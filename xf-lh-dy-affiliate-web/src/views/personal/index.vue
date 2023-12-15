@@ -1,18 +1,14 @@
 <template>
   <div class="roles-main">
-    <el-card style="margin-top: 20px;">
-      <template #header>
-        <div class="clearfix">
-          <span class="role-span">{{ $t('fields.personal') }}</span>
-        </div>
-      </template>
+    <el-card>
       <el-row class="affiliate-info">
         <el-card
-          body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
+          body-style="padding: 0 10px; display:flex; justify-content: space-between; align-items: left;"
           :xs="12"
           :sm="12"
           :lg="6"
           class="box-card"
+          shadow="none"
         >
           <template #header>
             <div class="clearfix">
@@ -21,7 +17,7 @@
           </template>
           <el-form label-suffix=" : " label-width="150px" label-position="left">
             <el-row class="info">
-              <el-icon color="#db1f55">
+              <el-icon color="#7D8792">
                 <Icon :icon="person20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item
@@ -32,7 +28,7 @@
               </el-form-item>
             </el-row>
             <el-row class="info">
-              <el-icon color="#db1f55">
+              <el-icon color="#7D8792">
                 <Icon :icon="personInfo20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item style="display: flex" :label="t('fields.realName')">
@@ -82,7 +78,7 @@
               </el-form-item>
             </el-row>
             <el-row class="info">
-              <el-icon color="#1fdbb0">
+              <el-icon color="#7D8792">
                 <Icon :icon="bookCoins20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item style="display: flex" :label="t('fields.balance')">
@@ -94,11 +90,12 @@
         </el-card>
 
         <el-card
-          body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
+          body-style="padding: 0 10px; display:flex; justify-content: space-between; align-items: center"
           :xs="12"
           :sm="12"
           :lg="6"
           class="box-card"
+          shadow="none"
         >
           <template #header>
             <div class="clearfix">
@@ -107,7 +104,7 @@
           </template>
           <el-form label-suffix=" : " label-width="150px" label-position="left">
             <el-row class="info">
-              <el-icon color="#db1f55">
+              <el-icon color="#7D8792">
                 <Icon :icon="lockClosed20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item
@@ -131,7 +128,7 @@
               </el-form-item>
             </el-row>
             <el-row class="info">
-              <el-icon color="#6639b5">
+              <el-icon color="#7D8792">
                 <Icon :icon="lockClosed20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item
@@ -144,7 +141,7 @@
               </el-form-item>
             </el-row>
             <el-row class="info">
-              <el-icon color="#1fdbb0">
+              <el-icon color="#7D8792">
                 <Icon :icon="lockShield20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item
@@ -167,11 +164,12 @@
         </el-card>
 
         <el-card
-          body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
+          body-style="padding: 0 10px; display:flex; justify-content: space-between; align-items: center"
           :xs="12"
           :sm="12"
           :lg="6"
           class="box-card"
+          shadow="none"
         >
           <template #header>
             <div class="clearfix">
@@ -180,7 +178,7 @@
           </template>
           <el-form label-suffix=" : " label-width="150px" label-position="left">
             <el-row class="info">
-              <el-icon color="#6639b5">
+              <el-icon color="#7D8792">
                 <Icon :icon="documentPercent20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item
@@ -191,7 +189,7 @@
               </el-form-item>
             </el-row>
             <el-row class="info">
-              <el-icon color="#db1f55">
+              <el-icon color="#7D8792">
                 <Icon :icon="peopleTeam20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item
@@ -202,7 +200,7 @@
               </el-form-item>
             </el-row>
             <el-row class="info">
-              <el-icon color="#1fa8db">
+              <el-icon color="#7D8792">
                 <Icon :icon="peopleList20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item
@@ -213,7 +211,7 @@
               </el-form-item>
             </el-row>
             <el-row class="info">
-              <el-icon color="#1fdbb0">
+              <el-icon color="#7D8792">
                 <Icon :icon="barCodeScanner20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item
@@ -852,7 +850,6 @@ onMounted(async () => {
 
 .info {
   align-items: center;
-  padding-left: 50px;
 }
 
 .el-row {
@@ -861,11 +858,19 @@ onMounted(async () => {
 
 ::v-deep(.el-form-item__content) {
   align-self: center;
+  font-weight: bold;
+}
+
+::v-deep(.el-form-item__label) {
+  color: #B3B6BD;
 }
 
 .dialog-footer {
   display: flex;
   justify-content: flex-end;
+}
+.el-card {
+  border: 0;
 }
 
 @media (max-width: 1200px) {

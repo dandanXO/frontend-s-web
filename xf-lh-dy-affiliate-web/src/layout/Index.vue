@@ -55,7 +55,7 @@ export default defineComponent({
 
     const classObj = computed(() => {
       return {
-        hideSidebar: !sidebar.value.opened,
+        // hideSidebar: !sidebar.value.opened,
         openSidebar: sidebar.value.opened,
         withoutAnimation: sidebar.value.withoutAnimation,
         mobile: device.value === 'mobile',
@@ -122,7 +122,7 @@ export default defineComponent({
   left: 0;
   z-index: 1;
   // overflow: hidden;
-  padding: 30px 0px 5px;
+  padding: 30px 0px 35px;
 }
 
 .fixed-header {
@@ -136,13 +136,29 @@ export default defineComponent({
 
 /* for mobile response 适配移动端 */
 .mobile {
-  .main-container {
-    margin-left: 0px;
-  }
+  // .main-container {
+  //   margin-left: 60px;
+  // }
 
   .sidebar-container {
     transition: transform 0.28s;
-    width: $sideBarWidth !important;
+    // width: $sideBarWidth !important;
+    position: fixed !important;
+    z-index: 99;
+    // top: 70px;
+    // bottom: 10px;
+    // left: 10px;
+    // height: 90vh;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    height: calc(100vh - 43px);
+    padding: 10px 0;
+    border-radius: 0;
+  }
+  :deep(.navigation) {
+    height: 100%;
+    overflow: auto;
   }
 
   &.openSidebar {
@@ -155,6 +171,12 @@ export default defineComponent({
       pointer-events: none;
       transition-duration: 0.3s;
       transform: translate3d(-$sideBarWidth, 0, 0);
+    }
+  }
+  .sidebar-container {
+    left: -20%;
+    &.expanded {
+      left: 0;
     }
   }
 

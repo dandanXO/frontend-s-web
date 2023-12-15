@@ -69,7 +69,8 @@
 
   <el-dialog
     v-model="showDialog"
-    width="25%"
+    width="95%"
+    style="max-width: 300px;"
     @close="onCloseDialog"
     :title="'安全验证, 请依次点击：' + words.join(' , ')"
   >

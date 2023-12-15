@@ -54,9 +54,11 @@
         :resizable="true"
         :data="tagList.records"
         row-key="id"
-        :empty-text="t('fields.noData')"
         v-loading="tagList.loading"
       >
+        <template #empty>
+          <emptyComp />
+        </template>
         <el-table-column
           :label="t('fields.sequence')"
           align="left"
@@ -110,6 +112,7 @@ import {
   deleteAffiliateTag,
 } from '../../../../api/affiliate-tag'
 import { required, size } from '../../../../utils/validate'
+import emptyComp from '@/components/empty'
 
 const { t } = useI18n()
 const store = useStore()

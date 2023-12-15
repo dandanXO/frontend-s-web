@@ -1,22 +1,37 @@
 <template>
-  <el-card class="box-card" shadow="never" style="margin-top: 20px">
+  <el-card class="box-card" shadow="never" style="margin-top: 0px;">
     <template #header>
       <div class="clearfix">
         <span class="role-span">{{ $t('menu.Bind Bank Cards') }}</span>
       </div>
     </template>
-    <el-row>
-      <el-col :span="24" style="text-align: right">
-        <el-button size="small" @click="openDialog('bank')"><svg-icon icon-class="bankcard" style="margin-bottom: 5px;" />{{ $t('fields.addBankCard') }}</el-button>
-        <!-- <el-button size="small" @click="openDialog('virtual')" type="primary"><svg-icon icon-class="linkcard" style="margin-bottom: 5px;" />{{ $t('fields.addVirtualCard') }}</el-button> -->
+    <el-row style="margin-bottom: 30px;">
+      <el-col>
+        <!-- <el-card shadow="always" @click="openDialog('bank')"><svg-icon icon-class="bankcard" style="margin-bottom: 5px; width: 100%; height: 100%;" />{{ $t('fields.addBankCard') }}</el-card> -->
+        <el-button class="addcardbtn" :icon="add" size="small" @click="openDialog('bank')" type="primary"><svg-icon icon-class="add" style="display:inline-block; font-size: 20px;" /><span>{{ $t('fields.addBankCard') }}</span></el-button>
       </el-col>
     </el-row>
+    <div class="subtitle">绑定账户列表</div>
     <el-row class="cards">
-      <el-col class="card" v-for="(card, o) in personalState.bankCardList" :key="o">
-        <el-card :body-style="{padding: '0px'}">
+      <div class="minititle">绑定银行卡列表</div>
+      <el-table :fit="true" :data="personalState.bankList">
+        <template #default="scope">
+          <el-table-column prop="bankName" :label="t('fields.bank')" />
+          <el-table-column prop="cardNumber" :label="t('fields.cardNumber')" />
+          <el-table-column prop="cardAccount" :label="t('fields.cardAccount')" />
+          <el-table-column prop="cardAddress" :label="t('fields.cardAddress')" />
+          <el-table-column :label="t('fields.actions')" fixed="right" width="100">
+            <el-link type="primary" :underline="false" @click="confirmUnbind(scope.row)">Unbind</el-link>
+            <!-- <svg-icon icon-class="unlink" @click="confirmUnbind(scope.row)" /> -->
+          </el-table-column>
+        </template>
+      </el-table>
+      <!-- <el-col class="card" v-for="(card, o) in personalState.bankCardList" :key="o">
+        <el-card :body-style="{padding: '0px'}" :style="`background-image: url(${cardBG(card)})`">
           <div style="padding: 14px;">
-            <el-row>
-              <el-col style="min-height: 50px; " :span="21">{{ card.bankName }}</el-col>
+            <el-row :gutter="20">
+              <el-col :span="4"><el-icon><img :src="cardLOGO(card)"></el-icon></el-col>
+              <el-col style="min-height: 50px; " :span="15">{{ card.bankName }}</el-col>
               <el-col :span="3" style="text-align: right">
                 <svg-icon icon-class="unlink" @click="confirmUnbind(card)" />
               </el-col>
@@ -54,10 +69,42 @@
             </el-row>
           </div>
         </el-card>
-      </el-col>
+      </el-col> -->
+    </el-row>
+    <el-row class="cards">
+      <div class="minititle">绑定虚拟账户列表</div>
+      <el-table :fit="true" :data="personalState.cryptoList">
+        <template #default="scope">
+          <el-table-column prop="bankName" :label="t('fields.bankName')" />
+          <el-table-column prop="bankCode" :label="t('fields.bankCode')" />
+          <el-table-column prop="cardNumber" :label="t('fields.cardNumber')" />
+          <el-table-column prop="cardAccount" :label="t('fields.cardAccount')" />
+          <el-table-column prop="cardAddress" :label="t('fields.cardAddress')" />
+          <el-table-column :label="t('fields.actions')" fixed="right" width="100">
+            <el-link type="primary" :underline="false" @click="confirmUnbind(scope.row)">Unbind</el-link>
+            <!-- <svg-icon icon-class="unlink" @click="confirmUnbind(scope.row)" /> -->
+          </el-table-column>
+        </template>
+      </el-table>
+    </el-row>
+    <el-row class="cards">
+      <div class="minititle">绑定电子钱包列表</div>
+      <el-table :fit="true" :data="personalState.eWalletList">
+        <template #default="scope">
+          <el-table-column prop="bankName" :label="t('fields.bankName')" />
+          <el-table-column prop="bankCode" :label="t('fields.bankCode')" />
+          <el-table-column prop="cardNumber" :label="t('fields.cardNumber')" />
+          <el-table-column prop="cardAccount" :label="t('fields.cardAccount')" />
+          <el-table-column :label="t('fields.actions')" fixed="right" width="100">
+            <el-link type="primary" :underline="false" @click="confirmUnbind(scope.row)">Unbind</el-link>
+            <!-- <svg-icon icon-class="unlink" @click="confirmUnbind(scope.row)" /> -->
+          </el-table-column>
+        </template>
+      </el-table>
     </el-row>
     <el-dialog
-      width="700px"
+      width="90%"
+      modal-class="dialog700"
       :title="t('fields.addBankCard')"
       v-model="centerDialogVisible"
       :close-on-click-modal="false"
@@ -140,13 +187,26 @@ const bankTypes = [
   { key: 3, displayName: t('fields.ewallet'), value: 'e-Wallet' }
 ]
 const personalState = reactive({
-  bankCardList: []
+  bankCardList: [],
+  bankList: [],
+  cryptoList: [],
+  eWalletList: [],
 });
 const loadCards = () => {
   personalState.bankCardList = [];
   loadBankCards().then((response) => {
     if (response.code === 0) {
       personalState.bankCardList.push(...response.data);
+      personalState.bankCardList.forEach(element => {
+        element.cardNumber = '****' + element.cardNumber.slice(-4);
+        if (element.bankType === 'BANK') {
+          personalState.bankList.push(element)
+        } else if (element.bankType === 'CRYPTO') {
+          personalState.cryptoList.push(element)
+        } else if (element.bankType === 'EWALLET') {
+          personalState.eWalletList.push(element)
+        }
+      });
     }
   }).catch((error) => {
     console.log("error", error);
@@ -257,6 +317,12 @@ const bankCardRules = {
     }
   ]
 };
+// const cardBG = (card) => {
+//   return require(`../../../assets/images/bank/${card.bankType.toLowerCase()}.png`)
+// }
+// const cardLOGO = (card) => {
+//   return require(`../../../assets/images/banklogo/${card.bankType.toLowerCase()}.png`)
+// }
 const confirmUnbind = (card) => {
   ElMessageBox.confirm(
     t('message.unbindConfirm') + card.bankName,
@@ -397,17 +463,66 @@ const submitBankCard = () => {
 };
 </script>
 <style lang="scss" scoped>
-
+  :deep(.dialog700 .el-dialog) {
+    max-width: 700px;
+  }
+  :deep(.el-table th.el-table__cell) {
+    background: #F4F9FD;
+    color: #333333;
+  }
   .el-select {
     width: 100%;
+  }
+  .addcardbtn {
+    background: #1F6DE0;
+    box-shadow: 0px 6px 12px 0px #3F8CFF6B;
+    border-radius: 10px;
+    line-height: 20px;
+    :deep(span) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .subtitle {
+    font-size: 20px;
+    font-family: PFBold;
+    display: block;
   }
   .cards {
     gap: 10px;
     margin: 20px 0;
     display: flex;
     flex-wrap: wrap;
+    .minititle {
+      font-size: 16px;
+      font-family: PFMed;
+      display: block;
+      color: #999999;
+    }
     .card {
       max-width: 250px;
+    }
+    .addcard {
+      max-width: 250px;
+      cursor: pointer;
+      .el-card {
+        color: #3F8CFF;
+        background: #ecf3ff;
+        min-height: 160px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+    }
+    .el-card {
+      color: #ffffff;
+      background-repeat: no-repeat;
+      background-size: cover;
+      min-height: 160px;
+      background-position: 50%;
     }
   }
 
