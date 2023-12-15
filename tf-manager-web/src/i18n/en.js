@@ -851,6 +851,7 @@ export default {
     name: 'Name',
     needRegister: 'Need Register',
     netProfit: 'Net Profit',
+    netPhone: 'Phone Call Config',
     newMember: 'New Member',
     newMemberCount: 'New Member Count',
     newPassword: 'New Password',
@@ -1316,7 +1317,9 @@ export default {
     createConfig: 'Create Config',
     configCode: 'Config Code',
     configValue: 'Config Value',
-    s3Url: 'S3 URL'
+    s3Url: 'S3 URL',
+    teamIcon: 'Team Icon',
+    other: 'Other',
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
@@ -1955,6 +1958,7 @@ export default {
     801: 'Captcha code has expired',
     900: 'Member details could not be found',
     901: 'Affiliate record could not be found',
+    922: 'Your account haven link to vcall config',
     1000: 'Login failed, username or password is wrong',
     1001: 'Login failed, account is disabled',
     1005: 'Login failed, account has been locked, please try again tomorrow',

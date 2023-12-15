@@ -857,6 +857,7 @@ export default {
     name: '名称',
     needRegister: '需要注册',
     netProfit: '净利润',
+    netPhone: '呼叫设置',
     newMember: '新会员',
     newMemberCount: '新会员数',
     newPassword: '新密码',
@@ -1321,7 +1322,9 @@ export default {
     createConfig: '新增设置',
     configCode: '设置Code',
     configValue: '设置值',
-    s3Url: 'S3地址'
+    s3Url: 'S3地址',
+    teamIcon: '队伍图标',
+    other: '其他',
   },
   message: {
     addRemarkSuccess: '新增备注成功',
@@ -1930,6 +1933,7 @@ export default {
     801: '验证码已失效',
     900: '无法找到会员信息',
     901: '无法找到此代理信息',
+    922: '你的账号还未连接到VCall',
     1000: '登录名或密码错误',
     1001: '登录失败, 账号已被禁用',
     1005: '登录失败, 账号已被封锁, 请于明日再尝试',
