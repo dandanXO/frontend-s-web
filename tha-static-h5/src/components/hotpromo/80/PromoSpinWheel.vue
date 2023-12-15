@@ -569,12 +569,12 @@ onMounted(() => {
 
       span {
         position: relative;
-        top: 4%;
-        left: 11.5%;
+        top: 1%;
+        left: 13%;
         color: #fbff1e;
         text-align: center;
         font-family: FZHanZhenGuangBiaoS-GB;
-        font-size: 2.5vw;
+        font-size: 2vw;
         font-weight: 600;
         line-height: 100%; /* 2.11175rem */
       }
@@ -704,9 +704,9 @@ onMounted(() => {
 
       .prize-lock-day {
         span {
-          top: 4%;
-          left: 7%;
-          font-size: 1.15rem;
+          top: 1%;
+          left: 8%;
+          font-size: 0.75rem;
         }
       }
     }
@@ -737,6 +737,11 @@ onMounted(() => {
 @media (min-width: 980px) {
   .spinwheel-container .spin-count-board span {
     font-size: 1.3rem;
+  }
+  .spinwheel-container .inner-wheel .prize-lock-day span {
+    top: 1%;
+    left: 8%;
+    font-size: 0.9rem;
   }
 }
 

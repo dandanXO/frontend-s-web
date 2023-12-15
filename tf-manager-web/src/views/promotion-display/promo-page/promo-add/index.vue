@@ -652,7 +652,7 @@ function submitImage() {
   }
   uiControl.imageSelectionVisible = false
 }
-//test
+// test
 onMounted(() => {
   console.log('new page ')
   loadSites()
