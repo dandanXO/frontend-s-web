@@ -130,7 +130,7 @@ export default defineComponent({
             console.log(aaid);
             store.aaid = aaid;
           });
-        }, 1000);
+        }, 1500);
       } else {
         //Normal WEb / H5 / iOS WEbclip.
         console.log("Init Web Adjust");
@@ -142,9 +142,9 @@ export default defineComponent({
         setTimeout(() => {
           const resp = AdjustWeb.getAttribution();
           console.log("Web Adid");
-          console.log(resp.adid);
-          store.aaid = resp.adid;
-        }, 1000);
+          // console.log(resp.adid);
+          store.aaid = resp ? resp.adid : "";
+        }, 1500);
       }
     };
 
