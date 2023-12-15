@@ -373,7 +373,15 @@
                 :empty-text="t('fields.noData')"
       >
         <el-table-column prop="remark" :label="t('fields.remark')" />
-        <el-table-column prop="createTime" :label="t('fields.createTime')" width="200px" />
+        <el-table-column prop="createTime" :label="t('fields.createTime')" width="200px">
+          <template #default="scope">
+            <span v-if="scope.row.createTime === null">-</span>
+            <span
+              v-if="scope.row.createTime !== null"
+              v-formatter="{data: scope.row.createTime, timeZone: timeZone, type: 'date'}"
+            />
+          </template>
+        </el-table-column>
         <el-table-column prop="createBy" :label="t('fields.createBy')" width="200px" />
         <el-table-column align="right" fixed="right">
           <template #default="scope">
@@ -417,7 +425,7 @@
         v-loading="loading.loginInfo"
       >
         <el-descriptions-item label-align="left" :label="t('fields.registerTime')" label-class-name="member-label" class-name="member-context">
-          <span v-if="memberDetail.regTime !== null" v-formatter="{data: memberDetail.regTime,formatter: 'YYYY/MM/DD HH:mm:ss',type: 'date'}" />
+          <span v-if="memberDetail.regTime !== null" v-formatter="{data: memberDetail.regTime,timeZone: timeZone,type: 'date'}" />
           <span v-if="memberDetail.regTime === null">-</span>
         </el-descriptions-item>
         <el-descriptions-item label-align="left" :label="t('fields.registerIp')" label-class-name="member-label" class-name="member-context">
@@ -429,7 +437,7 @@
           <span v-if="memberDetail.regAddress === '-,-,-' || memberDetail.regAddress === 'null,null,null' || memberDetail.regAddress === null">-</span>
         </el-descriptions-item>
         <el-descriptions-item label-align="left" :label="t('fields.lastLoginTime')" label-class-name="member-label" class-name="member-context">
-          <span v-if="memberDetail.lastLoginTime === null" v-formatter="{data: memberDetail.lastLoginTime,formatter: 'YYYY/MM/DD HH:mm:ss',type: 'date'}" />
+          <span v-if="memberDetail.lastLoginTime === null" v-formatter="{data: memberDetail.lastLoginTime,timeZone: timeZone,type: 'date'}" />
           <span v-if="memberDetail.lastLoginTime === null">-</span>
         </el-descriptions-item>
         <el-descriptions-item label-align="left" :label="t('fields.lastLoginIp')" label-class-name="member-label" class-name="member-context">
@@ -648,6 +656,10 @@ const LOGIN_USER_NAME = computed(() => store.state.user.name);
 const link = ref("");
 const props = defineProps({
   affId: {
+    type: String,
+    required: true
+  },
+  timeZone: {
     type: String,
     required: true
   }

@@ -1318,6 +1318,10 @@ export default {
     selectedImage: '已选图像',
     poster: '海报',
     posterType: '海报类别',
+    createConfig: '新增设置',
+    configCode: '设置Code',
+    configValue: '设置值',
+    s3Url: 'S3地址'
   },
   message: {
     addRemarkSuccess: '新增备注成功',
@@ -1659,6 +1663,8 @@ export default {
     validateImageRequired: '图像必填',
     validateImageNameRequired: '图像名必填',
     validatePosterTypeRequired: '海报类别必填',
+    validateConfigCodeRequired: '设置Code必填',
+    validateConfigValueRequired: '设置值必填',
   },
   menu: {
     undefined: '',

@@ -1313,6 +1313,10 @@ export default {
     selectedImage: 'Selected Image',
     poster: 'Poster',
     posterType: 'Poster Type',
+    createConfig: 'Create Config',
+    configCode: 'Config Code',
+    configValue: 'Config Value',
+    s3Url: 'S3 URL'
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
@@ -1683,6 +1687,8 @@ export default {
     validateImageRequired: 'Image is required',
     validateImageNameRequired: 'Image Name is required',
     validatePosterTypeRequired: 'Poster Type is required',
+    validateConfigCodeRequired: 'Config Code is required',
+    validateConfigValueRequired: 'Config Value is required',
   },
   menu: {
     undefined: '',
