@@ -116,8 +116,7 @@ export default boot(({ app, router }) => {
         ) {
           SessionStorage.remove("TOKEN");
           LocalStorage.remove("TOKEN");
-          window.location.href = "/";
-          // window.location.href = "app://login";
+          const newWin = window.open("app://login", "_blank");
         }
         if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
           return Dialog.create({
