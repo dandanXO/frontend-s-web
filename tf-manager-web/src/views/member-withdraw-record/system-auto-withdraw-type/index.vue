@@ -69,7 +69,7 @@
         <el-form-item :label="t('fields.maxWithdrawAmount')" prop="withdrawAmountMax">
           <el-input-number
             v-model="form.withdrawAmountMax"
-            :min="form.withdrawAmountMax"
+            :min="form.withdrawAmountMin"
             class="form-input"
             :controls="false"
           />
@@ -80,7 +80,7 @@
         <el-form-item :label="t('fields.maxBalance')" prop="memberBalanceMax">
           <el-input-number
             v-model="form.memberBalanceMax"
-            :min="form.memberBalanceMax"
+            :min="form.memberBalanceMin"
             class="form-input"
             :controls="false"
           />
@@ -130,7 +130,7 @@
         <el-form-item :label="t('fields.maxWithdrawAmount')" prop="withdrawAmountMax">
           <el-input-number
             v-model="form.withdrawAmountMax"
-            :min="form.withdrawAmountMax"
+            :min="form.withdrawAmountMin"
             class="form-input"
             :controls="false"
           />
