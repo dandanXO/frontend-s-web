@@ -143,7 +143,6 @@ onMounted(() => {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background: #d1d1d1;
 
     .info-team {
       display: flex;
@@ -154,9 +153,15 @@ onMounted(() => {
       padding-bottom: 10px;
 
       .info-team-logo {
+        background: #c1c1c1;
+        border-radius: 6px;
+        padding: 6px;
+        margin-bottom: 3px;
+
         img {
           display: block;
           width: 45px;
+          margin-bottom: 0px;
         }
       }
 

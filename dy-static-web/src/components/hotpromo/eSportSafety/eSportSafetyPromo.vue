@@ -283,7 +283,6 @@ onMounted(() => {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background: #d1d1d1;
 
     .info-team {
       display: flex;
@@ -294,6 +293,10 @@ onMounted(() => {
       padding-bottom: 20px;
 
       .info-team-logo {
+        background: #c1c1c1;
+        padding: 6px;
+        border-radius: 6px;
+
         img {
           display: block;
           width: 45px;

@@ -294,6 +294,10 @@ onMounted(() => {
       padding-bottom: 20px;
 
       .info-team-logo {
+        background: #c1c1c1;
+        padding: 6px;
+        border-radius: 6px;
+
         img {
           display: block;
           width: 45px;
