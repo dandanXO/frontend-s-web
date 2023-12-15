@@ -5,7 +5,7 @@
         <el-col :xl="6" :lg="6" :md="10">
           <el-form-item :label="t('fields.creditFlowType') + ' :'">
             <el-select
-              size="small"
+              size="normal"
               v-model="type.selectedType"
               :placeholder="t('fields.all')"
               @change="handleSelectChange"
@@ -27,7 +27,7 @@
               v-model="request.date"
               format="DD/MM/YYYY"
               value-format="YYYY-MM-DD"
-              size="small"
+              size="normal"
               type="daterange"
               range-separator=":"
               :start-placeholder="t('fields.startDate')"
@@ -42,11 +42,11 @@
               icon="el-icon-search"
               type="primary"
               @click="loadCreditFlow()"
-              size="small"
+              size="normal"
             >
               {{ $t('fields.search') }}
             </el-button>
-            <el-button size="small" type="primary" plain @click="resetQuery()">
+            <el-button size="normal" type="primary" plain @click="resetQuery()">
               {{ $t('fields.reset') }}
             </el-button>
           </div>
@@ -59,7 +59,7 @@
     :data="page.records"
     ref="table"
     row-key="id"
-    size="small"
+    size="normal"
     highlight-current-row
     v-loading="page.loading"
     style="margin-top: 15px; margin-left: 15px;"

@@ -13,7 +13,7 @@
               v-model="request.regTime"
               format="DD/MM/YYYY"
               value-format="YYYY-MM-DD"
-              size="small"
+              size="normal"
               class="input-small"
               type="daterange"
               range-separator=":"
@@ -31,7 +31,7 @@
               v-model="request.loginName"
               maxlength="50"
               :placeholder="t('fields.loginName')"
-              size="small"
+              size="normal"
             />
           </el-form-item>
           <el-form-item>
@@ -40,11 +40,11 @@
                 icon="el-icon-search"
                 type="primary"
                 @click="search()"
-                size="mini"
+                size="normal"
               >
                 {{ $t('fields.search') }}
               </el-button>
-              <el-button size="mini" type="warning" @click="resetQuery()">
+              <el-button size="normal" type="primary" plain @click="resetQuery()">
                 {{ $t('fields.reset') }}
               </el-button>
             </div>
@@ -55,7 +55,7 @@
         <el-button
           v-if="affiliateLevel !== 'AFFILIATE'"
           icon="el-icon-plus"
-          size="mini"
+          size="normal"
           type="primary"
           @click="showDialog('CREATE')"
         >
@@ -75,11 +75,13 @@
         :data="page.records"
         ref="table"
         row-key="id"
-        size="small"
+        size="normal"
         highlight-current-row
         v-loading="page.loading"
-        :empty-text="t('fields.noData')"
       >
+        <template #empty>
+          <emptyComp />
+        </template>
         <el-table-column
           prop="loginName"
           :label="t('fields.loginName')"
@@ -167,27 +169,27 @@
           min-width="120"
         >
           <template #default="scope">
-            <el-tag v-if="scope.row.affiliateStatus === 'APPLY'" size="mini">
+            <el-tag v-if="scope.row.affiliateStatus === 'APPLY'" size="normal">
               {{ t('affiliate.status.' + scope.row.affiliateStatus) }}
             </el-tag>
             <el-tag
               v-if="scope.row.affiliateStatus === 'NORMAL'"
               type="success"
-              size="mini"
+              size="normal"
             >
               {{ t('affiliate.status.' + scope.row.affiliateStatus) }}
             </el-tag>
             <el-tag
               v-if="scope.row.affiliateStatus === 'DISABLE'"
               type="danger"
-              size="mini"
+              size="normal"
             >
               {{ t('affiliate.status.' + scope.row.affiliateStatus) }}
             </el-tag>
             <el-tag
               v-if="scope.row.affiliateStatus === null"
               type="info"
-              size="mini"
+              size="normal"
             >
               -
             </el-tag>
@@ -258,12 +260,11 @@
           :label="t('fields.operate')"
           min-width="150"
           align="center"
-          fixed="right"
         >
           <template #default="scope">
             <el-button
               icon="el-icon-edit"
-              size="mini"
+              size="normal"
               type="success"
               :disabled="breadcrumbNameList.length > 1"
               @click="showEdit(scope.row)"
@@ -293,13 +294,13 @@
         :model="cForm"
         :rules="cFormRules"
         :inline="true"
-        size="small"
+        size="normal"
         label-width="150px"
       >
         <el-form-item :label="t('fields.site')" prop="siteId">
           <el-select
             v-model="cForm.siteId"
-            size="small"
+            size="normal"
             :placeholder="t('fields.site')"
             class="filter-item"
             style="width: 350px;"
@@ -320,7 +321,7 @@
         <!-- <el-form-item :label="t('fields.affiliateLevel')" prop="affiliateLevel">
             <el-select
               v-model="cForm.affiliateLevel"
-              size="small"
+              size="normal"
               :placeholder="t('fields.affiliateLevel')"
               class="filter-item"
               style="width: 350px"
@@ -390,7 +391,7 @@
         :model="eForm"
         :rules="eFormRules"
         :inline="true"
-        size="small"
+        size="normal"
         label-width="200px"
       >
         <el-form-item :label="t('fields.loginName')" prop="loginName">
@@ -444,6 +445,7 @@ import { getSite } from '../../../api/site'
 import { required, size } from '../../../utils/validate'
 import { ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n'
+import emptyComp from '@/components/empty'
 
 const store = useStore()
 const { t } = useI18n()
@@ -846,7 +848,7 @@ onMounted(async () => {
 
 .dialog-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .box-card {

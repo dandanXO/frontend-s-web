@@ -36,7 +36,7 @@
                 icon="el-icon-setting"
                 type="primary"
                 @click="goToTagSetting()"
-                size="mini"
+                size="normal"
               >
                 {{ $t('fields.tagSetting') }}
               </el-button>
@@ -47,25 +47,25 @@
           <el-row :gutter="20">
             <el-col :xl="8" :lg="7" :md="12">
               <el-form-item :label="t('fields.loginName') + ' :'">
-                <el-input size="small" v-model="request.loginName" />
+                <el-input size="normal" v-model="request.loginName" />
               </el-form-item>
             </el-col>
             <el-col :xl="10" :lg="10" :md="12">
               <el-form-item :label="t('fields.depositAmount') + ' :'">
-                <el-input size="small" v-model="request.depositMinAmount" class="input-min">
+                <el-input size="normal" v-model="request.depositMinAmount" class="input-min">
                   <template #append>
                     -
                   </template>
                 </el-input>
                 <el-input
                   v-model="request.depositMaxAmount"
-                  class="input-max" size="small"
+                  class="input-max" size="normal"
                 />
               </el-form-item>
             </el-col>
             <el-col :xl="6" :lg="5" :md="12">
               <el-form-item :label="t('fields.betRecord') + ' :'">
-                <el-select size="small" v-model="request.isBet">
+                <el-select size="normal" v-model="request.isBet">
                   <el-option key="1" value="-1" :label="t('fields.all')">
                     {{ t('fields.all') }}
                   </el-option>
@@ -88,7 +88,7 @@
                   v-model="request.recordTime"
                   format="DD/MM/YYYY"
                   value-format="YYYY-MM-DD"
-                  size="small"
+                  size="normal"
                   class="input-small"
                   type="daterange"
                   range-separator=":"
@@ -107,7 +107,7 @@
                   v-model="request.regTime"
                   format="DD/MM/YYYY"
                   value-format="YYYY-MM-DD"
-                  size="small"
+                  size="normal"
                   class="input-small"
                   type="daterange"
                   range-separator=":"
@@ -126,11 +126,11 @@
                   icon="el-icon-search"
                   type="primary"
                   @click="loadAffiliateMembers()"
-                  size="mini"
+                  size="normal"
                 >
                   {{ $t('fields.search') }}
                 </el-button>
-                <el-button size="mini" type="primary" plain @click="resetQuery()">
+                <el-button size="normal" type="primary" plain @click="resetQuery()">
                   {{ $t('fields.reset') }}
                 </el-button>
               </div>
@@ -139,7 +139,7 @@
         </div>
         <div class="inputs-wrap">
           <el-button
-            size="mini"
+            size="normal"
             type="primary"
             :disabled="uiControl.editBtn"
             @click="showBatchEditTag()"
@@ -153,7 +153,7 @@
         :data="page.records"
         ref="table"
         row-key="id"
-        size="small"
+        size="normal"
         highlight-current-row
         v-loading="page.loading"
         style="margin-top: 15px;"
@@ -178,18 +178,18 @@
             <el-tag
               v-if="scope.row.status === 'NORMAL'"
               type="success"
-              size="mini"
+              size="normal"
             >
               {{ scope.row.status }}
             </el-tag>
             <el-tag
               v-if="scope.row.status === 'FROZEN'"
               type="danger"
-              size="mini"
+              size="normal"
             >
               {{ scope.row.status }}
             </el-tag>
-            <el-tag v-if="scope.row.status === null" type="info" size="mini">
+            <el-tag v-if="scope.row.status === null" type="info" size="normal">
               -
             </el-tag>
           </template>
@@ -337,7 +337,7 @@
             v-model="memberRequest.recordTime"
             format="DD/MM/YYYY"
             value-format="YYYY-MM-DD"
-            size="small"
+            size="normal"
             class="input-small"
             type="daterange"
             range-separator=":"
@@ -353,7 +353,7 @@
           icon="el-icon-search"
           type="primary"
           @click="showMemberInfo()"
-          size="mini"
+          size="normal"
         >
           {{ $t('fields.search') }}
         </el-button>
@@ -370,18 +370,18 @@
               <el-tag
                 v-if="memberInfo.status === 'NORMAL'"
                 type="success"
-                size="mini"
+                size="normal"
               >
                 {{ t('member.status.normal') }}
               </el-tag>
               <el-tag
                 v-if="memberInfo.status === 'FROZEN'"
                 type="danger"
-                size="mini"
+                size="normal"
               >
                 {{ t('member.status.frozen') }}
               </el-tag>
-              <el-tag v-if="memberInfo.status === null" type="info" size="mini">
+              <el-tag v-if="memberInfo.status === null" type="info" size="normal">
                 -
               </el-tag>
             </el-form-item>
@@ -613,25 +613,25 @@
                   scope.row.status === 'SUPPLEMENT_SUCCESS'
               "
               type="success"
-              size="mini"
+              size="normal"
             >
               {{ t('depositStatus.' + scope.row.status) }}
             </el-tag>
             <el-tag
               v-else-if="scope.row.status === 'CLOSED'"
               type="danger"
-              size="mini"
+              size="normal"
             >
               {{ t('depositStatus.' + scope.row.status) }}
             </el-tag>
             <el-tag
               v-else-if="scope.row.status === 'PENDING'"
               type="warning"
-              size="mini"
+              size="normal"
             >
               {{ t('depositStatus.' + scope.row.status) }}
             </el-tag>
-            <el-tag v-else type="info" size="mini">-</el-tag>
+            <el-tag v-else type="info" size="normal">-</el-tag>
           </template>
         </el-table-column>
       </el-table>
@@ -1245,7 +1245,7 @@ onMounted(() => {
 
 .dialog-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 @media (max-width: 768px) {

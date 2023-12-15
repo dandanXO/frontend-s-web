@@ -39,7 +39,7 @@
         <div class="search">
           <div>
             <el-button
-              size="mini"
+              size="normal"
               type="success"
               icon="el-icon-circle-plus"
               @click="showDialog('CREATE')"
@@ -50,7 +50,7 @@
         </div>
       </div>
       <el-table
-        size="mini"
+        size="normal"
         :resizable="true"
         :data="tagList.records"
         row-key="id"
@@ -83,14 +83,13 @@
         <el-table-column
           :label="t('fields.operate')"
           align="center"
-          fixed="right"
           width="230"
         >
           <template #default="scope">
-            <el-button size="mini" type="success" @click="showEdit(scope.row)">
+            <el-button size="normal" type="success" @click="showEdit(scope.row)">
               {{ t('fields.edit') }}
             </el-button>
-            <el-button size="mini" type="danger" @click="deleteTag(scope.row)">
+            <el-button size="normal" type="danger" @click="deleteTag(scope.row)">
               {{ t('fields.delete') }}
             </el-button>
           </template>
@@ -238,7 +237,7 @@ onMounted(async () => {
 
 .dialog-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .table-footer {

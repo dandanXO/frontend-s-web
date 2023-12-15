@@ -84,7 +84,7 @@
     </el-tabs>
   </el-card>
   <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="580px">
-    <el-form v-if="uiControl.dialogType === 'SEC_QN'" ref="secRef" :model="securityForm" :rules="securityFormRules" :inline="true" size="small" label-width="150px">
+    <el-form v-if="uiControl.dialogType === 'SEC_QN'" ref="secRef" :model="securityForm" :rules="securityFormRules" :inline="true" size="normal" label-width="150px">
       <el-form-item :label="t('fields.questionOne')" prop="questionOne">
         <span>{{ securityForm.questionOne }}</span>
       </el-form-item>
@@ -108,7 +108,7 @@
         <el-button type="primary" @click="submitAnswer">{{ $t('fields.confirm') }}</el-button>
       </div>
     </el-form>
-    <el-form v-if="uiControl.dialogType === 'WITHDRAW_PASS'" ref="withdrawPwRef" :model="withdrawPwForm" :rules="withdrawPwFormRules" :inline="true" size="small" label-width="150px" @submit.prevent>
+    <el-form v-if="uiControl.dialogType === 'WITHDRAW_PASS'" ref="withdrawPwRef" :model="withdrawPwForm" :rules="withdrawPwFormRules" :inline="true" size="normal" label-width="150px" @submit.prevent>
       <el-form-item :label="t('fields.withdrawPassword')" prop="withdrawPassword">
         <el-input
           type="password"
@@ -548,7 +548,7 @@ onMounted(async() => {
 
 .dialog-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 .account-tip.remain-box {
   margin-left: 200px;

@@ -26,7 +26,7 @@
 
         <div class="btn-group">
           <el-dropdown trigger="click">
-            <el-button type="primary" size="small" style="width:100%; box-shadow: 0px 6px 12px 0px #3F8CFF43;">
+            <el-button type="primary" size="normal" style="width:100%; box-shadow: 0px 6px 12px 0px #3F8CFF43;">
               <span>{{ $t('fields.copy') }}</span>
               <el-icon class="el-icon--right"><arrow-down-bold /></el-icon>
             </el-button>
@@ -45,7 +45,7 @@
             </template>
           </el-dropdown>
           <el-dropdown trigger="click">
-            <el-button size="small" style="margin-left: 0px; width: 100%; border-color: #409eff">
+            <el-button size="normal" style="margin-left: 0px; width: 100%; border-color: #409eff">
               <span style="color: #409eff;">{{ $t('fields.download') }}</span>
               <el-icon class="el-icon--right" style="color: #409eff;">
                 <arrow-down-bold />
@@ -95,7 +95,7 @@
 
         <div class="btn-group">
           <el-dropdown trigger="click">
-            <el-button size="small" type="primary" style="width:100%">
+            <el-button size="normal" type="primary" style="width:100%">
               <span>{{ $t('fields.copy') }}</span>
               <el-icon class="el-icon--right"><arrow-down-bold /></el-icon>
             </el-button>
@@ -115,7 +115,7 @@
           </el-dropdown>
           <el-dropdown trigger="click">
             <el-button
-              size="small" style="margin-left: 0px; width: 100%; border-color: #409eff"
+              size="normal" style="margin-left: 0px; width: 100%; border-color: #409eff"
             >
               <span style="color: #409eff;">{{ $t('fields.download') }}</span>
               <el-icon class="el-icon--right" style="color: #409eff;">
@@ -426,7 +426,7 @@ onMounted(() => {
 
 <style scoped>
 .el-card {
-  max-width: 350px;
+  max-width: 430px;
 }
 .roles-main {
   display: flex;

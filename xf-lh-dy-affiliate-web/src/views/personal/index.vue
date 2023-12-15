@@ -54,19 +54,19 @@
                     ref="editForm"
                     :model="eForm"
                     :inline="true"
-                    size="mini"
+                    size="normal"
                   >
                     <el-form-item prop="realName">
                       <el-row>
                         <el-input
                           v-model="eForm.realName"
                           maxlength="50"
-                          size="mini"
+                          size="normal"
                         />
                         <el-button
                           type="primary"
                           @click="editRealName()"
-                          size="mini"
+                          size="normal"
                           style="margin-left: 10px"
                         >
                           {{ $t('fields.confirm') }}
@@ -238,7 +238,7 @@
         :model="pwForm"
         :rules="pwRules"
         ref="pwRef"
-        size="small"
+        size="normal"
         label-width="162px"
       >
         <el-form-item :label="t('fields.currentPassword')" prop="oldPassword">
@@ -269,10 +269,10 @@
           />
         </el-form-item>
         <div class="dialog-footer">
-          <el-button size="small" @click="uiControl.dialogVisible = false">
+          <el-button size="normal" @click="uiControl.dialogVisible = false">
             {{ $t('fields.cancel') }}
           </el-button>
-          <el-button size="small" type="primary" @click="updatePassword">
+          <el-button size="normal" type="primary" @click="updatePassword">
             {{ $t('fields.confirm') }}
           </el-button>
         </div>
@@ -283,7 +283,7 @@
         :model="withdrawPwForm"
         :rules="withdrawPwRules"
         ref="withdrawPwRef"
-        size="small"
+        size="normal"
         label-width="162px"
       >
         <el-form-item
@@ -319,11 +319,11 @@
           />
         </el-form-item>
         <div class="dialog-footer">
-          <el-button size="small" @click="uiControl.dialogVisible = false">
+          <el-button size="normal" @click="uiControl.dialogVisible = false">
             {{ $t('fields.cancel') }}
           </el-button>
           <el-button
-            size="small"
+            size="normal"
             type="primary"
             @click="updateWithdrawPassword"
           >
@@ -337,13 +337,13 @@
         :model="securityQnForm"
         :rules="securityQnRules"
         ref="securityQnRef"
-        size="small"
+        size="normal"
         label-width="162px"
       >
         <el-form-item :label="t('fields.questionOne')" prop="questionOne">
           <el-select
             v-model="securityQnForm.questionOne"
-            size="small"
+            size="normal"
             :placeholder="t('fields.questionOne')"
             class="filter-item"
             style="width: 350px;"
@@ -363,7 +363,7 @@
         <el-form-item :label="t('fields.questionTwo')" prop="questionTwo">
           <el-select
             v-model="securityQnForm.questionTwo"
-            size="small"
+            size="normal"
             :placeholder="t('fields.questionTwo')"
             class="filter-item"
             style="width: 350px;"
@@ -383,7 +383,7 @@
         <el-form-item :label="t('fields.questionThree')" prop="questionThree">
           <el-select
             v-model="securityQnForm.questionThree"
-            size="small"
+            size="normal"
             :placeholder="t('fields.questionThree')"
             class="filter-item"
             style="width: 350px;"
@@ -404,10 +404,10 @@
           />
         </el-form-item>
         <div class="dialog-footer">
-          <el-button size="small" @click="uiControl.dialogVisible = false">
+          <el-button size="normal" @click="uiControl.dialogVisible = false">
             {{ $t('fields.cancel') }}
           </el-button>
-          <el-button size="small" type="primary" @click="addSecurityQuestion">
+          <el-button size="normal" type="primary" @click="addSecurityQuestion">
             {{ $t('fields.confirm') }}
           </el-button>
         </div>
@@ -845,7 +845,7 @@ onMounted(async () => {
 
 .dialog-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .info {
@@ -867,7 +867,7 @@ onMounted(async () => {
 
 .dialog-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 .el-card {
   border: 0;
