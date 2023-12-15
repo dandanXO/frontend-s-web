@@ -23,7 +23,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:payment:type:add']"
+          v-permission="['sys:systemautowithdraw:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -153,12 +153,14 @@
     >
       <el-table-column type="expand">
         <template #default="props">
-          <el-table :data="props.row.systemAutoWithdrawPlatfromVO" ref="table" size="small">
-            <el-table-column type="selection" />
+          <div class="clearfix">
+            <span style="margin-left: 60px; font-size: small;font-weight:bold">{{ t('fields.withdrawPlatform') }}</span>
+          </div>
+          <el-table :data="props.row.systemAutoWithdrawPlatfromVO" ref="table" size="small" style="margin-left: 60px; width: 50%;">
             <el-table-column :label="t('fields.withdrawPlatformName')" prop="withdrawPlatformName" />
             <el-table-column :label="t('fields.minWithdrawAmount')" prop="withdrawAmountMin" />
             <el-table-column :label="t('fields.maxWithdrawAmount')" prop="withdrawAmountMax" />
-            <el-table-column :label="t('fields.operate')" align="right" v-if="hasPermission(['sys:payment:type:add'])">
+            <el-table-column :label="t('fields.operate')" v-if="hasPermission(['sys:systemautowithdraw:add'])">
               <template #default="scope">
                 <el-button
                   icon="el-icon-delete"
@@ -176,17 +178,17 @@
       <el-table-column prop="withdrawAmountMax" :label="t('fields.maxWithdrawAmount')" width="200" />
       <el-table-column prop="memberBalanceMin" :label="t('fields.minBalance')" width="200" />
       <el-table-column prop="memberBalanceMax" :label="t('fields.maxBalance')" width="200" />
-      <el-table-column prop="status" :label="t('fields.status')" width="200" v-if="hasPermission(['sys:payment:type:update:state'])">
+      <el-table-column prop="status" :label="t('fields.status')" width="200" v-if="hasPermission(['sys:systemautowithdraw:update'])">
         <template #default="scope">
           <el-switch
             v-model="scope.row.status"
             active-color="#409EFF"
             inactive-color="#F56C6C"
-            @change="changePaymentTypeStatus(scope.row.id, scope.row.status)"
+            @change="changeStatus(scope.row, scope.row.status)"
           />
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')" align="right" v-if="hasPermission(['sys:payment:type:add'])">
+      <el-table-column :label="t('fields.operate')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
         <template #default="scope">
           <el-button
             icon="el-icon-edit"
@@ -196,7 +198,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')" align="right" v-if="hasPermission(['sys:payment:type:add'])">
+      <el-table-column :label="t('fields.operate')" v-if="hasPermission(['sys:systemautowithdraw:add'])">
         <template #default="scope">
           <el-button
             icon="el-icon-plus"
@@ -308,9 +310,11 @@ async function loadAutoPaymentType() {
   const { data: ret } = await getSystemAutoPaymentTypeList(query)
   page.records = ret
   loadWithdrawName()
+  loadPayTypes()
 }
 
 function loadWithdrawName() {
+  list.withdrawPlatformByPayType = []
   list.filteredwithdrawPlatform.forEach(platform => {
     list.withdrawPlatform.forEach(itemz => {
       if (itemz.id === platform.withdrawPlatformId) {
@@ -335,8 +339,6 @@ function loadWithdrawName() {
   })
 }
 
-function filterWithdrawName() {}
-
 async function loadSiteWithdrawPlatform(siteId) {
   const { data: ret } = await getSiteWithdrawPlatform(siteId);
   list.filteredwithdrawPlatform = ret;
@@ -348,14 +350,12 @@ async function loadSiteWithdrawPlatform(siteId) {
       }
     })
   })
-  console.log('list.filteredwithdrawPlatform', list.filteredwithdrawPlatform)
 }
 
 async function loadWithdrawPlatform() {
   const { data: ret } = await getWithdrawPlatforms();
   list.withdrawPlatform = ret.records
   loadWithdrawName()
-  filterWithdrawName()
 }
 
 function filterPayTypeByCurrency() {
@@ -375,6 +375,13 @@ function payTypeByCurrencyID (record) {
     const currencyIdsList = record.currencyIds.split(',')
     return currencyIdsList.filter(currencyId => list.siteCurrencyIds.includes(parseInt(currencyId))).length > 0
   }
+}
+
+function changeStatus(data, status) {
+  console.log(data)
+  data.siteId = request.siteId
+  data.status = status
+  updateystemAutoPaymentType(data)
 }
 
 function showEdit(data) {
@@ -404,18 +411,7 @@ function showDialog(type) {
 
 function showPlatfromDialog(type, data) {
   loadWithdrawName()
-  console.log('showPlatfromDialog', data)
   list.withdrawPlatformByPayType = []
-
-  // list.withdrawPlatform.forEach(platform => {
-  //   if (platform.type === data.paymentTypeCode) {
-  //     list.filteredwithdrawPlatform.forEach(item => {
-  //       if (item.withdrawPlatformId === platform.id) {
-  //         list.withdrawPlatformByPayType.push(platform)
-  //       }
-  //     })
-  //   }
-  // })
   list.filteredwithdrawPlatform.forEach(item => {
     if (item.type === data.paymentTypeCode) {
       list.withdrawPlatformByPayType.push(item)
@@ -458,7 +454,7 @@ function createPlatform() {
       form.siteId = request.siteId
       form.id = null
       await createSystemAutoPaymentPlaltform(form)
-      uiControl.dialogVisible = false
+      uiControl.platformDialogVisible = false
       await loadAutoPaymentType()
       ElMessage({ message: t('message.addSuccess'), type: 'success' })
     }
@@ -477,10 +473,6 @@ function edit() {
   })
 }
 
-function editPlatform() {
-
-}
-
 function submit() {
   if (uiControl.dialogType === 'CREATE') {
     create()
@@ -492,8 +484,6 @@ function submit() {
 function submitPlatform(type) {
   if (uiControl.platformDialogType === 'CREATE') {
     createPlatform()
-  } else if (uiControl.platformDialogType === 'EDIT') {
-    editPlatform()
   }
 }
 
