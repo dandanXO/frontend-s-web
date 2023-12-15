@@ -259,7 +259,8 @@
                   <template
                     v-if="
                       scope.row.status === 'SUCCESS' &&
-                      (scope.row.currencyName === 'CNY' || scope.row.currencyName === 'AliCNY') &&
+                      (scope.row.currencyName === 'CNY' ||
+                        scope.row.currencyName === 'AliCNY') &&
                       scope.row.confirmStatus === 0
                     "
                   >
@@ -335,7 +336,6 @@
                     <span>{{ scope.row.recordTime }}</span>
                   </div>
                 </template>
-
 
                 <template v-if="tbl.dataIndex === 'platform'" #default="scope">
                   <div style="display: flex; align-items: center">
@@ -438,7 +438,10 @@
           </div>
         </el-tab-pane>
         <el-tab-pane name="gameBetRecord" label="投注记录">
-          <div v-if="searchForm.gameBetRecord.platform.length === 0" class="payout-total">
+          <div
+            v-if="searchForm.gameBetRecord.platform.length === 0"
+            class="payout-total"
+          >
             <div>总投注: {{ totalBetRecord.totalBet }}</div>
             <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
           </div>
@@ -1113,7 +1116,7 @@ export default defineComponent({
       // recordActive.value = key.props.name
       loading.value = true;
       if (recordActive.value === 'gameBetRecord') {
-        getPlatList(recordActive.value);
+        getPlatList();
       } else if (recordActive.value === 'reminderRecord') {
         financeFeedbackList(searchForm[recordActive.value]).then((response) => {
           if (response.code === 0) {
@@ -1184,20 +1187,6 @@ export default defineComponent({
         if (v in searchForm) {
           searchForm[v].startDate = chgDate(7);
           searchForm[v].endDate = chgDate(0);
-          if (v === 'gameBetRecord') {
-            const startMonth = new Date(searchForm[v].startDate).getMonth()
-            const endMonth = new Date(searchForm[v].endDate).getMonth()
-            if (startMonth !== endMonth) {
-              // Invalid date range, adjust the end date to the last day of the month
-              const firstDayOfMonth = 1;
-              // Convert the end date to a Date object
-              const startDateObject = new Date(searchForm[v].startDate);
-              // Set the day of the month to the last day of the month
-              startDateObject.setDate(firstDayOfMonth);
-              // Update searchForm[v].endDate with the adjusted Date object
-              searchForm[v].startDate = formatDate(startDateObject);
-            }
-          }
         }
       });
       searchRecord();
@@ -1206,36 +1195,8 @@ export default defineComponent({
     onMounted(() => {
       getTime();
     });
-    
-    function formatDate(date) {
-      const originalDate = new Date(date);
-
-      // Extract components
-      const year = originalDate.getFullYear();
-      const month = (originalDate.getMonth() + 2).toString().padStart(2, '0');
-      const day = originalDate.getDate().toString().padStart(2, '0');
-
-      // Format as 'YYYY-MM-DD'
-      const formattedDate = `${year}-${month}-${day}`;
-
-      return formattedDate
-    }
     const platformsList = ref([])
-    const getPlatList = (v) => {
-    const startMonth = new Date(searchForm[v].startDate).getMonth()
-      const endMonth = new Date(searchForm[v].endDate).getMonth()
-      if (startMonth !== endMonth) {
-        // // Invalid date range, adjust the end date to the last day of the month
-        // const currentDate = new Date(searchForm[v].startDate);
-        // const lastDayOfMonth = getLastDayOfMonth(currentDate);
-        // // Convert the end date to a Date object
-        // const endDateObject = new Date(searchForm[v].endDate);
-        // // Set the day of the month to the last day of the month
-        // endDateObject.setDate(lastDayOfMonth);
-        // // Update searchForm[v].endDate with the adjusted Date object
-        // searchForm[v].endDate = formatDate(endDateObject);
-        ElMessage.error('开始与结束月份必须一致');
-      }
+    const getPlatList = () => {
       getPlatformList().then((ret) => {
         platformsList.value = ret
       })
