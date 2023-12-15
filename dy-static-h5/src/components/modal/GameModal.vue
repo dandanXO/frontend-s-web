@@ -280,93 +280,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
       $q.loading.show({ message: "加载中..." });
 
-      // alert("HUawei check:" + isHuaweiPhone())
-
-      // if (store.isMobileSafari()) {
-      //   // alert(gameName + "-" + gameCode + "-" + gameType + "-" + platformCode);
-      //
-      //   if (gameName === 'SGWin' || (gameName === 'BBIN' && gameCode === 'bbkeno_lobby_app') || gameName === 'IM' ||
-      //       (platformCode === 'AG' && gameCode != undefined) || (platformCode === 'PTDY')) {
-      //     const newWin = window.open(`/loading`, `_blank`);
-      //     if (platformCode === 'platformType') {
-      //       api
-      //           .get(`/session/launch?_time=${new Date().getTime()}`, {
-      //             params: {
-      //               platform: gameCode,
-      //               isMobile: Platform.is.mobile ? true : false,
-      //               way: way
-      //             }
-      //           })
-      //           .then((response) => {
-      //             $q.loading.hide();
-      //             // src.value = response.data;
-      //             // visible.value = true;
-      //             newWin.location.href = response.data;
-      //           });
-      //       return;
-      //     }
-      //
-      //     api
-      //         .get(`/session/launch?_time=${new Date().getTime()}`, {
-      //           params: {
-      //             platform: platformCode,
-      //             gameCode: gameCode,
-      //             isMobile: Platform.is.mobile ? true : false,
-      //             way: way
-      //           }
-      //         })
-      //         .then((response) => {
-      //           $q.loading.hide();
-      //           // src.value = response.data;
-      //           // visible.value = true;
-      //           newWin.location.href = response.data;
-      //         });
-      //     return;
-      //
-      //   } else {
-      //
-      //     if (platformCode === 'platformType') {
-      //       api
-      //           .get(`/session/launch?_time=${new Date().getTime()}`, {
-      //             params: {
-      //               platform: gameCode,
-      //               isMobile: Platform.is.mobile ? true : false,
-      //               way: way
-      //             }
-      //           })
-      //           .then((response) => {
-      //             $q.loading.hide();
-      //             src.value = response.data;
-      //             visible.value = true;
-      //             // newWin.location.href = response.data;
-      //           });
-      //       return;
-      //     }
-      //
-      //     api
-      //         .get(`/session/launch?_time=${new Date().getTime()}`, {
-      //           params: {
-      //             platform: platformCode,
-      //             gameCode: gameCode,
-      //             isMobile: Platform.is.mobile ? true : false,
-      //             way: way
-      //           }
-      //         })
-      //         .then((response) => {
-      //           $q.loading.hide();
-      //           src.value = response.data;
-      //           visible.value = true;
-      //           // newWin.location.href = response.data;
-      //         });
-      //     return;
-      //
-      //   }
-      //
-      // }
-
-      // if ((platformCode === 'PTDY'))
-
-      // debugger;
       if (way !== "H5") {
         //Change to open at same page.
         showHeader.value = false;
@@ -413,10 +326,15 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           .then((response) => {
             $q.loading.hide();
 
+            let srcData = response.data;
+            if (platformCode === "PG") {
+              srcData = srcData.replaceAll(/\\\"/g, '"').replaceAll(/\n/g, "");
+            }
+
             if (way == "ANDROID") {
-              var ref = cordova.InAppBrowser.open(response.data, "_blank", "location=no,zoom=no");
+              var ref = cordova.InAppBrowser.open(srcData, "_blank", "location=no,zoom=no");
             } else {
-              window.location.href = response.data;
+              window.location.href = srcData;
             }
 
             // src.value = response.data;
@@ -462,6 +380,10 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
             if (platformCode === "MGP" || platformCode === "PT") {
               window.open(response.data, "_blank");
+            } else if (platformCode === "PG") {
+              let srcData = response.data;
+              srcData = srcData.replaceAll(/\\\"/g, '"').replaceAll(/\n/g, "");
+              window.location.href = srcData;
             } else {
               // newWin.location.href = response.data;
               window.location.href = response.data;
@@ -477,88 +399,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             });
           });
       }
-      // else if (isHuaweiPhone()) {
-      //   // alert("1");
-      //   if (platformCode === 'platformType') {
-      //     api
-      //         .get(`/session/launch?_time=${new Date().getTime()}`, {
-      //           params: {
-      //             platform: gameCode,
-      //             isMobile: Platform.is.mobile ? true : false,
-      //             way: way
-      //           }
-      //         })
-      //         .then((response) => {
-      //           $q.loading.hide();
-      //           src.value = response.data;
-      //           visible.value = true;
-      //           // window.open(response.data, `_blank`);
-      //         });
-      //     return
-      //   }
-      //   api
-      //       .get(`/session/launch?_time=${new Date().getTime()}`, {
-      //         params: {
-      //           platform: platformCode,
-      //           gameCode: gameCode,
-      //           isMobile: Platform.is.mobile ? true : false,
-      //           way: way
-      //         }
-      //       })
-      //       .then((response) => {
-      //         $q.loading.hide();
-      //         src.value = response.data;
-      //         visible.value = true;
-      //         // window.open(response.data, `_blank`);
-      //       }).catch((err) => {
-      //     $q.loading.hide();
-      //     $q.notify({
-      //       color: "negative",
-      //       position: "top",
-      //       message: err.message,
-      //       icon: "report_problem"
-      //     });
-      //   });
-      // } else {
-      //   if (platformCode === 'platformType') {
-      //     api
-      //         .get(`/session/launch?_time=${new Date().getTime()}`, {
-      //           params: {
-      //             platform: gameCode,
-      //             isMobile: Platform.is.mobile ? true : false,
-      //             way: way
-      //           }
-      //         })
-      //         .then((response) => {
-      //           $q.loading.hide();
-      //           src.value = response.data;
-      //           visible.value = true;
-      //         });
-      //     return
-      //   }
-      //   api
-      //       .get(`/session/launch?_time=${new Date().getTime()}`, {
-      //         params: {
-      //           platform: platformCode,
-      //           gameCode: gameCode,
-      //           isMobile: Platform.is.mobile ? true : false,
-      //           way: way
-      //         }
-      //       })
-      //       .then((response) => {
-      //         $q.loading.hide();
-      //         src.value = response.data;
-      //         visible.value = true;
-      //       }).catch((err) => {
-      //     $q.loading.hide();
-      //     $q.notify({
-      //       color: "negative",
-      //       position: "top",
-      //       message: err.message,
-      //       icon: "report_problem"
-      //     });
-      //   });
-      // }
     } else {
       router.push({ path: "/login", query: { redirect: route.path } });
     }
