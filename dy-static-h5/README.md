@@ -43,12 +43,12 @@ quasar build
 ```bash
 quasar build -m capacitor -T android
 cd src-capacitor
-npx cap sync 
+npx cap sync
 npx cap update android
 
 
 npx cap open android     (OR)
-npx cap run android -l   
+npx cap run android
 ```
 
 
@@ -63,13 +63,13 @@ See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-webpack/quas
 -- src-capacitor\android\capacitor-cordova-android-plugins\src\main\java\org\apache\cordova\inappbrowser\InAppBrowser.java
 
 ```bash
-super.onReceivedSslError(view, handler, error); 
- 
+super.onReceivedSslError(view, handler, error);
+
  ##, below add:
 
 handler.proceed();
 return;
-           
-## AND THEN COMMENT all try{}catch{}handle.cancel() codes below.           
-           
+
+## AND THEN COMMENT all try{}catch{}handle.cancel() codes below.
+
 ```
