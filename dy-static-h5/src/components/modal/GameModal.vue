@@ -35,74 +35,30 @@
           <q-spinner-hourglass color="blue-6" size="8em" />
         </div>
 
-        <iframe
-          @load="loadGame()"
-          v-show="!logoShow"
-          :src="src"
-          id="game-iframe"
-          scrolling="auto"
-          frameborder="0"
-          class="game-iframe"
-          :class="showHeader ? 'game-header-iframe' : ''"
-        ></iframe>
-        <!--        <q-drawer-->
-        <!--            v-model="drawerVisible"-->
-        <!--            :breakpoint="500"-->
-        <!--            overlay-->
-        <!--            bordered-->
-        <!--            class="bg-white"-->
-        <!--            side="right"-->
-        <!--        >-->
-        <!--          <div class="q-pa-sm q-pt-sm">-->
-        <!--            <div>-->
-        <!--              &lt;!&ndash; Uncomment for quick Transfer &ndash;&gt;-->
-        <!--              &lt;!&ndash; <q-btn-group push>-->
-        <!--                <q-btn-->
-        <!--                  size="sm"-->
-        <!--                  :color="quickTransferTab ? 'white' : 'primary'"-->
-        <!--                  glossy-->
-        <!--                  :text-color="quickTransferTab ? 'black' : 'white'"-->
-        <!--                  push-->
-        <!--                  label="Quick Transfer"-->
-        <!--                  icon="multiple_stop"-->
-        <!--                  @click="quickTransferTab = true"-->
-        <!--                />-->
-
-        <!--                <q-btn-->
-        <!--                  size="sm"-->
-        <!--                  :color="!quickTransferTab ? 'white' : 'primary'"-->
-        <!--                  glossy-->
-        <!--                  :text-color="!quickTransferTab ? 'black' : 'white'"-->
-        <!--                  push-->
-        <!--                  label="Bank Transfer"-->
-        <!--                  icon="account_balance"-->
-        <!--                  @click="quickTransferTab = false"-->
-        <!--                />-->
-        <!--              </q-btn-group> &ndash;&gt;-->
-
-        <!--              &lt;!&ndash; <template v-if="quickTransferTab">-->
-        <!--                <div class="numbers">-->
-        <!--                  <div class="instruction">Transfer amount to platform</div>-->
-
-        <!--                  <q-btn-->
-        <!--                    class="full-width"-->
-        <!--                    push-->
-        <!--                    glossy-->
-        <!--                    color="brand"-->
-        <!--                    v-for="(val, valIndex) in values"-->
-        <!--                    :key="valIndex"-->
-        <!--                    @click="submitTransfer(val)"-->
-        <!--                  >-->
-        <!--                    {{ val }}-->
-        <!--                  </q-btn>-->
-        <!--                </div>-->
-        <!--              </template> &ndash;&gt;-->
-        <!--              <template v-if="!quickTransferTab">-->
-        <!--                <DepositComponent/>-->
-        <!--              </template>-->
-        <!--            </div>-->
-        <!--          </div>-->
-        <!--        </q-drawer>-->
+        <template v-if="transferInfo.platform === 'PG'">
+          <iframe
+            @load="loadGame()"
+            v-show="!logoShow"
+            v-bind:srcdoc="src"
+            id="game-iframe"
+            scrolling="auto"
+            frameborder="0"
+            class="game-iframe"
+            :class="showHeader ? 'game-header-iframe' : ''"
+          ></iframe>
+        </template>
+        <template v-else>
+          <iframe
+            @load="loadGame()"
+            v-show="!logoShow"
+            :src="src"
+            id="game-iframe"
+            scrolling="auto"
+            frameborder="0"
+            class="game-iframe"
+            :class="showHeader ? 'game-header-iframe' : ''"
+          ></iframe>
+        </template>
       </q-toolbar>
     </q-dialog>
     <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">
@@ -247,7 +203,7 @@ const closeDialog = () => {
   // router.replace({query})
 };
 const open = (gameName, platformCode, gameCode, gameType) => {
-  // router.push({query: {...route.query, inGame: true}});
+  transferInfo.value.platform = platformCode;
 
   localStorage.removeItem("isOpenFromAccount");
   localStorage.removeItem("isBacked");
@@ -280,93 +236,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
       $q.loading.show({ message: "加载中..." });
 
-      // alert("HUawei check:" + isHuaweiPhone())
-
-      // if (store.isMobileSafari()) {
-      //   // alert(gameName + "-" + gameCode + "-" + gameType + "-" + platformCode);
-      //
-      //   if (gameName === 'SGWin' || (gameName === 'BBIN' && gameCode === 'bbkeno_lobby_app') || gameName === 'IM' ||
-      //       (platformCode === 'AG' && gameCode != undefined) || (platformCode === 'PTDY')) {
-      //     const newWin = window.open(`/loading`, `_blank`);
-      //     if (platformCode === 'platformType') {
-      //       api
-      //           .get(`/session/launch?_time=${new Date().getTime()}`, {
-      //             params: {
-      //               platform: gameCode,
-      //               isMobile: Platform.is.mobile ? true : false,
-      //               way: way
-      //             }
-      //           })
-      //           .then((response) => {
-      //             $q.loading.hide();
-      //             // src.value = response.data;
-      //             // visible.value = true;
-      //             newWin.location.href = response.data;
-      //           });
-      //       return;
-      //     }
-      //
-      //     api
-      //         .get(`/session/launch?_time=${new Date().getTime()}`, {
-      //           params: {
-      //             platform: platformCode,
-      //             gameCode: gameCode,
-      //             isMobile: Platform.is.mobile ? true : false,
-      //             way: way
-      //           }
-      //         })
-      //         .then((response) => {
-      //           $q.loading.hide();
-      //           // src.value = response.data;
-      //           // visible.value = true;
-      //           newWin.location.href = response.data;
-      //         });
-      //     return;
-      //
-      //   } else {
-      //
-      //     if (platformCode === 'platformType') {
-      //       api
-      //           .get(`/session/launch?_time=${new Date().getTime()}`, {
-      //             params: {
-      //               platform: gameCode,
-      //               isMobile: Platform.is.mobile ? true : false,
-      //               way: way
-      //             }
-      //           })
-      //           .then((response) => {
-      //             $q.loading.hide();
-      //             src.value = response.data;
-      //             visible.value = true;
-      //             // newWin.location.href = response.data;
-      //           });
-      //       return;
-      //     }
-      //
-      //     api
-      //         .get(`/session/launch?_time=${new Date().getTime()}`, {
-      //           params: {
-      //             platform: platformCode,
-      //             gameCode: gameCode,
-      //             isMobile: Platform.is.mobile ? true : false,
-      //             way: way
-      //           }
-      //         })
-      //         .then((response) => {
-      //           $q.loading.hide();
-      //           src.value = response.data;
-      //           visible.value = true;
-      //           // newWin.location.href = response.data;
-      //         });
-      //     return;
-      //
-      //   }
-      //
-      // }
-
-      // if ((platformCode === 'PTDY'))
-
-      // debugger;
       if (way !== "H5") {
         //Change to open at same page.
         showHeader.value = false;
@@ -387,8 +256,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               } else {
                 window.location.href = response.data;
               }
-              // src.value = response.data;
-              // visible.value = true;
             })
             .catch((err) => {
               $q.loading.hide();
@@ -413,10 +280,16 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           .then((response) => {
             $q.loading.hide();
 
+            let srcData = response.data;
+            if (platformCode === "PG") {
+              srcData = srcData.replaceAll(/\\\"/g, '"').replaceAll(/\n/g, "");
+              logoShow.value = false;
+            }
+
             if (way == "ANDROID") {
-              var ref = cordova.InAppBrowser.open(response.data, "_blank", "location=no,zoom=no");
+              var ref = cordova.InAppBrowser.open(srcData, "_blank", "location=no,zoom=no");
             } else {
-              window.location.href = response.data;
+              window.location.href = srcData;
             }
 
             // src.value = response.data;
@@ -462,6 +335,12 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
             if (platformCode === "MGP" || platformCode === "PT") {
               window.open(response.data, "_blank");
+            } else if (platformCode === "PG") {
+              let srcData = response.data;
+              srcData = srcData.replaceAll(/\\\"/g, '"').replaceAll(/\n/g, "");
+
+              src.value = srcData;
+              visible.value = true;
             } else {
               // newWin.location.href = response.data;
               window.location.href = response.data;
@@ -477,88 +356,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             });
           });
       }
-      // else if (isHuaweiPhone()) {
-      //   // alert("1");
-      //   if (platformCode === 'platformType') {
-      //     api
-      //         .get(`/session/launch?_time=${new Date().getTime()}`, {
-      //           params: {
-      //             platform: gameCode,
-      //             isMobile: Platform.is.mobile ? true : false,
-      //             way: way
-      //           }
-      //         })
-      //         .then((response) => {
-      //           $q.loading.hide();
-      //           src.value = response.data;
-      //           visible.value = true;
-      //           // window.open(response.data, `_blank`);
-      //         });
-      //     return
-      //   }
-      //   api
-      //       .get(`/session/launch?_time=${new Date().getTime()}`, {
-      //         params: {
-      //           platform: platformCode,
-      //           gameCode: gameCode,
-      //           isMobile: Platform.is.mobile ? true : false,
-      //           way: way
-      //         }
-      //       })
-      //       .then((response) => {
-      //         $q.loading.hide();
-      //         src.value = response.data;
-      //         visible.value = true;
-      //         // window.open(response.data, `_blank`);
-      //       }).catch((err) => {
-      //     $q.loading.hide();
-      //     $q.notify({
-      //       color: "negative",
-      //       position: "top",
-      //       message: err.message,
-      //       icon: "report_problem"
-      //     });
-      //   });
-      // } else {
-      //   if (platformCode === 'platformType') {
-      //     api
-      //         .get(`/session/launch?_time=${new Date().getTime()}`, {
-      //           params: {
-      //             platform: gameCode,
-      //             isMobile: Platform.is.mobile ? true : false,
-      //             way: way
-      //           }
-      //         })
-      //         .then((response) => {
-      //           $q.loading.hide();
-      //           src.value = response.data;
-      //           visible.value = true;
-      //         });
-      //     return
-      //   }
-      //   api
-      //       .get(`/session/launch?_time=${new Date().getTime()}`, {
-      //         params: {
-      //           platform: platformCode,
-      //           gameCode: gameCode,
-      //           isMobile: Platform.is.mobile ? true : false,
-      //           way: way
-      //         }
-      //       })
-      //       .then((response) => {
-      //         $q.loading.hide();
-      //         src.value = response.data;
-      //         visible.value = true;
-      //       }).catch((err) => {
-      //     $q.loading.hide();
-      //     $q.notify({
-      //       color: "negative",
-      //       position: "top",
-      //       message: err.message,
-      //       icon: "report_problem"
-      //     });
-      //   });
-      // }
     } else {
       router.push({ path: "/login", query: { redirect: route.path } });
     }

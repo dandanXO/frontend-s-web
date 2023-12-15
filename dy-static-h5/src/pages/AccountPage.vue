@@ -262,7 +262,7 @@
       </div>
     </q-item-section>
 
-    <q-card class="card-account-banner">
+    <q-card class="card-account-banner" v-if="btm_banners.length > 0">
       <q-card-section>
         <q-carousel
           class="account"

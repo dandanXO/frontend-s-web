@@ -31,18 +31,26 @@ export default defineComponent({
 
     var endDate = moment().format("YYYY-MM-DD");
     var startDate = moment().add(-7, "days").format("YYYY-MM-DD");
+    var current = ref(1);
+    var maxPage = ref(0);
+    var pagingState= ref("");
 
     const loadNewData = () => {
-      startDate = moment(startDate).add(-7, "days").format("YYYY-MM-DD");
-      console.log(startDate);
+      if(maxPage.value > current.value){
+        current.value++;
+      }else {
+        current.value = 1;
+        endDate = moment(startDate).add(-1, "days").format("YYYY-MM-DD");
+        console.log(endDate);
 
-      endDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
-      console.log(endDate);
+        startDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
+        console.log(startDate);
 
-      if (startDate <= moment().add(-30, "days").format("YYYY-MM-DD")) {
-        console.log("mor than 3 months");
-        isEnded.value = true;
-        return;
+        if (endDate <= moment().add(-29, "days").format("YYYY-MM-DD")) {
+          console.log("mor than 3 months");
+          isEnded.value = true;
+          return;
+        }
       }
       loadDepositTable(false);
     };
@@ -54,9 +62,11 @@ export default defineComponent({
 
       let paramData = {
         "startDate": startDate,
-        "endDate": endDate
+        "endDate": endDate,
+        "size": 10,
+        "current": current.value
       };
-      var apiKey = apiUrl + "_" + startDate + "_" + endDate;
+      var apiKey = apiUrl + "_" + startDate + "_" + endDate + "_" + current.value;
       console.log(apiKey);
 
       cached.get(apiKey, () => api.get(apiUrl, {
@@ -65,6 +75,10 @@ export default defineComponent({
         { expired_value: 30 }
       ).then((res) => {
         console.log(res);
+
+
+        maxPage.value = res.pages;
+
 
         if (isNew) {
           visible.value = false;
@@ -103,6 +117,7 @@ export default defineComponent({
       }
     ]);
     onMounted(() => {
+      current.value = 1;
       loadDepositTable();
     });
 

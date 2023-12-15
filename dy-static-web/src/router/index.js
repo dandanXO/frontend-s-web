@@ -120,6 +120,11 @@ const routes = [
         name: "agentCode",
         component: () => {}
       }
+      // {
+      //   path: "/test",
+      //   name: "test",
+      //   component: () => import(/* webpackChunkName: "depositLoading" */ "../components/TestIframe.vue")
+      // },
     ]
   }
   // {
