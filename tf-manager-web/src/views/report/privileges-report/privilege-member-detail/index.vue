@@ -38,6 +38,12 @@
         fixed
       />
       <el-table-column
+        prop="memberName"
+        :label="t('fields.realName')"
+        width="120"
+        fixed
+      />
+      <el-table-column
         prop="totalBonus"
         :label="t('fields.totalBonus')"
         width="120"
