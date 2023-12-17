@@ -38,7 +38,7 @@
         fixed
       />
       <el-table-column
-        prop="memberName"
+        prop="realName"
         :label="t('fields.realName')"
         width="120"
         fixed
