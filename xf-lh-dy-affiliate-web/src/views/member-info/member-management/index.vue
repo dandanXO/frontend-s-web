@@ -229,6 +229,16 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="netProfit"
+          :label="t('fields.netProfit')"
+          align="center"
+        >
+          <template #default="scope">
+            $
+            <span v-formatter="{data: scope.row.netProfit, type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="regTime"
           :label="t('fields.registerTime')"
           align="center"
