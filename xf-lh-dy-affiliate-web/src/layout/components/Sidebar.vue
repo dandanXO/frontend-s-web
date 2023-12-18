@@ -47,179 +47,17 @@ import { onMounted, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { ArrowLeftBold, ArrowRightBold, ArrowUpBold, ArrowDownBold, Expand, Fold } from '@element-plus/icons-vue'
+import { i18nStore } from "@/store/language";
+import { storeToRefs } from "pinia";
 
 const { t } = useI18n()
 const route = useRoute()
-const navigationData = ref([
-  {
-    title: t('menu.Dashboard'),
-    display: false,
-    path: '',
-    children: [
-      {
-        path: '/dashboard',
-        title: t('menu.Dashboard'),
-        active: false,
-        isMainNav: true,
-        icon: 'home',
-      },
-    ],
-  },
-  {
-    title: '下级信息',
-    display: true,
-    path: '/downline',
-    children: [
-      {
-        path: '/member',
-        title: '会员管理',
-        active: false,
-        isMainNav: true,
-        icon: 'squares',
-      },
-      {
-        path: '/affiliate',
-        title: '代理管理',
-        active: false,
-        isMainNav: true,
-        icon: 'squares',
-      },
-      {
-        path: '/game-record',
-        title: '游戏记录',
-        active: false,
-        isMainNav: true,
-        icon: 'clock',
-      },
-    ],
-  },
-  {
-    title: '财务中心',
-    display: true,
-    path: '/affiliate',
-    children: [
-      {
-        path: '/bank-card',
-        title: '绑定银行卡',
-        active: false,
-        isMainNav: true,
-        icon: 'money-bag',
-      },
-      {
-        path: '/withdraw-request',
-        title: '提款申请',
-        active: false,
-        isMainNav: true,
-        icon: 'form-w-pencil',
-      },
-      {
-        path: '/transfer',
-        title: '代理代存',
-        active: false,
-        isMainNav: true,
-        icon: 'users',
-      },
-      {
-        path: '/deposit',
-        title: '额度充值',
-        active: false,
-        isMainNav: true,
-        icon: 'wallet',
-      },
-      {
-        path: '/finance',
-        title: '财务报表',
-        active: false,
-        isMainNav: true,
-        icon: 'report',
-      },
-      {
-        path: '/settlement',
-        title: '佣金报表',
-        active: false,
-        isMainNav: true,
-        icon: 'money',
-      },
-      {
-        path: '/credit-flow',
-        title: '账变明细',
-        active: false,
-        isMainNav: true,
-        icon: 'ledger',
-      },
-    ],
-  },
-  {
-    title: '推广中心',
-    display: true,
-    path: '/promotion',
-    children: [
-      {
-        path: '/referral-link',
-        title: '推广链接',
-        active: false,
-        isMainNav: true,
-        icon: 'link',
-      },
-      {
-        path: '/referral-material',
-        title: '推广素材',
-        active: false,
-        isMainNav: true,
-        icon: 'photo',
-      },
-      {
-        path: '/channel-pack',
-        title: '渠道打包',
-        active: false,
-        isMainNav: true,
-        icon: 'folder',
-      },
-    ],
-  },
-  {
-    title: '个人中心',
-    display: true,
-    path: '/personal',
-    children: [
-      // {
-      //   path: '/vip',
-      //   title: 'VIP专享',
-      //   active: false,
-      //   icon: 'link',
-      // },
-      // {
-      //   path: '/overflow',
-      //   title: '溢出申请',
-      //   active: false,
-      //   icon: 'form',
-      // },
-      {
-        path: '/announcement',
-        title: '系统通告',
-        active: false,
-        isMainNav: true,
-        icon: 'speaker',
-      },
-      {
-        path: '/commission-info',
-        title: '佣金说明',
-        active: false,
-        isMainNav: true,
-        icon: 'money-bag',
-      },
-      {
-        path: '/contact-us',
-        title: '联系我们',
-        active: false,
-        isMainNav: true,
-        icon: 'speech-bubbles',
-      },
-    ],
-  },
-])
+const navigationData = ref([])
 const mainNavigationData = ['首页', '代理代存', "佣金报表", "佣金说明", "推广链接", "联系我们"];
-const isExpanded = ref(true)
+const isExpanded = ref(true);
+
+const i18nStoreLanguage = i18nStore();
+const { languageVal } = storeToRefs(i18nStoreLanguage);
 
 const setActiveNav = () => {
   const currentPath = route.path.substring(route.path.lastIndexOf('/'))
@@ -293,6 +131,176 @@ const checkMenu = (nav) => {
     child.isMenuShow = !child.isMenuShow
   });
 }
+const getNavigationData = () => {
+  navigationData.value = [
+    {
+      title: t('menu.Dashboard'),
+      display: false,
+      path: '',
+      children: [
+        {
+          path: '/dashboard',
+          title: t('menu.Dashboard'),
+          active: false,
+          isMainNav: true,
+          icon: 'home',
+        },
+      ],
+    },
+    {
+      title: t('menu.Downline Info'),
+      display: true,
+      path: '/downline',
+      children: [
+        {
+          path: '/member',
+          title: '会员管理',
+          active: false,
+          isMainNav: true,
+          icon: 'squares',
+        },
+        {
+          path: '/affiliate',
+          title: '代理管理',
+          active: false,
+          isMainNav: true,
+          icon: 'squares',
+        },
+        {
+          path: '/game-record',
+          title: '游戏记录',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+      ],
+    },
+    {
+      title: '财务中心',
+      display: true,
+      path: '/affiliate',
+      children: [
+        {
+          path: '/bank-card',
+          title: '绑定银行卡',
+          active: false,
+          isMainNav: true,
+          icon: 'money-bag',
+        },
+        {
+          path: '/withdraw-request',
+          title: '提款申请',
+          active: false,
+          isMainNav: true,
+          icon: 'form-w-pencil',
+        },
+        {
+          path: '/transfer',
+          title: '代理代存',
+          active: false,
+          isMainNav: true,
+          icon: 'users',
+        },
+        {
+          path: '/deposit',
+          title: '额度充值',
+          active: false,
+          isMainNav: true,
+          icon: 'wallet',
+        },
+        {
+          path: '/finance',
+          title: '财务报表',
+          active: false,
+          isMainNav: true,
+          icon: 'report',
+        },
+        {
+          path: '/settlement',
+          title: '佣金报表',
+          active: false,
+          isMainNav: true,
+          icon: 'money',
+        },
+        {
+          path: '/credit-flow',
+          title: '账变明细',
+          active: false,
+          isMainNav: true,
+          icon: 'ledger',
+        },
+      ],
+    },
+    {
+      title: '推广中心',
+      display: true,
+      path: '/promotion',
+      children: [
+        {
+          path: '/referral-link',
+          title: '推广链接',
+          active: false,
+          isMainNav: true,
+          icon: 'link',
+        },
+        {
+          path: '/referral-material',
+          title: '推广素材',
+          active: false,
+          isMainNav: true,
+          icon: 'photo',
+        },
+        {
+          path: '/channel-pack',
+          title: '渠道打包',
+          active: false,
+          isMainNav: true,
+          icon: 'folder',
+        },
+      ],
+    },
+    {
+      title: '个人中心',
+      display: true,
+      path: '/personal',
+      children: [
+        // {
+        //   path: '/vip',
+        //   title: 'VIP专享',
+        //   active: false,
+        //   icon: 'link',
+        // },
+        // {
+        //   path: '/overflow',
+        //   title: '溢出申请',
+        //   active: false,
+        //   icon: 'form',
+        // },
+        {
+          path: '/announcement',
+          title: '系统通告',
+          active: false,
+          isMainNav: true,
+          icon: 'speaker',
+        },
+        {
+          path: '/commission-info',
+          title: '佣金说明',
+          active: false,
+          isMainNav: true,
+          icon: 'money-bag',
+        },
+        {
+          path: '/contact-us',
+          title: '联系我们',
+          active: false,
+          isMainNav: true,
+          icon: 'speech-bubbles',
+        },
+      ],
+    },
+  ];
+}
 onMounted(() => {
   watch(
     () => route.path,
@@ -303,6 +311,8 @@ onMounted(() => {
       }
     }
   )
+
+  getNavigationData();
   // watch(isExpanded, () => {
   //   if (mainNavigationData && navigationData.value) {
   //     mainNavigationData.forEach((item) => {
@@ -322,6 +332,11 @@ onMounted(() => {
   //     });
   //   }
   // })
+  setActiveNav()
+});
+
+watch(languageVal, (newVal) => {
+  getNavigationData();
   setActiveNav()
 })
 
