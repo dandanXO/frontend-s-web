@@ -443,6 +443,7 @@ defineExpose({
         background-position: center;
         height: 100%;
         background-repeat: no-repeat;
+        background-size: contain;
       }
 
       img {
