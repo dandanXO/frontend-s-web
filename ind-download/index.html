@@ -1445,7 +1445,7 @@
                                         <header class=" cswwxf">
                                             <div class="VMq4uf">
                                                 <div class="EaMWib">
-                                                    <h2 class="XfZNbf">What's new</h2>
+                                                    <h2 class="XfZNbf">What's new (1.0.1)</h2>
                                                 </div>
                                             </div>
                                         </header>
@@ -1584,7 +1584,8 @@
     }
 
     function downloadApk(code, pp, fbclid, fbpid) {
-        var url = "https://ind-download.psna-dev.com/ind-app-1.0.1.apk";
+        var date= Date.now();
+        var url = "https://ind-download.psna-dev.com/ind-app-1.0.1.apk?v=" + date;
         const link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
