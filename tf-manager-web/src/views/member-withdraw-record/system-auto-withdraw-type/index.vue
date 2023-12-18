@@ -28,6 +28,15 @@
         >
           {{ t('fields.add') }}
         </el-button>
+        <el-button
+          icon="el-icon-close"
+          size="mini"
+          type="danger"
+          v-permission="['sys:systemautowithdraw:update']"
+          @click="disableAll()"
+        >
+          {{ t('fields.disableAll') }}
+        </el-button>
       </div>
     </div>
     <el-dialog
@@ -137,7 +146,7 @@
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-          <el-button type="primary" @click="submitPlatform('CREATE')">{{ t('fields.confirm') }}</el-button>
+          <el-button type="primary" @click="submitPlatform()">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
     </el-dialog>
@@ -188,7 +197,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
+      <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
         <template #default="scope">
           <el-button
             icon="el-icon-edit"
@@ -196,14 +205,10 @@
             type="success"
             @click="showEdit(scope.row)"
           />
-        </template>
-      </el-table-column>
-      <el-table-column :label="t('fields.operate')" v-if="hasPermission(['sys:systemautowithdraw:add'])">
-        <template #default="scope">
           <el-button
             icon="el-icon-plus"
             size="mini"
-            type="success"
+            type="warning"
             @click="showPlatfromDialog('CREATE', scope.row)"
           />
         </template>
@@ -316,11 +321,11 @@ async function loadAutoPaymentType() {
 function loadWithdrawName() {
   list.withdrawPlatformByPayType = []
   list.filteredwithdrawPlatform.forEach(platform => {
-    list.withdrawPlatform.forEach(itemz => {
-      if (itemz.id === platform.withdrawPlatformId) {
-        platform.name = itemz.name
-        platform.id = itemz.id
-        platform.type = itemz.type
+    list.withdrawPlatform.forEach(item => {
+      if (item.id === platform.withdrawPlatformId) {
+        platform.name = item.name
+        platform.id = item.id
+        platform.type = item.type
         list.withdrawPlatformByPayType.push(platform)
       }
     })
@@ -329,27 +334,18 @@ function loadWithdrawName() {
   page.records.forEach(item => {
     if (item.systemAutoWithdrawPlatfromVO) {
       item.systemAutoWithdrawPlatfromVO.forEach(platfrom => {
-        list.withdrawPlatform.forEach(itemz => {
-          if (itemz.id === platfrom.withdrawPlatformId) {
-            platfrom.withdrawPlatformName = itemz.name
-          }
-        })
-      })
+        const matchingPlatform = list.withdrawPlatform.find(itemz => itemz.id === platfrom.withdrawPlatformId);
+        if (matchingPlatform) {
+          platfrom.withdrawPlatformName = matchingPlatform.name;
+        }
+      });
     }
-  })
+  });
 }
 
 async function loadSiteWithdrawPlatform(siteId) {
   const { data: ret } = await getSiteWithdrawPlatform(siteId);
   list.filteredwithdrawPlatform = ret;
-  list.filteredwithdrawPlatform.forEach(platform => {
-    list.withdrawPlatform.forEach(itemz => {
-      if (itemz.id === platform.withdrawPlatformId) {
-        platform.name = itemz.name
-        platform.id = itemz.id
-      }
-    })
-  })
 }
 
 async function loadWithdrawPlatform() {
@@ -368,6 +364,7 @@ function filterPayTypeByCurrency() {
     }).filter(Boolean)
   ]
   list.filteredPayTypes = list.payTypes.filter(payTypeByCurrencyID)
+  payTypeByExistingPayType()
 }
 
 function payTypeByCurrencyID (record) {
@@ -377,9 +374,20 @@ function payTypeByCurrencyID (record) {
   }
 }
 
+function payTypeByExistingPayType() {
+  list.filteredPayTypes = list.filteredPayTypes.filter(payType => {
+    return !page.records.some(record => record.paymentTypeCode === payType.code);
+  });
+}
+
+function disableAll() {
+  page.records.forEach(record => {
+    record.status = false
+    updateystemAutoPaymentType(record)
+  })
+}
+
 function changeStatus(data, status) {
-  console.log(data)
-  data.siteId = request.siteId
   data.status = status
   updateystemAutoPaymentType(data)
 }
@@ -420,6 +428,8 @@ function showPlatfromDialog(type, data) {
 
   if (type === 'CREATE') {
     if (platformForm.value) {
+      form.withdrawAmountMax = 0
+      form.withdrawAmountMin = 0
       platformForm.value.resetFields()
     }
     form.autoWithdrawTypeId = data.id
@@ -476,12 +486,13 @@ function edit() {
 function submit() {
   if (uiControl.dialogType === 'CREATE') {
     create()
+    payTypeByExistingPayType()
   } else if (uiControl.dialogType === 'EDIT') {
     edit()
   }
 }
 
-function submitPlatform(type) {
+function submitPlatform() {
   if (uiControl.platformDialogType === 'CREATE') {
     createPlatform()
   }

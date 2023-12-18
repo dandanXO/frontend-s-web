@@ -610,6 +610,7 @@ export default {
     dif: 'Deposit Difference',
     disable: 'Disable',
     disableAffiliate: 'Disable Affiliate',
+    disableAll: 'Disable All',
     disableType: 'Disable Type',
     distributeBy: 'Distribute By',
     distributePrivilege: 'Distribute Privilege',
