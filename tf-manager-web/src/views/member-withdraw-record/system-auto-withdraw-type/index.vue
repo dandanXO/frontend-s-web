@@ -115,7 +115,7 @@
         size="small"
         label-width="200px"
       >
-        <el-form-item :label="t('fields.payTypeName')" prop="withdrawPlatformId" required>
+        <el-form-item :label="t('fields.withdrawPlatform')" prop="withdrawPlatformId" required>
           <el-select
             filterable
             clearable
@@ -433,9 +433,9 @@ function showPlatfromDialog(type, data) {
       platformForm.value.resetFields()
     }
     form.autoWithdrawTypeId = data.id
-    uiControl.platformDialogTitle = t('fields.addPayType')
+    uiControl.platformDialogTitle = t('fields.addWithdrawPlatform')
   } else if (type === 'EDIT') {
-    uiControl.platformDialogTitle = t('fields.editPayType')
+    uiControl.platformDialogTitle = t('fields.editWithdrawPlatform')
   }
   uiControl.platformDialogType = type
   uiControl.platformDialogVisible = true

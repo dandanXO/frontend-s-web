@@ -975,6 +975,7 @@ export default {
     rebateLevel: '返水等级',
     rebatePercentage: '返水比例 %',
     maxRebate: '最大返水额',
+    maxBalance: '最高余额',
     rebateAmount: '返水金额',
     receiveTime: '领取时间',
     receiveType: '领取模式',
