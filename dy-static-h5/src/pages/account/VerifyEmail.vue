@@ -4,90 +4,81 @@
     <q-form ref="profileFormRef">
       <div class="flex items-center no-wrap">
         <q-input
-            standout
-            bg-color="white"
-            class="q-pb-xs"
-            hide-bottom-space
-            v-model="formDetail.email"
-            label="邮箱"
-            clearable
-            lazy-rules
-            :rules="[(val) => (val && val.length > 0) || '请输入邮箱']"
-            :readonly="showVerifyBtn ? false : true"
-            style="width: 100%"
-        />
-        <template v-if="showVerifyBtn">
-          <div class="q-ml-md">
-            <q-btn
-                size="md"
-                color="dyblue"
-                label="发送验证码"
-                @click="openVerificationDialog()"
-                style="white-space: nowrap"
-            />
-          </div>
-        </template>
-      </div>
-
-      <q-input
           standout
           bg-color="white"
           class="q-pb-xs"
           hide-bottom-space
-          ref="emailOtpRef"
-          v-model="formDetail.emailOtpRef"
-          type="tel"
-          label="邮箱验证码"
+          v-model="formDetail.email"
+          label="邮箱"
+          clearable
           lazy-rules
-          :rules="[
-          (val) =>
-            (val && val.length > 5 && val.length < 7) || '请输入邮箱验证码'
-        ]"
-          label-color=""
-          color=""
+          ref="emailRef"
+          :rules="[(val) => (val && val.length > 0) || '请输入邮箱', isValidEmail]"
+          :readonly="showVerifyBtn ? false : true"
           style="width: 100%"
+        />
+
+        <div class="q-ml-md">
+          <q-btn
+            size="md"
+            color="dyblue"
+            :label="showVerifyBtn && otpCountdownCount <= 0 ? `发送验证码` : `已发送（倒数${otpCountdownCount}秒)`"
+            @click="openVerificationDialog()"
+            style="white-space: nowrap"
+            :disable="!showVerifyBtn && otpCountdownCount > 0"
+          />
+        </div>
+      </div>
+
+      <q-input
+        standout
+        bg-color="white"
+        class="q-pb-xs"
+        hide-bottom-space
+        ref="emailOtpRef"
+        v-model="formDetail.emailOtpRef"
+        type="tel"
+        label="邮箱验证码"
+        lazy-rules
+        :rules="[(val) => (val && val.length > 5 && val.length < 7) || '请输入邮箱验证码']"
+        label-color=""
+        color=""
+        style="width: 100%"
       ></q-input>
 
       <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn
-            size="md"
-            color="dyblue"
-            @click="submitUpdateSecurity()"
-            label="验证邮箱"
-        />
+        <q-btn size="md" color="dyblue" @click="submitUpdateSecurity()" label="验证邮箱" />
       </div>
     </q-form>
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
     <q-card width="100%">
-      <q-card-section
-          style="padding: 10px 5px"
-          class="q-pa-md bg-dyblue text-white"
-      >
+      <q-card-section style="padding: 10px 5px" class="q-pa-md bg-dyblue text-white">
         <q-toolbar>
           <q-toolbar-title>验证码</q-toolbar-title>
-          <q-btn flat v-close-popup round dense icon="close"/>
+          <q-btn flat v-close-popup round dense icon="close" />
         </q-toolbar>
       </q-card-section>
       <div style="padding: 20px">
         <q-card-section class="q-mb-md q-pa-md">
           <q-input
-              :rules="[(val) => (val && val.length > 3 && val.length < 5) || '请输入验证码']"
-              v-model="innerCaptchaRef" label="验证码"
-              ref="refInnerCaptchaCode"
+            :rules="[(val) => (val && val.length > 3 && val.length < 5) || '请输入验证码']"
+            v-model="innerCaptchaRef"
+            label="验证码"
+            ref="refInnerCaptchaCode"
           >
             <template v-slot:append>
               <img
-                  :src="verificationImg"
-                  title="点击刷新验证码"
-                  style="margin-top: 6px; cursor: pointer"
-                  @click="getCode"
+                :src="verificationImg"
+                title="点击刷新验证码"
+                style="margin-top: 6px; cursor: pointer"
+                @click="getCode"
               />
             </template>
           </q-input>
         </q-card-section>
-        <q-btn @click="onCaptchaSubmit" label="发送验证码" color="dyblue"/>
+        <q-btn @click="onCaptchaSubmit" label="发送验证码" color="dyblue" />
       </div>
     </q-card>
   </q-dialog>
@@ -101,7 +92,7 @@
 </template>
 
 <script lang="js">
-import {defineComponent, reactive, ref, onMounted, computed} from "vue";
+import {defineComponent, reactive, ref, onMounted, computed, onUnmounted} from "vue";
 import moment from "moment";
 import {api} from "boot/axios";
 import {useRoute, useRouter} from "vue-router";
@@ -173,6 +164,25 @@ export default defineComponent({
           });
     };
     //update security
+    const isValidEmail = () => {
+      const emailPattern =
+        /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
+      return emailPattern.test(formDetail.email) || "请输入正确的邮箱";
+    };
+
+    const otpCountdownCount = ref(0);
+    let otpCountdownSchedule;
+    const countdownOtp = () => {
+      otpCountdownCount.value = 60;
+      otpCountdownSchedule = setInterval(() => {
+        if (otpCountdownCount.value <= 0) {
+          showVerifyBtn.value = true;
+          clearInterval(otpCountdownSchedule);
+          return;
+        }
+        otpCountdownCount.value--;
+      }, 1000);
+    };
 
     const isEmailSending = ref(false);
     const updateSecurityModalVisible = ref(false);
@@ -297,8 +307,12 @@ export default defineComponent({
     };
 
     const openVerificationDialog = () => {
-      getCode();
-      showCaptchaDialog.value = true;
+      emailRef.value.validate();
+      if(!emailRef.value.hasError){
+        getCode();
+        showCaptchaDialog.value = true;
+      }
+
     };
 
     const onCaptchaSubmit = () => {
@@ -337,7 +351,7 @@ export default defineComponent({
               showCaptchaDialog.value = false;
               showVerifyBtn.value = false;
               showVerificationTokenInput.value = true;
-
+              countdownOtp();
               emailCodeId.value = res.data.codeId;
             } else {
               color = "negative";
@@ -355,6 +369,10 @@ export default defineComponent({
         getCode();
       })
     };
+
+    onUnmounted(() => {
+      clearInterval(otpCountdownSchedule);
+    });
 
     return {
       router,
@@ -375,6 +393,7 @@ export default defineComponent({
       verificationModalVisible,
       openVerificationModal,
       isEmailSending,
+      otpCountdownCount,
       verificationImg,
       emailCodeId,
       verifyVerificationCode,
@@ -390,7 +409,7 @@ export default defineComponent({
       moment,
       canEdit,
       isValidName,
-
+      isValidEmail,
       showVerificationTokenInput,
       isValidPhone,
       captchaRef,
@@ -437,6 +456,6 @@ export default defineComponent({
 }
 
 .q-toolbar {
-  background: #0089ED;
+  background: #0089ed;
 }
 </style>
