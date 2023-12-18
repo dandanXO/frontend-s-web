@@ -1600,11 +1600,10 @@
 
     function downloadApk(code, pp, fbclid, fbpid) {
         var date= Date.now();
-        var url = "https://ind-download.camestible.com/ind-app-1.0.1.apk?v=" + date;
+        var url = "https://app.adjust.com/176rzvj9?campaign=${campaignname}%20%28${campaignid}%29&adgroup=${adsetname}%20%28${adsetid}%29&creative=${adname}%20%28${adid}%29&fbclid=${fbclid}&redirect=https://ind-download.camestible.com/ind-app-1.0.1.apk?v=" + date;
         const link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        //""
         link.download = "ind-app-1.0.1.apk"
         document.body.appendChild(link);
         link.click();
