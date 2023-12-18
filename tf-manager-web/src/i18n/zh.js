@@ -615,6 +615,7 @@ export default {
     dif: '存提差',
     disable: '禁用',
     disableAffiliate: '禁用代理',
+    disableAll: '禁用所有',
     disableType: '禁用类型',
     distributeBy: '派发者',
     distributePrivilege: '发放奖金',
