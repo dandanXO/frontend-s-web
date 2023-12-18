@@ -1565,6 +1565,17 @@
 </div>
 
 <script type="text/javascript">
+    const searchParams = new URLSearchParams(window.location.search);
+    const affidValue = searchParams.get('id');
+    const campaignname = searchParams.get('campaignname');
+    const campaignid = searchParams.get('campaignid');
+    const adsetid = searchParams.get('adsetid');
+    const adsetname = searchParams.get('adsetname');
+    const adname = searchParams.get('adname');
+    const adid = searchParams.get('adid');
+    const fbclid = searchParams.get('fbclid');
+    const fbpid = searchParams.get('fbpid');
+
     function getQueryVariable(variable) {
         var query = window.location.search.substring(1);
         var vars = query.split("&");
@@ -1584,9 +1595,6 @@
         pp[i] = pp[i].replace(/{|}/g, "")
     }
 
-    var fbclid = getQueryVariable("fbclid")
-    var fbpid = getQueryVariable("fbpid")
-
     function copyUrl(_sTxt) {
 
         const aux = document.createElement('input')
@@ -1598,9 +1606,9 @@
         document.body.removeChild(aux)
     }
 
-    function downloadApk(code, pp, fbclid, fbpid) {
+    function downloadApk(code, pp, fbvar, fbpid) {
         var date= Date.now();
-        var url = "https://app.adjust.com/176rzvj9?campaign=${campaignname}%20%28${campaignid}%29&adgroup=${adsetname}%20%28${adsetid}%29&creative=${adname}%20%28${adid}%29&fbclid=${fbclid}&redirect=https://ind-download.camestible.com/ind-app-1.0.1.apk?v=" + date;
+        var url = `https://app.adjust.com/176rzvj9?campaign=${campaignname}%20%28${campaignid}%29&adgroup=${adsetname}%20%28${adsetid}%29&creative=${adname}%20%28${adid}%29&fbclid=${fbclid}&redirect=https://ind-download.camestible.com/ind-app-1.0.1.apk?v=` + date;
         const link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
