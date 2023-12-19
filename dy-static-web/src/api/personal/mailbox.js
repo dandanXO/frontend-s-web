@@ -14,7 +14,7 @@ export function loadMailbox(type, pageNum, pageSize) {
 // if read or delete function is called, clear existing cache to retrieve lastest data
 export function clearMailInboxCache() {
   for (var key in sessionStorage) {
-    if(key.startsWith(SESSION_STORAGE_PREFIX_KEY)) {
+    if (key.startsWith(SESSION_STORAGE_PREFIX_KEY)) {
       sessionStorage.removeItem(key);
     }
   }
@@ -54,7 +54,7 @@ export function readMultipleMail(mailQuery) {
 
 export function readAllMail(mailQuery) {
   return server.REST.post("/session/inbox/readAll", {
-    type: mailQuery
+    type: mailQuery !== null ? mailQuery : undefined
   });
 }
 
@@ -72,7 +72,7 @@ export function deleteMultipleMail(mailQuery) {
 
 export function deleteAllMail(mailQuery) {
   return server.REST.post("/session/inbox/deleteAll", {
-    type: mailQuery
+    type: mailQuery !== null ? mailQuery : undefined
   });
 }
 

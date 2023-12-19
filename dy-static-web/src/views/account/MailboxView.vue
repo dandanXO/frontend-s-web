@@ -268,7 +268,7 @@ const openMsg = (m) => {
       const { code, data } = res;
 
       clearMailInboxCache();
-      loadPersonalMailbox();
+      // loadPersonalMailbox();
       // if (code === 0) m.content = data.content;
     })
     .catch((error) => {
