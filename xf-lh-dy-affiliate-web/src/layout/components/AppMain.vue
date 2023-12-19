@@ -225,7 +225,7 @@ elTables.forEach((elTable) => {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   .el-date-range-picker {
     &__content {
       float: none !important;
