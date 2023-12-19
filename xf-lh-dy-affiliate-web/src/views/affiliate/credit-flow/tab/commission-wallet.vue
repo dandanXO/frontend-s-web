@@ -55,70 +55,36 @@
     </div>
   </el-form>
 
-  <el-table
-    :data="page.records"
-    ref="table"
-    row-key="id"
-    size="normal"
-    highlight-current-row
-    v-loading="page.loading"
-    style="margin-top: 15px; margin-left: 15px;"
-  >
-    <template #empty>
-      <emptyComp />
-    </template>
-    <el-table-column
-      prop="id"
-      :label="t('fields.creditFlowId')"
-      align="center"
-      width="75"
-    />
-
-    <el-table-column
-      prop="date"
-      :label="t('fields.creditFlowDate')"
-      align="center"
-    >
-      <template #default="scope">
-        <span v-if="scope.row.date === null">-</span>
-        <span
-          v-if="scope.row.date !== null"
-          v-formatter="{
-            data: scope.row.date,
-            formatter: 'YYYY/MM/DD HH:mm:ss',
-            type: 'date',
-          }"
-        />
-      </template>
-    </el-table-column>
-
-    <el-table-column
-      prop="serialNumber"
-      :label="t('fields.serialNumber')"
-      align="center"
-    />
-
-    <el-table-column
-      :prop="type"
-      :label="t('fields.creditFlowType')"
-      align="center"
-    >
-      <template #default="scope">
-        <span>{{ $t(`creditFlowType.${scope.row.type}`) }}</span>
-      </template>
-    </el-table-column>
-    <el-table-column
-      prop="amount"
-      :label="t('fields.creditFlowAmount')"
-      align="center"
-    />
-
-    <el-table-column
-      prop="balance"
-      :label="t('fields.creditFlowBalance')"
-      align="center"
-    />
-  </el-table>
+  <table class="custom-table" style="margin: 10px auto; width: 100%;" cellpadding="0" cellspacing="0" border="0">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Date</th>
+        <th scope="col">Serial Number</th>
+        <th scope="col">Credit Flow Type</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Credit Flow Balance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="row in page.records" :key="row.id">
+        <td data-label="ID">{{ row.id }}</td>
+        <td data-label="Date">
+          <span v-if="row.date === null">-</span>
+          <span v-if="row.date !== null">{{ formatDate(row.date) }}</span>
+        </td>
+        <td date-label="Serial Number">{{ row.serialNumber }}</td>
+        <td date-label="Credit Flow Type">{{ $t(`creditFlowType.${row.type}`) }}</td>
+        <td date-label="Amount">{{ row.amount }}</td>
+        <td date-label="Credit Flow Balance">{{ row.balance }}</td>
+      </tr>
+      <tr v-if="page.records.length === 0">
+        <td colspan="6">
+          <emptyComp />
+        </td>
+      </tr>
+    </tbody>
+  </table>
   <el-pagination
     class="pagination"
     @current-change="changePage"

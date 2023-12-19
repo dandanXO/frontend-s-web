@@ -50,76 +50,60 @@
         </el-col>
       </el-row>
     </el-form>
-    <el-table
-      :data="page.records"
-      ref="table"
-      row-key="id"
-      size="normal"
-      highlight-current-row
-    >
-      <template #empty>
-        <emptyComp />
-      </template>
-      <el-table-column prop="sequence" :label="t('fields.sequence')" width="50">
-        <template #default="scope">
-          {{ (request.current - 1) * 10 + scope.$index + 1 }}
-        </template>
-      </el-table-column>
-      <el-table-column prop="appType" :label="t('fields.packType')" />
-      <el-table-column prop="osType" :label="t('fields.osType')" />
-      <el-table-column prop="appName" :label="t('fields.appName')" />
-      <el-table-column prop="appIcon" :label="t('fields.appIcon')">
-        <template #default="scope">
-          <div class="preview">
-            <el-image :src="imageDir + scope.row.appIcon" fit="contain" />
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column prop="status" :label="t('fields.buildStatus')">
-        <template #default="scope">
-          {{ filterStatus(scope.row.status) }}
-        </template>
-      </el-table-column>
-      <el-table-column prop="downloadCount" :label="t('fields.download')" />
-      <el-table-column prop="finishTime" :label="t('fields.packDate')">
-        <template #default="scope">
-          <span v-if="scope.row.finishTime === null">-</span>
-          <span
-            v-if="scope.row.finishTime !== null"
-            v-formatter="{
-              data: scope.row.finishTime,
-              formatter: 'YYYY/MM/DD HH:mm:ss',
-              type: 'date',
-            }"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column type="title" :label="t('fields.operate')">
-        <template #default="scope">
-          <el-button
-            v-if="scope.row.status === 'SUCCESS'"
-            icon="el-icon-view"
-            size="normal"
-            type="success"
-            @click="viewDetail(scope.row)"
-          >
-            {{ $t('fields.detail') }}
-          </el-button>
-          <el-button
-            v-if="scope.row.status === 'IN_QUEUE'"
-            icon="el-icon-remove"
-            size="normal"
-            type="danger"
-            @click="cancelPack(scope.row.id)"
-          >
-            {{ $t('fields.cancel') }}
-          </el-button>
-          <span v-if="scope.row.status === 'CANCEL'">
-            -
-          </span>
-        </template>
-      </el-table-column>
-    </el-table>
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th scope="col">{{ t('fields.sequence') }}</th>
+          <th scope="col">{{ t('fields.packType') }}</th>
+          <th scope="col">{{ t('fields.osType') }}</th>
+          <th scope="col">{{ t('fields.appName') }}</th>
+          <th scope="col">{{ t('fields.appIcon') }}</th>
+          <th scope="col">{{ t('fields.buildStatus') }}</th>
+          <th scope="col">{{ t('fields.download') }}</th>
+          <th scope="col">{{ t('fields.packDate') }}</th>
+          <th scope="col">{{ t('fields.operate') }}</th>
+        </tr>
+      </thead>
+      <tbody v-if="page.records.length > 0">
+        <tr v-for="(item, index) in page.records" :key="item.id">
+          <td data-label="t('fields.sequence')">{{ (request.current - 1) * 10 + index + 1 }}</td>
+          <td data-label="t('fields.packType')">{{ item.appType }}</td>
+          <td data-label="t('fields.osType')">{{ item.osType }}</td>
+          <td data-label="t('fields.appName')">{{ item.appName }}</td>
+          <td data-label="t('fields.appIcon')">
+            <div class="preview">
+              <img :src="imageDir + item.appIcon" alt="app-icon">
+            </div>
+          </td>
+          <td data-label="t('fields.buildStatus')">{{ filterStatus(item.status) }}</td>
+          <td data-label="t('fields.download')">{{ item.downloadCount }}</td>
+          <td data-label="t('fields.packDate')">
+            <span v-if="item.finishTime === null">-</span>
+            <span>{{ moment(item.finishTime).format('YYYY/MM/DD HH:mm:ss') }}</span>
+          </td>
+          <td data-label="t('fields.operate')">
+            <button
+              v-if="item.status === 'SUCCESS'"
+              class="success-btn"
+              @click="viewDetail(item)"
+            >
+              {{ $t('fields.detail') }}
+            </button>
+            <button
+              v-if="item.status === 'IN_QUEUE'"
+              class="danger-btn"
+              @click="cancelPack(item.id)"
+            >
+              {{ $t('fields.cancel') }}
+            </button>
+            <span v-if="item.status === 'CANCEL'">-</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div v-if="page.records.length === 0">
+      <emptyComp />
+    </div>
     <el-pagination
       v-if="page.records.length !== 0"
       class="pagination"

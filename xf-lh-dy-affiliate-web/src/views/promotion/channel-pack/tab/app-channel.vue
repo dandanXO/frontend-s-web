@@ -50,7 +50,7 @@
     </el-form-item>
     <el-form-item :label="t('fields.appName')" prop="name">
       <el-row>
-        <el-col :span="8">
+        <el-col :xl="3" :lg="5" :md="5" :sm="8">
           <el-input size="normal" v-model="form.name" />
         </el-col>
       </el-row>

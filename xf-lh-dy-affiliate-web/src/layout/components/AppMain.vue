@@ -21,6 +21,23 @@ export default defineComponent({
     };
   }
 });
+// Assuming you have multiple el-tables on your page
+const elTables = document.querySelectorAll('.el-table');
+
+elTables.forEach((elTable) => {
+  // Assuming the th elements are directly inside the thead
+  const thElements = elTable.querySelectorAll('thead th');
+
+  // Loop through each th element and set data-label to the corresponding td elements
+  thElements.forEach((th, index) => {
+    const columnName = th.textContent.trim();
+    const tdElements = elTable.querySelectorAll(`tbody td:nth-child(${index + 1})`);
+
+    tdElements.forEach((td) => {
+      td.setAttribute('data-label', columnName);
+    });
+  });
+});
 </script>
 
 <style lang="scss" scoped>
@@ -74,8 +91,8 @@ export default defineComponent({
     // margin-left: 20px !important;
   }
   .el-form-item {
-    flex-direction: column;
-    align-items: flex-start !important;
+    // flex-direction: column;
+    // align-items: flex-start !important;
     &__label {
       text-align: left;
       width: unset !important;
@@ -116,7 +133,38 @@ export default defineComponent({
   border-radius: 10px;
   box-shadow: 0px 6px 58px 0px #C4CBD61A;
 }
+.el-table__empty-block {
+  width: unset !important;
+}
+.el-empty__image {
+  width: 80% !important;
+  margin: auto !important;
+  max-width: 300px;
+}
+.el-table__empty-text {
+  width: 100% !important;
+}
 
+.custom-table {
+  width: 100%;
+  border: 0;
+  th {
+    background: #F4F9FD;
+    text-align: left;
+  }
+  th, td {
+    padding: 12px;
+  }
+  tr:nth-child(even) {
+    background: #F4F9FD;
+  }
+}
+.el-form-item__content {
+  width: 100%;
+}
+.el-input__inner {
+  width: 100%;
+}
 @media screen and (max-width: 600px) {
   table {
     border: 0;
@@ -135,15 +183,24 @@ export default defineComponent({
     width: 1px;
   }
   table tr {
-    border-bottom: 3px solid #ddd;
+    border-bottom: 2px solid #7fb2ff;
     display: block;
-    margin-bottom: .625em;
+    // margin-bottom: .625em;
   }
   table td {
     border-bottom: 1px solid #ddd;
     display: block;
     font-size: .8em;
     text-align: right;
+    min-height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    img {
+      width: 80%;
+      max-width: 200px;
+    }
   }
   table td::before {
     /*
@@ -155,6 +212,7 @@ export default defineComponent({
     font-weight: bold;
     text-transform: uppercase;
   }
+
   table td:last-child {
     border-bottom: 0;
   }

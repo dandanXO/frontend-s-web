@@ -9,7 +9,7 @@
       <el-form @submit.prevent>
         <div style="margin: 20px;">
           <el-row :gutter="20">
-            <el-col :xl="2" :lg="3" :md="12" :sm="24">
+            <el-col :xl="2" :lg="3" :md="4" :sm="24">
               <el-form-item :label="t('fields.memberTag') + ' :'" />
             </el-col>
             <el-col :xl="18" :lg="16" :md="12" :sm="24">
@@ -45,12 +45,12 @@
         </div>
         <div class="inputs-wrap">
           <el-row :gutter="20">
-            <el-col :xl="8" :lg="7" :md="12">
+            <el-col :xl="8" :lg="8" :md="6" :sm="6">
               <el-form-item :label="t('fields.loginName') + ' :'">
                 <el-input size="normal" v-model="request.loginName" />
               </el-form-item>
             </el-col>
-            <el-col :xl="10" :lg="10" :md="12">
+            <el-col :xl="8" :lg="8" :md="10" :sm="8">
               <el-form-item :label="t('fields.depositAmount') + ' :'">
                 <el-input size="normal" v-model="request.depositMinAmount" class="input-min">
                   <template #append>
@@ -63,9 +63,9 @@
                 />
               </el-form-item>
             </el-col>
-            <el-col :xl="6" :lg="5" :md="12">
+            <el-col :xl="8" :lg="8" :md="6" :sm="6">
               <el-form-item :label="t('fields.betRecord') + ' :'">
-                <el-select size="normal" v-model="request.isBet">
+                <el-select style="width: 100%;" size="normal" v-model="request.isBet">
                   <el-option key="1" value="-1" :label="t('fields.all')">
                     {{ t('fields.all') }}
                   </el-option>
@@ -82,7 +82,7 @@
         </div>
         <div class="inputs-wrap">
           <el-row :gutter="20">
-            <el-col :xl="8" :lg="8" :md="12">
+            <el-col :xl="8" :lg="8" :md="12" :sm="12">
               <el-form-item :label="t('fields.recordTime') + ' :'">
                 <el-date-picker
                   v-model="request.recordTime"
@@ -101,7 +101,7 @@
                 />
               </el-form-item>
             </el-col>
-            <el-col :xl="10" :lg="8" :md="12">
+            <el-col :xl="10" :lg="8" :md="12" :sm="12">
               <el-form-item :label="t('fields.registerTime') + ' :'">
                 <el-date-picker
                   v-model="request.regTime"
@@ -148,177 +148,75 @@
           </el-button>
         </div>
       </el-form>
-
-      <el-table
-        :data="page.records"
-        ref="table"
-        row-key="id"
-        size="normal"
-        highlight-current-row
-        v-loading="page.loading"
-        style="margin-top: 15px;"
-        @selection-change="handleSelectionChange"
-      >
-        <template #empty>
+      <div style="width: 98%; margin: 10px auto">
+        <table cellpadding="0" cellspacing="0" border="0" class="custom-table">
+          <thead>
+            <tr>
+              <th scope="col">{{ t('fields.sequence') }}</th>
+              <th scope="col">{{ t('fields.loginName') }}</th>
+              <th scope="col">{{ t('fields.totalDeposit') }}</th>
+              <th scope="col">{{ t('fields.totalWithdraw') }}</th>
+              <th scope="col">{{ t('fields.winLoss') }}</th>
+              <th scope="col">{{ t('fields.registerTime') }}</th>
+              <th scope="col">{{ t('fields.lastLoginTime') }}</th>
+              <th scope="col">{{ t('fields.memberTag') }}</th>
+              <th scope="col">{{ t('fields.operate') }}</th>
+            </tr>
+          </thead>
+          <tbody v-if="page.records.length > 0">
+            <tr v-for="(item) in page.records" :key="item.id">
+              <td :data-label="t('fields.sequence')">
+                <input
+                  type="checkbox"
+                  :value="item.id"
+                  v-model="selectedMembers"
+                  @change="handleSelectionChange"
+                >
+              </td>
+              <td :data-label="t('fields.loginName')">{{ item.loginName }}</td>
+              <td :data-label="t('fields.totalDeposit')">{{ '$' + formatMoney(item.totalDeposit) }}</td>
+              <td :data-label="t('fields.totalWithdraw')">{{ '$' + formatMoney(item.totalWithdraw) }}</td>
+              <td :data-label="t('fields.winLoss')">{{ '$' + formatMoney(item.winLoss) }}</td>
+              <td :data-label="t('fields.regTime')">
+                <span v-if="item.regTime === null">-</span>
+                <span>{{ formatDateTime(item.regTime) }}</span>
+              </td>
+              <td :data-label="t('fields.lastLoginTime')">
+                <span v-if="item.lastLoginTime === null">-</span>
+                <span>{{ formatDateTime(item.lastLoginTime) }}</span>
+              </td>
+              <td :data-label="t('fields.memberTag')">{{ formatmTag(item.tags) }}</td>
+              <td :data-label="t('fields.operate')">
+                <button @click="showMemberInfo(item)">
+                  {{ t('fields.memberInfo') }}
+                </button>
+                <button @click="transferRedirect(item.loginName)">
+                  {{ t('menu.Transfer') }}
+                </button>
+                <button @click="showEditTag(item)">{{ t('fields.editTag') }}</button>
+                <button @click="showEditRemark(item)">{{ t('fields.remark') }}</button>
+                <button @click="showDepositRecord(item)">
+                  {{ t('fields.depositRecord') }}
+                </button>
+                <button @click="showGameRecord(item.loginName)">
+                  {{ t('fields.betRecord') }}
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div v-if="page.records.length === 0">
           <emptyComp />
-        </template>
-        <el-table-column type="selection" width="40" />
-        <el-table-column
-          prop="loginName"
-          :label="t('fields.loginName')"
-          align="center"
+        </div>
+        <el-pagination
+          class="pagination"
+          @current-change="changePage"
+          layout="prev, pager, next"
+          :page-size="request.size"
+          :page-count="page.pages"
+          :current-page="request.current"
         />
-        <!-- <el-table-column
-          prop="status"
-          :label="t('fields.status')"
-          align="center"
-          min-width="180"
-        >
-          <template #default="scope">
-            <el-tag
-              v-if="scope.row.status === 'NORMAL'"
-              type="success"
-              size="normal"
-            >
-              {{ scope.row.status }}
-            </el-tag>
-            <el-tag
-              v-if="scope.row.status === 'FROZEN'"
-              type="danger"
-              size="normal"
-            >
-              {{ scope.row.status }}
-            </el-tag>
-            <el-tag v-if="scope.row.status === null" type="info" size="normal">
-              -
-            </el-tag>
-          </template>
-        </el-table-column> -->
-        <el-table-column
-          prop="totalDeposit"
-          :label="t('fields.totalDeposit')"
-          align="center"
-        >
-          <template #default="scope">
-            $
-            <span
-              v-formatter="{data: scope.row.totalDeposit, type: 'money'}"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="totalWithdraw"
-          :label="t('fields.totalWithdraw')"
-          align="center"
-        >
-          <template #default="scope">
-            $
-            <span
-              v-formatter="{data: scope.row.totalWithdraw, type: 'money'}"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="winLoss"
-          :label="t('fields.winLoss')"
-          align="center"
-        >
-          <template #default="scope">
-            $
-            <span v-formatter="{data: scope.row.winLoss, type: 'money'}" />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="regTime"
-          :label="t('fields.registerTime')"
-          align="center"
-        >
-          <template #default="scope">
-            <span v-if="scope.row.regTime === null">-</span>
-            <span
-              v-if="scope.row.regTime !== null"
-              v-formatter="{
-                data: scope.row.regTime,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
-                type: 'date',
-              }"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="lastLoginTime"
-          :label="t('fields.lastLoginTime')"
-          align="center"
-        >
-          <template #default="scope">
-            <span v-if="scope.row.lastLoginTime === null">-</span>
-            <span
-              v-if="scope.row.lastLoginTime !== null"
-              v-formatter="{
-                data: scope.row.lastLoginTime,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
-                type: 'date',
-              }"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="tags"
-          :label="t('fields.memberTag')"
-          align="center"
-        >
-          <template #default="scope">
-            {{ formatTag(scope.row.tags) }}
-          </template>
-        </el-table-column>
-        <el-table-column :label="t('fields.operate')" align="center">
-          <template #default="scope">
-            <el-dropdown trigger="click">
-              <el-link
-                :underline="false"
-                type="primary"
-                class="el-dropdown-link"
-              >
-                {{ t('fields.more') }}
-              </el-link>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item @click="showMemberInfo(scope.row)">
-                    {{ t('fields.memberInfo') }}
-                  </el-dropdown-item>
-                  <el-dropdown-item
-                    @click="transferRedirect(scope.row.loginName)"
-                  >
-                    {{ t('menu.Transfer') }}
-                  </el-dropdown-item>
-                  <el-dropdown-item @click="showEditTag(scope.row)">
-                    {{ t('fields.editTag') }}
-                  </el-dropdown-item>
-                  <el-dropdown-item @click="showEditRemark(scope.row)">
-                    {{ t('fields.remark') }}
-                  </el-dropdown-item>
-                  <el-dropdown-item @click="showDepositRecord(scope.row)">
-                    {{ t('fields.depositRecord') }}
-                  </el-dropdown-item>
-                  <el-dropdown-item
-                    @click="showGameRecord(scope.row.loginName)"
-                  >
-                    {{ t('fields.betRecord') }}
-                  </el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
-          </template>
-        </el-table-column>
-      </el-table>
-      <el-pagination
-        class="pagination"
-        @current-change="changePage"
-        layout="prev, pager, next"
-        :page-size="request.size"
-        :page-count="page.pages"
-        :current-page="request.current"
-      />
+      </div>
     </el-card>
   </div>
   <el-dialog
@@ -435,33 +333,32 @@
           </div>
         </el-form>
       </div>
-      <el-table
-        :data="memberInfo.memberBetRecordSummaryVOList"
-      >
-        <template #empty>
-          <emptyComp />
-        </template>
-        <el-table-column :label="t('fields.sequence')" align="left">
-          <template #default="scope">
-            {{ scope.$index + 1 }}
-          </template>
-        </el-table-column>
-        <el-table-column :label="t('fields.platform')" align="left">
-          <template #default="scope">
-            {{ scope.row.platform + ' - ' + scope.row.gameType }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="validBet"
-          :label="t('fields.validBet')"
-          align="left"
-        />
-        <el-table-column
-          prop="winLoss"
-          :label="t('fields.winLoss')"
-          align="left"
-        />
-      </el-table>
+      <div style="width: 95%; margin: 10px auto">
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th scope="col">{{ t('fields.sequence') }}</th>
+              <th scope="col">{{ t('fields.platform') }}</th>
+              <th scope="col">{{ t('fields.validBet') }}</th>
+              <th scope="col">{{ t('fields.winLoss') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-if="memberInfo.memberBetRecordSummaryVOList.length === 0">
+              <td colspan="4">
+                <!-- Display your empty component or message here -->
+                <emptyComp />
+              </td>
+            </tr>
+            <tr v-for="(record, index) in memberInfo.memberBetRecordSummaryVOList" :key="index">
+              <td :data-label="t('fields.sequence')">{{ index + 1 }}</td>
+              <td :data-label="t('fields.platform')">{{ record.platform + ' - ' + record.gameType }}</td>
+              <td :data-label="t('fields.validBet')">{{ record.validBet }}</td>
+              <td :data-label="t('fields.winLoss')">{{ record.winLoss }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </el-dialog>
   <el-dialog
@@ -542,99 +439,50 @@
           {{ memberDepositInfo.regTime }}
         </el-form-item>
       </div>
-      <el-table
-        :data="memberDepositInfo.page.records"
-        v-loading="memberDepositInfo.page.loading"
-      >
-        <template #empty>
-          <emptyComp />
-        </template>
-        <el-table-column :label="t('fields.sequence')" align="left" width="50">
-          <template #default="scope">
-            {{ (depositRequest.current - 1) * 10 + scope.$index + 1 }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="serialNumber"
-          :label="t('fields.serialNumber')"
-          align="left"
-        />
-        <el-table-column
-          prop="depositAmount"
-          :label="t('fields.depositAmount')"
-          align="left"
-        >
-          <template #default="scope">
-            $
-            <span
-              v-formatter="{data: scope.row.depositAmount, type: 'money'}"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="depositDate"
-          :label="t('fields.depositDate')"
-          align="left"
-        >
-          <template #default="scope">
-            <span v-if="scope.row.depositDate === null">-</span>
-            <span
-              v-if="scope.row.depositDate !== null"
-              v-formatter="{
-                data: scope.row.depositDate,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
-                type: 'date',
-              }"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="finishDate"
-          :label="t('fields.finishDate')"
-          align="left"
-        >
-          <template #default="scope">
-            <span v-if="scope.row.finishDate === null">-</span>
-            <span
-              v-if="scope.row.finishDate !== null"
-              v-formatter="{
-                data: scope.row.finishDate,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
-                type: 'date',
-              }"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column prop="status" :label="t('fields.status')" align="left">
-          <template #default="scope">
-            <el-tag
-              v-if="
-                scope.row.status === 'SUCCESS' ||
-                  scope.row.status === 'SUPPLEMENT_SUCCESS'
-              "
-              type="success"
-              size="normal"
-            >
-              {{ t('depositStatus.' + scope.row.status) }}
-            </el-tag>
-            <el-tag
-              v-else-if="scope.row.status === 'CLOSED'"
-              type="danger"
-              size="normal"
-            >
-              {{ t('depositStatus.' + scope.row.status) }}
-            </el-tag>
-            <el-tag
-              v-else-if="scope.row.status === 'PENDING'"
-              type="warning"
-              size="normal"
-            >
-              {{ t('depositStatus.' + scope.row.status) }}
-            </el-tag>
-            <el-tag v-else type="info" size="normal">-</el-tag>
-          </template>
-        </el-table-column>
-      </el-table>
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th scope="col">{{ t('fields.sequence') }}</th>
+            <th scope="col">{{ t('fields.serialNumber') }}</th>
+            <th scope="col">{{ t('fields.depositAmount') }}</th>
+            <th scope="col">{{ t('fields.depositDate') }}</th>
+            <th scope="col">{{ t('fields.finishDate') }}</th>
+            <th scope="col">{{ t('fields.status') }}</th>
+          </tr>
+        </thead>
+        <tbody v-if="memberDepositInfo.page.records.length > 0">
+          <tr v-for="(item, index) in memberDepositInfo.page.records" :key="item.id">
+            <td>{{ (depositRequest.current - 1) * 10 + index + 1 }}</td>
+            <td>{{ item.serialNumber }}</td>
+            <td>
+              ${{ item.depositAmount.toFixed(2) }}
+            </td>
+            <td>
+              {{ formatDate(item.depositDate) }}
+            </td>
+            <td>
+              {{ formatDate(item.finishDate) }}
+            </td>
+            <td>
+              <span v-if="['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(item.status)">
+                <span class="success-tag">{{ t('depositStatus.' + item.status) }}</span>
+              </span>
+              <span v-else-if="item.status === 'CLOSED'">
+                <span class="danger-tag">{{ t('depositStatus.' + item.status) }}</span>
+              </span>
+              <span v-else-if="item.status === 'PENDING'">
+                <span class="warning-tag">{{ t('depositStatus.' + item.status) }}</span>
+              </span>
+              <span v-else>
+                <span class="info-tag">-</span>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-if="memberDepositInfo.page.records.length === 0">
+        <emptyComp />
+      </div>
       <el-pagination
         class="pagination"
         @current-change="changeDepositPage"
@@ -743,6 +591,28 @@ const unAssigned = reactive({
 const dialog = reactive({
   loading: false,
 })
+const formatMoney = (value) => {
+  if (typeof value !== 'number') {
+    return '-';
+  }
+  // Assuming you want to format to two decimal places
+  return value.toFixed(2);
+};
+
+const formatDateTime = (value) => {
+  if (!value) {
+    return '-';
+  }
+  const date = new Date(value);
+  return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+};
+
+const formatmTag = (tags) => {
+  if (!Array.isArray(tags) || tags.length === 0) {
+    return '-';
+  }
+  return tags.join(', ');
+};
 
 const shortcuts = [
   {
@@ -1135,6 +1005,9 @@ async function submitRemark() {
   ElMessage({ message: t('message.editSuccess'), type: 'success' })
   await loadAffiliateMembers()
   uiControl.remarkDialogVisible = false
+}
+function formatDate(date) {
+  return date ? moment(date).format('YYYY/MM/DD HH:mm:ss') : '-';
 }
 
 onMounted(() => {

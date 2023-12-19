@@ -92,82 +92,63 @@
           </el-col>
         </el-row>
       </div>
-      <el-table :data="page.records" ref="table"
-                row-key="id"
-                size="normal"
-                highlight-current-row
-                v-loading="page.loading"
-                style="margin-top: 15px;"
-      >
-        <template #empty>
-          <emptyComp />
-        </template>
-        <el-table-column prop="loginName" :label="t('fields.loginName')" align="center" min-width="100" />
-        <el-table-column prop="betTime" :label="t('fields.betTime')" align="center" min-width="150">
-          <template #default="scope">
-            <span v-if="scope.row.betTime === null">-</span>
-            <span
-              v-if="scope.row.betTime !== null"
-              v-formatter="{data: scope.row.betTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column prop="settleTime" :label="t('fields.settleTime')" align="center" min-width="150">
-          <template #default="scope">
-            <span v-if="scope.row.settleTime === null || scope.row.betStatus === 'UNSETTLED'">-</span>
-            <span
-              v-if="scope.row.settleTime !== null && scope.row.betStatus !== 'UNSETTLED'"
-              v-formatter="{data: scope.row.settleTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column prop="platform" :label="t('fields.platform')" align="center" min-width="100">
-          <template #default="scope">
-            <span v-if="scope.row.platform === null">-</span>
-            <span v-if="scope.row.platform !== null">{{ scope.row.platform }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="gameName" :label="t('fields.gameName')" align="center" min-width="180">
-          <template #default="scope">
-            <span v-if="scope.row.gameName === null">-</span>
-            <span v-if="scope.row.gameName !== null">{{ scope.row.gameName }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="transactionId" :label="t('fields.transactionId')" align="center" min-width="320">
-          <template #default="scope">
-            <span v-if="scope.row.transactionId === null">-</span>
-            <span v-if="scope.row.transactionId !== null">{{ scope.row.transactionId }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="bet" :label="t('fields.bet')" align="center" min-width="100" sortable>
-          <template #default="scope">
-            $ <span v-formatter="{data: scope.row.bet,type: 'money'}" />
-          </template>
-        </el-table-column>
-        <el-table-column prop="payout" :label="t('fields.payout')" align="center" min-width="100" sortable>
-          <template #default="scope">
-            $ <span v-formatter="{data: scope.row.payout,type: 'money'}" />
-          </template>
-        </el-table-column>
-        <el-table-column prop="companyProfit" :label="t('fields.companyProfit')" align="center" min-width="100" sortable>
-          <template #default="scope">
-            $ <span v-formatter="{data: scope.row.companyProfit,type: 'money'}" />
-          </template>
-        </el-table-column>
-        <el-table-column prop="betStatus" :label="t('fields.status')" align="center" min-width="100">
-          <template #default="scope">
-            <el-tag v-if="scope.row.betStatus === 'SETTLED'" type="success" size="normal">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
-            <el-tag v-else-if="scope.row.betStatus === 'CANCEL'" type="danger" size="normal">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
-            <el-tag v-else-if="scope.row.betStatus === 'UNSETTLED'" type="warning" size="normal">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
-            <el-tag v-else type="info" size="normal">-</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column :label="t('fields.operate')" align="center" width="150">
-          <template #default="scope">
-            <el-button icon="el-icon-edit" size="normal" type="success" @click="viewDetails(scope.row)">{{ t('fields.viewDetails') }}</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+      <table cellpadding="0" cellspacing="0" border="0" class="custom-table" style="width: 98%; margin: 15px auto;">
+        <thead>
+          <tr>
+            <th scope="col">{{ t('fields.loginName') }}</th>
+            <th scope="col">{{ t('fields.betTime') }}</th>
+            <th scope="col">{{ t('fields.settleTime') }}</th>
+            <th scope="col">{{ t('fields.platform') }}</th>
+            <th scope="col">{{ t('fields.gameName') }}</th>
+            <th scope="col">{{ t('fields.transactionId') }}</th>
+            <th scope="col">{{ t('fields.bet') }}</th>
+            <th scope="col">{{ t('fields.payout') }}</th>
+            <th scope="col">{{ t('fields.companyProfit') }}</th>
+            <th scope="col">{{ t('fields.status') }}</th>
+            <th scope="col">{{ t('fields.operate') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in page.records" :key="item.id">
+            <td :data-label="t('fields.loginName')">{{ item.loginName }}</td>
+            <td :data-label="t('fields.betTime')">
+              <span v-if="item.betTime === null">-</span>
+              <span v-if="item.betTime !== null">{{ item.betTime }}</span>
+            </td>
+            <td :data-label="t('fields.settleTime')">
+              <span v-if="item.settleTime === null || item.betStatus === 'UNSETTLED'">-</span>
+              <span v-if="item.settleTime !== null && item.betStatus !== 'UNSETTLED'">{{ item.settleTime }}</span>
+            </td>
+            <td :data-label="t('fields.platform')">
+              <span v-if="item.platform === null">-</span>
+              <span v-if="item.platform !== null">{{ item.platform }}</span>
+            </td>
+            <td :data-label="t('fields.gameName')">
+              <span v-if="item.gameName === null">-</span>
+              <span v-if="item.gameName !== null">{{ item.gameName }}</span>
+            </td>
+            <td :data-label="t('fields.transactionId')">
+              <span v-if="item.transactionId === null">-</span>
+              <span v-if="item.transactionId !== null">{{ item.transactionId }}</span>
+            </td>
+            <td :data-label="t('fields.bet')">$ {{ item.bet }}</td>
+            <td :data-label="t('fields.payout')">$ {{ item.payout }}</td>
+            <td :data-label="t('fields.companyProfit')">$ {{ item.companyProfit }}</td>
+            <td :data-label="t('fields.status')">
+              <el-tag v-if="item.betStatus === 'SETTLED'" type="success" size="normal">{{ t('betStatus.' + item.betStatus) }}</el-tag>
+              <el-tag v-else-if="item.betStatus === 'CANCEL'" type="danger" size="normal">{{ t('betStatus.' + item.betStatus) }}</el-tag>
+              <el-tag v-else-if="item.betStatus === 'UNSETTLED'" type="warning" size="normal">{{ t('betStatus.' + item.betStatus) }}</el-tag>
+              <el-tag v-else type="info" size="normal">-</el-tag>
+            </td>
+            <td :data-label="t('fields.operate')">
+              <button @click="viewDetails(item)">{{ t('fields.viewDetails') }}</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-if="page.records.length === 0">
+        <emptyComp />
+      </div>
       <div class="table-footer">
         <span style="margin-right:20px;">{{ t('fields.totalBet') }}: $ <span v-formatter="{data: page.totalBet,type: 'money'}" /></span>
         <span style="margin-right:20px;">{{ t('fields.totalPayout') }}: $ <span v-formatter="{data: page.totalPayout,type: 'money'}" /></span>
