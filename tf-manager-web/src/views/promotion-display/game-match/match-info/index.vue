@@ -469,6 +469,7 @@ const imageRequest = reactive({
   name: null,
   siteId: null,
   category: 'PROMO',
+  promoType: 'TEAM_ICON',
 })
 
 const page = reactive({
@@ -536,6 +537,7 @@ function showDialog(type) {
 }
 
 function showEdit(match) {
+  debugger;
   showDialog('EDIT');
   nextTick(() => {
     for (const key in match) {
@@ -705,5 +707,10 @@ onMounted(async () => {
 
 .el-form-item--level-color:deep .el-form-item__content {
   display: flex !important;
+}
+.el-overlay-dialog .el-image {
+  width: 100px;
+  height: 100px;
+  background-color: #c1c1c1;
 }
 </style>

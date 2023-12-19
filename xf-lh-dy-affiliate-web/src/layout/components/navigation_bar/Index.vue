@@ -40,7 +40,7 @@
 <script>
 import ForgetPasswordModal from "@/components/forgetpassword-modal/Index.vue";
 
-import { computed, reactive, toRefs } from "vue";
+import { computed, reactive, toRefs, onMounted } from "vue";
 import { useStore } from "@/store";
 import { AppActionTypes } from "@/store/modules/app/action-types";
 import { UserActionTypes } from "@/store/modules/user/action-types";
@@ -53,6 +53,9 @@ export default {
     ForgetPasswordModal
   },
   setup() {
+    onMounted(() => {
+      handleLanguage();
+    })
     const router = useRouter();
     const store = useStore();
     const sidebar = computed(() => {
@@ -86,6 +89,15 @@ export default {
     const { setLanguage } = i18nStoreLanguage;
 
     const handleLanguage = () => {
+      // Clear existing language classes from <body> element
+      document.body.classList.forEach((className) => {
+        if (className.endsWith('lang')) {
+          document.body.classList.remove(className);
+        }
+      });
+
+      // Set the new language class on <body> element
+      document.body.classList.add(languageVal.value + 'lang');
       setLanguage(languageVal.value);
     }
     const changePassword = async (formObj) => {

@@ -68,10 +68,10 @@
           :model="form"
           :rules="rules"
           autocomplete="off"
-          label-width="100px"
+          label-width="180px"
           label-suffix=":"
         >
-          <el-space>
+          <el-space alignment="flex-start">
             <el-form-item class="helptxt" :label="$t('fields.depositAmount')" prop="localAmount">
               <el-input
                 v-if="amountList.length === 0"
@@ -158,12 +158,14 @@
                 更新个人信息的新帐户可以参与促销活动。
             </div>
           </el-form-item> -->
-          <div class="txt-center">
+          <div>
             <el-button
               :loading="loadingBtn"
               size="large"
               @click="confirmDeposit"
               class="common-btn"
+              style="margin-left: 180px; margin-bottom: 20px;"
+              type="primary"
             >
               {{ $t('fields.confirm') }}
             </el-button>
@@ -614,6 +616,8 @@ onMounted(() => {
 .account-tip {
   display: flex;
   align-items: flex-start;
+  font-size: 14px;
+  color: #7D8592;
 }
 
 .account-content {

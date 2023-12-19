@@ -102,7 +102,7 @@
                 <div class="label-row">
                   {{ $t('fields.text') }} 1
                   <el-input-number
-                    size="small"
+                    size="normal"
                     v-model="data.text1Size"
                     :min="10"
                     :max="100"
@@ -184,7 +184,7 @@
                 <div class="label-row">
                   {{ $t('fields.text') }} 2
                   <el-input-number
-                    size="small"
+                    size="normal"
                     v-model="data.text2Size"
                     :min="10"
                     :max="100"
@@ -266,7 +266,7 @@
                 <div class="label-row">
                   {{ $t('fields.text') }} 3
                   <el-input-number
-                    size="small"
+                    size="normal"
                     v-model="data.text3Size"
                     :min="10"
                     :max="100"
@@ -360,7 +360,7 @@
         <div id="image-container" class="image-container">
           <div>
             <span>{{ $t('fields.preview') }}</span>
-            <el-button type="primary" size="small" @click="download()">
+            <el-button type="primary" size="normal" @click="download()">
               {{ $t('fields.download') }}
             </el-button>
           </div>

@@ -5,11 +5,11 @@
         v-model="request.transferDate"
         format="DD/MM/YYYY"
         value-format="YYYY-MM-DD HH:mm:ss"
-        size="small"
+        size="normal"
         type="daterange"
         :start-placeholder="t('fields.startDate')"
         :end-placeholder="t('fields.endDate')"
-        style="width: 380px"
+        style="width: 100%; max-width: 300px"
         :shortcuts="shortcuts"
         :disabled-date="disabledDate"
         :editable="false"
@@ -17,19 +17,21 @@
         :default-time="defaultTime"
       />
       <div class="btn-grp">
-        <el-button icon="el-icon-search" type="primary" @click="loadTransferRecords()" size="mini">
+        <el-button icon="el-icon-search" type="primary" @click="loadTransferRecords()" size="normal">
           {{ $t('fields.search') }}
         </el-button>
       </div>
     </div>
     <el-table :data="page.records" ref="table"
               row-key="id"
-              size="small"
+              size="normal"
               highlight-current-row
               v-loading="page.loading"
               style="margin-top: 15px;"
-              :empty-text="t('fields.noData')"
     >
+      <template #empty>
+        <emptyComp />
+      </template>
       <el-table-column prop="memberName" :label="t('fields.loginName')" align="center" min-width="150" />
       <el-table-column prop="transferAmount" :label="t('fields.transferAmount')" align="center" min-width="100">
         <template #default="scope">
@@ -48,8 +50,8 @@
       <el-table-column prop="rollover" :label="t('fields.rollover')" align="center" min-width="100" />
       <el-table-column prop="type" :label="t('fields.transferType')" align="center" min-width="150">
         <template #default="scope">
-          <el-tag v-if="scope.row.type === 'DEPOSIT'" type="success" size="mini">{{ t('transferType.' + scope.row.type) }}</el-tag>
-          <el-tag v-else-if="scope.row.type === 'COMMISSION'" type="warning" size="mini">{{ t('transferType.' + scope.row.type) }}</el-tag>
+          <el-tag v-if="scope.row.type === 'DEPOSIT'" type="success" size="normal">{{ t('transferType.' + scope.row.type) }}</el-tag>
+          <el-tag v-else-if="scope.row.type === 'COMMISSION'" type="warning" size="normal">{{ t('transferType.' + scope.row.type) }}</el-tag>
         </template>
       </el-table-column>
     </el-table>
@@ -74,6 +76,7 @@ import { useStore } from "@/store";
 import moment from 'moment';
 import { getTransferRecords, getTotal } from '@/api/affiliate-member-transfer';
 import { useI18n } from "vue-i18n";
+import emptyComp from "@/components/empty"
 
 const store = useStore();
 const { t } = useI18n();
@@ -243,24 +246,24 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
-  .inputs-wrap {
-    flex-direction: column;
-    gap: 10px;
-    .el-input--small {
-      width: 100% !important;
-      max-width: unset !important;
-      margin: 0 !important;
-      .el-button {
-        margin: 0 !important;
-      }
-    }
-    .input-small {
-      max-width: unset;
-      width: 100%;
-    &.el-range-editor--small.el-input__inner {
-      max-width: unset;
-    }
-    }
-  }
+  // .inputs-wrap {
+  //   flex-direction: column;
+  //   gap: 10px;
+  //   .el-input--small {
+  //     width: 100% !important;
+  //     max-width: unset !important;
+  //     margin: 0 !important;
+  //     .el-button {
+  //       margin: 0 !important;
+  //     }
+  //   }
+  //   .input-small {
+  //     max-width: unset;
+  //     width: 100%;
+  //   &.el-range-editor--small.el-input__inner {
+  //     max-width: unset;
+  //   }
+  //   }
+  // }
 }
 </style>

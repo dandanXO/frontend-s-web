@@ -69,7 +69,8 @@
 
   <el-dialog
     v-model="showDialog"
-    width="25%"
+    width="95%"
+    custom-class="dialog400"
     @close="onCloseDialog"
     :title="'安全验证, 请依次点击：' + words.join(' , ')"
   >
@@ -556,6 +557,9 @@ export default defineComponent({
 </style>
 
 <style>
+.dialog400 {
+  max-width: 400px;
+}
 .shake {
   animation: shake 0.5s;
 }

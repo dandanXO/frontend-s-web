@@ -350,10 +350,7 @@ async function loadPayTypes() {
 }
 
 function filterPayTypeByCurrency(siteId) {
-  console.log('siteId', siteId)
   const currentSite = siteList.list.find(s => s.id === siteId)
-  console.log('siteList.list', siteList.list)
-  console.log('currentSite', currentSite)
   const currencyCodeList = currentSite.currency.split(',').map(currencyName => currencyName)
   list.siteCurrencyIds = [
     ...currencyCodeList.map(currencyName => {
