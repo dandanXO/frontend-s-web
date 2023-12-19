@@ -372,7 +372,7 @@ export default {
     buildStatus: '构建状态',
     apkType: 'APK 种类',
     normal: '正常',
-    newKey: '新Key',
+    newKey: '防毒',
     detail: '详情',
     packSize: '包大小',
     packDownloadUrl: '渠道包链接',

@@ -105,15 +105,15 @@ const form = reactive({
   apkType: 'NORMAL',
   version: '1.1.1',
   name: '',
-  icon: '',
+  icon: null,
 })
 const inputImage = ref(null)
 const versionLoading = ref(true)
 
 const appTypeList = [
   { type: 'ALL_SITE', display: t('appType.allSite') },
-  { type: 'SPORT', display: t('appType.sport') },
-  { type: 'ESPORT', display: t('appType.esport') },
+  // { type: 'SPORT', display: t('appType.sport') },
+  // { type: 'ESPORT', display: t('appType.esport') },
 ]
 
 const uploadedImage = reactive({
@@ -122,7 +122,6 @@ const uploadedImage = reactive({
 
 const formRules = reactive({
   name: [required(t('message.validateAppNameRequired'))],
-  icon: [required(t('message.validateAppIconRequired'))],
 })
 
 async function attachImage(event) {
@@ -180,7 +179,7 @@ function resetForm() {
   form.os = 'ANDROID'
   form.apkType = 'NORMAL'
   form.name = ''
-  form.icon = ''
+  form.icon = null
   uploadedImage.url = ''
   loadVersion()
 }

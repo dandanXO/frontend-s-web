@@ -375,7 +375,7 @@ export default {
     buildStatus: 'Build Status',
     apkType: 'APK Type',
     normal: 'Normal',
-    newKey: 'New Key',
+    newKey: 'Antivirus',
     detail: 'Detail',
     packSize: 'Pack Size',
     packDownloadUrl: 'Channel Pack Download Url',
