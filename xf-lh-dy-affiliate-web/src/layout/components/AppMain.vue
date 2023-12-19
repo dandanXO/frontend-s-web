@@ -165,56 +165,114 @@ elTables.forEach((elTable) => {
 .el-input__inner {
   width: 100%;
 }
+
 @media screen and (max-width: 600px) {
-  table {
+  table:not(.el-date-table) {
     border: 0;
-  }
-  table caption {
-    font-size: 1.3em;
-  }
-  table thead {
-    border: none;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-  }
-  table tr {
-    border-bottom: 2px solid #7fb2ff;
-    display: block;
-    // margin-bottom: .625em;
-  }
-  table td {
-    border-bottom: 1px solid #ddd;
-    display: block;
-    font-size: .8em;
-    text-align: right;
-    min-height: 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 5px;
-    img {
-      width: 80%;
-      max-width: 200px;
+
+    caption {
+      font-size: 1.3em;
     }
-  }
-  table td::before {
-    /*
+
+    thead {
+      border: none;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+
+    tr {
+      border-bottom: 2px solid #7fb2ff;
+      display: block;
+      // margin-bottom: .625em;
+    }
+
+    td {
+      border-bottom: 1px solid #ddd;
+      display: block;
+      font-size: .8em;
+      text-align: right;
+      min-height: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 5px;
+
+      img {
+        width: 80%;
+        max-width: 200px;
+      }
+    }
+
+    td::before {
+      /*
     * aria-label has no advantage, it won't be read inside a table
     content: attr(aria-label);
     */
-    content: attr(data-label);
-    float: left;
-    font-weight: bold;
-    text-transform: uppercase;
+      content: attr(data-label);
+      float: left;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    td:last-child {
+      border-bottom: 0;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .el-date-range-picker__content {
+    float: none;
+    width: 100%;
   }
 
-  table td:last-child {
-    border-bottom: 0;
+  .el-date-range-picker.has-sidebar {
+    width: 400px;
+  }
+
+  .el-date-range-picker .el-picker-panel__body {
+    min-width: 290px;
+  }
+}
+
+@media (max-width: 320px) {
+  .el-picker-panel__sidebar {
+    width: 88px;
+
+    .el-picker-panel__shortcut {
+      font-size: 10px;
+    }
+  }
+
+  .el-picker-panel [slot=sidebar]+.el-picker-panel__body,
+  .el-picker-panel__sidebar+.el-picker-panel__body {
+    margin-left: 88px;
+  }
+
+  .el-date-range-picker__content {
+    padding: 8px;
+  }
+
+  .el-date-range-picker.has-sidebar {
+    width: 320px;
+  }
+
+  .el-date-range-picker .el-picker-panel__body {
+    min-width: 232px;
+  }
+
+  .el-date-range-picker__header div {
+    font-size: 12px;
+  }
+
+  .el-date-table th,
+  .el-date-table__row {
+    font-size: 10px;
   }
 }
 
