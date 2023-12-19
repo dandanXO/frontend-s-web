@@ -240,7 +240,7 @@ elTables.forEach((elTable) => {
   }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 400px) {
   .el-picker-panel__sidebar {
     width: 88px;
 
