@@ -226,53 +226,57 @@ elTables.forEach((elTable) => {
 }
 
 @media (max-width: 600px) {
-  .el-date-range-picker__content {
-    float: none;
-    width: 100%;
-  }
+  .el-date-range-picker {
+    &__content {
+      float: none !important;
+      width: 100% !important;
+    }
 
-  .el-date-range-picker.has-sidebar {
-    width: 400px;
-  }
+    &.has-sidebar {
+      width: 400px !important;
+    }
 
-  .el-date-range-picker .el-picker-panel__body {
-    min-width: 290px;
+    .el-picker-panel__body {
+      min-width: 290px !important;
+    }
   }
 }
 
-@media (max-width: 320px) {
-  .el-picker-panel__sidebar {
-    width: 88px;
+@media (max-width: 400px) {
+  .el-date-range-picker {
+    .el-picker-panel__sidebar {
+      width: 88px !important;
 
-    .el-picker-panel__shortcut {
-      font-size: 10px;
+      .el-picker-panel__shortcut {
+        font-size: 10px !important;
+      }
     }
-  }
 
-  .el-picker-panel [slot=sidebar]+.el-picker-panel__body,
-  .el-picker-panel__sidebar+.el-picker-panel__body {
-    margin-left: 88px;
-  }
+    .el-picker-panel [slot=sidebar]+.el-picker-panel__body,
+    .el-picker-panel__sidebar+.el-picker-panel__body {
+      margin-left: 88px !important;
+    }
 
-  .el-date-range-picker__content {
-    padding: 8px;
-  }
+    .el-date-range-picker__content {
+      padding: 8px !important;
+    }
 
-  .el-date-range-picker.has-sidebar {
-    width: 320px;
-  }
+    .el-date-range-picker.has-sidebar {
+      width: 320px !important;
+    }
 
-  .el-date-range-picker .el-picker-panel__body {
-    min-width: 232px;
-  }
+    .el-date-range-picker .el-picker-panel__body {
+      min-width: 232px !important;
+    }
 
-  .el-date-range-picker__header div {
-    font-size: 12px;
-  }
+    .el-date-range-picker__header div {
+      font-size: 12px !important;
+    }
 
-  .el-date-table th,
-  .el-date-table__row {
-    font-size: 10px;
+    .el-date-table th,
+    .el-date-table__row {
+      font-size: 10px !important;
+    }
   }
 }
 
