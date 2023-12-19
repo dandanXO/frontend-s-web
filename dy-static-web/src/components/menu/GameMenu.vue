@@ -4,7 +4,7 @@
       <div class="platform-box" v-for="nav in filteredNavigations" :key="nav.code">
         <router-link :to="`/game?plat=${nav.code}`">
           <img class="plat-icon" :src="require('../../assets/game/header_slot_logo_' + nav.icon + '.png')" />
-          <p class="platform-title">{{ nav.label }} 电子</p>
+          <p class="platform-title">{{ getGameLabel(nav.code) }}</p>
           <div class="platform-img" :class="'slot-' + nav.icon"></div>
         </router-link>
       </div>
@@ -35,10 +35,24 @@ export default defineComponent({
       { code: "PT", icon: "pt", label: "PT" },
       { code: "AG", icon: "ag", label: "AG" },
       { code: "BBINDY", icon: "bbin", label: "BBIN" },
-      { code: "CQ9", icon: "cq", label: "CQ" },
+      { code: "CQ9", icon: "cq", label: "CQ9" },
       { code: "MGP", icon: "mg", label: "MG" }
       // { code: "AMEBA", icon: "mg", label: "MG" },
     ];
+
+    const getGameLabel = (gameLabel) => {
+      if (gameLabel === "BBINDY") {
+        return "BBIN 电子";
+      } else if (gameLabel === "AMEBA") {
+        return "AE 电子";
+      } else if (gameLabel === "MGP") {
+        return "MG 电子";
+      } else if (gameLabel === "AG") {
+        return "XIN 电子";
+      } else {
+        return gameLabel + " 电子";
+      }
+    };
 
     const store = userStore();
     const platformsList = ref([]);
@@ -74,7 +88,8 @@ export default defineComponent({
 
     return {
       filteredNavigations,
-      getPlatList
+      getPlatList,
+      getGameLabel
     };
   }
 });
