@@ -60,6 +60,9 @@
         <el-form-item :label="t('fields.remark')" prop="remark">
           <el-input v-model="siteForm.remark" type="textarea" style="width: 350px;" :rows="5" />
         </el-form-item>
+        <el-form-item :label="t('fields.timeZone')" prop="timeZone">
+          <el-input v-model="siteForm.timeZone" style="width: 350px;" />
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -246,7 +249,8 @@ const siteForm = reactive({
   siteCode: null,
   parentId: null,
   currency: [],
-  remark: null
+  remark: null,
+  timeZone: '+08:00'
 });
 const domainForm = reactive({
   id: null,
