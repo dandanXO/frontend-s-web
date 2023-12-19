@@ -437,7 +437,7 @@
           <span v-if="memberDetail.regAddress === '-,-,-' || memberDetail.regAddress === 'null,null,null' || memberDetail.regAddress === null">-</span>
         </el-descriptions-item>
         <el-descriptions-item label-align="left" :label="t('fields.lastLoginTime')" label-class-name="member-label" class-name="member-context">
-          <span v-if="memberDetail.lastLoginTime === null" v-formatter="{data: memberDetail.lastLoginTime,timeZone: timeZone,type: 'date'}" />
+          <span v-if="memberDetail.lastLoginTime !== null" v-formatter="{data: memberDetail.lastLoginTime,timeZone: timeZone,type: 'date'}" />
           <span v-if="memberDetail.lastLoginTime === null">-</span>
         </el-descriptions-item>
         <el-descriptions-item label-align="left" :label="t('fields.lastLoginIp')" label-class-name="member-label" class-name="member-context">

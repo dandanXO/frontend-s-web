@@ -287,6 +287,12 @@
             <span v-if="scope.row.regTime !== null" v-formatter="{data: scope.row.regTime,timeZone: timeZone,type: 'date'}" />
           </template>
         </el-table-column>
+        <el-table-column prop="approveBy" :label="t('fields.createBy')" width="160">
+          <template #default="scope">
+            <span v-if="scope.row.approveBy === null">-</span>
+            <span v-if="scope.row.approveBy !== null">{{ scope.row.approveBy }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           :label="t('fields.operate')"
           align="center"

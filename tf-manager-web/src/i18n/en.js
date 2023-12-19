@@ -1933,7 +1933,7 @@ export default {
     SPORT: 'Sport App',
     ESPORT: 'Esport App',
     NORMAL: 'Normal',
-    NEW_KEY: 'New Key',
+    NEW_KEY: 'Antivirus',
     appUpload: 'App Upload',
     editAppUpload: 'Edit App Upload',
   },
