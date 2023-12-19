@@ -214,6 +214,14 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      class="pagination"
+      @current-change="changePage"
+      layout="prev, pager, next"
+      :page-size="request.size"
+      :page-count="page.pages"
+      :current-page="request.current"
+    />
   </div>
 </template>
 
@@ -222,7 +230,7 @@ import { nextTick, onMounted, reactive, ref, computed } from 'vue'
 import { getSiteListSimple } from '../../../api/site'
 import { getActivePaymentTypes } from '../../../api/payment-type'
 import { getCurrencyNames } from '../../../api/currency'
-import { getSystemAutoPaymentTypeList, createSystemAutoPaymentType, createSystemAutoPaymentPlaltform, updateystemAutoPaymentType, deleteSystemAutoPaymentPlaltform } from '../../../api/system-auto-withdraw-type'
+import { disableSystemAutoPaymentTypeBySite, getSystemAutoPaymentTypeList, createSystemAutoPaymentType, createSystemAutoPaymentPlaltform, updateystemAutoPaymentType, deleteSystemAutoPaymentPlaltform } from '../../../api/system-auto-withdraw-type'
 import { getWithdrawPlatforms } from "../../../api/withdraw-platform";
 import { getSiteWithdrawPlatform } from "../../../api/site-withdraw-platform";
 import { required } from '../../../utils/validate'
@@ -264,7 +272,7 @@ const list = reactive({
   withdrawPlatformByPayType: [],
 })
 const page = reactive({
-  pages: 0,
+  pages: 1,
   records: [],
   loading: false,
 })
@@ -380,11 +388,9 @@ function payTypeByExistingPayType() {
   });
 }
 
-function disableAll() {
-  page.records.forEach(record => {
-    record.status = false
-    updateystemAutoPaymentType(record)
-  })
+async function disableAll() {
+  await disableSystemAutoPaymentTypeBySite(request.siteId)
+  loadAutoPaymentType()
 }
 
 function changeStatus(data, status) {
@@ -418,18 +424,17 @@ function showDialog(type) {
 }
 
 function showPlatfromDialog(type, data) {
-  loadWithdrawName()
+  form.withdrawAmountMax = 0
+  form.withdrawAmountMin = 0
   list.withdrawPlatformByPayType = []
+  loadWithdrawName()
   list.filteredwithdrawPlatform.forEach(item => {
     if (item.type === data.paymentTypeCode) {
       list.withdrawPlatformByPayType.push(item)
     }
   })
-
   if (type === 'CREATE') {
     if (platformForm.value) {
-      form.withdrawAmountMax = 0
-      form.withdrawAmountMin = 0
       platformForm.value.resetFields()
     }
     form.autoWithdrawTypeId = data.id
@@ -496,6 +501,11 @@ function submitPlatform() {
   if (uiControl.platformDialogType === 'CREATE') {
     createPlatform()
   }
+}
+
+function changePage(page) {
+  request.current = page
+  loadAutoPaymentType()
 }
 
 onMounted(async() => {

@@ -17,6 +17,10 @@ export const updateystemAutoPaymentType = (systemAutoPaymentType) => {
   return https().request(`/system-auto-withdraw/update?_method=PUT`, Method.POST, systemAutoPaymentType, ContentType.form);
 };
 
+export const disableSystemAutoPaymentTypeBySite = (systemAutoPaymentType) => {
+  return https().request(`/system-auto-withdraw/disableAll?_method=PUT`, Method.POST, systemAutoPaymentType, ContentType.form);
+};
+
 export const updateSystemAutoPaymentPlaltform = (systemAutoPaymentType) => {
   return https().request(`/system-auto-withdraw/updatePlatform?_method=PUT`, Method.POST, systemAutoPaymentType, ContentType.form);
 };
