@@ -9,35 +9,31 @@
       infinite
     >
       <template v-slot:navigation-icon="{ active, onClick }">
-        <q-btn
-          padding="3px 10px"
-          v-if="active"
-          size="xs"
-          color="brand"
-          @click="onClick"
-        />
-        <q-btn
-          padding="3px 10px"
-          v-else
-          size="xs"
-          color="white"
-          @click="onClick"
-        />
+        <q-btn padding="3px 10px" v-if="active" size="xs" color="brand" @click="onClick" />
+        <q-btn padding="3px 10px" v-else size="xs" color="white" @click="onClick" />
       </template>
+
+      <!--      <q-carousel-slide-->
+      <!--        name="mainSlide"-->
+      <!--        class="column no-wrap flex-center"-->
+      <!--        :img-src="-->
+      <!--          !$q.screen.gt.sm-->
+      <!--            ? require('../assets/images/index/main-home-banner-mobile.jpg')-->
+      <!--            : require('../assets/images/index/main-home-banner-desktop.jpg')-->
+      <!--        "-->
+      <!--        @click="gotoPromo(0)"-->
+      <!--      >-->
+      <!--        <h1 class="main-slide-txt">ออนไลน์คาสิโนที่ไว้ใจได้-Jolly88</h1>-->
+      <!--      </q-carousel-slide>-->
 
       <q-carousel-slide
         v-for="(banner, i) in banners"
         :key="i"
         :name="i"
         class="column no-wrap flex-center"
-        :img-src="
-          !$q.screen.gt.sm
-            ? imgURL + banner.mobileImageUrl
-            : imgURL + banner.desktopImageUrl
-        "
+        :img-src="!$q.screen.gt.sm ? imgURL + banner.mobileImageUrl : imgURL + banner.desktopImageUrl"
         @click="gotoPromo(banner)"
-      >
-      </q-carousel-slide>
+      ></q-carousel-slide>
     </q-carousel>
 
     <div class="midd">
@@ -45,208 +41,173 @@
         <div class="volume">
           <img src="../assets/images/menu/announce-icon.png" />
         </div>
-        <marquee-text
-          :repeat="announcementList.length"
-          :duration="announcementList.length * 20"
-        >
+        <marquee-text :repeat="announcementList.length" :duration="announcementList.length * 20">
           <div v-if="announcementList">
-            <span
-              v-for="(a, i) in announcementList"
-              :key="i"
-              @click="openPopup(a)"
-            >
+            <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
               {{ a.content }}
             </span>
           </div>
         </marquee-text>
       </div>
     </div>
-    <div class="items-center grid">
-      <div
-        class="game-board-item"
-        :class="currentSelectedMenu == 'slots' ? 'active-board' : ''"
-        @click="switchMenu('slots')"
-      >
-        <img src="../assets/images/index/home-slot.png" />
-        <span>{{ $t("lang.slot_header") }}</span>
-      </div>
-      <div
-        class="game-board-item"
-        :class="currentSelectedMenu == 'sport' ? 'active-board' : ''"
-        @click="switchMenu('sport')"
-      >
-        <img src="../assets/images/index/home-sport.png" />
-        <span>{{ $t("lang.sport_header") }}</span>
-      </div>
+    <div class="grid-wrapper">
+      <div class="items-center grid" ref="gameBoardRef">
+        <div
+          v-for="(e, i) in gameBoardItemData"
+          :key="`gbi-${i}`"
+          ref="gameBoardItemRef"
+          class="game-board-item"
+          :class="currentSelectedMenu == e.name ? 'active-board' : ''"
+          @click="switchMenu(e.name, i)"
+        >
+          <img :src="require(`../assets/images/index/${e.imgName}`)" />
+          <span>{{ e.label }}</span>
+        </div>
 
-      <div
-        class="game-board-item"
-        :class="currentSelectedMenu == 'live' ? 'active-board' : ''"
-        @click="switchMenu('live')"
-      >
-        <img src="../assets/images/index/home-live.png" />
-        <span>{{ $t("lang.live_header") }}</span>
-      </div>
+        <!--      <div-->
+        <!--        class="game-board-item"-->
+        <!--        :class="currentSelectedMenu == 'xfj' ? 'active-board' : ''"-->
+        <!--        @click="switchMenu('xfj')"-->
+        <!--      >-->
+        <!--        <img src="../assets/images/index/home-cf.png"/>-->
+        <!--        <span>{{ $t("lang.fish2_list") }}</span>-->
+        <!--      </div>-->
 
-      <div
-        class="game-board-item"
-        :class="currentSelectedMenu == 'fish' ? 'active-board' : ''"
-        @click="switchMenu('fish')"
-      >
-        <img src="../assets/images/index/home-fish.png" />
-        <span>{{ $t("lang.fish_header") }}</span>
+        <!--      <div class="game-board-item"-->
+        <!--           :class="(currentSelectedMenu=='fish2') ? 'active-board' : ''"-->
+        <!--           @click="switchMenu('fish2')"-->
+        <!--      >-->
+        <!--        <img src="../assets/images/index/home-fish2.png"/>-->
+        <!--        <span>เกมส์เล็ก ๆ</span>-->
+        <!--      </div>-->
       </div>
-
-      <div
-        class="game-board-item"
-        :class="currentSelectedMenu == 'cf' ? 'active-board' : ''"
-        @click="switchMenu('cf')"
-      >
-        <img src="../assets/images/index/home-cf.png" />
-        <span>{{ $t("lang.fish2_list") }}</span>
-      </div>
-
-      <div
-        class="game-board-item"
-        :class="currentSelectedMenu == 'casual' ? 'active-board' : ''"
-        @click="switchMenu('casual')"
-      >
-        <img src="../assets/images/index/home-esport.png" />
-        <span>E-Sport</span>
-      </div>
-
-      <div
-        class="game-board-item"
-        :class="currentSelectedMenu == 'lottery' ? 'active-board' : ''"
-        @click="switchMenu('lottery')"
-      >
-        <img src="../assets/images/index/home-lottery.png" />
-        <span>{{ $t("lang.lottery_list") }}</span>
-      </div>
-
-      <!--      <div class="game-board-item"-->
-      <!--           :class="(currentSelectedMenu=='fish2') ? 'active-board' : ''"-->
-      <!--           @click="switchMenu('fish2')"-->
-      <!--      >-->
-      <!--        <img src="../assets/images/index/home-fish2.png"/>-->
-      <!--        <span>เกมส์เล็ก ๆ</span>-->
-      <!--      </div>-->
     </div>
 
     <Transition>
-      <div
-        class="game-grid-lists"
-        id="id-sport-board"
-        v-if="currentSelectedMenu === 'sport'"
-      >
+      <div class="game-grid-lists" id="id-sport-board" v-if="currentSelectedMenu === 'sport'">
         <div
           class="game-item btn-pointer mid-grid-column"
           v-for="(sport, index) in sportsGame"
           :key="`sports-${index}`"
           @click="playGame(sport.name, sport.code, sport.gameCode)"
         >
-          <img
-            :src="require(`../assets/images/games/sport/${sport.gameName}.png`)"
-          />
+          <div
+            class="platform-img"
+            :style="{
+              backgroundImage: (() => {
+                try {
+                  return `url(${require(`../assets/images/games/sport/${sport.gameName}.png`)})`;
+                } catch (e) {
+                  return `url(${comingSoonImg})`;
+                }
+              })()
+            }"
+          ></div>
         </div>
       </div>
     </Transition>
 
     <Transition>
-      <div
-        class="game-grid-lists"
-        id="id-live-board"
-        v-if="currentSelectedMenu === 'live'"
-      >
+      <div class="game-grid-lists" id="id-live-board" v-if="currentSelectedMenu === 'live'">
         <div
           class="game-item btn-pointer"
           v-for="(p, index) in liveCasinoGames"
           :key="`live-${index}`"
           @click="playGame(p.name, p.code, p.gameCode)"
         >
-          <img :src="require(`../assets/images/games/live/${p.code}.png`)" />
+          <div
+            class="platform-img"
+            :style="{
+              backgroundImage: (() => {
+                try {
+                  return `url(${require(`../assets/images/games/live/${p.code}.png`)})`;
+                } catch (e) {
+                  return `url(${comingSoonImg})`;
+                }
+              })()
+            }"
+          ></div>
         </div>
       </div>
     </Transition>
 
     <Transition>
-      <div
-        class="game-grid-lists"
-        id="id-lottery-board"
-        v-if="currentSelectedMenu === 'lottery'"
-      >
-        <div class="coming-soon-div">
+      <div class="game-grid-lists" id="id-lottery-board" v-if="currentSelectedMenu === 'lottery'">
+        <div v-if="lotteryGames.length === 0" class="coming-soon-div">
           <img src="../assets/home/coming-soon-img.png" />
           <span>{{ $t("lang.coming_soon") }}</span>
         </div>
       </div>
     </Transition>
     <Transition>
-      <div
-        class="game-grid-lists"
-        id="id-cf-board"
-        v-if="currentSelectedMenu === 'cf'"
-      >
-        <div class="coming-soon-div">
+      <div class="game-grid-lists" id="id-cf-board" v-if="currentSelectedMenu === 'xfj'">
+        <div v-if="xfjGames.length === 0" class="coming-soon-div">
           <img src="../assets/home/coming-soon-img.png" />
           <span>{{ $t("lang.coming_soon") }}</span>
         </div>
-      </div>
-    </Transition>
-    <Transition>
-      <div
-        class="game-grid-lists"
-        id="id-fish2-board"
-        v-if="currentSelectedMenu === 'fish2'"
-      >
-        <div class="coming-soon-div">
-          <img src="../assets/home/coming-soon-img.png" />
-          <span>{{ $t("lang.coming_soon") }}</span>
-        </div>
-      </div>
-    </Transition>
 
-    <Transition>
-      <div
-        class="game-grid-lists"
-        id="id-slot-board"
-        v-if="currentSelectedMenu === 'slots' && !isShow"
-      >
         <div
-          v-if="store.hasToken()"
-          class="game-item btn-pointer btn-slot-game"
-          @click="showFavourite()"
+          class="game-item btn-pointer"
+          :class="xfjGames.length === 1 ? 'mid-grid-column' : ''"
+          v-for="(p, index) in xfjGames"
+          :key="`xfj-${index}`"
+          @click="playGame(p.name, p.code, 'aviator')"
         >
+          <div
+            class="platform-img"
+            :style="{
+              backgroundImage: (() => {
+                try {
+                  return `url(${require(`../assets/images/games/xfj/${p.code}.png`)})`;
+                } catch (e) {
+                  return `url(${comingSoonImg})`;
+                }
+              })()
+            }"
+          ></div>
+        </div>
+
+
+      </div>
+    </Transition>
+    <Transition>
+      <div class="game-grid-lists" id="id-fish2-board" v-if="currentSelectedMenu === 'fish2'">
+        <div class="coming-soon-div">
+          <img src="../assets/home/coming-soon-img.png" />
+          <span>{{ $t("lang.coming_soon") }}</span>
+        </div>
+      </div>
+    </Transition>
+
+    <Transition>
+      <div class="game-grid-lists" id="id-slot-board" v-if="currentSelectedMenu === 'slots' && !isShow">
+        <div v-if="store.hasToken()" class="game-item btn-pointer btn-slot-game" @click="showFavourite()">
           <img :src="require('../assets/home/slot/slot-favourite-board.png')" />
         </div>
 
         <template v-for="p in platforms" :key="p">
-          <div
-            class="game-item btn-pointer btn-slot-game"
-            @click="selectSlotPlat(p)"
-          >
-            <img :src="require('../assets/home/slot/' + p.code + '.png')" />
+          <div class="game-item btn-pointer btn-slot-game" @click="selectSlotPlat(p)">
+            <div
+              class="platform-img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/home/slot/${p.code}.png`)})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"
+            ></div>
           </div>
         </template>
-
-        <div class="game-item">
-          <img :src="require('../assets/home/slot/' + 'StayTuned' + '.png')" />
-        </div>
       </div>
     </Transition>
     <Transition>
-      <div
-        class="game-scroll-lists"
-        id="id-slot-board"
-        v-if="currentSelectedMenu === 'slots' && isShow"
-      >
+      <div class="game-scroll-lists" id="id-slot-board" v-if="currentSelectedMenu === 'slots' && isShow">
         <q-scroll-area
           style="height: 500px"
-          :style="
-            !$q.screen.gt.sm
-              ? 'width: 80px; max-width: 80px'
-              : 'width: 120px; max-width: 120px'
-          "
+          :style="!$q.screen.gt.sm ? 'width: 80px; max-width: 80px' : 'width: 120px; max-width: 120px'"
         >
           <div class="bookmarks">
             <div
@@ -265,7 +226,20 @@
               :key="p"
               @click="switchPlat(p, 'slots')"
             >
-              <img :src="require('../assets/logo/' + p.code + '.png')" />
+              <div
+                class="platform-img"
+                :style="{
+                  backgroundImage: (() => {
+                    try {
+                      return `url(${require(`../assets/logo/${p.code}.png`)})`;
+                    } catch (e) {
+                      return `url(${comingSoonImg})`;
+                    }
+                  })()
+                }"
+              ></div>
+
+              <!--                <img :src="require('../assets/logo/' + p.code + '.png')" />-->
             </div>
           </div>
           <q-scroll-observer axis="vertical" />
@@ -278,18 +252,10 @@
         <q-scroll-area
           v-if="!isLoading && selectedPlatId === -99"
           style="height: 500px"
-          :style="
-            !$q.screen.gt.sm
-              ? 'width: calc(100% - 80px)'
-              : 'width: calc(100% - 120px)'
-          "
+          :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
         >
           <!-- FAVOURITE -->
-          <div
-            class="slot-grid"
-            style="padding-bottom: 20px"
-            v-if="sortedFavGamesList.length > 0"
-          >
+          <div class="slot-grid" style="padding-bottom: 20px" v-if="sortedFavGamesList.length > 0">
             <div
               v-for="(game, index) in sortedFavGamesList"
               :key="index"
@@ -301,45 +267,36 @@
               <transition name="in-view">
                 <q-list
                   class="btn-slot-game q-col-gutter-none"
-                  @click="
-                    openFavGame(game.name, game.code, selectedPlat.status, game)
-                  "
+                  @click="openFavGame(game.name, game.code, selectedPlat.status, game)"
                 >
-                  <q-img
-                    loading="lazy"
-                    :src="game.icon"
-                    :placeholder-src="game.default"
-                    fit="fill"
-                    height="auto"
-                    spinner-color="white"
-                    position="50% 20%"
-                    style="border-radius: 20px; overflow: hidden"
-                    :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
-                  >
+                  <div>
+                    <q-img
+                      loading="lazy"
+                      :src="game.icon"
+                      :placeholder-src="game.default"
+                      fit="fill"
+                      height="auto"
+                      spinner-color="white"
+                      position="50% 20%"
+                      style="border-radius: 20px; overflow: hidden"
+                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
+                    >
+                      <template v-slot:loading>
+                        <img
+                          :src="game.default"
+                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
+                        />
+                      </template>
+                    </q-img>
                     <div class="slot-name">
                       {{ game.name }}
-                      <!-- --- {{ game.gameClicked }} -->
                     </div>
-                    <template v-slot:loading>
-                      <img
-                        :src="game.default"
-                        style="
-                          width: 100%;
-                          height: 100%;
-                          border-radius: 15px;
-                          overflow: hidden;
-                        "
-                      />
-                    </template>
-                  </q-img>
+                  </div>
                 </q-list>
               </transition>
 
               <template v-if="favLists.indexOf(game.id) === -1">
-                <RiStarLine
-                  @click="toggleFavGame(game.id, true)"
-                  class="favourite-star"
-                />
+                <RiStarLine @click="toggleFavGame(game.id, true)" class="favourite-star" />
               </template>
               <template v-else>
                 <RiStarFill
@@ -361,11 +318,7 @@
           v-if="!isLoading && selectedPlatId !== -99"
           ref="scrollSlotRef"
           style="height: 500px"
-          :style="
-            !$q.screen.gt.sm
-              ? 'width: calc(100% - 80px)'
-              : 'width: calc(100% - 120px)'
-          "
+          :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
         >
           <div class="search-list">
             <q-form @submit="searchList">
@@ -378,12 +331,7 @@
                 :label="$t('lang.keyin_keyword')"
               >
                 <template v-slot:prepend>
-                  <q-icon
-                    color="white"
-                    name="search"
-                    @click="gamePage.searchKey = ''"
-                    class="cursor-pointer"
-                  />
+                  <q-icon color="white" name="search" @click="gamePage.searchKey = ''" class="cursor-pointer" />
                 </template>
                 <template v-slot:append>
                   <q-icon
@@ -418,45 +366,38 @@
               <transition name="in-view">
                 <q-list
                   class="btn-slot-game q-col-gutter-none"
-                  @click="
-                    openGame(game.name, game.code, selectedPlat.status, game)
-                  "
+                  @click="openGame(game.name, game.code, selectedPlat.status, game)"
                 >
-                  <q-img
-                    loading="lazy"
-                    :src="game.icon"
-                    :placeholder-src="game.default"
-                    fit="fill"
-                    height="auto"
-                    spinner-color="white"
-                    position="50% 20%"
-                    style="border-radius: 20px; overflow: hidden"
-                    :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
-                  >
+                  <div>
+                    <q-img
+                      loading="lazy"
+                      :src="game.icon"
+                      :placeholder-src="game.default"
+                      fit="fill"
+                      height="auto"
+                      spinner-color="white"
+                      position="50% 20%"
+                      style="border-radius: 20px; overflow: hidden"
+                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
+                    >
+                      <template v-slot:loading>
+                        <img
+                          :src="game.default"
+                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
+                        />
+                      </template>
+                    </q-img>
                     <div class="slot-name">{{ game.name }}</div>
-                    <template v-slot:loading>
-                      <img
-                        :src="game.default"
-                        style="
-                          width: 100%;
-                          height: 100%;
-                          border-radius: 15px;
-                          overflow: hidden;
-                        "
-                      />
-                    </template>
-                  </q-img>
+                  </div>
                 </q-list>
               </transition>
 
               <template v-if="favLists.indexOf(game.id) === -1">
-                <RiStarLine
-                  @click="toggleFavGame(game.id, true)"
-                  class="favourite-star"
-                />
+                <RiStarLine @click="toggleFavGame(game.id, true)" v-if="store.hasToken()" class="favourite-star" />
               </template>
               <template v-else>
                 <RiStarFill
+                  v-if="store.hasToken()"
                   @click="toggleFavGame(game.id, false)"
                   class="favourite-star"
                   style="fill: #ffd700 !important"
@@ -464,17 +405,17 @@
               </template>
 
               <!-- <q-img
-                  loading="lazy"
-                  :src="game.icon"
-                  :placeholder-src="defaultImg"
-                  fit="cover"
-                  height="120px"
-                  no-spinner
-              >
-                <template v-slot:loading>
-                  <img :src="game.default" style="height: 140px; max-width: 200px; border-radius: 15px; overflow:hidden;">
-                </template>
-              </q-img> -->
+                    loading="lazy"
+                    :src="game.icon"
+                    :placeholder-src="defaultImg"
+                    fit="cover"
+                    height="120px"
+                    no-spinner
+                >
+                  <template v-slot:loading>
+                    <img :src="game.default" style="height: 140px; max-width: 200px; border-radius: 15px; overflow:hidden;">
+                  </template>
+                </q-img> -->
               <!-- <img :loading="'lazy'" :class="selectedPlat.code === 'PG' ? 'zoomin' : ''" :src="game.icon" v-bind:alt="game.default" > -->
             </div>
           </div>
@@ -485,34 +426,30 @@
     </Transition>
 
     <Transition>
-      <div
-        class="game-grid-lists"
-        id="id-fish-board"
-        v-if="currentSelectedMenu === 'fish' && !isShow"
-      >
+      <div class="game-grid-lists" id="id-fish-board" v-if="currentSelectedMenu === 'fish' && !isShow">
         <template v-for="p in fishPlatforms" :key="p">
-          <div
-            class="game-item btn-pointer btn-slot-game"
-            @click="selectFishPlat(p)"
-          >
-            <img :src="require('../assets/home/fish/' + p.code + '.png')" />
+          <div class="game-item btn-pointer btn-slot-game" @click="selectFishPlat(p)">
+            <div
+              class="platform-img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/home/fish/${p.code}.png`)})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"
+            ></div>
           </div>
         </template>
       </div>
     </Transition>
     <Transition>
-      <div
-        class="game-scroll-lists"
-        id="id-fish-board"
-        v-if="currentSelectedMenu === 'fish' && isShow"
-      >
+      <div class="game-scroll-lists" id="id-fish-board" v-if="currentSelectedMenu === 'fish' && isShow">
         <q-scroll-area
           style="height: 500px"
-          :style="
-            !$q.screen.gt.sm
-              ? 'width: 80px; max-width: 80px'
-              : 'width: 120px; max-width: 120px'
-          "
+          :style="!$q.screen.gt.sm ? 'width: 80px; max-width: 80px' : 'width: 120px; max-width: 120px'"
         >
           <div class="bookmarks">
             <div
@@ -522,7 +459,18 @@
               :key="p"
               @click="switchPlat(p, 'fish')"
             >
-              <img :src="require('../assets/logo/' + p.code + '.png')" />
+              <div
+                class="platform-img"
+                :style="{
+                  backgroundImage: (() => {
+                    try {
+                      return `url(${require(`../assets/logo/${p.code}.png`)})`;
+                    } catch (e) {
+                      return `url(${comingSoonImg})`;
+                    }
+                  })()
+                }"
+              ></div>
             </div>
           </div>
           <q-scroll-observer axis="vertical" />
@@ -535,11 +483,7 @@
           v-if="!isLoading"
           ref="scrollPageRef"
           style="height: 500px"
-          :style="
-            !$q.screen.gt.sm
-              ? 'width: calc(100% - 80px)'
-              : 'width: calc(100% - 120px)'
-          "
+          :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
         >
           <div class="search-list">
             <q-form @submit="searchList">
@@ -552,12 +496,7 @@
                 :label="$t('lang.keyin_keyword')"
               >
                 <template v-slot:prepend>
-                  <q-icon
-                    color="white"
-                    name="search"
-                    @click="gamePage.searchKey = ''"
-                    class="cursor-pointer"
-                  />
+                  <q-icon color="white" name="search" @click="gamePage.searchKey = ''" class="cursor-pointer" />
                 </template>
                 <template v-slot:append>
                   <q-icon
@@ -592,44 +531,41 @@
             >
               <transition name="in-view">
                 <q-list class="q-col-gutter-none">
-                  <q-img
-                    loading="lazy"
-                    :src="game.icon"
-                    :placeholder-src="game.default"
-                    fit="fill"
-                    height="auto"
-                    spinner-color="white"
-                    position="50% 20%"
-                    style="border-radius: 20px; overflow: hidden"
-                    :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
-                  >
+                  <div>
+                    <q-img
+                      loading="lazy"
+                      :src="game.icon"
+                      :placeholder-src="game.default"
+                      fit="fill"
+                      height="auto"
+                      spinner-color="white"
+                      position="50% 20%"
+                      style="border-radius: 20px; overflow: hidden"
+                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
+                    >
+                      <template v-slot:loading>
+                        <img
+                          :src="game.default"
+                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
+                        />
+                      </template>
+                    </q-img>
                     <div class="slot-name">{{ game.name }}</div>
-                    <template v-slot:loading>
-                      <img
-                        :src="game.default"
-                        style="
-                          width: 100%;
-                          height: 100%;
-                          border-radius: 15px;
-                          overflow: hidden;
-                        "
-                      />
-                    </template>
-                  </q-img>
+                  </div>
                 </q-list>
               </transition>
               <!-- <q-img
-                  loading="lazy"
-                  :src="game.icon"
-                  :placeholder-src="defaultImg"
-                  fit="cover"
-                  height="120px"
-                  no-spinner
-              >
-                <template v-slot:loading>
-                  <img :src="game.default" style="height: 140px; max-width: 200px; border-radius: 15px; overflow:hidden;">
-                </template>
-              </q-img> -->
+                    loading="lazy"
+                    :src="game.icon"
+                    :placeholder-src="defaultImg"
+                    fit="cover"
+                    height="120px"
+                    no-spinner
+                >
+                  <template v-slot:loading>
+                    <img :src="game.default" style="height: 140px; max-width: 200px; border-radius: 15px; overflow:hidden;">
+                  </template>
+                </q-img> -->
               <!-- <img :loading="'lazy'" :class="selectedPlat.code === 'PG' ? 'zoomin' : ''" :src="game.icon" v-bind:alt="game.default" > -->
             </div>
           </div>
@@ -640,83 +576,100 @@
     </Transition>
 
     <Transition>
-      <div
-        class="game-grid-lists"
-        id="id-casual-board"
-        v-if="currentSelectedMenu === 'casual' && !isShow"
-      >
+      <div class="game-grid-lists" id="id-casual-board" v-if="currentSelectedMenu === 'casual' && !isShow">
         <template v-for="miniplat in platformMinigame" :key="miniplat.id">
           <div
-            class="game-item btn-pointer mid-grid-column"
-            @click="selectCasualPlat(miniplat)"
+            v-if="miniplat.code === 'Spribe'"
+            class="game-item btn-pointer"
+            @click="playGame(miniplat.name, miniplat.code, 'aviator')"
           >
-            <img src="../assets/images/games/casual/TFGaming.png" />
+            <div
+              class="platform-img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/games/casual/${miniplat.code}.png`)})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"
+            ></div>
+          </div>
+          <div v-else class="game-item btn-pointer" @click="selectCasualPlat(miniplat)">
+            <div
+              class="platform-img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/games/casual/${miniplat.code}.png`)})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"
+            ></div>
           </div>
         </template>
       </div>
     </Transition>
-
     <Transition>
-      <div
-        class="game-grid-lists"
-        id="id-casual-board"
-        v-if="currentSelectedMenu === 'casual' && isShow"
-      >
+      <div class="game-grid-lists" id="id-minigame-board" v-if="currentSelectedMenu === 'casual' && isShow">
         <div class="loading-div" v-if="isLoading">
           <q-spinner-hourglass :color="ui.themeColor" size="8em" />
         </div>
         <template v-if="!isLoading">
-          <div
-            class="game-item btn-pointer btn-slot-game"
-            v-for="(game, index) in miniGames"
-            :key="index"
-            @click="playGame(game.name, 'TFGaming', 'casual_' + game.code)"
-          >
-            <img
-              :src="require('../assets/home/casual/' + game.code + '.png')"
-            />
-          </div>
+          <template v-for="(game, index) in miniGames" :key="index">
+            <div class="game-item btn-pointer btn-slot-game" @click="playGame(game.name, selectedPlat.code, game.code)">
+              <div
+                class="platform-img"
+                :style="{
+                  backgroundImage: (() => {
+                    try {
+                      return `url(${game.icon})`;
+                    } catch (e) {
+                      return `url(${comingSoonImg})`;
+                    }
+                  })()
+                }"
+              ></div>
+            </div>
+          </template>
 
-          <div
-            class="game-item minigame-select-div"
-            v-for="(game, index) in miniGamesMore"
-            :key="index"
-            @click="showTypeH5(game.id)"
-            @mouseover="showTypeWeb(game.id)"
-            @mouseleave="showTypeWeb(0)"
-          >
-            <img :src="game.logo" />
+          <template v-if="selectedPlat.code === 'TFGaming'">
+            <div
+              class="game-item minigame-select-div"
+              v-for="(game, index) in miniGamesMore"
+              :key="index"
+              @click="showTypeH5(game.id)"
+              @mouseover="showTypeWeb(game.id)"
+              @mouseleave="showTypeWeb(0)"
+            >
+              <img :src="game.logo" />
 
-            <transition appear>
-              <div class="select-type-div" v-if="showMiniType == game.id">
-                <div
-                  class="game-type btn-pointer"
-                  id="copper-type"
-                  @click="
-                    playGame(game.name, 'TFGaming', 'casual_' + game.copper)
-                  "
-                >
-                  10 - 3,000
+              <transition appear>
+                <div class="select-type-div" v-if="showMiniType == game.id">
+                  <div
+                    class="game-type btn-pointer"
+                    id="copper-type"
+                    @click="playGame(game.name, 'TFGaming', game.copper)"
+                  >
+                    10 - 3,000
+                  </div>
+                  <div
+                    class="game-type btn-pointer"
+                    id="silver-type"
+                    @click="playGame(game.id, 'TFGaming', game.silver)"
+                  >
+                    500 - 100K
+                  </div>
+                  <div class="game-type btn-pointer" id="gold-type" @click="playGame(game.id, 'TFGaming', game.gold)">
+                    1,000 - 20K
+                  </div>
                 </div>
-                <div
-                  class="game-type btn-pointer"
-                  id="silver-type"
-                  @click="
-                    playGame(game.id, 'TFGaming', 'casual_' + game.silver)
-                  "
-                >
-                  500 - 100K
-                </div>
-                <div
-                  class="game-type btn-pointer"
-                  id="gold-type"
-                  @click="playGame(game.id, 'TFGaming', 'casual_' + game.gold)"
-                >
-                  1,000 - 20K
-                </div>
-              </div>
-            </transition>
-          </div>
+              </transition>
+            </div>
+          </template>
         </template>
       </div>
     </Transition>
@@ -742,6 +695,8 @@
         <img src="../assets/logo/TF88.png" height="30" />
         <img src="../assets/logo/WM.png" height="30" />
         <img src="../assets/logo/YGG.png" height="30" />
+        <img src="../assets/logo/CG.png" height="30" />
+        <img src="../assets/logo/SP.png" height="30" />
       </Vue3Marquee>
     </div>
 
@@ -761,14 +716,7 @@
         <div class="menu-title flex justify-between items-center">
           <div style="margin-right: auto">&nbsp;</div>
           <div>{{ $t("lang.announcement") }}</div>
-          <q-btn
-            style="margin-left: auto"
-            icon="close"
-            flat
-            round
-            dense
-            v-close-popup
-          />
+          <q-btn style="margin-left: auto" icon="close" flat round dense v-close-popup />
         </div>
 
         <q-tabs
@@ -780,22 +728,13 @@
           align="justify"
           narrow-indicator
         >
-          <q-tab
-            v-for="(tab, i) in announcementTypes"
-            :key="i"
-            :name="tab.id"
-            :label="tab.name"
-          />
+          <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
         </q-tabs>
 
         <q-separator />
 
         <q-tab-panels v-model="activeKey" animated>
-          <q-tab-panel
-            v-for="(tab, i) in announcementTypes"
-            :key="i"
-            :name="tab.id"
-          >
+          <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
             <q-list style="min-height: 65vh">
               <div v-for="(ann, idx) in announcementList" :key="idx">
                 <span v-if="ann.typeId === tab.id">
@@ -850,6 +789,40 @@
     </q-card>
   </q-dialog>
 
+  <q-page-sticky v-if="specialInviteBonusEligible" position="right" :offset="[0, 0]">
+    <div class="special-invite-bonus-sticky" @click="redeemSpecialInviteBonus" />
+  </q-page-sticky>
+
+  <q-dialog class="special-invite-bonus-popup" width="100%" v-model="specialInviteBonusPopupVisible">
+    <div class="special-invite-bonus-container">
+      <div class="header-decoration-wrapper">
+        <div class="header-decoration">
+          <img class="confetti" src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-confetti.png" width="250" />
+          <img class="money-bags" src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-money-bags.png" width="150" />
+        </div>
+      </div>
+      <div class="special-invite-bonus-content">
+        <div class="title-wrapper">
+          <div class="title">โบนัสพิเศษสำหรับสมาชิกที่ได้รับเชิญ </div>
+          <div class="reward-amt">200</div>
+        </div>
+        <div class="desc-wrapper">
+          <div class="desc-title">
+            ข้อกำหนดและเงื่อนไข
+          </div>
+          <div class="desc-content">
+            - โบนัสนี้สามารถ ถอนได้ที่ 2000 บาทเท่านั้น<br>
+            - สามารถแจ้งถอนได้เมื่อยอดเครดิตถึง 2000 บาท<br>
+            - ยอดเงินที่เหลือตจะถูกหักออกทันทีหลังการถอนสำเร็จ<br>
+            - โบนัสนี้ไม่สามารถใช้ซื้อฟรีสปินได้<br>
+            - บัญชีที่มี IP เดียวกันหรือข้อมูลที่คล้ายกันจะถูกตัดสิทธิ์จากการรับโปรโมชั่นนี้
+          </div>
+        </div>
+        <div class="special-invite-bonus-popup-confirm-btn" @click="toggleSpecialInviteBonusPopup(false)">{{ $t("lang.confirm") }}</div>
+      </div>
+    </div>
+  </q-dialog>
+
   <q-dialog class="home-popup-banner" width="100%" v-model="isHomePromoModal">
     <div class="promo-popup-div">
       <q-btn
@@ -866,57 +839,95 @@
       <img src="../assets/images/common/home-popup-img.png" />
 
       <div class="popup-list">
-        <router-link to="/promo?id=80">
+        <router-link to="/promo?id=81">
           <div class="popup-item">
-            <span
-            >แนะนำเพื่อน รับโบนัสสูงถึง <em>6,888</em> รับเงินคืนสูงสุด
-              <em>20,000</em></span
-            >
+            <span>
+              คลิกเพื่อหมุน รางวัลสูงสุด
+              <em>8,880</em>
+              และ
+              <em>IPHONE</em>
+            </span>
           </div>
         </router-link>
-        <router-link to="/promo?id=75">
+        <router-link to="/promo?id=80">
           <div class="popup-item">
-            <span
-              >สมาชิกใหม่ รับฟรี <em>50</em> ถอนสูงสุดถึง <em>1,000</em></span
-            >
+            <span>
+              แนะนำเพื่อน รับโบนัสสูงถึง
+              <em>6,888</em>
+              รับเงินคืนสูงสุด
+              <em>20,000</em>
+            </span>
           </div>
         </router-link>
         <router-link to="/promo?id=76">
           <div class="popup-item">
-            <span
-              >เลือกรับ <em>100%-150%</em> รับสูงสุด
-              <em>6,000</em> ถอนไม่อั้น</span
-            >
+            <span>
+              เลือกรับ
+              <em>100%-200%</em>
+              รับสูงสุด
+              <em>10,000</em>
+              ถอนไม่อั้น
+            </span>
           </div>
         </router-link>
-        <router-link to="/promo?id=77">
+<!--        <router-link to="/promo?id=77">
           <div class="popup-item">
-            <span
-              >โบนัสสูงสุด <em>30%</em> รับ <em>2,000</em> ทุกวัน
-              ถอนไม่อั้น</span
-            >
+            <span>
+              โบนัส
+              <em>30%</em>
+              สูงสุด
+              <em>2,000</em>
+              ถอนไม่อั้น
+            </span>
           </div>
-        </router-link>
+        </router-link>-->
         <router-link to="/promo?id=78">
           <div class="popup-item">
-            <span>โบนัส <em>15%</em> สูงสุด <em>15,000</em> ถอนไม่อั้น</span>
+            <span>
+              โบนัส
+              <em>15%</em>
+              สูงสุด
+              <em>15,000</em>
+              ถอนไม่อั้น
+            </span>
           </div>
         </router-link>
-        <router-link to="/promo?id=79">
+<!--        <router-link to="/promo?id=79">
           <div class="popup-item">
-            <span>ประกันยอดเสีย <em>10,000</em></span>
+            <span>
+              ประกันยอดเสีย
+              <em>10,000</em>
+            </span>
           </div>
-        </router-link>
+        </router-link>-->
       </div>
     </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="isSpinWheelPromo" class="modal-update-div">
+    <q-card style="width: 100%; padding: 0px 20px 20px" class="bg-primary text-white text-center">
+      <q-card-section class="q-mb-md">
+        <div class="menu-title flex justify-between items-center">
+          <div style="margin-right: auto">&nbsp;</div>
+          <div>{{ $t("lang.announcement") }}</div>
+          <q-btn style="margin-left: auto" icon="close" flat round dense v-close-popup />
+        </div>
+
+        <div class="">
+          {{ $t("lang.you_got_new_spin_wheel_spin") }}
+          <br />
+        </div>
+      </q-card-section>
+      <q-btn @click="gotoPromoSpinWheel" :label="$t('lang.go_now')" color="brand" />
+    </q-card>
   </q-dialog>
 </template>
 
 <script>
 /* eslint-disable */
-import { defineComponent, onMounted, ref, reactive, computed } from "vue";
+import { defineComponent, onMounted, ref, reactive, computed, onUnmounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { api } from "boot/axios";
+import { api, eventapi } from "boot/axios";
 import { cached } from "boot/cache";
 import { useQuasar, Platform, SessionStorage } from "quasar";
 import { userStore } from "stores/index";
@@ -942,7 +953,7 @@ export default defineComponent({
     BacktoTop,
     Vue3Marquee,
     RiStarLine,
-    RiStarFill,
+    RiStarFill
     // RiVolumeUpLine,
     // RiBilliardsLine,
     // RiBasketballLine,
@@ -953,13 +964,20 @@ export default defineComponent({
     const { t } = useI18n();
     const ui = useUI();
     const siteId = process.env.SITEID;
-    ui.$onAction(({ name, args }) => {
-      switch (name) {
-        case "setScrollPosition":
-          scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
-      }
-    });
+    // ui.$onAction(({ name, args }) => {
+    //   switch (name) {
+    //     case "setScrollPosition":
+    //       scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
+    //   }
+    // });
+    const specialInviteBonusEligible = ref(false);
+    const specialInviteBonusAmt = ref(0);
+    const specialInviteBonusPopupVisible = ref(false);
     const banners = ref([]);
+
+    const gameBoardRef = ref();
+    const gameBoardItemRef = ref();
+
     const route = useRoute();
     const router = useRouter();
     const store = userStore();
@@ -968,12 +986,7 @@ export default defineComponent({
     });
     const gameModalRef = ref(null);
     const openGame = (gameName, gameCode, gameStatus, gameInfo) => {
-      gameModalRef.value.open(
-        gameName,
-        selectedPlat.code,
-        gameCode,
-        gameStatus
-      );
+      gameModalRef.value.open(gameName, selectedPlat.code, gameCode, gameStatus);
 
       // gameInfo && console.log(gameInfo);
       // const favGames = JSON.parse(localStorage.getItem("FAV_GAMES")) || {};
@@ -995,12 +1008,7 @@ export default defineComponent({
     };
 
     const openFavGame = (gameName, gameCode, gameStatus, gameInfo) => {
-      gameModalRef.value.open(
-        gameName,
-        gameInfo.platformCode,
-        gameCode,
-        gameStatus
-      );
+      gameModalRef.value.open(gameName, gameInfo.platformCode, gameCode, gameStatus);
 
       // gameInfo && console.log(gameInfo);
       // const favGames = JSON.parse(localStorage.getItem("FAV_GAMES")) || {};
@@ -1049,9 +1057,7 @@ export default defineComponent({
 
           favGamesList.value.forEach((element) => {
             element.default = require("../assets/images/games/aviator/default.png");
-            element.icon = `${
-              process.env.IMAGE_CDN
-            }/game/${siteId}/${element.platformCode.toLowerCase()}/${
+            element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${element.platformCode.toLowerCase()}/${
               element.icon
             }.png`;
           });
@@ -1089,56 +1095,25 @@ export default defineComponent({
       //   logo: require("../assets/images/common/logo/km.png")
       // }
     ];
-    const liveCasinoGames = [
-      {
-        code: "Evo",
-        name: "Evolution",
-        gameName: "EVO",
-        logo: require("../assets/images/common/logo/evo.png"),
-        text: "In the Evolution live casino, there are the world's first 6-card start, VIP tables, badge baccarat, intelligent control baccarat waiting for you to enjoy non-stop.",
-      },
-      {
-        code: "AWC",
-        name: "AE Sexy",
-        status: "NORMAL",
-        gameName: "AE Sexy",
-        gameCode: "MX-LIVE-001",
-        logo: require("../assets/images/common/logo/ae_2.png"),
-        text: "วิดีโอไลฟ์แอ็กชันที่มีศักยภาพสูงสุดในเอเชียผลิตภัณฑ์เกมคุณภาพสูง และวิดีโอเกมที่หลากหลาย การเชื่อมต่อข้ามแพลตฟอร์มที่ง่ายดาย ทำให้คุณสนุกได้ทุกที่ทุกเวลา!",
-      },
-      {
-        code: "WM",
-        name: "WM Casino",
-        gameName: "WM",
-        status: "NORMAL",
-        logo: require("../assets/images/common/logo/WM.png"),
-        text: "AE Casino วิดีโอไลฟ์แอ็กชันที่มีศักยภาพมากที่สุดในเอเชีย เชื่อมต่อและใช้งานง่าย ข้ามแพลตฟอร์ม ฟรีดาวน์โหลด และสนุกได้ทุกที่ทุกเวลา!",
-      },
-      {
-        code: "SA",
-        name: "SA gaming",
-        gameName: "SA",
-        status: "NORMAL",
-        logo: require("../assets/images/common/logo/SA.png"),
-        text: "แพลตฟอร์มความบันเทิง EZUGI ที่มีดีลเลอร์มืออาชีพที่ผ่านการฝึกอบรมมาอย่างดีหลายร้อยคน มอบประสบการณ์คาสิโนที่แท้จริงให้กับคุณ",
-      },
-    ];
-    const esportsGame = [
-      {
-        code: "TFGaming",
-        name: "TF Gaming",
-        gameName: "AE Sexy",
-        gameCode: "MX-LIVE-001",
-        logo: require("../assets/logo/TF88.png"),
-      },
-    ];
+    const xfjGames = ref([]);
+    const liveCasinoGames = ref([]);
+    const esportsGame = ref([]);
+
+    // {
+    //   code: "TFGaming",
+    //     name: "TF Gaming",
+    //   gameName: "AE Sexy",
+    //   gameCode: "MX-LIVE-001",
+    //   logo: require("../assets/logo/TF88.png"),
+    // },
+
     const sportsGame = [
       {
         code: "SABA",
         name: "SABA Sport",
         gameName: "SABA",
-        gameCode: "SABA",
-      },
+        gameCode: "SABA"
+      }
     ];
     const platformMinigame = ref([]);
     const miniGames = ref([]);
@@ -1148,22 +1123,22 @@ export default defineComponent({
         logo: require("../assets/home/casual/2.png"),
         copper: "",
         silver: "",
-        gold: "",
+        gold: ""
       },
       {
         name: "DOTA 2 Treasure",
         logo: require("../assets/home/casual/5.png"),
         copper: "",
         silver: "",
-        gold: "",
+        gold: ""
       },
       {
         name: "LOL Draft",
         logo: require("../assets/home/casual/8.png"),
         copper: "",
         silver: "",
-        gold: "",
-      },
+        gold: ""
+      }
     ]);
 
     function loadData() {
@@ -1193,7 +1168,7 @@ export default defineComponent({
     const selectedPlatId = ref();
     const selectedPlat = reactive({
       code: "",
-      status: "",
+      status: ""
     });
     const gamePage = reactive({
       gameList: [],
@@ -1201,7 +1176,7 @@ export default defineComponent({
       pageSize: 40,
       searchType: "",
       searchKey: "",
-      total: 0,
+      total: 0
     });
     const favGamePage = reactive({
       gameList: [],
@@ -1209,18 +1184,28 @@ export default defineComponent({
       pageSize: 40,
       searchType: "",
       searchKey: "",
-      total: 0,
+      total: 0
     });
     const gameListData = ref([]);
     const fishPlatforms = ref([]);
+    const lotteryGames = ref([]);
+
+    const gameBoardItemData = [
+      { name: "slots", imgName: "home-slot.png", label: t("lang.slot_header") },
+      { name: "fish", imgName: "home-fish.png", label: t("lang.fish_header") },
+      { name: "live", imgName: "home-live.png", label: t("lang.live_header") },
+      { name: "sport", imgName: "home-sport.png", label: t("lang.sport_header") },
+      { name: "casual", imgName: "home-esport.png", label: t("lang.minigame_header") },
+      { name: "lottery", imgName: "home-lottery.png", label: t("lang.lottery_list") }
+    ];
 
     const currentSelectedMenu = ref("slots");
-    const switchMenu = (menu) => {
+    const switchMenu = (menu, index) => {
       currentSelectedMenu.value = menu;
       isShow.value = false;
       if (menu === "slots") {
         switchPlat(platforms.value[0], menu);
-      } else if (menu === "livecasino") {
+      } else if (menu === "live") {
         // switchPlat(liveCasinoGames[0], menu);
       } else if (menu === "fish") {
         switchPlat(fishPlatforms.value[0], menu);
@@ -1230,7 +1215,40 @@ export default defineComponent({
         switchPlat(sportsGame[0], menu);
       } else if (menu === "casual") {
         switchPlat(platformMinigame.value[0], menu);
+      } else if (menu === "xfjGames") {
+      } else if (menu === "lottery") {
+      } else if (menu === "esport") {
       }
+
+      const containerWidth = gameBoardRef.value.clientWidth;
+
+      const item = gameBoardItemRef.value[index];
+      const itemLeft = item.offsetLeft;
+      const itemWidth = item.clientWidth;
+
+      const scrollPosition = gameBoardRef.value.scrollLeft;
+
+      /**
+       * scrollLeft (scrollPosition) & offsetLeft (itemLeft) originated from left
+       * no complex calculation for left is normal
+       */
+      let toLeft = 0;
+      let isEdgeItem = false;
+
+      const moveAmount = containerWidth / 2;
+      const leftOffset = 30;
+
+      const rightCal = itemLeft - scrollPosition;
+      const rightEdge = containerWidth - itemWidth;
+      if (rightCal >= rightEdge) {
+        isEdgeItem = true;
+        toLeft = scrollPosition + moveAmount;
+      } else if (itemLeft <= scrollPosition + leftOffset) {
+        isEdgeItem = true;
+        toLeft = scrollPosition - moveAmount;
+      }
+
+      if (isEdgeItem) gameBoardRef.value.scrollTo({ left: toLeft, behavior: "smooth" });
     };
     const liveTabs = ref("");
     const switchPlat = (plat, menuType) => {
@@ -1244,7 +1262,7 @@ export default defineComponent({
           scrollSlotRef.value.setScrollPosition("vertical", 0);
         }
         gamePage.searchKey = "";
-      } else if (menuType === "livecasino") {
+      } else if (menuType === "live") {
         selectedLiveTab.value = plat.name;
         liveTabs.value = plat.name;
       } else if (menuType === "fish") {
@@ -1259,6 +1277,7 @@ export default defineComponent({
         selectedLiveTab.value = plat.name;
         liveTabs.value = plat.name;
       } else if (menuType === "casual") {
+        // debugger;
         selectedLiveTab.value = plat.name;
         liveTabs.value = plat.name;
 
@@ -1278,9 +1297,7 @@ export default defineComponent({
     const searchList = () => {
       if (gamePage.searchKey) {
         gamePage.gameList = gameListData.value.filter((game) => {
-          return game.name
-            .toLowerCase()
-            .includes(gamePage.searchKey.toLowerCase());
+          return game.name.toLowerCase().includes(gamePage.searchKey.toLowerCase());
         });
       } else {
         changePage(1, gamePage.pageSize);
@@ -1302,8 +1319,8 @@ export default defineComponent({
               params: {
                 platformId: code,
                 gameType: gameType,
-                device: regDevice,
-              },
+                device: regDevice
+              }
             })
             .then((ret) => {
               const res = ret.data;
@@ -1334,18 +1351,16 @@ export default defineComponent({
             });
             let games = [];
             minis.forEach((mini) => {
-              if (
-                mini.name.indexOf("(铜)") > -1 ||
-                mini.name.indexOf("(银)") > -1 ||
-                mini.name.indexOf("(金)") > -1
-              ) {
+              mini.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${mini.code}.png`;
+
+              if (mini.name.indexOf("(铜)") > -1 || mini.name.indexOf("(银)") > -1 || mini.name.indexOf("(金)") > -1) {
                 games.push(mini);
               } else {
                 miniGames.value.push(mini);
               }
             });
 
-            // console.log(games);
+            // console.log(miniGames);
 
             games.forEach((game) => {
               let index = _.findIndex(miniGamesMore.value, function (o) {
@@ -1363,9 +1378,7 @@ export default defineComponent({
           } else {
             res.forEach((element) => {
               element.default = require("../assets/images/games/aviator/default.png");
-              element.icon = `${
-                process.env.IMAGE_CDN
-              }/game/${siteId}/${selectedPlat.code.toLowerCase()}/${
+              element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${
                 element.icon
               }.png`;
             });
@@ -1379,24 +1392,34 @@ export default defineComponent({
       gamePage.gameList = gameListData.value;
       // gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
     };
+
+    var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
+    var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
     const getPlatList = () => {
       cached
-        .get("PLATFORMS", () =>
-          api.get("/platform").then((res) => {
+        .get(platformApiKey, () =>
+          api.get(platformApiUrl).then((res) => {
             const response = res.data;
             return response;
           })
         )
         .then((data) => {
-          fishPlatforms.value = data.filter((element) =>
-            element.gameType.includes("FISH")
-          );
-          platforms.value = data.filter((element) =>
-            element.gameType.includes("SLOT")
-          );
-          platformMinigame.value = data.filter((element) =>
-            element.gameType.includes("ESPORT")
-          );
+          if (store.memberType !== "TEST") {
+            console.log(store.memberType);
+            data = data.filter((element) => {
+              return element.status === "OPEN";
+            });
+          }
+          // console.log(data);
+
+          fishPlatforms.value = data.filter((element) => element.gameType.includes("FISH"));
+          platforms.value = data.filter((element) => element.gameType.includes("SLOT"));
+          platformMinigame.value = data.filter((element) => element.gameType.includes("CASUAL"));
+          platformMinigame.value.push(...data.filter((element) => element.gameType.includes("ESPORT")));
+          liveCasinoGames.value = data.filter((element) => element.gameType.includes("LIVE"));
+          xfjGames.value = data.filter((element) => element.gameType.includes("MINIGAME"));
+          lotteryGames.value = data.filter((element) => element.gameType.includes("LOTTERY"));
+
           if (currentSelectedMenu.value === "slots") {
             switchPlat(platforms.value[0], "slots");
             platforms.value.forEach((e, i) => {
@@ -1409,7 +1432,7 @@ export default defineComponent({
           }
 
           // console.log("After");
-          console.log(fishPlatforms.value);
+          // console.log(platformMinigame.value);
           // alert(platformMinigame.value.length);
           // if (!route.query.plat) {
           //   switchPlat(platforms.value[0], "slot");
@@ -1433,9 +1456,7 @@ export default defineComponent({
         });
     };
     const getLength = (tab, ann) => {
-      var categoryLength = announcementList.value.filter(
-        (item) => item.id == ann.typeId
-      );
+      var categoryLength = announcementList.value.filter((item) => item.id == ann.typeId);
       return categoryLength.length;
     };
     const announcementList = ref([]);
@@ -1457,6 +1478,8 @@ export default defineComponent({
         }
       });
     };
+    const comingSoonImg = require(`../assets/home/slot/StayTuned.png`);
+
     const isStationNotice = ref(false);
     const noticeTitle = ref("");
     const activeKey = ref(null);
@@ -1476,7 +1499,10 @@ export default defineComponent({
       }
     };
     const gotoPromo = (banner) => {
-      if (banner.promoPageId) {
+      if (banner === 0) {
+        router.push(`/promo`);
+        return;
+      } else if (banner.promoPageId) {
         router.push({ path: "/promo", query: { id: banner.promoPageId } });
       } else if (banner.redirectUrl) {
         const redirectPage = "/" + banner.redirectUrl;
@@ -1490,9 +1516,7 @@ export default defineComponent({
     const checkPlatform = () => {
       //Is iOS Webclip App || Is Android Apk
       if (
-        (Platform.is.ios &&
-          "standalone" in window.navigator &&
-          window.navigator.standalone) ||
+        (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) ||
         (Platform.is.android && Platform.is.capacitor)
       ) {
         isH5.value = false;
@@ -1511,17 +1535,13 @@ export default defineComponent({
         // const info = {
         //   version: "1.0.1"
         // };
-        var current_version = parseInt(
-          info.version.replaceAll(".", "") + info.build
-        );
+        var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
         ui.setVersion(info.version + " " + info.build);
 
         // info.version && info.build
         const appType = "ALL";
         const device = Platform.is.android ? "ANDROID" : "IOS";
-        const res = await api.get(
-          `/config/appVersionAndUrl?type=${appType}&device=${device}`
-        );
+        const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
         console.log(res, ">>res");
         if (res.data.code === 0) {
           var version_info = res.data.data.version;
@@ -1534,11 +1554,7 @@ export default defineComponent({
             isAppUpdateModal.value = true;
           }
         }
-      } else if (
-        Platform.is.ios &&
-        "standalone" in window.navigator &&
-        window.navigator.standalone
-      ) {
+      } else if (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) {
         ui.appVersion = "iOS App";
       }
     };
@@ -1567,18 +1583,16 @@ export default defineComponent({
 
     const toggleFavGame = (gameId, status) => {
       if (status === true) {
-        api
-          .post("/session/member/fav-games", qs.stringify({ gameId: gameId }))
-          .then((res) => {
-            console.log(res);
-            $q.notify({
-              color: "positive",
-              position: "top",
-              message: t("lang.fav_game_added"),
-              icon: "report_problem",
-            });
-            favGamesList.value.push({ id: gameId });
+        api.post("/session/member/fav-games", qs.stringify({ gameId: gameId })).then((res) => {
+          // console.log(res);
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: t("lang.fav_game_added"),
+            icon: "report_problem"
           });
+          favGamesList.value.push({ id: gameId });
+        });
       } else {
         api.delete("/session/member/fav-games?gameId=" + gameId).then((res) => {
           console.log(res);
@@ -1586,10 +1600,10 @@ export default defineComponent({
             color: "positive",
             position: "top",
             message: t("lang.fav_game_removed"),
-            icon: "report_problem",
+            icon: "report_problem"
           });
           _.remove(favGamesList.value, {
-            id: gameId,
+            id: gameId
           });
         });
       }
@@ -1613,18 +1627,105 @@ export default defineComponent({
       // console.log(target)
     };
 
+    const checkRedeemSpecialInviteBonusEligiblity = () => {
+      if (store.hasToken()) {
+        eventapi.get('/privi/telephone/canRedeem', {
+          params: {
+            promoCode: "special-invitation-bonus"
+          }
+        }).then((res) => {
+          if(res.data.data === true) {
+            specialInviteBonusEligible.value = true;
+          }
+        })
+      }
+    }
+
+    const redeemSpecialInviteBonus = () => {
+      eventapi.get('/privi/telephone/redeem', {
+        params: {
+          promoCode: "special-invitation-bonus"
+        }
+      }).then((res) => {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: t("lang.success"),
+          icon: "check_circle_outline"
+        });
+
+        specialInviteBonusAmt.value = res.data.data
+        toggleSpecialInviteBonusPopup(true);
+      })
+    }
+
+    const toggleSpecialInviteBonusPopup = (status) => {
+      if(status === false) {
+        specialInviteBonusEligible.value = false;
+      }
+
+      specialInviteBonusPopupVisible.value = status;
+    }
+
     onMounted(() => {
-      getPlatList();
+      checkPlatform();
+      loadHomePromoPopup();
+      loadHomeData();
+      getAppDownloadUrl();
+      getVersionNo();
+
+      checkSpinWheelPromo();
+      checkRedeemSpecialInviteBonusEligiblity();
+    });
+
+    const popupInterval = ref(null);
+    const isSpinWheelPromo = ref(false);
+    const checkSpinWheelPromo = () => {
+      if (store.hasToken()) {
+        setTimeout(() => {
+          console.log("Check Spin Wheel.");
+          getSpinWheelCount();
+          popupInterval.value = setInterval(() => {
+            // alert("YEs");
+            getSpinWheelCount();
+          }, 3600000);
+        }, 60000);
+      }
+    };
+
+    const getSpinWheelCount = () => {
+      eventapi.get("/multiWheel/init?promoCode=multi-wheel").then((res) => {
+        const { code, data } = res.data;
+        if (code === 0) {
+          console.log(data);
+          const { leftCount, unlock } = data;
+          if (leftCount > 0) {
+            isSpinWheelPromo.value = true;
+          }
+        }
+      });
+    };
+
+    const gotoPromoSpinWheel = () => {
+      isSpinWheelPromo.value = false;
+      router.push(`/promo?id=81`);
+    };
+
+    onUnmounted(() => {
+      clearInterval(popupInterval.value);
+    });
+
+    const loadHomeData = async () => {
+      if (store.hasToken()) {
+        await store.getMemberInfo();
+
+        getFavGameList();
+        store.getUnreadTotal();
+      }
       loadData();
       loadAnnouncement();
-      checkPlatform();
-      getVersionNo();
-      getAppDownloadUrl();
-      loadHomePromoPopup();
-      if (store.hasToken()) {
-        getFavGameList();
-      }
-    });
+      getPlatList();
+    };
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
 
@@ -1637,7 +1738,7 @@ export default defineComponent({
 
     const closePopupModal = () => {
       SessionStorage.set("isHomePromoModal", "1");
-    }
+    };
 
     const isShow = ref(false);
     const selectSlotPlat = (plat) => {
@@ -1684,11 +1785,17 @@ export default defineComponent({
       slide: ref(0),
       imgURL: process.env.IMAGE_CDN + "/promo/",
       banners,
+      gameBoardRef,
+      gameBoardItemRef,
+      gameBoardItemData,
       store,
       ui,
       platforms,
       fishPlatforms,
+      comingSoonImg,
       liveCasinoGames,
+      xfjGames,
+      lotteryGames,
       isShow,
       mainWallet,
       playGame,
@@ -1738,7 +1845,9 @@ export default defineComponent({
       announcementTypes,
       activeKey,
       getLength,
+      isSpinWheelPromo,
       gotoPromo,
+      gotoPromoSpinWheel,
       router,
       isAppUpdateModal,
       isH5,
@@ -1749,8 +1858,12 @@ export default defineComponent({
       sortedFavGamesList,
       // updateSortedFavGamesList,
       getFavGameList,
+      specialInviteBonusEligible,
+      specialInviteBonusPopupVisible,
+      redeemSpecialInviteBonus,
+      toggleSpecialInviteBonusPopup
     };
-  },
+  }
 });
 </script>
 <style scoped lang="scss">
@@ -1761,7 +1874,11 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin: 10px;
+  margin: 10px 10px 5px;
+
+  @media (min-width: 769px) {
+    margin: 10px;
+  }
 
   .station-notice-wrapper {
     display: flex;
@@ -1826,13 +1943,27 @@ export default defineComponent({
   }
 
   .slot-name {
-    background: linear-gradient(0deg, #1f2035cf 20%, transparent);
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 10px;
     text-align: center;
+    padding: 5px 2px 0px;
+    font-size: 10px;
+    background: transparent;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 75px;
+    margin: auto;
+
+    @media (min-width: 600px) {
+      font-size: 12px;
+      word-break: normal;
+      padding: 10px 2px;
+      width: auto;
+      white-space: wrap;
+    }
+
+    @media (min-width: 769px) {
+      font-size: 14px;
+    }
   }
 }
 
@@ -1842,35 +1973,46 @@ export default defineComponent({
   }
 }
 
+.grid-wrapper {
+  overflow: hidden;
+}
+
 .grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  margin: 20px auto 10px;
+  display: flex;
+  margin: 0px auto 0px;
   align-items: flex-start;
-  column-gap: 16px;
+  column-gap: 8px;
   row-gap: 14px;
-  width: calc(95% - 20px);
+  width: calc(100% - 20px);
+  background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
+  padding: 6px 12px 6px;
+  border-radius: 12px;
+  overflow-x: auto;
+
+  @media (min-width: 769px) {
+    margin: 10px auto;
+  }
 
   .game-board-item {
     border-radius: 8px;
-    width: 100%;
-    flex-direction: column;
+    width: auto;
+    gap: 12px;
     height: 100%;
     margin: auto;
-    background: $linear-bg-3;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
     text-align: center;
-    padding: 4px 12px;
+    padding: 12px 12px;
+    white-space: nowrap;
 
     &.active-board {
-      background: $linear-bg-4;
+      // background: $linear-bg-4;
+      background: #5555aa;
     }
 
     &:hover {
       filter: brightness(0.88);
+      background: #5555aa;
     }
 
     &:active {
@@ -1879,12 +2021,12 @@ export default defineComponent({
     }
 
     span {
-      font-size: 0.8em;
+      font-size: 0.9em;
     }
 
     img {
-      width: 100%;
-      max-width: 40px;
+      width: auto;
+      max-height: 30px;
     }
   }
 }
@@ -1893,16 +2035,30 @@ export default defineComponent({
   position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  width: calc(95% - 20px);
-  margin: 12px auto 20px;
+  width: calc(100% - 20px);
+  margin: 6px auto 20px;
   padding-bottom: 30px;
-  padding-top: 15px;
+  // padding-top: 15px;
   column-gap: 15px;
   row-gap: 10px;
   transition: 1s ease-in;
 
+  @media (min-width: 769px) {
+    margin: 12px auto 20px;
+    padding-top: 15px;
+  }
+
   .game-item {
     border-radius: 8px;
+
+    .platform-img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 280/328;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: top center;
+    }
 
     img {
       width: 100%;
@@ -1952,7 +2108,7 @@ export default defineComponent({
   }
 
   .bottom-footer {
-    background: url("../assets/images/index/footer-desc-bg.png");
+    //background: url("../assets/images/index/footer-desc-bg.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: 60px 0px;
@@ -2011,9 +2167,15 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  width: calc(100% - 20px);
-  margin: 20px auto 10px;
+  // width: calc(100% - 20px);
+  width: 100%;
+  margin: 6px auto 10px;
   position: relative;
+
+  @media (min-width: 769px) {
+    margin: 12px auto 20px;
+    padding-top: 15px;
+  }
 
   .bookmarks {
     width: 70px;
@@ -2034,6 +2196,18 @@ export default defineComponent({
       justify-content: center;
       align-items: center;
       background: $third-color;
+
+      .platform-img {
+        max-width: 85px;
+        filter: grayscale(1);
+
+        width: 100%;
+        height: auto;
+        aspect-ratio: 200/133;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
 
       img {
         max-width: 50px;
@@ -2063,6 +2237,10 @@ export default defineComponent({
         box-shadow: inset 0 0 5px #ffffff;
 
         img {
+          filter: grayscale(0);
+        }
+
+        .platform-img {
           filter: grayscale(0);
         }
 
@@ -2221,13 +2399,14 @@ export default defineComponent({
 
 @media (min-width: 769px) {
   .grid {
-    column-gap: 16px;
-    row-gap: 14px;
+    // column-gap: 16px;
+    // row-gap: 14px;
+    // grid-template-columns: repeat(4, 1fr);
 
     .game-board-item {
       img {
-        width: 100%;
-        max-width: 55px;
+        width: auto;
+        max-height: 35px;
       }
     }
   }
@@ -2235,6 +2414,7 @@ export default defineComponent({
   .game-grid-lists {
     padding-top: 15px;
     column-gap: 25px;
+    grid-template-columns: repeat(4, 1fr);
   }
 
   .game-scroll-lists {
@@ -2260,9 +2440,9 @@ export default defineComponent({
   .grid .game-board-item {
     cursor: pointer;
     border-radius: 10px;
-    max-width: 110px;
-    max-height: 125px;
-    aspect-ratio: 110/125;
+    // max-width: 110px;
+    // max-height: 125px;
+    // aspect-ratio: 110/125;
 
     span {
       font-size: 1em;
@@ -2282,8 +2462,8 @@ export default defineComponent({
   }
 
   .grid {
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: repeat(1, 1fr);
+    // grid-template-columns: repeat(6, 1fr);
+    // grid-template-rows: repeat(1, 1fr);
   }
 
   .game-grid-lists {
@@ -2291,6 +2471,10 @@ export default defineComponent({
   }
 
   #id-live-board {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  #id-casual-board {
     grid-template-columns: repeat(4, 1fr);
   }
 
@@ -2304,6 +2488,16 @@ export default defineComponent({
 }
 
 .modal-update-div {
+  .menu-title {
+    > div:first-child {
+      width: 32px;
+    }
+  }
+
+  .description {
+    color: $border-color;
+  }
+
   .modalcontent {
     background: #fff;
     height: 232px;
@@ -2397,6 +2591,95 @@ export default defineComponent({
   }
 }
 
+.special-invite-bonus-sticky {
+  background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-sticky.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  width: 190px;
+  height: 136px;
+  position: absolute;
+  top: 10%;
+  right: 0;
+}
+
+.special-invite-bonus-container {
+  position: relative;
+
+  .header-decoration-wrapper {
+    .header-decoration {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      height: 200px;
+      position: relative;
+
+      .confetti {
+        position: absolute;
+      }
+
+      .money-bags {
+        position: absolute;
+        top: 150px;
+      }
+    }
+  }
+  
+
+  .special-invite-bonus-content {
+    background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-bg.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    margin: 30px;
+    max-width: 495px;
+    min-height: 300px;
+    padding: 30px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    justify-content: center;
+
+    .title-wrapper {
+      display: flex;
+      align-items: center;
+
+      .reward-amt {
+        font-size: 30px;
+        font-weight: 700;
+        color: #FFE35A;
+        margin-left: 20px;
+      }
+    }
+
+    .desc-wrapper {
+      display: flex;
+      flex-direction: column;
+
+      .desc-title {
+        color: #FFCF1F;
+      }
+
+      .desc-content {
+        color: #E79DFF;
+      }
+    }
+
+    .special-invite-bonus-popup-confirm-btn {
+      background: url("../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-confirm-btn.png");
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      max-width: 200px;
+      width: 100%;
+      min-height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 10px auto 0px;
+      font-weight: 700;
+      font-size: 18px;
+    }
+  }
+}
+
 .home-popup-banner {
   .promo-popup-div {
     width: 100%;
@@ -2459,6 +2742,26 @@ export default defineComponent({
         font-style: normal;
       }
     }
+  }
+}
+
+.main-slide-txt {
+  font-size: 1.5rem;
+  max-width: 10rem;
+  margin-right: auto;
+  line-height: 1.4;
+  color: #ffc700;
+
+  @media (min-width: 769px) {
+    font-size: 2rem;
+    max-width: 15rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (min-width: 1280px) {
+    font-size: 2.5rem;
+    max-width: 20rem;
   }
 }
 </style>

@@ -264,6 +264,7 @@ export default {
     emailFormat: "请输入正确的邮箱格式",
     inputChineseCharacters: "请输入中文字符",
     inputDigits: "请输入数字",
+    inputEnglishRealName: "请输入英文的真实名字, 必须与提款银行名字一样",
     inputPassword: "请输入密码",
     inputPasswordAgain: "请再输入密码",
     length6To12: "字符串必须为 6 至 12 字",

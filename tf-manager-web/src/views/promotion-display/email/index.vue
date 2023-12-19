@@ -210,7 +210,6 @@
                   @keypress="restrictInput($event)"
                 />
               </span>
-
             </el-form-item>
         <el-form-item :label="t('fields.privilegeRedeemed')" prop="privilegeStatus" v-if="uiControl.dialogType !== 'CREATE'">
           <el-radio-group

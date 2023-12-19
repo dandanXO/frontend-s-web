@@ -58,6 +58,16 @@
           $ <span v-formatter="{data: scope.row.profit,type: 'money'}" />
         </template>
       </el-table-column>
+      <el-table-column prop="platformFee" :label="t('fields.platformFee')" align="center" min-width="120">
+        <template #default="scope">
+          $ <span v-formatter="{data: scope.row.platformFee,type: 'money'}" />
+        </template>
+      </el-table-column>
+      <el-table-column prop="paymentFee" :label="t('fields.paymentFee')" align="center" min-width="120">
+        <template #default="scope">
+          $ <span v-formatter="{data: scope.row.paymentFee,type: 'money'}" />
+        </template>
+      </el-table-column>
       <el-table-column prop="ngr" :label="t('fields.commission')" align="center" min-width="120">
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.ngr,type: 'money'}" />

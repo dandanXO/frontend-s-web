@@ -1,4 +1,5 @@
 import { Platform } from "quasar";
+import moment from "moment/moment";
 
 export const MAIN = "MAIN";
 
@@ -6,9 +7,7 @@ export const getRndInteger = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 export const isMobile = () => {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
-  );
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 };
 export const getMobileOS = () => {
   const ua = navigator.userAgent;
@@ -38,7 +37,7 @@ export function isHuaweiPhone() {
   }
 
   const huaweiDevicesRegex =
-      /ALP-|AMN-|ANA-|ANE-|ANG-|AQM-|ARS-|ART-|ATU-|BAC-|BLA-|BRQ-|CAG-|CAM-|CAN-|CAZ-|CDL-|CDY-|CLT-|CRO-|CUN-|DIG-|DRA-|DUA-|DUB-|DVC-|ELE-|ELS-|EML-|EVA-|EVR-|FIG-|FLA-|FRL-|GLK-|HMA-|HW-|HWI-|INE-|JAT-|JEF-|JER-|JKM-|JNY-|JSC-|LDN-|LIO-|LON-|LUA-|LYA-|LYO-|MAR-|MED-|MHA-|MLA-|MRD-|MYA-|NCE-|NEO-|NOH-|NOP-|OCE-|PAR-|PIC-|POT-|PPA-|PRA-|RNE-|SEA-|SLA-|SNE-|SPN-|STK-|TAH-|TAS-|TET-|TRT-|VCE-|VIE-|VKY-|VNS-|VOG-|VTR-|WAS-|WKG-|WLZ-|JAD-|WKG-|MLD-|RTE-|NAM-|NEN-|BAL-|JAD-|JLN-|YAL/i;
+    /ALP-|AMN-|ANA-|ANE-|ANG-|AQM-|ARS-|ART-|ATU-|BAC-|BLA-|BRQ-|CAG-|CAM-|CAN-|CAZ-|CDL-|CDY-|CLT-|CRO-|CUN-|DIG-|DRA-|DUA-|DUB-|DVC-|ELE-|ELS-|EML-|EVA-|EVR-|FIG-|FLA-|FRL-|GLK-|HMA-|HW-|HWI-|INE-|JAT-|JEF-|JER-|JKM-|JNY-|JSC-|LDN-|LIO-|LON-|LUA-|LYA-|LYO-|MAR-|MED-|MHA-|MLA-|MRD-|MYA-|NCE-|NEO-|NOH-|NOP-|OCE-|PAR-|PIC-|POT-|PPA-|PRA-|RNE-|SEA-|SLA-|SNE-|SPN-|STK-|TAH-|TAS-|TET-|TRT-|VCE-|VIE-|VKY-|VNS-|VOG-|VTR-|WAS-|WKG-|WLZ-|JAD-|WKG-|MLD-|RTE-|NAM-|NEN-|BAL-|JAD-|JLN-|YAL/i;
 
   const isHuaweiDevice = huaweiDevicesRegex.test(navigator.userAgent);
   if (isHuaweiDevice && Platform.is.capacitor) {
@@ -46,7 +45,6 @@ export function isHuaweiPhone() {
   }
   return false;
 }
-
 
 export function isAndroid() {
   if (Platform.is.android && Platform.is.capacitor) {
@@ -57,26 +55,49 @@ export function isAndroid() {
 }
 
 export const lsGet = (key, jsonParse = false) => {
-  const value = localStorage.getItem(key) ?? '';
+  const value = localStorage.getItem(key) ?? "";
 
   return value && jsonParse ? JSON.parse(value) : value;
-}
+};
 
 export const lsStore = (key, value, jsonStringfy = false) => {
   const n_value = jsonStringfy ? JSON.stringify(value) : value;
 
   localStorage.setItem(key, n_value);
-}
+};
 
-export const lsRemove = key => localStorage.removeItem(key)
+export const lsRemove = (key) => localStorage.removeItem(key);
 
-export const getTimeout = key => {
-  const cached_timeout = lsGet(key) ?? 0
-  const now = new Date()
+export const getTimeout = (key) => {
+  const cached_timeout = lsGet(key) ?? 0;
+  const now = new Date();
 
   return cached_timeout > now.getTime()
     ? Math.ceil((cached_timeout - now.getTime()) / 1000) // Seconds left
-    : 0  // No timeout found
-}
+    : 0; // No timeout found
+};
 
-export const getImageUrl = srcPath => require(`/src/assets/${srcPath}`)
+export const getImageUrl = (srcPath) => require(`/src/assets/${srcPath}`);
+
+export const updateDate = (val) => {
+  const gapDate = new Date().getTime() - val * 24 * 60 * 60 * 1000;
+  const oldDate = new Date(gapDate);
+
+  // Adjust the time to GMT+5.5
+  oldDate.setHours(oldDate.getHours() + 5);
+  oldDate.setMinutes(oldDate.getMinutes() + 30);
+
+  const newDate = {
+    Y: oldDate.getFullYear() + "-",
+    M: oldDate.getMonth() + 1 < 10 ? "0" + (oldDate.getMonth() + 1 + "-") : oldDate.getMonth() + 1 + "-",
+    D: oldDate.getDate() < 10 ? "0" + (oldDate.getDate() + "") : oldDate.getDate() + ""
+  };
+  return newDate.Y + newDate.M + newDate.D;
+};
+
+export const convertToGMT55 = (dateTime) => {
+  return moment(dateTime).utcOffset("+05:30").format("YYYY-MM-DD HH:mm:ss");
+};
+export const convertToGMT8 = (dateTime) => {
+  return moment(dateTime).utcOffset("+08:00").format("YYYY-MM-DD");
+};

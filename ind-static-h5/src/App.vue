@@ -4,12 +4,16 @@
 
 <script>
 import { defineComponent, onMounted } from "vue";
-import { useQuasar } from "quasar";
+import { Platform, useQuasar } from "quasar";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
 import CsClient from "csweb-client";
 // import CsClient from "boot/client";
+import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
+import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
+import { isAndroid } from "boot/utils";
+import AdjustWeb from "@adjustcom/adjust-web-sdk";
 
 export default defineComponent({
   name: "App",
@@ -65,18 +69,12 @@ export default defineComponent({
 
       // 'XFCS' / 2
       // csclient = new CsClient('XFCS', regDevice, 'zh-CN', '2', 'prod', 'https://csweb01.v6kthwlug.com/');
-      csclient = new CsClient(
-        "XFCS",
-        regDevice,
-        "zh-CN",
-        "2",
-        "prod",
-        `https://${CSAUrl}`
-      );
+      csclient = new CsClient("INDWINCS", regDevice, "en", "2", "prod", `https://${CSAUrl}`);
 
       csclient.set("pageurl", "/liveChat");
       csclient.set("btnid", "cs-web-id");
       csclient.set("openanimation", false);
+      csclient.set("bottom", "73");
 
       csclient.set("notification-type", {
         type: "none"
@@ -95,7 +93,7 @@ export default defineComponent({
       });
 
       //CsClient Event Listener.
-      window.addEventListener('message', function (event) {
+      window.addEventListener("message", function (event) {
         // console.log("HEre Message received from the iframe: " + event.data); // Message received from child
         if (_.isString(event.data)) {
           // if (event.data == 'sess_timeout') {
@@ -104,10 +102,58 @@ export default defineComponent({
         }
       });
     };
+
+    const getAppInfo = async () => {
+      const info = await Device.getId();
+      console.log("Device ID");
+      console.log(info);
+      console.log(info.identifier);
+    };
+
+    const initOrientation = () => {
+      if (isAndroid()) {
+        screen.orientation.lock("portrait");
+      }
+    };
+
+    const initAdjustEventTrack = () => {
+      if (isAndroid()) {
+        //Android App.
+        console.log("Init Adjust Sdk");
+        var adjustConfig = new AdjustConfig("pxrvpkqs0a9s", AdjustEnvironment.Production);
+        adjustConfig.setLogLevel(AdjustLogLevel.Verbose);
+        Adjust.create(adjustConfig);
+
+        setTimeout(() => {
+          Adjust.getAdid().then((aaid) => {
+            console.log("aaid");
+            console.log(aaid);
+            store.aaid = aaid;
+          });
+        }, 1000);
+      } else {
+        //Normal WEb / H5 / iOS WEbclip.
+        console.log("Init Web Adjust");
+        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        AdjustWeb.initSdk({
+          appToken: "pxrvpkqs0a9s",
+          environment: "production"
+        });
+        setTimeout(() => {
+          const resp = AdjustWeb.getAttribution();
+          console.log("Web Adid");
+          console.log(resp.adid);
+          store.aaid = resp.adid;
+        }, 1000);
+      }
+    };
+
     onMounted(() => {
       checkSID();
-      // initCsWeb();
       getCSA();
+      getAppInfo();
+      initOrientation();
+      initAdjustEventTrack();
     });
   }
 });

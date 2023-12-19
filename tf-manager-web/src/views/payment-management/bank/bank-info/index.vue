@@ -94,12 +94,31 @@
             @input="handleChange()"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.bankCode')" prop="code">
+        <el-form-item v-if="form.bankType === 'BANK'" :label="t('fields.bankCode')" prop="code">
           <el-input
             v-model="form.code"
             style="width: 350px"
             @input="handleChange()"
           />
+        </el-form-item>
+        <el-form-item v-if="form.bankType !== 'BANK'" :label="t('fields.bankCode')" prop="code">
+          <el-select
+            filterable
+            clearable
+            v-model="form.code"
+            size="small"
+            :placeholder="t('fields.pleaseChoose')"
+            class="filter-item"
+            style="width: 200px; margin-bottom: 16px"
+            @change="handleChange()"
+          >
+            <el-option
+              v-for="item in list.payTypes"
+              :key="item.id"
+              :label="item.code"
+              :value="item.code"
+            />
+          </el-select>
         </el-form-item>
 
         <!--表里有， 暂时不用 -->
@@ -395,6 +414,7 @@ import {
 } from '../../../../api/bank-info'
 import { getCurrencyCodes } from '../../../../api/currency'
 import { getSiteListSimple } from '../../../../api/site'
+import { getActivePaymentTypes } from '../../../../api/payment-type'
 import { required } from '../../../../utils/validate'
 import { hasRole, hasPermission } from '../../../../utils/util'
 import { getSiteImage } from '../../../../api/site-image'
@@ -480,6 +500,7 @@ const page = reactive({
 
 const list = reactive({
   currencies: [],
+  payTypes: [],
 })
 
 const selected = reactive({ currency: [] })
@@ -659,6 +680,11 @@ async function loadSiteImage() {
   imageList.pages = ret.pages
 }
 
+async function loadPayTypes() {
+  const { data: payType } = await getActivePaymentTypes()
+  list.payTypes = payType
+}
+
 async function changeImagePage(page) {
   imageRequest.current = page
   const { data: ret } = await getSiteImage(imageRequest)
@@ -769,6 +795,7 @@ async function loadSites() {
 onMounted(async () => {
   loadBankInfo()
   loadCurrency()
+  loadPayTypes()
   await loadSites();
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     sites.list = sites.list.find(s => s.siteName === store.state.user.siteName);

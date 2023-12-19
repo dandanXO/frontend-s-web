@@ -25,7 +25,7 @@ const selectedVIP = ref({
 const onVIPButtonClick = (type) => {
   if (!store.token) openLoginAlert(store);
   else {
-    const bonusItem = `dy1-vip-${type}`;
+    const bonusItem = `dy2-vip-${type}`;
 
     claimBonusItem(bonusItem)
       .then((res) => {

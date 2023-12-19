@@ -24,10 +24,14 @@ export const userStore = defineStore("userStore", {
       evip: "",
       currency: { value: "￥", label: "RMB" },
       loginPageVisible: false,
-      regPageVisible: false
+      regPageVisible: false,
+      siteId: 6
     };
   },
   actions: {
+    hasToken() {
+      return this.token ? true : false;
+    },
     memberLogin(loginInfo) {
       return login(loginInfo)
         .then((ret) => {
@@ -105,14 +109,7 @@ export const userStore = defineStore("userStore", {
             // `https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=WEB&lang=zh-CN&token=${this.token}`,
             `${res.data}${this.token}`,
             "Chat Server",
-            "resizable=yes, width=" +
-              800 +
-              ", height=" +
-              880 +
-              ", top=" +
-              top +
-              ", left=" +
-              left
+            "resizable=yes, width=" + 800 + ", height=" + 880 + ", top=" + top + ", left=" + left
           );
         })
         .catch((err) => {

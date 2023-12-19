@@ -7,39 +7,29 @@
         <!--        </div>-->
         <div class="wallet">
           <div class="label">我的钱包</div>
-          <div class="wallet-amt-div  row justify-between items-center">
+          <div class="wallet-amt-div row justify-between items-center">
             <div class="balamt text-dark" @click="loadBalance">
-            <span v-if="!isLoadingBalance">
-              {{ store.currency.value }}{{ store.balance.toFixed(2) }}</span
-            ><span v-if="isLoadingBalance">加载中...</span>
+              <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ store.balance.toFixed(2) }}</span>
+              <span v-if="isLoadingBalance">加载中...</span>
             </div>
             <div @click="loadBalance" class="icon">
               <!--              <q-icon name="refresh" ></q-icon>-->
-              <img src="../assets/account/finance/refresh-icon.png"/>
+              <img src="../assets/account/finance/refresh-icon.png" />
             </div>
           </div>
-
         </div>
       </div>
       <div class="refreshItems">
-        <div
-            v-if="!isRefreshingBalance"
-            class="refreshAll"
-            @click="refreshBalance('all')"
-        >
+        <div v-if="!isRefreshingBalance" class="refreshAll" @click="refreshBalance('all')">
           <div class="icon">
-            <img src="../assets/account/finance/refresh-btn-blue.png"/>
+            <img src="../assets/account/finance/refresh-btn-blue.png" />
           </div>
           <div class="label">一键刷新</div>
         </div>
         <div class="refreshAll" v-else>请稍等{{ seconds }}秒</div>
-        <div
-            v-if="isTransfer && !isTransferring"
-            class="transferAll"
-            @click="transferOutAll"
-        >
+        <div v-if="!isTransferring" class="transferAll" @click="transferOutAll">
           <div class="icon">
-            <img src="../assets/images/finance/withdraw/transfer_icon.png"/>
+            <img src="../assets/images/finance/withdraw/transfer_icon.png" />
           </div>
           <div class="label">一键转出</div>
         </div>
@@ -47,21 +37,21 @@
       </div>
     </div>
 
-    <div v-if="isTransfer" class="text-grey-8 q-pa-sm text-center">
-      除了以下平台需要转账，其它游戏平台都无需转账即可游戏
+    <div class="text-grey-8 q-pa-sm text-center">除了以下平台需要转账，其它游戏平台都无需转账即可游戏</div>
+    <div class="balance-transfer-button">
+      <q-toggle
+        v-model="isTransferRef"
+        class="wtf"
+        :label="`自动平台转账: ${isTransfer ? '已开启' : '已关闭'}`"
+        left-label
+        @update:model-value="updateAutoTransfer($event)"
+        color="positive"
+      ></q-toggle>
     </div>
-    <q-separator style="margin-bottom:10px;"/>
-    <div
-        class="transfer-plat-wrapper"
-        :style="isExpanded ? `height: auto;` : 'height: 80px;'"
-    >
+    <q-separator style="margin-bottom: 10px" />
+    <div class="transfer-plat-wrapper" :style="isExpanded ? `height: auto;` : 'height: 80px;'">
       <div class="transfer-plat-inner">
-        <div
-            class="transfer-plat-item"
-            v-for="p in props.platforms"
-            :key="p.id"
-            @click="refreshBalance(p.code)"
-        >
+        <div class="transfer-plat-item" v-for="p in props.platforms" :key="p.id" @click="refreshBalance(p.code)">
           <div class="flex-box flex-justify-space transfer-balance-box">
             <div class="platform-details">
               <div class="name-wrapper">
@@ -69,17 +59,13 @@
               </div>
               <div class="balance-wrapper">
                 <span class="text-bold row justify-center items-center gap-5 no-wrap" v-if="p.isLoading">
-                 <img style="margin-bottom: 5px;width:14px;" src="../assets/account/finance/refresh-btn-blue.png"/>
+                  <img style="margin-bottom: 5px; width: 14px" src="../assets/account/finance/refresh-btn-blue.png" />
                   加载中...
                 </span>
-                <span class="text-bold" v-else-if="p.isTransferring">
-                  转出中...
-                </span>
+                <span class="text-bold" v-else-if="p.isTransferring">转出中...</span>
                 <span class="text-bold" v-else>
                   {{ store.currency.value }}
-                  {{
-                    p.amount ? Number(p.amount).toFixed(2) : (0.0).toFixed(2)
-                  }}
+                  {{ p.amount ? Number(p.amount).toFixed(2) : (0.0).toFixed(2) }}
                 </span>
               </div>
             </div>
@@ -105,21 +91,13 @@
         </div>
       </div>
     </div>
-    <div
-        @click="showPlatform"
-        v-if="!isExpanded"
-        class="showall text-center text-blue-6 q-pt-md"
-    >
+    <div @click="showPlatform" v-if="!isExpanded" class="showall text-center text-blue-6 q-pt-md">
       显示所有场馆
-      <q-icon name="expand_more"/>
+      <q-icon name="expand_more" />
     </div>
-    <div
-        @click="showPlatform"
-        v-if="isExpanded"
-        class="showall text-center text-blue-6 q-pt-md"
-    >
+    <div @click="showPlatform" v-if="isExpanded" class="showall text-center text-blue-6 q-pt-md">
       收起所有场馆
-      <q-icon name="expand_less"/>
+      <q-icon name="expand_less" />
     </div>
   </div>
 </template>
@@ -127,12 +105,14 @@
 <script setup>
 const props = defineProps({
   isTransfer: Boolean,
-  platforms: Array
+  platforms: Array,
+  updateAutoTransfer: Function,
+  getAutoTransferValue: Function
 });
-import {ref, reactive, onMounted} from "vue";
-import {userStore} from "stores/index";
-import {api} from "boot/axios";
-import {useQuasar} from "quasar";
+import { ref, reactive, onMounted, watch } from "vue";
+import { userStore } from "stores/index";
+import { api } from "boot/axios";
+import { useQuasar } from "quasar";
 
 const isLoadingBalance = ref(false);
 const isRefreshingBalance = ref(true);
@@ -177,14 +157,14 @@ const showPlatform = () => {
 //     })
 // };
 const platformNames = {
-  "AG": "AG",
-  "BBINDY": "BBIN",
-  "KYDY": "开元棋牌",
-  "DT": "大唐棋牌",
-  "TCG": "TCG彩票",
-  "SGWin": "双赢彩票",
-  "PTDY": "PT电子",
-  "PGDY": "PG电子",
+  AG: "AG",
+  BBINDY: "BBIN",
+  KY: "开元棋牌",
+  DT: "大唐棋牌",
+  TCG: "TCG彩票",
+  SGWin: "双赢彩票",
+  PT: "PT电子",
+  PG: "PG电子"
 };
 const loadBalance = () => {
   isLoadingBalance.value = true;
@@ -195,24 +175,24 @@ const loadBalance = () => {
 const transferOutAll = () => {
   isTransferring.value = true;
   var gotTransfer = false;
-  props.platforms.forEach(platform => {
+  props.platforms.forEach((platform) => {
     platform.isTransferring = true;
     if (platform.code && platform.amount > 0) {
       gotTransfer = true;
       const transferInfo = {
         platform: platform.code,
         amount: platform.amount
-      }
+      };
       api.post("/session/balance/transfer/withdrawAll", qs.stringify(transferInfo)).then((response) => {
         if (response.code === 0) {
           setTimeout(() => {
             loadBalance();
-            refreshBalance(platform.code)
+            refreshBalance(platform.code);
             platform.isTransferring = false;
             isTransferring.value = false;
           }, 1000);
         }
-      })
+      });
     } else {
       setTimeout(() => {
         platform.isTransferring = false;
@@ -228,8 +208,7 @@ const transferOutAll = () => {
       loadBalance();
     }, 5000);
   }
-
-}
+};
 const refreshBalance = (plat) => {
   if (plat === "all") {
     isRefreshingBalance.value = true;
@@ -240,22 +219,22 @@ const refreshBalance = (plat) => {
       platform.isLoading = true;
       if (platform.code) {
         api
-            .get("/session/balance", {params: {platform: platform.code}})
-            .then((res) => {
-              if (platform) {
-                platform.amount = res.data;
-                platform.isLoading = false;
-              }
-            })
-            .catch((e) => {
-              // $q.notify({
-              // color: "negative",
-              // position: "top",
-              // message: e.message,
-              // icon: "report_problem"
-              // })
+          .get("/session/balance", { params: { platform: platform.code } })
+          .then((res) => {
+            if (platform) {
+              platform.amount = res.data;
               platform.isLoading = false;
-            });
+            }
+          })
+          .catch((e) => {
+            // $q.notify({
+            // color: "negative",
+            // position: "top",
+            // message: e.message,
+            // icon: "report_problem"
+            // })
+            platform.isLoading = false;
+          });
       }
     });
   } else {
@@ -263,24 +242,33 @@ const refreshBalance = (plat) => {
     platform.amount = 0;
     platform.isLoading = true;
     api
-        .get("/session/balance", {params: {platform: plat}})
-        .then((res) => {
-          if (platform) {
-            platform.amount = res.data;
-            platform.isLoading = false;
-          }
-        })
-        .catch((e) => {
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: e.message,
-            icon: "report_problem"
-          });
+      .get("/session/balance", { params: { platform: plat } })
+      .then((res) => {
+        if (platform) {
+          platform.amount = res.data;
           platform.isLoading = false;
+        }
+      })
+      .catch((e) => {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: e.message,
+          icon: "report_problem"
         });
+        platform.isLoading = false;
+      });
   }
 };
+
+const isTransferRef = ref(props.isTransfer);
+watch(
+  () => props.isTransfer,
+  (value) => {
+    isTransferRef.value = value;
+  }
+);
+
 onMounted(() => {
   if (isRefreshingBalance.value) {
     setTimer();
@@ -326,7 +314,7 @@ onMounted(() => {
         display: flex;
         flex-direction: column;
         width: 100%;
-        border: 1px solid #C2C2C2;
+        border: 1px solid #c2c2c2;
         border-radius: 12px;
         align-items: flex-start;
         justify-content: flex-start;
@@ -335,7 +323,7 @@ onMounted(() => {
 
         .wallet-amt-div {
           width: 100%;
-          background: #D9D9D950;
+          background: #d9d9d950;
           padding: 8px 6px;
           border-radius: 50px;
           height: 40px;
@@ -442,10 +430,9 @@ onMounted(() => {
           justify-content: center;
           align-items: center;
           flex-direction: column;
-          border: 1px solid #C2C2C2;
+          border: 1px solid #c2c2c2;
           padding: 10px 20px;
           border-radius: 12px;
-
 
           .name-wrapper {
             word-break: break-all;
@@ -474,13 +461,11 @@ onMounted(() => {
   }
 }
 
-@media (max-width: 440px){
-  .acct-balances .transfer-plat-wrapper .transfer-plat-inner{
+@media (max-width: 440px) {
+  .acct-balances .transfer-plat-wrapper .transfer-plat-inner {
     grid-template-columns: repeat(3, 1fr);
 
     .transfer-plat-item {
-
-
       .platform-details {
         padding: 10px 10px;
       }
@@ -488,4 +473,15 @@ onMounted(() => {
   }
 }
 
+.balance-transfer-button {
+  display: flex;
+  justify-content: flex-end;
+
+  .q-toggle__inner--truthy {
+    color: #13ce66;
+  }
+  .q-toggle__inner {
+    color: #ff4949;
+  }
+}
 </style>

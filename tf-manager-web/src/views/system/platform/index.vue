@@ -31,6 +31,7 @@
             :placeholder="t('fields.pleaseChoose')"
             style="width: 350px"
             filterable
+            multiple
             @focus="loadGameTypes"
           >
             <el-option
@@ -41,6 +42,7 @@
             />
           </el-select>
         </el-form-item>
+
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -106,10 +108,8 @@ const form = reactive({
   id: null,
   name: null,
   code: null,
-  gameType: null
+  gameType: []
 });
-
-const selected = reactive({ gameTypeChecked: [] });
 
 const formRules = reactive({
   name: [required(t('message.validatePlatformNameRequired'))],
@@ -141,10 +141,8 @@ function showDialog(type) {
     }
     uiControl.dialogTitle = t('fields.addPlatform');
     form.id = null;
-    selected.gameTypeChecked = [];
   } else if (type === "EDIT") {
     uiControl.dialogTitle = t('fields.editPlatform');
-    selected.gameTypeChecked = [];
   }
   uiControl.dialogType = type;
   uiControl.dialogVisible = true;
@@ -155,7 +153,11 @@ function showEdit(platform) {
   nextTick(() => {
     for (const key in platform) {
       if (Object.keys(form).find(k => k === key)) {
-        form[key] = platform[key];
+        if (key === 'gameType') { // game type 需要进行转换
+          form[key] = platform[key].split(","); // string 转 array
+        } else {
+          form[key] = platform[key];
+        }
       }
     }
   });
@@ -164,6 +166,8 @@ function showEdit(platform) {
 function create() {
   platformForm.value.validate(async (valid) => {
     if (valid) {
+      var arr = form.gameType;
+      form.gameType = arr.toString();
       await createPlatform(form);
       uiControl.dialogLoading = false;
       uiControl.dialogVisible = false;
@@ -176,6 +180,8 @@ function create() {
 function edit() {
   platformForm.value.validate(async (valid) => {
     if (valid) {
+      var arr = form.gameType;
+      form.gameType = arr.toString();
       await updatePlatform(form);
       uiControl.dialogLoading = false;
       uiControl.dialogVisible = false;

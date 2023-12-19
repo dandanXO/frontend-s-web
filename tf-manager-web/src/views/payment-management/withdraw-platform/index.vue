@@ -60,6 +60,7 @@
               style="width: 320px;"
               default-first-option
               @focus="loadSites"
+              @change="filterPayTypeByCurrency(form.siteId)"
             >
               <el-option
                 v-for="item in siteList.list"
@@ -132,7 +133,22 @@
         </el-row>
         <el-row>
           <el-form-item :label="t('fields.paymentType')" prop="type">
-            <el-input v-model="form.type" style="width: 600px;" />
+            <el-select
+              filterable
+              clearable
+              v-model="form.type"
+              size="small"
+              :placeholder="t('fields.pleaseChoose')"
+              class="filter-item"
+              style="width: 600px; margin-bottom: 16px"
+            >
+              <el-option
+                v-for="item in list.filteredPayTypes"
+                :key="item.id"
+                :label="item.code"
+                :value="item.code"
+              />
+            </el-select>
           </el-form-item>
         </el-row>
 
@@ -170,6 +186,12 @@
       <el-table-column :label="t('fields.operate')" align="right" v-if="hasPermission(['sys:payment-withdraw:update'])">
         <template #default="scope">
           <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit(scope.row)" />
+          <el-button
+            icon="el-icon-copy-document"
+            size="mini"
+            type="warning"
+            @click="showDialogCopy(scope.row)"
+          />
         </template>
       </el-table-column>
     </el-table>
@@ -182,6 +204,34 @@
       :current-page="request.current"
     />
   </div>
+  <el-dialog
+    :title="uiControl.dialogTitle"
+    v-model="uiControl.dialogCopyVisible"
+    append-to-body
+    width="600px"
+  >
+    <el-form
+      ref="copyWithdrawPlatformForm"
+      v-loading="uiControl.dialogCopyLoading"
+      :model="copyForm"
+      :inline="true"
+      size="small"
+      label-width="160px"
+    >
+      <el-form-item :label="t('fields.name')" prop="name">
+        <el-input v-model="copyForm.name" style="width: 350px" />
+      </el-form-item>
+
+      <el-form-item :label="t('fields.mallName')" prop="mall">
+        <el-input v-model="copyForm.mallName" style="width: 350px" />
+      </el-form-item>
+
+      <div class="dialog-footer">
+        <el-button @click="uiControl.dialogCopyVisible = false">{{ t('fields.cancel') }}</el-button>
+        <el-button type="primary" @click="copySubmit">{{ t('fields.confirm') }}</el-button>
+      </div>
+    </el-form>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -189,16 +239,18 @@
 import { computed, nextTick, onMounted, reactive, ref } from "vue";
 import { required } from "../../../utils/validate";
 import { ElMessage } from "element-plus";
-import { createWithdrawPlatform, getWithdrawPlatforms, updateWithdrawPlatform, updateWithdrawPlatformStatus } from "../../../api/withdraw-platform";
+import { createWithdrawPlatform, getWithdrawPlatforms, updateWithdrawPlatform, updateWithdrawPlatformStatus, copyWithdrawPlatform } from "../../../api/withdraw-platform";
 import { getCurrencyNames } from "../../../api/currency";
 import { hasPermission } from '../../../utils/util'
 import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { getSiteListSimple } from "../../../api/site";
+import { getActivePaymentTypes } from '../../../api/payment-type'
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const store = useStore();
+const copyWithdrawPlatformForm = ref(null)
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 
 const site = ref(null);
@@ -209,9 +261,11 @@ const siteList = reactive({
 });
 const uiControl = reactive({
   dialogVisible: false,
+  dialogCopyVisible: false,
   dialogTitle: "",
   dialogType: "CREATE",
   dialogLoading: false,
+  dialogCopyLoading: false,
   status: [
     { key: 1, displayName: "Open", value: true },
     { key: 2, displayName: "Close", value: false }
@@ -228,6 +282,12 @@ const request = reactive({
   name: null,
   status: null
 });
+const copyForm = reactive({
+  name: null,
+  mall: null,
+  id: null,
+  paymentName: null
+})
 const form = reactive({
   id: null,
   siteId: null,
@@ -260,6 +320,12 @@ const currencyNames = reactive({
   list: []
 })
 
+const list = reactive({
+  payTypes: [],
+  filteredPayTypes: [],
+  siteCurrencyIds: [],
+})
+
 function resetQuery() {
   request.name = null;
   request.status = null;
@@ -276,6 +342,33 @@ async function loadWithdrawPlatform() {
 async function loadCurrencyNames() {
   const { data: ret } = await getCurrencyNames();
   currencyNames.list = ret;
+}
+
+async function loadPayTypes() {
+  const { data: payType } = await getActivePaymentTypes()
+  list.payTypes = payType
+}
+
+function filterPayTypeByCurrency(siteId) {
+  console.log('siteId', siteId)
+  const currentSite = siteList.list.find(s => s.id === siteId)
+  console.log('siteList.list', siteList.list)
+  console.log('currentSite', currentSite)
+  const currencyCodeList = currentSite.currency.split(',').map(currencyName => currencyName)
+  list.siteCurrencyIds = [
+    ...currencyCodeList.map(currencyName => {
+      const currency = currencyNames.list.find(c => c.currencyCode.toUpperCase() === currencyName.toUpperCase())
+      return currency ? currency.id : null;
+    }).filter(Boolean)
+  ]
+  list.filteredPayTypes = list.payTypes.filter(payTypeByCurrencyID)
+}
+
+function payTypeByCurrencyID (record) {
+  if (record.currencyIds) {
+    const currencyIdsList = record.currencyIds.split(',')
+    return currencyIdsList.filter(currencyId => list.siteCurrencyIds.includes(parseInt(currencyId))).length > 0
+  }
 }
 
 function changePage(page) {
@@ -306,6 +399,7 @@ function showEdit(withdrawPlatform) {
       }
     }
   });
+  filterPayTypeByCurrency(parseInt(withdrawPlatform.siteId))
 }
 
 function create() {
@@ -355,8 +449,30 @@ onMounted(async() => {
   }
   await loadWithdrawPlatform();
   await loadCurrencyNames();
+  await loadPayTypes();
 });
 
+function showDialogCopy(withdrawPlatform) {
+  console.log(withdrawPlatform);
+  copyForm.id = withdrawPlatform.id;
+  copyForm.mallName = "";
+  copyForm.name = "";
+  uiControl.dialogTitle = t('fields.copyPayment') + " -  " + withdrawPlatform.name;
+  uiControl.dialogCopyVisible = true
+}
+
+async function copySubmit() {
+  if (copyForm.name === null || copyForm.name === "") {
+    ElMessage({ message: t('message.validateWithdrawPlatformNameRequired'), type: 'error' });
+  } else if (copyForm.mallName === null || copyForm.mallName === "") {
+    ElMessage({ message: t('message.validateMallNameRequired'), type: 'error' });
+  } else {
+    uiControl.dialogCopyVisible = false;
+    await copyWithdrawPlatform(copyForm);
+    loadWithdrawPlatform();
+    ElMessage({ message: t('message.copySuccess'), type: 'success' });
+  }
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

@@ -4,10 +4,15 @@ export const useUI = defineStore("ui-store", {
   state: () => {
     return {
       footer: true,
-      orientation: 'landscape',
-      themeColor: 'purple-8',
+      orientation: "landscape",
+      themeColor: "purple-8",
       leftDrawerOpen: false,
-      appVersion: ""
+      appVersion: "",
+      isCardUpdate: false,
+      //Affiliate A: Came From Affiliate 5D0E5C
+      isAffiliateA: false,
+      //Affiliate B: Came From slot-win.cc.
+      isAffiliateB: false
     };
   },
   actions: {
@@ -19,16 +24,16 @@ export const useUI = defineStore("ui-store", {
       this.footer = true;
     },
     orientationPotrait() {
-      this.orientation = 'portrait'
+      this.orientation = "portrait";
     },
     orientationLandscape() {
-      this.orientation = 'landscape'
+      this.orientation = "landscape";
     },
-    setDrawer(status){
-      this.leftDrawerOpen= status;
+    setDrawer(status) {
+      this.leftDrawerOpen = status;
     },
-    setVersion(version){
-      this.appVersion= version;
+    setVersion(version) {
+      this.appVersion = version;
     }
   }
 });

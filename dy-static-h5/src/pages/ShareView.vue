@@ -107,7 +107,7 @@ export default defineComponent({
     const getReferral = () => {
       api.get('/session/member/referralCode').then((res) => {
         if(res.code === 0) {
-          referralLink.value = `https://mph.jolly88.com/refer/${res.data}`;
+          referralLink.value = `${window.location.origin}/refer/${res.data}`;
         }
       }).catch((err) => {
 

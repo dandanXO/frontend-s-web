@@ -2,7 +2,23 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
+        <el-select
+          v-model="request.selectedDateType"
+          size="small"
+          :placeholder="t('fields.dateType')"
+          class="filter-item"
+          style="width: 180px"
+          @change="updateDateType"
+        >
+          <el-option
+            v-for="item in uiControl.selectedDateType"
+            :key="item.key"
+            :label="t('dateType.' + item.displayName)"
+            :value="item.value"
+          />
+        </el-select>
         <el-date-picker
+          v-if="request.selectedDateType === 0"
           v-model="request.recordTime"
           format="DD/MM/YYYY"
           value-format="YYYY-MM-DD"
@@ -11,27 +27,40 @@
           range-separator=":"
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
-          style="width: 250px"
+          style="width: 250px; margin-left: 5px;"
           :shortcuts="shortcuts"
           :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
         />
-
+        <el-date-picker
+          v-else
+          v-model="request.regTime"
+          format="DD/MM/YYYY"
+          value-format="YYYY-MM-DD"
+          size="small"
+          type="daterange"
+          range-separator=":"
+          :start-placeholder="t('fields.startDate')"
+          :end-placeholder="t('fields.endDate')"
+          style="width: 250px; margin-left: 5px;"
+          :shortcuts="shortcuts"
+          :disabled-date="disabledDate"
+          :editable="false"
+          :clearable="false"
+        />
         <el-input
           v-model="request.loginName"
           size="small"
           style="width: 150px; margin-left: 5px"
           :placeholder="t('fields.memberName')"
         />
-
         <el-input
           v-model="request.affiliateName"
           size="small"
           style="width: 150px; margin-left: 5px"
           :placeholder="t('fields.affiliateName')"
         />
-
         <el-select
           v-model="request.isDeposit"
           size="small"
@@ -46,7 +75,6 @@
             :value="item.id"
           />
         </el-select>
-
         <el-select
           v-model="request.siteId"
           size="small"
@@ -291,6 +319,10 @@ const site = ref(null)
 
 const uiControl = reactive({
   messageVisible: false,
+  selectedDateType: [
+    { key: 0, displayName: 'recordTime', value: 0 },
+    { key: 1, displayName: 'regTime', value: 1 },
+  ],
 });
 
 const siteList = reactive({
@@ -319,11 +351,16 @@ const request = reactive({
   isDeposit: 1,
   loginName: null,
   affiliateName: null,
+  selectedDateType: uiControl.selectedDateType[0].value,
   recordTime: [defaultStartDate, defaultEndDate],
+  regTime: []
+
 })
 
 function resetQuery() {
+  request.selectedDateType = uiControl.selectedDateType[0].value
   request.recordTime = [defaultStartDate, defaultEndDate]
+  request.regTime = []
   request.siteId = site.value ? site.value.id : 1
   request.loginName = null
   request.affiliateName = null
@@ -335,20 +372,19 @@ function changePage(page) {
   loadSiteMemberReport()
 }
 
+function updateDateType() {
+  if (request.selectedDateType === 0) {
+    request.recordTime = [defaultStartDate, defaultEndDate]
+    request.regTime = []
+  } else {
+    request.regTime = [defaultStartDate, defaultEndDate]
+    request.recordTime = []
+  }
+}
+
 async function loadSiteMemberReport() {
   page.loading = true
-  const requestCopy = { ...request }
-  const query = {}
-  Object.entries(requestCopy).forEach(([key, value]) => {
-    if (value) {
-      query[key] = value
-    }
-  })
-  if (request.recordTime !== null) {
-    if (request.recordTime.length === 2) {
-      query.recordTime = request.recordTime.join(',')
-    }
-  }
+  const query = checkQuery()
   const { data: ret } = await getSiteMemberReport(query)
   const { data: ret1 } = await getTotalSiteMemberReport(query)
   totalPage.records = ret1.records
@@ -517,6 +553,11 @@ function checkQuery() {
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
       query.recordTime = request.recordTime.join(',')
+    }
+  }
+  if (request.regTime !== null) {
+    if (request.regTime.length === 2) {
+      query.regTime = request.regTime.join(',')
     }
   }
   return query;

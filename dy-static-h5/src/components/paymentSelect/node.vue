@@ -384,6 +384,7 @@ $node-color: #4ab6fd;
         padding: 0;
         border: 0;
         background-color: transparent;
+        max-width: 60px;
       }
 
       ::after {

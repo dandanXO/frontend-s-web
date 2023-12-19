@@ -1,107 +1,92 @@
 <template>
-  <div class="app-container">
-    <div class="app-container-inner">
-      <template v-for="(det, idx) in platforms" :key="idx">
-        <template :class="active" v-if="selectedPlat === det.code">
-          <div class="app-right" :class="det.code">
-            <!-- <img class="bgimg" :class="det.image" :src="require('../assets/app/left_person_' + det.image + '.webp')"> -->
-            <div class="app-item-box">
-              <img v-if="det.code === 'QZ'" src="../assets/app/all_left.png" />
-              <img
-                v-if="det.code === 'DJ'"
-                src="../assets/app/esport_left.png"
-              />
-              <img
-                v-if="det.code === 'TY'"
-                src="../assets/app/sport_left.png"
-              />
-            </div>
-            <div class="app-item-box">
-              <img v-if="det.code === 'QZ'" src="../assets/app/all_right.png" />
-              <img
-                v-if="det.code === 'DJ'"
-                src="../assets/app/esport_right.png"
-              />
-              <img
-                v-if="det.code === 'TY'"
-                src="../assets/app/sport_right.png"
-              />
-            </div>
-          </div>
-          <div class="app-left">
-            <div class="platform-list-box">
-              <span
-                class="platform-list-item platform"
-                v-for="(plat, i) in platforms"
-                :key="i"
-                @click="clickPlat(plat)"
-                :class="{ active: selectedPlat === plat.code }"
-              >
-                {{ plat.name }}APP
-              </span>
-            </div>
-            <div class="fade-left">
-              <template v-if="det.code === 'QZ'">
-                <img src="../assets/app/txt_all_client.png" />
-              </template>
-              <!-- <template v-if="det.code === 'DJ'">
-                                <img src="../assets/app/txt_sport_client.png" />
-                            </template>
-                            <template v-if="det.code === 'TY'">
-                                <img
-                                    src="../assets/app/txt_esports_client.png"
-                                />
-                            </template> -->
-              <div class="app-desc" v-html="det.message"></div>
-              <div class="app-items">
-                <div class="box">
-                  <div class="qrcode-bg">
-                    <vue-qrious :value="`${downloadUrl}`" />
-                  </div>
-                  <div class="img-desc">
-                    扫描二维码下载IOS
-                    <br />
-                    安卓纯原生手机客户端
-                  </div>
-                  <a
-                    class="app-url"
-                    :href="`${downloadUrl}?url=${downloadUrl}&agentCode=`"
-                  >
-                    {{ downloadUrl }}
-                  </a>
-                </div>
-                <div class="box">
-                  <div class="h5">
-                    <img src="../assets/app/download_icon_h5.png" />
-                  </div>
-                  <div class="img-desc">
-                    使用浏览器输入以下网址
-                    <br />
-                    免下载访问
-                  </div>
-                  <a
-                    class="app-url"
-                    :href="`${downloadUrl}?url=${downloadUrl}&agentCode=`"
-                  >
-                    {{ downloadUrl }}
-                  </a>
-                </div>
+  <div class="platform__wrap">
+    <div class="app-container">
+      <div class="app-container-inner">
+        <template v-for="(det, idx) in platforms" :key="idx">
+          <template :class="active" v-if="selectedPlat === det.code">
+            <div class="app-right" :class="det.code">
+              <!-- <img class="bgimg" :class="det.image" :src="require('../assets/app/left_person_' + det.image + '.webp')"> -->
+              <div class="app-item-box">
+                <img v-if="det.code === 'QZ'" src="../assets/app/all_left.png" />
+                <img v-if="det.code === 'DJ'" src="../assets/app/esport_left.png" />
+                <img v-if="det.code === 'TY'" src="../assets/app/sport_left.png" />
+              </div>
+              <div class="app-item-box">
+                <img v-if="det.code === 'QZ'" src="../assets/app/all_right.png" />
+                <img v-if="det.code === 'DJ'" src="../assets/app/esport_right.png" />
+                <img v-if="det.code === 'TY'" src="../assets/app/sport_right.png" />
               </div>
             </div>
-            <!-- <div class="fade-left">
-                    <img :src="require('../assets/app/txt_desc_' + det.image + '.webp')">
-                    <div class="platform-txt-box">
-                        <div>
-                          <img :src="require('../assets/app/app_' + det.image + '_icons.webp')">
-                        </div>
+            <div class="app-left">
+              <div class="platform-list-box">
+                <span
+                  class="platform-list-item platform"
+                  v-for="(plat, i) in platforms"
+                  :key="i"
+                  @click="clickPlat(plat)"
+                  :class="{ active: selectedPlat === plat.code }"
+                >
+                  {{ plat.name }}APP
+                </span>
+              </div>
+              <div class="fade-left">
+                <template v-if="det.code === 'QZ'">
+                  <img src="../assets/app/txt_all_client.png" />
+                </template>
+                <!-- <template v-if="det.code === 'DJ'">
+                                  <img src="../assets/app/txt_sport_client.png" />
+                              </template>
+                              <template v-if="det.code === 'TY'">
+                                  <img
+                                      src="../assets/app/txt_esports_client.png"
+                                  />
+                              </template> -->
+                <div class="app-desc" v-html="det.message"></div>
+                <div class="app-items">
+                  <div class="box">
+                    <div class="qrcode-bg">
+                      <vue-qrious :value="`${downloadUrl}`" />
                     </div>
-                    <div class="play-btn" @click="openGame(det.name, det.code)">立即投注</div> 
-                </div>-->
-          </div>
+                    <div class="img-desc">
+                      扫描二维码下载IOS
+                      <br />
+                      安卓纯原生手机客户端
+                    </div>
+                    <a class="app-url" :href="`${downloadUrl}?url=${downloadUrl}&agentCode=`">
+                      {{ downloadUrl }}
+                    </a>
+                  </div>
+                  <div class="box">
+                    <div class="h5">
+                      <img src="../assets/app/download_icon_h5.png" />
+                    </div>
+                    <div class="img-desc">
+                      使用浏览器输入以下网址
+                      <br />
+                      免下载访问
+                    </div>
+                    <a class="app-url" :href="`${downloadUrl}?url=${downloadUrl}&agentCode=`">
+                      {{ downloadUrl }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="fade-left">
+                      <img :src="require('../assets/app/txt_desc_' + det.image + '.webp')">
+                      <div class="platform-txt-box">
+                          <div>
+                            <img :src="require('../assets/app/app_' + det.image + '_icons.webp')">
+                          </div>
+                      </div>
+                      <div class="play-btn" @click="openGame(det.name, det.code)">立即投注</div> 
+                  </div>-->
+            </div>
+          </template>
         </template>
-      </template>
+      </div>
     </div>
   </div>
+
   <GameModal ref="appGame"></GameModal>
 </template>
 <script>
@@ -389,8 +374,7 @@ export default defineComponent({
         display: block;
         width: 198px;
         height: 52px;
-        background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%),
-          linear-gradient(#000, #000);
+        background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000);
         background-blend-mode: normal, normal;
         border-radius: 26px;
         color: #fff;
@@ -627,8 +611,7 @@ export default defineComponent({
       display: flex;
       justify-content: center;
       align-items: center;
-      background-image: linear-gradient(0deg, #f2f2f2 0, #fefefe 100%),
-        linear-gradient(#000, #000);
+      background-image: linear-gradient(0deg, #f2f2f2 0, #fefefe 100%), linear-gradient(#000, #000);
       border: none;
       font-size: 16px;
       font-weight: 400;
@@ -641,8 +624,7 @@ export default defineComponent({
       border-radius: 26px;
       &.active,
       &:hover {
-        background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%),
-          linear-gradient(#000, #000);
+        background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000);
         box-shadow: 0 6px 20px 2px rgba(103, 204, 255, 0.75);
         border: none;
         color: #fff;

@@ -1,51 +1,203 @@
 <template>
-  <div class="bg-container">
-    <ContentFrame></ContentFrame>
-
+  <ContentView contentTopStatus="faded">
     <div class="agency-policy">
       <ul class="margin-style">
-        <li>How To Earn Commissions?</li>
-        <li>How To Invite Your Friends?</li>
-        <li>How To Upgrade Your Level?</li>
-        <li>How To Develop Your Referrals Into Affiliates?</li>
-        <li>
-          How To Get Commission From Your Affiliates? The Agent Level Is Divided According To The Number Of Active
-          Members You Invite. As Long As The Member You Invite Has Recharged Once, He Is An Active Member.
-        </li>
+        <li>How to earn commissions?</li>
+        <li>How to invite your friends?</li>
+        <li>What's the purpose of level?</li>
+        <li>How to upgrade your level?</li>
+        <li>How to develop your referrals into affiliates?</li>
+        <li>How to get commission from your affiliates?</li>
       </ul>
 
-      <q-table
+      <!-- <q-table
         flat
         :hide-pagination="true"
         class="table-container q-mt-md"
         :columns="columns"
         :rows="rows"
         row-key="name"
-      ></q-table>
+        dense
+      ></q-table> -->
+      <q-separator></q-separator>
 
       <ul>
-        <li>How To Earn Commissions?</li>
-        <li class="dot-style">
-          You Can Get Up To 16% Of Each Payments Made By Your Referred Players. The Commission Is Valid Forever. The
-          Higher Your Level Is, The Higher The Commission Percentage You Can Get.
-        </li>
+        <!-- 1. How to earn commissions? -->
+        <li>How to earn commissions?</li>
+        <ul>
+          <li class="dot-style">
+            You can earn up to 1.5% of the maximum daily wager paid by your referred players. Commissions are valid
+            forever. The higher your level, the higher the commission percentage you can earn.
+          </li>
+        </ul>
+        <q-table
+          flat
+          :hide-pagination="true"
+          :rows-per-page-options="[0]"
+          class="table-container q-my-md"
+          :columns="columns2"
+          :rows="rows2"
+          row-key="name"
+          dense
+        ></q-table>
+        <ul>
+          <li class="dot-style">
+            If your affiliate or your affiliate's referrer, etc. becomes an agent and they are at a lower level than
+            their direct superior, then you can get up to 1.2% of the affiliate wagering rebate amount. The commission
+            rate depends on the level difference between you and your affiliate, the greater the level difference, the
+            more commission you receive.
+          </li>
+        </ul>
+
+        <!-- 2. How to invite your friends? -->
+        <li>How to earn commissions?</li>
+        <ul>
+          <li class="dot-style">Share the game via social media or share the referral link to your friends.</li>
+          <li class="dot-style">
+            You get commission after your friends click the promotional link, download App, install the game and
+            register.
+          </li>
+          <li class="dot-style">
+            The installation must be finished by the referral link. Sharing the App package by Sharelt etc is not
+            allowed.
+          </li>
+        </ul>
+
+        <!-- 3. What's the purpose of level? -->
+        <li>What's the purpose of level?</li>
+        <ul>
+          <li class="dot-style">
+            Based on the activity and performance of agent users, we have divided them into 13 levels.
+          </li>
+          <li class="dot-style">
+            The higher your level, the higher the commission percentage you get from members' bets, and the upgrade
+            conditions require that the bet amount and team members meet the requirements at the same time.
+          </li>
+        </ul>
+        <q-table
+          flat
+          :hide-pagination="true"
+          :rows-per-page-options="[0]"
+          class="table-container q-my-md"
+          :columns="columns2"
+          :rows="rows2"
+          row-key="name"
+          dense
+        ></q-table>
+        <ul>
+          <li class="dot-style">
+            Level difference occurs when the direct superior level minus the corresponding direct affiliate level is
+            greater than or equal to 1; otherwise, there is no level difference.
+          </li>
+          <li class="dot-style">
+            The higher your level, the higher the commission percentage you get from the level difference bet.
+          </li>
+        </ul>
+        <q-table
+          flat
+          :hide-pagination="true"
+          :rows-per-page-options="[0]"
+          class="table-container q-my-md"
+          :columns="columns3"
+          :rows="rows3"
+          row-key="name"
+          dense
+        ></q-table>
+
+        <!-- 4. How to upgrade your level? -->
+        <li>How to upgrade your level?</li>
+        <ul>
+          <li class="dot-style">
+            The more referrals you bring to the game and the more they bet, the higher your score will be.
+          </li>
+          <li class="dot-style">
+            If you have extraordinary promotional ability with channels, please get contact with our customer service
+            center to verify your division.
+          </li>
+        </ul>
+
+        <!-- 5. How to upgrade your level? -->
+        <li>How to develop your referrals into affiliates?</li>
+        <ul>
+          <li class="dot-style">
+            Log in to the IndWin7, share your referral link with your friends on the agent page, guide them to register
+            from the link, and they can become your direct affiliates.
+          </li>
+          <li class="dot-style">
+            Encourage your affiliates to invite their friends to play games, and the friends they invite will become
+            your indirect affiliates.
+          </li>
+          <li class="dot-style">
+            After your direct affiliates' friends become your indirect affiliates, they can still develop their
+            affiliates in this way. All their affiliates will be regarded as your indirect affiliates.
+          </li>
+        </ul>
+
+        <!-- 6. How to get commission from your affiliates? -->
+        <li>How to get commission from your affiliates?</li>
+        <ul>
+          <li class="dot-style">
+            The top-up player is your indirect affiliate, and any pair of direct superiors and direct affiliates between
+            you and the player must have a level difference, otherwise no level difference commission will be generated.
+          </li>
+          <li class="dot-style">
+            The level difference commission ratio is determined by your direct membership and the level difference
+            between you and the betting player.
+          </li>
+        </ul>
       </ul>
 
-      <q-table
-        flat
-        :hide-pagination="true"
-        class="table-container q-mt-md"
-        :columns="columns2"
-        :rows="rows2"
-        row-key="name"
-      ></q-table>
+      <div class="notice">
+        <div class="title">Notice</div>
+        <ul>
+          <div class="desc">
+            You level
+            <em>V8</em>
+            . Betting amount
+            <em>972000rs</em>
+            . Team members
+            <em>49</em>
+            people.
+          </div>
+          <div class="desc">
+            A Level
+            <em>V8</em>
+            . Betting amount
+            <em>760000rs</em>
+            . Team members
+            <em>35</em>
+            people.
+          </div>
+          <div class="desc">
+            B Level
+            <em>V6</em>
+            . Betting amount
+            <em>210000rs</em>
+            . Team members
+            <em>13</em>
+            people.
+          </div>
+          <div class="desc">
+            C Level
+            <em>V1</em>
+            . Betting amount
+            <em>2000rs</em>
+            . Team members
+            <em>1</em>
+            person.
+          </div>
+          <li>You can't get A's betting rebate</li>
+          <li>You can get 0.2% commission on the bet amount of B's entire team</li>
+          <li>You can get 0.7% commission on the bet amount of C the entire team</li>
+        </ul>
+      </div>
 
       <div class="copy-link-container" @click="copyShareLink(selfTgurl)">
         <img class="copy-link" src="../../assets/images/earn-money/copy-link-btn.png" alt="" />
         <span>Copy Share Link</span>
       </div>
     </div>
-  </div>
+  </ContentView>
 </template>
 
 <script setup>
@@ -53,62 +205,167 @@ import { ref, onMounted } from "vue";
 import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
-import ContentFrame from "../ContentFrame.vue";
+import ContentView from "../ContentView.vue";
 
 const $q = useQuasar();
 const store = userStore();
 
-const columns = [
-  {
-    name: "name",
-    required: true,
-    label: "Agency Lever",
-    align: "center",
-    field: (row) => row.name
-  },
-  { name: "lever1", label: "1", field: "lever1", align: "center" },
-  { name: "lever2", label: "2", field: "lever2", align: "center" },
-  { name: "lever3", label: "3", field: "lever3", align: "center" },
-  { name: "lever4", label: "4", field: "lever4", align: "center" },
-  { name: "lever5", label: "5", field: "lever5", align: "center" },
-  { name: "lever6", label: "6", field: "lever6", align: "center" }
-];
-const rows = [
-  {
-    name: "Active User",
-    lever1: 0,
-    lever2: 20,
-    lever3: 40,
-    lever4: 80,
-    lever5: 160,
-    lever6: 320
-  }
-];
+// const columns = [
+//   {
+//     name: "name",
+//     required: true,
+//     label: "Agency Lever",
+//     align: "center",
+//     field: (row) => row.name
+//   },
+//   { name: "lever1", label: "1", field: "lever1", align: "center" },
+//   { name: "lever2", label: "2", field: "lever2", align: "center" },
+//   { name: "lever3", label: "3", field: "lever3", align: "center" },
+//   { name: "lever4", label: "4", field: "lever4", align: "center" },
+//   { name: "lever5", label: "5", field: "lever5", align: "center" },
+//   { name: "lever6", label: "6", field: "lever6", align: "center" }
+// ];
+// const rows = [
+//   {
+//     name: "Active User",
+//     lever1: 0,
+//     lever2: 20,
+//     lever3: 40,
+//     lever4: 80,
+//     lever5: 160,
+//     lever6: 320
+//   }
+// ];
 
 const columns2 = [
   {
-    name: "name",
-    required: true,
-    label: "VIP Level",
-    align: "center",
-    field: (row) => row.name
+    name: "level",
+    label: "Level",
+    field: "level",
+    align: "center"
   },
-  { name: "vip1", label: "VIP1", field: "vip1", align: "center" },
-  { name: "vip2", label: "VIP2", field: "vip2", align: "center" },
-  { name: "vip3", label: "VIP3", field: "vip3", align: "center" },
-  { name: "vip4", label: "VIP4", field: "vip4", align: "center" },
-  { name: "vip5", label: "VIP5", field: "vip5", align: "center" },
-  { name: "vip6", label: "VIP6", field: "vip6", align: "center" }
+  { name: "betAmount", label: "Bet Amount", field: "betAmount", align: "center" },
+  { name: "teamMember", label: "Team Member", field: "teamMember", align: "center" },
+  { name: "rebate", label: "Rebate %", field: "rebate", align: "center" }
 ];
 const rows2 = [
   {
-    name: "Commission",
-    vip1: "1%",
-    vip2: "1.5%",
-    vip3: "2%",
-    vip4: "2.5%",
-    vip5: "3%",
-    vip6: "3.5%"
+    level: "v13",
+    betAmount: "₹160000000",
+    teamMember: "377",
+    rebate: "1.5"
+  },
+  {
+    level: "v12",
+    betAmount: "₹85000000",
+    teamMember: "233",
+    rebate: "1.4"
+  },
+  {
+    level: "v11",
+    betAmount: "₹50000000",
+    teamMember: "144",
+    rebate: "1.3"
+  },
+  {
+    level: "v10",
+    betAmount: "₹26000000",
+    teamMember: "89",
+    rebate: "1.2"
+  },
+  {
+    level: "v9",
+    betAmount: "₹14000000",
+    teamMember: "55",
+    rebate: "1.1"
+  },
+  {
+    level: "v8",
+    betAmount: "₹7500000",
+    teamMember: "34",
+    rebate: "1.0"
+  },
+  {
+    level: "v7",
+    betAmount: "₹4200000",
+    teamMember: "21",
+    rebate: "0.9"
+  },
+  {
+    level: "v6",
+    betAmount: "₹2000000",
+    teamMember: "13",
+    rebate: "0.8"
+  },
+  {
+    level: "v5",
+    betAmount: "₹1000000",
+    teamMember: "8",
+    rebate: "0.7"
+  },
+  {
+    level: "v4",
+    betAmount: "₹350000",
+    teamMember: "5",
+    rebate: "0.6"
+  },
+  {
+    level: "v3",
+    betAmount: "₹140000",
+    teamMember: "3",
+    rebate: "0.5"
+  },
+  {
+    level: "v2",
+    betAmount: "₹5000",
+    teamMember: "2",
+    rebate: "0.4"
+  },
+  {
+    level: "v1",
+    betAmount: "₹2000",
+    teamMember: "1",
+    rebate: "0.3"
+  }
+];
+
+const columns3 = [
+  {
+    name: "level",
+    label: "Level",
+    field: "level",
+    align: "center"
+  },
+  { name: "1", label: "1", field: "1", align: "center" },
+  { name: "2", label: "2", field: "2", align: "center" },
+  { name: "3", label: "3", field: "3", align: "center" },
+  { name: "4", label: "4", field: "4", align: "center" },
+  { name: "5", label: "5", field: "5", align: "center" },
+  { name: "6", label: "6", field: "6", align: "center" },
+  { name: "7", label: "7", field: "7", align: "center" },
+  { name: "8", label: "8", field: "8", align: "center" },
+  { name: "9", label: "9", field: "9", align: "center" },
+  { name: "10", label: "10", field: "10", align: "center" },
+  { name: "11", label: "11", field: "11", align: "center" },
+  { name: "12", label: "12", field: "12", align: "center" },
+  { name: "13", label: "13", field: "13", align: "center" }
+];
+const rows3 = [
+  {
+    level: "Rebate %",
+    1: "0.3",
+    2: "0.4",
+    3: "0.5",
+    4: "0.6",
+    5: "0.7",
+    6: "0.8",
+    7: "0.9",
+    8: "1.0",
+    9: "1.1",
+    10: "1.2",
+    11: "1.3",
+    12: "1.4",
+    13: "1.5"
   }
 ];
 
@@ -143,81 +400,90 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss">
-.bg-container {
-  .agency-policy {
-    position: absolute;
-    padding: 0 2rem;
-    height: 37rem;
-    overflow: scroll;
-    top: 15rem;
+<style scoped lang="scss">
+.agency-policy {
+  .margin-style {
+    margin: 0;
+  }
 
-    &::-webkit-scrollbar {
-      display: none;
+  .notice {
+    .title {
+      list-style-type: none;
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.25rem;
+      text-align: left;
+      color: #edd3ff;
+      margin: 0 0 0.75rem 0;
     }
 
-    .margin-style {
-      margin: 0;
+    .desc {
+      list-style-type: none;
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.25rem;
+      text-align: left;
+      color: #edd3ff;
+      margin: 0 0 0.75rem 0;
+    }
+  }
+
+  ul {
+    padding-inline-start: 1.5rem;
+
+    li {
+      list-style-type: decimal;
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.25rem;
+      text-align: left;
+      color: #edd3ff;
+      margin: 0 0 0.75rem 0;
     }
 
-    ul {
-      padding-inline-start: 3rem;
-
-      li {
-        list-style-type: decimal;
-        font-size: 0.95rem;
-        font-weight: 700;
-        line-height: 1.25rem;
-        text-align: left;
-        color: #edd3ff;
-        margin: 0 0 0.75rem 0;
-      }
-
-      .dot-style {
-        list-style-type: disc;
-      }
+    .dot-style {
+      list-style-type: disc;
+    }
+  }
+  :deep(.q-table__container) {
+    background: transparent !important;
+    border-radius: 12px;
+  }
+  .table-container {
+    :deep(thead) {
+      background: rgba(21, 0, 37, 0.5);
     }
 
-    .table-container {
-      .q-table__card {
-        background: transparent !important;
-      }
-
-      thead {
-        background: #15002580;
-      }
-
-      tbody {
-        background: #15002533;
-      }
-
-      .text-center {
-        font-size: 0.95rem;
-        font-weight: 700;
-        width: 2rem;
-        border-bottom-width: 0;
-        border-right-width: 1px;
-        border-color: black;
-        padding: 0 0.25rem;
-      }
+    :deep(tbody) {
+      background: rgba(21, 0, 37, 0.2);
     }
 
-    .copy-link-container {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .text-center {
+      font-size: 0.95rem;
+      font-weight: 700;
+      width: 2rem;
+      border-bottom-width: 0;
+      border-right-width: 1px;
+      border-color: black;
+      padding: 0 0.25rem;
+    }
+  }
 
-      .copy-link {
-        width: 25rem;
-        padding: 1rem;
-      }
+  .copy-link-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-      span {
-        position: absolute;
-        font-size: 1.25rem;
-        font-weight: 700;
-      }
+    .copy-link {
+      width: 25rem;
+      padding: 1rem;
+    }
+
+    span {
+      position: absolute;
+      font-size: 1.25rem;
+      font-weight: 700;
     }
   }
 }

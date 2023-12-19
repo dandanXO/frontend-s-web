@@ -1,258 +1,172 @@
 <template>
-  <q-form class="q-gutter-y-md rounded-borders" @submit="onSubmit">
-    <q-input
-      ref="realNameRef"
-      hide-bottom-space
-      v-model="regForm.realName"
-      label="姓名"
-      lazy-rules
-      :rules="[
-        (val) => (val && val.length > 0) || '请输入姓名',
-        (val) =>
-          (val && val.length >= 2) ||
-          '姓名至少两个字符',
-        isValidName
-      ]"
-      color="white"
-    >
-      <template v-slot:prepend>
-        <q-icon color="bright" name="person_outline" />
-      </template>
-    </q-input>
-
-    <q-input
-      ref="loginNameRef"
-      hide-bottom-space
-      v-model="regForm.loginName"
-      label="用户名"
-      lazy-rules
-      :rules="[
-        (val) => (val && val.length > 0) || '请输入用户名',
-        (val) =>
-          (val && val.length >= 6 && val.length <= 12) ||
-          '用户名个数必须在6和12之间'
-      ]"
-      color="white"
-    >
-      <template v-slot:prepend>
-        <q-icon color="bright" name="person_outline" />
-      </template>
-    </q-input>
-
-    <q-input
-      ref="pwdRef"
-      hide-bottom-space
-      v-model="regForm.password"
-      label="密码"
-      lazy-rules
-      :type="isPwd ? 'password' : 'text'"
-      :rules="[
-        (val) => (val && val.length > 0) || '请输入密码',
-        (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
-      ]"
-      color="white"
-    >
-      <template v-slot:prepend>
-        <q-icon color="bright" name="lock_open" />
-      </template>
-      <template v-slot:append>
-        <q-icon
-          color="bright"
-          :name="isPwd ? 'visibility_off' : 'visibility'"
-          class="cursor-pointer"
-          @click="isPwd = !isPwd"
-        />
-      </template>
-    </q-input>
-    <div v-if="regForm.password" class="password-str-div">
-      <span
-        :class="{
-          'weak-pwd': pwdStrength == 'weak',
-          'normal-pwd': pwdStrength == 'normal',
-          'strong-pwd': pwdStrength == 'strong'
-        }"
-      >
-        弱
-      </span>
-      <span
-        :class="{
-          'normal-pwd': pwdStrength == 'normal',
-          'strong-pwd': pwdStrength == 'strong'
-        }"
-      >
-        好
-      </span>
-      <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">强</span>
+  <div class="login-container">
+    <div class="back-left">
+      <router-link :to="'/landing'">
+        <q-btn dense rounded icon="reply" class="bg-yellow text-black q-mt-sm" />
+      </router-link>
     </div>
 
-    <q-input
-      ref="confirmPwdRef"
-      hide-bottom-space
-      :type="isCfmPwd ? 'password' : 'text'"
-      v-model="regForm.confirmPwd"
-      label="确认密码"
-      lazy-rules
-      :rules="[
-        (val) => (val && val.length > 0) || '请输入确认密码',
-        (val) => val === regForm.password || '密码不一样',
-        (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
-      ]"
-      color="white"
-    >
-      <template v-slot:prepend>
-        <q-icon color="bright" name="lock_open" />
-      </template>
-      <template v-slot:append>
-        <q-icon
-          color="bright"
-          :name="isCfmPwd ? 'visibility_off' : 'visibility'"
-          class="cursor-pointer"
-          @click="isCfmPwd = !isCfmPwd"
-        />
-      </template>
-    </q-input>
+    <div class="logo">
+      <img src="../assets/logo.png" />
+    </div>
 
-    <!-- <q-input
-      ref="telRef"
-      hide-bottom-space
-      v-model="regForm.telephone"
-      label="电话号码"
-      lazy-rules
-      maxlength="11"
-      clearable
-      :rules="[
-        (val) => (val && val.length > 7) || '请输入有效的电话号码',
-        isValidCnPhone
-      ]"
-      color="white"
-    >
-      <template v-slot:prepend>
-        <q-icon color="bright" name="smartphone" />
-      </template>
-      <template v-slot:append>
-        <q-btn
-          label="获取验证码"
-          color="brightbtn"
-          @click="openPhoneVeriDialog()"
-        />
-      </template>
-    </q-input> -->
-
-    <q-input
-      v-show="regForm.smsCodeId"
-      ref="phoneVerificationRef"
-      hide-bottom-space
-      type="text"
-      v-model="regForm.smsCode"
-      label="手机验证码"
-      lazy-rules
-      color="white"
-      maxlength="6"
-      :rules="[(val) => (val && val.length > 3) || '请输入手机验证码']"
-    >
-      <template v-slot:prepend>
-        <q-icon color="bright" name="shield" />
-      </template>
-    </q-input>
-
-    <!--    <q-input-->
-    <!--      ref="emailRef"-->
-    <!--      type="email"-->
-    <!--      hide-bottom-space-->
-    <!--      v-model="regForm.email"-->
-    <!--      label="电子邮件"-->
-    <!--      lazy-rules-->
-    <!--      :rules="[-->
-    <!--        (val) => (val && val.length > 0) || '请输入电子邮件',-->
-    <!--        isValidEmail-->
-    <!--      ]"-->
-    <!--      color="white"-->
-    <!--    >-->
-    <!--      <template v-slot:prepend>-->
-    <!--        <q-icon color="bright" name="mail_outline"/>-->
-    <!--      </template>-->
-    <!--    </q-input>-->
-    <q-input
-      ref="verificationRef"
-      hide-bottom-space
-      clearable
-      type="text"
-      v-model="regForm.captchaCode"
-      label="验证码"
-      lazy-rules
-      color="white"
-      :rules="[
-        (val) => (val && val.length > 0) || '请输入验证码',
-        (val) => (val && val.length > 3 && val.length < 5) || '验证码长度为4个'
-      ]"
-    >
-      <template v-slot:append>
-        <img :src="verificationImg" @click="getCode()" />
-      </template>
-      <template v-slot:prepend>
-        <q-icon color="bright" name="security" />
-      </template>
-    </q-input>
-
-    <q-input
-      v-if="!hasAffiliate"
-      ref="affiliateCodeRef"
-      hide-bottom-space
-      v-model="regForm.referrer"
-      label="推荐码"
-      hint="若不是合营下会员无需填写"
-    >
-      <template v-slot:prepend>
-        <img src="../assets/images/login/login_name.png" width="20" />
-      </template>
-    </q-input>
-
-    <div class="row justify-between items-center">
-      <q-btn
-        @click.prevent="onSubmit"
-        type="submit"
-        class="q-mt-lg"
-        label="注册"
-        width="100%"
-        color="brightbtn"
-        style="width: 100%"
+    <q-form class="q-gutter-y-md rounded-borders">
+      <q-input
+        ref="loginNameRef"
+        hide-bottom-space
+        type="number"
+        v-model="regForm.loginName"
+        label="Phone Number"
+        lazy-rules
+        :rules="[
+          (val) => (val && val.length > 0) || 'Please insert Phone number',
+          (val) => val.length === 10 || 'The phone number must be 10 digits'
+        ]"
+        placeholder="Please Phone Number"
+        color="white"
+        class="landing-input"
         rounded
+        outlined
+        label-color="brand"
       />
-    </div>
-  </q-form>
 
-  <q-dialog
-    v-model="showCaptchaDialog"
-    width="100%"
-    no-backdrop-dismiss
-    no-esc-dismiss
-  >
-    <q-card width="100%">
-      <q-card-section
-        class="q-pa-md bg-brightbtn text-white"
+      <q-input
+        ref="pwdRef"
+        hide-bottom-space
+        v-model="regForm.password"
+        label="Password"
+        lazy-rules
+        :type="isPwd ? 'password' : 'text'"
+        :rules="[
+          (val) => (val && val.length > 0) || 'Please insert password',
+          (val) => (val.length >= 6 && val.length <= 11) || 'The characters of password must be between 6 and 11',
+          () => isAlphanumeric(regForm.password, 'Password')
+        ]"
+        placeholder="Please Enter Password"
+        color="white"
+        class="landing-input"
+        rounded
+        outlined
+        label-color="brand"
       >
-        <q-toolbar>
-          <q-toolbar-title>验证码</q-toolbar-title>
-          <q-btn flat v-close-popup round dense icon="close" />
-        </q-toolbar>
-      </q-card-section>
-      <div class="q-px-lg q-pt-sm q-pb-lg">
-        <q-card-section class="q-mb-md q-pa-md">
-          <q-input v-model="innerCaptchaRef" placeholder="验证码">
-            <template v-slot:append>
-              <img
-                :src="phoneVerificationImg"
-                title="点击刷新验证码"
-                style="margin-top: 6px; cursor: pointer"
-                @click="getInnerCode"
-              />
-            </template>
-          </q-input>
-        </q-card-section>
-        <q-btn @click="onCaptchaSubmit" label="发送验证码" color="brightbtn" />
+        <template v-slot:append>
+          <q-icon
+            color="gray-3"
+            :name="isPwd ? 'visibility_off' : 'visibility'"
+            class="cursor-pointer"
+            @click="isPwd = !isPwd"
+          />
+        </template>
+      </q-input>
+      <div v-if="regForm.password" class="password-str-div">
+        <span
+          :class="{
+            'weak-pwd': pwdStrength == 'weak',
+            'normal-pwd': pwdStrength == 'normal',
+            'strong-pwd': pwdStrength == 'strong'
+          }"
+        >
+          Weak
+        </span>
+        <span
+          :class="{
+            'normal-pwd': pwdStrength == 'normal',
+            'strong-pwd': pwdStrength == 'strong'
+          }"
+        >
+          Good
+        </span>
+        <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
       </div>
-    </q-card>
-  </q-dialog>
+
+      <q-input
+        ref="confirmPwdRef"
+        hide-bottom-space
+        :type="isCfmPwd ? 'password' : 'text'"
+        v-model="regForm.confirmPwd"
+        label="Confirm Password"
+        lazy-rules
+        :rules="[
+          (val) => (val && val.length > 0) || 'Please insert password',
+          (val) => val === regForm.password || 'Password does not match'
+        ]"
+        placeholder="Please Enter Password Again"
+        color="white"
+        class="landing-input"
+        rounded
+        outlined
+        label-color="brand"
+      >
+        <template v-slot:append>
+          <q-icon
+            color="gray-3"
+            :name="isCfmPwd ? 'visibility_off' : 'visibility'"
+            class="cursor-pointer"
+            @click="isCfmPwd = !isCfmPwd"
+          />
+        </template>
+      </q-input>
+
+      <!--      <q-input-->
+      <!--        ref="verificationRef"-->
+      <!--        hide-bottom-space-->
+      <!--        clearable-->
+      <!--        type="text"-->
+      <!--        v-model="regForm.captchaCode"-->
+      <!--        label="Verification Code"-->
+      <!--        lazy-rules-->
+      <!--        :rules="[-->
+      <!--          (val) => (val && val.length > 0) || 'Please insert verification code',-->
+      <!--          (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'-->
+      <!--        ]"-->
+      <!--        placeholder="Please enter verification Code"-->
+      <!--        label-color="brand"-->
+      <!--        rounded-->
+      <!--        outlined-->
+      <!--        color="white"-->
+      <!--        class="landing-input"-->
+      <!--      >-->
+      <!--        <template v-slot:append>-->
+      <!--          <img :src="verificationImg" @click="getCode()" />-->
+      <!--        </template>-->
+      <!--      </q-input>-->
+
+      <q-input
+        v-if="!hasAffiliate"
+        ref="affiliateCodeRef"
+        hide-bottom-space
+        v-model="regForm.referrer"
+        label="Invitation Code"
+        hint="Optional"
+        label-color="brand"
+        rounded
+        outlined
+        color="white"
+        class="landing-input"
+      />
+
+      <div class="row items-center justify-between q-mt-sm">
+        <div class="mui-row" :class="isAgreeReg ? 'checked' : ''">
+          <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box" color="yellow">
+            I have Agree To The
+            <a href="#" style="text-decoration: none; color: #fae576">Use Privacy Agreement</a>
+          </q-checkbox>
+        </div>
+      </div>
+
+      <div class="q-mt-xs">
+        <q-btn @click="onSubmit" class="btn-yellow" label="Register" rounded no-caps :disable="!isAgreeReg">
+          <template v-slot:loading>
+            <q-spinner-hourglass size="24px" color="white" />
+          </template>
+        </q-btn>
+      </div>
+
+      <div class="tip-container">
+        <router-link class="landing-tip" to="/login">Already A Member? Sign In Now</router-link>
+      </div>
+    </q-form>
+  </div>
 </template>
 
 <script>
@@ -263,7 +177,8 @@ import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "stores/index";
 import qs from "qs";
-
+import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
+import AdjustWeb from "@adjustcom/adjust-web-sdk";
 export default defineComponent({
   name: "RegisterPage",
   setup() {
@@ -274,17 +189,13 @@ export default defineComponent({
     });
     const store = userStore();
     const verificationImg = ref("");
-    const isValidName = () => {
-      const namePattern = /^([\u4e00-\u9fa5\.\。]*)$/;
-      // const namePattern = /^[\u4e00-\u9fa5]{2,4}$/;
-      return namePattern.test(regForm.realName) || "请输入中文字符";
-    };
 
     const captchaRef = ref();
     const innerCodeId = ref("");
     const innerCaptchaRef = ref("");
     const showCaptchaDialog = ref(false);
     const phoneVerificationImg = ref("");
+    const isAgreeReg = ref(false);
 
     const regForm = reactive({
       loginName: "",
@@ -292,7 +203,7 @@ export default defineComponent({
       confirmPwd: "",
       telephone: "",
       // email: "",
-      captchaCode: "",
+      captchaCode: "0000",
       regHost: location.hostname,
       codeId: "",
       codeAffiliate: "",
@@ -305,11 +216,10 @@ export default defineComponent({
         .get("/member/verificationCode")
         .then((response) => {
           if (response.code === 0) {
-            verificationImg.value =
-              "data:image/png;base64," + response.data.img;
+            verificationImg.value = "data:image/png;base64," + response.data.img;
             regForm.codeId = response.data.id;
-            regForm.captchaCode = "";
-            verificationRef.value.resetValidation();
+            regForm.captchaCode = "0000";
+            // verificationRef.value.resetValidation();
           }
         })
         .catch((e) => {
@@ -322,8 +232,7 @@ export default defineComponent({
         .get("/member/verificationCode")
         .then((response) => {
           if (response.code === 0) {
-            phoneVerificationImg.value =
-              "data:image/png;base64," + response.data.img;
+            phoneVerificationImg.value = "data:image/png;base64," + response.data.img;
             innerCodeId.value = response.data.id;
             innerCaptchaRef.value = "";
           }
@@ -374,12 +283,23 @@ export default defineComponent({
     };
 
     const isValidCnPhone = () => {
-      const phonePattern =
-        /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
+      const phonePattern = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
       return phonePattern.test(regForm.telephone) || "请输入有效的电话号码";
     };
 
+    const isValidName = (value, translation) => {
+      const namePattern = /^[A-Za-z0-9]+$/;
+      return namePattern.test(value) || `${translation} must be alphanumeric`;
+    };
+
+    const isAlphanumeric = (value, translation) => {
+      const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
+      // const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
+      return passwordPattern.test(value) || `${translation} must at least contain letters and numbers.`;
+    };
+
     const router = useRouter();
+
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
@@ -387,10 +307,12 @@ export default defineComponent({
       // telRef.value.validate();
       // phoneVerificationRef.value.validate();
       // emailRef.value.validate();
-      verificationRef.value.validate();
+      // verificationRef.value.validate();
+
       $q.loading.show({
-        message: "注册中"
+        message: "Registering in progress"
       });
+
       if (
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
@@ -398,7 +320,8 @@ export default defineComponent({
         // telRef.value.hasError ||
         // phoneVerificationRef.value.hasError ||
         // emailRef.value.hasError ||
-        verificationRef.value.hasError
+        // verificationRef.value.hasError ||
+        isAgreeReg.value === false
       ) {
         $q.loading.hide();
       } else {
@@ -412,8 +335,8 @@ export default defineComponent({
           excludes.value.forEach((element) => {
             delete allComponents[element];
           });
-          const sidParam = FingerprintJS.hashComponents(allComponents);
-          regForm.sid = sidParam;
+          // const sidParam = FingerprintJS.hashComponents(allComponents);
+          regForm.sid = store.aaid;
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
           if ("standalone" in window.navigator && window.navigator.standalone) {
             regForm.regDevice = "IOS";
@@ -431,7 +354,7 @@ export default defineComponent({
           }
 
           api
-            .post("/member/fbRegister", qs.stringify(regForm))
+            .post("/member/indRegister", qs.stringify(regForm))
             .then((ret) => {
               const res = ret;
               // console.log("RET");
@@ -440,16 +363,27 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: "注册成功",
+                  message: "Registered successfully",
                   icon: "check_circle_outline"
                 });
+
+                //ADJUST TRACKEVENT.
+                if (Platform.is.android && Platform.is.capacitor) {
+                  var adjustEvent = new AdjustEvent("81ibj7");
+                  Adjust.trackEvent(adjustEvent);
+                } else {
+                  const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+                  AdjustWeb.trackEvent({
+                    eventToken: "81ibj7"
+                  });
+                }
+
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {
-                  const jumpUrl = route.query.redirect
-                    ? route.query.redirect
-                    : "/";
-                  router.go(jumpUrl);
+                  // const jumpUrl = route.query.redirect ? route.query.redirect : "/";
+                  // router.go(jumpUrl);
+                  router.go("/");
                 }
 
                 sessionStorage.removeItem("REFERRAL_CODE");
@@ -521,7 +455,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: "手机号码不能为空",
+          message: "Phone number cannot be empty",
           icon: "report_problem"
         });
         getInnerCode();
@@ -537,7 +471,7 @@ export default defineComponent({
           })
         )
         .then((res) => {
-          let message = res.message || "发送手机验证码成功",
+          let message = res.message || "OTP sent to phone successfully",
             color = "positive";
 
           if (res.code === 0) {
@@ -561,8 +495,21 @@ export default defineComponent({
         });
     };
 
+    const isValidPhone = () => {
+      const { phone } = formDetail;
+
+      if (!phone) {
+        return "Please Enter Phone Number";
+      }
+
+      const phoneRegex = /^\d{10}$/;
+      const isValid = phoneRegex.test(phone);
+
+      return isValid ? true : "Phone Number must be 10 digits";
+    };
+
     return {
-      header: "注册账号",
+      header: "Register Account",
       regForm,
       verificationImg,
       loginNameRef,
@@ -578,7 +525,6 @@ export default defineComponent({
       getCode,
       getInnerCode,
       pwdStrength,
-      isValidName,
       showCaptchaDialog,
       onCaptchaSubmit,
       innerCaptchaRef,
@@ -586,7 +532,11 @@ export default defineComponent({
       openPhoneVeriDialog,
       phoneVerificationRef,
       isValidCnPhone,
-      hasAffiliate
+      hasAffiliate,
+      isAgreeReg,
+      isAlphanumeric,
+      isValidName,
+      isValidPhone
     };
   }
 });
@@ -604,14 +554,14 @@ function charType(num) {
   return 8;
 }
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 .page-header {
   background-image: linear-gradient(to right, #de4545, #db7e42);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: 28px;
   text-align: center;
-  font-family: Wave;
+  font-family: Poppins;
   padding: 10px;
   display: flex;
   gap: 20px;
@@ -646,8 +596,6 @@ function charType(num) {
     background: #434343;
     width: 33%;
     text-align: center;
-    font-family: "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial,
-      sans-serif;
   }
 
   span.weak-pwd {
@@ -668,5 +616,47 @@ function charType(num) {
 
 .q-toolbar {
   background: #33bcd4;
+}
+
+.landing-input {
+  :deep(.q-field__control) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  :deep(.q-field__control):before {
+    border-color: #ffdd27;
+    border-width: 2px;
+  }
+}
+
+.rmb-checked-box {
+  font-size: 14px;
+  color: #91829d;
+  margin-bottom: 8px;
+
+  :deep(.q-checkbox__bg) {
+    border-radius: 50%;
+  }
+  :deep(.q-checkbox__inner--truthy .q-checkbox__bg) {
+    background: linear-gradient(180deg, #fed87d 0%, #e6a60c 100%);
+
+    svg {
+      color: #000;
+      padding: 2px;
+    }
+  }
+}
+
+.tip-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  padding-bottom: 24px;
+}
+
+.landing-tip {
+  color: #fae576;
+  text-decoration: none;
+  font-weight: 700;
 }
 </style>
