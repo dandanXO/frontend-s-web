@@ -261,15 +261,15 @@ elTables.forEach((elTable) => {
       padding: 8px !important;
     }
 
-    .el-date-range-picker.has-sidebar {
+    &.has-sidebar {
       width: 320px !important;
     }
 
-    .el-date-range-picker .el-picker-panel__body {
+    .el-picker-panel__body {
       min-width: 232px !important;
     }
 
-    .el-date-range-picker__header div {
+    &__header div {
       font-size: 12px !important;
     }
 
