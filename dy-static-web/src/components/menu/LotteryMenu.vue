@@ -63,7 +63,7 @@ export default defineComponent({
     const platformsList = ref([]);
     const platformsListDisplay = ref([]);
     const getPlatList = () => {
-      if (store.memberType === "TEST") {
+      if (store.token) {
         getLoggedInPlatformList().then((res) => {
           platformsList.value = res;
           platformsListDisplay.value = platformsList.value.filter((element) =>

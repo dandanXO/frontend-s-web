@@ -235,7 +235,6 @@ const loadPersonalMailbox = () => {
 
         // Check if readTime is null
         shouldDisplayTrue.value = isAnyReadTimeNull(mailboxState.mailboxList);
-        console.log(shouldDisplayTrue, "~~~???");
       })
       .catch((error) => {
         console.log(error);
