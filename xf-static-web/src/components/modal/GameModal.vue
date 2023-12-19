@@ -8,15 +8,29 @@
     :afterClose="destroyGame"
   >
     <TFLoading v-if="logoShow"></TFLoading>
-    <iframe
-      @load="loadGame()"
-      v-show="!logoShow"
-      :src="src"
-      id="game-iframe"
-      scrolling="no"
-      frameborder="0"
-      class="game-iframe"
-    ></iframe>
+    <template v-if="transferInfo.platform === 'PG'">
+      <iframe
+        @load="loadGame()"
+        v-show="!logoShow"
+        v-bind:srcdoc="src"
+        id="game-iframe"
+        scrolling="no"
+        frameborder="0"
+        class="game-iframe"
+      ></iframe>
+    </template>
+    <template v-else>
+      <iframe
+        @load="loadGame()"
+        v-show="!logoShow"
+        :src="src"
+        id="game-iframe"
+        scrolling="no"
+        frameborder="0"
+        class="game-iframe"
+      ></iframe>
+    </template>
+
     <div
       @click="showDrawer()"
       class="drawer-btn"
@@ -203,7 +217,12 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           src.value = res.data;
           visible.value = true;
         });
-      } else if (platformCode === "TCG" || platformCode === "VR" || platformCode === "LBkeno" || platformCode === "JOKER") {
+      } else if (
+        platformCode === "TCG" ||
+        platformCode === "VR" ||
+        platformCode === "LBkeno" ||
+        platformCode === "JOKER"
+      ) {
         launchSessionGame(platformCode, {
           gameCode: gameCode,
           isMobile: isMobile()
@@ -219,7 +238,17 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           gameCode: gameCode,
           isMobile: isMobile()
         }).then((res) => {
-          src.value = res.data;
+          let srcData = res.data;
+
+          if (platformCode === "PG") {
+            const scriptEndTag = "</" + "script>";
+            srcData = res.data
+              .replace(/<\/script>/g, scriptEndTag)
+              .replaceAll(/\\\"/g, '"')
+              .replaceAll(/\n/g, "");
+          }
+
+          src.value = srcData;
           visible.value = true;
         });
       }

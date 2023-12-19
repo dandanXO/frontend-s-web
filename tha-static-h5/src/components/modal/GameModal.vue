@@ -20,15 +20,31 @@
           <q-btn v-if="drawerVisible" flat @click="drawerVisible = !drawerVisible" round dense icon="read_more" />
         </div>
 
-        <iframe
-          @load="loadGame()"
-          v-show="!logoShow"
-          :src="src"
-          id="game-iframe"
-          scrolling="no"
-          frameborder="0"
-          class="game-iframe"
-        ></iframe>
+        <template v-if="transferInfo.platform === 'PG'">
+          <iframe
+            @load="loadGame()"
+            v-show="!logoShow"
+            v-bind:srcdoc="src"
+            id="game-iframe"
+            scrolling="auto"
+            frameborder="0"
+            class="game-iframe"
+            :class="showHeader ? 'game-header-iframe' : ''"
+          ></iframe>
+        </template>
+
+        <template v-else>
+          <iframe
+            @load="loadGame()"
+            v-show="!logoShow"
+            :src="src"
+            id="game-iframe"
+            scrolling="no"
+            frameborder="0"
+            class="game-iframe"
+          ></iframe>
+        </template>
+
         <q-drawer v-model="drawerVisible" :breakpoint="500" overlay bordered class="bg-primary" side="right">
           <div class="q-pa-sm q-pt-sm">
             <div>
