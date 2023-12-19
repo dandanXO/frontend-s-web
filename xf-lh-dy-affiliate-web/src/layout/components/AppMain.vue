@@ -257,7 +257,7 @@ elTables.forEach((elTable) => {
       margin-left: 88px !important;
     }
 
-    .el-date-range-picker__content {
+    &__content {
       padding: 8px !important;
     }
 
