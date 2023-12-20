@@ -312,11 +312,6 @@ const uiControl = reactive({
   removeBtn: true,
 })
 
-const menuComparison = reactive({
-  fullMenuList: [],
-  siteMenuList: []
-})
-
 const siteList = reactive({ list: [] })
 
 const rolesForm = ref(null)
@@ -347,7 +342,10 @@ const request = reactive({
   siteId: null,
 })
 
-const menus = reactive({ list: [] })
+const menus = reactive({
+  list: [],
+  cloneList: [],
+})
 
 function showDialog(type) {
   if (type === 'CREATE') {
@@ -469,6 +467,7 @@ async function loadTreeMenu() {
   }
   const { data: children } = await fetchSimpleMenu(requestSiteId)
   menus.list = children
+  menus.cloneList = [...menus.list]
 }
 
 async function selectRoles(val) {
@@ -494,6 +493,13 @@ async function handleSelectionChange(val) {
     uiControl.editBtn = true
     uiControl.removeBtn = true
     uiControl.updatePermissionBtn = true
+    for (let i = 0; i < menus.cloneList.length; i++) {
+      tree.value.remove(menus.cloneList[i])
+    }
+
+    for (let i = 0; i < menus.cloneList.length; i++) {
+      tree.value.append(menus.cloneList[i])
+    }
   } else if (rolesID.length === 1) {
     uiControl.editBtn = false
     uiControl.removeBtn = false
@@ -508,20 +514,13 @@ async function handleSelectionChange(val) {
       siteMenu = children
     }
     tree.value.setCheckedKeys([], false)
-    menuComparison.fullMenuList = [];
-    menuComparison.siteMenuList = [];
-    getAllIdsFromArray(menus.list, "FULL")
-    getAllIdsFromArray(siteMenu, "SITE")
 
-    const permissionDiff = menuComparison.fullMenuList.filter(x => !menuComparison.siteMenuList.includes(x));
-    if (permissionDiff.length === 0) {
-      tree.value.filter()
+    for (let i = 0; i < menus.cloneList.length; i++) {
+      tree.value.remove(menus.cloneList[i])
     }
-    tree.value.filter(permissionDiff)
 
-    for (let i = 0; i < permissionDiff.length; i++) {
-      // tree.value.remove(permissionDiff[i])
-      // tree.value.filter(permissionDiff)
+    for (let i = 0; i < siteMenu.length; i++) {
+      tree.value.append(siteMenu[i])
     }
 
     val[0].menus.forEach(e => {
@@ -535,24 +534,6 @@ async function handleSelectionChange(val) {
     uiControl.editBtn = true
     uiControl.removeBtn = false
     uiControl.updatePermissionBtn = false
-  }
-}
-
-function getAllIdsFromArray(array, type) {
-  if (type === "FULL") {
-    for (let i = 0; i < array.length; i++) {
-      menuComparison.fullMenuList.push(array[i].id)
-      if (array[i].children.length > 0) {
-        getAllIdsFromArray(array[i].children, "FULL")
-      }
-    }
-  } else {
-    for (let i = 0; i < array.length; i++) {
-      menuComparison.siteMenuList.push(array[i].id)
-      if (array[i].children.length > 0) {
-        getAllIdsFromArray(array[i].children, "SITE")
-      }
-    }
   }
 }
 

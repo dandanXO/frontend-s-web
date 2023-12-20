@@ -126,6 +126,8 @@ export default {
     bank: '银行卡',
     bankCard: '银行卡',
     bankId: '银行ID',
+    bankName: '银行',
+    bankCode: '银行',
     bet: '投注金额',
     betMembers: '下注会员数',
     betRecord: '投注记录',
@@ -474,6 +476,8 @@ export default {
     'Downline Info': '下级信息',
     Member: '会员',
     Affiliate: '代理',
+    gameRecord: '游戏记录',
+    financeCentre: '财务中心',
     'Bet Record': '会员投注记录',
     'Deposit Record': '会员充值记录',
     Statistics: '统计',
@@ -484,6 +488,7 @@ export default {
     'Bind Bank Cards': '绑定银行卡',
     'Bank Withdrawal': '银行提款',
     Transfer: '代理代存',
+    'Referral Centre': '推广中心',
     'Referral Management': '推广管理',
     'Referral Link': '推广链接',
     'Referral Material': '推广素材',
@@ -493,6 +498,7 @@ export default {
     'Finance Report': '财务报表',
     'Settlement Report': '佣金报表',
     'Channel Pack': '渠道打包',
+    contactUs: '联系我们'
   },
   posterType: {
     overall: '综合推广图',

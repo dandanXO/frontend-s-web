@@ -14,18 +14,32 @@
     <div class="subtitle">绑定账户列表</div>
     <el-row class="cards">
       <div class="minititle">绑定银行卡列表</div>
-      <el-table :fit="true" :data="personalState.bankList">
-        <template #default="scope">
-          <el-table-column prop="bankName" :label="t('fields.bank')" />
-          <el-table-column prop="cardNumber" :label="t('fields.cardNumber')" />
-          <el-table-column prop="cardAccount" :label="t('fields.cardAccount')" />
-          <el-table-column prop="cardAddress" :label="t('fields.cardAddress')" />
-          <el-table-column :label="t('fields.actions')" width="100">
-            <el-link type="primary" :underline="false" @click="confirmUnbind(scope.row)">Unbind</el-link>
-            <!-- <svg-icon icon-class="unlink" @click="confirmUnbind(scope.row)" /> -->
-          </el-table-column>
-        </template>
-      </el-table>
+      <table cellpadding="0" cellspacing="0" border="0" class="custom-table">
+        <thead>
+          <tr>
+            <th scope="col">{{ t('fields.bank') }}</th>
+            <th scope="col">{{ t('fields.cardNumber') }}</th>
+            <th scope="col">{{ t('fields.cardAccount') }}</th>
+            <th scope="col">{{ t('fields.cardAddress') }}</th>
+            <th scope="col">{{ t('fields.actions') }}</th>
+          </tr>
+        </thead>
+        <tbody v-if="personalState.bankList.length > 0">
+          <tr v-for="item in personalState.bankList" :key="item.id">
+            <td :data-label="t('fields.bank')">{{ item.bankName }}</td>
+            <td :data-label="t('fields.cardNumber') ">{{ item.cardNumber }}</td>
+            <td :data-label="t('fields.cardAccount')">{{ item.cardAccount }}</td>
+            <td :data-label="t('fields.cardAddress')">{{ item.cardAddress }}</td>
+            <td>
+              <el-link type="primary" :underline="false" @click="confirmUnbind(item)">Unbind</el-link>
+              <!-- <svg-icon icon-class="unlink" @click="confirmUnbind(item)" /> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-if="personalState.bankList.length === 0" style="margin: 0 auto; text-align: center; width: 100%;">
+        <emptyComp />
+      </div>
       <!-- <el-col class="card" v-for="(card, o) in personalState.bankCardList" :key="o">
         <el-card :body-style="{padding: '0px'}" :style="`background-image: url(${cardBG(card)})`">
           <div style="padding: 14px;">
@@ -73,34 +87,65 @@
     </el-row>
     <el-row class="cards">
       <div class="minititle">绑定虚拟账户列表</div>
-      <el-table :fit="true" :data="personalState.cryptoList">
-        <template #default="scope">
-          <el-table-column prop="bankName" :label="t('fields.bankName')" />
-          <el-table-column prop="bankCode" :label="t('fields.bankCode')" />
-          <el-table-column prop="cardNumber" :label="t('fields.cardNumber')" />
-          <el-table-column prop="cardAccount" :label="t('fields.cardAccount')" />
-          <el-table-column prop="cardAddress" :label="t('fields.cardAddress')" />
-          <el-table-column :label="t('fields.actions')" width="100">
-            <el-link type="primary" :underline="false" @click="confirmUnbind(scope.row)">Unbind</el-link>
-            <!-- <svg-icon icon-class="unlink" @click="confirmUnbind(scope.row)" /> -->
-          </el-table-column>
-        </template>
-      </el-table>
+      <table cellpadding="0" cellspacing="0" border="0" class="custom-table">
+        <thead>
+          <tr>
+            <th scope="col">{{ t('fields.bankName') }}</th>
+            <th scope="col">{{ t('fields.bankCode') }}</th>
+            <th scope="col">{{ t('fields.cardNumber') }}</th>
+            <th scope="col">{{ t('fields.cardAccount') }}</th>
+            <th scope="col">{{ t('fields.cardAddress') }}</th>
+            <th scope="col">{{ t('fields.actions') }}</th>
+          </tr>
+        </thead>
+        <tbody v-if="personalState.cryptoList.length > 0">
+          <tr v-for="item in personalState.cryptoList" :key="item.id">
+            <td :data-label="t('fields.bankName')">{{ item.bankName }}</td>
+            <td :data-label="t('fields.bankCode')">{{ item.bankCode }}</td>
+            <td :data-label="t('fields.cardNumber') ">{{ item.cardNumber }}</td>
+            <td :data-label="t('fields.cardAccount')">{{ item.cardAccount }}</td>
+            <td :data-label="t('fields.cardAddress')">{{ item.cardAddress }}</td>
+            <td>
+              <el-link type="primary" :underline="false" @click="confirmUnbind(item)">Unbind</el-link>
+              <!-- <svg-icon icon-class="unlink" @click="confirmUnbind(item)" /> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-if="personalState.cryptoList.length === 0" style="margin: 0 auto; text-align: center; width: 100%;">
+        <emptyComp />
+      </div>
     </el-row>
     <el-row class="cards">
       <div class="minititle">绑定电子钱包列表</div>
-      <el-table :fit="true" :data="personalState.eWalletList">
-        <template #default="scope">
-          <el-table-column prop="bankName" :label="t('fields.bankName')" />
-          <el-table-column prop="bankCode" :label="t('fields.bankCode')" />
-          <el-table-column prop="cardNumber" :label="t('fields.cardNumber')" />
-          <el-table-column prop="cardAccount" :label="t('fields.cardAccount')" />
-          <el-table-column :label="t('fields.actions')" width="100">
-            <el-link type="primary" :underline="false" @click="confirmUnbind(scope.row)">Unbind</el-link>
-            <!-- <svg-icon icon-class="unlink" @click="confirmUnbind(scope.row)" /> -->
-          </el-table-column>
-        </template>
-      </el-table>
+      <table cellpadding="0" cellspacing="0" border="0" class="custom-table">
+        <thead>
+          <tr>
+            <th scope="col">{{ t('fields.bankName') }}</th>
+            <th scope="col">{{ t('fields.bankCode') }}</th>
+            <th scope="col">{{ t('fields.cardNumber') }}</th>
+            <th scope="col">{{ t('fields.cardAccount') }}</th>
+            <th scope="col">{{ t('fields.cardAddress') }}</th>
+            <th scope="col">{{ t('fields.actions') }}</th>
+          </tr>
+        </thead>
+        <tbody v-if="personalState.eWalletList.length === 1">
+          <tr v-for="item in personalState.eWalletList" :key="item.id">
+            <td :data-label="t('fields.bankName')">{{ item.bankName }}</td>
+            <td :data-label="t('fields.bankCode')">{{ item.bankCode }}</td>
+            <td :data-label="t('fields.cardNumber') ">{{ item.cardNumber }}</td>
+            <td :data-label="t('fields.cardAccount')">{{ item.cardAccount }}</td>
+            <td :data-label="t('fields.cardAddress')">{{ item.cardAddress }}</td>
+            <td>
+              <el-link type="primary" :underline="false" @click="confirmUnbind(item)">Unbind</el-link>
+              <!-- <svg-icon icon-class="unlink" @click="confirmUnbind(item)" /> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-if="personalState.eWalletList.length === 0" style="margin: 0 auto; text-align: center; width: 100%;">
+        <emptyComp />
+      </div>
     </el-row>
     <el-dialog
       width="90%"
@@ -173,6 +218,7 @@ import { loadBanks, loadBankCards, addBankCard, deleteBankCard } from "@/api/aff
 import { useI18n } from "vue-i18n";
 import { useStore } from "@/store";
 import router from "@/router";
+import emptyComp from "@/components/empty"
 
 onMounted(() => {
   loadCards();
@@ -525,5 +571,4 @@ const submitBankCard = () => {
       background-position: 50%;
     }
   }
-
 </style>

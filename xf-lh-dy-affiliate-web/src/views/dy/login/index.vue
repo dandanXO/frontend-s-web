@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <!-- <div class="wrapper">
     <div class="affiliate">
       <div class="game-title sub"><img :src="dyLogo"></div>
       <div class="affiliate-login">
@@ -65,8 +65,509 @@
         </el-form>
       </div>
     </div>
-  </div>
+  </div> -->
+  <Swiper v-if="!isMobileView"
+          :key="swiperKey"
+          :slides-per-view="1"
+          :direction="'vertical'"
+          :pagination="{clickable: true}"
+          :scrollbar="{draggable: true}"
+          :mousewheel="true"
+          :autoHeight="true"
+  >
+    <SwiperSlide>
+      <div class="firstPage">
+        <div class="inner">
+          <div class="loginPage">
+            <div class="left">
+              <div class="logo">
+                <img :src="dyLogo">
+              </div>
+              <div class="first-liner"><img src="../../../assets/images/login/first-liner.svg"></div>
+              <div class="second-liner"><img src="../../../assets/images/login/second-liner.svg"></div>
+            </div>
+            <div class="right">
+              <div class="bg">
+                <div class="top"><div class="log">{{ isReg ? '注册' : '登录' }}</div>
+                  <div class="topright"><span class="noaccabs">{{ isReg ? '已经有账号? ' : '没有帐户？' }}</span><a @click="isReg = !isReg" class="signlog">{{ isReg ? '请登录' : '立即注册' }}</a></div></div>
+                <div class="mid">
+                  <el-form
+                    v-if="!isReg"
+                    ref="loginFormRef"
+                    :model="loginForm"
+                    :rules="loginRules"
+                    class="login-form"
+                    autocomplete="no-fill"
+                  >
+                    <el-form-item prop="userName">
+                      <el-input
+                        ref="userNameRef"
+                        v-model="loginForm.userName"
+                        :placeholder="'用户名'"
+                        name="username"
+                        type="text"
+                        tabindex="1"
+                        autocomplete="no-fill"
+                      />
+                    </el-form-item>
 
+                    <el-tooltip
+                      v-model="capsTooltip"
+                      content="Caps lock is On"
+                      placement="right"
+                      manual
+                    >
+                      <el-form-item prop="password">
+                        <el-input
+                          :key="passwordType"
+                          ref="passwordRef"
+                          v-model="loginForm.password"
+                          :type="passwordType"
+                          :placeholder="'密码'"
+                          name="password"
+                          tabindex="2"
+                          autocomplete="no-fill"
+                          @keyup="checkCapslock"
+                          @blur="capsTooltip = false"
+                          @keyup.enter="handleLogin"
+                        />
+                      </el-form-item>
+                    </el-tooltip>
+
+                    <el-button
+                      class="common-btn"
+                      type="danger"
+                      style="width:100%;"
+                      @click.prevent="handleLogin"
+                    >
+                      立即登录
+                    </el-button>
+                  </el-form>
+                  <el-form
+                    v-if="isReg"
+                    ref="regFormRef"
+                    :model="regForm"
+                    :rules="regRules"
+                    class="reg-form"
+                    autocomplete="on"
+                  >
+                    <div v-if="step === 1">
+                      <el-form-item prop="userName">
+                        <el-input
+                          ref="userNameRef"
+                          v-model="regForm.userName"
+                          :placeholder="'合营账户'"
+                          name="userName"
+                          type="text"
+                          tabindex="1"
+                          autocomplete="off"
+                        />
+                      </el-form-item>
+                      <el-tooltip
+                        v-model="capsTooltip"
+                        content="Caps lock is On"
+                        placement="right"
+                        manual
+                      >
+                        <el-form-item prop="password">
+                          <el-input
+                            :key="passwordType"
+                            ref="passwordRef"
+                            v-model="regForm.password"
+                            :type="passwordType"
+                            :placeholder="'密码'"
+                            name="password"
+                            tabindex="2"
+                            autocomplete="on"
+                            @keyup="checkCapslock"
+                            @blur="capsTooltip = false"
+                          />
+                        </el-form-item>
+                      </el-tooltip>
+                      <el-tooltip
+                        v-model="capsTooltip"
+                        content="Caps lock is On"
+                        placement="right"
+                        manual
+                      >
+                        <el-form-item prop="confirmPwd">
+                          <el-input
+                            :key="passwordType"
+                            ref="confirmPwdRef"
+                            v-model="regForm.confirmPwd"
+                            :type="passwordType"
+                            :placeholder="'密码确认'"
+                            name="password"
+                            tabindex="3"
+                            autocomplete="on"
+                            @keyup="checkCapslock"
+                            @blur="capsTooltip = false"
+                          />
+                        </el-form-item>
+                      </el-tooltip>
+                      <el-button
+                        class="common-btn"
+                        :loading="loading"
+                        type="danger"
+                        style="width:100%;"
+                        @click.prevent="handleRegister"
+                      >
+                        下一步
+                      </el-button>
+                    </div>
+                    <div v-if="step === 2">
+                      <el-form-item prop="realName">
+                        <el-input
+                          ref="realNameRef"
+                          v-model="regForm.realName"
+                          :placeholder="'姓名'"
+                          name="realName"
+                          type="text"
+                          tabindex="4"
+                          autocomplete="on"
+                        />
+                      </el-form-item>
+                      <el-form-item prop="telephone">
+                        <el-input
+                          ref="telephoneRef"
+                          v-model="regForm.telephone"
+                          :placeholder="'手机号码'"
+                          name="telephone"
+                          type="text"
+                          tabindex="4"
+                          autocomplete="on"
+                        />
+                      </el-form-item>
+                      <el-form-item prop="email">
+                        <el-input
+                          ref="emailRef"
+                          v-model="regForm.email"
+                          :placeholder="'邮箱'"
+                          name="Email"
+                          type="text"
+                          tabindex="5"
+                          autocomplete="on"
+                        />
+                      </el-form-item>
+                      <!-- <el-form-item prop="birthday">
+                        <el-date-picker
+                          v-model="regForm.birthday"
+                          type="date"
+                          :placeholder="'生日'"
+                          format="YYYY-MM-DD"
+                          value-format="YYYY-MM-DD"
+                          popper-class="custom-date-picker"
+                          :disabled-date="disabledDate"
+                        />
+                      </el-form-item> -->
+                      <el-form-item prop="captchaCode">
+                        <el-input
+                          ref="verificationRef"
+                          v-model="regForm.captchaCode"
+                          :placeholder="'验证码'"
+                          name="captchaCode"
+                          type="text"
+                          tabindex="7"
+                          autocomplete="on"
+                        >
+                          <template #append class="verification">
+                            <img :src="verificationImg" @click="getCode()">
+                          </template>
+                        </el-input>
+                      </el-form-item>
+                      <!-- <el-form-item prop="codeAffiliate" v-if="!hasAffiliate">
+                        <el-input v-if="hasAffiliate"
+                                  ref="codeAffiliateRef"
+                                  v-model="regForm.codeAffiliate"
+                                  :placeholder="'代理码'"
+                                  name="codeAffiliate"
+                                  type="text"
+                                  tabindex="8"
+                                  autocomplete="on"
+                                  :disabled="true"
+                        />
+                        <el-input
+                          ref="codeAffiliateRef"
+                          v-model="regForm.codeAffiliate"
+                          :placeholder="'代理码'"
+                          name="codeAffiliate"
+                          type="text"
+                          tabindex="8"
+                          autocomplete="on"
+                        />
+                      </el-form-item> -->
+                      <el-button
+                        class="common-btn"
+                        :loading="loading"
+                        type="danger"
+                        style="width:100%;"
+                        @click.prevent="handleRegister"
+                      >
+                        申请
+                      </el-button>
+                    </div>
+                  </el-form>
+                </div>
+                <div class="bot">&nbsp;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </SwiperSlide>
+    <SwiperSlide>
+      <CustomerServicePage />
+    </SwiperSlide>
+    <SwiperSlide>
+      <SupportPage />
+    </SwiperSlide>
+    <Navigation />
+    <Pagination />
+    <Mousewheel />
+    <Scrollbar />
+  </Swiper>
+  <div v-if="isMobileView">
+    <div class="firstPage">
+      <div class="inner">
+        <div class="loginPage">
+          <div class="left">
+            <div class="logo">
+              <img :src="dyLogo">
+            </div>
+            <div class="first-liner"><img src="../../../assets/images/login/first-liner.svg"></div>
+            <div class="second-liner"><img src="../../../assets/images/login/second-liner.svg"></div>
+          </div>
+          <div class="right">
+            <div class="bg">
+              <div class="top"><div class="log">{{ isReg ? '注册' : '登录' }}</div>
+                <div class="topright"><span class="noaccabs">{{ isReg ? '已经有账号? ' : '没有帐户？' }}</span><a @click="isReg = !isReg" class="signlog">{{ isReg ? '请登录' : '立即注册' }}</a></div></div>
+              <div class="mid">
+                <el-form
+                  v-if="!isReg"
+                  ref="loginFormRef"
+                  :model="loginForm"
+                  :rules="loginRules"
+                  class="login-form"
+                  autocomplete="no-fill"
+                >
+                  <el-form-item prop="userName">
+                    <el-input
+                      ref="userNameRef"
+                      v-model="loginForm.userName"
+                      :placeholder="'用户名'"
+                      name="username"
+                      type="text"
+                      tabindex="1"
+                      autocomplete="no-fill"
+                    />
+                  </el-form-item>
+
+                  <el-tooltip
+                    v-model="capsTooltip"
+                    content="Caps lock is On"
+                    placement="right"
+                    manual
+                  >
+                    <el-form-item prop="password">
+                      <el-input
+                        :key="passwordType"
+                        ref="passwordRef"
+                        v-model="loginForm.password"
+                        :type="passwordType"
+                        :placeholder="'密码'"
+                        name="password"
+                        tabindex="2"
+                        autocomplete="no-fill"
+                        @keyup="checkCapslock"
+                        @blur="capsTooltip = false"
+                        @keyup.enter="handleLogin"
+                      />
+                    </el-form-item>
+                  </el-tooltip>
+
+                  <el-button
+                    class="common-btn"
+                    type="danger"
+                    style="width:100%;"
+                    @click.prevent="handleLogin"
+                  >
+                    立即登录
+                  </el-button>
+                </el-form>
+                <el-form
+                  v-if="isReg"
+                  ref="regFormRef"
+                  :model="regForm"
+                  :rules="regRules"
+                  class="reg-form"
+                  autocomplete="on"
+                >
+                  <div v-if="step === 1">
+                    <el-form-item prop="userName">
+                      <el-input
+                        ref="userNameRef"
+                        v-model="regForm.userName"
+                        :placeholder="'合营账户'"
+                        name="userName"
+                        type="text"
+                        tabindex="1"
+                        autocomplete="off"
+                      />
+                    </el-form-item>
+                    <el-tooltip
+                      v-model="capsTooltip"
+                      content="Caps lock is On"
+                      placement="right"
+                      manual
+                    >
+                      <el-form-item prop="password">
+                        <el-input
+                          :key="passwordType"
+                          ref="passwordRef"
+                          v-model="regForm.password"
+                          :type="passwordType"
+                          :placeholder="'密码'"
+                          name="password"
+                          tabindex="2"
+                          autocomplete="on"
+                          @keyup="checkCapslock"
+                          @blur="capsTooltip = false"
+                        />
+                      </el-form-item>
+                    </el-tooltip>
+                    <el-tooltip
+                      v-model="capsTooltip"
+                      content="Caps lock is On"
+                      placement="right"
+                      manual
+                    >
+                      <el-form-item prop="confirmPwd">
+                        <el-input
+                          :key="passwordType"
+                          ref="confirmPwdRef"
+                          v-model="regForm.confirmPwd"
+                          :type="passwordType"
+                          :placeholder="'密码确认'"
+                          name="password"
+                          tabindex="3"
+                          autocomplete="on"
+                          @keyup="checkCapslock"
+                          @blur="capsTooltip = false"
+                        />
+                      </el-form-item>
+                    </el-tooltip>
+                    <el-button
+                      class="common-btn"
+                      :loading="loading"
+                      type="danger"
+                      style="width:100%;"
+                      @click.prevent="handleRegister"
+                    >
+                      下一步
+                    </el-button>
+                  </div>
+                  <div v-if="step === 2">
+                    <el-form-item prop="realName">
+                      <el-input
+                        ref="realNameRef"
+                        v-model="regForm.realName"
+                        :placeholder="'姓名'"
+                        name="realName"
+                        type="text"
+                        tabindex="4"
+                        autocomplete="on"
+                      />
+                    </el-form-item>
+                    <el-form-item prop="telephone">
+                      <el-input
+                        ref="telephoneRef"
+                        v-model="regForm.telephone"
+                        :placeholder="'手机号码'"
+                        name="telephone"
+                        type="text"
+                        tabindex="4"
+                        autocomplete="on"
+                      />
+                    </el-form-item>
+                    <el-form-item prop="email">
+                      <el-input
+                        ref="emailRef"
+                        v-model="regForm.email"
+                        :placeholder="'邮箱'"
+                        name="Email"
+                        type="text"
+                        tabindex="5"
+                        autocomplete="on"
+                      />
+                    </el-form-item>
+                    <!-- <el-form-item prop="birthday">
+                      <el-date-picker
+                        v-model="regForm.birthday"
+                        type="date"
+                        :placeholder="'生日'"
+                        format="YYYY-MM-DD"
+                        value-format="YYYY-MM-DD"
+                        popper-class="custom-date-picker"
+                        :disabled-date="disabledDate"
+                      />
+                    </el-form-item> -->
+                    <el-form-item prop="captchaCode">
+                      <el-input
+                        ref="verificationRef"
+                        v-model="regForm.captchaCode"
+                        :placeholder="'验证码'"
+                        name="captchaCode"
+                        type="text"
+                        tabindex="7"
+                        autocomplete="on"
+                      >
+                        <template #append class="verification">
+                          <img :src="verificationImg" @click="getCode()">
+                        </template>
+                      </el-input>
+                    </el-form-item>
+                    <!-- <el-form-item prop="codeAffiliate" v-if="!hasAffiliate">
+                      <el-input v-if="hasAffiliate"
+                                ref="codeAffiliateRef"
+                                v-model="regForm.codeAffiliate"
+                                :placeholder="'代理码'"
+                                name="codeAffiliate"
+                                type="text"
+                                tabindex="8"
+                                autocomplete="on"
+                                :disabled="true"
+                      />
+                      <el-input
+                        ref="codeAffiliateRef"
+                        v-model="regForm.codeAffiliate"
+                        :placeholder="'代理码'"
+                        name="codeAffiliate"
+                        type="text"
+                        tabindex="8"
+                        autocomplete="on"
+                      />
+                    </el-form-item> -->
+                    <el-button
+                      class="common-btn"
+                      :loading="loading"
+                      type="danger"
+                      style="width:100%;"
+                      @click.prevent="handleRegister"
+                    >
+                      申请
+                    </el-button>
+                  </div>
+                </el-form>
+              </div>
+              <div class="bot">&nbsp;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <CustomerServicePage />
+    <SupportPage />
+  </div>
   <el-dialog
     v-model="showDialog"
     width="95%"
@@ -148,6 +649,7 @@
 import {
   defineComponent,
   onMounted,
+  onBeforeUnmount,
   reactive,
   watch,
   ref,
@@ -157,17 +659,89 @@ import {
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { UserActionTypes } from '@/store/modules/user/action-types'
-import dyLogo from '@/assets/images/dy/logo.png'
+import { ElNotification } from 'element-plus';
+import dyLogo from '@/assets/images/dy/logowhitee.png'
 import { getVerificationImage } from '@/api/verification'
-
+import { getVerificationCode } from '../../../api/user';
+// import Swiper core and required modules
+import SwiperCore, { Navigation, Pagination, Mousewheel, Scrollbar } from 'swiper';
+// Import Swiper Vue.js components
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import "swiper/swiper-bundle.css";
+import CustomerServicePage from '@/components/customer-service'
+import SupportPage from '@/components/support-page'
+// extra components
+SwiperCore.use([Mousewheel, Pagination, Navigation, Scrollbar])
 export default defineComponent({
+  components: {
+    Swiper,
+    SwiperSlide,
+    Navigation,
+    Pagination,
+    Mousewheel,
+    Scrollbar,
+    CustomerServicePage,
+    SupportPage
+  },
   setup() {
+    const isMobileView = ref(false)
+    const onSwiper = (swiper) => {
+      console.log(swiper);
+    };
+    const onSlideChange = () => {
+    };
+    const validatePass2 = async (r, v) => {
+      if (v === "") {
+        return Promise.reject(new Error('密码确认不能为空'));
+      } else if (v !== state.regForm.password) {
+        return Promise.reject(new Error("与登录密码不一致"));
+      } else {
+        return Promise.resolve();
+      }
+    };
+    const validateRealName = async (r, v) => {
+      if (v === "") {
+        return Promise.reject(new Error("请输入姓名"));
+      } else if (!checkRealName(v)) {
+        return Promise.reject(new Error("请输入中文字符"));
+      } else {
+        return Promise.resolve();
+      }
+    };
+
+    const checkRealName = (v) => {
+      // const alphanumeric = /^[\p{L}\p{N}]*$/u;
+      const chineseCharOnly = /^([\u4e00-\u9fa5]*)$/u;
+      return v.match(chineseCharOnly);
+    };
+    const getCode = () => {
+      getVerificationCode()
+        .then((res) => {
+          if (res.code === 0) {
+            verificationImg.value = "data:image/png;base64," + res.data.img;
+            state.regForm.codeId = res.data.id;
+          }
+        })
+        .catch((e) => {
+        });
+    };
+    const isReg = ref(false)
     const userNameRef = ref(null)
     const passwordRef = ref(null)
     const loginFormRef = ref(null)
+    const regFormRef = ref(null)
+    const verificationImg = ref("");
+    const confirmPwdRef = ref(null);
+    const realNameRef = ref(null);
+    const telephoneRef = ref(null);
+    const emailRef = ref(null);
+    const birthdayRef = ref(null);
+    const verificationRef = ref(null)
     const router = useRouter()
     const route = useRoute()
     const store = useStore()
+    const hasAffiliate = ref(false)
+    const step = ref(1);
     const state = reactive({
       loginForm: {
         userName: '',
@@ -192,6 +766,106 @@ export default defineComponent({
           },
         ],
       },
+      regForm: {
+        userName: "",
+        password: "",
+        confirmPwd: "",
+        realName: "",
+        telephone: "",
+        email: "",
+        captchaCode: "",
+        regHost: location.hostname,
+        codeId: "",
+      },
+      regRules: {
+        userName: [
+          {
+            required: true,
+            message: "代理账号不能为空",
+            trigger: "blur",
+          },
+          {
+            min: 6,
+            max: 13,
+            message: "由6-13位数字或字母组成",
+            trigger: "blur",
+          },
+        ],
+        password: [
+          {
+            required: true,
+            message: "登录密码不能为空",
+            trigger: "blur",
+          },
+          {
+            min: 6,
+            max: 13,
+            message: "由6-13位数字或字母组成",
+            trigger: "blur",
+          },
+        ],
+        confirmPwd: [
+          // {
+          //   required: true,
+          //   message: "密码确认不能为空",
+          //   trigger: "blur",
+          // },
+          {
+            validator: validatePass2,
+            trigger: "blur",
+          },
+        ],
+        realName: [
+          {
+            validator: validateRealName,
+            trigger: "blur",
+          }
+        ],
+        telephone: [
+          {
+            required: true,
+            message: "手机号码不能为空",
+            trigger: "blur",
+          },
+        ],
+        birthday: [
+          {
+            required: true,
+            message: "生日不能为空",
+            trigger: "blur",
+          },
+        ],
+        email: [
+          {
+            required: true,
+            message: "邮箱不能为空",
+            trigger: "blur",
+          },
+          {
+            type: "email",
+            message: "邮件地址无效",
+            trigger: "blur",
+          },
+          {
+            max: 50,
+            message: "由少过50位数字或字母组成",
+            trigger: "blur",
+          },
+        ],
+        captchaCode: [
+          {
+            required: true,
+            message: "验证码不能为空",
+            trigger: "blur",
+          },
+          {
+            min: 4,
+            max: 4,
+            message: "由4位数字组成",
+            trigger: "change",
+          },
+        ],
+      },
       passwordType: 'password',
       showDialog: false,
       capsTooltip: false,
@@ -206,7 +880,9 @@ export default defineComponent({
       imageOffSetHeight: 100,
       resultDisplay: 'none',
     })
-
+    function disabledDate(time) {
+      return time.getTime() > new Date().getTime();
+    }
     const methods = reactive({
       validatePasswordLength: (rule, value, callback) => {
         if (value.length < 6 || value.length > 12) {
@@ -239,6 +915,45 @@ export default defineComponent({
             state.showDialog = true
           }
         })
+      },
+      handleRegister: () => {
+        state.regForm.siteId = 6;
+        (regFormRef.value).validate(async (valid) => {
+          if (valid) {
+            if (step.value === 1) {
+              step.value = 2
+              return;
+            } else {
+            }
+            state.loading = true;
+            try {
+              await store.dispatch(UserActionTypes.ACTION_REGISTER, state.regForm);
+              ElNotification({
+                title: '系统提示',
+                message: "尊敬的合作伙伴，您的资料提交成功，我们的代理专员会在24小时内告知您审核结果，如有疑问请联系我们代理专员或在线客服，谢谢。",
+                showClose: false,
+                type: 'success'
+              })
+            } catch (e) {
+              ElNotification({
+                title: '系统提示',
+                message: e.message,
+                showClose: false,
+                type: 'error'
+              })
+              getCode()
+              state.loading = false;
+              return;
+            }
+            // router.push({
+            //   path: state.redirect || "/dy/login",
+            //   query: state.otherQuery
+            // }).catch(err => {
+            //   console.warn(err);
+            // });
+            isReg.value = false;
+          }
+        });
       },
       onFail: () => {
         const elDialog = document.getElementsByClassName('el-dialog')[0]
@@ -361,10 +1076,50 @@ export default defineComponent({
           state.redirect = query.redirect?.toString() ?? ''
           state.otherQuery = getOtherQuery(query)
         }
+      },
+      () => isReg.value,
+      (newIsReg) => {
+        if (newIsReg) {
+          if (route.query.agent) {
+            hasAffiliate.value = true
+            state.regForm.codeAffiliate = route.query.agent
+          } else {
+            hasAffiliate.value = false
+          }
+          getCode();
+          if (state.regForm.userName === "") {
+            userNameRef.value.focus();
+          } else if (state.regForm.password === "") {
+            passwordRef.value.focus();
+          }
+        }
       }
     )
-
+    const handleResize = () => {
+      // Handle the resize event here
+      if (window.innerWidth > 768) {
+        // Do something when the window is wider than 768
+        isMobileView.value = false
+      } else {
+        isMobileView.value = true
+      }
+    };
     onMounted(() => {
+      window.addEventListener('resize', handleResize);
+      // Check if the window width is greater than 768 initially
+      if (window.innerWidth > 768) {
+        isMobileView.value = false
+      } else {
+        isMobileView.value = true
+      }
+      // const swiper = new Swiper('.swiper-container', swiperOptions);
+      if (route.query.agent) {
+        hasAffiliate.value = true
+        state.regForm.codeAffiliate = route.query.agent
+      } else {
+        hasAffiliate.value = false
+      }
+      getCode();
       if (state.loginForm.userName === '') {
         userNameRef.value.focus()
       } else if (state.loginForm.password === '') {
@@ -374,20 +1129,46 @@ export default defineComponent({
       dialog.addEventListener('scroll', methods.onScrollEvent)
       window.addEventListener('resize', methods.onScrollEvent)
     })
+    onBeforeUnmount(() => {
+      // Remove the event listener before the component is unmounted
+      window.removeEventListener('resize', handleResize);
+    });
+    const swiperKey = ref(0)
 
     return {
       userNameRef,
       passwordRef,
       loginFormRef,
+      confirmPwdRef,
+      realNameRef,
+      telephoneRef,
+      emailRef,
+      birthdayRef,
+      verificationRef,
+      regFormRef,
       dyLogo,
+      verificationImg,
+      disabledDate,
       ...toRefs(state),
       ...toRefs(methods),
+      onSwiper,
+      onSlideChange,
+      getCode,
+      hasAffiliate,
+      step,
+      swiperKey,
+      isReg,
+      isMobileView
     }
-  },
+  }
 })
+
 </script>
 
 <style scoped lang="scss">
+a {
+  cursor: pointer;
+}
 .common-btn {
   font-family: Jura;
   transition: all 0.8s, color 0.3s 0.3s;
@@ -397,15 +1178,24 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   padding: 10px 20px;
-  background-color: #2144c6;
+  background-color: #458BFF;
+  border-radius: 14px;
   font-size: 14px;
   color: #ffffff;
   border: 1px solid transparent;
-  border-radius: 0;
   opacity: 0.9;
   &:hover {
     opacity: 1;
   }
+}
+:deep(.el-input-group__append) {
+    background-color: #ffffff;
+    border: 0;
+    padding: 0 10px;
+    border-radius: 0;
+    img {
+      display: flex;
+    }
 }
 :deep(.el-input-group__prepend) {
   background-color: #2144c6;
@@ -421,11 +1211,14 @@ export default defineComponent({
   }
 }
 :deep(.el-input__inner) {
-  background: #24222e;
-  background-color: #353f4b;
-  color: #ffffff;
-  border: 0;
-  border-radius: 0;
+  background: #F4F9FD;
+  background-color: #F4F9FD;
+  border: 1px solid #D8E0F0;
+  color: #458BFF;
+  border-radius: 14px;
+  &::placeholder {
+    color: #aaaaaa;
+  }
 }
 .wrapper {
   background: url('../../../assets/images/dy/main.jpg') no-repeat center top;
@@ -510,7 +1303,149 @@ export default defineComponent({
   max-width: 100% !important;
 }
 
+.swiper-slide {
+  max-height: 100vh;
+}
+.firstPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  background: url('../../../assets/images/login/firstbg.svg')no-repeat center center;
+  background-size: cover;
+  .inner {
+    max-width: 1200px;
+    width: 100%;
+    margin: 50px auto;
+    height: 50%;
+  }
+  .logo {
+    width: 200px;
+    img {
+      width: 100%;
+    }
+  }
+  .loginPage {
+    height: 80%;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    .left {
+      flex: 1;
+      .first-liner, .second-liner {
+        max-width: 400px;
+        width: 100%;
+        img {
+          width: 100%;
+        }
+      }
+      .first-liner {
+        margin-bottom: 3rem;
+      }
+      .second-liner {
+        max-width: 200px;
+      }
+    }
+    .right {
+      flex: 1;
+      .bg {
+        width: 520px;
+      }
+      .top {
+        background: url(../../../assets/images/login/top.png)no-repeat center center;
+        background-size: cover;
+        padding: 20px;
+        position: relative;
+        .log {
+          font-weight: bold;
+          font-family: fzh;
+          font-size: 32px;
+          padding-left: 15px;
+        }
+        .topright {
+          position: absolute;
+          right: 30px;
+          top: 18px;
+          .noaccabs {
+            font-size: 16px;
+            color: #ffffff;
+          }
+          a {
+            font-family: PFBold;
+            font-size: 16px;
+            color: #ffffff;
+          }
+        }
+      }
+      .mid {
+        background: url(../../../assets/images/login/mid.png)no-repeat center center;
+        background-size: cover;
+        margin: 0 10px;
+        padding: 25px 20px;
+        .el-form {
+          width: 95%;
+          margin: 0 auto;
+        }
+      }
+      .bot {
+        background: url(../../../assets/images/login/dow.png)no-repeat center bottom;
+        background-size: cover;
+        padding: 10px;
+      }
+    }
+  }
+}
+
 @media (max-width: 768px) {
+  .firstPage {
+    height: auto;
+    .inner {
+      padding-top: 50px;
+    }
+    .loginPage {
+      flex-direction: column;
+      gap: 60px;
+      .right {
+        width: 100%;
+        .bg {
+          width: 100%;
+        }
+        .top {
+          padding: 15px;
+          background-size: 100%;
+          background-position: bottom;
+          min-height: 13vw;
+          .log {
+            font-size: 20px;
+          }
+          .topright {
+            right: 20px;
+            top: 10px;
+          }
+        }
+        .mid {
+         background-size: 100% 100%;
+         margin: 0;
+        }
+        .bot {
+          background-size: 100%;
+          background-position: top;
+          padding: 4px 20px;
+        }
+      }
+    }
+    .logo {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      width: 120px;
+    }
+  }
   .wrapper {
     .affiliate {
       .game-title {
@@ -552,6 +1487,10 @@ export default defineComponent({
         }
       }
     }
+  }
+  .swiper-slide {
+    max-height: unset;
+    overflow: auto;
   }
 }
 </style>
@@ -598,5 +1537,59 @@ export default defineComponent({
   100% {
     transform: translate(1px, -2px);
   }
+}
+
+.swiper-pagination {
+    right: 20px!important
+}
+
+.swiper-pagination .swiper-pagination-bullet {
+    width: 24px;
+    height: 24px;
+    border: 2px solid transparent;
+    margin: 16px 0!important;
+    background: none;
+    font-size: 0;
+    color: transparent;
+    opacity: 1;
+    display: flex!important;
+    align-items: center;
+    justify-content: center
+}
+
+.swiper-pagination .swiper-pagination-bullet:before {
+    display: inline-block;
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #c8c9ce
+}
+
+.swiper-pagination .swiper-pagination-bullet.swiper-pagination-bullet-active {
+    border-color: #509cfc
+}
+
+.swiper-pagination .swiper-pagination-bullet.swiper-pagination-bullet-active:before {
+    background-color: #509cfc
+}
+
+.swiper-pagination:after,
+.swiper-pagination:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1px;
+    height: 296px;
+    background-color: #e3e4e6
+}
+
+.swiper-pagination:before {
+    transform: translate(-50%,calc(-100% - 84px))
+}
+
+.swiper-pagination:after {
+    transform: translate(-50%,84px)
 }
 </style>

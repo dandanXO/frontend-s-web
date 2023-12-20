@@ -41,55 +41,40 @@
         </el-button>
       </div>
     </div>
-    <el-table :data="page.records" ref="table"
-              row-key="id"
-              size="normal"
-              highlight-current-row
-              v-loading="page.loading"
-              style="margin-top: 15px;"
-    >
-      <template #empty>
-        <emptyComp />
-      </template>
-      <el-table-column prop="serialNumber" :label="t('fields.serialNumber')" align="center" min-width="150" />
-      <el-table-column prop="depositAmount" :label="t('fields.depositAmount')" align="center" min-width="100">
-        <template #default="scope">
-          $ <span v-formatter="{data: scope.row.depositAmount,type: 'money'}" />
-        </template>
-      </el-table-column>
-      <el-table-column prop="depositDate" :label="t('fields.depositDate')" align="center" min-width="150">
-        <template #default="scope">
-          <span v-if="scope.row.depositDate === null">-</span>
-          <span
-            v-if="scope.row.depositDate !== null"
-            v-formatter="{data: scope.row.depositDate, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column prop="finishDate" :label="t('fields.finishDate')" align="center" min-width="150">
-        <template #default="scope">
-          <span v-if="scope.row.finishDate === null">-</span>
-          <span
-            v-if="scope.row.finishDate !== null"
-            v-formatter="{data: scope.row.finishDate, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column prop="status" :label="t('fields.status')" align="center" min-width="100">
-        <template #default="scope">
-          <el-tag v-if="scope.row.status === 'SUCCESS' || scope.row.status === 'SUPPLEMENT_SUCCESS'" type="success" size="normal">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
-          <el-tag v-else-if="scope.row.status === 'CLOSED'" type="danger" size="normal">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
-          <el-tag v-else-if="scope.row.status === 'PENDING'" type="warning" size="normal">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
-          <el-tag v-else type="info" size="normal">-</el-tag>
-        </template>
-      </el-table-column>
-      <!-- <el-table-column prop="paymentName" :label="t('fields.paymentName')" align="center" min-width="100">
-        <template #default="scope">
-          <span v-if="scope.row.paymentName === null">-</span>
-          <span v-if="scope.row.paymentName !== null">{{ scope.row.paymentName }}</span>
-        </template>
-      </el-table-column> -->
-    </el-table>
+    <table style="width: 98%; margin: 20px auto" cellpadding="0" cellspacing="0" border="0" class="custom-table">
+      <thead>
+        <tr>
+          <th>{{ t('fields.serialNumber') }}</th>
+          <th>{{ t('fields.depositAmount') }}</th>
+          <th>{{ t('fields.depositDate') }}</th>
+          <th>{{ t('fields.finishDate') }}</th>
+          <th>{{ t('fields.status') }}</th>
+        </tr>
+      </thead>
+      <tbody v-if="page.records.length > 0">
+        <tr v-for="item in page.records" :key="item.id">
+          <td>{{ item.serialNumber }}</td>
+          <td>$ {{ item.depositAmount }}</td>
+          <td>
+            <span v-if="item.depositDate === null">-</span>
+            <span v-if="item.depositDate !== null">{{ item.depositDate }}</span>
+          </td>
+          <td>
+            <span v-if="item.finishDate === null">-</span>
+            <span v-if="item.finishDate !== null">{{ item.finishDate }}</span>
+          </td>
+          <td>
+            <el-tag v-if="item.status === 'SUCCESS' || item.status === 'SUPPLEMENT_SUCCESS'" type="success" size="normal">{{ t('depositStatus.' + item.status) }}</el-tag>
+            <el-tag v-else-if="item.status === 'CLOSED'" type="danger" size="normal">{{ t('depositStatus.' + item.status) }}</el-tag>
+            <el-tag v-else-if="item.status === 'PENDING'" type="warning" size="normal">{{ t('depositStatus.' + item.status) }}</el-tag>
+            <el-tag v-else type="info" size="normal">-</el-tag>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div v-if="page.records.length === 0">
+      <emptyComp />
+    </div>
     <div class="table-footer">
       <span style="margin-right:20px;">{{ t('fields.totalDeposit') }}: $ <span v-formatter="{data: page.totalDeposit,type: 'money'}" /></span>
     </div>
