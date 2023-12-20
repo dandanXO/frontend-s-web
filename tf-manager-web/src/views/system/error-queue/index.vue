@@ -16,6 +16,7 @@
           :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
+          :default-time="defaultTime"
         />
         <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadErrorQueue">
           {{ t('fields.search') }}
@@ -95,6 +96,11 @@ import { useI18n } from "vue-i18n";
 import { getLogShortcuts } from "@/utils/datetime";
 
 const { t } = useI18n();
+
+const defaultTime = [
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 1, 1, 23, 59, 59),
+];
 
 const shortcuts = getLogShortcuts(t);
 
