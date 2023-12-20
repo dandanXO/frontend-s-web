@@ -129,7 +129,7 @@
             v-if="scope.row.sendTime !== null"
             v-formatter="{
               data: scope.row.sendTime,
-              formatter: 'YYYY/MM/DD HH:mm:ss',
+              timeZone: timeZone,
               type: 'date',
             }"
           />
@@ -217,6 +217,8 @@ const request = reactive({
   isNotReplied: false,
 })
 
+let timeZone = null;
+
 function resetQuery() {
   request.loginName = null
   request.feedbackType = null
@@ -256,6 +258,7 @@ async function loadFeedback() {
   })
   const { data: ret } = await getFeedbacks(query)
   page.pages = ret.pages
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.records = ret.records
 }
 
