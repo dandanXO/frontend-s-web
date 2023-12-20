@@ -38,7 +38,6 @@
     "cordova-plugin-screen-orientation": "^3.0.3",
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
-    "csweb-client": "^1.4.2",
     "es6-promise-plugin": "^4.2.2",
     "image-webpack-loader": "^8.1.0",
     "imagemin": "^8.0.1",
@@ -59,7 +58,9 @@
     "vue3-carousel": "^0.1.40"
   },
   "devDependencies": {
+    "@babel/core": "^7.23.6",
     "@babel/eslint-parser": "^7.13.14",
+    "@babel/preset-env": "^7.23.6",
     "@capacitor/cli": "^5.0.0",
     "@quasar/app-webpack": "^3.0.0",
     "@quasar/quasar-app-extension-dotenv": "^1.1.0",
