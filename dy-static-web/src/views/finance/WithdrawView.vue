@@ -88,10 +88,13 @@
         <el-row>
           <el-col>
             <div
-              v-if="!isEWALLET && !isUSDT && selectedWithdrawalMethod.tips"
+              v-if="!isEWALLET && !isUSDT && !isALIPAY && selectedWithdrawalMethod.tips"
               class="selected-tip"
               v-html="selectedWithdrawalMethod.tips"
             ></div>
+            <div v-if="isALIPAY" class="selected-tip">
+              “支付宝提款” 可用时间：早10点-晚12点，其他时间提交系统会自动取消！
+            </div>
           </el-col>
         </el-row>
         <el-form-item
@@ -140,21 +143,32 @@
         >
           <span style="color: #17cd27"
             >{{
-              (
-                withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate
+              (selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin) ? '0.00' : (
+                (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate) - 1
               ).toFixed(2)
             }}
             USDT
           </span>
         </el-form-item>
+        <div  v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="" style="color: #17cd27;">
+          *特别说明：三方自动收取提币 1.00 USDT 手续费！
+        </div>
 
         <!-- K豆教程视频 -->
         <div style="margin-left: 150px" v-else-if="isEWALLET">
-          <el-button class="common-btn" @click="openEWalletTutorial(selectedWithdrawalMethod.code)">
-            <span v-if="selectedWithdrawalMethod.code === 'KDPAY'">K豆教程视频</span>
-            <span v-if="selectedWithdrawalMethod.code === 'EBPAY'">EB教程视频</span>
-            <span v-if="selectedWithdrawalMethod.code === 'OKPAY'">OK教程视频</span>
-            
+          <el-button
+            class="common-btn"
+            @click="openEWalletTutorial(selectedWithdrawalMethod.code)"
+          >
+            <span v-if="selectedWithdrawalMethod.code === 'KDPAY'">
+              K豆教程视频
+            </span>
+            <span v-else-if="selectedWithdrawalMethod.code === 'EBPAY'">
+              EB教程视频
+            </span>
+            <span v-else-if="selectedWithdrawalMethod.code === 'OKPAY'">
+              OK教程视频
+            </span>
           </el-button>
         </div>
 
@@ -202,6 +216,7 @@ export default defineComponent({
     const activeItem = ref(0);
     const isUSDT = ref(false);
     const isEWALLET = ref(false);
+    const isALIPAY = ref(false);
     const withdrawState = reactive({
       bankCardList: [],
     });
@@ -337,8 +352,11 @@ export default defineComponent({
         loadBankCards().then((response) => {
           if (response.code === 0) {
             response.data.forEach(element => {
-              if (element.bankType === 'BANK') {
-                  if (element.bankType.includes(selectedWithdrawalMethod.value.code)) {
+              if (element && element.bankType === 'BANK') {
+                  if (element.bankCode !== 'alipay' && element.bankType.includes(selectedWithdrawalMethod.value.code)) {
+                    withdrawState.bankCardList.push(element)
+                  } 
+                  if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
                     withdrawState.bankCardList.push(element)
                   }
                 } else {
@@ -379,6 +397,7 @@ export default defineComponent({
       activeItem.value = index;
       isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
       isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY')
+      isALIPAY.value = withdrawInfo.withdrawCode.includes('ALIPAY')
       loadCards()
     }
     const getWithdrawalMethods = () => {
@@ -405,7 +424,7 @@ export default defineComponent({
     const openEWalletTutorial = (code) => {
       const urlMap = {
         'KDPAY': 'http://jiaocheng.kdpay123.com',
-        'EBPAY': 'https://www.ebpay009.com/xszn',
+        'EBPAY': 'https://www.ebpay009.com/syjc',
         'OKPAY': 'https://me-qr.com/l/okpay'
       };
 
@@ -428,6 +447,7 @@ export default defineComponent({
       imgURL,
       isUSDT,
       isEWALLET,
+      isALIPAY,
       verifyWithdrawAmount,
       store,
       loadingBtn,

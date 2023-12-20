@@ -526,7 +526,7 @@ export default defineComponent({
           }
         });
       } else {
-        const bonusItem = `dy1-vip-${type}`;
+        const bonusItem = `dy2-vip-${type}`;
         eventapi
             .put("/bonus/claim/" + bonusItem)
             .then((res) => {
@@ -560,7 +560,7 @@ export default defineComponent({
                 startCountdown(expirationTime);
                 Swal.fire({
                   title: "系统提示",
-                  text: `${err}`,
+                  text: `${err.message}`,
                   confirmButtonText: "确认"
                 });
               }

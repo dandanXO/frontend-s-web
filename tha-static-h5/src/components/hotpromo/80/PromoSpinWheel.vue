@@ -27,14 +27,15 @@
 
   <div class="spinwheel-container">
     <div class="spin-count-board">
-      <img class="spin-count-board-img" src="../../../assets/images/promotion/spinwheel/spin_count_board.png" />
-      <span>
-        {{
-          $t("lang.spinRemaining", {
-            spinCount: availableSpinCount
-          })
-        }}
-      </span>
+      <img
+        class="spin-count-board-img"
+        src="../../../assets/images/promotion/spinwheel/spin_count_board.png"
+      />
+      <span>{{
+        $t("lang.spinRemaining", {
+          spinCount: availableSpinCount,
+        })
+      }}</span>
     </div>
 
     <div :ref="outerWheelConfig.wheelRef" class="outer-wheel">

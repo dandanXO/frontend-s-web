@@ -5,7 +5,7 @@
         class="platform-box"
         v-for="nav in filteredNavigations"
         :key="nav.code"
-        @click="$emit('loadModal', nav.label, nav.code, nav.gameCode)"
+        @click="nav.path ? router.push(nav.path) : $emit('loadModal', nav.label, nav.code, nav.gameCode)"
       >
         <img
           class="plat-icon"
@@ -27,6 +27,7 @@ import {
   getLoggedInPlatformList
 } from "@/api/platform/platform";
 import { userStore } from "@/store";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   setup() {
@@ -36,29 +37,33 @@ export default defineComponent({
         icon: "tcg",
         label: "TCG彩票",
         slogan: "TCG",
-        gameCode: ""
+        gameCode: "",
+        path: ""
       },
       {
         code: "BBINDY",
         icon: "bbin",
         label: "BBIN彩票",
         slogan: "BBIN",
-        gameCode: "bbkeno_lobby_pc"
+        gameCode: "bbkeno_lobby_pc",
+        path: ""
       },
       {
         code: "SGWin",
         icon: "sgwin",
         label: "双赢彩票",
         slogan: "SGWin ",
-        gameCode: "imlotto30000"
+        gameCode: "imlotto30000",
+        path: "/lottery/SGWin"
       }
     ];
 
+    const router = useRouter();
     const store = userStore();
     const platformsList = ref([]);
     const platformsListDisplay = ref([]);
     const getPlatList = () => {
-      if (store.memberType === "TEST") {
+      if (store.token) {
         getLoggedInPlatformList().then((res) => {
           platformsList.value = res;
           platformsListDisplay.value = platformsList.value.filter((element) =>
@@ -88,7 +93,8 @@ export default defineComponent({
 
     return {
       filteredNavigations,
-      getPlatList
+      getPlatList,
+      router
     };
   }
 });

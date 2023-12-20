@@ -24,10 +24,14 @@ export const userStore = defineStore("userStore", {
       evip: "",
       currency: { value: "￥", label: "RMB" },
       loginPageVisible: false,
-      regPageVisible: false
+      regPageVisible: false,
+      siteId: 6
     };
   },
   actions: {
+    hasToken() {
+      return this.token ? true : false;
+    },
     memberLogin(loginInfo) {
       return login(loginInfo)
         .then((ret) => {
@@ -94,25 +98,24 @@ export const userStore = defineStore("userStore", {
     memberLogout() {
       return logout().then(() => (this.token = null));
     },
-    openLiveChat() {
+    openLiveChat(line) {
       const left = (screen.width - 350) * 2;
       const top = (screen.height - 650) / 4;
 
       return getCSAFromServer()
         .then((res) => {
           console.log(res.data);
+          var lineUrl = "";
+          if (line === 1) {
+            lineUrl = res.data.liveUrl1;
+          } else {
+            lineUrl = res.data.liveUrl2;
+          }
           window.open(
             // `https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=WEB&lang=zh-CN&token=${this.token}`,
-            `${res.data}${this.token}`,
+            `${lineUrl}${this.token}`,
             "Chat Server",
-            "resizable=yes, width=" +
-              800 +
-              ", height=" +
-              880 +
-              ", top=" +
-              top +
-              ", left=" +
-              left
+            "resizable=yes, width=" + 800 + ", height=" + 880 + ", top=" + top + ", left=" + left
           );
         })
         .catch((err) => {

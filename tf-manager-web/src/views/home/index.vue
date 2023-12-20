@@ -920,8 +920,7 @@ function getFinancialChart(summaryList, chartOptions) {
 
 function getTotalDailySummary() {
   dailySummary.list.forEach(x => {
-    quickSummary.total_ftd =
-      quickSummary.total_ftd + parseInt(x.ftdMember)
+    quickSummary.total_ftd = quickSummary.total_ftd + parseInt(x.ftdMember)
     quickSummary.total_registerMember =
       quickSummary.total_registerMember + x.registerMember
     quickSummary.total_visitorMember =

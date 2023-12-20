@@ -6,10 +6,6 @@
       </router-link>
     </div>
 
-    <div class="logo">
-      <img src="../assets/logo.png" />
-    </div>
-
     <div class="landing-img">
       <img src="../assets/images/login/landing-img.png" />
     </div>
@@ -20,8 +16,11 @@
           hide-bottom-space
           ref="loginNameRef"
           v-model="loginForm.loginName"
-          label="Login Name"
-          :rules="[(val) => (val && val.length > 0) || 'Please insert login name']"
+          label="Phone Number"
+          :rules="[
+            (val) => (val && val.length > 0) || 'Please insert Phone number',
+            (val) => (val.length >= 7 && val.length <= 12) || 'The phone number must be between 7 and 12'
+          ]"
           label-color="brand"
           autocomplete="username"
           rounded
@@ -53,27 +52,27 @@
             />
           </template>
         </q-input>
-        <q-input
-          ref="verificationRef"
-          hide-bottom-space
-          clearable
-          type="text"
-          v-model="loginForm.captchaCode"
-          label="Verification Code"
-          :rules="[
-            (val) => (val && val.length > 0) || 'Please insert verification code',
-            (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'
-          ]"
-          label-color="brand"
-          rounded
-          outlined
-          color="white"
-          class="landing-input"
-        >
-          <template v-slot:append>
-            <img :src="verificationImg" @click="getCode" />
-          </template>
-        </q-input>
+        <!--        <q-input-->
+        <!--          ref="verificationRef"-->
+        <!--          hide-bottom-space-->
+        <!--          clearable-->
+        <!--          type="text"-->
+        <!--          v-model="loginForm.captchaCode"-->
+        <!--          label="Verification Code"-->
+        <!--          :rules="[-->
+        <!--            (val) => (val && val.length > 0) || 'Please insert verification code',-->
+        <!--            (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'-->
+        <!--          ]"-->
+        <!--          label-color="brand"-->
+        <!--          rounded-->
+        <!--          outlined-->
+        <!--          color="white"-->
+        <!--          class="landing-input"-->
+        <!--        >-->
+        <!--          <template v-slot:append>-->
+        <!--            <img :src="verificationImg" @click="getCode" />-->
+        <!--          </template>-->
+        <!--        </q-input>-->
       </div>
 
       <div class="row items-center justify-between q-mt-sm">
@@ -89,7 +88,21 @@
         </div>
       </div>
 
-      <q-btn @click.prevent="onSubmit" type="submit" class="btn-yellow" label="Login" rounded no-caps />
+      <div>
+        <q-btn @click.prevent="onSubmit" type="submit" class="btn-yellow" label="Login" rounded no-caps />
+      </div>
+
+      <div class="q-mt-sm">
+        <q-btn
+          @click="guestLogin()"
+          rounded
+          flat
+          no-caps
+          class="btn-purple"
+          label="Play As Guest"
+          v-if="Platform.is.capacitor"
+        />
+      </div>
     </q-form>
 
     <div class="tip-container">
@@ -130,11 +143,12 @@
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
+import { Device } from "@capacitor/device";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-// import RegisterPage from "../pages/RegisterPage.vue";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import qs from "qs";
+import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 
 export default defineComponent({
   name: "LoginPage",
@@ -149,7 +163,7 @@ export default defineComponent({
     const loginForm = reactive({
       loginName: "",
       password: "",
-      captchaCode: "",
+      captchaCode: "0000",
       codeId: ""
     });
     const phoneLoginForm = reactive({
@@ -284,18 +298,19 @@ export default defineComponent({
         if (loginType.value === false) {
           loginNameRef.value.validate();
           passwordRef.value.validate();
-          verificationRef.value.validate();
+          // verificationRef.value.validate();
           $q.loading.show({
             message: "Logging in"
           });
-          if (loginNameRef.value.hasError || passwordRef.value.hasError || verificationRef.value.hasError) {
+          // || verificationRef.value.hasError
+          if (loginNameRef.value.hasError || passwordRef.value.hasError) {
             $q.loading.hide();
           } else {
             store
               .memberLogin({
                 loginName: loginForm.loginName,
                 password: loginForm.password,
-                sid: sidParam,
+                sid: store.aaid ? store.aaid : sidParam,
                 captchaCode: loginForm.captchaCode,
                 codeId: loginForm.codeId
               })
@@ -324,7 +339,7 @@ export default defineComponent({
                 }
               })
               .catch((error) => {
-                loginForm.captchaCode = "";
+                loginForm.captchaCode = "0000";
                 getCode();
                 $q.loading.hide();
               });
@@ -376,7 +391,85 @@ export default defineComponent({
       router.push("/");
     };
 
+    const guestLoginInfo = reactive({
+      sid: "",
+      way: "ANDROID"
+    });
+
+    const guestLogin = () => {
+      $q.loading.show({
+        message: "Playing as guest"
+      });
+
+      (async () => {
+        // guestLoginInfo.sid = guestDeviceInfo.value;
+        guestLoginInfo.sid = store.getAaid();
+
+        api
+          .post("/member/quickRegister", qs.stringify(guestLoginInfo))
+          .then((ret) => {
+            const res = ret;
+            console.log("res:", res);
+
+            if (res.code === 0) {
+              $q.notify({
+                color: "positive",
+                position: "top",
+                message: "Quick registered successfully",
+                icon: "check_circle_outline"
+              });
+
+              //ADJUST TRACKEVENT.
+              if (Platform.is.android && Platform.is.capacitor) {
+                var adjustEvent = new AdjustEvent("vm6pjs");
+                Adjust.trackEvent(adjustEvent);
+              } else {
+                const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+                AdjustWeb.trackEvent({
+                  eventToken: "vm6pjs"
+                });
+              }
+
+              store.autoLogin(res.data);
+              sessionStorage.removeItem("REFERRAL_CODE");
+              if (store.hasToken()) {
+                router.push("/home");
+              }
+            } else if (res.code === 1010) {
+              $q.notify({
+                color: "warning",
+                position: "top",
+                message: "Please login with password to continue",
+                icon: "report_problem"
+              });
+              router.push("/login");
+            } else {
+              $q.notify({
+                color: "negative",
+                position: "top",
+                message: res.message,
+                icon: "report_problem"
+              });
+            }
+            $q.loading.hide();
+          })
+          .catch((error) => {
+            $q.loading.hide();
+          });
+        // getCode();
+      })();
+    };
+
+    const guestDeviceInfo = ref("");
+
+    const getAppInfo = async () => {
+      const info = await Device.getId();
+      guestDeviceInfo.value = info.identifier;
+      // guestDeviceInfo.value = store.aaid;
+    };
+
     onMounted(() => {
+      getAppInfo();
       getCode();
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has("register")) {
@@ -410,7 +503,12 @@ export default defineComponent({
       phoneVerificationImg,
       getInnerCode,
       isValidCnPhone,
-      telephoneRef
+      telephoneRef,
+      guestLoginInfo,
+      guestLogin,
+      guestDeviceInfo,
+      getAppInfo,
+      Platform
     };
   }
 });
