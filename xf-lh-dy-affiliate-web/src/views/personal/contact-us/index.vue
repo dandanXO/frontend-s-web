@@ -17,47 +17,94 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch, onMounted } from 'vue'
+import { storeToRefs } from "pinia";
+import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 
+import { i18nStore } from "@/store/language";
+
 const route = useRoute()
-const contactlist = ref([
-  {
-    icon: 'cchat',
-    type: '合营咨询',
-    link: '点击进入在线咨询',
-    btns: [{
-      text: '咨询',
-      action: ''
-    }]
-  },
-  {
-    icon: 'cskype',
-    type: '合营部Skype',
-    link: 'Live:cid.b2a14236...',
-    btns: [{
-      text: '复制',
-      action: ''
+const i18nStoreLanguage = i18nStore();
+const { languageVal } = storeToRefs(i18nStoreLanguage);
+const { t } = useI18n()
+
+const contactlist = ref([]);
+
+const initContactList = () => {
+  contactlist.value = [
+    {
+      icon: 'cmail',
+      type: '合营部电邮',
+      link: 'affiliate@dyvip99.com',
+      btns: [{
+        text: t('fields.enquire'),
+        action: ''
+      }]
     },
     {
-      text: '下载',
-      action: ''
-    }]
-  },
-  {
-    icon: 'cmeetalk',
-    type: '合营部Mee Talk',
-    link: 'Kyaff05',
-    btns: [{
-      text: '复制',
-      action: ''
+      icon: 'cqq',
+      type: '合营QQ',
+      link: '100983290',
+      btns: [{
+        text: t('fields.copy'),
+        action: ''
+      },
+      {
+        text: t('fields.download'),
+        action: ''
+      }]
     },
     {
-      text: '下载',
-      action: ''
-    }]
-  }
-])
+      icon: 'cskype',
+      type: '合营部Skype',
+      link: 'Live:cid.b2a14236...',
+      btns: [{
+        text: t('fields.copy'),
+        action: ''
+      },
+      {
+        text: t('fields.download'),
+        action: ''
+      }]
+    },
+    {
+      icon: 'cflygram',
+      type: '合营Flygram',
+      link: 'dybet5',
+      btns: [{
+        text: t('fields.copy'),
+        action: ''
+      },
+      {
+        text: t('fields.download'),
+        action: ''
+      }]
+    },
+    {
+      icon: 'cbat',
+      type: '合营蝙蝠ID',
+      link: '12830840',
+      btns: [{
+        text: t('fields.copy'),
+        action: ''
+      },
+      {
+        text: t('fields.download'),
+        action: ''
+      }]
+    }
+  ]
+}
+
+watch(languageVal, () => {
+  initContactList();
+})
+
+onMounted(() => {
+  initContactList();
+})
+
 </script>
 <style lang="scss" scoped>
 .contact-boxes {

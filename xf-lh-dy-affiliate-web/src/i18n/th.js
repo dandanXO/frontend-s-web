@@ -191,6 +191,7 @@ export default {
     editRealName: 'แก้ไขชื่อจริง',
     email: 'อีเมล',
     endDate: 'วันที่สิ้นสุด',
+    enquire: 'สอบถาม',
     enterTheWithdrawalAmount: 'กรุณาใส่จำนวนเงินถอน',
     estimatedAffiliateCommission: 'คอมมิชชันตัวแทนโดยประมาณ',
     estimatedMemberCommission: 'คอมมิชชันสมาชิกโดยประมาณ',
