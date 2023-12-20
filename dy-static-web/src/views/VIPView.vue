@@ -34,20 +34,10 @@
             <div class="carousel__item swiper-slide">
               <div class="vip-detail-left-box">
                 <div>
-                  <img
-                    :src="
-                      require(`../assets/vip/vip_detail_${vipIndex + 1}.png`)
-                    "
-                  />
+                  <img :src="require(`../assets/vip/vip_detail_${vipIndex + 1}.png`)" />
                 </div>
                 <div class="vip-txt-left-box">
-                  <img
-                    :src="
-                      require(`../assets/vip/vip_detail_txt_${
-                        vipIndex + 1
-                      }.png`)
-                    "
-                  />
+                  <img :src="require(`../assets/vip/vip_detail_txt_${vipIndex + 1}.png`)" />
                   <div class="vip-txt-desc" v-html="vip.description" />
                 </div>
               </div>
@@ -60,15 +50,18 @@
                   </div>
                   <div v-if="vip.monthlyBonus">
                     <template v-if="!store.token || vip.level == store.vip.split('VIP')[1]">
+                      <!-- <div :class="redeemed"> -->
                       <button
                         class="vip-btn-get vip-receive-btn"
                         data-bonu-type="month"
                         data-vip-lev="10"
-                        @click="onVIPButtonClick('dy1-vip-monthly')"
-                        :disabled="btnIsDisabled"
+                        @click="onVIPButtonClick('dy2-vip-monthly')"
+                        :disabled="btnIsDisabled || btnIsRedeemMonthly"
                       >
+                        <span v-if="btnIsRedeemMonthly">已</span>
                         领取
                       </button>
+                      <!-- </div> -->
                     </template>
                   </div>
                 </div>
@@ -84,9 +77,10 @@
                         class="vip-btn-get vip-receive-btn"
                         data-bonu-type="birth"
                         data-vip-lev="10"
-                        @click="onVIPButtonClick('dy1-vip-birthday')"
-                        :disabled="btnIsDisabled"
+                        @click="onVIPButtonClick('dy2-vip-birthday')"
+                        :disabled="btnIsDisabled || btnIsRedeemBirthday"
                       >
+                        <span v-if="btnIsRedeemBirthday">已</span>
                         领取
                       </button>
                     </template>
@@ -97,9 +91,7 @@
                   <div class="vip-promo-txt" v-html="vip.cunsong"></div>
                   <div v-if="vip.birthdayBonus">
                     <router-link to="/center/deposit">
-                      <el-button class="vip-btn-get vip-deposit-btn">
-                        领取
-                      </el-button>
+                      <el-button class="vip-btn-get vip-deposit-btn">领取</el-button>
                     </router-link>
                   </div>
                 </div>
@@ -408,6 +400,8 @@ export default defineComponent({
     const store = userStore();
     const selectedVIP = ref(0);
     const btnIsDisabled = ref(false);
+    const btnIsRedeemMonthly = ref(false);
+    const btnIsRedeemBirthday = ref(false);
     const vipLevel = ref("");
 
     const claimBirthdayBonus = (vip) => {
@@ -619,10 +613,7 @@ export default defineComponent({
       // Check if the button is already disabled
       if (localStorage.getItem("vipButtonDisabled") === "true") {
         const currentTime = new Date().getTime();
-        const expirationTime = parseInt(
-          localStorage.getItem("vipButtonExpirationTime"),
-          10
-        );
+        const expirationTime = parseInt(localStorage.getItem("vipButtonExpirationTime"), 10);
 
         // Check if the expiration time has passed
         if (currentTime < expirationTime) {
@@ -649,15 +640,24 @@ export default defineComponent({
       } else {
         claimBonusItem(bonusItem)
           .then((res) => {
-            console.log(res);
+            const redeemAmout = res.data;
 
             if (res.code === 0) {
+              console.log("bonusItem:", bonusItem);
               // Success
-              ElMessageBox.alert(`你已领取 ${res.data.value}`, "系统提示", {
+              ElMessageBox.alert(`你已领取 ${redeemAmout}`, "系统提示", {
                 confirmButtonText: "OK",
                 type: "success"
               });
-              location.href = `/center/deposit`;
+
+              if (bonusItem === 'dy2-vip-monthly') {
+                btnIsRedeemMonthly.value = true;
+              } else if (bonusItem === 'dy2-vip-birthday') {
+                btnIsRedeemBirthday.value = true;
+              }
+
+
+              // location.href = `/center/deposit`;
             }
           })
           .catch((err) => {
@@ -669,10 +669,7 @@ export default defineComponent({
               const currentTime = new Date().getTime();
               const expirationTime = currentTime + 30000; // 30 secs in milliseconds
               localStorage.setItem("vipButtonDisabled", "true");
-              localStorage.setItem(
-                "vipButtonExpirationTime",
-                expirationTime.toString()
-              );
+              localStorage.setItem("vipButtonExpirationTime", expirationTime.toString());
               // Start the countdown
               startCountdown(expirationTime);
               ElMessageBox.alert(`按钮将在30秒后启用`, "系统提示", {
@@ -710,10 +707,7 @@ export default defineComponent({
     // Check if the button should be initially disabled after a page refresh
     if (localStorage.getItem("vipButtonDisabled") === "true") {
       const currentTime = new Date().getTime();
-      const expirationTime = parseInt(
-        localStorage.getItem("vipButtonExpirationTime"),
-        10
-      );
+      const expirationTime = parseInt(localStorage.getItem("vipButtonExpirationTime"), 10);
 
       // Check if the expiration time has passed
       if (currentTime < expirationTime) {
@@ -756,6 +750,8 @@ export default defineComponent({
       plus,
       onVIPButtonClick,
       btnIsDisabled,
+      btnIsRedeemMonthly,
+      btnIsRedeemBirthday,
       errorCount,
       startCountdown
     };
@@ -966,10 +962,7 @@ export default defineComponent({
   margin-right: 10px;
 }
 .vip-container .vip-list-container .vip-detail-right-box .vip-btn-get:disabled,
-.vip-container
-  .vip-list-container
-  .vip-detail-right-box
-  .vip-btn-get[disabled] {
+.vip-container .vip-list-container .vip-detail-right-box .vip-btn-get[disabled] {
   background: -webkit-linear-gradient(right, #85898d, #b0bec0);
   background: linear-gradient(270deg, #85898d, #b0bec0);
 }
@@ -985,19 +978,11 @@ export default defineComponent({
   justify-content: flex-start;
   gap: 5px;
 }
-.vip-container
-  .vip-list-container
-  .vip-detail-right-box
-  .vip-detail-promo-box
-  .vip-promo-title {
+.vip-container .vip-list-container .vip-detail-right-box .vip-detail-promo-box .vip-promo-title {
   color: #364160;
   width: 108px;
 }
-.vip-container
-  .vip-list-container
-  .vip-detail-right-box
-  .vip-detail-promo-box
-  .vip-promo-txt {
+.vip-container .vip-list-container .vip-detail-right-box .vip-detail-promo-box .vip-promo-txt {
   width: 260px;
 }
 .vip-container .table {

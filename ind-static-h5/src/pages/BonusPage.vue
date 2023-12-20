@@ -61,7 +61,7 @@
     <div class="countdown-container">
       <img class="character-blue" src="../assets/images/bonus/character-blue.png" alt="" />
       <div class="right-container">
-        <div class="countdown">
+        <!-- <div class="countdown">
           <div class="common-text">
             Ready To
             <br />
@@ -71,7 +71,7 @@
             <img class="countdown-btn" src="../assets/images/bonus/countdown-btn.png" alt="" />
             <span class="countdown-text">{{ timeRef }}</span>
           </div>
-        </div>
+        </div> -->
         <div class="noticeboard">
           You Can Get
           <span>0.3%</span>
@@ -196,7 +196,7 @@ let scheduler;
 scheduler = setInterval(() => {
   const curDate = new Date();
   const endDate = date.endOfDate(curDate, "day");
-  const offset = 7 * 60 * 60 * 1000; // GMT+7
+  const offset = 5.5 * 60 * 60 * 1000; // GMT+5.5
   const difference = endDate - curDate - offset;
 
   if (difference <= 0) {

@@ -202,7 +202,15 @@
           :label="t('fields.withdrawDate')"
           align="center"
           min-width="150"
-        />
+        >
+          <template #default="scope">
+            <span v-if="scope.row.withdrawDate === null">-</span>
+            <span
+              v-if="scope.row.withdrawDate !== null"
+              v-formatter="{data: scope.row.withdrawDate, timeZone: scope.row.timeZone, type: 'date'}"
+            />
+          </template>
+        </el-table-column>
         <el-table-column
           :label="t('fields.operate')"
           align="center"
@@ -613,8 +621,10 @@ import { required } from '../../../../utils/validate'
 import { getConfigList } from '../../../../api/config'
 import { getSiteListSimple } from '../../../../api/site'
 import { hasPermission } from '../../../../utils/util'
+import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
+const store = useStore();
 const { t } = useI18n();
 const searchForm = ref(null)
 const toPayForm = ref(null)
@@ -817,6 +827,11 @@ async function loadRecord() {
   query.withdrawCode = "BANK";
   const { data: ret } = await getMemberWithdrawRecordPay(query)
   page.pages = ret.pages
+  ret.records.forEach(data => {
+    data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined
+      ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
+      : null
+  });
   page.records = ret.records
   page.total = ret.total
   if (page.records.length !== 0) {

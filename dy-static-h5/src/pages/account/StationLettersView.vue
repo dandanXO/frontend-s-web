@@ -1,26 +1,17 @@
 <template>
   <div>
     <div class="transit-buttons">
-      <router-link
-        class="btn"
-        v-for="(trans, i) in transitList"
-        :key="i"
-        :to="`mail/${trans.code}`"
-      >
-        <img
-          :src="
-            require(`../../assets/account/mail/${trans.icon}-icon.png`)
-          "
-        />
+      <router-link class="btn" v-for="(trans, i) in transitList" :key="i" :to="`mail/${trans.code}`">
+        <img :src="require(`../../assets/account/mail/${trans.icon}-icon.png`)" />
         {{ trans.name }}
         <div class="right">
-<!--          <q-chip-->
-<!--            v-if="trans.icon === 'inbox' && store.unreadInboxMail != 0"-->
-<!--            color="brand"-->
-<!--            size="sm"-->
-<!--          >-->
-<!--            {{ store.unreadInboxMail }}-->
-<!--          </q-chip>-->
+          <!--          <q-chip-->
+          <!--            v-if="trans.icon === 'inbox' && store.unreadInboxMail != 0"-->
+          <!--            color="brand"-->
+          <!--            size="sm"-->
+          <!--          >-->
+          <!--            {{ store.unreadInboxMail }}-->
+          <!--          </q-chip>-->
           <RiArrowRightSLine />
         </div>
       </router-link>
@@ -41,11 +32,6 @@ export default defineComponent({
 
     const store = userStore();
     const transitList = ref([
-      {
-        code: "inbox",
-        icon: "inbox",
-        name: "收件箱"
-      },
       {
         code: "outbox",
         icon: "outbox",

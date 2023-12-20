@@ -1,19 +1,10 @@
 <template>
   <div>
     <div class="platform-menu games">
-      <div
-        class="platform-box"
-        v-for="nav in filteredNavigations"
-        :key="nav.code"
-      >
+      <div class="platform-box" v-for="nav in filteredNavigations" :key="nav.code">
         <router-link :to="`/game?plat=${nav.code}`">
-          <img
-            class="plat-icon"
-            :src="
-              require('../../assets/game/header_slot_logo_' + nav.icon + '.png')
-            "
-          />
-          <p class="platform-title">{{ nav.label }} 电子</p>
+          <img class="plat-icon" :src="require('../../assets/game/header_slot_logo_' + nav.icon + '.png')" />
+          <p class="platform-title">{{ getGameLabel(nav.code) }}</p>
           <div class="platform-img" :class="'slot-' + nav.icon"></div>
         </router-link>
       </div>
@@ -33,41 +24,49 @@
 
 <script>
 import { defineComponent, ref, onMounted, computed } from "vue";
-import {
-  getPlatformListDisplay,
-  getLoggedInPlatformList
-} from "@/api/platform/platform";
+import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 
 export default defineComponent({
   setup() {
     const navigations = [
-      { code: "PGDY", icon: "pg", label: "PG" },
+      { code: "PG", icon: "pg", label: "PG" },
       { code: "SW", icon: "sw", label: "SW" },
-      { code: "PTDY", icon: "pt", label: "PT" },
-      // { code: "AG", icon: "ag", label: "AG" },
-      { code: "BBINDY", icon: "bbin", label: "BBIN" }
-      // { code: "CQ9", icon: "cq", label: "CQ" },
+      { code: "PT", icon: "pt", label: "PT" },
+      { code: "AG", icon: "ag", label: "AG" },
+      { code: "BBINDY", icon: "bbin", label: "BBIN" },
+      { code: "CQ9", icon: "cq", label: "CQ9" },
+      { code: "MGP", icon: "mg", label: "MG" }
       // { code: "AMEBA", icon: "mg", label: "MG" },
     ];
+
+    const getGameLabel = (gameLabel) => {
+      if (gameLabel === "BBINDY") {
+        return "BBIN 电子";
+      } else if (gameLabel === "AMEBA") {
+        return "AE 电子";
+      } else if (gameLabel === "MGP") {
+        return "MG 电子";
+      } else if (gameLabel === "AG") {
+        return "XIN 电子";
+      } else {
+        return gameLabel + " 电子";
+      }
+    };
 
     const store = userStore();
     const platformsList = ref([]);
     const platformsListDisplay = ref([]);
     const getPlatList = () => {
-      if (store.memberType === "TEST") {
+      if (store.token) {
         getLoggedInPlatformList().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("SLOT")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("SLOT"));
         });
       } else {
         getPlatformListDisplay().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("SLOT")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("SLOT"));
         });
       }
     };
@@ -89,7 +88,8 @@ export default defineComponent({
 
     return {
       filteredNavigations,
-      getPlatList
+      getPlatList,
+      getGameLabel
     };
   }
 });

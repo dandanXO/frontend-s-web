@@ -44,7 +44,7 @@
                 >
                   <div class="mailbox-title">{{ m.title }}</div>
                   <p class="mailbox-content" v-html="m.content"></p>
-                  <div class="txt-right">{{ m.readTime }}</div>
+                  <div class="txt-right">{{ convertToGMT55(m.readTime) }}</div>
                 </div>
               </div>
             </div>
@@ -57,7 +57,7 @@
               <div class="b-button" @click="mailOpened = false">Back</div>
               <div class="mailbox-item">
                 <div class="mailbox-title">{{ mailDetailList.title }}</div>
-                <div class="txt-right">{{ mailDetailList.readTime }}</div>
+                <div class="txt-right">{{ convertToGMT55(mailDetailList.readTime) }}</div>
 
                 <p class="mailbox-content" v-html="mailDetailList.content"></p>
               </div>
@@ -139,6 +139,7 @@
 import { defineComponent, onMounted, reactive, ref } from "vue";
 // import { mailInbox, mailOutbox, wirteMail } from "@/api/personal/mailbox";
 import { RiMailAddLine } from "vue-remix-icons";
+import { convertToGMT55 } from "src/boot/utils";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 var qs = require("qs");

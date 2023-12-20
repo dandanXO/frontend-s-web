@@ -284,7 +284,13 @@
         <el-table-column prop="regTime" :label="t('fields.registerTime')" width="150">
           <template #default="scope">
             <span v-if="scope.row.regTime === null">-</span>
-            <span v-if="scope.row.regTime !== null" v-formatter="{data: scope.row.regTime,formatter: 'YYYY/MM/DD HH:mm:ss',type: 'date'}" />
+            <span v-if="scope.row.regTime !== null" v-formatter="{data: scope.row.regTime,timeZone: timeZone,type: 'date'}" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="approveBy" :label="t('fields.createBy')" width="160">
+          <template #default="scope">
+            <span v-if="scope.row.approveBy === null">-</span>
+            <span v-if="scope.row.approveBy !== null">{{ scope.row.approveBy }}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -361,6 +367,7 @@ const table = ref(null);
 const siteList = reactive({
   list: []
 });
+let timeZone = null;
 const freezeType = reactive({
   list: [
     { key: 1, name: "NORMAL", value: "NORMAL" },
@@ -578,6 +585,7 @@ async function loadAffiliates() {
 
   page.pages = result.data.pages;
   page.records = result.data.records;
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false;
 }
 

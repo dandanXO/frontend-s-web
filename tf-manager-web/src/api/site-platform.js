@@ -28,3 +28,7 @@ export const getSitePlatformList = (sitePlatform) => {
 export const updateStatus = (id, state) => {
   return https().request(`/sitePlatform/${id}/state?_method=PUT`, Method.POST, { state: state }, ContentType.form);
 };
+
+export const updateMaintenance = (id, maintenance) => {
+  return https().request(`/sitePlatform/${id}/maintenance?_method=PUT`, Method.POST, maintenance, ContentType.form);
+};

@@ -1,94 +1,98 @@
 .download {
-    width: 100%;
-    height: auto;
-    display: none;
-    background: url(../images/bg.png) top center no-repeat;
-    background-size: 7.5rem 13.34rem;
-    overflow: hidden;
-    font-family: "微软雅黑";
+  width: 100%;
+  height: auto;
+  display: none;
+  overflow: hidden;
 }
 
-.download_esport {
-    width: 100%;
-    height: auto;
-    display: none;
-    background: url(../images/esport/bg.png) top center no-repeat;
-    background-size: 7.5rem 13.34rem;
-    overflow: hidden;
-    font-family: "΢���ź�";
+.download_bg {
+  background-image: url("../images/download_bg.jpg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  min-height: 100vh;
 }
 
-.remind {
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    position: relative;
+.host_address {
+  color: #383838;
+  font-size: 42px;
+  margin-top: 10px;
+  font-weight: bold;
 }
-.content {
-    position: relative;
-    top: 5.2rem;
+
+.customer_icon {
+  position: absolute;
+  right: 0;
+  width: 90px;
+  margin-top: 23%;
 }
-a.logo {
-    display: block;
-    width: 1.53rem;
-    height: 1.53rem;
-    margin: 0 auto;
+
+.games_title_container {
+  width: 80%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
-.remind h3 {
-    font-size: 0.48rem;
-    font-family: "微软雅黑";
-    color: #333333;
-    text-align: center;
-    margin-top: 0.2rem;
+
+.games_title_item {
+  font-weight: bold;
+  color: #2a2a2a;
+  font-size: 18px;
 }
-.remind-txt{
-    font-size: 0.28rem;
-    text-align: center;
-    color: #7E7E7E;
+
+.download_btn {
+  background-image: url("../images/download_btns_bg.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 85%;
+  height: 50px;
+  margin-top: 5px;
 }
-.load {
-    width: 100%;
-    margin: 15px 0;
+
+.download_btn a {
+  display: block;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  text-decoration: none;
+  color: #000000;
+  font-weight: bold;
+  font-size: 100%;
+  text-align: center;
 }
-.load a {
-    display: block;
-    width: 180px;
-    height: 40px;
-    background: #2EC2F5;
-    color: white;
-    text-align: center;
-    font-size: 0.38rem;
-    margin: auto;
-    border-radius: 20px;
-    line-height: 40px;
+.download_des {
+  font-size: 12px;
+  width: 90%;
+  margin-top: 10px;
+  text-align: left;
 }
-.tuto {
-    width: 100%;
-    font-size: 0.28rem;
-    font-weight: bold;
-    color: #333333;
-    text-align: center;
-    margin-top: 0.28rem;
+
+.download_install_des {
+  font-size: 13px;
+  width: 90%;
+  margin-top: 8px;
+  color: #3882cb;
+  text-align: center;
 }
-#consult {
-    display: block;
-    border: none;
-    width: 0.19rem;
-    height: 0.18rem;
-    margin: 0 auto;
-    margin-top: 0.18rem;
-    background: url(../images/down.png) no-repeat;
-    background-size: 100%;
+
+.swiper_parent {
+  width: 100%;
+  padding-bottom: 0;
+  background: linear-gradient(#33b9ff, #33a7ff);
 }
-.torial {
-    width: 100%;
-    padding-bottom: 0;
-    background: linear-gradient(#33b9ff,#33a7ff);
-}
+
 .swiper-slide img {
-    display: block;
-    border: none;
-    width: 80%;
-    height: auto;
-    margin: 0 auto;
+  display: block;
+  border: none;
+  width: 80%;
+  height: auto;
+  margin: 0 auto;
 }

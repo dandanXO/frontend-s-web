@@ -93,25 +93,43 @@
       <el-table-column prop="siteName" :label="t('fields.site')" />
       <el-table-column prop="labelType" :label="t('fields.label')">
         <template #default="scope">
-          <div v-if="scope.row.labelType === 0">New</div>
-          <div v-if="scope.row.labelType === 1">Hot</div>
-          <div v-if="scope.row.labelType === 2">Normal</div>
+          <div v-if="scope.row.labelType === 0">{{ t('promoLabel.new') }}</div>
+          <div v-if="scope.row.labelType === 1">{{ t('promoLabel.hot') }}</div>
+          <div v-if="scope.row.labelType === 2">{{ t('promoLabel.normal') }}</div>
+          <div v-if="scope.row.labelType === 3">{{ t('promoLabel.recomend') }}</div>
+          <div v-if="scope.row.labelType === 4">{{ t('promoLabel.daily') }}</div>
+          <div v-if="scope.row.labelType === 5">{{ t('promoLabel.newbie') }}</div>
+          <div v-if="scope.row.labelType === 6">{{ t('promoLabel.limit') }}</div>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="status"
-        :label="t('fields.status')"
-        v-if="hasPermission(['sys:promp:page:update:state'])"
-        style="width: 300px"
-      >
+      <el-table-column prop="status" :label="t('fields.status')" min-width="200">
         <template #default="scope">
-          <div v-if="scope.row.status === 0" style="color: green;">OPEN</div>
-          <div v-if="scope.row.status === 1" style="color:red">CLOSED</div>
-          <div v-if="scope.row.status === 2">TEST</div>
+          <el-radio-group
+            v-model="scope.row.status"
+            size="mini"
+            v-if="hasPermission(['sys:promp:page:update:state'])"
+            @change="changePromoPagesState(scope.row.id, scope.row.status)"
+          >
+            <el-radio-button label="0">OPEN</el-radio-button>
+            <el-radio-button label="1">CLOSE</el-radio-button>
+            <el-radio-button label="2">TEST</el-radio-button>
+          </el-radio-group>
+          <div v-else>
+            <div v-if="scope.row.status === 0" style="color: green;">OPEN</div>
+            <div v-if="scope.row.status === 1" style="color:red">CLOSED</div>
+            <div v-if="scope.row.status === 2">TEST</div>
+          </div>
         </template>
       </el-table-column>
-      l
-      <el-table-column prop="createTime" :label="t('fields.createTime')" />
+      <el-table-column prop="createTime" :label="t('fields.createTime')" min-width="200">
+        <template #default="scope">
+          <span v-if="scope.row.createTime === null">-</span>
+          <span
+            v-if="scope.row.createTime !== null"
+            v-formatter="{data: scope.row.createTime, timeZone: scope.row.timeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
       <el-table-column
         type="title"
@@ -120,6 +138,7 @@
           hasPermission(['sys:promp:page:update']) ||
             hasPermission(['sys:promp:page:del'])
         "
+        min-width="200"
       >
         <template #default="scope">
           <el-button
@@ -156,6 +175,7 @@ import { computed, onMounted, reactive, ref } from 'vue'
 import {
   getPromoPagesList,
   deletePromoPages,
+  updatePromoPagesState
 } from '../../../../api/promoPages'
 import { useRoute, useRouter } from 'vue-router'
 import { getSiteListSimple } from '../../../../api/site'
@@ -237,6 +257,11 @@ function editPromo(promoPages) {
 async function loadPromoPages() {
   const { data: ret } = await getPromoPagesList(request)
   page.pages = ret.pages
+  ret.records.forEach(data => {
+    data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined
+      ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
+      : null
+  });
   page.records = ret.records
 }
 
@@ -261,9 +286,11 @@ async function removePromo(promoPages) {
   })
 }
 
-// async function changePromoPagesState(id, status) {
-//   await updatePromoPagesState(id, status)
-// }
+async function changePromoPagesState(id, status) {
+  await updatePromoPagesState(id, status)
+  ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+  await loadPromoPages()
+}
 
 const route = useRoute()
 
