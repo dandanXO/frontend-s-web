@@ -129,7 +129,20 @@
         </template>
       </el-table-column>
       <el-table-column prop="remark" :label="t('fields.remark')" width="200" />
-      <el-table-column prop="createTime" :label="t('fields.createTime')" width="200" />
+      <el-table-column prop="createTime" :label="t('fields.createTime')" width="200">
+        <template #default="scope">
+          <span v-if="scope.row.createTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.createTime !== null"
+            v-formatter="{
+              data: scope.row.createTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="150">
         <template #default="scope">
           <span v-if="scope.row.updateBy === null">-</span>
@@ -139,7 +152,15 @@
       <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="200">
         <template #default="scope">
           <span v-if="scope.row.updateTime === null">-</span>
-          <span v-else>{{ scope.row.updateTime }}</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.updateTime !== null"
+            v-formatter="{
+              data: scope.row.updateTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
         </template>
       </el-table-column>
       <el-table-column
@@ -239,6 +260,7 @@ const recordForm = ref(null);
 const sites = reactive({
   list: []
 });
+let timeZone = null
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -290,6 +312,7 @@ async function loadGiftRecord() {
   page.pages = ret.pages;
   page.records = ret.records;
   page.total = ret.total;
+  timeZone = sites.list.find(e => e.id === request.siteId).timeZone
   page.loading = false;
 }
 
