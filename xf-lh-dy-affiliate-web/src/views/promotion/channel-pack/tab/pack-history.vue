@@ -65,14 +65,25 @@
           {{ (request.current - 1) * 10 + scope.$index + 1 }}
         </template>
       </el-table-column>
-      <el-table-column prop="appType" :label="t('fields.packType')" />
-      <el-table-column prop="osType" :label="t('fields.osType')" />
+      <el-table-column prop="appType" :label="t('fields.packType')">
+        <template #default="scope">
+          {{ $t(`appType.${scope.row.appType}`) }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="osType" :label="t('fields.osType')">
+        <template #default="scope">
+          {{ $t(`osType.${scope.row.osType}`) }}
+        </template>
+      </el-table-column>
       <el-table-column prop="appName" :label="t('fields.appName')" />
       <el-table-column prop="appIcon" :label="t('fields.appIcon')">
         <template #default="scope">
-          <div class="preview">
+          <div class="preview" v-if="scope.row.appIcon !== null">
             <el-image :src="imageDir + scope.row.appIcon" fit="contain" />
           </div>
+          <span v-else>
+            {{ $t('fields.unchanged') }}
+          </span>
         </template>
       </el-table-column>
       <el-table-column prop="status" :label="t('fields.buildStatus')">
