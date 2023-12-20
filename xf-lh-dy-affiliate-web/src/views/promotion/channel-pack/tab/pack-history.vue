@@ -67,19 +67,28 @@
       <tbody v-if="page.records.length > 0">
         <tr v-for="(item, index) in page.records" :key="item.id">
           <td data-label="t('fields.sequence')">{{ (request.current - 1) * 10 + index + 1 }}</td>
-          <td data-label="t('fields.packType')">{{ item.appType }}</td>
-          <td data-label="t('fields.osType')">{{ item.osType }}</td>
+          <td data-label="t('fields.packType')">
+            {{ $t(`appType.${item.appType}`) }}
+          </td>
+          <td data-label="t('fields.osType')">
+            {{ $t(`osType.${item.osType}`) }}
+          </td>
           <td data-label="t('fields.appName')">{{ item.appName }}</td>
           <td data-label="t('fields.appIcon')">
-            <div class="preview">
+            <div v-if="item.appIcon !== null" class="preview">
               <img :src="imageDir + item.appIcon" alt="app-icon">
             </div>
+            <div v-else>
+              {{ $t('fields.unchanged') }}
+            </div>
           </td>
-          <td data-label="t('fields.buildStatus')">{{ filterStatus(item.status) }}</td>
+          <td data-label="t('fields.buildStatus')">
+            {{ $t(`packStatus.${item.status}`) }}
+          </td>
           <td data-label="t('fields.download')">{{ item.downloadCount }}</td>
           <td data-label="t('fields.packDate')">
             <span v-if="item.finishTime === null">-</span>
-            <span>{{ moment(item.finishTime).format('YYYY/MM/DD HH:mm:ss') }}</span>
+            <span v-else>{{ moment(item.finishTime).format('YYYY/MM/DD HH:mm:ss') }}</span>
           </td>
           <td data-label="t('fields.operate')">
             <button
@@ -123,7 +132,7 @@
               {{ channelPackInfo.appType }}
             </el-form-item>
             <el-form-item :label="t('fields.buildStatus')">
-              {{ filterStatus(channelPackInfo.status) }}
+              {{ $t(`packStatus.${channelPackInfo.status}`) }}
             </el-form-item>
           </div>
           <div class="info-row-container">
@@ -160,11 +169,14 @@
           </div>
           <div class="info-row-container">
             <el-form-item :label="t('fields.appIcon')">
-              <div class="preview">
+              <div v-if="channelPackInfo.appIcon !== ''" class="preview">
                 <el-image
                   :src="imageDir + channelPackInfo.appIcon"
                   fit="contain"
                 />
+              </div>
+              <div v-else>
+                {{ $t('fields.unchanged') }}
               </div>
             </el-form-item>
           </div>
@@ -439,16 +451,6 @@ function changePage(page) {
   }
 }
 
-function filterStatus(status) {
-  return statusList
-    .filter(function(obj) {
-      return obj.type === status
-    })
-    .map(function(obj) {
-      return obj.display
-    })[0]
-}
-
 async function loadHistory() {
   page.loading = true
   const requestCopy = { ...request }
@@ -608,6 +610,11 @@ onMounted(() => {
 }
 
 .preview .el-image {
+  width: 100px;
+  height: 100px;
+}
+
+.preview img{
   width: 100px;
   height: 100px;
 }

@@ -519,11 +519,11 @@ export default {
     affiliate: 'Affiliate Benefit',
   },
   packStatus: {
-    inQueue: 'In Queue',
-    inProgress: 'In Progress',
-    success: 'Success',
-    fail: 'Fail',
-    cancel: 'Cancel',
+    IN_QUEUE: 'In Queue',
+    IN_PROGRESS: 'In Progress',
+    SUCCESS: 'Success',
+    FAIL: 'Fail',
+    CANCEL: 'Cancel',
   },
   appType: {
     ALL_SITE: 'ALL SITE',
