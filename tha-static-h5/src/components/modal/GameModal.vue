@@ -231,6 +231,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
   localStorage.removeItem("isOpenFromAccount");
   localStorage.removeItem("isBacked");
+
+  isInnerHtmlSrc.value = false;
   // window.addEventListener(
   //   "message",
   //   (event) => {
