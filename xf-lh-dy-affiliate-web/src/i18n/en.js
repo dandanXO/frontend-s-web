@@ -379,6 +379,7 @@ export default {
     detail: 'Detail',
     packSize: 'Pack Size',
     packDownloadUrl: 'Channel Pack Download Url',
+    unchanged: 'Unchanged',
   },
   message: {
     adjustSuccess: 'Adjust Success',
@@ -516,9 +517,9 @@ export default {
     cancel: 'Cancel',
   },
   appType: {
-    allSite: 'ALL SITE',
-    sport: 'SPORT',
-    esport: 'ESPORT',
+    ALL_SITE: 'ALL SITE',
+    SPORT: 'SPORT',
+    ESPORT: 'ESPORT',
   },
   member: {
     status: {
@@ -540,8 +541,8 @@ export default {
     },
   },
   osType: {
-    android: 'ANDROID',
-    ios: 'IOS',
+    ANDROID: 'ANDROID',
+    IOS: 'IOS',
   },
   error: {
     400: 'Bad Request',
