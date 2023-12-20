@@ -141,7 +141,7 @@
               <el-tag v-else type="info" size="normal">-</el-tag>
             </td>
             <td :data-label="t('fields.operate')">
-              <button @click="viewDetails(item)">{{ t('fields.viewDetails') }}</button>
+              <el-link type="primary" :underline="false" @click="viewDetails(item)">{{ t('fields.viewDetails') }}</el-link>
             </td>
           </tr>
         </tbody>
