@@ -319,6 +319,7 @@
             data-aos-once="true"
             data-aos-anchor="#slot"
             data-aos-offset="300"
+            v-if="item.name !== 'JOKER'"
           >
             <img src="../assets/images/index/fish/item-game-maintenance.png" />
             <div
