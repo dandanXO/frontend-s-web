@@ -128,7 +128,7 @@ export default route(function (/* { store, ssrContext } */) {
 
       gtag("js", new Date());
       gtag("config", "UA-780462346-6");
-    } else if (window.location.href.indexOf("jo88.cc")) {
+    } else if (window.location.href.indexOf("jo88.cc") > -1) {
       ui.isAffiliateB = true;
       console.log("jo88.cc");
 
