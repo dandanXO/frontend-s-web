@@ -27,6 +27,15 @@ export default [
       ),
   },
   {
+    path: "feedback",
+    name: "feedback",
+    meta: { requiresAuth: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "feedback" */ "../views/account/FeedbackView.vue"
+      ),
+  },
+  {
     path: "share",
     name: "share",
     meta: { requiresAuth: true },

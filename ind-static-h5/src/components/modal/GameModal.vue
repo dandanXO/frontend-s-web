@@ -4,14 +4,29 @@
       <q-toolbar>
         <div class="topActions">
           <q-btn v-if="!drawerVisible" dense rounded icon="reply" class="bg-yellow text-black" @click="onExitClick" />
-          <q-toolbar-title></q-toolbar-title>
+          <div class="game-logo-img">
+            <div
+              class="game-logo"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../../assets/images/index/logo/logo-${platformCodeImg.toLowerCase()}.png`)})`;
+                  } catch (e) {
+                    return '';
+                  }
+                })()
+              }"
+            >
+              &nbsp;
+            </div>
+          </div>
           <q-btn
             v-if="!drawerVisible"
             dense
             rounded
             icon="add"
             class="bg-yellow text-black"
-            @click="drawerVisible = !drawerVisible"
+            @click="handleDrawerVisible"
           />
         </div>
 
@@ -20,20 +35,33 @@
           <div>Loading... Please wait...</div>
         </div>
 
-        <iframe
-          @load="loadGame()"
-          v-show="!logoShow"
-          :src="src"
-          id="game-iframe"
-          scrolling="no"
-          frameborder="0"
-          class="game-iframe"
-        ></iframe>
+        <template v-if="isInnerHtmlSrc === false">
+          <iframe
+            @load="loadGame()"
+            v-show="!logoShow"
+            :src="src"
+            id="game-iframe"
+            scrolling="no"
+            frameborder="0"
+            class="game-iframe"
+          ></iframe>
+        </template>
+        <template v-else>
+          <iframe
+            @load="loadGame()"
+            v-show="!logoShow"
+            v-bind:srcdoc="src"
+            id="game-iframe"
+            scrolling="no"
+            frameborder="0"
+            class="game-iframe"
+          ></iframe>
+        </template>
 
         <q-dialog width="100%" v-model="drawerVisible" presistent>
           <div class="popout-dialog">
             <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
-            <div class="popout-dialog-container">
+            <div class="popout-dialog-container-gold">
               <div class="popout-main-title">
                 <div class="txt-title">Deposit</div>
               </div>
@@ -45,6 +73,19 @@
     </q-dialog>
     <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">
       <!-- <img src="../../assets/logo-coming.png" style="width: 80%" /> -->
+    </q-dialog>
+
+    <q-dialog width="100%" v-model="isExitDialogOpen" presistent>
+      <div class="popout-dialog">
+        <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+        <div class="popout-dialog-container">
+          <div class="txt-content q-mt-md text-center">Are you sure want to quit? Click Confirm to quit the game.</div>
+          <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+            <q-btn label="Cancel" no-caps class="btn-cancel" v-close-popup />
+            <q-btn label="Confirm" no-caps class="btn-confirm" @click="closeDialog()" v-close-popup />
+          </div>
+        </div>
+      </div>
     </q-dialog>
   </q-scroll-area>
 </template>
@@ -61,7 +102,10 @@ import DepositComponent from "components/depositComponent.vue";
 import { storeToRefs } from "pinia";
 import { api } from "boot/axios";
 import { useQuasar, Platform, AppFullscreen, Notify } from "quasar";
+import { isAndroid } from "boot/utils";
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
+
+const props = defineProps(["closeFullGameDialog"]);
 
 const $q = useQuasar();
 
@@ -114,29 +158,24 @@ function selectPayType(value) {
 }
 
 const drawerVisible = ref(false);
-const exitClickCount = ref(0);
-
+const isExitDialogOpen = ref(false);
 const onExitClick = () => {
-  if (exitClickCount.value === 1) {
-    closeDialog();
-    exitClickCount.value = 0;
-  } else {
-    exitClickCount.value++;
-    Notify.create({
-      timeout: 1000,
-      position: "top",
-      message: "Tap one more time to exit"
-    });
+  isExitDialogOpen.value = true;
+};
 
-    setTimeout(() => {
-      exitClickCount.value = 0;
-    }, 2000);
+const handleDrawerVisible = () => {
+  if (!store.realName) {
+    closeDialog();
+    props.closeFullGameDialog();
+  } else {
+    drawerVisible.value = !drawerVisible.value;
   }
 };
 
 const router = useRouter();
 const route = useRoute();
 const visible = ref(false);
+const isInnerHtmlSrc = ref(false);
 const visibleComingSoon = ref(false);
 const src = ref("");
 const logoShow = ref(true);
@@ -182,11 +221,19 @@ const closeDialog = () => {
   src.value = "";
   store.getBalance();
   // AppFullscreen.exit()
+  if (isAndroid()) {
+    screen.orientation.lock("portrait");
+  }
 };
+
+const platformCodeImg = ref();
 const open = (gameName, platformCode, gameCode, gameType) => {
   // debugger;
   // AppFullscreen.request()
 
+  platformCodeImg.value = platformCode;
+
+  //TESt
   localStorage.removeItem("isOpenFromAccount");
   localStorage.removeItem("isBacked");
   // window.addEventListener(
@@ -204,11 +251,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   //     var gameIfrm = document.getElementById('game-iframe');
   //     gameIfrm.requestFullscreen();
   // // const iframeRef = ref(null);
-  // var myScreenOrientation = window.screen.orientation;
-  // console.log(myScreenOrientation)
-  // myScreenOrientation.unlock()
-  // myScreenOrientation.lock("portrait");
-  // console.log(myScreenOrientation)
+  if (isAndroid()) {
+    screen.orientation.unlock();
+  }
   // iframe.find('HTML-Element').touchwipe({
   // wipeLeft: function() { alert("left"); },
   // wipeRight: function() { alert("right"); },
@@ -231,17 +276,25 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   //   console.log(iframe)
   title.value = gameName;
   const store = userStore();
+
   if (store.memberType !== "TEST" && gameType === "TEST") {
     visibleComingSoon.value = true;
   } else {
     if (store.hasToken()) {
       visible.value = true;
+
       var way = null;
-      if (Platform.is.android) {
-        way = "ANDROID";
-      } else if (Platform.is.ios) {
+      if ("standalone" in window.navigator && window.navigator.standalone) {
         way = "IOS";
+      } else {
+        way = Platform.is.mobile ? "H5" : "WEB";
+        if (Platform.is.capacitor) {
+          if (Platform.is.android) {
+            way = "ANDROID";
+          }
+        }
       }
+
       api
         .get(`/session/launch?_time=${new Date().getTime()}`, {
           params: {
@@ -251,11 +304,35 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             way: way
           }
         })
-        .then((ret) => {
-          const res = ret;
-          src.value = res.data;
+        .then((res) => {
+          let srcDoc = res.data;
+          var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
+          if (firstFourChars === "http") {
+            src.value = srcDoc;
+          } else {
+            isInnerHtmlSrc.value = true;
+
+            const scriptEndTag = "</" + "script>";
+            srcDoc = srcDoc
+              .replace(/<\/script>/g, scriptEndTag)
+              .replaceAll(/\\\"/g, '"')
+              .replaceAll(/\n/g, "");
+
+            src.value = srcDoc;
+          }
+
+          // if (platformCode === "PG") {
+          // if (way === "ANDROID") {
+          //   cordova.InAppBrowser.open(res.data, "_blank", "location=no,zoom=no");
+          // } else {
+          //   window.location.href = res.data;
+          // }
+          // } else {
+          //   src.value = res.data;
+          // }
         });
     } else {
+      props.closeFullGameDialog();
       router.push({ path: "/login", query: { redirect: route.path } });
     }
   }
@@ -273,42 +350,6 @@ const close = () => {
   logoShow.value = true;
   payMethods = [];
 };
-
-const depositItems = reactive([
-  { amount: 100, hotLabel: 5, isActive: false },
-  { amount: 300, hotLabel: 15, isActive: false },
-  { amount: 500, hotLabel: 25, isActive: false },
-  { amount: 1000, hotLabel: 50, isActive: false },
-  { amount: 3000, hotLabel: 150, isActive: false },
-  { amount: 5000, hotLabel: 250, isActive: false },
-  { amount: 10000, hotLabel: 500, isActive: false },
-  { amount: 30000, hotLabel: 1500, isActive: false },
-  { amount: 50000, hotLabel: 2500, isActive: false }
-]);
-
-const handleDepositItemClick = (index) => {
-  depositItems.forEach((item, i) => {
-    item.isActive = i === index;
-    if (i === index) {
-      depositAmountInput.value = item.amount;
-    }
-  });
-};
-
-const isUpi1Active = ref(true);
-const isUpi2Active = ref(false);
-
-const handleDepositUpiClick = (option) => {
-  if (option === 1) {
-    isUpi1Active.value = true;
-    isUpi2Active.value = false;
-  } else if (option === 2) {
-    isUpi1Active.value = false;
-    isUpi2Active.value = true;
-  }
-};
-
-const depositAmountInput = ref("");
 
 defineExpose({
   open
@@ -390,10 +431,27 @@ defineExpose({
 
   .topActions {
     display: flex;
-
-    justify-content: flex-end;
+    justify-content: space-between;
     width: 100%;
     padding: 16px;
+    align-items: center;
+
+    .game-logo-img {
+      height: 25px;
+      .game-logo {
+        width: 30vw;
+        background-position: center;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+
+      img {
+        display: block;
+        height: 100%;
+        width: auto;
+      }
+    }
   }
 }
 
@@ -570,7 +628,7 @@ defineExpose({
     top: 80px;
   }
 
-  .popout-dialog-container {
+  .popout-dialog-container-gold {
     background-image: url(../../assets/images/index/popout/deposit-bg.png);
     background-position: bottom center;
     background-size: cover;
@@ -729,6 +787,20 @@ defineExpose({
         }
       }
     }
+  }
+
+  .btn-cancel {
+    background: rgba(21, 0, 37, 0.5);
+    font-weight: 700;
+    color: #ffffff;
+    border-radius: 8px;
+  }
+
+  .btn-confirm {
+    background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+    font-weight: 700;
+    color: #150025;
+    border-radius: 8px;
   }
 }
 .loader-container {

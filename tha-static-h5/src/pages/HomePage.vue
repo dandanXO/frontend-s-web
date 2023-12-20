@@ -166,6 +166,8 @@
             }"
           ></div>
         </div>
+
+
       </div>
     </Transition>
     <Transition>
@@ -787,6 +789,52 @@
     </q-card>
   </q-dialog>
 
+  <q-page-sticky v-if="specialInviteBonusEligible" position="right" :offset="[0, 0]">
+    <div class="special-invite-bonus-sticky" @click="redeemSpecialInviteBonus" />
+  </q-page-sticky>
+
+  <q-dialog class="special-invite-bonus-popup" width="100%" v-model="specialInviteBonusPopupVisible">
+    <div class="special-invite-bonus-container">
+      <div class="header-decoration-wrapper">
+        <div class="header-decoration">
+          <img
+            class="confetti"
+            src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-confetti.png"
+            width="250"
+          />
+          <img
+            class="money-bags"
+            src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-money-bags.png"
+            width="150"
+          />
+        </div>
+      </div>
+      <div class="special-invite-bonus-content">
+        <div class="title-wrapper">
+          <div class="title">โบนัสพิเศษสำหรับสมาชิกที่ได้รับเชิญ</div>
+          <div class="reward-amt">200</div>
+        </div>
+        <div class="desc-wrapper">
+          <div class="desc-title">ข้อกำหนดและเงื่อนไข</div>
+          <div class="desc-content">
+            - โบนัสนี้สามารถ ถอนได้ที่ 2000 บาทเท่านั้น
+            <br />
+            - สามารถแจ้งถอนได้เมื่อยอดเครดิตถึง 2000 บาท
+            <br />
+            - ยอดเงินที่เหลือตจะถูกหักออกทันทีหลังการถอนสำเร็จ
+            <br />
+            - โบนัสนี้ไม่สามารถใช้ซื้อฟรีสปินได้
+            <br />
+            - บัญชีที่มี IP เดียวกันหรือข้อมูลที่คล้ายกันจะถูกตัดสิทธิ์จากการรับโปรโมชั่นนี้
+          </div>
+        </div>
+        <div class="special-invite-bonus-popup-confirm-btn" @click="toggleSpecialInviteBonusPopup(false)">
+          {{ $t("lang.confirm") }}
+        </div>
+      </div>
+    </div>
+  </q-dialog>
+
   <q-dialog class="home-popup-banner" width="100%" v-model="isHomePromoModal">
     <div class="promo-popup-div">
       <q-btn
@@ -806,7 +854,7 @@
         <router-link to="/promo?id=81">
           <div class="popup-item">
             <span>
-              คลิกเพื่อหมุน รางวัลสูงสุด
+              คลิกเพื่อหมุนวงล้อ รางวัลสูงสุด
               <em>8,880</em>
               และ
               <em>IPHONE</em>
@@ -834,7 +882,7 @@
             </span>
           </div>
         </router-link>
-<!--        <router-link to="/promo?id=77">
+        <!--        <router-link to="/promo?id=77">
           <div class="popup-item">
             <span>
               โบนัส
@@ -856,7 +904,7 @@
             </span>
           </div>
         </router-link>
-<!--        <router-link to="/promo?id=79">
+        <!--        <router-link to="/promo?id=79">
           <div class="popup-item">
             <span>
               ประกันยอดเสีย
@@ -934,6 +982,9 @@ export default defineComponent({
     //       scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
     //   }
     // });
+    const specialInviteBonusEligible = ref(false);
+    const specialInviteBonusAmt = ref(0);
+    const specialInviteBonusPopupVisible = ref(false);
     const banners = ref([]);
 
     const gameBoardRef = ref();
@@ -1588,6 +1639,50 @@ export default defineComponent({
       // console.log(target)
     };
 
+    const checkRedeemSpecialInviteBonusEligiblity = () => {
+      if (store.hasToken()) {
+        eventapi
+          .get("/privi/telephone/canRedeem", {
+            params: {
+              promoCode: "special-invitation-bonus"
+            }
+          })
+          .then((res) => {
+            if (res.data.data === true) {
+              specialInviteBonusEligible.value = true;
+            }
+          });
+      }
+    };
+
+    const redeemSpecialInviteBonus = () => {
+      eventapi
+        .get("/privi/telephone/redeem", {
+          params: {
+            promoCode: "special-invitation-bonus"
+          }
+        })
+        .then((res) => {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: t("lang.success"),
+            icon: "check_circle_outline"
+          });
+
+          specialInviteBonusAmt.value = res.data.data;
+          toggleSpecialInviteBonusPopup(true);
+        });
+    };
+
+    const toggleSpecialInviteBonusPopup = (status) => {
+      if (status === false) {
+        specialInviteBonusEligible.value = false;
+      }
+
+      specialInviteBonusPopupVisible.value = status;
+    };
+
     onMounted(() => {
       checkPlatform();
       loadHomePromoPopup();
@@ -1596,6 +1691,7 @@ export default defineComponent({
       getVersionNo();
 
       checkSpinWheelPromo();
+      checkRedeemSpecialInviteBonusEligiblity();
     });
 
     const popupInterval = ref(null);
@@ -1777,7 +1873,11 @@ export default defineComponent({
       favGamesList,
       sortedFavGamesList,
       // updateSortedFavGamesList,
-      getFavGameList
+      getFavGameList,
+      specialInviteBonusEligible,
+      specialInviteBonusPopupVisible,
+      redeemSpecialInviteBonus,
+      toggleSpecialInviteBonusPopup
     };
   }
 });
@@ -2503,6 +2603,129 @@ export default defineComponent({
         letter-spacing: 1px;
         font-size: 14px;
       }
+    }
+  }
+}
+
+.special-invite-bonus-sticky {
+  background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-sticky.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  width: 190px;
+  height: 136px;
+  position: absolute;
+  top: 10%;
+  right: 0;
+
+  animation: tilt-shaking 2s ease-in-out infinite;
+}
+
+@keyframes tilt-shaking {
+  0% {
+    transform: rotate(0deg);
+  }
+  3% {
+    transform: rotate(6deg);
+  }
+  6% {
+    transform: rotate(0deg);
+  }
+  9% {
+    transform: rotate(-6deg);
+  }
+  12% {
+    transform: rotate(0deg);
+  }
+  15% {
+    transform: rotate(6deg);
+  }
+  18% {
+    transform: rotate(0deg);
+  }
+  21% {
+    transform: rotate(-6deg);
+  }
+  24% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.special-invite-bonus-container {
+  position: relative;
+
+  .header-decoration-wrapper {
+    .header-decoration {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      height: 200px;
+      position: relative;
+
+      .confetti {
+        position: absolute;
+      }
+
+      .money-bags {
+        position: absolute;
+        top: 150px;
+      }
+    }
+  }
+
+  .special-invite-bonus-content {
+    background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-bg.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    margin: 30px;
+    max-width: 495px;
+    min-height: 300px;
+    padding: 30px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    justify-content: center;
+
+    .title-wrapper {
+      display: flex;
+      align-items: center;
+
+      .reward-amt {
+        font-size: 30px;
+        font-weight: 700;
+        color: #ffe35a;
+        margin-left: 20px;
+      }
+    }
+
+    .desc-wrapper {
+      display: flex;
+      flex-direction: column;
+
+      .desc-title {
+        color: #ffcf1f;
+      }
+
+      .desc-content {
+        color: #e79dff;
+      }
+    }
+
+    .special-invite-bonus-popup-confirm-btn {
+      background: url("../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-confirm-btn.png");
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      max-width: 200px;
+      width: 100%;
+      min-height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 10px auto 0px;
+      font-weight: 700;
+      font-size: 18px;
     }
   }
 }

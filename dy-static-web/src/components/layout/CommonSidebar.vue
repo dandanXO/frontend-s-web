@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="customer-right"
-    :style="!customerHovered ? 'right: -170px;' : 'right: 0;'"
-  >
+  <div class="customer-right" :style="!customerHovered ? 'right: -170px;' : 'right: 0;'">
     <div class="customer-right-logo">
       <div class="hot-activity customer-div">
         <router-link to="/promotion">
@@ -18,13 +15,16 @@
         <RiCustomerServiceLine />
         <div style="margin-top: 15px">客服中心</div>
         <div class="customer-right-content">
-          <div
-            class="customer-content"
-            @click.stop.prevent="store.openLiveChat()"
-          >
+          <div class="customer-content">
             <RiCustomerServiceFill />
             <span>24小时在线客服</span>
           </div>
+
+          <div class="customer-line-div">
+            <div class="line-div" id="cs-line-1" @click.stop.prevent="store.openLiveChat(1)">线路一</div>
+            <div class="line-div" id="cs-line-2" @click.stop.prevent="store.openLiveChat(2)">线路二</div>
+          </div>
+
           <!--<div class="content-line"></div>
                 <div class="customer-qq">
                     <div class="remixicon-qq-fill"></div>
@@ -38,14 +38,12 @@
           <div class="content-line"></div>
           <div class="customer-num">
             <RiPhoneFill />
-            <span style="margin-left: 5px"
-              ><span class="customer_phone">852-81932110</span></span
-            >
+            <span style="margin-left: 5px"><span class="customer_phone">852-81932110</span></span>
           </div>
         </div>
       </div>
       <div class="app-download customer-div">
-        <a href="https://dy9367.app/" target="_blank">
+        <a :href="downloadUrl" target="_blank">
           <RiDownloadCloudLine />
           <div class="remixicon-download-cloud-line"></div>
           <div style="margin-top: 15px">APP下载</div>
@@ -60,7 +58,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import {
   RiPaletteLine,
   RiCustomerServiceLine,
@@ -71,6 +69,7 @@ import {
   RiRocketLine
 } from "vue-remix-icons";
 import { userStore } from "@/store";
+import { getAppDownloadUrlFromServer } from "@/api/index/site";
 
 export default defineComponent({
   components: {
@@ -88,10 +87,27 @@ export default defineComponent({
       window.scroll({ behavior: "smooth", left: 0, top: 0 });
     };
     const store = userStore();
+
+    const downloadUrl = ref("");
+    const getAppDownloadUrl = () => {
+      getAppDownloadUrlFromServer()
+        .then((res) => {
+          downloadUrl.value = res;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    onMounted(() => {
+      getAppDownloadUrl();
+    });
+
     return {
       store,
       customerHovered,
-      scrollToTop
+      scrollToTop,
+      downloadUrl
     };
   }
 });
@@ -100,7 +116,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .customer-right {
   position: fixed;
-  top: 520px;
+  bottom: 8%;
   width: 240px;
   z-index: 99999;
   display: flex;
@@ -160,15 +176,43 @@ export default defineComponent({
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  background-image: linear-gradient(36deg, #2f76f6 1%, #68b4fc 100%),
-    linear-gradient(#000, #000);
+  background-image: linear-gradient(36deg, #2f76f6 1%, #68b4fc 100%), linear-gradient(#000, #000);
   background-blend-mode: normal, normal;
   border-radius: 6px;
   cursor: pointer;
   font-size: 12px;
   letter-spacing: 1px;
   color: #fff;
-  margin: 50px auto 22px;
+  margin: 26px auto 10px;
+}
+
+.customer-right-content .customer-line-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+  margin: 0 auto 10px;
+}
+
+.customer-right-content .line-div {
+  background: #fff;
+  color: #2f76f6;
+  border: 1px solid #2f76f6;
+  width: 48px;
+  border-radius: 4px;
+  padding: 5px 5px;
+  text-align: center;
+
+  &:hover {
+    //opacity: 0.9;
+    background: #e7e7e7;
+  }
+
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
+  }
 }
 
 .customer-right .customer-right-content .content-line {

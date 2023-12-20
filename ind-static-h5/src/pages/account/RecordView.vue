@@ -1,8 +1,7 @@
 <template>
   <ProfileSummary></ProfileSummary>
 
-  <SwiperNav :slideList="slideList" :onSlideClick="onSlideClick" :isActiveSlide="isActiveSlide"></SwiperNav>
-
+  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>
   <ContentView :contentTopStatus="`solid`">
     <q-card class="search-container">
       <q-form layout="inline" :model="searchForm">
@@ -36,7 +35,7 @@
         </div>
 
         <div class="platform-field">
-          <q-select
+          <!-- <q-select
             class="platform"
             v-model="searchForm.platform"
             filled
@@ -46,39 +45,47 @@
             option-value="name"
             emit-value
             map-options
-          />
-          <q-btn class="search-btn" label="Search" @click="searchRecord" />
+          /> -->
+          <q-btn class="search-btn" label="Search" @click="searchRecord(true)" />
         </div>
       </q-form>
     </q-card>
 
     <LoadingComponent v-if="isLoading"></LoadingComponent>
     <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Record"></NoInfoComponent>
-    <q-card v-else v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
-      <q-card-section class="top-wrapper">
-        <div class="date">{{ moment(e.betTime).format("YYYY-MM-DD HH:mm") }}</div>
-        <q-btn
-          :class="`${e.payout > 0 ? 'bet-btn' : 'loss-btn'}`"
-          :label="`${e.payout > 0 ? 'Profit' : 'Loss'}`"
-        ></q-btn>
-      </q-card-section>
+    <template v-else>
+      <q-card v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
+        <q-card-section class="top-wrapper">
+          <div class="date">{{ convertToGMT55(e.betTime) }}</div>
+          <q-btn
+            :class="`${e.payout > 0 ? 'bet-btn' : 'loss-btn'}`"
+            :label="`${e.payout > 0 ? 'Profit' : 'Loss'}`"
+          ></q-btn>
+        </q-card-section>
 
-      <q-card-section class="mid-wrapper">
-        RS
-        <span>{{ e.payout }}</span>
-      </q-card-section>
+        <q-card-section class="mid-wrapper">
+          RS
+          <span :class="`${e.payout > 0 ? 'win-amt' : 'loss-amt'}`">{{ e.payout }}</span>
+        </q-card-section>
 
-      <q-card-section class="bot-wrapper">
-        <div class="origin">
-          <div class="bet">Bet</div>
-          <div class="game-platform">Game Platform</div>
-        </div>
-        <div class="origin-val">
-          <div class="bet-val">{{ e.bet }}</div>
-          <div class="game-platform-val">{{ e.platform }}</div>
-        </div>
-      </q-card-section>
-    </q-card>
+        <q-card-section class="bot-wrapper">
+          <div class="origin">
+            <div class="bet">Bet</div>
+            <div class="game-platform">Game Platform</div>
+          </div>
+          <div class="origin-val">
+            <div class="bet-val">{{ e.bet }}</div>
+            <div class="game-platform-val">{{ e.platform }}</div>
+          </div>
+        </q-card-section>
+      </q-card>
+
+      <q-card class="pagination-container">
+        <q-btn class="pagination-btn" @click="onPrevPageClick()">&lt;</q-btn>
+        <!-- <div>{{ pagination.current }} / {{ pagination.pages }}</div> -->
+        <q-btn class="pagination-btn" @click="onNextPageClick()">></q-btn>
+      </q-card>
+    </template>
   </ContentView>
 </template>
 
@@ -87,8 +94,7 @@ import { onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
-import { updateDate } from "src/boot/utils";
-import moment from "moment";
+import { updateDate, convertToGMT8, convertToGMT55 } from "src/boot/utils";
 import SwiperNav from "../../components/SwiperNav.vue";
 import ContentView from "../../components/ContentView.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
@@ -114,12 +120,6 @@ const isActiveSlide = (e) => {
   return false;
 };
 
-const onSlideClick = (e, i) => {
-  if (e === currentSlide.value) return;
-  router.push(slideListPath.value[i]);
-  currentSlide.value = e;
-};
-
 const isLoading = ref(true);
 const isNoInfo = ref(true);
 
@@ -132,25 +132,57 @@ const setTime = () => {
 const gameBetRecordData = ref([]);
 const pagination = reactive({
   pageSize: 10,
-  total: 0
+  total: 0,
+  pages: 1,
+  current: 1,
+  pagingState: null
 });
-const searchRecord = () => {
+
+const onPrevPageClick = () => {
+  if (pagination.current === 1) return;
+  pagination.current--;
+  searchRecord();
+};
+
+const onNextPageClick = () => {
+  if (pagination.current === pagination.pages) return;
+  pagination.current++;
+  searchRecord();
+};
+
+const searchRecord = (isNewSearch) => {
+  if (isNewSearch) {
+    pagination.current = 1;
+    pagination.pagingState = null;
+  }
+
   isLoading.value = true;
   gameBetRecordData.value = [];
 
   const { startDate, endDate, platform } = searchForm;
   api
-    .get("/session/member/gameBetRecord", {
-      params: { startDate, endDate, platform, memberId: store.id, current: 1, size: 10 }
+    .get("/session/member/cassandraBetRecord", {
+      params: {
+        startDate,
+        endDate,
+        platform,
+        memberId: store.id,
+        current: pagination.current,
+        size: pagination.pageSize,
+        pagingState: pagination.pagingState
+      }
     })
     .then((response) => {
-      if (response.code === 0) {
-        const data = response.data.records;
+      const { code, data } = response;
+      if (code === 0) {
+        const records = data.records;
         pagination.total = data.length;
+        pagination.pages = data.pages;
+        pagination.pagingState = data.pagingState;
 
-        gameBetRecordData.value.push(...data);
+        gameBetRecordData.value.push(...records);
 
-        if (data.length === 0) isNoInfo.value = true;
+        if (records.length === 0) isNoInfo.value = true;
         else isNoInfo.value = false;
       }
     })
@@ -175,8 +207,8 @@ const getGameBetRecordTotal = () => {
   const obj = {
     memberId: store.id,
     platform: searchForm.platform,
-    startDate: searchForm.startDate,
-    endDate: searchForm.endDate
+    startDate: convertToGMT8(searchForm.startDate),
+    endDate: convertToGMT8(searchForm.endDate)
   };
   api.get("/session/member/gameBetRecordTotal", { params: obj }).then((res) => {
     if (res.code === 0) {
@@ -186,13 +218,12 @@ const getGameBetRecordTotal = () => {
     }
   });
 };
-
 onMounted(() => {
   setTime();
   getPlatformList();
 
   // NOTE: fire together on search
-  searchRecord();
+  searchRecord(true);
   //   getGameBetRecordTotal();
 });
 </script>
@@ -220,6 +251,8 @@ onMounted(() => {
   .platform-field {
     display: flex;
     align-items: center;
+    justify-content: center;
+    margin-top: 10px;
 
     .platform {
       width: 50%;
@@ -279,6 +312,14 @@ onMounted(() => {
     }
   }
 
+  .win-amt {
+    color: $positive;
+  }
+
+  .loss-amt {
+    color: $negative;
+  }
+
   .mid-wrapper {
     font-size: 1rem;
     font-weight: 700;
@@ -333,6 +374,21 @@ onMounted(() => {
         font-weight: 700;
       }
     }
+  }
+}
+
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  border-bottom: 0;
+
+  .pagination-btn {
+    background: #7c28bd;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
   }
 }
 </style>

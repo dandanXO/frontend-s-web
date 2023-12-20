@@ -1,6 +1,20 @@
 <template>
   <div class="table-record">
+    <q-select
+      allowClear
+      rounded
+      outlined
+      dense
+      color="primary"
+      style="width: 320px; margin: 10px auto 8px; color: #000"
+      v-model="platform"
+      :options="platformsList"
+      placeholder="选择平台"
+      @update:model-value="searchRecord"
+    ></q-select>
+
     <RecordComponent
+      ref="recordRef"
       recordType="bethistory"
       :loading="visible"
       :list="tableData"
@@ -16,6 +30,9 @@ import RecordComponent from "../../components/RecordComponent.vue";
 import { api } from "boot/axios";
 import moment from "moment/moment";
 import { userStore } from "src/stores";
+import {cached} from "boot/cache";
+import * as _ from "lodash"
+
 
 export default defineComponent({
   name: "BetHistoryRecordView",
@@ -32,21 +49,39 @@ export default defineComponent({
 
     var apiUrl= "/session/member/gameBetRecord";
 
-
     var endDate = moment().format("YYYY-MM-DD");
     var startDate = moment().add(-7, "days").format("YYYY-MM-DD");
+    var current = ref(1);
+    var maxPage = ref(0);
+
+    const platformsList = ref([]);
+    const platform = ref("");
+    const recordRef = ref();
 
     const loadNewData = () => {
-      startDate = moment(startDate).add(-7, "days").format("YYYY-MM-DD");
-      console.log(startDate);
+      if(maxPage.value > current.value){
+        current.value++;
+      }else {
+        current.value= 1;
+        endDate = moment(startDate).add(-1, "days").format("YYYY-MM-DD");
+        console.log(endDate);
 
-      endDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
-      console.log(endDate);
+        startDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
+        console.log(startDate);
 
-      if (startDate <= moment().add(-30, "days").format("YYYY-MM-DD")) {
-        console.log("mor than 3 months");
-        isEnded.value = true;
-        return;
+        const startMonth = moment(startDate).format("MM");
+        const endMonth = moment(endDate).format("MM");
+        if (startMonth !== endMonth) {
+          // If startDate and endDate are in the same month, take the latest month's data
+          const latestMonthEnd = moment(endDate).endOf("month").format("YYYY-MM-DD");
+          startDate = moment(latestMonthEnd).startOf("month").format("YYYY-MM-DD");
+        }
+
+        if (endDate <= moment().add(-29, "days").format("YYYY-MM-DD")) {
+          console.log("mor than 3 months");
+          isEnded.value = true;
+          return;
+        }
       }
       loadDepositTable(false);
     };
@@ -55,22 +90,27 @@ export default defineComponent({
       if (isNew) {
         visible.value = true;
       }
+
+      var platformName = platform.value ? platform.value.value : "";
+
+
       console.log(startDate);
       console.log(endDate);
 
       let paramData = {
         "startDate": startDate,
         "endDate": endDate,
-        "platform": "",
+        "platform": platformName,
         "memberId": store.id,
-        "current": 1,
-        "size": 10
+        "size": 20,
+        "current": current.value
       };
 
       api.get(apiUrl, {
           params: paramData
         }
       ).then((res) => {
+        maxPage.value = res.data.pages;
         tableData.value.push(...res.data.records);
         // console.log("TableData");
         // console.log(tableData.value);
@@ -80,6 +120,42 @@ export default defineComponent({
         }
       });
     };
+
+    const loadPlatformLists = () => {
+      cached.get("PLATFORMS", () => api.get("/platform").then((response) => {
+        return response
+      })).then((data) => {
+        console.log(data);
+        _.each(data, function (item, index) {
+          var option = {
+            label: item.name,
+            value: item.code,
+          }
+          platformsList.value.push(option);
+        })
+
+      });
+    }
+
+    const searchRecord = () => {
+      // console.log("searchRecord");
+      recordRef.value.clearTable();
+      isEnded.value = false;
+      tableData.value= [];
+
+      current.value= 1;
+      endDate = moment().format("YYYY-MM-DD");
+      startDate = moment().add(-7, "days").format("YYYY-MM-DD");
+      const startMonth = moment(startDate).format("MM");
+      const endMonth = moment(endDate).format("MM");
+      if (startMonth !== endMonth) {
+        // If startDate and endDate are in the same month, take the latest month's data
+        const latestMonthEnd = moment(endDate).endOf("month").format("YYYY-MM-DD");
+        startDate = moment(latestMonthEnd).startOf("month").format("YYYY-MM-DD");
+      }
+
+      loadDepositTable(true);
+    }
 
 
     const tableHeaders = [
@@ -108,8 +184,17 @@ export default defineComponent({
         label: "投注状态"
       }
     ];
-    onMounted(() => {
-      loadDepositTable();
+    onMounted(async () => {
+      await loadPlatformLists();
+
+      const startMonth = moment(startDate).format("MM");
+      const endMonth = moment(endDate).format("MM");
+      if (startMonth !== endMonth) {
+        // If startDate and endDate are in the same month, take the latest month's data
+        const latestMonthEnd = moment(endDate).endOf("month").format("YYYY-MM-DD");
+        startDate = moment(latestMonthEnd).startOf("month").format("YYYY-MM-DD");
+      }
+      await loadDepositTable();
     });
 
     return {
@@ -117,11 +202,13 @@ export default defineComponent({
       visible,
       tableHeaders,
       loadNewData,
-      isEnded
+      isEnded,
+      platformsList,
+      platform,
+      searchRecord,
+      recordRef
     };
   }
 });
 </script>
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

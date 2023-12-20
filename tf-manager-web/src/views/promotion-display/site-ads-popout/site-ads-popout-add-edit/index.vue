@@ -1,5 +1,12 @@
 <template>
-  <el-form ref="adsPopoutForm" :model="form" :rules="formRules" :inline="true" size="small" label-width="120px">
+  <el-form
+    ref="adsPopoutForm"
+    :model="form"
+    :rules="formRules"
+    :inline="true"
+    size="small"
+    label-width="120px"
+  >
     <el-row>
       <el-form-item :label="t('fields.title')" prop="title">
         <el-col :span="24">
@@ -10,17 +17,39 @@
     <el-row>
       <el-form-item :label="t('fields.site')" prop="siteId">
         <!-- eslint-disable -->
-        <el-select v-model="form.siteId" size="small" :placeholder="t('fields.site')" class="filter-item"
-          style="width: 260px" default-first-option @focus="loadSites">
-          <el-option v-for="item in siteList.list" :key="item.id" :label="item.siteName" :value="item.id" />
+        <el-select
+          v-model="form.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 260px"
+          default-first-option
+          @focus="loadSites"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
         </el-select>
       </el-form-item>
     </el-row>
     <el-row>
       <el-form-item :label="t('fields.type')" prop="type">
-        <el-select v-model="form.type" size="small" :placeholder="t('fields.frequency')" class="filter-item"
-          style="width: 260px">
-          <el-option v-for="item in uiControl.type" :key="item.key" :label="item.displayName" :value="item.value" />
+        <el-select
+          v-model="form.type"
+          size="small"
+          :placeholder="t('fields.frequency')"
+          class="filter-item"
+          style="width: 260px"
+        >
+          <el-option
+            v-for="item in uiControl.type"
+            :key="item.key"
+            :label="item.displayName"
+            :value="item.value"
+          />
         </el-select>
       </el-form-item>
     </el-row>
@@ -31,48 +60,86 @@
     </el-row>
     <el-row>
       <el-form-item :label="t('fields.frequency')" prop="frequency">
-        <el-select v-model="form.frequency" size="small" :placeholder="t('fields.frequency')" class="filter-item"
-          style="width: 260px">
-          <el-option v-for="item in uiControl.frequency" :key="item.key" :label="item.displayName" :value="item.value" />
+        <el-select
+          v-model="form.frequency"
+          size="small"
+          :placeholder="t('fields.frequency')"
+          class="filter-item"
+          style="width: 260px"
+        >
+          <el-option
+            v-for="item in uiControl.frequency"
+            :key="item.key"
+            :label="item.displayName"
+            :value="item.value"
+          />
         </el-select>
       </el-form-item>
     </el-row>
     <el-row>
-      <el-form-item :label="t('fields.desktopImage')" prop="desktopImgUrl" v-if="form.type === 'IMG'">
+      <el-form-item
+        :label="t('fields.desktopImage')"
+        prop="desktopImgUrl"
+        v-if="form.type === 'IMG'"
+      >
         <el-row :gutter="5">
-          <el-col :span="20">
-            <el-input :readonly="true" v-model="form.desktopImgUrl" class="image-input" />
+          <el-col v-if="form.desktopImgUrl" :span="18" style="width: 250px">
+            <el-image
+              v-if="form.desktopImgUrl"
+              :src="promoDir + form.desktopImgUrl"
+              fit="contain"
+              class="preview"
+              :preview-src-list="[promoDir + form.desktopImgUrl]"
+            />
           </el-col>
-          <el-col :span="2">
-            <!-- eslint-disable -->
-            <input id="uploadDesktopFile" type="file" ref="inputDesktop" style="display: none" accept="image/*"
-              @change="attachDesktopImg" />
-            <el-button icon="el-icon-upload" size="mini" type="success" @click="$refs.inputDesktop.click()">
-              {{ t('fields.upload') }}
+          <el-col :span="6">
+            <el-button
+              icon="el-icon-search"
+              size="mini"
+              type="success"
+              @click="browseImage('DESKTOP')"
+            >
+              {{ t('fields.browse') }}
             </el-button>
           </el-col>
         </el-row>
       </el-form-item>
     </el-row>
     <el-row>
-      <el-form-item :label="t('fields.mobileImage')" prop="mobileImgUrl" v-if="form.type === 'IMG'">
+      <el-form-item
+        :label="t('fields.mobileImage')"
+        prop="mobileImgUrl"
+        v-if="form.type === 'IMG'"
+      >
         <el-row :gutter="5">
-          <el-col :span="20">
-            <el-input :readonly="true" v-model="form.mobileImgUrl" class="image-input" />
+          <el-col v-if="form.mobileImgUrl" :span="18" style="width: 250px">
+            <el-image
+              v-if="form.mobileImgUrl"
+              :src="promoDir + form.mobileImgUrl"
+              fit="contain"
+              class="preview"
+              :preview-src-list="[promoDir + form.mobileImgUrl]"
+            />
           </el-col>
-          <el-col :span="2">
-            <!-- eslint-disable -->
-            <input id="uploadMobileFile" type="file" ref="inputMobile" style="display: none" accept="image/*"
-              @change="attachMobileImg" />
-            <el-button icon="el-icon-upload" size="mini" type="success" @click="$refs.inputMobile.click()">
-              {{ t('fields.upload') }}
+          <el-col :span="6">
+            <el-button
+              icon="el-icon-search"
+              size="mini"
+              type="success"
+              @click="browseImage('MOBILE')"
+            >
+              {{ t('fields.browse') }}
             </el-button>
           </el-col>
         </el-row>
       </el-form-item>
     </el-row>
     <el-row>
-      <el-form-item :label="t('fields.content')" prop="content" v-if="form.type === 'TEXT'">
+      <el-form-item
+        :label="t('fields.content')"
+        prop="content"
+        v-if="form.type === 'TEXT'"
+      >
         <!-- editor here -->
         <Editor v-model:value="form.content" @input="getInput"></Editor>
       </el-form-item>
@@ -84,28 +151,137 @@
       <el-button @click="back">{{ t('fields.cancel') }}</el-button>
     </div>
   </el-form>
+  <el-dialog
+    :title="uiControl.imageSelectionTitle"
+    v-model="uiControl.imageSelectionVisible"
+    append-to-body
+    width="50%"
+    :close-on-press-escape="false"
+  >
+    <div class="search">
+      <el-input
+        v-model="imageRequest.name"
+        size="small"
+        style="width: 200px"
+        :placeholder="t('fields.imageName')"
+      />
+      <el-select
+        v-model="imageRequest.siteId"
+        size="small"
+        :placeholder="t('fields.site')"
+        class="filter-item"
+        style="width: 120px; margin-left: 5px"
+      >
+        <el-option
+          v-for="item in siteList.list"
+          :key="item.id"
+          :label="item.siteName"
+          :value="item.id"
+        />
+      </el-select>
+      <el-button
+        style="margin-left: 20px"
+        icon="el-icon-search"
+        size="mini"
+        type="success"
+        ref="searchImage"
+        @click="loadSiteImage"
+      >
+        {{ t('fields.search') }}
+      </el-button>
+      <el-button
+        icon="el-icon-refresh"
+        size="mini"
+        type="warning"
+        @click="resetImageQuery()"
+      >
+        {{ t('fields.reset') }}
+      </el-button>
+    </div>
+    <div class="grid-container">
+      <div
+        v-for="item in imageList.list"
+        :key="item"
+        class="grid-item"
+        :class="item.id === selectedImage.id ? 'selected' : ''"
+      >
+        <el-image
+          :src="promoDir + item.path"
+          fit="contain"
+          style="aspect-ratio: 1/1"
+          @click="selectImage(item)"
+        />
+      </div>
+    </div>
+    <el-pagination
+      class="pagination"
+      @current-change="changeImagePage"
+      layout="prev, pager, next"
+      :page-size="imageRequest.size"
+      :page-count="imageList.pages"
+      :current-page="imageRequest.current"
+    />
+    <div class="image-info" v-if="selectedImage.id !== 0">
+      <el-row>
+        <el-col :span="4">
+          <h3>{{ t('fields.selectedImage') }}</h3>
+        </el-col>
+        <el-col :span="20">
+          <el-image
+            :src="promoDir + selectedImage.path"
+            fit="contain"
+            class="smallPreview"
+            :preview-src-list="[promoDir + selectedImage.path]"
+          />
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">{{ t('fields.imageSite') }} :</el-col>
+        <el-col :span="20">{{ selectedImage.siteName }}</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">{{ t('fields.imageName') }} :</el-col>
+        <el-col :span="20">{{ selectedImage.name }}</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">{{ t('fields.imageRemark') }} :</el-col>
+        <el-col :span="20">{{ selectedImage.remark }}</el-col>
+      </el-row>
+      <div class="dialog-footer">
+        <el-button @click="uiControl.imageSelectionVisible = false">
+          {{ t('fields.cancel') }}
+        </el-button>
+        <el-button type="primary" @click="submitImage">
+          {{ t('fields.confirm') }}
+        </el-button>
+      </div>
+    </div>
+  </el-dialog>
 </template>
 <script setup>
-import { nextTick, reactive, ref, onMounted, watch } from 'vue'
+import { computed, nextTick, reactive, ref, onMounted, watch } from 'vue'
 import { required } from '../../../../utils/validate'
 import Editor from '../../../../components/editor/index.vue'
 import {
   createAdsPopout,
   updateAdsPopout,
-  getAdsPopOutById
+  getAdsPopOutById,
 } from '../../../../api/site-ads-popout'
 import { ElMessage } from 'element-plus'
-import { uploadImage } from '../../../../api/image'
+// import { uploadImage } from '../../../../api/image'
 import { useRoute, useRouter } from 'vue-router'
+import { getSiteImage } from '../../../../api/site-image'
 import { getSiteListSimple } from '../../../../api/site'
 import { useI18n } from 'vue-i18n'
-// import { useStore } from '../../../../store';
-// import { TENANT } from "../../../../store/modules/user/action-types";
+import { useStore } from '../../../../store'
+import { TENANT } from '../../../../store/modules/user/action-types'
 
 const { t } = useI18n()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const route = useRoute()
-// const store = useStore();
-// const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
+const store = useStore()
+const site = ref(null)
+const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
 
 const adsPopoutForm = ref(null)
 
@@ -137,7 +313,10 @@ const uiControl = reactive({
     { key: 1, displayName: '每次', value: 'EVERYTIME' },
     { key: 2, displayName: '每天', value: 'EVERYDAY' },
     { key: 3, displayName: '每时域', value: 'SESSION' },
-  ]
+  ],
+  imageSelectionTitle: '',
+  imageSelectionType: '',
+  imageSelectionVisible: false,
 })
 
 const formRules = reactive({
@@ -154,6 +333,55 @@ const formRules = reactive({
 const siteList = reactive({
   list: [],
 })
+const imageList = reactive({
+  dataList: [],
+  pages: 0,
+})
+const selectedImage = reactive({
+  id: 0,
+  name: '',
+  siteName: '',
+  remark: '',
+  path: '',
+})
+const imageRequest = reactive({
+  size: 10,
+  current: 1,
+  name: null,
+  siteId: null,
+  category: 'PROMO',
+})
+
+function resetImageQuery() {
+  imageRequest.name = null
+  imageRequest.siteId = site.value ? site.value.id : null
+}
+
+async function changeImagePage(page) {
+  imageRequest.current = page
+  const { data: ret } = await getSiteImage(imageRequest)
+  imageList.list = ret.records
+  imageList.pages = ret.pages
+}
+
+function selectImage(item) {
+  selectedImage.id = item.id
+  selectedImage.name = item.name
+  selectedImage.siteName = item.siteName
+  selectedImage.path = item.path
+  selectedImage.remark = item.remark
+}
+
+function browseImage(type) {
+  loadSiteImage()
+  if (type === 'DESKTOP') {
+    uiControl.imageSelectionTitle = t('fields.desktopImage')
+  } else {
+    uiControl.imageSelectionTitle = t('fields.mobileImage')
+  }
+  uiControl.imageSelectionType = type
+  uiControl.imageSelectionVisible = true
+}
 
 // is bind to the onchange event in the editor
 function getInput(value) {
@@ -217,65 +445,83 @@ async function loadForm(id, siteId) {
   })
 }
 
+async function loadSiteImage() {
+  selectedImage.id = 0
+  const { data: ret } = await getSiteImage(imageRequest)
+  imageList.list = ret.records
+  imageList.pages = ret.pages
+}
+
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
 }
 
-async function attachPhoto(event) {
-  const files = event.target.files[0]
-  const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
-  const dir = 'adspopout'
+// async function attachPhoto(event) {
+//   const files = event.target.files[0]
+//   const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
+//   const dir = 'adspopout'
 
-  if (!allowFileType.find(ftype => ftype.includes(files.type))) {
-    ElMessage({ message: t('message.invalidFileType'), type: 'error' })
+//   if (!allowFileType.find(ftype => ftype.includes(files.type))) {
+//     ElMessage({ message: t('message.invalidFileType'), type: 'error' })
+//   } else {
+//     var formData = new FormData()
+//     formData.append('files', files)
+//     formData.append('dir', dir)
+//     formData.append('overwrite', false)
+//     return await uploadImage(formData)
+//   }
+// }
+
+// async function attachDesktopImg(event) {
+//   const data = await attachPhoto(event)
+//   if (data.code === 0) {
+//     form.desktopImgUrl = data.data
+//   } else {
+//     ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
+//   }
+// }
+
+// async function attachMobileImg(event) {
+//   const data = await attachPhoto(event)
+//   if (data.code === 0) {
+//     form.mobileImgUrl = data.data
+//   } else {
+//     ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
+//   }
+// }
+
+function submitImage() {
+  if (uiControl.imageSelectionType === 'DESKTOP') {
+    form.desktopImgUrl = selectedImage.path
   } else {
-    var formData = new FormData()
-    formData.append('files', files)
-    formData.append('dir', dir)
-    formData.append('overwrite', false)
-    return await uploadImage(formData)
+    form.mobileImgUrl = selectedImage.path
   }
+  uiControl.imageSelectionVisible = false
 }
 
-async function attachDesktopImg(event) {
-  const data = await attachPhoto(event)
-  if (data.code === 0) {
-    form.desktopImgUrl = data.data
-  } else {
-    ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
+watch(
+  () => route.name,
+  () => {
+    if (route.name.includes('Edit')) {
+      uiControl.titleDisable = true
+      loadForm(route.params.id, route.params.siteId)
+    } else {
+      adsPopoutForm.value.resetFields()
+      form.type = uiControl.type[0].value
+    }
   }
-}
-
-async function attachMobileImg(event) {
-  const data = await attachPhoto(event)
-  if (data.code === 0) {
-    form.mobileImgUrl = data.data
-  } else {
-    ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
-  }
-}
-watch(() => route.name, () => {
-  if (route.name.includes('Edit')) {
-    uiControl.titleDisable = true
-    loadForm(route.params.id, route.params.siteId)
-  } else {
-    adsPopoutForm.value.resetFields()
-    form.type = uiControl.type[0].value;
-  }
-});
+)
 onMounted(async () => {
+  await loadSites()
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    imageRequest.siteId = store.state.user.siteId
+  }
   if (route.name.includes('Edit')) {
     uiControl.titleDisable = true
     loadForm(route.params.id, route.params.siteId)
   } else {
-    await loadSites();
-    // if (LOGIN_USER_TYPE.value === TENANT.value) {
-    //   console.log(siteList.list)
-    //   // siteList.list.find(s => s.siteName === store.state.user.siteName).value;
-    //   // form.siteId = site.value.id;
-    // }
-    form.type = uiControl.type[0].value;
+    form.type = uiControl.type[0].value
   }
 })
 </script>
@@ -307,5 +553,53 @@ onMounted(async () => {
 
 .w-e-text-container {
   z-index: 1 !important;
+}
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+.grid-container {
+  margin: 20px auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.grid-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  border-radius: 5px;
+  transition: transform 0.5s;
+}
+
+.grid-item .el-image:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.grid-item.selected {
+  box-shadow: 0 4px 8px rgba(12, 20, 242, 0.12), 0 0 6px rgba(12, 20, 242, 0.12);
+  border: 1px solid blue;
+}
+
+.image-info {
+  margin: 10px;
+}
+
+.image-info .el-row {
+  margin-top: 10px;
+}
+
+.preview {
+  width: 200px;
+  height: 200px;
+}
+
+.smallPreview {
+  width: 100px;
+  height: 100px;
 }
 </style>

@@ -30,14 +30,8 @@
           <div class="plat-type-container">
             <div class="plat-list">
               <template v-for="p in platforms" :key="p">
-                <div
-                  class="plat-item"
-                  :class="{ active: p === activePlat }"
-                  @click="switchPlat(p)"
-                >
-                  <img
-                    :src="require(`../assets/game/${p.code.toLowerCase()}.png`)"
-                  />
+                <div class="plat-item" :class="{ active: p === activePlat }" @click="switchPlat(p)">
+                  <img :src="require(`../assets/game/${p.code.toLowerCase()}.png`)" />
                   {{ getGameLabel(p.name) }}
                 </div>
               </template>
@@ -45,9 +39,7 @@
           </div>
         </div>
         <div class="right">
-          <div
-            class="grid-items flex-box flex-align-center search-container web-only-box"
-          >
+          <div class="grid-items flex-box flex-align-center search-container web-only-box">
             <el-input
               class="search-input"
               v-model="gamePage.searchKey"
@@ -93,9 +85,7 @@
               background
               layout="prev, pager, next"
               :total="gamePage.total"
-              @current-change="
-                changePage(gamePage.currentPage, gamePage.pageSize)
-              "
+              @current-change="changePage(gamePage.currentPage, gamePage.pageSize)"
               v-model:current-page="gamePage.currentPage"
               v-model:pageSize="gamePage.pageSize"
               default-page-size="30"
@@ -120,7 +110,7 @@
 <script lang="js">
 import { defineComponent, onMounted, reactive, ref, watch } from "vue";
 import { Search } from "@element-plus/icons-vue";
-import { getPlatformGames, getPlatformList } from "@/api/platform/platform";
+import { getLoggedInPlatformList, getPlatformGames, getPlatformList } from "@/api/platform/platform";
 import GameModal from "@/components/modal/GameModal";
 import { loadPromoBanner } from "@/api/index/promo";
 import { useRoute, useRouter } from 'vue-router';
@@ -166,30 +156,54 @@ export default defineComponent({
         return 'AE 电子'
       } else if (gameLabel === 'MGP') {
         return 'MG 电子'
+      } else if (gameLabel === 'AG') {
+        return 'XIN 电子'
       } else {
         return gameLabel + ' 电子'
       }
     }
 
     const getPlatList = () => {
-      getPlatformList().then((data) => {
-        platforms.value = data.filter(element => element.gameType.includes("SLOT"));
-        if (!route.query.plat) {
-          switchPlat(platforms.value[0]);
-        } else {
-          platforms.value.forEach(element => {
-            if (route.query.plat === element.code) {
-              switchPlat(element)
-            }
-          });
-        }
-      }).catch((err) => {
-        console.log(err.message)
-        // message.error(
-        //   err.message,
-        //   4
-        // );
-      });
+      if (store.token) {
+        getLoggedInPlatformList().then((data) => {
+          platforms.value = data.filter(element => element.gameType.includes("SLOT"));
+          if (!route.query.plat) {
+            switchPlat(platforms.value[0]);
+          } else {
+            platforms.value.forEach(element => {
+              if (route.query.plat === element.code) {
+                switchPlat(element)
+              }
+            });
+          }
+        }).catch((err) => {
+          console.log(err.message)
+          // message.error(
+          //   err.message,
+          //   4
+          // );
+        });
+      } else {
+        getPlatformList().then((data) => {
+          platforms.value = data.filter(element => element.gameType.includes("SLOT"));
+          if (!route.query.plat) {
+            switchPlat(platforms.value[0]);
+          } else {
+            platforms.value.forEach(element => {
+              if (route.query.plat === element.code) {
+                switchPlat(element)
+              }
+            });
+          }
+        }).catch((err) => {
+          console.log(err.message)
+          // message.error(
+          //   err.message,
+          //   4
+          // );
+        });
+      }
+
     };
     const searchList = () => {
       if (gamePage.searchKey) {
@@ -202,7 +216,7 @@ export default defineComponent({
       getPlatformGames(activePlat.value.id, "SLOT").then((data) => {
         data.forEach(element => {
           element.default = require("../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
+          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${element.icon}`;
         });
         gameListData.value = data;
         gamePage.total = data.length;
@@ -328,7 +342,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .el-image {
-  min-height: 120px;
+  height: 130px;
   display: block;
   width: 100%;
   cursor: pointer;

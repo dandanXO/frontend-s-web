@@ -60,6 +60,9 @@
         <el-form-item :label="t('fields.remark')" prop="remark">
           <el-input v-model="siteForm.remark" type="textarea" style="width: 350px;" :rows="5" />
         </el-form-item>
+        <el-form-item :label="t('fields.timeZone')" prop="timeZone">
+          <el-input v-model="siteForm.timeZone" style="width: 350px;" />
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -115,7 +118,12 @@
               <el-table-column prop="domainCount" :label="t('fields.domainCount')" width="150" />
               <el-table-column prop="subsiteCount" :label="t('fields.subSiteCount')" width="150" />
               <el-table-column prop="currency" :label="t('fields.currency')" width="150" />
-              <el-table-column prop="createTime" :label="t('fields.createTime')" width="150" />
+              <el-table-column prop="createTime" :label="t('fields.createTime')" width="150">
+                <template #default="scope">
+                  <span v-formatter="{data: scope.row.createTime, type: 'date', timeZone: scope.row.timeZone}" />
+                </template>
+              </el-table-column>
+              <el-table-column prop="timeZone" :label="t('fields.timeZone')" width="150" />
               <el-table-column :label="t('fields.operate')" align="right" fixed="right">
                 <template #default="scope">
                   <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit(scope.row)" />
@@ -241,7 +249,8 @@ const siteForm = reactive({
   siteCode: null,
   parentId: null,
   currency: [],
-  remark: null
+  remark: null,
+  timeZone: '+08:00'
 });
 const domainForm = reactive({
   id: null,

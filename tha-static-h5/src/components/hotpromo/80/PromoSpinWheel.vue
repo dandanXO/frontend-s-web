@@ -1,19 +1,24 @@
 <template>
   <q-dialog v-model="isShowTotalWin" class="total-win-dialog">
     <div class="total-win">
-      <div class="total-win-content">
-        <div class="title">{{ $t("lang.youWon") }}</div>
-        <div v-if="outerAmount !== finalAmount">
-          <span>{{ outerAmount }}</span>
-          X
-          <span>{{ innerAmount }}</span>
-          % =
-        </div>
-        <div>{{ $t("lang.totalBonus") }}</div>
-        <div>
-          <span>{{ finalAmount }}</span>
+      <img src="../../../assets/images/promotion/spinwheel/total_win_text.png" />
+      <div class="total-win-content-container">
+        <img src="../../../assets/images/promotion/spinwheel/total_win_board.png" />
+        <div class="total-win-content">
+          <div class="title">{{ $t("lang.youWon") }}</div>
+          <div v-if="outerAmount !== finalAmount">
+            <span>{{ outerAmount }}</span>
+            X
+            <span>{{ innerAmount }}</span>
+            % =
+          </div>
+          <div>{{ $t("lang.totalBonus") }}</div>
+          <div>
+            <span>{{ finalAmount }}</span>
+          </div>
         </div>
       </div>
+
       <div class="collect-btn" @click="onCollectClick">
         <div class="collect-text">Collect</div>
       </div>
@@ -22,14 +27,15 @@
 
   <div class="spinwheel-container">
     <div class="spin-count-board">
-      <img class="spin-count-board-img" src="../../../assets/images/promotion/spinwheel/spin_count_board.png" />
-      <span>
-        {{
-          $t("lang.spinRemaining", {
-            spinCount: availableSpinCount
-          })
-        }}
-      </span>
+      <img
+        class="spin-count-board-img"
+        src="../../../assets/images/promotion/spinwheel/spin_count_board.png"
+      />
+      <span>{{
+        $t("lang.spinRemaining", {
+          spinCount: availableSpinCount,
+        })
+      }}</span>
     </div>
 
     <div :ref="outerWheelConfig.wheelRef" class="outer-wheel">
@@ -395,13 +401,11 @@ onMounted(() => {
   }
 
   .total-win {
-    background: url(../../../assets/images/promotion/spinwheel/total_win.png);
+    background: url(../../../assets/images/promotion/spinwheel/total_win_bg.png);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
 
-    width: 100%;
-    height: auto;
     aspect-ratio: 1;
     position: relative;
 
@@ -410,15 +414,11 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
 
-    color: white;
-    text-align: center;
-    font-family: Arial Black;
-    font-size: 3vw;
-    font-weight: 900;
-    line-height: normal;
-    letter-spacing: 0.14063rem;
-
     pointer-events: none;
+
+    img {
+      width: 90%;
+    }
 
     span {
       background: linear-gradient(0deg, #ff932f 9.54%, #fffca9 86.08%);
@@ -427,13 +427,27 @@ onMounted(() => {
       -webkit-text-fill-color: transparent;
     }
 
-    .total-win-content {
+    .total-win-content-container {
       position: relative;
-      top: 17.5%;
-      left: 2%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
 
-      .title {
-        font-size: 6vw;
+      .total-win-content {
+        position: absolute;
+        margin: 0 0 0 2%;
+        color: white;
+        text-align: center;
+        font-size: 3vw;
+        font-family: Arial Black;
+        font-weight: 900;
+        line-height: normal;
+        letter-spacing: 0.14063rem;
+
+        .title {
+          font-size: 6vw;
+        }
       }
     }
 
@@ -555,12 +569,12 @@ onMounted(() => {
 
       span {
         position: relative;
-        top: 4%;
-        left: 11.5%;
+        top: 1%;
+        left: 13%;
         color: #fbff1e;
         text-align: center;
         font-family: FZHanZhenGuangBiaoS-GB;
-        font-size: 2.5vw;
+        font-size: 2vw;
         font-weight: 600;
         line-height: 100%; /* 2.11175rem */
       }
@@ -637,10 +651,8 @@ onMounted(() => {
 
 @media (min-width: 768px) {
   .total-win {
-    font-size: 2vw !important;
-
     .total-win-content {
-      left: 1% !important;
+      font-size: 2vw !important;
 
       .title {
         font-size: 2.5vw !important;
@@ -692,9 +704,9 @@ onMounted(() => {
 
       .prize-lock-day {
         span {
-          top: 4%;
-          left: 7%;
-          font-size: 1.15rem;
+          top: 1%;
+          left: 8%;
+          font-size: 0.75rem;
         }
       }
     }
@@ -725,6 +737,11 @@ onMounted(() => {
 @media (min-width: 980px) {
   .spinwheel-container .spin-count-board span {
     font-size: 1.3rem;
+  }
+  .spinwheel-container .inner-wheel .prize-lock-day span {
+    top: 1%;
+    left: 8%;
+    font-size: 0.9rem;
   }
 }
 

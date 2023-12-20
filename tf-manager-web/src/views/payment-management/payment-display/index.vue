@@ -515,7 +515,45 @@ function changeWebPaymentId(value) {
     }
   });
 }
+
+const getDuplicatePaymentAreaCode = (paymentAreaList) => {
+  const codeSet = new Set()
+  const duplicates = []
+  paymentAreaList.forEach((node) => {
+    const code = node.code
+    if (codeSet.has(code)) {
+      duplicates.push(code)
+    } else {
+      codeSet.add(code)
+    }
+  })
+  return duplicates
+}
+
+const getPaymentAreaNode = (paymentAreaList) => {
+  const codeSet = []
+  const processNode = (node) => {
+    codeSet.push(node)
+    if (node.children && node.children.length > 0) {
+      node.children.forEach(processNode)
+    }
+  }
+  paymentAreaList.forEach(processNode)
+  return codeSet
+}
+
 async function confirmUpdate() {
+  const paymentShowNode = getPaymentAreaNode(page.paymentShowNodes)
+  const missingCodePayments = paymentShowNode.filter(payment => !payment.code);
+  if (missingCodePayments.length > 0) {
+    ElMessage({ message: t('message.validateCodeRequired') + ' - ' + missingCodePayments[0].name, type: 'error' });
+    return false
+  }
+  const duplicateCode = getDuplicatePaymentAreaCode(paymentShowNode)
+  if (duplicateCode.length > 0) {
+    ElMessage({ message: t('message.validateCodeExist') + duplicateCode, type: 'error' })
+    return false
+  }
   ElMessageBox.confirm(t('message.confirmUpdate'), t('fields.notice'), {
     confirmButtonText: t('fields.update'),
     cancelButtonText: t('fields.cancel'),
