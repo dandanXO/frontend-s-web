@@ -307,11 +307,6 @@ function getRecords() {
 }
 
 function onPrevPageClick() {
-  // if (paginationInfo.pageNumber === 1) return;
-
-  // paginationInfo.pageNumber--;
-  // getRecordList();
-
   if (recordsPagination.current > 1) {
     recordsPagination.current = recordsPagination.current - 1;
     getRecords();
@@ -319,23 +314,13 @@ function onPrevPageClick() {
 }
 
 function onNextPageClick() {
-  // if (paginationInfo.pageNumber + 1 > paginationInfo.pageTotal) return;
-
-  // paginationInfo.pageNumber++;
-  // getRecordList();
-
-  if (recordsPagination.total / recordsPagination.current > recordsPagination.current) {
+  if (recordsPagination.pages > recordsPagination.current) {
     recordsPagination.current = recordsPagination.current + 1;
     getRecords();
   }
 }
 
 function onPaginationClick(pageIndex) {
-  if (paginationInfo.pageNumber === pageIndex) return;
-
-  // paginationInfo.pageNumber = pageIndex;
-  // getRecordList();
-  // paginationInfo.pageNumber = pageIndex;
   recordsPagination.current = pageIndex;
   getRecords();
 }
