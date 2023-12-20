@@ -227,7 +227,20 @@
       </el-table-column>
       <el-table-column prop="limitNumber" :label="t('fields.limitNumber')" width="120" />
       <el-table-column prop="createBy" :label="t('fields.createBy')" width="120" />
-      <el-table-column prop="createTime" :label="t('fields.createTime')" width="200" />
+      <el-table-column prop="createTime" :label="t('fields.createTime')" width="200">
+        <template #default="scope">
+          <span v-if="scope.row.createTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.createTime !== null"
+            v-formatter="{
+              data: scope.row.createTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:gift:update'])" fixed="right">
         <template #default="scope">
           <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit(scope.row)"
@@ -405,6 +418,7 @@ const formRef = ref(null);
 const sites = reactive({
   list: []
 });
+let timeZone = null
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -500,6 +514,7 @@ async function loadGift() {
   const { data: ret } = await getGift(query);
   page.pages = ret.pages;
   page.records = ret.records;
+  timeZone = sites.list.find(e => e.id === request.siteId).timeZone
   page.total = ret.total;
   page.loading = false;
 }
