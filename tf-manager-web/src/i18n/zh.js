@@ -1225,6 +1225,7 @@ export default {
     validate: '验证',
     validBet: '有效投注额',
     value: '值',
+    vcallName: '座机号',
     view: '查看',
     viewLog: '查看日志',
     vipLevel: 'VIP等级',

@@ -259,7 +259,8 @@
                   <template
                     v-if="
                       scope.row.status === 'SUCCESS' &&
-                      (scope.row.currencyName === 'CNY' || scope.row.currencyName === 'AliCNY') &&
+                      (scope.row.currencyName === 'CNY' ||
+                        scope.row.currencyName === 'AliCNY') &&
                       scope.row.confirmStatus === 0
                     "
                   >
@@ -335,7 +336,6 @@
                     <span>{{ scope.row.recordTime }}</span>
                   </div>
                 </template>
-
 
                 <template v-if="tbl.dataIndex === 'platform'" #default="scope">
                   <div style="display: flex; align-items: center">
@@ -438,7 +438,10 @@
           </div>
         </el-tab-pane>
         <el-tab-pane name="gameBetRecord" label="投注记录">
-          <div v-if="searchForm.gameBetRecord.platform.length === 0" class="payout-total">
+          <div
+            v-if="searchForm.gameBetRecord.platform.length === 0"
+            class="payout-total"
+          >
             <div>总投注: {{ totalBetRecord.totalBet }}</div>
             <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
           </div>

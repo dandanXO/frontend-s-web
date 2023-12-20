@@ -1219,6 +1219,7 @@ export default {
     validate: 'Validate',
     validBet: 'Valid Bet',
     value: 'Value',
+    vcallName: 'Landline phone number',
     view: 'View',
     viewLog: 'View Log',
     vipLevel: 'VIP Level',
