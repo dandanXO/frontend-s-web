@@ -11,9 +11,9 @@
         <el-button class="addcardbtn" :icon="add" size="normal" @click="openDialog('bank')" type="primary"><svg-icon icon-class="add" style="display:inline-block; font-size: 20px;" /><span>{{ $t('fields.addBankCard') }}</span></el-button>
       </el-col>
     </el-row>
-    <div class="subtitle">绑定账户列表</div>
+    <div class="subtitle">{{ t('fields.bindAccountList') }}</div>
     <el-row class="cards">
-      <div class="minititle">绑定银行卡列表</div>
+      <div class="minititle">{{ t('fields.bindBankCardList') }}</div>
       <table cellpadding="0" cellspacing="0" border="0" class="custom-table">
         <thead>
           <tr>
@@ -86,7 +86,7 @@
       </el-col> -->
     </el-row>
     <el-row class="cards">
-      <div class="minititle">绑定虚拟账户列表</div>
+      <div class="minititle">{{ t('fields.bindCryptoList') }}</div>
       <table cellpadding="0" cellspacing="0" border="0" class="custom-table">
         <thead>
           <tr>
@@ -117,7 +117,7 @@
       </div>
     </el-row>
     <el-row class="cards">
-      <div class="minititle">绑定电子钱包列表</div>
+      <div class="minititle">{{ t('fields.bindEWalletList') }}</div>
       <table cellpadding="0" cellspacing="0" border="0" class="custom-table">
         <thead>
           <tr>
