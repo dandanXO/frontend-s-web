@@ -10,7 +10,7 @@
     >
       <!-- <template v-for="(item, index) in upcomingMatchDetails" :key="index"> -->
       <swiper-slide>
-        <div class="bet-info-box" >
+        <div class="bet-info-box">
           <div class="bet-info-date">{{ upcomingMatchDetails.matchTime }}</div>
 
           <div class="bet-info-title" v-html="upcomingMatchDetails.matchTitle" />
@@ -76,9 +76,7 @@ const onSwiper = (swiper) => {
   console.log(swiper);
 };
 
-const onSlideChange = () => {
-
-}
+const onSlideChange = () => {};
 
 // const prevSlide = () => {
 //   $swiper.value.slidePrev();
@@ -155,9 +153,15 @@ onMounted(() => {
       padding-bottom: 10px;
 
       .info-team-logo {
+        background: #c1c1c1;
+        border-radius: 6px;
+        padding: 6px;
+        margin-bottom: 3px;
+
         img {
           display: block;
           width: 45px;
+          margin-bottom: 0px;
         }
       }
 

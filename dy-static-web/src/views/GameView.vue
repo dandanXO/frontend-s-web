@@ -164,7 +164,7 @@ export default defineComponent({
     }
 
     const getPlatList = () => {
-      if (store.memberType === "TEST") {
+      if (store.token) {
         getLoggedInPlatformList().then((data) => {
           platforms.value = data.filter(element => element.gameType.includes("SLOT"));
           if (!route.query.plat) {

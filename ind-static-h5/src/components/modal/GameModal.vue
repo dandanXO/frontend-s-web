@@ -5,7 +5,20 @@
         <div class="topActions">
           <q-btn v-if="!drawerVisible" dense rounded icon="reply" class="bg-yellow text-black" @click="onExitClick" />
           <div class="game-logo-img">
-            <img :src="require(`../../assets/images/index/logo/logo-${platformCodeImg.toLowerCase()}.png`)" />
+            <div
+              class="game-logo"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../../assets/images/index/logo/logo-${platformCodeImg.toLowerCase()}.png`)})`;
+                  } catch (e) {
+                    return '';
+                  }
+                })()
+              }"
+            >
+              &nbsp;
+            </div>
           </div>
           <q-btn
             v-if="!drawerVisible"
@@ -22,15 +35,28 @@
           <div>Loading... Please wait...</div>
         </div>
 
-        <iframe
-          @load="loadGame()"
-          v-show="!logoShow"
-          :src="src"
-          id="game-iframe"
-          scrolling="no"
-          frameborder="0"
-          class="game-iframe"
-        ></iframe>
+        <template v-if="isInnerHtmlSrc === false">
+          <iframe
+            @load="loadGame()"
+            v-show="!logoShow"
+            :src="src"
+            id="game-iframe"
+            scrolling="no"
+            frameborder="0"
+            class="game-iframe"
+          ></iframe>
+        </template>
+        <template v-else>
+          <iframe
+            @load="loadGame()"
+            v-show="!logoShow"
+            v-bind:srcdoc="src"
+            id="game-iframe"
+            scrolling="no"
+            frameborder="0"
+            class="game-iframe"
+          ></iframe>
+        </template>
 
         <q-dialog width="100%" v-model="drawerVisible" presistent>
           <div class="popout-dialog">
@@ -76,6 +102,7 @@ import DepositComponent from "components/depositComponent.vue";
 import { storeToRefs } from "pinia";
 import { api } from "boot/axios";
 import { useQuasar, Platform, AppFullscreen, Notify } from "quasar";
+import { isAndroid } from "boot/utils";
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 const props = defineProps(["closeFullGameDialog"]);
@@ -148,6 +175,7 @@ const handleDrawerVisible = () => {
 const router = useRouter();
 const route = useRoute();
 const visible = ref(false);
+const isInnerHtmlSrc = ref(false);
 const visibleComingSoon = ref(false);
 const src = ref("");
 const logoShow = ref(true);
@@ -193,7 +221,9 @@ const closeDialog = () => {
   src.value = "";
   store.getBalance();
   // AppFullscreen.exit()
-  screen.orientation.lock("portrait");
+  if (isAndroid()) {
+    screen.orientation.lock("portrait");
+  }
 };
 
 const platformCodeImg = ref();
@@ -203,6 +233,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
   platformCodeImg.value = platformCode;
 
+  //TESt
   localStorage.removeItem("isOpenFromAccount");
   localStorage.removeItem("isBacked");
   // window.addEventListener(
@@ -220,7 +251,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   //     var gameIfrm = document.getElementById('game-iframe');
   //     gameIfrm.requestFullscreen();
   // // const iframeRef = ref(null);
-  screen.orientation.unlock();
+  if (isAndroid()) {
+    screen.orientation.unlock();
+  }
   // iframe.find('HTML-Element').touchwipe({
   // wipeLeft: function() { alert("left"); },
   // wipeRight: function() { alert("right"); },
@@ -248,9 +281,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.hasToken()) {
-      if (platformCode !== "PG") {
-        visible.value = true;
-      }
+      visible.value = true;
 
       var way = null;
       if ("standalone" in window.navigator && window.navigator.standalone) {
@@ -274,15 +305,31 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           }
         })
         .then((res) => {
-          if (platformCode === "PG") {
-            if (way === "ANDROID") {
-              cordova.InAppBrowser.open(res.data, "_blank", "location=no,zoom=no");
-            } else {
-              window.location.href = res.data;
-            }
+          let srcDoc = res.data;
+          var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
+          if (firstFourChars === "http") {
+            src.value = srcDoc;
           } else {
-            src.value = res.data;
+            isInnerHtmlSrc.value = true;
+
+            const scriptEndTag = "</" + "script>";
+            srcDoc = srcDoc
+              .replace(/<\/script>/g, scriptEndTag)
+              .replaceAll(/\\\"/g, '"')
+              .replaceAll(/\n/g, "");
+
+            src.value = srcDoc;
           }
+
+          // if (platformCode === "PG") {
+          // if (way === "ANDROID") {
+          //   cordova.InAppBrowser.open(res.data, "_blank", "location=no,zoom=no");
+          // } else {
+          //   window.location.href = res.data;
+          // }
+          // } else {
+          //   src.value = res.data;
+          // }
         });
     } else {
       props.closeFullGameDialog();
@@ -391,6 +438,14 @@ defineExpose({
 
     .game-logo-img {
       height: 25px;
+      .game-logo {
+        width: 30vw;
+        background-position: center;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+
       img {
         display: block;
         height: 100%;

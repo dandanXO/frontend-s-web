@@ -293,7 +293,7 @@ export default defineComponent({
         excludes.value.forEach((element) => {
           delete allComponents[element];
         });
-        // const sidParam = FingerprintJS.hashComponents(allComponents);
+        const sidParam = FingerprintJS.hashComponents(allComponents);
 
         if (loginType.value === false) {
           loginNameRef.value.validate();
@@ -310,7 +310,7 @@ export default defineComponent({
               .memberLogin({
                 loginName: loginForm.loginName,
                 password: loginForm.password,
-                sid: store.aaid,
+                sid: store.aaid ? store.aaid : sidParam,
                 captchaCode: loginForm.captchaCode,
                 codeId: loginForm.codeId
               })

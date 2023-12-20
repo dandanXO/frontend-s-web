@@ -15,11 +15,7 @@
             <q-icon name="delete" />
             <div>全部删除</div>
           </button>
-          <q-toggle
-            v-model="allowSelectMultiple"
-            :label="'选择多个'"
-            left-label
-          />
+          <q-toggle v-model="allowSelectMultiple" :label="'选择多个'" left-label />
           <button class="read-selected-btn" @click="readSelectedMessages" v-if="hasMessagesSelected">
             <q-icon name="mail_outline" />
             <div>读取</div>
@@ -42,16 +38,17 @@
             <div class="mail-title">
               {{ det.title }}
             </div>
-            <div style="display:flex;align-items:center;">
+            <div style="display: flex; align-items: center">
               <q-chip color="brand" size="sm" label="已读" v-if="(det.isRead && det.isRead !== 0) || !!det.readTime" />
               <div v-if="allowSelectMultiple" class="mailbox-checkbox">
                 <q-checkbox
                   rounded
                   :model-value="selectedMessageIds[det.id] ?? false"
-                  @update:model-value="newValue => selectedMessageIds[det.id] = newValue ?? false"
+                  @update:model-value="(newValue) => (selectedMessageIds[det.id] = newValue ?? false)"
                   size="sm"
-                  style="font-size: 14px;"
-                  color="#0089ED" />
+                  style="font-size: 14px"
+                  color="#0089ED"
+                />
               </div>
             </div>
           </div>
@@ -95,7 +92,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, reactive, watch,computed } from "vue";
+import { defineComponent, onMounted, ref, reactive, watch, computed } from "vue";
 import moment from "moment";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
@@ -132,7 +129,7 @@ export default defineComponent({
     const $q = useQuasar();
     const allowSelectMultiple = ref(false);
     const selectedMessageIds = ref({});
-    const hasMessagesSelected = computed(() => Object.values(selectedMessageIds.value).includes(true))
+    const hasMessagesSelected = computed(() => Object.values(selectedMessageIds.value).includes(true));
     const isDeleteAllModal = ref(false);
     const lists = reactive({
       NOTIFICATION: [],
@@ -192,6 +189,12 @@ export default defineComponent({
               icon: "check_circle_outline"
             });
             lists[type] = [];
+            if (type === "ALL") {
+              lists["NOTIFICATION"] = [];
+              lists["ACTIVITY"] = [];
+              lists["ANNOUNCEMENT"] = [];
+              lists["PAYMENT"] = [];
+            }
           }
         })
         .catch((error) => {
@@ -208,9 +211,12 @@ export default defineComponent({
       const messagesIdArr = Object.keys(selectedMessageIds.value);
       const formattedIds = messagesIdArr.join(",");
       api
-        .post("/session/inbox/readMultiple", qs.stringify({
-          ids: formattedIds
-        }))
+        .post(
+          "/session/inbox/readMultiple",
+          qs.stringify({
+            ids: formattedIds
+          })
+        )
         .then((res) => {
           if (res.code === 0) {
             $q.notify({
@@ -221,7 +227,7 @@ export default defineComponent({
             });
 
             lists[props.type] = lists[props.type].map((messageData) => ({
-              ...messageData, 
+              ...messageData,
               isRead: messagesIdArr.includes(messageData.id.toString()) ? 1 : undefined
             }));
           }
@@ -235,9 +241,12 @@ export default defineComponent({
       const messagesIdArr = Object.keys(selectedMessageIds.value);
       const formattedIds = messagesIdArr.join(",");
       api
-        .post("/session/inbox/deleteMultiple", qs.stringify({
-          ids: formattedIds
-        }))
+        .post(
+          "/session/inbox/deleteMultiple",
+          qs.stringify({
+            ids: formattedIds
+          })
+        )
         .then((res) => {
           if (res.code === 0) {
             $q.notify({
@@ -247,7 +256,26 @@ export default defineComponent({
               icon: "check_circle_outline"
             });
 
-            lists[props.type] = lists[props.type].filter((messageData) => !messagesIdArr.includes(messageData.id.toString()));
+            if (props.type === "ALL") {
+              lists["ALL"] = lists["ALL"].filter((messageData) => !messagesIdArr.includes(messageData.id.toString()));
+              lists["NOTIFICATION"] = lists["NOTIFICATION"].filter(
+                (messageData) => !messagesIdArr.includes(messageData.id.toString())
+              );
+              lists["ACTIVITY"] = lists["ACTIVITY"].filter(
+                (messageData) => !messagesIdArr.includes(messageData.id.toString())
+              );
+              lists["ANNOUNCEMENT"] = lists["ANNOUNCEMENT"].filter(
+                (messageData) => !messagesIdArr.includes(messageData.id.toString())
+              );
+              lists["PAYMENT"] = lists["PAYMENT"].filter(
+                (messageData) => !messagesIdArr.includes(messageData.id.toString())
+              );
+            } else {
+              lists[props.type] = lists[props.type].filter(
+                (messageData) => !messagesIdArr.includes(messageData.id.toString())
+              );
+              lists["ALL"] = lists["ALL"].filter((messageData) => !messagesIdArr.includes(messageData.id.toString()));
+            }
           }
         })
         .catch((error) => {
@@ -256,11 +284,14 @@ export default defineComponent({
     };
 
     // clear selected messages if toggle is turned off
-    watch(() => allowSelectMultiple.value, () => {
-      if(allowSelectMultiple.value === false) {
-        selectedMessageIds.value = {};
+    watch(
+      () => allowSelectMultiple.value,
+      () => {
+        if (allowSelectMultiple.value === false) {
+          selectedMessageIds.value = {};
+        }
       }
-    })
+    );
 
     onMounted(() => {
       onLoad;
@@ -320,11 +351,13 @@ function mergeArrays(array1, array2) {
 <style scoped lang="scss">
 .quick-btn-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(75px,112px));
+  grid-template-columns: repeat(auto-fit, minmax(75px, 112px));
   gap: 10px;
 
   .read-all-btn,
-  .del-all-btn, .read-selected-btn, .del-selected-btn {
+  .del-all-btn,
+  .read-selected-btn,
+  .del-selected-btn {
     max-width: 112px;
     height: 35px;
     white-space: nowrap;
@@ -338,11 +371,13 @@ function mergeArrays(array1, array2) {
     gap: 5px;
   }
 
-  .read-all-btn, .read-selected-btn {
+  .read-all-btn,
+  .read-selected-btn {
     background: $primary;
   }
 
-  .del-all-btn, .del-selected-btn {
+  .del-all-btn,
+  .del-selected-btn {
     background: $secondary;
   }
 }

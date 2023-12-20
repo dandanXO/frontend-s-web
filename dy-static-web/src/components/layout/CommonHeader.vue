@@ -22,7 +22,7 @@
               </Vue3Marquee>
             </div>
             <template v-if="store.token">
-              <div class="mailbox-notify">
+              <div class="mailbox-notify" @click="checkMailboxUnread">
                 <router-link to="/center/mailbox">
                   <RiMailFill style="fill: #2db9e2; width: 20px" />
                   <div v-if="mailboxUnreadTotal > 0" class="notify-red"></div>

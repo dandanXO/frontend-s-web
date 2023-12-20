@@ -14,7 +14,7 @@ export const updateGameMatch = (id, gameMatch) => {
 };
 
 export const updateGameMatchStatus = (id) => {
-  return https().request(`/game-match/${id}?_method=PUT`, Method.POST);
+  return https().request(`/game-match/${id}/status?_method=PUT`, Method.POST);
 };
 
 export const deleteGameMatch = (id) => {

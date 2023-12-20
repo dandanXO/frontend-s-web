@@ -1,15 +1,29 @@
 <template>
   <el-dialog v-model="visible" width="100%" class="full-modal" :title="title" destroyOnClose :afterClose="destroyGame">
     <TFLoading v-if="logoShow"></TFLoading>
-    <iframe
-      @load="loadGame()"
-      v-show="!logoShow"
-      :src="src"
-      id="game-iframe"
-      :scrolling="iframeScroll ? 'yes' : 'no'"
-      frameborder="0"
-      class="game-iframe"
-    ></iframe>
+    <template v-if="transferInfo.platform === 'PG'">
+      <iframe
+        @load="loadGame()"
+        v-show="!logoShow"
+        v-bind:srcdoc="src"
+        id="game-iframe"
+        :scrolling="iframeScroll ? 'yes' : 'no'"
+        frameborder="0"
+        class="game-iframe"
+      ></iframe>
+    </template>
+    <template v-else>
+      <iframe
+        @load="loadGame()"
+        v-show="!logoShow"
+        :src="src"
+        id="game-iframe"
+        :scrolling="iframeScroll ? 'yes' : 'no'"
+        frameborder="0"
+        class="game-iframe"
+      ></iframe>
+    </template>
+
     <div @click="showDrawer()" class="drawer-btn" :class="{ active: isMobileDrawerActive }">Quick Actions</div>
 
     <div :class="{ active: isMobileDrawerActive }" class="additional-buttons desktopview" v-if="!drawerVisible">
@@ -176,9 +190,9 @@ const submitTransfer = (amount) => {
     });
 };
 const open = (gameName, platformCode, gameCode, gameType) => {
-  transferInfo.value = {
-    platform: platformCode
-  };
+  transferInfo.value.platform = platformCode;
+  logoShow.value = true;
+  src.value = "";
   title.value = gameName;
   const store = userStore();
   if (store.memberType !== "TEST" && gameType === "TEST") {
@@ -194,7 +208,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           platformCode === "SGWin" ||
           platformCode === "TCG" ||
           platformCode === "PT" ||
-          (platformCode === "BBINDY" && gameCode === "bbkeno_lobby_pc")
+          (platformCode === "BBINDY" && gameCode === "bbkeno_lobby_pc") ||
+          (platformCode === "onlyPlatform" && (gameCode === "IMES" || gameCode === "IM"))
         )
       ) {
         visible.value = true;
@@ -204,7 +219,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         iframeScroll.value = true;
       }
 
-      if (platformCode === "onlyPlatform" && gameCode === "IMES") {
+      if (platformCode === "onlyPlatform" && (gameCode === "IMES" || gameCode === "IM")) {
         launchSessionGame(gameCode, {
           isMobile: isMobile()
         }).then((res) => {
@@ -243,7 +258,17 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           gameCode: gameCode,
           isMobile: isMobile()
         }).then((res) => {
-          src.value = res.data;
+          let srcData = res.data;
+
+          if (platformCode === "PG") {
+            const scriptEndTag = "</" + "script>";
+            srcData = res.data
+              .replace(/<\/script>/g, scriptEndTag)
+              .replaceAll(/\\\"/g, '"')
+              .replaceAll(/\n/g, "");
+          }
+
+          src.value = srcData;
           visible.value = true;
         });
       }

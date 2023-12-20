@@ -478,7 +478,7 @@ export default defineComponent({
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "存款";
-        } else if (route.path === "/finance/depositMobile") {
+        } else if (route.path === "/deposit") {
           hasPage.value = false;
           pageName.value = "存款";
           prevPage.value = "";

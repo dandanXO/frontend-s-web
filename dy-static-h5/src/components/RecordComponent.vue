@@ -267,7 +267,7 @@ export default defineComponent({
     }
   },
   emits: ["loadnewdata"],
-  setup(props, { emit }) {
+  setup(props, context) {
     const truncatedList = ref([]);
     const comList = ref({});
     const $q = useQuasar();
@@ -288,7 +288,7 @@ export default defineComponent({
             });
             done();
           } else if (comList.value.length === 0) {
-            emit("loadnewdata");
+            context.emit("loadnewdata");
             done();
           }
         }
@@ -299,6 +299,12 @@ export default defineComponent({
       isConfirmWithdraw.value = true;
       passDet.value = det;
     };
+
+    const clearTable = () => {
+      truncatedList.value = [];
+    };
+
+    context.expose({ clearTable });
 
     const openWithdrawConfirm = () => {
       const obj = {
