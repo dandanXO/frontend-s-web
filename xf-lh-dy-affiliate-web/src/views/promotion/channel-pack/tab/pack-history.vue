@@ -468,45 +468,7 @@ async function loadHistory() {
   }
   const { data: ret } = await loadChannelPackHistory(query)
   page.pages = ret.pages
-  // page.records = ret.records
-  page.records = [
-    {
-      id: 16,
-      siteId: 6,
-      affiliateId: 1731630490469601281,
-      version: "1.1",
-      osType: "ANDROID",
-      apkType: "NORMAL",
-      appIcon: null,
-      appName: "dy_1_1",
-      packageName: null,
-      channelValue: "45D3FC",
-      status: "SUCCESS",
-      createTime: 1703054590000,
-      finishTime: 1703054893000,
-      downloadUrl: "https://url-shortener.test-psna.com/4c29123689cc41dfa046e7008a4f05e5",
-      downloadCount: 0,
-      appType: "ALL_SITE"
-    },
-    {
-      id: 16,
-      siteId: 6,
-      affiliateId: 1731630490469601281,
-      version: "1.1",
-      osType: "ANDROID",
-      apkType: "NORMAL",
-      appIcon: null,
-      appName: "dy_1_1",
-      packageName: null,
-      channelValue: "45D3FC",
-      status: "SUCCESS",
-      createTime: 1703054590000,
-      finishTime: 1703054893000,
-      downloadUrl: "https://url-shortener.test-psna.com/4c29123689cc41dfa046e7008a4f05e5",
-      downloadCount: 0,
-      appType: "ALL_SITE"
-    },
-  ]
+  page.records = ret.records
   page.loading = false
 }
 
