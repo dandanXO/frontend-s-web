@@ -511,11 +511,11 @@ export default {
     affiliate: '代理福利图',
   },
   packStatus: {
-    inQueue: '等待中',
-    inProgress: '进行中',
-    success: '成功',
-    fail: '失败',
-    cancel: '取消',
+    IN_QUEUE: '等待中',
+    IN_PROGRESS: '进行中',
+    SUCCESS: '成功',
+    FAIL: '失败',
+    CANCEL: '取消',
   },
   appType: {
     ALL_SITE: '全站',
