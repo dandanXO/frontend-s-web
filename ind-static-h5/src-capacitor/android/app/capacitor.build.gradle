@@ -13,7 +13,8 @@ dependencies {
     implementation project(':capacitor-device')
     implementation project(':capacitor-preferences')
     implementation project(':capacitor-splash-screen')
-
+    implementation "com.google.android.gms:play-services-analytics:+"
+    implementation "com.android.installreferrer:installreferrer:1.0"
 }
 
 

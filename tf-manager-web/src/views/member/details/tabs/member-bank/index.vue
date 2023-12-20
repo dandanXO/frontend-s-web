@@ -28,7 +28,7 @@
             <span v-if="scope.row.createTime === null">-</span>
             <span
               v-if="scope.row.createTime !== null"
-              v-formatter="{data: scope.row.createTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
+              v-formatter="{data: scope.row.createTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -100,7 +100,7 @@
             <span v-if="scope.row.operationTime === null">-</span>
             <span
               v-if="scope.row.operationTime !== null"
-              v-formatter="{data: scope.row.operationTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
+              v-formatter="{data: scope.row.operationTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -128,6 +128,10 @@ const props = defineProps({
   mbrId: {
     type: String,
     required: true
+  },
+  timeZone: {
+    type: String,
+    required: true,
   }
 })
 

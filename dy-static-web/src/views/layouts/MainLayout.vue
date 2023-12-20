@@ -8,7 +8,9 @@
       <component :is="Component" />
       <!-- </transition> -->
     </router-view>
-    <common-footer />
+    <keep-alive>
+      <common-footer />
+    </keep-alive>
     <common-sidebar />
   </div>
 </template>

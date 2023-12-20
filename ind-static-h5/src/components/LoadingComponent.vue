@@ -1,6 +1,6 @@
 <template>
   <div class="loading-container">
-    <q-spinner-hourglass size="8em" class="loading" />
+    <q-spinner-hourglass size="4em" class="loading" />
   </div>
 </template>
 

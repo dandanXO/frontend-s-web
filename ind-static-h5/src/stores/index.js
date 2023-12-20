@@ -31,7 +31,7 @@ export const userStore = defineStore("userStore", {
       token: getStoreToken(),
       vip: "",
       evip: "",
-      currency: { value: "￥", label: "RMB" },
+      currency: { value: "₹", label: "INR" },
       personalAddress: "",
       unreadInboxMail: 0,
       phoneVerified: false,
@@ -40,12 +40,14 @@ export const userStore = defineStore("userStore", {
       levelUpDeposit: "",
       currentMailData: {},
       guest: false,
+      readMsgLists: [],
+      aaid: ""
     };
   },
   actions: {
     hasToken() {
       if (isAndroid()) {
-        console.log("android");
+        // console.log("android");
         if (LocalStorage.getItem("TOKEN", "") !== "") {
           return true;
         } else {
@@ -85,6 +87,12 @@ export const userStore = defineStore("userStore", {
     },
     setPhone(tel) {
       this.phone = tel;
+    },
+    setAaid(aaid) {
+      this.aaid = aaid;
+    },
+    getAaid() {
+      return this.aaid;
     },
     memberLogin(loginInfo) {
       var regDevice = Platform.is.mobile ? "H5" : "WEB";
@@ -143,6 +151,18 @@ export const userStore = defineStore("userStore", {
           });
         }
       });
+    },
+    addReadMsg(id) {
+      this.readMsgLists = SessionStorage.getItem("READ_MAIL_IDS") || [];
+      if (this.readMsgLists.length === 0) {
+        SessionStorage.set("READ_MAIL_IDS", [id]);
+      } else {
+        this.readMsgLists.push(id);
+        SessionStorage.set("READ_MAIL_IDS", this.readMsgLists);
+      }
+    },
+    setReadMsg() {
+      this.readMsgLists = SessionStorage.getItem("READ_MAIL_IDS") || [];
     },
     getMemberInfo() {
       api.interceptors.request.use(async (req) => {
@@ -245,7 +265,6 @@ export const userStore = defineStore("userStore", {
     getUnreadTotal() {
       if (this.token) {
         return api.get("/session/inbox/getUnreadTotal").then((total) => {
-          console.log(total);
           if (total.code === 0) {
             this.unreadInboxMail = total.data;
           }
@@ -264,7 +283,7 @@ export const userStore = defineStore("userStore", {
         LocalStorage.remove("TOKEN");
         SessionStorage.remove("TOKEN");
 
-        location.reload();
+        location.href = "/";
       });
     },
     setMailData(mailData) {

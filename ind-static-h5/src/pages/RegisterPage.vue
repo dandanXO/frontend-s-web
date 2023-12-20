@@ -14,14 +14,15 @@
       <q-input
         ref="loginNameRef"
         hide-bottom-space
+        type="number"
         v-model="regForm.loginName"
-        label="Username"
+        label="Phone Number"
         lazy-rules
         :rules="[
-          (val) => (val && val.length > 0) || 'Please insert username',
-          (val) => (val && val.length >= 6 && val.length <= 11) || 'The characters of username must be between 6 and 11'
+          (val) => (val && val.length > 0) || 'Please insert Phone number',
+          (val) => val.length === 10 || 'The phone number must be 10 digits'
         ]"
-        placeholder="Please Enter Account"
+        placeholder="Please Phone Number"
         color="white"
         class="landing-input"
         rounded
@@ -38,7 +39,8 @@
         :type="isPwd ? 'password' : 'text'"
         :rules="[
           (val) => (val && val.length > 0) || 'Please insert password',
-          (val) => (val.length >= 6 && val.length <= 11) || 'The characters of password must be between 6 and 11'
+          (val) => (val.length >= 6 && val.length <= 11) || 'The characters of password must be between 6 and 11',
+          () => isAlphanumeric(regForm.password, 'Password')
         ]"
         placeholder="Please Enter Password"
         color="white"
@@ -86,8 +88,7 @@
         lazy-rules
         :rules="[
           (val) => (val && val.length > 0) || 'Please insert password',
-          (val) => val === regForm.password || 'Password does not match',
-          (val) => (val.length >= 6 && val.length <= 11) || 'The characters of password must be between 6 and 11'
+          (val) => val === regForm.password || 'Password does not match'
         ]"
         placeholder="Please Enter Password Again"
         color="white"
@@ -106,29 +107,29 @@
         </template>
       </q-input>
 
-      <q-input
-        ref="verificationRef"
-        hide-bottom-space
-        clearable
-        type="text"
-        v-model="regForm.captchaCode"
-        label="Verification Code"
-        lazy-rules
-        :rules="[
-          (val) => (val && val.length > 0) || 'Please insert verification code',
-          (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'
-        ]"
-        placeholder="Please enter verification Code"
-        label-color="brand"
-        rounded
-        outlined
-        color="white"
-        class="landing-input"
-      >
-        <template v-slot:append>
-          <img :src="verificationImg" @click="getCode()" />
-        </template>
-      </q-input>
+      <!--      <q-input-->
+      <!--        ref="verificationRef"-->
+      <!--        hide-bottom-space-->
+      <!--        clearable-->
+      <!--        type="text"-->
+      <!--        v-model="regForm.captchaCode"-->
+      <!--        label="Verification Code"-->
+      <!--        lazy-rules-->
+      <!--        :rules="[-->
+      <!--          (val) => (val && val.length > 0) || 'Please insert verification code',-->
+      <!--          (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'-->
+      <!--        ]"-->
+      <!--        placeholder="Please enter verification Code"-->
+      <!--        label-color="brand"-->
+      <!--        rounded-->
+      <!--        outlined-->
+      <!--        color="white"-->
+      <!--        class="landing-input"-->
+      <!--      >-->
+      <!--        <template v-slot:append>-->
+      <!--          <img :src="verificationImg" @click="getCode()" />-->
+      <!--        </template>-->
+      <!--      </q-input>-->
 
       <q-input
         v-if="!hasAffiliate"
@@ -176,7 +177,8 @@ import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "stores/index";
 import qs from "qs";
-
+import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
+import AdjustWeb from "@adjustcom/adjust-web-sdk";
 export default defineComponent({
   name: "RegisterPage",
   setup() {
@@ -201,7 +203,7 @@ export default defineComponent({
       confirmPwd: "",
       telephone: "",
       // email: "",
-      captchaCode: "",
+      captchaCode: "0000",
       regHost: location.hostname,
       codeId: "",
       codeAffiliate: "",
@@ -216,8 +218,8 @@ export default defineComponent({
           if (response.code === 0) {
             verificationImg.value = "data:image/png;base64," + response.data.img;
             regForm.codeId = response.data.id;
-            regForm.captchaCode = "";
-            verificationRef.value.resetValidation();
+            regForm.captchaCode = "0000";
+            // verificationRef.value.resetValidation();
           }
         })
         .catch((e) => {
@@ -285,6 +287,17 @@ export default defineComponent({
       return phonePattern.test(regForm.telephone) || "请输入有效的电话号码";
     };
 
+    const isValidName = (value, translation) => {
+      const namePattern = /^[A-Za-z0-9]+$/;
+      return namePattern.test(value) || `${translation} must be alphanumeric`;
+    };
+
+    const isAlphanumeric = (value, translation) => {
+      const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
+      // const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
+      return passwordPattern.test(value) || `${translation} must at least contain letters and numbers.`;
+    };
+
     const router = useRouter();
 
     const onSubmit = () => {
@@ -294,7 +307,7 @@ export default defineComponent({
       // telRef.value.validate();
       // phoneVerificationRef.value.validate();
       // emailRef.value.validate();
-      verificationRef.value.validate();
+      // verificationRef.value.validate();
 
       $q.loading.show({
         message: "Registering in progress"
@@ -307,7 +320,7 @@ export default defineComponent({
         // telRef.value.hasError ||
         // phoneVerificationRef.value.hasError ||
         // emailRef.value.hasError ||
-        verificationRef.value.hasError ||
+        // verificationRef.value.hasError ||
         isAgreeReg.value === false
       ) {
         $q.loading.hide();
@@ -323,7 +336,7 @@ export default defineComponent({
             delete allComponents[element];
           });
           const sidParam = FingerprintJS.hashComponents(allComponents);
-          regForm.sid = sidParam;
+          regForm.sid = store.aaid ? store.aaid : sidParam;
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
           if ("standalone" in window.navigator && window.navigator.standalone) {
             regForm.regDevice = "IOS";
@@ -341,7 +354,7 @@ export default defineComponent({
           }
 
           api
-            .post("/member/fbRegister", qs.stringify(regForm))
+            .post("/member/indRegister", qs.stringify(regForm))
             .then((ret) => {
               const res = ret;
               // console.log("RET");
@@ -353,6 +366,18 @@ export default defineComponent({
                   message: "Registered successfully",
                   icon: "check_circle_outline"
                 });
+
+                //ADJUST TRACKEVENT.
+                if (Platform.is.android && Platform.is.capacitor) {
+                  var adjustEvent = new AdjustEvent("81ibj7");
+                  Adjust.trackEvent(adjustEvent);
+                } else {
+                  const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+                  AdjustWeb.trackEvent({
+                    eventToken: "81ibj7"
+                  });
+                }
+
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {
@@ -470,6 +495,19 @@ export default defineComponent({
         });
     };
 
+    const isValidPhone = () => {
+      const { phone } = formDetail;
+
+      if (!phone) {
+        return "Please Enter Phone Number";
+      }
+
+      const phoneRegex = /^\d{10}$/;
+      const isValid = phoneRegex.test(phone);
+
+      return isValid ? true : "Phone Number must be 10 digits";
+    };
+
     return {
       header: "Register Account",
       regForm,
@@ -495,7 +533,10 @@ export default defineComponent({
       phoneVerificationRef,
       isValidCnPhone,
       hasAffiliate,
-      isAgreeReg
+      isAgreeReg,
+      isAlphanumeric,
+      isValidName,
+      isValidPhone
     };
   }
 });
@@ -520,7 +561,7 @@ function charType(num) {
   -webkit-text-fill-color: transparent;
   font-size: 28px;
   text-align: center;
-  font-family: Wave;
+  font-family: Poppins;
   padding: 10px;
   display: flex;
   gap: 20px;
@@ -555,7 +596,6 @@ function charType(num) {
     background: #434343;
     width: 33%;
     text-align: center;
-    font-family: "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 
   span.weak-pwd {

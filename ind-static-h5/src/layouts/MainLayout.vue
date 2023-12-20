@@ -72,17 +72,14 @@
         </div>
       </q-scroll-area>
     </q-drawer>
-    <!-- <q-scroll-area
-      ref="scrollPageRef"
-      class="scrollArea"
-    >
-      <q-page-container>
-        <router-view />
-      </q-page-container>
-    </q-scroll-area> -->
 
     <q-page-container>
-      <router-view />
+      <router-view v-slot="{ Component }">
+        <KeepAlive :max="8">
+          <component :is="Component" />
+        </KeepAlive>
+      </router-view>
+      <!-- <router-view /> -->
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
       <q-tabs v-model="tab" no-caps class="bg-primary" :breakpoint="0" align="justify">
@@ -139,7 +136,7 @@ export default defineComponent({
     const logout = () => {
       store.memberLogout().then(() => {
         // location.reload();
-        router.push("/");
+        router.push("/home");
       });
     };
     watch(
@@ -187,7 +184,7 @@ export default defineComponent({
           prevPage.value = "/";
           hasPage.value = true;
           pageName.value = "Personal Center";
-        } else if (route.path === "/earn-money") {
+        } else if (route.path === "/earn-money" || route.path === "/agency-policy") {
           prevPage.value = "/";
           hasPage.value = true;
           pageName.value = "Earn Money";
@@ -455,6 +452,7 @@ export default defineComponent({
       },
       logout,
       store,
+      router,
       scrollPageRef,
       pageName,
       hasPage,
@@ -537,20 +535,20 @@ svg path {
     width: 14rem;
     margin: 0 0.5rem;
 
-    .title {
-      background-color: #f3ec78;
-      background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-      background-size: 100%;
-      -webkit-background-clip: text;
-      -moz-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -moz-text-fill-color: transparent;
-      line-height: 1.25;
-      font-size: 1.25rem;
-      font-weight: 800;
-      -webkit-text-stroke-width: 1px;
-      -webkit-text-stroke-color: #a94700;
-    }
+    // .title {
+    //   background-color: #f3ec78;
+    //   background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
+    //   background-size: 100%;
+    //   -webkit-background-clip: text;
+    //   -moz-background-clip: text;
+    //   -webkit-text-fill-color: transparent;
+    //   -moz-text-fill-color: transparent;
+    //   line-height: 1.25;
+    //   font-size: 1.25rem;
+    //   font-weight: 800;
+    //   -webkit-text-stroke-width: 1px;
+    //   -webkit-text-stroke-color: #a94700;
+    // }
   }
 
   svg {

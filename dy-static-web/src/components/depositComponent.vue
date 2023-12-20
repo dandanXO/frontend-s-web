@@ -244,7 +244,7 @@ const rules = {
       trigger: "blur",
     },
     {
-      pattern: "^([1-9][0-9]*)$",
+      pattern: "^[0-9]*(\\.[0-9]{0,2})?$",
       message: "金额应为正数",
       trigger: "change",
     },

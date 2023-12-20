@@ -11,110 +11,48 @@ const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
 
-var rstApi = getRstApi();
-var crtApi = getCrtApi();
-var evtApi = getEvtApi();
+var rstApi = getInitApi(rstArray, "IND_RST_URL");
+var crtApi = getInitApi(crtArray, "IND_CRT_URL");
+var evtApi = getInitApi(evtArray, "IND_EVT_URL");
 
 const api = axios.create({ baseURL: rstApi });
 const cashier = axios.create({ baseURL: crtApi });
 const eventapi = axios.create({ baseURL: evtApi });
 
-function getCrtApi() {
-  var successCrtUrl = localStorage.getItem("successCrtUrl");
-  if (successCrtUrl) {
-    axios
-      .get(successCrtUrl + "/ping")
-      .then((res) => {
-        console.log(res);
-        if (res.status !== 200) {
-          localStorage.removeItem("successCrtUrl");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        localStorage.removeItem("successCrtUrl");
-      });
-
-    return successCrtUrl;
-  } else {
-    var crtTestApi = crtArray[getRndInteger(0, crtArray.length)];
-
-    axios.get(crtTestApi + "/ping").then((res) => {
-      console.log(res);
-      if (res.status === 200) {
-        localStorage.setItem("successCrtUrl", crtTestApi);
-      } else {
-        localStorage.removeItem("successCrtUrl");
-      }
-    });
-
-    return crtTestApi;
-  }
-}
-
-function getEvtApi() {
-  var successEvtUrl = localStorage.getItem("successEvtUrl");
-  if (successEvtUrl) {
-    axios
-      .get(successEvtUrl + "/ping")
-      .then((res) => {
-        console.log(res);
-        if (res.status !== 200) {
-          localStorage.removeItem("successEvtUrl");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        localStorage.removeItem("successEvtUrl");
-      });
-
-    return successEvtUrl;
-  } else {
-    var testEvtApi = evtArray[getRndInteger(0, evtArray.length)];
-
-    axios.get(testEvtApi + "/ping").then((res) => {
-      console.log(res);
-      if (res.status === 200) {
-        localStorage.setItem("successEvtUrl", testEvtApi);
-      } else {
-        localStorage.removeItem("successEvtUrl");
-      }
-    });
-
-    return testEvtApi;
-  }
-}
-
-function getRstApi() {
-  var successRstUrl = localStorage.getItem("successRstUrl");
+function getInitApi(apiLinks, urlLsName) {
+  var successRstUrl = localStorage.getItem(urlLsName);
   if (successRstUrl) {
     axios
       .get(successRstUrl + "/ping")
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.status !== 200) {
-          localStorage.removeItem("successRstUrl");
+          localStorage.removeItem(urlLsName);
         }
       })
       .catch((err) => {
-        console.log(err);
-        localStorage.removeItem("successRstUrl");
+        // console.log(err);
+        localStorage.removeItem(urlLsName);
       });
 
     return successRstUrl;
   } else {
-    var testApi = rstArray[getRndInteger(0, rstArray.length)];
+    if (typeof apiLinks === "string" || apiLinks instanceof String) {
+      var initApi = apiLinks;
+    } else {
+      var apiLists = Object.values(apiLinks);
+      var initApi = apiLists[getRndInteger(0, apiLists.length)];
+    }
 
-    axios.get(testApi + "/ping").then((res) => {
-      console.log(res);
+    axios.get(initApi + "/ping").then((res) => {
+      // console.log(res);
       if (res.status === 200) {
-        localStorage.setItem("successRstUrl", testApi);
+        localStorage.setItem(urlLsName, initApi);
       } else {
-        localStorage.removeItem("successRstUrl");
+        localStorage.removeItem(urlLsName);
       }
     });
-
-    return testApi;
+    return initApi;
   }
 }
 
