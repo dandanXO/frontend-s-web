@@ -156,15 +156,15 @@
         <!-- <pre>records: {{ records }}</pre> -->
         <div v-if="isHasRecord" class="page-list">
           <div class="prev page-item" @click="onPrevPageClick()">&lt;</div>
-          <!-- <div
-            v-for="(e, i) in paginationInfo.pageTotal"
+          <div
+            v-for="(e, i) in recordsPagination.pages"
             :key="`page-content-${i}`"
             :id="`page-number-${e}`"
-            :class="`page-number page-item ${paginationInfo.pageNumber === e ? 'active' : ''}`"
+            :class="`page-number page-item ${recordsPagination.current === e ? 'active' : ''}`"
             @click="onPaginationClick(e)"
           >
             {{ e }}
-          </div> -->
+          </div>
           <div class="next page-item" @click="onNextPageClick()">&gt;</div>
         </div>
         <div v-else class="page-list">暂无记录</div>
@@ -269,16 +269,18 @@ const records = ref([]);
 const quizAttendTimesRecord = ref();
 const quizWonTimesRecord = ref();
 const recordsLength = ref();
-const recordsPagination = reactive({ size: 5, current: 1, total: 5 });
+const recordsPagination = reactive({ size: 5, current: 1, total: 0, pages: 0 });
 const paginationInfo = reactive({ pageSize: 5, pageNumber: 1, pageTotal: 0 });
 
 const isHasRecord = ref(false);
 function getRecords() {
   getMemberSportMatchRecord(recordsPagination).then((res) => {
-    // console.log("data", res.data)
+    console.log("data", res.data);
     const { code, data } = res;
     if (code == 0) {
       records.value = data.records;
+      recordsPagination.total = data.total;
+      recordsPagination.pages = data.pages + 1;
       // quizAttendTimesRecord.value = data.quizAttendTimes;
       // quizWonTimesRecord.value = data.quizWonTimes;
 
@@ -331,8 +333,11 @@ function onNextPageClick() {
 function onPaginationClick(pageIndex) {
   if (paginationInfo.pageNumber === pageIndex) return;
 
-  paginationInfo.pageNumber = pageIndex;
-  getRecordList();
+  // paginationInfo.pageNumber = pageIndex;
+  // getRecordList();
+  // paginationInfo.pageNumber = pageIndex;
+  recordsPagination.current = pageIndex;
+  getRecords();
 }
 
 const tableInfo = ref([]);
