@@ -166,8 +166,6 @@
             }"
           ></div>
         </div>
-
-
       </div>
     </Transition>
     <Transition>
@@ -923,14 +921,15 @@
             </span>
           </div>
         </router-link>
-        <!--        <router-link to="/promo?id=79">
+        <router-link to="/promo?id=76">
           <div class="popup-item">
             <span>
-              ประกันยอดเสีย
-              <em>10,000</em>
+              ฝากครั้งแรกรับ
+              <em>100%-200%</em>
+              เล่นได้ทุกเกมส์ ถอนไม่อั้น
             </span>
           </div>
-        </router-link>-->
+        </router-link>
       </div>
     </div>
   </q-dialog>
