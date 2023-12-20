@@ -81,7 +81,7 @@
           </el-row>
         </div>
         <div class="inputs-wrap">
-          <el-row :gutter="20">
+          <el-row :gutter="20" style="gap: 10px;">
             <el-col :xl="8" :lg="8" :md="12" :sm="12">
               <el-form-item :label="t('fields.recordTime') + ' :'">
                 <el-date-picker
@@ -120,8 +120,8 @@
                 />
               </el-form-item>
             </el-col>
-            <el-col :xl="6" :lg="6" :md="12">
-              <div>
+            <el-col :xl="6" :lg="6" :md="12" style="text-align: center; margin-top: 10px;">
+              <div style="margin-top: 10px; width: 100%; display: flex; align-items: center; justify-content: center">
                 <el-button
                   icon="el-icon-search"
                   type="primary"
@@ -186,21 +186,42 @@
                 <span>{{ formatDateTime(item.lastLoginTime) }}</span>
               </td>
               <td :data-label="t('fields.memberTag')">{{ formatmTag(item.tags) }}</td>
-              <td :data-label="t('fields.operate')">
-                <button @click="showMemberInfo(item)">
-                  {{ t('fields.memberInfo') }}
-                </button>
-                <button @click="transferRedirect(item.loginName)">
-                  {{ t('menu.Transfer') }}
-                </button>
-                <button @click="showEditTag(item)">{{ t('fields.editTag') }}</button>
-                <button @click="showEditRemark(item)">{{ t('fields.remark') }}</button>
-                <button @click="showDepositRecord(item)">
-                  {{ t('fields.depositRecord') }}
-                </button>
-                <button @click="showGameRecord(item.loginName)">
-                  {{ t('fields.betRecord') }}
-                </button>
+              <td class="relativerow" :data-label="t('fields.operate')">
+                <el-dropdown>
+                  <span class="el-dropdown-link">
+                    {{ t('fields.more') }}
+                    <el-icon class="el-icon--right">
+                      <arrow-down />
+                    </el-icon>
+                  </span>
+                  <template #dropdown>
+                    <el-dropdown-menu>
+                      <el-dropdown-item @click="showMemberInfo(item)">{{ t('fields.memberInfo') }}</el-dropdown-item>
+                      <el-dropdown-item @click="transferRedirect(item.loginName)">{{ t('menu.Transfer') }}</el-dropdown-item>
+                      <el-dropdown-item @click="showEditTag(item)">{{ t('fields.editTag') }}</el-dropdown-item>
+                      <el-dropdown-item @click="showEditRemark(item)">{{ t('fields.remark') }}</el-dropdown-item>
+                      <el-dropdown-item @click="showDepositRecord(item)">{{ t('fields.depositRecord') }}</el-dropdown-item>
+                      <el-dropdown-item @click="showGameRecord(item.loginName)"> {{ t('fields.betRecord') }}</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </template>
+                </el-dropdown>
+                <!-- <el-link class="more">More</el-link>
+                <div class="absbuttons" v-if="isMore">
+                  <button @click="showMemberInfo(item)">
+                    {{ t('fields.memberInfo') }}
+                  </button>
+                  <button @click="transferRedirect(item.loginName)">
+                    {{ t('menu.Transfer') }}
+                  </button>
+                  <button @click="showEditTag(item)">{{ t('fields.editTag') }}</button>
+                  <button @click="showEditRemark(item)">{{ t('fields.remark') }}</button>
+                  <button @click="showDepositRecord(item)">
+                    {{ t('fields.depositRecord') }}
+                  </button>
+                  <button @click="showGameRecord(item.loginName)">
+                    {{ t('fields.betRecord') }}
+                  </button> -->
+                <!-- </div> -->
               </td>
             </tr>
           </tbody>
@@ -222,39 +243,44 @@
   <el-dialog
     :title="t('fields.memberInfo')"
     v-model="uiControl.infoDialogVisible"
-    append-to-body
-    width="1000px"
+    modal-class="dialog900"
+    width="90%"
   >
     <el-form>
       <div style="display: flex; gap: 10px;">
-        <el-form-item
-          :label="t('fields.recordTime') + ' :'"
-          style="width: 50%; margin-bottom: 0;"
-        >
-          <el-date-picker
-            v-model="memberRequest.recordTime"
-            format="DD/MM/YYYY"
-            value-format="YYYY-MM-DD"
-            size="normal"
-            class="input-small"
-            type="daterange"
-            range-separator=":"
-            :start-placeholder="t('fields.startDate')"
-            :end-placeholder="t('fields.endDate')"
-            :shortcuts="shortcuts"
-            :disabled-date="disabledDate"
-            :editable="false"
-            :clearable="false"
-          />
-        </el-form-item>
-        <el-button
-          icon="el-icon-search"
-          type="primary"
-          @click="showMemberInfo()"
-          size="normal"
-        >
-          {{ $t('fields.search') }}
-        </el-button>
+        <el-row :gutter="20" style="gap: 10px">
+          <el-col :xl="8" :lg="18" :md="16" :xs="16">
+            <el-form-item
+              :label="t('fields.recordTime') + ' :'"
+            >
+              <el-date-picker
+                v-model="memberRequest.recordTime"
+                format="DD/MM/YYYY"
+                value-format="YYYY-MM-DD"
+                size="normal"
+                class="input-small"
+                type="daterange"
+                range-separator=":"
+                :start-placeholder="t('fields.startDate')"
+                :end-placeholder="t('fields.endDate')"
+                :shortcuts="shortcuts"
+                :disabled-date="disabledDate"
+                :editable="false"
+                :clearable="false"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :xl="5" :lg="3" :md="3" :xs="3">
+            <el-button
+              icon="el-icon-search"
+              type="primary"
+              @click="showMemberInfo()"
+              size="normal"
+            >
+              {{ $t('fields.search') }}
+            </el-button>
+          </el-col>
+        </el-row>
       </div>
     </el-form>
     <div class="scrollable-container" v-loading="dialog.loading">
@@ -365,6 +391,8 @@
     :title="t('fields.editTag')"
     v-model="uiControl.tagDialogVisible"
     append-to-body
+    width="90%"
+    modal-class="dialog400"
   >
     <el-form @submit.prevent>
       <el-form-item :label="t('fields.loginName')">
@@ -512,7 +540,6 @@ import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { getMemberDepositRecords } from '../../../api/affiliate-deposit-record';
 import emptyComp from '@/components/empty';
-
 const store = useStore()
 const { t } = useI18n()
 const router = useRouter()
@@ -530,7 +557,7 @@ const tagList = reactive({
   description: [],
 })
 let assignTaglist = []
-const table = ref(null)
+// const table = ref(null)
 const selected = reactive({
   tags: [],
 })
@@ -775,7 +802,7 @@ function resetQuery() {
 async function loadAffiliateMembers() {
   selectedMemberList.id.length = 0
   selectedMemberList.loginName.length = 0
-  table.value.clearSelection()
+  // table.value.clearSelection()
   uiControl.editBtn = true
   page.loading = true
   const requestCopy = { ...request }
@@ -1120,12 +1147,38 @@ onMounted(() => {
   display: flex;
   justify-content: center;
 }
+.relativerow {
+  position: relative;
+}
+.absbuttons {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--el-border-color-light);
+  box-shadow: var(--el-dropdown-menu-box-shadow);
+  right: 0px;
+  bottom: 0px;
+  button {
+    font-size: 12px;
+    cursor: pointer;
+    border: 0;
+    padding: 10px;
+    background: #ffffff;
+    &:hover {
+      background: #ecf5ff;
+      color: #66b1ff;
+    }
+  }
+}
 
 @media (max-width: 768px) {
   .memberTag {
     position: absolute;
     top: -20px;
     right: 0;
+  }
+  .info-row-container {
+    flex-direction: column;
   }
   // .inputs-wrap {
   //   flex-direction: column;
@@ -1146,5 +1199,13 @@ onMounted(() => {
   //     }
   //   }
   // }
+}
+</style>
+<style>
+.dialog900 .el-dialog {
+  max-width: 900px;
+}
+.dialog400 .el-dialog {
+  max-width: 400px;
 }
 </style>

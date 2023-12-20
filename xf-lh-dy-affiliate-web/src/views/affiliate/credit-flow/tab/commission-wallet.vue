@@ -78,13 +78,11 @@
         <td date-label="Amount">{{ row.amount }}</td>
         <td date-label="Credit Flow Balance">{{ row.balance }}</td>
       </tr>
-      <tr v-if="page.records.length === 0">
-        <td colspan="6">
-          <emptyComp />
-        </td>
-      </tr>
     </tbody>
   </table>
+  <div v-if="page.records.length === 0">
+    <emptyComp />
+  </div>
   <el-pagination
     class="pagination"
     @current-change="changePage"

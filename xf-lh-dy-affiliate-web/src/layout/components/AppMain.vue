@@ -76,6 +76,10 @@ elTables.forEach((elTable) => {
   margin-left: 200px;
 }
 @media (max-width: 768px) {
+  .el-form-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
   .role-span {
     font-weight: bold;
     font-size: 20px;

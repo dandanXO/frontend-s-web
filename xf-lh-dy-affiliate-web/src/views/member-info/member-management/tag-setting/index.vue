@@ -5,6 +5,8 @@
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
+      custom-class="dialog400"
+      width="90%"
     >
       <el-form
         ref="memberTagForm"
@@ -49,52 +51,32 @@
           </div>
         </div>
       </div>
-      <el-table
-        size="normal"
-        :resizable="true"
-        :data="tagList.records"
-        row-key="id"
-        v-loading="tagList.loading"
-      >
-        <template #empty>
-          <emptyComp />
-        </template>
-        <el-table-column
-          :label="t('fields.sequence')"
-          align="left"
-          min-width="120"
-        >
-          <template #default="scope">
-            {{ scope.$index + 1 }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="description"
-          :label="t('fields.memberTag')"
-          align="left"
-          min-width="120"
-        />
-        <el-table-column
-          prop="totalMember"
-          :label="t('fields.memberAmount')"
-          align="left"
-          min-width="120"
-        />
-        <el-table-column
-          :label="t('fields.operate')"
-          align="center"
-          width="230"
-        >
-          <template #default="scope">
-            <el-button size="normal" type="success" @click="showEdit(scope.row)">
-              {{ t('fields.edit') }}
-            </el-button>
-            <el-button size="normal" type="danger" @click="deleteTag(scope.row)">
-              {{ t('fields.delete') }}
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+      <table class="custom-table" cellpadding="0" cellspacing="0" border="0">
+        <thead>
+          <tr>
+            <th scope="col">{{ t('fields.sequence') }}</th>
+            <th scope="col">{{ t('fields.memberTag') }}</th>
+            <th scope="col">{{ t('fields.memberAmount') }}</th>
+            <th scope="col">{{ t('fields.operate') }}</th>
+          </tr>
+        </thead>
+        <tbody v-if="tagList.records.length > 0">
+          <tr v-for="(tag, index) in tagList.records" :key="tag.id">
+            <td :data-label="t('fields.sequence')">{{ index + 1 }}</td>
+            <td :data-label="t('fields.memberTag')">{{ tag.description }}</td>
+            <td :data-label="t('fields.memberAmount')">{{ tag.totalMember }}</td>
+            <td :data-label="t('fields.operate')">
+              <div>
+                <el-button size="small" type="primary" plain @click="showEdit(tag)">{{ t('fields.edit') }}</el-button>
+                <el-button size="small" type="danger" @click="deleteTag(tag)">{{ t('fields.delete') }}</el-button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-if="tagList.records.length === 0">
+        <emptyComp />
+      </div>
     </el-card>
   </div>
 </template>
@@ -259,5 +241,10 @@ onMounted(async () => {
 
 .el-table--enable-row-transition .el-table__body td.el-table__cell {
   padding: 4px 0;
+}
+</style>
+<style>
+.dialog400 {
+  max-width: 400px;
 }
 </style>
