@@ -21,13 +21,27 @@ import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
+
 const contactlist = ref([
   {
-    icon: 'cchat',
-    type: '合营咨询',
-    link: '点击进入在线咨询',
+    icon: 'cmail',
+    type: '合营部电邮',
+    link: 'affiliate@dyvip99.com',
     btns: [{
       text: '咨询',
+      action: ''
+    }]
+  },
+  {
+    icon: 'cqq',
+    type: '合营QQ',
+    link: '100983290',
+    btns: [{
+      text: '复制',
+      action: ''
+    },
+    {
+      text: '下载',
       action: ''
     }]
   },
@@ -45,9 +59,22 @@ const contactlist = ref([
     }]
   },
   {
-    icon: 'cmeetalk',
-    type: '合营部Mee Talk',
-    link: 'Kyaff05',
+    icon: 'cflygram',
+    type: '合营Flygram',
+    link: 'dybet5',
+    btns: [{
+      text: '复制',
+      action: ''
+    },
+    {
+      text: '下载',
+      action: ''
+    }]
+  },
+  {
+    icon: 'cbat',
+    type: '合营蝙蝠ID',
+    link: '12830840',
     btns: [{
       text: '复制',
       action: ''
