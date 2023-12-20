@@ -50,7 +50,7 @@
         </el-col>
       </el-row>
     </el-form>
-    <table class="custom-table">
+    <table class="custom-table" cellpadding="0" cellspacing="0" border="0">
       <thead>
         <tr>
           <th scope="col">{{ t('fields.sequence') }}</th>
@@ -66,15 +66,15 @@
       </thead>
       <tbody v-if="page.records.length > 0">
         <tr v-for="(item, index) in page.records" :key="item.id">
-          <td data-label="t('fields.sequence')">{{ (request.current - 1) * 10 + index + 1 }}</td>
-          <td data-label="t('fields.packType')">
+          <td :data-label="t('fields.sequence')">{{ (request.current - 1) * 10 + index + 1 }}</td>
+          <td :data-label="t('fields.packType')">
             {{ $t(`appType.${item.appType}`) }}
           </td>
-          <td data-label="t('fields.osType')">
+          <td :data-label="t('fields.osType')">
             {{ $t(`osType.${item.osType}`) }}
           </td>
-          <td data-label="t('fields.appName')">{{ item.appName }}</td>
-          <td data-label="t('fields.appIcon')">
+          <td :data-label="t('fields.appName')">{{ item.appName }}</td>
+          <td :data-label="t('fields.appIcon')">
             <div v-if="item.appIcon !== null" class="preview">
               <img :src="imageDir + item.appIcon" alt="app-icon">
             </div>
@@ -82,29 +82,30 @@
               {{ $t('fields.unchanged') }}
             </div>
           </td>
-          <td data-label="t('fields.buildStatus')">
+          <td :data-label="t('fields.buildStatus')">
             {{ $t(`packStatus.${item.status}`) }}
           </td>
-          <td data-label="t('fields.download')">{{ item.downloadCount }}</td>
-          <td data-label="t('fields.packDate')">
+          <td :data-label="t('fields.download')">{{ item.downloadCount }}</td>
+          <td :data-label="t('fields.packDate')">
             <span v-if="item.finishTime === null">-</span>
             <span v-else>{{ moment(item.finishTime).format('YYYY/MM/DD HH:mm:ss') }}</span>
           </td>
-          <td data-label="t('fields.operate')">
-            <button
+          <td :data-label="t('fields.operate')">
+            <el-button
               v-if="item.status === 'SUCCESS'"
               class="success-btn"
+              type="primary"
               @click="viewDetail(item)"
             >
               {{ $t('fields.detail') }}
-            </button>
-            <button
+            </el-button>
+            <el-button
               v-if="item.status === 'IN_QUEUE'"
               class="danger-btn"
               @click="cancelPack(item.id)"
             >
               {{ $t('fields.cancel') }}
-            </button>
+            </el-button>
             <span v-if="item.status === 'CANCEL'">-</span>
           </td>
         </tr>
@@ -123,7 +124,7 @@
       :current-page="request.current"
     />
   </div>
-  <el-dialog :title="t('fields.detail')" v-model="showDialog" width="800px">
+  <el-dialog :title="t('fields.detail')" v-model="showDialog" width="90%" style="margin: 0 auto;" modal-class="dialog900">
     <div class="scrollable-container">
       <div class="info-container">
         <el-form label-suffix=" : " label-width="110px">
@@ -205,7 +206,6 @@
                 <!-- <el-dropdown trigger="click"> -->
                 <el-button
                   type="primary"
-                  style="width:200px"
                   @click="copy(channelPackInfo.downloadUrl)"
                 >
                   <span>{{ $t('fields.copy') }}</span>
@@ -233,7 +233,6 @@
                 <!-- <el-dropdown trigger="click"> -->
                 <el-button
                   type="primary"
-                  style="width:200px"
                   @click="download()"
                 >
                   <span>{{ $t('fields.download') }}</span>
@@ -469,7 +468,45 @@ async function loadHistory() {
   }
   const { data: ret } = await loadChannelPackHistory(query)
   page.pages = ret.pages
-  page.records = ret.records
+  // page.records = ret.records
+  page.records = [
+    {
+      id: 16,
+      siteId: 6,
+      affiliateId: 1731630490469601281,
+      version: "1.1",
+      osType: "ANDROID",
+      apkType: "NORMAL",
+      appIcon: null,
+      appName: "dy_1_1",
+      packageName: null,
+      channelValue: "45D3FC",
+      status: "SUCCESS",
+      createTime: 1703054590000,
+      finishTime: 1703054893000,
+      downloadUrl: "https://url-shortener.test-psna.com/4c29123689cc41dfa046e7008a4f05e5",
+      downloadCount: 0,
+      appType: "ALL_SITE"
+    },
+    {
+      id: 16,
+      siteId: 6,
+      affiliateId: 1731630490469601281,
+      version: "1.1",
+      osType: "ANDROID",
+      apkType: "NORMAL",
+      appIcon: null,
+      appName: "dy_1_1",
+      packageName: null,
+      channelValue: "45D3FC",
+      status: "SUCCESS",
+      createTime: 1703054590000,
+      finishTime: 1703054893000,
+      downloadUrl: "https://url-shortener.test-psna.com/4c29123689cc41dfa046e7008a4f05e5",
+      downloadCount: 0,
+      appType: "ALL_SITE"
+    },
+  ]
   page.loading = false
 }
 
@@ -640,9 +677,29 @@ onMounted(() => {
   vertical-align: baseline;
   width: 100%;
   justify-content: left;
+  word-break: break-word;
 }
 
 @media (max-width: 768px) {
+  .info-row-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  :deep(.dialog900 .el-dialog) {
+    max-width: 900px;
+    .el-form-item {
+      flex-direction: unset;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      line-height: 40px;
+      &__label {
+        color: #7D8592;
+      }
+      &__content {
+        flex: unset;
+      }
+    }
+  }
   // .inputs-wrap {
   //   flex-direction: column;
   //   gap: 10px;
@@ -663,4 +720,17 @@ onMounted(() => {
   //   }
   // }
 }
+</style>
+<style lang="scss">
+  .dialog900 .el-dialog {
+    max-width: 900px;
+    .el-form-item {
+      &__label {
+        color: #7D8592;
+      }
+      &__content {
+        flex: unset;
+      }
+    }
+  }
 </style>

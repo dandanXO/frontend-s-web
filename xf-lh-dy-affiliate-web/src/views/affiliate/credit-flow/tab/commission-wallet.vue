@@ -58,12 +58,12 @@
   <table class="custom-table" style="margin: 10px auto; width: 100%;" cellpadding="0" cellspacing="0" border="0">
     <thead>
       <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Date</th>
-        <th scope="col">Serial Number</th>
-        <th scope="col">Credit Flow Type</th>
-        <th scope="col">Amount</th>
-        <th scope="col">Credit Flow Balance</th>
+        <th scope="col">{{ t('fields.creditFlowId') }}</th>
+        <th scope="col">{{ t('fields.creditFlowDate') }}</th>
+        <th scope="col">{{ t('fields.serialNumber') }}</th>
+        <th scope="col">{{ t('fields.creditFlowType') }}</th>
+        <th scope="col">{{ t('fields.creditFlowAmount') }}</th>
+        <th scope="col">{{ t('fields.creditFlowBalance') }}</th>
       </tr>
     </thead>
     <tbody>
