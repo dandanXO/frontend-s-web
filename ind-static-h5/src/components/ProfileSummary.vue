@@ -162,8 +162,8 @@ onMounted(() => {
       height: 70px;
       background-size: 100%;
       position: absolute;
-      top: -12px;
-      left: -10px;
+      top: -8px;
+      left: -4px;
     }
 
     .profile-details-container {
