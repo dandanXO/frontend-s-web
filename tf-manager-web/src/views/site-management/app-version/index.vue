@@ -342,8 +342,8 @@ const uiControl = reactive({
   ],
   appType: [
     { name: 'ALL_SITE', display: t('siteAppVersion.ALL_SITE') },
-    { name: 'SPORT', display: t('siteAppVersion.SPORT') },
-    { name: 'ESPORT', display: t('siteAppVersion.ESPORT') },
+    // { name: 'SPORT', display: t('siteAppVersion.SPORT') },
+    // { name: 'ESPORT', display: t('siteAppVersion.ESPORT') },
   ],
   apkType: [
     { name: 'NORMAL', display: t('siteAppVersion.NORMAL') },
@@ -537,6 +537,10 @@ async function attachFile(event) {
     formData.append('appType', form.appType)
     formData.append('extension', fileExtension)
     uploadedApp.filePath = URL.createObjectURL(files)
+    ElMessage({
+      message: t('siteAppVersion.fileUploadedSuccessfully'),
+      type: 'success',
+    })
     return await uploadApp(formData, fileExtension)
   }
 }

@@ -126,15 +126,6 @@
                   {{ secondChoiceRef || "选择答案" }}
                 </button>
               </div>
-              <div
-                class="btn-answer"
-                data-question-id="1"
-                data-question-type="select"
-                id="submitBtn"
-                @click="onSubmitClick()"
-              >
-                提交答案
-              </div>
             </div>
             <div class="questions-item-box">
               <div class="item-question">第三题:{{ matchInfo.questionThree }}</div>
@@ -151,6 +142,18 @@
                 </button>
               </div>
             </div>
+
+            <div class="questions-item-box">
+              <div
+                class="btn-answer"
+                data-question-id="1"
+                data-question-type="select"
+                id="submitBtn"
+                @click="onSubmitClick()"
+              >
+                提交答案
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -158,19 +161,25 @@
       <div>
         <table v-if="isHasRecord" class="record-table" id="record-table">
           <tr>
-            <th style="width: 50%">日期</th>
-            <th style="width: 25%">答案</th>
-            <th style="width: 25%">中奖记录</th>
+            <th style="width: 25%">日期</th>
+            <th style="width: 35%">答案</th>
+            <th style="width: 20%">中奖记录</th>
+            <th style="width: 10%">中奖次数</th>
+            <th style="width: 10%">参与次数</th>
           </tr>
           <tr v-for="(e, i) in tableInfo" :key="`table-info-${i}`">
             <td>{{ e.time }}</td>
             <td>{{ e.answer }}</td>
             <td :class="e.className">{{ e.statusText }}</td>
+            <template v-if="i === 0">
+              <td rowspan="2">{{ quizWonTimesRecord }}</td>
+              <td rowspan="2">{{ quizAttendTimesRecord }}</td>
+            </template>
           </tr>
         </table>
         <table v-else class="record-table" id="record-table"></table>
 
-        <div v-if="isHasRecord" class="page-list">
+        <div v-if="isHasRecord && tableInfo.length > 1" class="page-list">
           <div class="prev page-item" @click="onPrevPageClick()">&lt;</div>
           <div
             v-for="(e, i) in paginationInfo.pageTotal"
@@ -282,6 +291,8 @@ function getMatchInfo() {
 }
 
 const records = ref();
+const quizAttendTimesRecord = ref();
+const quizWonTimesRecord = ref();
 const paginationInfo = reactive({ pageSize: 5, pageNumber: 1, pageTotal: 5 });
 
 const isHasRecord = ref(true);
@@ -290,6 +301,8 @@ function getRecords() {
     const { code, data } = res;
     if (code == 0) {
       records.value = data.answers;
+      quizAttendTimesRecord.value = data.quizAttendTimes;
+      quizWonTimesRecord.value = data.quizWonTimes;
 
       const dataLength = data.answers.length;
       if (dataLength) {
@@ -334,10 +347,11 @@ function getRecordList() {
   const end = start + pageSize;
 
   for (let i = start, l = end; i < l; i++) {
-    const { createTime, answerOne, answerTwo, answerThree, status } = records[i];
+    const { createTime, answerOne, answerTwo, answerThree, status } = records.value[i];
 
     const newObj = {};
-    newObj.time = moment(createTime).format("YYYY-MM-DD HH:mm:ss");
+    // newObj.time = moment(createTime).format("YYYY-MM-DD HH:mm:ss");
+    newObj.time = createTime;
     newObj.answer = answerOne + ", " + answerTwo + ", " + answerThree;
     newObj.statusText = status;
     if (status == "WIN") newObj.className = "got-answer";
@@ -463,21 +477,12 @@ function onSubmitClick() {
   }).then((res) => {
     const { code, data, message } = res;
     if (code == 0) {
-      if (data.count == 0) {
-        $q.notify({
-          type: "positive",
-          position: "top",
-          message: "您好，您已成功提交一次本场竞猜答案，可进行再次单笔存款1000 进行提交第二次",
-          icon: "check_circle_outline"
-        });
-      } else {
-        $q.notify({
-          type: "positive",
-          position: "top",
-          message: "您好，本场竞猜您已成功提交两次，请次日0点参与新一场的竞猜，感谢您的支持!",
-          icon: "check_circle_outline"
-        });
-      }
+      $q.notify({
+        type: "positive",
+        position: "top",
+        message: "您好，您已成功提交本场竞猜答案",
+        icon: "check_circle_outline"
+      });
     } else {
       $q.notify({
         color: "negative",
@@ -496,6 +501,7 @@ function onSubmitClick() {
   font-size: 14px;
   color: #87898a;
   padding: 0 0 20px 0;
+  position: relative;
 
   .prize-quiz-content-container {
     margin: 0 auto;
@@ -562,6 +568,8 @@ function onSubmitClick() {
         .questions-container {
           display: flex;
           justify-content: space-between;
+          flex-wrap: wrap;
+          padding: 16px;
 
           &::before,
           &::after {
@@ -570,12 +578,12 @@ function onSubmitClick() {
           }
 
           .questions-item-box {
-            width: 33%;
+            width: 100%;
             letter-spacing: 0;
 
             .item-question {
               margin-bottom: 10px;
-              height: 42px;
+              // height: 42px;
             }
 
             .question-options-box {
@@ -602,7 +610,7 @@ function onSubmitClick() {
               line-height: 40px;
               text-align: center;
               cursor: pointer;
-              margin: 38px auto 40px;
+              margin: 0 auto 40px;
               border: none;
               background-image: linear-gradient(255deg, #0094ff 0%, #18c5ff 100%), linear-gradient(#0084a4, #0084a4);
               background-blend-mode: normal, normal;
@@ -638,9 +646,10 @@ function onSubmitClick() {
     }
 
     .record-table {
-      width: 100%;
+      // width: 100px !important;
       border-collapse: collapse;
       margin: 20px auto;
+      // overflow-x: scroll;
 
       th {
         text-align: center;
@@ -691,11 +700,12 @@ function onSubmitClick() {
 }
 
 .question-select-box {
-  width: 360px;
+  max-width: 360px;
   margin: 40px auto;
   font-size: 14px;
   color: #bacef1;
   display: flex;
+  gap: 20px;
   justify-content: space-between;
   flex-wrap: wrap;
 
@@ -759,5 +769,9 @@ function onSubmitClick() {
     width: 50%;
     text-align: center;
   }
+}
+
+#record-table {
+  white-space: wrap;
 }
 </style>

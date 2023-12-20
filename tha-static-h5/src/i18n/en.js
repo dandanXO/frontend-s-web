@@ -171,7 +171,7 @@ export default {
     please_enter_valid_phone: "Please enter valid phone number",
     affiliate_code: "Invitation Code",
     affiliate_code_hint: "Leave empty if you are not affiliate member.",
-    back: "Bank",
+    back: "Back",
     already_a_member_signin_now: "Already a member? Sign In now.",
     invalid_email: "Invalid Email",
     invalid_phone_num: "Invalid Phone Number",
@@ -465,7 +465,25 @@ export default {
     spinRemaining: "You have {spinCount} spins remaining",
     loginToCont: "Login to Continue",
     you_got_new_spin_wheel_spin: "Congratulation! You 've earned a Lucky Draw Spin!",
-    go_now: "Go Now"
+    go_now: "Go Now",
+    step_to_download_android: "Steps to download the app for Android",
+    step_to_download_ios: "Steps to download the app for IOS",
+    goto_webpage: "Go to the webpage",
+    goto_apppage_then_press_download_or_scan_qr:
+      "Go to the <em>apps</em> page, then press <em>download</em> or scan the <em>Qr Code</em>",
+    click_download: "Click <em>download</em>",
+    click_download_anyway: "Click <em>download anyway</em>",
+    after_download_goto_file_manager: "After downloading, go to the file manager to proceed with the installation.",
+    after_click_into_file_select_proceed:
+      "After clicking into the file, select the app to proceed with the installation.",
+    please_install_to_proceed: "Please install to proceed with the app installation.",
+    after_install_success_on_member_wallpaper_page:
+      "After the installation is successful, the application will be on the member wallapaper page. You can enjoy <em>Jolly88 </em><em>24</em> hours a day.",
+    click_continue_and_allow: "Click 'Continue', and then click 'Allow'.",
+    after_success_go_to_setting: "After the download is successful, go to Settings to install the App.",
+    press_install: "Press 'Profile Downloaded', and then press Install.",
+    after_success_you_click_join_and_have_fun:
+      "After successful installation, you can click to join and have fun with us immediately."
   },
   error: {
     101: "Platform not found",

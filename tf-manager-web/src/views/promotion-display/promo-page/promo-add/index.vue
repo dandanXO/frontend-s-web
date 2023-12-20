@@ -262,7 +262,7 @@
         size="mini"
         type="success"
         ref="searchImage"
-        @click="loadSiteImage"
+        @click="loadSiteImage(uiControl.imageSelectionType)"
       >
         {{ t('fields.search') }}
       </el-button>
@@ -482,7 +482,7 @@ function selectImage(item) {
 }
 
 function browseImage(type) {
-  loadSiteImage()
+  loadSiteImage(type)
   switch (type) {
     case 'DESKTOP_IMAGE':
       uiControl.imageSelectionTitle = t('fields.desktopImage')
@@ -570,8 +570,9 @@ async function loadForm(id, siteId) {
   })
 }
 
-async function loadSiteImage() {
+async function loadSiteImage(type) {
   selectedImage.id = 0
+  imageRequest.promoType = type
   const { data: ret } = await getSiteImage(imageRequest)
   imageList.list = ret.records
   imageList.pages = ret.pages
@@ -651,15 +652,12 @@ function submitImage() {
   }
   uiControl.imageSelectionVisible = false
 }
-
+// test
 onMounted(() => {
   console.log('new page ')
   loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
-    site.value = siteList.list.find(
-      s => s.siteName === store.state.user.siteName
-    )
-    imageRequest.siteId = site.value.id
+    imageRequest.siteId = store.state.user.siteId
   }
   if (route.name.includes('Edit')) {
     uiControl.titleDisable = true

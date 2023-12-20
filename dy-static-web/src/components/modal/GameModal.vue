@@ -185,14 +185,15 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.token) {
-      console.log(gameCode);
-      console.log(platformCode);
+      // console.log("gameCode", gameCode);
+      // console.log("platformCode", platformCode);
 
       //Straight open Dialog Before Loading.
       if (
         !(
           platformCode === "SGWin" ||
           platformCode === "TCG" ||
+          platformCode === "PT" ||
           (platformCode === "BBINDY" && gameCode === "bbkeno_lobby_pc")
         )
       ) {
@@ -203,7 +204,18 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         iframeScroll.value = true;
       }
 
-      if (platformCode === "onlyPlatform") {
+      if (platformCode === "onlyPlatform" && gameCode === "IMES") {
+        launchSessionGame(gameCode, {
+          isMobile: isMobile()
+        }).then((res) => {
+          visible.value = false;
+          window.open(
+            res.data,
+            "popUpWindow",
+            "fullscreen=yes,resizable=no,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no,status=no"
+          );
+        });
+      } else if (platformCode === "onlyPlatform" && gameCode !== "IMES") {
         launchSessionGame(gameCode, {
           isMobile: isMobile()
         }).then((res) => {
@@ -213,6 +225,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
       } else if (
         platformCode === "SGWin" ||
         platformCode === "TCG" ||
+        platformCode === "PT" ||
         (platformCode === "BBINDY" && gameCode === "bbkeno_lobby_pc")
       ) {
         launchSessionGame(platformCode, {

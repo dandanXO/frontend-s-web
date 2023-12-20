@@ -1,19 +1,24 @@
 <template>
   <q-dialog v-model="isShowTotalWin" class="total-win-dialog">
     <div class="total-win">
-      <div class="total-win-content">
-        <div class="title">{{ $t("lang.youWon") }}</div>
-        <div v-if="outerAmount !== finalAmount">
-          <span>{{ outerAmount }}</span>
-          X
-          <span>{{ innerAmount }}</span>
-          % =
-        </div>
-        <div>{{ $t("lang.totalBonus") }}</div>
-        <div>
-          <span>{{ finalAmount }}</span>
+      <img src="../../../assets/images/promotion/spinwheel/total_win_text.png" />
+      <div class="total-win-content-container">
+        <img src="../../../assets/images/promotion/spinwheel/total_win_board.png" />
+        <div class="total-win-content">
+          <div class="title">{{ $t("lang.youWon") }}</div>
+          <div v-if="outerAmount !== finalAmount">
+            <span>{{ outerAmount }}</span>
+            X
+            <span>{{ innerAmount }}</span>
+            % =
+          </div>
+          <div>{{ $t("lang.totalBonus") }}</div>
+          <div>
+            <span>{{ finalAmount }}</span>
+          </div>
         </div>
       </div>
+
       <div class="collect-btn" @click="onCollectClick">
         <div class="collect-text">Collect</div>
       </div>
@@ -40,65 +45,56 @@
       <img class="inner-wheel-img" src="../../../assets/images/promotion/spinwheel/inner_wheel.png" />
 
       <template v-if="unlockDay < 1 ? true : false">
-        <div class="prize-lock" style="transform: rotate(309.25deg)">
+        <div class="prize-lock" style="transform: rotate(0deg)">
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
-        <div class="prize-lock-day" style="transform: rotate(309.25deg)">
+        <div class="prize-lock-day" style="transform: rotate(0deg)">
           <span>day{{ 1 }}</span>
         </div>
       </template>
 
       <template v-if="unlockDay < 2 ? true : false">
-        <div class="prize-lock" style="transform: rotate(0deg)">
+        <div class="prize-lock" style="transform: rotate(52deg)">
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
-        <div class="prize-lock-day" style="transform: rotate(0deg)">
+        <div class="prize-lock-day" style="transform: rotate(52deg)">
           <span>day{{ 2 }}</span>
         </div>
       </template>
 
       <template v-if="unlockDay < 3 ? true : false">
-        <div class="prize-lock" style="transform: rotate(52deg)">
+        <div class="prize-lock" style="transform: rotate(104deg)">
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
-        <div class="prize-lock-day" style="transform: rotate(52deg)">
+        <div class="prize-lock-day" style="transform: rotate(104deg)">
           <span>day{{ 3 }}</span>
         </div>
       </template>
 
       <template v-if="unlockDay < 4 ? true : false">
-        <div class="prize-lock" style="transform: rotate(104deg)">
+        <div class="prize-lock" style="transform: rotate(156.25deg)">
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
-        <div class="prize-lock-day" style="transform: rotate(104deg)">
+        <div class="prize-lock-day" style="transform: rotate(156.25deg)">
           <span>day{{ 4 }}</span>
         </div>
       </template>
 
       <template v-if="unlockDay < 5 ? true : false">
-        <div class="prize-lock" style="transform: rotate(156.25deg)">
+        <div class="prize-lock" style="transform: rotate(208.25deg)">
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
-        <div class="prize-lock-day" style="transform: rotate(156.25deg)">
+        <div class="prize-lock-day" style="transform: rotate(208.25deg)">
           <span>day{{ 5 }}</span>
         </div>
       </template>
 
       <template v-if="unlockDay < 6 ? true : false">
-        <div class="prize-lock" style="transform: rotate(208.25deg)">
-          <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
-        </div>
-        <div class="prize-lock-day" style="transform: rotate(208.25deg)">
-          <span>day{{ 6 }}</span>
-        </div>
-      </template>
-
-      <template v-if="unlockDay < 7 ? true : false">
         <div class="prize-lock" style="transform: rotate(258.25deg)">
           <img src="../../../assets/images/promotion/spinwheel/prize_lock.png" />
         </div>
         <div class="prize-lock-day" style="transform: rotate(258.25deg)">
-          <span>day{{ 7 }}</span>
+          <span>day{{ 6 }}</span>
         </div>
       </template>
     </div>
@@ -150,6 +146,7 @@ const outerWheelData = [
   { degree: -386.25, amount: 880 }
 ];
 const innerWheelData = [
+  { degree: -27, amount: 200 },
   { degree: -52, amount: 110 },
   { degree: -77, amount: 130 },
   { degree: -104, amount: 300 },
@@ -162,8 +159,7 @@ const innerWheelData = [
   { degree: -284, amount: 110 },
   { degree: -310, amount: 200 },
   { degree: -336, amount: 1000 },
-  { degree: -361, amount: 0 },
-  { degree: -387, amount: 200 }
+  { degree: -361, amount: 0 }
 ];
 
 /**
@@ -318,9 +314,9 @@ function updateSpinButton(isDisable) {
   }
 }
 
-function initWheelRotation(config) {
+function initWheelRotation(config, defaultIndex = 0) {
   const { wheelRef, wheelData } = config;
-  wheelRef.value.style.transform = `rotate(${wheelData[0].degree}deg)`;
+  wheelRef.value.style.transform = `rotate(${wheelData[defaultIndex].degree}deg)`;
 }
 
 const availableSpinCount = ref(0);
@@ -392,7 +388,7 @@ function onCollectClick() {
 
 onMounted(() => {
   initWheelRotation(outerWheelConfig);
-  initWheelRotation(innerWheelConfig);
+  initWheelRotation(innerWheelConfig, 1);
 
   initSpinWheelAPI();
 });
@@ -405,13 +401,11 @@ onMounted(() => {
   }
 
   .total-win {
-    background: url(../../../assets/images/promotion/spinwheel/total_win.png);
+    background: url(../../../assets/images/promotion/spinwheel/total_win_bg.png);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
 
-    width: 100%;
-    height: auto;
     aspect-ratio: 1;
     position: relative;
 
@@ -420,15 +414,11 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
 
-    color: white;
-    text-align: center;
-    font-family: Arial Black;
-    font-size: 3vw;
-    font-weight: 900;
-    line-height: normal;
-    letter-spacing: 0.14063rem;
-
     pointer-events: none;
+
+    img {
+      width: 90%;
+    }
 
     span {
       background: linear-gradient(0deg, #ff932f 9.54%, #fffca9 86.08%);
@@ -437,13 +427,27 @@ onMounted(() => {
       -webkit-text-fill-color: transparent;
     }
 
-    .total-win-content {
+    .total-win-content-container {
       position: relative;
-      top: 17.5%;
-      left: 2%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
 
-      .title {
-        font-size: 6vw;
+      .total-win-content {
+        position: absolute;
+        margin: 0 0 0 2%;
+        color: white;
+        text-align: center;
+        font-size: 3vw;
+        font-family: Arial Black;
+        font-weight: 900;
+        line-height: normal;
+        letter-spacing: 0.14063rem;
+
+        .title {
+          font-size: 6vw;
+        }
       }
     }
 
@@ -647,10 +651,8 @@ onMounted(() => {
 
 @media (min-width: 768px) {
   .total-win {
-    font-size: 2vw !important;
-
     .total-win-content {
-      left: 1% !important;
+      font-size: 2vw !important;
 
       .title {
         font-size: 2.5vw !important;

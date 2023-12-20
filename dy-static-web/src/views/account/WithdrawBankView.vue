@@ -540,8 +540,27 @@ export default defineComponent({
           ElMessage.error('真实姓名不可为空');
           router.push("/center/personal");
         } else if (!store.phone || store.phone == "") {
-          ElMessage.error('电话不可为空');
-          router.push("/center/personal");
+          // ElMessage.error('电话不可为空');
+          // router.push("/center/personal");
+          ElMessageBox.alert(
+            '电话不可为空，请先验证电话', "系统提示",
+            {
+              showClose: false,
+              showCancelButton: false,
+              confirmButtonText: '确认',
+              draggable: false,
+              buttonSize: 'small',
+              closeOnClickModal: false,
+              center: true,
+            }
+          )
+          .then(() => {
+            ElMessage.error('电话不可为空');
+            router.push('/center/personal')
+          })
+            .catch(() => {
+          })
+
         } else {
           bankCardInfo.bankId = undefined;
           bankCardInfo.cardNumber = "";
@@ -1002,7 +1021,8 @@ body {
     border-radius: 5px;
     // background-image: url("../../assets/images/finance/hk.png");
     background-position: right;
-    background: #69001c;
+    // background: #69001c;
+    background: linear-gradient(to right, rgb(104, 161, 231) 0%, rgb(28, 70, 196) 100%);
     // background: #24222e;
     // background: url(../../assets/images/account/bank_card_lrg_bg.png) no-repeat
     //   0% 50%;

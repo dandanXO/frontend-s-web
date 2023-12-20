@@ -156,6 +156,8 @@ export default defineComponent({
         return 'AE 电子'
       } else if (gameLabel === 'MGP') {
         return 'MG 电子'
+      } else if (gameLabel === 'AG') {
+        return 'XIN 电子'
       } else {
         return gameLabel + ' 电子'
       }
@@ -340,7 +342,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .el-image {
-  min-height: 120px;
+  height: 130px;
   display: block;
   width: 100%;
   cursor: pointer;

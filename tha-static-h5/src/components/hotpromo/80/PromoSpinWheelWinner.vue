@@ -26,15 +26,15 @@
       <img class="treasure-box-img" src="../../../assets/images/promotion/spinwheel/treasure_box.png" />
     </div>
 
-    <div class="note">
+    <!-- <div class="note">
       Come back daily to complete the multiwheel !
       <div>Come back daily to unlock the inside wheel and more chance to get bigger price and Iphone15 pro max !</div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import { eventapi } from "boot/axios";
 import { useI18n } from "vue-i18n";
 
@@ -113,16 +113,19 @@ function initSpinWheelWinnerAPI(callback) {
     });
 }
 
+let initSpinWheelWinnerAPIScheduler = null;
+let tableScrollScheduler = null;
 onMounted(() => {
   loading.value = true;
   initSpinWheelWinnerAPI(() => {
     loading.value = false;
   });
-  setInterval(() => {
+  
+  initSpinWheelWinnerAPIScheduler = setInterval(() => {
     initSpinWheelWinnerAPI();
   }, 20000);
 
-  setInterval(() => {
+  tableScrollScheduler = setInterval(() => {
     if (temp_rows.value.length > 0) {
       let row = temp_rows.value[0];
       temp_rows.value.splice(0, 1);
@@ -138,6 +141,11 @@ onMounted(() => {
       }, 250);
     }
   }, 3500);
+});
+
+onUnmounted(() => {
+  clearInterval(initSpinWheelWinnerAPIScheduler);
+  clearInterval(tableScrollScheduler);
 });
 </script>
 

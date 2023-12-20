@@ -377,10 +377,11 @@ export default {
     buildStatus: '构建状态',
     apkType: 'APK 种类',
     normal: '正常',
-    newKey: '新Key',
+    newKey: '防毒',
     detail: '详情',
     packSize: '包大小',
     packDownloadUrl: '渠道包链接',
+    unchanged: '无修改',
   },
   message: {
     addSuccess: '新增成功',
@@ -517,9 +518,9 @@ export default {
     cancel: '取消',
   },
   appType: {
-    allSite: '全站',
-    sport: '体育',
-    esport: '电竞',
+    ALL_SITE: '全站',
+    SPORT: '体育',
+    ESPORT: '电竞',
   },
   member: {
     status: {
@@ -540,8 +541,8 @@ export default {
     },
   },
   osType: {
-    android: '安卓',
-    ios: 'IOS',
+    ANDROID: '安卓',
+    IOS: 'IOS',
   },
   error: {
     400: '请求无效',

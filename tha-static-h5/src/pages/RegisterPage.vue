@@ -1,180 +1,8 @@
 <template>
   <div class="main-section">
     <q-form class="q-gutter-y-md rounded-borders q-pa-md q-ma-md register-form" @submit="onSubmit">
-      <!--      <q-stepper-->
-      <!--          v-model="step"-->
-      <!--          ref="stepper"-->
-      <!--          alternative-labels-->
-      <!--          color="primary"-->
-      <!--          animated-->
-      <!--      >-->
-      <!--        <q-step-->
-      <!--            :name="1"-->
-      <!--            :title="$t('lang.bank_information')"-->
-      <!--            icon="account_balance"-->
-      <!--            :done="done1"-->
-      <!--            color="white"-->
-      <!--        >-->
-      <!--        <span class="q-gutter-y-md">-->
-      <!--          <q-input-->
-      <!--              ref="cardAccountNameRef"-->
-      <!--              filled-->
-      <!--              v-model="regForm.cardAccountName"-->
-      <!--              :label="$t('lang.bank_account_name')"-->
-      <!--              lazy-rules-->
-      <!--              :rules="[-->
-      <!--              (val) => (val && val.length > 0) || $t('lang.enter_bank_account_name')-->
-      <!--            ]"-->
-      <!--              color="white"-->
-      <!--              clearable-->
-      <!--          >-->
-      <!--            <template v-slot:prepend>-->
-      <!--              <q-icon name="web"/>-->
-      <!--            </template>-->
-      <!--          </q-input>-->
-      <!--          <q-input-->
-      <!--              ref="cardAccountSurnameRef"-->
-      <!--              filled-->
-      <!--              v-model="regForm.cardAccountSurname"-->
-      <!--              :label="$t('lang.bank_account_surname')"-->
-      <!--              lazy-rules-->
-      <!--              :rules="[-->
-      <!--              (val) =>-->
-      <!--                (val && val.length > 0) ||-->
-      <!--                $t('lang.enter_bank_account_surname')-->
-      <!--            ]"-->
-      <!--              color="white"-->
-      <!--              clearable-->
-      <!--          >-->
-      <!--            <template v-slot:prepend>-->
-      <!--              <q-icon name="web"/>-->
-      <!--            </template>-->
-      <!--          </q-input>-->
-      <!--          <q-input-->
-      <!--              ref="cardNumberRef"-->
-      <!--              filled-->
-      <!--              v-model="regForm.cardNumber"-->
-      <!--              :label="$t('lang.card_number')"-->
-      <!--              lazy-rules-->
-      <!--              :rules="[-->
-      <!--              (val) => (val && val.length > 0) || $t('lang.enter_account_number'),-->
-      <!--              (val) => validateBankLength(val)-->
-      <!--            ]"-->
-      <!--              color="white"-->
-      <!--              clearable-->
-      <!--          >-->
-      <!--            <template v-slot:prepend>-->
-      <!--              <q-icon name="credit_card"/>-->
-      <!--            </template>-->
-      <!--          </q-input>-->
-      <!--          <q-select-->
-      <!--              v-model="selectedBankType"-->
-      <!--              filled-->
-      <!--              :options="[{ name: 'Bank' }, { name: 'Crypto' }]"-->
-      <!--              :label="$t('lang.withdraw_methods')"-->
-      <!--              color="white"-->
-      <!--              label-color="grey"-->
-      <!--              option-label="name"-->
-      <!--              option-value="name"-->
-      <!--              @update:model-value="selectBankType(opt)"-->
-      <!--              emit-value-->
-      <!--              map-options-->
-      <!--              label-slot-->
-      <!--          />-->
-      <!--          <q-select-->
-      <!--              ref="bankCardRef"-->
-      <!--              class="q-mb-md"-->
-      <!--              color="white"-->
-      <!--              filled-->
-      <!--              label-color="grey"-->
-      <!--              v-model="regForm.bankId"-->
-      <!--              :options="banksList"-->
-      <!--              option-value="id"-->
-      <!--              option-label="name"-->
-      <!--              :label="$t('lang.choose_a_bank')"-->
-      <!--              :rules="[(val) => !!val || $t('lang.please_select_bank')]"-->
-      <!--              lazy-rules-->
-      <!--              emit-value-->
-      <!--              map-options-->
-      <!--              hide-dropdown-icon-->
-      <!--              clearable-->
-      <!--          >-->
-      <!--            <template v-slot:selected-item="scope">-->
-      <!--              <q-item-section avatar>-->
-      <!--                <img-->
-      <!--                    v-if="scope.opt.bankIcon"-->
-      <!--                    style="width: 30px; margin-top: 10px; margin-bottom: 10px"-->
-      <!--                    :src="imgURL + scope.opt.bankIcon"-->
-      <!--                />-->
-      <!--              </q-item-section>-->
-      <!--              <q-item-section>-->
-      <!--                <q-item-label-->
-      <!--                    style="-->
-      <!--                    text-overflow: ellipsis;-->
-      <!--                    overflow: hidden;-->
-      <!--                    white-space: nowrap;-->
-      <!--                  "-->
-      <!--                >{{ scope.opt.name }}</q-item-label-->
-      <!--                >-->
-      <!--              </q-item-section>-->
-
-      <!--              &lt;!&ndash; <q-item-section avatar>-->
-      <!--                <img-->
-      <!--                    v-if="scope.opt.bankIcon"-->
-      <!--                    style="width: 30px; margin-top: 10px; margin-bottom: 10px"-->
-      <!--                    :src="imgURL + scope.opt.bankIcon"-->
-      <!--                />-->
-      <!--              </q-item-section> &ndash;&gt;-->
-      <!--              &lt;!&ndash; <q-item-section>-->
-      <!--                <q-item-label-->
-      <!--                    style="-->
-      <!--                    text-overflow: ellipsis;-->
-      <!--                    overflow: hidden;-->
-      <!--                    white-space: nowrap;-->
-      <!--                  "-->
-      <!--                >{{ scope.opt.name }}</q-item-label-->
-      <!--                >-->
-      <!--              </q-item-section> &ndash;&gt;-->
-
-      <!--            </template>-->
-      <!--            <template v-slot:option="scope">-->
-      <!--              <q-item v-bind="scope.itemProps">-->
-      <!--                <q-item-section avatar>-->
-      <!--                  <img-->
-      <!--                      v-if="scope.opt.bankIcon"-->
-      <!--                      style="width: 30px"-->
-      <!--                      :src="imgURL + scope.opt.bankIcon"-->
-      <!--                  />-->
-      <!--                </q-item-section>-->
-      <!--                <q-item-section>-->
-      <!--                  <q-item-label>{{ scope.opt.name }}</q-item-label>-->
-      <!--                </q-item-section>-->
-      <!--              </q-item>-->
-      <!--            </template>-->
-      <!--          </q-select>-->
-
-      <!--          <div class="row justify-center items-center">-->
-      <!--            <q-btn-->
-      <!--                @click.prevent="onSubmit"-->
-      <!--                :label="$t('lang.next_page')"-->
-      <!--                type="text"-->
-      <!--                color="brand"-->
-      <!--                class="common-large-btn"-->
-      <!--                rounded-->
-      <!--            />-->
-      <!--          </div>-->
-      <!--        </span>-->
-      <!--        </q-step>-->
-
       <h5>{{ $t("lang.register") }}</h5>
 
-      <!--        <q-step-->
-      <!--            :name="2"-->
-      <!--            :title="$t('lang.personal_information')"-->
-      <!--            icon="person"-->
-      <!--            :done="done2"-->
-      <!--            color="white"-->
-      <!--        >-->
       <div class="q-gutter-y-md">
         <q-input
           ref="loginNameRef"
@@ -199,9 +27,9 @@
           ref="pwdRef"
           filled
           v-model="regForm.password"
+          :type="isPwd ? 'password' : 'text'"
           :label="$t('lang.password')"
           lazy-rules
-          :type="isPwd ? 'password' : 'text'"
           :rules="[
             (val) => (val && val.length > 0) || $t('lang.input_password_empty'),
             (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12'),
@@ -266,26 +94,30 @@
           </template>
         </q-input>
 
-        <!--        <q-input-->
-        <!--            ref="telRef"-->
-        <!--            filled-->
-        <!--            v-model="regForm.telephone"-->
-        <!--            :label="$t('lang.phone_number')"-->
-        <!--            lazy-rules-->
-        <!--            :rules="[-->
-        <!--              (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),-->
-        <!--              (val) =>-->
-        <!--                (val && val.length > 7) ||-->
-        <!--                $t('lang.please_enter_valid_phone'),-->
-        <!--              isValidPhone-->
-        <!--            ]"-->
-        <!--            color="white"-->
-        <!--            clearable-->
-        <!--        >-->
-        <!--          <template v-slot:prepend>-->
-        <!--            <q-icon name="smartphone"/>-->
-        <!--          </template>-->
-        <!--        </q-input>-->
+        <q-input ref="telRef" filled v-model="regForm.telephone" :label="$t('lang.phone_number')" lazy-rules :rules="[
+          (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
+          (val) =>
+            (val && val.length > 7) ||
+            $t('lang.please_enter_valid_phone'),
+          isValidPhone
+        ]" color="white" clearable>
+          <template v-slot:prepend>
+            <q-icon name="smartphone" />
+          </template>
+        </q-input>
+
+        <div class="telephone-otp-row">
+          <q-input ref="telOtpCodeRef" v-model="regForm.otpCode" :placeholder="$t('lang.one_time_otp')"
+            :label="$t('lang.one_time_otp')" stack-label clearable autocomplete="off" filled  lazy-rules 
+            :rules="[(val) => (val && val.length > 0) || $t('lang.otp_cannot_be_empty')]">
+            <template v-slot:prepend>
+              <q-icon name="security" />
+            </template>
+          </q-input>
+
+          <q-btn class="common-large-btn third-btn" :label="$t('lang.request_otp_code')"
+            @click="openTelephoneVerificationModal" />
+        </div>
 
         <!--        <q-input-->
         <!--            ref="birthdayRef"-->
@@ -390,6 +222,31 @@
       <!--        </q-step>-->
       <!--      </q-stepper>-->
     </q-form>
+
+    <q-dialog v-model="isTelephoneVerificationModalVisible" transition-show="slide-up" transition-hide="slide-down">
+      <q-card class="q-pa-md">
+        <div class="modal-head-title q-pb-md">
+          {{ $t("lang.check_your_captcha_code") }}
+        </div>
+        <q-form class="q-gutter-sm">
+          <q-input class="verification-input" ref="telephoneVerifyCaptchaCodeRef" filled type="text" maxlength="4"
+            v-model="verifyTelephoneForm.telephoneVerifyCaptchaCode" :label="$t('lang.captcha_code')"
+            :rules="[(val) => (val && val.length > 3) || $t('lang.enter_captcha_code')]" color="white">
+            <template v-slot:append>
+              <img :src="telephoneVerificationCaptchaImg" @click="getTelephoneVerificationImgCode()" />
+            </template>
+            <template v-slot:prepend>
+              <q-icon name="security" />
+            </template>
+          </q-input>
+          <q-btn :disabled="isOtpSending" :style="isOtpSending ? 'opacity: .6' : ''" class="common-btn verification-btn third-btn"
+            @click.prevent="getOtpCode">
+            {{ isOtpSending ? $t("lang.verifying") : $t("lang.confirm_button") }}
+          </q-btn>
+        </q-form>
+      </q-card>
+    </q-dialog>
+
     <div class="text-center q-mb-md">
       <router-link class="forget-pwd-tip" to="/login">
         {{ $t("lang.already_a_member_signin_now") }}
@@ -415,6 +272,8 @@ export default defineComponent({
     const { t } = useI18n();
     const store = userStore();
     const siteId = process.env.SITEID;
+    const qs = require("qs");
+
     onMounted(() => {
       getCode();
       getAffiliateCode();
@@ -441,7 +300,9 @@ export default defineComponent({
       loginName: "",
       password: "",
       confirmPwd: "",
-      // telephone: "",
+      telephone: "",
+      otpCode: "",
+      otpCodeId: "",
       // email: "",
       codeAffiliate: "",
       // cardAccountName: "",
@@ -451,6 +312,13 @@ export default defineComponent({
       captchaCode: ""
       // birthday: ""
     });
+
+    const verifyTelephoneForm = reactive({
+      telephone: "",
+      telephoneVerifyCaptchaCode: "",
+      telephoneVerificationCaptchaCodeId: "",
+    });
+
     const getCode = () => {
       api
         .get("/member/verificationCode")
@@ -472,10 +340,83 @@ export default defineComponent({
           // });
         });
     };
+    const telephoneVerificationCaptchaImg = ref("");
+    const isOtpSending = ref(false);
+
+    const isTelephoneVerificationModalVisible = ref(false);
+    const openTelephoneVerificationModal = () => {
+      telRef.value.validate();
+      
+      if(telRef.value.hasError) {
+        return;
+      }
+
+      getTelephoneVerificationImgCode();
+      isTelephoneVerificationModalVisible.value = true
+    }
+
+
+    const getTelephoneVerificationImgCode = () => {
+      api
+        .get("/member/verificationCode")
+        .then((res) => {
+          const response = res.data;
+          if (response.code === 0) {
+            telephoneVerificationCaptchaImg.value = "data:image/png;base64," + response.data.img;
+            verifyTelephoneForm.telephoneVerificationCaptchaCodeId = response.data.id;
+            verificationRef.value.resetValidation();
+          }
+        })
+        .catch((e) => {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: e.message,
+            icon: "report_problem"
+          });
+        });
+    };
+
+    const getOtpCode = () => {
+      const isTelephoneVerifyCaptchaCodeValid = telephoneVerifyCaptchaCodeRef.value.validate();
+      
+      if(!isTelephoneVerifyCaptchaCodeValid) {
+        return;
+      }
+
+      isOtpSending.value = true;
+      regForm.otpCode = '';
+      regForm.otpCodeId = '';
+      const telephoneDetails = {
+        telephone: regForm.telephone,
+        codeId: verifyTelephoneForm.telephoneVerificationCaptchaCodeId,
+        captchaCode: verifyTelephoneForm.telephoneVerifyCaptchaCode
+      }
+      api.post("/otp/sendSms", qs.stringify(telephoneDetails)).then((res) => {
+        const ret = res.data
+        if (ret.code === 0) {
+          regForm.otpCodeId = ret.data.codeId;
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: t('lang.otp_code_has_been_sent_to_your_mobile_phone'),
+            icon: "check_circle_outline"
+          });
+          isTelephoneVerificationModalVisible.value = false;
+        }
+
+        isOtpSending.value = false
+      }).catch((e) => {
+        isOtpSending.value = false
+      });
+    }
+
     const loginNameRef = ref();
     const pwdRef = ref();
     const confirmPwdRef = ref();
-    // const telRef = ref();
+    const telRef = ref();
+    const telOtpCodeRef = ref();
+    const telephoneVerifyCaptchaCodeRef = ref();
     const emailRef = ref();
     const verificationRef = ref();
     const cardAccountNameRef = ref();
@@ -502,7 +443,8 @@ export default defineComponent({
       loginNameRef.value.validate();
       pwdRef.value.validate();
       confirmPwdRef.value.validate();
-      // telRef.value.validate();
+      telRef.value.validate();
+      telOtpCodeRef.value.validate();
       // emailRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
@@ -513,7 +455,8 @@ export default defineComponent({
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
         confirmPwdRef.value.hasError ||
-        // telRef.value.hasError ||
+        telRef.value.hasError ||
+        telOtpCodeRef.value.hasError ||
         // emailRef.value.hasError ||
         verificationRef.value.hasError
       ) {
@@ -588,11 +531,12 @@ export default defineComponent({
       () => regForm.password,
       () => {
         pwdStrength.value = "";
-
         var pwd = regForm.password;
         var result = 0;
-        for (var i = 0, len = pwd.length; i < len; ++i) {
-          result |= charType(pwd.charCodeAt(i));
+        if (pwd) {
+          for (var i = 0, len = pwd.length; i < len; ++i) {
+            result |= charType(pwd.charCodeAt(i));
+          }
         }
 
         var level = 0;
@@ -602,7 +546,7 @@ export default defineComponent({
           }
           result = result >>> 1;
         }
-        if (pwd.length >= 6) {
+        if (pwd && pwd.length >= 6) {
           switch (level) {
             case 1:
               pwdStrength.value = "weak";
@@ -674,7 +618,9 @@ export default defineComponent({
       loginNameRef,
       pwdRef,
       confirmPwdRef,
-      // telRef,
+      telRef,
+      telOtpCodeRef,
+      telephoneVerifyCaptchaCodeRef,
       emailRef,
       verificationRef,
       cardNumberRef,
@@ -698,7 +644,14 @@ export default defineComponent({
       done2,
       hasAffiliate,
       getAffiliateCode,
-      getReferralCode
+      getReferralCode,
+      telephoneVerificationCaptchaImg,
+      isTelephoneVerificationModalVisible,
+      openTelephoneVerificationModal,
+      getTelephoneVerificationImgCode,
+      isOtpSending,
+      getOtpCode,
+      verifyTelephoneForm
       // birthdayRef
     };
   }
@@ -783,6 +736,17 @@ function charType(num) {
 
   .q-field--filled .q-field__control {
     border-radius: 8px;
+  }
+
+  .telephone-otp-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    .q-input {
+      width: 100%;
+    }
   }
 }
 

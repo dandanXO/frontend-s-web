@@ -4,7 +4,7 @@
     <div class="profile">
       <div class="left">
         <div class="avatar">
-          <img src="../assets/images/account/avatar.png"/>
+          <img src="../assets/images/account/avatar.png" />
         </div>
         <div class="pro-details">
           <span class="nickname-span">{{ store.nickName }}</span>
@@ -45,94 +45,101 @@
             <img id="personal_vip_img" src="../assets/vip/vip_text_12.png" />
           </span> -->
 
-          <span v-if="store.evip">专属网址: <a style="text-decoration: none; color: #000000; font-size: 17px;"
-                                               :href="selfTgurl" target="_blank">{{ store.evip }}</a></span>
+          <span v-if="store.evip">
+            专属网址:
+            <a style="text-decoration: none; color: #000000; font-size: 17px" :href="selfTgurl" target="_blank">
+              {{ store.evip }}
+            </a>
+          </span>
           <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
         </div>
       </div>
-      <router-link to="/liveChat" class="livechat cs-web-id">
-        在线客服
-      </router-link>
+      <router-link to="/liveChat" class="livechat cs-web-id">在线客服</router-link>
     </div>
     <div class="vipcard">
       <q-card-section class="top-section">
         <!-- <div class="name">{{ header }}</div> -->
         <q-card-section class="acct-section">
           <div class="left-sect">
-            <div class="label"><img src="../assets/images/account/wallet.svg">中心钱包:</div>
-            <div class="amt" @click="getBalance">{{ !isLoadingBalance ? mainWallet : '加载中...' }}
-              <RiRefreshLine/>
+            <div class="label">
+              <img src="../assets/images/account/wallet.svg" />
+              中心钱包:
+            </div>
+            <div class="amt" @click="getBalance">
+              {{ !isLoadingBalance ? mainWallet : "加载中..." }}
+              <RiRefreshLine />
             </div>
           </div>
           <div class="right-sect">
-
             <q-btn
-                label="存款"
-                rounded
-                color="primary"
-                style="width:80px;font-size:16px;height:36px;min-height:36px;"
-                @click="openDeposit"
+              label="存款"
+              rounded
+              color="primary"
+              style="width: 80px; font-size: 16px; height: 36px; min-height: 36px"
+              @click="openDeposit"
             />
 
             <q-btn
-                label="提款"
-                rounded
-                color="secondary"
-                style="width:80px;font-size:16px;height:36px;min-height:36px;"
-                to="finance/withdraw"
+              label="提款"
+              rounded
+              color="secondary"
+              style="width: 80px; font-size: 16px; height: 36px; min-height: 36px"
+              to="finance/withdraw"
             />
 
             <q-btn
-                label="转账"
-                rounded
-                color="accent"
-                style="width:80px;font-size:16px;height:36px;min-height:36px;"
-                to="account/transfer"
+              label="转账"
+              rounded
+              color="accent"
+              style="width: 80px; font-size: 16px; height: 36px; min-height: 36px"
+              to="account/transfer"
             />
-
           </div>
         </q-card-section>
 
         <!-- <q-separator /> -->
 
         <q-card class="bluecard vip-info-board" @click="goToVip">
-
           <div class="vipline q-mt-sm">
-            <div class="circle"><span class="bigV">v</span><span class="small">{{ vipLevel }}</span></div>
+            <div class="circle">
+              <span class="bigV">v</span>
+              <span class="small">{{ vipLevel }}</span>
+            </div>
             <div class="middle">
               <div class="row items-center justify-between">
                 <div class="left">成长值</div>
                 <div class="right">{{ store.currentDeposit }}/{{ store.levelUpDeposit }}</div>
               </div>
 
-              <q-linear-progress :value="vip_progress" rounded class="q-mt-xs" color="white"/>
-
+              <q-linear-progress :value="vip_progress" rounded class="q-mt-xs" color="white" />
             </div>
-            <div class="circle"><span class="bigV">v</span><span class="small">{{ vipLevel + 1 }}</span></div>
+            <div class="circle">
+              <span class="bigV">v</span>
+              <span class="small">{{ vipLevel + 1 }}</span>
+            </div>
           </div>
 
           <div class="vip-get-div row justify-between items-center q-mt-sm">
-
             <div class="vip-getpromo-div">
               <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
-              <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png"/>
+              <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" />
               <span>晋级礼包</span>
             </div>
             <div class="vip-getpromo-div">
               <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
 
-              <img v-if="vipLevel>= 2" src="../assets/account/vip-tick-icon.png"/>
+              <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" />
               <span>生日礼金</span>
             </div>
             <div class="vip-getpromo-div">
               <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
 
-              <img v-if="vipLevel>= 2" src="../assets/account/vip-tick-icon.png"/>
+              <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" />
               <span>每月活动</span>
             </div>
             <div class="vip-getpromo-div">
               <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
-              <img v-if="vipLevel>= 2" src="../assets/account/vip-tick-icon.png"/>
+              <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" />
               <span>专属活动</span>
             </div>
           </div>
@@ -160,7 +167,7 @@
 
     <div class="privilege-vip-div">
       <router-link to="/account/vip?redirect=account">
-        <img src="../assets/account/vip_button_icon.png" alt="">
+        <img src="../assets/account/vip_button_icon.png" alt="" />
       </router-link>
     </div>
 
@@ -178,122 +185,129 @@
       <div class="acct-menu" id="id-acct-menu">
         <router-link to="/account/records">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_record.svg"/>
+            <img src="../assets/images/account/menu_record.svg" />
             <div class="acct-nav-label">交易记录</div>
           </div>
         </router-link>
         <router-link to="/account/invite">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_share.svg"/>
+            <img src="../assets/images/account/menu_share.svg" />
             <div class="acct-nav-label">呼朋唤友</div>
           </div>
         </router-link>
         <router-link to="/promo?redirect=account">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_promo.svg"/>
+            <img src="../assets/images/account/menu_promo.svg" />
             <div class="acct-nav-label">优惠领取</div>
           </div>
         </router-link>
         <router-link to="/account/personal">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_personal.svg"/>
+            <img src="../assets/images/account/menu_personal.svg" />
             <div class="acct-nav-label">个人信息</div>
           </div>
         </router-link>
         <router-link to="/account/changePwd">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_changePwd.svg"/>
+            <img src="../assets/images/account/menu_changePwd.svg" />
             <div class="acct-nav-label">密码</div>
           </div>
         </router-link>
         <router-link to="/account/withdraw">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_bank.svg"/>
+            <img src="../assets/images/account/menu_bank.svg" />
             <div class="acct-nav-label">银行信息</div>
           </div>
         </router-link>
         <router-link v-if="!store.isApp()" to="/account/download">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_download.svg"/>
+            <img src="../assets/images/account/menu_download.svg" />
             <div class="acct-nav-label">下载中心</div>
           </div>
         </router-link>
         <router-link to="/account/announcement">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_announcement.svg"/>
+            <img src="../assets/images/account/menu_announcement.svg" />
             <div class="acct-nav-label">系统公告</div>
+          </div>
+        </router-link>
+        <router-link to="/account/inbox">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/menu_mailbox.svg" />
+            <div class="acct-nav-label">
+              消息中心 {{ store.unreadInboxMail > 0 ? `(${store.unreadInboxMail})` : "" }}
+            </div>
+            <!--            ({{ store.unreadInboxMail }})-->
           </div>
         </router-link>
         <router-link to="/account/mail">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_mailbox.svg"/>
-            <div class="acct-nav-label">站内信</div>
+            <img src="../assets/images/account/menu_mailbox.svg" />
+            <div class="acct-nav-label">会员建议</div>
             <!--            ({{ store.unreadInboxMail }})-->
           </div>
         </router-link>
-<!--        <router-link to="/affiliate">-->
-<!--          <div class="acct-nav-item">-->
-<!--            <img src="../assets/images/account/menu_affiliate.svg"/>-->
-<!--            <div class="acct-nav-label">加盟</div>-->
-<!--          </div>-->
-<!--        </router-link>-->
+        <a href="https://partner.dyvip90.com/" target="_blank">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/menu_affiliate.svg" />
+            <div class="acct-nav-label">加盟</div>
+          </div>
+        </a>
         <!--        <a @click="logout">-->
         <!--          <div class="acct-nav-item">-->
         <!--            <img src="../assets/account/btn-logout.png"/>-->
         <!--            <div class="acct-nav-label">退出</div>-->
         <!--          </div>-->
         <!--        </a>-->
-
       </div>
     </q-item-section>
 
     <q-card class="card-account-banner">
       <q-card-section>
         <q-carousel
-            class="account"
-            autoplay
-            navigation
-            v-model="slide"
-            swipeable
-            transition-next="slide-left"
-            transition-prev="slide-right"
-            animated
-            infinite
+          class="account"
+          autoplay
+          navigation
+          v-model="slide"
+          swipeable
+          transition-next="slide-left"
+          transition-prev="slide-right"
+          animated
+          infinite
         >
           <template v-slot:navigation-icon="{ active, onClick }">
             <q-btn
-                padding="3px"
-                v-if="active"
-                size="xs"
-                color="white"
-                @click="onClick"
-                style="border: 1px solid #ffffff; border-radius: 50%; margin: 6px 8px"
+              padding="3px"
+              v-if="active"
+              size="xs"
+              color="white"
+              @click="onClick"
+              style="border: 1px solid #ffffff; border-radius: 50%; margin: 6px 8px"
             />
             <q-btn
-                padding="3px"
-                v-else
-                size="xs"
-                color="transparent"
-                @click="onClick"
-                style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px"
+              padding="3px"
+              v-else
+              size="xs"
+              color="transparent"
+              @click="onClick"
+              style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px"
             />
           </template>
 
           <q-carousel-slide
-              v-for="(banner, i) in btm_banners"
-              :key="i"
-              :name="i"
-              class="column no-wrap flex-center"
-              :img-src="imgURL + banner.mobileImageUrl"
-              @click="gotoPromo(banner)"
+            v-for="(banner, i) in btm_banners"
+            :key="i"
+            :name="i"
+            class="column no-wrap flex-center"
+            :img-src="imgURL + banner.mobileImageUrl"
+            @click="gotoPromo(banner)"
           ></q-carousel-slide>
         </q-carousel>
-
       </q-card-section>
     </q-card>
     <a @click="logout">
       <div class="acct-logout">
-        <img src="../assets/images/account/menu_logout.svg"/>
+        <img src="../assets/images/account/menu_logout.svg" />
         <div class="acct-nav-label">退出登录</div>
       </div>
     </a>
@@ -301,22 +315,16 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  ref,
-  computed,
-  onMounted,
-  onBeforeUnmount
-} from "vue";
-import {userStore} from "stores/index";
-import {useRouter} from "vue-router";
-import {App} from "@capacitor/app";
-import {RiRefreshLine} from "vue-remix-icons";
-import {api} from "boot/axios";
+import { defineComponent, ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { userStore } from "stores/index";
+import { useRouter } from "vue-router";
+import { App } from "@capacitor/app";
+import { RiRefreshLine } from "vue-remix-icons";
+import { api } from "boot/axios";
 
 export default defineComponent({
   name: "AccountPage",
-  components: {RiRefreshLine},
+  components: { RiRefreshLine },
   setup() {
     const router = useRouter();
     const store = userStore();
@@ -359,7 +367,7 @@ export default defineComponent({
     const vip_progress = ref(store.currentDeposit / store.levelUpDeposit);
     const goToVip = () => {
       router.push("/account/vip?redirect=account");
-    }
+    };
 
     const timerBalance = ref();
     const mainWallet = computed(() => {
@@ -375,10 +383,9 @@ export default defineComponent({
       } else {
       }
     };
-    const isLoadingBalance = ref(false)
+    const isLoadingBalance = ref(false);
 
-    const selfTgurl = ref('https://' + store.evip);
-
+    const selfTgurl = ref("https://" + store.evip);
 
     onMounted(() => {
       getBalance();
@@ -386,7 +393,7 @@ export default defineComponent({
       // store.getUnreadTotal();
       getVersionNo();
       getPromoImage();
-      if(store.isApp()){
+      if (store.isApp()) {
         var btmSwiper = document.getElementById("id-acct-menu");
         btmSwiper.classList.add("shorter-menu");
       }
@@ -396,19 +403,17 @@ export default defineComponent({
     const btm_banners = ref([]);
     const getPromoImage = () => {
       api
-          .get("/promo/banner?category=CENTERPROMO")
-          .then((res) => {
-            if (res.code === 0) {
-              btm_banners.value = res.data;
-              if (btm_banners.value.length === 1) {
-                btm_banners.value.push(res.data[0]);
-              }
-
+        .get("/promo/banner?category=CENTERPROMO")
+        .then((res) => {
+          if (res.code === 0) {
+            btm_banners.value = res.data;
+            if (btm_banners.value.length === 1) {
+              btm_banners.value.push(res.data[0]);
             }
-          })
-          .catch(() => {
-          });
-    }
+          }
+        })
+        .catch(() => {});
+    };
     const gotoPromo = (banner) => {
       const redirectU = "/promo?name=" + banner.redirectUrl;
       router.push(`${redirectU}`);
@@ -425,7 +430,7 @@ export default defineComponent({
     const getBalance = () => {
       isLoadingBalance.value = true;
       store.getBalance().then(() => {
-        isLoadingBalance.value = false
+        isLoadingBalance.value = false;
       });
       timerBalance.value = setInterval(function () {
         if (store.hasToken()) {
@@ -511,7 +516,7 @@ export default defineComponent({
   }
 
   .livechat {
-    background: #0089ED;
+    background: #0089ed;
     color: #ffffff;
     border-radius: 50px;
     cursor: pointer;
@@ -549,7 +554,6 @@ export default defineComponent({
     justify-content: space-between;
     align-items: center;
     padding: 15px;
-
   }
 
   .acct-section {
@@ -575,7 +579,7 @@ export default defineComponent({
         gap: 5px;
 
         svg {
-          fill: #0089ED;
+          fill: #0089ed;
         }
 
         img {
@@ -583,7 +587,6 @@ export default defineComponent({
           margin-bottom: 3px;
         }
       }
-
     }
 
     .right-sect {
@@ -597,7 +600,6 @@ export default defineComponent({
       max-width: 260px;
       gap: 6px;
 
-
       a {
         font-size: 16px;
         display: block;
@@ -606,7 +608,6 @@ export default defineComponent({
         text-decoration: none;
       }
     }
-
   }
 
   .amt {
@@ -653,7 +654,7 @@ export default defineComponent({
         justify-content: center;
         align-items: center;
         color: #ffffff;
-        background: linear-gradient(180deg, #AAD6FF, #0075E1);
+        background: linear-gradient(180deg, #aad6ff, #0075e1);
 
         .bigV {
           font-weight: 700;
@@ -760,7 +761,7 @@ export default defineComponent({
   .acct-menu {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3,1fr);
+    grid-template-rows: repeat(3, 1fr);
     grid-gap: 30px;
     gap: 20px;
     row-gap: 20px;
@@ -771,8 +772,8 @@ export default defineComponent({
     // flex-wrap: wrap;
     // gap: 6%;
 
-    &.shorter-menu{
-      grid-template-rows: repeat(2,1fr);
+    &.shorter-menu {
+      grid-template-rows: repeat(2, 1fr);
     }
 
     a {
@@ -804,10 +805,10 @@ export default defineComponent({
 
 .acct-logout {
   padding: 12px;
-  border: 1px solid #0089ED;
+  border: 1px solid #0089ed;
   text-align: center;
   font-size: 20px;
-  color: #0089ED;
+  color: #0089ed;
   border-radius: 30px;
   line-height: 15px;
   width: 90%;
@@ -841,8 +842,6 @@ export default defineComponent({
       border-radius: 50%;
       height: 16px;
       line-height: 16px;
-
-
     }
 
     img {
@@ -864,10 +863,8 @@ export default defineComponent({
   .account-banner-img {
     width: 100%;
     border-radius: 10px 10px 0px 0px;
-
   }
 }
-
 
 #personal_vip_img {
   height: 14px;
@@ -890,14 +887,12 @@ export default defineComponent({
   }
 
   .q-carousel.home {
-
   }
 }
 
 @media (max-width: 350px) {
   .acct-nav {
     .acct-menu {
-
       grid-template-columns: repeat(3, 1fr);
       height: 380px;
     }

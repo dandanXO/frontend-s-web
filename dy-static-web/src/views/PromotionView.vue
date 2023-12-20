@@ -299,6 +299,7 @@ export default defineComponent({
 
       th {
         background-image: linear-gradient(0deg, #0494fc 0, #15bdfc 100%), linear-gradient(#d0d1d3, #d0d1d3);
+        color: white;
       }
 
       td {
@@ -565,7 +566,7 @@ export default defineComponent({
         .promo-bg {
           background-size: cover;
           background-repeat: no-repeat;
-          background-position: center center;
+          background-position: top center;
 
           &.isDesktop {
             display: block;

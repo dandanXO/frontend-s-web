@@ -141,58 +141,56 @@
         <el-form-item :label="t('fields.limitNumber')" prop="limitNumber">
           <el-input v-model="form.limitNumber" style="width: 350px" maxlength="11" @keypress="restrictInput($event)" />
         </el-form-item>
-        <el-form-item :label="t('fields.desktopImage')" prop="desktopImgUrl">
-          <el-row :gutter="22">
-            <el-col :span="22">
-              <el-input :readonly="true" v-model="form.desktopImgUrl" />
-            </el-col>
-            <el-col :span="2">
-              <!-- eslint-disable -->
-              <input
-                id="uploadFile"
-                type="file"
-                ref="inputDekstopImg"
-                style="display: none"
-                accept="image/*"
-                @change="attachDesktopImg"
-              />
-              <el-button
-                icon="el-icon-upload"
-                size="mini"
-                type="success"
-                @click="$refs.inputDekstopImg.click()"
-              >
-                {{ t('fields.upload') }}
-              </el-button>
-            </el-col>
-          </el-row>
-        </el-form-item>
-        <el-form-item :label="t('fields.mobileImage')" prop="mobileImgUrl">
-          <el-row :gutter="22">
-            <el-col :span="22">
-              <el-input :readonly="true" v-model="form.mobileImgUrl" />
-            </el-col>
-            <el-col :span="2">
-              <!-- eslint-disable -->
-              <input
-                id="uploadFile"
-                type="file"
-                ref="inputMobileImg"
-                style="display: none"
-                accept="image/*"
-                @change="attachMobileImg"
-              />
-              <el-button
-                icon="el-icon-upload"
-                size="mini"
-                type="success"
-                @click="$refs.inputMobileImg.click()"
-              >
-                {{ t('fields.upload') }}
-              </el-button>
-            </el-col>
-          </el-row>
-        </el-form-item>
+        <el-row>
+          <el-form-item :label="t('fields.desktopImage')" prop="desktopImgUrl">
+            <el-row :gutter="5">
+              <el-col v-if="form.desktopImgUrl" :span="18" style="width: 250px">
+                <el-image
+                  v-if="form.desktopImgUrl"
+                  :src="promoDir + form.desktopImgUrl"
+                  fit="contain"
+                  class="preview"
+                  :preview-src-list="[promoDir + form.desktopImgUrl]"
+                />
+              </el-col>
+              <el-col :span="6">
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('DESKTOP_IMG')"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-form-item :label="t('fields.mobileImage')" prop="mobileImgUrl">
+            <el-row :gutter="5">
+              <el-col v-if="form.mobileImgUrl" :span="18" style="width: 250px">
+                <el-image
+                  v-if="form.mobileImgUrl"
+                  :src="promoDir + form.mobileImgUrl"
+                  fit="contain"
+                  class="preview"
+                  :preview-src-list="[promoDir + form.mobileImgUrl]"
+                />
+              </el-col>
+              <el-col :span="6">
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('MOBILE_IMG')"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-row>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -229,7 +227,20 @@
       </el-table-column>
       <el-table-column prop="limitNumber" :label="t('fields.limitNumber')" width="120" />
       <el-table-column prop="createBy" :label="t('fields.createBy')" width="120" />
-      <el-table-column prop="createTime" :label="t('fields.createTime')" width="200" />
+      <el-table-column prop="createTime" :label="t('fields.createTime')" width="200">
+        <template #default="scope">
+          <span v-if="scope.row.createTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.createTime !== null"
+            v-formatter="{
+              data: scope.row.createTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:gift:update'])" fixed="right">
         <template #default="scope">
           <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit(scope.row)"
@@ -252,6 +263,112 @@
       @size-change="loadGift"
     />
   </div>
+  <el-dialog
+    :title="uiControl.imageSelectionTitle"
+    v-model="uiControl.imageSelectionVisible"
+    append-to-body
+    width="50%"
+    :close-on-press-escape="false"
+  >
+    <div class="search">
+      <el-input
+        v-model="imageRequest.name"
+        size="small"
+        style="width: 200px"
+        :placeholder="t('fields.imageName')"
+      />
+      <el-select
+        v-model="imageRequest.siteId"
+        size="small"
+        :placeholder="t('fields.site')"
+        class="filter-item"
+        style="width: 120px; margin-left: 5px"
+      >
+        <el-option
+          v-for="item in sites.list"
+          :key="item.id"
+          :label="item.siteName"
+          :value="item.id"
+        />
+      </el-select>
+      <el-button
+        style="margin-left: 20px"
+        icon="el-icon-search"
+        size="mini"
+        type="success"
+        ref="searchImage"
+        @click="loadSiteImage"
+      >
+        {{ t('fields.search') }}
+      </el-button>
+      <el-button
+        icon="el-icon-refresh"
+        size="mini"
+        type="warning"
+        @click="resetImageQuery()"
+      >
+        {{ t('fields.reset') }}
+      </el-button>
+    </div>
+    <div class="grid-container">
+      <div
+        v-for="item in imageList.list"
+        :key="item"
+        class="grid-item"
+        :class="item.id === selectedImage.id ? 'selected' : ''"
+      >
+        <el-image
+          :src="promoDir + item.path"
+          fit="contain"
+          style="aspect-ratio: 1/1"
+          @click="selectImage(item)"
+        />
+      </div>
+    </div>
+    <el-pagination
+      class="pagination"
+      @current-change="changeImagePage"
+      layout="prev, pager, next"
+      :page-size="imageRequest.size"
+      :page-count="imageList.pages"
+      :current-page="imageRequest.current"
+    />
+    <div class="image-info" v-if="selectedImage.id !== 0">
+      <el-row>
+        <el-col :span="4">
+          <h3>{{ t('fields.selectedImage') }}</h3>
+        </el-col>
+        <el-col :span="20">
+          <el-image
+            :src="promoDir + selectedImage.path"
+            fit="contain"
+            class="smallPreview"
+            :preview-src-list="[promoDir + selectedImage.path]"
+          />
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">{{ t('fields.imageSite') }} :</el-col>
+        <el-col :span="20">{{ selectedImage.siteName }}</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">{{ t('fields.imageName') }} :</el-col>
+        <el-col :span="20">{{ selectedImage.name }}</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">{{ t('fields.imageRemark') }} :</el-col>
+        <el-col :span="20">{{ selectedImage.remark }}</el-col>
+      </el-row>
+      <div class="dialog-footer">
+        <el-button @click="uiControl.imageSelectionVisible = false">
+          {{ t('fields.cancel') }}
+        </el-button>
+        <el-button type="primary" @click="submitImage">
+          {{ t('fields.confirm') }}
+        </el-button>
+      </div>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -266,12 +383,18 @@ import { nextTick, onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
-import { uploadImage } from "@/api/image";
+import { getSiteImage } from "@/api/site-image";
 
 const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
+const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
+
+const imageList = reactive({
+  dataList: [],
+  pages: 0,
+})
 
 const request = reactive({
   size: 20,
@@ -283,10 +406,19 @@ const request = reactive({
   status: null
 });
 
+const imageRequest = reactive({
+  size: 10,
+  current: 1,
+  name: null,
+  siteId: null,
+  category: 'PROMO',
+})
+
 const formRef = ref(null);
 const sites = reactive({
   list: []
 });
+let timeZone = null
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -300,8 +432,12 @@ const uiControl = reactive({
   type: [
     { key: 1, displayName: 'ENTITY', value: 'ENTITY' },
     { key: 2, displayName: 'VIRTUAL', value: 'VIRTUAL' }
-  ]
+  ],
+  imageSelectionTitle: '',
+  imageSelectionType: '',
+  imageSelectionVisible: false
 });
+
 const page = reactive({
   pages: 0,
   records: [],
@@ -320,6 +456,14 @@ const form = reactive({
   mobileImgUrl: null,
   status: null
 });
+
+const selectedImage = reactive({
+  id: 0,
+  name: '',
+  siteName: '',
+  remark: '',
+  path: '',
+})
 
 const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
@@ -370,6 +514,7 @@ async function loadGift() {
   const { data: ret } = await getGift(query);
   page.pages = ret.pages;
   page.records = ret.records;
+  timeZone = sites.list.find(e => e.id === request.siteId).timeZone
   page.total = ret.total;
   page.loading = false;
 }
@@ -444,37 +589,57 @@ function resetQuery() {
   request.status = null;
 }
 
-async function attachDesktopImg(event) {
-  const data = await attachPhoto(event)
-  if (data.code === 0) {
-    form.desktopImgUrl = data.data
-  } else {
-    ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
-  }
+function resetImageQuery() {
+  imageRequest.name = null
+  imageRequest.siteId = site.value ? site.value.id : null
 }
 
-async function attachMobileImg(event) {
-  const data = await attachPhoto(event)
-  if (data.code === 0) {
-    form.mobileImgUrl = data.data
-  } else {
-    ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
-  }
+async function changeImagePage(page) {
+  imageRequest.current = page
+  const { data: ret } = await getSiteImage(imageRequest)
+  imageList.list = ret.records
+  imageList.pages = ret.pages
 }
 
-async function attachPhoto(event) {
-  const files = event.target.files[0]
-  const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
+function selectImage(item) {
+  selectedImage.id = item.id
+  selectedImage.name = item.name
+  selectedImage.siteName = item.siteName
+  selectedImage.path = item.path
+  selectedImage.remark = item.remark
+}
 
-  if (!allowFileType.find(ftype => ftype.includes(files.type))) {
-    ElMessage({ message: t('message.invalidFileType'), type: 'error' })
-  } else {
-    var formData = new FormData()
-    formData.append('files', files)
-    formData.append('dir', 'promo/gifts/' + form.siteId);
-    formData.append('overwrite', false)
-    return await uploadImage(formData)
+async function browseImage(type) {
+  await loadSiteImage()
+  switch (type) {
+    case 'DESKTOP_IMG':
+      uiControl.imageSelectionTitle = t('fields.desktopImage')
+      break
+    case 'MOBILE_IMG':
+      uiControl.imageSelectionTitle = t('fields.mobileImage')
+      break
   }
+  uiControl.imageSelectionType = type
+  uiControl.imageSelectionVisible = true
+}
+
+async function loadSiteImage() {
+  selectedImage.id = 0
+  const { data: ret } = await getSiteImage(imageRequest)
+  imageList.list = ret.records
+  imageList.pages = ret.pages
+}
+
+function submitImage() {
+  switch (uiControl.imageSelectionType) {
+    case 'DESKTOP_IMG':
+      form.desktopImgUrl = selectedImage.path
+      break
+    case 'MOBILE_IMG':
+      form.mobileImgUrl = selectedImage.path
+      break
+  }
+  uiControl.imageSelectionVisible = false
 }
 
 onMounted(async () => {

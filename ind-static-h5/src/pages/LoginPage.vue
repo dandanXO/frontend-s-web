@@ -146,9 +146,9 @@ import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-// import RegisterPage from "../pages/RegisterPage.vue";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import qs from "qs";
+import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 
 export default defineComponent({
   name: "LoginPage",
@@ -293,7 +293,7 @@ export default defineComponent({
         excludes.value.forEach((element) => {
           delete allComponents[element];
         });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+        // const sidParam = FingerprintJS.hashComponents(allComponents);
 
         if (loginType.value === false) {
           loginNameRef.value.validate();
@@ -310,7 +310,7 @@ export default defineComponent({
               .memberLogin({
                 loginName: loginForm.loginName,
                 password: loginForm.password,
-                sid: sidParam,
+                sid: store.aaid,
                 captchaCode: loginForm.captchaCode,
                 codeId: loginForm.codeId
               })
@@ -402,7 +402,8 @@ export default defineComponent({
       });
 
       (async () => {
-        guestLoginInfo.sid = guestDeviceInfo.value;
+        // guestLoginInfo.sid = guestDeviceInfo.value;
+        guestLoginInfo.sid = store.getAaid();
 
         api
           .post("/member/quickRegister", qs.stringify(guestLoginInfo))
@@ -417,6 +418,18 @@ export default defineComponent({
                 message: "Quick registered successfully",
                 icon: "check_circle_outline"
               });
+
+              //ADJUST TRACKEVENT.
+              if (Platform.is.android && Platform.is.capacitor) {
+                var adjustEvent = new AdjustEvent("vm6pjs");
+                Adjust.trackEvent(adjustEvent);
+              } else {
+                const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+                AdjustWeb.trackEvent({
+                  eventToken: "vm6pjs"
+                });
+              }
+
               store.autoLogin(res.data);
               sessionStorage.removeItem("REFERRAL_CODE");
               if (store.hasToken()) {
@@ -452,6 +465,7 @@ export default defineComponent({
     const getAppInfo = async () => {
       const info = await Device.getId();
       guestDeviceInfo.value = info.identifier;
+      // guestDeviceInfo.value = store.aaid;
     };
 
     onMounted(() => {

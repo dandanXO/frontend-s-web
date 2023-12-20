@@ -46,7 +46,7 @@
       </div>
     </div>
     <div class="dialog-footer">
-      <el-button type="primary" @click="onChoiceSubmit('third')">提交</el-button>
+      <el-button type="primary" class="common-btn" @click="onChoiceSubmit('third')">提交</el-button>
     </div>
   </el-dialog>
 
@@ -101,6 +101,7 @@
               </div>
               <div
                 class="btn-answer"
+                :class="submittedFormStatus && 'submitted-ans'"
                 data-question-id="1"
                 data-question-type="select"
                 id="submitBtn"
@@ -131,18 +132,28 @@
       <div>
         <table v-if="isHasRecord" class="record-table" id="record-table">
           <tr>
-            <th style="width: 50%">日期</th>
-            <th style="width: 25%">答案</th>
-            <th style="width: 25%">中奖记录</th>
+            <th style="width: 25%">日期</th>
+            <th style="width: 35%">答案</th>
+            <th style="width: 20%">中奖记录</th>
+            <th style="width: 10%">中奖次数</th>
+            <th style="width: 10%">参与次数</th>
           </tr>
           <tr v-for="(e, i) in tableInfo" :key="`table-info-${i}`">
             <td>{{ e.time }}</td>
             <td>{{ e.answer }}</td>
             <td :class="e.className">{{ e.statusText }}</td>
+            <template v-if="i === 0">
+              <td rowspan="2">{{ quizWonTimesRecord }}</td>
+              <td rowspan="2">{{ quizAttendTimesRecord }}</td>
+            </template>
           </tr>
         </table>
         <table v-else class="record-table" id="record-table"></table>
 
+        <!-- <pre>isHasRecord: {{ isHasRecord }}</pre> -->
+        <!-- <pre>paginationInfo.pageTotal: {{ paginationInfo.pageTotal }}</pre> -->
+        <!-- <pre>tableInfo: {{ tableInfo }}</pre> -->
+        <!-- <pre>records: {{ records }}</pre> -->
         <div v-if="isHasRecord" class="page-list">
           <div class="prev page-item" @click="onPrevPageClick()">&lt;</div>
           <div
@@ -249,7 +260,9 @@ function getMatchInfo() {
   });
 }
 
-const records = ref();
+const records = ref([]);
+const quizAttendTimesRecord = ref();
+const quizWonTimesRecord = ref();
 const paginationInfo = reactive({ pageSize: 5, pageNumber: 1, pageTotal: 0 });
 
 const isHasRecord = ref(false);
@@ -258,6 +271,8 @@ function getRecords() {
     const { code, data } = res;
     if (code == 0) {
       records.value = data.answers;
+      quizAttendTimesRecord.value = data.quizAttendTimes;
+      quizWonTimesRecord.value = data.quizWonTimes;
 
       const dataLength = data.answers.length;
       if (dataLength) {
@@ -299,20 +314,44 @@ const tableInfo = ref([]);
 function getRecordList() {
   const { pageSize, pageNumber } = paginationInfo;
   const start = (pageNumber - 1) * pageSize;
-  const end = start + pageSize;
+  const end = Math.min(start + pageSize, records.value.length); // Ensure end does not exceed array length
 
-  for (let i = start, l = end; i < l; i++) {
-    const { createTime, answerOne, answerTwo, answerThree, status } = records[i];
+  for (let i = start; i < end; i++) {
+    const record = records.value[i];
 
-    const newObj = {};
-    newObj.time = moment(createTime).format("YYYY-MM-DD HH:mm:ss");
-    newObj.answer = answerOne + ", " + answerTwo + ", " + answerThree;
-    newObj.statusText = status;
-    if (status == "WIN") newObj.className = "got-answer";
+    // Check if the record exists before destructuring
+    if (record) {
+      const { createTime, answerOne, answerTwo, answerThree, status } = record;
 
-    tableInfo.value.push(newObj);
+      const newObj = {};
+      // newObj.time = moment(createTime).format("YYYY-MM-DD HH:mm:ss");
+      newObj.time = createTime;
+      newObj.answer = answerOne + ", " + answerTwo + ", " + answerThree;
+      newObj.statusText = status;
+      if (status == "WIN") newObj.className = "got-answer";
+
+      tableInfo.value.push(newObj);
+    }
   }
 }
+
+// function getRecordList() {
+//   const { pageSize, pageNumber } = paginationInfo;
+//   const start = (pageNumber - 1) * pageSize;
+//   const end = start + pageSize;
+
+//   for (let i = start, l = end; i < l; i++) {
+//     const { createTime, answerOne, answerTwo, answerThree, status } = records.value[i];
+
+//     const newObj = {};
+//     newObj.time = moment(createTime).format("YYYY-MM-DD HH:mm:ss");
+//     newObj.answer = answerOne + ", " + answerTwo + ", " + answerThree;
+//     newObj.statusText = status;
+//     if (status == "WIN") newObj.className = "got-answer";
+
+//     tableInfo.value.push(newObj);
+//   }
+// }
 
 const isFirstQuestionClicked = ref(false);
 function onFirstQuestionClick(flag) {
@@ -406,16 +445,22 @@ function onSubmitClick() {
   }).then((res) => {
     const { code, data, message } = res;
     if (code == 0) {
-      if (data.count == 0) {
-        ElMessage.success("您好，您已成功提交一次本场竞猜答案，可进行再次单笔存款1000 进行提交第二次；");
-      } else {
-        ElMessage.success("您好，本场竞猜您已成功提交两次，请次日0点参与新一场的竞猜，感谢您的支持!");
-      }
+      // submittedFormStatus
+      // if (res.count == 0) {
+      //   ElMessage.success("您好，您已成功提交一次本场竞猜答案，可进行再次单笔存款1000 进行提交第二次；");
+      // } else {
+      //   ElMessage.success("您好，本场竞猜您已成功提交两次，请次日0点参与新一场的竞猜，感谢您的支持!");
+      // }
+
+      ElMessage.success("您好，您已成功提交本场竞猜答案");
+      submittedFormStatus.value = true;
     } else {
       ElMessage.error(message);
     }
   });
 }
+
+const submittedFormStatus = ref(false);
 </script>
 
 <style scoped lang="scss">
@@ -540,6 +585,11 @@ function onSubmitClick() {
               background-image: linear-gradient(255deg, #0094ff 0%, #18c5ff 100%), linear-gradient(#0084a4, #0084a4);
               background-blend-mode: normal, normal;
               border-radius: 4px;
+              &.submitted-ans {
+                filter: brightness(0.8);
+                cursor: not-allowed;
+                pointer-events: all !important;
+              }
             }
           }
         }
@@ -634,7 +684,6 @@ function onSubmitClick() {
 
   .question-select-type {
     border-radius: 6px;
-    margin-bottom: 24px;
     display: flex;
     align-items: center;
     justify-content: center;

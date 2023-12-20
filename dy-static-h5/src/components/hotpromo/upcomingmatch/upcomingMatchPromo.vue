@@ -18,7 +18,7 @@
           <div class="bet-info-details">
             <div class="info-team info-team-one">
               <div class="info-team-logo">
-                <img :src="imgURL + upcomingMatchDetails.siteId + '/' + upcomingMatchDetails.teamOneIcon" />
+                <img :src="imgURL + upcomingMatchDetails.teamOneIcon" />
               </div>
               <div class="info-team-name" v-html="upcomingMatchDetails.teamOne" />
             </div>
@@ -27,7 +27,7 @@
 
             <div class="info-team info-team-two">
               <div class="info-team-logo">
-                <img :src="imgURL + upcomingMatchDetails.siteId + '/' + upcomingMatchDetails.teamTwoIcon" />
+                <img :src="imgURL + upcomingMatchDetails.teamTwoIcon" />
               </div>
               <div class="info-team-name" v-html="upcomingMatchDetails.teamTwo" />
             </div>
@@ -54,7 +54,7 @@ const props = defineProps({
 });
 
 const upcomingMatchDetails = ref([]);
-const imgURL = process.env.IMAGE_CDN + "/game-match/";
+const imgURL = process.env.IMAGE_CDN + "/promo/";
 
 const getupcomingMatchDetails = () => {
   eventapi

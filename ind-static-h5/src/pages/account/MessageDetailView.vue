@@ -8,7 +8,7 @@
   <ContentView contentTopStatus="faded">
     <div class="msg-detail-container">
       <div class="title">{{ mailDataRef.title }}</div>
-      <div class="send-time">{{ mailDataRef.sendTime && moment(mailDataRef.sendTime).format("YYYY-MM-DD HH:mm") }}</div>
+      <div class="send-time">{{ mailDataRef.sendTime && convertToGMT55(mailDataRef.sendTime).format("YYYY-MM-DD HH:mm") }}</div>
 
       <div class="title">{{ mailDataRef.title }}</div>
       <div class="content">{{ mailDataRef.content }}</div>
@@ -22,6 +22,7 @@ import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import moment from "moment";
+import { convertToGMT55 } from "src/boot/utils";
 import ContentView from "../../components/ContentView.vue";
 
 const router = useRouter();

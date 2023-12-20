@@ -60,6 +60,7 @@
               style="width: 320px;"
               default-first-option
               @focus="loadSites"
+              @change="filterPayTypeByCurrency(form.siteId)"
             >
               <el-option
                 v-for="item in siteList.list"
@@ -132,7 +133,22 @@
         </el-row>
         <el-row>
           <el-form-item :label="t('fields.paymentType')" prop="type">
-            <el-input v-model="form.type" style="width: 600px;" />
+            <el-select
+              filterable
+              clearable
+              v-model="form.type"
+              size="small"
+              :placeholder="t('fields.pleaseChoose')"
+              class="filter-item"
+              style="width: 600px; margin-bottom: 16px"
+            >
+              <el-option
+                v-for="item in list.filteredPayTypes"
+                :key="item.id"
+                :label="item.code"
+                :value="item.code"
+              />
+            </el-select>
           </el-form-item>
         </el-row>
 
@@ -229,6 +245,7 @@ import { hasPermission } from '../../../utils/util'
 import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { getSiteListSimple } from "../../../api/site";
+import { getActivePaymentTypes } from '../../../api/payment-type'
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -303,6 +320,12 @@ const currencyNames = reactive({
   list: []
 })
 
+const list = reactive({
+  payTypes: [],
+  filteredPayTypes: [],
+  siteCurrencyIds: [],
+})
+
 function resetQuery() {
   request.name = null;
   request.status = null;
@@ -319,6 +342,33 @@ async function loadWithdrawPlatform() {
 async function loadCurrencyNames() {
   const { data: ret } = await getCurrencyNames();
   currencyNames.list = ret;
+}
+
+async function loadPayTypes() {
+  const { data: payType } = await getActivePaymentTypes()
+  list.payTypes = payType
+}
+
+function filterPayTypeByCurrency(siteId) {
+  console.log('siteId', siteId)
+  const currentSite = siteList.list.find(s => s.id === siteId)
+  console.log('siteList.list', siteList.list)
+  console.log('currentSite', currentSite)
+  const currencyCodeList = currentSite.currency.split(',').map(currencyName => currencyName)
+  list.siteCurrencyIds = [
+    ...currencyCodeList.map(currencyName => {
+      const currency = currencyNames.list.find(c => c.currencyCode.toUpperCase() === currencyName.toUpperCase())
+      return currency ? currency.id : null;
+    }).filter(Boolean)
+  ]
+  list.filteredPayTypes = list.payTypes.filter(payTypeByCurrencyID)
+}
+
+function payTypeByCurrencyID (record) {
+  if (record.currencyIds) {
+    const currencyIdsList = record.currencyIds.split(',')
+    return currencyIdsList.filter(currencyId => list.siteCurrencyIds.includes(parseInt(currencyId))).length > 0
+  }
 }
 
 function changePage(page) {
@@ -349,6 +399,7 @@ function showEdit(withdrawPlatform) {
       }
     }
   });
+  filterPayTypeByCurrency(parseInt(withdrawPlatform.siteId))
 }
 
 function create() {
@@ -398,6 +449,7 @@ onMounted(async() => {
   }
   await loadWithdrawPlatform();
   await loadCurrencyNames();
+  await loadPayTypes();
 });
 
 function showDialogCopy(withdrawPlatform) {

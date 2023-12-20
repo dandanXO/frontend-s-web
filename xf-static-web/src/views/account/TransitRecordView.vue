@@ -1184,6 +1184,12 @@ export default defineComponent({
         if (v in searchForm) {
           searchForm[v].startDate = chgDate(7);
           searchForm[v].endDate = chgDate(0);
+          if(v === "gameBetRecord") {
+            // 结束时间如果不跟开始时间一个月，则从当月1号开始
+            if(moment(searchForm[v].startDate).format("YYYY-MM") !== moment(searchForm[v].endDate).format("YYYY-MM")) {
+              searchForm[v].startDate = moment(searchForm[v].endDate).format("YYYY-MM") + "-01";
+            }
+          }
         }
       });
       searchRecord();

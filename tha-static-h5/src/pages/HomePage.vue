@@ -51,59 +51,17 @@
       </div>
     </div>
     <div class="grid-wrapper">
-      <div class="items-center grid">
+      <div class="items-center grid" ref="gameBoardRef">
         <div
+          v-for="(e, i) in gameBoardItemData"
+          :key="`gbi-${i}`"
+          ref="gameBoardItemRef"
           class="game-board-item"
-          :class="currentSelectedMenu == 'slots' ? 'active-board' : ''"
-          @click="switchMenu('slots')"
+          :class="currentSelectedMenu == e.name ? 'active-board' : ''"
+          @click="switchMenu(e.name, i)"
         >
-          <img src="../assets/images/index/home-slot.png" />
-          <span>{{ $t("lang.slot_header") }}</span>
-        </div>
-
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'fish' ? 'active-board' : ''"
-          @click="switchMenu('fish')"
-        >
-          <img src="../assets/images/index/home-fish.png" />
-          <span>{{ $t("lang.fish_header") }}</span>
-        </div>
-
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'live' ? 'active-board' : ''"
-          @click="switchMenu('live')"
-        >
-          <img src="../assets/images/index/home-live.png" />
-          <span>{{ $t("lang.live_header") }}</span>
-        </div>
-
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'sport' ? 'active-board' : ''"
-          @click="switchMenu('sport')"
-        >
-          <img src="../assets/images/index/home-sport.png" />
-          <span>{{ $t("lang.sport_header") }}</span>
-        </div>
-
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'casual' ? 'active-board' : ''"
-          @click="switchMenu('casual')"
-        >
-          <img src="../assets/images/index/home-esport.png" />
-          <span>{{ $t("lang.minigame_header") }}</span>
-        </div>
-
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'lottery' ? 'active-board' : ''"
-          @click="switchMenu('lottery')"
-        >
-          <img src="../assets/images/index/home-lottery.png" />
-          <span>{{ $t("lang.lottery_list") }}</span>
+          <img :src="require(`../assets/images/index/${e.imgName}`)" />
+          <span>{{ e.label }}</span>
         </div>
 
         <!--      <div-->
@@ -831,6 +789,40 @@
     </q-card>
   </q-dialog>
 
+  <q-page-sticky v-if="specialInviteBonusEligible" position="right" :offset="[0, 0]">
+    <div class="special-invite-bonus-sticky" @click="redeemSpecialInviteBonus" />
+  </q-page-sticky>
+
+  <q-dialog class="special-invite-bonus-popup" width="100%" v-model="specialInviteBonusPopupVisible">
+    <div class="special-invite-bonus-container">
+      <div class="header-decoration-wrapper">
+        <div class="header-decoration">
+          <img class="confetti" src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-confetti.png" width="250" />
+          <img class="money-bags" src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-money-bags.png" width="150" />
+        </div>
+      </div>
+      <div class="special-invite-bonus-content">
+        <div class="title-wrapper">
+          <div class="title">โบนัสพิเศษสำหรับสมาชิกที่ได้รับเชิญ </div>
+          <div class="reward-amt">200</div>
+        </div>
+        <div class="desc-wrapper">
+          <div class="desc-title">
+            ข้อกำหนดและเงื่อนไข
+          </div>
+          <div class="desc-content">
+            - โบนัสนี้สามารถ ถอนได้ที่ 2000 บาทเท่านั้น<br>
+            - สามารถแจ้งถอนได้เมื่อยอดเครดิตถึง 2000 บาท<br>
+            - ยอดเงินที่เหลือตจะถูกหักออกทันทีหลังการถอนสำเร็จ<br>
+            - โบนัสนี้ไม่สามารถใช้ซื้อฟรีสปินได้<br>
+            - บัญชีที่มี IP เดียวกันหรือข้อมูลที่คล้ายกันจะถูกตัดสิทธิ์จากการรับโปรโมชั่นนี้
+          </div>
+        </div>
+        <div class="special-invite-bonus-popup-confirm-btn" @click="toggleSpecialInviteBonusPopup(false)">{{ $t("lang.confirm") }}</div>
+      </div>
+    </div>
+  </q-dialog>
+
   <q-dialog class="home-popup-banner" width="100%" v-model="isHomePromoModal">
     <div class="promo-popup-div">
       <q-btn
@@ -847,6 +839,16 @@
       <img src="../assets/images/common/home-popup-img.png" />
 
       <div class="popup-list">
+        <router-link to="/promo?id=81">
+          <div class="popup-item">
+            <span>
+              คลิกเพื่อหมุน รางวัลสูงสุด
+              <em>8,880</em>
+              และ
+              <em>IPHONE</em>
+            </span>
+          </div>
+        </router-link>
         <router-link to="/promo?id=80">
           <div class="popup-item">
             <span>
@@ -868,7 +870,7 @@
             </span>
           </div>
         </router-link>
-        <router-link to="/promo?id=77">
+<!--        <router-link to="/promo?id=77">
           <div class="popup-item">
             <span>
               โบนัส
@@ -878,7 +880,7 @@
               ถอนไม่อั้น
             </span>
           </div>
-        </router-link>
+        </router-link>-->
         <router-link to="/promo?id=78">
           <div class="popup-item">
             <span>
@@ -890,14 +892,14 @@
             </span>
           </div>
         </router-link>
-        <router-link to="/promo?id=79">
+<!--        <router-link to="/promo?id=79">
           <div class="popup-item">
             <span>
               ประกันยอดเสีย
               <em>10,000</em>
             </span>
           </div>
-        </router-link>
+        </router-link>-->
       </div>
     </div>
   </q-dialog>
@@ -968,7 +970,14 @@ export default defineComponent({
     //       scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
     //   }
     // });
+    const specialInviteBonusEligible = ref(false);
+    const specialInviteBonusAmt = ref(0);
+    const specialInviteBonusPopupVisible = ref(false);
     const banners = ref([]);
+
+    const gameBoardRef = ref();
+    const gameBoardItemRef = ref();
+
     const route = useRoute();
     const router = useRouter();
     const store = userStore();
@@ -1181,8 +1190,17 @@ export default defineComponent({
     const fishPlatforms = ref([]);
     const lotteryGames = ref([]);
 
+    const gameBoardItemData = [
+      { name: "slots", imgName: "home-slot.png", label: t("lang.slot_header") },
+      { name: "fish", imgName: "home-fish.png", label: t("lang.fish_header") },
+      { name: "live", imgName: "home-live.png", label: t("lang.live_header") },
+      { name: "sport", imgName: "home-sport.png", label: t("lang.sport_header") },
+      { name: "casual", imgName: "home-esport.png", label: t("lang.minigame_header") },
+      { name: "lottery", imgName: "home-lottery.png", label: t("lang.lottery_list") }
+    ];
+
     const currentSelectedMenu = ref("slots");
-    const switchMenu = (menu) => {
+    const switchMenu = (menu, index) => {
       currentSelectedMenu.value = menu;
       isShow.value = false;
       if (menu === "slots") {
@@ -1201,6 +1219,36 @@ export default defineComponent({
       } else if (menu === "lottery") {
       } else if (menu === "esport") {
       }
+
+      const containerWidth = gameBoardRef.value.clientWidth;
+
+      const item = gameBoardItemRef.value[index];
+      const itemLeft = item.offsetLeft;
+      const itemWidth = item.clientWidth;
+
+      const scrollPosition = gameBoardRef.value.scrollLeft;
+
+      /**
+       * scrollLeft (scrollPosition) & offsetLeft (itemLeft) originated from left
+       * no complex calculation for left is normal
+       */
+      let toLeft = 0;
+      let isEdgeItem = false;
+
+      const moveAmount = containerWidth / 2;
+      const leftOffset = 30;
+
+      const rightCal = itemLeft - scrollPosition;
+      const rightEdge = containerWidth - itemWidth;
+      if (rightCal >= rightEdge) {
+        isEdgeItem = true;
+        toLeft = scrollPosition + moveAmount;
+      } else if (itemLeft <= scrollPosition + leftOffset) {
+        isEdgeItem = true;
+        toLeft = scrollPosition - moveAmount;
+      }
+
+      if (isEdgeItem) gameBoardRef.value.scrollTo({ left: toLeft, behavior: "smooth" });
     };
     const liveTabs = ref("");
     const switchPlat = (plat, menuType) => {
@@ -1579,6 +1627,46 @@ export default defineComponent({
       // console.log(target)
     };
 
+    const checkRedeemSpecialInviteBonusEligiblity = () => {
+      if (store.hasToken()) {
+        eventapi.get('/privi/telephone/canRedeem', {
+          params: {
+            promoCode: "special-invitation-bonus"
+          }
+        }).then((res) => {
+          if(res.data.data === true) {
+            specialInviteBonusEligible.value = true;
+          }
+        })
+      }
+    }
+
+    const redeemSpecialInviteBonus = () => {
+      eventapi.get('/privi/telephone/redeem', {
+        params: {
+          promoCode: "special-invitation-bonus"
+        }
+      }).then((res) => {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: t("lang.success"),
+          icon: "check_circle_outline"
+        });
+
+        specialInviteBonusAmt.value = res.data.data
+        toggleSpecialInviteBonusPopup(true);
+      })
+    }
+
+    const toggleSpecialInviteBonusPopup = (status) => {
+      if(status === false) {
+        specialInviteBonusEligible.value = false;
+      }
+
+      specialInviteBonusPopupVisible.value = status;
+    }
+
     onMounted(() => {
       checkPlatform();
       loadHomePromoPopup();
@@ -1587,6 +1675,7 @@ export default defineComponent({
       getVersionNo();
 
       checkSpinWheelPromo();
+      checkRedeemSpecialInviteBonusEligiblity();
     });
 
     const popupInterval = ref(null);
@@ -1696,6 +1785,9 @@ export default defineComponent({
       slide: ref(0),
       imgURL: process.env.IMAGE_CDN + "/promo/",
       banners,
+      gameBoardRef,
+      gameBoardItemRef,
+      gameBoardItemData,
       store,
       ui,
       platforms,
@@ -1765,7 +1857,11 @@ export default defineComponent({
       favGamesList,
       sortedFavGamesList,
       // updateSortedFavGamesList,
-      getFavGameList
+      getFavGameList,
+      specialInviteBonusEligible,
+      specialInviteBonusPopupVisible,
+      redeemSpecialInviteBonus,
+      toggleSpecialInviteBonusPopup
     };
   }
 });
@@ -2491,6 +2587,95 @@ export default defineComponent({
         letter-spacing: 1px;
         font-size: 14px;
       }
+    }
+  }
+}
+
+.special-invite-bonus-sticky {
+  background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-sticky.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  width: 190px;
+  height: 136px;
+  position: absolute;
+  top: 10%;
+  right: 0;
+}
+
+.special-invite-bonus-container {
+  position: relative;
+
+  .header-decoration-wrapper {
+    .header-decoration {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      height: 200px;
+      position: relative;
+
+      .confetti {
+        position: absolute;
+      }
+
+      .money-bags {
+        position: absolute;
+        top: 150px;
+      }
+    }
+  }
+  
+
+  .special-invite-bonus-content {
+    background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-bg.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    margin: 30px;
+    max-width: 495px;
+    min-height: 300px;
+    padding: 30px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    justify-content: center;
+
+    .title-wrapper {
+      display: flex;
+      align-items: center;
+
+      .reward-amt {
+        font-size: 30px;
+        font-weight: 700;
+        color: #FFE35A;
+        margin-left: 20px;
+      }
+    }
+
+    .desc-wrapper {
+      display: flex;
+      flex-direction: column;
+
+      .desc-title {
+        color: #FFCF1F;
+      }
+
+      .desc-content {
+        color: #E79DFF;
+      }
+    }
+
+    .special-invite-bonus-popup-confirm-btn {
+      background: url("../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-confirm-btn.png");
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      max-width: 200px;
+      width: 100%;
+      min-height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 10px auto 0px;
+      font-weight: 700;
+      font-size: 18px;
     }
   }
 }

@@ -98,11 +98,11 @@ const routes = [
         name: "referCode",
         component: () => {}
       },
-      {
-        path: "/privilege/invite",
-        name: "invite",
-        component: () => import("../views/PrivilegeInvite.vue")
-      },
+      // {
+      //   path: "/privilege/invite",
+      //   name: "invite",
+      //   component: () => import("../views/PrivilegeInvite.vue")
+      // },
       {
         path: "/center",
         name: "center",
@@ -135,7 +135,15 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  scrollBehavior: () => ({ left: 0, top: 0 }),
+  scrollBehavior(to, from, savedPosition) {
+    // console.log(to);
+    // console.log(savedPosition);
+    if (savedPosition && savedPosition.top) {
+      return { left: 0, top: savedPosition.top };
+    } else if (to.path !== "/game") {
+      return { left: 0, top: 0 };
+    }
+  },
   routes
 });
 

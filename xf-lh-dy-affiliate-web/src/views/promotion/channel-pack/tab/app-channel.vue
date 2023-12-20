@@ -16,14 +16,16 @@
         style="min-width: 100px; padding-left: 10px;"
         @click="onAppTypeChange(index)"
       >
-        {{ appType.display }}
+        {{ $t(`appType.${appType.type}`) }}
       </el-button>
     </el-form-item>
     <el-form-item :label="t('fields.affiliateCode')">
-      <span>{{ form.affId }}</span>
+      <div v-loading="affCodeLoading" style="width:fit-content">
+        <span>{{ affInfo.affiliateCode }}</span>
+      </div>
     </el-form-item>
     <el-form-item :label="t('fields.selectSystem')">
-      <span>{{ form.os === 'ANDROID' ? t('osType.android') : t('osType.ios') }}</span>
+      <span>{{ form.os === 'ANDROID' ? $t('osType.ANDROID') : $t('osType.IOS') }}</span>
     </el-form-item>
     <el-form-item :label="t('fields.apkType')">
       <el-button
@@ -98,6 +100,7 @@ import {
 } from '../../../../api/channel-pack'
 import { useStore } from '../../../../store'
 import { required } from '../../../../utils/validate'
+import { getAffiliateInfo } from '../../../../api/affiliate'
 
 const { t } = useI18n()
 const store = useStore()
@@ -111,16 +114,20 @@ const form = reactive({
   apkType: 'NORMAL',
   version: '1.1.1',
   name: '',
-  icon: '',
+  icon: null,
 })
 const inputImage = ref(null)
 const versionLoading = ref(true)
-
+const affCodeLoading = ref(true)
 const appTypeList = [
-  { type: 'ALL_SITE', display: t('appType.allSite') },
-  { type: 'SPORT', display: t('appType.sport') },
-  { type: 'ESPORT', display: t('appType.esport') },
+  { type: 'ALL_SITE', display: t('appType.ALL_SITE') },
+  // { type: 'SPORT', display: t('appType.SPORT') },
+  // { type: 'ESPORT', display: t('appType.ESPORT') },
 ]
+
+const affInfo = reactive({
+  affiliateCode: null,
+})
 
 const uploadedImage = reactive({
   url: null,
@@ -128,7 +135,6 @@ const uploadedImage = reactive({
 
 const formRules = reactive({
   name: [required(t('message.validateAppNameRequired'))],
-  icon: [required(t('message.validateAppIconRequired'))],
 })
 
 async function attachImage(event) {
@@ -186,7 +192,7 @@ function resetForm() {
   form.os = 'ANDROID'
   form.apkType = 'NORMAL'
   form.name = ''
-  form.icon = ''
+  form.icon = null
   uploadedImage.url = ''
   loadVersion()
 }
@@ -198,8 +204,17 @@ async function loadVersion() {
   versionLoading.value = false
 }
 
+async function loadAffiliateInfo() {
+  const { data: aff } = await getAffiliateInfo(store.state.user.id)
+  Object.keys({ ...aff }).forEach(field => {
+    affInfo[field] = aff[field]
+  })
+  affCodeLoading.value = false
+}
+
 onMounted(() => {
   loadVersion()
+  loadAffiliateInfo()
 })
 </script>
 
