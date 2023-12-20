@@ -173,4 +173,15 @@ const contactlist = ref([
             }
     }
 }
+@media (max-width: 768px) {
+  .customer-service {
+    .inner {
+      padding: 20px;
+    }
+    height: unset;
+    .services {
+      flex-direction: column;
+    }
+  }
+}
 </style>

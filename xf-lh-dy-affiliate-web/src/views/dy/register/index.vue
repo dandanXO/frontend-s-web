@@ -188,6 +188,7 @@
     :slides-per-view="1"
     :direction="'vertical'"
     :pagination="{clickable: true}"
+    :scrollbar="{draggable: true}"
     :mousewheel="true"
     :autoHeight="true"
   >
