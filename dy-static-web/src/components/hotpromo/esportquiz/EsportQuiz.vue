@@ -143,8 +143,8 @@
             <td>{{ e.answer }}</td>
             <td :class="e.className">{{ e.statusText }}</td>
             <template v-if="i === 0">
-              <td rowspan="2">{{ quizWonTimesRecord }}</td>
-              <td rowspan="2">{{ quizAttendTimesRecord }}</td>
+              <td :rowspan="recordsLength">{{ quizWonTimesRecord }}</td>
+              <td :rowspan="recordsLength">{{ quizAttendTimesRecord }}</td>
             </template>
           </tr>
         </table>
@@ -156,7 +156,7 @@
         <!-- <pre>records: {{ records }}</pre> -->
         <div v-if="isHasRecord" class="page-list">
           <div class="prev page-item" @click="onPrevPageClick()">&lt;</div>
-          <div
+          <!-- <div
             v-for="(e, i) in paginationInfo.pageTotal"
             :key="`page-content-${i}`"
             :id="`page-number-${e}`"
@@ -164,7 +164,7 @@
             @click="onPaginationClick(e)"
           >
             {{ e }}
-          </div>
+          </div> -->
           <div class="next page-item" @click="onNextPageClick()">&gt;</div>
         </div>
         <div v-else class="page-list">暂无记录</div>
@@ -177,7 +177,12 @@
 import { onMounted, ref, reactive } from "vue";
 import { userStore } from "@/store";
 import { ElMessage } from "element-plus";
-import { getSportMatchQuizInfo, getMemberSportMatchRecord, submitMemberSportMatchQuiz } from "@/api/index/promo";
+import {
+  getSportMatchQuizInfo,
+  getMemberSportMatchRecord,
+  getRecordsCount,
+  submitMemberSportMatchQuiz
+} from "@/api/index/promo";
 import moment from "moment";
 
 const store = userStore();
@@ -263,44 +268,64 @@ function getMatchInfo() {
 const records = ref([]);
 const quizAttendTimesRecord = ref();
 const quizWonTimesRecord = ref();
+const recordsLength = ref();
+const recordsPagination = reactive({ size: 5, current: 1, total: 5 });
 const paginationInfo = reactive({ pageSize: 5, pageNumber: 1, pageTotal: 0 });
 
 const isHasRecord = ref(false);
 function getRecords() {
-  getMemberSportMatchRecord().then((res) => {
+  getMemberSportMatchRecord(recordsPagination).then((res) => {
+    // console.log("data", res.data)
     const { code, data } = res;
     if (code == 0) {
-      records.value = data.answers;
-      quizAttendTimesRecord.value = data.quizAttendTimes;
-      quizWonTimesRecord.value = data.quizWonTimes;
+      records.value = data.records;
+      // quizAttendTimesRecord.value = data.quizAttendTimes;
+      // quizWonTimesRecord.value = data.quizWonTimes;
 
-      const dataLength = data.answers.length;
+      recordsLength.value = data.records.length;
+      const dataLength = data.records.length;
       if (dataLength) {
         let pageTotal;
         pageTotal = dataLength % paginationInfo.pageSize == 0 ? 0 : 1;
         pageTotal = pageTotal + parseInt(dataLength / paginationInfo.pageSize);
         paginationInfo.pageTotal = pageTotal;
-
         getRecordList();
-
         isHasRecord.value = true;
       }
+    }
+  });
+
+  getRecordsCount().then((res) => {
+    const { code, data } = res;
+    if (code == 0) {
+      quizAttendTimesRecord.value = data.quizAttendTimes;
+      quizWonTimesRecord.value = data.quizWonTimes;
     }
   });
 }
 
 function onPrevPageClick() {
-  if (paginationInfo.pageNumber === 1) return;
+  // if (paginationInfo.pageNumber === 1) return;
 
-  paginationInfo.pageNumber--;
-  getRecordList();
+  // paginationInfo.pageNumber--;
+  // getRecordList();
+
+  if (recordsPagination.current > 1) {
+    recordsPagination.current = recordsPagination.current - 1;
+    getRecords();
+  }
 }
 
 function onNextPageClick() {
-  if (paginationInfo.pageNumber + 1 > paginationInfo.pageTotal) return;
+  // if (paginationInfo.pageNumber + 1 > paginationInfo.pageTotal) return;
 
-  paginationInfo.pageNumber++;
-  getRecordList();
+  // paginationInfo.pageNumber++;
+  // getRecordList();
+
+  if (recordsPagination.total / recordsPagination.current > recordsPagination.current) {
+    recordsPagination.current = recordsPagination.current + 1;
+    getRecords();
+  }
 }
 
 function onPaginationClick(pageIndex) {

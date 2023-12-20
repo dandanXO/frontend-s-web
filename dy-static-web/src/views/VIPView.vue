@@ -58,8 +58,7 @@
                         @click="onVIPButtonClick('dy2-vip-monthly')"
                         :disabled="btnIsDisabled || btnIsRedeemMonthly"
                       >
-                        <span v-if="btnIsRedeemMonthly">已</span>
-                        领取
+                        <span v-if="btnIsRedeemMonthly">已</span>领取
                       </button>
                       <!-- </div> -->
                     </template>
@@ -80,8 +79,7 @@
                         @click="onVIPButtonClick('dy2-vip-birthday')"
                         :disabled="btnIsDisabled || btnIsRedeemBirthday"
                       >
-                        <span v-if="btnIsRedeemBirthday">已</span>
-                        领取
+                        <span v-if="btnIsRedeemBirthday">已</span>领取
                       </button>
                     </template>
                   </div>
@@ -389,6 +387,7 @@ import { userStore } from "@/store";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import { claimBonusItem } from "@/api/index/promo";
 import { ElMessageBox } from "element-plus";
+import { getPriviVipCanRedeem } from "@/api/personal/vip";
 
 export default defineComponent({
   components: {
@@ -733,11 +732,33 @@ export default defineComponent({
       }
     };
 
+    const checkPrivilegeClaim = (type, btnValue) => {
+      getPriviVipCanRedeem(`dy2-vip-${type}`).then((res) => {
+        if (res.data === false) {
+          btnValue.value = true;
+        }
+      });
+    };
+
+    const checkPrivilegeClaimMonthly = () => {
+      checkPrivilegeClaim('monthly', btnIsRedeemMonthly);
+    };
+
+    const checkPrivilegeClaimBirthday = () => {
+      checkPrivilegeClaim('birthday', btnIsRedeemBirthday);
+    };
+
     onMounted(() => {
       vipLevel.value = store.vip.replace("VIP", "");
       if (vipLevel.value >= 1) {
         selectedVIP.value = vipLevel.value ? parseInt(vipLevel.value) - 1 : 0;
       }
+
+      if(store.token){
+        checkPrivilegeClaimMonthly();
+        checkPrivilegeClaimBirthday();
+      }
+     
     });
 
     return {
@@ -753,7 +774,9 @@ export default defineComponent({
       btnIsRedeemMonthly,
       btnIsRedeemBirthday,
       errorCount,
-      startCountdown
+      startCountdown,
+      checkPrivilegeClaimMonthly,
+      checkPrivilegeClaimBirthday
     };
   }
 });
