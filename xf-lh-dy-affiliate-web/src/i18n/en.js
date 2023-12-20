@@ -194,6 +194,7 @@ export default {
     editRealName: 'Update Real Name',
     email: 'Email',
     endDate: 'End Date',
+    enquire: 'Enquire',
     enterTheWithdrawalAmount: 'Enter the withdrawal amount',
     estimatedAffiliateCommission: 'Estimated Affiliate Commission',
     estimatedMemberCommission: 'Estimated Member Commission',

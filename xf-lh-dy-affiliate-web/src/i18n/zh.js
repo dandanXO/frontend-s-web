@@ -191,6 +191,7 @@ export default {
     editRealName: '编辑真实名字',
     email: '邮箱',
     endDate: '结束日期',
+    enquire: '咨询',
     enterTheWithdrawalAmount: '请输入提款金额',
     estimatedAffiliateCommission: '预计代理佣金',
     estimatedMemberCommission: '预计会员佣金',
