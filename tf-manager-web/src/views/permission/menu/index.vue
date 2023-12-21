@@ -316,7 +316,7 @@ function initSite() {
   if (sitesList.value[0].id !== 9999) {
     sitesList.value.unshift({
       id: 9999,
-      siteName: 'All Sites',
+      siteName: t('fields.allSites'),
       siteCode: 'ALL'
     })
   }

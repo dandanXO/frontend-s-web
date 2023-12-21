@@ -1323,7 +1323,8 @@ export default {
     createConfig: '新增设置',
     configCode: '设置Code',
     configValue: '设置值',
-    s3Url: 'S3地址'
+    s3Url: 'S3地址',
+    allSites: '全部站点'
   },
   message: {
     addRemarkSuccess: '新增备注成功',
