@@ -69,6 +69,10 @@ export const getMemberWithdrawRecordAutopay = (memberWithdrawRecord) => {
   return https().request("/memberWithdrawRecord/getAutopay", Method.GET, memberWithdrawRecord, ContentType.form);
 };
 
+export const getMemberWithdrawRecordWaitingAutopay = (memberWithdrawRecord) => {
+  return https().request("/memberWithdrawRecord/getWaitingAutopay", Method.GET, memberWithdrawRecord, ContentType.form);
+};
+
 export const getAffiliateWithdrawRecordAutopay = (memberWithdrawRecord) => {
   return https().request("/memberWithdrawRecord/getAffiliateAutopay", Method.GET, memberWithdrawRecord, ContentType.form);
 };
@@ -99,6 +103,10 @@ export const fromAffiliatePendingToApply = async (ids) => {
 
 export const fromCheckingToApply = async (ids) => {
   await https().httpClient.post('/memberWithdrawRecord/checkingToApply?_method=PUT', JSON.stringify(ids), { headers: { "Content-Type": "application/json" } });
+};
+
+export const fromWaitingAutoPayToApply = async (ids) => {
+  await https().httpClient.post('/memberWithdrawRecord/waitingAutoPayToApply?_method=PUT', JSON.stringify(ids), { headers: { "Content-Type": "application/json" } });
 };
 
 export const fromAffiliateCheckingToApply = async (ids) => {
