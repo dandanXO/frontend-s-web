@@ -313,6 +313,13 @@ function resetForm() {
 
 function initSite() {
   sitesList.value = useStore().state.user.sites;
+  if (sitesList.value[0].id !== 9999) {
+    sitesList.value.unshift({
+      id: 9999,
+      siteName: 'All Sites',
+      siteCode: 'ALL'
+    })
+  }
 }
 
 onMounted(() => {
