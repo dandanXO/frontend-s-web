@@ -571,6 +571,7 @@ svg path {
   border-radius: 15px;
   margin-left: 8px;
   margin-right: auto;
+  z-index: 2;
 
   span {
     color: $white;
@@ -642,6 +643,8 @@ svg path {
   position: absolute;
   top: -50%;
   width: 100%;
+  height: 26px;
+  z-index: 0;
 
   img {
     width: 100%;

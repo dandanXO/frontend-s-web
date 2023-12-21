@@ -676,6 +676,10 @@ onMounted(() => {
     }
   }
 
+  .santa-img {
+    display: none;
+  }
+
   .spinwheel-container {
     background: url(../../../assets/images/promotion/spinwheel/web_bg.png);
     background-size: contain;
