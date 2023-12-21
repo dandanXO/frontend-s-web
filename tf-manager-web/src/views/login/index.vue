@@ -10,7 +10,7 @@
     >
       <div class="title-container">
         <h3 class="title">
-          XF ADMIN SYSTEM
+          ADMIN SYSTEM
         </h3>
       </div>
 

@@ -10,7 +10,10 @@
       <el-button
         v-for="(appType, index) in appTypeList"
         :key="appType.type"
-        :class="form.appType === appType.type ? 'el-button--primary' : ''"
+        :class="form.appType === appType.type ? 'tick' : ''"
+        plain
+        size="normal"
+        style="min-width: 100px; padding-left: 10px;"
         @click="onAppTypeChange(index)"
       >
         {{ $t(`appType.${appType.type}`) }}
@@ -26,13 +29,17 @@
     </el-form-item>
     <el-form-item :label="t('fields.apkType')">
       <el-button
-        :class="form.apkType === 'NORMAL' ? 'el-button--primary' : ''"
+        size="normal"
+        style="min-width: 100px; padding-left: 10px;"
+        :class="form.apkType === 'NORMAL' ? 'tick' : ''"
         @click="onApkTypeChange(1)"
       >
         {{ $t('fields.normal') }}
       </el-button>
       <el-button
-        :class="form.apkType !== 'NORMAL' ? 'el-button--primary' : ''"
+        size="normal"
+        style="min-width: 100px; padding-left: 10px;"
+        :class="form.apkType !== 'NORMAL' ? 'tick' : ''"
         @click="onApkTypeChange(2)"
       >
         {{ $t('fields.newKey') }}
@@ -44,7 +51,11 @@
       </div>
     </el-form-item>
     <el-form-item :label="t('fields.appName')" prop="name">
-      <el-input v-model="form.name" />
+      <el-row>
+        <el-col :span="8">
+          <el-input size="normal" v-model="form.name" />
+        </el-col>
+      </el-row>
     </el-form-item>
     <el-form-item :label="t('fields.appIcon')" prop="icon">
       <div id="preview">
@@ -62,14 +73,9 @@
         accept="image/*"
         @change="attachImage"
       >
-      <el-button
-        icon="el-icon-upload"
-        size="mini"
-        type="success"
-        @click="$refs.inputImage.click()"
-      >
-        {{ t('fields.upload') }}
-      </el-button>
+      <el-icon :class="uploadedImage.url ? 'uploaded' : ''" class="avatar-uploader-icon" @click="$refs.inputImage.click()">
+        <img src="../../../../assets/images/imgicon.svg">
+      </el-icon>
     </el-form-item>
     <el-form-item>
       <el-button
@@ -219,7 +225,63 @@ onMounted(() => {
 }
 
 #preview .el-image {
-  width: 60px;
-  height: 60px;
+  width: 75px;
+  height: 75px;
+}
+.tick {
+  position: relative;
+  border: 1px solid#409eff;
+  background: #ecf5ff;
+  overflow: hidden;
+  &:before {
+    content: "✔";
+    position: absolute;
+    color: #ffffff;
+    padding: 0px;
+    right: 3px;
+    bottom: 3px;
+    width: 8px;
+    height: 8px;
+    font-size: 10px;
+    background-size: contain;
+    z-index: 1;
+  }
+  &:after {
+    content: "";
+    background: #409eff;
+    position: absolute;
+    bottom: -15px;
+    right: -15px;
+    width: 30px;
+    height: 30px;
+    transform: rotateZ(45deg);
+  }
+}
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 75px;
+  height: 75px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed #458BFF;
+  background: #F4F9FD;
+  &.uploaded {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+  }
 }
 </style>

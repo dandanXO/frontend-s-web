@@ -227,10 +227,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         way = "IOS";
       } else {
         way = Platform.is.mobile ? "H5" : "WEB";
-        if (Platform.is.capacitor) {
-          if (Platform.is.android) {
-            way = "ANDROID";
-          }
+        if (Platform.is.capacitor && Platform.is.android) {
+          way = "ANDROID";
         }
       }
 
@@ -281,12 +279,12 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             $q.loading.hide();
 
             let srcData = response.data;
+
             if (platformCode === "PG") {
               srcData = srcData.replaceAll(/\\\"/g, '"').replaceAll(/\n/g, "");
-              logoShow.value = false;
-            }
-
-            if (way == "ANDROID") {
+              src.value = srcData;
+              visible.value = true;
+            } else if (way == "ANDROID") {
               var ref = cordova.InAppBrowser.open(srcData, "_blank", "location=no,zoom=no");
             } else {
               window.location.href = srcData;

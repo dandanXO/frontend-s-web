@@ -203,7 +203,6 @@
           <el-input v-model="ruleForm.name" autocomplete="off" />
         </el-form-item>
         <el-form-item :label="t('fields.code')" prop="code" required>
-          <!-- <el-input v-model="ruleForm.code" autocomplete="off" /> -->
           <el-select
             filterable
             clearable

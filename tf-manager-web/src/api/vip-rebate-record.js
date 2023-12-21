@@ -16,3 +16,7 @@ export const adjustAmount = (id, adjust) => {
 export const distribute = (rebate) => {
   return https().request("/vip-rebate-record/rebate", Method.POST, rebate, ContentType.form);
 };
+
+export const batchCancel = (records) => {
+  return https(5 * 60 * 1000).request("/vip-rebate-record/batchCancel", Method.POST, { records: JSON.stringify(records) }, ContentType.form);
+};

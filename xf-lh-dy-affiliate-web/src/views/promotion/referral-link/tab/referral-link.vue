@@ -1,17 +1,17 @@
 <template>
   <div class="roles-main">
-    <el-card style="margin-top: 20px;">
+    <el-card style="margin-top: 20px;" shadow="none">
       <div class="card-container">
         <div class="card-panel-description">
-          <span style="font-size: 20px">
+          <span style="font-size: 20px; font-weight: normal;">
             {{ $t('referralLink.affiliateWebPlatformLink') }}
           </span>
-          <a :href="page.webLongLink" target="_blank" style="color: #1fa8db">
+          <a :href="page.webLongLink" target="_blank" style="color: #3F8CFF">
             {{ page.webLongLink }}
           </a>
         </div>
 
-        <div class="btn-group">&nbsp;</div>
+        <!-- <div class="btn-group">&nbsp;</div> -->
         <!-- <div class="btn-group">
             <el-button
               type="primary"
@@ -26,7 +26,7 @@
 
         <div class="btn-group">
           <el-dropdown trigger="click">
-            <el-button type="primary" style="width:100%">
+            <el-button type="primary" size="normal" style="width:100%; box-shadow: 0px 6px 12px 0px #3F8CFF43;">
               <span>{{ $t('fields.copy') }}</span>
               <el-icon class="el-icon--right"><arrow-down-bold /></el-icon>
             </el-button>
@@ -45,9 +45,7 @@
             </template>
           </el-dropdown>
           <el-dropdown trigger="click">
-            <el-button
-              style="margin-left: 0px; width: 100%; border-color: #409eff"
-            >
+            <el-button size="normal" style="margin-left: 0px; width: 100%; border-color: #409eff">
               <span style="color: #409eff;">{{ $t('fields.download') }}</span>
               <el-icon class="el-icon--right" style="color: #409eff;">
                 <arrow-down-bold />
@@ -74,15 +72,15 @@
     <el-card style="margin-top: 20px;">
       <div class="card-container">
         <div class="card-panel-description">
-          <span style="font-size: 20px">
+          <span style="font-size: 20px; font-weight: normal;">
             {{ $t('referralLink.affiliateH5PlatformLink') }}
           </span>
-          <a :href="page.h5LongLink" target="_blank" style="color: #1fa8db">
+          <a :href="page.h5LongLink" target="_blank" style="color: #3F8CFF">
             {{ page.h5LongLink }}
           </a>
         </div>
 
-        <div class="btn-group">&nbsp;</div>
+        <!-- <div class="btn-group">&nbsp;</div> -->
         <!-- <div class="btn-group">
             <el-button
               type="primary"
@@ -97,7 +95,7 @@
 
         <div class="btn-group">
           <el-dropdown trigger="click">
-            <el-button type="primary" style="width:100%">
+            <el-button size="normal" type="primary" style="width:100%">
               <span>{{ $t('fields.copy') }}</span>
               <el-icon class="el-icon--right"><arrow-down-bold /></el-icon>
             </el-button>
@@ -117,7 +115,7 @@
           </el-dropdown>
           <el-dropdown trigger="click">
             <el-button
-              style="margin-left: 0px; width: 100%; border-color: #409eff"
+              size="normal" style="margin-left: 0px; width: 100%; border-color: #409eff"
             >
               <span style="color: #409eff;">{{ $t('fields.download') }}</span>
               <el-icon class="el-icon--right" style="color: #409eff;">
@@ -427,13 +425,25 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.el-card {
+  max-width: 430px;
+}
+.roles-main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.el-card {
+  background: #F4F9FD;
+  border: 0;
+}
 .card-container {
   display: flex;
-  gap: 10px;
+  gap: 20px;
 }
 
 .card-panel-description {
-  width: 50%;
+  /* width: 50%; */
   font-weight: 700;
   margin-left: 0;
   display: flex;
@@ -442,10 +452,12 @@ onMounted(() => {
 }
 
 .btn-group {
-  width: 25%;
+  /* width: 25%; */
   display: flex;
   flex-direction: column;
   gap: 15px;
+  max-width: 130px;
+  margin-left: auto;
 }
 
 /* Styles for the container and QR code */
@@ -476,4 +488,14 @@ onMounted(() => {
   width: 50px; /* Adjust the width and height as needed */
   height: 50px;
 }
+
+@media (max-width: 500px) {
+  .card-container {
+    flex-direction: column;
+  }
+  .btn-group {
+    margin-left: 0;
+  }
+}
+
 </style>

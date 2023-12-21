@@ -22,7 +22,7 @@
           <q-btn
             size="md"
             color="dyblue"
-            label="发送验证码"
+            :label="showVerifyBtn && otpCountdownCount <= 0 ? `发送验证码` : `已发送（倒数${otpCountdownCount}秒)`"
             @click="openVerificationDialog()"
             style="white-space: nowrap"
             :disable="!showVerifyBtn && otpCountdownCount > 0"
@@ -46,16 +46,16 @@
           color=""
           style="width: 100%"
         ></q-input>
-        <div v-if="otpCountdownCount" class="q-ml-md">
-          <q-btn
-            size="md"
-            color="grey"
-            :label="`已发送（倒数${otpCountdownCount}秒)`"
-            @click="openVerificationDialog()"
-            style="white-space: nowrap"
-            :disable="!showVerifyBtn && otpCountdownCount > 0"
-          />
-        </div>
+        <!--        <div v-if="otpCountdownCount" class="q-ml-md">-->
+        <!--          <q-btn-->
+        <!--            size="md"-->
+        <!--            color="grey"-->
+        <!--            :label="`已发送（倒数${otpCountdownCount}秒)`"-->
+        <!--            @click="openVerificationDialog()"-->
+        <!--            style="white-space: nowrap"-->
+        <!--            :disable="!showVerifyBtn && otpCountdownCount > 0"-->
+        <!--          />-->
+        <!--        </div>-->
       </div>
 
       <div class="text-center q-mt-md" v-if="canEdit">
@@ -318,6 +318,7 @@ const countdownOtp = () => {
   otpCountdownCount.value = 60;
   otpCountdownSchedule = setInterval(() => {
     if (otpCountdownCount.value <= 0) {
+      showVerifyBtn.value = true;
       clearInterval(otpCountdownSchedule);
       return;
     }

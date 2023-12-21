@@ -2,9 +2,10 @@
   <el-form @submit.prevent>
     <div class="inputs-wrap">
       <el-row :gutter="20">
-        <el-col :span="8">
+        <el-col :xl="6" :lg="6" :md="10">
           <el-form-item :label="t('fields.creditFlowType') + ' :'">
             <el-select
+              size="normal"
               v-model="type.selectedType"
               :placeholder="t('fields.all')"
               @change="handleSelectChange"
@@ -20,7 +21,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="10">
+        <el-col :xl="7" :lg="8" :md="14">
           <el-form-item :label="t('fields.creditFlowDate') + ' :'">
             <el-date-picker
               v-model="request.date"
@@ -31,10 +32,11 @@
               range-separator=":"
               :start-placeholder="t('fields.startDate')"
               :end-placeholder="t('fields.endDate')"
+              style="width: 100%;"
             />
           </el-form-item>
         </el-col>
-        <el-col :span="6">
+        <el-col :xl="8" :lg="8" :md="6">
           <div class="btn-grp">
             <el-button
               icon="el-icon-search"
@@ -44,7 +46,7 @@
             >
               {{ $t('fields.search') }}
             </el-button>
-            <el-button size="normal" type="warning" @click="resetQuery()">
+            <el-button size="normal" type="primary" plain @click="resetQuery()">
               {{ $t('fields.reset') }}
             </el-button>
           </div>
@@ -57,12 +59,14 @@
     :data="page.records"
     ref="table"
     row-key="id"
-    size="small"
+    size="normal"
     highlight-current-row
     v-loading="page.loading"
     style="margin-top: 15px; margin-left: 15px;"
-    :empty-text="t('fields.noData')"
   >
+    <template #empty>
+      <emptyComp />
+    </template>
     <el-table-column
       prop="id"
       :label="t('fields.creditFlowId')"
@@ -129,6 +133,7 @@
 import { reactive, onMounted } from 'vue'
 import { useStore } from '@/store'
 import { useI18n } from 'vue-i18n'
+import emptyComp from '@/components/empty'
 
 import { getCreditFlow } from '../../../../api/affiliate-credit-flow'
 

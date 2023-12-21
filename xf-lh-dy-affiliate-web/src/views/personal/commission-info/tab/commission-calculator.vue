@@ -1,7 +1,7 @@
 <template>
   <el-form
     label-position="right"
-    label-width="250px"
+    label-width="280px"
     style="margin-top: 20px;"
     :model="form"
   >
@@ -155,7 +155,7 @@ onMounted(() => {
   width: 200px; /* Adjust the width as needed */
 }
 .note {
-  color: red;
+  color: #FB560A;
 }
 /*
 ((总有效投注 - 总派彩) - 平账 - 红利 - ((总有效投注 - 总派彩） platform_fee) - ((存款 + 提款)  payment_fee)) * commission rate
