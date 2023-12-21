@@ -509,7 +509,8 @@ svg path {
 }
 
 .footer-icon {
-  width: 22px;
+  //width: 22px;
+  width: 26px;
   filter: brightness(1.4);
   margin-bottom: 4px;
 }
@@ -640,6 +641,7 @@ svg path {
 .btn-deco {
   position: absolute;
   top: -50%;
+  width: 100%;
 
   img {
     width: 100%;

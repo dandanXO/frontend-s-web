@@ -2971,8 +2971,9 @@ export default defineComponent({
 .snow {
   $total: 50;
   position: absolute;
-  width: 100%;
-  height: 100%;
+  z-index: 0;
+  width: 23px;
+  height: 23px;
   background: url(../assets/images/common/snow.png);
   background-repeat: no-repeat;
 
