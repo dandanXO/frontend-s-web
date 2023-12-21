@@ -138,9 +138,24 @@
 
     <Transition>
       <div class="game-grid-lists" id="id-lottery-board" v-if="currentSelectedMenu === 'lottery'">
-        <div v-if="lotteryGames.length === 0" class="coming-soon-div">
-          <img src="../assets/home/coming-soon-img.png" />
-          <span>{{ $t("lang.coming_soon") }}</span>
+        <div
+          :class="`game-item btn-pointer ${lotteryGames.length === 1 ? 'mid-grid-column' : ''}`"
+          v-for="(lotteryGameItem, index) in lotteryGames"
+          :key="`lottery-${index}`"
+          @click="playGame(lotteryGameItem.name, lotteryGameItem.code, lotteryGameItem.gameCode)"
+        >
+          <div
+            class="platform-img"
+            :style="{
+              backgroundImage: (() => {
+                try {
+                  return `url(${require(`../assets/home/lottery/${lotteryGameItem.code}.png`)})`;
+                } catch (e) {
+                  return `url(${comingSoonImg})`;
+                }
+              })()
+            }"
+          ></div>
         </div>
       </div>
     </Transition>
@@ -1270,6 +1285,7 @@ export default defineComponent({
         switchPlat(platformMinigame.value[0], menu);
       } else if (menu === "xfjGames") {
       } else if (menu === "lottery") {
+        switchPlat(lotteryGames.value[0], menu);
       } else if (menu === "esport") {
       }
 
@@ -1809,6 +1825,11 @@ export default defineComponent({
       isShow.value = true;
       switchPlat(plat, "fish");
     };
+    const selectLotteryPlat = (plat) => {
+      selectedPlatId.value = plat.id;
+      isShow.value = true;
+      switchPlat(plat, "lottery");
+    };
     const selectCasualPlat = (plat) => {
       selectedPlatId.value = plat.id;
       isShow.value = true;
@@ -1882,6 +1903,7 @@ export default defineComponent({
       esportsGame,
       showFavourite,
       selectFishPlat,
+      selectLotteryPlat,
       selectSlotPlat,
       selectCasualPlat,
       platformMinigame,
