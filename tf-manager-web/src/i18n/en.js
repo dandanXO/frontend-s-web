@@ -1319,7 +1319,8 @@ export default {
     createConfig: 'Create Config',
     configCode: 'Config Code',
     configValue: 'Config Value',
-    s3Url: 'S3 URL'
+    s3Url: 'S3 URL',
+    allSites: 'All Sites'
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
