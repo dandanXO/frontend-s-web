@@ -1327,6 +1327,7 @@ export default {
     s3Url: 'S3地址',
     teamIcon: '队伍图标',
     other: '其他',
+    allSites: '全部站点'
   },
   message: {
     addRemarkSuccess: '新增备注成功',
