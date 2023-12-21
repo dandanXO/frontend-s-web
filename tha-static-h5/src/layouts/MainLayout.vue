@@ -3,14 +3,31 @@
     <q-header elevated>
       <q-card-section v-if="!store.hasToken()" class="top-section justify-between items-center" horizontal>
         <q-card-actions v-if="$q.screen.gt.md">
-          <q-btn size="md" class="register-btn" to="/register">{{ $t("lang.register") }}</q-btn>
+          <div class="btn-deco-wrapper">
+            <q-btn size="md" class="register-btn" to="/register">{{ $t("lang.register") }}</q-btn>
+            <div class="btn-deco">
+              <img src="../assets/images/common/btn-snow.png" />
+            </div>
+          </div>
         </q-card-actions>
         <div class="logo">
           <router-link to="/"><img src="../assets/logo.png" /></router-link>
         </div>
         <q-card-actions>
-          <q-btn size="md" class="login-btn" to="/login">{{ $t("lang.login") }}</q-btn>
-          <q-btn v-if="!$q.screen.gt.md" size="md" class="register-btn" to="/register">{{ $t("lang.register") }}</q-btn>
+          <div class="btn-deco-wrapper">
+            <q-btn size="md" class="login-btn" to="/login">{{ $t("lang.login") }}</q-btn>
+            <div class="btn-deco">
+              <img src="../assets/images/common/btn-snow.png" />
+            </div>
+          </div>
+          <div v-if="!$q.screen.gt.md" class="btn-deco-wrapper">
+            <q-btn size="md" class="register-btn" to="/register">
+              {{ $t("lang.register") }}
+            </q-btn>
+            <div class="btn-deco">
+              <img src="../assets/images/common/btn-snow.png" />
+            </div>
+          </div>
         </q-card-actions>
       </q-card-section>
       <!--      v-if="hasPage"-->
@@ -23,13 +40,17 @@
           <span id="point-span">{{ mainWalletValue }}</span>
 
           <img class="btn-pointer" @click="store.getBalance()" src="../assets/images/menu/refresh-icon.png" />
+
+          <div class="btn-deco">
+            <img src="../assets/images/common/btn-snow.png" />
+          </div>
         </div>
 
         <div v-if="$q.screen.gt.md" class="logo">
           <router-link to="/"><img src="../assets/logo.png" /></router-link>
         </div>
 
-        <q-btn v-if="store.hasToken()" class="flex header-vip-btn" to="/vip" no-caps flat>
+        <q-btn v-if="store.hasToken()" class="flex header-vip-btn" to="/vip" no-caps flat label="VIP" stack>
           <img class="vip-btn btn-pointer" src="../assets/images/menu/vip-icon.png" />
         </q-btn>
       </q-card-section>
@@ -86,6 +107,8 @@
       </div>
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
+      <img class="footer-deco left" src="../assets/images/common/xmas-footer-left.png" />
+
       <q-tabs v-model="tab" no-caps class="footer-nav" :breakpoint="0" align="justify">
         <q-route-tab to="/" name="home" exact>
           <img class="footer-icon" :src="tab === 'home' ? footers['home']['active'] : footers['home']['icon']" />
@@ -140,6 +163,8 @@
           <span>{{ $t("lang.cs_footer") }}</span>
         </q-route-tab>
       </q-tabs>
+
+      <img class="footer-deco right" src="../assets/images/common/xmas-footer-right.png" />
     </q-footer>
   </q-layout>
 </template>
@@ -468,8 +493,24 @@ svg path {
   }
 }
 
+.footer-deco {
+  position: absolute;
+  bottom: 0;
+  height: 100%;
+  padding: 0 20px;
+
+  &.left {
+    left: 0;
+  }
+
+  &.right {
+    right: 0;
+  }
+}
+
 .footer-icon {
-  width: 22px;
+  //width: 22px;
+  width: 26px;
   filter: brightness(1.4);
   margin-bottom: 4px;
 }
@@ -516,9 +557,11 @@ svg path {
 
 .vip-btn {
   width: 24px;
+  order: -1;
 }
 
 .point-rebate-div {
+  position: relative;
   min-width: 130px;
   height: 30px;
   background: $third-color;
@@ -528,6 +571,7 @@ svg path {
   border-radius: 15px;
   margin-left: 8px;
   margin-right: auto;
+  z-index: 2;
 
   span {
     color: $white;
@@ -591,6 +635,22 @@ svg path {
   line-height: 1rem;
 }
 
+.btn-deco-wrapper {
+  position: relative;
+}
+
+.btn-deco {
+  position: absolute;
+  top: -50%;
+  width: 100%;
+  height: 26px;
+  z-index: 0;
+
+  img {
+    width: 100%;
+  }
+}
+
 .drawer-container {
   padding: 10px 16px;
   width: calc(100%);
@@ -627,6 +687,12 @@ svg path {
   }
   .header-vip-btn {
     margin-left: 130px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .footer-deco {
+    display: none;
   }
 }
 </style>

@@ -27,15 +27,14 @@
 
   <div class="spinwheel-container">
     <div class="spin-count-board">
-      <img
-        class="spin-count-board-img"
-        src="../../../assets/images/promotion/spinwheel/spin_count_board.png"
-      />
-      <span>{{
-        $t("lang.spinRemaining", {
-          spinCount: availableSpinCount,
-        })
-      }}</span>
+      <img class="spin-count-board-img" src="../../../assets/images/promotion/spinwheel/spin_count_board.png" />
+      <span>
+        {{
+          $t("lang.spinRemaining", {
+            spinCount: availableSpinCount
+          })
+        }}
+      </span>
     </div>
 
     <div :ref="outerWheelConfig.wheelRef" class="outer-wheel">
@@ -110,6 +109,8 @@
     <div class="infoboard">
       <img class="infoboard-img" src="../../../assets/images/promotion/spinwheel/infoboard.png" />
     </div>
+
+    <img class="santa-img" src="../../../assets/images/promotion/spinwheel/santa.png" />
   </div>
 </template>
 
@@ -647,6 +648,13 @@ onMounted(() => {
       margin: 0 auto;
     }
   }
+
+  .santa-img {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 125px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -666,6 +674,10 @@ onMounted(() => {
         font-size: 30px !important;
       }
     }
+  }
+
+  .santa-img {
+    display: none;
   }
 
   .spinwheel-container {
