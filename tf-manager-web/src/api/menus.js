@@ -24,7 +24,8 @@ export const fetchMenu = (parentId) => {
 };
 
 export const fetchSimpleMenu = (id) => {
-  return https().request(`/authority/menu/simple/${id}`, Method.GET);
+  id = id === 0 ? null : id
+  return https().request('/authority/menu/simple', Method.GET, { id: id });
 };
 
 export const fetchSimpleChildMenu = (id) => {

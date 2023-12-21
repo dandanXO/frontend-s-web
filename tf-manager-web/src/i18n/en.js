@@ -1322,6 +1322,7 @@ export default {
     s3Url: 'S3 URL',
     teamIcon: 'Team Icon',
     other: 'Other',
+    allSites: 'All Sites'
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
