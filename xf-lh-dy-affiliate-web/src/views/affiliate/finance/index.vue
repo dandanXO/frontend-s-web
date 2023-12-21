@@ -6,7 +6,7 @@
           <span class="role-span">{{ $t('menu.Finance Report') }}</span>
         </div>
       </template>
-      <el-tabs v-model="activeName" style="margin-left: 20px">
+      <el-tabs v-model="activeName">
         <el-tab-pane :label="t('fields.personalReport')" name="personal">
           <PersonalFinanceTab />
         </el-tab-pane>

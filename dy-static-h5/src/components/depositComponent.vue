@@ -657,7 +657,8 @@ const currentPath = ref(route.path);
 const extensionState = ref(false);
 const extensionToken = ref("");
 const checkExtension = () => {
-  if (currentPath.value === "/finance/depositMobile") {
+  // console.log(currentPath.value);
+  if (currentPath.value === "/deposit") {
     // const eToken = ref(route.query.name);
     extensionToken.value = route.query.token;
     extensionState.value = true;

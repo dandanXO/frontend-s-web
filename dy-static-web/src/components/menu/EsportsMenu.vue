@@ -7,10 +7,7 @@
         @click="$emit('loadModal', nav.label, 'onlyPlatform', nav.code)"
       >
         <div class="platform-box">
-          <div
-            class="imgbox"
-            :style="`background-position-x: ${nav.percentage}`"
-          ></div>
+          <div class="imgbox" :style="`background-position-x: ${nav.percentage}`"></div>
           <div class="contents">
             <p class="platform-title">{{ nav.label }}电竞</p>
             <p class="platform-slogan">{{ nav.slogan }}</p>
@@ -33,10 +30,7 @@
 
 <script>
 import { defineComponent, ref, onMounted, computed } from "vue";
-import {
-  getPlatformListDisplay,
-  getLoggedInPlatformList
-} from "@/api/platform/platform";
+import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 
 export default defineComponent({
@@ -69,28 +63,20 @@ export default defineComponent({
     const platformsList = ref([]);
     const platformsListDisplay = ref([]);
     const getPlatList = () => {
-      if (store.memberType === "TEST") {
+      if (store.token) {
         getLoggedInPlatformList().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("ESPORT")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("ESPORT"));
         });
       } else {
         getPlatformListDisplay().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("ESPORT")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("ESPORT"));
         });
       }
     };
     const filteredNavigations = computed(() => {
-      return navigations.filter((nav) =>
-        platformsListDisplay.value.some(
-          (platform) => platform.code === nav.code
-        )
-      );
+      return navigations.filter((nav) => platformsListDisplay.value.some((platform) => platform.code === nav.code));
     });
 
     onMounted(() => {

@@ -6,7 +6,7 @@
           <span class="role-span">{{ $t('menu.Transfer') }}</span>
         </div>
       </template>
-      <el-tabs v-model="activeName" style="margin-left: 20px">
+      <el-tabs v-model="activeName">
         <el-tab-pane :label="t('fields.transfer')" name="transfer">
           <TransferTab />
         </el-tab-pane>

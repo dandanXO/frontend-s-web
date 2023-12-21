@@ -61,10 +61,11 @@
             :options="unselectedPrivileges"
             v-model="selectedPrivilege"
             emit-value
-            v-if="hasPrivilege"
+            v-if="hasPrivilege && !isUSDT"
             :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
             color="white"
             @update:model-value="checkMinDepositAmt"
+            clearable
           >
             <template v-slot:option="scope">
               <q-item v-bind="scope.itemProps">
@@ -282,7 +283,7 @@ function checkMinDepositAmt() {
   if (!selectedPrivilege.value) {
     calculatedMinDeposit.value = activeMethod.value.depositMin;
   } else {
-    calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, selectedPrivilege.value.depositMin);
+    calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, selectedPrivilege.value.depositMin+1);
   }
 }
 
@@ -357,6 +358,8 @@ async function confirmDeposit() {
           value: form.localAmount
         });
       }
+
+      clearInfo();
 
       window.addEventListener(
         "message",

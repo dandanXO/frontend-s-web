@@ -7,85 +7,101 @@
         </div>
       </template>
       <div class="inputs-wrap">
-        <el-date-picker
-          v-model="request.betTime"
-          format="DD/MM/YYYY HH:mm:ss"
-          value-format="YYYY-MM-DD HH:mm:ss"
-          size="small"
-          type="datetimerange"
-          range-separator=":"
-          :start-placeholder="t('fields.startDate')"
-          :end-placeholder="t('fields.endDate')"
-          style="width: 380px"
-          :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
-          :editable="false"
-          :clearable="false"
-          :default-time="defaultTime"
-        />
-        <el-input v-model="request.loginName" size="small" class="input-small" :placeholder="t('fields.loginName')" />
-        <el-select
-          v-model="request.platform"
-          size="small"
-          :placeholder="t('fields.platform')"
-          class="filter-item"
-          style="margin-left: 5px; width: 200px;"
-          @focus="loadPlatform"
-          @change="populateGameType"
-        >
-          <el-option
-            v-for="item in list.platform"
-            :key="item.id"
-            :label="item.name"
-            :value="item.code"
-          />
-        </el-select>
-        <el-select
-          v-model="request.gameType"
-          size="small"
-          :placeholder="t('fields.gameType')"
-          class="filter-item"
-          style="margin-left: 5px; width: 200px;"
-        >
-          <el-option
-            v-for="item in list.gameType"
-            :key="item.key"
-            :label="item.displayName"
-            :value="item.value"
-          />
-        </el-select>
-        <el-select
-          multiple
-          v-model="request.status"
-          size="small"
-          :placeholder="t('fields.status')"
-          class="filter-item"
-          style="margin-left: 5px; width: 250px;"
-        >
-          <el-option
-            v-for="item in uiControl.status"
-            :key="item.key"
-            :label="item.displayName"
-            :value="item.value"
-          />
-        </el-select>
-        <div class="btn-grp">
-          <el-button icon="el-icon-search" type="primary" @click="loadBetRecords()" size="mini">
-            {{ $t('fields.search') }}
-          </el-button>
-          <el-button size="mini" type="warning" @click="resetQuery()">
-            {{ $t('fields.reset') }}
-          </el-button>
-        </div>
+        <el-row :gutter="10">
+          <el-col :xl="6" :lg="10" :md="12">
+            <el-date-picker
+              v-model="request.betTime"
+              format="DD/MM/YYYY HH:mm:ss"
+              value-format="YYYY-MM-DD HH:mm:ss"
+              size="normal"
+              type="datetimerange"
+              range-separator=":"
+              :start-placeholder="t('fields.startDate')"
+              :end-placeholder="t('fields.endDate')"
+              :shortcuts="shortcuts"
+              :disabled-date="disabledDate"
+              :editable="false"
+              :clearable="false"
+              :default-time="defaultTime"
+              style="width: 100%;"
+            />
+          </el-col>
+          <el-col :xl="3" :lg="6" :md="12">
+            <el-input v-model="request.loginName" size="normal" class="input-small" :placeholder="t('fields.loginName')" />
+          </el-col>
+          <el-col :xl="3" :lg="6" :md="12">
+            <el-select
+              v-model="request.platform"
+              size="normal"
+              :placeholder="t('fields.platform')"
+              class="filter-item"
+              style="width: 100%"
+              @focus="loadPlatform"
+              @change="populateGameType"
+            >
+              <el-option
+                v-for="item in list.platform"
+                :key="item.id"
+                :label="item.name"
+                :value="item.code"
+              />
+            </el-select>
+          </el-col>
+          <el-col :xl="3" :lg="6" :md="12">
+            <el-select
+              v-model="request.gameType"
+              size="normal"
+              :placeholder="t('fields.gameType')"
+              class="filter-item"
+              style="width: 100%"
+            >
+              <el-option
+                v-for="item in list.gameType"
+                :key="item.key"
+                :label="item.displayName"
+                :value="item.value"
+              />
+            </el-select>
+          </el-col>
+          <el-col :xl="6" :lg="10" :md="12">
+            <el-select
+              multiple
+              v-model="request.status"
+              size="normal"
+              :placeholder="t('fields.status')"
+              class="filter-item"
+              style="width: 100%;"
+            >
+              <el-option
+                v-for="item in uiControl.status"
+                :key="item.key"
+                :label="item.displayName"
+                :value="item.value"
+              />
+            </el-select>
+          </el-col>
+          <el-col :xl="3" :lg="8" :md="12">
+            <div class="btn-grp">
+              <el-button icon="el-icon-search" type="primary" @click="loadBetRecords()" size="normal">
+                {{ $t('fields.search') }}
+              </el-button>
+              <el-button size="normal" type="primary" plain @click="resetQuery()">
+                {{ $t('fields.reset') }}
+              </el-button>
+            </div>
+          </el-col>
+        </el-row>
       </div>
       <el-table :data="page.records" ref="table"
                 row-key="id"
-                size="small"
+                size="normal"
                 highlight-current-row
                 v-loading="page.loading"
                 style="margin-top: 15px;"
-                :empty-text="t('fields.noData')"
       >
+        <template #empty>
+          <emptyComp />
+        </template>
         <el-table-column prop="loginName" :label="t('fields.loginName')" align="center" min-width="100" />
         <el-table-column prop="betTime" :label="t('fields.betTime')" align="center" min-width="150">
           <template #default="scope">
@@ -140,15 +156,15 @@
         </el-table-column>
         <el-table-column prop="betStatus" :label="t('fields.status')" align="center" min-width="100">
           <template #default="scope">
-            <el-tag v-if="scope.row.betStatus === 'SETTLED'" type="success" size="mini">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
-            <el-tag v-else-if="scope.row.betStatus === 'CANCEL'" type="danger" size="mini">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
-            <el-tag v-else-if="scope.row.betStatus === 'UNSETTLED'" type="warning" size="mini">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
-            <el-tag v-else type="info" size="mini">-</el-tag>
+            <el-tag v-if="scope.row.betStatus === 'SETTLED'" type="success" size="normal">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
+            <el-tag v-else-if="scope.row.betStatus === 'CANCEL'" type="danger" size="normal">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
+            <el-tag v-else-if="scope.row.betStatus === 'UNSETTLED'" type="warning" size="normal">{{ t('betStatus.' + scope.row.betStatus) }}</el-tag>
+            <el-tag v-else type="info" size="normal">-</el-tag>
           </template>
         </el-table-column>
-        <el-table-column :label="t('fields.operate')" fixed="right" align="center" width="150">
+        <el-table-column :label="t('fields.operate')" align="center" width="150">
           <template #default="scope">
-            <el-button icon="el-icon-edit" size="mini" type="success" @click="viewDetails(scope.row)">{{ t('fields.viewDetails') }}</el-button>
+            <el-button icon="el-icon-edit" size="normal" type="success" @click="viewDetails(scope.row)">{{ t('fields.viewDetails') }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -161,7 +177,7 @@
         class="pagination"
         @current-change="changePage"
         layout="total, prev, pager, next"
-        style="margin-top: 10px"
+        style="margin: 5px;"
         :total="page.total"
         :page-size="request.size"
         :page-count="page.pages"
@@ -174,7 +190,7 @@
       append-to-body
       width="800px"
     >
-      <el-form :model="details" label-width="200px" label-suffix=":" size="small" :inline="true">
+      <el-form :model="details" label-width="200px" label-suffix=":" size="normal" :inline="true">
         <el-row>
           <el-col :span="12">
             <el-form-item :label="t('fields.account')" prop="loginName">
@@ -234,10 +250,10 @@
           </el-col>
           <el-col :span="12">
             <el-form-item :label="t('fields.status')" prop="betStatus">
-              <el-tag v-if="details.betStatus === 'SETTLED'" type="success" size="mini">{{ t('betStatus.' + details.betStatus) }}</el-tag>
-              <el-tag v-else-if="details.betStatus === 'CANCEL'" type="danger" size="mini">{{ t('betStatus.' + details.betStatus) }}</el-tag>
-              <el-tag v-else-if="details.betStatus === 'UNSETTLED'" type="warning" size="mini">{{ t('betStatus.' + details.betStatus) }}</el-tag>
-              <el-tag v-else type="info" size="mini">-</el-tag>
+              <el-tag v-if="details.betStatus === 'SETTLED'" type="success" size="normal">{{ t('betStatus.' + details.betStatus) }}</el-tag>
+              <el-tag v-else-if="details.betStatus === 'CANCEL'" type="danger" size="normal">{{ t('betStatus.' + details.betStatus) }}</el-tag>
+              <el-tag v-else-if="details.betStatus === 'UNSETTLED'" type="warning" size="normal">{{ t('betStatus.' + details.betStatus) }}</el-tag>
+              <el-tag v-else type="info" size="normal">-</el-tag>
             </el-form-item>
           </el-col>
         </el-row>
@@ -262,6 +278,7 @@ import moment from 'moment';
 import { getMemberBetRecords, getPlatformsBySite, getVipName, getTotal } from '../../../api/affiliate-bet-record';
 import { useI18n } from "vue-i18n";
 import { useRoute } from 'vue-router'
+import emptyComp from "@/components/empty"
 
 const store = useStore();
 const { t } = useI18n();
@@ -509,7 +526,6 @@ onMounted(() => {
   margin: 40px 0 20px;
   display: flex;
 }
-
 .box-card {
   ::v-deep(.el-card__body) {
     padding: 0;
@@ -523,7 +539,7 @@ onMounted(() => {
   gap: 10px;
   .input-small {
     width: 100%;
-    max-width: 200px;
+    // max-width: 200px;
     &.el-range-editor--small.el-input__inner {
       height: 40px;
       max-width: 300px;
@@ -539,31 +555,37 @@ onMounted(() => {
 }
 
 .table-footer {
-  margin-top: 15px;
-  margin-right: 20px;
   float: right;
   font-size: small;
+  margin: 15px;
+  display:flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
-
 @media (max-width: 768px) {
-  .inputs-wrap {
-    flex-direction: column;
-    gap: 10px;
-    .el-input--small {
-      width: 100% !important;
-      max-width: unset !important;
-      margin: 0 !important;
-      .el-button {
-        margin: 0 !important;
-      }
-    }
-    .input-small {
-      max-width: unset;
-      width: 100%;
-    &.el-range-editor--small.el-input__inner {
-      max-width: unset;
-    }
-    }
-  }
+  // .inputs-wrap {
+  //   flex-direction: column;
+  //   gap: 10px;
+  //   .el-input--small {
+  //     width: 100% !important;
+  //     max-width: unset !important;
+  //     margin: 0 !important;
+  //     .el-button {
+  //       margin: 0 !important;
+  //     }
+  //   }
+  //   .input-small {
+  //     max-width: unset;
+  //     width: 100%;
+  //   &.el-range-editor--small.el-input__inner {
+  //     max-width: unset;
+  //   }
+  //   }
+  // }
+}
+</style>
+<style>
+.el-col {
+  margin-bottom: 10px;
 }
 </style>

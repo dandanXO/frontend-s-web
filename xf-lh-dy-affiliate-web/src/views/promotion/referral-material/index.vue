@@ -6,70 +6,81 @@
           <span class="role-span">{{ $t('menu.Referral Material') }}</span>
         </div>
       </template>
-      <el-form @submit.prevent>
+      <el-form @submit.prevent label-width="100px" label-position="left" label-suffix=":">
         <div class="inputs-wrap">
-          <el-form-item :label="t('fields.imageTitle') + ' :'">
-            <el-input v-model="request.name" />
-          </el-form-item>
-          <el-form-item :label="t('fields.uploadTime') + ' :'">
-            <el-date-picker
-              v-model="request.updateTime"
-              format="DD/MM/YYYY"
-              value-format="YYYY-MM-DD"
-              size="small"
-              class="input-small"
-              type="daterange"
-              range-separator=":"
-              :start-placeholder="t('fields.startDate')"
-              :end-placeholder="t('fields.endDate')"
-              :shortcuts="shortcuts"
-              :disabled-date="disabledDate"
-              :editable="false"
-              :clearable="false"
-            />
-          </el-form-item>
-        </div>
-        <div class="inputs-wrap">
-          <el-form-item :label="t('fields.imageSize')">
-            <el-select v-model="request.imageSize">
-              <el-option :label="t('fields.all')" key="0" value="" />
-              <el-option
-                v-for="size in sizeList"
-                :key="size"
-                :label="size"
-                :value="size"
-              />
-            </el-select>
-          </el-form-item>
-          <el-form-item :label="t('fields.imageType')">
-            <el-select v-model="request.posterType">
-              <el-option :label="t('fields.all')" key="0" value="" />
-              <el-option
-                v-for="poster in posterType"
-                :key="poster.name"
-                :label="poster.display"
-                :value="poster.name"
-              />
-            </el-select>
-          </el-form-item>
-          <el-button
-            icon="el-icon-search"
-            type="primary"
-            @click="loadPosterList()"
-            size="mini"
-          >
-            {{ $t('fields.search') }}
-          </el-button>
-          <el-button size="mini" type="warning" @click="resetQuery()">
-            {{ $t('fields.reset') }}
-          </el-button>
+          <el-row :gutter="20" style="margin-bottom: 20px;">
+            <el-col :xl="6" :lg="8" :md="12">
+              <el-form-item :label="t('fields.imageTitle')">
+                <el-input size="normal" v-model="request.name" />
+              </el-form-item>
+            </el-col>
+            <el-col :xl="8" :lg="12" :md="12">
+              <el-form-item :label="t('fields.uploadTime')">
+                <el-date-picker
+                  v-model="request.updateTime"
+                  format="DD/MM/YYYY"
+                  value-format="YYYY-MM-DD"
+                  size="normal"
+                  class="input-small"
+                  type="daterange"
+                  range-separator=":"
+                  :start-placeholder="t('fields.startDate')"
+                  :end-placeholder="t('fields.endDate')"
+                  :shortcuts="shortcuts"
+                  :disabled-date="disabledDate"
+                  :editable="false"
+                  :clearable="false"
+                  style="width:100%;"
+                />
+              </el-form-item>
+            </el-col>
+            <el-col :xl="8" :lg="8" :md="12">
+              <el-form-item :label="t('fields.imageSize')">
+                <el-select style="width: 100%;" v-model="request.imageSize" size="normal">
+                  <el-option :label="t('fields.all')" key="0" value="" />
+                  <el-option
+                    v-for="size in sizeList"
+                    :key="size"
+                    :label="size"
+                    :value="size"
+                  />
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :xl="6" :lg="8" :md="12">
+              <el-form-item :label="t('fields.imageType')">
+                <el-select style="width: 100%;" v-model="request.posterType" size="normal">
+                  <el-option :label="t('fields.all')" key="0" value="" />
+                  <el-option
+                    v-for="poster in posterType"
+                    :key="poster.name"
+                    :label="poster.display"
+                    :value="poster.name"
+                  />
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :xl="8" :lg="8" :md="12">
+              <el-button
+                icon="el-icon-search"
+                type="primary"
+                @click="loadPosterList()"
+                size="normal"
+              >
+                {{ $t('fields.search') }}
+              </el-button>
+              <el-button size="normal" type="primary" plain @click="resetQuery()">
+                {{ $t('fields.reset') }}
+              </el-button>
+            </el-col>
+          </el-row>
         </div>
       </el-form>
       <el-card v-if="page.records.length === 0" style="text-align: center">
-        {{ t('fields.noData') }}
+        <emptyComp />
       </el-card>
       <div v-if="page.records.length !== 0">
-        <el-card
+        <!-- <el-card
           v-for="(item, index) in page.records"
           :key="item.id"
           style="margin-bottom: 10px"
@@ -146,7 +157,62 @@
               </div>
             </div>
           </div>
-        </el-card>
+        </el-card> -->
+        <el-table
+          :stripe="true"
+          :fit="true"
+          :data="page.records"
+          :default-sort="{prop: 'updateTime', order: 'descending'}"
+          :v-model:current-page="request.current"
+          :v-model:page-size="request.size"
+          style="width: 100%;"
+        >
+          <el-table-column :label="t('fields.sequence')" type="index" />
+          <el-table-column prop="name" :label="t('fields.imageTitle')" />
+          <el-table-column prop="category" :label="t('fields.imageType')" />
+          <el-table-column :prop="path" :label="t('fields.image')">
+            <template #default="scope">
+              <el-image :src="posterDir + scope.row.path" fit="contain" style="max-height: 300px" />
+            </template>
+          </el-table-column>
+          <el-table-column prop="updateTime" :label="t('fields.uploadTime')">
+            <template #default="scope">
+              <div style="line-height: 16px;">{{ moment(scope.row.updateTime).format('YYYY-MM-DD') }}</div>
+              <div style="color: #7D8592; font-size: 12px;">{{ moment(scope.row.updateTime).format('HH:mm:ss') }}</div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="size" :label="t('fields.imageSize')" />
+          <el-table-column prop="downloadNumber" :label="t('fields.downloadTime')" />
+          <el-table-column align="center" :label="t('fields.actions')">
+            <template #default="scope">
+              <el-link
+                :underline="false"
+                type="primary"
+                style="text-align:center; width: 100%;"
+                @click="generateQR(scope.row.id)"
+              >
+                {{ t('fields.generateQR') }}
+              </el-link>
+              <el-link
+                :underline="false"
+                type="primary"
+                style="text-align:center; width: 100%;"
+                @click="downloadImage(scope.row, scope.$index)"
+              >
+                <!-- <el-icon class="el-icon--right"><download /></el-icon> -->
+                {{ $t('fields.download') }}
+              </el-link>
+              <el-link
+                :underline="false"
+                type="primary"
+                style="text-align:center; width: 100%;"
+                @click="viewImage(scope.row, scope.$index)"
+              >
+                {{ $t('fields.settleView') }}
+              </el-link>
+            </template>
+          </el-table-column>
+        </el-table>
       </div>
       <el-pagination
         v-if="page.records.length !== 0"
@@ -158,11 +224,14 @@
         :current-page="request.current"
       />
     </el-card>
+    <el-dialog width="100%" :align-center="true" fullscreen v-model="isViewImageDialog">
+      <img style="width: 100%;" :src="imgItem">
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { useStore } from '@/store'
 import moment from 'moment'
 import { useI18n } from 'vue-i18n'
@@ -172,9 +241,11 @@ import {
   loadPoster,
   increaseDownloadCount,
 } from '../../../api/poster'
-import { Download } from '@element-plus/icons-vue'
+// import { Download } from '@element-plus/icons-vue'
+import emptyComp from '@/components/empty'
 // import { ElMessage } from 'element-plus'
-
+const isViewImageDialog = ref(false)
+const imgItem = ref()
 const store = useStore()
 const { t } = useI18n()
 const router = useRouter()
@@ -351,6 +422,12 @@ function generateQR(id) {
   })
 }
 
+function viewImage(item, index) {
+  console.log(item)
+  isViewImageDialog.value = true
+  imgItem.value = posterDir + item.path
+}
+
 async function downloadImage(item, index) {
   page.records[index].downloadNumber += 1
   await increaseDownloadCount(item.id)
@@ -389,25 +466,36 @@ onMounted(() => {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+:deep(.el-table th.el-table__cell) {
+  background: #F4F9FD;
+  color:#333333;
+}
+:deep(.el-table tr:nth-child(even)) {
+  background: #F4F9FD;
+}
+.el-input__inner {
+  width: 100%;
+}
 .inputs-wrap {
-  margin: 0px 20px;
+  // margin: 0px 20px;
   display: flex;
   align-items: baseline;
-  gap: 10px;
-  .input-small {
-    width: 100%;
-    max-width: 200px;
-    &.el-range-editor--small.el-input__inner {
-      height: 40px;
-      max-width: 300px;
-    }
-  }
+  justify-content: flex-start;
+  gap: 20px;
+  // .input-small {
+  //   width: 100%;
+  //   max-width: 200px;
+  //   &.el-range-editor--small.el-input__inner {
+  //     height: 40px;
+  //     max-width: 300px;
+  //   }
+  // }
   .btn-grp {
     display: flex;
   }
-  .el-row .el-col {
-    display: flex;
-  }
+  // .el-row .el-col {
+  //   display: flex;
+  // }
 }
 
 .data-container {
@@ -430,24 +518,24 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
-  .inputs-wrap {
-    flex-direction: column;
-    gap: 10px;
-    .el-input--small {
-      width: 100% !important;
-      max-width: unset !important;
-      margin: 0 !important;
-      .el-button {
-        margin: 0 !important;
-      }
-    }
-    .input-small {
-      max-width: unset;
-      width: 100%;
-      &.el-range-editor--small.el-input__inner {
-        max-width: unset;
-      }
-    }
-  }
+  // .inputs-wrap {
+  //   flex-direction: column;
+  //   gap: 10px;
+  //   .el-input--small {
+  //     width: 100% !important;
+  //     max-width: unset !important;
+  //     margin: 0 !important;
+  //     .el-button {
+  //       margin: 0 !important;
+  //     }
+  //   }
+  //   .input-small {
+  //     max-width: unset;
+  //     width: 100%;
+  //     &.el-range-editor--small.el-input__inner {
+  //       max-width: unset;
+  //     }
+  //   }
+  // }
 }
 </style>

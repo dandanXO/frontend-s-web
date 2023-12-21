@@ -5,6 +5,10 @@
       <ArrowLeftBold style="width: 10px" v-if="isExpanded" />
       <ArrowRightBold style="width: 10px" v-if="!isExpanded" />
     </el-button>
+    <el-button type="plain" class="mobilehamburg" @click="toggleExpansion">
+      <Fold style="width: 20px" v-if="isExpanded" />
+      <Expand style="width: 20px" v-if="!isExpanded" />
+    </el-button>
     <div class="navigation">
       <div
         v-for="nav in navigationData"
@@ -42,19 +46,19 @@
 import { onMounted, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { ArrowLeftBold, ArrowRightBold, ArrowUpBold, ArrowDownBold } from '@element-plus/icons-vue'
+import { ArrowLeftBold, ArrowRightBold, ArrowUpBold, ArrowDownBold, Expand, Fold } from '@element-plus/icons-vue'
 
 const { t } = useI18n()
 const route = useRoute()
 const navigationData = ref([
   {
-    title: t('首页'),
+    title: t('menu.Dashboard'),
     display: false,
     path: '',
     children: [
       {
         path: '/dashboard',
-        title: '首页',
+        title: t('menu.Dashboard'),
         active: false,
         isMainNav: true,
         icon: 'home',
@@ -294,6 +298,9 @@ onMounted(() => {
     () => route.path,
     async () => {
       setActiveNav()
+      if (isExpanded.value && window.innerWidth < 768) {
+        toggleExpansion()
+      }
     }
   )
   // watch(isExpanded, () => {
@@ -327,7 +334,8 @@ onMounted(() => {
   flex-direction: column;
   border-radius: 1rem;
   &.expanded {
-  width: 250px;
+  width: 90%;
+  max-width: 250px;
   .route-wrapper {
 
     padding: 0.5rem 0 0.5rem 0;
@@ -346,12 +354,24 @@ onMounted(() => {
   }
   }
   .expansionbtn {
-     position:absolute;
+    position:absolute;
     right: -10px;
     width: 30px;
     min-height: 30px;
     padding: 5px;
     top: -10px;
+  }
+  .mobilehamburg {
+    display: none;
+    position:fixed;
+    left: 10px;
+    top: 10px;
+    padding: 0;
+    border: 0;
+    margin-left: 0;
+    &:hover, &:focus {
+      background: unset;
+    }
   }
   .home {
     display: flex;
@@ -371,13 +391,27 @@ onMounted(() => {
     margin: 0 0 1rem 0;
 
     .route {
-      color: black;
+      color: #7D8592;
       text-decoration: none;
     }
   }
 
   .navigation {
     font-size: 1rem;
+    &::-webkit-scrollbar-track
+    {
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+      background-color: #ffffff;
+    }
+    &::-webkit-scrollbar
+    {
+      width: 5px;
+      background-color: #ffffff;
+    }
+    &::-webkit-scrollbar-thumb
+    {
+      background-color: #98c0fc;
+    }
 
     .route-title {
       margin: 1rem;
@@ -393,10 +427,12 @@ onMounted(() => {
     .route-wrapper {
       // padding: 0.5rem 0 0.5rem 0;
       padding: 0;
+      font-family: PFMed;
 
       .route {
-        color: black;
+        color: #7D8592;
         text-decoration: none;
+        font-size: 16px;
       }
 
       .route-content {
@@ -418,6 +454,21 @@ onMounted(() => {
     background-color: #ecf3ff;
     border-radius: 0.5rem;
     color: #3F8CFF;
+  }
+}
+@media (max-width: 992px) {
+  .sidebar {
+    .expansionbtn {
+      right: -35px;
+      top: -35px;
+      display: none;
+    }
+    .mobilehamburg {
+      display: block;
+    }
+  }
+  .navbar .avatar-container {
+    display: none;
   }
 }
 </style>

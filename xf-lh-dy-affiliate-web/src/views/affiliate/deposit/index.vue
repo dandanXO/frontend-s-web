@@ -6,7 +6,7 @@
           <span class="role-span">{{ $t('menu.Deposit') }}</span>
         </div>
       </template>
-      <el-tabs v-model="activeName" style="margin-left: 20px">
+      <el-tabs v-model="activeName" style="margin:20px;">
         <el-tab-pane :label="t('fields.affiliateDeposit')" name="deposit">
           <DepositTab />
         </el-tab-pane>

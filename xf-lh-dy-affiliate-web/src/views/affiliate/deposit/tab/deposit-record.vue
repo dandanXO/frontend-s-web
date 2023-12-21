@@ -5,12 +5,12 @@
         v-model="request.depositDate"
         format="DD/MM/YYYY HH:mm:ss"
         value-format="YYYY-MM-DD HH:mm:ss"
-        size="small"
+        size="normal"
         type="datetimerange"
         range-separator=":"
         :start-placeholder="t('fields.startDate')"
         :end-placeholder="t('fields.endDate')"
-        style="width: 380px"
+        style="width: 100%; max-width: 380px;"
         :shortcuts="shortcuts"
         :disabled-date="disabledDate"
         :editable="false"
@@ -19,7 +19,7 @@
       />
       <el-select
         v-model="request.status"
-        size="small"
+        size="normal"
         :placeholder="t('fields.status')"
         class="filter-item"
         style="margin-left: 5px; width: 200px;"
@@ -33,22 +33,24 @@
         />
       </el-select>
       <div class="btn-grp">
-        <el-button icon="el-icon-search" type="primary" @click="loadDepositRecords()" size="mini">
+        <el-button icon="el-icon-search" type="primary" @click="loadDepositRecords()" size="normal">
           {{ $t('fields.search') }}
         </el-button>
-        <el-button size="mini" type="warning" @click="resetQuery()">
+        <el-button size="normal" type="primary" plain @click="resetQuery()">
           {{ $t('fields.reset') }}
         </el-button>
       </div>
     </div>
     <el-table :data="page.records" ref="table"
               row-key="id"
-              size="small"
+              size="normal"
               highlight-current-row
               v-loading="page.loading"
               style="margin-top: 15px;"
-              :empty-text="t('fields.noData')"
     >
+      <template #empty>
+        <emptyComp />
+      </template>
       <el-table-column prop="serialNumber" :label="t('fields.serialNumber')" align="center" min-width="150" />
       <el-table-column prop="depositAmount" :label="t('fields.depositAmount')" align="center" min-width="100">
         <template #default="scope">
@@ -75,10 +77,10 @@
       </el-table-column>
       <el-table-column prop="status" :label="t('fields.status')" align="center" min-width="100">
         <template #default="scope">
-          <el-tag v-if="scope.row.status === 'SUCCESS' || scope.row.status === 'SUPPLEMENT_SUCCESS'" type="success" size="mini">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
-          <el-tag v-else-if="scope.row.status === 'CLOSED'" type="danger" size="mini">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
-          <el-tag v-else-if="scope.row.status === 'PENDING'" type="warning" size="mini">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
-          <el-tag v-else type="info" size="mini">-</el-tag>
+          <el-tag v-if="scope.row.status === 'SUCCESS' || scope.row.status === 'SUPPLEMENT_SUCCESS'" type="success" size="normal">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
+          <el-tag v-else-if="scope.row.status === 'CLOSED'" type="danger" size="normal">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
+          <el-tag v-else-if="scope.row.status === 'PENDING'" type="warning" size="normal">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
+          <el-tag v-else type="info" size="normal">-</el-tag>
         </template>
       </el-table-column>
       <!-- <el-table-column prop="paymentName" :label="t('fields.paymentName')" align="center" min-width="100">
@@ -109,6 +111,7 @@ import { useStore } from "@/store";
 import moment from 'moment';
 import { getDepositRecords, getTotal } from '@/api/affiliate-deposit-record';
 import { useI18n } from "vue-i18n";
+import emptyComp from "@/components/empty"
 
 const store = useStore();
 const { t } = useI18n();
@@ -301,24 +304,24 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
-  .inputs-wrap {
-    flex-direction: column;
-    gap: 10px;
-    .el-input--small {
-      width: 100% !important;
-      max-width: unset !important;
-      margin: 0 !important;
-      .el-button {
-        margin: 0 !important;
-      }
-    }
-    .input-small {
-      max-width: unset;
-      width: 100%;
-    &.el-range-editor--small.el-input__inner {
-      max-width: unset;
-    }
-    }
-  }
+  // .inputs-wrap {
+  //   flex-direction: column;
+  //   gap: 10px;
+  //   .el-input--small {
+  //     width: 100% !important;
+  //     max-width: unset !important;
+  //     margin: 0 !important;
+  //     .el-button {
+  //       margin: 0 !important;
+  //     }
+  //   }
+  //   .input-small {
+  //     max-width: unset;
+  //     width: 100%;
+  //   &.el-range-editor--small.el-input__inner {
+  //     max-width: unset;
+  //   }
+  //   }
+  // }
 }
 </style>

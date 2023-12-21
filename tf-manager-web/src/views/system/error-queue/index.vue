@@ -11,12 +11,14 @@
           range-separator=":"
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
-          style="width: 400px;margin-left: 5px"
+          style="width: 400px;margin-right: 20px"
           :shortcuts="shortcuts"
           :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
+          :default-time="defaultTime"
         />
+        <el-input v-model="request.topic" size="small" style="width: 200px;" :placeholder="t('fields.topic')" />
         <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadErrorQueue">
           {{ t('fields.search') }}
         </el-button>
@@ -96,6 +98,11 @@ import { getLogShortcuts } from "@/utils/datetime";
 
 const { t } = useI18n();
 
+const defaultTime = [
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 1, 1, 23, 59, 59),
+];
+
 const shortcuts = getLogShortcuts(t);
 
 const uiControl = reactive({
@@ -135,7 +142,8 @@ function disabledDate(time) {
 const request = reactive({
   size: 20,
   current: 1,
-  createTime: [defaultStartDate, defaultEndDate]
+  createTime: [defaultStartDate, defaultEndDate],
+  topic: null
 });
 
 function handleSelectionChange(val) {

@@ -230,7 +230,7 @@ const platformCodeImg = ref();
 const open = (gameName, platformCode, gameCode, gameType) => {
   // debugger;
   // AppFullscreen.request()
-
+  isInnerHtmlSrc.value = false;
   platformCodeImg.value = platformCode;
 
   //TESt
@@ -443,6 +443,7 @@ defineExpose({
         background-position: center;
         height: 100%;
         background-repeat: no-repeat;
+        background-size: contain;
       }
 
       img {

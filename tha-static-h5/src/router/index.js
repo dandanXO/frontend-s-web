@@ -128,11 +128,11 @@ export default route(function (/* { store, ssrContext } */) {
 
       gtag("js", new Date());
       gtag("config", "UA-780462346-6");
-    } else if (window.location.href.indexOf("jo88.cc")) {
+    } else if (window.location.href.indexOf("jo88.cc") > -1) {
       ui.isAffiliateB = true;
       console.log("jo88.cc");
 
-      fbq("init", "241650862263360");
+      fbq("init", "722685126460216");
       fbq("track", "PageView");
       fbq("track", "ViewContent");
     } else if (ui.isAffiliateB) {
@@ -140,7 +140,7 @@ export default route(function (/* { store, ssrContext } */) {
 
       fbq("init", "211810688532352");
 
-      fbq("init", "241650862263360");
+      fbq("init", "722685126460216");
       fbq("track", "PageView");
       fbq("track", "ViewContent");
     }

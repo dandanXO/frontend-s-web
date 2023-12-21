@@ -205,7 +205,7 @@
             />
           </el-select>
         </el-form-item>
-        
+
         <el-form-item
           v-show="form.category === 'PROMO'"
           :label="t('fields.promoType')"
@@ -690,13 +690,17 @@ onMounted(async () => {
   display: flex;
   justify-content: center;
   align-items: center;
+
 }
 
 #preview .el-image {
   width: 60%;
   height: 60%;
 }
-
+.el-table__body .el-image {
+  width: 100px;
+  background-color: #c1c1c1;
+}
 td.el-table__cell img {
   width: 100px;
   height: 100px;
