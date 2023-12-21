@@ -93,15 +93,8 @@
       </div>
 
       <div class="q-mt-sm">
-        <q-btn
-          @click="guestLogin()"
-          rounded
-          flat
-          no-caps
-          class="btn-purple"
-          label="Play As Guest"
-          v-if="Platform.is.capacitor"
-        />
+        <q-btn @click="goRegister()" rounded flat no-caps class="btn-purple" label="Register" />
+        <!--          v-if="Platform.is.capacitor"-->
       </div>
     </q-form>
 
@@ -278,6 +271,10 @@ export default defineComponent({
           console.log("Err");
           getInnerCode();
         });
+    };
+
+    const goRegister = () => {
+      router.push("/register");
     };
 
     const onSubmit = () => {
@@ -486,6 +483,7 @@ export default defineComponent({
       loginForm,
       loginFormRef,
       onSubmit,
+      goRegister,
       store,
       isPwd: ref(true),
       tab,
