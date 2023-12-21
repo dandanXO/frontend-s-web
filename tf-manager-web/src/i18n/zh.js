@@ -256,6 +256,7 @@ export default {
   distributeStatus: {
     PENDING: '未派发',
     DISTRIBUTED: '已派发',
+    CANCEL: '已取消'
   },
   referFriendEvent: {
     INFO: '完善个人信息',
@@ -452,6 +453,7 @@ export default {
     bankName: '银行名',
     bankNumber: '银行号码',
     bankType: '银行类型',
+    batchCancel: '批量取消',
     beanName: '对象名称',
     beforeAmount: '之前金额',
     beforeBalance: '之前余额',
@@ -1179,6 +1181,7 @@ export default {
     totalTransferIn: '总转入',
     totalTransferOut: '总转出',
     toUnderReview: '至审核中',
+    totalValidBet: '总有效投注',
     totalWithdraw: '总提款',
     totalWithdrawAmount: '提款总额',
     totalWithdrawCount: '总提款次数',

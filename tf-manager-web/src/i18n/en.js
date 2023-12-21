@@ -250,6 +250,7 @@ export default {
   distributeStatus: {
     PENDING: 'Pending',
     DISTRIBUTED: 'Distributed',
+    CANCEL: 'Cancel'
   },
   referFriendEvent: {
     INFO: 'Complete Info',
@@ -446,6 +447,7 @@ export default {
     bankName: 'Bank Name',
     bankNumber: 'Bank Number',
     bankType: 'Bank Type',
+    batchCancel: 'Batch Cancel',
     beanName: 'Bean Name',
     beforeAmount: 'Before Amount',
     beforeBalance: 'Before Balance',
@@ -1173,6 +1175,7 @@ export default {
     totalTransferIn: 'Total Transfer In',
     totalTransferOut: 'Total Transfer Out',
     toUnderReview: 'To Under Review',
+    totalValidBet: 'Total Valid Bet',
     totalWithdraw: 'Total Withdraw',
     totalWithdrawAmount: 'Total Withdraw Amount',
     totalWithdrawCount: 'Total Withdraw Count',
