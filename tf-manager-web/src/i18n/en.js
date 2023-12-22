@@ -1695,6 +1695,7 @@ export default {
     validatePosterTypeRequired: 'Poster Type is required',
     validateConfigCodeRequired: 'Config Code is required',
     validateConfigValueRequired: 'Config Value is required',
+    resultCalculateSuccess: 'Result is calculated successfully'
   },
   menu: {
     undefined: '',

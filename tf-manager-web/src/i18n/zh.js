@@ -1671,6 +1671,7 @@ export default {
     validatePosterTypeRequired: '海报类别必填',
     validateConfigCodeRequired: '设置Code必填',
     validateConfigValueRequired: '设置值必填',
+    resultCalculateSuccess: '结果结算成功'
   },
   menu: {
     undefined: '',

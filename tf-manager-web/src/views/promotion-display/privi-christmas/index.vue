@@ -54,7 +54,7 @@
         >
           {{ t('fields.reset') }}
         </el-button>
-        <el-button size="mini" type="success" @click="calculateWinner(id)">
+        <el-button size="mini" type="success" @click="calculateResult(id)">
           {{ $t('fields.processResult') }}
         </el-button>
         <el-button
@@ -198,6 +198,7 @@ import {
   calculateWinner,
   getParticipants,
 } from '../../../api/privi-christmas'
+import { ElMessage } from "element-plus";
 
 const { t } = useI18n()
 const store = useStore()
@@ -269,6 +270,11 @@ async function loadParticipant() {
 //   const { data: site } = await getSiteListSimple()
 //   siteList.list = site
 // }
+
+async function calculateResult(id) {
+  await calculateWinner(id);
+  ElMessage({ message: t('message.resultCalculateSuccess'), type: "success" });
+}
 
 function changePage(page) {
   request.current = page
