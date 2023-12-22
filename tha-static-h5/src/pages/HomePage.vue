@@ -1,40 +1,45 @@
 <template>
   <div class="main-section">
-    <q-carousel
-      :class="!$q.screen.gt.sm ? 'home-banner-h5' : 'home-banner-web'"
-      autoplay
-      navigation
-      v-model="slide"
-      swipeable
-      infinite
-    >
-      <template v-slot:navigation-icon="{ active, onClick }">
-        <q-btn padding="3px 10px" v-if="active" size="xs" color="brand" @click="onClick" />
-        <q-btn padding="3px 10px" v-else size="xs" color="white" @click="onClick" />
-      </template>
+    <div v-for="e in snowCount" :key="`snow-${e}`" class="snow"></div>
 
-      <!--      <q-carousel-slide-->
-      <!--        name="mainSlide"-->
-      <!--        class="column no-wrap flex-center"-->
-      <!--        :img-src="-->
-      <!--          !$q.screen.gt.sm-->
-      <!--            ? require('../assets/images/index/main-home-banner-mobile.jpg')-->
-      <!--            : require('../assets/images/index/main-home-banner-desktop.jpg')-->
-      <!--        "-->
-      <!--        @click="gotoPromo(0)"-->
-      <!--      >-->
-      <!--        <h1 class="main-slide-txt">ออนไลน์คาสิโนที่ไว้ใจได้-Jolly88</h1>-->
-      <!--      </q-carousel-slide>-->
+    <div class="home-banner-wrapper">
+      <div class="xmas-antler left"><img src="../assets/images/common/xmas-antler-left.png" /></div>
+      <div class="xmas-antler right"><img src="../assets/images/common/xmas-antler-right.png" /></div>
+      <q-carousel
+        :class="!$q.screen.gt.sm ? 'home-banner-h5' : 'home-banner-web'"
+        autoplay
+        navigation
+        v-model="slide"
+        swipeable
+        infinite
+      >
+        <template v-slot:navigation-icon="{ active, onClick }">
+          <q-btn padding="3px 10px" v-if="active" size="xs" color="brand" @click="onClick" />
+          <q-btn padding="3px 10px" v-else size="xs" color="white" @click="onClick" />
+        </template>
 
-      <q-carousel-slide
-        v-for="(banner, i) in banners"
-        :key="i"
-        :name="i"
-        class="column no-wrap flex-center"
-        :img-src="!$q.screen.gt.sm ? imgURL + banner.mobileImageUrl : imgURL + banner.desktopImageUrl"
-        @click="gotoPromo(banner)"
-      ></q-carousel-slide>
-    </q-carousel>
+        <!--      <q-carousel-slide-->
+        <!--        name="mainSlide"-->
+        <!--        class="column no-wrap flex-center"-->
+        <!--        :img-src="-->
+        <!--          !$q.screen.gt.sm-->
+        <!--            ? require('../assets/images/index/main-home-banner-mobile.jpg')-->
+        <!--            : require('../assets/images/index/main-home-banner-desktop.jpg')-->
+        <!--        "-->
+        <!--        @click="gotoPromo(0)"-->
+        <!--      >-->
+        <!--        <h1 class="main-slide-txt">ออนไลน์คาสิโนที่ไว้ใจได้-Jolly88</h1>-->
+        <!--      </q-carousel-slide>-->
+        <q-carousel-slide
+          v-for="(banner, i) in banners"
+          :key="i"
+          :name="i"
+          class="column no-wrap flex-center"
+          :img-src="!$q.screen.gt.sm ? imgURL + banner.mobileImageUrl : imgURL + banner.desktopImageUrl"
+          @click="gotoPromo(banner)"
+        ></q-carousel-slide>
+      </q-carousel>
+    </div>
 
     <div class="midd">
       <div class="station-notice-wrapper">
@@ -166,8 +171,6 @@
             }"
           ></div>
         </div>
-
-
       </div>
     </Transition>
     <Transition>
@@ -789,8 +792,27 @@
     </q-card>
   </q-dialog>
 
-  <q-page-sticky v-if="specialInviteBonusEligible" position="right" :offset="[0, 0]">
-    <div class="special-invite-bonus-sticky" @click="redeemSpecialInviteBonus" />
+  <q-page-sticky
+    v-if="showSticky || specialInviteBonusEligible"
+    class="home-sticky-div"
+    position="right"
+    :offset="[0, 0]"
+  >
+    <div v-if="showSticky" class="home-sticky">
+      <!-- <img class="sticky-bear" src="../assets/home/line-bear.png" /> -->
+      <q-btn name="close" height="20" width="20" size="xs" @click="closeLineSticky" class="sticky-close-btn">
+        <q-icon name="close"></q-icon>
+      </q-btn>
+      <div class="sticky-container">
+        <div class="line-title">LINE</div>
+        <img src="../assets/home/line-bg.png" class="line-img" />
+        <div class="line-bottom">line ID:@jolly88</div>
+      </div>
+    </div>
+
+    <div v-if="specialInviteBonusEligible" class="bonus-sticky-box">
+      <div class="special-invite-bonus-sticky" @click="redeemSpecialInviteBonus" />
+    </div>
   </q-page-sticky>
 
   <q-dialog class="special-invite-bonus-popup" width="100%" v-model="specialInviteBonusPopupVisible">
@@ -860,6 +882,7 @@
               <em>IPHONE</em>
             </span>
           </div>
+          <div class="btn-deco"><img src="../assets/images/common/home-popup-btn-deco.png" /></div>
         </router-link>
         <router-link to="/promo?id=80">
           <div class="popup-item">
@@ -870,8 +893,9 @@
               <em>20,000</em>
             </span>
           </div>
+          <div class="btn-deco"><img src="../assets/images/common/home-popup-btn-deco.png" /></div>
         </router-link>
-        <router-link to="/promo?id=76">
+        <!-- <router-link to="/promo?id=76">
           <div class="popup-item">
             <span>
               เลือกรับ
@@ -881,7 +905,7 @@
               ถอนไม่อั้น
             </span>
           </div>
-        </router-link>
+        </router-link> -->
         <!--        <router-link to="/promo?id=77">
           <div class="popup-item">
             <span>
@@ -903,15 +927,17 @@
               ถอนไม่อั้น
             </span>
           </div>
+          <div class="btn-deco"><img src="../assets/images/common/home-popup-btn-deco.png" /></div>
         </router-link>
-        <!--        <router-link to="/promo?id=79">
+        <router-link to="/promo?id=76">
           <div class="popup-item">
             <span>
-              ประกันยอดเสีย
-              <em>10,000</em>
+              ฝากครั้งแรกรับ
+              <em>100%-200%</em>
+              เล่นได้ทุกเกมส์ ถอนไม่อั้น
             </span>
           </div>
-        </router-link>-->
+        </router-link>
       </div>
     </div>
   </q-dialog>
@@ -972,6 +998,8 @@ export default defineComponent({
     // RiUserShared2Line
   },
   setup() {
+    const snowCount = 10;
+
     const $q = useQuasar();
     const { t } = useI18n();
     const ui = useUI();
@@ -993,6 +1021,19 @@ export default defineComponent({
     const route = useRoute();
     const router = useRouter();
     const store = userStore();
+
+    const showSticky = ref(true);
+    const checkSticky = () => {
+      const stickyOff = localStorage.getItem("LINE_STICKY_OFF");
+      if (stickyOff === "true") {
+        showSticky.value = false;
+      }
+    };
+    const closeLineSticky = () => {
+      showSticky.value = false;
+      localStorage.setItem("LINE_STICKY_OFF", "true");
+    };
+
     const mainWallet = computed(() => {
       return store.balance;
     });
@@ -1689,6 +1730,7 @@ export default defineComponent({
       loadHomeData();
       getAppDownloadUrl();
       getVersionNo();
+      checkSticky();
 
       checkSpinWheelPromo();
       checkRedeemSpecialInviteBonusEligiblity();
@@ -1797,6 +1839,7 @@ export default defineComponent({
     };
 
     return {
+      snowCount,
       imageLoading,
       slide: ref(0),
       imgURL: process.env.IMAGE_CDN + "/promo/",
@@ -1855,6 +1898,8 @@ export default defineComponent({
       scrollPageRef,
       announcementList,
       isStationNotice,
+      closeLineSticky,
+      showSticky,
       isHomePromoModal,
       openPopup,
       noticeTitle,
@@ -1884,6 +1929,22 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
+.home-banner-wrapper {
+  position: relative;
+
+  .xmas-antler {
+    position: absolute;
+    top: -25%;
+
+    &.left {
+      left: -10.5%;
+    }
+
+    &.right {
+      right: -10.5%;
+    }
+  }
+}
 
 .midd {
   display: flex;
@@ -2607,15 +2668,21 @@ export default defineComponent({
   }
 }
 
+.bonus-sticky-box {
+  width: 100%;
+  height: 136px;
+  margin-top: 10px;
+}
+
 .special-invite-bonus-sticky {
   background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-sticky.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   width: 190px;
   height: 136px;
-  position: absolute;
-  top: 10%;
-  right: 0;
+  //position: absolute;/**/
+  //right: 50%;
+  //top: 0;
 
   animation: tilt-shaking 2s ease-in-out infinite;
 }
@@ -2759,6 +2826,7 @@ export default defineComponent({
     a:active,
     a:focus {
       color: #fff9e2;
+      position: relative;
     }
 
     .popup-item {
@@ -2792,6 +2860,85 @@ export default defineComponent({
         font-style: normal;
       }
     }
+
+    .btn-deco {
+      position: absolute;
+      top: -5%;
+      z-index: 1;
+      padding: 0 20px;
+    }
+  }
+}
+
+.home-sticky-div {
+  z-index: 4000;
+}
+
+.home-sticky {
+  //display:none;
+  position: relative;
+  width: 175px;
+  height: 240px;
+
+  .sticky-bear {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 55;
+  }
+
+  .sticky-close-btn {
+    position: absolute;
+    right: 5px;
+    top: 37px;
+    z-index: 30;
+    border-radius: 50%;
+    width: 20px;
+    padding: 0px;
+    line-height: 20px;
+    height: 20px;
+    background: $white;
+    color: $text-gray;
+
+    &:active {
+      filter: brightness(0.8);
+    }
+  }
+
+  .sticky-container {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    z-index: 15;
+
+    width: 152px;
+    height: 230px;
+    background: url(../assets/home/xmas-line-btn.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    padding: 10px 0;
+    border-radius: 10px 0px 0px 10px;
+
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    justify-content: flex-end;
+
+    .line-title {
+      font-size: 18px;
+    }
+
+    .line-img {
+      width: 100px;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    .line-bottom {
+      font-size: 16px;
+    }
   }
 }
 
@@ -2812,6 +2959,50 @@ export default defineComponent({
   @media (min-width: 1280px) {
     font-size: 2.5rem;
     max-width: 20rem;
+  }
+}
+
+@function random_range($min, $max) {
+  $rand: random();
+  $random_range: $min + floor($rand * (($max - $min) + 1));
+  @return $random_range;
+}
+
+.snow {
+  $total: 50;
+  position: absolute;
+  z-index: 0;
+  width: 23px;
+  height: 23px;
+  background: url(../assets/images/common/snow.png);
+  background-repeat: no-repeat;
+
+  @for $i from 1 through $total {
+    $random-x: random(1000000) * 0.0001vw;
+    $random-offset: random_range(-100000, 100000) * 0.0001vw;
+    $random-x-end: $random-x + $random-offset;
+    $random-x-end-yoyo: $random-x + ($random-offset / 2);
+    $random-yoyo-time: random_range(30000, 80000) / 100000;
+    $random-yoyo-y: $random-yoyo-time * 100vh;
+    $random-scale: random(10000) * 0.0001 + 1;
+    $fall-duration: random_range(10, 30) * 1s;
+    $fall-delay: random(10) * -1s;
+
+    &:nth-child(#{$i}) {
+      opacity: random(10000) * 0.0001;
+      transform: translate($random-x, -10px) scale($random-scale);
+      animation: fall-#{$i} $fall-duration $fall-delay linear infinite;
+    }
+
+    @keyframes fall-#{$i} {
+      #{percentage($random-yoyo-time)} {
+        transform: translate($random-x-end, $random-yoyo-y) scale($random-scale);
+      }
+
+      to {
+        transform: translate($random-x-end-yoyo, 100vh) scale($random-scale);
+      }
+    }
   }
 }
 </style>

@@ -248,16 +248,16 @@
           v-if="
             uiControl.dialogType === 'CREATE' || uiControl.dialogType === 'EDIT'
           "
-          :label="t('fields.netPhone')"
-          prop="netPhone"
+          :label="t('fields.vcallName')"
+          prop="vcallId"
         >
           <el-select
-            v-model="form.netPhone"
+            v-model="form.vcallId"
             size="small"
             class="filter-item"
             style="width: 350px"
             :placeholder="t('fields.pleaseChoose')"
-            default-first-option
+            clearable
           >
             <el-option
               v-for="item in netPhone.list"
@@ -312,6 +312,11 @@
         <template #default="scope">
           <el-tag v-if="scope.row.attempt === 3 && scope.row.lastAttemptDate === today" type="danger">{{ scope.row.lockStatus = 'LOCKED' }}</el-tag>
           <el-tag v-else type="success">{{ scope.row.lockStatus = 'NORMAL' }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="vcallName" :label="t('fields.vcallName')" width="200">
+        <template #default="scope">
+          {{ scope.row.vcallName }}
         </template>
       </el-table-column>
       <el-table-column prop="roles" :label="t('fields.role')" width="200">
@@ -476,7 +481,7 @@ const form = reactive({
     LOGIN_USER_TYPE.value === TENANT.value ? LOGIN_USER_TYPE.value : null,
   queryRestriction: null,
   queryNumber: 10,
-  netPhone: null,
+  vcallId: null,
 })
 
 const validateconfirm = (rule, value, callback) => {
@@ -568,7 +573,7 @@ function showDialog(type) {
       LOGIN_USER_TYPE.value === TENANT.value ? LOGIN_USER_TYPE.value : null
     form.queryRestriction = null
     form.queryNumber = 10
-    form.netPhone = null;
+    form.vcallId = null;
     uiControl.dialogTitle = t('fields.addUser')
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editUser')
@@ -591,14 +596,15 @@ function showEdit(user) {
   nextTick(() => {
     for (const key in user) {
       if (Object.keys(form).find(k => k === key)) {
-        if (key === 'netPhone' && user[key] === 0) {
+        if (key === 'vcallId' && user[key] === 0) {
           form[key] = null
         } else {
           form[key] = user[key]
         }
       }
     }
-    form.id = user.id
+    form.id = user.id;
+    // console.log(form);
   })
 }
 
@@ -724,7 +730,7 @@ watch(
     if (uiControl.dialogType === 'CREATE') {
       form.roles = null
     } else if (uiControl.dialogType === 'EDIT') {
-      if (oldValue && value !== oldValue) {
+      if (oldValue && value && value !== oldValue) {
         form.roles = null;
       }
     }

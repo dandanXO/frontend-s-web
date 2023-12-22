@@ -7,8 +7,7 @@ import { defineComponent, onMounted } from "vue";
 import { Platform, useQuasar } from "quasar";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
-import CsClient from "csweb-client";
-// import CsClient from "boot/client";
+// import CsClient from "csweb-client";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
 import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
@@ -47,61 +46,61 @@ export default defineComponent({
     let csclient;
     let CSAUrl;
 
-    const getCSA = () => {
-      api
-        .get("/config/customerAddress")
-        .then((res) => {
-          // console.log(res);
-          const url = new URL(res.data);
-          CSAUrl = url.hostname;
-          initCsWeb();
-          console.log(CSAUrl);
-        })
-        .catch((err) => {
-          console.log(err);
-          CSAUrl = "csweb01.v6kthwlug.com";
-        });
-    };
+    // const getCSA = () => {
+    //   api
+    //     .get("/config/customerAddress")
+    //     .then((res) => {
+    //       // console.log(res);
+    //       const url = new URL(res.data);
+    //       CSAUrl = url.hostname;
+    //       initCsWeb();
+    //       console.log(CSAUrl);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //       CSAUrl = "csweb01.v6kthwlug.com";
+    //     });
+    // };
 
-    const initCsWeb = () => {
-      var regDevice = store.getDeviceType();
-      // console.log("Footer OnMounted");
-
-      // 'XFCS' / 2
-      // csclient = new CsClient('XFCS', regDevice, 'zh-CN', '2', 'prod', 'https://csweb01.v6kthwlug.com/');
-      csclient = new CsClient("INDWINCS", regDevice, "en", "2", "prod", `https://${CSAUrl}`);
-
-      csclient.set("pageurl", "/liveChat");
-      csclient.set("btnid", "cs-web-id");
-      csclient.set("openanimation", false);
-      csclient.set("bottom", "73");
-
-      csclient.set("notification-type", {
-        type: "none"
-      });
-
-      if (store.token) {
-        csclient.set("token", store.token);
-      }
-
-      //客服初始化。
-      csclient.init();
-
-      csclient.receiveListener("message", function (callback) {
-        //收到新消息。
-        // alert(callback);
-      });
-
-      //CsClient Event Listener.
-      window.addEventListener("message", function (event) {
-        // console.log("HEre Message received from the iframe: " + event.data); // Message received from child
-        if (_.isString(event.data)) {
-          // if (event.data == 'sess_timeout') {
-          //   router.push({ path: "/" });
-          // }
-        }
-      });
-    };
+    // const initCsWeb = () => {
+    //   var regDevice = store.getDeviceType();
+    //   // console.log("Footer OnMounted");
+    //
+    //   // 'XFCS' / 2
+    //   // csclient = new CsClient('XFCS', regDevice, 'zh-CN', '2', 'prod', 'https://csweb01.v6kthwlug.com/');
+    //   csclient = new CsClient("INDWINCS", regDevice, "en", "2", "prod", `https://${CSAUrl}`);
+    //
+    //   csclient.set("pageurl", "/liveChat");
+    //   csclient.set("btnid", "cs-web-id");
+    //   csclient.set("openanimation", false);
+    //   csclient.set("bottom", "73");
+    //
+    //   csclient.set("notification-type", {
+    //     type: "none"
+    //   });
+    //
+    //   if (store.token) {
+    //     csclient.set("token", store.token);
+    //   }
+    //
+    //   //客服初始化。
+    //   csclient.init();
+    //
+    //   csclient.receiveListener("message", function (callback) {
+    //     //收到新消息。
+    //     // alert(callback);
+    //   });
+    //
+    //   //CsClient Event Listener.
+    //   window.addEventListener("message", function (event) {
+    //     // console.log("HEre Message received from the iframe: " + event.data); // Message received from child
+    //     if (_.isString(event.data)) {
+    //       // if (event.data == 'sess_timeout') {
+    //       //   router.push({ path: "/" });
+    //       // }
+    //     }
+    //   });
+    // };
 
     const getAppInfo = async () => {
       const info = await Device.getId();
@@ -150,7 +149,7 @@ export default defineComponent({
 
     onMounted(() => {
       checkSID();
-      getCSA();
+      // getCSA();
       getAppInfo();
       initOrientation();
       initAdjustEventTrack();

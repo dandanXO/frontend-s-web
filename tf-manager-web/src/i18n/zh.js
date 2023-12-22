@@ -256,6 +256,7 @@ export default {
   distributeStatus: {
     PENDING: '未派发',
     DISTRIBUTED: '已派发',
+    CANCEL: '已取消'
   },
   referFriendEvent: {
     INFO: '完善个人信息',
@@ -452,6 +453,7 @@ export default {
     bankName: '银行名',
     bankNumber: '银行号码',
     bankType: '银行类型',
+    batchCancel: '批量取消',
     beanName: '对象名称',
     beforeAmount: '之前金额',
     beforeBalance: '之前余额',
@@ -1179,6 +1181,7 @@ export default {
     totalTransferIn: '总转入',
     totalTransferOut: '总转出',
     toUnderReview: '至审核中',
+    totalValidBet: '总有效投注',
     totalWithdraw: '总提款',
     totalWithdrawAmount: '提款总额',
     totalWithdrawCount: '总提款次数',
@@ -1225,6 +1228,7 @@ export default {
     validate: '验证',
     validBet: '有效投注额',
     value: '值',
+    vcallName: '座机号',
     view: '查看',
     viewLog: '查看日志',
     vipLevel: 'VIP等级',
@@ -1405,6 +1409,7 @@ export default {
     removeRemarkSuccess: '删除备注成功',
     replyFeedback: '回复用户反馈',
     resetSuccess: '清除成功',
+    resendSuccess: '重发成功',
     selectSiteFirst: '请先选择站点',
     selectSiteAndGameTypeFirst: '请先选择站点和游戏类型',
     selectPreviousLevel: '请选择上级',

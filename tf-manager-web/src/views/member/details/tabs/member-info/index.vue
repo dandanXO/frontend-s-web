@@ -132,6 +132,18 @@
           </template>
           <span v-if="memberDetail.telephone !== null">{{ memberDetail.telephone }}</span>
           <span v-if="memberDetail.telephone === null">-</span>
+
+          <el-button
+            type="info"
+            size="mini"
+            style="float: right;"
+            v-permission="['sys:member:detail:unmask']"
+            @click="unmaskDetail('TELEPHONE')"
+            :disabled="memberDetail.telephone === null"
+          >
+            {{ t('fields.show') }}
+          </el-button>
+
           <el-button
             style="margin-left: 5px"
             icon="el-icon-phone"
@@ -146,20 +158,10 @@
             icon="el-icon-video-pause"
             size="mini"
             type="danger"
-            v-if="memberDetail.telephone !== null && uiControl.showCall"
+            v-if="memberDetail.telephone !== null && uiControl.showCall1"
             v-permission="['sys:member:stop:phone']"
             @click="stopPhone(memberDetail.id, memberDetail.siteId)"
           />
-          <el-button
-            type="info"
-            size="mini"
-            style="float: right;"
-            v-permission="['sys:member:detail:unmask']"
-            @click="unmaskDetail('TELEPHONE')"
-            :disabled="memberDetail.telephone === null"
-          >
-            {{ t('fields.show') }}
-          </el-button>
         </el-descriptions-item>
         <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context">
           <template #label>
@@ -848,6 +850,7 @@ export default defineComponent({
       dialogTitle: "",
       dialogType: "",
       showCall: false,
+      showCall1: false,
     });
     const route = useRoute()
     const site = reactive({
@@ -1455,19 +1458,19 @@ export default defineComponent({
 
     async function callPhone(id, site) {
       var res = await callTelephone(id, site);
-      if (res === 'true') {
+      if (res.data === 'true') {
         ElMessage({ message: t('message.success'), type: "success" });
       } else {
-        ElMessage({ message: t('fields.Success'), type: "fail" });
+        ElMessage({ message: t('fields.fail'), type: "fail" });
       }
     }
 
     async function stopPhone(id, site) {
       var res = await stopTelephone(id, site);
-      if (res === 'true') {
+      if (res.data === 'true') {
         ElMessage({ message: t('message.success'), type: "success" });
       } else {
-        ElMessage({ message: t('message.Success'), type: "fail" });
+        ElMessage({ message: t('fields.fail'), type: "fail" });
       }
     }
 
@@ -1500,6 +1503,7 @@ export default defineComponent({
       loading.fundingInfo = false;
       if (site.id === '3') {
         uiControl.showCall = true;
+        uiControl.showCall1 = true;
       }
     });
 
