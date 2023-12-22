@@ -1319,7 +1319,10 @@ export default {
     configCode: 'Config Code',
     configValue: 'Config Value',
     s3Url: 'S3 URL',
-    allSites: 'All Sites'
+    allSites: 'All Sites',
+    rank: 'Rank',
+    processResult: 'Process Result',
+    winner: 'Winner',
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
@@ -1860,6 +1863,7 @@ export default {
     "Error Queue": "Error Message Queue",
     GoogleAuth: 'Google Auth',
     'Image Setting': 'Image Setting',
+    'Privi Christmas': 'Merry Christmas',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -2097,5 +2101,6 @@ export default {
     21005: 'App exists with same site, OS, App Type & Apk Type',
     21006: 'File and os that choosing not the same',
     30000: 'PG update transaction status failed',
+    24003: 'Result is already processed',
   },
 }

@@ -1324,7 +1324,10 @@ export default {
     configCode: '设置Code',
     configValue: '设置值',
     s3Url: 'S3地址',
-    allSites: '全部站点'
+    allSites: '全部站点',
+    rank: '等级',
+    processResult: '结算结果',
+    winner: '贏家',
   },
   message: {
     addRemarkSuccess: '新增备注成功',
@@ -1836,6 +1839,7 @@ export default {
     GoogleAuth: "Google 验证中心",
     "Error Queue": "错误消息",
     'Image Setting': '图片设置',
+    'Privi Christmas': '圣诞快乐',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -2071,5 +2075,6 @@ export default {
     21005: '应用程序已存在',
     21006: '操作系统和上载应用程序不匹配',
     30000: 'PG注单设置失败',
+    24003: '结果已结算',
   },
 }
