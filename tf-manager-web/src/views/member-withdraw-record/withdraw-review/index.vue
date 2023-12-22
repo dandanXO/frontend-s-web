@@ -665,6 +665,9 @@ function changePage(page) {
 }
 
 function getSummaries(param) {
+  if (!hasPermission(['sys:report:summary:total'])) {
+    return []
+  }
   const { columns } = param
   var sums = []
   const requestCopy = { ...request }
