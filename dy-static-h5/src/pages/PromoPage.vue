@@ -65,6 +65,7 @@
             </div>
           </div>
           <div v-else class="selected-promo">
+            <div class="loader" v-if="isFetchingPromo" />
             <div class="selected-promo-wrapper">
               <div class="banner-container">
                 <!-- <div
@@ -178,6 +179,7 @@ export default defineComponent({
           return '';
       }
     }
+    const isFetchingPromo = ref(false);
     const promoTabActive = ref(promoTypes.value[0].value);
     const filteredArray = ref([]);
     const isPromoDetail = ref(false);
@@ -282,6 +284,8 @@ export default defineComponent({
     const loadAll = () => {
       const platformApiUrl = (store.hasToken() && window.location.pathname !== "/promotion") ? "/session/loggedInPromoPages" : "/promo/page";
 
+      isFetchingPromo.value = window.location.pathname === "/promotion";
+
       api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
           promoState.promoList = [];
@@ -301,9 +305,11 @@ export default defineComponent({
           // console.log("Final Promos");
           // console.log(promoState.promoList);
           switchPromoType(promoState.active);
+          isFetchingPromo.value = false;
         }
       }).catch((e) => {
         console.log("error", e);
+        isFetchingPromo.value = false;
       });
     };
 
@@ -349,11 +355,11 @@ export default defineComponent({
       tabItems,
       isDisplayLogin,
       getPromoLabel,
-
       checkExtension,
       currentPath,
       extensionState,
-      extensionToken
+      extensionToken,
+      isFetchingPromo
     };
   }
 });
@@ -862,5 +868,27 @@ export default defineComponent({
       fill: #0089ed;
     }
   }
+}
+</style>
+<style scoped lang="scss">
+.loader {
+  margin: auto;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 </style>
