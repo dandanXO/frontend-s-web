@@ -278,6 +278,7 @@ const form = reactive({
   paymentTypeCode: null,
   withdrawAmountMax: 0,
   withdrawAmountMin: 0,
+  rule: null,
 })
 const formRules = reactive({
   name: [required(t('message.validateNameRequired'))],
