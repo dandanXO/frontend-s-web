@@ -1032,6 +1032,9 @@ const isAppUpdateModal = ref(false);
 const getVersionNo = async () => {
   if (Platform.is.android && Platform.is.capacitor) {
     const info = await App.getInfo();
+    // console.log("APP Info");
+    // console.log(info);
+
     var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
     // info.version && info.build
     const appType = "ALL";
