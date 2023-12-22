@@ -79,7 +79,7 @@
                   "
                 ></div> -->
                 <div>
-                  <img :src="imgURL + selectedPromo.mobileBannerUrl" style="width: 100%; display: block" />
+                  <img v-if="!!imgURL && !!selectedPromo.mobileBannerUrl" :src="imgURL + selectedPromo.mobileBannerUrl" style="width: 100%; display: block" />
                 </div>
               </div>
               <div class="inner">
@@ -87,6 +87,7 @@
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
+                  v-if="selectedPromo.promoType"
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
@@ -321,12 +322,15 @@ export default defineComponent({
 
     }
 
-
     onActivated(() => {
+      // if promo name is present, do not show promo list on first load
+      if(route.query.name) {
+        isPromoDetail.value = true;
+      }
+
       checkExtension();
       loadBanner();
       loadAll();
-
     });
 
     return {
