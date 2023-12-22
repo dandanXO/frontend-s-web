@@ -113,7 +113,7 @@
         :rules="formRules"
         :inline="true"
         size="small"
-        label-width="200px"
+        label-width="250px"
       >
         <el-form-item :label="t('fields.withdrawPlatform')" prop="withdrawPlatformId" required>
           <el-select
@@ -123,7 +123,7 @@
             size="small"
             :placeholder="t('fields.pleaseChoose')"
             class="filter-item"
-            style="width: 200px; margin-bottom: 16px"
+            style="width: 200px;"
           >
             <el-option
               v-for="item in list.withdrawPlatformByPayType"
@@ -133,15 +133,30 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.minWithdrawAmount')" prop="withdrawAmountMin">
-          <el-input-number v-model="form.withdrawAmountMin" :min="0" class="form-input" :controls="false" />
+        <el-form-item
+          :label="t('fields.minWithdrawAmount')"
+          prop="withdrawAmountMin"
+          :rules="numberRules.repeatNumberValidation"
+        >
+          <el-input-number
+            v-model="form.withdrawAmountMin"
+            :min="0"
+            class="form-input"
+            :controls="false"
+            style="width: 200px;"
+          />
         </el-form-item>
-        <el-form-item :label="t('fields.maxWithdrawAmount')" prop="withdrawAmountMax">
+        <el-form-item
+          :label="t('fields.maxWithdrawAmount')"
+          prop="withdrawAmountMax"
+          :rules="numberRules.repeatNumberValidation"
+        >
           <el-input-number
             v-model="form.withdrawAmountMax"
             :min="form.withdrawAmountMin"
             class="form-input"
             :controls="false"
+            style="width: 200px;"
           />
         </el-form-item>
         <div class="dialog-footer">
@@ -159,6 +174,7 @@
       highlight-current-row
       @selection-change="handleSelectionChange"
       :empty-text="t('fields.noData')"
+      style="width: 100%;"
     >
       <el-table-column type="expand">
         <template #default="props">
@@ -182,12 +198,12 @@
           </el-table>
         </template>
       </el-table-column>
-      <el-table-column prop="paymentTypeCode" :label="t('fields.payTypeName')" width="200" />
-      <el-table-column prop="withdrawAmountMin" :label="t('fields.minWithdrawAmount')" width="200" />
-      <el-table-column prop="withdrawAmountMax" :label="t('fields.maxWithdrawAmount')" width="200" />
-      <el-table-column prop="memberBalanceMin" :label="t('fields.minBalance')" width="200" />
-      <el-table-column prop="memberBalanceMax" :label="t('fields.maxBalance')" width="200" />
-      <el-table-column prop="status" :label="t('fields.status')" width="200" v-if="hasPermission(['sys:systemautowithdraw:update'])">
+      <el-table-column prop="paymentTypeCode" :label="t('fields.payTypeName')" />
+      <el-table-column prop="withdrawAmountMin" :label="t('fields.minWithdrawAmount')" />
+      <el-table-column prop="withdrawAmountMax" :label="t('fields.maxWithdrawAmount')" />
+      <el-table-column prop="memberBalanceMin" :label="t('fields.minBalance')" />
+      <el-table-column prop="memberBalanceMax" :label="t('fields.maxBalance')" />
+      <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
         <template #default="scope">
           <el-switch
             v-model="scope.row.status"
@@ -253,7 +269,6 @@ const uiControl = reactive({
   platformDialogVisible: false,
   platformDialogTitle: '',
   platformDialogType: 'CREATE',
-  removeBtn: true,
   dialogLoading: false,
 })
 const request = reactive({
@@ -268,8 +283,9 @@ const list = reactive({
   filteredPayTypes: [],
   siteCurrencyIds: [],
   withdrawPlatform: [],
-  filteredwithdrawPlatform: [],
+  siteWithdrawPlatform: [],
   withdrawPlatformByPayType: [],
+  exclusionList: [],
 })
 const page = reactive({
   pages: 1,
@@ -290,9 +306,25 @@ const form = reactive({
 const formRules = reactive({
   name: [required(t('message.validateNameRequired'))],
   code: [required(t('message.validateCodeRequired'))],
-  icon: [required(t('message.validateIconRequired'))],
-  sequence: [required(t('message.validateSequenceRequired'))],
-  currencyId: [required(t('message.validateCurrencyRequired'))],
+})
+
+const repeatNumberValidation = (msg) => {
+  return {
+    required: true,
+    message: msg,
+    trigger: "blur",
+    validator: (rule, value, callback) => {
+      if (list.exclusionList.includes(value)) {
+        callback(new Error());
+      } else {
+        callback();
+      }
+    }
+  };
+};
+
+const numberRules = reactive({
+  repeatNumberValidation: [repeatNumberValidation(t('message.validateNoRepeatAmount'))],
 })
 
 async function loadSites() {
@@ -312,7 +344,6 @@ async function loadCurrency() {
 }
 
 async function loadAutoPaymentType() {
-  loadSiteWithdrawPlatform(request.siteId)
   const requestCopy = { ...request }
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
@@ -322,44 +353,30 @@ async function loadAutoPaymentType() {
   })
   const { data: ret } = await getSystemAutoPaymentTypeList(query)
   page.records = ret
-  loadWithdrawName()
   loadPayTypes()
 }
 
 function loadWithdrawName() {
-  list.withdrawPlatformByPayType = []
-  list.filteredwithdrawPlatform.forEach(platform => {
+  list.siteWithdrawPlatform.forEach(platform => {
     list.withdrawPlatform.forEach(item => {
       if (item.id === platform.withdrawPlatformId) {
         platform.name = item.name
         platform.id = item.id
         platform.type = item.type
-        list.withdrawPlatformByPayType.push(platform)
       }
     })
   })
-
-  page.records.forEach(item => {
-    if (item.systemAutoWithdrawPlatfromVO) {
-      item.systemAutoWithdrawPlatfromVO.forEach(platfrom => {
-        const matchingPlatform = list.withdrawPlatform.find(itemz => itemz.id === platfrom.withdrawPlatformId);
-        if (matchingPlatform) {
-          platfrom.withdrawPlatformName = matchingPlatform.name;
-        }
-      });
-    }
-  });
 }
 
 async function loadSiteWithdrawPlatform(siteId) {
   const { data: ret } = await getSiteWithdrawPlatform(siteId);
-  list.filteredwithdrawPlatform = ret;
+  list.siteWithdrawPlatform = ret;
+  loadWithdrawName()
 }
 
 async function loadWithdrawPlatform() {
   const { data: ret } = await getWithdrawPlatforms();
   list.withdrawPlatform = ret.records
-  loadWithdrawName()
 }
 
 function filterPayTypeByCurrency() {
@@ -368,7 +385,7 @@ function filterPayTypeByCurrency() {
   list.siteCurrencyIds = [
     ...currencyCodeList.map(currencyName => {
       const currency = list.currencies.find(c => c.currencyCode.toUpperCase() === currencyName.toUpperCase())
-      return currency ? currency.id : null;
+      return currency ? currency.id : null
     }).filter(Boolean)
   ]
   list.filteredPayTypes = list.payTypes.filter(payTypeByCurrencyID)
@@ -424,11 +441,15 @@ function showDialog(type) {
 }
 
 function showPlatfromDialog(type, data) {
+  list.exclusionList = []
+  data.systemAutoWithdrawPlatfromVO.forEach(item => {
+    list.exclusionList.push(item.withdrawAmountMin)
+    list.exclusionList.push(item.withdrawAmountMax)
+  })
   form.withdrawAmountMax = 0
   form.withdrawAmountMin = 0
   list.withdrawPlatformByPayType = []
-  loadWithdrawName()
-  list.filteredwithdrawPlatform.forEach(item => {
+  list.siteWithdrawPlatform.forEach(item => {
     if (item.type === data.paymentTypeCode) {
       list.withdrawPlatformByPayType.push(item)
     }
@@ -446,8 +467,8 @@ function showPlatfromDialog(type, data) {
   uiControl.platformDialogVisible = true
 }
 
-function deletePlatform(data) {
-  deleteSystemAutoPaymentPlaltform(data)
+async function deletePlatform(data) {
+  await deleteSystemAutoPaymentPlaltform(data)
   loadAutoPaymentType()
 }
 
@@ -489,18 +510,22 @@ function edit() {
 }
 
 function submit() {
+  uiControl.dialogLoading = true
   if (uiControl.dialogType === 'CREATE') {
     create()
     payTypeByExistingPayType()
   } else if (uiControl.dialogType === 'EDIT') {
     edit()
   }
+  uiControl.dialogLoading = false
 }
 
 function submitPlatform() {
+  uiControl.dialogLoading = true
   if (uiControl.platformDialogType === 'CREATE') {
     createPlatform()
   }
+  uiControl.dialogLoading = false
 }
 
 function changePage(page) {
@@ -517,8 +542,8 @@ onMounted(async() => {
     site.value = list.sites[0];
     request.siteId = site.value.id;
   }
-  loadWithdrawPlatform()
-  loadSiteWithdrawPlatform(request.siteId)
+  await loadWithdrawPlatform()
+  await loadSiteWithdrawPlatform(request.siteId)
   loadCurrency()
   loadPayTypes()
   loadAutoPaymentType()

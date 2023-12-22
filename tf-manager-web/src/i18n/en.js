@@ -1589,6 +1589,7 @@ export default {
     validateNextGetBetPage: 'Next Get Bet Page is required',
     validateNextGetBetStartTime: 'Next Get Bet Start Time is required',
     validateNoNullValue: 'No null value can exist',
+    validateNoRepeatAmount: 'No same amount can exist',
     validateNumberOnly: 'Please enter number only',
     validateNumberFourDecimalOnly:
       'Please enter number greater than 0 and only 4 decimal places',
@@ -1772,6 +1773,7 @@ export default {
     'Ewallt Payment on going': 'Ewallet Paying',
     'Alipay Payment on going': 'Alipay Paying',
     'Automatic Payment': 'Automatic Paying',
+    'Waiting Auto Pay': 'Waiting Auto Pay',
     Suspend: 'Suspend',
     Promotion: 'Promotion',
     'Privilege Info': 'Privilege Info',
