@@ -215,6 +215,12 @@ export default defineComponent({
             message: "ควรมีพยัญชนะ 6-12 ตัว",
             trigger: "blur",
           },
+          {
+            required: true,
+            pattern: /^[a-zA-Z1-9][a-zA-Z0-9]*$/,
+            message: "ชื่อผู้ใช้สามารถประกอบด้วยตัวเลขและตัวอักษรเท่านั้น",
+            trigger: "blur"
+          }
         ],
         password: [
           {
