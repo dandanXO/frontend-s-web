@@ -82,6 +82,7 @@ export default {
     SENDING: '发送中',
     WAITING_CALLBACK: '自动支付中',
     PAYING: '支付',
+    WAITING_AUTO_PAY: '待自动支付',
   },
   withdrawConfirmStatus: {
     0: '未确认',
@@ -976,6 +977,7 @@ export default {
     rebateDistributeTime: '返水发放时间',
     rebateLevel: '返水等级',
     rebatePercentage: '返水比例 %',
+    rule: '规则',
     maxRebate: '最大返水额',
     maxBalance: '最高余额',
     rebateAmount: '返水金额',

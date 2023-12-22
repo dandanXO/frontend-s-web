@@ -82,6 +82,7 @@ export default {
     SENDING: 'Sending',
     WAITING_CALLBACK: 'Waiting Callback',
     PAYING: 'Paying',
+    WAITING_AUTO_PAY: 'Waiting Auto Payment',
   },
   withdrawConfirmStatus: {
     0: '未确认',
@@ -970,6 +971,7 @@ export default {
     rebateDistributeTime: 'Rebate Distribute Time',
     rebateLevel: 'Rebate Level',
     rebatePercentage: 'Rebate %',
+    rule: 'Rule',
     maxRebate: 'Max Rebate',
     maxBalance: 'Maximun Balance',
     rebateAmount: 'Rebate Amount',
