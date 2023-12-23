@@ -54,14 +54,14 @@
         >
           {{ t('fields.reset') }}
         </el-button>
-        <el-button size="mini" type="success" @click="calculateResult(id)">
+        <el-button size="mini" type="success" @click="calculateResult()">
           {{ $t('fields.processResult') }}
         </el-button>
         <el-button
           icon="el-icon-view"
           size="mini"
           type="success"
-          @click="showDialog(id)"
+          @click="showDialog()"
         >
           {{ $t('fields.winner') }}
         </el-button>
@@ -175,9 +175,9 @@
       class="pagination"
       @current-change="changePage"
       layout="prev, pager, next"
-      :page-size="request.size"
+      :page-size="participantRequest.size"
       :page-count="page.pages"
-      :current-page="request.current"
+      :current-page="participantRequest.current"
     />
   </div>
 </template>
@@ -187,7 +187,7 @@ import { onMounted, reactive, ref } from 'vue'
 // import moment from 'moment'
 // import { required } from '../../../utils/validate'
 // import { ElMessage } from 'element-plus'
-import { getPrivilegeInfo } from '../../../api/privilege-info'
+// import { getPrivilegeInfo } from '../../../api/privilege-info'
 // import { getSiteListSimple } from '../../../api/site'
 // import { hasPermission } from '../../../utils/util'
 import { useStore } from '../../../store'
@@ -207,7 +207,6 @@ const store = useStore()
 // const siteList = reactive({
 //   list: [],
 // })
-const id = ref(1)
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -225,19 +224,19 @@ const winnerList = reactive({
   records: [],
 })
 
-const request = reactive({
-  size: 30,
-  current: 1,
-  name: null,
-  code: 'jolly_event',
-  // status: null,
-  // siteId: null,
-})
+// const request = reactive({
+//   size: 30,
+//   current: 1,
+//   name: null,
+//   code: 'jolly_event',
+//   status: null,
+//   siteId: null,
+// })
 
 const participantRequest = reactive({
   size: 30,
   current: 1,
-  id: id,
+  code: 'jolly_event',
   name: '',
 })
 
@@ -247,10 +246,10 @@ function resetQuery() {
   // request.siteId = site.value ? site.value.id : null
 }
 
-async function loadPrivilegeInfo() {
-  const { data: ret } = await getPrivilegeInfo(request)
-  id.value = ret.records[0].id
-}
+// async function loadPrivilegeInfo() {
+//   const { data: ret } = await getPrivilegeInfo(request)
+//   id.value = ret.records[0].id
+// }
 
 async function loadParticipant() {
   page.loading = true
@@ -271,18 +270,18 @@ async function loadParticipant() {
 //   siteList.list = site
 // }
 
-async function calculateResult(id) {
-  await calculateWinner(id);
+async function calculateResult() {
+  await calculateWinner('jolly_event');
   ElMessage({ message: t('message.resultCalculateSuccess'), type: "success" });
 }
 
 function changePage(page) {
-  request.current = page
-  loadPrivilegeInfo()
+  participantRequest.current = page
+  loadParticipant()
 }
 
-async function showDialog(id) {
-  const { data: ret } = await getWinnerList(id)
+async function showDialog() {
+  const { data: ret } = await getWinnerList('jolly_event')
   winnerList.records = ret
   uiControl.dialogVisible = true
 }
@@ -295,7 +294,7 @@ onMounted(async () => {
   //   )
   //   request.siteId = site.value.id
   // }
-  await loadPrivilegeInfo()
+  // await loadPrivilegeInfo()
   await loadParticipant()
   timeZone = store.state.user.sites[0].timeZone
 })
