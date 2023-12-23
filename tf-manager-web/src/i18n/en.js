@@ -702,6 +702,7 @@ export default {
     feedbackStatusSuccess: 'Success',
     feedbackTime: 'Feedback Time',
     feeRate: 'Fee Rate',
+    subtractAmount: 'Subtract Amount',
     finalSum: 'Final Sum',
     financialLevel: 'Financial Level',
     financeType: 'Type',

@@ -708,6 +708,7 @@ export default {
     feedbackStatusSuccess: '已核实',
     feedbackTime: '催单日期',
     feeRate: '收费率',
+    subtractAmount: '扣费金额',
     finalSum: '最终佣金',
     financialLevel: '会员组别',
     financePhotos: '图片',
