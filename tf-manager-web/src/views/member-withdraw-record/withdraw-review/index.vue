@@ -250,6 +250,11 @@
         </template>
       </el-table-column>
       <el-table-column
+        prop="time"
+        :label="t('fields.date')"
+        width="120"
+      />
+      <el-table-column
         prop="totalBet"
         :label="t('fields.totalBet')"
         width="120"
