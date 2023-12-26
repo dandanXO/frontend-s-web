@@ -233,27 +233,27 @@ body.body--dark .q-footer {
   background: #063c50;
   color: #26e6fb !important;
 }
-.flex-c-start{
-  display:flex;
+.flex-c-start {
+  display: flex;
   align-items: center;
   justify-content: flex-start;
 }
-.flex-c-end{
-  display:flex;
+.flex-c-end {
+  display: flex;
   align-items: center;
   justify-content: flex-end;
   flex-wrap: wrap;
 }
-.gap-8{
-  gap: 8px
+.gap-8 {
+  gap: 8px;
 }
-.btn-pointer{
+.btn-pointer {
   cursor: pointer;
 
-  &:hover{
+  &:hover {
     opacity: 0.9;
   }
-  &:active{
+  &:active {
     filter: brightness(0.86);
     transform: translate(0, 1px);
   }
@@ -451,4 +451,11 @@ body.body--dark .q-footer {
   display: flex;
   gap: 24px;
   justify-content: center;
+}
+
+// lower android version
+.android-8 {
+  .q-panel > div {
+    height: 150px;
+  }
 }
