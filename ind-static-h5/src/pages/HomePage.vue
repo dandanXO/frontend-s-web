@@ -1783,6 +1783,7 @@ onMounted(() => {
 
 .top-action {
   display: flex;
+  justify-content: space-around;
   gap: 16px;
   margin-top: 5px;
 

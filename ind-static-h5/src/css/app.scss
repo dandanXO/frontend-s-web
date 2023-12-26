@@ -458,4 +458,18 @@ body.body--dark .q-footer {
   .q-panel > div {
     height: 150px;
   }
+
+  .profile-pic {
+    margin-right: 12px !important;
+  }
+
+  .name-txt {
+    margin-right: 10px !important;
+  }
+
+  .top-action {
+    .action-btn:first-child {
+      margin-right: 12px;
+    }
+  }
 }
