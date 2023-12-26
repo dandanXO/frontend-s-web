@@ -393,6 +393,8 @@ export default defineComponent({
       way: "ANDROID"
     });
 
+    const affQuickRegEvent = ref("");
+
     const guestLogin = () => {
       $q.loading.show({
         message: "Playing as guest"
@@ -418,13 +420,15 @@ export default defineComponent({
 
               //ADJUST TRACKEVENT.
               if (Platform.is.android && Platform.is.capacitor) {
-                var adjustEvent = new AdjustEvent("vm6pjs");
+                affQuickRegEvent.value = sessionStorage.getItem("AFFILIATE_QUICK_REGISTER_EVENT");
+                var adjustEvent = new AdjustEvent(affQuickRegEvent.value);
+                // alert(affQuickRegEvent.value);
                 Adjust.trackEvent(adjustEvent);
               } else {
                 const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-                AdjustWeb.trackEvent({
-                  eventToken: "vm6pjs"
-                });
+                // AdjustWeb.trackEvent({
+                //   eventToken: "vm6pjs"
+                // });
               }
 
               store.autoLogin(res.data);
@@ -506,7 +510,8 @@ export default defineComponent({
       guestLogin,
       guestDeviceInfo,
       getAppInfo,
-      Platform
+      Platform,
+      affQuickRegEvent
     };
   }
 });
