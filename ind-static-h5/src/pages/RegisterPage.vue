@@ -371,7 +371,7 @@ export default defineComponent({
 
                 //ADJUST TRACKEVENT.
                 if (Platform.is.android && Platform.is.capacitor) {
-                  affRegEvent.value = sessionStorage.getItem("AFFILIATE_QUICK_REGISTER_EVENT");
+                  affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
                   var adjustEvent = new AdjustEvent(affRegEvent.value);
                   // alert(affRegEvent.value);
                   Adjust.trackEvent(adjustEvent);
