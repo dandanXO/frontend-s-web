@@ -39,7 +39,8 @@ export const userStore = defineStore("userStore", {
             phoneVerified: false,
             emailVerified: false,
             hasCheckedVersion: false,
-            hasClosedDL: false
+            hasClosedDL: false,
+            appDownloadUrl: '',
         };
     },
     actions: {
@@ -237,6 +238,19 @@ export const userStore = defineStore("userStore", {
                     }
                 });
             }
+        },
+        async getAppDownloadUrl () {
+            if(!this.appDownloadUrl) {
+                try {
+                    const res = await api.get("/config/appDownloadUrl");
+                    this.appDownloadUrl = res.data;
+                } catch(err) {
+                    console.log(err);
+                    this.appDownloadUrl = "https://dy9367.app/";
+                }
+            }
+            
+            return this.appDownloadUrl;
         },
         autoLogin(token) {
             if (isAndroid()) {

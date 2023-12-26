@@ -59,7 +59,9 @@ import { ref, onMounted, computed } from "vue";
 import { api } from "boot/axios";
 
 import { RiDownload2Fill } from "vue-remix-icons";
+import { userStore } from "stores/index";
 
+const store = userStore();
 const tab = ref("android");
 
 const downloadUrl = ref("");
@@ -135,15 +137,9 @@ const appleItems = computed(() => {
 // ];
 
 const getAppDownloadUrl = () => {
-  api
-      .get("/config/appDownloadUrl")
-      .then((res) => {
-        // console.log(res);
-        downloadUrl.value = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  store.getAppDownloadUrl().then((url) => {
+    downloadUrl.value = url;
+  });
 };
 
 onMounted(getAppDownloadUrl);

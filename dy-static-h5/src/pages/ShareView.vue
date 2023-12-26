@@ -71,12 +71,16 @@ import moment from 'moment'
 import { api } from "boot/axios";
 import Vue from "vue";
 import VueQRCodeComponent from 'vue-qrcode-component'
+import { isAndroid } from "boot/utils";
+import { userStore } from "src/stores";
+
 export default defineComponent({
   name: "ShareView",
   components: {
     RiFacebookCircleLine, RiWhatsappLine, RiTelegramLine, RiTwitterLine, RiInstagramLine, VueQRCodeComponent
   },
   setup() {
+    const store = userStore();
     const searchForm = reactive({
       date: moment('2022-03-03', 'YYYY-MM-DD'),
     });
@@ -105,12 +109,17 @@ export default defineComponent({
     //   },
     // ];
     const getReferral = () => {
-      api.get('/session/member/referralCode').then((res) => {
-        if(res.code === 0) {
-          referralLink.value = `${window.location.origin}/refer/${res.data}`;
+      api.get('/session/member/referralCode').then(async (res) => {
+        if(isAndroid()) {
+          const appDownloadUrl = await store.getAppDownloadUrl();
+          const appReferralLinkBaseURL = appDownloadUrl.replace('.app', '.com');
+          const appReferralLink = `${appReferralLinkBaseURL}/refer/${res.data}`;
+          referralLink.value = appReferralLink;
+          return;
         }
-      }).catch((err) => {
 
+        referralLink.value = `${window.location.origin}/refer/${res.data}`;
+      }).catch((err) => {
       })
     };
     onMounted(() => {
