@@ -540,6 +540,10 @@ export default defineComponent({
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "呼朋唤友";
+        } else if (route.path === "/privilege/invite") {
+          prevPage.value = "promo";
+          hasPage.value = true;
+          pageName.value = "邀请好友";
         } else if (route.path === "/account/announcement") {
           prevPage.value = "account";
           hasPage.value = true;
