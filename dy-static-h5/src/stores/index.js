@@ -246,7 +246,7 @@ export const userStore = defineStore("userStore", {
                     this.appDownloadUrl = res.data;
                 } catch(err) {
                     console.log(err);
-                    this.appDownloadUrl = "https://dy9367.app/";
+                    this.appDownloadUrl = "https://dy8168.app/";
                 }
             }
             
