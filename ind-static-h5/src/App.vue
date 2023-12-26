@@ -63,6 +63,7 @@ export default defineComponent({
       if (isAndroid()) {
         //Android App.
         console.log("Init Adjust Sdk");
+        console.log(affAppToken.value);
         var adjustConfig = new AdjustConfig(affAppToken.value, AdjustEnvironment.Production);
         adjustConfig.setLogLevel(AdjustLogLevel.Verbose);
         Adjust.create(adjustConfig);
@@ -115,7 +116,8 @@ export default defineComponent({
                         sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
                         sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
                         sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
-                        affAppToken.value = sessionStorage.getItem("AFFILIATE_APP_TOKEN");
+                        affAppToken.value = res.data.adjust_app_token;
+                        initAdjustEventTrack();
                         // alert(affAppToken.value);
                       }
                     });
@@ -150,7 +152,6 @@ export default defineComponent({
         "deviceready",
         () => {
           onDeviceReady();
-          initAdjustEventTrack();
         },
         false
       );
