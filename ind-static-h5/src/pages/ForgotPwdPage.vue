@@ -1,9 +1,15 @@
 <template>
   <div class="q-pa-md">
     <div class="q-gutter-y-md">
-      <div class="text-blue-grey">
+      <!-- 
+        <div class="text-blue-grey">
         Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.
-      </div>
+      </div> 
+    -->
+
+      <div class="forgot-password-form-logo-img">
+      <img src="../assets/logo.png" />
+    </div>
 
       <q-form v-if="!isRequestSent" class="q-gutter-y-md rounded-borders">
         <!-- <q-input
@@ -34,41 +40,46 @@
           class="landing-input"
         ></q-input> -->
 
-        <q-input
-          ref="phoneRef"
-          type="number"
-          hide-bottom-space
-          v-model="passwordForm.phone"
-          label="Phone Number"
-          lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Please Enter Phone Number']"
-          rounded
-          outlined
-          label-color="brand"
-          color="white"
-          class="landing-input"
-        ></q-input>
+        <div class="forgot-password-form-grid">
+          <span class="forgot-password-form-title">Forgot Password</span>
+          <span class="forgot-password-form-desc">Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.</span>
 
-        <q-input
-          ref="ftCaptchaRef"
-          hide-bottom-space
-          type="text"
-          v-model="passwordForm.captchaCode"
-          label="Verification Code"
-          lazy-rules
-          :rules="[(val) => (val && val.length > 3) || 'Please Enter Verification Code']"
-          rounded
-          outlined
-          label-color="brand"
-          color="white"
-          class="landing-input"
-        >
-          <template v-slot:append>
-            <img :src="verificationImg" @click="getCode()" />
-          </template>
-        </q-input>
+          <span class="forgot-password-form-field-label">Phone Number</span>
+          <q-input
+            ref="phoneRef"
+            type="number"
+            hide-bottom-space
+            v-model="passwordForm.phone"
+            lazy-rules
+            :rules="[(val) => (val && val.length > 0) || 'Please Enter Phone Number']"
+            outlined
+            label-color="brand"
+            color="white"
+            class="landing-input"
+          ></q-input>
 
-        <ConfirmButton label="Submit" :confirmFunc="onSubmitForgotPwd"></ConfirmButton>
+          <span class="forgot-password-form-field-label">Verification Code</span>
+          <q-input
+            ref="ftCaptchaRef"
+            hide-bottom-space
+            type="text"
+            v-model="passwordForm.captchaCode"
+            lazy-rules
+            :rules="[(val) => (val && val.length > 3) || 'Please Enter Verification Code']"
+            outlined
+            label-color="brand"
+            color="white"
+            class="landing-input"
+          >
+            <template v-slot:append>
+              <img :src="verificationImg" @click="getCode()" />
+            </template>
+          </q-input>
+
+          <div>
+            <q-btn @click.prevent="onSubmitForgotPwd" type="submit" class="submit-btn" label="Submit" rounded no-caps />
+          </div>
+        </div>
       </q-form>
       <q-form v-else class="q-gutter-y-md rounded-borders">
         <p>OTP Has Been Sent To Your Phone Number, Please Enter The OTP And New Password.</p>
@@ -455,13 +466,54 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+.forgot-password-form-logo-img {
+  img {
+    display: block;
+    width: 95%;
+    margin: 20px auto;
+    max-width: 200px;
+  }
+}
+.forgot-password-form-grid {
+  display: grid;
+  grid-auto-flow: row;
+  gap: 7px;
+
+  .forgot-password-form-title {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 30px;
+  }
+
+  .forgot-password-form-desc {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 25px;
+    color: #ffffff67;
+    width: 80%;
+  }
+
+  .forgot-password-form-field-label {
+    margin-top: 15px;
+  }
+}
+
+.submit-btn {
+  background-color: #8B00FF;
+  width: 100%;
+  height: 56px;
+  border-radius: 4px;
+  margin-top: 35px;
+}
+
 .landing-input {
   :deep(.q-field__control) {
     padding-left: 20px;
     padding-right: 20px;
   }
   :deep(.q-field__control):before {
-    border-color: #ffdd27;
+    border-color: #1E1F24;
+    background-color: #1E1F24;
     border-width: 2px;
   }
 }
