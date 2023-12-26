@@ -1980,6 +1980,8 @@ export default {
     1007: 'The withdrawal order has been submitted, please try again in 20 minutes',
     1008: 'You have already bound Google Authenticator, please enter the Google verification code.',
     1009: 'The Google verification code was entered incorrectly.',
+    1100: 'Admin is restricted from logging in',
+    1101: 'Login account does not belongs to this site',
     9000: 'Failed to create scheduled job',
     9001: 'Failed to update scheduled job',
     9002: 'Failed to delete scheduled job',
