@@ -370,6 +370,22 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="fee"
+          :label="t('fields.fee')"
+          align="center"
+          min-width="120"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{
+                data: scope.row.fee,
+                type: 'money',
+              }"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
           :label="t('fields.operate')"
           align="center"
           min-width="280"
