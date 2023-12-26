@@ -85,15 +85,16 @@ export default boot(({ app, router }) => {
 
   async function refreshTokenAndRetry(errorresp) {
     Notify.create({
-      type: "negative",
+      spinner: true,
+      type: "warning",
       timeout: 1000,
       position: "top",
-      message: "Refreshing token..."
+      message: "Refreshing..."
     });
     // debugger;
     const originalRequest = errorresp.config;
     const res = await api.post("/member/token/refresh");
-    console.log(res);
+    // console.log(res);
     SessionStorage.set("TOKEN", res.data);
     LocalStorage.set("TOKEN", res.data);
     store.token = res.data;
@@ -124,6 +125,8 @@ export default boot(({ app, router }) => {
 
     if (res.code !== ResponseCode.SUCCESS) {
       Loading.hide();
+      const messageTranslated = errorMessages[res.code] || "Error";
+
       if (res.code === ResponseCode.ERROR_SYSTEM) {
         return res;
       }
@@ -159,8 +162,6 @@ export default boot(({ app, router }) => {
             router.push("/login");
           });
         }
-
-        const messageTranslated = errorMessages[res.code] || "Error";
 
         Notify.create({
           type: "negative",
