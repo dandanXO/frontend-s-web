@@ -6,42 +6,40 @@
       </router-link>
     </div>
 
-    <div class="landing-img">
-      <img src="../assets/images/login/landing-img.png" />
+    <div class="login-form-logo-img">
+      <img src="../assets/logo.png" />
     </div>
 
     <q-form ref="loginFormRef" @submit="onSubmit">
-      <div v-if="!loginType" class="q-gutter-y-md">
+      <div v-if="!loginType" class="login-form-grid">
+        <span class="login-form-field-label">Phone Number</span>
         <q-input
           hide-bottom-space
           ref="loginNameRef"
           v-model="loginForm.loginName"
-          label="Phone Number"
           :rules="[
             (val) => (val && val.length > 0) || 'Please insert Phone number',
             (val) => (val.length >= 7 && val.length <= 12) || 'The phone number must be between 7 and 12'
           ]"
           label-color="brand"
           autocomplete="username"
-          rounded
           outlined
           color="white"
-          class="landing-input"
+          class="landing-input login-form-field"
         ></q-input>
 
+        <span class="login-form-field-label">Password</span>
         <q-input
           ref="passwordRef"
           hide-bottom-space
           v-model="loginForm.password"
-          label="Password"
           :type="isPwd ? 'password' : 'text'"
           :rules="[(val) => (val && val.length > 0) || 'Please insert password']"
           label-color="brand"
           autocomplete="current-password"
-          rounded
           outlined
           color="white"
-          class="landing-input"
+          class="landing-input login-form-field"
         >
           <template v-slot:append>
             <q-icon
@@ -75,6 +73,11 @@
         <!--        </q-input>-->
       </div>
 
+      <div class="forgot-password">
+        <router-link class="form-text" to="/forgot-password">Forgot Password</router-link>
+      </div>
+
+      <!-- 
       <div class="row items-center justify-between q-mt-sm">
         <div class="mui-row" :class="isCheckRmb ? 'checked' : ''">
           <q-checkbox
@@ -87,22 +90,31 @@
           />
         </div>
       </div>
+       -->
 
       <div>
-        <q-btn @click.prevent="onSubmit" type="submit" class="btn-yellow" label="Login" rounded no-caps />
+        <q-btn @click.prevent="onSubmit" type="submit" class="login-btn" label="Login" rounded no-caps />
       </div>
 
-      <div class="q-mt-sm">
+      <!-- <div class="q-mt-sm">
         <q-btn @click="goRegister()" rounded flat no-caps class="btn-purple" label="Register" />
-        <!--          v-if="Platform.is.capacitor"-->
-      </div>
+      </div> -->
     </q-form>
 
-    <div class="tip-container">
+    <hr class="end-of-form-separator"/>
+
+    <div class="create-account">
+      <span class="form-text">Not a member? </span>
+      <router-link class="form-text" to="/register" style="color: #AE6DEF">Create account</router-link>
+    </div>
+
+    <!-- 
+      <div class="tip-container">
       <router-link class="landing-tip" to="/forgot-password">Forgot Password ?</router-link>
 
       <router-link class="landing-tip" to="/register">Sign Up Now</router-link>
-    </div>
+    </div> 
+    -->
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
@@ -517,6 +529,49 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="scss">
+.login-form-logo-img {
+  img {
+    display: block;
+    width: 95%;
+    margin: 20px auto;
+    max-width: 200px;
+  }
+}
+.login-form-grid {
+  display: grid;
+  grid-auto-flow: row;
+  gap: 7px;
+
+  .login-form-field-label {
+    margin-top: 15px;
+  }
+}
+.login-btn {
+  background-color: #8B00FF;
+  width: 100%;
+  height: 56px;
+  border-radius: 4px;
+  margin-top:30px;
+}
+.forgot-password {
+  margin: 8px 0px 0px;
+  text-align: right;
+}
+
+.end-of-form-separator {
+  margin: 35px 0px 0px;
+  border-color: #FFFFFF26;
+}
+
+.create-account {
+  margin: 20px 0px;
+  text-align: center;
+}
+.form-text {
+  color: #B3B0B8;
+  text-decoration: none;
+}
+
 .tip-container {
   display: flex;
   justify-content: space-between;
@@ -536,7 +591,8 @@ export default defineComponent({
     padding-right: 20px;
   }
   :deep(.q-field__control):before {
-    border-color: #ffdd27;
+    border-color: #1E1F24;
+    background-color: #1E1F24;
     border-width: 2px;
   }
 }
