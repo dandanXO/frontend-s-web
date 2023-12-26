@@ -698,6 +698,7 @@ export default {
     failReason: '失败原因',
     fdConvertRate: '存款转化率',
     features: '特性',
+    fee: '手续费',
     feedbackType: '催单类型',
     feedbackTypeAll: '全部',
     feedbackTypeDeposit: '存款',

@@ -692,6 +692,7 @@ export default {
     failReason: 'Fail Reason',
     fdConvertRate: 'FTD ConvertRate',
     features: 'Features',
+    fee: 'Fee',
     feedbackType: 'Feedback Type',
     feedbackTypeAll: 'All',
     feedbackTypeDeposit: 'Deposit',
