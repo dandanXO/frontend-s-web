@@ -1,34 +1,40 @@
 <template>
+  <ProfileSummary :homeProfile="true" />
+
   <div class="bonus-page">
     <div class="progress-container">
       <div class="left-container">
-        <img class="character-red-bg" src="../assets/images/bonus/character-red-bg.png" alt="" />
-        <img class="character-red" src="../assets/images/bonus/character-red.png" alt="" />
+        <q-avatar size="60px">
+          <img src="http://localhost:9090/img/profile-pic-01.7971be19.png" />
+        </q-avatar>
+        <!-- 
+          <img class="character-red-bg" src="../assets/images/bonus/character-red-bg.png" alt="" />
+          <img class="character-red" src="../assets/images/bonus/character-red.png" alt="" />
 
-        <div class="bonus-pot-btn-container">
-          <img class="bonus-pot-btn-frame" src="../assets/images/bonus/bonus-pot-btn-frame.png" alt="" />
-          <img class="bonus-pot-btn" src="../assets/images/bonus/bonus-pot-btn.png" alt="" />
-          <span class="common-text">Bonus Pot</span>
-        </div>
+          <div class="bonus-pot-btn-container">
+            <img class="bonus-pot-btn-frame" src="../assets/images/bonus/bonus-pot-btn-frame.png" alt="" />
+            <img class="bonus-pot-btn" src="../assets/images/bonus/bonus-pot-btn.png" alt="" />
+            <span class="common-text">Bonus Pot</span>
+          </div>
+        -->
       </div>
 
       <div class="right-container">
         <div class="amount-progress-container">
-          <div class="common-text">VIP</div>
-          <div class="common-text">{{ `${progressRef} / ${maxProgress}` }}</div>
+          <div class="vip-text">VIP</div>
+          <div class="progress-num">{{ `${progressRef} / ${maxProgress}` }}</div>
         </div>
-        <q-linear-progress reverse rounded size="5px" :value="progressBarRef" class="progress-bar"></q-linear-progress>
-        <div class="common-text">Deposit Monthly To Win Gifts</div>
-
-        <div class="detail-btn-container absolute-bottom-right" @click="onDetailClick()">
-          <img class="detail-btn" src="../assets/images/bonus/detail-btn.png" alt="" />
-          <span class="common-text">Detail</span>
-        </div>
+        <q-linear-progress reverse rounded size="15px" :value="progressBarRef" class="progress-bar" color="white"></q-linear-progress>
+        <div class="win-gift-text">Deposit Monthly To Win Gifts</div>
       </div>
     </div>
 
+    <div class="detail-btn-container" @click="onDetailClick()">
+      <span class="">Bonus Pot Detail</span>
+    </div>
+
     <div class="vip-table-container">
-      <q-table flat :hide-pagination="true" :columns="columns" :rows="rows" row-key="name" :rows-per-page-options="[0]">
+      <q-table flat :hide-pagination="true" :columns="columns" :rows="rows" row-key="name" :rows-per-page-options="[0]" bordered :separator="'cell'">
         <template v-slot:header="props">
           <q-tr :props="props">
             <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
@@ -59,8 +65,14 @@
     </div>
 
     <div class="countdown-container">
-      <img class="character-blue" src="../assets/images/bonus/character-blue.png" alt="" />
-      <div class="right-container">
+      <div class="noticeboard">
+        You Can Get
+        <span>0.3%</span>
+        Of The Daily Wager As A Reward, Credited To Your Account Every Day At 0:00 Indian Time
+      </div>
+      
+      <img class="character-blue" src="../assets/images/bonus/character-blue.png" alt="" style="display:none" />
+      <div class="right-container" style="display:none">
         <!-- <div class="countdown">
           <div class="common-text">
             Ready To
@@ -87,6 +99,7 @@ import { ref } from "vue";
 import { date } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
+import ProfileSummary from "components/ProfileSummary.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -217,9 +230,15 @@ const redeem = () => {};
   overflow: hidden;
 
   .progress-container {
-    display: flex;
-    justify-content: space-between;
-    margin: 1.5rem 0 0 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-gap: 10px;
+    align-items: center;
+    margin: 1.5rem 0 3rem 0;
+    background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%);
+    border-radius: 8px;
+    min-height: 150px;
+    padding: 10px;
 
     .left-container {
       position: relative;
@@ -263,16 +282,31 @@ const redeem = () => {};
     .right-container {
       position: relative;
       top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
 
       .amount-progress-container {
         display: flex;
         justify-content: space-between;
+        align-items: center;
       }
 
       .progress-bar {
         border: 1px solid #fed87d;
-        background: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
+        // background: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
+        background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%);
+        border-radius: 100px;
         color: #320b5b;
+      }
+
+      .vip-text {
+        font-size: 20px;
+        font-weight: 700;
+      }
+
+      .win-gift-text {
+        text-align: right;
       }
 
       .detail-btn-container {
@@ -291,11 +325,21 @@ const redeem = () => {};
     }
   }
 
+  .detail-btn-container {
+    background: linear-gradient(180deg, #FFE146 0%, #B54100 100%);
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+  }
+
   .vip-table-container {
-    margin: 2.5rem 0 1rem 0;
+    margin: 2.5rem 0 2rem 0;
 
     .q-table__card {
       background: transparent !important;
+      border-radius: 8px;
     }
 
     .vip-icon {
@@ -309,19 +353,25 @@ const redeem = () => {};
       justify-content: flex-end;
 
       .coin {
-        width: 1.5rem;
+        width: 2rem;
         margin: 0 0.5rem 0 0;
       }
     }
 
     thead > :first-child {
       background: rgba(21, 0, 37, 0.5);
+      background: linear-gradient(180deg, #41206F 0%, #1F2862 100%);
     }
     tbody > :nth-child(odd) {
       background: rgba(21, 0, 37, 0.2);
+      background: #652C93;
     }
     tbody > :nth-child(even) {
       background: rgba(21, 0, 37, 0.5);
+      background: #502175;
+    }
+    tbody > td {
+      border-width: 1px;
     }
 
     .text-center,
@@ -337,6 +387,23 @@ const redeem = () => {};
     display: flex;
     position: relative;
     line-height: 1.25;
+    background: url("../assets/images/bonus/bonus-page-daily-wager-reward-banner.png");
+    min-height: 150px;
+    margin-bottom: 20px;
+
+    .noticeboard {
+      background: #00000099;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      color: #D4CDD6;
+      line-height: 25px;
+      text-align: center;
+      
+      span {
+        color: #fff;
+      }
+    }
 
     .character-blue {
       width: 15rem;

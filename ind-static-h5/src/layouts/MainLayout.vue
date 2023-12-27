@@ -197,7 +197,7 @@ export default defineComponent({
           pageName.value = "Earn Money";
         } else if (route.path === "/bonus") {
           prevPage.value = "/";
-          hasPage.value = true;
+          // hasPage.value = true;
           pageName.value = "Daily Activity";
         } else if (route.path === "/vip") {
           // hasPage.value = true;
