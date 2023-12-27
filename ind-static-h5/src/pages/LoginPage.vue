@@ -7,7 +7,7 @@
     </div>
 
     <div class="login-form-logo-img">
-      <img src="../assets/logo.png" />
+      <img src="../assets/ind-win-7-logo.png" />
     </div>
 
     <q-form ref="loginFormRef" @submit="onSubmit">
@@ -535,6 +535,9 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background: url("../assets/images/index/auth-bg.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 .back-left {

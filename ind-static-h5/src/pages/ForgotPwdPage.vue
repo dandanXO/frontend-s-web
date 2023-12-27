@@ -12,7 +12,7 @@
   -->
 
     <div class="forgot-password-form-logo-img">
-    <img src="../assets/logo.png" />
+    <img src="../assets/ind-win-7-logo.png" />
   </div>
 
     <q-form v-if="!isRequestSent" class="q-gutter-y-md rounded-borders">
@@ -475,6 +475,9 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background: url("../assets/images/index/auth-bg.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 .back-left {

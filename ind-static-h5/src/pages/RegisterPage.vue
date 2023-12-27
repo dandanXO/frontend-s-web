@@ -7,7 +7,7 @@
     </div>
 
     <div class="register-form-logo-img">
-      <img src="../assets/logo.png" />
+      <img src="../assets/ind-win-7-logo.png" />
     </div>
 
     <q-form class="q-gutter-y-md rounded-borders">
@@ -560,6 +560,9 @@ function charType(num) {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background: url("../assets/images/index/auth-bg.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 .back-left {
