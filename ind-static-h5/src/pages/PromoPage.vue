@@ -22,9 +22,9 @@
                 >
                   <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
-                      <div class="pad-title">
+                      <!-- <div class="pad-title">
                         <span class="pad-right">查看详情&gt;&gt;</span>
-                      </div>
+                      </div> -->
                       <div class="promo-info">
                         <span class="viewdetail">{{ promo.title }}</span>
                       </div>
@@ -39,9 +39,9 @@
 
                   <div class="promo-item" v-if="tab.name === 'all'">
                     <a @click="showPromoDetails(promo)">
-                      <div class="pad-title">
+                      <!-- <div class="pad-title">
                         <span class="pad-right">查看详情&gt;&gt;</span>
-                      </div>
+                      </div> -->
                       <div class="promo-info">
                         <span class="viewdetail">{{ promo.title }}</span>
                       </div>
