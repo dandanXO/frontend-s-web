@@ -115,7 +115,20 @@
       <el-table-column prop="teamNameLocal" :label="t('fields.teamName')" />
       <el-table-column prop="type" :label="t('fields.type')" />
       <el-table-column prop="status" :label="t('fields.status')" />
-      <el-table-column prop="voteTime" :label="t('fields.voteTime')" />
+      <el-table-column prop="voteTime" :label="t('fields.voteTime')">
+        <template #default="scope">
+          <span v-if="scope.row.voteTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.voteTime !== null"
+            v-formatter="{
+              data: scope.row.voteTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column
         type="title"
         :label="t('fields.action')"
@@ -175,6 +188,7 @@ const site = ref(null);
 const siteList = reactive({
   list: [],
 })
+let timeZone = null
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
   new Date(2000, 1, 1, 23, 59, 59),
@@ -288,6 +302,7 @@ async function loadTeamVotesRecord() {
   const { data: ret } = await getTeamVotesRecord(query)
   page.pages = ret.pages
   page.records = ret.records
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
 }
 
 async function loadSites() {

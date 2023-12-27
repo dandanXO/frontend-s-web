@@ -505,11 +505,59 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="startTime" :label="t('fields.startTime')" />
-      <el-table-column prop="endTime" :label="t('fields.endTime')" />
-      <el-table-column prop="createTime" :label="t('fields.createTime')" />
+      <el-table-column prop="startTime" :label="t('fields.startTime')">
+        <template #default="scope">
+          <span v-if="scope.row.startTime === null">-</span>
+          <span
+            v-if="scope.row.startTime !== null"
+            v-formatter="{
+              data: scope.row.startTime,
+              timeZone: scope.row.timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="endTime" :label="t('fields.endTime')">
+        <template #default="scope">
+          <span v-if="scope.row.endTime === null">-</span>
+          <span
+            v-if="scope.row.endTime !== null"
+            v-formatter="{
+              data: scope.row.endTime,
+              timeZone: scope.row.timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="createTime" :label="t('fields.createTime')">
+        <template #default="scope">
+          <span v-if="scope.row.createTime === null">-</span>
+          <span
+            v-if="scope.row.createTime !== null"
+            v-formatter="{
+              data: scope.row.createTime,
+              timeZone: scope.row.timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
-      <el-table-column prop="updateTime" :label="t('fields.updateTime')" />
+      <el-table-column prop="updateTime" :label="t('fields.updateTime')">
+        <template #default="scope">
+          <span v-if="scope.row.updateTime === null">-</span>
+          <span
+            v-if="scope.row.updateTime !== null"
+            v-formatter="{
+              data: scope.row.updateTime,
+              timeZone: scope.row.timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" />
       <el-table-column type="title" :label="t('fields.action')"
                        v-if="hasPermission(['sys:banner:update'])|| hasPermission(['sys:banner:del'])"
@@ -775,6 +823,14 @@ function setRefreshDurationSameAsRainDuration() {
 async function loadRedPacketRain() {
   const {data: ret} = await getRedPacketRains(request)
   page.pages = ret.pages
+  ret.records.forEach(data => {
+    data.timeZone =
+      store.state.user.sites.find(e => e.id === data.siteId) !==
+      undefined
+        ? store.state.user.sites.find(e => e.id === data.siteId)
+          .timeZone
+        : null
+  })
   page.records = ret.records
 }
 

@@ -1,5 +1,14 @@
 <template>
   <div class="hot-promo">
+    <div v-if="list.promoCode === 'jolly_event' && !isCommonPromo && !btnHide">
+      <div class="row items-center justify-center" v-if="store.hasToken()">
+        <q-btn size="md" class="login-btn" @click="submitEvent">{{ $t("lang.participate") }}</q-btn>
+      </div>
+      <div class="row items-center justify-center" v-else>
+        <q-btn size="md" class="login-btn" to="/login">{{ $t("lang.loginToCont") }}</q-btn>
+      </div>
+    </div>
+
     <div v-if="list.id === 30 && store.hasToken()" class="promo-4">
       <div class="tabs">
         <q-card-section>
@@ -33,17 +42,10 @@
                       filled
                       color="white"
                       type="number"
-                      :rules="[
-                        (val) => (val && val.length === 3) || 'ขีดสุด 3 ตัวเลข',
-                      ]"
+                      :rules="[(val) => (val && val.length === 3) || 'ขีดสุด 3 ตัวเลข']"
                       label="เลขนำโชค"
                     />
-                    <q-btn
-                      :loading="btnLoading"
-                      @click="submitLuckyNumber()"
-                      color="brand"
-                      label="ส่ง"
-                    />
+                    <q-btn :loading="btnLoading" @click="submitLuckyNumber()" color="brand" label="ส่ง" />
                   </q-form>
                 </div>
               </div>
@@ -51,28 +53,13 @@
 
             <q-tab-panel name="2">
               <q-form>
-                <q-input
-                  filled
-                  v-model="formState.dateTime"
-                  label="เลือกวันที่"
-                  readonly
-                  color="white"
-                >
+                <q-input filled v-model="formState.dateTime" label="เลือกวันที่" readonly color="white">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                         <q-date v-model="formState.dateTime" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              label="ปิด"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup label="ปิด" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -107,37 +94,18 @@
                 class="q-mt-md"
                 :columns="filterColumn"
                 :rows="dataSource"
-              >
-              </q-table>
+              ></q-table>
             </q-tab-panel>
 
             <q-tab-panel name="3">
               <q-form>
-                <q-input
-                  filled
-                  v-model="formState.resultTime"
-                  label="เลือกวันที่"
-                  readonly
-                  color="white"
-                >
+                <q-input filled v-model="formState.resultTime" label="เลือกวันที่" readonly color="white">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="formState.resultTime"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="formState.resultTime" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              label="ปิด"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup label="ปิด" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -175,10 +143,7 @@
       @daily-slot="handleSlot()"
     />
 
-    <SJBPromo
-      v-if="list.id === 40 && !isCommonPromo && store.hasToken()"
-      class="promo-sjb"
-    />
+    <SJBPromo v-if="list.id === 40 && !isCommonPromo && store.hasToken()" class="promo-sjb" />
 
     <template v-if="list.promoCode === 'multi-wheel'">
       <template v-if="store.hasToken()">
@@ -186,9 +151,7 @@
         <PromoSpinWheelWinner></PromoSpinWheelWinner>
       </template>
       <div v-else class="row items-center justify-center">
-        <q-btn size="md" class="login-btn" to="/login">{{
-          $t("lang.loginToCont")
-        }}</q-btn>
+        <q-btn size="md" class="login-btn" to="/login">{{ $t("lang.loginToCont") }}</q-btn>
       </div>
     </template>
 
@@ -224,6 +187,7 @@ import InviteFriendPromo from "../components/hotpromo/35/inviteFriendPromo.vue";
 import PromoSpinWheel from "components/hotpromo/80/PromoSpinWheel.vue";
 import PromoSpinWheelWinner from "components/hotpromo/80/PromoSpinWheelWinner.vue";
 import { useI18n } from "vue-i18n";
+import qs from "qs";
 
 export default defineComponent({
   name: "HotPromo",
@@ -233,7 +197,7 @@ export default defineComponent({
     ClaimPromo,
     SJBPromo,
     PromoSpinWheel,
-    PromoSpinWheelWinner,
+    PromoSpinWheelWinner
     // InviteFriendPromo
   },
   props: {
@@ -241,8 +205,8 @@ export default defineComponent({
       type: Object,
       default: function () {
         return {};
-      },
-    },
+      }
+    }
   },
   data() {
     return {
@@ -252,8 +216,8 @@ export default defineComponent({
       selectedHotPromo: {
         id: "",
         bg: "",
-        contents: "",
-      },
+        contents: ""
+      }
     };
   },
   methods: {
@@ -277,7 +241,7 @@ export default defineComponent({
         .catch((error) => {
           this.btnLoading = false;
         });
-    },
+    }
   },
   mounted() {
     this.hotPromoList.forEach((element) => {
@@ -289,7 +253,8 @@ export default defineComponent({
       this.list.id === 30 ||
       this.list.id === 40 ||
       this.list.id === 35 ||
-      this.list.id === 81
+      this.list.id === 81 ||
+      this.list.promoCode === "jolly_event"
     ) {
       this.isCommonPromo = false;
     } else {
@@ -315,12 +280,13 @@ export default defineComponent({
     const lucky_number = ref("");
     const loading = ref(false);
     const btnLoading = ref(false);
+    const btnHide = ref(false);
     const isClaimModal = ref(false);
     const claimMsg = ref("");
     const formState = ref({
       dateTime: "",
       onlyMe: false,
-      resultTime: "",
+      resultTime: ""
     });
     const filterColumn = ref([
       {
@@ -328,29 +294,29 @@ export default defineComponent({
         label: "เบอร์",
         field: "number",
         align: "left",
-        sortable: true,
+        sortable: true
       },
       {
         name: "name",
         label: "ชื่อ",
         field: "loginName",
         align: "left",
-        sortable: true,
+        sortable: true
       },
       {
         name: "status",
         label: "สถานะ",
         field: "winStatus",
         align: "left",
-        sortable: true,
+        sortable: true
       },
       {
         name: "date",
         label: "วันที่",
         field: "date",
         align: "left",
-        sortable: true,
-      },
+        sortable: true
+      }
     ]);
     const dataSource = ref([]);
     const winnerDataSource = ref([]);
@@ -361,29 +327,29 @@ export default defineComponent({
         label: "เบอร์",
         field: "number",
         align: "left",
-        sortable: true,
+        sortable: true
       },
       {
         name: "name",
         label: "ชื่อ",
         field: "loginName",
         align: "left",
-        sortable: true,
+        sortable: true
       },
       {
         name: "status",
         label: "สถานะ",
         field: "winStatus",
         align: "left",
-        sortable: true,
+        sortable: true
       },
       {
         name: "date",
         label: "วันที่",
         field: "date",
         align: "left",
-        sortable: true,
-      },
+        sortable: true
+      }
     ];
 
     const filterWinnerLists = () => {
@@ -445,8 +411,7 @@ export default defineComponent({
         onlyMeParam = "&memberId=" + user_id;
       }
 
-      var filterUrl =
-        "/privi/selectedNumbers?recordTime=" + filterDate + onlyMeParam;
+      var filterUrl = "/privi/selectedNumbers?recordTime=" + filterDate + onlyMeParam;
 
       // console.log(filterDate);
       eventapi
@@ -488,6 +453,25 @@ export default defineComponent({
 
     // }
     // }
+    const submitEvent = () => {
+
+      var joinChristmasUrl = "/privi-christmas/join";
+      btnLoading.value = true;
+      eventapi.post(joinChristmasUrl, qs.stringify({ promoCode: "jolly_event" })).then((res) => {
+        btnLoading.value = false;
+        var responseCode = res.data;
+        if (responseCode.code === 0) {
+          btnHide.value = true;
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: t("lang.sent_success"),
+            icon: "check_circle_outline"
+          });
+        } else {
+        }
+      });
+    };
 
     const submitLuckyNumber = () => {
       console.log(lucky_number.value);
@@ -520,7 +504,7 @@ export default defineComponent({
                 color: "positive",
                 position: "top",
                 message: t("lang.number_sent"),
-                icon: "check_circle_outline",
+                icon: "check_circle_outline"
               });
             } else {
               // $q.notify({
@@ -559,8 +543,10 @@ export default defineComponent({
       btnLoading,
       isClaimModal,
       claimMsg,
+      submitEvent,
+      btnHide
     };
-  },
+  }
 });
 </script>
 <style lang="scss">
