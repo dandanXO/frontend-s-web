@@ -517,16 +517,15 @@ body.body--dark .q-footer {
 
 .popout-dialog {
   width: 90%;
-
   max-width: 500px;
   position: relative;
-  padding-top: 90px;
+  padding-top: 20px;
   padding-right: 10px;
 
   .popout-close {
     position: absolute;
     right: 0px;
-    top: 80px;
+    top: 10px;
   }
 
   .txt-title {
@@ -536,12 +535,18 @@ body.body--dark .q-footer {
   }
 
   .popout-dialog-container {
-    background-image: url(../assets/images/account/kyc-bg.jpg);
+    background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%);
     background-position: top center;
     background-size: cover;
     background-repeat: no-repeat;
-    padding: 30px 20px 20px;
+    padding: 30px 20px 30px;
+    min-height: 250px;
     border-radius: 30px !important;
+
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
   }
 }
 

@@ -118,7 +118,7 @@
 
   <q-dialog width="100%" v-model="confirmSignOutDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">Sign Out</div>
 
@@ -386,15 +386,20 @@ const logout = () => {
 }
 
 .btn-cancel {
-  background: rgba(21, 0, 37, 0.5);
+  background: #ffffff20;
   font-weight: 700;
-  color: #ffffff;
+  color: #dcdcdc;
+  border: 1px solid #ffffff80;
   border-radius: 8px;
+  width: 140px;
+  height: 42px;
 }
 .btn-confirm {
-  background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+  background: linear-gradient(187.94deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
   font-weight: 700;
-  color: #150025;
+  width: 140px;
+  height: 42px;
+  color: #5c46e7;
   border-radius: 8px;
 }
 </style>
