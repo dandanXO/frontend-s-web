@@ -11,160 +11,154 @@
     </div>
 
     <q-form class="q-gutter-y-md rounded-borders">
-      <q-input
-        ref="loginNameRef"
-        hide-bottom-space
-        type="number"
-        v-model="regForm.loginName"
-        label="Phone Number"
-        lazy-rules
-        :rules="[
-          (val) => (val && val.length > 0) || 'Please insert Phone number',
-          (val) => val.length === 10 || 'The phone number must be 10 digits'
-        ]"
-        placeholder="Please Phone Number"
-        color="white"
-        class="landing-input"
-        rounded
-        outlined
-        label-color="brand"
-      />
+      <div class="register-form-grid">
+        <span class="register-form-field-label">Phone Number</span>
+        <q-input
+          ref="loginNameRef"
+          hide-bottom-space
+          type="number"
+          v-model="regForm.loginName"
+          lazy-rules
+          :rules="[
+            (val) => (val && val.length > 0) || 'Please insert Phone number',
+            (val) => val.length === 10 || 'The phone number must be 10 digits'
+          ]"
+          color="white"
+          class="landing-input"
+          outlined
+          label-color="brand"
+        />
 
-      <q-input
-        ref="pwdRef"
-        hide-bottom-space
-        v-model="regForm.password"
-        label="Password"
-        lazy-rules
-        :type="isPwd ? 'password' : 'text'"
-        :rules="[
-          (val) => (val && val.length > 0) || 'Please insert password',
-          (val) => (val.length >= 6 && val.length <= 11) || 'The characters of password must be between 6 and 11',
-          () => isAlphanumeric(regForm.password, 'Password')
-        ]"
-        placeholder="Please Enter Password"
-        color="white"
-        class="landing-input"
-        rounded
-        outlined
-        label-color="brand"
-      >
-        <template v-slot:append>
-          <q-icon
-            color="gray-3"
-            :name="isPwd ? 'visibility_off' : 'visibility'"
-            class="cursor-pointer"
-            @click="isPwd = !isPwd"
-          />
-        </template>
-      </q-input>
-      <div v-if="regForm.password" class="password-str-div">
-        <span
-          :class="{
-            'weak-pwd': pwdStrength == 'weak',
-            'normal-pwd': pwdStrength == 'normal',
-            'strong-pwd': pwdStrength == 'strong'
-          }"
+        <span class="register-form-field-label">Password</span>
+        <q-input
+          ref="pwdRef"
+          hide-bottom-space
+          v-model="regForm.password"
+          lazy-rules
+          :type="isPwd ? 'password' : 'text'"
+          :rules="[
+            (val) => (val && val.length > 0) || 'Please insert password',
+            (val) => (val.length >= 6 && val.length <= 11) || 'The characters of password must be between 6 and 11',
+            () => isAlphanumeric(regForm.password, 'Password')
+          ]"
+          color="white"
+          class="landing-input"
+          outlined
+          label-color="brand"
         >
-          Weak
-        </span>
-        <span
-          :class="{
-            'normal-pwd': pwdStrength == 'normal',
-            'strong-pwd': pwdStrength == 'strong'
-          }"
-        >
-          Good
-        </span>
-        <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
-      </div>
-
-      <q-input
-        ref="confirmPwdRef"
-        hide-bottom-space
-        :type="isCfmPwd ? 'password' : 'text'"
-        v-model="regForm.confirmPwd"
-        label="Confirm Password"
-        lazy-rules
-        :rules="[
-          (val) => (val && val.length > 0) || 'Please insert password',
-          (val) => val === regForm.password || 'Password does not match'
-        ]"
-        placeholder="Please Enter Password Again"
-        color="white"
-        class="landing-input"
-        rounded
-        outlined
-        label-color="brand"
-      >
-        <template v-slot:append>
-          <q-icon
-            color="gray-3"
-            :name="isCfmPwd ? 'visibility_off' : 'visibility'"
-            class="cursor-pointer"
-            @click="isCfmPwd = !isCfmPwd"
-          />
-        </template>
-      </q-input>
-
-      <!--      <q-input-->
-      <!--        ref="verificationRef"-->
-      <!--        hide-bottom-space-->
-      <!--        clearable-->
-      <!--        type="text"-->
-      <!--        v-model="regForm.captchaCode"-->
-      <!--        label="Verification Code"-->
-      <!--        lazy-rules-->
-      <!--        :rules="[-->
-      <!--          (val) => (val && val.length > 0) || 'Please insert verification code',-->
-      <!--          (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'-->
-      <!--        ]"-->
-      <!--        placeholder="Please enter verification Code"-->
-      <!--        label-color="brand"-->
-      <!--        rounded-->
-      <!--        outlined-->
-      <!--        color="white"-->
-      <!--        class="landing-input"-->
-      <!--      >-->
-      <!--        <template v-slot:append>-->
-      <!--          <img :src="verificationImg" @click="getCode()" />-->
-      <!--        </template>-->
-      <!--      </q-input>-->
-
-      <q-input
-        v-if="!hasAffiliate"
-        ref="affiliateCodeRef"
-        hide-bottom-space
-        v-model="regForm.referrer"
-        label="Invitation Code"
-        hint="Optional"
-        label-color="brand"
-        rounded
-        outlined
-        color="white"
-        class="landing-input"
-      />
-
-      <div class="row items-center justify-between q-mt-sm">
-        <div class="mui-row" :class="isAgreeReg ? 'checked' : ''">
-          <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box" color="yellow">
-            I have Agree To The
-            <a href="#" style="text-decoration: none; color: #fae576">Use Privacy Agreement</a>
-          </q-checkbox>
+          <template v-slot:append>
+            <q-icon
+              color="gray-3"
+              :name="isPwd ? 'visibility_off' : 'visibility'"
+              class="cursor-pointer"
+              @click="isPwd = !isPwd"
+            />
+          </template>
+        </q-input>
+        <div v-if="regForm.password" class="password-str-div">
+          <span
+            :class="{
+              'weak-pwd': pwdStrength == 'weak',
+              'normal-pwd': pwdStrength == 'normal',
+              'strong-pwd': pwdStrength == 'strong'
+            }"
+          >
+            Weak
+          </span>
+          <span
+            :class="{
+              'normal-pwd': pwdStrength == 'normal',
+              'strong-pwd': pwdStrength == 'strong'
+            }"
+          >
+            Good
+          </span>
+          <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
         </div>
+
+        <span class="register-form-field-label">Confirm Password</span>
+        <q-input
+          ref="confirmPwdRef"
+          hide-bottom-space
+          :type="isCfmPwd ? 'password' : 'text'"
+          v-model="regForm.confirmPwd"
+          lazy-rules
+          :rules="[
+            (val) => (val && val.length > 0) || 'Please insert password',
+            (val) => val === regForm.password || 'Password does not match'
+          ]"
+          color="white"
+          class="landing-input"
+          outlined
+          label-color="brand"
+        >
+          <template v-slot:append>
+            <q-icon
+              color="gray-3"
+              :name="isCfmPwd ? 'visibility_off' : 'visibility'"
+              class="cursor-pointer"
+              @click="isCfmPwd = !isCfmPwd"
+            />
+          </template>
+        </q-input>
+
+        <!--      <q-input-->
+        <!--        ref="verificationRef"-->
+        <!--        hide-bottom-space-->
+        <!--        clearable-->
+        <!--        type="text"-->
+        <!--        v-model="regForm.captchaCode"-->
+        <!--        label="Verification Code"-->
+        <!--        lazy-rules-->
+        <!--        :rules="[-->
+        <!--          (val) => (val && val.length > 0) || 'Please insert verification code',-->
+        <!--          (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'-->
+        <!--        ]"-->
+        <!--        placeholder="Please enter verification Code"-->
+        <!--        label-color="brand"-->
+        <!--        rounded-->
+        <!--        outlined-->
+        <!--        color="white"-->
+        <!--        class="landing-input"-->
+        <!--      >-->
+        <!--        <template v-slot:append>-->
+        <!--          <img :src="verificationImg" @click="getCode()" />-->
+        <!--        </template>-->
+        <!--      </q-input>-->
+
+        <span class="register-form-field-label">Invitation Code (Optional)</span>
+        <q-input
+          v-if="!hasAffiliate"
+          ref="affiliateCodeRef"
+          hide-bottom-space
+          v-model="regForm.referrer"
+          label-color="brand"
+          outlined
+          color="white"
+          class="landing-input"
+        />
       </div>
 
-      <div class="q-mt-xs">
-        <q-btn @click="onSubmit" class="btn-yellow" label="Register" rounded no-caps :disable="!isAgreeReg">
+      <div class="mui-row" :class="isAgreeReg ? 'checked' : ''">
+        <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
+          I have Agree To The
+          <a href="#" style="text-decoration: none; color: #C1DFFC">Use Privacy Agreement</a>
+        </q-checkbox>
+      </div>
+
+      <div>
+        <q-btn @click="onSubmit" class="register-btn" label="Register" rounded no-caps :disable="!isAgreeReg">
           <template v-slot:loading>
             <q-spinner-hourglass size="24px" color="white" />
           </template>
         </q-btn>
       </div>
 
-      <div class="tip-container">
+      <!-- 
+        <div class="tip-container">
         <router-link class="landing-tip" to="/login">Already A Member? Sign In Now</router-link>
-      </div>
+      </div> 
+    -->
     </q-form>
   </div>
 </template>
@@ -560,6 +554,30 @@ function charType(num) {
 }
 </script>
 <style scoped lang="scss">
+.register-form-logo-img {
+  img {
+    display: block;
+    width: 95%;
+    margin: 20px auto;
+    max-width: 200px;
+  }
+}
+.register-form-grid {
+  display: grid;
+  grid-auto-flow: row;
+  gap: 7px;
+
+  .register-form-field-label {
+    margin-top: 15px;
+  }
+}
+.register-btn {
+  background-color: #8B00FF;
+  width: 100%;
+  height: 56px;
+  border-radius: 4px;
+  margin-top:30px;
+}
 .page-header {
   background-image: linear-gradient(to right, #de4545, #db7e42);
   -webkit-background-clip: text;
@@ -629,7 +647,8 @@ function charType(num) {
     padding-right: 20px;
   }
   :deep(.q-field__control):before {
-    border-color: #ffdd27;
+    border-color: #1E1F24;
+    background-color: #1E1F24;
     border-width: 2px;
   }
 }
@@ -637,16 +656,15 @@ function charType(num) {
 .rmb-checked-box {
   font-size: 14px;
   color: #91829d;
-  margin-bottom: 8px;
 
   :deep(.q-checkbox__bg) {
     border-radius: 50%;
   }
   :deep(.q-checkbox__inner--truthy .q-checkbox__bg) {
-    background: linear-gradient(180deg, #fed87d 0%, #e6a60c 100%);
+    background: #8B00FF;
 
     svg {
-      color: #000;
+      color: #fff;
       padding: 2px;
     }
   }
