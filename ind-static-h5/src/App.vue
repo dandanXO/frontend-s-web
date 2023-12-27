@@ -12,6 +12,8 @@ import { userStore } from "src/stores";
 import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
 import { isAndroid } from "boot/utils";
 import { App } from "@capacitor/app";
+import { AddressbarColor } from "quasar";
+import { StatusBar, Style } from "@capacitor/status-bar";
 
 export default defineComponent({
   name: "App",
@@ -139,6 +141,25 @@ export default defineComponent({
       console.error("File error: " + error.code);
     };
 
+    const setStatusBarColor = () => {
+      AddressbarColor.set("#3E1474");
+      if (Platform.is.capacitor && Platform.is.android) {
+        StatusBar.hide();
+        StatusBar.setOverlaysWebView({ overlay: true });
+        StatusBar.setBackgroundColor({ color: "#3E1474" });
+        StatusBar.setStyle({ style: Style.Dark });
+        // if (cordova.platformId == "android") {
+        //   StatusBar.show();
+        //   StatusBar.overlaysWebView(true);
+        //   StatusBar.styleLightContent();
+        //   StatusBar.backgroundColorByHexString("#3E1474");
+        // } else {
+        //   StatusBar.overlaysWebView(false);
+        //   StatusBar.hide();
+        // }
+      }
+    };
+
     onMounted(async () => {
       // const info = await App.getInfo();
       // console.log("APP Info");
@@ -147,6 +168,8 @@ export default defineComponent({
       // getCSA();
       getAppInfo();
       initOrientation();
+
+      setStatusBarColor();
 
       document.addEventListener(
         "deviceready",

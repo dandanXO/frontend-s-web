@@ -79,13 +79,13 @@ body.body--dark .q-header {
 .q-item--active {
   color: #fdd835;
 }
-// body.platform-ios .q-dialog__inner--minimized > div, body.platform-android:not(.native-mobile) .q-dialog__inner--minimized > div {
-//   max-height: unset;
-// }
+
 
 body.platform-ios .q-dialog__inner--minimized > div:not(.popout-dialog) {
   max-height: calc(100% - 108px);
 }
+
+
 .game-title {
   font-family: "Poppins";
   font-size: 50px;
@@ -147,6 +147,15 @@ body.body--dark .q-footer {
   // border-radius: 15px 15px 0 0;
   overflow: hidden;
 }
+//body.platform-android .q-header {
+//  padding: 3px;
+//  padding-top: calc(16px + env(safe-area-inset-top, 0));
+//  padding-top: calc(16px + constants(safe-area-inset-bottom));
+//}
+//body.platform-android .q-footer{
+//  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+//  padding-bottom: calc(16px + constants(safe-area-inset-bottom));
+//}
 // svg {
 //   width: 25px;
 //   fill: #ffffff;
