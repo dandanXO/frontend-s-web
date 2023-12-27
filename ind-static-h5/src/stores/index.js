@@ -41,7 +41,8 @@ export const userStore = defineStore("userStore", {
       currentMailData: {},
       guest: false,
       readMsgLists: [],
-      aaid: ""
+      aaid: "",
+      h5Url: "https://www.indwin7.com/"
     };
   },
   actions: {
