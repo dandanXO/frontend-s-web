@@ -340,6 +340,7 @@ const redeem = () => {};
 
     .character-blue {
       width: 15rem;
+      height: 100%;
       position: relative;
       left: -6rem;
     }

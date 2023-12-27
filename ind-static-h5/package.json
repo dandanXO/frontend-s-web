@@ -34,6 +34,7 @@
     "aos": "^2.3.4",
     "axios": "^0.27.2",
     "com.adjust.sdk": "4.23.0",
+    "cordova-plugin-file": "^8.0.0",
     "cordova-plugin-inappbrowser": "^5.0.0",
     "cordova-plugin-screen-orientation": "^3.0.3",
     "core-js": "^3.6.5",

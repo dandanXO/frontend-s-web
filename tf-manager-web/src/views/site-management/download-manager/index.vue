@@ -117,6 +117,7 @@ import { useI18n } from "vue-i18n";
 import { getSiteListSimple } from '../../../api/site';
 import { useStore } from '../../../store';
 import { TENANT, ADMIN } from '../../../store/modules/user/action-types';
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n();
 const store = useStore()
@@ -198,7 +199,10 @@ function checkQuery() {
   });
   if (request.requestTime !== null) {
     if (request.requestTime.length === 2) {
-      query.requestTime = request.requestTime.join(",");
+      query.requestTime = JSON.parse(JSON.stringify(request.requestTime));
+      query.requestTime[0] = formatInputTimeZone(query.requestTime[0], timeZone);
+      query.requestTime[1] = formatInputTimeZone(query.requestTime[1], timeZone);
+      query.requestTime = query.requestTime.join(',')
     }
   }
   if (LOGIN_USER_TYPE.value !== ADMIN.value) {
