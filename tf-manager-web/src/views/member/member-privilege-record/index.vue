@@ -326,6 +326,7 @@ import { ElMessage } from 'element-plus'
 import { getActivePrivilegeInfoBySiteId, getPrivilegeExcelMapping } from '../../../api/privilege-info'
 import { createBatchPrivilege, distributePrivilege } from '../../../api/member-privilege'
 import { findIdByLoginName } from '../../../api/member'
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -449,9 +450,13 @@ async function loadPrivilegeRecord() {
       query[key] = value
     }
   })
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
-      query.recordTime = request.recordTime.join(',')
+      query.recordTime = JSON.parse(JSON.stringify(request.recordTime));
+      query.recordTime[0] = formatInputTimeZone(query.recordTime[0], timeZone, 'start');
+      query.recordTime[1] = formatInputTimeZone(query.recordTime[1], timeZone, 'end');
+      query.recordTime = query.recordTime.join(',')
     }
   }
 
@@ -467,7 +472,6 @@ async function loadPrivilegeRecord() {
     page.totalAmount = 0
   }
 
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false
 }
 

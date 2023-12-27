@@ -21,6 +21,23 @@ export default defineComponent({
     };
   }
 });
+// Assuming you have multiple el-tables on your page
+const elTables = document.querySelectorAll('.el-table');
+
+elTables.forEach((elTable) => {
+  // Assuming the th elements are directly inside the thead
+  const thElements = elTable.querySelectorAll('thead th');
+
+  // Loop through each th element and set data-label to the corresponding td elements
+  thElements.forEach((th, index) => {
+    const columnName = th.textContent.trim();
+    const tdElements = elTable.querySelectorAll(`tbody td:nth-child(${index + 1})`);
+
+    tdElements.forEach((td) => {
+      td.setAttribute('data-label', columnName);
+    });
+  });
+});
 </script>
 
 <style lang="scss" scoped>
@@ -59,6 +76,10 @@ export default defineComponent({
   margin-left: 200px;
 }
 @media (max-width: 768px) {
+  .el-form-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
   .role-span {
     font-weight: bold;
     font-size: 20px;
@@ -74,8 +95,8 @@ export default defineComponent({
     // margin-left: 20px !important;
   }
   .el-form-item {
-    flex-direction: column;
-    align-items: flex-start !important;
+    // flex-direction: column;
+    // align-items: flex-start !important;
     &__label {
       text-align: left;
       width: unset !important;
@@ -116,47 +137,150 @@ export default defineComponent({
   border-radius: 10px;
   box-shadow: 0px 6px 58px 0px #C4CBD61A;
 }
+.el-table__empty-block {
+  width: unset !important;
+}
+.el-empty__image {
+  width: 80% !important;
+  margin: auto !important;
+  max-width: 300px;
+}
+.el-table__empty-text {
+  width: 100% !important;
+}
+
+.custom-table {
+  width: 100%;
+  border: 0;
+  th {
+    background: #F4F9FD;
+    text-align: left;
+  }
+  th, td {
+    padding: 12px;
+  }
+  tr:nth-child(even) {
+    background: #F4F9FD;
+  }
+}
+.el-form-item__content {
+  width: 100%;
+}
+.el-input__inner {
+  width: 100%;
+}
 
 @media screen and (max-width: 600px) {
-  table {
+  table:not(.el-date-table) {
     border: 0;
-  }
-  table caption {
-    font-size: 1.3em;
-  }
-  table thead {
-    border: none;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-  }
-  table tr {
-    border-bottom: 3px solid #ddd;
-    display: block;
-    margin-bottom: .625em;
-  }
-  table td {
-    border-bottom: 1px solid #ddd;
-    display: block;
-    font-size: .8em;
-    text-align: right;
-  }
-  table td::before {
-    /*
+
+    caption {
+      font-size: 1.3em;
+    }
+
+    thead {
+      border: none;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+
+    tr {
+      border-bottom: 2px solid #7fb2ff;
+      display: block;
+      // margin-bottom: .625em;
+    }
+
+    td {
+      border-bottom: 1px solid #ddd;
+      display: block;
+      font-size: .8em;
+      text-align: right;
+      min-height: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 5px;
+
+      img {
+        width: 80%;
+        max-width: 200px;
+      }
+    }
+
+    td::before {
+      /*
     * aria-label has no advantage, it won't be read inside a table
     content: attr(aria-label);
     */
-    content: attr(data-label);
-    float: left;
-    font-weight: bold;
-    text-transform: uppercase;
+      content: attr(data-label);
+      float: left;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    td:last-child {
+      border-bottom: 0;
+    }
   }
-  table td:last-child {
-    border-bottom: 0;
+}
+
+@media (max-width: 700px) {
+  .el-date-range-picker {
+    &__content {
+      float: none !important;
+      width: 100% !important;
+    }
+
+    &.has-sidebar {
+      width: 400px !important;
+    }
+
+    .el-picker-panel__body {
+      min-width: 290px !important;
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .el-date-range-picker {
+    .el-picker-panel__sidebar {
+      width: 88px !important;
+
+      .el-picker-panel__shortcut {
+        font-size: 10px !important;
+      }
+    }
+
+    .el-picker-panel [slot=sidebar]+.el-picker-panel__body,
+    .el-picker-panel__sidebar+.el-picker-panel__body {
+      margin-left: 88px !important;
+    }
+
+    &__content {
+      padding: 8px !important;
+    }
+
+    &.has-sidebar {
+      width: 320px !important;
+    }
+
+    .el-picker-panel__body {
+      min-width: 232px !important;
+    }
+
+    &__header div {
+      font-size: 12px !important;
+    }
+
+    .el-date-table th,
+    .el-date-table__row {
+      font-size: 10px !important;
+    }
   }
 }
 

@@ -54,71 +54,32 @@
       </el-row>
     </div>
   </el-form>
-
-  <el-table
-    :data="page.records"
-    ref="table"
-    row-key="id"
-    size="normal"
-    highlight-current-row
-    v-loading="page.loading"
-    style="margin-top: 15px; margin-left: 15px;"
-  >
-    <template #empty>
-      <emptyComp />
-    </template>
-    <el-table-column
-      prop="id"
-      :label="t('fields.creditFlowId')"
-      align="center"
-      width="75"
-    />
-
-    <el-table-column
-      prop="date"
-      :label="t('fields.creditFlowDate')"
-      align="center"
-    >
-      <template #default="scope">
-        <span v-if="scope.row.date === null">-</span>
-        <span
-          v-if="scope.row.date !== null"
-          v-formatter="{
-            data: scope.row.date,
-            formatter: 'YYYY/MM/DD HH:mm:ss',
-            type: 'date',
-          }"
-        />
-      </template>
-    </el-table-column>
-
-    <el-table-column
-      prop="serialNumber"
-      :label="t('fields.serialNumber')"
-      align="center"
-    />
-
-    <el-table-column
-      :prop="type"
-      :label="t('fields.creditFlowType')"
-      align="center"
-    >
-      <template #default="scope">
-        <span>{{ $t(`creditFlowType.${scope.row.type}`) }}</span>
-      </template>
-    </el-table-column>
-    <el-table-column
-      prop="amount"
-      :label="t('fields.creditFlowAmount')"
-      align="center"
-    />
-
-    <el-table-column
-      prop="balance"
-      :label="t('fields.creditFlowBalance')"
-      align="center"
-    />
-  </el-table>
+  <table style="width: 98%; margin: 0 auto" cellpadding="0" cellspacing="0" border="0" class="custom-table">
+    <thead>
+      <tr>
+        <th scope="col">{{ t('fields.creditFlowId') }}</th>
+        <th scope="col">{{ t('fields.creditFlowDate') }}</th>
+        <th scope="col">{{ t('fields.serialNumber') }}</th>
+        <th scope="col">{{ t('fields.creditFlowType') }}</th>
+        <th scope="col">{{ t('fields.creditFlowAmount') }}</th>
+        <th scope="col">{{ t('fields.creditFlowBalance') }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="item in page.records" :key="item.id">
+        <td :data-label="t('fields.creditFlowId')">{{ item.id }}</td>
+        <td :data-label="t('fields.creditFlowDate')">
+          <span v-if="item.date === null">-</span>
+          <span>{{ moment(item.date).format('YYYY/MM/DD HH:mm:ss') }}</span>
+        </td>
+        <td :data-label="t('fields.serialNumber')">{{ item.serialNumber }}</td>
+        <td :data-label="t('fields.creditFlowType')">{{ $t(`creditFlowType.${item.type}`) }}</td>
+        <td :data-label="t('fields.creditFlowAmount')">{{ item.amount }}</td>
+        <td :data-label="t('fields.creditFlowBalance')">{{ item.balance }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <emptyComp v-if="page.records.length === 0" />
   <el-pagination
     class="pagination"
     @current-change="changePage"
@@ -134,6 +95,7 @@ import { reactive, onMounted } from 'vue'
 import { useStore } from '@/store'
 import { useI18n } from 'vue-i18n'
 import emptyComp from '@/components/empty'
+import moment from 'moment'
 
 import { getCreditFlow } from '../../../../api/affiliate-credit-flow'
 

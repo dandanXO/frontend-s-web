@@ -249,6 +249,7 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n();
 const store = useStore()
@@ -371,7 +372,6 @@ async function loadTigerCardRecord() {
   page.pages = ret.pages
   page.records = ret.records
 
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
   page.loading = false
 }
 
@@ -402,9 +402,13 @@ function checkQuery() {
       query[key] = value;
     }
   });
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
   if (request.queryTime !== null) {
     if (request.queryTime.length === 2) {
-      query.queryTime = request.queryTime.join(",");
+      query.queryTime = JSON.parse(JSON.stringify(request.queryTime));
+      query.queryTime[0] = formatInputTimeZone(query.queryTime[0], timeZone);
+      query.queryTime[1] = formatInputTimeZone(query.queryTime[1], timeZone);
+      query.queryTime = query.queryTime.join(',')
     }
   }
   return query;

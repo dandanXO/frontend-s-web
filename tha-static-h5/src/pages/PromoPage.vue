@@ -85,8 +85,7 @@
               sport: selectedPromo.promoType.toLowerCase() === 'sport',
               eSport: selectedPromo.promoType.toLowerCase() === 'esport',
               fish: selectedPromo.promoType.toLowerCase() === 'fish',
-              liveCasino:
-                selectedPromo.promoType.toLowerCase() === 'livecasino',
+              liveCasino: selectedPromo.promoType.toLowerCase() === 'livecasino',
               slot: selectedPromo.promoType.toLowerCase() === 'slot game'
             }"
           >
@@ -497,7 +496,7 @@ export default defineComponent({
         margin: 20px auto;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 8px;
 
         .hot-promo {
           background: #2b2b4b;
@@ -536,13 +535,7 @@ export default defineComponent({
 }
 
 @media (max-width: 991px) and (min-width: 768px) {
-  .promo-container
-    .all-promotions
-    .promo-main-container
-    .promo-list-wrapper
-    .promo-item
-    .promo-info
-    .viewdetail {
+  .promo-container .all-promotions .promo-main-container .promo-list-wrapper .promo-item .promo-info .viewdetail {
     padding: 4px 10px;
   }
 }
@@ -629,12 +622,7 @@ export default defineComponent({
     aspect-ratio: 100/25;
   }
 
-  .promo-container
-    .all-promotions
-    .promo-main-container
-    .promo-list-wrapper
-    .promo-item
-    .promo-img-wrapper {
+  .promo-container .all-promotions .promo-main-container .promo-list-wrapper .promo-item .promo-img-wrapper {
     aspect-ratio: 100/25;
   }
 }

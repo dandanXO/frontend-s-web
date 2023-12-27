@@ -1335,12 +1335,12 @@ export default {
     configCode: '设置Code',
     configValue: '设置值',
     s3Url: 'S3地址',
+    teamIcon: '队伍图标',
+    other: '其他',
     allSites: '全部站点',
     rank: '等级',
     processResult: '结算结果',
     winner: '贏家',
-    teamIcon: '队伍图标',
-    other: '其他'
   },
   message: {
     addRemarkSuccess: '新增备注成功',

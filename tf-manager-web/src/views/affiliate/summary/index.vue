@@ -244,6 +244,7 @@ import { getAffiliateSummary, getAffiliateSummaryNewMember } from '../../../api/
 import { getSiteListSimple } from "../../../api/site";
 import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n();
 const siteList = reactive({
@@ -324,9 +325,13 @@ function checkQuery() {
       query[key] = value;
     }
   });
+  const timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
-      query.recordTime = request.recordTime.join(",");
+      query.recordTime = JSON.parse(JSON.stringify(request.recordTime));
+      query.recordTime[0] = formatInputTimeZone(query.recordTime[0], timeZone, 'start');
+      query.recordTime[1] = formatInputTimeZone(query.recordTime[1], timeZone, 'end');
+      query.recordTime = query.recordTime.join(',')
     }
   }
   return query;
@@ -362,11 +367,15 @@ async function loadNewMember(members) {
     }
   });
 
+  const timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
-      query.recordTime = request.recordTime.join(",");
+      query.recordTime = JSON.parse(JSON.stringify(request.recordTime));
+      query.recordTime[0] = formatInputTimeZone(query.recordTime[0], timeZone, 'start');
+      query.recordTime[1] = formatInputTimeZone(query.recordTime[1], timeZone, 'end');
+      query.recordTime = query.recordTime.join(',')
     } else {
-      query.recordTime = request.recordTime[0];
+      query.recordTime = formatInputTimeZone(request.recordTime[0], timeZone, 'start');
     }
   }
 

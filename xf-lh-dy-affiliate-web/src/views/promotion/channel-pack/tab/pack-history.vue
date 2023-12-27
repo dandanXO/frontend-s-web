@@ -50,87 +50,70 @@
         </el-col>
       </el-row>
     </el-form>
-    <el-table
-      :data="page.records"
-      ref="table"
-      row-key="id"
-      size="normal"
-      highlight-current-row
-    >
-      <template #empty>
-        <emptyComp />
-      </template>
-      <el-table-column prop="sequence" :label="t('fields.sequence')" width="50">
-        <template #default="scope">
-          {{ (request.current - 1) * 10 + scope.$index + 1 }}
-        </template>
-      </el-table-column>
-      <el-table-column prop="appType" :label="t('fields.packType')">
-        <template #default="scope">
-          {{ $t(`appType.${scope.row.appType}`) }}
-        </template>
-      </el-table-column>
-      <el-table-column prop="osType" :label="t('fields.osType')">
-        <template #default="scope">
-          {{ $t(`osType.${scope.row.osType}`) }}
-        </template>
-      </el-table-column>
-      <el-table-column prop="appName" :label="t('fields.appName')" />
-      <el-table-column prop="appIcon" :label="t('fields.appIcon')">
-        <template #default="scope">
-          <div class="preview" v-if="scope.row.appIcon !== null">
-            <el-image :src="imageDir + scope.row.appIcon" fit="contain" />
-          </div>
-          <span v-else>
-            {{ $t('fields.unchanged') }}
-          </span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="status" :label="t('fields.buildStatus')">
-        <template #default="scope">
-          {{ filterStatus(scope.row.status) }}
-        </template>
-      </el-table-column>
-      <el-table-column prop="downloadCount" :label="t('fields.download')" />
-      <el-table-column prop="finishTime" :label="t('fields.packDate')">
-        <template #default="scope">
-          <span v-if="scope.row.finishTime === null">-</span>
-          <span
-            v-if="scope.row.finishTime !== null"
-            v-formatter="{
-              data: scope.row.finishTime,
-              formatter: 'YYYY/MM/DD HH:mm:ss',
-              type: 'date',
-            }"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column type="title" :label="t('fields.operate')">
-        <template #default="scope">
-          <el-button
-            v-if="scope.row.status === 'SUCCESS'"
-            icon="el-icon-view"
-            size="normal"
-            type="success"
-            @click="viewDetail(scope.row)"
-          >
-            {{ $t('fields.detail') }}
-          </el-button>
-          <el-button
-            v-if="scope.row.status === 'IN_QUEUE'"
-            icon="el-icon-remove"
-            size="normal"
-            type="danger"
-            @click="cancelPack(scope.row.id)"
-          >
-            {{ $t('fields.cancel') }}
-          </el-button>
-          <span v-if="scope.row.status === 'CANCEL'">
-            -
-          </span>
-        </template>
-      </el-table-column>
-    </el-table>
+    <table class="custom-table" cellpadding="0" cellspacing="0" border="0">
+      <thead>
+        <tr>
+          <th scope="col">{{ t('fields.sequence') }}</th>
+          <th scope="col">{{ t('fields.packType') }}</th>
+          <th scope="col">{{ t('fields.osType') }}</th>
+          <th scope="col">{{ t('fields.appName') }}</th>
+          <th scope="col">{{ t('fields.appIcon') }}</th>
+          <th scope="col">{{ t('fields.buildStatus') }}</th>
+          <th scope="col">{{ t('fields.download') }}</th>
+          <th scope="col">{{ t('fields.packDate') }}</th>
+          <th scope="col">{{ t('fields.operate') }}</th>
+        </tr>
+      </thead>
+      <tbody v-if="page.records.length > 0">
+        <tr v-for="(item, index) in page.records" :key="item.id">
+          <td :data-label="t('fields.sequence')">{{ (request.current - 1) * 10 + index + 1 }}</td>
+          <td :data-label="t('fields.packType')">
+            {{ $t(`appType.${item.appType}`) }}
+          </td>
+          <td :data-label="t('fields.osType')">
+            {{ $t(`osType.${item.osType}`) }}
+          </td>
+          <td :data-label="t('fields.appName')">{{ item.appName }}</td>
+          <td :data-label="t('fields.appIcon')">
+            <div v-if="item.appIcon !== null" class="preview">
+              <img :src="imageDir + item.appIcon" alt="app-icon">
+            </div>
+            <div v-else>
+              {{ $t('fields.unchanged') }}
+            </div>
+          </td>
+          <td :data-label="t('fields.buildStatus')">
+            {{ $t(`packStatus.${item.status}`) }}
+          </td>
+          <td :data-label="t('fields.download')">{{ item.downloadCount }}</td>
+          <td :data-label="t('fields.packDate')">
+            <span v-if="item.finishTime === null">-</span>
+            <span v-else>{{ moment(item.finishTime).format('YYYY/MM/DD HH:mm:ss') }}</span>
+          </td>
+          <td :data-label="t('fields.operate')">
+            <el-button
+              v-if="item.status === 'SUCCESS'"
+              class="success-btn"
+              type="primary"
+              @click="viewDetail(item)"
+            >
+              {{ $t('fields.detail') }}
+            </el-button>
+            <el-button
+              v-if="item.status === 'IN_QUEUE'"
+              class="danger-btn"
+              @click="cancelPack(item.id)"
+            >
+              {{ $t('fields.cancel') }}
+            </el-button>
+            <span v-if="item.status === 'CANCEL'">-</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div v-if="page.records.length === 0">
+      <emptyComp />
+    </div>
     <el-pagination
       v-if="page.records.length !== 0"
       class="pagination"
@@ -141,7 +124,7 @@
       :current-page="request.current"
     />
   </div>
-  <el-dialog :title="t('fields.detail')" v-model="showDialog" width="800px">
+  <el-dialog :title="t('fields.detail')" v-model="showDialog" width="90%" style="margin: 0 auto;" modal-class="dialog900">
     <div class="scrollable-container">
       <div class="info-container">
         <el-form label-suffix=" : " label-width="110px">
@@ -150,7 +133,7 @@
               {{ channelPackInfo.appType }}
             </el-form-item>
             <el-form-item :label="t('fields.buildStatus')">
-              {{ filterStatus(channelPackInfo.status) }}
+              {{ $t(`packStatus.${channelPackInfo.status}`) }}
             </el-form-item>
           </div>
           <div class="info-row-container">
@@ -187,11 +170,14 @@
           </div>
           <div class="info-row-container">
             <el-form-item :label="t('fields.appIcon')">
-              <div class="preview">
+              <div v-if="channelPackInfo.appIcon !== ''" class="preview">
                 <el-image
                   :src="imageDir + channelPackInfo.appIcon"
                   fit="contain"
                 />
+              </div>
+              <div v-else>
+                {{ $t('fields.unchanged') }}
               </div>
             </el-form-item>
           </div>
@@ -220,7 +206,6 @@
                 <!-- <el-dropdown trigger="click"> -->
                 <el-button
                   type="primary"
-                  style="width:200px"
                   @click="copy(channelPackInfo.downloadUrl)"
                 >
                   <span>{{ $t('fields.copy') }}</span>
@@ -248,7 +233,6 @@
                 <!-- <el-dropdown trigger="click"> -->
                 <el-button
                   type="primary"
-                  style="width:200px"
                   @click="download()"
                 >
                   <span>{{ $t('fields.download') }}</span>
@@ -466,16 +450,6 @@ function changePage(page) {
   }
 }
 
-function filterStatus(status) {
-  return statusList
-    .filter(function(obj) {
-      return obj.type === status
-    })
-    .map(function(obj) {
-      return obj.display
-    })[0]
-}
-
 async function loadHistory() {
   page.loading = true
   const requestCopy = { ...request }
@@ -639,6 +613,11 @@ onMounted(() => {
   height: 100px;
 }
 
+.preview img{
+  width: 100px;
+  height: 100px;
+}
+
 .info-row-container {
   display: flex;
   align-items: center;
@@ -660,9 +639,29 @@ onMounted(() => {
   vertical-align: baseline;
   width: 100%;
   justify-content: left;
+  word-break: break-word;
 }
 
 @media (max-width: 768px) {
+  .info-row-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  :deep(.dialog900 .el-dialog) {
+    max-width: 900px;
+    .el-form-item {
+      flex-direction: unset;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      line-height: 40px;
+      &__label {
+        color: #7D8592;
+      }
+      &__content {
+        flex: unset;
+      }
+    }
+  }
   // .inputs-wrap {
   //   flex-direction: column;
   //   gap: 10px;
@@ -683,4 +682,17 @@ onMounted(() => {
   //   }
   // }
 }
+</style>
+<style lang="scss">
+  .dialog900 .el-dialog {
+    max-width: 900px;
+    .el-form-item {
+      &__label {
+        color: #7D8592;
+      }
+      &__content {
+        flex: unset;
+      }
+    }
+  }
 </style>

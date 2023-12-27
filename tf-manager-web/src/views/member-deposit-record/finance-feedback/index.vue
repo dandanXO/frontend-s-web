@@ -370,6 +370,7 @@ import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
 import { getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -476,15 +477,27 @@ async function loadFinanceFeedback() {
       query[key] = value
     }
   })
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
+
   if (request.feedbackTime !== null) {
     if (request.feedbackTime.length === 2) {
-      query.feedbackTime = request.feedbackTime.join(',')
+      query.feedbackTime = JSON.parse(JSON.stringify(request.feedbackTime));
+      if (query.feedbackTime[0] !== null && query.feedbackTime[1] !== null) {
+        query.feedbackTime[0] = formatInputTimeZone(query.feedbackTime[0], timeZone, 'start');
+        query.feedbackTime[1] = formatInputTimeZone(query.feedbackTime[1], timeZone, 'end');
+      }
+      query.feedbackTime = query.feedbackTime.join(',')
     }
   }
 
   if (request.commitTime !== null) {
     if (request.commitTime.length === 2) {
-      query.commitTime = request.commitTime.join(',')
+      query.commitTime = JSON.parse(JSON.stringify(request.commitTime));
+      if (query.commitTime[0] !== null && query.commitTime[1] !== null) {
+        query.commitTime[0] = formatInputTimeZone(query.commitTime[0], timeZone, 'start');
+        query.commitTime[1] = formatInputTimeZone(query.commitTime[1], timeZone, 'end');
+      }
+      query.commitTime = query.commitTime.join(',')
     }
   }
 
@@ -492,8 +505,6 @@ async function loadFinanceFeedback() {
 
   page.pages = ret.pages
   page.records = ret.records
-
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
 
   page.loading = false
 }
