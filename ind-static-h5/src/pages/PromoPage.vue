@@ -62,7 +62,8 @@
                       </div>
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
-                          <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
+                          <!-- <img class="promo-content" :src="imgURL + promo.mobileImgUrl" /> -->
+                          <img class="promo-content" src="https://placehold.co/372x130/orange/white" />
                         </div>
                       </div>
                       <div class="pad-label label-new">最新活动</div>
