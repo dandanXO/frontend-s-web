@@ -334,6 +334,7 @@ import {
 } from '../../../../../api/member'
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n();
 const props = defineProps({
@@ -412,7 +413,10 @@ async function loadWithdrwalInfo() {
     }
   })
   if (request.withdrawDate && request.withdrawDate.length === 2) {
-    query.withdrawDate = request.withdrawDate.join(',')
+    query.withdrawDate = JSON.parse(JSON.stringify(request.withdrawDate));
+    query.withdrawDate[0] = formatInputTimeZone(query.withdrawDate[0], props.timeZone, 'start');
+    query.withdrawDate[1] = formatInputTimeZone(query.withdrawDate[1], props.timeZone, 'end');
+    query.withdrawDate = query.withdrawDate.join(',')
   }
   query.memberId = props.affId
   query.status = request.status

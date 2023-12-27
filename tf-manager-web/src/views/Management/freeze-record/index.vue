@@ -146,6 +146,7 @@ import { getFreezeRecords } from '../../../api/freeze'
 import { useI18n } from 'vue-i18n'
 import { getSiteListSimple } from '../../../api/site'
 import { getShortcuts } from '@/utils/datetime'
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n()
 const page = reactive({
@@ -220,13 +221,16 @@ async function loadFreezeRecords() {
       query[key] = value
     }
   })
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
   if (request.createTime.length === 2) {
-    query.createTime = request.createTime.join(',')
+    query.createTime = JSON.parse(JSON.stringify(request.createTime));
+    query.createTime[0] = formatInputTimeZone(query.createTime[0], timeZone, 'start');
+    query.createTime[1] = formatInputTimeZone(query.createTime[1], timeZone, 'end');
+    query.createTime = query.createTime.join(',')
   }
   const { data: ret } = await getFreezeRecords(query)
   page.pages = ret.pages
   page.records = ret.records
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
   page.loading = false
 }
 
