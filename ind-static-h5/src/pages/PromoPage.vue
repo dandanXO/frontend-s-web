@@ -378,7 +378,7 @@ export default defineComponent({
 
     .promo-main-container {
       max-width: 1400px;
-      width: 95%;
+      width: 90%;
       margin-left: auto;
       margin-right: auto;
 
@@ -460,7 +460,10 @@ export default defineComponent({
           transition: 0.4s ease-in;
           margin-bottom: 20px;
           overflow: hidden;
-          padding-top: 25px;
+          padding-top: 40px;
+          border-radius: 17px;
+          background: #4F366C;
+          box-shadow: 0px 7.5px 20px 0px #1411321A;
 
           img {
           }
@@ -478,6 +481,7 @@ export default defineComponent({
               background-position: center center;
               margin: 0;
               // border-radius: 10px 10px 0 0;
+              border-radius: 17px;
 
               &:hover {
                 transform: scale(1.2);
@@ -489,8 +493,8 @@ export default defineComponent({
               gap: 30px;
 
               .promo-content {
-                // width: 100%;
-                width: unset;
+                width: 100%;
+                // width: unset;
                 height: 100%;
 
                 &.isDesktop {
@@ -525,43 +529,43 @@ export default defineComponent({
             align-items: center;
 
             .viewdetail {
-              background: #002a35;
+              // background: #002a35;
               color: #ffffff;
               font-size: 12px;
               position: absolute;
               width: 100%;
               z-index: 2;
               top: 0;
-              height: 30px;
+              height: 40px;
               overflow: hidden;
-              line-height: 27px;
+              line-height: 40px;
               padding: 0 100px 0 10px;
 
-              &:before {
-                background: #043d4f;
-                content: "";
-                display: block;
-                height: 100%;
-                position: absolute;
-                right: 0;
-                top: 0;
-                width: 70px;
-              }
+              // &:before {
+              //   background: #043d4f;
+              //   content: "";
+              //   display: block;
+              //   height: 100%;
+              //   position: absolute;
+              //   right: 0;
+              //   top: 0;
+              //   width: 70px;
+              // }
 
-              &:after {
-                border-left: 20px solid transparent;
-                border-right: 30px solid transparent;
-                border-top: 30px solid #043d4f;
-                clear: both;
-                content: "";
-                display: block;
-                height: 0;
-                position: absolute;
-                right: 50px;
-                top: 0;
-                transform: rotate(180deg);
-                width: 0;
-              }
+              // &:after {
+              //   border-left: 20px solid transparent;
+              //   border-right: 30px solid transparent;
+              //   border-top: 30px solid #043d4f;
+              //   clear: both;
+              //   content: "";
+              //   display: block;
+              //   height: 0;
+              //   position: absolute;
+              //   right: 50px;
+              //   top: 0;
+              //   transform: rotate(180deg);
+              //   width: 0;
+              // }
             }
 
             .detail-arrow {
@@ -686,15 +690,15 @@ export default defineComponent({
 }
 
 .pad-title {
-  position: absolute;
+  // position: absolute;
   // top: -7px;
   // right: 5px;
   // z-index: 3;
   font-size: 12px;
   // color: #3e5cc0;
   color: #ffffff;
-  right: 5px;
-  top: 5px;
+  // right: 5px;
+  // top: 5px;
   z-index: 3;
 }
 
