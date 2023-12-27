@@ -1,8 +1,16 @@
 <template>
   <div class="vip-container">
+
+    <div class="header-wrapper">
+      <div class="vertical-line"></div>
+      <div class="header">
+        Monthly Cumulative Deposit An Upgrade Vip Level
+      </div>
+    </div>
+
     <q-table flat :hide-pagination="true" :columns="columns" :rows="rows" row-key="name" :rows-per-page-options="[0]">
       <template v-slot:header="props">
-        <q-tr :props="props">
+        <q-tr :props="props" style="display:none">
           <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
             <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
             <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;</div>
@@ -34,8 +42,8 @@
         </q-tr>
       </template>
 
-      <template v-slot:bottom-row>
-        <q-tr>
+        <template v-slot:bottom-row>
+        <q-tr style="display:none">
           <q-td colspan="100%" class="bottom-note text-left">
             After the recharge on the day reaches the standard, the next day will increase the VIP level and issue
             corresponding upgrade rewards.
@@ -44,9 +52,11 @@
       </template>
     </q-table>
 
+    <div class="hint-msg">After the recharge on the day reaches the standard, the next day will increase the VIP level and issue corresponding upgrade rewards.</div>
+
     <q-table flat :hide-pagination="true" :columns="columns3" :rows="rows3" row-key="name" :rows-per-page-options="[0]">
       <template v-slot:header="props">
-        <q-tr :props="props">
+        <q-tr :props="props" style="display:none">
           <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
             <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
             <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
@@ -79,7 +89,7 @@
       </template>
 
       <template v-slot:bottom-row>
-        <q-tr>
+        <q-tr style="display:none">
           <q-td colspan="100%" class="bottom-note text-left">
             Promotion Bonus: Every time you advance, you can instantly receive a promotion reward.
           </q-td>
@@ -87,9 +97,11 @@
       </template>
     </q-table>
 
+    <div class="hint-msg">Promotion Bonus: Every time you advance, you can instantly receive a promotion reward.</div>
+
     <q-table flat :hide-pagination="true" :columns="columns4" :rows="rows4" row-key="name" :rows-per-page-options="[0]">
       <template v-slot:header="props">
-        <q-tr :props="props">
+        <q-tr :props="props" style="display:none">
           <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
             <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
             <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
@@ -121,7 +133,7 @@
       </template>
 
       <template v-slot:bottom-row>
-        <q-tr>
+        <q-tr style="display:none">
           <q-td colspan="100%" class="bottom-note text-left">
             Cash Bonus: Based on your VIP level at the end of this month, this reward will be sent to you at 10 a.m. on
             the 1st of next month.
@@ -130,9 +142,12 @@
       </template>
     </q-table>
 
+    <div class="hint-msg">Cash Bonus: Based on your VIP level at the end of this month, this reward will be sent to you at 10 a.m. on
+            the 1st of next month.</div>
+
     <q-table flat :hide-pagination="true" :columns="columns2" :rows="rows2" row-key="name" :rows-per-page-options="[0]">
       <template v-slot:header="props">
-        <q-tr :props="props">
+        <q-tr :props="props" style="display:none">
           <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
             <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
             <div v-else-if="colIndex === 2" style="width: 90px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
@@ -161,11 +176,13 @@
       </template>
 
       <template v-slot:bottom-row>
-        <q-tr>
+        <q-tr style="display:none">
           <q-td colspan="100%" class="bottom-note text-left">Daily withdrawal limits based on VIP levels.</q-td>
         </q-tr>
       </template>
     </q-table>
+
+    <div class="hint-msg">Daily withdrawal limits based on VIP levels.</div>
   </div>
 </template>
 
@@ -480,11 +497,13 @@ const rows4 = [
 
   .top-header {
     color: #f1f1f1;
+    background: linear-gradient(180deg, #41206F 0%, #1F2862 100%);
   }
 
   .q-table__card {
     background: transparent !important;
     margin: 0 0 1.25rem 0;
+    border-radius: 8px;
   }
 
   .vip-icon {
@@ -510,9 +529,11 @@ const rows4 = [
   }
   tbody > :nth-child(odd) {
     background: rgba(21, 0, 37, 0.2);
+    background: #652C93;
   }
   tbody > :nth-child(even) {
     background: rgba(21, 0, 37, 0.5);
+    background: #502175;
   }
 
   span {
@@ -543,6 +564,41 @@ const rows4 = [
     padding: 0.5rem 1.25rem;
     white-space: normal;
   }
+
+  .hint-msg {
+    border-radius: 8px;
+    background: linear-gradient(180deg, #2F1B4D 0%, #1A2045 100%);
+    padding: 10px;
+    margin: 0 0 1.25rem 0;
+    color: rgba(255, 255, 255, 0.70);
+    text-align: center;
+    font-weight: 400;
+    line-height: 19px;
+  }
+
+  .header-wrapper {
+    display: flex;
+    gap: 15px;
+    padding: 20px 0px;
+
+    .vertical-line {
+      width: 10px;
+      background: linear-gradient(102.74deg, rgba(174, 110, 223, 0.5) 20.78%, rgba(255, 255, 255, 0) 100.75%);
+    }
+
+    .header {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 32px;
+    text-align: left;
+    background: linear-gradient(90deg, #BC70DF 0%, #FCD23C 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  }
+
+  
 }
 
 @media (max-width: 410px) {
