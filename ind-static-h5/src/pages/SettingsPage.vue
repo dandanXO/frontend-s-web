@@ -338,8 +338,11 @@ const logout = () => {
 }
 
 .card-account-banner {
-  margin: 0px 10px 10px;
+  width: calc(95% - 20px);
+  margin: 0px auto 10px;
   border-radius: 10px 10px 0px 0px;
+  border-color: transparent;
+  box-shadow: none;
 
   .account-banner-img {
     width: 100%;
@@ -350,7 +353,7 @@ const logout = () => {
 .acct-logout {
   background-image: url("../assets/images/account/logout-btn.png");
   background-repeat: no-repeat;
-  width: calc(100% - 24px);
+  width: calc(95% - 20px);
   margin: 20px auto;
   aspect-ratio: 335/40;
   background-size: 100% 100%;
