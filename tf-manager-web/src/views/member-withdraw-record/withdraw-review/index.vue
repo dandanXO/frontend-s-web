@@ -250,6 +250,11 @@
         </template>
       </el-table-column>
       <el-table-column
+        prop="time"
+        :label="t('fields.date')"
+        width="120"
+      />
+      <el-table-column
         prop="totalBet"
         :label="t('fields.totalBet')"
         width="120"
@@ -665,6 +670,9 @@ function changePage(page) {
 }
 
 function getSummaries(param) {
+  if (!hasPermission(['sys:report:summary:total'])) {
+    return []
+  }
   const { columns } = param
   var sums = []
   const requestCopy = { ...request }

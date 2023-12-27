@@ -82,6 +82,7 @@ export default {
     SENDING: 'Sending',
     WAITING_CALLBACK: 'Waiting Callback',
     PAYING: 'Paying',
+    WAITING_AUTO_PAY: 'Waiting Auto Payment',
   },
   withdrawConfirmStatus: {
     0: '未确认',
@@ -250,6 +251,7 @@ export default {
   distributeStatus: {
     PENDING: 'Pending',
     DISTRIBUTED: 'Distributed',
+    CANCEL: 'Cancel'
   },
   referFriendEvent: {
     INFO: 'Complete Info',
@@ -446,6 +448,7 @@ export default {
     bankName: 'Bank Name',
     bankNumber: 'Bank Number',
     bankType: 'Bank Type',
+    batchCancel: 'Batch Cancel',
     beanName: 'Bean Name',
     beforeAmount: 'Before Amount',
     beforeBalance: 'Before Balance',
@@ -518,6 +521,7 @@ export default {
     commissionReport: 'Commission Report',
     commitTime: 'Commit Time',
     companyProfit: 'Company Profit',
+    configGroup: 'Config Group',
     componentName: 'Component Name',
     componentPath: 'Component Path',
     composeMessage: 'Compose Message',
@@ -641,6 +645,7 @@ export default {
     editBank: 'Edit Bank',
     editBankCard: 'Edit Bank Card',
     editBanner: 'Edit Banner',
+    editConfig: 'Edit Config',
     editCurrency: 'Edit Currency',
     editCurrencyRate: 'Edit Currency Rate',
     editDepositSetting: 'Edit Deposit Setting',
@@ -689,6 +694,7 @@ export default {
     failReason: 'Fail Reason',
     fdConvertRate: 'FTD ConvertRate',
     features: 'Features',
+    fee: 'Fee',
     feedbackType: 'Feedback Type',
     feedbackTypeAll: 'All',
     feedbackTypeDeposit: 'Deposit',
@@ -699,6 +705,7 @@ export default {
     feedbackStatusSuccess: 'Success',
     feedbackTime: 'Feedback Time',
     feeRate: 'Fee Rate',
+    subtractAmount: 'Subtract Amount',
     finalSum: 'Final Sum',
     financialLevel: 'Financial Level',
     financeType: 'Type',
@@ -968,6 +975,7 @@ export default {
     rebateDistributeTime: 'Rebate Distribute Time',
     rebateLevel: 'Rebate Level',
     rebatePercentage: 'Rebate %',
+    rule: 'Rule',
     maxRebate: 'Max Rebate',
     maxBalance: 'Maximun Balance',
     rebateAmount: 'Rebate Amount',
@@ -1173,6 +1181,7 @@ export default {
     totalTransferIn: 'Total Transfer In',
     totalTransferOut: 'Total Transfer Out',
     toUnderReview: 'To Under Review',
+    totalValidBet: 'Total Valid Bet',
     totalWithdraw: 'Total Withdraw',
     totalWithdrawAmount: 'Total Withdraw Amount',
     totalWithdrawCount: 'Total Withdraw Count',
@@ -1321,8 +1330,12 @@ export default {
     configCode: 'Config Code',
     configValue: 'Config Value',
     s3Url: 'S3 URL',
+    allSites: 'All Sites',
+    rank: 'Rank',
+    processResult: 'Process Result',
+    winner: 'Winner',
     teamIcon: 'Team Icon',
-    other: 'Other',
+    other: 'Other'
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
@@ -1492,6 +1505,7 @@ export default {
     validateCommissionRequired: 'Commission is required',
     validateCommissionFormat: 'Commission must be between 0 to 1',
     validateCommissionModelRequired: 'Commission Model is required',
+    validateConfigGroupRequired: 'Config Group is required',
     validateConfirmPasswordRequired: 'Confirm Password is required',
     validateConfirmPasswordSize: 'Confirm Password has to be 6-12 characters',
     validateContentRequired: 'Content is required',
@@ -1697,6 +1711,7 @@ export default {
     validatePosterTypeRequired: 'Poster Type is required',
     validateConfigCodeRequired: 'Config Code is required',
     validateConfigValueRequired: 'Config Value is required',
+    resultCalculateSuccess: 'Result is calculated successfully'
   },
   menu: {
     undefined: '',
@@ -1867,6 +1882,7 @@ export default {
     "Error Queue": "Error Message Queue",
     GoogleAuth: 'Google Auth',
     'Image Setting': 'Image Setting',
+    'Privi Christmas': 'Merry Christmas',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -1973,6 +1989,8 @@ export default {
     1007: 'The withdrawal order has been submitted, please try again in 20 minutes',
     1008: 'You have already bound Google Authenticator, please enter the Google verification code.',
     1009: 'The Google verification code was entered incorrectly.',
+    1100: 'Admin is restricted from logging in',
+    1101: 'Login account does not belongs to this site',
     9000: 'Failed to create scheduled job',
     9001: 'Failed to update scheduled job',
     9002: 'Failed to delete scheduled job',
@@ -2105,5 +2123,6 @@ export default {
     21005: 'App exists with same site, OS, App Type & Apk Type',
     21006: 'File and os that choosing not the same',
     30000: 'PG update transaction status failed',
+    24003: 'Result is already processed',
   },
 }

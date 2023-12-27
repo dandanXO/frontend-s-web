@@ -1566,7 +1566,7 @@
 
 <script type="text/javascript">
     const searchParams = new URLSearchParams(window.location.search);
-    const affidValue = searchParams.get('id');
+    let affidValue = searchParams.get('id');
     const campaignname = searchParams.get('campaignname');
     const campaignid = searchParams.get('campaignid');
     const adsetid = searchParams.get('adsetid');
@@ -1576,16 +1576,20 @@
     const fbclid = searchParams.get('fbclid');
     const fbpid = searchParams.get('fbpid');
 
+    affidValue = affidValue ?? 'D2E144';
+
     var apiUrl= '';
+    var adjustUrlCode = '';
     getApiUrl();
 
     async function getApiUrl(){
         try {
-            const response = await fetch('https://tljwn.plan2wtion.com/app/download/url?siteCode=IND');
+            const response = await fetch(`https://tljwn.plan2wtion.com/app/download/affiliate/url?siteCode=IND&affiliateCode=${affidValue}`);
             const data = await response.json();
             if (data) {
-                console.log("data", data)
-                apiUrl = data.data;
+                console.log("data", data);
+                apiUrl = data.data.url;
+                adjustUrlCode = data.data.adjustUrlCode
                 // alert(apiUrl)
             }
         }
@@ -1627,7 +1631,7 @@
 
     function downloadApk(code, pp, fbvar, fbpid) {
         var date= Date.now();
-        var url = `https://app.adjust.com/176rzvj9?campaign=${campaignname}%20%28${campaignid}%29&adgroup=${adsetname}%20%28${adsetid}%29&creative=${adname}%20%28${adid}%29&fbclid=${fbclid}&redirect=${apiUrl}?v=` + date;
+        var url = `https://app.adjust.com/${adjustUrlCode}?campaign=${campaignname}%20%28${campaignid}%29&adgroup=${adsetname}%20%28${adsetid}%29&creative=${adname}%20%28${adid}%29&fbclid=${fbclid}&redirect=${apiUrl}?v=` + date;
         const link = document.createElement("a");
         link.style.display = "none";
         link.href = url;

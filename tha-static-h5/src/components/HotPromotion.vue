@@ -454,12 +454,10 @@ export default defineComponent({
     // }
     // }
     const submitEvent = () => {
-      var postData = {};
-      postData.memberId = store.id;
-      postData.privilegeId = 137;
+
       var joinChristmasUrl = "/privi-christmas/join";
       btnLoading.value = true;
-      eventapi.post(joinChristmasUrl, qs.stringify(postData)).then((res) => {
+      eventapi.post(joinChristmasUrl, qs.stringify({ promoCode: "jolly_event" })).then((res) => {
         btnLoading.value = false;
         var responseCode = res.data;
         if (responseCode.code === 0) {

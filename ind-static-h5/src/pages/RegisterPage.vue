@@ -300,6 +300,8 @@ export default defineComponent({
 
     const router = useRouter();
 
+    const affRegEvent = ref("");
+
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
@@ -369,13 +371,15 @@ export default defineComponent({
 
                 //ADJUST TRACKEVENT.
                 if (Platform.is.android && Platform.is.capacitor) {
-                  var adjustEvent = new AdjustEvent("81ibj7");
+                  affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
+                  var adjustEvent = new AdjustEvent(affRegEvent.value);
+                  // alert(affRegEvent.value);
                   Adjust.trackEvent(adjustEvent);
                 } else {
                   const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-                  AdjustWeb.trackEvent({
-                    eventToken: "81ibj7"
-                  });
+                  // AdjustWeb.trackEvent({
+                  //   eventToken: "81ibj7"
+                  // });
                 }
 
                 store.autoLogin(res.data);
@@ -536,7 +540,8 @@ export default defineComponent({
       isAgreeReg,
       isAlphanumeric,
       isValidName,
-      isValidPhone
+      isValidPhone,
+      affRegEvent
     };
   }
 });

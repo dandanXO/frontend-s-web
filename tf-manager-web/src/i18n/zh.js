@@ -82,6 +82,7 @@ export default {
     SENDING: '发送中',
     WAITING_CALLBACK: '自动支付中',
     PAYING: '支付',
+    WAITING_AUTO_PAY: '待自动支付',
   },
   withdrawConfirmStatus: {
     0: '未确认',
@@ -256,6 +257,7 @@ export default {
   distributeStatus: {
     PENDING: '未派发',
     DISTRIBUTED: '已派发',
+    CANCEL: '已取消'
   },
   referFriendEvent: {
     INFO: '完善个人信息',
@@ -452,6 +454,7 @@ export default {
     bankName: '银行名',
     bankNumber: '银行号码',
     bankType: '银行类型',
+    batchCancel: '批量取消',
     beanName: '对象名称',
     beforeAmount: '之前金额',
     beforeBalance: '之前余额',
@@ -528,6 +531,7 @@ export default {
     consumingTime: '耗费时间',
     commitTime: '订单日期',
     companyProfit: '公司盈利',
+    configGroup: '设置组',
     confirm: '确认',
     confirmAndImport: '确认并导入',
     confirmNewPassword: '确认新密码',
@@ -647,6 +651,7 @@ export default {
     editBankCard: '编辑银行卡',
     editBanner: '编辑广告',
     editCheck: '更改',
+    editConfig: '编辑设置',
     editCurrency: '编辑货币',
     editCurrencyRate: '编辑汇率',
     editDepositSetting: '编辑存款设置',
@@ -695,6 +700,7 @@ export default {
     failReason: '失败原因',
     fdConvertRate: '存款转化率',
     features: '特性',
+    fee: '手续费',
     feedbackType: '催单类型',
     feedbackTypeAll: '全部',
     feedbackTypeDeposit: '存款',
@@ -705,6 +711,7 @@ export default {
     feedbackStatusSuccess: '已核实',
     feedbackTime: '催单日期',
     feeRate: '收费率',
+    subtractAmount: '扣费金额',
     finalSum: '最终佣金',
     financialLevel: '会员组别',
     financePhotos: '图片',
@@ -974,6 +981,7 @@ export default {
     rebateDistributeTime: '返水发放时间',
     rebateLevel: '返水等级',
     rebatePercentage: '返水比例 %',
+    rule: '规则',
     maxRebate: '最大返水额',
     maxBalance: '最高余额',
     rebateAmount: '返水金额',
@@ -1179,6 +1187,7 @@ export default {
     totalTransferIn: '总转入',
     totalTransferOut: '总转出',
     toUnderReview: '至审核中',
+    totalValidBet: '总有效投注',
     totalWithdraw: '总提款',
     totalWithdrawAmount: '提款总额',
     totalWithdrawCount: '总提款次数',
@@ -1326,8 +1335,12 @@ export default {
     configCode: '设置Code',
     configValue: '设置值',
     s3Url: 'S3地址',
+    allSites: '全部站点',
+    rank: '等级',
+    processResult: '结算结果',
+    winner: '贏家',
     teamIcon: '队伍图标',
-    other: '其他',
+    other: '其他'
   },
   message: {
     addRemarkSuccess: '新增备注成功',
@@ -1476,6 +1489,7 @@ export default {
     validateChoiceTwoRequired: '请选择游戏类型',
     validateChoiceThreeRequired: '请选择游戏类型',
     validateClassNameRequired: '类别名必填',
+    validateConfigGroupRequired: '设置组必填',
     validateCodeRequired: '代码必填',
     validateCodeExist: '代码已存在，请输入其他代码. 现有代码 : ',
     validateColorRequired: '颜色必填',
@@ -1673,6 +1687,7 @@ export default {
     validatePosterTypeRequired: '海报类别必填',
     validateConfigCodeRequired: '设置Code必填',
     validateConfigValueRequired: '设置值必填',
+    resultCalculateSuccess: '结果结算成功'
   },
   menu: {
     undefined: '',
@@ -1843,6 +1858,7 @@ export default {
     GoogleAuth: "Google 验证中心",
     "Error Queue": "错误消息",
     'Image Setting': '图片设置',
+    'Privi Christmas': '圣诞快乐',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -1948,6 +1964,8 @@ export default {
     1007: '该提款订单已经提交, 请于20分钟后在尝试',
     1008: '您已经绑定谷歌验证，请输入谷歌验证码',
     1009: '谷歌验证码输入错误',
+    1100: 'ADMIN账号不能登录',
+    1101: '账号不属于此站点',
     9000: '创建定时任务失败',
     9001: '更新定时任务失败',
     9002: '删除定时任务失败',
@@ -2079,5 +2097,6 @@ export default {
     21005: '应用程序已存在',
     21006: '操作系统和上载应用程序不匹配',
     30000: 'PG注单设置失败',
+    24003: '结果已结算',
   },
 }
