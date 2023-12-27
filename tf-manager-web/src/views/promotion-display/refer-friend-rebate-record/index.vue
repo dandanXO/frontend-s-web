@@ -132,7 +132,7 @@
             <span v-if="scope.row.distributeTime === null">-</span>
             <span
               v-if="scope.row.distributeTime !== null"
-              v-formatter="{data: scope.row.distributeTime, formatter: 'YYYY-MM-DD HH:mm:ss', type: 'date'}"
+              v-formatter="{data: scope.row.distributeTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -147,7 +147,7 @@
             <span v-if="scope.row.updateTime === null">-</span>
             <span
               v-if="scope.row.updateTime !== null"
-              v-formatter="{data: scope.row.updateTime, formatter: 'YYYY-MM-DD HH:mm:ss', type: 'date'}"
+              v-formatter="{data: scope.row.updateTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -312,6 +312,7 @@ const site = ref(null)
 const siteList = reactive({
   list: []
 });
+let timeZone = null
 const exportPercentage = ref(0);
 const uiControl = reactive({
   dialogTitle: "",
@@ -424,6 +425,7 @@ async function loadReferFriendRebateRecords() {
   const { data: ret } = await getReferFriendRebateRecord(query);
   page.pages = ret.pages;
   page.records = ret.records;
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
   page.total = ret.total;
   const { data: total } = await getTotal(query);
   page.totalRebateAmount = total;
