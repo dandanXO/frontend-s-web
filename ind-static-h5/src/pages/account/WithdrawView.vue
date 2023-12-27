@@ -233,22 +233,6 @@ import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 
-// modal
-const isLoadingContent = ref(false);
-const isShowModal = ref(false);
-const open = () => {
-  isShowModal.value = true;
-  isLoadingContent.value = true;
-
-  refreshBalance();
-  getWithdrawalMethods();
-  loadCards();
-};
-
-defineExpose({
-  open
-});
-
 // withdraw component
 const qs = require("qs");
 const $q = useQuasar();
@@ -526,12 +510,11 @@ const goToBank = () => {
   router.push("/account/bank");
 };
 
-// NOTE: modal doesn't fire onMounted when open 2nd time.
-// onMounted(() => {
-//   refreshBalance();
-//   getWithdrawalMethods();
-//   loadCards();
-// });
+onMounted(() => {
+  refreshBalance();
+  getWithdrawalMethods();
+  loadCards();
+});
 
 const isValidCardNumber = () => {
   const { cardNumber } = withdrawReadOnlyInfo;
