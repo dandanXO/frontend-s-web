@@ -1,4 +1,6 @@
 <template>
+  <ProfileSummary :homeProfile="true" />
+
   <div class="vip-container">
 
     <div class="header-wrapper">
@@ -187,6 +189,8 @@
 </template>
 
 <script setup>
+import ProfileSummary from "components/ProfileSummary.vue";
+
 const columns = [
   {
     name: "vip",

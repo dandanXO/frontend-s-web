@@ -1,5 +1,6 @@
 <template>
-  <q-card-section class="page-title">优惠活动</q-card-section>
+  <!-- <q-card-section class="page-title">优惠活动</q-card-section> -->
+  <ProfileSummary :homeProfile="true" />
 
   <div class="promo-container" style="background: #090b19">
     <div class="promo">
@@ -125,13 +126,14 @@ import {useUI} from "stores/ui";
 import {userStore} from "stores/index";
 // import { loadPromo } from "src/api/index/promo.js";
 // import { loadPromoBanner } from "src/api/index/promo";
-
+import ProfileSummary from "components/ProfileSummary.vue";
 import HotPromotion from 'components/HotPromotion'
 // import HotPromotion from 'components/HotPromotion'
 export default defineComponent({
   name: "PromoView",
   components: {
-    HotPromotion
+    HotPromotion,
+    ProfileSummary
   },
   setup() {
     const store = userStore();

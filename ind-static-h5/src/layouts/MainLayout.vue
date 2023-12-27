@@ -200,7 +200,7 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = "Daily Activity";
         } else if (route.path === "/vip") {
-          hasPage.value = true;
+          // hasPage.value = true;
           pageName.value = "VIP Privileges";
           if (route.query.redirect) prevPage.value = route.query.redirect;
           else prevPage.value = "/";
@@ -208,14 +208,12 @@ export default defineComponent({
           prevPage.value = "/login";
           hasPage.value = true;
           pageName.value = "Forgot Account";
-        } else if (route.path === "/live-casino") {
-          /**
-          else if (route.path === "/forgot-password") {
-            prevPage.value = "/login";
-            hasPage.value = true;
-            pageName.value = "Forgot Password";
-          }
-        */
+        } else if (route.path === "/forgot-password") {
+          prevPage.value = "/login";
+          // hasPage.value = true;
+          pageName.value = "Forgot Password";
+        }
+        else if (route.path === "/live-casino") {
           hasPage.value = true;
           pageName.value = "Live Casino";
         } else if (route.path === "/poker") {
