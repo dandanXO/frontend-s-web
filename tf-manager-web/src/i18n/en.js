@@ -1954,6 +1954,12 @@ export default {
     appUpload: 'App Upload',
     editAppUpload: 'Edit App Upload',
   },
+  priviEvent: {
+    status: 'Record Status',
+    cancel: 'Cancelled',
+    active: 'Active',
+    settled: 'Settled',
+  },
   error: {
     400: 'Bad Request',
     401: 'Unauthorized Request',

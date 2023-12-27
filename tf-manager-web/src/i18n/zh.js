@@ -1929,6 +1929,12 @@ export default {
     appUpload: '上载应用程序',
     editAppUpload: '编辑上载应用程序',
   },
+  priviEvent: {
+    status: '记录状态',
+    cancel: '已取消',
+    active: '活跃',
+    settled: '已结算',
+  },
   error: {
     400: '请求无效',
     401: '用户未授权',
