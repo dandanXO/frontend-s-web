@@ -1,9 +1,7 @@
 <template>
-  <!--  <ProfileSummary />-->
+  <q-page>
+    <ProfileSummary />
 
-  <!--  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>-->
-
-  <ContentView contentTopStatus="faded">
     <q-form ref="profileFormRef" class="pc-form">
       <div class="pc-form-item" @click="openPersonalCenterDialog">
         <div class="pc-form-label">Full Name</div>
@@ -89,8 +87,7 @@
         <q-btn size="md" color="brightbtn" @click="updateState" label="保存信息" />
       </div> -->
     </q-form>
-  </ContentView>
-
+  </q-page>
   <q-dialog width="100%" v-model="showCaptchaDialog">
     <q-card style="width: 100%; padding: 20px" class="bg-dark text-white text-center">
       <q-card-section class="q-mb-md">
@@ -482,22 +479,6 @@
       </div>
     </div>
   </q-dialog>
-
-  <q-dialog width="100%" v-model="confirmSignOutDialog" presistent>
-    <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
-      <div class="popout-dialog-container">
-        <div class="txt-title">Sign Out</div>
-
-        <div class="txt-content q-mt-md text-center">Are you sure you want to sign out?</div>
-
-        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
-          <q-btn label="Cancel" no-caps class="btn-cancel" v-close-popup />
-          <q-btn label="Confirm" no-caps class="btn-confirm" @click="logout" />
-        </div>
-      </div>
-    </div>
-  </q-dialog>
 </template>
 
 <script setup>
@@ -639,11 +620,6 @@ const openVerificationCodeDialog = () => {
 
   verificationCodeDialog.value = !verificationCodeDialog.value;
   getCode();
-};
-
-const confirmSignOutDialog = ref(false);
-const openConfirmSignOutDialog = () => {
-  confirmSignOutDialog.value = !confirmSignOutDialog.value;
 };
 
 const myMemberList = ref([]);
@@ -1327,18 +1303,5 @@ const resetChangePasswordInfo = () => {
   :deep(.q-icon) {
     color: #fed87d;
   }
-}
-
-.btn-cancel {
-  background: rgba(21, 0, 37, 0.5);
-  font-weight: 700;
-  color: #ffffff;
-  border-radius: 8px;
-}
-.btn-confirm {
-  background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
-  font-weight: 700;
-  color: #150025;
-  border-radius: 8px;
 }
 </style>

@@ -108,13 +108,29 @@
           </q-carousel>
         </q-card-section>
       </q-card>
-      <a @click="logout">
+      <a @click="openConfirmSignOutDialog">
         <div class="acct-logout">
           <div class="acct-nav-label">&nbsp;</div>
         </div>
       </a>
     </div>
   </q-page>
+
+  <q-dialog width="100%" v-model="confirmSignOutDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">Sign Out</div>
+
+        <div class="txt-content q-mt-md text-center">Are you sure you want to sign out?</div>
+
+        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+          <q-btn label="Cancel" no-caps class="btn-cancel" v-close-popup />
+          <q-btn label="Confirm" no-caps class="btn-confirm" @click="logout" />
+        </div>
+      </div>
+    </div>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -138,6 +154,11 @@ const btm_banners = ref([
 ]);
 
 const loadingLogout = ref(false);
+
+const confirmSignOutDialog = ref(false);
+const openConfirmSignOutDialog = () => {
+  confirmSignOutDialog.value = !confirmSignOutDialog.value;
+};
 
 const logout = () => {
   loadingLogout.value = true;
@@ -362,5 +383,18 @@ const logout = () => {
     filter: brightness(1.2);
     transform: translate(0px, 1px);
   }
+}
+
+.btn-cancel {
+  background: rgba(21, 0, 37, 0.5);
+  font-weight: 700;
+  color: #ffffff;
+  border-radius: 8px;
+}
+.btn-confirm {
+  background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+  font-weight: 700;
+  color: #150025;
+  border-radius: 8px;
 }
 </style>
