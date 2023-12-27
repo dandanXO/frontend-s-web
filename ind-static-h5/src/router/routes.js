@@ -32,11 +32,11 @@ const routes = [
   //   component: () => import("layouts/MainLayout.vue"),
   //   children: [{ path: "", component: () => import("pages/HomePage.vue") }]
   // },
-  // {
-  //   path: "/promo",
-  //   component: () => import("layouts/MainLayout.vue"),
-  //   children: [{ path: "", component: () => import("pages/PromoPage.vue") }]
-  // },
+  {
+    path: "/promo",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/PromoPage.vue") }]
+  },
   {
     path: "/earn-money",
     component: () => import("layouts/MainLayout.vue"),

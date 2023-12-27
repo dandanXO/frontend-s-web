@@ -2,6 +2,11 @@
   <div class="infoboard-container" :class="!homeProfile && 'q-pa-md'">
     <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" />
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
+      <div class="profile-wrapper-extra">
+        <div class="logo-img">
+          <img src="../assets/logo.png" />
+        </div>
+      </div>
       <div class="profile-wrapper" v-if="store.hasToken()">
         <div class="profile-pic">
           <q-avatar size="60px">
@@ -51,10 +56,9 @@
           <q-chip v-if="store.unreadInboxMail" class="notification" color="red" size="xs"></q-chip>
         </div>
       </div>
-      <div class="profile-wrapper-extra" v-else>
-        <div class="logo-img">
-          <img src="../assets/logo.png" />
-        </div>
+      <div class="profile-wrapper" v-else style="justify-content: flex-end">
+        <q-btn class="btn-style-purple" no-caps @click="router.push('/register')">Register</q-btn>
+        <q-btn no-caps @click="router.push('/login')">Login</q-btn>
       </div>
     </div>
   </div>
@@ -122,12 +126,14 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   position: relative;
+  background: linear-gradient(180deg, #2d0f54 0%, #101114 100%);
+  box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
 
   .infoboard-wrapper {
     position: absolute;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-end;
+    justify-content: space-between;
     gap: 1.5rem;
     width: 22rem;
     margin: 0;
@@ -270,7 +276,7 @@ onMounted(() => {
   .profile-wrapper-extra {
     display: flex;
     align-items: center;
-    padding-top: 8px;
+    padding-top: 16px;
     width: 100%;
   }
 
@@ -278,7 +284,7 @@ onMounted(() => {
     width: 100%;
 
     margin: 0 auto;
-    text-align: center;
+    //     text-align: center;
 
     img {
       max-width: 100px;

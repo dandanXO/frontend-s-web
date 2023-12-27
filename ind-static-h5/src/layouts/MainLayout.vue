@@ -76,26 +76,29 @@
       </router-view>
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
-      <q-tabs v-model="tab" no-caps class="bg-primary" :breakpoint="0" align="justify">
+      <q-tabs v-model="tab" no-caps :breakpoint="0" align="justify">
         <q-route-tab to="/home" name="home" exact>
           <img class="inactive" src="../assets/images/index/menu/home-icon.png" />
           <img class="hover" src="../assets/images/index/menu/home-icon-hover.png" />
-          HOME
+          Home
         </q-route-tab>
         <q-route-tab to="/earn-money" name="earn-money">
           <img class="inactive" src="../assets/images/index/menu/earn-icon.png" />
           <img class="hover" src="../assets/images/index/menu/earn-icon-hover.png" />
-          EARN MONEY
+          Earn Money
+        </q-route-tab>
+        <q-route-tab to="/deposit" name="deposit" class="center-menu">
+          <img src="../assets/images/index/menu/deposit-icon.png" />
         </q-route-tab>
         <q-route-tab class="cs-web-id" to="/bonus" id="cs-web-id" name="live">
           <img class="inactive" src="../assets/images/index/menu/bonus-icon.png" />
           <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.png" />
-          BONUS
+          Bonus
         </q-route-tab>
         <q-route-tab to="/account" name="account">
           <img class="inactive" src="../assets/images/index/menu/account-icon.png" />
           <img class="hover" src="../assets/images/index/menu/account-icon-hover.png" />
-          MINE
+          Me
         </q-route-tab>
       </q-tabs>
     </q-footer>
