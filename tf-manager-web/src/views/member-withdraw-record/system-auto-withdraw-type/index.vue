@@ -7,7 +7,7 @@
           size="small"
           :placeholder="t('fields.site')"
           class="filter-item"
-          style="width: 120px;margin-left: 5px"
+          style="width: 120px; margin-left: 5px"
           @change="handleChangeSite()"
         >
           <el-option
@@ -312,7 +312,6 @@ async function loadSites() {
 async function loadPayTypes() {
   const { data: payType } = await getActivePaymentTypes()
   list.payTypes = payType
-  filterPayTypeByCurrency()
 }
 
 async function loadCurrency() {
@@ -321,33 +320,21 @@ async function loadCurrency() {
 }
 
 async function loadAutoPaymentType() {
-  const requestCopy = { ...request }
-  const query = {}
-  Object.entries(requestCopy).forEach(([key, value]) => {
-    if (value) {
-      query[key] = value
-    }
-  })
-  const { data: ret } = await getSystemAutoPaymentTypeList(query)
+  const { data: ret } = await getSystemAutoPaymentTypeList(request)
   page.records = ret
-}
-
-function loadWithdrawName() {
-  list.siteWithdrawPlatform.forEach(platform => {
-    list.withdrawPlatform.forEach(item => {
-      if (item.id === platform.withdrawPlatformId) {
-        platform.name = item.name
-        platform.id = item.id
-        platform.type = item.type
-      }
-    })
-  })
 }
 
 async function loadSiteWithdrawPlatform(siteId) {
   const { data: ret } = await getSiteWithdrawPlatform(siteId);
   list.siteWithdrawPlatform = ret;
-  loadWithdrawName()
+  list.siteWithdrawPlatform.forEach(platform => {
+    const matchingItem = list.withdrawPlatform.find(item => item.id === platform.withdrawPlatformId);
+    if (matchingItem) {
+      platform.name = matchingItem.name;
+      platform.id = matchingItem.id;
+      platform.type = matchingItem.type;
+    }
+  });
 }
 
 async function loadWithdrawPlatform() {

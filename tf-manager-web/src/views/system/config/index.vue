@@ -357,15 +357,31 @@
     </el-form-item>
     <el-divider v-if="configs.customList.length > 0" />
     <div v-for="(item, index) in configs.customList" :key="index">
+      <el-divider
+        style="width: 80%; margin-left: 10%; --el-border-style: dashed;"
+        v-if="
+          index !== 0 && item.configGroup !== configs.customList[index - 1].configGroup
+        "
+      />
       <el-form-item
-        :label="
-          index !== 0 && item.code === configs.customList[index - 1].code
+        border-color="#dcdcdc" border-style="dashed" :label="
+          index !== 0 && item.configGroup === configs.customList[index - 1].configGroup
             ? ''
-            : item.code
+            : item.configGroup
         "
         size="mini"
       >
-        <el-input v-model="item.value" />
+        <el-input disabled v-model="item.codeValue" />
+        <el-button
+          icon="el-icon-edit"
+          size="mini"
+          type="success"
+          style="margin-left: 20px"
+          @click="showEdit(item)"
+          plain
+        >
+          {{ t('fields.edit') }}
+        </el-button>
         <el-button
           icon="el-icon-remove"
           size="mini"
@@ -387,14 +403,14 @@
         size="mini"
         type="success"
         icon="el-icon-circle-plus"
-        @click="showDialog()"
+        @click="showDialog('CREATE')"
       >
         {{ t('fields.createConfig') }}
       </el-button>
     </el-form-item>
   </el-form>
   <el-dialog
-    :title="t('fields.createConfig')"
+    :title="uiControl.dialogTitle"
     v-model="uiControl.dialogVisible"
     append-to-body
   >
@@ -406,6 +422,9 @@
       label-position="left"
       @submit.prevent
     >
+      <el-form-item :label="t('fields.configGroup')" prop="configGroup">
+        <el-input v-model="form.configGroup" :placeholder="t('fields.configGroup')" />
+      </el-form-item>
       <el-form-item :label="t('fields.configCode')" prop="code">
         <el-input v-model="form.code" :placeholder="t('fields.configCode')" />
       </el-form-item>
@@ -426,7 +445,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue'
 import { getSiteListSimple } from '../../../api/site'
 import uuidv1 from 'uuid/v1'
 import { getVipList } from '../../../api/vip'
@@ -435,6 +454,7 @@ import { selectList } from '../../../api/risk-level'
 import {
   deleteById,
   getConfigs,
+  updateConfig,
   updateBatch,
   createConfig,
 } from '../../../api/config'
@@ -462,18 +482,22 @@ const configs = reactive({
 })
 
 const uiControl = reactive({
+  dialogTitle: "",
   dialogVisible: false,
 })
 
 const configForm = ref(null)
 
 const form = reactive({
+  id: null,
   siteId: '',
+  configGroup: null,
   code: null,
   value: null,
 })
 
 const formRules = reactive({
+  configGroup: [required(t('message.validateConfigGroupRequired'))],
   code: [required(t('message.validateConfigCodeRequired'))],
   value: [required(t('message.validateConfigValueRequired'))],
 })
@@ -674,10 +698,34 @@ async function loadConfigs() {
       config.code !== 's3_url' &&
       config.code !== 'withdraw_tips'
   )
-  configs.customList = configs.customList.sort((a, b) =>
-    a.code < b.code ? -1 : 1
-  )
-  console.log(configs.customList)
+  configs.customList = configs.customList.sort((a, b) => {
+    if (a.configGroup < b.configGroup) {
+      return -1;
+    } else if (a.configGroup > b.configGroup) {
+      return 1;
+    } else {
+      if (a.code < b.code) {
+        return -1;
+      } else if (a.code > b.code) {
+        return 1;
+      }
+    }
+  }
+  ).map((item, index) => {
+    item.codeValue = item.code + "-" + item.value
+    return item
+  })
+}
+
+function showEdit(customConfig) {
+  showDialog("EDIT");
+  nextTick(() => {
+    for (const key in customConfig) {
+      if (Object.keys(form).find(k => k === key)) {
+        form[key] = customConfig[key]
+      }
+    }
+  })
 }
 
 async function updateConfigs() {
@@ -725,9 +773,15 @@ async function updateConfigs() {
   ElMessage({ message: t('message.updateSuccess'), type: 'success' })
 }
 
-function showDialog() {
-  if (configForm.value) {
-    configForm.value.resetFields()
+function showDialog(type) {
+  if (type === "CREATE") {
+    if (configForm.value) {
+      form.id = null
+      configForm.value.resetFields()
+    }
+    uiControl.dialogTitle = t('fields.createConfig')
+  } else if (type === "EDIT") {
+    uiControl.dialogTitle = t('fields.editConfig')
   }
   uiControl.dialogVisible = true
 }
@@ -735,9 +789,14 @@ function showDialog() {
 async function submit() {
   configForm.value.validate(async valid => {
     if (valid) {
-      form.siteId = siteId.value
-      await createConfig(form)
-      ElMessage({ message: t('message.addSuccess'), type: 'success' })
+      if (uiControl.dialogTitle === t('fields.createConfig')) {
+        form.siteId = siteId.value
+        await createConfig(form)
+        ElMessage({ message: t('message.addSuccess'), type: 'success' })
+      } else if (uiControl.dialogTitle === t('fields.editConfig')) {
+        await updateConfig(form)
+        ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+      }
       await loadConfigs()
       uiControl.dialogVisible = false
     }
