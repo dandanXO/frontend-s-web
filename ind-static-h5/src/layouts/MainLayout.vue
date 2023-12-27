@@ -212,8 +212,7 @@ export default defineComponent({
           prevPage.value = "/login";
           // hasPage.value = true;
           pageName.value = "Forgot Password";
-        }
-        else if (route.path === "/live-casino") {
+        } else if (route.path === "/live-casino") {
           hasPage.value = true;
           pageName.value = "Live Casino";
         } else if (route.path === "/poker") {
@@ -380,6 +379,14 @@ export default defineComponent({
           prevPage.value = "/account/records";
           hasPage.value = true;
           pageName.value = "催单记录";
+        } else if (route.path === "/deposit") {
+          prevPage.value = "/account";
+          hasPage.value = true;
+          pageName.value = "Deposit";
+        } else if (route.path === "/withdraw") {
+          prevPage.value = "/account";
+          hasPage.value = true;
+          pageName.value = "Withdraw";
         }
       }
     };
