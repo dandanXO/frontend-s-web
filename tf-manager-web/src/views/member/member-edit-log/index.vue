@@ -349,6 +349,7 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { getShortcuts } from '@/utils/datetime'
 import { hasPermission } from '../../../utils/util'
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n()
 const memberMainInfoForm = ref(null)
@@ -497,14 +498,17 @@ async function loadMemberEditLog() {
       query[key] = value
     }
   })
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
+
   if (request.createTime.length === 2) {
-    query.createTime = request.createTime.join(',')
+    query.createTime = JSON.parse(JSON.stringify(request.createTime));
+    query.createTime[0] = formatInputTimeZone(query.createTime[0], timeZone, 'start');
+    query.createTime[1] = formatInputTimeZone(query.createTime[1], timeZone, 'end');
+    query.createTime = query.createTime.join(',')
   }
   const { data: ret } = await getMemberEditLogList(query)
   page.pages = ret.pages
   page.records = ret.records
-
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
 }
 
 async function loadSites() {

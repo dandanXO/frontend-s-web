@@ -220,6 +220,7 @@ import moment from 'moment';
 import { getMemberDepositRecord, getMemberDepositRecordTotalAmount } from '../../../../../api/member';
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 const props = defineProps({
   mbrId: {
     type: String,
@@ -287,7 +288,10 @@ async function loadDepositInfo() {
     }
   })
   if (request.depositDate && request.depositDate.length === 2) {
-    query.depositDate = request.depositDate.join(',');
+    query.depositDate = JSON.parse(JSON.stringify(request.depositDate));
+    query.depositDate[0] = formatInputTimeZone(query.depositDate[0], props.timeZone);
+    query.depositDate[1] = formatInputTimeZone(query.depositDate[1], props.timeZone);
+    query.depositDate = query.depositDate.join(',');
   }
   query.memberId = props.mbrId;
   query.status = request.status;

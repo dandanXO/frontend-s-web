@@ -98,11 +98,11 @@ const routes = [
         name: "referCode",
         component: () => {}
       },
-      // {
-      //   path: "/privilege/invite",
-      //   name: "invite",
-      //   component: () => import("../views/PrivilegeInvite.vue")
-      // },
+      {
+        path: "/privilege/invite",
+        name: "invite",
+        component: () => import("../views/PrivilegeInvite.vue")
+      },
       {
         path: "/center",
         name: "center",
