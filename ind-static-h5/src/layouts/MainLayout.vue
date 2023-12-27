@@ -257,6 +257,10 @@ export default defineComponent({
           if (route.query.redirect) {
             prevPage.value = route.query.redirect;
           }
+        } else if (route.path === "/account/profile") {
+          prevPage.value = "/account";
+          hasPage.value = true;
+          pageName.value = "Personal Center";
         } else if (route.path === "/account/records") {
           prevPage.value = "/account";
           hasPage.value = true;

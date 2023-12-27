@@ -164,6 +164,20 @@ body.body--dark .q-footer {
     bottom: 30px;
   }
 }
+
+.q-carousel.account {
+  height: auto;
+  border-radius: 6px;
+  width: 100%;
+
+  .q-panel > div {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    aspect-ratio: 335/150;
+  }
+}
+
 .q-card {
   margin: 10px;
   border-radius: 10px;
@@ -451,6 +465,18 @@ body.body--dark .q-footer {
   display: flex;
   gap: 24px;
   justify-content: center;
+}
+
+.btn-click{
+
+  &:hover{
+    opacity: 0.9;
+  }
+
+  &:active{
+    filter: brightness(0.85);
+    transform: translate(0px , 1px);
+  }
 }
 
 // lower android version

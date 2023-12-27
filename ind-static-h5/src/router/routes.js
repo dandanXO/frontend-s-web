@@ -200,6 +200,12 @@ const routes = [
   {
     path: "/account",
     component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/SettingsPage.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/profile",
+    component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/AccountPage.vue") }],
     meta: { requiresAuth: true }
   },
