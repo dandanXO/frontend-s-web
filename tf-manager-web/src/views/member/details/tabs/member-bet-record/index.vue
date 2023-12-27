@@ -202,6 +202,7 @@ import { getPlatformsBySite } from '../../../../../api/platform';
 import { useI18n } from "vue-i18n";
 import { useRoute } from 'vue-router'
 import { useStore } from "@/store";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 const store = useStore()
 
 const { t } = useI18n();
@@ -325,7 +326,10 @@ function checkQuery() {
   });
   if (request.betTime !== null) {
     if (request.betTime.length === 2) {
-      query.betTime = request.betTime.join(",");
+      query.betTime = JSON.parse(JSON.stringify(request.betTime));
+      query.betTime[0] = formatInputTimeZone(query.betTime[0], props.timeZone);
+      query.betTime[1] = formatInputTimeZone(query.betTime[1], props.timeZone);
+      query.betTime = query.betTime.join(',')
     }
   }
   if (request.status !== null) {

@@ -94,6 +94,7 @@ import moment from 'moment';
 import { getMemberReferFriend } from "../../../../../api/member";
 import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 export default defineComponent({
   props: {
@@ -145,7 +146,10 @@ export default defineComponent({
         }
       });
       if (formData.regTime && formData.regTime.length === 2) {
-        query.regTime = formData.regTime.join(",");
+        query.regTime = JSON.parse(JSON.stringify(formData.regTime));
+        query.regTime[0] = formatInputTimeZone(query.regTime[0], props.timeZone, 'start');
+        query.regTime[1] = formatInputTimeZone(query.regTime[1], props.timeZone, 'end');
+        query.regTime = query.regTime.join(',')
       }
       query.referrerId = props.mbrId;
       query.siteId = props.siteId;

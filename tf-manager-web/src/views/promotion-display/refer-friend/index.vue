@@ -150,7 +150,7 @@
             <span v-if="scope.row.recordTime === null">-</span>
             <span
               v-if="scope.row.recordTime !== null"
-              v-formatter="{data: scope.row.recordTime, formatter: 'YYYY-MM-DD', type: 'date'}"
+              v-formatter="{data: scope.row.recordTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -215,6 +215,7 @@ import { useStore } from '../../../store';
 import { TENANT } from '../../../store/modules/user/action-types';
 import { distribute, getReferFriend } from '../../../api/refer-friend';
 import { ElMessage, ElMessageBox } from 'element-plus';
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n();
 const store = useStore()
@@ -292,9 +293,13 @@ function checkQuery() {
       query[key] = value;
     }
   });
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
-      query.recordTime = request.recordTime.join(",");
+      query.recordTime = JSON.parse(JSON.stringify(request.recordTime));
+      query.recordTime[0] = formatInputTimeZone(query.recordTime[0], timeZone, 'start');
+      query.recordTime[1] = formatInputTimeZone(query.recordTime[1], timeZone, 'end');
+      query.recordTime = query.recordTime.join(',')
     }
   }
   if (request.status !== null) {
@@ -315,7 +320,6 @@ async function loadReferFriendRecords() {
   page.records = ret.records;
   page.total = ret.total;
 
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false;
 }
 

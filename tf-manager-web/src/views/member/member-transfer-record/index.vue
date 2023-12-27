@@ -190,6 +190,7 @@ import { getSiteListSimple } from "../../../api/site";
 import { useStore } from '../../../store';
 import { TENANT } from "../../../store/modules/user/action-types";
 import { getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n();
 const store = useStore();
@@ -296,7 +297,14 @@ async function loadTransferRecords() {
       query.siteId = siteIdList.join(',');
     }
     if (request.times && request.times.length === 2) {
-      query.times = request.times.join(',')
+      let timeZone = null
+      if (request.siteId) {
+        timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
+      }
+      query.times = JSON.parse(JSON.stringify(request.times));
+      query.times[0] = formatInputTimeZone(query.times[0], timeZone, 'start');
+      query.times[1] = formatInputTimeZone(query.times[1], timeZone, 'end');
+      query.times = query.times.join(',')
     }
   });
   const { data: ret } = await getTransferRecords(query);

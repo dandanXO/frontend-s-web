@@ -123,7 +123,7 @@ import moment from 'moment';
 import { getMemberBank, getMemberBankLog } from '../../../../../api/member';
 import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
-
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 const props = defineProps({
   mbrId: {
     type: String,
@@ -209,7 +209,10 @@ async function loadMemberBankLog() {
   });
   if (memberBankLogRequest.operationTime !== null) {
     if (memberBankLogRequest.operationTime.length === 2) {
-      query.operationTime = memberBankLogRequest.operationTime.join(",");
+      query.operationTime = JSON.parse(JSON.stringify(memberBankLogRequest.operationTime));
+      query.operationTime[0] = formatInputTimeZone(query.operationTime[0], props.timeZone, 'start');
+      query.operationTime[1] = formatInputTimeZone(query.operationTime[1], props.timeZone, 'end');
+      query.operationTime = query.operationTime.join(",");
     }
   }
   query.memberId = props.mbrId;
