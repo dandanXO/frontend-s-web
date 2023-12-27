@@ -497,7 +497,7 @@ export default defineComponent({
         margin: 20px auto;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 8px;
 
         .hot-promo {
           background: #2b2b4b;
