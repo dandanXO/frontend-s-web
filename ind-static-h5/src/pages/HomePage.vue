@@ -1746,10 +1746,6 @@ onMounted(() => {
   overflow-x: hidden;
 }
 
-.q-card__section {
-  background: rgba(0, 0, 0, 0.1);
-}
-
 .promo-banner-container {
   color: #ffffff;
 

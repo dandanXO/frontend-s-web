@@ -1,9 +1,5 @@
 <template>
-  <ProfileSummary></ProfileSummary>
-
-  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>
-
-  <ContentView :contentTopStatus="`${isNoInfo ? '' : 'solid'}`">
+  <q-page class="account-message-page">
     <LoadingComponent v-if="isLoading"></LoadingComponent>
     <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Message"></NoInfoComponent>
     <q-card v-else v-for="(e, i) in mailData" :key="`${e}-${i}`" class="msg-container">
@@ -18,7 +14,7 @@
         <q-btn class="detail-btn" label="Details >" @click="onDetailsClick(e)"></q-btn>
       </q-card-section>
     </q-card>
-  </ContentView>
+  </q-page>
 </template>
 
 <script setup>
@@ -55,7 +51,7 @@ const isActiveSlide = (e) => {
 
 const isLoading = ref(true);
 const isNoInfo = ref(true);
-const readIdLists= ref([]);
+const readIdLists = ref([]);
 const mailData = ref([]);
 const mailboxData = ref({
   type: null,

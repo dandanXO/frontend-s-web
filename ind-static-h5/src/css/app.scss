@@ -107,21 +107,32 @@ body.platform-ios .q-dialog__inner--minimized > div {
   }
 }
 .page-title {
+  width: 100%;
   min-height: 40px;
-  // margin: 5px;
-  color: #bacef1;
+  background: linear-gradient(180deg, #3E1474 0%, #101114 96.35%);
+  color: #fff;
   font-size: 16px;
   text-align: center;
   padding: 10px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   position: relative;
   a {
     display: block;
     position: relative;
-    left: 2rem;
-    margin: 0.75rem 3rem 0 0rem;
+    left: 1.5rem;
+  }
+  .header-right{
+    display: block;
+    position: relative;
+    right: 1.5rem;
+    min-width: 22px;
+  }
+
+  .header-icon{
+    color: #fff;
+    font-size: 22px;
   }
 }
 
@@ -190,6 +201,30 @@ body.body--dark .q-footer {
     padding: 10px;
   }
 }
+.account-table-page{
+  background-color: #101114;
+  position:relative;
+
+  &::after{
+    content: "";
+    display: block;
+    position:absolute;
+    width: 370px;
+    height: 370px;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    transform: translate(-50% , -50%);
+    background-size: contain;
+    background-image: url("../assets/images/account/shadow1-bg.png");
+  }
+}
+.account-message-page{
+  background-color: #101114;
+  position:relative;
+}
+
+
 .q-footer .q-tab {
   padding: 5px 0 5px;
   background: #3f1e5e;

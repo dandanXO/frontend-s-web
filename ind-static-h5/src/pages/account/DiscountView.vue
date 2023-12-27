@@ -1,9 +1,5 @@
 <template>
-  <ProfileSummary />
-
-  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>
-
-  <ContentView :contentTopStatus="`${isNoInfo ? '' : 'solid'}`">
+  <q-page class="account-table-page">
     <LoadingComponent v-if="isLoading"></LoadingComponent>
     <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Record"></NoInfoComponent>
     <div v-else v-for="(e, i) in discountData" :key="`${e}-${i}`" class="discount-table">
@@ -20,7 +16,7 @@
         </div>
       </div>
     </div>
-  </ContentView>
+  </q-page>
 </template>
 
 <script setup>
@@ -67,7 +63,7 @@ const searchDiscountRecord = () => {
   discountData.value = [];
 
   const { startDate, endDate } = searchForm;
-  
+
   const gmtStartDate = convertToGMT8(startDate);
   const gmtEndDate = convertToGMT8(endDate);
   api
@@ -97,20 +93,23 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .discount-table {
-  margin-bottom: 12px;
+  background: #171e2b80;
+  border-radius: 10px;
+  padding: 6px 4px;
+  margin-bottom: 10px;
+
   .discount-row {
     display: flex;
     justify-content: space-between;
     padding: 8px 12px;
+    flex-wrap: wrap;
 
     &--title {
-      background-color: rgba(21, 0, 37, 0.5);
       border-top-right-radius: 16px;
       border-top-left-radius: 16px;
     }
 
     &--content {
-      background-color: rgba(21, 0, 37, 0.2);
       flex-wrap: wrap;
     }
   }

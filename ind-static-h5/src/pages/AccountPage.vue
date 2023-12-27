@@ -1,7 +1,7 @@
 <template>
-  <ProfileSummary />
+  <!--  <ProfileSummary />-->
 
-  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>
+  <!--  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>-->
 
   <ContentView contentTopStatus="faded">
     <q-form ref="profileFormRef" class="pc-form">

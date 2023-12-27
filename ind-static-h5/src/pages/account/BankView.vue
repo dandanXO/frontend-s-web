@@ -36,9 +36,9 @@
   <!-- add card dialog -->
   <AddBankCardModal ref="addBankCardModalRef" :loadCards="loadCards"></AddBankCardModal>
 
-  <ProfileSummary></ProfileSummary>
+  <!--  <ProfileSummary></ProfileSummary>-->
 
-  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>
+  <!--  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>-->
 
   <!-- bank card -->
   <ContentView contentTopStatus="solid">
