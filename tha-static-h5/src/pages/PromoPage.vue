@@ -41,7 +41,7 @@
                 <div class="promo-bg">
                   <img
                     class="promo-content"
-                    :src="!$q.screen.gt.sm ? imgURL + promo.mobileBannerUrl : imgURL + promo.desktopBannerUrl"
+                    :src="!$q.screen.gt.sm ? imgURL + promo.mobileImgUrl : imgURL + promo.desktopImgUrl"
                   />
                 </div>
               </div>
@@ -60,12 +60,12 @@
             <img
               :src="
                 !$q.screen.gt.sm
-                  ? selectedPromo.mobileImgUrl
-                    ? imgURL + selectedPromo.mobileImgUrl
-                    : imgURL + selectedPromo.mobileBannerUrl
-                  : selectedPromo.desktopImgUrl
-                  ? imgURL + selectedPromo.desktopImgUrl
-                  : imgURL + selectedPromo.desktopBannerUrl
+                  ? selectedPromo.mobileBannerUrl
+                    ? imgURL + selectedPromo.mobileBannerUrl
+                    : imgURL + selectedPromo.mobileImgUrl
+                  : selectedPromo.desktopBannerUrl
+                  ? imgURL + selectedPromo.desktopBannerUrl
+                  : imgURL + selectedPromo.desktopImgUrl
               "
             />
           </div>
@@ -623,7 +623,7 @@ export default defineComponent({
   }
 
   .promo-container .all-promotions .promo-main-container .promo-list-wrapper .promo-item .promo-img-wrapper {
-    aspect-ratio: 100/25;
+    aspect-ratio: 800/188;
   }
 }
 </style>
