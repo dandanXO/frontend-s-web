@@ -12,3 +12,7 @@ export const calculateWinner = (code) => {
 export const getParticipants = (form) => {
   return https().request("/privi-christmas/queryParticipant", Method.GET, form, ContentType.form);
 };
+
+export const cancelParticipantRecord = (id) => {
+  return https().request("/privi-christmas/cancel", Method.POST, { id: id }, ContentType.form);
+};
