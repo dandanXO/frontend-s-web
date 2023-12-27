@@ -1334,6 +1334,10 @@ export default {
     s3Url: 'S3地址',
     teamIcon: '队伍图标',
     other: '其他',
+    allSites: '全部站点',
+    rank: '等级',
+    processResult: '结算结果',
+    winner: '贏家',
   },
   message: {
     addRemarkSuccess: '新增备注成功',
@@ -1679,6 +1683,7 @@ export default {
     validatePosterTypeRequired: '海报类别必填',
     validateConfigCodeRequired: '设置Code必填',
     validateConfigValueRequired: '设置值必填',
+    resultCalculateSuccess: '结果结算成功'
   },
   menu: {
     undefined: '',
@@ -1849,6 +1854,7 @@ export default {
     GoogleAuth: "Google 验证中心",
     "Error Queue": "错误消息",
     'Image Setting': '图片设置',
+    'Privi Christmas': '圣诞快乐',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -2085,5 +2091,6 @@ export default {
     21005: '应用程序已存在',
     21006: '操作系统和上载应用程序不匹配',
     30000: 'PG注单设置失败',
+    24003: '结果已结算',
   },
 }
