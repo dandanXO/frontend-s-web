@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container">
+  <div class="register-container">
     <div class="back-left">
       <router-link :to="'/landing'">
         <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
@@ -554,6 +554,20 @@ function charType(num) {
 }
 </script>
 <style scoped lang="scss">
+.register-container {
+  min-height: 100vh;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.back-left {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+}
+
 .register-form-logo-img {
   img {
     display: block;

@@ -529,6 +529,20 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="scss">
+.login-container {
+  min-height: 100vh;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.back-left {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+}
+
 .login-form-logo-img {
   img {
     display: block;

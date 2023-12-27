@@ -1,188 +1,75 @@
 <template>
-  <div class="q-pa-md">
-    <div class="q-gutter-y-md">
-      <!-- 
-        <div class="text-blue-grey">
-        Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.
-      </div> 
-    -->
-
-      <div class="forgot-password-form-logo-img">
-      <img src="../assets/logo.png" />
+  <div class="forgot-password-container">
+    <div class="back-left">
+      <router-link :to="'/login'">
+        <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
+      </router-link>
     </div>
+    <!-- 
+      <div class="text-blue-grey">
+      Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.
+    </div> 
+  -->
 
-      <q-form v-if="!isRequestSent" class="q-gutter-y-md rounded-borders">
-        <!-- <q-input
-          hide-bottom-space
-          ref="loginNameRef"
-          v-model="loginForm.loginName"
-          label="Login Name"
-          :rules="[(val) => (val && val.length > 0) || 'Please insert login name']"
-          label-color="brand"
-          autocomplete="username"
-          rounded
-          outlined
-          color="white"
-          class="landing-input"
-        ></q-input> -->
+    <div class="forgot-password-form-logo-img">
+    <img src="../assets/logo.png" />
+  </div>
 
-        <!-- <q-input
-          ref="loginNameRef"
-          hide-bottom-space
-          v-model="passwordForm.loginName"
-          label="Username"
-          lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Please Enter Username']"
-          rounded
-          outlined
-          label-color="brand"
-          color="white"
-          class="landing-input"
-        ></q-input> -->
+    <q-form v-if="!isRequestSent" class="q-gutter-y-md rounded-borders">
+      <!-- <q-input
+        hide-bottom-space
+        ref="loginNameRef"
+        v-model="loginForm.loginName"
+        label="Login Name"
+        :rules="[(val) => (val && val.length > 0) || 'Please insert login name']"
+        label-color="brand"
+        autocomplete="username"
+        rounded
+        outlined
+        color="white"
+        class="landing-input"
+      ></q-input> -->
 
-        <div class="forgot-password-form-grid">
-          <span class="forgot-password-form-title">Forgot Password</span>
-          <span class="forgot-password-form-desc">Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.</span>
+      <!-- <q-input
+        ref="loginNameRef"
+        hide-bottom-space
+        v-model="passwordForm.loginName"
+        label="Username"
+        lazy-rules
+        :rules="[(val) => (val && val.length > 0) || 'Please Enter Username']"
+        rounded
+        outlined
+        label-color="brand"
+        color="white"
+        class="landing-input"
+      ></q-input> -->
 
-          <span class="forgot-password-form-field-label">Phone Number</span>
-          <q-input
-            ref="phoneRef"
-            type="number"
-            hide-bottom-space
-            v-model="passwordForm.phone"
-            lazy-rules
-            :rules="[(val) => (val && val.length > 0) || 'Please Enter Phone Number']"
-            outlined
-            label-color="brand"
-            color="white"
-            class="landing-input"
-          ></q-input>
+      <div class="forgot-password-form-grid">
+        <span class="forgot-password-form-title">Forgot Password</span>
+        <span class="forgot-password-form-desc">Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.</span>
 
-          <span class="forgot-password-form-field-label">Verification Code</span>
-          <q-input
-            ref="ftCaptchaRef"
-            hide-bottom-space
-            type="text"
-            v-model="passwordForm.captchaCode"
-            lazy-rules
-            :rules="[(val) => (val && val.length > 3) || 'Please Enter Verification Code']"
-            outlined
-            label-color="brand"
-            color="white"
-            class="landing-input"
-          >
-            <template v-slot:append>
-              <img :src="verificationImg" @click="getCode()" />
-            </template>
-          </q-input>
-
-          <div>
-            <q-btn @click.prevent="onSubmitForgotPwd" type="submit" class="submit-btn" label="Submit" rounded no-caps />
-          </div>
-        </div>
-      </q-form>
-      <q-form v-else class="q-gutter-y-md rounded-borders">
-        <p>OTP Has Been Sent To Your Phone Number, Please Enter The OTP And New Password.</p>
+        <span class="forgot-password-form-field-label">Phone Number</span>
         <q-input
-          ref="codeRef"
+          ref="phoneRef"
+          type="number"
           hide-bottom-space
-          v-model="verificationForm.code"
-          label="OTP"
+          v-model="passwordForm.phone"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Please Enter OTP']"
-          rounded
+          :rules="[(val) => (val && val.length > 0) || 'Please Enter Phone Number']"
           outlined
           label-color="brand"
           color="white"
           class="landing-input"
         ></q-input>
 
+        <span class="forgot-password-form-field-label">Verification Code</span>
         <q-input
-          ref="newPwdRef"
-          :type="isPwd ? 'password' : 'text'"
-          hide-bottom-space
-          v-model="verificationForm.newPassword"
-          label="New Password"
-          lazy-rules
-          :rules="[
-            (val) => (val && val.length > 0) || 'Please Enter New Password',
-            (val) => (val.length > 5 && val.length <= 12) || 'Password Must Be 6 To 12 Character',
-            (val) => (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) || 'Stronger Password Is Recommended'
-          ]"
-          rounded
-          outlined
-          label-color="brand"
-          color="white"
-          class="landing-input"
-        >
-          <template v-slot:append>
-            <q-icon
-              color="bright"
-              :name="isPwd ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isPwd = !isPwd"
-            />
-          </template>
-        </q-input>
-
-        <q-input
-          ref="newConfirmPwdRef"
-          :type="isConfirmPwd ? 'password' : 'text'"
-          hide-bottom-space
-          v-model="newConfirmPwdVModel"
-          label="Confirm New Password"
-          lazy-rules
-          :rules="[
-            (val) => (val && val.length > 0) || 'Please Enter Confirm Password',
-            (val) => (val.length > 5 && val.length <= 12) || 'Confirm Password Must Be 6 To 12 Character',
-            (val) => (val && val === verificationForm.newPassword) || 'Confirm Password Does Not Match'
-          ]"
-          rounded
-          outlined
-          label-color="brand"
-          color="white"
-          class="landing-input"
-        >
-          <template v-slot:append>
-            <q-icon
-              color="bright"
-              :name="isConfirmPwd ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isConfirmPwd = !isConfirmPwd"
-            />
-          </template>
-        </q-input>
-
-        <div v-if="verificationForm.newPassword" class="password-str-div">
-          <span
-            :class="{
-              'weak-pwd': pwdStrength == 'weak',
-              'normal-pwd': pwdStrength == 'normal',
-              'strong-pwd': pwdStrength == 'strong'
-            }"
-          >
-            Weak
-          </span>
-          <span
-            :class="{
-              'normal-pwd': pwdStrength == 'normal',
-              'strong-pwd': pwdStrength == 'strong'
-            }"
-          >
-            Normal
-          </span>
-          <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
-        </div>
-
-        <q-input
-          ref="captchaRef"
+          ref="ftCaptchaRef"
           hide-bottom-space
           type="text"
-          v-model="verificationForm.captchaCode"
-          label="Verification Code"
+          v-model="passwordForm.captchaCode"
           lazy-rules
           :rules="[(val) => (val && val.length > 3) || 'Please Enter Verification Code']"
-          rounded
           outlined
           label-color="brand"
           color="white"
@@ -193,9 +80,125 @@
           </template>
         </q-input>
 
-        <ConfirmButton label="Submit" :confirmFunc="onVerifyForgotPassword"></ConfirmButton>
-      </q-form>
-    </div>
+        <div>
+          <q-btn @click.prevent="onSubmitForgotPwd" type="submit" class="submit-btn" label="Submit" rounded no-caps />
+        </div>
+      </div>
+    </q-form>
+    <q-form v-else class="q-gutter-y-md rounded-borders">
+      <p>OTP Has Been Sent To Your Phone Number, Please Enter The OTP And New Password.</p>
+      <q-input
+        ref="codeRef"
+        hide-bottom-space
+        v-model="verificationForm.code"
+        label="OTP"
+        lazy-rules
+        :rules="[(val) => (val && val.length > 0) || 'Please Enter OTP']"
+        rounded
+        outlined
+        label-color="brand"
+        color="white"
+        class="landing-input"
+      ></q-input>
+
+      <q-input
+        ref="newPwdRef"
+        :type="isPwd ? 'password' : 'text'"
+        hide-bottom-space
+        v-model="verificationForm.newPassword"
+        label="New Password"
+        lazy-rules
+        :rules="[
+          (val) => (val && val.length > 0) || 'Please Enter New Password',
+          (val) => (val.length > 5 && val.length <= 12) || 'Password Must Be 6 To 12 Character',
+          (val) => (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) || 'Stronger Password Is Recommended'
+        ]"
+        rounded
+        outlined
+        label-color="brand"
+        color="white"
+        class="landing-input"
+      >
+        <template v-slot:append>
+          <q-icon
+            color="bright"
+            :name="isPwd ? 'visibility_off' : 'visibility'"
+            class="cursor-pointer"
+            @click="isPwd = !isPwd"
+          />
+        </template>
+      </q-input>
+
+      <q-input
+        ref="newConfirmPwdRef"
+        :type="isConfirmPwd ? 'password' : 'text'"
+        hide-bottom-space
+        v-model="newConfirmPwdVModel"
+        label="Confirm New Password"
+        lazy-rules
+        :rules="[
+          (val) => (val && val.length > 0) || 'Please Enter Confirm Password',
+          (val) => (val.length > 5 && val.length <= 12) || 'Confirm Password Must Be 6 To 12 Character',
+          (val) => (val && val === verificationForm.newPassword) || 'Confirm Password Does Not Match'
+        ]"
+        rounded
+        outlined
+        label-color="brand"
+        color="white"
+        class="landing-input"
+      >
+        <template v-slot:append>
+          <q-icon
+            color="bright"
+            :name="isConfirmPwd ? 'visibility_off' : 'visibility'"
+            class="cursor-pointer"
+            @click="isConfirmPwd = !isConfirmPwd"
+          />
+        </template>
+      </q-input>
+
+      <div v-if="verificationForm.newPassword" class="password-str-div">
+        <span
+          :class="{
+            'weak-pwd': pwdStrength == 'weak',
+            'normal-pwd': pwdStrength == 'normal',
+            'strong-pwd': pwdStrength == 'strong'
+          }"
+        >
+          Weak
+        </span>
+        <span
+          :class="{
+            'normal-pwd': pwdStrength == 'normal',
+            'strong-pwd': pwdStrength == 'strong'
+          }"
+        >
+          Normal
+        </span>
+        <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
+      </div>
+
+      <q-input
+        ref="captchaRef"
+        hide-bottom-space
+        type="text"
+        v-model="verificationForm.captchaCode"
+        label="Verification Code"
+        lazy-rules
+        :rules="[(val) => (val && val.length > 3) || 'Please Enter Verification Code']"
+        rounded
+        outlined
+        label-color="brand"
+        color="white"
+        class="landing-input"
+      >
+        <template v-slot:append>
+          <img :src="verificationImg" @click="getCode()" />
+        </template>
+      </q-input>
+
+      <ConfirmButton label="Submit" :confirmFunc="onVerifyForgotPassword"></ConfirmButton>
+    </q-form>
   </div>
 </template>
 
@@ -466,6 +469,20 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+.forgot-password-container {
+  min-height: 100vh;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.back-left {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+}
+
 .forgot-password-form-logo-img {
   img {
     display: block;
