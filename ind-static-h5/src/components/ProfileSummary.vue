@@ -8,23 +8,7 @@
         </div>
       </div>
       <div class="profile-wrapper" v-if="store.hasToken()">
-        <div class="profile-pic">
-          <q-avatar size="60px">
-            <img :src="profileImagePath" />
-          </q-avatar>
-          <div class="profile-pic-frame" v-if="!homeProfile"></div>
-        </div>
         <div class="profile-details-container">
-          <div class="profile-name">
-            <div class="name-txt">{{ store.realName ? store.realName : store.nickName }}</div>
-            <div class="vip-details" @click="onVipClick">
-              <img src="../assets/images/index/icon-vip-badge.png" alt="" />
-              <div class="vip-level">
-                {{ store.vip }}
-              </div>
-            </div>
-          </div>
-
           <template v-if="!homeProfile">
             <div class="profile-rating">
               <img src="../assets/images/index/profile-rating-off.png" alt="" />
@@ -41,19 +25,39 @@
             <div class="flex-c-start">
               <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
                 <span class="balance-amount">
+                  <span style="font-family: 'Times New Roman', Times, serif">{{ store.currency.value }}</span>
                   {{ isLoadingBalance ? "Loading..." : store.balance.toFixed(2) }}
                 </span>
-              </div>
-              <div style="margin-top: 10px" @click="refreshBalance()">
-                <q-icon class="btn-pointer" name="sync" size="30px" color="yellow-7"></q-icon>
+
+                <div @click="refreshBalance()" class="btn-refresh">
+                  <q-icon name="sync" size="16px" color="white-7"></q-icon>
+                </div>
               </div>
             </div>
           </template>
         </div>
 
-        <div class="profile-msg btn-effect" v-if="homeProfile">
+        <div>
+          <q-btn square class="style-blue-btn" icon="add" dense></q-btn>
+        </div>
+
+        <!-- <div class="profile-msg btn-effect" v-if="homeProfile">
           <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
           <q-chip v-if="store.unreadInboxMail" class="notification" color="red" size="xs"></q-chip>
+        </div> -->
+
+        <div class="profile-pic">
+          <q-avatar size="50px">
+            <img :src="profileImagePath" />
+          </q-avatar>
+          <div class="profile-pic-frame" v-if="!homeProfile"></div>
+
+          <div class="vip-details" @click="onVipClick">
+            <img src="../assets/images/index/vip-row.png" alt="" />
+            <div class="vip-level">
+              {{ store.vip }}
+            </div>
+          </div>
         </div>
       </div>
       <div class="profile-wrapper" v-else style="justify-content: flex-end">
@@ -76,7 +80,7 @@ const store = userStore();
 
 const profileImg = [
   {
-    imgPath: ["profile-pic-01", "profile-pic-02", "profile-pic-03", "profile-pic-04", "profile-pic-05"]
+    imgPath: ["profile-pic"]
   }
 ];
 const randomProfileImg = computed(() => {
@@ -128,6 +132,7 @@ onMounted(() => {
   position: relative;
   background: linear-gradient(180deg, #2d0f54 0%, #101114 100%);
   box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
+  overflow-x: hidden;
 
   .infoboard-wrapper {
     position: absolute;
@@ -135,7 +140,8 @@ onMounted(() => {
     align-items: flex-end;
     justify-content: space-between;
     gap: 1.5rem;
-    width: 22rem;
+    // width: 22rem;
+    width: 100%;
     margin: 0;
 
     &.home-profile {
@@ -143,9 +149,10 @@ onMounted(() => {
       width: 100%;
       gap: 0;
       justify-content: space-between;
+      padding: 0 12px;
 
       .profile-pic {
-        margin: 0;
+        margin-top: -20px;
       }
     }
   }
@@ -156,6 +163,7 @@ onMounted(() => {
     gap: 12px;
     padding-top: 10px;
     padding-bottom: 10px;
+    margin-bottom: 10px;
     width: 100%;
 
     .profile-pic {
@@ -182,34 +190,6 @@ onMounted(() => {
       align-items: center;
       line-height: 1;
       gap: 10px;
-
-      .vip-details {
-        position: relative;
-        margin-left: 20px;
-        margin-bottom: 5px;
-        img {
-          display: block;
-          width: 30px;
-          position: absolute;
-          top: -3px;
-          left: -21px;
-        }
-
-        .vip-level {
-          background: linear-gradient(93.61deg, #ffd84d 11.24%, #d97d00 91.82%),
-            linear-gradient(217.27deg, rgba(255, 255, 255, 0.55) -9.02%, rgba(255, 255, 255, 0) 53.03%);
-          border-radius: 0px 2px 5px 0px;
-          width: 38px;
-          height: 13px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 10px;
-          line-height: 1.1;
-          padding-top: 2px;
-          padding-bottom: 4px;
-        }
-      }
     }
     .profile-agency {
       display: flex;
@@ -229,36 +209,26 @@ onMounted(() => {
     }
     .profile-balance {
       position: relative;
-      background: rgba(255, 255, 255, 0.24);
+      // background: rgba(255, 255, 255, 0.24);
+      background: rgba(103, 38, 154, 0.9);
       border-radius: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-top: 10px;
-      padding-top: 1px;
-      padding-bottom: 1px;
-      width: 115px;
+      // margin-bottom: 10px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      width: 130px;
+
       font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: bold;
       &:active {
         filter: brightness(0.75);
       }
 
-      &:before {
-        content: "";
-        position: absolute;
-        top: -4px;
-        left: -3px;
-        background-image: url(../assets/images/index/icon-balance.png);
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: 30px 30px;
-        display: block;
-        width: 30px;
-        height: 30px;
-      }
-
       .balance-amount {
-        margin-left: 15px;
+        padding-right: 18px;
       }
     }
     .profile-msg {
@@ -282,9 +252,7 @@ onMounted(() => {
 
   .logo-img {
     width: 100%;
-
     margin: 0 auto;
-    //     text-align: center;
 
     img {
       max-width: 100px;
@@ -296,5 +264,44 @@ onMounted(() => {
   img {
     width: 30rem;
   }
+}
+
+.vip-details {
+  position: relative;
+  margin-left: 20px;
+  margin-bottom: 5px;
+  margin-top: -10px;
+  img {
+    display: block;
+    width: 100px;
+    position: absolute;
+    top: -17px;
+    left: -45px;
+  }
+
+  .vip-level {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    line-height: 1.1;
+    padding-top: 2px;
+    padding-bottom: 4px;
+    z-index: 3;
+    color: #334ad6;
+    font-weight: bold;
+  }
+}
+
+.btn-refresh {
+  position: absolute;
+  top: 0;
+  right: 10px;
+}
+
+.style-blue-btn {
+  background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+  border-radius: 5px;
 }
 </style>
