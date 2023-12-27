@@ -1,4 +1,8 @@
 <template>
+  <!--  <pre>extensionState: {{ extensionState }}</pre>-->
+  <!--  <pre>extensionToken: {{ extensionToken }}</pre>-->
+  <!--  <pre>store:{{ store }}</pre>-->
+
   <div class="q-pa-md deposit-section" style="overflow: auto; background: #fff; margin: 8px 8px">
     <div class="q-mb-sm">
       <span class="additional-tips">如果遇到存款问题，请立即联系在线客服解决！</span>
@@ -192,7 +196,7 @@
 </template>
 
 <script setup id="DepositComponent">
-import { ref, reactive, onMounted, onActivated, shallowRef, onBeforeUnmount } from "vue";
+import { ref, reactive, onMounted, onActivated, shallowRef } from "vue";
 import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
@@ -203,9 +207,10 @@ import liff from "@line/liff";
 var qs = require("qs");
 
 import { userStore } from "stores/index";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const store = userStore();
+const route = useRoute();
 const router = useRouter();
 const formRef = ref();
 const isNewUser = ref(false);
@@ -451,7 +456,7 @@ const depositAmtRef = ref("");
 
 async function confirmDeposit() {
   if (form.bankId !== null || isUSDT.value) {
-    if (store.phone === "" || store.phone === null) {
+    if (!extensionState.value && (store.phone === "" || store.phone === null)) {
       isNewUser.value = true;
     } else {
       btnLoading.value = true;
@@ -648,13 +653,34 @@ async function pDepo(deposit) {
     });
 }
 
+const currentPath = ref(route.path);
+const extensionState = ref(false);
+const extensionToken = ref("");
+const checkExtension = () => {
+  // console.log(currentPath.value);
+  if (currentPath.value === "/deposit") {
+    // const eToken = ref(route.query.name);
+    extensionToken.value = route.query.token;
+    extensionState.value = true;
+
+    // store.dispatch("token", extensionToken);
+
+    console.log(store);
+  }
+};
+
 onMounted(() => {
   initPay();
-  // checkNewUser();
+  if (route.meta && route.meta.isApp) {
+    checkExtension();
+  }
 });
 
 onActivated(() => {
-  checkNewUser();
+  console.log(route.meta.isApp);
+  if (route.meta && !route.meta.isApp) {
+    checkNewUser();
+  }
 });
 </script>
 

@@ -6,11 +6,9 @@ export function getSiteParamFromServer() {
 }
 
 export function getAppDownloadUrlFromServer() {
-  return cached.get("APPDOWNLOAD_URL", () =>
-    server.REST.get("/config/appDownloadUrl")
-  );
+  return cached.get("APPDOWNLOAD_URL", () => server.REST.get("/config/appDownloadUrl"));
 }
 
 export function getCSAFromServer() {
-  return server.REST.get("/config/customerAddress");
+  return server.REST.get("/config/customerAddress/v2");
 }

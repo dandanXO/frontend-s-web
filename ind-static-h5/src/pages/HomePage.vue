@@ -1,7 +1,7 @@
 <template>
-  <div class="home-wrapper">
+  <div class="home-wrapper" :class="detectAndroidVersion()">
     <q-page-sticky position="bottom-right" :offset="[18, 18]" class="floating-btn">
-      <q-btn fab class="bg-yellow text-black btn-effect" @click="openCSInNewTab('https://direct.lc.chat/14154051/')">
+      <q-btn fab class="bg-yellow text-black btn-effect" @click="openCSInNewTab('https://direct.lc.chat/16887009/')">
         <img src="../assets/images/index/icon-customer-service.png" alt="" />
       </q-btn>
     </q-page-sticky>
@@ -319,6 +319,7 @@
             data-aos-once="true"
             data-aos-anchor="#slot"
             data-aos-offset="300"
+            v-if="item.name !== 'JOKER'"
           >
             <img src="../assets/images/index/fish/item-game-maintenance.png" />
             <div
@@ -1031,6 +1032,9 @@ const isAppUpdateModal = ref(false);
 const getVersionNo = async () => {
   if (Platform.is.android && Platform.is.capacitor) {
     const info = await App.getInfo();
+    // console.log("APP Info");
+    // console.log(info);
+
     var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
     // info.version && info.build
     const appType = "ALL";
@@ -1086,6 +1090,24 @@ const openCSInNewTab = (url) => {
   const absoluteUrl = url;
   window.open(absoluteUrl, "_blank");
 };
+
+const detectAndroidVersion = () => {
+  // JavaScript to detect Android version
+  const ua = navigator.userAgent.toLowerCase();
+  const userAndroid = ua.indexOf("android") > -1;
+  const androidVersion = userAndroid ? parseFloat(ua.slice(ua.indexOf("android") + 8)) : 0;
+
+  return "android-" + androidVersion;
+};
+
+// const detectAndroidVersion = () => {
+//   // JavaScript to detect Android version
+//   const ua = navigator.userAgent.toLowerCase();
+//   const isAndroid = ua.indexOf("android") > -1;
+//   const androidVersion = isAndroid ? Math.floor(parseFloat(ua.slice(ua.indexOf("android") + 8))) : 0;
+
+//   return isAndroid ? 'android-' + androidVersion : 'non-android';
+// };
 
 onMounted(() => {
   getPlatList();
@@ -1761,6 +1783,7 @@ onMounted(() => {
 
 .top-action {
   display: flex;
+  justify-content: space-around;
   gap: 16px;
   margin-top: 5px;
 
@@ -2089,5 +2112,12 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   height: 200px;
+}
+
+// lower android version
+.android-8 {
+  .game-platform-img {
+    height: 80px;
+  }
 }
 </style>

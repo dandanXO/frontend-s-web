@@ -15,10 +15,16 @@
         <RiCustomerServiceLine />
         <div style="margin-top: 15px">客服中心</div>
         <div class="customer-right-content">
-          <div class="customer-content" @click.stop.prevent="store.openLiveChat()">
+          <div class="customer-content">
             <RiCustomerServiceFill />
             <span>24小时在线客服</span>
           </div>
+
+          <div class="customer-line-div">
+            <div class="line-div" id="cs-line-1" @click.stop.prevent="store.openLiveChat(1)">线路一</div>
+            <div class="line-div" id="cs-line-2" @click.stop.prevent="store.openLiveChat(2)">线路二</div>
+          </div>
+
           <!--<div class="content-line"></div>
                 <div class="customer-qq">
                     <div class="remixicon-qq-fill"></div>
@@ -177,7 +183,36 @@ export default defineComponent({
   font-size: 12px;
   letter-spacing: 1px;
   color: #fff;
-  margin: 50px auto 22px;
+  margin: 26px auto 10px;
+}
+
+.customer-right-content .customer-line-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+  margin: 0 auto 10px;
+}
+
+.customer-right-content .line-div {
+  background: #fff;
+  color: #2f76f6;
+  border: 1px solid #2f76f6;
+  width: 48px;
+  border-radius: 4px;
+  padding: 5px 5px;
+  text-align: center;
+
+  &:hover {
+    //opacity: 0.9;
+    background: #e7e7e7;
+  }
+
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
+  }
 }
 
 .customer-right .customer-right-content .content-line {

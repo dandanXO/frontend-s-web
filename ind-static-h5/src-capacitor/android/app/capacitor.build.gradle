@@ -15,6 +15,7 @@ dependencies {
     implementation project(':capacitor-splash-screen')
     implementation "com.google.android.gms:play-services-analytics:+"
     implementation "com.android.installreferrer:installreferrer:1.0"
+    implementation "androidx.webkit:webkit:1.4.0"
 }
 
 

@@ -107,8 +107,8 @@
         </q-input>
 
         <div class="telephone-otp-row">
-          <q-input ref="telOtpCodeRef" v-model="regForm.otpCode" :placeholder="$t('lang.one_time_otp')"
-            :label="$t('lang.one_time_otp')" stack-label clearable autocomplete="off" filled  lazy-rules 
+          <q-input ref="telOtpCodeRef" v-model="regForm.smsCode" :placeholder="$t('lang.one_time_otp')"
+            :label="$t('lang.one_time_otp')" stack-label clearable autocomplete="off" filled  lazy-rules
             :rules="[(val) => (val && val.length > 0) || $t('lang.otp_cannot_be_empty')]">
             <template v-slot:prepend>
               <q-icon name="security" />
@@ -172,7 +172,7 @@
           </template>
         </q-input> -->
 
-        <q-input
+<!--        <q-input
           ref="verificationRef"
           filled
           class="verification-input"
@@ -189,7 +189,7 @@
           <template v-slot:prepend>
             <q-icon name="security" />
           </template>
-        </q-input>
+        </q-input>-->
 
         <q-input
           ref="codeAffiliate"
@@ -239,10 +239,12 @@
               <q-icon name="security" />
             </template>
           </q-input>
-          <q-btn :disabled="isOtpSending" :style="isOtpSending ? 'opacity: .6' : ''" class="common-btn verification-btn third-btn"
-            @click.prevent="getOtpCode">
-            {{ isOtpSending ? $t("lang.verifying") : $t("lang.confirm_button") }}
-          </q-btn>
+          <div class="row justify-center items-center gap-8" style="margin-top: 25px">
+            <q-btn :disabled="isOtpSending" :style="isOtpSending ? 'opacity: .6' : ''" class="common-btn verification-btn third-btn"
+              @click.prevent="getOtpCode">
+              {{ isOtpSending ? $t("lang.verifying") : $t("lang.confirm_button") }}
+            </q-btn>
+          </div>
         </q-form>
       </q-card>
     </q-dialog>
@@ -275,7 +277,7 @@ export default defineComponent({
     const qs = require("qs");
 
     onMounted(() => {
-      getCode();
+      //getCode();
       getAffiliateCode();
       getReferralCode();
       // api
@@ -301,15 +303,15 @@ export default defineComponent({
       password: "",
       confirmPwd: "",
       telephone: "",
-      otpCode: "",
-      otpCodeId: "",
+      smsCode: "",
+      smsCodeId: "",
       // email: "",
       codeAffiliate: "",
       // cardAccountName: "",
       // cardAccountSurname: "",
       regHost: location.hostname,
       codeId: "",
-      captchaCode: ""
+      captchaCode: "AAAA"
       // birthday: ""
     });
 
@@ -319,7 +321,7 @@ export default defineComponent({
       telephoneVerificationCaptchaCodeId: "",
     });
 
-    const getCode = () => {
+    /*const getCode = () => {
       api
         .get("/member/verificationCode")
         .then((res) => {
@@ -339,14 +341,14 @@ export default defineComponent({
           //   icon: "report_problem"
           // });
         });
-    };
+    };*/
     const telephoneVerificationCaptchaImg = ref("");
     const isOtpSending = ref(false);
 
     const isTelephoneVerificationModalVisible = ref(false);
     const openTelephoneVerificationModal = () => {
       telRef.value.validate();
-      
+
       if(telRef.value.hasError) {
         return;
       }
@@ -364,7 +366,7 @@ export default defineComponent({
           if (response.code === 0) {
             telephoneVerificationCaptchaImg.value = "data:image/png;base64," + response.data.img;
             verifyTelephoneForm.telephoneVerificationCaptchaCodeId = response.data.id;
-            verificationRef.value.resetValidation();
+            //verificationRef.value.resetValidation();
           }
         })
         .catch((e) => {
@@ -379,14 +381,14 @@ export default defineComponent({
 
     const getOtpCode = () => {
       const isTelephoneVerifyCaptchaCodeValid = telephoneVerifyCaptchaCodeRef.value.validate();
-      
+
       if(!isTelephoneVerifyCaptchaCodeValid) {
         return;
       }
 
       isOtpSending.value = true;
-      regForm.otpCode = '';
-      regForm.otpCodeId = '';
+      regForm.smsCode = '';
+      regForm.smsCodeId = '';
       const telephoneDetails = {
         telephone: regForm.telephone,
         codeId: verifyTelephoneForm.telephoneVerificationCaptchaCodeId,
@@ -395,7 +397,7 @@ export default defineComponent({
       api.post("/otp/sendSms", qs.stringify(telephoneDetails)).then((res) => {
         const ret = res.data
         if (ret.code === 0) {
-          regForm.otpCodeId = ret.data.codeId;
+          regForm.smsCodeId = ret.data.codeId;
           $q.notify({
             color: "positive",
             position: "top",
@@ -418,7 +420,7 @@ export default defineComponent({
     const telOtpCodeRef = ref();
     const telephoneVerifyCaptchaCodeRef = ref();
     const emailRef = ref();
-    const verificationRef = ref();
+    //const verificationRef = ref();
     const cardAccountNameRef = ref();
     const cardAccountSurnameRef = ref();
     // const birthdayRef = ref();
@@ -446,7 +448,7 @@ export default defineComponent({
       telRef.value.validate();
       telOtpCodeRef.value.validate();
       // emailRef.value.validate();
-      verificationRef.value.validate();
+      //verificationRef.value.validate();
       $q.loading.show({
         message: t("lang.loading")
       });
@@ -456,9 +458,9 @@ export default defineComponent({
         pwdRef.value.hasError ||
         confirmPwdRef.value.hasError ||
         telRef.value.hasError ||
-        telOtpCodeRef.value.hasError ||
+        telOtpCodeRef.value.hasError
         // emailRef.value.hasError ||
-        verificationRef.value.hasError
+        //verificationRef.value.hasError
       ) {
         $q.loading.hide();
       } else {
@@ -489,7 +491,7 @@ export default defineComponent({
             regForm.regHost = "app://";
           }
           api
-            .post("/member/fbRegister", qs.stringify(regForm))
+            .post("/member/fbRegisterWithPhone", qs.stringify(regForm))
             .then((ret) => {
               const res = ret.data;
               if (res.code === 0) {
@@ -522,7 +524,7 @@ export default defineComponent({
             .catch((error) => {
               $q.loading.hide();
             });
-          getCode();
+          //getCode();
         })();
       }
     };
@@ -622,7 +624,7 @@ export default defineComponent({
       telOtpCodeRef,
       telephoneVerifyCaptchaCodeRef,
       emailRef,
-      verificationRef,
+      //verificationRef,
       cardNumberRef,
       cardAccountNameRef,
       cardAccountSurnameRef,
@@ -632,7 +634,7 @@ export default defineComponent({
       isValidPhone,
       isPwd: ref(true),
       isCfmPwd: ref(true),
-      getCode,
+      //getCode,
       pwdStrength,
       selectBankType,
       selectedBankType,

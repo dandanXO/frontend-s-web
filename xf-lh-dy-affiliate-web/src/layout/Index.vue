@@ -9,7 +9,7 @@
       @click="handleClickOutside"
     />
     <div class="main-container">
-      <Sidebar class="sidebar-container" />
+      <Sidebar :key="reloadKey" class="sidebar-container" />
       <AppMain />
     </div>
   </div>
@@ -24,6 +24,8 @@ import {
   onMounted,
   reactive,
   toRefs,
+  ref,
+  watch
 } from 'vue'
 import { useStore } from '@/store'
 import { AppActionTypes } from '@/store/modules/app/action-types'
@@ -52,10 +54,22 @@ export default defineComponent({
         store.dispatch(AppActionTypes.ACTION_CLOSE_SIDEBAR, false)
       },
     })
+    var reloadKey = ref(0)
+    const languageLocale = ref(localStorage.getItem('language') || 'default');
+    // Watch changes to languageLocale and reloadFlag
+    watch([languageLocale], async ([newLanguage, reload]) => {
+      // Check if reload is needed
+      if (reload) {
+        // Perform any actions needed to "reload" without modifying data
+        console.log('Reloading with existing data');
 
+        // Reset the reloadFlag to false
+        reloadKey.value += 1;
+      }
+    });
     const classObj = computed(() => {
       return {
-        hideSidebar: !sidebar.value.opened,
+        // hideSidebar: !sidebar.value.opened,
         openSidebar: sidebar.value.opened,
         withoutAnimation: sidebar.value.withoutAnimation,
         mobile: device.value === 'mobile',
@@ -122,7 +136,7 @@ export default defineComponent({
   left: 0;
   z-index: 1;
   // overflow: hidden;
-  padding: 30px 0px 5px;
+  padding: 30px 0px 35px;
 }
 
 .fixed-header {
@@ -136,13 +150,29 @@ export default defineComponent({
 
 /* for mobile response 适配移动端 */
 .mobile {
-  .main-container {
-    margin-left: 0px;
-  }
+  // .main-container {
+  //   margin-left: 60px;
+  // }
 
   .sidebar-container {
     transition: transform 0.28s;
-    width: $sideBarWidth !important;
+    // width: $sideBarWidth !important;
+    position: fixed !important;
+    z-index: 99;
+    // top: 70px;
+    // bottom: 10px;
+    // left: 10px;
+    // height: 90vh;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    height: calc(100vh - 43px);
+    padding: 10px 0;
+    border-radius: 0;
+  }
+  :deep(.navigation) {
+    height: 100%;
+    overflow: auto;
   }
 
   &.openSidebar {
@@ -155,6 +185,12 @@ export default defineComponent({
       pointer-events: none;
       transition-duration: 0.3s;
       transform: translate3d(-$sideBarWidth, 0, 0);
+    }
+  }
+  .sidebar-container {
+    left: -20%;
+    &.expanded {
+      left: 0;
     }
   }
 

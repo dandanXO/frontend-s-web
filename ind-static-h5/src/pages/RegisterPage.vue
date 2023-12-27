@@ -300,6 +300,8 @@ export default defineComponent({
 
     const router = useRouter();
 
+    const affRegEvent = ref("");
+
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
@@ -335,8 +337,8 @@ export default defineComponent({
           excludes.value.forEach((element) => {
             delete allComponents[element];
           });
-          // const sidParam = FingerprintJS.hashComponents(allComponents);
-          regForm.sid = store.aaid;
+          const sidParam = FingerprintJS.hashComponents(allComponents);
+          regForm.sid = store.aaid ? store.aaid : sidParam;
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
           if ("standalone" in window.navigator && window.navigator.standalone) {
             regForm.regDevice = "IOS";
@@ -369,13 +371,15 @@ export default defineComponent({
 
                 //ADJUST TRACKEVENT.
                 if (Platform.is.android && Platform.is.capacitor) {
-                  var adjustEvent = new AdjustEvent("81ibj7");
+                  affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
+                  var adjustEvent = new AdjustEvent(affRegEvent.value);
+                  // alert(affRegEvent.value);
                   Adjust.trackEvent(adjustEvent);
                 } else {
                   const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-                  AdjustWeb.trackEvent({
-                    eventToken: "81ibj7"
-                  });
+                  // AdjustWeb.trackEvent({
+                  //   eventToken: "81ibj7"
+                  // });
                 }
 
                 store.autoLogin(res.data);
@@ -536,7 +540,8 @@ export default defineComponent({
       isAgreeReg,
       isAlphanumeric,
       isValidName,
-      isValidPhone
+      isValidPhone,
+      affRegEvent
     };
   }
 });

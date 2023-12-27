@@ -151,7 +151,24 @@
             </el-select>
           </el-form-item>
         </el-row>
-
+        <el-row>
+          <el-form-item :label="t('fields.feeRate')" prop="fee">
+            <el-input-number
+              v-model="form.fee"
+              :precision="3"
+              :step="0.10"
+              :min="0"
+              :max="1"
+              :controls="false"
+              class="form-input"
+            />
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-form-item :label="t('fields.subtractAmount')" prop="subtractAmount">
+            <el-input-number v-model="form.subtractAmount" class="form-input" :controls="false" />
+          </el-form-item>
+        </el-row>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false" class="footer_btn">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit" class="footer_btn">{{ t('fields.confirm') }}</el-button>
@@ -302,6 +319,8 @@ const form = reactive({
   callbackUrl: null,
   balanceUrl: null,
   type: "",
+  subtractAmount: 0,
+  fee: 0,
   status: true
 });
 const formRules = reactive({
@@ -350,10 +369,7 @@ async function loadPayTypes() {
 }
 
 function filterPayTypeByCurrency(siteId) {
-  console.log('siteId', siteId)
   const currentSite = siteList.list.find(s => s.id === siteId)
-  console.log('siteList.list', siteList.list)
-  console.log('currentSite', currentSite)
   const currencyCodeList = currentSite.currency.split(',').map(currencyName => currencyName)
   list.siteCurrencyIds = [
     ...currencyCodeList.map(currencyName => {

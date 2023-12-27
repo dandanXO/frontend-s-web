@@ -176,7 +176,7 @@ export default defineComponent({
         image: "ky",
         style: "KY",
         gameCode: "",
-        message: "双赢棋牌提供市面上热门游戏种类，选择全面多元，应有尽有<br> 玩家能不断游戏不感无趣！"
+        message: "开元棋牌提供市面上热门游戏种类，选择全面多元，应有尽有<br> 玩家能不断游戏不感无趣！"
       }
     ]);
 
@@ -184,7 +184,7 @@ export default defineComponent({
     const platformsList = ref([]);
     const platformsListDisplay = ref([]);
     const getPlatList = () => {
-      if (store.memberType === "TEST") {
+      if (store.token) {
         getLoggedInPlatformList().then((res) => {
           platformsList.value = res;
           platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("POKER"));

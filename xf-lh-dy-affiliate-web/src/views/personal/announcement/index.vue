@@ -8,7 +8,7 @@
       </template>
       <el-tabs
         v-model="activeName"
-        style="margin-left: 20px"
+        style="margin: 0 20px;"
         @tab-click="handleTabClick"
       >
         <el-tab-pane
@@ -17,28 +17,30 @@
           :key="item.id"
           v-for="item in type.getTypeList"
         >
-          <div class="inputs-wrap">
-            <el-input
-              v-model="request.title"
-              class="input-small"
-              :placeholder="t('fields.title')"
-              size="small"
-            />
-            <div class="btn-grp">
+          <el-row :gutter="20" style="gap:10px;">
+            <el-col :xl="4" :lg="6" :md="6" :sm="5">
+              <el-input
+                v-model="request.title"
+                class="input-small"
+                :placeholder="t('fields.title')"
+                size="normal"
+              />
+            </el-col>
+            <el-col :xl="16" :lg="12" :md="18" :sm="18">
               <el-button
                 icon="el-icon-search"
                 type="primary"
                 @click="loadAffiliateAnnouncement(type.getCurrentTab)"
-                size="mini"
+                size="normal"
               >
                 {{ $t('fields.search') }}
               </el-button>
-              <el-button size="mini" type="warning" @click="resetQuery()">
+              <el-button size="normal" type="primary" plain @click="resetQuery()">
                 {{ $t('fields.reset') }}
               </el-button>
               <el-button
                 icon="el-icon-edit"
-                size="mini"
+                size="normal"
                 type="success"
                 :disabled="uiControl.editBtn"
                 @click="readAnnouncement()"
@@ -47,7 +49,7 @@
               </el-button>
               <el-button
                 icon="el-icon-remove"
-                size="mini"
+                size="normal"
                 type="danger"
                 v-permission="['sys:annou:del']"
                 :disabled="uiControl.removeBtn"
@@ -55,8 +57,8 @@
               >
                 {{ t('fields.bulk_delete') }}
               </el-button>
-            </div>
-          </div>
+            </el-col>
+          </el-row>
 
           <el-dialog
             v-model="uiControl.dialogVisible"
@@ -70,7 +72,7 @@
               :model="form"
               :rules="formRules"
               :inline="true"
-              size="small"
+              size="normal"
               label-width="150px"
             >
               <el-form-item>
@@ -83,14 +85,16 @@
             :data="page.records"
             ref="table"
             row-key="id"
-            size="small"
+            size="normal"
             highlight-current-row
             v-loading="page.loading"
             style="margin-top: 15px; margin-left: 15px;"
-            :empty-text="t('fields.noData')"
             @selection-change="handleSelectionChange"
             @row-click="handleRowClick"
           >
+            <template #empty>
+              <emptyComp />
+            </template>
             <el-table-column type="selection" width="55" />
             <el-table-column
               prop="title"
@@ -120,7 +124,7 @@
               <template #default="scope">
                 <el-button
                   icon="el-icon-delete"
-                  size="mini"
+                  size="normal"
                   type="delete"
                   @click.stop="removeAnnouncement(scope.row)"
                 />
@@ -152,6 +156,7 @@ import {
   deleteAffAnnouncement,
 } from '../../../api/affiliate-announcement'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import emptyComp from '@/components/empty'
 
 const store = useStore()
 const { t } = useI18n()
@@ -323,6 +328,9 @@ onMounted(() => {
     padding: 0;
   }
 }
+.el-button {
+  margin-bottom: 10px;
+}
 
 .inputs-wrap {
   margin: 20px;
@@ -343,24 +351,24 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
-  .inputs-wrap {
-    flex-direction: column;
-    gap: 10px;
-    .el-input--small {
-      width: 100% !important;
-      max-width: unset !important;
-      margin: 0 !important;
-      .el-button {
-        margin: 0 !important;
-      }
-    }
-    .input-small {
-      max-width: unset;
-      width: 100%;
-      &.el-range-editor--small.el-input__inner {
-        max-width: unset;
-      }
-    }
-  }
+  // .inputs-wrap {
+  //   flex-direction: column;
+  //   gap: 10px;
+  //   .el-input--small {
+  //     width: 100% !important;
+  //     max-width: unset !important;
+  //     margin: 0 !important;
+  //     .el-button {
+  //       margin: 0 !important;
+  //     }
+  //   }
+  //   .input-small {
+  //     max-width: unset;
+  //     width: 100%;
+  //     &.el-range-editor--small.el-input__inner {
+  //       max-width: unset;
+  //     }
+  //   }
+  // }
 }
 </style>

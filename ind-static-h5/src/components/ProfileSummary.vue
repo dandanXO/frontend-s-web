@@ -11,7 +11,7 @@
         </div>
         <div class="profile-details-container">
           <div class="profile-name">
-            {{ store.realName ? store.realName : store.nickName }}
+            <div class="name-txt">{{ store.realName ? store.realName : store.nickName }}</div>
             <div class="vip-details" @click="onVipClick">
               <img src="../assets/images/index/icon-vip-badge.png" alt="" />
               <div class="vip-level">
@@ -162,8 +162,8 @@ onMounted(() => {
       height: 70px;
       background-size: 100%;
       position: absolute;
-      top: -12px;
-      left: -10px;
+      top: -8px;
+      left: -4px;
     }
 
     .profile-details-container {

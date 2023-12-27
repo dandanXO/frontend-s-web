@@ -39,7 +39,7 @@
         <div class="search">
           <div>
             <el-button
-              size="mini"
+              size="normal"
               type="success"
               icon="el-icon-circle-plus"
               @click="showDialog('CREATE')"
@@ -50,13 +50,15 @@
         </div>
       </div>
       <el-table
-        size="mini"
+        size="normal"
         :resizable="true"
         :data="tagList.records"
         row-key="id"
-        :empty-text="t('fields.noData')"
         v-loading="tagList.loading"
       >
+        <template #empty>
+          <emptyComp />
+        </template>
         <el-table-column
           :label="t('fields.sequence')"
           align="left"
@@ -81,14 +83,13 @@
         <el-table-column
           :label="t('fields.operate')"
           align="center"
-          fixed="right"
           width="230"
         >
           <template #default="scope">
-            <el-button size="mini" type="success" @click="showEdit(scope.row)">
+            <el-button size="normal" type="success" @click="showEdit(scope.row)">
               {{ t('fields.edit') }}
             </el-button>
-            <el-button size="mini" type="danger" @click="deleteTag(scope.row)">
+            <el-button size="normal" type="danger" @click="deleteTag(scope.row)">
               {{ t('fields.delete') }}
             </el-button>
           </template>
@@ -110,6 +111,7 @@ import {
   deleteAffiliateTag,
 } from '../../../../api/affiliate-tag'
 import { required, size } from '../../../../utils/validate'
+import emptyComp from '@/components/empty'
 
 const { t } = useI18n()
 const store = useStore()
@@ -235,7 +237,7 @@ onMounted(async () => {
 
 .dialog-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .table-footer {

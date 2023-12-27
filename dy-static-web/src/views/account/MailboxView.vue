@@ -8,12 +8,19 @@
         <el-tab-pane key="inbox" name="inbox" :label="'消息中心'">
           <div>
             <el-tabs v-model="mailboxMessageTab" type="card" @tab-click="changeMailboxType">
-              <el-tab-pane
-                v-for="(item, index) in mailboxMessageTypeData"
-                :key="index"
-                :label="item.name"
-                :name="item.type"
-              >
+              <el-tab-pane v-for="(item, index) in mailboxMessageTypeData" :key="index" :name="item.type">
+                <template #label>
+                  <span class="mailTab-label">
+                    <div
+                      class="red-dot-icon"
+                      v-if="hasUnreadMessages(item.type) || (item.type === 'ALL' && hasUnreadMessages(null))"
+                    />
+                    <span>
+                      {{ item.name }}
+                    </span>
+                  </span>
+                </template>
+
                 <template v-if="mailboxState.mailboxList.inbox.list.length > 0">
                   <div class="quick-btn">
                     <el-button type="primary" @click="readAllMsg(mailboxMessageType)">
@@ -121,6 +128,7 @@
 import { ref, reactive, onMounted, computed } from "vue";
 import {
   mailInbox,
+  clearMailInboxCache,
   mailOutbox,
   readMail,
   readMultipleMail,
@@ -135,6 +143,7 @@ import { Calendar, Delete, MessageBox, ArrowDown, Check } from "@element-plus/ic
 
 const loadingBtn = ref(false);
 const mailboxData = ref([]);
+const mailboxNotifyData = ref([]);
 // const mailboxMessageType = ref(["NOTIFICATION", "ACTIVITY", "ANNOUNCEMENT", "PAYMENT"]);
 const mailboxMessageTypeData = ref([
   { num: 1, type: "NOTIFICATION", name: "通知" },
@@ -156,6 +165,8 @@ const changeMailboxType = (nk) => {
 
   loadPersonalMailbox();
 };
+
+const mailboxNotifyState = ref([]);
 
 const mailboxState = reactive({
   active: "inbox",
@@ -179,7 +190,34 @@ const mailboxState = reactive({
   }
 });
 
+const loadNotifyMailbox = () => {
+  mailboxNotifyData.value = {
+    type: null,
+    orderBy: "sendTime"
+  };
+  mailInbox(mailboxNotifyData.value)
+    .then((res) => {
+      const response = res;
+      mailboxNotifyState.value = response.records;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+const hasUnreadMessages = (type) => {
+  return mailboxNotifyState.value.some((item) => item.type === type && item.readTime === null);
+};
+
+const isAnyReadTimeNull = (mailboxList) => {
+  return mailboxList.inbox.list.some((item) => item.readTime === null);
+};
+
+const shouldDisplayTrue = ref(false);
+
 const loadPersonalMailbox = () => {
+  loadNotifyMailbox();
+
   mailboxState.mailboxList[mailboxState.active].list = [];
   if (mailboxState.active === "inbox") {
     mailboxData.value = {
@@ -191,19 +229,15 @@ const loadPersonalMailbox = () => {
     };
     mailInbox(mailboxData.value)
       .then((res) => {
-        // console.log(res);
-        // if (res.code === 0) {
-        //   const response = res.data;
-        //   mailboxState.mailboxList[mailboxState.active].list.push(...response.records);
-        //   mailboxState.mailboxList[mailboxState.active].total = response.total;
-        // }
         const response = res;
         mailboxState.mailboxList[mailboxState.active].list.push(...response.records);
         mailboxState.mailboxList[mailboxState.active].total = response.total;
+
+        // Check if readTime is null
+        shouldDisplayTrue.value = isAnyReadTimeNull(mailboxState.mailboxList);
       })
       .catch((error) => {
         console.log(error);
-        // message.error(error.message, 4)
       });
   } else {
     mailboxData.value = {
@@ -266,6 +300,8 @@ const openMsg = (m) => {
     .then((res) => {
       const { code, data } = res;
 
+      clearMailInboxCache();
+      // loadPersonalMailbox();
       // if (code === 0) m.content = data.content;
     })
     .catch((error) => {
@@ -282,6 +318,9 @@ const readAllMsg = (m) => {
           message: "已全读部消息",
           type: "success"
         });
+
+        clearMailInboxCache();
+        loadPersonalMailbox();
       }
     })
     .catch((error) => {
@@ -300,6 +339,10 @@ const deleteMsg = (id, spliceIndex, callback) => {
         });
 
         if (spliceIndex !== null) mailboxState.mailboxList[mailboxState.active].list.splice(spliceIndex, 1); // fake delete
+
+        clearMailInboxCache();
+        loadPersonalMailbox();
+
         callback && callback();
       }
     })
@@ -316,6 +359,9 @@ const deleteAllMsg = (m) => {
           message: "已删除全部消息",
           type: "success"
         });
+
+        clearMailInboxCache();
+        loadPersonalMailbox();
       }
     })
     .catch((error) => {
@@ -342,6 +388,9 @@ const readMultipleMsg = () => {
           message: "读取已选择的消息",
           type: "success"
         });
+
+        clearMailInboxCache();
+        loadPersonalMailbox();
 
         isShowSelect.value = false;
       }
@@ -377,6 +426,9 @@ const deleteMultipleMsg = () => {
         Object.keys(selectedIds.value).forEach((key) => {
           selectedIds.value[key] = false;
         });
+
+        clearMailInboxCache();
+        loadPersonalMailbox();
       }
     })
     .catch((error) => {
@@ -386,6 +438,8 @@ const deleteMultipleMsg = () => {
 
 onMounted(() => {
   loadPersonalMailbox();
+  // loadNotifyMailbox();
+  // getMailCatNotify();
   // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
 });
 </script>
@@ -416,6 +470,11 @@ onMounted(() => {
     }
     :deep(.ant-tabs-nav .ant-tabs-tabpane) {
       padding: 20px 30px;
+    }
+
+    .mailTab-label {
+      display: flex;
+      align-items: center;
     }
 
     .quick-btn {
@@ -562,5 +621,13 @@ onMounted(() => {
   align-items: center;
   gap: 6px;
   color: #a1a1a1;
+}
+
+.red-dot-icon {
+  height: 10px;
+  width: 10px;
+  background: #db0011;
+  border-radius: 50%;
+  margin-right: 5px;
 }
 </style>

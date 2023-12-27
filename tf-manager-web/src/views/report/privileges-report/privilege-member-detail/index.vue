@@ -2,7 +2,6 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-
         <el-button
           style="margin-left: 20px"
           icon="el-icon-refresh"
@@ -38,7 +37,17 @@
         width="120"
         fixed
       />
-      <el-table-column prop="totalBonus" :label="t('fields.totalBonus')" width="120">
+      <el-table-column
+        prop="realName"
+        :label="t('fields.realName')"
+        width="120"
+        fixed
+      />
+      <el-table-column
+        prop="totalBonus"
+        :label="t('fields.totalBonus')"
+        width="120"
+      >
         <template #default="scope1">
           $
           <span
@@ -85,6 +94,28 @@
           />
         </template>
       </el-table-column>
+      <el-table-column :label="t('fields.action')" width="180">
+        <template #default="scope1">
+          <el-button
+            style="margin-left: 5px"
+            icon="el-icon-phone"
+            size="mini"
+            type="success"
+            v-if="siteIdFromParam === '3'"
+            v-permission="['sys:member:call:phone']"
+            @click="callPhone(scope1.row)"
+          />
+          <el-button
+            style="margin-left: 5px"
+            icon="el-icon-video-pause"
+            size="mini"
+            type="danger"
+            v-if="siteIdFromParam === '3'"
+            v-permission="['sys:member:stop:phone']"
+            @click="stopPhone(scope1.row)"
+          />
+        </template>
+      </el-table-column>
     </el-table>
 
     <el-pagination
@@ -122,10 +153,12 @@ import {
   getExportPrivilegeMemberDetailReport,
 } from '../../../../api/report-privilege'
 import { getSiteListSimple } from '../../../../api/site'
+import { callTelephone, stopTelephone } from "../../../../api/vcall";
 import { useStore } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import moment from 'moment'
+import { ElMessage } from "element-plus";
 
 // eslint-disable-next-line
 const { t } = useI18n()
@@ -154,7 +187,7 @@ const request = reactive({
   current: 1,
   recordTime: date,
   siteId: null,
-  id: id
+  id: id,
 })
 
 async function loadPrivilegeMemberDetail() {
@@ -192,6 +225,25 @@ async function loadSites() {
 
 function refresh() {
   loadPrivilegeMemberDetail()
+}
+
+async function callPhone(row) {
+  var res = await callTelephone(row.id, row.siteId)
+  console.log(res);
+  if (res.data === 'true') {
+    ElMessage({ message: t('message.success'), type: 'success' })
+  } else {
+    ElMessage({ message: t('fields.fail'), type: 'fail' })
+  }
+}
+
+async function stopPhone(row) {
+  var res = await stopTelephone(row.id, row.siteId)
+  if (res.data === 'true') {
+    ElMessage({ message: t('message.success'), type: 'success' })
+  } else {
+    ElMessage({ message: t('fields.fail'), type: 'fail' })
+  }
 }
 
 onMounted(async () => {

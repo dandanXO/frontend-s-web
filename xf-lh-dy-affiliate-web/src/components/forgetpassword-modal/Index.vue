@@ -13,7 +13,7 @@
       :model="pwForgetModel"
       :rules="pwForgetRules"
       ref="pwForgetRef"
-      size="small"
+      size="normal"
       label-width="162px"
     >
       <el-form-item
@@ -52,12 +52,12 @@
       </el-form-item>
       <div class="forget-pw-btns">
         <el-button
-          size="small"
+          size="normal"
           @click="dialogVisible = false"
         >
           {{ $t('fields.cancel') }}
         </el-button>
-        <el-button size="small" type="primary" @click="submitForm">{{ $t('fields.confirm') }}</el-button>
+        <el-button size="normal" type="primary" @click="submitForm">{{ $t('fields.confirm') }}</el-button>
       </div>
     </el-form>
   </el-dialog>

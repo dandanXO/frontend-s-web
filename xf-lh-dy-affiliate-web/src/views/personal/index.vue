@@ -1,18 +1,14 @@
 <template>
   <div class="roles-main">
-    <el-card style="margin-top: 20px;">
-      <template #header>
-        <div class="clearfix">
-          <span class="role-span">{{ $t('fields.personal') }}</span>
-        </div>
-      </template>
+    <el-card>
       <el-row class="affiliate-info">
         <el-card
-          body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
+          body-style="padding: 0 10px; display:flex; justify-content: space-between; align-items: left;"
           :xs="12"
           :sm="12"
           :lg="6"
           class="box-card"
+          shadow="none"
         >
           <template #header>
             <div class="clearfix">
@@ -21,7 +17,7 @@
           </template>
           <el-form label-suffix=" : " label-width="150px" label-position="left">
             <el-row class="info">
-              <el-icon color="#db1f55">
+              <el-icon color="#7D8792">
                 <Icon :icon="person20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item
@@ -32,7 +28,7 @@
               </el-form-item>
             </el-row>
             <el-row class="info">
-              <el-icon color="#db1f55">
+              <el-icon color="#7D8792">
                 <Icon :icon="personInfo20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item style="display: flex" :label="t('fields.realName')">
@@ -58,19 +54,19 @@
                     ref="editForm"
                     :model="eForm"
                     :inline="true"
-                    size="mini"
+                    size="normal"
                   >
                     <el-form-item prop="realName">
                       <el-row>
                         <el-input
                           v-model="eForm.realName"
                           maxlength="50"
-                          size="mini"
+                          size="normal"
                         />
                         <el-button
                           type="primary"
                           @click="editRealName()"
-                          size="mini"
+                          size="normal"
                           style="margin-left: 10px"
                         >
                           {{ $t('fields.confirm') }}
@@ -82,7 +78,7 @@
               </el-form-item>
             </el-row>
             <el-row class="info">
-              <el-icon color="#1fdbb0">
+              <el-icon color="#7D8792">
                 <Icon :icon="bookCoins20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item style="display: flex" :label="t('fields.balance')">
@@ -94,11 +90,12 @@
         </el-card>
 
         <el-card
-          body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
+          body-style="padding: 0 10px; display:flex; justify-content: space-between; align-items: center"
           :xs="12"
           :sm="12"
           :lg="6"
           class="box-card"
+          shadow="none"
         >
           <template #header>
             <div class="clearfix">
@@ -107,7 +104,7 @@
           </template>
           <el-form label-suffix=" : " label-width="150px" label-position="left">
             <el-row class="info">
-              <el-icon color="#db1f55">
+              <el-icon color="#7D8792">
                 <Icon :icon="lockClosed20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item
@@ -131,7 +128,7 @@
               </el-form-item>
             </el-row>
             <el-row class="info">
-              <el-icon color="#6639b5">
+              <el-icon color="#7D8792">
                 <Icon :icon="lockClosed20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item
@@ -144,7 +141,7 @@
               </el-form-item>
             </el-row>
             <el-row class="info">
-              <el-icon color="#1fdbb0">
+              <el-icon color="#7D8792">
                 <Icon :icon="lockShield20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item
@@ -167,11 +164,12 @@
         </el-card>
 
         <el-card
-          body-style="gap:20px; display:flex; justify-content: space-between; align-items: center"
+          body-style="padding: 0 10px; display:flex; justify-content: space-between; align-items: center"
           :xs="12"
           :sm="12"
           :lg="6"
           class="box-card"
+          shadow="none"
         >
           <template #header>
             <div class="clearfix">
@@ -180,7 +178,7 @@
           </template>
           <el-form label-suffix=" : " label-width="150px" label-position="left">
             <el-row class="info">
-              <el-icon color="#6639b5">
+              <el-icon color="#7D8792">
                 <Icon :icon="documentPercent20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item
@@ -191,7 +189,7 @@
               </el-form-item>
             </el-row>
             <el-row class="info">
-              <el-icon color="#db1f55">
+              <el-icon color="#7D8792">
                 <Icon :icon="peopleTeam20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item
@@ -202,7 +200,7 @@
               </el-form-item>
             </el-row>
             <el-row class="info">
-              <el-icon color="#1fa8db">
+              <el-icon color="#7D8792">
                 <Icon :icon="peopleList20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item
@@ -213,7 +211,7 @@
               </el-form-item>
             </el-row>
             <el-row class="info">
-              <el-icon color="#1fdbb0">
+              <el-icon color="#7D8792">
                 <Icon :icon="barCodeScanner20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item
@@ -240,7 +238,7 @@
         :model="pwForm"
         :rules="pwRules"
         ref="pwRef"
-        size="small"
+        size="normal"
         label-width="162px"
       >
         <el-form-item :label="t('fields.currentPassword')" prop="oldPassword">
@@ -271,10 +269,10 @@
           />
         </el-form-item>
         <div class="dialog-footer">
-          <el-button size="small" @click="uiControl.dialogVisible = false">
+          <el-button size="normal" @click="uiControl.dialogVisible = false">
             {{ $t('fields.cancel') }}
           </el-button>
-          <el-button size="small" type="primary" @click="updatePassword">
+          <el-button size="normal" type="primary" @click="updatePassword">
             {{ $t('fields.confirm') }}
           </el-button>
         </div>
@@ -285,7 +283,7 @@
         :model="withdrawPwForm"
         :rules="withdrawPwRules"
         ref="withdrawPwRef"
-        size="small"
+        size="normal"
         label-width="162px"
       >
         <el-form-item
@@ -321,11 +319,11 @@
           />
         </el-form-item>
         <div class="dialog-footer">
-          <el-button size="small" @click="uiControl.dialogVisible = false">
+          <el-button size="normal" @click="uiControl.dialogVisible = false">
             {{ $t('fields.cancel') }}
           </el-button>
           <el-button
-            size="small"
+            size="normal"
             type="primary"
             @click="updateWithdrawPassword"
           >
@@ -339,13 +337,13 @@
         :model="securityQnForm"
         :rules="securityQnRules"
         ref="securityQnRef"
-        size="small"
+        size="normal"
         label-width="162px"
       >
         <el-form-item :label="t('fields.questionOne')" prop="questionOne">
           <el-select
             v-model="securityQnForm.questionOne"
-            size="small"
+            size="normal"
             :placeholder="t('fields.questionOne')"
             class="filter-item"
             style="width: 350px;"
@@ -365,7 +363,7 @@
         <el-form-item :label="t('fields.questionTwo')" prop="questionTwo">
           <el-select
             v-model="securityQnForm.questionTwo"
-            size="small"
+            size="normal"
             :placeholder="t('fields.questionTwo')"
             class="filter-item"
             style="width: 350px;"
@@ -385,7 +383,7 @@
         <el-form-item :label="t('fields.questionThree')" prop="questionThree">
           <el-select
             v-model="securityQnForm.questionThree"
-            size="small"
+            size="normal"
             :placeholder="t('fields.questionThree')"
             class="filter-item"
             style="width: 350px;"
@@ -406,10 +404,10 @@
           />
         </el-form-item>
         <div class="dialog-footer">
-          <el-button size="small" @click="uiControl.dialogVisible = false">
+          <el-button size="normal" @click="uiControl.dialogVisible = false">
             {{ $t('fields.cancel') }}
           </el-button>
-          <el-button size="small" type="primary" @click="addSecurityQuestion">
+          <el-button size="normal" type="primary" @click="addSecurityQuestion">
             {{ $t('fields.confirm') }}
           </el-button>
         </div>
@@ -847,12 +845,11 @@ onMounted(async () => {
 
 .dialog-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .info {
   align-items: center;
-  padding-left: 50px;
 }
 
 .el-row {
@@ -861,11 +858,19 @@ onMounted(async () => {
 
 ::v-deep(.el-form-item__content) {
   align-self: center;
+  font-weight: bold;
+}
+
+::v-deep(.el-form-item__label) {
+  color: #B3B6BD;
 }
 
 .dialog-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+}
+.el-card {
+  border: 0;
 }
 
 @media (max-width: 1200px) {

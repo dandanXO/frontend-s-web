@@ -5,6 +5,10 @@ export const loginRequest = (userInfo) => {
   return https().request("/auth/login", Method.POST, userInfo, ContentType.form);
 };
 
+export const indLoginRequest = (userInfo) => {
+  return https().request("/auth/indLogin", Method.POST, userInfo, ContentType.form);
+};
+
 export const logoutRequest = () => {
   return https().request("/auth?_method=DELETE", Method.POST);
 };
@@ -41,7 +45,7 @@ export const createUser = (user) => {
 
 export const updateUser = async (user) => {
   await https().request(`/authority/user/${user.id}?_method=PUT`, Method.POST,
-    { roles: user.roles.join(","), userType: user.userType, siteId: user.siteId, queryRestriction: user.queryRestriction, queryNumber: user.queryNumber },
+    { roles: user.roles.join(","), userType: user.userType, siteId: user.siteId, queryRestriction: user.queryRestriction, queryNumber: user.queryNumber, vcallId: user.vcallId },
     ContentType.form);
 };
 

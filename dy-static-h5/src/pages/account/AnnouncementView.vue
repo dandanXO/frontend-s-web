@@ -1,53 +1,49 @@
 <template>
   <div class="announcement-section">
-
     <div class="transit-buttons">
-      <div class="" v-for="(trans, i) in tabItems" :key="i"
-      >
+      <div class="" v-for="(trans, i) in tabItems" :key="i">
         <div class="btn" @click="openAnnounce(trans)">
-          <img :src="require(`../../assets/account/announce/announce-icon-${trans.id}.png`)">
+          <div
+            class="announce-tabimg"
+            :style="{
+              backgroundImage: (() => {
+                try {
+                  return `url(${require(`../../assets/account/announce/announce-icon-${trans.id}.png`)})`;
+                } catch (e) {
+                  return `url(${require(`../../assets/account/announce/announce-icon-16.png`)})`;
+                }
+              })()
+            }"
+          ></div>
+
           {{ trans.name }}
           <div class="right">
-            <q-icon name="keyboard_arrow_right" v-if="!(selectedId==trans.id)" size="md"/>
-            <q-icon name="keyboard_arrow_down" v-if="selectedId==trans.id" size="md"/>
+            <q-icon name="keyboard_arrow_right" v-if="!(selectedId == trans.id)" size="md" />
+            <q-icon name="keyboard_arrow_down" v-if="selectedId == trans.id" size="md" />
           </div>
         </div>
 
         <div class="announce-field">
-          <div class="empty-field" v-if="(selectedId==trans.id) && isEmptyAnnoucements(trans.id)">
+          <div class="empty-field" v-if="selectedId == trans.id && isEmptyAnnoucements(trans.id)">
             <p>暂无公告。</p>
           </div>
-          <q-list class="rounded-borders" v-if="selectedId==trans.id">
-          <span v-for="ann in announcementsList" :key="ann">
-            <div v-if="ann.typeId === selectedId">
-              <q-expansion-item
-                  class="expansion-bg"
-                  expand-separator
-                  :label="ann.title"
-              >
-                <q-card>
-                  <q-card-section>
-                    {{ ann.content }}
-                  </q-card-section>
-                </q-card>
-              </q-expansion-item>
-              <div
-                  class="text-center q-pa-md text-brand"
-                  v-if="ann.content.length === 0"
-              >
-                暂时无通知
+          <q-list class="rounded-borders" v-if="selectedId == trans.id">
+            <span v-for="ann in announcementsList" :key="ann">
+              <div v-if="ann.typeId === selectedId">
+                <q-expansion-item class="expansion-bg" expand-separator :label="ann.title">
+                  <q-card>
+                    <q-card-section>
+                      {{ ann.content }}
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+                <div class="text-center q-pa-md text-brand" v-if="ann.content.length === 0">暂时无通知</div>
               </div>
-            </div>
-          </span>
+            </span>
           </q-list>
-
         </div>
-
-
       </div>
-
     </div>
-
   </div>
 </template>
 <script lang="js">
@@ -141,6 +137,12 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .announcement-section {
+  .announce-tabimg {
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
   .q-tabs {
     background: rgba(113, 125, 146, 0.2);
     width: 100%;
@@ -156,7 +158,7 @@ export default defineComponent({
   }
 
   .q-tab--active {
-    color: #3e5cc0 !important;;
+    color: #3e5cc0 !important;
   }
 
   .q-tab__content {
@@ -276,13 +278,12 @@ export default defineComponent({
       }
 
       &:last-child {
-        border-bottom: 0.5px solid #0089ED50;
+        border-bottom: 0.5px solid #0089ed50;
       }
 
       &:active {
         filter: brightness(0.85);
       }
-
     }
   }
 
@@ -290,13 +291,10 @@ export default defineComponent({
     padding: 8px 20px;
     text-align: center;
 
-    p{
+    p {
       font-size: 14px;
       font-weight: 400;
     }
   }
-
 }
-
-
 </style>
