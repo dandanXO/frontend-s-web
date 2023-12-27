@@ -1,6 +1,20 @@
 <template>
   <ProfileSummary :homeProfile="true" />
 
+  <div class="vip-promo-tab-wrapper">
+    <q-tabs
+      v-model="vipPromoTab"
+      dense
+      no-caps
+      class="vip-promo-tab-toggle"
+      indicator-color="transparent"
+      align="justify"
+    >
+      <q-tab name="vip" label="VIP" />
+      <q-tab name="promo" label="Promo" />
+    </q-tabs>
+  </div>
+
   <div class="vip-container">
 
     <div class="header-wrapper">
@@ -44,7 +58,7 @@
         </q-tr>
       </template>
 
-        <template v-slot:bottom-row>
+      <template v-slot:bottom-row>
         <q-tr style="display:none">
           <q-td colspan="100%" class="bottom-note text-left">
             After the recharge on the day reaches the standard, the next day will increase the VIP level and issue
@@ -54,7 +68,8 @@
       </template>
     </q-table>
 
-    <div class="hint-msg">After the recharge on the day reaches the standard, the next day will increase the VIP level and issue corresponding upgrade rewards.</div>
+    <div class="hint-msg">After the recharge on the day reaches the standard, the next day will increase the VIP level and
+      issue corresponding upgrade rewards.</div>
 
     <q-table flat :hide-pagination="true" :columns="columns3" :rows="rows3" row-key="name" :rows-per-page-options="[0]">
       <template v-slot:header="props">
@@ -189,7 +204,25 @@
 </template>
 
 <script setup>
+import { watch, onMounted, ref } from "vue";
 import ProfileSummary from "components/ProfileSummary.vue";
+import { useRoute, useRouter } from "vue-router";
+
+const vipPromoTab = ref("vip");
+const router = useRouter();
+const route = useRoute();
+
+watch(() => vipPromoTab.value, () => {
+  if(vipPromoTab.value === 'promo') {
+    router.push('/promo');
+  }
+})
+
+watch(() => route.path, () => {
+  if(route.path === '/vip') {
+    vipPromoTab.value = 'vip';
+  }
+})
 
 const columns = [
   {
@@ -490,7 +523,35 @@ const rows4 = [
   }
 ];
 </script>
+<style lang="scss" scoped>
+.vip-promo-tab-wrapper {
+  width: 90%;
+  margin: 0 auto;
+  .q-tab {
+    min-height: 45px;
+    border-radius: 8px;
+    background: #101114;
+    color: #5C6C86;
+  }
 
+  .vip-promo-tab-toggle {
+    background-color: #1B2232;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    padding: 3px;
+
+    :deep(.q-tab__label) {
+      font-weight: 700;
+    }
+
+    :deep(.q-tab--active) {
+      color: #fff;
+      background: linear-gradient(0deg, #5C46E7, #5C46E7), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+      box-shadow: 0px 1px 2px 0px #0000000D;
+    }
+  }
+}
+</style>
 <style lang="scss">
 .vip-container {
   padding: 0 1.75rem;

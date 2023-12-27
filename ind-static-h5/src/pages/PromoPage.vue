@@ -2,10 +2,24 @@
   <!-- <q-card-section class="page-title">优惠活动</q-card-section> -->
   <ProfileSummary :homeProfile="true" />
 
-  <div class="promo-container" style="background: #090b19">
+  <div class="vip-promo-tab-wrapper">
+    <q-tabs
+      v-model="vipPromoTab"
+      dense
+      no-caps
+      class="vip-promo-tab-toggle"
+      indicator-color="transparent"
+      align="justify"
+    >
+      <q-tab name="vip" label="VIP" />
+      <q-tab name="promo" label="Promo" />
+    </q-tabs>
+  </div>
+  
+  <div class="promo-container" style="background: #090b19">    
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
-        <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
+        <!-- <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" /> -->
       </q-tabs>
 
       <q-tab-panels v-model="tab" animated>
@@ -139,6 +153,7 @@ export default defineComponent({
     const store = userStore();
     const imgURL = process.env.IMAGE_CDN + '/promo/';
     const banner = ref([]);
+    const vipPromoTab = ref("promo");
     const promoState = reactive({
       active: {value: 'ALL', label: 'ALL'},
       promoList: [],
@@ -165,10 +180,10 @@ export default defineComponent({
     const tabItems = [
 
     { name:"all", label: '全部' },
-      { name: "slot game", label: '电子'},
-      { name: "fish", label: '捕鱼'},
-      { name: "live casino", label: '真人'},
-      { name: "poker", label: '棋牌'},
+      // { name: "slot game", label: '电子'},
+      // { name: "fish", label: '捕鱼'},
+      // { name: "live casino", label: '真人'},
+      // { name: "poker", label: '棋牌'},
 
       // {
       //   name: "all",
@@ -200,6 +215,19 @@ export default defineComponent({
         ui.setScrollPosition("vertical", 0, 200);
       }
     });
+
+    watch(() => vipPromoTab.value, () => {
+      if(vipPromoTab.value === 'vip') {
+        router.push('/vip');
+      }
+    })
+
+    watch(() => route.path, () => {
+      if(route.path === '/promo') {
+        vipPromoTab.value = 'promo';
+      }
+    })
+
     const loadBanner = () => {
       // loadPromoBanner("PROMO").then((res) => {
       //   if (res.code === 0) {
@@ -297,11 +325,41 @@ export default defineComponent({
       store,
       tab,
       tabItems,
-      isDisplayLogin
+      isDisplayLogin,
+      vipPromoTab
     }
   },
 });
 </script>
+<style lang="scss" scoped>
+.vip-promo-tab-wrapper {
+  width: 90%;
+  margin: 0 auto;
+  .q-tab {
+    min-height: 45px;
+    border-radius: 8px;
+    background: #101114;
+    color: #5C6C86;
+  }
+
+  .vip-promo-tab-toggle {
+    background-color: #1B2232;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    padding: 3px;
+
+    :deep(.q-tab__label) {
+      font-weight: 700;
+    }
+
+    :deep(.q-tab--active) {
+      color: #fff;
+      background: linear-gradient(0deg, #5C46E7, #5C46E7), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+      box-shadow: 0px 1px 2px 0px #0000000D;
+    }
+  }
+}
+</style>
 <style lang="scss">
 .promo-container {
   min-height: 100vh;
