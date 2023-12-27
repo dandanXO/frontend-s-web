@@ -454,6 +454,7 @@ export default defineComponent({
     // }
     // }
     const submitEvent = () => {
+
       var joinChristmasUrl = "/privi-christmas/join";
       btnLoading.value = true;
       eventapi.post(joinChristmasUrl, qs.stringify({ promoCode: "jolly_event" })).then((res) => {
