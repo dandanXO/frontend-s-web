@@ -31,7 +31,6 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 
 const store = userStore();

@@ -70,55 +70,19 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { date } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-import { userStore } from "stores/index";
 import ProfileSummary from "components/ProfileSummary.vue";
 import ProfileProgressBanner from "components/ProfileProgressBanner.vue";
 
 const route = useRoute();
 const router = useRouter();
-const store = userStore();
-
-// progress bar
-const maxProgress = store.levelUpDeposit.toFixed(2);
-const progressRef = ref(store.currentDeposit.toFixed(2));
-
-/**
- * NOTE: q-linear-progress
- * the coloring on the bar done w/ css props "background" & "color"
- * figma required linear-gradient which wasn't available in "color"
- * hence switch "background" to "color" & "color" to "background", reverse value 1 - result.
- */
-let progressBarRef = ref();
-progressBarRef.value = 1 - progressRef.value / maxProgress;
 
 // detail btn
 const onDetailClick = () => {
   router.push({ path: "/vip", query: { redirect: route.path } });
 };
-const profileImg = [
-  {
-    imgPath: ["profile-pic"]
-  }
-];
-const randomProfileImg = computed(() => {
-  const storedImg = sessionStorage.getItem("PROFILE_IMG");
-  if (storedImg) {
-    return storedImg;
-  } else {
-    const randomProfile = profileImg[0];
-    const randomIndex = Math.floor(Math.random() * randomProfile.imgPath.length);
-    const imgPath = randomProfile.imgPath[randomIndex];
-    sessionStorage.setItem("PROFILE_IMG", imgPath);
-    return imgPath;
-  }
-});
-
-const profileImagePath = computed(() => {
-  return require(`../assets/images/account/${randomProfileImg.value}.png`);
-});
 
 // table
 const columns = [
@@ -225,146 +189,6 @@ const redeem = () => {};
 .bonus-page {
   padding: 0 1.75rem;
   overflow: hidden;
-
-  .progress-container {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-gap: 10px;
-    align-items: center;
-    margin: 1.5rem 0 1rem 0;
-    background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%);
-    border-radius: 8px;
-    min-height: 130px;
-    padding: 10px;
-
-    .left-container {
-      position: relative;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      max-width: 100px;
-
-      .profile-pic {
-        margin: 15px;
-
-        .vip-details {
-          position: relative;
-          margin-left: 20px;
-          margin-bottom: 5px;
-          margin-top: -10px;
-          img {
-            display: block;
-            width: 100px;
-            position: absolute;
-            top: -17px;
-            left: -45px;
-          }
-
-          .vip-level {
-            position: absolute;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            line-height: 1.1;
-            padding-top: 2px;
-            padding-bottom: 4px;
-            z-index: 3;
-            color: #334ad6;
-            font-weight: bold;
-          }
-        }
-      }
-
-      .nickname {
-        text-overflow: ellipsis;
-        max-width: 100%;
-        overflow: auto;
-      }
-
-      .character-red-bg {
-        width: 7.5rem;
-      }
-
-      .character-red {
-        position: absolute;
-        left: 0.75rem;
-        top: -0.5rem;
-        width: 6.25rem;
-      }
-
-      .bonus-pot-btn-container {
-        position: absolute;
-        left: -0.75rem;
-        bottom: -1.25rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        .bonus-pot-btn-frame {
-          position: relative;
-          width: 9rem;
-        }
-
-        .bonus-pot-btn {
-          position: absolute;
-          width: 8.5rem;
-          left: 0.25rem;
-        }
-
-        span {
-          position: absolute;
-        }
-      }
-    }
-
-    .right-container {
-      position: relative;
-      top: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-
-      .amount-progress-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .progress-bar {
-        border: 1px solid #fed87d;
-        // background: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-        background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%);
-        border-radius: 100px;
-        color: #320b5b;
-      }
-
-      .vip-text {
-        font-size: 20px;
-        font-weight: 700;
-      }
-
-      .win-gift-text {
-        text-align: right;
-      }
-
-      .detail-btn-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        .detail-btn {
-          width: 7.5rem;
-        }
-
-        span {
-          position: absolute;
-        }
-      }
-    }
-  }
 
   .detail-btn-container {
     background: linear-gradient(180deg, #FFE146 0%, #B54100 100%);
