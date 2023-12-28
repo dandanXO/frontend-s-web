@@ -16,6 +16,8 @@
             </div>
           </div>
         </div>
+
+        <div class="nickname">{{ store.nickName }}</div>
         <!-- 
           <img class="character-red-bg" src="../assets/images/bonus/character-red-bg.png" alt="" />
           <img class="character-red" src="../assets/images/bonus/character-red.png" alt="" />
@@ -272,8 +274,16 @@ const redeem = () => {};
 
     .left-container {
       position: relative;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      max-width: 100px;
 
       .profile-pic {
+        margin: 15px;
+
         .vip-details {
           position: relative;
           margin-left: 20px;
@@ -301,6 +311,12 @@ const redeem = () => {};
             font-weight: bold;
           }
         }
+      }
+
+      .nickname {
+        text-overflow: ellipsis;
+        max-width: 100%;
+        overflow: auto;
       }
 
       .character-red-bg {
