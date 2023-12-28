@@ -1,4 +1,5 @@
 <template>
+  <div style="height: 80px"></div>
   <div class="infoboard-container" :class="!homeProfile && 'q-pa-md'">
     <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" />
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
@@ -38,9 +39,8 @@
         </div>
 
         <div>
-          <q-btn square class="style-blue-btn" icon="add" dense></q-btn>
+          <q-btn square class="style-blue-btn" icon="add" dense @click="router.push('/deposit')" />
         </div>
-
         <!-- <div class="profile-msg btn-effect" v-if="homeProfile">
           <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
           <q-chip v-if="store.unreadInboxMail" class="notification" color="red" size="xs"></q-chip>
@@ -192,6 +192,11 @@ onMounted(() => {
   background: linear-gradient(180deg, #2d0f54 0%, #101114 100%);
   box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
   overflow-x: hidden;
+
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
 
   .infoboard-wrapper {
     position: absolute;

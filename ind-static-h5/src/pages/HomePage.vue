@@ -279,7 +279,7 @@
               <template v-for="(item, index) in slot" :key="index">
                 <swiper-slide
                   class="platform-game-item btn-effect"
-                  @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                  @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)"
                 >
                   <div
                     data-aos="zoom-in"
@@ -369,7 +369,7 @@
               <template v-for="(item, index) in fishing" :key="index">
                 <swiper-slide
                   class="platform-game-item btn-effect"
-                  @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                  @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)"
                 >
                   <div
                     data-aos="zoom-in"
@@ -579,6 +579,24 @@
             <div class="q-mt-sm q-mb-md">
               <q-btn dense rounded icon="chevron_left" class="back-btn text-white" size="16px" v-close-popup />
             </div>
+            <div>
+              <div class="game-logo-img">
+                <div
+                  class="game-logo"
+                  :style="{
+                    backgroundImage: (() => {
+                      try {
+                        return `url(${require(`../assets/images/index/logo/logo-${subGameCode.toLowerCase()}.png`)})`;
+                      } catch (e) {
+                        return '';
+                      }
+                    })()
+                  }"
+                >
+                  &nbsp;
+                </div>
+              </div>
+            </div>
 
             <div class="fullgame-search">
               <q-input standout v-model="searchText" label="Search" clearable clear-icon="close">
@@ -589,7 +607,7 @@
             </div>
           </div>
 
-          <template v-if="!isGameLoading">
+          <template v-if="isGameLoading">
             <div class="loader-container">
               <div><q-spinner color="yellow" size="10em" :thickness="10" /></div>
               <div>Loading... Please wait...</div>
@@ -679,9 +697,9 @@
                 </template>
               </div>
 
-              <div class="btn-more-games btn-effect" @click="scrollDownFullGames" v-if="!isShowAllFullGames">
+              <q-btn class="btn-more-games btn-effect" @click="scrollDownFullGames" v-if="!isShowAllFullGames">
                 More Games
-              </div>
+              </q-btn>
             </div>
           </template>
         </div>
@@ -1877,10 +1895,11 @@ onMounted(() => {
 }
 
 .game-logo-img {
-  height: 50px;
+  height: 30px;
   position: absolute;
-  top: 10px;
-  left: 45px;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   .game-logo {
     width: 30vw;
     background-position: center;
@@ -2029,14 +2048,13 @@ onMounted(() => {
 .game-platform-wrapper {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  column-gap: 4px;
-  row-gap: 6px;
+  column-gap: 6px;
+  row-gap: 8px;
   margin-top: 10px;
+  padding-bottom: 20px;
 
   .game-platform-item {
-    border: 2px solid #ffc027;
-    border-radius: 15px;
-    overflow: hidden;
+    width: 100%;
     position: relative;
 
     .game-platform-label {
@@ -2066,27 +2084,31 @@ onMounted(() => {
       background-position: center center;
       position: relative;
       background-image: url("../assets/images/index/mini-game-bg.png");
+      border-radius: 8px;
 
       .game--bg {
+        border-radius: 8px;
         background-size: cover;
-        background-position: center center;
+        background-position: top center;
         height: 100%;
         width: 100%;
       }
     }
 
     .game-platform-title {
-      padding: 0px 5px;
-      color: #ffe248;
-      font-weight: 700;
-      font-size: 10px;
-      line-height: 1.1;
-      text-align: center;
+      // padding: 0px 5px;
+      // color: #ffe248;
+      margin-top: 6px;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 1.3;
+      text-align: left;
       height: 30px;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(270deg, #370f59 -0.1%, #57009d 50.22%, #340c56 97.6%);
+      word-break: break-all;
+      // justify-content: center;
+      // background: linear-gradient(270deg, #370f59 -0.1%, #57009d 50.22%, #340c56 97.6%);
     }
   }
 }
@@ -2331,6 +2353,10 @@ onMounted(() => {
   color: rgba(206, 206, 206, 0.8);
   font-size: 16px;
   margin-top: 20px;
+}
+
+.back-btn {
+  background: rgb(255, 255, 255, 0.2);
 }
 
 // lower android version
