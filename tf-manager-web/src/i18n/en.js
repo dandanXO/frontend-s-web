@@ -1711,7 +1711,8 @@ export default {
     validatePosterTypeRequired: 'Poster Type is required',
     validateConfigCodeRequired: 'Config Code is required',
     validateConfigValueRequired: 'Config Value is required',
-    resultCalculateSuccess: 'Result is calculated successfully'
+    resultCalculateSuccess: 'Result is calculated successfully',
+    buildIsInQueue: 'Build is in queue',
   },
   menu: {
     undefined: '',
@@ -1883,6 +1884,7 @@ export default {
     GoogleAuth: 'Google Auth',
     'Image Setting': 'Image Setting',
     'Privi Christmas': 'Merry Christmas',
+    'Affiliate APK Build': 'Affiliate APK Build',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -1956,6 +1958,18 @@ export default {
     NEW_KEY: 'Antivirus',
     appUpload: 'App Upload',
     editAppUpload: 'Edit App Upload',
+  },
+  affiliateApk: {
+    currentVersion: "Current Version",
+    buildStatus: "Build Status",
+    latestVersion: "Latest Version",
+    buildApk: "Build APK",
+    editParam: "Edit Param",
+    status: {
+      IN_QUEUE: "IN QUEUE",
+      IN_PROGRESS: "IN PROGRESS",
+      SUCCESS: "SUCCESS",
+    }
   },
   error: {
     400: 'Bad Request',
