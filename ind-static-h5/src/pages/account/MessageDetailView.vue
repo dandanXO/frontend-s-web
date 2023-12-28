@@ -6,10 +6,10 @@
   <!--  </div>-->
 
   <div class="msg-detail-container">
-    <div class="title">{{ mailDataRef.title }}</div>
-    <div class="send-time">{{ mailDataRef.sendTime && convertToGMT55(mailDataRef.sendTime) }}</div>
-
-    <div class="title">{{ mailDataRef.title }}</div>
+    <div class="header">
+      <div class="title">{{ mailDataRef.title }}</div>
+      <div class="send-time">{{ mailDataRef.sendTime && convertToGMT55(mailDataRef.sendTime) }}</div>
+    </div>
     <div class="content">{{ mailDataRef.content }}</div>
   </div>
 </template>
@@ -76,22 +76,32 @@ onMounted(() => {
 }
 
 .msg-detail-container {
-  .title {
-    font-size: 1rem;
-    font-weight: 700;
-    margin: 0.25rem 0;
-  }
+  padding: 20px;
 
-  .send-time {
-    font-size: 1rem;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.5);
-    margin: 0.75rem 0;
+  .header {
+    display: grid;
+    grid-template-columns: 1fr 120px;
+    justify-content: space-between;
+    align-items: center;
+
+    .title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 1rem 0;
+    }
+
+    .send-time {
+      font-size: 1rem;
+      // font-weight: 700;
+      color: rgba(255, 255, 255, 0.5);
+      margin: 0.75rem 0;
+      text-align: right;
+    }
   }
 
   .content {
     font-size: 1rem;
-    font-weight: 700;
+    // font-weight: 700;
     color: rgba(255, 255, 255, 0.5);
   }
 }
