@@ -2353,6 +2353,7 @@ onMounted(() => {
   color: rgba(206, 206, 206, 0.8);
   font-size: 16px;
   margin-top: 20px;
+  margin-bottom: 40px;
 }
 
 .back-btn {
