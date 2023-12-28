@@ -19,7 +19,7 @@
 
         <div class="right-container">
             <div class="amount-progress-container">
-                <div class="vip-text">VIP</div>
+                <div class="vip-text">{{ store.vip }}</div>
                 <div class="progress-num">{{ `${progressRef} / ${maxProgress}` }}</div>
             </div>
             <q-linear-progress reverse rounded size="15px" :value="progressBarRef" class="progress-bar"
