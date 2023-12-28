@@ -267,7 +267,7 @@ const redeem = () => {};
     margin: 1.5rem 0 3rem 0;
     background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%);
     border-radius: 8px;
-    min-height: 150px;
+    min-height: 130px;
     padding: 10px;
 
     .left-container {
