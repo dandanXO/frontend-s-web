@@ -1313,7 +1313,7 @@ const resetChangePasswordInfo = () => {
   font-weight: 700;
   margin-top: auto;
   color: #AE6DEF;
-  padding: 10px 10px;
+  padding: 10px 20px;
 
   :deep(.q-icon) {
     color: #AE6DEF;
