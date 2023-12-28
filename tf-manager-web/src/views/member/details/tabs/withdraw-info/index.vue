@@ -338,6 +338,7 @@ import {
 import { getMemberWithdrawLog } from '../../../../../api/member-withdraw-log'
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 const props = defineProps({
   mbrId: {
     type: String,
@@ -433,7 +434,10 @@ async function loadWithdrwalInfo() {
     }
   })
   if (request.withdrawDate && request.withdrawDate.length === 2) {
-    query.withdrawDate = request.withdrawDate.join(',')
+    query.withdrawDate = JSON.parse(JSON.stringify(request.withdrawDate));
+    query.withdrawDate[0] = formatInputTimeZone(query.withdrawDate[0], props.timeZone);
+    query.withdrawDate[1] = formatInputTimeZone(query.withdrawDate[1], props.timeZone);
+    query.withdrawDate = query.withdrawDate.join(',')
   }
   query.memberId = props.mbrId
   query.status = request.status

@@ -11,8 +11,12 @@ export function getSportMatchQuizInfo() {
   return eventapi.get(`/quiz/upcoming`, {});
 }
 
-export function getMemberSportMatchRecord() {
-  return eventapi.get(`/quiz/answeredRecords`, {});
+export function getMemberSportMatchRecord(number, size) {
+  return eventapi.get(`/quiz/answeredRecords?size=${size}&current=${number}`, {});
+}
+
+export function getMemberSportQuizTotal() {
+  return eventapi.get(`/quiz/recordsCount`, {});
 }
 
 export function submitMemberSportMatchQuiz(param) {

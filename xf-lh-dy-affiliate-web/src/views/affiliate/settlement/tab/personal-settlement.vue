@@ -236,22 +236,16 @@ onMounted(() => {
 .display-container .el-row:nth-child(odd) {
   background-color: #F4F9FD;
 }
-</style>
-
-<style>
-.el-form-item__label {
-  line-height: unset;
-}
-.el-form-item__content {
+:deep(.el-form-item__label) {
   line-height: unset;
 }
 
 @media (max-width: 768px) {
-.el-form-item__label {
-  line-height: 40px;
-}
-.el-form-item__content {
-  line-height: 40px;
-}
+  :deep(.el-form-item__label) {
+    line-height: 40px;
+  }
+  :deep(.el-form-item__content) {
+    line-height: 40px;
+  }
 }
 </style>

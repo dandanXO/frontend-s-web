@@ -228,6 +228,7 @@ import { TENANT } from "../../../store/modules/user/action-types";
 import { getSiteListSimple } from "../../../api/site";
 import { useStore } from '../../../store';
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 const { t } = useI18n();
 const supplementForm = ref(null);
 const cancelDepositForm = ref(null);
@@ -337,9 +338,13 @@ async function loadRecord() {
       query[key] = value;
     }
   });
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.depositDate !== null) {
     if (request.depositDate.length === 2) {
-      query.depositDate = request.depositDate.join(",");
+      query.depositDate = JSON.parse(JSON.stringify(request.depositDate));
+      query.depositDate[0] = formatInputTimeZone(query.depositDate[0], timeZone);
+      query.depositDate[1] = formatInputTimeZone(query.depositDate[1], timeZone);
+      query.depositDate = query.depositDate.join(',')
     }
   }
   const { data: ret } = await getDepositRecord(query);
@@ -352,9 +357,6 @@ async function loadRecord() {
   } else {
     page.totalAmount = 0;
   }
-
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
-
   page.loading = false;
 };
 

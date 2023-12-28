@@ -8,7 +8,7 @@
               v-model="request.recordTime"
               format="DD/MM/YYYY"
               value-format="YYYY-MM-DD"
-              size="normal"
+              size="small"
               class="input-small"
               type="daterange"
               range-separator=":"
@@ -28,11 +28,11 @@
               icon="el-icon-search"
               type="primary"
               @click="loadFinanceReport()"
-              size="normal"
+              size="mini"
             >
               {{ $t('fields.search') }}
             </el-button>
-            <el-button size="normal" type="primary" plain @click="resetQuery()">
+            <el-button size="mini" type="primary" plain @click="resetQuery()">
               {{ $t('fields.reset') }}
             </el-button>
           </div>
@@ -129,133 +129,108 @@
   <el-dialog
     :title="t('fields.depositRecord')"
     v-model="uiControl.depositDialogVisible"
-    width="900px"
-    append-to-body
+    modal-class="dialog700"
+    width="90%"
   >
-    <el-table
-      :data="data.depositData"
-      height="380"
-    >
-      <template #empty>
-        <emptyComp />
-      </template>
-      <el-table-column
-        prop="type"
-        :label="t('fields.paymentMethod')"
-        align="left"
-      />
-      <el-table-column
-        prop="amount"
-        :label="t('fields.depositAmount')"
-        align="left"
-      />
-    </el-table>
+    <table class="custom-table" cellpadding="0" cellspacing="0" border="0" style="width: 100%; margin: 0 auto;">
+      <thead>
+        <tr>
+          <th scope="col">{{ t('fields.paymentMethod') }}</th>
+          <th scope="col">{{ t('fields.depositAmount') }}</th>
+        </tr>
+      </thead>
+      <tbody v-if="data.depositData.length > 0">
+        <tr v-for="item in data.depositData" :key="item.id">
+          <td :data-label="t('fields.paymentMethod')">{{ item.type }}</td>
+          <td :data-label="t('fields.depositAmount')">{{ item.amount }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div v-if="data.depositData.length === 0">
+      <emptyComp />
+    </div>
   </el-dialog>
   <el-dialog
     :title="t('fields.bonus')"
     v-model="uiControl.bonusDialogVisible"
-    width="900px"
-    append-to-body
+    modal-class="dialog700"
+    width="90%"
   >
-    <el-table
-      :data="data.bonusData"
-      height="380"
-    >
-      <template #empty>
-        <emptyComp />
-      </template>
-      <el-table-column
-        prop="type"
-        :label="t('fields.privilegeType')"
-        align="left"
-      />
-      <el-table-column
-        prop="amount"
-        :label="t('fields.bonus')"
-        align="left"
-      />
-    </el-table>
+    <table class="custom-table" cellpadding="0" cellspacing="0" border="0" style="width: 100%; margin: 0 auto;">
+      <thead>
+        <tr>
+          <th scope="col">{{ t('fields.privilegeType') }}</th>
+          <th scope="col">{{ t('fields.bonus') }}</th>
+        </tr>
+      </thead>
+      <tbody v-if="data.depositData.length > 0">
+        <tr v-for="item in data.bonusData" :key="item.id">
+          <td :data-label="t('fields.privilegeType')">{{ item.type }}</td>
+          <td :data-label="t('fields.bonus')">{{ item.amount }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div v-if="data.depositData.length === 0">
+      <emptyComp />
+    </div>
   </el-dialog>
   <el-dialog
     :title="t('fields.platformFee')"
     v-model="uiControl.platformDialogVisible"
-    width="900px"
-    append-to-body
+    modal-class="dialog700"
+    width="90%"
   >
-    <el-table
-      :data="data.winLossData"
-      height="380"
-    >
-      <template #empty>
-        <emptyComp />
-      </template>
-      <el-table-column
-        prop="type"
-        :label="t('fields.platform')"
-        align="left"
-      />
-      <el-table-column
-        prop="winLoss"
-        :label="t('fields.winLoss')"
-        align="left"
-      />
-      <el-table-column
-        prop="percentage"
-        :label="t('fields.platformFeePercentage')"
-        align="left"
-      />
-      <el-table-column
-        :label="t('fields.platformFee')"
-        align="left"
-      >
-        <template #default="scope">
-          {{ scope.row.winLoss * scope.row.percentage }}
-        </template>
-      </el-table-column>
-    </el-table>
+    <table class="custom-table" cellpadding="0" cellspacing="0" border="0" style="width: 100%; margin: 0 auto;">
+      <thead>
+        <tr>
+          <th scope="col">{{ t('fields.platform') }}</th>
+          <th scope="col">{{ t('fields.winLoss') }}</th>
+          <th scope="col">{{ t('fields.platformFeePercentage') }}</th>
+          <th scope="col">{{ t('fields.platformFee') }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in data.winLossData" :key="item.id">
+          <td :data-label="t('fields.platform')">{{ item.type }}</td>
+          <td :data-label="t('fields.winLoss')">{{ item.winLoss }}</td>
+          <td :data-label="t('fields.platformFeePercentage')">{{ item.percentage }}</td>
+          <td :data-label="t('fields.platformFee')">{{ item.winLoss * item.percentage }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div v-if="data.winLossData.length === 0">
+      <emptyComp />
+    </div>
   </el-dialog>
   <el-dialog
     :title="t('fields.winLoss')"
     v-model="uiControl.winLossDialogVisible"
-    width="900px"
-    append-to-body
+    modal-class="dialog700"
+    width="90%"
   >
-    <el-table
-      :data="data.winLossData"
-      height="380"
-    >
-      <template #empty>
-        <emptyComp />
-      </template>
-      <el-table-column
-        prop="type"
-        :label="t('fields.platform')"
-        align="left"
-      />
-      <el-table-column
-        prop="winLoss"
-        :label="t('fields.winLoss')"
-        align="left"
-      />
-      <el-table-column
-        prop="percentage"
-        :label="t('fields.platformFeePercentage')"
-        align="left"
-      />
-      <el-table-column
-        :label="t('fields.platformFee')"
-        align="left"
-      >
-        <template #default="scope">
-          {{ scope.row.winLoss * scope.row.percentage }}
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="rollover"
-        :label="t('fields.rolloverAmount')"
-        align="left"
-      />
-    </el-table>
+    <table class="custom-table" cellpadding="0" cellspacing="0" border="0" style="width: 100%; margin: 0 auto;">
+      <thead>
+        <tr>
+          <th scope="col">{{ t('fields.platform') }}</th>
+          <th scope="col">{{ t('fields.winLoss') }}</th>
+          <th scope="col">{{ t('fields.platformFeePercentage') }}</th>
+          <th scope="col">{{ t('fields.platformFee') }}</th>
+          <th scope="col">{{ t('fields.rolloverAmount') }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in data.winLossData" :key="item.id">
+          <td :data-label="t('fields.platform')">{{ item.type }}</td>
+          <td :data-label="t('fields.winLoss')">{{ item.winLoss }}</td>
+          <td :data-label="t('fields.platformFeePercentage')">{{ item.percentage }}</td>
+          <td :data-label="t('fields.platformFee')">{{ item.winLoss * item.percentage }}</td>
+          <td :data-label="t('fields.rolloverAmount')">{{ item.rollover }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div v-if="data.winLossData.length === 0">
+      <emptyComp />
+    </div>
   </el-dialog>
 </template>
 
@@ -458,8 +433,7 @@ onMounted(() => {
 
   span {
     font-size: 16px;
-    font-weight: 600;
-    color: #afb3c8;
+    color: #7D8592;
   }
 }
 
@@ -472,8 +446,26 @@ onMounted(() => {
 }
 @media (max-width: 768px) {
   .grid-container {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-item {
+    text-align: center;
+    padding: 15px
+  }
+  .grid-item-label {
+    margin-bottom: 15px;
+    justify-content: center;
+  }
+  .grid-item-label a {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
   }
 }
 
+</style>
+<style>
+.dialog700 .el-dialog {
+  max-width: 700px;
+}
 </style>

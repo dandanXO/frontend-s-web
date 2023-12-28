@@ -371,7 +371,9 @@
         "
         size="mini"
       >
-        <el-input disabled v-model="item.codeValue" />
+        <el-input disabled v-model="item.code" />
+        -
+        <el-input disabled v-model="item.value" />
         <el-button
           icon="el-icon-edit"
           size="mini"
@@ -711,10 +713,7 @@ async function loadConfigs() {
       }
     }
   }
-  ).map((item, index) => {
-    item.codeValue = item.code + "-" + item.value
-    return item
-  })
+  )
 }
 
 function showEdit(customConfig) {

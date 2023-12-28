@@ -36,6 +36,11 @@ const routes = [
     children: [{ path: "", component: () => import("pages/PromoPage.vue") }]
   },
   {
+    path: "/privilege/invite",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/PrivilegeInvite.vue") }]
+  },
+  {
     path: "/promotion",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/PromoPage.vue") }],
@@ -112,18 +117,6 @@ const routes = [
         path: "",
         name: "e-sport",
         component: () => import("pages/games/E-SportView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/share",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        name: "share",
-        component: () => import("pages/ShareView.vue")
       }
     ],
     meta: { requiresAuth: true }

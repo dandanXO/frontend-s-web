@@ -1396,6 +1396,10 @@ export default defineComponent({
           regForm.codeId = res.data.id;
           captchaForm.codeId = res.data.id;
           passForm.codeId = res.data.id
+
+          // reset captcha input when captcha changes
+          loginForm.captchaCode = "";
+          regForm.captchaCode = "";
         }
       })
     };
