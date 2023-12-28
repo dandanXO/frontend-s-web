@@ -4,9 +4,18 @@
   <div class="bonus-page">
     <div class="progress-container">
       <div class="left-container">
-        <q-avatar size="60px">
-          <img src="http://localhost:9090/img/profile-pic-01.7971be19.png" />
-        </q-avatar>
+        <div class="profile-pic">
+          <q-avatar size="50px">
+            <img :src="profileImagePath" />
+          </q-avatar>
+
+          <div class="vip-details" @click="onVipClick">
+            <img src="../assets/images/index/vip-row.png" alt="" />
+            <div class="vip-level">
+              {{ store.vip }}
+            </div>
+          </div>
+        </div>
         <!-- 
           <img class="character-red-bg" src="../assets/images/bonus/character-red-bg.png" alt="" />
           <img class="character-red" src="../assets/images/bonus/character-red.png" alt="" />
@@ -95,7 +104,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { date } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
@@ -122,6 +131,27 @@ progressBarRef.value = 1 - progressRef.value / maxProgress;
 const onDetailClick = () => {
   router.push({ path: "/vip", query: { redirect: route.path } });
 };
+const profileImg = [
+  {
+    imgPath: ["profile-pic"]
+  }
+];
+const randomProfileImg = computed(() => {
+  const storedImg = sessionStorage.getItem("PROFILE_IMG");
+  if (storedImg) {
+    return storedImg;
+  } else {
+    const randomProfile = profileImg[0];
+    const randomIndex = Math.floor(Math.random() * randomProfile.imgPath.length);
+    const imgPath = randomProfile.imgPath[randomIndex];
+    sessionStorage.setItem("PROFILE_IMG", imgPath);
+    return imgPath;
+  }
+});
+
+const profileImagePath = computed(() => {
+  return require(`../assets/images/account/${randomProfileImg.value}.png`);
+});
 
 // table
 const columns = [
@@ -237,11 +267,41 @@ const redeem = () => {};
     margin: 1.5rem 0 3rem 0;
     background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%);
     border-radius: 8px;
-    min-height: 150px;
+    min-height: 130px;
     padding: 10px;
 
     .left-container {
       position: relative;
+
+      .profile-pic {
+        .vip-details {
+          position: relative;
+          margin-left: 20px;
+          margin-bottom: 5px;
+          margin-top: -10px;
+          img {
+            display: block;
+            width: 100px;
+            position: absolute;
+            top: -17px;
+            left: -45px;
+          }
+
+          .vip-level {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            line-height: 1.1;
+            padding-top: 2px;
+            padding-bottom: 4px;
+            z-index: 3;
+            color: #334ad6;
+            font-weight: bold;
+          }
+        }
+      }
 
       .character-red-bg {
         width: 7.5rem;
