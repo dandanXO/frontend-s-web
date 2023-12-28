@@ -10,7 +10,7 @@
       <q-card-section class="content">{{ e.content }}</q-card-section>
 
       <q-card-section class="bottom-wrapper">
-        <div class="time">{{ convertToGMT55(e.sendTime).format("YYYY-MM-DD HH:mm") }}</div>
+        <div class="time">{{ convertToGMT55(e.sendTime) }}</div>
         <q-btn class="detail-btn" label="Details >" @click="onDetailsClick(e)"></q-btn>
       </q-card-section>
     </q-card>
@@ -22,11 +22,7 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { userStore } from "stores/index";
-import moment from "moment";
 import { convertToGMT55 } from "src/boot/utils";
-import SwiperNav from "../../components/SwiperNav.vue";
-import ContentView from "../../components/ContentView.vue";
-import ProfileSummary from "../../components/ProfileSummary.vue";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
 

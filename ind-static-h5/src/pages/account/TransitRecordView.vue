@@ -21,22 +21,10 @@
                 <q-input filled v-model="searchForm.deposit.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.deposit.startDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.deposit.startDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              label="Close"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup label="Close" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -46,22 +34,10 @@
                 <q-input filled v-model="searchForm.deposit.endDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.deposit.endDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.deposit.endDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              label="Close"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup label="Close" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -69,12 +45,7 @@
                   </template>
                 </q-input>
               </div>
-              <q-btn
-                class="q-mb-md"
-                label="Search For"
-                color="brand"
-                @click="searchRecord"
-              />
+              <q-btn class="q-mb-md" label="Search For" color="brand" @click="searchRecord" />
             </q-form>
           </div>
           <q-table
@@ -101,22 +72,10 @@
                 <q-input filled v-model="searchForm.turnover.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.turnover.startDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.turnover.startDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              label="Close"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup label="Close" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -126,22 +85,10 @@
                 <q-input filled v-model="searchForm.turnover.endDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.turnover.endDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.turnover.endDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              label="Close"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup label="Close" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -149,12 +96,7 @@
                   </template>
                 </q-input>
               </div>
-              <q-btn
-                class="q-mb-md"
-                label="Search For"
-                color="brand"
-                @click="searchRecord"
-              />
+              <q-btn class="q-mb-md" label="Search For" color="brand" @click="searchRecord" />
             </q-form>
           </div>
           <q-table
@@ -181,22 +123,10 @@
                 <q-input filled v-model="searchForm.withdraw.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.withdraw.startDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.withdraw.startDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              label="Close"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup label="Close" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -206,22 +136,10 @@
                 <q-input filled v-model="searchForm.withdraw.endDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.withdraw.endDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.withdraw.endDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              label="Close"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup label="Close" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -229,12 +147,7 @@
                   </template>
                 </q-input>
               </div>
-              <q-btn
-                class="q-mb-md"
-                label="Search For"
-                color="brand"
-                @click="searchRecord"
-              />
+              <q-btn class="q-mb-md" label="Search For" color="brand" @click="searchRecord" />
             </q-form>
           </div>
           <q-table
@@ -261,22 +174,10 @@
                 <q-input filled v-model="searchForm.transfer.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.transfer.startDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.transfer.startDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              label="Close"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup label="Close" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -286,22 +187,10 @@
                 <q-input filled v-model="searchForm.transfer.endDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.transfer.endDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.transfer.endDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              label="Close"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup label="Close" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -309,12 +198,7 @@
                   </template>
                 </q-input>
               </div>
-              <q-btn
-                class="q-mb-md"
-                label="Search For"
-                color="brand"
-                @click="searchRecord"
-              />
+              <q-btn class="q-mb-md" label="Search For" color="brand" @click="searchRecord" />
             </q-form>
           </div>
           <q-table
@@ -344,22 +228,10 @@
                 <q-input filled v-model="searchForm.rebates.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.rebates.startDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.rebates.startDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              label="Close"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup label="Close" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -369,22 +241,10 @@
                 <q-input filled v-model="searchForm.rebates.endDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.rebates.endDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.rebates.endDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              label="Close"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup label="Close" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -392,12 +252,7 @@
                   </template>
                 </q-input>
               </div>
-              <q-btn
-                class="q-mb-md"
-                label="Search For"
-                color="brand"
-                @click="searchRecord"
-              />
+              <q-btn class="q-mb-md" label="Search For" color="brand" @click="searchRecord" />
             </q-form>
           </div>
           <q-table
@@ -420,22 +275,10 @@
                 <q-input filled v-model="searchForm.gameBetRecord.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.gameBetRecord.startDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.gameBetRecord.startDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              label="Close"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup label="Close" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -445,22 +288,10 @@
                 <q-input filled v-model="searchForm.gameBetRecord.endDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.gameBetRecord.endDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.gameBetRecord.endDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              label="Close"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup label="Close" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -470,7 +301,7 @@
               </div>
               <div class="left">
                 <q-select
-                 style="width: 100%;"
+                  style="width: 100%"
                   v-model="searchForm.gameBetRecord.platform"
                   filled
                   clearable
@@ -483,7 +314,7 @@
                   emit-value
                   map-options
                 />
-                  <!-- <template v-slot:append>
+                <!-- <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy
                         cover
@@ -533,12 +364,7 @@
                   </template>
                 </q-input> -->
               </div>
-              <q-btn
-                class="q-mb-md"
-                label="Search For"
-                color="brand"
-                @click="searchRecord"
-              />
+              <q-btn class="q-mb-md" label="Search For" color="brand" @click="searchRecord" />
             </q-form>
           </div>
           <q-table
@@ -549,7 +375,6 @@
             :rows-per-page-label="rowPerPageLabel"
             row-key="serialNumber"
           >
-
             <!-- <template v-slot:body-cell-actions="props">
               <q-td :props="props">
                 <q-btn color="deep-orange" @click="betDetails(props.row)" label="บันทึกการเดิมพัน"></q-btn>
@@ -558,16 +383,15 @@
           </q-table>
         </q-tab-panel>
       </q-tab-panels>
-      <q-dialog style="margin: 20px;" v-model="betRecordDialog">
-          <q-table
-            :loading="loading"
-            :columns="tableColumns.betRecord"
-            :rows="dataState.betRecord"
-            :no-data-label="noDataLabel"
-            :rows-per-page-label="rowPerPageLabel"
-            row-key="serialNumber"
-          >
-          </q-table>
+      <q-dialog style="margin: 20px" v-model="betRecordDialog">
+        <q-table
+          :loading="loading"
+          :columns="tableColumns.betRecord"
+          :rows="dataState.betRecord"
+          :no-data-label="noDataLabel"
+          :rows-per-page-label="rowPerPageLabel"
+          row-key="serialNumber"
+        ></q-table>
       </q-dialog>
     </div>
   </div>
@@ -1017,7 +841,7 @@ export default defineComponent({
       noDataLabel: "No information",
       rowPerPageLabel: "Record per page",
       humanDatetime(ts) {
-        return convertToGMT55(ts).format("DD-MM-YYYY HH:mm:ss");
+        return convertToGMT55(ts);
       },
       getPlatList,
       platformsList,
@@ -1080,10 +904,9 @@ export default defineComponent({
   margin-bottom: 20px;
   margin-top: 25px;
 }
-.block{
+.block {
   color: #fff !important;
 }
-
 </style>
 <style scoped lang="scss">
 @media (max-width: 768px) {
