@@ -1575,6 +1575,7 @@
     const adid = searchParams.get('adid');
     const fbclid = searchParams.get('fbclid');
     const fbpid = searchParams.get('fbpid');
+    const autoDownload= searchParams.get("autoDownload");
 
     affidValue = affidValue ?? 'D2E144';
 
@@ -1589,8 +1590,10 @@
             if (data) {
                 console.log("data", data);
                 apiUrl = data.data.url;
-                adjustUrlCode = data.data.adjustUrlCode
-                // alert(apiUrl)
+                adjustUrlCode = data.data.adjustUrlCode;
+                if(autoDownload=="1"){
+                    downloadApk(code, pp, fbclid, fbpid)
+                }
             }
         }
         catch (error) {
