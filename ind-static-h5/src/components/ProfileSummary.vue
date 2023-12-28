@@ -45,22 +45,74 @@
           <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
           <q-chip v-if="store.unreadInboxMail" class="notification" color="red" size="xs"></q-chip>
         </div> -->
+        <q-btn-dropdown no-caps :ripple="false">
+          <template v-slot:label>
+            <div class="profile-pic">
+              <q-avatar size="50px">
+                <img :src="profileImagePath" />
+              </q-avatar>
+              <div class="profile-pic-frame" v-if="!homeProfile"></div>
 
-        <div class="profile-pic">
-          <q-avatar size="50px">
-            <img :src="profileImagePath" />
-          </q-avatar>
-          <div class="profile-pic-frame" v-if="!homeProfile"></div>
-
-          <div class="vip-details" @click="onVipClick">
-            <img src="../assets/images/index/vip-row.png" alt="" />
-            <div class="vip-level">
-              {{ store.vip }}
+              <div class="vip-details">
+                <img src="../assets/images/index/vip-row.png" alt="" />
+                <div class="vip-level">
+                  {{ store.vip }}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </template>
+
+          <q-list style="background: #303954" dense>
+            <q-item clickable v-close-popup @click="onVipClick">
+              <q-item-section avatar>
+                <q-avatar icon="diamond" text-color="white" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>VIP</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-close-popup @click="onItemClick">
+              <q-item-section avatar>
+                <q-avatar icon="mail" text-color="white" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Message</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-close-popup @click="onItemClick">
+              <q-item-section avatar>
+                <q-avatar icon="receipt" text-color="white" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Order</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <hr />
+
+            <q-item clickable v-close-popup @click="onItemClick">
+              <q-item-section avatar>
+                <q-avatar icon="account_balance" text-color="white" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Bank</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-close-popup @click="onLogout()">
+              <q-item-section avatar>
+                <q-avatar icon="logout" text-color="white" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Log out</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
       </div>
-      <div class="profile-wrapper" v-else style="justify-content: flex-end">
+      <div class="profile-wrapper" v-else>
         <q-btn class="btn-style-purple" no-caps @click="router.push('/register')">Register</q-btn>
         <q-btn no-caps @click="router.push('/login')">Login</q-btn>
       </div>
@@ -114,6 +166,13 @@ const onVipClick = () => {
   router.push({ path: "/vip", query: { redirect: route.path } });
 };
 
+const onLogout = () => {
+  store.memberLogout().then(() => {
+    // location.reload();
+    router.push("/home");
+  });
+};
+
 onMounted(() => {
   if (!sessionStorage.getItem("PROFILE_IMG")) {
     const randomProfile = profileImg[0];
@@ -153,6 +212,7 @@ onMounted(() => {
 
       .profile-pic {
         margin-top: -20px;
+        margin-right: 20px;
       }
     }
   }
@@ -294,6 +354,12 @@ onMounted(() => {
   }
 }
 
+.vip-chevron {
+  position: absolute;
+  top: 25px;
+  right: -25px;
+}
+
 .btn-refresh {
   position: absolute;
   top: 0;
@@ -303,5 +369,15 @@ onMounted(() => {
 .style-blue-btn {
   background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
   border-radius: 5px;
+}
+</style>
+
+<style lang="scss">
+.q-btn-dropdown--simple * + .q-btn-dropdown__arrow {
+  margin-left: -12px !important;
+}
+
+.q-btn-dropdown--simple {
+  width: 80px !important;
 }
 </style>

@@ -3,9 +3,10 @@
     <q-dialog v-model="visible" class="gameDialog" full-height full-width>
       <q-toolbar>
         <div class="topActions">
-          <q-btn v-if="!drawerVisible" dense rounded icon="reply" class="bg-yellow text-black" @click="onExitClick" />
+          <q-icon name="chevron_left" size="30px" @click="onExitClick" />
           <div class="game-logo-img">
-            <div
+            <img src="../../assets/logo.png" />
+            <!-- <div
               class="game-logo"
               :style="{
                 backgroundImage: (() => {
@@ -18,16 +19,15 @@
               }"
             >
               &nbsp;
-            </div>
+            </div> -->
           </div>
-          <q-btn
-            v-if="!drawerVisible"
-            dense
-            rounded
-            icon="add"
-            class="bg-yellow text-black"
-            @click="handleDrawerVisible"
-          />
+
+          <div v-if="!drawerVisible" class="wallet-container">
+            Add Cash &nbsp;
+            <q-btn dense rounded class="wallet-btn" @click="handleDrawerVisible">
+              <img src="../../assets/images/index/icon-wallet.png" />
+            </q-btn>
+          </div>
         </div>
 
         <div class="loader-container">
@@ -424,12 +424,11 @@ defineExpose({
   align-items: flex-start;
   flex-direction: column;
   padding: 0;
-  background: transparent;
-  background-image: url(../../assets/images/index/modal-bg.png);
-  background-size: cover;
-  background-position: top center;
+  background: #1d1d27;
 
   .topActions {
+    background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
+    box-shadow: 0px 3 7px 0px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -437,7 +436,10 @@ defineExpose({
     align-items: center;
 
     .game-logo-img {
-      height: 25px;
+      height: 50px;
+      position: absolute;
+      top: 10px;
+      left: 45px;
       .game-logo {
         width: 30vw;
         background-position: center;

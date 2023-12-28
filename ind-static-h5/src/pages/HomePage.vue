@@ -15,25 +15,6 @@
     data-aos-duration="1200"
     data-aos-once="true"
   >
-    <template v-slot:navigation-icon="{ active, onClick }">
-      <q-btn
-        padding="3px"
-        v-if="active"
-        size="xs"
-        color="white"
-        @click="onClick"
-        style="border: 1px solid #ffffff; border-radius: 50%; margin: 6px 8px"
-      />
-      <q-btn
-        padding="3px"
-        v-else
-        size="xs"
-        color="transparent"
-        @click="onClick"
-        style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px"
-      />
-    </template>
-
     <q-carousel-slide
       v-for="(banner, i) in banners"
       :key="i"
@@ -42,6 +23,37 @@
       :img-src="imgURLPromo + banner.mobileImageUrl"
       @click="gotoPromo(banner)"
     ></q-carousel-slide>
+
+    <template v-slot:navigation-icon="{ active, onClick }">
+      <q-btn
+        v-if="active"
+        size="xs"
+        @click="onClick"
+        style="
+          border-radius: 8px;
+          margin: 6px 3px;
+          height: 5px;
+          min-height: 5px;
+          width: 30px;
+          padding: 0;
+          background-color: #661ebf;
+        "
+      />
+      <q-btn
+        v-else
+        size="xs"
+        @click="onClick"
+        style="
+          border-radius: 8px;
+          margin: 6px 3px;
+          height: 5px;
+          min-height: 5px;
+          width: 30px;
+          padding: 0;
+          background-color: rgba(255, 255, 255, 0.2);
+        "
+      />
+    </template>
   </q-carousel>
 
   <div class="home-wrapper" :class="detectAndroidVersion()">
@@ -551,25 +563,36 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog v-model="fullGameDialog" persistent maximized transition-show="slide-up" transition-hide="slide-down">
+  <q-dialog
+    v-model="fullGameDialog"
+    persistent
+    maximized
+    transition-show="slide-up"
+    transition-hide="slide-down"
+    class="fullgame-dialog"
+  >
     <q-card class="fullgame-card" id="fullgame">
+      <ProfileSummary :homeProfile="true" />
       <q-card-section>
         <div class="home-wrapper fullgame-wrapper">
           <div class="fullgame-header">
-            <q-btn dense rounded icon="reply" class="bg-yellow text-black q-mt-lg" v-close-popup />
+            <div class="q-mt-sm q-mb-md">
+              <q-btn dense rounded icon="chevron_left" class="back-btn text-white" size="16px" v-close-popup />
+            </div>
 
             <div class="fullgame-search">
-              <q-input dense standout v-model="searchText" label="Search" clearable clear-icon="close">
-                <template v-slot:append>
-                  <q-icon name="search" />
+              <q-input standout v-model="searchText" label="Search" clearable clear-icon="close">
+                <template v-slot:prepend>
+                  <q-icon name="search" size="20px" />
                 </template>
               </q-input>
             </div>
           </div>
 
-          <template v-if="isGameLoading">
-            <div class="loading-spinner">
-              <q-spinner-cube color="orange" size="100px" />
+          <template v-if="!isGameLoading">
+            <div class="loader-container">
+              <div><q-spinner color="yellow" size="10em" :thickness="10" /></div>
+              <div>Loading... Please wait...</div>
             </div>
           </template>
 
@@ -656,8 +679,8 @@
                 </template>
               </div>
 
-              <div class="btn-load-more btn-effect" @click="scrollDownFullGames" v-if="!isShowAllFullGames">
-                Load More
+              <div class="btn-more-games btn-effect" @click="scrollDownFullGames" v-if="!isShowAllFullGames">
+                More Games
               </div>
             </div>
           </template>
@@ -1852,6 +1875,26 @@ onMounted(() => {
     }
   }
 }
+
+.game-logo-img {
+  height: 50px;
+  position: absolute;
+  top: 10px;
+  left: 45px;
+  .game-logo {
+    width: 30vw;
+    background-position: center;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  img {
+    display: block;
+    height: 100%;
+    width: auto;
+  }
+}
 </style>
 
 <style lang="scss">
@@ -2124,6 +2167,7 @@ onMounted(() => {
       margin-top: 6px;
       color: #ffffff;
       font-weight: bold;
+      font-size: 12px;
     }
 
     img {
@@ -2142,30 +2186,40 @@ onMounted(() => {
   }
 }
 
+.fullgame-dialog {
+  // &.fullscreen {
+  // top: 81px !important;
+  // bottom: auto !important;
+  // height: calc(100vh - 81px) !important;
+  // }
+}
+
 .fullgame-card {
   margin: 0;
-  background-image: url(../assets/images/index/home-bg.png);
+  // background-color: #101114;
+  background-image: url(../assets/images/index/dialog-game-bg.png);
   background-position: top center;
-  background-repeat: repeat-y;
-  background-size: 100%;
-  background-color: #280946;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #1e1f24;
 }
 
 .fullgame-wrapper {
   padding: 0;
 
   .fullgame-header {
-    background-image: url(../assets/images/index/fullgame-banner.jpg);
-    background-position: top center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    // background-image: url(../assets/images/index/fullgame-banner.jpg);
+
     margin: 0 -2.5%;
     // min-height: 200px;
     padding: 12px;
   }
 
   .fullgame-search {
-    padding-top: 90px;
+    margin-top: 10px;
+    // background: #1E1F24;
+    background: #0b0b0c;
+    border-radius: 4px;
   }
 }
 
@@ -2254,6 +2308,29 @@ onMounted(() => {
     width: 100%;
     border-radius: 8px;
   }
+}
+
+.loader-container {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-more-games {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  border: 2px solid #8b36f8;
+  padding: 12px 16px;
+  width: 160px;
+  border-radius: 8px;
+  color: rgba(206, 206, 206, 0.8);
+  font-size: 16px;
+  margin-top: 20px;
 }
 
 // lower android version

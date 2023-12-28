@@ -80,11 +80,9 @@ body.body--dark .q-header {
   color: #fdd835;
 }
 
-
 body.platform-ios .q-dialog__inner--minimized > div:not(.popout-dialog) {
   max-height: calc(100% - 108px);
 }
-
 
 .game-title {
   font-family: "Poppins";
@@ -165,10 +163,10 @@ body.body--dark .q-footer {
   text-align: center;
 }
 .q-carousel.home {
-  // height: 50vw;
   width: 100%;
-  // border-radius: 10px;
   height: auto;
+  padding-bottom: 20px;
+  background: #101114;
 
   .q-panel > div {
     background-repeat: no-repeat;
@@ -177,7 +175,11 @@ body.body--dark .q-footer {
     aspect-ratio: 20 / 9;
   }
   .q-carousel__navigation--bottom {
-    bottom: 30px;
+    bottom: -5px;
+    left: 0;
+    background: #101114;
+    width: 100%;
+    height: 20px;
   }
 }
 
@@ -412,6 +414,19 @@ body.body--dark .q-footer {
   background: linear-gradient(180deg, #fed87d 0%, #e6a60c 100%) !important;
 }
 
+.wallet-container {
+  color: rgba(255, 255, 255, 0.5);
+
+  .wallet-btn {
+    background: rgba(255, 255, 255, 0.7);
+    padding: 8px;
+
+    img {
+      width: 20px;
+    }
+  }
+}
+
 .landing-container {
   position: relative;
   background: url(../assets/images/login/landing-bg.jpg) no-repeat center center;
@@ -499,13 +514,13 @@ body.body--dark .q-footer {
   }
 }
 
-.bankcard-dialog{
+.bankcard-dialog {
   width: 90%;
   max-width: 500px;
   position: relative;
   padding-top: 10px;
   padding-right: 10px;
-  padding-left:10px;
+  padding-left: 10px;
   padding-bottom: 20px;
 
   .popout-close {
@@ -535,18 +550,19 @@ body.body--dark .q-footer {
   }
 
   .popout-dialog-container {
-    background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%);
+    background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
     background-position: top center;
     background-size: cover;
     background-repeat: no-repeat;
     padding: 30px 20px 30px;
-    min-height: 250px;
+    min-height: 200px;
     border-radius: 30px !important;
-
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    justify-content: center;
+    gap: 0px;
+    font-size: 16px;
   }
 }
 
