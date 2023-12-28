@@ -266,7 +266,7 @@ const redeem = () => {};
     grid-template-columns: auto 1fr;
     grid-gap: 10px;
     align-items: center;
-    margin: 1.5rem 0 3rem 0;
+    margin: 1.5rem 0 1rem 0;
     background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%);
     border-radius: 8px;
     min-height: 130px;
@@ -411,7 +411,7 @@ const redeem = () => {};
   }
 
   .vip-table-container {
-    margin: 2.5rem 0 2rem 0;
+    margin: 1.5rem 0 2rem 0;
 
     .q-table__card {
       background: transparent !important;
