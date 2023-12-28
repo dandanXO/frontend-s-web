@@ -2,93 +2,94 @@
   <q-page>
     <!-- <ProfileSummary /> -->
 
-    <ProfileProgressBanner />
+    <div class="personal-center-container">
+      <ProfileProgressBanner />
 
-    <q-form ref="profileFormRef" class="pc-form">
-      <div class="pc-form-item" @click="openPersonalCenterDialog">
-        <div class="pc-form-label">Full Name</div>
-        <div class="pc-form-input">
-          <q-input
-            v-model="formDetail.realName"
-            filled
-            dense
-            clearable
-            borderless
-            standout
-            hide-bottom-space
-            readonly
-          ></q-input>
-        </div>
-      </div>
-
-      <div class="pc-form-item" @click="openPersonalCenterDialog">
-        <div class="pc-form-label">Phone</div>
-        <div class="pc-form-input">
-          <q-input
-            v-model="formDetail.phone"
-            filled
-            dense
-            clearable
-            borderless
-            standout
-            hide-bottom-space
-            readonly
-          ></q-input>
-        </div>
-      </div>
-
-      <!-- <div class="pc-form-item" @click="openPersonalCenterDialog">
-        <div class="pc-form-label">Email</div>
-        <div class="pc-form-input">
-          <q-input
-            v-model="formDetail.email"
-            filled
-            dense
-            clearable
-            borderless
-            standout
-            hide-bottom-space
-            readonly
-          ></q-input>
-        </div>
-      </div> -->
-
-      <div class="pc-tip">
-        <div>
-          <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">Change Password</a>
-
-          <div class="pc-ver" v-if="appVersionNo">
-            Version:
-            <span>{{ appVersionNo }}</span>
+      <q-form ref="profileFormRef" class="pc-form">
+        <div class="pc-form-item" @click="openPersonalCenterDialog">
+          <div class="pc-form-label">Full Name</div>
+          <div class="pc-form-input">
+            <q-input
+              v-model="formDetail.realName"
+              filled
+              dense
+              clearable
+              borderless
+              standout
+              hide-bottom-space
+              readonly
+            ></q-input>
           </div>
         </div>
 
-        <div>
-          <q-btn
-            class="btn-refresh"
-            no-caps
-            text-color="white"
-            icon="refresh"
-            label="Updated"
-            :loading="loadingUpdated"
-            @click="startRefresh"
-          >
-            <template v-slot:loading>
-              <q-spinner class="on-left" style="color: #fed87d" />
-              Updating...
-            </template>
-          </q-btn>
+        <div class="pc-form-item" @click="openPersonalCenterDialog">
+          <div class="pc-form-label">Phone</div>
+          <div class="pc-form-input">
+            <q-input
+              v-model="formDetail.phone"
+              filled
+              dense
+              clearable
+              borderless
+              standout
+              hide-bottom-space
+              readonly
+            ></q-input>
+          </div>
         </div>
-      </div>
 
-      <div class="q-mt-md q-pl-lg q-pr-lg">
-        <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">Sign Out</q-btn>
-      </div>
+        <!-- <div class="pc-form-item" @click="openPersonalCenterDialog">
+          <div class="pc-form-label">Email</div>
+          <div class="pc-form-input">
+            <q-input
+              v-model="formDetail.email"
+              filled
+              dense
+              clearable
+              borderless
+              standout
+              hide-bottom-space
+              readonly
+            ></q-input>
+          </div>
+        </div> -->
 
-      <!-- <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn size="md" color="brightbtn" @click="updateState" label="保存信息" />
-      </div> -->
-    </q-form>
+        <div class="pc-tip">
+          <div>
+            <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">Change Password</a>
+
+            <div class="pc-ver" v-if="appVersionNo">
+              Version:
+              <span>{{ appVersionNo }}</span>
+            </div>
+          </div>
+
+          <div>
+            <q-btn
+              class="btn-refresh"
+              no-caps
+              icon="refresh"
+              label="Updated"
+              :loading="loadingUpdated"
+              @click="startRefresh"
+            >
+              <template v-slot:loading>
+                <q-spinner class="on-left" style="color: #AE6DEF" />
+                Updating...
+              </template>
+            </q-btn>
+          </div>
+        </div>
+
+        <div class="q-mt-md">
+          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">Sign Out</q-btn>
+        </div>
+
+        <!-- <div class="text-center q-mt-md" v-if="canEdit">
+          <q-btn size="md" color="brightbtn" @click="updateState" label="保存信息" />
+        </div> -->
+      </q-form>
+    </div>
   </q-page>
   <q-dialog width="100%" v-model="showCaptchaDialog">
     <q-card style="width: 100%; padding: 20px" class="bg-dark text-white text-center">
@@ -1163,6 +1164,14 @@ const resetChangePasswordInfo = () => {
 </script>
 
 <style lang="scss" scoped>
+.personal-center-container {
+  padding: 0 20px;
+}
+
+.progress-container {
+  background: linear-gradient(180deg, #D29E3A 0%, #D65033 100%);
+}
+
 .infoboard-container {
   display: flex;
   align-items: center;
@@ -1221,22 +1230,22 @@ const resetChangePasswordInfo = () => {
   .pc-form-item {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    margin-bottom: 12px;
+    gap: 8px;
+    margin-bottom: 25px;
   }
   .pc-form-label {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 1);
   }
   .pc-form-input {
     border-radius: 5px;
     position: relative;
 
     :deep(.q-field__control) {
-      background-color: rgba(21, 0, 37, 0.7) !important;
+      background-color: #1E1F24 !important;
     }
 
     :deep(.q-field__native) {
-      color: #ffffff;
+      color: rgba(255, 255, 255, 0.60);
     }
   }
 
@@ -1262,16 +1271,17 @@ const resetChangePasswordInfo = () => {
   align-items: center;
   font-size: 18px;
   line-height: 1;
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
   font-weight: 700;
   width: 100%;
-  height: 48px;
+  height: 55px;
+  text-transform: uppercase;
   transition: 0.3s all;
-  background-image: url(../assets/images/account/btn-purple-pattern.png);
   color: #ffffff;
   margin: auto;
+  border-radius: 6px;
+  border: 1px solid rgba(232, 196, 255, 0.20);
+  background: rgba(88, 23, 170, 0.60);
+
   &:active {
     filter: brightness(0.85);
     transform: translate(0px, 1px);
@@ -1279,7 +1289,7 @@ const resetChangePasswordInfo = () => {
 }
 
 .pc-tip-chg-pwd {
-  color: #fae576;
+  color: #A73DFF;
 }
 
 .pc-tip {
@@ -1298,13 +1308,15 @@ const resetChangePasswordInfo = () => {
 }
 
 .btn-refresh {
-  background: rgba(21, 0, 37, 0.7);
+  background: #48325A;
   border-radius: 8px;
   font-weight: 700;
   margin-top: auto;
+  color: #AE6DEF;
+  padding: 10px 10px;
 
   :deep(.q-icon) {
-    color: #fed87d;
+    color: #AE6DEF;
   }
 }
 </style>
