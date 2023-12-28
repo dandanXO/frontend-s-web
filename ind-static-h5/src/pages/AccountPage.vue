@@ -1,6 +1,8 @@
 <template>
   <q-page>
-    <ProfileSummary />
+    <!-- <ProfileSummary /> -->
+
+    <ProfileProgressBanner />
 
     <q-form ref="profileFormRef" class="pc-form">
       <div class="pc-form-item" @click="openPersonalCenterDialog">
@@ -485,6 +487,7 @@
 import SwiperNav from "../components/SwiperNav.vue";
 import ContentView from "../components/ContentView.vue";
 import ProfileSummary from "../components/ProfileSummary.vue";
+import ProfileProgressBanner from "../components/ProfileProgressBanner.vue";
 import { defineComponent, reactive, ref, onMounted, computed } from "vue";
 import moment from "moment";
 import { api } from "boot/axios";

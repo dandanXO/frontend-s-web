@@ -1,44 +1,8 @@
 <template>
   <ProfileSummary :homeProfile="true" />
-
+  
   <div class="bonus-page">
-    <div class="progress-container">
-      <div class="left-container">
-        <div class="profile-pic">
-          <q-avatar size="50px">
-            <img :src="profileImagePath" />
-          </q-avatar>
-
-          <div class="vip-details" @click="onVipClick">
-            <img src="../assets/images/index/vip-row.png" alt="" />
-            <div class="vip-level">
-              {{ store.vip }}
-            </div>
-          </div>
-        </div>
-
-        <div class="nickname">{{ store.nickName }}</div>
-        <!-- 
-          <img class="character-red-bg" src="../assets/images/bonus/character-red-bg.png" alt="" />
-          <img class="character-red" src="../assets/images/bonus/character-red.png" alt="" />
-
-          <div class="bonus-pot-btn-container">
-            <img class="bonus-pot-btn-frame" src="../assets/images/bonus/bonus-pot-btn-frame.png" alt="" />
-            <img class="bonus-pot-btn" src="../assets/images/bonus/bonus-pot-btn.png" alt="" />
-            <span class="common-text">Bonus Pot</span>
-          </div>
-        -->
-      </div>
-
-      <div class="right-container">
-        <div class="amount-progress-container">
-          <div class="vip-text">VIP</div>
-          <div class="progress-num">{{ `${progressRef} / ${maxProgress}` }}</div>
-        </div>
-        <q-linear-progress reverse rounded size="15px" :value="progressBarRef" class="progress-bar" color="white"></q-linear-progress>
-        <div class="win-gift-text">Deposit Monthly To Win Gifts</div>
-      </div>
-    </div>
+    <ProfileProgressBanner />
 
     <div class="detail-btn-container" @click="onDetailClick()">
       <span class="">Bonus Pot Detail</span>
@@ -111,6 +75,7 @@ import { date } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import ProfileSummary from "components/ProfileSummary.vue";
+import ProfileProgressBanner from "components/ProfileProgressBanner.vue";
 
 const route = useRoute();
 const router = useRouter();
