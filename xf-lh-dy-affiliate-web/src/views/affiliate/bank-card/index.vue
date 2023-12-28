@@ -288,63 +288,58 @@ const validateEmptyCardNo = async (r, v) => {
   return Promise.resolve();
 };
 
-const validateBankLength = async (r, v) => {
-  var min = 6;
-  var max = 12;
-  if (selectedBankType.value === 'Bank') {
-    if (store.state.user.siteId === 3) {
-      min = 10;
-      max = 15;
-    } else {
-      min = 16;
-      max = 19;
-    }
-  } else if (selectedBankType.value === 'Crypto') {
-    min = 34;
-    max = 36;
-  } else if (selectedBankType.value === 'e-Wallet') {
-    min = 34;
-    max = 34;
-    var selectedCode = null
-    banksList.value.forEach(bank => {
-      if (bank.id === bankCardInfo.bankId) {
-        selectedCode = bank.code
-      }
-    });
-    if (selectedCode === 'KDPAY') {
-      min = 34;
-      max = 34;
-    } else if (selectedCode === 'EBPAY') {
-      min = 34;
-      max = 34;
-    } else if (selectedCode === 'OKPAY') {
-      min = 16;
-      max = 16;
-    }
-  }
-  if (v === '') {
-    return Promise.reject(new Error(t('message.requiredCardNumber')));
-  } else if (v.length < min || v.length > max) {
-    if (min === max) {
-      return Promise.reject(new Error(t('message.lengthShouldBe') + min));
-    } else {
-      return Promise.reject(new Error(t('message.lengthShouldBe') + min + '-' + max));
-    }
-  } else {
-    return Promise.resolve();
-  }
-};
+// const validateBankLength = async (r, v) => {
+//   var min = 6;
+//   var max = 12;
+//   if (selectedBankType.value === 'Bank') {
+//     if (store.state.user.siteId === 3) {
+//       min = 10;
+//       max = 15;
+//     } else {
+//       min = 16;
+//       max = 19;
+//     }
+//   } else if (selectedBankType.value === 'Crypto') {
+//     min = 34;
+//     max = 36;
+//   } else if (selectedBankType.value === 'e-Wallet') {
+//     min = 34;
+//     max = 34;
+//     var selectedCode = null
+//     banksList.value.forEach(bank => {
+//       if (bank.id === bankCardInfo.bankId) {
+//         selectedCode = bank.code
+//       }
+//     });
+//     if (selectedCode === 'KDPAY') {
+//       min = 34;
+//       max = 34;
+//     } else if (selectedCode === 'EBPAY') {
+//       min = 34;
+//       max = 34;
+//     } else if (selectedCode === 'OKPAY') {
+//       min = 16;
+//       max = 16;
+//     }
+//   }
+//   if (v === '') {
+//     return Promise.reject(new Error(t('message.requiredCardNumber')));
+//   } else if (v.length < min || v.length > max) {
+//     if (min === max) {
+//       return Promise.reject(new Error(t('message.lengthShouldBe') + min));
+//     } else {
+//       return Promise.reject(new Error(t('message.lengthShouldBe') + min + '-' + max));
+//     }
+//   } else {
+//     return Promise.resolve();
+//   }
+// };
 
 const bankCardRules = {
   cardNumber: [
     {
       required: true,
       validator: validateEmptyCardNo,
-      trigger: "blur",
-    },
-    {
-      required: true,
-      validator: validateBankLength,
       trigger: "blur",
     }
   ],
