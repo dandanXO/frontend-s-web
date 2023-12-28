@@ -651,6 +651,7 @@ import { TENANT } from '../../../store/modules/user/action-types'
 import { getSiteListSimple } from '../../../api/site'
 import { getAllPaymentTypes } from "../../../api/payment-type";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 const { t } = useI18n()
 const store = useStore()
 const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
@@ -885,15 +886,22 @@ function checkQuery() {
       query[key] = value
     }
   })
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.depositDate !== null) {
     if (request.depositDate.length === 2) {
-      query.depositDate = request.depositDate.join(',')
+      query.depositDate = JSON.parse(JSON.stringify(request.depositDate));
+      query.depositDate[0] = formatInputTimeZone(query.depositDate[0], timeZone);
+      query.depositDate[1] = formatInputTimeZone(query.depositDate[1], timeZone);
+      query.depositDate = query.depositDate.join(',')
     }
   }
 
   if (request.finishDate !== null) {
     if (request.finishDate.length === 2) {
-      query.finishDate = request.finishDate.join(',')
+      query.finishDate = JSON.parse(JSON.stringify(request.finishDate));
+      query.finishDate[0] = formatInputTimeZone(query.finishDate[0], timeZone);
+      query.finishDate[1] = formatInputTimeZone(query.finishDate[1], timeZone);
+      query.finishDate = query.finishDate.join(',')
     }
   }
 
@@ -927,7 +935,6 @@ async function loadRecord() {
     page.totalAmount = 0
   }
 
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false
 }
 
