@@ -328,7 +328,7 @@
               <template v-for="(item, index) in slot" :key="index">
                 <div
                   class="platform-game-item btn-effect"
-                  @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                  @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)"
                   data-aos="zoom-in"
                   data-aos-delay="100"
                   data-aos-duration="1200"
