@@ -137,6 +137,10 @@
 
     <Transition>
       <div class="game-grid-lists" id="id-lottery-board" v-if="currentSelectedMenu === 'lottery'">
+        <div v-if="lotteryGames.length === 0" class="coming-soon-div">
+          <img src="../assets/home/coming-soon-img.png" />
+          <span>{{ $t("lang.coming_soon") }}</span>
+        </div>
         <div
           :class="`game-item btn-pointer ${lotteryGames.length === 1 ? 'mid-grid-column' : ''}`"
           v-for="(lotteryGameItem, index) in lotteryGames"
@@ -1965,7 +1969,7 @@ export default defineComponent({
   .station-notice-wrapper {
     display: flex;
     border-radius: 10px;
-    border: 1px solid #9C1103;
+    border: 1px solid #9c1103;
     gap: 10px;
     padding: 2px 10px;
     justify-content: center;
