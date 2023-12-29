@@ -295,41 +295,6 @@ const getVipLevelProgress = (vipInfo) => {
   return (currentDeposit / levelUpDeposit) * 100;
 };
 
-const vipItems = [
-  {
-    vipLevel: "1",
-    upgrade: "1,000",
-  },
-  {
-    vipLevel: "2",
-    upgrade: "10,000",
-  },
-  {
-    vipLevel: "3",
-    upgrade: "100,000",
-  },
-  {
-    vipLevel: "4",
-    upgrade: "500,000",
-  },
-  {
-    vipLevel: "5",
-    upgrade: "1,000,000",
-  },
-  {
-    vipLevel: "6",
-    upgrade: "3,000,000",
-  },
-  {
-    vipLevel: "7",
-    upgrade: "5,000,000",
-  },
-  {
-    vipLevel: "8",
-    upgrade: "10,000,000",
-  },
-];
-
 const columns = [
   {
     name: "vip",
@@ -403,6 +368,16 @@ const rows = [
     flow: "x10"
   }
 ];
+
+const vipItems = rows.map(({ name: vipName, ugprade: upgradeRequirement }) => {
+  const vipLevelStr = vipName.replace("VIP ", "");
+  const vipLevelNum = Number(vipLevelStr);
+
+  return {
+    vipLevel: vipLevelNum,
+    ugprade: upgradeRequirement,
+  }
+})
 
 const columns2 = [
   {
@@ -704,7 +679,7 @@ const rows4 = [
     background-size: 100% 100%;
   }
 
-  &8 {
+  &8, &9, &10, &11, &12 {
     background: url("../../assets/images/vip/badge/banner-8.png") no-repeat top
       center;
     background-size: 100% 100%;
