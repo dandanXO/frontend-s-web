@@ -135,7 +135,13 @@
                   class="platform-game-item btn-effect"
                   @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
                 >
-                  <div data-aos="zoom-in" :data-aos-delay="100 * index" data-aos-duration="1200" data-aos-once="true" data-aos-anchor="#home">
+                  <div
+                    data-aos="zoom-in"
+                    :data-aos-delay="100 * index"
+                    data-aos-duration="1200"
+                    data-aos-once="true"
+                    data-aos-anchor="#home"
+                  >
                     <div class="platform-game-img">
                       <div
                         class="game--bg"
@@ -697,7 +703,7 @@
                         data-aos-once="true"
                         data-aos-anchor="#fullgame"
                       >
-                        <div class="game-platform-img">
+                        <div class="game-platform-img" :class="'game-' + item.gameType.toLowerCase()">
                           <div
                             class="game--bg"
                             :style="{
@@ -2128,6 +2134,10 @@ onMounted(() => {
       position: relative;
       background-image: url("../assets/images/index/mini-game-bg.png");
       border-radius: 8px;
+
+      &.game-fish {
+        aspect-ratio: 1/1.2;
+      }
 
       .game--bg {
         border-radius: 8px;
