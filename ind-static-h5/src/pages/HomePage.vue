@@ -3,6 +3,7 @@
 
   <q-carousel
     class="home"
+    id="home"
     autoplay
     navigation
     v-model="slide"
@@ -134,7 +135,7 @@
                   class="platform-game-item btn-effect"
                   @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
                 >
-                  <div data-aos="zoom-in" :data-aos-delay="100 * index" data-aos-duration="1200" data-aos-once="true">
+                  <div data-aos="zoom-in" :data-aos-delay="100 * index" data-aos-duration="1200" data-aos-once="true" data-aos-anchor="#home">
                     <div class="platform-game-img">
                       <div
                         class="game--bg"
@@ -1283,12 +1284,22 @@ const openCSInNewTab = (url) => {
 };
 
 const detectAndroidVersion = () => {
-  // JavaScript to detect Android version
   const ua = navigator.userAgent.toLowerCase();
-  const userAndroid = ua.indexOf("android") > -1;
-  const androidVersion = userAndroid ? parseFloat(ua.slice(ua.indexOf("android") + 8)) : 0;
+  const isAndroid = ua.indexOf("android") > -1;
 
-  return "android-" + androidVersion;
+  if (isAndroid) {
+    const androidVersion = parseFloat(ua.slice(ua.indexOf("android") + 8));
+
+    if (!isNaN(androidVersion)) {
+      if (androidVersion <= 9) {
+        return "android-low " + androidVersion;
+      } else {
+        return "android-high " + androidVersion;
+      }
+    }
+  }
+
+  return "not-android";
 };
 
 onMounted(() => {
