@@ -401,7 +401,7 @@ import { getBankInfoListSimple } from '../../../../api/bank-info'
 import {
   autoWithdrawToFail,
   fromApplyToAutopay,
-  getMemberWithdrawRecordApply,
+  getMemberWithdrawRecordApplySimple,
   getTotalWithdrawAmountByStatus,
   getWithdrawPlatformList,
 } from '../../../../api/member-withdraw-record'
@@ -559,7 +559,7 @@ async function loadRecord() {
     }
   }
   query.memberType = "NORMAL,TEST,OUTSIDE";
-  const { data: ret } = await getMemberWithdrawRecordApply(query)
+  const { data: ret } = await getMemberWithdrawRecordApplySimple(query)
   page.pages = ret.pages
   ret.records.forEach(data => {
     data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined

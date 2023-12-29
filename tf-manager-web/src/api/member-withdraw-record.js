@@ -185,6 +185,10 @@ export const autoWithdrawToFail = (id, wd) => {
   return https().request(`/memberWithdrawRecord/${id}/autoWithdrawToFail?_method=PUT`, Method.POST, { withdrawDate: wd }, ContentType.form);
 };
 
+export const getMemberWithdrawRecordApplySimple = (memberWithdrawRecord) => {
+  return https().request("/memberWithdrawRecord/getSimpleApply", Method.GET, memberWithdrawRecord, ContentType.form);
+};
+
 export const fromPayToAutopay = (id, withdrawPlatformId, wd) => {
   return https().request(`/memberWithdrawRecord/${id}/payToAutopay?_method=PUT`, Method.POST, { withdrawPlatformId: withdrawPlatformId, withdrawDate: wd }, ContentType.form);
 };
