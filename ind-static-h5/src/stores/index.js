@@ -289,6 +289,9 @@ export const userStore = defineStore("userStore", {
     },
     setMailData(mailData) {
       this.currentMailData = mailData;
-    }
+    },
+    getCurrentDeposit() {
+      return this.currentDeposit;
+    },
   }
 });

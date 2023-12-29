@@ -16,7 +16,62 @@
   </div>
 
   <div class="vip-container">
+    <q-carousel
+      class="vip bg-transparent"
+      animated
+      v-model="vipCarousel"
+      arrows
+      infinite
+      swipeable
+    >
+      <q-carousel-slide
+        v-for="(vip, vipIndex) in vipItems"
+        :key="vipIndex"
+        :name="vipIndex"
+      >
+        <div class="carousel__item">
+          <div :class="`vipitem vipitem${vip.vipLevel}`">
+            <div
+              :class="`achieved-status ${vipLevel >= vip.vipLevel ? 'achieved' : 'not-achieved'}`">
+              {{ vipLevel >= vip.vipLevel ? "Accomplished" : "Not Yet" }}
+            </div>
 
+            <div class="vip-level-header">VIP{{ vip.vipLevel }}</div>
+
+            <div
+              class="vip-contents"
+              :style="
+                vip.upgrade === 'Successful deposit'
+                  ? 'padding-top: 120px;'
+                  : ''
+              "
+            >
+              <div class="upgrade-requirements">
+                <span v-if="vip.vipLevel !== '0'">Accummulate Deposit</span>
+                {{ vip.upgrade }}
+              </div>
+
+              <div class="progress-bar-container">
+                <div class="progress-bar-outer-bar">
+                  <div
+                    class="progress-bar-inner-bar"
+                    :style="{ width: getVipLevelProgress(vip) + '%' }"
+                  />
+                </div>
+                <div class="progress-bar-desc">
+                  <span>
+                    {{ `V${vip.vipLevel}` }}
+                  </span>
+                  <span>
+                    {{ `V${+vip.vipLevel + 1}` }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </q-carousel-slide>
+    </q-carousel>
     <div class="header-wrapper">
       <div class="vertical-line"></div>
       <div class="header">
@@ -50,7 +105,7 @@
             <template v-if="colIndex === 1">
               <div style="text-align: center">
                 Deposit ₹
-                <span class>{{ col.value }}</span>
+                <span class="amt-text">{{ col.value }}</span>
               </div>
             </template>
             <template v-else>{{ col.value }}</template>
@@ -97,7 +152,7 @@
             <template v-if="colIndex === 1">
               <div style="text-align: center">
                 ₹
-                <span class>{{ col.value }}</span>
+                <span class="amt-text">{{ col.value }}</span>
               </div>
             </template>
             <template v-else>{{ col.value }}</template>
@@ -141,7 +196,7 @@
             <template v-if="colIndex === 1">
               <div style="text-align: right">
                 ₹
-                <span class>{{ col.value }}</span>
+                <span class="amt-text">{{ col.value }}</span>
               </div>
             </template>
             <template v-else>{{ col.value }}</template>
@@ -185,7 +240,7 @@
           <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
             <template v-if="colIndex === 1">
               ₹
-              <span class>{{ col.value }}</span>
+              <span class="amt-text">{{ col.value }}</span>
             </template>
             <template v-else>{{ col.value }}</template>
           </q-td>
@@ -204,13 +259,16 @@
 </template>
 
 <script setup>
-import { watch, onMounted, ref } from "vue";
+import { watch, ref } from "vue";
 import ProfileSummary from "components/ProfileSummary.vue";
 import { useRoute, useRouter } from "vue-router";
+import { userStore } from "stores/index";
 
 const vipPromoTab = ref("vip");
 const router = useRouter();
 const route = useRoute();
+const store = userStore();
+const vipCarousel = ref(0);
 
 watch(() => vipPromoTab.value, () => {
   if(vipPromoTab.value === 'promo') {
@@ -223,6 +281,54 @@ watch(() => route.path, () => {
     vipPromoTab.value = 'vip';
   }
 })
+
+const getVipLevelProgress = (vipInfo) => {
+  const vipLevel = Number(store.vip.replace("VIP", ""));
+  const currentDeposit = Number(store.getCurrentDeposit());
+  const upgradeStatus = vipInfo.upgrade;
+
+  if (vipLevel > +vipInfo.vipLevel) {
+    return 100;
+  }
+
+  const levelUpDeposit = +upgradeStatus.replaceAll(",", "");
+  return (currentDeposit / levelUpDeposit) * 100;
+};
+
+const vipItems = [
+  {
+    vipLevel: "1",
+    upgrade: "1,000",
+  },
+  {
+    vipLevel: "2",
+    upgrade: "10,000",
+  },
+  {
+    vipLevel: "3",
+    upgrade: "100,000",
+  },
+  {
+    vipLevel: "4",
+    upgrade: "500,000",
+  },
+  {
+    vipLevel: "5",
+    upgrade: "1,000,000",
+  },
+  {
+    vipLevel: "6",
+    upgrade: "3,000,000",
+  },
+  {
+    vipLevel: "7",
+    upgrade: "5,000,000",
+  },
+  {
+    vipLevel: "8",
+    upgrade: "10,000,000",
+  },
+];
 
 const columns = [
   {
@@ -551,13 +657,162 @@ const rows4 = [
     }
   }
 }
+
+.vipitem {
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  background: url("../../assets/images/vip/badge/banner-1.png") no-repeat top center;
+  background-size: 100% 100%;
+  height: 192px;
+  justify-content: flex-end;
+  font-size: 12px;
+
+  &2 {
+    background: url("../../assets/images/vip/badge/banner-2.png") no-repeat top
+      center;
+    background-size: 100% 100%;
+  }
+
+  &3 {
+    background: url("../../assets/images/vip/badge/banner-3.png") no-repeat top
+      center;
+    background-size: 100% 100%;
+  }
+
+  &4 {
+    background: url("../../assets/images/vip/badge/banner-4.png") no-repeat top
+      center;
+    background-size: 100% 100%;
+  }
+
+  &5 {
+    background: url("../../assets/images/vip/badge/banner-5.png") no-repeat top
+      center;
+    background-size: 100% 100%;
+  }
+
+  &6 {
+    background: url("../../assets/images/vip/badge/banner-6.png") no-repeat top
+      center;
+    background-size: 100% 100%;
+  }
+
+  &7 {
+    background: url("../../assets/images/vip/badge/banner-7.png") no-repeat top
+      center;
+    background-size: 100% 100%;
+  }
+
+  &8 {
+    background: url("../../assets/images/vip/badge/banner-8.png") no-repeat top
+      center;
+    background-size: 100% 100%;
+  }
+
+  .achieved-status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    top: 4.5%;
+    left: 0px;
+    background-repeat: no-repeat;
+    background-position: top left;
+    background-size: contain;
+    width: 100px;
+    height: 32px;
+    color: #fff;
+    position: absolute;
+    border-top-left-radius: 16px;
+    background: linear-gradient(90.38deg, #83817f 5.14%, #c5c5c5 67.7%, rgba(201, 201, 201, 0) 99.72%);
+    
+    &.achieved {
+      background: linear-gradient(90.38deg, #A37B40 5.14%, #CFB27B 67.7%, rgba(207, 178, 123, 0) 99.72%);
+    }
+  }
+
+  .vip-level-header {
+    font-size: 3.2em;
+    top: 25%;
+    left: 5%;
+    font-style: italic;
+    z-index: 1;
+    position: absolute;
+    color: #333333;
+  }
+
+  .vip-contents {
+    padding-top: 60px;
+    color: #ffffff;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .title {
+      font-size: 18px;
+      line-height: 36px;
+    }
+
+    .progress-bar-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: absolute;
+      bottom: 4%;
+      left: 6%;
+      right: 6%;
+
+      .progress-bar-outer-bar {
+        border-radius: 16px;
+        background: grey;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .progress-bar-inner-bar {
+        color: #fff;
+        border-radius: 16px;
+        background: linear-gradient(90deg, #e5cda5 0.87%, #b48f57 100%);
+        height: 10px;
+      }
+
+      .progress-bar-desc {
+        display: flex;
+        justify-content: space-between;
+        color: #333;
+        font-size: 17.987px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+    }
+
+    .upgrade-requirements {
+      position: absolute;
+      width: 100%;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
+      font-size: 1.2em;
+      left: 25px;
+      top: 55%;
+      color: #424f72;
+
+      span {
+        color: #7a80a1;
+      }
+    }
+  }
+}
 </style>
 <style lang="scss">
 .vip-container {
   padding: 0 1.75rem;
   overflow: hidden;
   font-size: 1rem;
-  font-weight: 700;
   text-align: center;
 
   .top-header {
@@ -569,6 +824,7 @@ const rows4 = [
     background: transparent !important;
     margin: 0 0 1.25rem 0;
     border-radius: 8px;
+    font-weight: 700;
   }
 
   .vip-icon {
@@ -601,7 +857,7 @@ const rows4 = [
     background: #502175;
   }
 
-  span {
+  span.amt-text {
     background-color: #f3ec78 !important;
     background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%) !important;
     background-size: 100% !important;
