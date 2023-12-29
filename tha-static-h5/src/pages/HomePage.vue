@@ -2925,7 +2925,7 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
+    gap: 0px;
     justify-content: flex-end;
 
     .line-title {
