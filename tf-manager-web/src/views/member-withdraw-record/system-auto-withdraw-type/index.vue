@@ -164,8 +164,28 @@
           </div>
           <el-table :data="props.row.systemAutoWithdrawPlatfromVO" ref="table" size="small" style="margin-left: 60px; width: 50%;">
             <el-table-column :label="t('fields.withdrawPlatformName')" prop="withdrawPlatformName" />
-            <el-table-column :label="t('fields.minWithdrawAmount')" prop="withdrawAmountMin" />
-            <el-table-column :label="t('fields.maxWithdrawAmount')" prop="withdrawAmountMax" />
+            <el-table-column :label="t('fields.minWithdrawAmount')" prop="withdrawAmountMin" align="center">
+              <template #default="scope">
+                $
+                <span
+                  v-formatter="{
+                    data: scope.row.withdrawAmountMin,
+                    type: 'money',
+                  }"
+                />
+              </template>
+            </el-table-column>
+            <el-table-column :label="t('fields.maxWithdrawAmount')" prop="withdrawAmountMax" align="center">
+              <template #default="scope">
+                $
+                <span
+                  v-formatter="{
+                    data: scope.row.withdrawAmountMax,
+                    type: 'money',
+                  }"
+                />
+              </template>
+            </el-table-column>
             <el-table-column :label="t('fields.operate')" v-if="hasPermission(['sys:systemautowithdraw:add'])">
               <template #default="scope">
                 <el-button

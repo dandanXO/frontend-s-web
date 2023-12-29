@@ -1443,6 +1443,7 @@ export default {
     updateProceed: '更新节点以进行付款编辑',
     updateRiskLevelSuccess: '更新风险等级成功',
     updateSuccess: '更新成功',
+    updateWithdraw: '成功提交出款',
     updateTimeTypeSuccess: '更新时间类型成功',
     updateToApplySuccess: '成功更新至申请中状态',
     updateToBeforePaidSuccess: '成功更新至待支付状态',
@@ -1729,6 +1730,7 @@ export default {
     'Deposit Management': '存款管理',
     'Online Deposit': '线上存款',
     'Deposit Record': '存款记录',
+    'Withdrawal Auto Process': '自动提款流程',
     'Withdrawal Management': '提款管理',
     'Withdrawal Process': '提款流程',
     'Withdrawal Affiliate Process': '代理提款流程',
@@ -1757,6 +1759,8 @@ export default {
     'Alipay Payment on going': '支付宝支付中',
     'Automatic Payment': '自动支付',
     'Waiting Auto Pay': '等待自动支付',
+    'AutoWithdraw Under review': '提款审核',
+    'AutoWithdraw Withdrawal Record': '提交记录',
     Suspend: '暂不处理',
     Promotion: '优惠',
     'Privilege Info': '优惠列表',
@@ -1945,6 +1949,12 @@ export default {
       IN_PROGRESS: "构建中",
       SUCCESS: "成功",
     }
+  },
+  priviEvent: {
+    status: '记录状态',
+    cancel: '已取消',
+    active: '活跃',
+    settled: '已结算',
   },
   error: {
     400: '请求无效',

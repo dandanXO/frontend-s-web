@@ -101,13 +101,13 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="balance" :label="t('fields.balance')" width="200">
+      <el-table-column prop="balance" :label="t('fields.balance')">
         <template #default="scope">
           $
           <span v-formatter="{data: scope.row.balance, type: 'money'}" />
         </template>
       </el-table-column>
-      <el-table-column prop="status" :label="t('fields.status')" width="150">
+      <el-table-column prop="status" :label="t('fields.status')">
         <template #default="scope">
           <el-tag
             v-if="scope.row.status === 'NORMAL'"
@@ -160,14 +160,35 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="vipName" :label="t('menu.VIP')" width="200" />
-      <el-table-column prop="createTime" :label="t('fields.createTime')" width="200">
+      <el-table-column prop="vipName" :label="t('menu.VIP')" />
+      <el-table-column prop="createTime" :label="t('fields.createTime')">
         <template #default="scope">
           <span v-if="scope.row.createTime === null">-</span>
           <span
             v-if="scope.row.createTime !== null"
             v-formatter="{data: scope.row.createTime, timeZone: timeZone, type: 'date'}"
           />
+        </template>
+      </el-table-column>
+      <el-table-column prop="participantStatus" :label="t('priviEvent.status')">
+        <template #default="scope">
+          <span v-if="scope.row.participantStatus === null">-</span>
+          <span v-if="scope.row.participantStatus === 0"> {{ t('priviEvent.cancel') }}</span>
+          <span v-if="scope.row.participantStatus === 1"> {{ t('priviEvent.active') }}</span>
+          <span v-if="scope.row.participantStatus === 2"> {{ t('priviEvent.settled') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column :label="t('fields.operate')">
+        <template #default="scope">
+          <el-button
+            v-if="scope.row.participantStatus === 1"
+            size="mini"
+            type="danger"
+            style="margin-left: 10px"
+            @click="cancelRecord(scope.row.recordId)"
+          >
+            {{ t('fields.cancel') }}
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -183,7 +204,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive } from 'vue'
 // import moment from 'moment'
 // import { required } from '../../../utils/validate'
 // import { ElMessage } from 'element-plus'
@@ -197,8 +218,9 @@ import {
   getWinnerList,
   calculateWinner,
   getParticipants,
+  cancelParticipantRecord,
 } from '../../../api/privi-christmas'
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 
 const { t } = useI18n()
 const store = useStore()
@@ -273,6 +295,7 @@ async function loadParticipant() {
 async function calculateResult() {
   await calculateWinner('jolly_event');
   ElMessage({ message: t('message.resultCalculateSuccess'), type: "success" });
+  await loadParticipant()
 }
 
 function changePage(page) {
@@ -284,6 +307,18 @@ async function showDialog() {
   const { data: ret } = await getWinnerList('jolly_event')
   winnerList.records = ret
   uiControl.dialogVisible = true
+}
+
+async function cancelRecord(id) {
+  ElMessageBox.confirm(t('message.confirmUpdate'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
+    await cancelParticipantRecord(id)
+    await loadParticipant()
+    ElMessage({ message: t('message.cancelSuccess'), type: 'success' })
+  })
 }
 
 onMounted(async () => {

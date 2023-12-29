@@ -269,6 +269,19 @@ export default defineComponent({
         this.filterWinnerLists();
       }
     }
+    if (this.list.promoCode === "jolly_event") {
+      if (store.hasToken()) {
+        eventapi.get("/privi-christmas/check-deposit", {
+          params: {
+            promoCode: "jolly_event"
+          }
+        }).then((res) => {
+          if (res.data.data === false) {
+            btnHide.value = true
+          }
+        })
+      }
+    }
   },
   setup() {
     var qs = require("qs");
