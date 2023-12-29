@@ -118,7 +118,6 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script setup>
@@ -198,6 +197,7 @@ onMounted(() => {
   position: fixed;
   top: 0;
   width: 100%;
+  max-width: 500px;
   z-index: 999;
 
   .infoboard-wrapper {

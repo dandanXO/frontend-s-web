@@ -219,6 +219,7 @@ onMounted(() => {
     background: #392e7b;
     height: 50px;
     padding: 10px;
+    justify-content: space-between;
 
     .link {
       overflow: hidden;
