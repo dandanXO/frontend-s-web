@@ -49,7 +49,7 @@
             #default="scope"
             v-if="hasPermission(['sys:affiliate:detail'])"
           >
-            <router-link :to="`details/${scope.row.id}?site=${request.siteId}`">
+            <router-link :to="`details/${scope.row.id}?site=${scope.row.siteId}`">
               <el-link type="primary">{{ scope.row.loginName }}</el-link>
             </router-link>
           </template>
