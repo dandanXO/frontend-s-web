@@ -34,6 +34,7 @@ default:
       - node_modules
   image: $CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX/node:16.17.0
   script:
+    - echo 'NODE_OPTIONS: $NODE_OPTIONS'
     - cd $PROJECT
     - npm install
     - npm install -g @quasar/cli
