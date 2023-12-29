@@ -66,6 +66,10 @@ export default defineComponent({
         console.log(affAppToken.value);
         var adjustConfig = new AdjustConfig(affAppToken.value, AdjustEnvironment.Production);
         adjustConfig.setLogLevel(AdjustLogLevel.Verbose);
+        adjustConfig.setAttributionCallbackListener(function (e) {
+          console.log("setAttributionCallbackListener");
+          console.log(e);
+        });
         Adjust.create(adjustConfig);
         setTimeout(() => {
           Adjust.getAdid().then((aaid) => {
@@ -73,21 +77,33 @@ export default defineComponent({
             console.log(aaid);
             store.aaid = aaid;
           });
+
+          Adjust.getAttribution().then((attribution) => {
+            console.log("GeT attribution");
+            console.log(attribution);
+            store.aaid = attribution.adid;
+          });
+
+          Adjust.getGoogleAdId().then((googleid) => {
+            console.log("Google AdID");
+            console.log(googleid);
+            store.googleadid = googleid;
+          });
         }, 1500);
       } else {
         //Normal WEb / H5 / iOS WEbclip.
-        console.log("Init Web Adjust");
-        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        // console.log("Init Web Adjust");
+        // const AdjustWeb = require("@adjustcom/adjust-web-sdk");
         // AdjustWeb.initSdk({
         //   appToken: affAppToken.value,
         //   environment: "production"
         // });
-        setTimeout(() => {
-          const resp = AdjustWeb.getAttribution();
-          console.log("Web Adid");
-          // console.log(resp.adid);
-          store.aaid = resp ? resp.adid : "";
-        }, 1500);
+        // setTimeout(() => {
+        //   const resp = AdjustWeb.getAttribution();
+        //   console.log("Web Adid");
+        //   // console.log(resp.adid);
+        //   store.aaid = resp ? resp.adid : "";
+        // }, 1500);
       }
     };
 
