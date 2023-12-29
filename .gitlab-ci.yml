@@ -35,7 +35,7 @@ default:
     - cd $PROJECT
     - npm install
     - npm install -g @quasar/cli
-    - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "test" ]; then npm run build:test; else npm run build:prod -- --max-old-space-size=4096; fi
+    - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "test" ]; then npm run build:test; else npm run build:prod --node-flags --max-old-space-size=4096; fi
   artifacts:
    untracked: true
    expire_in: 24 hrs
