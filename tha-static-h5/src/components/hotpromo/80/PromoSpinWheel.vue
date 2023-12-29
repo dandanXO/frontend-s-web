@@ -110,7 +110,7 @@
       <img class="infoboard-img" src="../../../assets/images/promotion/spinwheel/infoboard.png" />
     </div>
 
-    <img class="santa-img" src="../../../assets/images/promotion/spinwheel/santa.png" />
+    <img class="panda-img" src="../../../assets/images/promotion/spinwheel/panda.png" />
   </div>
 </template>
 
@@ -509,7 +509,7 @@ onMounted(() => {
 
     span {
       position: absolute;
-      bottom: 10%;
+      bottom: 15%;
       color: #fff;
       text-align: center;
       font-family: FZHanZhenGuangBiaoS-GB;
@@ -649,7 +649,7 @@ onMounted(() => {
     }
   }
 
-  .santa-img {
+  .panda-img {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -676,7 +676,7 @@ onMounted(() => {
     }
   }
 
-  .santa-img {
+  .panda-img {
     display: none;
   }
 
