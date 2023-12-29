@@ -356,8 +356,38 @@
             <span class="txt-style">Fishing</span>
           </div>
 
-          <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
-            <swiper
+          <div class="platform-game-wrapper">
+            <div class="platform-game-container sport-platform">
+              <template v-for="(item, index) in fishing" :key="index">
+                <div
+                  class="platform-game-item btn-effect"
+                  v-if="item.name !== 'JOKER'"
+                  @click="openGame(item.name, item.code, '', item.status, 'FISH', item.id)"
+                  data-aos="zoom-in"
+                  :data-aos-delay="100 * index"
+                  data-aos-duration="1200"
+                  data-aos-once="true"
+                  data-aos-anchor="#slotsgames"
+                  data-aos-offset="300"
+                >
+                  <img src="../assets/images/index/fish/item-game-maintenance.png" />
+                  <div
+                    class="platform-game-item--img"
+                    :style="{
+                      backgroundImage: (() => {
+                        try {
+                          return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                        } catch (e) {
+                          return '';
+                        }
+                      })()
+                    }"
+                  ></div>
+                </div>
+              </template>
+            </div>
+
+            <!-- <swiper
               :slidesPerView="3.5"
               :spaceBetween="10"
               :scrollbar="{
@@ -395,10 +425,10 @@
                   </div>
                 </swiper-slide>
               </template>
-            </swiper>
+            </swiper> -->
           </div>
 
-          <div class="platform-game-wrapper" v-else>
+          <!-- <div class="platform-game-wrapper" v-else>
             <div
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -434,7 +464,7 @@
                 </div>
               </template>
             </div>
-          </div>
+          </div> -->
         </div>
       </template>
 
@@ -720,7 +750,7 @@
   </q-dialog> -->
   <WithdrawalModal ref="withdrawalModalRef"></WithdrawalModal>
 
-  <q-dialog width="100%" v-model="depositDialog" presistent>
+  <!-- <q-dialog width="100%" v-model="depositDialog" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" @click="closeDepositDialog" />
       <div class="popout-dialog-container popout-dialog-container--yel">
@@ -730,18 +760,18 @@
         <DepositComponent />
       </div>
     </div>
-  </q-dialog>
+  </q-dialog> -->
 
   <q-dialog width="100%" v-model="guestKYCDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
       <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
     </div>
   </q-dialog>
 
   <q-dialog width="100%" v-model="userKYCDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
@@ -884,12 +914,12 @@ const checkPlatform = () => {
   }
 };
 
-ui.$onAction(({ name, args }) => {
-  switch (name) {
-    case "setScrollPosition":
-      scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
-  }
-});
+// ui.$onAction(({ name, args }) => {
+//   switch (name) {
+//     case "setScrollPosition":
+//       scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
+//   }
+// });
 const qs = require("qs");
 const $q = useQuasar();
 const banners = ref(null);
@@ -1291,7 +1321,7 @@ onMounted(() => {
 .modal-update-div {
   .modalcontent {
     background: #fff;
-    height: 232px;
+    height: 180px;
     box-sizing: border-box;
 
     display: flex;
@@ -1350,7 +1380,7 @@ onMounted(() => {
       align-items: center;
       justify-content: space-between;
       padding: 0 20px;
-      margin-top: 23.5px;
+      margin-top: 0px;
 
       .cacnels {
         flex: 1;
@@ -1727,6 +1757,8 @@ onMounted(() => {
     position: absolute;
     right: 0px;
     top: 80px;
+    background: #cfcfcf;
+    color: #787878;
   }
 
   .popout-dialog-container--yel {

@@ -154,10 +154,10 @@
         </q-btn>
       </div>
 
-      <!-- 
+      <!--
         <div class="tip-container">
         <router-link class="landing-tip" to="/login">Already A Member? Sign In Now</router-link>
-      </div> 
+      </div>
     -->
     </q-form>
   </div>

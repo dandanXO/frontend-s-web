@@ -74,7 +74,7 @@
               @click="startRefresh"
             >
               <template v-slot:loading>
-                <q-spinner class="on-left" style="color: #AE6DEF" />
+                <q-spinner class="on-left" style="color: #ae6def" />
                 Updating...
               </template>
             </q-btn>
@@ -434,21 +434,21 @@
 
   <q-dialog width="100%" v-model="guestKYCDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" @click="closeGuestKYCDialog" />
+      <q-btn dense rounded icon="close" class="popout-close" @click="closeGuestKYCDialog" />
       <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
     </div>
   </q-dialog>
 
   <q-dialog width="100%" v-model="userKYCDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" @click="closeUserKYCDialog" />
+      <q-btn dense rounded icon="close" class="popout-close" @click="closeUserKYCDialog" />
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
 
   <q-dialog width="100%" v-model="verificationCodeDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">Captcha Code Check</div>
 
@@ -478,6 +478,22 @@
 
         <div class="q-mt-md q-pl-lg q-pr-lg">
           <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup @click="onCaptchaSubmit">Confirm</q-btn>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="confirmSignOutDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">Sign Out</div>
+
+        <div class="txt-content q-mt-md text-center">Are you sure you want to sign out?</div>
+
+        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+          <q-btn label="Cancel" no-caps class="btn-cancel" v-close-popup />
+          <q-btn label="Confirm" no-caps class="btn-confirm" @click="logout" />
         </div>
       </div>
     </div>
@@ -1161,6 +1177,11 @@ const resetChangePasswordInfo = () => {
   updatePwdInfo.oldPassword = "";
   updatePwdInfo.password = "";
 };
+
+const confirmSignOutDialog = ref(false);
+const openConfirmSignOutDialog = () => {
+  confirmSignOutDialog.value = !confirmSignOutDialog.value;
+};
 </script>
 
 <style lang="scss" scoped>
@@ -1169,7 +1190,7 @@ const resetChangePasswordInfo = () => {
 }
 
 .progress-container {
-  background: linear-gradient(180deg, #D29E3A 0%, #D65033 100%);
+  background: linear-gradient(180deg, #d29e3a 0%, #d65033 100%);
 }
 
 .infoboard-container {
@@ -1227,6 +1248,7 @@ const resetChangePasswordInfo = () => {
 
 .pc-form {
   margin-top: 20px;
+  width: 100%;
   .pc-form-item {
     display: flex;
     flex-direction: column;
@@ -1241,11 +1263,11 @@ const resetChangePasswordInfo = () => {
     position: relative;
 
     :deep(.q-field__control) {
-      background-color: #1E1F24 !important;
+      background: rgba(255, 255, 255, 0.15) !important;
     }
 
     :deep(.q-field__native) {
-      color: rgba(255, 255, 255, 0.60);
+      color: rgba(255, 255, 255, 0.6);
     }
   }
 
@@ -1279,8 +1301,8 @@ const resetChangePasswordInfo = () => {
   color: #ffffff;
   margin: auto;
   border-radius: 6px;
-  border: 1px solid rgba(232, 196, 255, 0.20);
-  background: rgba(88, 23, 170, 0.60);
+  border: 1px solid rgba(232, 196, 255, 0.2);
+  background: rgba(88, 23, 170, 0.6);
 
   &:active {
     filter: brightness(0.85);
@@ -1289,7 +1311,7 @@ const resetChangePasswordInfo = () => {
 }
 
 .pc-tip-chg-pwd {
-  color: #A73DFF;
+  color: #a73dff;
 }
 
 .pc-tip {
@@ -1308,15 +1330,33 @@ const resetChangePasswordInfo = () => {
 }
 
 .btn-refresh {
-  background: #48325A;
+  background: #48325a;
   border-radius: 8px;
   font-weight: 700;
   margin-top: auto;
-  color: #AE6DEF;
+  color: #ae6def;
   padding: 10px 20px;
 
   :deep(.q-icon) {
-    color: #AE6DEF;
+    color: #ae6def;
   }
+}
+
+.btn-cancel {
+  background: #ffffff20;
+  font-weight: 700;
+  color: #dcdcdc;
+  border: 1px solid #ffffff80;
+  border-radius: 8px;
+  width: 140px;
+  height: 42px;
+}
+.btn-confirm {
+  background: linear-gradient(187.94deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
+  font-weight: 700;
+  width: 140px;
+  height: 42px;
+  color: #5c46e7;
+  border-radius: 8px;
 }
 </style>

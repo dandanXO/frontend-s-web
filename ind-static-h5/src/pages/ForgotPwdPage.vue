@@ -5,15 +5,15 @@
         <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
       </router-link>
     </div>
-    <!-- 
+    <!--
       <div class="text-blue-grey">
       Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.
-    </div> 
+    </div>
   -->
 
     <div class="forgot-password-form-logo-img">
-    <img src="../assets/ind-win-7-logo.png" />
-  </div>
+      <img src="../assets/ind-win-7-logo.png" />
+    </div>
 
     <q-form v-if="!isRequestSent" class="q-gutter-y-md rounded-borders">
       <!-- <q-input
@@ -46,7 +46,9 @@
 
       <div class="forgot-password-form-grid">
         <span class="forgot-password-form-title">Forgot Password</span>
-        <span class="forgot-password-form-desc">Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.</span>
+        <span class="forgot-password-form-desc">
+          Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.
+        </span>
 
         <span class="forgot-password-form-field-label">Phone Number</span>
         <q-input
@@ -519,7 +521,7 @@ onMounted(() => {
 }
 
 .submit-btn {
-  background-color: #8B00FF;
+  background-color: #8b00ff;
   width: 100%;
   height: 56px;
   border-radius: 4px;
@@ -532,9 +534,12 @@ onMounted(() => {
     padding-right: 20px;
   }
   :deep(.q-field__control):before {
-    border-color: #1E1F24;
-    background-color: #1E1F24;
+    border-color: #1e1f24;
+    background-color: #1e1f24;
     border-width: 2px;
+  }
+  img {
+    z-index: 3;
   }
 }
 .password-str-div {

@@ -169,7 +169,7 @@ export default defineComponent({
           }
         } else if (route.path === "/account") {
           prevPage.value = "/";
-          hasPage.value = true;
+          hasPage.value = false;
           pageName.value = "";
         } else if (route.path === "/account/bank") {
           prevPage.value = "/account";
@@ -239,7 +239,7 @@ export default defineComponent({
             if (route.query.fromAccount) {
               prevPage.value = "/account/promotion";
             } else {
-              hasPage.value = true;
+              hasPage.value = false;
               prevPage.value = "/promo";
             }
           }
@@ -542,6 +542,7 @@ svg path {
   justify-content: space-between;
   margin: 0;
   padding: 1rem 0px;
+  height: 60px;
 
   img {
     width: 2.25rem;

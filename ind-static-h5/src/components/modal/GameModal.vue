@@ -24,7 +24,7 @@
 
           <div v-if="!drawerVisible" class="wallet-container">
             Add Cash &nbsp;
-            <q-btn dense rounded class="wallet-btn" @click="handleDrawerVisible">
+            <q-btn dense rounded class="wallet-btn" @click="goToDeposit()">
               <img src="../../assets/images/index/icon-wallet.png" />
             </q-btn>
           </div>
@@ -77,7 +77,7 @@
 
     <q-dialog width="100%" v-model="isExitDialogOpen" presistent>
       <div class="popout-dialog">
-        <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+        <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
         <div class="popout-dialog-container">
           <div class="txt-content q-mt-md text-center">Are you sure want to quit? Click Confirm to quit the game.</div>
           <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
@@ -224,6 +224,14 @@ const closeDialog = () => {
   if (isAndroid()) {
     screen.orientation.lock("portrait");
   }
+};
+
+const goToDeposit = () => {
+  closeDialog();
+  props.closeFullGameDialog();
+  setTimeout(() => {
+    router.push("/deposit");
+  }, 500);
 };
 
 const platformCodeImg = ref();

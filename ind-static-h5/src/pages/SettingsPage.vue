@@ -1,4 +1,6 @@
 <template>
+  <ProfileSummary :homeProfile="true" />
+
   <q-page>
     <div class="top-setting-section">
       <div class="top-section-inner">
@@ -138,6 +140,7 @@ import { ref } from "vue";
 import { userStore } from "src/stores";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
+import ProfileSummary from "../components/ProfileSummary.vue";
 
 const store = userStore();
 const router = useRouter();
@@ -258,8 +261,8 @@ const logout = () => {
     line-height: 36px;
     color: #fff;
     font-size: 26px;
-    margin: 0px auto 10px;
-    width: calc(330px + 100px);
+    margin: 0px 0px 10px;
+    // width: calc(330px + 100px);
     text-transform: uppercase;
   }
 }
