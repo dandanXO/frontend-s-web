@@ -276,8 +276,8 @@ export default defineComponent({
             promoCode: "jolly_event"
           }
         }).then((res) => {
-          if (res.data.data === false) {
-            btnHide.value = true
+          if (res.data.data === true) {
+            this.btnHide = false
           }
         })
       }
@@ -293,7 +293,7 @@ export default defineComponent({
     const lucky_number = ref("");
     const loading = ref(false);
     const btnLoading = ref(false);
-    const btnHide = ref(false);
+    const btnHide = ref(true);
     const isClaimModal = ref(false);
     const claimMsg = ref("");
     const formState = ref({
