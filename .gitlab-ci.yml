@@ -132,6 +132,7 @@ build-tf-manager-web:
   extends: .build-projects
   variables:
     PROJECT: tf-manager-web
+    NODE_OPTIONS: "--max-old-space-size=8192"
 
 build-image-tf-manager-web:
   extends: .docker-build
