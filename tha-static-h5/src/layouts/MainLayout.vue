@@ -447,7 +447,7 @@ export default defineComponent({
   }
 
   .footer-label {
-    color: #CD7A7C;
+    color: #C9C9C9;
   }
 
   .q-tab--active {
