@@ -340,7 +340,7 @@ export default defineComponent({
     }
 
     // promo timer
-    const endDate = new Date('12/30/2023 11:30:00').getTime();
+    const endDate = new Date('01/02/2024 12:00:00').getTime();
     const countdown = ref('');
     const isPromotionEnded = ref(false);
 
@@ -802,6 +802,7 @@ export default defineComponent({
         .hot-promo {
           background: #272c3d;
           border-radius: 10px;
+          display: none;
         }
 
         .promo-view-container {
