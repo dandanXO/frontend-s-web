@@ -170,7 +170,6 @@
           />
         </template>
       </el-table-column>
-      
       <el-table-column prop="participantStatus" :label="t('priviEvent.status')">
         <template #default="scope">
           <span v-if="scope.row.participantStatus === null">-</span>
@@ -179,7 +178,6 @@
           <span v-if="scope.row.participantStatus === 2"> {{ t('priviEvent.settled') }}</span>
         </template>
       </el-table-column>
-      
       <el-table-column :label="t('fields.operate')">
         <template #default="scope">
           <el-button
