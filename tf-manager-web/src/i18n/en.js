@@ -1969,7 +1969,13 @@ export default {
       IN_QUEUE: "IN QUEUE",
       IN_PROGRESS: "IN PROGRESS",
       SUCCESS: "SUCCESS",
-    }
+    },
+  },
+  priviEvent: {
+    status: 'Record Status',
+    cancel: 'Cancelled',
+    active: 'Active',
+    settled: 'Settled',
   },
   error: {
     400: 'Bad Request',

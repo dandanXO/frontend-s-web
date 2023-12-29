@@ -550,6 +550,7 @@ export default {
     21000: "This game is already in your favorite games list.",
     24001: "The attendance record already exists.",
     24002: "Detected same IP",
+    24005: "Does not meet the minimum deposit amount",
     30000: "Member data not found",
     30001: "Member has already received the promotion",
     30002: "Member has sent the number today",
