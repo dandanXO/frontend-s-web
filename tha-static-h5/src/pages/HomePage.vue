@@ -881,7 +881,6 @@
               <em>IPHONE</em>
             </span>
           </div>
-          <div class="btn-deco"><img src="../assets/images/common/home-popup-btn-deco.png" /></div>
         </router-link>
         <router-link to="/promo?id=80">
           <div class="popup-item">
@@ -892,7 +891,6 @@
               <em>20,000</em>
             </span>
           </div>
-          <div class="btn-deco"><img src="../assets/images/common/home-popup-btn-deco.png" /></div>
         </router-link>
         <!-- <router-link to="/promo?id=76">
           <div class="popup-item">
@@ -926,7 +924,6 @@
               ถอนไม่อั้น
             </span>
           </div>
-          <div class="btn-deco"><img src="../assets/images/common/home-popup-btn-deco.png" /></div>
         </router-link>
         <router-link to="/promo?id=76">
           <div class="popup-item">
@@ -936,7 +933,6 @@
               เล่นได้ทุกเกมส์ ถอนไม่อั้น
             </span>
           </div>
-          <div class="btn-deco"><img src="../assets/images/common/home-popup-btn-deco.png" /></div>
         </router-link>
       </div>
     </div>
@@ -2873,13 +2869,6 @@ export default defineComponent({
         margin: 0px 35px;
       }
     }
-
-    .btn-deco {
-      position: absolute;
-      top: 15%;
-      z-index: 1;
-      padding: 0 25px;
-    }
   }
 }
 
@@ -2944,7 +2933,7 @@ export default defineComponent({
     }
 
     .line-img {
-      width: 90px;
+      width: 80px;
       height: auto;
       margin: 0 auto;
     }

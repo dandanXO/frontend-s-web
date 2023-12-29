@@ -508,6 +508,10 @@ svg path {
   z-index: 9;
   opacity: 1;
 
+  .footer-icon {
+    width: 35px;
+  }
+
   .footer-icon-wrapper {
     // background: linear-gradient(90deg, #cf027d 0%, #ff6370 100%),
     //   linear-gradient(94.81deg, #fb3ca9 7.45%, #ffa9ab 95.9%);
