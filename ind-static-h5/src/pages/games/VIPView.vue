@@ -19,7 +19,7 @@
     <q-carousel
       class="vip bg-transparent"
       animated
-      v-model="vipCarousel"
+      v-model="vipCarouselIndex"
       arrows
       infinite
       swipeable
@@ -32,8 +32,7 @@
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
             <div
-              :class="`achieved-status ${vipLevel >= vip.vipLevel ? 'achieved' : 'not-achieved'}`">
-              {{ vipLevel >= vip.vipLevel ? "Accomplished" : "Not Yet" }}
+              :class="`vip-badge vip${vip.vipLevel}`">
             </div>
 
             <div class="vip-level-header">VIP{{ vip.vipLevel }}</div>
@@ -53,9 +52,11 @@
 
               <div class="progress-bar-container">
                 <div class="progress-bar-outer-bar">
+                  <span class="progress-bar-label">{{ getVipLevelProgress(vip).progressBarText }}</span>
+
                   <div
                     class="progress-bar-inner-bar"
-                    :style="{ width: getVipLevelProgress(vip) + '%' }"
+                    :style="{ width: getVipLevelProgress(vip).levelUpPercentage + '%' }"
                   />
                 </div>
                 <div class="progress-bar-desc">
@@ -259,16 +260,17 @@
 </template>
 
 <script setup>
-import { watch, ref } from "vue";
+import { watch, ref, onMounted } from "vue";
 import ProfileSummary from "components/ProfileSummary.vue";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 
+const vipLevel = ref("");
 const vipPromoTab = ref("vip");
 const router = useRouter();
 const route = useRoute();
 const store = userStore();
-const vipCarousel = ref(0);
+const vipCarouselIndex = ref(0);
 
 watch(() => vipPromoTab.value, () => {
   if(vipPromoTab.value === 'promo') {
@@ -292,7 +294,11 @@ const getVipLevelProgress = (vipInfo) => {
   }
 
   const levelUpDeposit = +upgradeStatus.replaceAll(",", "");
-  return (currentDeposit / levelUpDeposit) * 100;
+  return {
+    levelUpPercentage: (currentDeposit / levelUpDeposit) * 100,
+    progressBarText: `${currentDeposit} / ${levelUpDeposit}`
+
+  };
 };
 
 const columns = [
@@ -369,13 +375,40 @@ const rows = [
   }
 ];
 
-const vipItems = rows.map(({ name: vipName, ugprade: upgradeRequirement }) => {
+const { vipItems, lastVipLevel } = rows.reduce((acc, { name: vipName, ugprade: upgradeRequirement }) => {
   const vipLevelStr = vipName.replace("VIP ", "");
   const vipLevelNum = Number(vipLevelStr);
 
   return {
-    vipLevel: vipLevelNum,
-    ugprade: upgradeRequirement,
+    ...acc,
+    vipItems: [...acc.vipItems, {
+      vipLevel: vipLevelNum,
+      ugprade: upgradeRequirement
+    }],
+    lastVipLevel: vipLevelNum
+  }
+}, {
+  lastVipLevel: "",
+  vipItems: [],
+})
+
+onMounted(() => {
+  const vipLevelNum = Number(store.vip.replace("VIP", ""));
+  vipLevel.value = vipLevelNum;
+
+  // if vip0, show vip1 slide
+  if(vipLevelNum === 0) {
+    vipCarouselIndex.value = vipLevelNum;
+  }
+  // if vip level higher than existing info available, show last vip level slide
+  else if(vipLevelNum > lastVipLevel) {
+    // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
+    vipCarouselIndex.value = lastVipLevel - 1;
+  }
+  // show vip slide correspond to current vip level
+  else {
+    // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
+    vipCarouselIndex.value = vipLevelNum - 1;
   }
 })
 
@@ -637,84 +670,106 @@ const rows4 = [
   position: relative;
   display: flex;
   flex-direction: column-reverse;
-  background: url("../../assets/images/vip/badge/banner-1.png") no-repeat top center;
+  background: url("../../assets/images/vip/badge/banner.png") no-repeat top center;
   background-size: 100% 100%;
   height: 192px;
+  width: 100%;
   justify-content: flex-end;
   font-size: 12px;
 
-  &2 {
-    background: url("../../assets/images/vip/badge/banner-2.png") no-repeat top
-      center;
-    background-size: 100% 100%;
-  }
-
-  &3 {
-    background: url("../../assets/images/vip/badge/banner-3.png") no-repeat top
-      center;
-    background-size: 100% 100%;
-  }
-
-  &4 {
-    background: url("../../assets/images/vip/badge/banner-4.png") no-repeat top
-      center;
-    background-size: 100% 100%;
-  }
-
-  &5 {
-    background: url("../../assets/images/vip/badge/banner-5.png") no-repeat top
-      center;
-    background-size: 100% 100%;
-  }
-
-  &6 {
-    background: url("../../assets/images/vip/badge/banner-6.png") no-repeat top
-      center;
-    background-size: 100% 100%;
-  }
-
-  &7 {
-    background: url("../../assets/images/vip/badge/banner-7.png") no-repeat top
-      center;
-    background-size: 100% 100%;
-  }
-
-  &8, &9, &10, &11, &12 {
-    background: url("../../assets/images/vip/badge/banner-8.png") no-repeat top
-      center;
-    background-size: 100% 100%;
-  }
-
-  .achieved-status {
+  .vip-badge {
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1;
-    top: 4.5%;
-    left: 0px;
+    top: 0px;
+    left: 10px;
     background-repeat: no-repeat;
     background-position: top left;
     background-size: contain;
-    width: 100px;
-    height: 32px;
+    width: 102px;
+    height: 100px;
     color: #fff;
     position: absolute;
-    border-top-left-radius: 16px;
-    background: linear-gradient(90.38deg, #83817f 5.14%, #c5c5c5 67.7%, rgba(201, 201, 201, 0) 99.72%);
-    
-    &.achieved {
-      background: linear-gradient(90.38deg, #A37B40 5.14%, #CFB27B 67.7%, rgba(207, 178, 123, 0) 99.72%);
+
+    background: url("../../assets/images/vip/badge/vip1.png") no-repeat top center;
+    background-size: 100% 100%;
+
+    &.vip2 {
+      background: url("../../assets/images/vip/badge/vip2.png") no-repeat top
+        center;
+      background-size: 100% 100%;
+    }
+
+    &.vip3 {
+      background: url("../../assets/images/vip/badge/vip3.png") no-repeat top
+        center;
+      background-size: 100% 100%;
+    }
+
+    &.vip4 {
+      background: url("../../assets/images/vip/badge/vip4.png") no-repeat top
+        center;
+      background-size: 100% 100%;
+    }
+
+    &.vip5 {
+      background: url("../../assets/images/vip/badge/vip5.png") no-repeat top
+        center;
+      background-size: 100% 100%;
+    }
+
+    &.vip6 {
+      background: url("../../assets/images/vip/badge/vip6.png") no-repeat top
+        center;
+      background-size: 100% 100%;
+    }
+
+    &.vip7 {
+      background: url("../../assets/images/vip/badge/vip7.png") no-repeat top
+        center;
+      background-size: 100% 100%;
+    }
+
+    &.vip8 {
+      background: url("../../assets/images/vip/badge/vip8.png") no-repeat top
+        center;
+      background-size: 100% 100%;
+    }
+
+    &.vip9 {
+      background: url("../../assets/images/vip/badge/vip9.png") no-repeat top
+        center;
+      background-size: 100% 100%;
+    }
+
+    &.vip10 {
+      background: url("../../assets/images/vip/badge/vip10.png") no-repeat top
+        center;
+      background-size: 100% 100%;
+    }
+
+    &.vip11, &.vip12 {
+      background: none;
+      background-size: 100% 100%;
     }
   }
 
   .vip-level-header {
     font-size: 3.2em;
+    font-weight: 700;
+    -webkit-text-stroke: 2px #fff;
     top: 25%;
-    left: 5%;
-    font-style: italic;
+    right: 10%;
     z-index: 1;
     position: absolute;
-    color: #333333;
+    color: #8B36F8;
+    background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%),
+    linear-gradient(0deg, #FFFFFF, #FFFFFF);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
   }
 
   .vip-contents {
@@ -740,17 +795,29 @@ const rows4 = [
       right: 6%;
 
       .progress-bar-outer-bar {
+        border:3px solid #fff;
         border-radius: 16px;
-        background: grey;
+        background: #fff;
         width: 100%;
         overflow: hidden;
+        position: relative;
+
+        .progress-bar-label {
+          position: absolute;
+          margin-left: auto;
+          margin-right: auto;
+          left: 0;
+          right: 0;
+          text-align: center;
+          color: #333;
+        }
       }
 
       .progress-bar-inner-bar {
         color: #fff;
         border-radius: 16px;
-        background: linear-gradient(90deg, #e5cda5 0.87%, #b48f57 100%);
-        height: 10px;
+        background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%);
+        height: 16px;
       }
 
       .progress-bar-desc {
@@ -766,7 +833,6 @@ const rows4 = [
 
     .upgrade-requirements {
       position: absolute;
-      width: 100%;
       margin-bottom: 10px;
       display: flex;
       justify-content: flex-start;
