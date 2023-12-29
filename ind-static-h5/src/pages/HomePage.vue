@@ -1273,6 +1273,10 @@ const getAppDownloadUrl = () => {
 };
 
 const truncateText = (text, maxLength) => {
+  if (text === "JiliGames") {
+    text = "JILI";
+  }
+
   if (window.innerWidth <= 450) {
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
   } else {
