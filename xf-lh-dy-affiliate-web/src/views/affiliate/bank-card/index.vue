@@ -31,7 +31,7 @@
             <td :data-label="t('fields.cardAccount')">{{ item.cardAccount }}</td>
             <td :data-label="t('fields.cardAddress')">{{ item.cardAddress }}</td>
             <td>
-              <el-link type="primary" :underline="false" @click="confirmUnbind(item)">Unbind</el-link>
+              <el-link type="primary" :underline="false" @click="confirmUnbind(item)">{{ t('fields.unbind') }}</el-link>
               <!-- <svg-icon icon-class="unlink" @click="confirmUnbind(item)" /> -->
             </td>
           </tr>
@@ -106,7 +106,7 @@
             <td :data-label="t('fields.cardAccount')">{{ item.cardAccount }}</td>
             <td :data-label="t('fields.cardAddress')">{{ item.cardAddress }}</td>
             <td>
-              <el-link type="primary" :underline="false" @click="confirmUnbind(item)">Unbind</el-link>
+              <el-link type="primary" :underline="false" @click="confirmUnbind(item)">{{ t('fields.unbind') }}</el-link>
               <!-- <svg-icon icon-class="unlink" @click="confirmUnbind(item)" /> -->
             </td>
           </tr>
@@ -137,7 +137,7 @@
             <td :data-label="t('fields.cardAccount')">{{ item.cardAccount }}</td>
             <td :data-label="t('fields.cardAddress')">{{ item.cardAddress }}</td>
             <td>
-              <el-link type="primary" :underline="false" @click="confirmUnbind(item)">Unbind</el-link>
+              <el-link type="primary" :underline="false" @click="confirmUnbind(item)">{{ t('fields.unbind') }}</el-link>
               <!-- <svg-icon icon-class="unlink" @click="confirmUnbind(item)" /> -->
             </td>
           </tr>

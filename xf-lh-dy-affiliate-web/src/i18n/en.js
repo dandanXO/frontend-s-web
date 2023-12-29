@@ -390,6 +390,7 @@ export default {
     packSize: 'Pack Size',
     packDownloadUrl: 'Channel Pack Download Url',
     unchanged: 'Unchanged',
+    unbind: 'Unbind',
   },
   message: {
     adjustSuccess: 'Adjust Success',
@@ -514,14 +515,14 @@ export default {
     contactUs: 'Contact Us'
   },
   posterType: {
-    overall: 'Overall Referral',
-    app: 'APP Referral',
-    sponsor: 'Sponsor Referral',
-    gift: 'Gift Referral',
-    competition: 'Competition Referral',
-    event: 'Event Referral',
-    crypto: 'Crypto Referral',
-    affiliate: 'Affiliate Benefit',
+    OVERALL: 'Overall Referral',
+    APP: 'APP Referral',
+    SPONSOR: 'Sponsor Referral',
+    GIFT: 'Gift Referral',
+    COMPETITION: 'Competition Referral',
+    EVENT: 'Event Referral',
+    CRYPTO: 'Crypto Referral',
+    AFFILIATE: 'Affiliate Benefit',
   },
   packStatus: {
     IN_QUEUE: 'In Queue',
