@@ -48,7 +48,7 @@
             >
               <div class="upgrade-requirements">
                 <span v-if="vip.vipLevel !== '0'">Accummulate Deposit</span>
-                {{ vip.upgrade }}
+                {{ vip.ugprade }}
               </div>
 
               <div class="progress-bar-container">
