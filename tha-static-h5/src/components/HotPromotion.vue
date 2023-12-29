@@ -271,7 +271,11 @@ export default defineComponent({
     }
     if (this.list.promoCode === "jolly_event") {
       if (store.hasToken()) {
-        eventapi.get("/privi-christmas/check-deposit", qs.stringify({ promoCode: "jolly_event" })).then((res) => {
+        eventapi.get("/privi-christmas/check-deposit", {
+          params: {
+            promoCode: "jolly_event"
+          }
+        }).then((res) => {
           if (res.data.data === false) {
             btnHide.value = true
           }
