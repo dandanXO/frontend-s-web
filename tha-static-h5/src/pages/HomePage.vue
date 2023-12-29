@@ -3,8 +3,6 @@
     <div v-for="e in snowCount" :key="`snow-${e}`" class="snow"></div>
 
     <div class="home-banner-wrapper">
-      <div class="xmas-antler left"><img src="../assets/images/common/xmas-antler-left.png" /></div>
-      <div class="xmas-antler right"><img src="../assets/images/common/xmas-antler-right.png" /></div>
       <q-carousel
         :class="!$q.screen.gt.sm ? 'home-banner-h5' : 'home-banner-web'"
         autoplay
@@ -65,6 +63,7 @@
           :class="currentSelectedMenu == e.name ? 'active-board' : ''"
           @click="switchMenu(e.name, i)"
         >
+          <img class="active-flag" :src="require(`../assets/home/game-board-item-bg-active-flag.png`)" />
           <img :src="require(`../assets/images/index/${e.imgName}`)" />
           <span>{{ e.label }}</span>
         </div>
@@ -937,6 +936,7 @@
               เล่นได้ทุกเกมส์ ถอนไม่อั้น
             </span>
           </div>
+          <div class="btn-deco"><img src="../assets/images/common/home-popup-btn-deco.png" /></div>
         </router-link>
       </div>
     </div>
@@ -1931,19 +1931,6 @@ export default defineComponent({
 @import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
 .home-banner-wrapper {
   position: relative;
-
-  .xmas-antler {
-    position: absolute;
-    top: -25%;
-
-    &.left {
-      left: -10.5%;
-    }
-
-    &.right {
-      right: -10.5%;
-    }
-  }
 }
 
 .midd {
@@ -1959,8 +1946,8 @@ export default defineComponent({
 
   .station-notice-wrapper {
     display: flex;
-    border-radius: 8px;
-    border: 1px solid $border-color;
+    border-radius: 10px;
+    border: 1px solid #9C1103;
     gap: 10px;
     padding: 2px 10px;
     justify-content: center;
@@ -2061,8 +2048,8 @@ export default defineComponent({
   column-gap: 8px;
   row-gap: 14px;
   width: calc(100% - 20px);
-  background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
-  padding: 6px 12px 6px;
+  // background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
+  padding: 35px 12px 16px;
   border-radius: 12px;
   overflow-x: auto;
 
@@ -2081,15 +2068,31 @@ export default defineComponent({
     text-align: center;
     padding: 12px 12px;
     white-space: nowrap;
+    background: url("../assets/home/game-board-item-bg.png") no-repeat center center;
+    background-size: 100% 100%;
+    position: relative;
+
+    .active-flag {
+      display: none;
+    }
 
     &.active-board {
       // background: $linear-bg-4;
-      background: #5555aa;
+      background: url("../assets/home/game-board-item-bg-active.png") no-repeat center center;
+      background-size: 100% 100%;
+
+      .active-flag {
+        display: block;
+        position: absolute;
+        top: -32px;
+        left: 20px;
+        width: 31px;
+        height: 33px;
+      }
     }
 
     &:hover {
       filter: brightness(0.88);
-      background: #5555aa;
     }
 
     &:active {
@@ -2830,20 +2833,25 @@ export default defineComponent({
     }
 
     .popup-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 92%;
-      margin: 0 auto 14px;
-      border: 2px solid #d483ff;
-      background: rgba(52, 41, 97, 0.9);
+      margin: 0 auto;
+      // border: 2px solid #d483ff;
+      // background: rgba(52, 41, 97, 0.9);
       border-radius: 11px;
       //margin-bottom: 14px;
-      line-height: 30px;
-      font-size: 22px;
+      line-height: 20px;
+      font-size: 16px;
       text-align: center;
       padding: 8px;
-      box-shadow: 0px 3px 2px 0px #ddb2ff42 inset;
-      box-shadow: 0px 0px 5px 3px #8000ffd9;
+      // box-shadow: 0px 3px 2px 0px #ddb2ff42 inset;
+      // box-shadow: 0px 0px 5px 3px #8000ffd9;
       cursor: pointer;
       text-shadow: 1px 2px 2px #000000;
+      background: url("../assets/images/common/home-popup-item-bg.png") no-repeat center center;
+      background-size: 100% 100%;
 
       &:hover {
         opacity: 0.9;
@@ -2855,17 +2863,22 @@ export default defineComponent({
 
       em {
         color: #ecff17;
-        font-size: 26px;
+        font-size: 16px;
         font-weight: 600;
         font-style: normal;
+      }
+
+      span {
+        padding: 10px;
+        margin: 0px 35px;
       }
     }
 
     .btn-deco {
       position: absolute;
-      top: -5%;
+      top: 15%;
       z-index: 1;
-      padding: 0 20px;
+      padding: 0 25px;
     }
   }
 }
@@ -2911,8 +2924,8 @@ export default defineComponent({
     right: 0px;
     z-index: 15;
 
-    width: 152px;
-    height: 230px;
+    width: 125px;
+    height: 352px;
     background: url(../assets/home/xmas-line-btn.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -2927,17 +2940,17 @@ export default defineComponent({
     justify-content: flex-end;
 
     .line-title {
-      font-size: 18px;
+      font-size: 12px;
     }
 
     .line-img {
-      width: 100px;
+      width: 90px;
       height: auto;
       margin: 0 auto;
     }
 
     .line-bottom {
-      font-size: 16px;
+      font-size: 12px;
     }
   }
 }

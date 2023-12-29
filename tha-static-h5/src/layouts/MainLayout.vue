@@ -5,9 +5,6 @@
         <q-card-actions v-if="$q.screen.gt.md">
           <div class="btn-deco-wrapper">
             <q-btn size="md" class="register-btn" to="/register">{{ $t("lang.register") }}</q-btn>
-            <div class="btn-deco">
-              <img src="../assets/images/common/btn-snow.png" />
-            </div>
           </div>
         </q-card-actions>
         <div class="logo">
@@ -16,17 +13,11 @@
         <q-card-actions>
           <div class="btn-deco-wrapper">
             <q-btn size="md" class="login-btn" to="/login">{{ $t("lang.login") }}</q-btn>
-            <div class="btn-deco">
-              <img src="../assets/images/common/btn-snow.png" />
-            </div>
           </div>
           <div v-if="!$q.screen.gt.md" class="btn-deco-wrapper">
             <q-btn size="md" class="register-btn" to="/register">
               {{ $t("lang.register") }}
             </q-btn>
-            <div class="btn-deco">
-              <img src="../assets/images/common/btn-snow.png" />
-            </div>
           </div>
         </q-card-actions>
       </q-card-section>
@@ -40,10 +31,6 @@
           <span id="point-span">{{ mainWalletValue }}</span>
 
           <img class="btn-pointer" @click="store.getBalance()" src="../assets/images/menu/refresh-icon.png" />
-
-          <div class="btn-deco">
-            <img src="../assets/images/common/btn-snow.png" />
-          </div>
         </div>
 
         <div v-if="$q.screen.gt.md" class="logo">
@@ -107,20 +94,23 @@
       </div>
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
-      <img class="footer-deco left" src="../assets/images/common/xmas-footer-left.png" />
-
       <q-tabs v-model="tab" no-caps class="footer-nav" :breakpoint="0" align="justify">
         <q-route-tab to="/" name="home" exact>
           <img class="footer-icon" :src="tab === 'home' ? footers['home']['active'] : footers['home']['icon']" />
-          <span>{{ $t("lang.home_page") }}</span>
+          <span class="footer-label">{{ $t("lang.home_page") }}</span>
         </q-route-tab>
 
-        <q-route-tab to="/finance/withdraw" name="withdraw">
+        <q-route-tab to="/finance/deposit" name="deposit">
+          <img class="footer-icon" :src="tab === 'deposit' ? footers['deposit']['active'] : footers['deposit']['icon']" />
+          <span class="footer-label">{{ $t("lang.deposit_footer") }}</span>
+        </q-route-tab>
+
+        <q-route-tab to="/finance/withdraw" name="withdraw" class="middle-menu">
           <img
             class="footer-icon"
             :src="tab === 'withdraw' ? footers['withdraw']['active'] : footers['withdraw']['icon']"
           />
-          <span>{{ $t("lang.withdraw_footer") }}</span>
+          <span class="footer-label">{{ $t("lang.withdraw_footer") }}</span>
         </q-route-tab>
 
         <!-- <q-route-tab to="/finance/deposit" name="deposit">
@@ -137,14 +127,6 @@
           <span>{{ $t('lang.withdraw_footer') }}</span>
         </q-route-tab> -->
 
-        <q-route-tab to="/finance/deposit" name="deposit" class="middle-menu">
-          <div class="footer-icon-wrapper">
-            <img class="footer-icon" :src="footers['deposit']['icon']" />
-          </div>
-
-          <span>{{ $t("lang.deposit_footer") }}</span>
-        </q-route-tab>
-
         <!-- <q-route-tab to="/account/mail" name="notice">
           <img class="footer-icon"
                :src="(tab === 'notice') ? footers['notice']['active']  :  footers['notice']['icon'] "/>
@@ -152,7 +134,7 @@
         </q-route-tab> -->
         <q-route-tab to="/getapp" name="app">
           <img class="footer-icon" :src="tab === 'app' ? footers['app']['active'] : footers['app']['icon']" />
-          <span>APP</span>
+          <span class="footer-label">APP</span>
         </q-route-tab>
         <q-route-tab to="/liveChat" id="cs-web-id" class="cs-web-id" name="cs" @click="openLiveChat($event, router)">
           <img
@@ -160,11 +142,9 @@
             :class="tab != 'cs' ? 'breathing-icon' : ''"
             :src="tab === 'cs' ? footers['cs']['active'] : footers['cs']['icon']"
           />
-          <span>{{ $t("lang.cs_footer") }}</span>
+          <span class="footer-label">{{ $t("lang.cs_footer") }}</span>
         </q-route-tab>
       </q-tabs>
-
-      <img class="footer-deco right" src="../assets/images/common/xmas-footer-right.png" />
     </q-footer>
   </q-layout>
 </template>
@@ -460,6 +440,23 @@ export default defineComponent({
 }
 </style>
 <style scoped lang="scss">
+
+.footer-nav {
+  .footer-label {
+    font-weight: normal;
+  }
+
+  .footer-label {
+    color: #CD7A7C;
+  }
+
+  .q-tab--active {
+    .footer-label {
+      color: #FFFFFF;
+      -webkit-text-fill-color: #FFFFFF;
+    }
+  }
+}
 path {
   stroke-width: 0.5;
   stroke-dasharray: 3212;
@@ -490,21 +487,6 @@ svg path {
 
   :deep(.q-hoverable:hover) {
     filter: brightness(1.3);
-  }
-}
-
-.footer-deco {
-  position: absolute;
-  bottom: 0;
-  height: 100%;
-  padding: 0 20px;
-
-  &.left {
-    left: 0;
-  }
-
-  &.right {
-    right: 0;
   }
 }
 
@@ -639,18 +621,6 @@ svg path {
   position: relative;
 }
 
-.btn-deco {
-  position: absolute;
-  top: -50%;
-  width: 100%;
-  height: 26px;
-  z-index: 0;
-
-  img {
-    width: 100%;
-  }
-}
-
 .drawer-container {
   padding: 10px 16px;
   width: calc(100%);
@@ -687,12 +657,6 @@ svg path {
   }
   .header-vip-btn {
     margin-left: 130px;
-  }
-}
-
-@media (max-width: 1280px) {
-  .footer-deco {
-    display: none;
   }
 }
 </style>

@@ -13,6 +13,8 @@ body {
 
 #q-app {
   background: $dark-page;
+  background: url("../assets/images/common/bg-img.png") no-repeat top center;
+  background-size: cover;
 }
 
 ::-webkit-scrollbar {
@@ -61,10 +63,6 @@ body {
 }
 
 .main-section {
-  background-image: url("../assets/images/common/bg-img.png");
-  background-position: top center;
-  background-repeat: no-repeat;
-  background-size: cover;
   min-height: calc(100vh - 60px);
 }
 
@@ -79,15 +77,18 @@ body.body--dark {
 
 body.body--dark .q-header {
   background-image: url(../assets/images/common/header-btm-bg.png);
-  background-size: contain;
+  background-size: cover;
   background-position: top center;
+  background-repeat: no-repeat;
   height: 60px;
 
   .q-card__section {
+    /*
     background-image: url(../assets/images/common/bg-header.png);
     background-size: 100% auto;
     background-position: top;
     background-repeat: no-repeat;
+    */
     height: 100%;
 
     max-width: 1280px;
@@ -644,8 +645,8 @@ input:internal-autofill-selected {
 }
 
 @media (min-width: 991px) {
-  .main-section {
-    background-image: url("../assets/images/common/bg-web.png");
+  #q-app {
+    background: url("../assets/images/common/bg-web.png") no-repeat top center;
     background-size: cover;
   }
 }
