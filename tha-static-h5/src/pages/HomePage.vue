@@ -2936,6 +2936,7 @@ export default defineComponent({
       width: 80px;
       height: auto;
       margin: 0 auto;
+      background: #fff;
     }
 
     .line-bottom {
