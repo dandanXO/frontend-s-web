@@ -34,7 +34,7 @@ default:
       - node_modules
   image: $CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX/node:16.17.0
   script:
-    - echo "NODE_OPTIONS in .build-projects: $NODE_OPTIONS"
+    - echo "NODE_OPTIONS: $NODE_OPTIONS"
     - cd $PROJECT
     - npm install
     - npm install -g @quasar/cli
@@ -132,7 +132,6 @@ build-tf-manager-web:
   extends: .build-projects
   variables:
     PROJECT: tf-manager-web
-    NODE_OPTIONS: "--max-old-space-size=8192"
 
 build-image-tf-manager-web:
   extends: .docker-build
