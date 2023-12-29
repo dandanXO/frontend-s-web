@@ -18,7 +18,7 @@
     <div>
       <div class="percentage-wrapper">
         <div class="percentage">{{ memberVIPData.rate }}%</div>
-        <div class="percentage">{{ memberVIPData.nextRebateLevel }}%</div>
+        <div class="percentage">{{ memberVIPData.nextLevelRate }}%</div>
       </div>
       <div class="rate-wrapper">
         <div class="rate">Rate</div>
@@ -62,7 +62,7 @@
       </div>
     </div>
     <div class="chart">
-      <Bar :data="chartData.data" :options="chartData.options" />
+      <Bar ref="chartRef" :data="chartData.data" :options="chartData.options" />
     </div>
   </div>
 
@@ -105,7 +105,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive } from "vue";
+import { onMounted, ref, reactive, computed } from "vue";
 import { api } from "boot/axios";
 import NoInfoComponent from "../NoInfoComponent.vue";
 import LoadingComponent from "../LoadingComponent.vue";
@@ -149,6 +149,7 @@ const getVIPApi = () => {
     const { code, data } = res;
     if (code === 0) {
       memberVIPData.rate = data.rate;
+      memberVIPData.nextLevelRate = data.nextLevelRate;
       memberVIPData.memberCount = data.memberCount;
       memberVIPData.totalValidBet = data.totalValidBet;
     }
@@ -158,14 +159,13 @@ const getVIPApi = () => {
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 const chartData = reactive({
   data: {
-    labels: ["18 Dec", "19 Dec", "20 Dec", "21 Dec", "22 Dec", "23 Dec"],
+    labels: [],
     datasets: [
       {
         label: "Member",
-        // data: [10000, 20000, 30000, 20000, 10000, 5000, 5000],
-        data: [0, 0, 0, 0, 0, 0, 0],
-        backgroundColor: ["", "", "", "", "", "", ""],
-        borderRadius: ["6", "6", "6", "6", "6", "6", "6"]
+        data: [],
+        backgroundColor: [],
+        borderRadius: []
       }
     ]
   },
@@ -193,6 +193,7 @@ const chartData = reactive({
     }
   }
 });
+const chartRef = ref();
 
 const totalBetRabteDailyDetailsData = reactive({
   recordTime: "",
@@ -212,7 +213,11 @@ const getChartAPI = () => {
         totalBetRabteDailyDetailsData.rebateAmount += e.rebateAmount;
         totalBetRabteDailyDetailsData.memberCount += e.memberCount;
 
+        chartRef.value.chart.data.datasets[0].data[i] = e.validBet;
+
         chartData.data.datasets[0].data[i] = e.validBet;
+        chartData.data.datasets[0].borderRadius[i] = 6;
+        chartData.data.labels[i] = moment(e.recordTime).format("DD MMM");
       });
 
       const max = Math.max(...chartData.data.datasets[0].data);
@@ -220,6 +225,9 @@ const getChartAPI = () => {
         if (e === max) chartData.data.datasets[0].backgroundColor[i] = "#FFB100";
         else chartData.data.datasets[0].backgroundColor[i] = "#574BA0";
       });
+
+      chartRef.value.chart.update();
+      chartRef.value.chart.render();
     }
   });
 };
