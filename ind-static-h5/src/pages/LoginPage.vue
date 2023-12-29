@@ -402,7 +402,7 @@ export default defineComponent({
 
       (async () => {
         // guestLoginInfo.sid = guestDeviceInfo.value;
-        guestLoginInfo.sid = store.getAaid();
+        guestLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
 
         api
           .post("/member/quickRegister", qs.stringify(guestLoginInfo))

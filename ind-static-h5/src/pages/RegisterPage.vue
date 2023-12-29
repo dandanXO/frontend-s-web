@@ -337,8 +337,9 @@ export default defineComponent({
           excludes.value.forEach((element) => {
             delete allComponents[element];
           });
-          const sidParam = FingerprintJS.hashComponents(allComponents);
-          regForm.sid = store.aaid ? store.aaid : sidParam;
+          // const sidParam = FingerprintJS.hashComponents(allComponents);
+          regForm.sid = store.googleadid ? store.googleadid : store.aaid;
+
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
           if ("standalone" in window.navigator && window.navigator.standalone) {
             regForm.regDevice = "IOS";
