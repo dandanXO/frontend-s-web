@@ -166,7 +166,7 @@ onUnmounted(() => {
       background: linear-gradient(180deg, rgba(145, 1, 1, 0.4) 0%, rgba(61, 25, 23, 0) 100%);
 
       .iphone {
-        color: #ffa3e0;
+        color: #FFB800;
         text-align: center;
         font-family: Arial;
         font-size: 12px;
