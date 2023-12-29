@@ -285,7 +285,7 @@ watch(() => route.path, () => {
 const getVipLevelProgress = (vipInfo) => {
   const vipLevel = Number(store.vip.replace("VIP", ""));
   const currentDeposit = Number(store.getCurrentDeposit());
-  const upgradeStatus = vipInfo.upgrade;
+  const upgradeStatus = vipInfo.ugprade;
 
   if (vipLevel > +vipInfo.vipLevel) {
     return 100;
