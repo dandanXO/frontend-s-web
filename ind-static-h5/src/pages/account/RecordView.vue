@@ -91,6 +91,8 @@ import NoInfoComponent from "../../components/NoInfoComponent.vue";
 const router = useRouter();
 const store = userStore();
 
+const qs = require("qs");
+
 let slideList = ref(["Record", "Order", "Bank", "Message", "Personal Center", "Discount"]);
 let slideListPath = ref([
   "/account/record",
@@ -137,6 +139,8 @@ const onNextPageClick = () => {
   searchRecord();
 };
 
+// api.post("/memberAccessLog", qs.stringify(obj))
+
 const searchRecord = (isNewSearch) => {
   if (!searchForm.startDate || !searchForm.endDate) {
     return;
@@ -150,17 +154,31 @@ const searchRecord = (isNewSearch) => {
   gameBetRecordData.value = [];
 
   const { startDate, endDate, platform } = searchForm;
+  // const paramsInfo = {
+  //   startDate,
+  //   endDate,
+  //   platform,
+  //   memberId: store.id,
+  //   current: pagination.current,
+  //   size: pagination.pageSize,
+  //   pagingState: pagination.pagingState
+  // };
+
+  // api.post(`/otp/sendNewEmail`, qs.stringify({
+  //       email: formDetail.email,
+  //       captchaCode: innerCaptchaRef.value,
+  //       codeId: updateSecurityVerified.codeId
+  //     }))
+
   api
-    .get("/session/member/cassandraBetRecord", {
-      params: {
-        startDate,
-        endDate,
-        platform,
-        memberId: store.id,
-        current: pagination.current,
-        size: pagination.pageSize,
-        pagingState: pagination.pagingState
-      }
+    .post("/session/member/cassandraBetRecord", {
+      startDate,
+      endDate,
+      platform,
+      memberId: store.id,
+      current: pagination.current,
+      size: pagination.pageSize,
+      pagingState: pagination.pagingState
     })
     .then((response) => {
       const { code, data } = response;

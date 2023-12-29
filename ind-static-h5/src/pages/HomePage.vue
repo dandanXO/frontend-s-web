@@ -358,13 +358,49 @@
       <template
         v-if="(category.title === 'Fishing' && category.active) || (category.title === 'Lobby' && category.active)"
       >
-        <div class="games-selection-wrapper" id="fishing">
+        <div class="games-selection-wrapper" id="fishing" v-if="category.title === 'Lobby' && category.active">
           <div class="title-game">
             <span class="txt-style">Fishing</span>
           </div>
 
           <div class="platform-game-wrapper">
-            <div class="platform-game-container sport-platform">
+            <swiper
+              :slidesPerView="3.5"
+              :spaceBetween="10"
+              :scrollbar="{
+                hide: true
+              }"
+              :modules="gameModules"
+              class="platform-game-container"
+            >
+              <template v-for="(item, index) in fishGameList" :key="index">
+                <swiper-slide
+                  class="platform-game-item btn-effect"
+                  @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                >
+                  <div
+                    data-aos="zoom-in"
+                    :data-aos-delay="100 * index"
+                    data-aos-duration="1200"
+                    data-aos-once="true"
+                    data-aos-anchor="#home"
+                  >
+                    <div class="platform-game-img">
+                      <div
+                        class="game--bg"
+                        :style="{
+                          backgroundImage: `url(${imgURLGame}${item.icon})`
+                        }"
+                      ></div>
+                    </div>
+
+                    <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
+                  </div>
+                </swiper-slide>
+              </template>
+            </swiper>
+
+            <!-- <div class="platform-game-container sport-platform">
               <template v-for="(item, index) in fishing" :key="index">
                 <div
                   class="platform-game-item btn-effect"
@@ -392,7 +428,7 @@
                   ></div>
                 </div>
               </template>
-            </div>
+            </div> -->
 
             <!-- <swiper
               :slidesPerView="3.5"
@@ -472,6 +508,31 @@
               </template>
             </div>
           </div> -->
+        </div>
+
+        <div class="platform-game-container grid-view" v-else>
+          <template v-for="(item, index) in fishGameList" :key="index">
+            <div
+              class="platform-game-item btn-effect"
+              @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+              data-aos="zoom-in"
+              data-aos-delay="100"
+              data-aos-duration="1200"
+              data-aos-once="true"
+              data-aos-anchor="#hotgames"
+            >
+              <div class="platform-game-img">
+                <div
+                  class="game--bg"
+                  :style="{
+                    backgroundImage: `url(${imgURLGame}${item.icon})`
+                  }"
+                ></div>
+
+                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
+              </div>
+            </div>
+          </template>
         </div>
       </template>
 
@@ -1013,6 +1074,179 @@ const loadHotGameList = () => {
       hotGameList.value = res;
     });
 };
+
+const fishGameList = ref([
+  {
+    id: 8989,
+    name: "Dinosaur Tycoon II",
+    code: "212",
+    status: "OPEN",
+    icon: "5/JILI/212.png",
+    sequence: 0,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "admin",
+    updateTime: "9/29/23, 2:31 PM"
+  },
+  {
+    id: 8926,
+    name: "Bombing Fishing",
+    code: "20",
+    status: "OPEN",
+    icon: "5/JILI/20.png",
+    sequence: 1,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "admin",
+    updateTime: "9/29/23, 2:31 PM"
+  },
+  {
+    id: 8985,
+    name: "Royal Fishing",
+    code: "1",
+    status: "OPEN",
+    icon: "5/JILI/1.png",
+    sequence: 1,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "admin",
+    updateTime: "9/29/23, 2:31 PM"
+  },
+  {
+    id: 8927,
+    name: "Dinosaur Tycoon",
+    code: "42",
+    status: "OPEN",
+    icon: "5/JILI/42.png",
+    sequence: 2,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "admin",
+    updateTime: "10/30/23, 2:36 PM"
+  },
+  {
+    id: 8928,
+    name: "Jackpot Fishing",
+    code: "32",
+    status: "OPEN",
+    icon: "5/JILI/32.png",
+    sequence: 3,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "admin",
+    updateTime: "9/29/23, 2:31 PM"
+  },
+  {
+    id: 8929,
+    name: "Dragon Fortune",
+    code: "60",
+    status: "OPEN",
+    icon: "5/JILI/60.png",
+    sequence: 4,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "admin",
+    updateTime: "9/29/23, 2:31 PM"
+  },
+  {
+    id: 8930,
+    name: "Mega Fishing",
+    code: "74",
+    status: "OPEN",
+    icon: "5/JILI/74.png",
+    sequence: 5,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "admin",
+    updateTime: "9/29/23, 2:31 PM"
+  },
+  {
+    id: 8931,
+    name: "Boom Legend",
+    code: "71",
+    status: "OPEN",
+    icon: "5/JILI/71.png",
+    sequence: 6,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "admin",
+    updateTime: "9/29/23, 2:31 PM"
+  },
+  {
+    id: 8932,
+    name: "Happy Fishing",
+    code: "82",
+    status: "OPEN",
+    icon: "5/JILI/82.png",
+    sequence: 7,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "admin",
+    updateTime: "10/30/23, 2:36 PM"
+  },
+  {
+    id: 8933,
+    name: "All-star Fishing",
+    code: "119",
+    status: "OPEN",
+    icon: "5/JILI/119.png",
+    sequence: 8,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "admin",
+    updateTime: "9/29/23, 2:31 PM"
+  }
+]);
 
 const isShowAllHotGames = ref(false);
 const scrollDownHotGames = () => {
@@ -2347,6 +2581,7 @@ onMounted(() => {
   border-radius: 4px;
   padding-top: 6px;
   transition: 0.3s all;
+  width: 100%;
 
   &.active {
     background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
