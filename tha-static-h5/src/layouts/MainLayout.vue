@@ -100,17 +100,20 @@
           <span class="footer-label">{{ $t("lang.home_page") }}</span>
         </q-route-tab>
 
-        <q-route-tab to="/finance/deposit" name="deposit">
-          <img class="footer-icon" :src="tab === 'deposit' ? footers['deposit']['active'] : footers['deposit']['icon']" />
-          <span class="footer-label">{{ $t("lang.deposit_footer") }}</span>
-        </q-route-tab>
-
-        <q-route-tab to="/finance/withdraw" name="withdraw" class="middle-menu">
+        <q-route-tab to="/finance/withdraw" name="withdraw">
           <img
             class="footer-icon"
             :src="tab === 'withdraw' ? footers['withdraw']['active'] : footers['withdraw']['icon']"
           />
           <span class="footer-label">{{ $t("lang.withdraw_footer") }}</span>
+        </q-route-tab>
+
+        <q-route-tab to="/finance/deposit" name="deposit" class="middle-menu">
+          <img
+            class="footer-icon"
+            :src="tab === 'deposit' ? footers['deposit']['active'] : footers['deposit']['icon']"
+          />
+          <span class="footer-label">{{ $t("lang.deposit_footer") }}</span>
         </q-route-tab>
 
         <!-- <q-route-tab to="/finance/deposit" name="deposit">
@@ -440,20 +443,19 @@ export default defineComponent({
 }
 </style>
 <style scoped lang="scss">
-
 .footer-nav {
   .footer-label {
     font-weight: normal;
   }
 
   .footer-label {
-    color: #C9C9C9;
+    color: #c9c9c9;
   }
 
   .q-tab--active {
     .footer-label {
-      color: #FFFFFF;
-      -webkit-text-fill-color: #FFFFFF;
+      color: #ffffff;
+      -webkit-text-fill-color: #ffffff;
     }
   }
 }
