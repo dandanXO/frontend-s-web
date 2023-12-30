@@ -1452,6 +1452,7 @@ export default {
     updateProceed: 'Update nodes to proceed to payment edit',
     updateRiskLevelSuccess: 'Update Risk Level Success',
     updateSuccess: 'Update Success',
+    updateWithdraw: 'Update Withdraw',
     updateTimeTypeSuccess: 'Update Time Type Success',
     updateToApplySuccess: 'Update to Apply Success',
     updateToBeforePaidSuccess: 'Update to Before Paid Success',
@@ -1711,7 +1712,8 @@ export default {
     validatePosterTypeRequired: 'Poster Type is required',
     validateConfigCodeRequired: 'Config Code is required',
     validateConfigValueRequired: 'Config Value is required',
-    resultCalculateSuccess: 'Result is calculated successfully'
+    resultCalculateSuccess: 'Result is calculated successfully',
+    buildIsInQueue: 'Build is in queue',
   },
   menu: {
     undefined: '',
@@ -1753,6 +1755,7 @@ export default {
     'Deposit Management': 'Deposit Management',
     'Online Deposit': 'Online Deposit',
     'Deposit Record': 'Deposit Record',
+    'Withdrawal Auto Process': 'Withdrawal Auto Process',
     'Withdrawal Management': 'Withdrawal Management',
     'Withdrawal Process': 'Withdrawal Process',
     'Withdrawal Affiliate Process': 'Withdrawal Affiliate Process',
@@ -1781,6 +1784,8 @@ export default {
     'Alipay Payment on going': 'Alipay Paying',
     'Automatic Payment': 'Automatic Paying',
     'Waiting Auto Pay': 'Waiting Auto Pay',
+    'AutoWithdraw Under review': 'Under review',
+    'AutoWithdraw Withdrawal Record': 'Withdrawal Record',
     Suspend: 'Suspend',
     Promotion: 'Promotion',
     'Privilege Info': 'Privilege Info',
@@ -1883,6 +1888,7 @@ export default {
     GoogleAuth: 'Google Auth',
     'Image Setting': 'Image Setting',
     'Privi Christmas': 'Merry Christmas',
+    'Affiliate APK Build': 'Affiliate APK Build',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -1956,6 +1962,24 @@ export default {
     NEW_KEY: 'Antivirus',
     appUpload: 'App Upload',
     editAppUpload: 'Edit App Upload',
+  },
+  affiliateApk: {
+    currentVersion: "Current Version",
+    buildStatus: "Build Status",
+    latestVersion: "Latest Version",
+    buildApk: "Build APK",
+    editParam: "Edit Param",
+    status: {
+      IN_QUEUE: "IN QUEUE",
+      IN_PROGRESS: "IN PROGRESS",
+      SUCCESS: "SUCCESS",
+    },
+  },
+  priviEvent: {
+    status: 'Record Status',
+    cancel: 'Cancelled',
+    active: 'Active',
+    settled: 'Settled',
   },
   error: {
     400: 'Bad Request',

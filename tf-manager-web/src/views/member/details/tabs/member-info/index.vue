@@ -562,6 +562,22 @@
             </div>
           </el-descriptions-item>
         </el-descriptions>
+        <el-descriptions :column="3" style="margin-top: 10px">
+          <el-descriptions-item :label="t('fields.bet')">
+            <div style="display: inline-block;" v-loading="loading.total">
+              <div class="balance">
+                $ <span v-formatter="{data: memberDetail.totalBet,type: 'money'}" />
+              </div>
+            </div>
+          </el-descriptions-item>
+          <el-descriptions-item :label="t('fields.payout')">
+            <div style="display: inline-block;" v-loading="loading.total">
+              <div class="balance">
+                $ <span v-formatter="{data: memberDetail.totalPayout,type: 'money'}" />
+              </div>
+            </div>
+          </el-descriptions-item>
+        </el-descriptions>
       </div>
     </el-card>
 
@@ -1639,7 +1655,7 @@ export default defineComponent({
   flex: 1;
 
   * {
-    // add back paddings supposed to be present
+    // add back paddings supposed to be present 1
     padding-top: 10px;
     padding-bottom: 10px;
     display: flex;

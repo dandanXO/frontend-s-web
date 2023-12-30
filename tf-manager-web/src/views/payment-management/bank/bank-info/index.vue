@@ -2,10 +2,25 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
+        <el-select
+          v-model="siteId.value"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+          @change="handleSiteChange()"
+        >
+          <el-option
+            v-for="item in list.sites"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-input
           v-model="request.name"
           size="small"
-          style="width: 200px"
+          style="width: 200px; margin-left: 5px"
           :placeholder="t('fields.bankName')"
         />
         <el-input
@@ -456,6 +471,10 @@ const request = reactive({
   current: 1,
   name: null,
   code: null,
+  currencyIds: null,
+})
+const siteId = reactive({
+  value: null,
 })
 const imageRequest = reactive({
   size: 10,
@@ -501,6 +520,7 @@ const page = reactive({
 const list = reactive({
   currencies: [],
   payTypes: [],
+  sites: [],
 })
 
 const selected = reactive({ currency: [] })
@@ -569,6 +589,11 @@ function handleChangeCurrencies() {
   if (!uiControl.dialogTitle.includes('Add')) {
     traceEditing()
   }
+}
+
+function handleSiteChange() {
+  getCurrencyIds()
+  loadBankInfo()
 }
 
 function traceEditing() {
@@ -663,6 +688,7 @@ function showEdit(banner) {
 }
 
 async function loadBankInfo() {
+  console.log('request', request)
   const { data: ret } = await getBankInfoList(request)
   page.pages = ret.pages
   page.records = ret.records
@@ -747,6 +773,21 @@ async function browseImage() {
 async function loadSites() {
   const { data: ret } = await getSiteListSimple()
   sites.list = ret
+  list.sites = ret
+}
+
+function getCurrencyIds() {
+  site.value = list.sites.find(s => s.id === siteId.value)
+  const currencyCodeList = site.value.currency.split(',').map(currencyName => currencyName);
+  request.currencyIds = currencyCodeList.reduce((acc, currencyName) => {
+    const currency = list.currencies.find(c => c.currencyCode.toUpperCase() === currencyName.toUpperCase());
+    if (currency) {
+      acc.push(currency.id);
+    }
+    return acc;
+  }, []);
+
+  request.currencyIds = request.currencyIds.join(',');
 }
 
 // async function attachPhoto(event) {
@@ -793,13 +834,20 @@ async function loadSites() {
 // }
 
 onMounted(async () => {
-  loadBankInfo()
-  loadCurrency()
-  loadPayTypes()
+  await loadCurrency()
   await loadSites();
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     sites.list = sites.list.find(s => s.siteName === store.state.user.siteName);
+    site.value = list.sites.find(s => s.siteName === store.state.user.siteName);
+    siteId.value = site.value.id
+  } else {
+    site.value = list.sites[0];
+    siteId.value = site.value.id
   }
+
+  getCurrencyIds()
+  loadBankInfo()
+  loadPayTypes()
 })
 </script>
 

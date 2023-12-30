@@ -15,9 +15,11 @@
 $primary: #342961;
 $main-color: #342961;
 $secondary: #433481;
-$third-color: #151553;
+//$third-color: #151553;
+$third-color: rgba(0,0,0,0.3);
 $header-color: #E2A4FF;
-$border-color: #8385D7;
+//$border-color: #8385D7;
+$border-color: #de4545;
 $panel-bg-color: #141452;
 
 $dark-page: #000028;
@@ -34,17 +36,22 @@ $line-app: #00b900;
 $lightblue-color: #6DDCFF;
 $red-color: #de4545;
 $pink-color: #FB4BFF;
-$purple-color: #A840FB;
+$purple-color: #FF6D6D
+;
 
 $warning: #f2c037;
 
 
 $linear-bg-1: linear-gradient(90deg, #CF027D 0%, #FF6370 100%), linear-gradient(94.81deg, #FB3CA9 7.45%, #FFA9AB 95.9%);
-$linear-bg-2: linear-gradient(90deg, #8002EC 0%, #CD43FE 100%), linear-gradient(94.81deg, #A840FB 7.45%, #E291FF 95.9%);
+//$linear-bg-2: linear-gradient(90deg, #8002EC 0%, #CD43FE 100%), linear-gradient(94.81deg, #A840FB 7.45%, #E291FF 95.9%);
+$linear-bg-2: linear-gradient(180deg, #EC4700 0%, #A00000 100%);
 $linear-bg-3: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
 $linear-bg-4: linear-gradient(360deg, rgba(132, 133, 255, 0.95) -3.64%, rgba(93, 95, 239, 0.51) 100%);
 $linear-bg-gray: linear-gradient(94.81deg, #767676 7.45%, #CFCFCF 95.9%), linear-gradient(90deg, #DBDBDB 0%, #979797 100%);
 $linear-bg-red: linear-gradient(to right, #de4545, #db7e42);
+
+$linear-bg-new: linear-gradient(180deg, #EC4700 0%, #A00000 100%);
+
 
 $text-gray: #D9D9D9;
 $text-footer: #AFA0E2;

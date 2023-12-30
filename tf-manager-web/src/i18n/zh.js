@@ -1443,6 +1443,7 @@ export default {
     updateProceed: '更新节点以进行付款编辑',
     updateRiskLevelSuccess: '更新风险等级成功',
     updateSuccess: '更新成功',
+    updateWithdraw: '成功提交出款',
     updateTimeTypeSuccess: '更新时间类型成功',
     updateToApplySuccess: '成功更新至申请中状态',
     updateToBeforePaidSuccess: '成功更新至待支付状态',
@@ -1687,7 +1688,8 @@ export default {
     validatePosterTypeRequired: '海报类别必填',
     validateConfigCodeRequired: '设置Code必填',
     validateConfigValueRequired: '设置值必填',
-    resultCalculateSuccess: '结果结算成功'
+    resultCalculateSuccess: '结果结算成功',
+    buildIsInQueue: '构建等待中',
   },
   menu: {
     undefined: '',
@@ -1728,6 +1730,7 @@ export default {
     'Deposit Management': '存款管理',
     'Online Deposit': '线上存款',
     'Deposit Record': '存款记录',
+    'Withdrawal Auto Process': '自动提款流程',
     'Withdrawal Management': '提款管理',
     'Withdrawal Process': '提款流程',
     'Withdrawal Affiliate Process': '代理提款流程',
@@ -1756,6 +1759,8 @@ export default {
     'Alipay Payment on going': '支付宝支付中',
     'Automatic Payment': '自动支付',
     'Waiting Auto Pay': '等待自动支付',
+    'AutoWithdraw Under review': '提款审核',
+    'AutoWithdraw Withdrawal Record': '提交记录',
     Suspend: '暂不处理',
     Promotion: '优惠',
     'Privilege Info': '优惠列表',
@@ -1859,6 +1864,7 @@ export default {
     "Error Queue": "错误消息",
     'Image Setting': '图片设置',
     'Privi Christmas': '圣诞快乐',
+    'Affiliate APK Build': '代理构建APK',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -1931,6 +1937,24 @@ export default {
     NEW_KEY: '防毒',
     appUpload: '上载应用程序',
     editAppUpload: '编辑上载应用程序',
+  },
+  affiliateApk: {
+    currentVersion: "当前版本",
+    buildStatus: "构建状态",
+    latestVersion: "最新版本",
+    buildApk: "构建APK",
+    editParam: "编辑参数",
+    status: {
+      IN_QUEUE: "等待中",
+      IN_PROGRESS: "构建中",
+      SUCCESS: "成功",
+    }
+  },
+  priviEvent: {
+    status: '记录状态',
+    cancel: '已取消',
+    active: '活跃',
+    settled: '已结算',
   },
   error: {
     400: '请求无效',

@@ -242,7 +242,7 @@ import {ElMessage, ElMessageBox} from "element-plus";
 import {RiLink, RiLinkUnlink} from "vue-remix-icons";
 import {
   loadBanks,
-  loadBankCards,
+  loadAllBankCards,
   loadUnbindRecord,
   addBankCard,
   deleteBankCard,
@@ -504,7 +504,7 @@ export default defineComponent({
     }
     const loadCards = () => {
       personalState.bankCardList = [];
-      loadBankCards().then((response) => {
+      loadAllBankCards().then((response) => {
         if (response.code === 0) {
           response.data.forEach(element => {
             if (element){

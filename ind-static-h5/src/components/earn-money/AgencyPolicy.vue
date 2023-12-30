@@ -391,11 +391,13 @@ const copyShareLink = (selfTgurl) => {
 };
 
 onMounted(() => {
-  let tgDomain = location.origin;
-  if (store.isApp()) tgDomain = "https://" + store.evip;
+  let tgDomain = window.location.origin + "/";
+  if (store.isApp()) {
+    tgDomain = store.h5Url;
+  }
 
   api.get("/session/member/referralCode").then((res) => {
-    if (res.code === 0) selfTgurl.value = tgDomain + "/refer/" + res.data;
+    if (res.code === 0) selfTgurl.value = tgDomain + "refer/" + res.data;
   });
 });
 </script>
