@@ -37,7 +37,8 @@ default:
     - cd $PROJECT
     - npm install
     - npm install -g @quasar/cli
-    - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then NODE_OPTIONS="$NODE_OPTIONS" npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "test" ]; then NODE_OPTIONS="$NODE_OPTIONS" npm run build:test; NODE_OPTIONS="$NODE_OPTIONS" npm run build:prod; fi
+    - export NODE_OPTIONS="$NODE_OPTIONS" 
+    - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "test" ]; then npm run build:test; npm run build:prod; fi
   artifacts:
    untracked: true
    expire_in: 24 hrs
