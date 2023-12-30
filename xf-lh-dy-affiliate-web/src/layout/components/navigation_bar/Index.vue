@@ -1,7 +1,9 @@
 <template>
   <div class="navbar">
     <div class="logo-container">
-      <img class="logo" src="../../../assets/images/home/logo_w_text.png">
+      <img class="logo" src="../../../assets/images/xf/logo.png" v-if="siteId === '1' || siteId === 1"> <!--XF-->
+      <img class="logo" src="../../../assets/images/dy/logo.png" v-if="siteId === '6' || siteId === 6"> <!--DY-->
+      <img class="logo" src="../../../assets/images/home/logo_w_text.png" v-if="siteId === '7' || siteId === 7"> <!--LH-->
     </div>
     <div class="right-menu">
       <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage">
@@ -70,6 +72,9 @@ export default {
     const name = computed(() => {
       return store.state.user.name;
     });
+    const siteId = computed(() => {
+      return store.state.user.siteId
+    })
     const state = reactive({
       toggleSideBar: () => {
         store.dispatch(AppActionTypes.ACTION_TOGGLE_SIDEBAR, false);
@@ -112,7 +117,8 @@ export default {
       languageVal,
       handleLanguage,
       ...toRefs(state),
-      changePassword
+      changePassword,
+      siteId
     };
   }
 };

@@ -1331,6 +1331,8 @@ export default {
     selectedImage: '已选图像',
     poster: '海报',
     posterType: '海报类别',
+    teamIcon: '队伍图标',
+    other: '其他',
     createConfig: '新增设置',
     configCode: '设置Code',
     configValue: '设置值',
@@ -1339,8 +1341,6 @@ export default {
     rank: '等级',
     processResult: '结算结果',
     winner: '贏家',
-    teamIcon: '队伍图标',
-    other: '其他'
   },
   message: {
     addRemarkSuccess: '新增备注成功',

@@ -65,6 +65,7 @@
             </div>
           </div>
           <div v-else class="selected-promo">
+            <div class="loader" v-if="isFetchingPromo" />
             <div class="selected-promo-wrapper">
               <div class="banner-container">
                 <!-- <div
@@ -79,7 +80,7 @@
                   "
                 ></div> -->
                 <div>
-                  <img :src="imgURL + selectedPromo.mobileBannerUrl" style="width: 100%; display: block" />
+                  <img v-if="!!imgURL && !!selectedPromo.mobileBannerUrl" :src="imgURL + selectedPromo.mobileBannerUrl" style="width: 100%; display: block" />
                 </div>
               </div>
               <div class="inner">
@@ -87,6 +88,7 @@
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
+                  v-if="selectedPromo.promoType"
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
@@ -177,6 +179,7 @@ export default defineComponent({
           return '';
       }
     }
+    const isFetchingPromo = ref(false);
     const promoTabActive = ref(promoTypes.value[0].value);
     const filteredArray = ref([]);
     const isPromoDetail = ref(false);
@@ -281,6 +284,8 @@ export default defineComponent({
     const loadAll = () => {
       const platformApiUrl = (store.hasToken() && window.location.pathname !== "/promotion") ? "/session/loggedInPromoPages" : "/promo/page";
 
+      isFetchingPromo.value = window.location.pathname === "/promotion";
+
       api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
           promoState.promoList = [];
@@ -300,9 +305,11 @@ export default defineComponent({
           // console.log("Final Promos");
           // console.log(promoState.promoList);
           switchPromoType(promoState.active);
+          isFetchingPromo.value = false;
         }
       }).catch((e) => {
         console.log("error", e);
+        isFetchingPromo.value = false;
       });
     };
 
@@ -321,12 +328,15 @@ export default defineComponent({
 
     }
 
-
     onActivated(() => {
+      // if promo name is present, do not show promo list on first load
+      if(route.query.name) {
+        isPromoDetail.value = true;
+      }
+
       checkExtension();
       loadBanner();
       loadAll();
-
     });
 
     return {
@@ -345,11 +355,11 @@ export default defineComponent({
       tabItems,
       isDisplayLogin,
       getPromoLabel,
-
       checkExtension,
       currentPath,
       extensionState,
-      extensionToken
+      extensionToken,
+      isFetchingPromo
     };
   }
 });
@@ -858,5 +868,27 @@ export default defineComponent({
       fill: #0089ed;
     }
   }
+}
+</style>
+<style scoped lang="scss">
+.loader {
+  margin: auto;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 </style>

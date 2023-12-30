@@ -1802,16 +1802,9 @@ export default defineComponent({
     const downloadUrl = ref("");
 
     const getAppDownloadUrl = () => {
-      api
-        .get("/config/appDownloadUrl")
-        .then((res) => {
-          // console.log(res);
-          downloadUrl.value = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-          downloadUrl.value = "https://dy9367.app/";
-        });
+      store.getAppDownloadUrl().then((url) => {
+        downloadUrl.value = url;
+      });
     };
 
     const closeTopBox = () => {

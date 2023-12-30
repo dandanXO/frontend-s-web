@@ -315,6 +315,7 @@ export default defineComponent({
           if (response.code === 0) {
             verificationImg.value = "data:image/png;base64," + response.data.img;
             regForm.codeId = response.data.id;
+            regForm.captchaCode = "";
           }
         })
         .catch((e) => {
