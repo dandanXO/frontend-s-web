@@ -17,7 +17,7 @@
           @click.stop.prevent="
             openWindow(
               `https://csweb01.amv4xjcbd.com/?partnerCode=XFCS&lang=zh-CN&way=${regDevice}&token=${store.token}`,
-              'Chat Server',
+              '在线客服',
               350,
               650,
             )
