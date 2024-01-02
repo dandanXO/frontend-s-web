@@ -196,8 +196,8 @@ const siteList = reactive({
 const uiControl = reactive({
   removeBtn: true,
   promoState: [
-    { key: 1, displayName: 'active', value: true },
-    { key: 2, displayName: 'disable', value: false },
+    { key: 1, displayName: 'active', value: false },
+    { key: 2, displayName: 'disable', value: true },
   ],
 })
 const request = reactive({
