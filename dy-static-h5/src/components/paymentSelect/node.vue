@@ -202,7 +202,7 @@ $node-color: #4ab6fd;
     cursor: pointer;
 
     img {
-      max-width: 75px;
+      max-width: 48px;
       margin-bottom: 10px;
       width: 100%;
       height: auto;
