@@ -117,6 +117,22 @@ export default {
       })
     }
 
+    const statisticsList = reactive({
+      list: [],
+    })
+    async function loadMemberStatistics() {
+      console.log("aaaaaaaa")
+      const { data: memberStatistics } = await getMemberStatistics()
+      statisticsList.list = memberStatistics
+    }
+
+    onMounted(() => {
+      debugger;
+      console.log("bbbbbbb")
+      loadMemberStatistics()
+      console.log("cccccc")
+    })
+
     return {
       sidebar,
       device,
@@ -130,21 +146,7 @@ export default {
     }
   },
 }
-const statisticsList = reactive({
-  list: [],
-})
-async function loadMemberStatistics() {
-  console.log("aaaaaaaa")
-  const { data: memberStatistics } = await getMemberStatistics()
-  statisticsList.list = memberStatistics
-}
 
-onMounted(() => {
-  debugger;
-  console.log("bbbbbbb")
-  loadMemberStatistics()
-  console.log("cccccc")
-})
 </script>
 
 <style lang="scss" scoped>
