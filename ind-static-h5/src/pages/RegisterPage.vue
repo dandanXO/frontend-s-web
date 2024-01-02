@@ -337,7 +337,7 @@ export default defineComponent({
           excludes.value.forEach((element) => {
             delete allComponents[element];
           });
-          // const sidParam = FingerprintJS.hashComponents(allComponents);
+          const sidParam = FingerprintJS.hashComponents(allComponents);
           regForm.sid = store.googleadid ? store.googleadid : store.aaid;
 
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
@@ -350,6 +350,10 @@ export default defineComponent({
                 regForm.regDevice = "ANDROID";
               }
             }
+          }
+
+          if (regForm.regDevice !== "ANDROID") {
+            regForm.sid = sidParam;
           }
 
           if (regForm.regHost.indexOf("http://localhost") > -1) {
