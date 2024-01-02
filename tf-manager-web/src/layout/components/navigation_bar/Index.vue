@@ -8,6 +8,7 @@
     />
     <BreadCrumb id="breadcrumb-container" class="breadcrumb-container" />
     <div class="right-menu">
+      <div class="statistics-container">test</div>
       <el-select
         class="lang-container right-menu-item"
         placeholder=""
@@ -58,7 +59,7 @@ import BreadCrumb from '@/components/bread-crumb/Index.vue'
 import Hamburger from '@/components/hamburger/Index.vue'
 import ForgetPasswordModal from '@/components/forgetpassword-modal/Index.vue'
 
-import { computed, reactive, toRefs } from 'vue'
+import { computed, reactive, toRefs, onMounted } from 'vue'
 import { useStore } from '@/store'
 import { AppActionTypes } from '@/store/modules/app/action-types'
 import { UserActionTypes } from '@/store/modules/user/action-types'
@@ -66,6 +67,7 @@ import { storeToRefs } from 'pinia'
 import { i18nStore } from '@/store/language'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
+import { getMemberStatistics } from '../../../api/member-statistics'
 
 export default {
   components: {
@@ -128,6 +130,21 @@ export default {
     }
   },
 }
+const statisticsList = reactive({
+  list: [],
+})
+async function loadMemberStatistics() {
+  console.log("aaaaaaaa")
+  const { data: memberStatistics } = await getMemberStatistics()
+  statisticsList.list = memberStatistics
+}
+
+onMounted(() => {
+  debugger;
+  console.log("bbbbbbb")
+  loadMemberStatistics()
+  console.log("cccccc")
+})
 </script>
 
 <style lang="scss" scoped>
@@ -211,7 +228,11 @@ export default {
         }
       }
     }
-
+    .statistics-container{
+      margin-top: 5px;
+      right: 200px;
+      position: absolute;
+    }
     .lang-container {
       margin-top: 5px;
       width: 100px;
