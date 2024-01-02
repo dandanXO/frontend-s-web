@@ -743,14 +743,9 @@ const rows4 = [
       background-size: 100% 100%;
     }
 
-    &.vip10 {
+    &.vip10, &.vip11, &.vip12 {
       background: url("../../assets/images/vip/badge/vip10.png") no-repeat top
         center;
-      background-size: 100% 100%;
-    }
-
-    &.vip11, &.vip12 {
-      background: none;
       background-size: 100% 100%;
     }
   }
