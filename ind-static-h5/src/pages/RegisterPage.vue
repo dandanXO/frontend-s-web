@@ -142,7 +142,7 @@
       <div class="mui-row" :class="isAgreeReg ? 'checked' : ''">
         <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
           I have Agree To The
-          <a href="#" style="text-decoration: none; color: #C1DFFC">Use Privacy Agreement</a>
+          <a href="#" style="text-decoration: none; color: #c1dffc">Use Privacy Agreement</a>
         </q-checkbox>
       </div>
 
@@ -158,8 +158,7 @@
         <div class="tip-container">
         <router-link class="landing-tip" to="/login">Already A Member? Sign In Now</router-link>
       </div>
-    -->
-    </q-form>
+    --></q-form>
   </div>
 </template>
 
@@ -332,7 +331,8 @@ export default defineComponent({
             delete allComponents[element];
           });
           const sidParam = FingerprintJS.hashComponents(allComponents);
-          regForm.sid = store.aaid ? store.aaid : sidParam;
+          regForm.sid = store.googleadid ? store.googleadid : store.aaid;
+
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
           if ("standalone" in window.navigator && window.navigator.standalone) {
             regForm.regDevice = "IOS";
@@ -343,6 +343,10 @@ export default defineComponent({
                 regForm.regDevice = "ANDROID";
               }
             }
+          }
+
+          if (regForm.regDevice !== "ANDROID") {
+            regForm.sid = sidParam;
           }
 
           if (regForm.regHost.indexOf("http://localhost") > -1) {
@@ -589,11 +593,11 @@ function charType(num) {
   }
 }
 .register-btn {
-  background-color: #8B00FF;
+  background-color: #8b00ff;
   width: 100%;
   height: 56px;
   border-radius: 4px;
-  margin-top:30px;
+  margin-top: 30px;
 }
 .page-header {
   background-image: linear-gradient(to right, #de4545, #db7e42);
@@ -664,8 +668,8 @@ function charType(num) {
     padding-right: 20px;
   }
   :deep(.q-field__control):before {
-    border-color: #1E1F24;
-    background-color: #1E1F24;
+    border-color: #1e1f24;
+    background-color: #1e1f24;
     border-width: 2px;
   }
 }
@@ -678,7 +682,7 @@ function charType(num) {
     border-radius: 50%;
   }
   :deep(.q-checkbox__inner--truthy .q-checkbox__bg) {
-    background: #8B00FF;
+    background: #8b00ff;
 
     svg {
       color: #fff;

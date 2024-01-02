@@ -77,7 +77,7 @@
         <router-link class="form-text" to="/forgot-password">Forgot Password</router-link>
       </div>
 
-      <!-- 
+      <!--
       <div class="row items-center justify-between q-mt-sm">
         <div class="mui-row" :class="isCheckRmb ? 'checked' : ''">
           <q-checkbox
@@ -101,19 +101,19 @@
       </div> -->
     </q-form>
 
-    <hr class="end-of-form-separator"/>
+    <hr class="end-of-form-separator" />
 
     <div class="create-account">
-      <span class="form-text">Not a member? </span>
-      <router-link class="form-text" to="/register" style="color: #AE6DEF">Create account</router-link>
+      <span class="form-text">Not a member?</span>
+      <router-link class="form-text" to="/register" style="color: #ae6def">Create account</router-link>
     </div>
 
-    <!-- 
+    <!--
       <div class="tip-container">
       <router-link class="landing-tip" to="/forgot-password">Forgot Password ?</router-link>
 
       <router-link class="landing-tip" to="/register">Sign Up Now</router-link>
-    </div> 
+    </div>
     -->
   </div>
 
@@ -319,7 +319,7 @@ export default defineComponent({
               .memberLogin({
                 loginName: loginForm.loginName,
                 password: loginForm.password,
-                sid: store.aaid ? store.aaid : sidParam,
+                sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
                 captchaCode: loginForm.captchaCode,
                 codeId: loginForm.codeId
               })
@@ -414,7 +414,7 @@ export default defineComponent({
 
       (async () => {
         // guestLoginInfo.sid = guestDeviceInfo.value;
-        guestLoginInfo.sid = store.getAaid();
+        guestLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
 
         api
           .post("/member/quickRegister", qs.stringify(guestLoginInfo))
@@ -564,11 +564,11 @@ export default defineComponent({
   }
 }
 .login-btn {
-  background-color: #8B00FF;
+  background-color: #8b00ff;
   width: 100%;
   height: 56px;
   border-radius: 4px;
-  margin-top:30px;
+  margin-top: 30px;
 }
 .forgot-password {
   margin: 8px 0px 0px;
@@ -577,7 +577,7 @@ export default defineComponent({
 
 .end-of-form-separator {
   margin: 35px 0px 0px;
-  border-color: #FFFFFF26;
+  border-color: #ffffff26;
 }
 
 .create-account {
@@ -585,7 +585,7 @@ export default defineComponent({
   text-align: center;
 }
 .form-text {
-  color: #B3B0B8;
+  color: #b3b0b8;
   text-decoration: none;
 }
 
@@ -608,8 +608,8 @@ export default defineComponent({
     padding-right: 20px;
   }
   :deep(.q-field__control):before {
-    border-color: #1E1F24;
-    background-color: #1E1F24;
+    border-color: #1e1f24;
+    background-color: #1e1f24;
     border-width: 2px;
   }
 }

@@ -42,6 +42,7 @@ export const userStore = defineStore("userStore", {
       guest: false,
       readMsgLists: [],
       aaid: "",
+      googleadid: "",
       h5Url: "https://www.indwin7.com/"
     };
   },
@@ -88,12 +89,6 @@ export const userStore = defineStore("userStore", {
     },
     setPhone(tel) {
       this.phone = tel;
-    },
-    setAaid(aaid) {
-      this.aaid = aaid;
-    },
-    getAaid() {
-      return this.aaid;
     },
     memberLogin(loginInfo) {
       var regDevice = Platform.is.mobile ? "H5" : "WEB";
@@ -292,6 +287,6 @@ export const userStore = defineStore("userStore", {
     },
     getCurrentDeposit() {
       return this.currentDeposit;
-    },
+    }
   }
 });
