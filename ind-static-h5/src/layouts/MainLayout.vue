@@ -75,7 +75,7 @@
         </KeepAlive>
       </router-view>
     </q-page-container>
-    <q-footer v-if="ui.footer" elevated>
+    <q-footer v-if="ui.footer" :style="ui.bottomInsetHeight > 0 ? `bottom: ${ui.bottomInsetHeight}px;` : ''" elevated>
       <q-tabs v-model="tab" no-caps :breakpoint="0" align="justify">
         <q-route-tab to="/home" name="home" exact :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/home-icon.png" />

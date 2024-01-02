@@ -14,12 +14,16 @@ import { isAndroid } from "boot/utils";
 import { App } from "@capacitor/app";
 import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
+import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
+import { useUI } from "src/stores/ui";
 
 export default defineComponent({
   name: "App",
   setup() {
     var qs = require("qs");
     const store = userStore();
+    const ui = useUI();
+
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(true);
     const checkSID = () => {
@@ -160,6 +164,27 @@ export default defineComponent({
       }
     };
 
+    const getInsetHeight = async () => {
+      const ua = navigator.userAgent.toLowerCase();
+      console.log(ua);
+      const isAndroidPixel = ua.indexOf("android") > -1 && ua.indexOf("pixel") > -1;
+      if (Platform.is.capacitor && Platform.is.android && isAndroidPixel) {
+        const insets = await SafeArea.getSafeAreaInsets();
+        console.log(insets);
+        // alert(insets); // Ex. { "bottom":34, "top":47, "right":0, "left":0 }
+        if (insets.bottom > 0) {
+          // console.log("HERe");
+          ui.bottomInsetHeight = insets.bottom;
+        }
+      }
+    };
+
+    const handleVisibilityChange = (status) => {
+      if (Platform.is.capacitor && Platform.is.android) {
+        StatusBar.hide();
+      }
+    };
+
     onMounted(async () => {
       // const info = await App.getInfo();
       // console.log("APP Info");
@@ -178,6 +203,10 @@ export default defineComponent({
         },
         false
       );
+
+      document.addEventListener("visibilitychange", handleVisibilityChange);
+
+      getInsetHeight();
     });
   }
 });

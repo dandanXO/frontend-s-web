@@ -6,9 +6,10 @@ export const useUI = defineStore("ui-store", {
     return {
       drawerRight: false,
       footer: true,
-      orientation: 'landscape',
-      pageName: '优惠详细信息',
-      slotLists: []
+      orientation: "landscape",
+      pageName: "优惠详细信息",
+      slotLists: [],
+      bottomInsetHeight: 0
     };
   },
   actions: {
@@ -20,13 +21,13 @@ export const useUI = defineStore("ui-store", {
       this.footer = true;
     },
     orientationPotrait() {
-      this.orientation = 'portrait'
+      this.orientation = "portrait";
     },
     orientationLandscape() {
-      this.orientation = 'landscape'
+      this.orientation = "landscape";
     },
     changePromoName(name) {
-       this.pageName = name
+      this.pageName = name;
     }
   }
 });

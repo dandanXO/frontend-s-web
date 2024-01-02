@@ -44,7 +44,7 @@ body {
   background: #2b2b4b;
 }
 .q-toolbar {
-  padding-top: env(safe-area-inset-top, 0);
+  //padding-top: env(safe-area-inset-top, 0);
   background: #2b2b4b;
   &__title {
     font-size: 16px;
@@ -138,10 +138,10 @@ body.body--dark .q-drawer {
 }
 body.body--dark .q-header {
   padding: 3px;
-  padding-top: calc(3px + env(safe-area-inset-top, 0));
+  //padding-top: calc(3px + env(safe-area-inset-top, 0));
 }
 body.body--dark .q-footer {
-  padding-bottom: calc(1px + env(safe-area-inset-bottom));
+  //padding-bottom: calc(1px + env(safe-area-inset-bottom));
   // border-radius: 15px 15px 0 0;
   overflow: hidden;
 }
@@ -234,7 +234,7 @@ body.body--dark .q-footer {
 .q-footer {
   // margin-top: 30px;
   background: transparent !important;
-  bottom: -2px;
+  bottom: 0px;
   height: 82px;
 
   .q-tabs__content {
