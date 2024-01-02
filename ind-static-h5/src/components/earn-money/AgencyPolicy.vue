@@ -1,242 +1,191 @@
 <template>
-  <ContentView contentTopStatus="faded">
-    <div class="agency-policy">
-      <ul class="margin-style">
-        <li>How to earn commissions?</li>
-        <li>How to invite your friends?</li>
-        <li>What's the purpose of level?</li>
-        <li>How to upgrade your level?</li>
-        <li>How to develop your referrals into affiliates?</li>
-        <li>How to get commission from your affiliates?</li>
-      </ul>
+  <div class="agency-policy">
+    <img src="../../assets/images/earn-money/about-bg.png" />
 
-      <!-- <q-table
-        flat
-        :hide-pagination="true"
-        class="table-container q-mt-md"
-        :columns="columns"
-        :rows="rows"
-        row-key="name"
-        dense
-      ></q-table> -->
-      <q-separator></q-separator>
-
-      <ul>
-        <!-- 1. How to earn commissions? -->
-        <li>How to earn commissions?</li>
-        <ul>
-          <li class="dot-style">
-            You can earn up to 1.5% of the maximum daily wager paid by your referred players. Commissions are valid
-            forever. The higher your level, the higher the commission percentage you can earn.
-          </li>
-        </ul>
-        <q-table
-          flat
-          :hide-pagination="true"
-          :rows-per-page-options="[0]"
-          class="table-container q-my-md"
-          :columns="columns2"
-          :rows="rows2"
-          row-key="name"
-          dense
-        ></q-table>
-        <ul>
-          <li class="dot-style">
-            If your affiliate or your affiliate's referrer, etc. becomes an agent and they are at a lower level than
-            their direct superior, then you can get up to 1.2% of the affiliate wagering rebate amount. The commission
-            rate depends on the level difference between you and your affiliate, the greater the level difference, the
-            more commission you receive.
-          </li>
-        </ul>
-
-        <!-- 2. How to invite your friends? -->
-        <li>How to earn commissions?</li>
-        <ul>
-          <li class="dot-style">Share the game via social media or share the referral link to your friends.</li>
-          <li class="dot-style">
-            You get commission after your friends click the promotional link, download App, install the game and
-            register.
-          </li>
-          <li class="dot-style">
-            The installation must be finished by the referral link. Sharing the App package by Sharelt etc is not
-            allowed.
-          </li>
-        </ul>
-
-        <!-- 3. What's the purpose of level? -->
-        <li>What's the purpose of level?</li>
-        <ul>
-          <li class="dot-style">
-            Based on the activity and performance of agent users, we have divided them into 13 levels.
-          </li>
-          <li class="dot-style">
-            The higher your level, the higher the commission percentage you get from members' bets, and the upgrade
-            conditions require that the bet amount and team members meet the requirements at the same time.
-          </li>
-        </ul>
-        <q-table
-          flat
-          :hide-pagination="true"
-          :rows-per-page-options="[0]"
-          class="table-container q-my-md"
-          :columns="columns2"
-          :rows="rows2"
-          row-key="name"
-          dense
-        ></q-table>
-        <ul>
-          <li class="dot-style">
-            Level difference occurs when the direct superior level minus the corresponding direct affiliate level is
-            greater than or equal to 1; otherwise, there is no level difference.
-          </li>
-          <li class="dot-style">
-            The higher your level, the higher the commission percentage you get from the level difference bet.
-          </li>
-        </ul>
-        <q-table
-          flat
-          :hide-pagination="true"
-          :rows-per-page-options="[0]"
-          class="table-container q-my-md"
-          :columns="columns3"
-          :rows="rows3"
-          row-key="name"
-          dense
-        ></q-table>
-
-        <!-- 4. How to upgrade your level? -->
-        <li>How to upgrade your level?</li>
-        <ul>
-          <li class="dot-style">
-            The more referrals you bring to the game and the more they bet, the higher your score will be.
-          </li>
-          <li class="dot-style">
-            If you have extraordinary promotional ability with channels, please get contact with our customer service
-            center to verify your division.
-          </li>
-        </ul>
-
-        <!-- 5. How to upgrade your level? -->
-        <li>How to develop your referrals into affiliates?</li>
-        <ul>
-          <li class="dot-style">
-            Log in to the IndWin7, share your referral link with your friends on the agent page, guide them to register
-            from the link, and they can become your direct affiliates.
-          </li>
-          <li class="dot-style">
-            Encourage your affiliates to invite their friends to play games, and the friends they invite will become
-            your indirect affiliates.
-          </li>
-          <li class="dot-style">
-            After your direct affiliates' friends become your indirect affiliates, they can still develop their
-            affiliates in this way. All their affiliates will be regarded as your indirect affiliates.
-          </li>
-        </ul>
-
-        <!-- 6. How to get commission from your affiliates? -->
-        <li>How to get commission from your affiliates?</li>
-        <ul>
-          <li class="dot-style">
-            The top-up player is your indirect affiliate, and any pair of direct superiors and direct affiliates between
-            you and the player must have a level difference, otherwise no level difference commission will be generated.
-          </li>
-          <li class="dot-style">
-            The level difference commission ratio is determined by your direct membership and the level difference
-            between you and the betting player.
-          </li>
-        </ul>
-      </ul>
-
-      <div class="notice">
-        <div class="title">Notice</div>
-        <ul>
-          <div class="desc">
-            You level
-            <em>V8</em>
-            . Betting amount
-            <em>972000rs</em>
-            . Team members
-            <em>49</em>
-            people.
-          </div>
-          <div class="desc">
-            A Level
-            <em>V8</em>
-            . Betting amount
-            <em>760000rs</em>
-            . Team members
-            <em>35</em>
-            people.
-          </div>
-          <div class="desc">
-            B Level
-            <em>V6</em>
-            . Betting amount
-            <em>210000rs</em>
-            . Team members
-            <em>13</em>
-            people.
-          </div>
-          <div class="desc">
-            C Level
-            <em>V1</em>
-            . Betting amount
-            <em>2000rs</em>
-            . Team members
-            <em>1</em>
-            person.
-          </div>
-          <li>You can't get A's betting rebate</li>
-          <li>You can get 0.2% commission on the bet amount of B's entire team</li>
-          <li>You can get 0.7% commission on the bet amount of C the entire team</li>
-        </ul>
-      </div>
-
-      <div class="copy-link-container" @click="copyShareLink(selfTgurl)">
-        <img class="copy-link" src="../../assets/images/earn-money/copy-link-btn.png" alt="" />
-        <span>Copy Share Link</span>
+    <div class="title">Invite to Earn</div>
+    <div class="subtitle">Simply share your exclusive QR code</div>
+    <div class="desc-wrapper">
+      <img src="../../assets/images/earn-money/about-invite.png" />
+      <div>
+        Invite more friends and you will earn more. Every member who joins Skyace Club is both a player and an agent.
       </div>
     </div>
-  </ContentView>
+    <div class="desc-wrapper">
+      <img src="../../assets/images/earn-money/about-reward.png" />
+      <div>We advocate benefits and bonuses for everyone.</div>
+    </div>
+
+    <div class="agency-policy-separator"></div>
+    <div class="agency-policy-title">Agency Policy</div>
+    <div class="agency-policy-separator"></div>
+
+    <q-expansion-item label="1. How to earn commissions?">
+      <ul>
+        <li class="dot-style">
+          You can earn up to 1.5% of the maximum daily wager paid by your referred players. Commissions are valid
+          forever. The higher your level, the higher the commission percentage you can earn.
+        </li>
+      </ul>
+      <q-table
+        flat
+        :hide-pagination="true"
+        :rows-per-page-options="[0]"
+        class="table-container q-my-md"
+        :columns="columns2"
+        :rows="rows2"
+        row-key="name"
+        dense
+      ></q-table>
+      <ul>
+        <li class="dot-style">
+          If your affiliate or your affiliate's referrer, etc. becomes an agent and they are at a lower level than their
+          direct superior, then you can get up to 1.2% of the affiliate wagering rebate amount. The commission rate
+          depends on the level difference between you and your affiliate, the greater the level difference, the more
+          commission you receive.
+        </li>
+      </ul>
+    </q-expansion-item>
+
+    <q-expansion-item label="2. How to invite your friends?">
+      <ul>
+        <li class="dot-style">Share the game via social media or share the referral link to your friends.</li>
+        <li class="dot-style">
+          You get commission after your friends click the promotional link, download App, install the game and register.
+        </li>
+        <li class="dot-style">
+          The installation must be finished by the referral link. Sharing the App package by Sharelt etc is not allowed.
+        </li>
+      </ul>
+    </q-expansion-item>
+
+    <q-expansion-item label="3. What's the purpose of level?">
+      <ul>
+        <li class="dot-style">
+          Based on the activity and performance of agent users, we have divided them into 13 levels.
+        </li>
+        <li class="dot-style">
+          The higher your level, the higher the commission percentage you get from members' bets, and the upgrade
+          conditions require that the bet amount and team members meet the requirements at the same time.
+        </li>
+      </ul>
+      <q-table
+        flat
+        :hide-pagination="true"
+        :rows-per-page-options="[0]"
+        class="table-container q-my-md"
+        :columns="columns2"
+        :rows="rows2"
+        row-key="name"
+        dense
+      ></q-table>
+      <ul>
+        <li class="dot-style">
+          Level difference occurs when the direct superior level minus the corresponding direct affiliate level is
+          greater than or equal to 1; otherwise, there is no level difference.
+        </li>
+        <li class="dot-style">
+          The higher your level, the higher the commission percentage you get from the level difference bet.
+        </li>
+      </ul>
+      <q-table
+        flat
+        :hide-pagination="true"
+        :rows-per-page-options="[0]"
+        class="table-container q-my-md"
+        :columns="columns3"
+        :rows="rows3"
+        row-key="name"
+        dense
+      ></q-table>
+    </q-expansion-item>
+
+    <q-expansion-item label="4. How to upgrade your level?">
+      <ul>
+        <li class="dot-style">
+          The more referrals you bring to the game and the more they bet, the higher your score will be.
+        </li>
+        <li class="dot-style">
+          If you have extraordinary promotional ability with channels, please get contact with our customer service
+          center to verify your division.
+        </li>
+      </ul>
+    </q-expansion-item>
+
+    <q-expansion-item label="5. How to develop your referrals into affiliates?">
+      <ul>
+        <li class="dot-style">
+          Log in to the IndWin7, share your referral link with your friends on the agent page, guide them to register
+          from the link, and they can become your direct affiliates.
+        </li>
+        <li class="dot-style">
+          Encourage your affiliates to invite their friends to play games, and the friends they invite will become your
+          indirect affiliates.
+        </li>
+        <li class="dot-style">
+          After your direct affiliates' friends become your indirect affiliates, they can still develop their affiliates
+          in this way. All their affiliates will be regarded as your indirect affiliates.
+        </li>
+      </ul>
+    </q-expansion-item>
+
+    <q-expansion-item label="6. How to get commission from your affiliates?">
+      <ul>
+        <li class="dot-style">
+          The top-up player is your indirect affiliate, and any pair of direct superiors and direct affiliates between
+          you and the player must have a level difference, otherwise no level difference commission will be generated.
+        </li>
+        <li class="dot-style">
+          The level difference commission ratio is determined by your direct membership and the level difference between
+          you and the betting player.
+        </li>
+      </ul>
+    </q-expansion-item>
+
+    <ul>
+      <li class="dot-style">
+        You level
+        <em>V8</em>
+        . Betting amount
+        <em>972000rs</em>
+        . Team members
+        <em>49</em>
+        people.
+      </li>
+      <li class="dot-style">
+        A Level
+        <em>V8</em>
+        . Betting amount
+        <em>760000rs</em>
+        . Team members
+        <em>35</em>
+        people.
+      </li>
+      <li class="dot-style">
+        B Level
+        <em>V6</em>
+        . Betting amount
+        <em>210000rs</em>
+        . Team members
+        <em>13</em>
+        people.
+      </li>
+      <li class="dot-style">
+        C Level
+        <em>V1</em>
+        . Betting amount
+        <em>2000rs</em>
+        . Team members
+        <em>1</em>
+        person.
+      </li>
+      <li class="dot-style">You can't get A's betting rebate</li>
+      <li class="dot-style">You can get 0.2% commission on the bet amount of B's entire team</li>
+      <li class="dot-style">You can get 0.7% commission on the bet amount of C the entire team</li>
+    </ul>
+  </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { useQuasar, copyToClipboard } from "quasar";
-import { userStore } from "stores/index";
-import { api } from "boot/axios";
-import ContentView from "../ContentView.vue";
-
-const $q = useQuasar();
-const store = userStore();
-
-// const columns = [
-//   {
-//     name: "name",
-//     required: true,
-//     label: "Agency Lever",
-//     align: "center",
-//     field: (row) => row.name
-//   },
-//   { name: "lever1", label: "1", field: "lever1", align: "center" },
-//   { name: "lever2", label: "2", field: "lever2", align: "center" },
-//   { name: "lever3", label: "3", field: "lever3", align: "center" },
-//   { name: "lever4", label: "4", field: "lever4", align: "center" },
-//   { name: "lever5", label: "5", field: "lever5", align: "center" },
-//   { name: "lever6", label: "6", field: "lever6", align: "center" }
-// ];
-// const rows = [
-//   {
-//     name: "Active User",
-//     lever1: 0,
-//     lever2: 20,
-//     lever3: 40,
-//     lever4: 80,
-//     lever5: 160,
-//     lever6: 320
-//   }
-// ];
-
 const columns2 = [
   {
     name: "level",
@@ -368,78 +317,71 @@ const rows3 = [
     13: "1.5"
   }
 ];
-
-const selfTgurl = ref("");
-const copyShareLink = (selfTgurl) => {
-  copyToClipboard(selfTgurl)
-    .then(() => {
-      $q.notify({
-        color: "position",
-        position: "top",
-        message: `${selfTgurl} copied to clipboard`,
-        icon: "check_circle_outline"
-      });
-    })
-    .catch(() => {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: "Failed",
-        icon: "report_problem"
-      });
-    });
-};
-
-onMounted(() => {
-  let tgDomain = window.location.origin + "/";
-  if (store.isApp()) {
-    tgDomain = store.h5Url;
-  }
-
-  api.get("/session/member/referralCode").then((res) => {
-    if (res.code === 0) selfTgurl.value = tgDomain + "refer/" + res.data;
-  });
-});
 </script>
 
 <style scoped lang="scss">
 .agency-policy {
-  .margin-style {
-    margin: 0;
+  img {
+    width: 100%;
   }
 
-  .notice {
-    .title {
-      list-style-type: none;
-      font-size: 1rem;
-      font-weight: 700;
-      line-height: 1.25rem;
-      text-align: left;
-      color: #edd3ff;
-      margin: 0 0 0.75rem 0;
-    }
+  .title {
+    background: linear-gradient(180deg, #d6b335 0%, #fff96b 50%, #f2ae01 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 2rem;
+    font-weight: 700;
+  }
 
-    .desc {
-      list-style-type: none;
-      font-size: 0.95rem;
-      font-weight: 700;
-      line-height: 1.25rem;
-      text-align: left;
-      color: #edd3ff;
-      margin: 0 0 0.75rem 0;
+  .subtitle {
+    margin: 0 0 15px 0;
+  }
+
+  .desc-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 0 0 15px 0;
+
+    img {
+      width: 75px;
+      height: 75px;
     }
+  }
+
+  .agency-policy-separator {
+    background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #5c46e7 0.01%, rgba(92, 70, 231, 0) 100%);
+    height: 2px;
+  }
+
+  .agency-policy-title {
+    background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #5c46e7 0.01%, rgba(92, 70, 231, 0) 100%);
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    margin: 1px 0;
+  }
+
+  :deep(.q-item) {
+    padding: 0;
+  }
+
+  :deep(.q-expansion-item) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   ul {
-    padding-inline-start: 1.5rem;
+    padding-inline-start: 1rem;
 
     li {
       list-style-type: decimal;
       font-size: 0.95rem;
-      font-weight: 700;
       line-height: 1.25rem;
       text-align: left;
-      color: #edd3ff;
+      color: rgba(255, 255, 255, 0.8);
       margin: 0 0 0.75rem 0;
     }
 
@@ -453,11 +395,19 @@ onMounted(() => {
   }
   .table-container {
     :deep(thead) {
-      background: rgba(21, 0, 37, 0.5);
+      background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
     }
 
     :deep(tbody) {
-      background: rgba(21, 0, 37, 0.2);
+      background: #652c93;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+      tr {
+        &:nth-child(2n) {
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          background: #502175;
+        }
+      }
     }
 
     .text-center {

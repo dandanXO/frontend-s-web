@@ -1,10 +1,25 @@
 <template>
-  <q-card-section class="page-title">优惠活动</q-card-section>
+  <!-- <q-card-section class="page-title">优惠活动</q-card-section> -->
+  <ProfileSummary :homeProfile="true" />
+
+  <div class="vip-promo-tab-wrapper" v-if="!isPromoDetail">
+    <q-tabs
+      v-model="vipPromoTab"
+      dense
+      no-caps
+      class="vip-promo-tab-toggle"
+      indicator-color="transparent"
+      align="justify"
+    >
+      <q-tab name="vip" label="VIP" />
+      <q-tab name="promo" label="Promo" />
+    </q-tabs>
+  </div>
 
   <div class="promo-container" style="background: #090b19">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
-        <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
+        <!-- <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" /> -->
       </q-tabs>
 
       <q-tab-panels v-model="tab" animated>
@@ -22,9 +37,9 @@
                 >
                   <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
-                      <div class="pad-title">
+                      <!-- <div class="pad-title">
                         <span class="pad-right">查看详情&gt;&gt;</span>
-                      </div>
+                      </div> -->
                       <div class="promo-info">
                         <span class="viewdetail">{{ promo.title }}</span>
                       </div>
@@ -33,15 +48,12 @@
                           <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
-                      <div class="pad-label label-new">最新活动</div>
+                      <!-- <div class="pad-label label-new">最新活动</div> -->
                     </a>
                   </div>
 
                   <div class="promo-item" v-if="tab.name === 'all'">
                     <a @click="showPromoDetails(promo)">
-                      <div class="pad-title">
-                        <span class="pad-right">查看详情&gt;&gt;</span>
-                      </div>
                       <div class="promo-info">
                         <span class="viewdetail">{{ promo.title }}</span>
                       </div>
@@ -50,7 +62,6 @@
                           <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
-                      <div class="pad-label label-new">最新活动</div>
                     </a>
                   </div>
                 </div>
@@ -59,6 +70,7 @@
           </div>
           <div v-else class="selected-promo">
             <div class="selected-promo-wrapper">
+              <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
               <div class="banner-container">
                 <!-- <div
                     class="promo-bg"
@@ -92,6 +104,30 @@
                   }"
                 >
                   <div v-html="selectedPromo.pageContent"></div>
+                  <div class="join-container">
+                    <div class="promo-date">
+                      <div class="date-txt" v-if="!isPromotionEnded">Promotion Ends</div>
+                      <div class="date-timer">
+                        <img src="../assets/images/promotion/timer-icon.svg" alt="" />
+                        {{ countdown }}
+                      </div>
+                    </div>
+                    <q-btn
+                      class="btn-join-now"
+                      no-caps
+                      label="Join Now"
+                      :disabled="isPromotionEnded"
+                      @click="goToVip()"
+                    />
+                  </div>
+
+                  <!-- <div class="join-container">
+                    <div class="promo-date">
+                      <div class="date-txt">Promotion Ends</div>
+                      <div class="date-timer">01/01/2024</div>
+                    </div>
+                    <q-btn class="btn-join-now" no-caps label="Join Now" />
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -104,20 +140,20 @@
   <q-dialog width="100%" v-model="isDisplayLogin">
     <q-card style="width: 100%; padding: 20px" class="bg-white text-black text-center">
       <q-card-section class="q-mb-md">
-        <strong>系统提示</strong>
+        <strong>System Prompt</strong>
         <br />
         <br />
-        请登录后再操作
+        Please log in before performing the operation
       </q-card-section>
       <router-link to="/login?redirect=/promo">
-        <q-btn label="确认" color="brightbtn" />
+        <q-btn label="Login" color="primary" />
       </router-link>
     </q-card>
   </q-dialog>
 </template>
 
 <script lang="js">
-import {ref, defineComponent, onMounted, reactive, watch} from "vue";
+import {ref, defineComponent, onMounted, reactive, watch, onBeforeUnmount} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
@@ -125,18 +161,20 @@ import {useUI} from "stores/ui";
 import {userStore} from "stores/index";
 // import { loadPromo } from "src/api/index/promo.js";
 // import { loadPromoBanner } from "src/api/index/promo";
-
+import ProfileSummary from "components/ProfileSummary.vue";
 import HotPromotion from 'components/HotPromotion'
 // import HotPromotion from 'components/HotPromotion'
 export default defineComponent({
   name: "PromoView",
   components: {
-    HotPromotion
+    HotPromotion,
+    ProfileSummary
   },
   setup() {
     const store = userStore();
     const imgURL = process.env.IMAGE_CDN + '/promo/';
     const banner = ref([]);
+    const vipPromoTab = ref("promo");
     const promoState = reactive({
       active: {value: 'ALL', label: 'ALL'},
       promoList: [],
@@ -163,10 +201,10 @@ export default defineComponent({
     const tabItems = [
 
     { name:"all", label: '全部' },
-      { name: "slot game", label: '电子'},
-      { name: "fish", label: '捕鱼'},
-      { name: "live casino", label: '真人'},
-      { name: "poker", label: '棋牌'},
+      // { name: "slot game", label: '电子'},
+      // { name: "fish", label: '捕鱼'},
+      // { name: "live casino", label: '真人'},
+      // { name: "poker", label: '棋牌'},
 
       // {
       //   name: "all",
@@ -198,6 +236,26 @@ export default defineComponent({
         ui.setScrollPosition("vertical", 0, 200);
       }
     });
+
+    watch(() => vipPromoTab.value, () => {
+      if(vipPromoTab.value === 'vip') {
+        router.push('/vip');
+      }
+    })
+
+    watch(() => route.path, () => {
+      if(route.path === '/promo') {
+        vipPromoTab.value = 'promo';
+      }
+    })
+
+    const isPromoDetailPage = ref(false);
+
+    const backToPromoList = () => {
+      router.push('/promo');
+      isPromoDetailPage.value = false
+    }
+
     const loadBanner = () => {
       // loadPromoBanner("PROMO").then((res) => {
       //   if (res.code === 0) {
@@ -225,14 +283,14 @@ export default defineComponent({
       if (!store.token) {
         isDisplayLogin.value = true
       } else {
-
-        if (promo.redirectUrl.includes("page-vip")) {
+        if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
           router.push({path: '/account/vip'});
         } else {
+          // router.push({path: '/promo', query: {name: promo.redirectUrl}})
           if (route.query.fromAccount) {
-            router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
+            router.push({path: '/promo', query: {name: promo.title, fromAccount: true}})
           } else {
-            router.push({path: '/promo', query: {name: promo.redirectUrl}})
+            router.push({path: '/promo', query: {name: promo.title}})
           }
           isPromoDetail.value = true
           selectedPromo.value = promo
@@ -276,9 +334,52 @@ export default defineComponent({
       });
 
     }
+
+    const goToVip = () => {
+      router.push('/vip')
+    }
+
+    // promo timer
+    const endDate = new Date('01/02/2024 12:00:00').getTime();
+    const countdown = ref('');
+    const isPromotionEnded = ref(false);
+
+    function getCountdown() {
+      const now = new Date().getTime();
+      const timeRemaining = endDate - now;
+
+      if (timeRemaining <= 0) {
+        isPromotionEnded.value = true;
+        return 'Promotion Ended';
+      }
+
+      const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
+      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+      const formattedHours = String(hours).padStart(2, '0');
+      const formattedMinutes = String(minutes).padStart(2, '0');
+      const formattedSeconds = String(seconds).padStart(2, '0');
+
+      return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    }
+
+    const updateCountdown = () => {
+      countdown.value = getCountdown();
+    };
+
+    // Update the countdown every second
+    const countdownInterval = setInterval(updateCountdown, 1000);
+
+    // Cleanup the interval when the component is unmounted
+    onBeforeUnmount(() => {
+      clearInterval(countdownInterval);
+    });
+
     onMounted(() => {
       loadBanner();
       loadAll();
+      updateCountdown();
     });
 
     return {
@@ -295,11 +396,48 @@ export default defineComponent({
       store,
       tab,
       tabItems,
-      isDisplayLogin
+      isDisplayLogin,
+      vipPromoTab,
+      backToPromoList,
+      isPromotionEnded,
+      countdown,
+      getCountdown,
+      updateCountdown,
+      countdownInterval,
+      goToVip
     }
   },
 });
 </script>
+<style lang="scss" scoped>
+.vip-promo-tab-wrapper {
+  width: 90%;
+  margin: 0 auto;
+  .q-tab {
+    min-height: 45px;
+    border-radius: 8px;
+    background: #101114;
+    color: #5c6c86;
+  }
+
+  .vip-promo-tab-toggle {
+    background-color: #1b2232;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    padding: 3px;
+
+    :deep(.q-tab__label) {
+      font-weight: 700;
+    }
+
+    :deep(.q-tab--active) {
+      color: #fff;
+      background: linear-gradient(0deg, #5c46e7, #5c46e7), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+      box-shadow: 0px 1px 2px 0px #0000000d;
+    }
+  }
+}
+</style>
 <style lang="scss">
 .promo-container {
   min-height: 100vh;
@@ -349,6 +487,14 @@ export default defineComponent({
     font-size: 17px;
   }
 }
+
+.back-btn {
+  background: rgb(255, 255, 255, 0.2);
+  margin: 12px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
 </style>
 <style lang="scss">
 .promo-container {
@@ -378,7 +524,7 @@ export default defineComponent({
 
     .promo-main-container {
       max-width: 1400px;
-      width: 95%;
+      width: 90%;
       margin-left: auto;
       margin-right: auto;
 
@@ -460,7 +606,10 @@ export default defineComponent({
           transition: 0.4s ease-in;
           margin-bottom: 20px;
           overflow: hidden;
-          padding-top: 25px;
+          padding-top: 40px;
+          border-radius: 17px;
+          background: #4f366c;
+          box-shadow: 0px 7.5px 20px 0px #1411321a;
 
           img {
           }
@@ -478,6 +627,7 @@ export default defineComponent({
               background-position: center center;
               margin: 0;
               // border-radius: 10px 10px 0 0;
+              border-radius: 17px;
 
               &:hover {
                 transform: scale(1.2);
@@ -489,8 +639,8 @@ export default defineComponent({
               gap: 30px;
 
               .promo-content {
-                // width: 100%;
-                width: unset;
+                width: 100%;
+                // width: unset;
                 height: 100%;
 
                 &.isDesktop {
@@ -525,43 +675,43 @@ export default defineComponent({
             align-items: center;
 
             .viewdetail {
-              background: #002a35;
+              // background: #002a35;
               color: #ffffff;
               font-size: 12px;
               position: absolute;
               width: 100%;
               z-index: 2;
               top: 0;
-              height: 30px;
+              height: 40px;
               overflow: hidden;
-              line-height: 27px;
+              line-height: 40px;
               padding: 0 100px 0 10px;
 
-              &:before {
-                background: #043d4f;
-                content: "";
-                display: block;
-                height: 100%;
-                position: absolute;
-                right: 0;
-                top: 0;
-                width: 70px;
-              }
+              // &:before {
+              //   background: #043d4f;
+              //   content: "";
+              //   display: block;
+              //   height: 100%;
+              //   position: absolute;
+              //   right: 0;
+              //   top: 0;
+              //   width: 70px;
+              // }
 
-              &:after {
-                border-left: 20px solid transparent;
-                border-right: 30px solid transparent;
-                border-top: 30px solid #043d4f;
-                clear: both;
-                content: "";
-                display: block;
-                height: 0;
-                position: absolute;
-                right: 50px;
-                top: 0;
-                transform: rotate(180deg);
-                width: 0;
-              }
+              // &:after {
+              //   border-left: 20px solid transparent;
+              //   border-right: 30px solid transparent;
+              //   border-top: 30px solid #043d4f;
+              //   clear: both;
+              //   content: "";
+              //   display: block;
+              //   height: 0;
+              //   position: absolute;
+              //   right: 50px;
+              //   top: 0;
+              //   transform: rotate(180deg);
+              //   width: 0;
+              // }
             }
 
             .detail-arrow {
@@ -652,6 +802,7 @@ export default defineComponent({
         .hot-promo {
           background: #272c3d;
           border-radius: 10px;
+          display: none;
         }
 
         .promo-view-container {
@@ -686,15 +837,15 @@ export default defineComponent({
 }
 
 .pad-title {
-  position: absolute;
+  // position: absolute;
   // top: -7px;
   // right: 5px;
   // z-index: 3;
   font-size: 12px;
   // color: #3e5cc0;
   color: #ffffff;
-  right: 5px;
-  top: 5px;
+  // right: 5px;
+  // top: 5px;
   z-index: 3;
 }
 
@@ -777,6 +928,50 @@ export default defineComponent({
       width: 120px;
       margin-left: auto;
       display: block;
+    }
+  }
+}
+
+// join now
+.join-container {
+  background: #3b2e95;
+  padding: 12px 12px;
+  position: fixed;
+  bottom: 71px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .btn-join-now {
+    border-radius: 100px;
+    background: linear-gradient(180deg, #d6b335 0%, #fff96b 50%, #f2ae01 100%);
+    color: #000;
+    font-weight: 600;
+    font-size: 12px;
+    height: 30px;
+  }
+
+  .promo-date {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+  }
+  .date-txt {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .date-timer {
+    color: #fe9a9a;
+    display: flex;
+    align-items: center;
+    line-height: 1 !important;
+    gap: 8px;
+    font-size: 14px;
+
+    img {
+      width: 14px !important;
     }
   }
 }

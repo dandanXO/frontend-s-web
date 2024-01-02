@@ -1,24 +1,24 @@
 <template>
-  <ProfileSummary></ProfileSummary>
-
-  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>
-
-  <ContentView :contentTopStatus="`${isNoInfo ? '' : 'solid'}`">
+  <q-page class="account-message-page">
     <LoadingComponent v-if="isLoading"></LoadingComponent>
     <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Message"></NoInfoComponent>
     <q-card v-else v-for="(e, i) in mailData" :key="`${e}-${i}`" class="msg-container">
-      <q-card-section class="title">
-        <div v-if="!e.status && store.readMsgLists.indexOf(e.id) === -1" class="status">New</div>
-        <div>{{ e.title }}</div>
-      </q-card-section>
-      <q-card-section class="content">{{ e.content }}</q-card-section>
+      <img class="new-message-ribbon" src="../../assets/images/message/new-message-ribbon.png" v-if="!e.status && store.readMsgLists.indexOf(e.id) === -1" />
 
-      <q-card-section class="bottom-wrapper">
-        <div class="time">{{ convertToGMT55(e.sendTime).format("YYYY-MM-DD HH:mm") }}</div>
-        <q-btn class="detail-btn" label="Details >" @click="onDetailsClick(e)"></q-btn>
-      </q-card-section>
+      <div class="message-wrapper">
+        <q-card-section class="title">
+          <div>{{ e.title }}</div>
+        </q-card-section>
+        <q-card-section class="content">{{ e.content }}</q-card-section>
+
+        <q-card-section class="bottom-wrapper">
+          <div class="time">{{ convertToGMT55(e.sendTime) }}</div>
+          <q-btn class="detail-btn" @click="onDetailsClick(e)">
+            More&nbsp;<q-icon class="forward-icon" name="arrow_forward_ios" size="small" /></q-btn>
+        </q-card-section>
+      </div>
     </q-card>
-  </ContentView>
+  </q-page>
 </template>
 
 <script setup>
@@ -26,11 +26,7 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { userStore } from "stores/index";
-import moment from "moment";
 import { convertToGMT55 } from "src/boot/utils";
-import SwiperNav from "../../components/SwiperNav.vue";
-import ContentView from "../../components/ContentView.vue";
-import ProfileSummary from "../../components/ProfileSummary.vue";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
 
@@ -55,7 +51,7 @@ const isActiveSlide = (e) => {
 
 const isLoading = ref(true);
 const isNoInfo = ref(true);
-const readIdLists= ref([]);
+const readIdLists = ref([]);
 const mailData = ref([]);
 const mailboxData = ref({
   type: null,
@@ -100,11 +96,41 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.account-message-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 20px;
+}
 .msg-container {
-  border-radius: 0.5rem;
-  background: rgba(21, 0, 37, 0.5);
   padding: 1rem;
-  margin-top: 0;
+  margin: 0;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  background: #171E2B;
+  position: relative;
+  box-shadow: none;
+
+  &:has(.new-message-ribbon) {
+    background: #27344A;
+  }
+
+  .new-message-ribbon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30px;
+    height: 30px;
+  }
+
+  .message-wrapper {
+    height: 100%;
+    width: 100%;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 
   .title {
     font-size: 1rem;
@@ -125,7 +151,7 @@ onMounted(() => {
 
   .content {
     font-size: 1rem;
-    font-weight: 700;
+    // font-weight: 700;
     color: rgba(255, 255, 255, 0.5);
     white-space: nowrap;
     overflow: hidden;
@@ -140,7 +166,7 @@ onMounted(() => {
 
     .time {
       font-size: 1rem;
-      font-weight: 700;
+      // font-weight: 700;
       color: rgba(255, 255, 255, 0.5);
     }
 
@@ -148,9 +174,10 @@ onMounted(() => {
       border-radius: 12.5rem;
       background: rgba(255, 255, 255, 0.2);
       font-size: 1rem;
-      font-weight: 700;
+      // font-weight: 700;
       padding: 0 1rem;
       min-height: unset;
+      text-transform: capitalize;
     }
   }
 }

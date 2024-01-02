@@ -295,7 +295,7 @@ html,
 p {
   margin: 0;
   padding: 0;
-  font-family: MicrosoftYaHei;
+  // font-family: MicrosoftYaHei;
 }
 
 .message-title > section > h2,
