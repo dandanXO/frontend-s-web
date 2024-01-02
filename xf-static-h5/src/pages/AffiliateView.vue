@@ -16,7 +16,7 @@
         <a
           @click.stop.prevent="
             openWindow(
-              `https://csweb01.amv4xjcbd.com/?partnerId=3&lang=zh-CN&way=${regDevice}&token=${store.token}`,
+              `https://csweb01.amv4xjcbd.com/?partnerCode=XFCS&lang=zh-CN&way=${regDevice}&token=${store.token}`,
               'Chat Server',
               350,
               650,
