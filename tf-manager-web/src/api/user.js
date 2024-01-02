@@ -5,6 +5,10 @@ export const loginRequest = (userInfo) => {
   return https().request("/auth/login", Method.POST, userInfo, ContentType.form);
 };
 
+export const indLoginRequest = (userInfo) => {
+  return https().request("/auth/indLogin", Method.POST, userInfo, ContentType.form);
+};
+
 export const logoutRequest = () => {
   return https().request("/auth?_method=DELETE", Method.POST);
 };

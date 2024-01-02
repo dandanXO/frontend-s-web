@@ -1325,7 +1325,6 @@ const getVersionNo = async () => {
     // info.version && info.build
     const appType = "ALL";
     const affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
-    // alert(affiliateCode);
     const res = await api.get(`/app/india/getAppData?affiliateCode=${affiliateCode}`);
     // console.log(res);
     if (res.code === 0) {

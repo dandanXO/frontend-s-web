@@ -208,6 +208,7 @@ import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
 import { getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -290,9 +291,13 @@ async function loadBankCardHistory() {
       query[key] = value
     }
   })
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.cardTime !== null) {
     if (request.cardTime.length === 2) {
-      query.cardTime = request.cardTime.join(',')
+      query.cardTime = JSON.parse(JSON.stringify(request.cardTime));
+      query.cardTime[0] = formatInputTimeZone(query.cardTime[0], timeZone, 'start');
+      query.cardTime[1] = formatInputTimeZone(query.cardTime[1], timeZone, 'end');
+      query.cardTime = query.cardTime.join(',')
     }
   }
 
@@ -300,7 +305,6 @@ async function loadBankCardHistory() {
 
   page.pages = ret.pages
   page.records = ret.records
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false
 }
 

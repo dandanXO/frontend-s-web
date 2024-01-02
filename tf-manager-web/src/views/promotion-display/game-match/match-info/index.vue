@@ -228,9 +228,35 @@
           <span v-else>{{ t('gameType.' + scope.row.gameType) }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="matchTime" :label="t('fields.matchTime')" width="200" />
+      <el-table-column prop="matchTime" :label="t('fields.matchTime')" width="200">
+        <template #default="scope">
+          <span v-if="scope.row.matchTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.matchTime !== null"
+            v-formatter="{
+              data: scope.row.matchTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="createBy" :label="t('fields.createBy')" width="150" />
-      <el-table-column prop="createTime" :label="t('fields.createTime')" width="200" />
+      <el-table-column prop="createTime" :label="t('fields.createTime')" width="200">
+        <template #default="scope">
+          <span v-if="scope.row.createTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.createTime !== null"
+            v-formatter="{
+              data: scope.row.createTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:game-match:update-status']) || hasPermission(['sys:game-match:update']) || hasPermission(['sys:game-match:delete']))" fixed="right" width="280">
         <template #default="scope">
           <el-button
@@ -431,6 +457,7 @@ const gameMatchForm = ref(null);
 const sites = reactive({
   list: []
 });
+let timeZone = null
 const imageList = reactive({
   dataList: [],
   pages: 0,
@@ -518,6 +545,7 @@ async function loadGameMatch() {
   const { data: ret } = await getGameMatch(query);
   page.pages = ret.pages;
   page.records = ret.records;
+  timeZone = sites.list.find(e => e.id === request.siteId).timeZone
   page.total = ret.total;
   page.loading = false;
 }

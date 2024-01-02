@@ -787,4 +787,13 @@ onMounted(async () => {
 .color-item {
   margin: 0px !important;
 }
+@media (max-width: 768px) {
+  .body-container {
+    flex-direction: column;
+    padding: 0;
+    .config-container,.image-container {
+      width: 100%;
+    }
+  }
+}
 </style>

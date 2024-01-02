@@ -482,7 +482,9 @@ export default {
     after_success_go_to_setting: "After the download is successful, go to Settings to install the App.",
     press_install: "Press 'Profile Downloaded', and then press Install.",
     after_success_you_click_join_and_have_fun:
-      "After successful installation, you can click to join and have fun with us immediately."
+      "After successful installation, you can click to join and have fun with us immediately.",
+    participate: "Participate",
+    sent_success: "Sent Successfully"
   },
   error: {
     101: "Platform not found",
@@ -546,6 +548,9 @@ export default {
     15201: "Incorrect old code",
     15202: "New code must match old code",
     21000: "This game is already in your favorite games list.",
+    24001: "The attendance record already exists.",
+    24002: "Detected same IP",
+    24005: "Does not meet the minimum deposit amount",
     30000: "Member data not found",
     30001: "Member has already received the promotion",
     30002: "Member has sent the number today",

@@ -9,7 +9,7 @@
       @click="handleClickOutside"
     />
     <div class="main-container">
-      <Sidebar :key="reloadKey" class="sidebar-container" />
+      <Sidebar class="sidebar-container" />
       <AppMain />
     </div>
   </div>
@@ -23,9 +23,7 @@ import {
   onBeforeUnmount,
   onMounted,
   reactive,
-  toRefs,
-  ref,
-  watch
+  toRefs
 } from 'vue'
 import { useStore } from '@/store'
 import { AppActionTypes } from '@/store/modules/app/action-types'
@@ -54,19 +52,6 @@ export default defineComponent({
         store.dispatch(AppActionTypes.ACTION_CLOSE_SIDEBAR, false)
       },
     })
-    var reloadKey = ref(0)
-    const languageLocale = ref(localStorage.getItem('language') || 'default');
-    // Watch changes to languageLocale and reloadFlag
-    watch([languageLocale], async ([newLanguage, reload]) => {
-      // Check if reload is needed
-      if (reload) {
-        // Perform any actions needed to "reload" without modifying data
-        console.log('Reloading with existing data');
-
-        // Reset the reloadFlag to false
-        reloadKey.value += 1;
-      }
-    });
     const classObj = computed(() => {
       return {
         // hideSidebar: !sidebar.value.opened,

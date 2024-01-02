@@ -2,10 +2,25 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+          @change="handleSiteChange()"
+        >
+          <el-option
+            v-for="item in list.sites"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-input
           v-model="request.withdrawName"
           size="small"
-          style="width: 200px"
+          style="width: 200px; margin-left: 5px"
           :placeholder="t('fields.withdrawPlatformName')"
         />
         <el-button
@@ -130,7 +145,8 @@
 
 <script setup>
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, computed } from 'vue'
+import { getSiteListSimple } from '../../../api/site'
 import {
   getWithdrawBankList,
   createWithdrawBank,
@@ -141,9 +157,14 @@ import { getWithdrawPlatforms } from "../../../api/withdraw-platform";
 import { required } from '../../../utils/validate'
 // import { hasRole, hasPermission } from '../../../utils/util'
 import { useI18n } from "vue-i18n";
+import { useStore } from '../../../store'
+import { TENANT } from '../../../store/modules/user/action-types'
 
-const { t } = useI18n();
+const { t } = useI18n()
+const store = useStore()
 const bankForm = ref(null)
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
+const site = ref(null)
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -180,6 +201,7 @@ const page = reactive({
 })
 
 const list = reactive({
+  sites: [],
   bankInfo: [],
   withdrawInfo: [],
 })
@@ -199,6 +221,16 @@ function showDialog(type) {
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
+}
+
+function handleSiteChange() {
+  loadWithdrawBankList()
+  loadWithdraw()
+}
+
+async function loadSites() {
+  const { data: ret } = await getSiteListSimple()
+  list.sites = ret
 }
 
 async function loadWithdrawBankList() {
@@ -244,7 +276,15 @@ function submit() {
     create()
   }
 }
-onMounted(() => {
+onMounted(async () => {
+  await loadSites()
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = list.sites.find(s => s.siteName === store.state.user.siteName);
+    request.siteId = site.value.id;
+  } else {
+    site.value = list.sites[0];
+    request.siteId = site.value.id;
+  }
   loadWithdrawBankList()
   loadBank()
   loadWithdraw()

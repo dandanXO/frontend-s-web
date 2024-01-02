@@ -98,11 +98,11 @@
 
       <template v-if="activeTab === 3">
         <div class="referral-info provillage">
-          <div class="bg">
+          <div class="bg" @click="goToInvitePage(2)">
             <img src="../../../assets/images/privilege-invite/btn_referral.png" />
             <div class="title">邀请周存送</div>
           </div>
-          <div class="bg">
+          <div class="bg" @click="goToInvitePage(3)">
             <img src="../../../assets/images/privilege-invite/btn_turnover.png" />
             <div class="title">好友流水返利</div>
           </div>
@@ -191,6 +191,10 @@ const hotPromoNav = [
 const onTabClick = (nav) => {
   activeTab.value = nav.id;
   router.push(nav.path);
+};
+
+const goToInvitePage = (type) => {
+  router.push("/privilege/invite?type=" + type);
 };
 
 const tableData = [

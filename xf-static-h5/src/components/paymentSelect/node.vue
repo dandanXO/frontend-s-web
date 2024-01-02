@@ -26,7 +26,7 @@
           <div class="promo">
             <img
               v-if="item.promotionIcon"
-              :src="`${imgURL}label/${item.promotionIcon}`"
+              :src="`${imgURL}${item.promotionIcon}`"
             />
           </div>
 

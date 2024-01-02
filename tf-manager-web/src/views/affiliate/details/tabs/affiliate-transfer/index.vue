@@ -65,6 +65,7 @@ import { getTransferRecords } from '@/api/member-affiliate';
 import { useI18n } from "vue-i18n";
 import { useRoute } from 'vue-router';
 import { getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n();
 const props = defineProps({
@@ -124,7 +125,10 @@ async function loadTransferRecords() {
   });
   if (request.transferDate !== null) {
     if (request.transferDate.length === 2) {
-      query.transferDate = request.transferDate.join(",");
+      query.transferDate = JSON.parse(JSON.stringify(request.transferDate));
+      query.transferDate[0] = formatInputTimeZone(query.transferDate[0], props.timeZone);
+      query.transferDate[1] = formatInputTimeZone(query.transferDate[1], props.timeZone);
+      query.transferDate = query.transferDate.join(',')
     }
   }
   query.siteId = site.id;

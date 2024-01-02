@@ -259,6 +259,7 @@ import { useI18n } from "vue-i18n";
 import { getSiteListSimple } from '../../../api/site';
 import { useStore } from '../../../store';
 import { TENANT } from '../../../store/modules/user/action-types';
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n();
 const store = useStore()
@@ -388,9 +389,13 @@ function checkQuery() {
       query[key] = value;
     }
   });
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.betTime !== null) {
     if (request.betTime.length === 2) {
-      query.betTime = request.betTime.join(",");
+      query.betTime = JSON.parse(JSON.stringify(request.betTime));
+      query.betTime[0] = formatInputTimeZone(query.betTime[0], timeZone);
+      query.betTime[1] = formatInputTimeZone(query.betTime[1], timeZone);
+      query.betTime = query.betTime.join(',')
     }
   }
   if (request.status !== null) {
@@ -416,7 +421,6 @@ async function loadMemberBetRecords() {
   total.totalBet = t.totalBet;
   total.totalPayout = t.totalPayout;
 
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false;
 }
 
