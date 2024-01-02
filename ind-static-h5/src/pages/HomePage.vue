@@ -977,8 +977,10 @@ const checkPlatform = () => {
     (Platform.is.android && Platform.is.capacitor)
   ) {
     isH5.value = false;
+    getVersionNo();
   } else {
     isH5.value = true;
+    getVersionNo();
   }
 };
 
@@ -1314,6 +1316,7 @@ const gotoSignUp = () => {
 const download_url = ref("");
 const isAppUpdateModal = ref(false);
 const getVersionNo = async () => {
+  // alert("run")
   if (Platform.is.android && Platform.is.capacitor) {
     const info = await App.getInfo();
     // console.log("APP Info");
@@ -1408,13 +1411,14 @@ onMounted(() => {
   loadData();
   loadAnnouncement();
   checkPlatform();
-  getVersionNo();
   getAppDownloadUrl();
   loadHotGameList();
   loadFishGameList();
   store.getUnreadTotal();
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+
+
 });
 </script>
 
