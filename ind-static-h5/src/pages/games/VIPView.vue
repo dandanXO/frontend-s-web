@@ -16,35 +16,15 @@
   </div>
 
   <div class="vip-container">
-    <q-carousel
-      class="vip bg-transparent"
-      animated
-      v-model="vipCarouselIndex"
-      arrows
-      infinite
-      swipeable
-    >
-      <q-carousel-slide
-        v-for="(vip, vipIndex) in vipItems"
-        :key="vipIndex"
-        :name="vipIndex"
-      >
+    <q-carousel class="vip bg-transparent" animated v-model="vipCarouselIndex" arrows infinite swipeable>
+      <q-carousel-slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex" :name="vipIndex">
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
-            <div
-              :class="`vip-badge vip${vip.vipLevel}`">
-            </div>
+            <div :class="`vip-badge vip${vip.vipLevel}`"></div>
 
             <div class="vip-level-header">VIP{{ vip.vipLevel }}</div>
 
-            <div
-              class="vip-contents"
-              :style="
-                vip.upgrade === 'Successful deposit'
-                  ? 'padding-top: 120px;'
-                  : ''
-              "
-            >
+            <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
               <div class="upgrade-requirements">
                 <span v-if="vip.vipLevel !== '0'">Accummulate Deposit</span>
                 {{ vip.ugprade }}
@@ -75,14 +55,12 @@
     </q-carousel>
     <div class="header-wrapper">
       <div class="vertical-line"></div>
-      <div class="header">
-        Monthly Cumulative Deposit An Upgrade Vip Level
-      </div>
+      <div class="header">Monthly Cumulative Deposit An Upgrade Vip Level</div>
     </div>
 
     <q-table flat :hide-pagination="true" :columns="columns" :rows="rows" row-key="name" :rows-per-page-options="[0]">
       <template v-slot:header="props">
-        <q-tr :props="props" style="display:none">
+        <q-tr :props="props" style="display: none">
           <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
             <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
             <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;</div>
@@ -115,7 +93,7 @@
       </template>
 
       <template v-slot:bottom-row>
-        <q-tr style="display:none">
+        <q-tr style="display: none">
           <q-td colspan="100%" class="bottom-note text-left">
             After the recharge on the day reaches the standard, the next day will increase the VIP level and issue
             corresponding upgrade rewards.
@@ -124,12 +102,14 @@
       </template>
     </q-table>
 
-    <div class="hint-msg">After the recharge on the day reaches the standard, the next day will increase the VIP level and
-      issue corresponding upgrade rewards.</div>
+    <div class="hint-msg">
+      After the recharge on the day reaches the standard, the next day will increase the VIP level and issue
+      corresponding upgrade rewards.
+    </div>
 
     <q-table flat :hide-pagination="true" :columns="columns3" :rows="rows3" row-key="name" :rows-per-page-options="[0]">
       <template v-slot:header="props">
-        <q-tr :props="props" style="display:none">
+        <q-tr :props="props" style="display: none">
           <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
             <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
             <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
@@ -162,7 +142,7 @@
       </template>
 
       <template v-slot:bottom-row>
-        <q-tr style="display:none">
+        <q-tr style="display: none">
           <q-td colspan="100%" class="bottom-note text-left">
             Promotion Bonus: Every time you advance, you can instantly receive a promotion reward.
           </q-td>
@@ -174,7 +154,7 @@
 
     <q-table flat :hide-pagination="true" :columns="columns4" :rows="rows4" row-key="name" :rows-per-page-options="[0]">
       <template v-slot:header="props">
-        <q-tr :props="props" style="display:none">
+        <q-tr :props="props" style="display: none">
           <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
             <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
             <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
@@ -206,7 +186,7 @@
       </template>
 
       <template v-slot:bottom-row>
-        <q-tr style="display:none">
+        <q-tr style="display: none">
           <q-td colspan="100%" class="bottom-note text-left">
             Cash Bonus: Based on your VIP level at the end of this month, this reward will be sent to you at 10 a.m. on
             the 1st of next month.
@@ -215,12 +195,14 @@
       </template>
     </q-table>
 
-    <div class="hint-msg">Cash Bonus: Based on your VIP level at the end of this month, this reward will be sent to you at 10 a.m. on
-            the 1st of next month.</div>
+    <div class="hint-msg">
+      Cash Bonus: Based on your VIP level at the end of this month, this reward will be sent to you at 10 a.m. on the
+      1st of next month.
+    </div>
 
     <q-table flat :hide-pagination="true" :columns="columns2" :rows="rows2" row-key="name" :rows-per-page-options="[0]">
       <template v-slot:header="props">
-        <q-tr :props="props" style="display:none">
+        <q-tr :props="props" style="display: none">
           <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
             <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
             <div v-else-if="colIndex === 2" style="width: 90px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
@@ -249,7 +231,7 @@
       </template>
 
       <template v-slot:bottom-row>
-        <q-tr style="display:none">
+        <q-tr style="display: none">
           <q-td colspan="100%" class="bottom-note text-left">Daily withdrawal limits based on VIP levels.</q-td>
         </q-tr>
       </template>
@@ -272,17 +254,23 @@ const route = useRoute();
 const store = userStore();
 const vipCarouselIndex = ref(0);
 
-watch(() => vipPromoTab.value, () => {
-  if(vipPromoTab.value === 'promo') {
-    router.push('/promo');
+watch(
+  () => vipPromoTab.value,
+  () => {
+    if (vipPromoTab.value === "promo") {
+      router.push("/promo");
+    }
   }
-})
+);
 
-watch(() => route.path, () => {
-  if(route.path === '/vip') {
-    vipPromoTab.value = 'vip';
+watch(
+  () => route.path,
+  () => {
+    if (route.path === "/vip") {
+      vipPromoTab.value = "vip";
+    }
   }
-})
+);
 
 const getVipLevelProgress = (vipInfo) => {
   const vipLevel = Number(store.vip.replace("VIP", ""));
@@ -293,11 +281,10 @@ const getVipLevelProgress = (vipInfo) => {
     return 100;
   }
 
-  const levelUpDeposit = +upgradeStatus.replaceAll(",", "");
+  const levelUpDeposit = +upgradeStatus.replace(/"/g, "");
   return {
     levelUpPercentage: (currentDeposit / levelUpDeposit) * 100,
     progressBarText: `${currentDeposit} / ${levelUpDeposit}`
-
   };
 };
 
@@ -375,33 +362,39 @@ const rows = [
   }
 ];
 
-const { vipItems, lastVipLevel } = rows.reduce((acc, { name: vipName, ugprade: upgradeRequirement }) => {
-  const vipLevelStr = vipName.replace("VIP ", "");
-  const vipLevelNum = Number(vipLevelStr);
+const { vipItems, lastVipLevel } = rows.reduce(
+  (acc, { name: vipName, ugprade: upgradeRequirement }) => {
+    const vipLevelStr = vipName.replace("VIP ", "");
+    const vipLevelNum = Number(vipLevelStr);
 
-  return {
-    ...acc,
-    vipItems: [...acc.vipItems, {
-      vipLevel: vipLevelNum,
-      ugprade: upgradeRequirement
-    }],
-    lastVipLevel: vipLevelNum
+    return {
+      ...acc,
+      vipItems: [
+        ...acc.vipItems,
+        {
+          vipLevel: vipLevelNum,
+          ugprade: upgradeRequirement
+        }
+      ],
+      lastVipLevel: vipLevelNum
+    };
+  },
+  {
+    lastVipLevel: "",
+    vipItems: []
   }
-}, {
-  lastVipLevel: "",
-  vipItems: [],
-})
+);
 
 onMounted(() => {
   const vipLevelNum = Number(store.vip.replace("VIP", ""));
   vipLevel.value = vipLevelNum;
 
   // if vip0, show vip1 slide
-  if(vipLevelNum === 0) {
+  if (vipLevelNum === 0) {
     vipCarouselIndex.value = vipLevelNum;
   }
   // if vip level higher than existing info available, show last vip level slide
-  else if(vipLevelNum > lastVipLevel) {
+  else if (vipLevelNum > lastVipLevel) {
     // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
     vipCarouselIndex.value = lastVipLevel - 1;
   }
@@ -410,7 +403,7 @@ onMounted(() => {
     // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
     vipCarouselIndex.value = vipLevelNum - 1;
   }
-})
+});
 
 const columns2 = [
   {
@@ -645,11 +638,11 @@ const rows4 = [
     min-height: 45px;
     border-radius: 8px;
     background: #101114;
-    color: #5C6C86;
+    color: #5c6c86;
   }
 
   .vip-promo-tab-toggle {
-    background-color: #1B2232;
+    background-color: #1b2232;
     border-radius: 8px;
     margin-bottom: 4px;
     padding: 3px;
@@ -660,8 +653,8 @@ const rows4 = [
 
     :deep(.q-tab--active) {
       color: #fff;
-      background: linear-gradient(0deg, #5C46E7, #5C46E7), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-      box-shadow: 0px 1px 2px 0px #0000000D;
+      background: linear-gradient(0deg, #5c46e7, #5c46e7), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+      box-shadow: 0px 1px 2px 0px #0000000d;
     }
   }
 }
@@ -696,56 +689,49 @@ const rows4 = [
     background-size: 100% 100%;
 
     &.vip2 {
-      background: url("../../assets/images/vip/badge/vip2.png") no-repeat top
-        center;
+      background: url("../../assets/images/vip/badge/vip2.png") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip3 {
-      background: url("../../assets/images/vip/badge/vip3.png") no-repeat top
-        center;
+      background: url("../../assets/images/vip/badge/vip3.png") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip4 {
-      background: url("../../assets/images/vip/badge/vip4.png") no-repeat top
-        center;
+      background: url("../../assets/images/vip/badge/vip4.png") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip5 {
-      background: url("../../assets/images/vip/badge/vip5.png") no-repeat top
-        center;
+      background: url("../../assets/images/vip/badge/vip5.png") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip6 {
-      background: url("../../assets/images/vip/badge/vip6.png") no-repeat top
-        center;
+      background: url("../../assets/images/vip/badge/vip6.png") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip7 {
-      background: url("../../assets/images/vip/badge/vip7.png") no-repeat top
-        center;
+      background: url("../../assets/images/vip/badge/vip7.png") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip8 {
-      background: url("../../assets/images/vip/badge/vip8.png") no-repeat top
-        center;
+      background: url("../../assets/images/vip/badge/vip8.png") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip9 {
-      background: url("../../assets/images/vip/badge/vip9.png") no-repeat top
-        center;
+      background: url("../../assets/images/vip/badge/vip9.png") no-repeat top center;
       background-size: 100% 100%;
     }
 
-    &.vip10, &.vip11, &.vip12 {
-      background: url("../../assets/images/vip/badge/vip10.png") no-repeat top
-        center;
+    &.vip10,
+    &.vip11,
+    &.vip12 {
+      background: url("../../assets/images/vip/badge/vip10.png") no-repeat top center;
       background-size: 100% 100%;
     }
   }
@@ -758,13 +744,11 @@ const rows4 = [
     right: 10%;
     z-index: 1;
     position: absolute;
-    color: #8B36F8;
-    background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%),
-    linear-gradient(0deg, #FFFFFF, #FFFFFF);
+    color: #8b36f8;
+    background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%), linear-gradient(0deg, #ffffff, #ffffff);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-
   }
 
   .vip-contents {
@@ -790,7 +774,7 @@ const rows4 = [
       right: 6%;
 
       .progress-bar-outer-bar {
-        border:3px solid #fff;
+        border: 3px solid #fff;
         border-radius: 16px;
         background: #fff;
         width: 100%;
@@ -811,7 +795,7 @@ const rows4 = [
       .progress-bar-inner-bar {
         color: #fff;
         border-radius: 16px;
-        background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%);
+        background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
         height: 16px;
       }
 
@@ -853,7 +837,7 @@ const rows4 = [
 
   .top-header {
     color: #f1f1f1;
-    background: linear-gradient(180deg, #41206F 0%, #1F2862 100%);
+    background: linear-gradient(180deg, #41206f 0%, #1f2862 100%);
   }
 
   .q-table__card {
@@ -886,7 +870,7 @@ const rows4 = [
   }
   tbody > :nth-child(odd) {
     background: rgba(21, 0, 37, 0.2);
-    background: #652C93;
+    background: #652c93;
   }
   tbody > :nth-child(even) {
     background: rgba(21, 0, 37, 0.5);
@@ -924,10 +908,10 @@ const rows4 = [
 
   .hint-msg {
     border-radius: 8px;
-    background: linear-gradient(180deg, #2F1B4D 0%, #1A2045 100%);
+    background: linear-gradient(180deg, #2f1b4d 0%, #1a2045 100%);
     padding: 10px;
     margin: 0 0 1.25rem 0;
-    color: rgba(255, 255, 255, 0.70);
+    color: rgba(255, 255, 255, 0.7);
     text-align: center;
     font-weight: 400;
     line-height: 19px;
@@ -944,18 +928,16 @@ const rows4 = [
     }
 
     .header {
-    font-size: 26px;
-    font-weight: 700;
-    line-height: 32px;
-    text-align: left;
-    background: linear-gradient(90deg, #BC70DF 0%, #FCD23C 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 32px;
+      text-align: left;
+      background: linear-gradient(90deg, #bc70df 0%, #fcd23c 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
   }
-  }
-
-  
 }
 
 @media (max-width: 410px) {
