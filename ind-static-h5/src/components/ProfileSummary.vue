@@ -216,6 +216,7 @@ onMounted(() => {
       gap: 0;
       justify-content: space-between;
       padding: 0 12px;
+      overflow-y: hidden;
 
       .profile-pic {
         margin-top: -20px;
