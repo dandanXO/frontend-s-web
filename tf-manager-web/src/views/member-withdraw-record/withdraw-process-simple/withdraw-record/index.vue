@@ -117,18 +117,6 @@
         v-loading="page.loading"
       >
         <el-table-column
-          prop="site"
-          :label="t('fields.site')"
-          align="center"
-          min-width="80"
-        />
-        <el-table-column
-          prop="serialNumber"
-          :label="t('fields.serialNo')"
-          align="center"
-          min-width="210"
-        />
-        <el-table-column
           prop="loginName"
           :label="t('fields.loginName')"
           align="center"
@@ -144,84 +132,10 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="realName"
-          :label="t('fields.realName')"
+          prop="serialNumber"
+          :label="t('fields.serialNo')"
           align="center"
-          min-width="110"
-        />
-        <el-table-column
-          prop="memberType"
-          :label="t('fields.memberType')"
-          align="center"
-          min-width="110"
-        />
-        <el-table-column
-          prop="status"
-          :label="t('fields.status')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <el-tag v-if="scope.row.status === 'FAIL'" type="danger">
-              {{ t('withdrawStatus.' + scope.row.status) }}
-            </el-tag>
-            <el-tag v-else-if="scope.row.status === 'SUCCESS'" type="success">
-              {{ t('withdrawStatus.' + scope.row.status) }}
-            </el-tag>
-            <el-tag v-else>{{ t('withdrawStatus.' + scope.row.status) }}</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="vip"
-          :label="t('fields.vipLevel')"
-          align="center"
-          min-width="80"
-        />
-        <el-table-column
-          prop="financial"
-          :label="t('fields.financialLevel')"
-          align="center"
-          min-width="110"
-        >
-          <template #default="scope">
-            <span :style="{color: scope.row.financialColor}">{{ scope.row.financial }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="cardAccount"
-          :label="t('fields.accountHolder')"
-          align="center"
-          min-width="120"
-        />
-        <el-table-column
-          prop="bankName"
-          :label="t('fields.bankName')"
-          align="center"
-          min-width="150"
-        />
-        <el-table-column
-          prop="cardNumber"
-          :label="t('fields.accountNumber')"
-          align="center"
-          min-width="120"
-        />
-        <el-table-column
-          prop="cardAddress"
-          :label="t('fields.cardAddress')"
-          align="center"
-          min-width="120"
-        />
-        <el-table-column
-          prop="currencyCode"
-          :label="t('fields.currency')"
-          align="center"
-          min-width="80"
-        />
-        <el-table-column
-          prop="currencyRate"
-          :label="t('fields.currencyRate')"
-          align="center"
-          min-width="100"
+          min-width="210"
         />
         <el-table-column
           prop="withdrawAmount"
@@ -236,10 +150,9 @@
             />
           </template>
         </el-table-column>
-
         <el-table-column
-          prop="localCurrencyAmount"
-          :label="t('fields.localCurrencyAmount')"
+          prop="fee"
+          :label="t('fields.fee')"
           align="center"
           min-width="120"
         >
@@ -247,13 +160,12 @@
             $
             <span
               v-formatter="{
-                data: scope.row.localCurrencyAmount,
+                data: scope.row.fee,
                 type: 'money',
               }"
             />
           </template>
         </el-table-column>
-
         <el-table-column
           prop="withdrawDate"
           :label="t('fields.withdrawDate')"
@@ -322,34 +234,45 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="paymentCard"
-          :label="t('fields.paymentCard')"
+          prop="status"
+          :label="t('fields.status')"
           align="center"
-          min-width="120"
+          width="160"
         >
           <template #default="scope">
-            <span v-if="scope.row.paymentCard === null">-</span>
-            <span v-if="scope.row.paymentCard !== null">
-              {{ scope.row.paymentCard }}
-            </span>
+            <el-tag v-if="scope.row.status === 'FAIL'" type="danger">
+              {{ t('withdrawStatus.' + scope.row.status) }}
+            </el-tag>
+            <el-tag v-else-if="scope.row.status === 'SUCCESS'" type="success">
+              {{ t('withdrawStatus.' + scope.row.status) }}
+            </el-tag>
+            <el-tag v-else>{{ t('withdrawStatus.' + scope.row.status) }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column
-          prop="fee"
-          :label="t('fields.fee')"
+          prop="cardAccount"
+          :label="t('fields.accountHolder')"
           align="center"
           min-width="120"
-        >
-          <template #default="scope">
-            $
-            <span
-              v-formatter="{
-                data: scope.row.fee,
-                type: 'money',
-              }"
-            />
-          </template>
-        </el-table-column>
+        />
+        <el-table-column
+          prop="bankName"
+          :label="t('fields.bankName')"
+          align="center"
+          min-width="150"
+        />
+        <el-table-column
+          prop="cardNumber"
+          :label="t('fields.accountNumber')"
+          align="center"
+          min-width="120"
+        />
+        <el-table-column
+          prop="cardAddress"
+          :label="t('fields.cardAddress')"
+          align="center"
+          min-width="120"
+        />
         <el-table-column
           :label="t('fields.operate')"
           align="center"
@@ -663,24 +586,6 @@
             maxlength="20"
           />
         </el-form-item>
-        <!--        <el-form-item :label="t('fields.cancelType')" prop="cancelType">-->
-        <!--          <el-select-->
-        <!--            v-model="request.cancelType"-->
-        <!--            size="small"-->
-        <!--            :placeholder="t('fields.cancelType')"-->
-        <!--            class="filter-item"-->
-        <!--            style="width: 250px;"-->
-        <!--            default-first-option-->
-        <!--            @focus="loadCancelTypes"-->
-        <!--          >-->
-        <!--            <el-option-->
-        <!--              v-for="item in cancelTypeList.list"-->
-        <!--              :key="item.id"-->
-        <!--              :label="item.value"-->
-        <!--              :value="item.id"-->
-        <!--            />-->
-        <!--          </el-select>-->
-        <!--        </el-form-item>-->
         <el-form-item :label="t('fields.checkTime')" prop="checkTime">
           <el-select
             v-model="request.checkTime"
@@ -1028,31 +933,10 @@ async function advancedSearch() {
   })
 }
 
-// async function toApply(val) {
-//   const chooseRecord = []
-//   chooseRecord.push(val)
-//   await fromCheckingToApply(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
-//   await loadRecord()
-// }
-
-// async function toBeforePaid(val) {
-//   const chooseRecord = []
-//   chooseRecord.push(val)
-//   await fromPayToBeforePaid(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
-//   await loadRecord()
-// }
-
 async function toFail(val) {
   await autoWithdrawToFail(val.id, val.withdrawDate)
   await loadRecord()
 }
-
-// async function toConfirm(val) {
-//   const chooseRecord = []
-//   chooseRecord.push(val)
-//   await fromToConfirm(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
-//   await loadRecord()
-// }
 
 function checkQuery() {
   if (searchRequest.selectedDateType === 0) {
