@@ -1,7 +1,17 @@
 <template>
   <div class="section-wrapper">
     <div class="title">My Team</div>
-    <div class="subtitle">Today Status</div>
+    <div class="subtitle-wrapper">
+      <div class="subtitle">Today Status</div>
+      <div class="chart-cat">
+        <div class="square m"></div>
+        <div>Member</div>
+      </div>
+      <div class="chart-cat">
+        <div class="square ba"></div>
+        <div>Bet Amount</div>
+      </div>
+    </div>
   </div>
 
   <div class="content-wrapper">
@@ -62,7 +72,24 @@
       </div>
     </div>
     <div class="chart">
-      <Bar ref="chartRef" :data="chartData.data" :options="chartData.options" />
+      <div class="arrow" @click="onSwiperArrowClick()">&lt;</div>
+      <div class="swiper-container swiper-nav-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="slide-item">
+              <Bar ref="chartRef" :data="chartData.data" :options="chartData.options" />
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="slide-item">
+              <Bar ref="chartRef2" :data="chartData2.data" :options="chartData2.options" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="arrow" @click="onSwiperArrowClick(true)">></div>
+
+      <!-- <Bar ref="chartRef" :data="chartData.data" :options="chartData.options" /> -->
     </div>
   </div>
 
@@ -113,6 +140,8 @@ import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, Li
 import { Bar } from "vue-chartjs";
 import { userStore } from "stores/index";
 import moment from "moment";
+import Swiper from "swiper";
+import "swiper/swiper-bundle.css";
 
 const store = userStore();
 
@@ -156,6 +185,16 @@ const getVIPApi = () => {
   });
 };
 
+let swiperNav;
+const initializeSwiperNav = () => {
+  swiperNav = new Swiper(".swiper-nav-container", {
+    slidesPerView: 1,
+    initialSlide: 0,
+    centeredSlides: true,
+    pagination: false
+  });
+};
+
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 const chartData = reactive({
   data: {
@@ -185,7 +224,43 @@ const chartData = reactive({
       y: {
         ticks: {
           color: "#fff",
-          callback: function (value, index, ticks) {
+          callback: function (value, index) {
+            return index % 2 ? value : "";
+          }
+        }
+      }
+    }
+  }
+});
+const chartData2 = reactive({
+  data: {
+    labels: [],
+    datasets: [
+      {
+        label: "Bet Amount",
+        data: [],
+        backgroundColor: [],
+        borderRadius: []
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false
+      }
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: "#C4C4C4"
+        }
+      },
+      y: {
+        ticks: {
+          color: "#fff",
+          callback: function (value, index) {
             return index % 2 ? value : "";
           }
         }
@@ -194,6 +269,12 @@ const chartData = reactive({
   }
 });
 const chartRef = ref();
+const chartRef2 = ref();
+
+const onSwiperArrowClick = (isRight) => {
+  if (isRight) swiperNav.slideNext();
+  else swiperNav.slidePrev();
+};
 
 const totalBetRabteDailyDetailsData = reactive({
   recordTime: "",
@@ -213,26 +294,41 @@ const getChartAPI = () => {
         totalBetRabteDailyDetailsData.rebateAmount += e.rebateAmount;
         totalBetRabteDailyDetailsData.memberCount += e.memberCount;
 
-        chartRef.value.chart.data.datasets[0].data[i] = e.validBet;
+        // chartRef.value.chart.data.datasets[0].data[i] = e.validBet;
 
-        chartData.data.datasets[0].data[i] = e.validBet;
+        chartData.data.datasets[0].data[i] = e.memberCount;
         chartData.data.datasets[0].borderRadius[i] = 6;
         chartData.data.labels[i] = moment(e.recordTime).format("DD MMM");
+
+        chartData2.data.datasets[0].data[i] = e.validBet;
+        chartData2.data.datasets[0].borderRadius[i] = 6;
+        chartData2.data.labels[i] = moment(e.recordTime).format("DD MMM");
       });
 
-      const max = Math.max(...chartData.data.datasets[0].data);
+      const maxChart = Math.max(...chartData.data.datasets[0].data);
       chartData.data.datasets[0].data.forEach((e, i) => {
-        if (e === max) chartData.data.datasets[0].backgroundColor[i] = "#FFB100";
+        if (e === maxChart) chartData.data.datasets[0].backgroundColor[i] = "#00D1FF";
         else chartData.data.datasets[0].backgroundColor[i] = "#574BA0";
+      });
+
+      const maxChart2 = Math.max(...chartData2.data.datasets[0].data);
+      chartData2.data.datasets[0].data.forEach((e, i) => {
+        if (e === maxChart2) chartData2.data.datasets[0].backgroundColor[i] = "#FFB100";
+        else chartData2.data.datasets[0].backgroundColor[i] = "#574BA0";
       });
 
       chartRef.value.chart.update();
       chartRef.value.chart.render();
+
+      chartRef2.value.chart.update();
+      chartRef2.value.chart.render();
     }
   });
 };
 
 onMounted(() => {
+  initializeSwiperNav();
+
   getReferredBetRebateRecord();
 
   getVIPApi();
@@ -249,10 +345,34 @@ onMounted(() => {
     font-weight: 700;
   }
 
-  .subtitle {
+  .subtitle-wrapper {
+    display: flex;
+    gap: 20px;
     color: rgba(255, 255, 255, 0.7);
     font-size: 0.9375rem;
     font-weight: 500;
+
+    .subtitle {
+    }
+
+    .chart-cat {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      .square {
+        width: 10px;
+        height: 10px;
+
+        &.m {
+          background: #ffb100;
+        }
+
+        &.ba {
+          background: #00d1ff;
+        }
+      }
+    }
   }
 }
 
@@ -375,7 +495,34 @@ onMounted(() => {
   }
 
   .chart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 30px 0 0 0;
+
+    .swiper-nav-container {
+      text-align: center;
+      overflow: hidden;
+
+      .slide-item {
+        width: 95%;
+        margin: 0 auto;
+      }
+    }
+
+    .arrow {
+      border-radius: 6.25rem;
+      background: rgba(255, 255, 255, 0.8);
+      color: #5c46e7;
+      text-align: center;
+      width: 50px;
+      height: 25px;
+      line-height: 25px;
+      margin: 0 0 50px 0;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
   }
 }
 
