@@ -376,7 +376,7 @@
               <template v-for="(item, index) in fishGameList" :key="index">
                 <swiper-slide
                   class="platform-game-item btn-effect"
-                  @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                  @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
                 >
                   <div
                     data-aos="zoom-in"
@@ -514,7 +514,7 @@
           <template v-for="(item, index) in fishGameList" :key="index">
             <div
               class="platform-game-item btn-effect"
-              @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+              @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
               data-aos="zoom-in"
               data-aos-delay="100"
               data-aos-duration="1200"
