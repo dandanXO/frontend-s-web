@@ -1075,178 +1075,34 @@ const loadHotGameList = () => {
     });
 };
 
-const fishGameList = ref([
-  {
-    id: 8989,
-    name: "Dinosaur Tycoon II",
-    code: "212",
-    status: "OPEN",
-    icon: "5/JILI/212.png",
-    sequence: 0,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: null,
-    gameType: "FISH",
-    device: "ALL",
-    gameLabel: null,
-    updateBy: "admin",
-    updateTime: "9/29/23, 2:31 PM"
-  },
-  {
-    id: 8926,
-    name: "Bombing Fishing",
-    code: "20",
-    status: "OPEN",
-    icon: "5/JILI/20.png",
-    sequence: 1,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: null,
-    gameType: "FISH",
-    device: "ALL",
-    gameLabel: null,
-    updateBy: "admin",
-    updateTime: "9/29/23, 2:31 PM"
-  },
-  {
-    id: 8985,
-    name: "Royal Fishing",
-    code: "1",
-    status: "OPEN",
-    icon: "5/JILI/1.png",
-    sequence: 1,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: null,
-    gameType: "FISH",
-    device: "ALL",
-    gameLabel: null,
-    updateBy: "admin",
-    updateTime: "9/29/23, 2:31 PM"
-  },
-  {
-    id: 8927,
-    name: "Dinosaur Tycoon",
-    code: "42",
-    status: "OPEN",
-    icon: "5/JILI/42.png",
-    sequence: 2,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: null,
-    gameType: "FISH",
-    device: "ALL",
-    gameLabel: null,
-    updateBy: "admin",
-    updateTime: "10/30/23, 2:36 PM"
-  },
-  {
-    id: 8928,
-    name: "Jackpot Fishing",
-    code: "32",
-    status: "OPEN",
-    icon: "5/JILI/32.png",
-    sequence: 3,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: null,
-    gameType: "FISH",
-    device: "ALL",
-    gameLabel: null,
-    updateBy: "admin",
-    updateTime: "9/29/23, 2:31 PM"
-  },
-  {
-    id: 8929,
-    name: "Dragon Fortune",
-    code: "60",
-    status: "OPEN",
-    icon: "5/JILI/60.png",
-    sequence: 4,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: null,
-    gameType: "FISH",
-    device: "ALL",
-    gameLabel: null,
-    updateBy: "admin",
-    updateTime: "9/29/23, 2:31 PM"
-  },
-  {
-    id: 8930,
-    name: "Mega Fishing",
-    code: "74",
-    status: "OPEN",
-    icon: "5/JILI/74.png",
-    sequence: 5,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: null,
-    gameType: "FISH",
-    device: "ALL",
-    gameLabel: null,
-    updateBy: "admin",
-    updateTime: "9/29/23, 2:31 PM"
-  },
-  {
-    id: 8931,
-    name: "Boom Legend",
-    code: "71",
-    status: "OPEN",
-    icon: "5/JILI/71.png",
-    sequence: 6,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: null,
-    gameType: "FISH",
-    device: "ALL",
-    gameLabel: null,
-    updateBy: "admin",
-    updateTime: "9/29/23, 2:31 PM"
-  },
-  {
-    id: 8932,
-    name: "Happy Fishing",
-    code: "82",
-    status: "OPEN",
-    icon: "5/JILI/82.png",
-    sequence: 7,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: null,
-    gameType: "FISH",
-    device: "ALL",
-    gameLabel: null,
-    updateBy: "admin",
-    updateTime: "10/30/23, 2:36 PM"
-  },
-  {
-    id: 8933,
-    name: "All-star Fishing",
-    code: "119",
-    status: "OPEN",
-    icon: "5/JILI/119.png",
-    sequence: 8,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: null,
-    gameType: "FISH",
-    device: "ALL",
-    gameLabel: null,
-    updateBy: "admin",
-    updateTime: "9/29/23, 2:31 PM"
-  }
-]);
+const fishGameList = ref([]);
+
+const loadFishGameList = () => {
+  const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
+  const key = `PLATFORM_FISH_GAMES_${regDevice}`;
+
+  cached
+    .get(key, () =>
+      api
+        .get("/platformGames", {
+          params: {
+            platformId: 8,
+            gameType: "FISH",
+            device: regDevice
+          }
+        })
+        .then((ret) => {
+          const res = ret;
+          if (res.code === 0) {
+            return res;
+          }
+        })
+        .catch((err) => {})
+    )
+    .then((res) => {
+      fishGameList.value = res;
+    });
+};
 
 const isShowAllHotGames = ref(false);
 const scrollDownHotGames = () => {
@@ -1554,6 +1410,7 @@ onMounted(() => {
   getVersionNo();
   getAppDownloadUrl();
   loadHotGameList();
+  loadFishGameList();
   store.getUnreadTotal();
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
