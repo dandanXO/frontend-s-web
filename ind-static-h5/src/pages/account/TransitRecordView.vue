@@ -1017,7 +1017,7 @@ export default defineComponent({
       noDataLabel: "No information",
       rowPerPageLabel: "Record per page",
       humanDatetime(ts) {
-        return convertToGMT55(ts).format("DD-MM-YYYY HH:mm:ss");
+        return convertToGMT55(ts);
       },
       getPlatList,
       platformsList,

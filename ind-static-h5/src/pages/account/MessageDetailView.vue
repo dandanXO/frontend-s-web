@@ -8,7 +8,7 @@
   <ContentView contentTopStatus="faded">
     <div class="msg-detail-container">
       <div class="title">{{ mailDataRef.title }}</div>
-      <div class="send-time">{{ mailDataRef.sendTime && convertToGMT55(mailDataRef.sendTime).format("YYYY-MM-DD HH:mm") }}</div>
+      <div class="send-time">{{ mailDataRef.sendTime && convertToGMT55(mailDataRef.sendTime) }}</div>
 
       <div class="title">{{ mailDataRef.title }}</div>
       <div class="content">{{ mailDataRef.content }}</div>

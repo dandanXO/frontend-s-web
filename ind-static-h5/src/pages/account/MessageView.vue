@@ -14,7 +14,7 @@
       <q-card-section class="content">{{ e.content }}</q-card-section>
 
       <q-card-section class="bottom-wrapper">
-        <div class="time">{{ convertToGMT55(e.sendTime).format("YYYY-MM-DD HH:mm") }}</div>
+        <div class="time">{{ convertToGMT55(e.sendTime) }}</div>
         <q-btn class="detail-btn" label="Details >" @click="onDetailsClick(e)"></q-btn>
       </q-card-section>
     </q-card>
