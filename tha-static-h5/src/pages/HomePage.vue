@@ -141,25 +141,27 @@
           <img src="../assets/home/coming-soon-img.png" />
           <span>{{ $t("lang.coming_soon") }}</span>
         </div>
-        <div
-          :class="`game-item btn-pointer ${lotteryGames.length === 1 ? 'mid-grid-column' : ''}`"
-          v-for="(lotteryGameItem, index) in lotteryGames"
-          :key="`lottery-${index}`"
-          @click="playGame(lotteryGameItem.name, lotteryGameItem.code, lotteryGameItem.gameCode)"
-        >
+
+        <template v-for="(lotteryGameItem, index) in lotteryGames" :key="`lottery-${index}`">
           <div
-            class="platform-img"
-            :style="{
-              backgroundImage: (() => {
-                try {
-                  return `url(${require(`../assets/home/lottery/${lotteryGameItem.code}.png`)})`;
-                } catch (e) {
-                  return `url(${comingSoonImg})`;
-                }
-              })()
-            }"
-          ></div>
-        </div>
+            v-if="lotteryGameItem.code === 'GPI'"
+            :class="`game-item btn-pointer ${lotteryGames.length === 1 ? 'mid-grid-column' : ''}`"
+            @click="playGame(lotteryGameItem.name, lotteryGameItem.code, 'thailottery')"
+          >
+            <div
+              class="platform-img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/home/lottery/${lotteryGameItem.code}.png`)})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"
+            ></div>
+          </div>
+        </template>
       </div>
     </Transition>
     <Transition>
