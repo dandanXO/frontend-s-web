@@ -16,7 +16,7 @@
   </div>
 
   <div class="vip-container">
-    <Carousel ref="vipCarouselRef" :items-to-show="1.3" :wrap-around="false" :snapAlign="'start'" v-model="vipCarouselIndex">
+    <Carousel ref="vipCarouselRef" :items-to-show="1.3" :wrap-around="true" :snapAlign="'start'" v-model="vipCarouselIndex">
       <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
@@ -462,7 +462,7 @@ onActivated(() => {
 });
 
 watch(() => vipCarouselIndex.value, () => {
-  const carouselVipLevel = vipCarouselIndex.value === vipCarouselRef.value.data.maxSlide.value ? 12 : (Math.round(vipCarouselIndex.value) + 1);
+  const carouselVipLevel = vipCarouselIndex.value + 1;
   
   const levelUpgrade = rows4.find(({name}) => name === `VIP ${carouselVipLevel}`).ugprade
   const monthlyReward = rows3.find(({name}) => name === `VIP ${carouselVipLevel}`).ugprade
