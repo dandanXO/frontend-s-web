@@ -759,8 +759,7 @@ const rows4 = [
   .vip-level-header {
     font-size: 3.2em;
     font-weight: 800;
-    // -webkit-text-stroke: 1px #fff;
-    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+    -webkit-text-stroke: 2px #fff;
     top: 25%;
     right: 10%;
     z-index: 1;
