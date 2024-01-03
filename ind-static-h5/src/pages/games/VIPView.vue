@@ -56,7 +56,7 @@
         <Navigation />
       </template>
     </Carousel>
-    
+
     <div class="header-wrapper">
       <div class="vertical-line"></div>
       <div class="header">Monthly Cumulative Deposit An Upgrade Vip Level</div>
@@ -252,6 +252,7 @@ import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const vipLevel = ref("");
 const vipPromoTab = ref("vip");
@@ -290,7 +291,7 @@ const getVipLevelProgress = (vipInfo) => {
   const levelUpDeposit = +upgradeStatus.replace(/,/g, "");
   return {
     levelUpPercentage: (currentDeposit / levelUpDeposit) * 100,
-    progressBarText: `${currentDeposit} / ${levelUpDeposit}`
+    progressBarText: `${convertToCommaAmount(currentDeposit)} / ${convertToCommaAmount(levelUpDeposit)}`
   };
 };
 
@@ -860,7 +861,8 @@ const rows4 = [
 .carousel__slide {
   padding-right: 10px;
 
-  &.carousel__slide--next .vipitem, &.carousel__slide--prev .vipitem {
+  &.carousel__slide--next .vipitem,
+  &.carousel__slide--prev .vipitem {
     filter: brightness(0.5);
     height: 172px;
     margin-top: 20px;

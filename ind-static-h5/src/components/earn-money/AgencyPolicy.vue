@@ -146,7 +146,7 @@
         You level
         <em>V8</em>
         . Betting amount
-        <em>972000rs</em>
+        <em>{{ convertToCommaAmount(972000) }}rs</em>
         . Team members
         <em>49</em>
         people.
@@ -155,7 +155,7 @@
         A Level
         <em>V8</em>
         . Betting amount
-        <em>760000rs</em>
+        <em>{{ convertToCommaAmount(760000) }}rs</em>
         . Team members
         <em>35</em>
         people.
@@ -164,7 +164,7 @@
         B Level
         <em>V6</em>
         . Betting amount
-        <em>210000rs</em>
+        <em>{{ convertToCommaAmount(210000) }}rs</em>
         . Team members
         <em>13</em>
         people.
@@ -173,7 +173,7 @@
         C Level
         <em>V1</em>
         . Betting amount
-        <em>2000rs</em>
+        <em>{{ convertToCommaAmount(2000) }}rs</em>
         . Team members
         <em>1</em>
         person.
@@ -186,6 +186,8 @@
 </template>
 
 <script setup>
+import { convertToCommaAmount } from "src/boot/utils";
+
 const columns2 = [
   {
     name: "level",
@@ -200,79 +202,79 @@ const columns2 = [
 const rows2 = [
   {
     level: "v13",
-    betAmount: "₹160000000",
+    betAmount: `₹${convertToCommaAmount(160000000)}`,
     teamMember: "377",
     rebate: "1.5"
   },
   {
     level: "v12",
-    betAmount: "₹85000000",
+    betAmount: `₹${convertToCommaAmount(85000000)}`,
     teamMember: "233",
     rebate: "1.4"
   },
   {
     level: "v11",
-    betAmount: "₹50000000",
+    betAmount: `₹${convertToCommaAmount(50000000)}`,
     teamMember: "144",
     rebate: "1.3"
   },
   {
     level: "v10",
-    betAmount: "₹26000000",
+    betAmount: `₹${convertToCommaAmount(26000000)}`,
     teamMember: "89",
     rebate: "1.2"
   },
   {
     level: "v9",
-    betAmount: "₹14000000",
+    betAmount: `₹${convertToCommaAmount(14000000)}`,
     teamMember: "55",
     rebate: "1.1"
   },
   {
     level: "v8",
-    betAmount: "₹7500000",
+    betAmount: `₹${convertToCommaAmount(7500000)}`,
     teamMember: "34",
     rebate: "1.0"
   },
   {
     level: "v7",
-    betAmount: "₹4200000",
+    betAmount: `₹${convertToCommaAmount(4200000)}`,
     teamMember: "21",
     rebate: "0.9"
   },
   {
     level: "v6",
-    betAmount: "₹2000000",
+    betAmount: `₹${convertToCommaAmount(2000000)}`,
     teamMember: "13",
     rebate: "0.8"
   },
   {
     level: "v5",
-    betAmount: "₹1000000",
+    betAmount: `₹${convertToCommaAmount(1000000)}`,
     teamMember: "8",
     rebate: "0.7"
   },
   {
     level: "v4",
-    betAmount: "₹350000",
+    betAmount: `₹${convertToCommaAmount(350000)}`,
     teamMember: "5",
     rebate: "0.6"
   },
   {
     level: "v3",
-    betAmount: "₹140000",
+    betAmount: `₹${convertToCommaAmount(140000)}`,
     teamMember: "3",
     rebate: "0.5"
   },
   {
     level: "v2",
-    betAmount: "₹5000",
+    betAmount: `₹${convertToCommaAmount(5000)}`,
     teamMember: "2",
     rebate: "0.4"
   },
   {
     level: "v1",
-    betAmount: "₹2000",
+    betAmount: `₹${convertToCommaAmount(2000)}`,
     teamMember: "1",
     rebate: "0.3"
   }

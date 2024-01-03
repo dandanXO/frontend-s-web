@@ -16,13 +16,17 @@
 
   <div class="content-wrapper">
     <div class="progress-bar-wrapper">
-      <div>{{ progressRef }}</div>
+      <div>{{ convertToCommaAmount(progressRef, true) }}</div>
       <q-linear-progress size="15px" :value="progressValue" color="#FFB100" class="progress-bar">
         <div class="absolute-full flex flex-center">
-          <q-badge color="transparent" text-color="white" :label="`${progressRef}/${maxProgress}`"></q-badge>
+          <q-badge
+            color="transparent"
+            text-color="white"
+            :label="`${convertToCommaAmount(progressRef, true)}/${convertToCommaAmount(maxProgress, true)}`"
+          ></q-badge>
         </div>
       </q-linear-progress>
-      <div>{{ maxProgress }}</div>
+      <div>{{ convertToCommaAmount(maxProgress, true) }}</div>
     </div>
 
     <div>
@@ -50,7 +54,7 @@
     <div class="top-container">
       <div class="left-container">
         <div class="title">Betting Amount</div>
-        <div class="value">₹ {{ totalBetRabteDailyDetailsData.validBet }}</div>
+        <div class="value">₹ {{ convertToCommaAmount(totalBetRabteDailyDetailsData.validBet, true) }}</div>
         <div class="data-wrapper">
           <div class="img-wrapper">
             <img src="../../assets/images/earn-money/member.png" />
@@ -61,7 +65,7 @@
       </div>
       <div class="right-container text-right">
         <div class="title">Rebate Amount</div>
-        <div class="value">₹ {{ totalBetRabteDailyDetailsData.rebateAmount }}</div>
+        <div class="value">₹ {{ convertToCommaAmount(totalBetRabteDailyDetailsData.rebateAmount, true) }}</div>
         <!-- <div class="data-wrapper right">
           <div class="img-wrapper">
             <img src="../../assets/images/earn-money/cash.png" />
@@ -115,7 +119,7 @@
           <div class="amount-text">Recharge Amount</div>
           <div class="amount">
             RS
-            <span>{{ e.rebateAmount }}</span>
+            <span>{{ convertToCommaAmount(e.rebateAmount, true) }}</span>
           </div>
         </div>
 
@@ -123,7 +127,7 @@
           <div class="amount-text text-right">Income</div>
           <div class="amount text-right">
             RS
-            <span>{{ e.validBet }}</span>
+            <span>{{ convertToCommaAmount(e.validBet, true) }}</span>
           </div>
         </div>
       </div>
@@ -142,6 +146,7 @@ import { userStore } from "stores/index";
 import moment from "moment";
 import Swiper from "swiper";
 import "swiper/swiper-bundle.css";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const store = userStore();
 

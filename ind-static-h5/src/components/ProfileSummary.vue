@@ -27,7 +27,7 @@
               <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
                 <span class="balance-amount">
                   <span style="font-family: 'Times New Roman', Times, serif">{{ store.currency.value }}</span>
-                  {{ isLoadingBalance ? "Loading..." : store.balance.toFixed(2) }}
+                  {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, true) }}
                 </span>
 
                 <div @click="refreshBalance()" class="btn-refresh">
@@ -125,6 +125,7 @@ import { ref, onMounted, computed, reactive } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const props = defineProps(["homeProfile"]);
 const route = useRoute();

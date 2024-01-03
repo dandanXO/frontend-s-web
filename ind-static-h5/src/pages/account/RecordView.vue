@@ -52,7 +52,7 @@
 
         <q-card-section class="mid-wrapper">
           RS
-          <span :class="`${e.payout > 0 ? 'win-amt' : 'loss-amt'}`">{{ e.payout }}</span>
+          <span :class="`${e.payout > 0 ? 'win-amt' : 'loss-amt'}`">{{ convertToCommaAmount(e.payout, true) }}</span>
         </q-card-section>
 
         <q-card-section class="bot-wrapper">
@@ -61,7 +61,7 @@
             <div class="game-platform">Game Platform</div>
           </div>
           <div class="origin-val">
-            <div class="bet-val">{{ e.bet }}</div>
+            <div class="bet-val">{{ convertToCommaAmount(e.bet, true) }}</div>
             <div class="game-platform-val">{{ e.platform }}</div>
           </div>
         </q-card-section>
@@ -87,6 +87,7 @@ import ContentView from "../../components/ContentView.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const router = useRouter();
 const store = userStore();

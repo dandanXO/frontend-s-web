@@ -20,7 +20,7 @@
   <div class="deposit-item-container q-mt-md">
     <template v-for="(item, index) in depositItems" :key="index">
       <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
-        <div :class="['deposit-amt', item.isActive && 'active']">{{ item.amount }}</div>
+        <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
         <div :class="['deposit-svg', item.isActive && 'active']">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
             <path
@@ -178,6 +178,7 @@ import { Platform, useQuasar, openURL } from "quasar";
 import liff from "@line/liff";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
+import { convertToCommaAmount } from "src/boot/utils";
 
 var qs = require("qs");
 const store = userStore();
