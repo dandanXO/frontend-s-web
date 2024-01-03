@@ -65,9 +65,10 @@
 
       <div class="bank-card-item bank-addcard" @click="onAddCardClick()">
         <div class="bank-card-add">
-          <div class="card-icon addcard-icon-div">
-            <q-icon class="add-card-icon" key="md" size="md" name="add" />
-          </div>
+          <div><img src="../../assets/images/account/icon-add.png" /></div>
+          <!-- <div class="card-icon addcard-icon-div"> -->
+          <!-- <q-icon class="add-card-icon" key="md" size="md" name="add" /> -->
+          <!-- </div> -->
           <div class="card-label" style="margin-top: 10px">Add Bank Card</div>
         </div>
       </div>
@@ -267,7 +268,7 @@ onActivated(() => {
     }
 
     &.bank-addcard {
-      border: 2px solid #a73dff;
+      border: 1px solid #a73dff;
       background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
     }
 

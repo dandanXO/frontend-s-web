@@ -20,7 +20,7 @@
   <div class="deposit-item-container q-mt-md">
     <template v-for="(item, index) in depositItems" :key="index">
       <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
-        <div :class="['deposit-amt', item.isActive && 'active']">{{ item.amount }}</div>
+        <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
         <div :class="['deposit-svg', item.isActive && 'active']">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
             <path
@@ -178,6 +178,7 @@ import { Platform, useQuasar, openURL } from "quasar";
 import liff from "@line/liff";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
+import { convertToCommaAmount } from "src/boot/utils";
 
 var qs = require("qs");
 const store = userStore();
@@ -706,7 +707,7 @@ onMounted(() => {
     position: relative;
 
     .deposit-amt {
-      border-radius: 0.25rem;
+      border-radius: 4px;
       background: #1d2635;
       display: flex;
       align-items: center;
@@ -714,8 +715,9 @@ onMounted(() => {
       line-height: 1;
       padding: 3px;
       width: 7.3rem;
-      height: 4rem;
+      height: 4.1rem;
       font-weight: 600;
+      aspect-ratio: 106/64;
 
       &.active {
         background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
@@ -777,6 +779,7 @@ onMounted(() => {
     border: 3px solid transparent;
     height: 50px;
     border-radius: 0.375rem;
+    aspect-ratio: 77/38;
 
     &.active {
       background: #5c46e7;
@@ -816,9 +819,10 @@ onMounted(() => {
   transition: 0.3s all;
   color: #ffffff;
   margin: auto;
-  border-radius: 0.5rem;
+  border-radius: 6px;
   background: #5c46e7;
   width: 90%;
+  aspect-ratio: 335/46;
 
   &:before {
     box-shadow: none;

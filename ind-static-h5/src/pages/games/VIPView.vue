@@ -10,14 +10,14 @@
       indicator-color="transparent"
       align="justify"
     >
-      <q-tab name="vip" label="VIP" />
       <q-tab name="promo" label="Promo" />
+      <q-tab name="vip" label="VIP" />
     </q-tabs>
   </div>
 
   <div class="vip-container">
-    <q-carousel class="vip bg-transparent" animated v-model="vipCarouselIndex" arrows infinite swipeable>
-      <q-carousel-slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex" :name="vipIndex">
+    <Carousel ref="vipCarouselRef" :items-to-show="1.3" :wrap-around="false" :snapAlign="'start'" v-model="vipCarouselIndex">
+      <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
             <div :class="`vip-badge vip${vip.vipLevel}`"></div>
@@ -31,28 +31,87 @@
               </div>
 
               <div class="progress-bar-container">
+                <div class="progress-bar-endpoint-label">
+                  {{ `V${vip.vipLevel}` }}
+                </div>
                 <div class="progress-bar-outer-bar">
-                  <span class="progress-bar-label">{{ getVipLevelProgress(vip).progressBarText }}</span>
+                  <span class="progress-bar-label">{{ currentVipLevelStats.progressBarText }}</span>
 
                   <div
                     class="progress-bar-inner-bar"
-                    :style="{ width: getVipLevelProgress(vip).levelUpPercentage + '%' }"
+                    :style="{ width: currentVipLevelStats.levelUpPercentage + '%' }"
                   />
                 </div>
-                <div class="progress-bar-desc">
-                  <span>
-                    {{ `V${vip.vipLevel}` }}
-                  </span>
-                  <span>
-                    {{ `V${+vip.vipLevel + 1}` }}
-                  </span>
+                <div class="progress-bar-endpoint-label">
+                  {{ `V${+vip.vipLevel + 1}` }}
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </q-carousel-slide>
-    </q-carousel>
+      </Slide>
+      <template #addons>
+        <Navigation />
+      </template>
+    </Carousel>
+
+    <div class="vip-rewards">
+      <div class="vip-reward-item">
+        <div class="reward-desc">
+          <div class="icon">
+            <img src="../../assets/images/vip/level-upgrade-reward-icon.png" />
+          </div>
+          <div class="title">
+            <span class="bold">Level Upgrade</span><br/>
+            Reward
+          </div>
+          <div class="reward-amt-wrapper">
+            <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>
+          </div>
+        </div>
+        <div class="unlock-status">
+          <img v-if="vipLevel > (vipCarouselIndex + 1)" src="../../assets/images/vip/vip-reward-unlocked-icon.png" />
+          <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
+        </div>
+      </div>
+      <div class="vip-reward-item">
+        <div class="reward-desc">
+          <div class="icon">
+            <img src="../../assets/images/vip/monthly-reward-icon.png" />
+          </div>
+          <div class="title">
+            <span class="bold">Monthly</span><br/>
+            Reward
+          </div>
+          <div class="reward-amt-wrapper">
+            <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
+          </div>
+        </div>
+        <div class="unlock-status">
+          <img v-if="vipLevel > (vipCarouselIndex + 1)" src="../../assets/images/vip/vip-reward-unlocked-icon.png" />
+          <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
+        </div>
+      </div>
+      <div class="vip-reward-item">
+        <div class="reward-desc">
+          <div class="icon">
+            <img src="../../assets/images/vip/daily-withdrawal-limit-icon.png" />
+          </div>
+          <div class="title">
+            <span class="bold">Daily Withdrawal</span><br/>
+            Limit
+          </div>
+          <div class="reward-amt-wrapper">
+            <div class="reward-amt bold">{{ currentVipLevelStats.dailyWithdrawalLimit }}</div>
+          </div>
+      </div>
+      <div class="unlock-status">
+          <img v-if="vipLevel > (vipCarouselIndex + 1)" src="../../assets/images/vip/vip-reward-unlocked-icon.png" />
+          <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
+        </div>
+      </div>
+    </div>
+    
     <div class="header-wrapper">
       <div class="vertical-line"></div>
       <div class="header">Monthly Cumulative Deposit An Upgrade Vip Level</div>
@@ -246,13 +305,24 @@ import { watch, ref, onMounted } from "vue";
 import ProfileSummary from "components/ProfileSummary.vue";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
+import { Carousel, Slide, Navigation } from "vue3-carousel";
+import "vue3-carousel/dist/carousel.css";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const vipLevel = ref("");
+const currentVipLevelStats = ref({
+  levelUpPercentage: null,
+  progressBarText: "",
+  levelUpgrade: null,
+  monthlyReward: null,
+  dailyWithdrawalLimit: null
+});
 const vipPromoTab = ref("vip");
 const router = useRouter();
 const route = useRoute();
 const store = userStore();
-const vipCarouselIndex = ref(0);
+const vipCarouselIndex = ref();
+const vipCarouselRef = ref();
 
 watch(
   () => vipPromoTab.value,
@@ -271,22 +341,6 @@ watch(
     }
   }
 );
-
-const getVipLevelProgress = (vipInfo) => {
-  const vipLevel = Number(store.vip.replace("VIP", ""));
-  const currentDeposit = Number(store.getCurrentDeposit());
-  const upgradeStatus = vipInfo.ugprade;
-
-  if (vipLevel > +vipInfo.vipLevel) {
-    return 100;
-  }
-
-  const levelUpDeposit = +upgradeStatus.replace(/"/g, "");
-  return {
-    levelUpPercentage: (currentDeposit / levelUpDeposit) * 100,
-    progressBarText: `${currentDeposit} / ${levelUpDeposit}`
-  };
-};
 
 const columns = [
   {
@@ -403,7 +457,39 @@ onMounted(() => {
     // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
     vipCarouselIndex.value = vipLevelNum - 1;
   }
+
+  vipCarouselRef.value.data.currentSlide.value = vipCarouselIndex.value;
 });
+
+watch(() => vipCarouselIndex.value, () => {
+  const carouselVipLevel = vipCarouselIndex.value === vipCarouselRef.value.data.maxSlide.value ? 12 : (vipCarouselIndex.value + 1);
+  
+  const levelUpgrade = rows4.find(({name}) => name === `VIP ${carouselVipLevel}`).ugprade
+  const monthlyReward = rows3.find(({name}) => name === `VIP ${carouselVipLevel}`).ugprade
+  const dailyWithdrawalLimit = rows.find(({name}) => name === `VIP ${carouselVipLevel}`).ugprade
+
+  const vipInfo = vipItems.find(({vipLevel}) => vipLevel === carouselVipLevel)
+  const vipLevel = Number(store.vip.replace("VIP", ""));
+  const currentDeposit = Number(store.getCurrentDeposit());
+  const upgradeStatus = vipInfo.ugprade;
+  const levelUpDeposit = +upgradeStatus.replace(/,/g, "");
+
+  const levelUpPercentage = (() => {
+    if (vipLevel > +vipInfo.vipLevel) {
+      return 100;
+    }
+
+    return (currentDeposit / levelUpDeposit) * 100;
+  })();
+  
+  currentVipLevelStats.value = {
+    levelUpgrade,
+    monthlyReward,
+    dailyWithdrawalLimit,
+    levelUpPercentage,
+    progressBarText: `${currentDeposit} / ${levelUpDeposit}`
+  }
+})
 
 const columns2 = [
   {
@@ -631,6 +717,76 @@ const rows4 = [
 ];
 </script>
 <style lang="scss" scoped>
+
+.vip-rewards {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  .vip-reward-item {
+    width: 107px;
+    height: 182px;
+    background: url("../../assets/images/vip/vip-reward-unlock-bg.png") no-repeat center center;
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px;
+    .reward-desc {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+
+      .bold {
+        font-weight: 800;
+      }
+
+      .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #A296F0;
+        border-radius: 100px;
+        height: 35px;
+        width: 35px;
+      }
+
+      .title {
+        color: #5C46E7;
+        font-size: 11px;
+        height: 35px;
+        line-height: 18px;
+      }
+
+      .reward-amt-wrapper {
+        background-color: #C9C8FF;
+        padding: 5px 15px;
+        max-width: 100px;
+        border-radius: 4px;
+        font-family: sans-serif;
+        font-size: 12px;
+
+        .reward-amt {
+          line-height: 12px;
+          word-wrap: break-word;
+          color: #8b36f8;
+          background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%), linear-gradient(0deg, #ffffff, #ffffff);
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
+    }
+
+    .unlock-status {
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+    }
+  }
+}
+
 .vip-promo-tab-wrapper {
   width: 90%;
   margin: 0 auto;
@@ -648,13 +804,18 @@ const rows4 = [
     padding: 3px;
 
     :deep(.q-tab__label) {
-      font-weight: 700;
+      font-weight: 400;
     }
 
     :deep(.q-tab--active) {
       color: #fff;
       background: linear-gradient(0deg, #5c46e7, #5c46e7), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
       box-shadow: 0px 1px 2px 0px #0000000d;
+      border: 1px solid #5c46e7;
+    }
+
+    :deep(.q-tab--active .q-tab__label) {
+      font-weight: 700 !important;
     }
   }
 }
@@ -728,17 +889,26 @@ const rows4 = [
       background-size: 100% 100%;
     }
 
-    &.vip10,
-    &.vip11,
-    &.vip12 {
+    &.vip10 {
       background: url("../../assets/images/vip/badge/vip10.png") no-repeat top center;
+      background-size: 100% 100%;
+    }
+
+    &.vip11 {
+      background: url("../../assets/images/vip/badge/vip11.png") no-repeat top center;
+      background-size: 100% 100%;
+    }
+
+    &.vip12 {
+      background: url("../../assets/images/vip/badge/vip12.png") no-repeat top center;
       background-size: 100% 100%;
     }
   }
 
   .vip-level-header {
+    font-family: sans-serif;
     font-size: 3.2em;
-    font-weight: 700;
+    font-weight: 800;
     -webkit-text-stroke: 2px #fff;
     top: 25%;
     right: 10%;
@@ -766,12 +936,16 @@ const rows4 = [
 
     .progress-bar-container {
       display: flex;
-      flex-direction: column;
+      align-items: center;
       gap: 10px;
       position: absolute;
-      bottom: 4%;
+      bottom: 10%;
       left: 6%;
       right: 6%;
+
+      .progress-bar-endpoint-label {
+        color: #333;
+      }
 
       .progress-bar-outer-bar {
         border: 3px solid #fff;
@@ -789,6 +963,7 @@ const rows4 = [
           right: 0;
           text-align: center;
           color: #333;
+          font-size: 10px;
         }
       }
 
@@ -796,17 +971,7 @@ const rows4 = [
         color: #fff;
         border-radius: 16px;
         background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
-        height: 16px;
-      }
-
-      .progress-bar-desc {
-        display: flex;
-        justify-content: space-between;
-        color: #333;
-        font-size: 17.987px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
+        height: 12px;
       }
     }
 
@@ -829,6 +994,35 @@ const rows4 = [
 }
 </style>
 <style lang="scss">
+.carousel__item {
+  min-height: 200px;
+  width: 100%;
+  font-size: 20px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel__slide {
+  padding: 10px;
+
+  &.carousel__slide--next .vipitem,
+  &.carousel__slide--prev .vipitem {
+    filter: brightness(0.5);
+    height: 172px;
+    margin-top: 20px;
+
+    .vip-contents .progress-bar-container .progress-bar-inner-bar {
+      height: 8px;
+    }
+  }
+}
+
+.carousel__prev, .carousel__next {
+  display: none;
+}
+
 .vip-container {
   padding: 0 1.75rem;
   overflow: hidden;
@@ -929,7 +1123,7 @@ const rows4 = [
 
     .header {
       font-size: 26px;
-      font-weight: 700;
+      font-weight: 800;
       line-height: 32px;
       text-align: left;
       background: linear-gradient(90deg, #bc70df 0%, #fcd23c 100%);

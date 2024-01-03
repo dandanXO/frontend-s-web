@@ -1,6 +1,6 @@
 <template>
   <ProfileSummary :homeProfile="true" />
-  
+
   <div class="bonus-page">
     <ProfileProgressBanner />
 
@@ -9,7 +9,16 @@
     </div>
 
     <div class="vip-table-container">
-      <q-table flat :hide-pagination="true" :columns="columns" :rows="rows" row-key="name" :rows-per-page-options="[0]" bordered :separator="'cell'">
+      <q-table
+        flat
+        :hide-pagination="true"
+        :columns="columns"
+        :rows="rows"
+        row-key="name"
+        :rows-per-page-options="[0]"
+        bordered
+        :separator="'cell'"
+      >
         <template v-slot:header="props">
           <q-tr :props="props">
             <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
@@ -45,9 +54,9 @@
         <span>0.3%</span>
         Of The Daily Wager As A Reward, Credited To Your Account Every Day At 0:00 Indian Time
       </div>
-      
-      <img class="character-blue" src="../assets/images/bonus/character-blue.png" alt="" style="display:none" />
-      <div class="right-container" style="display:none">
+
+      <img class="character-blue" src="../assets/images/bonus/character-blue.png" alt="" style="display: none" />
+      <div class="right-container" style="display: none">
         <!-- <div class="countdown">
           <div class="common-text">
             Ready To
@@ -75,6 +84,7 @@ import { date } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import ProfileSummary from "components/ProfileSummary.vue";
 import ProfileProgressBanner from "components/ProfileProgressBanner.vue";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const route = useRoute();
 const router = useRouter();
@@ -99,68 +109,68 @@ const columns = [
 const rows = [
   {
     name: "VIP 0",
-    award: 0,
-    firstDay: 0
+    award: convertToCommaAmount(0),
+    firstDay: convertToCommaAmount(0)
   },
   {
     name: "VIP 1",
-    award: 20,
-    firstDay: 38
+    award: convertToCommaAmount(20),
+    firstDay: convertToCommaAmount(38)
   },
   {
     name: "VIP 2",
-    award: 25,
-    firstDay: 88
+    award: convertToCommaAmount(25),
+    firstDay: convertToCommaAmount(88)
   },
   {
     name: "VIP 3",
-    award: 50,
-    firstDay: 188
+    award: convertToCommaAmount(50),
+    firstDay: convertToCommaAmount(188)
   },
   {
     name: "VIP 4",
-    award: 100,
-    firstDay: 388
+    award: convertToCommaAmount(100),
+    firstDay: convertToCommaAmount(388)
   },
   {
     name: "VIP 5",
-    award: 200,
-    firstDay: 588
+    award: convertToCommaAmount(200),
+    firstDay: convertToCommaAmount(588)
   },
   {
     name: "VIP 6",
-    award: 300,
-    firstDay: 888
+    award: convertToCommaAmount(300),
+    firstDay: convertToCommaAmount(888)
   },
   {
     name: "VIP 7",
-    award: 1000,
-    firstDay: 1888
+    award: convertToCommaAmount(1000),
+    firstDay: convertToCommaAmount(1888)
   },
   {
     name: "VIP 8",
-    award: 2000,
-    firstDay: 3888
+    award: convertToCommaAmount(2000),
+    firstDay: convertToCommaAmount(3888)
   },
   {
     name: "VIP 9",
-    award: 3000,
-    firstDay: 8888
+    award: convertToCommaAmount(3000),
+    firstDay: convertToCommaAmount(8888)
   },
   {
     name: "VIP 10",
-    award: 10000,
-    firstDay: 28888
+    award: convertToCommaAmount(10000),
+    firstDay: convertToCommaAmount(28888)
   },
   {
     name: "VIP 11",
-    award: 20000,
-    firstDay: 58888
+    award: convertToCommaAmount(20000),
+    firstDay: convertToCommaAmount(58888)
   },
   {
     name: "VIP 12",
-    award: 30000,
-    firstDay: 88888
+    award: convertToCommaAmount(30000),
+    firstDay: convertToCommaAmount(88888)
   }
 ];
 
@@ -191,12 +201,14 @@ const redeem = () => {};
   overflow: hidden;
 
   .detail-btn-container {
-    background: linear-gradient(180deg, #FFE146 0%, #B54100 100%);
+    background: linear-gradient(180deg, #ffe146 0%, #b54100 100%);
     min-height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
   }
 
   .vip-table-container {
@@ -225,11 +237,11 @@ const redeem = () => {};
 
     thead > :first-child {
       background: rgba(21, 0, 37, 0.5);
-      background: linear-gradient(180deg, #41206F 0%, #1F2862 100%);
+      background: linear-gradient(180deg, #41206f 0%, #1f2862 100%);
     }
     tbody > :nth-child(odd) {
       background: rgba(21, 0, 37, 0.2);
-      background: #652C93;
+      background: #652c93;
     }
     tbody > :nth-child(even) {
       background: rgba(21, 0, 37, 0.5);
@@ -261,10 +273,10 @@ const redeem = () => {};
       margin: 20px;
       padding: 20px;
       border-radius: 10px;
-      color: #D4CDD6;
+      color: #d4cdd6;
       line-height: 25px;
       text-align: center;
-      
+
       span {
         color: #fff;
       }

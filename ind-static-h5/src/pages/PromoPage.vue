@@ -11,8 +11,8 @@
       indicator-color="transparent"
       align="justify"
     >
-      <q-tab name="vip" label="VIP" />
       <q-tab name="promo" label="Promo" />
+      <q-tab name="vip" label="VIP" />
     </q-tabs>
   </div>
 
@@ -103,6 +103,13 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
+                  <div class="top-float">
+                    <div class="top-subtitle">Get unlimited rewards!</div>
+                    <div class="top-title">VIP Rewards</div>
+                  </div>
+                  <div class="promo-content-inner">
+                    <div class="content-title">Invite to Earn</div>
+                  </div>
                   <div v-html="selectedPromo.pageContent"></div>
                   <div class="join-container">
                     <div class="promo-date">
@@ -418,6 +425,7 @@ export default defineComponent({
     border-radius: 8px;
     background: #101114;
     color: #5c6c86;
+    font-weight: 400;
   }
 
   .vip-promo-tab-toggle {
@@ -427,13 +435,17 @@ export default defineComponent({
     padding: 3px;
 
     :deep(.q-tab__label) {
-      font-weight: 700;
+      font-weight: 400;
     }
 
     :deep(.q-tab--active) {
       color: #fff;
       background: linear-gradient(0deg, #5c46e7, #5c46e7), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
       box-shadow: 0px 1px 2px 0px #0000000d;
+    }
+
+    :deep(.q-tab--active .q-tab__label) {
+      font-weight: 700 !important;
     }
   }
 }
@@ -677,7 +689,7 @@ export default defineComponent({
             .viewdetail {
               // background: #002a35;
               color: #ffffff;
-              font-size: 12px;
+              font-size: 14px;
               position: absolute;
               width: 100%;
               z-index: 2;
@@ -686,6 +698,7 @@ export default defineComponent({
               overflow: hidden;
               line-height: 40px;
               padding: 0 100px 0 10px;
+              font-weight: 500;
 
               // &:before {
               //   background: #043d4f;
@@ -932,12 +945,48 @@ export default defineComponent({
   }
 }
 
+// promo content-inner
+.promo-content-inner {
+  .content-title {
+    background: linear-gradient(180deg, #d6b335 0%, #fff96b 50%, #f2ae01 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    font-size: 24px;
+    font-weight: 700;
+  }
+}
+
+// top float
+.top-float {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+
+  .top-subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .top-title {
+    color: #fff;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+  }
+}
+
 // join now
 .join-container {
   background: #3b2e95;
   padding: 12px 12px;
   position: fixed;
-  bottom: 71px;
+  bottom: 66px;
   left: 0;
   width: 100%;
   display: flex;

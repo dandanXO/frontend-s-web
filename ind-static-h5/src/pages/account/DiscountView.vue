@@ -12,7 +12,7 @@
         <div class="discount-col">{{ e.privilegeName }}</div>
         <div class="discount-col">
           Amount:
-          <span class="txt-yellow">{{ e.amount }}</span>
+          <span class="txt-yellow">{{ convertToCommaAmount(e.amount, true) }}</span>
         </div>
       </div>
     </div>
@@ -29,6 +29,7 @@ import ContentView from "../../components/ContentView.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const router = useRouter();
 

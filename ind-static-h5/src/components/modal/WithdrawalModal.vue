@@ -636,18 +636,19 @@ const isValidCardAddress = () => {
     }
 
     .withdrawal-summary {
-      border-radius: 0.5rem;
+      font-family: "Manrope", sans-serif;
+      border-radius: 10px;
       background: #370a40;
       padding: 1rem;
       margin-top: 0;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: space-around;
 
       text-align: center;
-      font-family: Helvetica;
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       font-weight: 700;
+      aspect-ratio: 335/82;
 
       .balance {
         margin: 0 0 0 1rem;

@@ -3,7 +3,7 @@
     <div class="withdrawal-summary">
       <div class="balance">
         <div class="title">Cash Balance</div>
-        <span class="amount">{{ store.balance.toFixed(2) }}</span>
+        <span class="amount">{{ convertToCommaAmount(store.balance, true) }}</span>
       </div>
 
       <div class="separator"></div>
@@ -13,7 +13,7 @@
         <span class="amount">
           {{
             withdrawalMethods[withdrawalDialogTab].withdrawableBalance >= 0
-              ? withdrawalMethods[withdrawalDialogTab].withdrawableBalance.toFixed(2)
+              ? convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawableBalance, true)
               : "0.00"
           }}
         </span>
@@ -169,8 +169,10 @@
           </div>
           <div class="desc">
             RS:{{
-              withdrawalMethods[withdrawalDialogTab].withdrawMax -
-              withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount
+              convertToCommaAmount(
+                withdrawalMethods[withdrawalDialogTab].withdrawMax -
+                  withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount
+              )
             }}
           </div>
         </div>
@@ -178,13 +180,13 @@
           <div class="desc-wrapper">
             <div class="desc">{{ store.vip }} Daily Limit</div>
           </div>
-          <div class="desc">RS:{{ withdrawalMethods[withdrawalDialogTab].withdrawMax }}</div>
+          <div class="desc">RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }}</div>
         </div>
         <div class="info">
           <div class="desc-wrapper">
             <div class="desc">Remain Wagers</div>
           </div>
-          <div class="desc">RS:{{ withdrawalMethods[withdrawalDialogTab].remainWagers }}</div>
+          <div class="desc">RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }}</div>
         </div>
       </div>
     </div>
@@ -232,6 +234,7 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
+import { convertToCommaAmount } from "src/boot/utils";
 
 // withdraw component
 const qs = require("qs");
@@ -544,14 +547,15 @@ const isValidCardAddress = () => {
     margin-top: 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     border-radius: 0.625rem;
     background: #1d2635;
 
     text-align: center;
-    font-family: Helvetica;
-    font-size: 1.25rem;
+    font-family: "Manrope", sans-serif;
+    font-size: 1.1rem;
     font-weight: 700;
+    aspect-ratio: 335/82;
 
     .balance {
       margin: 0 0 0 1rem;
@@ -710,8 +714,9 @@ const isValidCardAddress = () => {
     transition: 0.3s all;
     color: #ffffff;
     margin: auto;
-    border-radius: 0.5rem;
+    border-radius: 6px;
     background: #5c46e7;
+    aspect-ratio: 335/46;
 
     &:before {
       box-shadow: none;

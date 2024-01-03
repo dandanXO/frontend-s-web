@@ -41,7 +41,7 @@
           </div>
           <div class="order-row order-row--content">
             <div class="order-subrow">
-              <div class="order-col">{{ e.withdrawAmount }}</div>
+              <div class="order-col">{{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
               <div class="order-col">BANK</div>
             </div>
             <div class="order-subrow">
@@ -77,7 +77,7 @@
           </div>
           <div class="order-row order-row--content">
             <div class="order-subrow">
-              <div class="order-col">{{ e.depositAmount }}</div>
+              <div class="order-col">{{ convertToCommaAmount(e.depositAmount, true) }}</div>
               <div class="order-col">{{ e.paymentType }}</div>
             </div>
             <div class="order-subrow">
@@ -110,6 +110,7 @@ import ProfileSummary from "../../components/ProfileSummary.vue";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
 import { useQuasar } from "quasar";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const $q = useQuasar();
 const router = useRouter();

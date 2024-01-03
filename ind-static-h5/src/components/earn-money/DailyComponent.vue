@@ -16,13 +16,17 @@
 
   <div class="content-wrapper">
     <div class="progress-bar-wrapper">
-      <div>{{ progressRef }}</div>
+      <div>{{ convertToCommaAmount(progressRef, true) }}</div>
       <q-linear-progress size="15px" :value="progressValue" color="#FFB100" class="progress-bar">
         <div class="absolute-full flex flex-center">
-          <q-badge color="transparent" text-color="white" :label="`${progressRef}/${maxProgress}`"></q-badge>
+          <q-badge
+            color="transparent"
+            text-color="white"
+            :label="`${convertToCommaAmount(progressRef, true)}/${convertToCommaAmount(maxProgress, true)}`"
+          ></q-badge>
         </div>
       </q-linear-progress>
-      <div>{{ maxProgress }}</div>
+      <div>{{ convertToCommaAmount(maxProgress, true) }}</div>
     </div>
 
     <div>
@@ -50,7 +54,7 @@
     <div class="top-container">
       <div class="left-container">
         <div class="title">Betting Amount</div>
-        <div class="value">₹ {{ totalBetRabteDailyDetailsData.validBet }}</div>
+        <div class="value">₹ {{ convertToCommaAmount(totalBetRabteDailyDetailsData.validBet, true) }}</div>
         <div class="data-wrapper">
           <div class="img-wrapper">
             <img src="../../assets/images/earn-money/member.png" />
@@ -61,7 +65,7 @@
       </div>
       <div class="right-container text-right">
         <div class="title">Rebate Amount</div>
-        <div class="value">₹ {{ totalBetRabteDailyDetailsData.rebateAmount }}</div>
+        <div class="value">₹ {{ convertToCommaAmount(totalBetRabteDailyDetailsData.rebateAmount, true) }}</div>
         <!-- <div class="data-wrapper right">
           <div class="img-wrapper">
             <img src="../../assets/images/earn-money/cash.png" />
@@ -72,7 +76,7 @@
       </div>
     </div>
     <div class="chart">
-      <div class="arrow" @click="onSwiperArrowClick()">&lt;</div>
+      <div class="arrow" @click="onSwiperArrowClick()"><img src="../../assets/images/earn-money/arrow_left.png" /></div>
       <div class="swiper-container swiper-nav-container">
         <div class="swiper-wrapper">
           <div class="swiper-slide">
@@ -87,7 +91,9 @@
           </div>
         </div>
       </div>
-      <div class="arrow" @click="onSwiperArrowClick(true)">></div>
+      <div class="arrow" @click="onSwiperArrowClick(true)">
+        <img src="../../assets/images/earn-money/arrow_right.png" />
+      </div>
 
       <!-- <Bar ref="chartRef" :data="chartData.data" :options="chartData.options" /> -->
     </div>
@@ -115,7 +121,7 @@
           <div class="amount-text">Recharge Amount</div>
           <div class="amount">
             RS
-            <span>{{ e.rebateAmount }}</span>
+            <span>{{ convertToCommaAmount(e.rebateAmount, true) }}</span>
           </div>
         </div>
 
@@ -123,7 +129,7 @@
           <div class="amount-text text-right">Income</div>
           <div class="amount text-right">
             RS
-            <span>{{ e.validBet }}</span>
+            <span>{{ convertToCommaAmount(e.validBet, true) }}</span>
           </div>
         </div>
       </div>
@@ -142,6 +148,7 @@ import { userStore } from "stores/index";
 import moment from "moment";
 import Swiper from "swiper";
 import "swiper/swiper-bundle.css";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const store = userStore();
 
@@ -341,7 +348,7 @@ onMounted(() => {
   margin: 0 0 10px 0;
   .title {
     color: #fff;
-    font-size: 1.09375rem;
+    font-size: 18px;
     font-weight: 700;
   }
 
@@ -353,6 +360,8 @@ onMounted(() => {
     font-weight: 500;
 
     .subtitle {
+      font-size: 12px;
+      font-weight: 500;
     }
 
     .chart-cat {
@@ -455,6 +464,10 @@ onMounted(() => {
 
     .left-container,
     .right-container {
+      .title {
+        font-size: 12px;
+        font-weight: 700;
+      }
       .value {
         color: #ffb100;
         font-size: 1.25rem;
@@ -511,17 +524,17 @@ onMounted(() => {
     }
 
     .arrow {
-      border-radius: 6.25rem;
+      border-radius: 50%;
       background: rgba(255, 255, 255, 0.8);
       color: #5c46e7;
       text-align: center;
-      width: 50px;
-      height: 25px;
-      line-height: 25px;
+      width: 60px;
+      height: 30px;
       margin: 0 0 50px 0;
-      font-size: 1rem;
-      font-weight: 600;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }

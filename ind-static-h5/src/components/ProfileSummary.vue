@@ -27,7 +27,7 @@
               <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
                 <span class="balance-amount">
                   <span style="font-family: 'Times New Roman', Times, serif">{{ store.currency.value }}</span>
-                  {{ isLoadingBalance ? "Loading..." : store.balance.toFixed(2) }}
+                  {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, true) }}
                 </span>
 
                 <div @click="refreshBalance()" class="btn-refresh">
@@ -45,7 +45,7 @@
           <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
           <q-chip v-if="store.unreadInboxMail" class="notification" color="red" size="xs"></q-chip>
         </div> -->
-        <q-btn-dropdown no-caps :ripple="false">
+        <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown">
           <template v-slot:label>
             <div class="profile-pic">
               <q-avatar size="50px">
@@ -62,10 +62,10 @@
             </div>
           </template>
 
-          <q-list style="background: #303954" dense>
+          <q-list style="background: #303954" dense unelevated flat>
             <q-item clickable v-close-popup @click="onVipClick">
               <q-item-section avatar>
-                <q-avatar icon="diamond" text-color="white" />
+                <q-avatar icon="diamond" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>VIP</q-item-label>
@@ -74,7 +74,7 @@
 
             <q-item clickable v-close-popup @click="router.push('/account/message')">
               <q-item-section avatar>
-                <q-avatar icon="mail" text-color="white" />
+                <q-avatar icon="mail" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>Message</q-item-label>
@@ -83,18 +83,18 @@
 
             <q-item clickable v-close-popup @click="router.push('/account/order')">
               <q-item-section avatar>
-                <q-avatar icon="receipt" text-color="white" />
+                <q-avatar icon="receipt" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>Order</q-item-label>
               </q-item-section>
             </q-item>
 
-            <hr />
+            <hr color="#575E74" />
 
             <q-item clickable v-close-popup @click="router.push('/account/bank')">
               <q-item-section avatar>
-                <q-avatar icon="account_balance" text-color="white" />
+                <q-avatar icon="account_balance" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>Bank</q-item-label>
@@ -103,7 +103,7 @@
 
             <q-item clickable v-close-popup @click="onLogout()">
               <q-item-section avatar>
-                <q-avatar icon="logout" text-color="white" />
+                <q-avatar icon="logout" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>Log out</q-item-label>
@@ -125,6 +125,7 @@ import { ref, onMounted, computed, reactive } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const props = defineProps(["homeProfile"]);
 const route = useRoute();
@@ -216,6 +217,7 @@ onMounted(() => {
       gap: 0;
       justify-content: space-between;
       padding: 0 12px;
+      overflow-y: hidden;
 
       .profile-pic {
         margin-top: -20px;
@@ -227,6 +229,7 @@ onMounted(() => {
   .profile-wrapper {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 12px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -357,7 +360,6 @@ onMounted(() => {
     padding-bottom: 4px;
     z-index: 3;
     color: #334ad6;
-    font-weight: bold;
   }
 }
 
@@ -377,6 +379,20 @@ onMounted(() => {
   background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
   border-radius: 5px;
 }
+
+@media (max-width: 375px) {
+  .infoboard-container .profile-wrapper .profile-balance {
+    width: 100px;
+  }
+
+  .infoboard-container .profile-wrapper {
+    gap: 4px;
+  }
+
+  .infoboard-container .infoboard-wrapper.home-profile {
+    padding: 0px 4px;
+  }
+}
 </style>
 
 <style lang="scss">
@@ -386,5 +402,27 @@ onMounted(() => {
 
 .q-btn-dropdown--simple {
   width: 80px !important;
+}
+
+.q-item__label {
+  color: #c5c7ff;
+}
+
+.q-avatar {
+  i.q-icon {
+    color: #7b80a9;
+  }
+}
+
+.q-item__section--avatar {
+  min-width: 40px;
+}
+
+.q-item__section--side {
+  padding-right: 6px;
+}
+
+.q-menu--dark {
+  box-shadow: none;
 }
 </style>

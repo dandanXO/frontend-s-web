@@ -4,7 +4,7 @@
       <div class="frame">
         <div class="content-wrapper">
           <div class="title">Total Rebates</div>
-          <div class="amount">₹ {{ totalBetRebateData.totalRebate }}</div>
+          <div class="amount">₹ {{ convertToCommaAmount(totalBetRebateData.totalRebate, true) }}</div>
           <div class="date">Total Rebates from {{ totalBetRebateData.rebateFrom }}</div>
         </div>
       </div>
@@ -35,7 +35,7 @@
           <div class="amount-container">
             <div class="amount-text text-right">Rebate Amount</div>
             <div class="amount text-right">
-              <span>{{ e.rebateAmount }}</span>
+              <span>{{ convertToCommaAmount(e.rebateAmount, true) }}</span>
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@
           <div class="amount-container">
             <div class="amount-text text-right">Rebate Amount</div>
             <div class="amount text-right">
-              <span>{{ e.rebateAmount }}</span>
+              <span>{{ convertToCommaAmount(e.rebateAmount, true) }}</span>
             </div>
           </div>
         </div>
@@ -64,6 +64,7 @@
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 import { api } from "boot/axios";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const activeKey = ref("month");
 
