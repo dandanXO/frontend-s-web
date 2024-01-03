@@ -35,7 +35,7 @@ import SidebarLogo from './SidebarLogo.vue'
 import variables from '@/styles/_variables.scss'
 import { useStore } from '@/store'
 import { useRoute } from 'vue-router'
-import { getMemberWithdrawRecordApply, getMemberWithdrawRecordBeforePaid, getMemberWithdrawRecordPay } from '../../../api/member-withdraw-record'
+import { getMemberWithdrawRecordApplySimple, getMemberWithdrawRecordApply, getMemberWithdrawRecordBeforePaid, getMemberWithdrawRecordPay } from '../../../api/member-withdraw-record'
 import moment from 'moment'
 import { hasPermission } from '../../../utils/util'
 
@@ -108,6 +108,18 @@ export default defineComponent({
       } else {
         sessionStorage.setItem("WITHDRAW", ret.records.length);
       }
+      console.log('getMemberWithdrawRecordApply', ret)
+    };
+
+    const checkOutstandingAutoWithdraw = async() => {
+      const query = checkQuery();
+      const { data: ret } = await getMemberWithdrawRecordApplySimple(query);
+      if (ret.records.length === 0) {
+        spliceSocket('WITHDRAW');
+        sessionStorage.setItem("WITHDRAW", 0);
+      } else {
+        sessionStorage.setItem("WITHDRAW", ret.records.length);
+      }
     };
 
     const checkOutstandingBeforePaid = async() => {
@@ -133,6 +145,9 @@ export default defineComponent({
     };
 
     onMounted(async() => {
+      if (!hasPermission(["sys:withdraw:apply"]) && hasPermission(["sys:withdraw:simple:list"])) {
+        await checkOutstandingAutoWithdraw();
+      }
       if (hasPermission(["sys:withdraw:apply"])) {
         await checkOutstandingWithdraw();
       }
