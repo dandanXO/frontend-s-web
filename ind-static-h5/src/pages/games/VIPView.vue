@@ -281,7 +281,7 @@ const getVipLevelProgress = (vipInfo) => {
     return 100;
   }
 
-  const levelUpDeposit = +upgradeStatus.replace(/"/g, "");
+  const levelUpDeposit = +upgradeStatus.replace(/,/g, "");
   return {
     levelUpPercentage: (currentDeposit / levelUpDeposit) * 100,
     progressBarText: `${currentDeposit} / ${levelUpDeposit}`
