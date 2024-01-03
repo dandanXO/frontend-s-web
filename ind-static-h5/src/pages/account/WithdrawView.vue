@@ -547,14 +547,15 @@ const isValidCardAddress = () => {
     margin-top: 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     border-radius: 0.625rem;
     background: #1d2635;
 
     text-align: center;
-    font-family: Helvetica;
-    font-size: 1.25rem;
+    font-family: "Manrope", sans-serif;
+    font-size: 1.1rem;
     font-weight: 700;
+    aspect-ratio: 335/82;
 
     .balance {
       margin: 0 0 0 1rem;
@@ -713,8 +714,9 @@ const isValidCardAddress = () => {
     transition: 0.3s all;
     color: #ffffff;
     margin: auto;
-    border-radius: 0.5rem;
+    border-radius: 6px;
     background: #5c46e7;
+    aspect-ratio: 335/46;
 
     &:before {
       box-shadow: none;

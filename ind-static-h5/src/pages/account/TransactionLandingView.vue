@@ -38,6 +38,8 @@ watch(
 .transaction-landing {
   background: #101114;
   .deposit-tabs {
+    font-family: "Manrope", sans-serif;
+
     width: 90%;
     margin: 0 auto;
     border-radius: 0.5rem;
@@ -53,7 +55,12 @@ watch(
     :deep(.q-tab--active) {
       color: white;
       background: #5c46e7;
+
       box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+
+      .q-tab__label {
+        font-weight: bold;
+      }
     }
   }
 

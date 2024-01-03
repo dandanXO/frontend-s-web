@@ -19,6 +19,7 @@
       <q-card-section class="page-title" v-if="hasPage">
         <router-link :to="prevPage || '/'">
           <q-icon class="header-icon" name="arrow_back_ios"></q-icon>
+          <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">Back</span>
         </router-link>
         <div class="page-title-wrapper">
           <!--          <img src="../assets/images/index/hot-elephant-left.png" alt="" />-->
@@ -28,7 +29,10 @@
           <!--          <img src="../assets/images/index/hot-elephant-right.png" alt="" />-->
         </div>
 
-        <div class="header-right">
+        <div
+          class="header-right"
+          :class="route.path === '/deposit' || route.path === '/withdraw' ? 'header-right-long' : ''"
+        >
           <q-btn v-if="hasDrawer" flat @click="ui.drawerRight = !ui.drawerRight" round dense icon="menu" />
         </div>
       </q-card-section>
@@ -476,6 +480,7 @@ export default defineComponent({
       logout,
       store,
       router,
+      route,
       scrollPageRef,
       pageName,
       hasPage,
