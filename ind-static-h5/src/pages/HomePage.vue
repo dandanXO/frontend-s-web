@@ -4,7 +4,6 @@
   <q-carousel
     class="home"
     id="home"
-
     navigation
     v-model="slide"
     swipeable
@@ -583,41 +582,43 @@
   </q-dialog>
 
   <q-dialog width="100%" class="announcement-dialog" v-model="isStationNotice">
-    <q-btn dense rounded icon="close" class="bg-white text-black announcement-close" v-close-popup />
-    <q-card style="width: 100%" class="announcement-card">
-      <q-card-section class="q-mb-md">
-        <q-tabs v-model="activeKey" dense class="text-white" align="justify">
-          <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
-        </q-tabs>
+    <div class="popout-dialog" style="padding-top: 16px">
+      <q-btn dense rounded icon="close" class="bg-white text-black announcement-close" v-close-popup />
+      <q-card style="width: calc(100% - 0px); margin: auto; padding-left: 10px" class="announcement-card">
+        <q-card-section class="q-mb-md">
+          <q-tabs v-model="activeKey" dense class="text-white" align="justify">
+            <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
+          </q-tabs>
 
-        <q-separator />
+          <q-separator />
 
-        <q-tab-panels v-model="activeKey" animated>
-          <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
-            <q-list style="min-height: 65vh">
-              <div v-for="(ann, idx) in announcementList" :key="idx">
-                <span v-if="ann.typeId === tab.id">
-                  <q-expansion-item
-                    style="max-height: 65vh; overflow: auto"
-                    group="somegroup"
-                    icon="volume_up"
-                    :label="ann.title"
-                  >
-                    <q-card>
-                      <q-card-section>
-                        {{ ann.content }}
-                      </q-card-section>
-                    </q-card>
-                  </q-expansion-item>
+          <q-tab-panels v-model="activeKey" animated>
+            <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
+              <q-list style="min-height: 65vh">
+                <div v-for="(ann, idx) in announcementList" :key="idx">
+                  <span v-if="ann.typeId === tab.id">
+                    <q-expansion-item
+                      style="max-height: 65vh; overflow: auto"
+                      group="somegroup"
+                      icon="volume_up"
+                      :label="ann.title"
+                    >
+                      <q-card>
+                        <q-card-section>
+                          {{ ann.content }}
+                        </q-card-section>
+                      </q-card>
+                    </q-expansion-item>
 
-                  <q-separator></q-separator>
-                </span>
-              </div>
-            </q-list>
-          </q-tab-panel>
-        </q-tab-panels>
-      </q-card-section>
-    </q-card>
+                    <q-separator></q-separator>
+                  </span>
+                </div>
+              </q-list>
+            </q-tab-panel>
+          </q-tab-panels>
+        </q-card-section>
+      </q-card>
+    </div>
   </q-dialog>
 
   <q-dialog width="100%" v-model="isImportantAnnoucementModal">
@@ -1824,8 +1825,8 @@ onMounted(() => {
 
 .announcement-close {
   position: absolute;
-  right: 4px;
-  top: calc((100vh - calc(100vh - 108px)) / 2 + 20px);
+  right: 0px;
+  top: 0px;
   z-index: 3;
 }
 
@@ -1834,8 +1835,10 @@ onMounted(() => {
 }
 
 .announcement-card {
+  height: 400px;
   background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
   border-radius: 10px;
+  overflow-y: auto;
 
   .q-tab__label {
     font-size: 18px;
@@ -1846,13 +1849,13 @@ onMounted(() => {
   }
 
   .q-tab-panels {
-    background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+    background: transparent;
+    width: calc(100% - 10px);
   }
 }
 
 .popout-dialog {
   width: 90%;
-
   max-width: 500px;
   position: relative;
   padding-top: 90px;

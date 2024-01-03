@@ -450,7 +450,7 @@ export default defineComponent({
   }
 }
 </style>
-<style lang="scss">
+<style scoped lang="scss">
 .promo-container {
   min-height: 100vh;
   .promo-view-container {
@@ -506,6 +506,7 @@ export default defineComponent({
   position: absolute;
   right: 0;
   top: 0;
+  z-index: 9;
 }
 </style>
 <style lang="scss">
