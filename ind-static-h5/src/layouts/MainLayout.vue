@@ -18,24 +18,23 @@
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
         <router-link :to="prevPage || '/'">
-          <img class="back-btn" src="../assets/images/index/back-btn.png" />
+          <q-icon class="header-icon" name="arrow_back_ios"></q-icon>
+          <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">Back</span>
         </router-link>
         <div class="page-title-wrapper">
-          <img src="../assets/images/index/hot-elephant-left.png" alt="" />
+          <!--          <img src="../assets/images/index/hot-elephant-left.png" alt="" />-->
           <div class="title-container">
             <span class="title">{{ pageName }}</span>
           </div>
-          <img src="../assets/images/index/hot-elephant-right.png" alt="" />
+          <!--          <img src="../assets/images/index/hot-elephant-right.png" alt="" />-->
         </div>
-        <q-btn
-          v-if="hasDrawer"
-          style="position: absolute; right: 10px"
-          flat
-          @click="ui.drawerRight = !ui.drawerRight"
-          round
-          dense
-          icon="menu"
-        />
+
+        <div
+          class="header-right"
+          :class="route.path === '/deposit' || route.path === '/withdraw' ? 'header-right-long' : ''"
+        >
+          <q-btn v-if="hasDrawer" flat @click="ui.drawerRight = !ui.drawerRight" round dense icon="menu" />
+        </div>
       </q-card-section>
       <!-- <q-card-actions v-if="store.hasToken()" class="bot-section" horizontal>
         <q-card-section class="acct-section">
@@ -79,29 +78,31 @@
           <component :is="Component" />
         </KeepAlive>
       </router-view>
-      <!-- <router-view /> -->
     </q-page-container>
-    <q-footer v-if="ui.footer" elevated>
-      <q-tabs v-model="tab" no-caps class="bg-primary" :breakpoint="0" align="justify">
-        <q-route-tab to="/home" name="home" exact>
+    <q-footer v-if="ui.footer" :style="ui.bottomInsetHeight > 0 ? `bottom: ${ui.bottomInsetHeight}px;` : ''" elevated>
+      <q-tabs v-model="tab" no-caps :breakpoint="0" align="justify">
+        <q-route-tab to="/home" name="home" exact :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/home-icon.png" />
           <img class="hover" src="../assets/images/index/menu/home-icon-hover.png" />
-          HOME
+          Home
         </q-route-tab>
-        <q-route-tab to="/earn-money" name="earn-money">
+        <q-route-tab to="/earn-money" name="earn-money" :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/earn-icon.png" />
           <img class="hover" src="../assets/images/index/menu/earn-icon-hover.png" />
-          EARN MONEY
+          Earn Money
         </q-route-tab>
-        <q-route-tab class="cs-web-id" to="/bonus" id="cs-web-id" name="live">
+        <q-route-tab to="/deposit" name="deposit" class="center-menu" :ripple="false">
+          <img src="../assets/images/index/menu/deposit-icon.png" />
+        </q-route-tab>
+        <q-route-tab class="cs-web-id" to="/bonus" id="cs-web-id" name="live" :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/bonus-icon.png" />
           <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.png" />
-          BONUS
+          Bonus
         </q-route-tab>
-        <q-route-tab to="/account" name="account">
+        <q-route-tab to="/account" name="account" :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/account-icon.png" />
           <img class="hover" src="../assets/images/index/menu/account-icon-hover.png" />
-          MINE
+          Me
         </q-route-tab>
       </q-tabs>
     </q-footer>
@@ -172,28 +173,42 @@ export default defineComponent({
           }
         } else if (route.path === "/account") {
           prevPage.value = "/";
+          hasPage.value = false;
+          pageName.value = "";
+        } else if (route.path === "/account/bank") {
+          prevPage.value = "/account";
           hasPage.value = true;
-          pageName.value = "Personal Center";
-        } else if (
-          route.path === "/account/bank" ||
-          route.path === "/account/message" ||
-          route.path === "/account/record" ||
-          route.path === "/account/order" ||
-          route.path === "/account/discount"
-        ) {
-          prevPage.value = "/";
+          pageName.value = "Bank";
+        } else if (route.path === "/account/message") {
+          prevPage.value = "/account";
           hasPage.value = true;
-          pageName.value = "Personal Center";
+          pageName.value = "Message";
+        } else if (route.path === "/account/message-detail") {
+          prevPage.value = "/account/message";
+          hasPage.value = true;
+          pageName.value = "Message";
+        } else if (route.path === "/account/record") {
+          prevPage.value = "/account";
+          hasPage.value = true;
+          pageName.value = "Record";
+        } else if (route.path === "/account/order") {
+          prevPage.value = "/account";
+          hasPage.value = true;
+          pageName.value = "Order";
+        } else if (route.path === "/account/discount") {
+          prevPage.value = "/account";
+          hasPage.value = true;
+          pageName.value = "Discount";
         } else if (route.path === "/earn-money" || route.path === "/agency-policy") {
           prevPage.value = "/";
-          hasPage.value = true;
+          hasPage.value = false;
           pageName.value = "Earn Money";
         } else if (route.path === "/bonus") {
           prevPage.value = "/";
-          hasPage.value = true;
+          // hasPage.value = true;
           pageName.value = "Daily Activity";
         } else if (route.path === "/vip") {
-          hasPage.value = true;
+          // hasPage.value = true;
           pageName.value = "VIP Privileges";
           if (route.query.redirect) prevPage.value = route.query.redirect;
           else prevPage.value = "/";
@@ -203,7 +218,7 @@ export default defineComponent({
           pageName.value = "Forgot Account";
         } else if (route.path === "/forgot-password") {
           prevPage.value = "/login";
-          hasPage.value = true;
+          // hasPage.value = true;
           pageName.value = "Forgot Password";
         } else if (route.path === "/live-casino") {
           hasPage.value = true;
@@ -228,7 +243,7 @@ export default defineComponent({
             if (route.query.fromAccount) {
               prevPage.value = "/account/promotion";
             } else {
-              hasPage.value = true;
+              hasPage.value = false;
               prevPage.value = "/promo";
             }
           }
@@ -253,6 +268,10 @@ export default defineComponent({
           if (route.query.redirect) {
             prevPage.value = route.query.redirect;
           }
+        } else if (route.path === "/account/profile") {
+          prevPage.value = "/account";
+          hasPage.value = true;
+          pageName.value = "Personal Center";
         } else if (route.path === "/account/records") {
           prevPage.value = "/account";
           hasPage.value = true;
@@ -368,6 +387,14 @@ export default defineComponent({
           prevPage.value = "/account/records";
           hasPage.value = true;
           pageName.value = "催单记录";
+        } else if (route.path === "/deposit") {
+          prevPage.value = "/account";
+          hasPage.value = true;
+          pageName.value = "Deposit";
+        } else if (route.path === "/withdraw") {
+          prevPage.value = "/account";
+          hasPage.value = true;
+          pageName.value = "Withdraw";
         }
       }
     };
@@ -453,6 +480,7 @@ export default defineComponent({
       logout,
       store,
       router,
+      route,
       scrollPageRef,
       pageName,
       hasPage,
@@ -516,16 +544,16 @@ svg path {
 
 .page-title-wrapper {
   display: flex;
-  justify-content: center;
-  margin: 0 5rem 0 0;
-  padding: 1rem;
+  justify-content: space-between;
+  margin: 0;
+  padding: 1rem 0px;
+  height: 60px;
 
   img {
     width: 2.25rem;
   }
 
   .title-container {
-    background-image: url(../assets/images/index/hot-games-title.png);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
@@ -534,21 +562,7 @@ svg path {
     justify-content: center;
     width: 14rem;
     margin: 0 0.5rem;
-
-    // .title {
-    //   background-color: #f3ec78;
-    //   background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-    //   background-size: 100%;
-    //   -webkit-background-clip: text;
-    //   -moz-background-clip: text;
-    //   -webkit-text-fill-color: transparent;
-    //   -moz-text-fill-color: transparent;
-    //   line-height: 1.25;
-    //   font-size: 1.25rem;
-    //   font-weight: 800;
-    //   -webkit-text-stroke-width: 1px;
-    //   -webkit-text-stroke-color: #a94700;
-    // }
+    font-size: 16px;
   }
 
   svg {

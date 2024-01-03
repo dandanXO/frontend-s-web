@@ -1,16 +1,13 @@
 <template>
-  <ProfileSummary></ProfileSummary>
-
-  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>
-  <ContentView :contentTopStatus="`solid`">
-    <q-card class="search-container">
+  <q-page class="account-table-page">
+    <q-card flat class="search-container">
       <q-form layout="inline" :model="searchForm">
         <div class="date-field">
           <q-input filled v-model="searchForm.startDate" readonly>
-            <template v-slot:append>
-              <q-icon name="event" class="cursor-pointer">
+            <template v-slot:prepend>
+              <q-icon name="calendar_today" class="cursor-pointer text-purple-7">
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="searchForm.startDate" mask="YYYY-MM-DD">
+                  <q-date v-model="searchForm.startDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
                     <div class="row items-center justify-end">
                       <q-btn v-close-popup label="Close" color="white" flat />
                     </div>
@@ -19,11 +16,12 @@
               </q-icon>
             </template>
           </q-input>
+          <span>to</span>
           <q-input filled v-model="searchForm.endDate" readonly>
-            <template v-slot:append>
-              <q-icon name="event" class="cursor-pointer">
+            <template v-slot:prepend>
+              <q-icon name="calendar_today" class="cursor-pointer text-purple-7">
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="searchForm.endDate" mask="YYYY-MM-DD">
+                  <q-date v-model="searchForm.endDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
                     <div class="row items-center justify-end">
                       <q-btn v-close-popup label="Close" color="white" flat />
                     </div>
@@ -34,20 +32,9 @@
           </q-input>
         </div>
 
-        <div class="platform-field">
-          <!-- <q-select
-            class="platform"
-            v-model="searchForm.platform"
-            filled
-            :options="platformList"
-            label="Platforms"
-            option-label="name"
-            option-value="name"
-            emit-value
-            map-options
-          /> -->
-          <q-btn class="search-btn" label="Search" @click="searchRecord(true)" />
-        </div>
+        <!--        <div class="platform-field">-->
+        <!--          <q-btn class="search-btn" label="Search" @click="searchRecord(true)" />-->
+        <!--        </div>-->
       </q-form>
     </q-card>
 
@@ -65,7 +52,7 @@
 
         <q-card-section class="mid-wrapper">
           RS
-          <span :class="`${e.payout > 0 ? 'win-amt' : 'loss-amt'}`">{{ e.payout }}</span>
+          <span :class="`${e.payout > 0 ? 'win-amt' : 'loss-amt'}`">{{ convertToCommaAmount(e.payout, true) }}</span>
         </q-card-section>
 
         <q-card-section class="bot-wrapper">
@@ -74,7 +61,7 @@
             <div class="game-platform">Game Platform</div>
           </div>
           <div class="origin-val">
-            <div class="bet-val">{{ e.bet }}</div>
+            <div class="bet-val">{{ convertToCommaAmount(e.bet, true) }}</div>
             <div class="game-platform-val">{{ e.platform }}</div>
           </div>
         </q-card-section>
@@ -86,7 +73,7 @@
         <q-btn class="pagination-btn" @click="onNextPageClick()">></q-btn>
       </q-card>
     </template>
-  </ContentView>
+  </q-page>
 </template>
 
 <script setup>
@@ -100,9 +87,12 @@ import ContentView from "../../components/ContentView.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const router = useRouter();
 const store = userStore();
+
+const qs = require("qs");
 
 let slideList = ref(["Record", "Order", "Bank", "Message", "Personal Center", "Discount"]);
 let slideListPath = ref([
@@ -150,7 +140,12 @@ const onNextPageClick = () => {
   searchRecord();
 };
 
+// api.post("/memberAccessLog", qs.stringify(obj))
+
 const searchRecord = (isNewSearch) => {
+  if (!searchForm.startDate || !searchForm.endDate) {
+    return;
+  }
   if (isNewSearch) {
     pagination.current = 1;
     pagination.pagingState = null;
@@ -160,17 +155,31 @@ const searchRecord = (isNewSearch) => {
   gameBetRecordData.value = [];
 
   const { startDate, endDate, platform } = searchForm;
+  // const paramsInfo = {
+  //   startDate,
+  //   endDate,
+  //   platform,
+  //   memberId: store.id,
+  //   current: pagination.current,
+  //   size: pagination.pageSize,
+  //   pagingState: pagination.pagingState
+  // };
+
+  // api.post(`/otp/sendNewEmail`, qs.stringify({
+  //       email: formDetail.email,
+  //       captchaCode: innerCaptchaRef.value,
+  //       codeId: updateSecurityVerified.codeId
+  //     }))
+
   api
-    .get("/session/member/cassandraBetRecord", {
-      params: {
-        startDate,
-        endDate,
-        platform,
-        memberId: store.id,
-        current: pagination.current,
-        size: pagination.pageSize,
-        pagingState: pagination.pagingState
-      }
+    .post("/session/member/cassandraBetRecord", {
+      startDate,
+      endDate,
+      platform,
+      memberId: store.id,
+      current: pagination.current,
+      size: pagination.pageSize,
+      pagingState: pagination.pagingState
     })
     .then((response) => {
       const { code, data } = response;
@@ -237,14 +246,29 @@ onMounted(() => {
 
   .date-field {
     display: flex;
+    align-items: center;
+
+    span {
+      color: #ffffff99;
+      padding: 0px 12px;
+    }
 
     .q-field__control,
     .q-field__marginal {
+      //border: 1px solid #b478ff4d;
       height: unset;
+    }
+
+    .q-field {
+      border: 1px solid #b478ff4d;
+      background: #28292b;
+      padding: 4px 3px;
+      border-radius: 8px;
     }
 
     .q-field__native {
       padding: 0;
+      color: #b0b0b0;
     }
   }
 

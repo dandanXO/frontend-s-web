@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container">
+  <div class="landing-container">
     <div class="logo">
       <img src="../assets/logo.png" />
     </div>
