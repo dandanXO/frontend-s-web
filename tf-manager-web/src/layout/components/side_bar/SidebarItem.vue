@@ -58,7 +58,11 @@ import { isExternal } from "@/utils/validate";
 import SidebarItemLink from "./SidebarItemLink.vue";
 import { useStore } from "../../../store";
 import moment from "moment";
-import { getMemberWithdrawRecordApply, getMemberWithdrawRecordBeforePaid, getMemberWithdrawRecordPay } from "../../../api/member-withdraw-record";
+import {
+  getMemberWithdrawRecordApply,
+  getMemberWithdrawRecordBeforePaid,
+  getMemberWithdrawRecordPay
+} from "../../../api/member-withdraw-record";
 import { useI18n } from "vue-i18n";
 
 export default defineComponent({
@@ -81,17 +85,18 @@ export default defineComponent({
   },
   setup(props) {
     // eslint-disable-next-line
-    const { t } = useI18n();
+    const {t} = useI18n();
     const startDate = new Date();
     startDate.setDate(startDate.getDate());
     const defaultStartDate = convertDate(startDate);
     const defaultEndDate = convertDate(new Date());
     const hasTips = ref(false);
     const menu = reactive({
-      upperLevelWithdraw: ['Withdrawal Management', 'Withdrawal Process'],
+      upperLevelWithdraw: ['Withdrawal Management', 'Withdrawal Process', 'Withdrawal Auto Process'],
       withdraw: 'Applying',
       beforePaid: 'To be paid',
-      payment: 'Payment on going'
+      payment: 'Payment on going',
+      autoWithdraw: 'AutoWithdraw Under review',
     })
 
     const alwaysShowRootMenu = computed(() => {
@@ -163,7 +168,7 @@ export default defineComponent({
       });
     }
 
-    const checkOutstandingWithdraw = async() => {
+    const checkOutstandingWithdraw = async () => {
       const query = checkQuery();
       const { data: ret } = await getMemberWithdrawRecordApply(query);
       if (ret.records.length === 0) {
@@ -173,7 +178,7 @@ export default defineComponent({
       }
     };
 
-    const checkOutstandingBeforePaid = async() => {
+    const checkOutstandingBeforePaid = async () => {
       const query = checkQuery();
       const { data: ret } = await getMemberWithdrawRecordBeforePaid(query);
       if (ret.records.length === 0) {
@@ -183,7 +188,7 @@ export default defineComponent({
       }
     };
 
-    const checkOutstandingPayment = async() => {
+    const checkOutstandingPayment = async () => {
       const query = checkQuery();
       const { data: ret } = await getMemberWithdrawRecordPay(query);
       if (ret.records.length === 0) {
@@ -207,11 +212,11 @@ export default defineComponent({
       checkTips();
     }, { deep: true });
 
-    const checkTips = async() => {
+    const checkTips = async () => {
       if (menu.upperLevelWithdraw.includes(props.item.name)) {
         if ((sessionStorage.getItem('PAYMENT') && parseInt(sessionStorage.getItem('PAYMENT')) !== 0) ||
-        (sessionStorage.getItem('WITHDRAW') && parseInt(sessionStorage.getItem('WITHDRAW')) !== 0) ||
-        (sessionStorage.getItem('BEFORE_PAID') && parseInt(sessionStorage.getItem('BEFORE_PAID')) !== 0)) {
+          (sessionStorage.getItem('WITHDRAW') && parseInt(sessionStorage.getItem('WITHDRAW')) !== 0) ||
+          (sessionStorage.getItem('BEFORE_PAID') && parseInt(sessionStorage.getItem('BEFORE_PAID')) !== 0)) {
           hasTips.value = true;
         } else {
           hasTips.value = false;
@@ -223,7 +228,7 @@ export default defineComponent({
           } else {
             hasTips.value = false;
           }
-        } else if (menu.withdraw === props.item.name) {
+        } else if (menu.withdraw === props.item.name || menu.autoWithdraw === props.item.name) {
           if (sessionStorage.getItem('WITHDRAW') && parseInt(sessionStorage.getItem('WITHDRAW')) !== 0) {
             hasTips.value = true;
           } else {
@@ -251,7 +256,7 @@ export default defineComponent({
       return path.resolve(props.basePath, routePath);
     };
 
-    onMounted(async() => {
+    onMounted(async () => {
       await checkTips();
     })
 
@@ -298,6 +303,7 @@ export default defineComponent({
 
     ::v-deep(.el-sub-menu__title) {
       display: flex;
+
       & > span {
         display: inline-block;
         padding-left: 5px;
@@ -308,9 +314,9 @@ export default defineComponent({
 }
 
 .nest-menu {
-  .el-sub-menu{
-    ::v-deep(.el-sub-menu__title){
-      background-color: #1f2d3d!important;
+  .el-sub-menu {
+    ::v-deep(.el-sub-menu__title) {
+      background-color: #1f2d3d !important;
     }
   }
 }
@@ -322,10 +328,12 @@ svg {
 .simple-mode {
   .el-menu-item {
     display: flex;
+
     span {
       margin-left: 20px;
     }
   }
+
   ::v-deep(.el-sub-menu__title) {
     display: flex;
 

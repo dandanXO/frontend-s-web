@@ -111,11 +111,11 @@
           <img class="hover" src="../assets/images/index/menu/livechat-icon-hover.png">
           客服
         </q-route-tab>
-        <!--        <q-route-tab to="/affiliate" name="affiliate">-->
-        <!--          <img class="inactive" src="../assets/images/index/menu/affiliate-icon.png">-->
-        <!--          <img class="hover" src="../assets/images/index/menu/affiliate-icon-hover.png">-->
-        <!--          加盟-->
-        <!--        </q-route-tab>-->
+        <q-route-tab to="/affiliate" name="affiliate">
+          <img class="inactive" src="../assets/images/index/menu/affiliate-icon.png">
+          <img class="hover" src="../assets/images/index/menu/affiliate-icon-hover.png">
+          加盟
+        </q-route-tab>
         <q-route-tab to="/account" name="account">
           <img class="inactive" src="../assets/images/index/menu/account-icon.png">
           <img class="hover" src="../assets/images/index/menu/account-icon-hover.png">

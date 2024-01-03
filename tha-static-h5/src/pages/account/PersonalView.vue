@@ -996,6 +996,7 @@ export default defineComponent({
         width: 100px;
         height: auto;
         margin: 0 auto;
+        background-color: #fff;
       }
 
       .line-bottom {

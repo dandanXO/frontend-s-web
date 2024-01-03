@@ -76,7 +76,6 @@ export default defineComponent({
           console.log("setAttributionCallbackListener");
           console.log(e);
         });
-
         Adjust.create(adjustConfig);
         setTimeout(() => {
           Adjust.getAdid().then((aaid) => {

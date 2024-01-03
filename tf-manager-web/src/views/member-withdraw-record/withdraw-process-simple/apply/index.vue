@@ -53,30 +53,6 @@
         </el-button>
       </div>
     </div>
-
-    <!-- <div class="btn-group">
-      <el-button
-        ref="checkBtnRef"
-        size="mini"
-        type="primary"
-        :disabled="uiControl.toCheckBtn"
-        @click="toCheck()"
-        @keydown.enter.prevent
-      >
-        {{ t('fields.toUnderReview') }}
-      </el-button>
-      <el-button
-        ref="suspendBtnRef"
-        size="mini"
-        type="danger"
-        :disabled="uiControl.toPendingBtn"
-        @click="toPending()"
-        @keydown.enter.prevent
-      >
-        {{ t('fields.toSuspend') }}
-      </el-button>
-    </div> -->
-
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <el-table
         height="600"
@@ -87,13 +63,6 @@
         v-loading="page.loading"
         :empty-text="t('fields.noData')"
       >
-        <el-table-column type="selection" width="40" />
-        <el-table-column
-          prop="site"
-          :label="t('fields.site')"
-          align="center"
-          min-width="80"
-        />
         <el-table-column
           prop="serialNumber"
           :label="t('fields.serialNo')"
@@ -116,26 +85,52 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="realName"
-          :label="t('fields.realName')"
+          prop="afterBalance"
+          :label="t('fields.balance')"
           align="center"
-          min-width="110"
-        />
-        <el-table-column
-          prop="vip"
-          :label="t('fields.vipLevel')"
-          align="center"
-          min-width="80"
-        />
-        <el-table-column
-          prop="financial"
-          :label="t('fields.financialLevel')"
-          align="center"
-          min-width="110"
+          min-width="120"
         >
           <template #default="scope">
-            <span :style="{color: scope.row.financialColor}">{{ scope.row.financial }}</span>
+            $
+            <span
+              v-formatter="{data: scope.row.afterBalance, type: 'money'}"
+            />
           </template>
+        </el-table-column>
+        <el-table-column
+          prop="withdrawAmount"
+          :label="t('fields.withdrawAmount')"
+          align="center"
+          min-width="120"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.withdrawAmount, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="withdrawDate"
+          :label="t('fields.withdrawDate')"
+          align="center"
+          min-width="150"
+        >
+          <template #default="scope">
+            <span v-if="scope.row.withdrawDate === null">-</span>
+            <span
+              v-if="scope.row.withdrawDate !== null"
+              v-formatter="{data: scope.row.withdrawDate, timeZone: scope.row.timeZone, type: 'date'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="status"
+          :label="t('fields.status')"
+          align="center"
+          width="160"
+        >
+          <el-tag>{{ t('withdrawStatus.APPLY') }}</el-tag>
         </el-table-column>
         <el-table-column
           prop="cardAccount"
@@ -156,72 +151,11 @@
           min-width="120"
         />
         <el-table-column
-          prop="currencyCode"
-          :label="t('fields.currency')"
-          align="center"
-          min-width="80"
-        />
-        <el-table-column
-          prop="currencyRate"
-          :label="t('fields.currencyRate')"
-          align="center"
-          min-width="100"
-        />
-        <el-table-column
-          prop="withdrawName"
-          :label="t('fields.withdrawName')"
+          prop="cardAddress"
+          :label="t('fields.cardAddress')"
           align="center"
           min-width="120"
         />
-        <el-table-column
-          prop="withdrawCode"
-          :label="t('fields.withdrawCode')"
-          align="center"
-          min-width="120"
-        />
-        <el-table-column
-          prop="withdrawAmount"
-          :label="t('fields.withdrawAmount')"
-          align="center"
-          min-width="120"
-        >
-          <template #default="scope">
-            $
-            <span
-              v-formatter="{data: scope.row.withdrawAmount, type: 'money'}"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="localCurrencyAmount"
-          :label="t('fields.localCurrencyAmount')"
-          align="center"
-          min-width="180"
-        >
-          <template #default="scope">
-            $
-            <span
-              v-formatter="{
-                data: scope.row.localCurrencyAmount,
-                type: 'money',
-              }"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="withdrawDate"
-          :label="t('fields.withdrawDate')"
-          align="center"
-          min-width="150"
-        >
-          <template #default="scope">
-            <span v-if="scope.row.withdrawDate === null">-</span>
-            <span
-              v-if="scope.row.withdrawDate !== null"
-              v-formatter="{data: scope.row.withdrawDate, timeZone: scope.row.timeZone, type: 'date'}"
-            />
-          </template>
-        </el-table-column>
         <el-table-column
           :label="t('fields.operate')"
           align="center"
@@ -401,7 +335,7 @@ import { getBankInfoListSimple } from '../../../../api/bank-info'
 import {
   autoWithdrawToFail,
   fromApplyToAutopay,
-  getMemberWithdrawRecordApply,
+  getMemberWithdrawRecordApplySimple,
   getTotalWithdrawAmountByStatus,
   getWithdrawPlatformList,
 } from '../../../../api/member-withdraw-record'
@@ -559,7 +493,7 @@ async function loadRecord() {
     }
   }
   query.memberType = "NORMAL,TEST,OUTSIDE";
-  const { data: ret } = await getMemberWithdrawRecordApply(query)
+  const { data: ret } = await getMemberWithdrawRecordApplySimple(query)
   page.pages = ret.pages
   ret.records.forEach(data => {
     data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined

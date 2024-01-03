@@ -1655,7 +1655,7 @@ export default defineComponent({
   flex: 1;
 
   * {
-    // add back paddings supposed to be present
+    // add back paddings supposed to be present 1
     padding-top: 10px;
     padding-bottom: 10px;
     display: flex;

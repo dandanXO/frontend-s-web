@@ -289,7 +289,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             let srcData = response.data;
 
             if (platformCode === "PG") {
-              srcData = srcData.replaceAll(/\\\"/g, '"').replaceAll(/\n/g, "");
+              srcData = srcData.replace(/\\\"/g, '"').replace(/\n/g, "");
               src.value = srcData;
               visible.value = true;
             } else if (way == "ANDROID") {
@@ -345,8 +345,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
             if (platformCode === "PG") {
               // window.open(response.data, "_blank");
-              let srcData = response.data;
-              srcData = srcData.replaceAll(/\\\"/g, '"').replaceAll(/\n/g, "");
+              let srcData = response.data ? response.data : "";
+              srcData = srcData.replace(/\\\"/g, '"').replace(/\n/g, "");
 
               src.value = srcData;
               visible.value = true;

@@ -8,7 +8,6 @@
         src="../../assets/images/message/new-message-ribbon.svg"
         v-if="!e.status && store.readMsgLists.indexOf(e.id) === -1"
       />
-
       <div class="message-wrapper">
         <q-card-section class="title">
           <div>{{ e.title }}</div>
