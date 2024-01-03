@@ -378,6 +378,20 @@ onMounted(() => {
   background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
   border-radius: 5px;
 }
+
+@media (max-width: 375px) {
+  .infoboard-container .profile-wrapper .profile-balance {
+    width: 100px;
+  }
+
+  .infoboard-container .profile-wrapper {
+    gap: 4px;
+  }
+
+  .infoboard-container .infoboard-wrapper.home-profile {
+    padding: 0px 4px;
+  }
+}
 </style>
 
 <style lang="scss">
