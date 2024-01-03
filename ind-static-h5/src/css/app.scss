@@ -635,3 +635,5 @@ body.body--dark .q-footer {
     margin-right: 10px !important;
   }
 }
+
+.input:-webkit-autofill {transition: background-color 5000s ease-in-out 0s;}
