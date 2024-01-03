@@ -207,6 +207,8 @@ const redeem = () => {};
     justify-content: center;
     align-items: center;
     border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
   }
 
   .vip-table-container {

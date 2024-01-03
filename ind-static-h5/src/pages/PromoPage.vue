@@ -943,7 +943,7 @@ export default defineComponent({
   background: #3b2e95;
   padding: 12px 12px;
   position: fixed;
-  bottom: 71px;
+  bottom: 66px;
   left: 0;
   width: 100%;
   display: flex;

@@ -3,7 +3,11 @@
     <LoadingComponent v-if="isLoading"></LoadingComponent>
     <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Message"></NoInfoComponent>
     <q-card v-else v-for="(e, i) in mailData" :key="`${e}-${i}`" class="msg-container">
-      <img class="new-message-ribbon" src="../../assets/images/message/new-message-ribbon.png" v-if="!e.status && store.readMsgLists.indexOf(e.id) === -1" />
+      <img
+        class="new-message-ribbon"
+        src="../../assets/images/message/new-message-ribbon.svg"
+        v-if="!e.status && store.readMsgLists.indexOf(e.id) === -1"
+      />
 
       <div class="message-wrapper">
         <q-card-section class="title">
@@ -13,8 +17,10 @@
 
         <q-card-section class="bottom-wrapper">
           <div class="time">{{ convertToGMT55(e.sendTime) }}</div>
-          <q-btn class="detail-btn" @click="onDetailsClick(e)">
-            More&nbsp;<q-icon class="forward-icon" name="arrow_forward_ios" size="small" /></q-btn>
+          <q-btn class="detail-btn" @click="onDetailsClick(e)" flat unelevated>
+            More&nbsp;
+            <q-icon class="forward-icon" name="arrow_forward_ios" size="small" />
+          </q-btn>
         </q-card-section>
       </div>
     </q-card>
@@ -106,13 +112,13 @@ onMounted(() => {
   padding: 1rem;
   margin: 0;
   border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.20);
-  background: #171E2B;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #171e2b;
   position: relative;
   box-shadow: none;
 
   &:has(.new-message-ribbon) {
-    background: #27344A;
+    background: #27344a;
   }
 
   .new-message-ribbon {
@@ -133,7 +139,7 @@ onMounted(() => {
   }
 
   .title {
-    font-size: 1rem;
+    font-size: 16px;
     font-weight: 700;
     display: flex;
     gap: 0.5rem;
@@ -150,7 +156,7 @@ onMounted(() => {
   }
 
   .content {
-    font-size: 1rem;
+    font-size: 14px;
     // font-weight: 700;
     color: rgba(255, 255, 255, 0.5);
     white-space: nowrap;
@@ -172,7 +178,7 @@ onMounted(() => {
 
     .detail-btn {
       border-radius: 12.5rem;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.3);
       font-size: 1rem;
       // font-weight: 700;
       padding: 0 1rem;

@@ -1264,6 +1264,7 @@ const openConfirmSignOutDialog = () => {
 
     :deep(.q-field__control) {
       background: rgba(255, 255, 255, 0.15) !important;
+      border-radius: 4px;
     }
 
     :deep(.q-field__native) {
@@ -1293,7 +1294,7 @@ const openConfirmSignOutDialog = () => {
   align-items: center;
   font-size: 18px;
   line-height: 1;
-  font-weight: 700;
+  font-weight: 400;
   width: 100%;
   height: 55px;
   text-transform: uppercase;
@@ -1301,7 +1302,7 @@ const openConfirmSignOutDialog = () => {
   color: #ffffff;
   margin: auto;
   border-radius: 6px;
-  border: 1px solid rgba(232, 196, 255, 0.2);
+  border: 1px solid #5e388b;
   background: rgba(88, 23, 170, 0.6);
 
   &:active {
@@ -1332,7 +1333,7 @@ const openConfirmSignOutDialog = () => {
 .btn-refresh {
   background: #48325a;
   border-radius: 8px;
-  font-weight: 700;
+  font-weight: 400;
   margin-top: auto;
   color: #ae6def;
   padding: 10px 20px;

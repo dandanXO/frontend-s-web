@@ -1,17 +1,17 @@
 <template>
   <div class="agency-policy">
-    <img src="../../assets/images/earn-money/about-bg.png" />
+    <div class="agency-policy-main-img"><img src="../../assets/images/earn-money/about-bg.png" /></div>
 
     <div class="title">Invite to Earn</div>
     <div class="subtitle">Simply share your exclusive QR code</div>
     <div class="desc-wrapper">
-      <img src="../../assets/images/earn-money/about-invite.png" />
+      <img src="../../assets/images/earn-money/about-invite.svg" />
       <div>
         Invite more friends and you will earn more. Every member who joins Skyace Club is both a player and an agent.
       </div>
     </div>
     <div class="desc-wrapper">
-      <img src="../../assets/images/earn-money/about-reward.png" />
+      <img src="../../assets/images/earn-money/about-reward.svg" />
       <div>We advocate benefits and bonuses for everyone.</div>
     </div>
 
@@ -352,19 +352,28 @@ const rows3 = [
     }
   }
 
+  .agency-policy-main-img {
+    margin-left: -16px;
+    margin-right: -16px;
+  }
+
   .agency-policy-separator {
     background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #5c46e7 0.01%, rgba(92, 70, 231, 0) 100%);
     height: 2px;
   }
 
   .agency-policy-title {
-    background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #5c46e7 0.01%, rgba(92, 70, 231, 0) 100%);
-    font-size: 2rem;
-    font-weight: 700;
+    // background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #5c46e7 0.01%, rgba(92, 70, 231, 0) 100%);
+    background-image: url("../../assets/images/earn-money/agency-policy-label.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100% auto;
+    font-size: 18px;
+    font-weight: 500;
     text-align: center;
     height: 50px;
     line-height: 50px;
-    margin: 1px 0;
+    margin: 1px -16px;
   }
 
   :deep(.q-item) {
