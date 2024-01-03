@@ -594,7 +594,7 @@
 
           <q-tab-panels v-model="activeKey" animated>
             <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
-              <q-list style="min-height: 65vh">
+              <q-list style="min-height: auto">
                 <div v-for="(ann, idx) in announcementList" :key="idx">
                   <span v-if="ann.typeId === tab.id">
                     <q-expansion-item
@@ -2264,6 +2264,7 @@ onMounted(() => {
   margin-bottom: 12px;
   column-gap: 8px;
   row-gap: 16px;
+  padding-bottom: 10px;
 
   &.live-casino {
     padding-top: 8px;
