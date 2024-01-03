@@ -452,7 +452,6 @@ export default defineComponent({
 </style>
 <style scoped lang="scss">
 .promo-container {
-  min-height: 100vh;
   .promo-view-container {
     ol {
       padding: 0 15px;
@@ -512,6 +511,7 @@ export default defineComponent({
 <style lang="scss">
 .promo-container {
   color: #ffffff;
+  min-height: calc(100vh - 160px);
 
   .all-promotions {
     padding-bottom: 20px;
@@ -784,6 +784,7 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+        padding-bottom: 40px;
 
         p {
           font-size: 14px;
