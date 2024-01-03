@@ -16,8 +16,8 @@
   </div>
 
   <div class="vip-container">
-    <q-carousel class="vip bg-transparent" animated v-model="vipCarouselIndex" arrows infinite swipeable>
-      <q-carousel-slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex" :name="vipIndex">
+    <Carousel :items-to-show="1.3" :wrap-around="false" :snapAlign="'start'">
+      <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
             <div :class="`vip-badge vip${vip.vipLevel}`"></div>
@@ -51,8 +51,12 @@
             </div>
           </div>
         </div>
-      </q-carousel-slide>
-    </q-carousel>
+      </Slide>
+      <template #addons>
+        <Navigation />
+      </template>
+    </Carousel>
+    
     <div class="header-wrapper">
       <div class="vertical-line"></div>
       <div class="header">Monthly Cumulative Deposit An Upgrade Vip Level</div>
@@ -246,6 +250,8 @@ import { watch, ref, onMounted } from "vue";
 import ProfileSummary from "components/ProfileSummary.vue";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
+import { Carousel, Slide, Navigation } from "vue3-carousel";
+import "vue3-carousel/dist/carousel.css";
 
 const vipLevel = ref("");
 const vipPromoTab = ref("vip");
@@ -829,6 +835,38 @@ const rows4 = [
 }
 </style>
 <style lang="scss">
+.carousel__item {
+  min-height: 200px;
+  width: 100%;
+  font-size: 20px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel__slide {
+  padding-right: 10px;
+
+  &.carousel__slide--next .vipitem, &.carousel__slide--prev .vipitem {
+    filter: brightness(0.5);
+    height: 172px;
+    margin-top: 20px;
+
+    .vip-contents .progress-bar-container .progress-bar-inner-bar {
+      height: 8px;
+    }
+  }
+}
+
+.carousel__prev {
+  transform: translate(5%, -50%);
+}
+
+.carousel__next {
+  transform: translate(-5%, -50%);
+}
+
 .vip-container {
   padding: 0 1.75rem;
   overflow: hidden;
