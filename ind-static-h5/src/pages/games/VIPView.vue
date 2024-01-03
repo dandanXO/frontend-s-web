@@ -16,7 +16,7 @@
   </div>
 
   <div class="vip-container">
-    <Carousel :items-to-show="1.3" :wrap-around="false" :snapAlign="'start'">
+    <Carousel ref="vipCarouselRef" :items-to-show="1.3" :wrap-around="false" :snapAlign="'start'" v-model="vipCarouselIndex">
       <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
@@ -31,21 +31,19 @@
               </div>
 
               <div class="progress-bar-container">
+                <div class="progress-bar-endpoint-label">
+                  {{ `V${vip.vipLevel}` }}
+                </div>
                 <div class="progress-bar-outer-bar">
-                  <span class="progress-bar-label">{{ getVipLevelProgress(vip).progressBarText }}</span>
+                  <span class="progress-bar-label">{{ currentVipLevelStats.progressBarText }}</span>
 
                   <div
                     class="progress-bar-inner-bar"
-                    :style="{ width: getVipLevelProgress(vip).levelUpPercentage + '%' }"
+                    :style="{ width: currentVipLevelStats.levelUpPercentage + '%' }"
                   />
                 </div>
-                <div class="progress-bar-desc">
-                  <span>
-                    {{ `V${vip.vipLevel}` }}
-                  </span>
-                  <span>
-                    {{ `V${+vip.vipLevel + 1}` }}
-                  </span>
+                <div class="progress-bar-endpoint-label">
+                  {{ `V${+vip.vipLevel + 1}` }}
                 </div>
               </div>
             </div>
@@ -57,6 +55,63 @@
       </template>
     </Carousel>
 
+    <div class="vip-rewards">
+      <div class="vip-reward-item">
+        <div class="reward-desc">
+          <div class="icon">
+            <img src="../../assets/images/vip/level-upgrade-reward-icon.png" />
+          </div>
+          <div class="title">
+            <span class="bold">Level Upgrade</span><br/>
+            Reward
+          </div>
+          <div class="reward-amt-wrapper">
+            <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>
+          </div>
+        </div>
+        <div class="unlock-status">
+          <img v-if="vipLevel > (vipCarouselIndex + 1)" src="../../assets/images/vip/vip-reward-unlocked-icon.png" />
+          <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
+        </div>
+      </div>
+      <div class="vip-reward-item">
+        <div class="reward-desc">
+          <div class="icon">
+            <img src="../../assets/images/vip/monthly-reward-icon.png" />
+          </div>
+          <div class="title">
+            <span class="bold">Monthly</span><br/>
+            Reward
+          </div>
+          <div class="reward-amt-wrapper">
+            <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
+          </div>
+        </div>
+        <div class="unlock-status">
+          <img v-if="vipLevel > (vipCarouselIndex + 1)" src="../../assets/images/vip/vip-reward-unlocked-icon.png" />
+          <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
+        </div>
+      </div>
+      <div class="vip-reward-item">
+        <div class="reward-desc">
+          <div class="icon">
+            <img src="../../assets/images/vip/daily-withdrawal-limit-icon.png" />
+          </div>
+          <div class="title">
+            <span class="bold">Daily Withdrawal</span><br/>
+            Limit
+          </div>
+          <div class="reward-amt-wrapper">
+            <div class="reward-amt bold">{{ currentVipLevelStats.dailyWithdrawalLimit }}</div>
+          </div>
+      </div>
+      <div class="unlock-status">
+          <img v-if="vipLevel > (vipCarouselIndex + 1)" src="../../assets/images/vip/vip-reward-unlocked-icon.png" />
+          <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
+        </div>
+      </div>
+    </div>
+    
     <div class="header-wrapper">
       <div class="vertical-line"></div>
       <div class="header">Monthly Cumulative Deposit An Upgrade Vip Level</div>
@@ -255,11 +310,19 @@ import "vue3-carousel/dist/carousel.css";
 import { convertToCommaAmount } from "src/boot/utils";
 
 const vipLevel = ref("");
+const currentVipLevelStats = ref({
+  levelUpPercentage: null,
+  progressBarText: "",
+  levelUpgrade: null,
+  monthlyReward: null,
+  dailyWithdrawalLimit: null
+});
 const vipPromoTab = ref("vip");
 const router = useRouter();
 const route = useRoute();
 const store = userStore();
-const vipCarouselIndex = ref(0);
+const vipCarouselIndex = ref();
+const vipCarouselRef = ref();
 
 watch(
   () => vipPromoTab.value,
@@ -278,22 +341,6 @@ watch(
     }
   }
 );
-
-const getVipLevelProgress = (vipInfo) => {
-  const vipLevel = Number(store.vip.replace("VIP", ""));
-  const currentDeposit = Number(store.getCurrentDeposit());
-  const upgradeStatus = vipInfo.ugprade;
-
-  if (vipLevel > +vipInfo.vipLevel) {
-    return 100;
-  }
-
-  const levelUpDeposit = +upgradeStatus.replace(/,/g, "");
-  return {
-    levelUpPercentage: (currentDeposit / levelUpDeposit) * 100,
-    progressBarText: `${convertToCommaAmount(currentDeposit)} / ${convertToCommaAmount(levelUpDeposit)}`
-  };
-};
 
 const columns = [
   {
@@ -410,7 +457,39 @@ onMounted(() => {
     // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
     vipCarouselIndex.value = vipLevelNum - 1;
   }
+
+  vipCarouselRef.value.data.currentSlide.value = vipCarouselIndex.value;
 });
+
+watch(() => vipCarouselIndex.value, () => {
+  const carouselVipLevel = vipCarouselIndex.value === vipCarouselRef.value.data.maxSlide.value ? 12 : (vipCarouselIndex.value + 1);
+  
+  const levelUpgrade = rows4.find(({name}) => name === `VIP ${carouselVipLevel}`).ugprade
+  const monthlyReward = rows3.find(({name}) => name === `VIP ${carouselVipLevel}`).ugprade
+  const dailyWithdrawalLimit = rows.find(({name}) => name === `VIP ${carouselVipLevel}`).ugprade
+
+  const vipInfo = vipItems.find(({vipLevel}) => vipLevel === carouselVipLevel)
+  const vipLevel = Number(store.vip.replace("VIP", ""));
+  const currentDeposit = Number(store.getCurrentDeposit());
+  const upgradeStatus = vipInfo.ugprade;
+  const levelUpDeposit = +upgradeStatus.replace(/,/g, "");
+
+  const levelUpPercentage = (() => {
+    if (vipLevel > +vipInfo.vipLevel) {
+      return 100;
+    }
+
+    return (currentDeposit / levelUpDeposit) * 100;
+  })();
+  
+  currentVipLevelStats.value = {
+    levelUpgrade,
+    monthlyReward,
+    dailyWithdrawalLimit,
+    levelUpPercentage,
+    progressBarText: `${currentDeposit} / ${levelUpDeposit}`
+  }
+})
 
 const columns2 = [
   {
@@ -638,6 +717,76 @@ const rows4 = [
 ];
 </script>
 <style lang="scss" scoped>
+
+.vip-rewards {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  .vip-reward-item {
+    width: 107px;
+    height: 182px;
+    background: url("../../assets/images/vip/vip-reward-unlock-bg.png") no-repeat center center;
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px;
+    .reward-desc {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+
+      .bold {
+        font-weight: 800;
+      }
+
+      .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #A296F0;
+        border-radius: 100px;
+        height: 35px;
+        width: 35px;
+      }
+
+      .title {
+        color: #5C46E7;
+        font-size: 11px;
+        height: 35px;
+        line-height: 18px;
+      }
+
+      .reward-amt-wrapper {
+        background-color: #C9C8FF;
+        padding: 5px 15px;
+        max-width: 100px;
+        border-radius: 4px;
+        font-family: sans-serif;
+        font-size: 12px;
+
+        .reward-amt {
+          line-height: 12px;
+          word-wrap: break-word;
+          color: #8b36f8;
+          background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%), linear-gradient(0deg, #ffffff, #ffffff);
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
+    }
+
+    .unlock-status {
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+    }
+  }
+}
+
 .vip-promo-tab-wrapper {
   width: 90%;
   margin: 0 auto;
@@ -757,6 +906,7 @@ const rows4 = [
   }
 
   .vip-level-header {
+    font-family: sans-serif;
     font-size: 3.2em;
     font-weight: 800;
     -webkit-text-stroke: 2px #fff;
@@ -786,12 +936,16 @@ const rows4 = [
 
     .progress-bar-container {
       display: flex;
-      flex-direction: column;
+      align-items: center;
       gap: 10px;
       position: absolute;
-      bottom: 4%;
+      bottom: 10%;
       left: 6%;
       right: 6%;
+
+      .progress-bar-endpoint-label {
+        color: #333;
+      }
 
       .progress-bar-outer-bar {
         border: 3px solid #fff;
@@ -809,6 +963,7 @@ const rows4 = [
           right: 0;
           text-align: center;
           color: #333;
+          font-size: 10px;
         }
       }
 
@@ -816,17 +971,7 @@ const rows4 = [
         color: #fff;
         border-radius: 16px;
         background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
-        height: 16px;
-      }
-
-      .progress-bar-desc {
-        display: flex;
-        justify-content: space-between;
-        color: #333;
-        font-size: 17.987px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
+        height: 12px;
       }
     }
 
@@ -860,7 +1005,7 @@ const rows4 = [
 }
 
 .carousel__slide {
-  padding-right: 10px;
+  padding: 10px;
 
   &.carousel__slide--next .vipitem,
   &.carousel__slide--prev .vipitem {
@@ -874,14 +1019,8 @@ const rows4 = [
   }
 }
 
-.carousel__prev {
-  transform: translate(5%, -50%);
-  background: transparent;
-}
-
-.carousel__next {
-  transform: translate(-5%, -50%);
-  background: transparent;
+.carousel__prev, .carousel__next {
+  display: none;
 }
 
 .vip-container {
