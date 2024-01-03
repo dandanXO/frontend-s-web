@@ -112,7 +112,7 @@
       </q-card>
       <a @click="openConfirmSignOutDialog">
         <div class="acct-logout">
-          <div class="acct-nav-label">&nbsp;</div>
+          <div class="acct-nav-label">LOG OUT</div>
         </div>
       </a>
     </div>
@@ -381,6 +381,14 @@ const logout = () => {
   margin: 20px auto;
   aspect-ratio: 335/40;
   background-size: 100% 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .acct-nav-label {
+    color: rgba(206, 206, 206, 0.8);
+    font-size: 16px;
+  }
 
   &:active {
     filter: brightness(1.2);
@@ -409,6 +417,6 @@ const logout = () => {
 
 <style lang="scss">
 .q-page-container {
-  padding-bottom: 0 !important;
+  padding-bottom: 20px !important;
 }
 </style>

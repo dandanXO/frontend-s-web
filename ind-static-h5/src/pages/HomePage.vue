@@ -1,9 +1,9 @@
 <template>
   <ProfileSummary :homeProfile="true" />
-  <!-- autoplay -->
   <q-carousel
     class="home"
     id="home"
+    autoplay
     navigation
     v-model="slide"
     swipeable
@@ -199,7 +199,7 @@
                 hide: true
               }"
               :modules="gameModules"
-              class="platform-game-container"
+              class="platform-game-container live-casino"
             >
               <template v-for="(item, index) in livecasino" :key="index">
                 <swiper-slide
@@ -2165,18 +2165,18 @@ onMounted(() => {
   .title-game {
     margin-left: -8px;
     margin-right: -8px;
-    padding: 8px 12px 12px;
+    padding: 15px 12px 8px;
     display: flex;
     gap: 8px;
     align-items: center;
     background-image: url("../assets/images/index/title-bg.png");
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: top left;
+    background-position: center center;
 
     .txt-style {
       font-family: "Dongle", sans-serif;
-      font-size: 48px;
+      font-size: 2.6rem;
       font-weight: 700;
       letter-spacing: 1px;
       line-height: 1;
@@ -2264,6 +2264,11 @@ onMounted(() => {
   margin-bottom: 12px;
   column-gap: 8px;
   row-gap: 16px;
+
+  &.live-casino {
+    padding-top: 8px;
+    margin-bottom: 0px;
+  }
 
   .swiper-scrollbar.swiper-scrollbar-horizontal {
     bottom: 0px;
@@ -2407,7 +2412,7 @@ onMounted(() => {
 .cat-selection-wrapper {
   // overflow-x: hidden;
   padding-bottom: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   .cat-selection-container {
     display: flex;
     gap: 6px;
@@ -2427,7 +2432,7 @@ onMounted(() => {
   background: #2b374a;
   // min-width: 80px;
   width: 80px;
-  height: 60px;
+  height: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2452,13 +2457,13 @@ onMounted(() => {
   .cat-icon {
     img {
       height: 100%;
-      max-height: 22px;
+      max-height: 19px;
     }
   }
 
   .cat-title {
+    font-size: 12px;
     font-weight: bold;
-    font-size: 14px;
     color: #bfc3c9;
   }
 }

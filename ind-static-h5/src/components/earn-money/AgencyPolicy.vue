@@ -338,23 +338,37 @@ const rows3 = [
 
   .subtitle {
     margin: 0 0 15px 0;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    font-weight: 400;
   }
 
   .desc-wrapper {
     display: flex;
     align-items: center;
     gap: 15px;
-    margin: 0 0 15px 0;
+    margin: 0 0 25px 0;
+    letter-spacing: 0.5px;
 
     img {
-      width: 75px;
-      height: 75px;
+      width: 56px;
+      height: 56px;
     }
   }
 
   .agency-policy-main-img {
     margin-left: -16px;
     margin-right: -16px;
+
+    &:after {
+      content: "";
+      background: linear-gradient(to bottom, rgba(17, 19, 31, 0.9), rgba(255, 255, 255, 0));
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100px;
+      width: 100%;
+    }
   }
 
   .agency-policy-separator {
@@ -384,6 +398,12 @@ const rows3 = [
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
+  :deep(.q-item__label) {
+    color: #ffffff;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+  }
+
   ul {
     padding-inline-start: 1rem;
 
@@ -398,6 +418,8 @@ const rows3 = [
 
     .dot-style {
       list-style-type: disc;
+      letter-spacing: 0.5px;
+      line-height: 1.7;
     }
   }
   :deep(.q-table__container) {
