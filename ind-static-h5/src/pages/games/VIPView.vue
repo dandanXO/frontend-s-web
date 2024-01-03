@@ -462,7 +462,7 @@ onMounted(() => {
 });
 
 watch(() => vipCarouselIndex.value, () => {
-  const carouselVipLevel = vipCarouselIndex.value === vipCarouselRef.value.data.maxSlide.value ? 12 : (vipCarouselIndex.value + 1);
+  const carouselVipLevel = vipCarouselIndex.value === vipCarouselRef.value.data.maxSlide.value ? 12 : (Math.round(vipCarouselIndex.value) + 1);
   
   const levelUpgrade = rows4.find(({name}) => name === `VIP ${carouselVipLevel}`).ugprade
   const monthlyReward = rows3.find(({name}) => name === `VIP ${carouselVipLevel}`).ugprade
