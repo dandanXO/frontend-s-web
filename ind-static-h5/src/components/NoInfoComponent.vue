@@ -26,11 +26,11 @@ const props = defineProps(["noInfoTitle"]);
 
   p {
     color: #b3b0b8;
-    font-size: 1rem;
+    font-size: 14px;
   }
 
   .no-info-text {
-    font-size: 1.25rem;
+    font-size: 20px;
     font-weight: 700;
     text-align: center;
   }

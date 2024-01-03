@@ -662,6 +662,7 @@ const rows4 = [
       color: #fff;
       background: linear-gradient(0deg, #5c46e7, #5c46e7), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
       box-shadow: 0px 1px 2px 0px #0000000d;
+      border: 1px solid #5c46e7;
     }
 
     :deep(.q-tab--active .q-tab__label) {
@@ -757,7 +758,7 @@ const rows4 = [
 
   .vip-level-header {
     font-size: 3.2em;
-    font-weight: 700;
+    font-weight: 800;
     -webkit-text-stroke: 2px #fff;
     top: 25%;
     right: 10%;
@@ -875,10 +876,12 @@ const rows4 = [
 
 .carousel__prev {
   transform: translate(5%, -50%);
+  background: transparent;
 }
 
 .carousel__next {
   transform: translate(-5%, -50%);
+  background: transparent;
 }
 
 .vip-container {
@@ -981,7 +984,7 @@ const rows4 = [
 
     .header {
       font-size: 26px;
-      font-weight: 700;
+      font-weight: 800;
       line-height: 32px;
       text-align: left;
       background: linear-gradient(90deg, #bc70df 0%, #fcd23c 100%);

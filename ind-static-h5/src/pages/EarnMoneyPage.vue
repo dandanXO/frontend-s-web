@@ -1,4 +1,6 @@
 <template>
+  <ProfileSummary :homeProfile="true" />
+
   <div class="earn-money">
     <q-tabs v-model="activeKey" class="earn-money-tabs" color="black" no-caps indicator-color="transparent">
       <q-tab name="about">
@@ -81,6 +83,7 @@ import AgencyPolicy from "../components/earn-money/AgencyPolicy.vue";
 import MyMember from "../components/earn-money/MyMember.vue";
 import DailyComponent from "../components/earn-money/DailyComponent.vue";
 import EarnComponent from "../components/earn-money/EarnComponent.vue";
+import ProfileSummary from "components/ProfileSummary.vue";
 
 const activeKey = ref("about");
 </script>
@@ -91,8 +94,16 @@ const activeKey = ref("about");
     :deep(.q-tab) {
       margin: 0 15px;
       color: rgba(255, 255, 255, 0.3);
-      border-radius: 0.25rem;
+      border-radius: 4px;
+      height: 55px;
+      width: 66px;
       background: rgba(232, 232, 232, 0.2);
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    :deep(.q-tab__content) {
+      gap: 2px;
     }
 
     :deep(.q-tab--active) {
@@ -106,7 +117,11 @@ const activeKey = ref("about");
   }
 
   .earn-money-panels {
-    background: radial-gradient(25% 50% at 50% 50%, #e01b84 0%, rgba(27, 28, 36, 0) 100%);
+    // background: radial-gradient(25% 50% at 50% 50%, #e01b84 0%, rgba(27, 28, 36, 0) 100%);
+    background-image: url("../assets/images/earn-money/earn-money-bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
   }
 
   svg {

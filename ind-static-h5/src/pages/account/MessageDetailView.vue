@@ -85,13 +85,13 @@ onMounted(() => {
     align-items: center;
 
     .title {
-      font-size: 1rem;
+      font-size: 16px;
       font-weight: 700;
       margin: 1rem 0;
     }
 
     .send-time {
-      font-size: 1rem;
+      font-size: 12px;
       // font-weight: 700;
       color: rgba(255, 255, 255, 0.5);
       margin: 0.75rem 0;
@@ -100,7 +100,7 @@ onMounted(() => {
   }
 
   .content {
-    font-size: 1rem;
+    font-size: 14px;
     // font-weight: 700;
     color: rgba(255, 255, 255, 0.5);
   }

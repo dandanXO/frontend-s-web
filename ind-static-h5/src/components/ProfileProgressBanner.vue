@@ -14,15 +14,13 @@
         </div>
       </div>
 
-      <div class="nickname">{{ store.nickName }}</div>
+      <div class="nickname">{{ store.realName ? store.realName : store.nickName }}</div>
     </div>
 
     <div class="right-container">
       <div class="amount-progress-container">
         <div class="vip-text">{{ store.vip }}</div>
-        <div class="progress-num">
-          {{ `${convertToCommaAmount(progressRef)} / ${convertToCommaAmount(maxProgress)}` }}
-        </div>
+        <div class="progress-num">{{ `${progressRef} / ${maxProgress}` }}</div>
       </div>
       <q-linear-progress
         reverse
@@ -90,7 +88,7 @@ const profileImagePath = computed(() => {
   background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
   border-radius: 8px;
   min-height: 130px;
-  padding: 10px;
+  padding: 14px;
 
   .left-container {
     position: relative;
@@ -102,7 +100,7 @@ const profileImagePath = computed(() => {
     max-width: 100px;
 
     .profile-pic {
-      margin: 15px;
+      margin: 0 15px 15px;
 
       .vip-details {
         position: relative;
@@ -147,6 +145,7 @@ const profileImagePath = computed(() => {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    font-size: 12px;
 
     .amount-progress-container {
       display: flex;

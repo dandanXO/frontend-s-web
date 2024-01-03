@@ -166,11 +166,6 @@
                 <div
                   class="platform-game-item btn-effect"
                   @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
-                  data-aos="zoom-in"
-                  data-aos-delay="100"
-                  data-aos-duration="1200"
-                  data-aos-once="true"
-                  data-aos-anchor="#hotgames"
                 >
                   <div class="platform-game-img">
                     <div
@@ -245,7 +240,7 @@
                   class="platform-game-item btn-effect"
                   @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
                 >
-                  <div data-aos="zoom-in" data-aos-delay="100" data-aos-duration="1200" data-aos-once="true">
+                  <div>
                     <img src="../assets/images/index/live/item-game-maintenance.png" />
                     <div
                       class="platform-live-item--img"
@@ -331,10 +326,6 @@
                 <div
                   class="platform-game-item btn-effect"
                   @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)"
-                  data-aos="zoom-in"
-                  data-aos-delay="100"
-                  data-aos-duration="1200"
-                  data-aos-once="true"
                 >
                   <div class="platform-game-img">
                     <div
@@ -517,11 +508,6 @@
             <div
               class="platform-game-item btn-effect"
               @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
-              data-aos="zoom-in"
-              data-aos-delay="100"
-              data-aos-duration="1200"
-              data-aos-once="true"
-              data-aos-anchor="#hotgames"
             >
               <div class="platform-game-img">
                 <div
@@ -550,12 +536,6 @@
               <div
                 class="platform-game-item btn-effect"
                 @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
-                data-aos="zoom-in"
-                :data-aos-delay="100 * index"
-                data-aos-duration="1200"
-                data-aos-once="true"
-                data-aos-anchor="#slotsgames"
-                data-aos-offset="300"
               >
                 <img src="../assets/images/index/sport/item-game-maintenance.png" />
                 <div

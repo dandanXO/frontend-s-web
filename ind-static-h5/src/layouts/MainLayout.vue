@@ -201,7 +201,7 @@ export default defineComponent({
           pageName.value = "Discount";
         } else if (route.path === "/earn-money" || route.path === "/agency-policy") {
           prevPage.value = "/";
-          hasPage.value = true;
+          hasPage.value = false;
           pageName.value = "Earn Money";
         } else if (route.path === "/bonus") {
           prevPage.value = "/";

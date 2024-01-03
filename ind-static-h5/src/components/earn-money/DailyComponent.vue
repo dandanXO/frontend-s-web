@@ -76,7 +76,7 @@
       </div>
     </div>
     <div class="chart">
-      <div class="arrow" @click="onSwiperArrowClick()">&lt;</div>
+      <div class="arrow" @click="onSwiperArrowClick()"><img src="../../assets/images/earn-money/arrow_left.png" /></div>
       <div class="swiper-container swiper-nav-container">
         <div class="swiper-wrapper">
           <div class="swiper-slide">
@@ -91,7 +91,9 @@
           </div>
         </div>
       </div>
-      <div class="arrow" @click="onSwiperArrowClick(true)">></div>
+      <div class="arrow" @click="onSwiperArrowClick(true)">
+        <img src="../../assets/images/earn-money/arrow_right.png" />
+      </div>
 
       <!-- <Bar ref="chartRef" :data="chartData.data" :options="chartData.options" /> -->
     </div>
@@ -346,7 +348,7 @@ onMounted(() => {
   margin: 0 0 10px 0;
   .title {
     color: #fff;
-    font-size: 1.09375rem;
+    font-size: 18px;
     font-weight: 700;
   }
 
@@ -358,6 +360,8 @@ onMounted(() => {
     font-weight: 500;
 
     .subtitle {
+      font-size: 12px;
+      font-weight: 500;
     }
 
     .chart-cat {
@@ -460,6 +464,10 @@ onMounted(() => {
 
     .left-container,
     .right-container {
+      .title {
+        font-size: 12px;
+        font-weight: 700;
+      }
       .value {
         color: #ffb100;
         font-size: 1.25rem;
@@ -516,17 +524,17 @@ onMounted(() => {
     }
 
     .arrow {
-      border-radius: 6.25rem;
+      border-radius: 50%;
       background: rgba(255, 255, 255, 0.8);
       color: #5c46e7;
       text-align: center;
-      width: 50px;
-      height: 25px;
-      line-height: 25px;
+      width: 60px;
+      height: 30px;
       margin: 0 0 50px 0;
-      font-size: 1rem;
-      font-weight: 600;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }
