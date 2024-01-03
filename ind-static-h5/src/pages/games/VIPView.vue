@@ -22,7 +22,18 @@
           <div :class="`vipitem vipitem${vip.vipLevel}`">
             <div :class="`vip-badge vip${vip.vipLevel}`"></div>
 
-            <div class="vip-level-header">VIP{{ vip.vipLevel }}</div>
+            <div class="vip-level-header">
+              <svg viewBox="0 0 450 70">  
+                <defs>
+                  <!-- Linear Gradient -->
+                  <linearGradient id="myGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#8b36f8;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#334ad6;stop-opacity:1" />
+                  </linearGradient>
+                </defs>
+                <text class="svgText" x="10" y="45" fill="url(#myGradient)">VIP{{ vip.vipLevel }}</text>
+              </svg>
+            </div>
 
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
               <div class="upgrade-requirements">
@@ -721,7 +732,6 @@ const rows4 = [
 ];
 </script>
 <style lang="scss" scoped>
-
 .separator-line {
   border: 1px solid #49148F;
   padding: 0 10px;
@@ -927,10 +937,25 @@ const rows4 = [
     z-index: 1;
     position: absolute;
     color: #8b36f8;
-    background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%), linear-gradient(0deg, #ffffff, #ffffff);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+
+    svg {
+      font-family: Arial;
+      font-size: 10rem;
+      font-weight: bold;
+      position: absolute;
+      width: 125px;
+      height: 70px;
+      right: 0px;
+      top: 0px;
+    }
+
+    .svgText {
+      stroke: white;
+      stroke-width: 30px;
+      stroke-linejoin: round;
+      paint-order: stroke;
+    }
+    
   }
 
   .vip-contents {
