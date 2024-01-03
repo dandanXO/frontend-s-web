@@ -108,7 +108,7 @@
                     <div class="top-title">VIP Rewards</div>
                   </div>
                   <div class="promo-content-inner">
-                    <div class="content-title">Invite to Earn</div>
+                    <div class="content-title">{{ selectedPromo.title }}</div>
                   </div>
                   <div v-html="selectedPromo.pageContent"></div>
                   <div class="join-container">
@@ -773,6 +773,10 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
+        p {
+          font-size: 14px;
+        }
 
         img {
           margin-bottom: 5px;

@@ -67,7 +67,7 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <RiVolumeUpLine style="fill: #5f4682" />
+          <RiVolumeUpLine style="fill: #5f4682; width: 24px; height: 24px" />
         </div>
         <div class="marquee-container">
           <marquee-text :repeat="5" :duration="announcementList.length * 120">
@@ -582,18 +582,11 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isStationNotice">
-    <q-btn dense rounded icon="close" class="bg-yellow text-black announcement-close" v-close-popup />
-    <q-card style="width: 100%" class="bg-primary text-white">
+  <q-dialog width="100%" class="announcement-dialog" v-model="isStationNotice">
+    <q-btn dense rounded icon="close" class="bg-white text-black announcement-close" v-close-popup />
+    <q-card style="width: 100%" class="announcement-card">
       <q-card-section class="q-mb-md">
-        <q-tabs
-          v-model="activeKey"
-          dense
-          class="text-grey"
-          active-color="bright"
-          indicator-color="bright"
-          align="justify"
-        >
+        <q-tabs v-model="activeKey" dense class="text-white" align="justify">
           <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
         </q-tabs>
 
@@ -1832,8 +1825,29 @@ onMounted(() => {
 .announcement-close {
   position: absolute;
   right: 4px;
-  top: 80px;
+  top: calc((100vh - calc(100vh - 108px)) / 2 + 20px);
   z-index: 3;
+}
+
+.announcement-dialog {
+  height: calc(100vh - 108px);
+}
+
+.announcement-card {
+  background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+  border-radius: 10px;
+
+  .q-tab__label {
+    font-size: 18px;
+  }
+
+  .q-card {
+    background: transparent;
+  }
+
+  .q-tab-panels {
+    background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+  }
 }
 
 .popout-dialog {
@@ -2497,6 +2511,21 @@ onMounted(() => {
 .android-8 {
   .game-platform-img {
     height: 80px;
+  }
+}
+
+.announcement-card {
+  padding-top: 16px;
+
+  font-family: "Manrope", sans-serif;
+  .q-tab__label {
+    font-size: 16px;
+  }
+  .q-tab--active .q-tab__indicator {
+    height: 0px;
+  }
+  .q-item__label {
+    color: #fff;
   }
 }
 </style>
