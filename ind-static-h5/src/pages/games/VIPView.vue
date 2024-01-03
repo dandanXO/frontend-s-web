@@ -932,8 +932,8 @@ const rows4 = [
     font-size: 3.2em;
     font-weight: 800;
     -webkit-text-stroke: 2px #fff;
-    top: 25%;
-    right: 10%;
+    top: 28%;
+    right: 2%;
     z-index: 1;
     position: absolute;
     color: #8b36f8;
