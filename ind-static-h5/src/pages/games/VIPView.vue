@@ -32,7 +32,7 @@
 
               <div class="progress-bar-container">
                 <div class="progress-bar-endpoint-label">
-                  {{ `V${vip.vipLevel}` }}
+                  {{ `V${+vip.vipLevel - 1}` }}
                 </div>
                 <div class="progress-bar-outer-bar">
                   <span class="progress-bar-label">{{ currentVipLevelStats.progressBarText }}</span>
@@ -43,7 +43,7 @@
                   />
                 </div>
                 <div class="progress-bar-endpoint-label">
-                  {{ `V${+vip.vipLevel + 1}` }}
+                  {{ `V${vip.vipLevel}` }}
                 </div>
               </div>
             </div>
@@ -70,7 +70,7 @@
           </div>
         </div>
         <div class="unlock-status">
-          <img v-if="vipLevel > (vipCarouselIndex + 1)" src="../../assets/images/vip/vip-reward-unlocked-icon.png" />
+          <img v-if="currentVipLevelStats.rewardUnlocked" src="../../assets/images/vip/vip-reward-unlocked-icon.png" />
           <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
         </div>
       </div>
@@ -88,7 +88,7 @@
           </div>
         </div>
         <div class="unlock-status">
-          <img v-if="vipLevel > (vipCarouselIndex + 1)" src="../../assets/images/vip/vip-reward-unlocked-icon.png" />
+          <img v-if="currentVipLevelStats.rewardUnlocked" src="../../assets/images/vip/vip-reward-unlocked-icon.png" />
           <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
         </div>
       </div>
@@ -106,7 +106,7 @@
           </div>
       </div>
       <div class="unlock-status">
-          <img v-if="vipLevel > (vipCarouselIndex + 1)" src="../../assets/images/vip/vip-reward-unlocked-icon.png" />
+          <img v-if="currentVipLevelStats.rewardUnlocked" src="../../assets/images/vip/vip-reward-unlocked-icon.png" />
           <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
         </div>
       </div>
@@ -301,13 +301,12 @@
 </template>
 
 <script setup>
-import { watch, ref, onMounted } from "vue";
+import { watch, ref, onActivated } from "vue";
 import ProfileSummary from "components/ProfileSummary.vue";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
-import { convertToCommaAmount } from "src/boot/utils";
 
 const vipLevel = ref("");
 const currentVipLevelStats = ref({
@@ -315,7 +314,8 @@ const currentVipLevelStats = ref({
   progressBarText: "",
   levelUpgrade: null,
   monthlyReward: null,
-  dailyWithdrawalLimit: null
+  dailyWithdrawalLimit: null,
+  rewardUnlocked: false
 });
 const vipPromoTab = ref("vip");
 const router = useRouter();
@@ -439,7 +439,7 @@ const { vipItems, lastVipLevel } = rows.reduce(
   }
 );
 
-onMounted(() => {
+onActivated(() => {
   const vipLevelNum = Number(store.vip.replace("VIP", ""));
   vipLevel.value = vipLevelNum;
 
@@ -487,7 +487,8 @@ watch(() => vipCarouselIndex.value, () => {
     monthlyReward,
     dailyWithdrawalLimit,
     levelUpPercentage,
-    progressBarText: `${currentDeposit} / ${levelUpDeposit}`
+    progressBarText: `${currentDeposit} / ${levelUpDeposit}`,
+    rewardUnlocked: currentDeposit >= levelUpDeposit
   }
 })
 
