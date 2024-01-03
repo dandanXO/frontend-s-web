@@ -11,8 +11,8 @@
       indicator-color="transparent"
       align="justify"
     >
-      <q-tab name="vip" label="VIP" />
       <q-tab name="promo" label="Promo" />
+      <q-tab name="vip" label="VIP" />
     </q-tabs>
   </div>
 
@@ -418,6 +418,7 @@ export default defineComponent({
     border-radius: 8px;
     background: #101114;
     color: #5c6c86;
+    font-weight: 400;
   }
 
   .vip-promo-tab-toggle {
@@ -427,13 +428,17 @@ export default defineComponent({
     padding: 3px;
 
     :deep(.q-tab__label) {
-      font-weight: 700;
+      font-weight: 400;
     }
 
     :deep(.q-tab--active) {
       color: #fff;
       background: linear-gradient(0deg, #5c46e7, #5c46e7), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
       box-shadow: 0px 1px 2px 0px #0000000d;
+    }
+
+    :deep(.q-tab--active .q-tab__label) {
+      font-weight: 700 !important;
     }
   }
 }
@@ -677,7 +682,7 @@ export default defineComponent({
             .viewdetail {
               // background: #002a35;
               color: #ffffff;
-              font-size: 12px;
+              font-size: 14px;
               position: absolute;
               width: 100%;
               z-index: 2;
@@ -686,6 +691,7 @@ export default defineComponent({
               overflow: hidden;
               line-height: 40px;
               padding: 0 100px 0 10px;
+              font-weight: 500;
 
               // &:before {
               //   background: #043d4f;

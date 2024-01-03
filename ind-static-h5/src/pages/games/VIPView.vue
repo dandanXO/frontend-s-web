@@ -10,8 +10,8 @@
       indicator-color="transparent"
       align="justify"
     >
-      <q-tab name="vip" label="VIP" />
       <q-tab name="promo" label="Promo" />
+      <q-tab name="vip" label="VIP" />
     </q-tabs>
   </div>
 
@@ -654,13 +654,17 @@ const rows4 = [
     padding: 3px;
 
     :deep(.q-tab__label) {
-      font-weight: 700;
+      font-weight: 400;
     }
 
     :deep(.q-tab--active) {
       color: #fff;
       background: linear-gradient(0deg, #5c46e7, #5c46e7), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
       box-shadow: 0px 1px 2px 0px #0000000d;
+    }
+
+    :deep(.q-tab--active .q-tab__label) {
+      font-weight: 700 !important;
     }
   }
 }

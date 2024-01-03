@@ -33,9 +33,9 @@
         style="
           border-radius: 8px;
           margin: 6px 3px;
-          height: 5px;
-          min-height: 5px;
-          width: 30px;
+          height: 3px;
+          min-height: 3px;
+          width: 33px;
           padding: 0;
           background-color: #661ebf;
         "
@@ -47,9 +47,9 @@
         style="
           border-radius: 8px;
           margin: 6px 3px;
-          height: 5px;
-          min-height: 5px;
-          width: 30px;
+          height: 3px;
+          min-height: 3px;
+          width: 33px;
           padding: 0;
           background-color: rgba(255, 255, 255, 0.2);
         "
@@ -67,15 +67,17 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <RiVolumeUpFill style="fill: #ffffff" />
+          <RiVolumeUpLine style="fill: #5f4682" />
         </div>
-        <marquee-text :repeat="5" :duration="announcementList.length * 120">
-          <div v-if="announcementList">
-            <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
-              {{ a.content }}
-            </span>
-          </div>
-        </marquee-text>
+        <div class="marquee-container">
+          <marquee-text :repeat="5" :duration="announcementList.length * 120">
+            <div v-if="announcementList">
+              <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
+                {{ a.content }}
+              </span>
+            </div>
+          </marquee-text>
+        </div>
       </div>
     </div>
 
@@ -90,7 +92,7 @@
 
     <swiper
       :slidesPerView="4.5"
-      :spaceBetween="20"
+      :spaceBetween="10"
       :scrollbar="{
         hide: false
       }"
@@ -854,7 +856,7 @@ import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
-import { RiVolumeUpFill } from "vue-remix-icons";
+import { RiVolumeUpLine } from "vue-remix-icons";
 import { App } from "@capacitor/app";
 import { useUI } from "stores/ui";
 import ProfileSummary from "../components/ProfileSummary.vue";
@@ -1417,8 +1419,6 @@ onMounted(() => {
   store.getUnreadTotal();
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
-
-
 });
 </script>
 
@@ -1573,28 +1573,15 @@ onMounted(() => {
 }
 
 .midd {
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
-  // gap: 10px;
-  // margin: 10px;
-  // margin-top: -29px;
-  // height: 30px;
   margin-top: 10px;
   margin-bottom: 10px;
   position: relative;
-  border-radius: 8px;
+  border-radius: 40px;
   overflow: hidden;
 
   .station-notice-wrapper {
     display: flex;
-    // background: rgba(44, 44, 44, 0.7);
-    // background: rgba(255, 255, 255, 0.24);
     background: #2d0c5a;
-
-    // background: #2b2b4b;
-    // border-radius: 10px;
-    // margin: 10px;
     gap: 10px;
     padding: 5px 10px;
     justify-content: center;
@@ -1604,12 +1591,19 @@ onMounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 28px;
+      width: 28px;
+    }
+
+    .marquee-container {
+      width: calc(100% - 28px);
     }
 
     span {
       margin-right: 10px;
       cursor: pointer;
       color: #bacef1;
+      font-weight: light;
     }
   }
 
@@ -2184,10 +2178,11 @@ onMounted(() => {
     background-position: top left;
 
     .txt-style {
-      font-family: Poppins;
-      font-size: 24px;
-      font-weight: 800;
+      font-family: "Dongle", sans-serif;
+      font-size: 48px;
+      font-weight: 700;
       letter-spacing: 1px;
+      line-height: 1;
       text-transform: uppercase;
       color: #ffffff;
     }
@@ -2342,7 +2337,7 @@ onMounted(() => {
       margin-top: 6px;
       color: #ffffff;
       font-weight: bold;
-      font-size: 12px;
+      font-size: 14px;
     }
 
     img {
@@ -2440,13 +2435,17 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: 8px;
   padding-top: 6px;
   transition: 0.3s all;
   width: 100%;
 
   &.active {
     background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+
+    .cat-title {
+      color: #ffffff;
+    }
   }
 
   &:hover {
