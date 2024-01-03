@@ -103,6 +103,13 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
+                  <div class="top-float">
+                    <div class="top-subtitle">Get unlimited rewards!</div>
+                    <div class="top-title">VIP Rewards</div>
+                  </div>
+                  <div class="promo-content-inner">
+                    <div class="content-title">Invite to Earn</div>
+                  </div>
                   <div v-html="selectedPromo.pageContent"></div>
                   <div class="join-container">
                     <div class="promo-date">
@@ -935,6 +942,42 @@ export default defineComponent({
       margin-left: auto;
       display: block;
     }
+  }
+}
+
+// promo content-inner
+.promo-content-inner {
+  .content-title {
+    background: linear-gradient(180deg, #d6b335 0%, #fff96b 50%, #f2ae01 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    font-size: 24px;
+    font-weight: 700;
+  }
+}
+
+// top float
+.top-float {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+
+  .top-subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .top-title {
+    color: #fff;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
   }
 }
 

@@ -2,7 +2,7 @@
   <div class="no-info-container">
     <img class="" src="../assets/images/account/nodata-folder.png" alt="" />
     <div class="no-info-text">{{ noInfoTitle }}</div>
-    <p>Haven’t found any discount record</p>
+    <p>Haven’t found any record</p>
   </div>
 </template>
 
