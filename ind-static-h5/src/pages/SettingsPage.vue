@@ -416,7 +416,7 @@ const logout = () => {
 </style>
 
 <style lang="scss">
-.q-page-container {
-  padding-bottom: 20px !important;
-}
+// .q-page-container {
+//   padding-bottom: 20px !important;
+// }
 </style>

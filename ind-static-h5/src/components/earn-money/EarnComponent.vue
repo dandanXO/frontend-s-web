@@ -1,6 +1,6 @@
 <template>
   <div class="earn">
-    <img src="../../assets/images/earn-money/about-bg.png" />
+    <div class="agency-policy-main-img"><img src="../../assets/images/earn-money/about-bg.png" /></div>
 
     <div class="title">Invite to Earn</div>
     <div class="desc-title-wrapper">
@@ -261,4 +261,19 @@ onMounted(() => {
     }
   }
 }
+
+.agency-policy-main-img {
+    margin-left: -16px;
+    margin-right: -16px;
+
+    &:after {
+      content: "";
+      background: linear-gradient(to bottom, rgba(17, 19, 31, 0.9), rgba(255, 255, 255, 0));
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100px;
+      width: 100%;
+    }
+  }
 </style>

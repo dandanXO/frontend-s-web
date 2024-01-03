@@ -432,7 +432,8 @@ export default defineComponent({
     background-color: #1b2232;
     border-radius: 8px;
     margin-bottom: 4px;
-    padding: 3px;
+    margin-top: 5px;
+    padding: 1px;
 
     :deep(.q-tab__label) {
       font-weight: 400;
@@ -526,8 +527,8 @@ export default defineComponent({
       background-repeat: no-repeat;
       background-position: center bottom;
       overflow: hidden;
-      height: 40vw;
-      max-height: 130px;
+      height: 170px;
+      // max-height: 130px;
       margin: 10px;
 
       img {

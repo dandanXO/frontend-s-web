@@ -356,10 +356,12 @@ onMounted(() => {
     justify-content: center;
     font-size: 11px;
     line-height: 1.1;
-    padding-top: 2px;
+    padding-top: 3px;
     padding-bottom: 4px;
     z-index: 3;
     color: #334ad6;
+    font-weight: 700;
+    font-style: italic;
   }
 }
 

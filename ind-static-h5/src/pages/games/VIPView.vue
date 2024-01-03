@@ -836,7 +836,8 @@ const rows4 = [
     background-color: #1b2232;
     border-radius: 8px;
     margin-bottom: 4px;
-    padding: 3px;
+    margin-top: 5px;
+    padding: 1px;
 
     :deep(.q-tab__label) {
       font-weight: 400;
