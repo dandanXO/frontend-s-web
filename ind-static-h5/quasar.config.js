@@ -12,7 +12,7 @@ const ESLintPlugin = require("eslint-webpack-plugin");
 
 const { configure } = require("quasar/wrappers");
 
-const isImageCompress = false;
+const isImageCompress = true;
 
 const ImageminPlugin = require("imagemin-webpack-plugin").default;
 

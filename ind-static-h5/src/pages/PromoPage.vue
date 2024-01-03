@@ -111,7 +111,7 @@
                     <div class="content-title">{{ selectedPromo.title }}</div>
                   </div>
                   <div v-html="selectedPromo.pageContent"></div>
-                  <div class="join-container">
+                  <div class="join-container" :style="`top: calc(100vh - 127px - ${ui.bottomInsetHeight}px`">
                     <div class="promo-date">
                       <div class="date-txt" v-if="!isPromotionEnded">Promotion Ends</div>
                       <div class="date-timer">
@@ -411,7 +411,8 @@ export default defineComponent({
       getCountdown,
       updateCountdown,
       countdownInterval,
-      goToVip
+      goToVip,
+      ui
     }
   },
 });
@@ -1003,7 +1004,8 @@ export default defineComponent({
   background: #3b2e95;
   padding: 12px 12px;
   position: fixed;
-  bottom: 66px;
+  //top: calc(100vh - 127px);
+  //bottom: 66px;
   left: 0;
   width: 100%;
   display: flex;
