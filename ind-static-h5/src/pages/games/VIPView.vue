@@ -16,7 +16,7 @@
   </div>
 
   <div class="vip-container">
-    <Carousel ref="vipCarouselRef" :items-to-show="1.3" :wrap-around="true" :snapAlign="'start'" v-model="vipCarouselIndex">
+    <Carousel ref="vipCarouselRef" :items-to-show="1.3" :wrap-around="false" :snapAlign="'start'" v-model="vipCarouselIndex">
       <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
@@ -55,11 +55,13 @@
       </template>
     </Carousel>
 
+    <hr class="separator-line" style="margin-bottom:20px"/>
+
     <div class="vip-rewards">
       <div class="vip-reward-item">
         <div class="reward-desc">
           <div class="icon">
-            <img src="../../assets/images/vip/level-upgrade-reward-icon.png" />
+            <img src="../../assets/images/vip/level-upgrade-reward-icon.svg" />
           </div>
           <div class="title">
             <span class="bold">Level Upgrade</span><br/>
@@ -77,7 +79,7 @@
       <div class="vip-reward-item">
         <div class="reward-desc">
           <div class="icon">
-            <img src="../../assets/images/vip/monthly-reward-icon.png" />
+            <img src="../../assets/images/vip/monthly-reward-icon.svg" />
           </div>
           <div class="title">
             <span class="bold">Monthly</span><br/>
@@ -95,7 +97,7 @@
       <div class="vip-reward-item">
         <div class="reward-desc">
           <div class="icon">
-            <img src="../../assets/images/vip/daily-withdrawal-limit-icon.png" />
+            <img src="../../assets/images/vip/daily-withdrawal-limit-icon.svg" />
           </div>
           <div class="title">
             <span class="bold">Daily Withdrawal</span><br/>
@@ -112,8 +114,9 @@
       </div>
     </div>
     
+    <hr class="separator-line" style="margin-top:20px"/>
+    
     <div class="header-wrapper">
-      <div class="vertical-line"></div>
       <div class="header">Monthly Cumulative Deposit An Upgrade Vip Level</div>
     </div>
 
@@ -462,7 +465,7 @@ onActivated(() => {
 });
 
 watch(() => vipCarouselIndex.value, () => {
-  const carouselVipLevel = vipCarouselIndex.value + 1;
+  const carouselVipLevel = vipCarouselIndex.value === vipCarouselRef.value.data.maxSlide.value ? 12 : (Math.round(vipCarouselIndex.value) + 1);
   
   const levelUpgrade = rows4.find(({name}) => name === `VIP ${carouselVipLevel}`).ugprade
   const monthlyReward = rows3.find(({name}) => name === `VIP ${carouselVipLevel}`).ugprade
@@ -719,6 +722,11 @@ const rows4 = [
 </script>
 <style lang="scss" scoped>
 
+.separator-line {
+  border: 1px solid #49148F;
+  padding: 0 10px;
+}
+
 .vip-rewards {
   display: flex;
   justify-content: space-around;
@@ -747,7 +755,6 @@ const rows4 = [
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #A296F0;
         border-radius: 100px;
         height: 35px;
         width: 35px;
@@ -784,6 +791,10 @@ const rows4 = [
       display: flex;
       justify-content: center;
       padding: 10px;
+
+      img {
+        max-width: 20px;
+      }
     }
   }
 }
@@ -827,7 +838,7 @@ const rows4 = [
   flex-direction: column-reverse;
   background: url("../../assets/images/vip/badge/banner.png") no-repeat top center;
   background-size: 100% 100%;
-  height: 192px;
+  height: 170px;
   width: 100%;
   justify-content: flex-end;
   font-size: 12px;
@@ -978,7 +989,7 @@ const rows4 = [
 
     .upgrade-requirements {
       position: absolute;
-      margin-bottom: 10px;
+      margin: 10px 0px;
       display: flex;
       justify-content: flex-start;
       gap: 10px;
@@ -996,7 +1007,7 @@ const rows4 = [
 </style>
 <style lang="scss">
 .carousel__item {
-  min-height: 200px;
+  min-height: 170px;
   width: 100%;
   font-size: 20px;
   border-radius: 8px;
@@ -1011,7 +1022,7 @@ const rows4 = [
   &.carousel__slide--next .vipitem,
   &.carousel__slide--prev .vipitem {
     filter: brightness(0.5);
-    height: 172px;
+    height: 150px;
     margin-top: 20px;
 
     .vip-contents .progress-bar-container .progress-bar-inner-bar {
@@ -1115,19 +1126,14 @@ const rows4 = [
   .header-wrapper {
     display: flex;
     gap: 15px;
-    padding: 20px 0px;
-
-    .vertical-line {
-      width: 10px;
-      background: linear-gradient(102.74deg, rgba(174, 110, 223, 0.5) 20.78%, rgba(255, 255, 255, 0) 100.75%);
-    }
+    padding: 10px 0px 20px;
 
     .header {
       font-size: 26px;
       font-weight: 800;
       line-height: 32px;
       text-align: left;
-      background: linear-gradient(90deg, #bc70df 0%, #fcd23c 100%);
+      background: linear-gradient(180deg, #D6B335 0%, #FFF96B 50%, #F2AE01 100%);
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
