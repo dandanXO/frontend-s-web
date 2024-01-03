@@ -329,6 +329,11 @@ defineExpose({
 
   .dialog-input {
     border-radius: 1.25rem;
+    min-height: 46px;
+
+    :deep(.q-field__control) {
+      min-height: 46px;
+    }
     //background: rgba(21, 0, 37, 0.5);
   }
 
@@ -341,6 +346,10 @@ defineExpose({
 
   .q-card__section {
     background: transparent;
+  }
+
+  .q-dialog__inner > div {
+    overflow: hidden;
   }
 }
 </style>

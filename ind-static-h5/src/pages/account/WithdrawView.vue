@@ -707,10 +707,11 @@ const isValidCardAddress = () => {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1;
     font-weight: 600;
-    height: 60px;
+    height: 46px;
+    width: 100%;
     transition: 0.3s all;
     color: #ffffff;
     margin: auto;

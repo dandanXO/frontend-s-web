@@ -501,7 +501,7 @@ export default defineComponent({
 }
 
 .back-btn {
-  background: rgb(255, 255, 255, 0.2);
+  background: rgb(255, 255, 255, 0.4);
   margin: 12px;
   position: absolute;
   right: 0;
@@ -653,7 +653,7 @@ export default defineComponent({
               .promo-content {
                 width: 100%;
                 // width: unset;
-                height: 100%;
+                // height: 100%;
 
                 &.isDesktop {
                   display: block;
@@ -742,6 +742,16 @@ export default defineComponent({
 
     .selected-promo-wrapper {
       .banner-container {
+        &:after {
+          content: "";
+          background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(255, 255, 255, 0));
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 80px;
+          width: 100%;
+        }
+
         width: 100%;
 
         .promo-bg {

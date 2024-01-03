@@ -390,11 +390,11 @@ export default defineComponent({
         } else if (route.path === "/deposit") {
           prevPage.value = "/account";
           hasPage.value = true;
-          pageName.value = "Deposit";
+          pageName.value = "";
         } else if (route.path === "/withdraw") {
           prevPage.value = "/account";
           hasPage.value = true;
-          pageName.value = "Withdraw";
+          pageName.value = "";
         }
       }
     };

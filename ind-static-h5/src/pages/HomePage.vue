@@ -1,10 +1,10 @@
 <template>
   <ProfileSummary :homeProfile="true" />
-
+  <!-- autoplay -->
   <q-carousel
     class="home"
     id="home"
-    autoplay
+
     navigation
     v-model="slide"
     swipeable

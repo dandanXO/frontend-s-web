@@ -62,7 +62,7 @@
             </div>
           </template>
 
-          <q-list style="background: #303954" dense unelevated flat>
+          <q-list style="background: #303954" dense unelevated flat class="dropdown-list">
             <q-item clickable v-close-popup @click="onVipClick">
               <q-item-section avatar>
                 <q-avatar icon="diamond" />
@@ -90,7 +90,7 @@
               </q-item-section>
             </q-item>
 
-            <hr color="#575E74" />
+            <hr class="menu-line" />
 
             <q-item clickable v-close-popup @click="router.push('/account/bank')">
               <q-item-section avatar>
@@ -380,6 +380,10 @@ onMounted(() => {
   border-radius: 5px;
 }
 
+.menu-line {
+  border-color: rgba(243, 244, 246, 0.1);
+}
+
 @media (max-width: 375px) {
   .infoboard-container .profile-wrapper .profile-balance {
     width: 100px;
@@ -406,6 +410,7 @@ onMounted(() => {
 
 .q-item__label {
   color: #c5c7ff;
+  font-weight: 500;
 }
 
 .q-avatar {
@@ -423,6 +428,11 @@ onMounted(() => {
 }
 
 .q-menu--dark {
-  box-shadow: none;
+  // box-shadow: none;
+  box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.2) !important;
+}
+
+.dropdown-list {
+  // box-shadow: 14px 14px 14px rgba(0, 0, 0, 0.4) !important;
 }
 </style>
