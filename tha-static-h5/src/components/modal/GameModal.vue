@@ -313,8 +313,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             const scriptEndTag = "</" + "script>";
             srcDoc = srcDoc
               .replace(/<\/script>/g, scriptEndTag)
-              .replaceAll(/\\\"/g, '"')
-              .replaceAll(/\n/g, "");
+              .replace(/\\\"/g, '"')
+              .replace(/\n/g, "");
 
             src.value = srcDoc;
           }
