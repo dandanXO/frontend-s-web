@@ -738,10 +738,18 @@ const rows4 = [
       background-size: 100% 100%;
     }
 
-    &.vip10,
-    &.vip11,
-    &.vip12 {
+    &.vip10 {
       background: url("../../assets/images/vip/badge/vip10.png") no-repeat top center;
+      background-size: 100% 100%;
+    }
+
+    &.vip11 {
+      background: url("../../assets/images/vip/badge/vip11.png") no-repeat top center;
+      background-size: 100% 100%;
+    }
+
+    &.vip12 {
+      background: url("../../assets/images/vip/badge/vip12.png") no-repeat top center;
       background-size: 100% 100%;
     }
   }
