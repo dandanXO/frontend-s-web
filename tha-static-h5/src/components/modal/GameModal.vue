@@ -26,7 +26,7 @@
             v-show="!logoShow"
             :src="src"
             id="game-iframe"
-            scrolling="no"
+            scrolling="auto"
             frameborder="0"
             class="game-iframe"
           ></iframe>
@@ -37,7 +37,7 @@
             v-show="!logoShow"
             v-bind:srcdoc="src"
             id="game-iframe"
-            scrolling="no"
+            scrolling="auto"
             frameborder="0"
             class="game-iframe"
           ></iframe>
