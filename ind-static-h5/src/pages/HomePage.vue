@@ -978,39 +978,11 @@ const store = userStore();
 
 const allGames = ref(null);
 const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
-  console.log(
-    "gameName:",
-    gameName,
-    "platformCode:",
-    platformCode,
-    "gameCode:",
-    gameCode,
-    "gameStatus:",
-    gameStatus,
-    "gameType:",
-    gameType,
-    "gameId:",
-    gameId
-  );
   allGames.value.open(gameName, platformCode, gameCode, gameType);
 };
 
 const isGameLoading = ref(true);
 const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
-  // console.log(
-  //   "gameName:",
-  //   gameName,
-  //   "platformCode:",
-  //   platformCode,
-  //   "gameCode:",
-  //   gameCode,
-  //   "gameStatus:",
-  //   gameStatus,
-  //   "gameType:",
-  //   gameType,
-  //   "gameId:",
-  //   gameId
-  // );
   isShowAllFullGames.value = false;
   isGameLoading.value = true;
   subGameCode.value = platformCode;
@@ -1318,18 +1290,15 @@ const gotoPromo = (banner) => {
   } else if (banner.redirectUrl.match(platformPattern)) {
     const extractedUrl = banner.redirectUrl.match(platformPattern)[1];
 
-    switch (extractedUrl) {
-      case "Evo":
-        // gameName: Evo platformCode: Evo gameCode:  gameStatus: OPEN gameType: LIVE gameId: 2
-        playGame(extractedUrl, extractedUrl, "", "OPEN", "LIVE", "2");
-      case "JILI":
-        // gameName: JiliGames platformCode: JILI gameCode:  gameStatus: OPEN gameType: SLOT gameId: 8
-        openGame(extractedUrl, extractedUrl, "", "OPEN", "SLOT", "8");
-      case "SABA":
-        // gameName: SABA platformCode: SABA gameCode:  gameStatus: OPEN gameType: SPORT gameId: 50
-        playGame(extractedUrl, extractedUrl, "", "OPEN", "SPORT", "50");
-      default:
-        return null;
+    if (extractedUrl === "SABA") {
+      // gameName: SABA platformCode: SABA gameCode:  gameStatus: OPEN gameType: SPORT gameId: 50
+      playGame(extractedUrl, extractedUrl, "", "OPEN", "SPORT", "50");
+    } else if (extractedUrl === "Evo") {
+      // gameName: Evo platformCode: Evo gameCode:  gameStatus: OPEN gameType: LIVE gameId: 2
+      playGame(extractedUrl, extractedUrl, "", "OPEN", "LIVE", "2");
+    } else if (extractedUrl === "JILI") {
+      // gameName: JiliGames platformCode: JILI gameCode:  gameStatus: OPEN gameType: SLOT gameId: 8
+      openGame(extractedUrl, extractedUrl, "", "OPEN", "SLOT", "8");
     }
   } else if (banner.redirectUrl.match(gamePattern)) {
     const extractedUrl = banner.redirectUrl.match(gamePattern)[1];
