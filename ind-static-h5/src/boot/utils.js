@@ -101,3 +101,7 @@ export const convertToGMT55 = (dateTime) => {
 export const convertToGMT8 = (dateTime) => {
   return moment(dateTime).utcOffset("+08:00").format("YYYY-MM-DD");
 };
+
+export const convertToCommaAmount = (amount, isForceDecimal) => {
+  return parseInt(amount, 10).toLocaleString("en-US", { minimumFractionDigits: isForceDecimal ? 2 : 0 });
+};
