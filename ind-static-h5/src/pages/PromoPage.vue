@@ -124,7 +124,7 @@
                       no-caps
                       label="Join Now"
                       :disabled="isPromotionEnded"
-                      @click="goToVip()"
+                      @click="goToJoinNow()"
                     />
                   </div>
 
@@ -342,6 +342,14 @@ export default defineComponent({
 
     }
 
+    const goToJoinNow = () => {
+      if(selectedPromo.value.redirectUrl) {
+        router.push(selectedPromo.value.redirectUrl)
+      } else {
+        router.push('/vip')
+      }
+    }
+
     const goToVip = () => {
       router.push('/vip')
     }
@@ -412,6 +420,7 @@ export default defineComponent({
       updateCountdown,
       countdownInterval,
       goToVip,
+      goToJoinNow,
       ui
     }
   },

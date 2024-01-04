@@ -2273,7 +2273,7 @@ onMounted(() => {
 
   .swiper-scrollbar.swiper-scrollbar-horizontal {
     bottom: 0px;
-    background: rgba(43, 55, 74, 0.4);
+    background: rgba(43, 55, 74, 0.6);
     padding: 2px;
     height: 10px;
   }
@@ -2426,6 +2426,10 @@ onMounted(() => {
     background: rgba(43, 55, 74, 0.6);
     padding: 2px;
     height: 10px;
+  }
+
+  .swiper-scrollbar-drag {
+    background: rgba(255, 255, 255, 0.4);
   }
 }
 
