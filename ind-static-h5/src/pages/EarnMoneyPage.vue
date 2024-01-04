@@ -90,8 +90,16 @@ const activeKey = ref("about");
 
 <style scoped lang="scss">
 .earn-money {
-  padding-top: 10px;
+  padding-top: 50px;
   .earn-money-tabs {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    z-index: 2;
+    background: #101115;
+    width: 100%;
+    padding-bottom: 12px;
+
     :deep(.q-tab) {
       margin: 0 15px;
       color: rgba(255, 255, 255, 0.3);

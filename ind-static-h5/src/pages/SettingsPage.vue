@@ -419,4 +419,8 @@ const logout = () => {
 // .q-page-container {
 //   padding-bottom: 20px !important;
 // }
+
+.q-page {
+  min-height: 0 !important;
+}
 </style>
