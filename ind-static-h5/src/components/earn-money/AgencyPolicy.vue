@@ -19,27 +19,38 @@
     <div class="agency-policy-title">Agency Policy</div>
     <div class="agency-policy-separator"></div>
 
+    <h6>The table below shows how the rewards are assigned.</h6>
+    <q-table
+      flat
+      :hide-pagination="true"
+      :rows-per-page-options="[0]"
+      class="table-container q-my-md"
+      :columns="columns2"
+      :rows="rows2"
+      row-key="name"
+      dense
+    ></q-table>
+
+    <ul>
+      <li class="dot-style">Active users: daily bet amount reaches 2000</li>
+      <li class="dot-style">
+        Your reward will be calculated based on the total bet amount of your members. The reward gained can either be
+        withdrawn or used for further betting.
+      </li>
+      <li class="dot-style">Refer as many friends as you can to gain bigger percentage of rebates.</li>
+      <li class="dot-style">Earn lifetime revenue on your referred players.</li>
+    </ul>
+
+    <h4>&nbsp;&middot;&nbsp;FAQ</h4>
     <q-expansion-item label="1. How to earn commissions?">
       <ul>
         <li class="dot-style">
-          You can earn up to 1.5% of the maximum daily wager paid by your referred players. Commissions are valid
-          forever. The higher your level, the higher the commission percentage you can earn.
+          You can earn up to 1.5% of the daily wagers of players you refer. The higher your level, the higher the
+          commission percentage you can earn.
         </li>
-      </ul>
-      <q-table
-        flat
-        :hide-pagination="true"
-        :rows-per-page-options="[0]"
-        class="table-container q-my-md"
-        :columns="columns2"
-        :rows="rows2"
-        row-key="name"
-        dense
-      ></q-table>
-      <ul>
         <li class="dot-style">
-          If your affiliate or your affiliate's referrer, etc. becomes an agent and they are at a lower level than their
-          direct superior, then you can get up to 1.2% of the affiliate wagering rebate amount. The commission rate
+          If your affiliate or your affiliate becomes an agent and they are at a lower level than their immediate
+          superior, then you can receive up to 1.2% of the affiliate's wagering rebate amount. The commission rate
           depends on the level difference between you and your affiliate, the greater the level difference, the more
           commission you receive.
         </li>
@@ -50,93 +61,81 @@
       <ul>
         <li class="dot-style">Share the game via social media or share the referral link to your friends.</li>
         <li class="dot-style">
-          You get commission after your friends click the promotional link, download App, install the game and register.
+          Friends must click on your promotion link, download the App, install the game and register to start betting to
+          get commission.
         </li>
-        <li class="dot-style">
-          The installation must be finished by the referral link. Sharing the App package by Sharelt etc is not allowed.
-        </li>
+        <li class="dot-style">Registration must be completed through a referral link.</li>
       </ul>
     </q-expansion-item>
 
     <q-expansion-item label="3. What's the purpose of level?">
       <ul>
         <li class="dot-style">
-          Based on the activity and performance of agent users, we have divided them into 13 levels.
+          We have divided 13 levels based on the number of recommended users and betting performance.
         </li>
         <li class="dot-style">
-          The higher your level, the higher the commission percentage you get from members' bets, and the upgrade
-          conditions require that the bet amount and team members meet the requirements at the same time.
+          Upgrade conditions require that the bet amount and team size meet the requirements at the same time. The
+          higher your level, the higher the commission percentage you will receive from members' bet amounts.
+        </li>
+        <li class="dot-style">
+          Level difference: When the immediate superior minus the corresponding direct member level is ≥ 1, there is a
+          level difference, otherwise there is no level difference.
+        </li>
+        <li class="dot-style">
+          The higher your level, the higher the commission percentage you get from level difference bets.
         </li>
       </ul>
-      <q-table
-        flat
-        :hide-pagination="true"
-        :rows-per-page-options="[0]"
-        class="table-container q-my-md"
-        :columns="columns2"
-        :rows="rows2"
-        row-key="name"
-        dense
-      ></q-table>
-      <ul>
-        <li class="dot-style">
-          Level difference occurs when the direct superior level minus the corresponding direct affiliate level is
-          greater than or equal to 1; otherwise, there is no level difference.
-        </li>
-        <li class="dot-style">
-          The higher your level, the higher the commission percentage you get from the level difference bet.
-        </li>
-      </ul>
-      <q-table
-        flat
-        :hide-pagination="true"
-        :rows-per-page-options="[0]"
-        class="table-container q-my-md"
-        :columns="columns3"
-        :rows="rows3"
-        row-key="name"
-        dense
-      ></q-table>
+
+      <!--      <q-table-->
+      <!--        flat-->
+      <!--        :hide-pagination="true"-->
+      <!--        :rows-per-page-options="[0]"-->
+      <!--        class="table-container q-my-md"-->
+      <!--        :columns="columns3"-->
+      <!--        :rows="rows3"-->
+      <!--        row-key="name"-->
+      <!--        dense-->
+      <!--      ></q-table>-->
     </q-expansion-item>
 
     <q-expansion-item label="4. How to upgrade your level?">
       <ul>
         <li class="dot-style">
-          The more referrals you bring to the game and the more they bet, the higher your score will be.
+          The more members you bring to the game and the more they bet, the higher the tiers you can get.
         </li>
         <li class="dot-style">
-          If you have extraordinary promotional ability with channels, please get contact with our customer service
-          center to verify your division.
-        </li>
-      </ul>
-    </q-expansion-item>
-
-    <q-expansion-item label="5. How to develop your referrals into affiliates?">
-      <ul>
-        <li class="dot-style">
-          Log in to the IndWin7, share your referral link with your friends on the agent page, guide them to register
-          from the link, and they can become your direct affiliates.
-        </li>
-        <li class="dot-style">
-          Encourage your affiliates to invite their friends to play games, and the friends they invite will become your
-          indirect affiliates.
-        </li>
-        <li class="dot-style">
-          After your direct affiliates' friends become your indirect affiliates, they can still develop their affiliates
-          in this way. All their affiliates will be regarded as your indirect affiliates.
+          If you have extraordinary channel promotion capabilities, please contact our customer service center for
+          verification.
         </li>
       </ul>
     </q-expansion-item>
 
-    <q-expansion-item label="6. How to get commission from your affiliates?">
+    <q-expansion-item label="5. How to turn your friends into members?">
       <ul>
         <li class="dot-style">
-          The top-up player is your indirect affiliate, and any pair of direct superiors and direct affiliates between
-          you and the player must have a level difference, otherwise no level difference commission will be generated.
+          Log in to IndWin7, share your recommendation link with your friends on the recommendation page, guide them to
+          register from the link, and they can become your direct members.
         </li>
         <li class="dot-style">
-          The level difference commission ratio is determined by your direct membership and the level difference between
-          you and the betting player.
+          Encourage your members to invite their friends to play games, and the friends they invite will become your
+          indirect members.
+        </li>
+        <li class="dot-style">
+          When friends of your direct members become your indirect members, they can still grow their membership this
+          way. All their sub-members will be considered as your indirect sub-members.
+        </li>
+      </ul>
+    </q-expansion-item>
+
+    <q-expansion-item label="6. How to get commission from your members?">
+      <ul>
+        <li class="dot-style">
+          There must be a level difference between you and all your lower-level members, otherwise no level difference
+          commission will be generated.
+        </li>
+        <li class="dot-style">
+          The proportion of commission is determined by the difference between your level and the level of your
+          subordinate members.
         </li>
       </ul>
     </q-expansion-item>
@@ -195,9 +194,9 @@ const columns2 = [
     field: "level",
     align: "center"
   },
-  { name: "betAmount", label: "Bet Amount", field: "betAmount", align: "center" },
-  { name: "teamMember", label: "Team Member", field: "teamMember", align: "center" },
-  { name: "rebate", label: "Rebate %", field: "rebate", align: "center" }
+  { name: "betAmount", label: "Bet Amount (₹)", field: "betAmount", align: "center" },
+  { name: "teamMember", label: "Active Member", field: "teamMember", align: "center" },
+  { name: "rebate", label: "Rate %", field: "rebate", align: "center" }
 ];
 const rows2 = [
   {
@@ -470,6 +469,18 @@ const rows3 = [
       font-size: 1.25rem;
       font-weight: 700;
     }
+  }
+
+  h6 {
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 0px;
+    margin-top: 7px;
+  }
+
+  h4 {
+    margin-bottom: 5px;
+    font-size: 22px;
   }
 }
 </style>
