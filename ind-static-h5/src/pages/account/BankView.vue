@@ -62,13 +62,11 @@
           <div class="card-num-wrapper">
             <div class="">IFSC: {{ bc.cardAddress }}</div>
           </div>
-          <div class="options-wrapper">
-            <div class="card-update" @click.stop.prevent="onUpdateCardClick(bcIndex)">
-              <q-icon size="sm" name="settings" />
-            </div>
-            <div class="card-unlink" @click.stop.prevent="onUnbindClick(bcIndex)">
-              <q-icon size="sm" name="link_off" />
-            </div>
+          <div class="card-update" @click.stop.prevent="onUpdateCardClick(bcIndex)">
+            <q-icon size="sm" name="settings" />
+          </div>
+          <div class="card-unlink" @click.stop.prevent="onUnbindClick(bcIndex)">
+            <q-icon size="sm" name="link_off" />
           </div>
         </div>
       </div>
@@ -231,7 +229,7 @@ onActivated(() => {
         height: auto;
         padding: 1rem 0 4rem;
 
-        .options-wrapper {
+        .card-update, .card-unlink {
           display: none;
         }
 
@@ -261,15 +259,18 @@ onActivated(() => {
         gap: 0.5rem;
       }
 
-      .options-wrapper {
+      .card-update, .card-unlink {
         position: absolute;
         top: 1rem;
-        right: 1rem;
         color: black;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
+      }
+
+      .card-update {
+        left: 1rem;
+      }
+
+      .card-unlink {
+        right: 1rem;
       }
 
       .card-num-wrapper {
