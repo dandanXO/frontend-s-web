@@ -137,7 +137,7 @@ const copy = (val) => {
       $q.notify({
         color: "position",
         position: "top",
-        message: `${maskCardNumber(val)} copied to clipboard`,
+        message: `${val} copied to clipboard`,
         icon: "check_circle_outline"
       });
     })
