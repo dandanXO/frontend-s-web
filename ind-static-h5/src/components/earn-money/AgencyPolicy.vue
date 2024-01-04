@@ -138,49 +138,90 @@
           subordinate members.
         </li>
       </ul>
-    </q-expansion-item>
 
-    <ul>
-      <li class="dot-style">
-        You level
-        <em>V8</em>
-        . Betting amount
-        <em>{{ convertToCommaAmount(972000) }}rs</em>
-        . Team members
-        <em>49</em>
-        people.
-      </li>
-      <li class="dot-style">
-        A Level
-        <em>V8</em>
-        . Betting amount
-        <em>{{ convertToCommaAmount(760000) }}rs</em>
-        . Team members
-        <em>35</em>
-        people.
-      </li>
-      <li class="dot-style">
-        B Level
-        <em>V6</em>
-        . Betting amount
-        <em>{{ convertToCommaAmount(210000) }}rs</em>
-        . Team members
-        <em>13</em>
-        people.
-      </li>
-      <li class="dot-style">
-        C Level
-        <em>V1</em>
-        . Betting amount
-        <em>{{ convertToCommaAmount(2000) }}rs</em>
-        . Team members
-        <em>1</em>
-        person.
-      </li>
-      <li class="dot-style">You can't get A's betting rebate</li>
-      <li class="dot-style">You can get 0.2% commission on the bet amount of B's entire team</li>
-      <li class="dot-style">You can get 0.7% commission on the bet amount of C the entire team</li>
-    </ul>
+      <h4>&nbsp;&middot;&nbsp;Example</h4>
+
+      <div class="text-center">
+        <img class="affi-graph" src="../../assets/images/earn-money/afiliate-graph.png" />
+      </div>
+
+      <table class="rebate-example-table">
+        <tbody>
+          <tr>
+            <td>Name</td>
+            <td>Level</td>
+            <td>Betting</td>
+            <td>Members</td>
+          </tr>
+          <tr>
+            <td>You</td>
+            <td>8(1.0%)</td>
+            <td>972,000</td>
+            <td>49</td>
+          </tr>
+          <tr>
+            <td>A</td>
+            <td>8(1.0%)</td>
+            <td>760,000</td>
+            <td>35</td>
+          </tr>
+          <tr>
+            <td>B</td>
+            <td>6(0.8%)</td>
+            <td>210,000</td>
+            <td>13</td>
+          </tr>
+          <tr>
+            <td>C</td>
+            <td>1(0.3%)</td>
+            <td>2,000</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ul>
+        <!--      <li class="dot-style">-->
+        <!--        You level-->
+        <!--        <em>V8</em>-->
+        <!--        . Betting amount-->
+        <!--        <em>{{ convertToCommaAmount(972000) }}rs</em>-->
+        <!--        . Team members-->
+        <!--        <em>49</em>-->
+        <!--        people.-->
+        <!--      </li>-->
+        <!--      <li class="dot-style">-->
+        <!--        A Level-->
+        <!--        <em>V8</em>-->
+        <!--        . Betting amount-->
+        <!--        <em>{{ convertToCommaAmount(760000) }}rs</em>-->
+        <!--        . Team members-->
+        <!--        <em>35</em>-->
+        <!--        people.-->
+        <!--      </li>-->
+        <!--      <li class="dot-style">-->
+        <!--        B Level-->
+        <!--        <em>V6</em>-->
+        <!--        . Betting amount-->
+        <!--        <em>{{ convertToCommaAmount(210000) }}rs</em>-->
+        <!--        . Team members-->
+        <!--        <em>13</em>-->
+        <!--        people.-->
+        <!--      </li>-->
+        <!--      <li class="dot-style">-->
+        <!--        C Level-->
+        <!--        <em>V1</em>-->
+        <!--        . Betting amount-->
+        <!--        <em>{{ convertToCommaAmount(2000) }}rs</em>-->
+        <!--        . Team members-->
+        <!--        <em>1</em>-->
+        <!--        person.-->
+        <!--      </li>-->
+        <li class="dot-style">You can't get A's betting rebate</li>
+        <li class="dot-style">You can get 0.2% commission on the bet amount of B's entire team</li>
+        <li class="dot-style">You can get 0.7% commission on the bet amount of C the entire team</li>
+      </ul>
+    </q-expansion-item>
   </div>
 </template>
 
@@ -481,6 +522,28 @@ const rows3 = [
   h4 {
     margin-bottom: 5px;
     font-size: 22px;
+  }
+
+  .affi-graph {
+    margin: 10px auto;
+    width: calc(70% - 20px);
+    text-align: center;
+  }
+
+  .rebate-example-table {
+    width: calc(100% - 20px);
+    margin: 0px auto 5px;
+    border-collapse: collapse;
+
+    tbody {
+      table-layout: fixed;
+    }
+
+    td {
+      padding: 4px 6px;
+      border: 1px solid #fff;
+      font-size: 16px;
+    }
   }
 }
 </style>
