@@ -96,8 +96,8 @@
       transition-hide="slide-down"
       class="full-deposit-dialog"
     >
-      <q-card class="full-deposit-card" @click="closeFullDepositDialog" id="fulldeposit">
-        <div class="back-bar">
+      <q-card class="full-deposit-card" id="fulldeposit">
+        <div class="back-bar" @click="closeFullDepositDialog">
           <q-icon name="chevron_left" size="28px" />
           Back
         </div>
@@ -130,10 +130,6 @@ const props = defineProps(["closeFullGameDialog"]);
 
 const fullDepositDialog = ref(false);
 
-const closeFullDepositDialog = () => {
-  fullDepositDialog.value = false;
-};
-
 const $q = useQuasar();
 
 const store = userStore();
@@ -153,6 +149,11 @@ const isMobileDrawerActive = ref(false);
 const values = ref(["100", "200", "300", "500", "1000"]);
 const hasPrivilege = ref(false);
 // const quickTransferTab = ref(false);
+
+const closeFullDepositDialog = () => {
+  fullDepositDialog.value = false;
+  store.getBalance();
+};
 
 const checkAmount = reactive({
   flag: true,

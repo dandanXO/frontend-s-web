@@ -35,6 +35,12 @@ export default route(function (/* { store, ssrContext } */) {
   Router.beforeEach((to, from, next) => {
     const user = userStore();
     const ui = useUI();
+
+    if (user.token) {
+      user.getBalance();
+    } else {
+    }
+
     if (to.path === "/login" || to.path === "/register" || to.path === "/forgot-password") {
       ui.hiddenFooter();
     } else {

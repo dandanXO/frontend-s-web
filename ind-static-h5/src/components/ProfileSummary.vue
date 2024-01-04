@@ -5,7 +5,7 @@
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-wrapper-extra">
         <div class="logo-img">
-          <img src="../assets/logo.png" />
+          <img src="../assets/logo.png" @click="router.push('/')" />
         </div>
       </div>
       <div class="profile-wrapper" v-if="store.hasToken()">
