@@ -1606,8 +1606,9 @@ export default defineComponent({
         // const info = {
         //   version: "1.0.1"
         // };
-        var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
+        var current_version = parseInt(info.version.replace(/\./g, "") + info.build);
         ui.setVersion(info.version + " " + info.build);
+        // console.log("Current Ver: " + current_version);
 
         // info.version && info.build
         const appType = "ALL";
@@ -1616,8 +1617,9 @@ export default defineComponent({
         console.log(res, ">>res");
         if (res.data.code === 0) {
           var version_info = res.data.data.version;
-          var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
+          var latest_ver_no = parseInt(version_info.replace(/\./g, ""));
           download_url.value = res.data.data.url;
+          // console.log("latest_ver_no Ver: " + latest_ver_no);
 
           // alert(latest_ver_no);
           // console.log(download_url.value);
