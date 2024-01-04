@@ -57,9 +57,10 @@
   </q-carousel>
 
   <div class="home-wrapper" :class="detectAndroidVersion()">
-    <q-page-sticky position="bottom-right" :offset="[10, 0]" class="floating-btn">
-      <div @click="openCSInNewTab('https://direct.lc.chat/16887009/')">
-        <img src="../assets/images/index/icon-cs.png" alt="" />
+    <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
+      <div v-touch-pan.prevent.mouse="moveCsIcon" @click="openCSInNewTab('https://direct.lc.chat/16887009/')">
+        <div class='cs-icon-wrapper'>
+        </div>
       </div>
     </q-page-sticky>
 
@@ -872,6 +873,9 @@ const activateSlide = (clickedItem) => {
   });
 };
 
+const csDragPos = ref([ 10, 0 ])
+const isDraggingCsIcon = ref(false)
+
 const slide = ref(0);
 
 const isFirstView = ref(false);
@@ -1381,6 +1385,15 @@ const detectAndroidVersion = () => {
 
   return "not-android";
 };
+
+const moveCsIcon = (ev) => {
+  isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true
+
+  csDragPos.value = [
+    csDragPos.value[ 0 ] - ev.delta.x,
+    csDragPos.value[ 1 ] - ev.delta.y
+  ]
+}
 
 onMounted(() => {
   getPlatList();
@@ -2083,6 +2096,14 @@ onMounted(() => {
 .home-wrapper {
   width: calc(100% - 16px);
   margin: auto;
+}
+
+.cs-icon-wrapper {
+  display: flex;
+  width: 70px;
+  height: 76px;
+  background: url("../assets/images/index/icon-cs.png") no-repeat center center;
+  background-size: contain;
 }
 
 .home-divider {
