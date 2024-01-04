@@ -48,6 +48,7 @@
         <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown">
           <template v-slot:label>
             <div class="profile-pic">
+              <div class="unread-total" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</div>
               <q-avatar size="50px">
                 <img :src="profileImagePath" />
               </q-avatar>
@@ -244,6 +245,23 @@ onMounted(() => {
     padding-bottom: 10px;
     margin-bottom: 10px;
     width: 100%;
+    position: relative;
+
+    .unread-total {
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      background: #8952FF;
+      border-radius: 100px;
+      padding: 0px 3px;
+      z-index: 1;
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+    }
 
     .profile-pic {
       position: relative;
