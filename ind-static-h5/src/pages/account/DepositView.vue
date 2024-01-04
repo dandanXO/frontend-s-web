@@ -172,7 +172,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, shallowRef } from "vue";
+import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated } from "vue";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { cashier } from "boot/axios";
@@ -185,16 +185,18 @@ import { convertToCommaAmount } from "src/boot/utils";
 var qs = require("qs");
 const store = userStore();
 const router = useRouter();
+const emits = defineEmits(["closeModal"]);
 
 const checkNewUser = () => {
   if (store.realName == "" || store.realName == null) {
+    emits("closeModal");
     $q.notify({
       color: "negative",
       position: "top",
       message: "Please fill in your personal details",
       icon: "report_problem"
     });
-    router.push(`/account`);
+    router.push(`/account/profile`);
   }
 };
 
@@ -618,6 +620,11 @@ async function pDepo(deposit) {
       btnLoading.value = false;
     });
 }
+
+onActivated(() => {
+  initPay();
+  checkNewUser();
+});
 
 onMounted(() => {
   initPay();

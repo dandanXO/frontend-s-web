@@ -86,7 +86,7 @@
             Reward
           </div>
           <div class="reward-amt-wrapper">
-            <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>
+            <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
           </div>
         </div>
         <div class="unlock-status">
@@ -105,7 +105,7 @@
             Reward
           </div>
           <div class="reward-amt-wrapper">
-            <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
+            <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>
           </div>
         </div>
         <div class="unlock-status">

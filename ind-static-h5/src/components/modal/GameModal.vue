@@ -103,7 +103,7 @@
         </div>
 
         <q-card-section>
-          <DepositView></DepositView>
+          <DepositView @closeModal="closeDialog"></DepositView>
         </q-card-section>
       </q-card>
     </q-dialog>

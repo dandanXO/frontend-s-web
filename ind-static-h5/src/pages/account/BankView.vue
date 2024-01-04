@@ -7,19 +7,20 @@
 
         <q-card-section>
           <q-form>
-            <div class="input-title">Bank Card Number</div>
+            <div class="input-title">Bank Account Number</div>
             <q-input
               standout
               class="q-pb-xs dialog-input"
               hide-bottom-space
               filled
               v-model="unbindField.bankCardNumber"
-              label="Bank Card Number"
+              label="Bank Account Number"
               lazy-rules
               :rules="[
-                (val) => (val && val.length > 0) || 'Please Enter Bank Card Number',
+                (val) => (val && val.length > 0) || 'Please Enter Bank Account Number',
                 (val) =>
-                  (val && val == bankCardList[selectedBankIndex].cardNumber) || 'Please Enter The Correct Card Number'
+                  (val && val == bankCardList[selectedBankIndex].cardNumber) ||
+                  'Please Enter The Correct Account Number'
               ]"
               label-color="secondary"
             />
@@ -48,10 +49,10 @@
         @click="handleBankCardClick(bcIndex)"
       >
         <div class="bank-card-add">
-          <!-- 
+          <!--
             <div class="card-icon">
               <img src="../../assets/images/account/bank-icon-bpi.png" alt="" />
-            </div> 
+            </div>
           -->
           <div class="card-label">{{ bc.bankName }}</div>
           <!--          <div class="card-label">{{ bc.bankName }}</div>-->
@@ -77,7 +78,7 @@
           <!-- <div class="card-icon addcard-icon-div"> -->
           <!-- <q-icon class="add-card-icon" key="md" size="md" name="add" /> -->
           <!-- </div> -->
-          <div class="card-label" style="margin-top: 10px">Add Bank Card</div>
+          <div class="card-label" style="margin-top: 10px">Add Bank Account</div>
         </div>
       </div>
     </div>
@@ -229,7 +230,8 @@ onActivated(() => {
         height: auto;
         padding: 1rem 0 4rem;
 
-        .card-update, .card-unlink {
+        .card-update,
+        .card-unlink {
           display: none;
         }
 
@@ -259,7 +261,8 @@ onActivated(() => {
         gap: 0.5rem;
       }
 
-      .card-update, .card-unlink {
+      .card-update,
+      .card-unlink {
         position: absolute;
         top: 1rem;
         color: black;

@@ -172,7 +172,7 @@ const searchRecord = (isNewSearch) => {
   //     }))
 
   api
-    .post("/session/member/cassandraBetRecord", {
+    .post("/session/member/betRecord", {
       startDate,
       endDate,
       platform,

@@ -70,7 +70,7 @@
                 hide-bottom-space
                 filled
                 v-model="bankCardField.cardNumber"
-                label="Enter Card Number"
+                label="Enter Account Number"
                 lazy-rules
                 :rules="[(_) => isValidCardNumber()]"
                 label-color="secondary"
@@ -159,7 +159,7 @@ const onAddCardClick = () => {
         message: "Please fill in your personal details",
         icon: "report_problem"
       });
-      router.push("/account");
+      router.push("/account/profile");
     } else {
       isAddCardDialogOpen.value = true;
 
@@ -191,7 +191,7 @@ const onAddCardClick = () => {
 };
 
 const dialogDisplays = reactive({
-  title: "Add Bank Card",
+  title: "Add Bank Account",
   selectionTitle: "Bank",
   selectionPlaceholder: "Select A Bank",
   selectionError: "Please Select A Bank"
@@ -202,7 +202,7 @@ const selectBankType = () => {
 
   if (currentCardType.value === "Bank") {
     currBankList.value = bankList;
-    dialogDisplays.title = "Add Bank Card";
+    dialogDisplays.title = "Add Bank Account";
     dialogDisplays.selectionTitle = "Bank";
     dialogDisplays.selectionPlaceholder = "Select A Bank";
     dialogDisplays.selectionError = "Please Select A Bank";
@@ -241,14 +241,14 @@ const isDisableBtn = ref(false);
 const isValidCardAccount = () => {
   const { cardAccount } = bankCardField;
 
-  const result = !cardAccount ? "Please Enter Card Account" : true;
+  const result = !cardAccount ? "Please Enter Account Number" : true;
   return result;
 };
 
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
 
-  const result = !cardNumber ? "Please Enter Card Number" : true;
+  const result = !cardNumber ? "Please Enter Account Number" : true;
   return result;
 };
 
