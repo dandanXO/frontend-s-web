@@ -7,7 +7,7 @@ export function formatMoney(number, decimals = 0, decPoint = ".", thousandsSep =
   let s = [];
   const toFixedFix = function(n, prec) {
     const k = Math.pow(10, prec);
-    return "" + Math.ceil(n * k) / k;
+    return "" + Math.floor(n * k) / k;
   };
   s = (prec ? toFixedFix(n, prec) : "" + Math.round(n)).split(".");
   const re = /(-?\d+)(\d{3})/;
