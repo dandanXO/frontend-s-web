@@ -59,8 +59,7 @@
   <div class="home-wrapper" :class="detectAndroidVersion()">
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
       <div v-touch-pan.prevent.mouse="moveCsIcon" @click="openCSInNewTab('https://direct.lc.chat/16887009/')">
-        <div class='cs-icon-wrapper'>
-        </div>
+        <div class="cs-icon-wrapper"></div>
       </div>
     </q-page-sticky>
 
@@ -873,8 +872,8 @@ const activateSlide = (clickedItem) => {
   });
 };
 
-const csDragPos = ref([ 10, 0 ])
-const isDraggingCsIcon = ref(false)
+const csDragPos = ref([10, 0]);
+const isDraggingCsIcon = ref(false);
 
 const slide = ref(0);
 
@@ -979,11 +978,39 @@ const store = userStore();
 
 const allGames = ref(null);
 const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
+  console.log(
+    "gameName:",
+    gameName,
+    "platformCode:",
+    platformCode,
+    "gameCode:",
+    gameCode,
+    "gameStatus:",
+    gameStatus,
+    "gameType:",
+    gameType,
+    "gameId:",
+    gameId
+  );
   allGames.value.open(gameName, platformCode, gameCode, gameType);
 };
 
 const isGameLoading = ref(true);
 const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
+  // console.log(
+  //   "gameName:",
+  //   gameName,
+  //   "platformCode:",
+  //   platformCode,
+  //   "gameCode:",
+  //   gameCode,
+  //   "gameStatus:",
+  //   gameStatus,
+  //   "gameType:",
+  //   gameType,
+  //   "gameId:",
+  //   gameId
+  // );
   isShowAllFullGames.value = false;
   isGameLoading.value = true;
   subGameCode.value = platformCode;
@@ -1281,8 +1308,39 @@ const openPopup = (noticeType) => {
   }
 };
 const gotoPromo = (banner) => {
-  const redirectU = "/promo?name=" + banner.redirectUrl;
-  // router.push(`${redirectU}`);
+  const urlPattern = /^\/url\/(.*)/;
+  const platformPattern = /^\/platform\/(.*)/;
+  const gamePattern = /^\/game\/(.*)/;
+
+  if (banner.redirectUrl.match(urlPattern)) {
+    const extractedUrl = banner.redirectUrl.match(urlPattern)[1];
+    router.push(`${extractedUrl}`);
+  } else if (banner.redirectUrl.match(platformPattern)) {
+    const extractedUrl = banner.redirectUrl.match(platformPattern)[1];
+
+    switch (extractedUrl) {
+      case "Evo":
+        // gameName: Evo platformCode: Evo gameCode:  gameStatus: OPEN gameType: LIVE gameId: 2
+        playGame(extractedUrl, extractedUrl, "", "OPEN", "LIVE", "2");
+      case "JILI":
+        // gameName: JiliGames platformCode: JILI gameCode:  gameStatus: OPEN gameType: SLOT gameId: 8
+        openGame(extractedUrl, extractedUrl, "", "OPEN", "SLOT", "8");
+      case "SABA":
+        // gameName: SABA platformCode: SABA gameCode:  gameStatus: OPEN gameType: SPORT gameId: 50
+        playGame(extractedUrl, extractedUrl, "", "OPEN", "SPORT", "50");
+      default:
+        return null;
+    }
+  } else if (banner.redirectUrl.match(gamePattern)) {
+    const extractedUrl = banner.redirectUrl.match(gamePattern)[1];
+    switch (extractedUrl) {
+      case "spribe/aviator":
+        // gameName: Aviator platformCode: Spribe gameCode: aviator gameStatus: OPEN gameType: CASUAL gameId: 9568
+        playGame("Aviator", "Spribe", "aviator", "CASUAL", "LIVE", "9568");
+      default:
+        return null;
+    }
+  }
 };
 
 const gotoSignIn = () => {
@@ -1387,13 +1445,10 @@ const detectAndroidVersion = () => {
 };
 
 const moveCsIcon = (ev) => {
-  isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true
+  isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
 
-  csDragPos.value = [
-    csDragPos.value[ 0 ] - ev.delta.x,
-    csDragPos.value[ 1 ] - ev.delta.y
-  ]
-}
+  csDragPos.value = [csDragPos.value[0] - ev.delta.x, csDragPos.value[1] - ev.delta.y];
+};
 
 onMounted(() => {
   getPlatList();

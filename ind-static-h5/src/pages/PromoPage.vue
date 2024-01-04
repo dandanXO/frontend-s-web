@@ -160,7 +160,7 @@
 </template>
 
 <script lang="js">
-import {ref, defineComponent, onMounted, reactive, watch, onBeforeUnmount} from "vue";
+import {ref, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
@@ -234,6 +234,16 @@ export default defineComponent({
       //   label: "电游",
       // },
     ];
+
+    onActivated(() => {
+      // if promo name is present, do not show promo list on first load
+      if(route.query.name) {
+        isPromoDetail.value = true;
+      }
+
+      // loadBanner();
+      // loadAll();
+    });
 
     watch(() => route.query, () => {
       if (route.query === null) {
