@@ -39,7 +39,7 @@
         </div>
 
         <div>
-          <q-btn square class="style-blue-btn" icon="add" dense @click="router.push('/deposit')" />
+          <q-btn square class="style-blue-btn" icon="add" dense @click="router.push('/deposit?from=' + route.path)" />
         </div>
         <!-- <div class="profile-msg btn-effect" v-if="homeProfile">
           <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />

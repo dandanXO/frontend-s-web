@@ -230,7 +230,8 @@ const goToDeposit = () => {
   closeDialog();
   props.closeFullGameDialog();
   setTimeout(() => {
-    router.push("/deposit");
+    // router.push("/deposit");
+    router.push("/deposit?from=" + route.path);
   }, 500);
 };
 
