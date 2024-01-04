@@ -85,7 +85,7 @@ const downloadQRImg = async () => {
 
         // Save the image to the photo gallery
         await Filesystem.writeFile({
-          path: `photos/qr-code.jpg`,
+          path: `Pictures/myreferral.jpg`,
           data: dataUrl,
           directory: Directory.Documents,
           recursive: true
