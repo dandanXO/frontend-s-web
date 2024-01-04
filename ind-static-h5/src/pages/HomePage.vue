@@ -2372,7 +2372,7 @@ onMounted(() => {
 }
 
 .floating-btn {
-  z-index: 5;
+  z-index: 999;
 
   img {
     width: 100%;
