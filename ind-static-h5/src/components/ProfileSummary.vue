@@ -5,7 +5,7 @@
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-wrapper-extra">
         <div class="logo-img">
-          <img src="../assets/logo.png" @click="router.push('/')" />
+          <img src="../assets/logo.png" @click="onClickLogo" />
         </div>
       </div>
       <div class="profile-wrapper" v-if="store.hasToken()">
@@ -125,7 +125,7 @@ import { ref, onMounted, computed, reactive } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
-import { convertToCommaAmount } from "src/boot/utils";
+import { convertToCommaAmount, isAndroid } from "src/boot/utils";
 
 const props = defineProps(["homeProfile"]);
 const route = useRoute();
@@ -163,6 +163,15 @@ const refreshBalance = () => {
     });
   }
 };
+
+const onClickLogo = () => {
+  if(isAndroid()) {
+    window.open('http://indwind7.com/', '_blank');
+    return;
+  }
+  
+  router.push('/');
+}
 
 const onVipClick = () => {
   router.push({ path: "/vip", query: { redirect: route.path } });
