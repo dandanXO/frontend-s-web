@@ -166,7 +166,7 @@ const refreshBalance = () => {
 
 const onClickLogo = () => {
   if(isAndroid()) {
-    window.open(store.h5Url, '_blank');
+    window.open("http://indwin7.com/", '_blank');
     return;
   }
   
