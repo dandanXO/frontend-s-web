@@ -16,6 +16,7 @@ import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
 import { useUI } from "src/stores/ui";
+import axios from "axios";
 
 export default defineComponent({
   name: "App",
@@ -204,6 +205,33 @@ export default defineComponent({
       }
     };
 
+    const getOnlineStatApi = async () => {
+      // console.log("Ok Online.");
+      const fpPromise = FingerprintJS.load();
+
+      const fp = await fpPromise;
+      const result = await fp.get();
+      const excludes = { value: ["timezone", "timeZoneOffset"] };
+      const allComponents = { ...result.components };
+      excludes.value.forEach((element) => {
+        delete allComponents[element];
+      });
+      const sidParam = FingerprintJS.hashComponents(allComponents);
+      const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
+      const theSid = store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam;
+      console.log(theSid);
+
+      if (theSid) {
+        const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
+          params: {
+            way: way,
+            sid: theSid,
+            siteCode: "ind"
+          }
+        });
+      }
+    };
+
     onMounted(async () => {
       // const info = await App.getInfo();
       // console.log("APP Info");
@@ -226,6 +254,9 @@ export default defineComponent({
       document.addEventListener("visibilitychange", handleVisibilityChange);
 
       getInsetHeight();
+
+      setTimeout(getOnlineStatApi, 2000);
+      setInterval(getOnlineStatApi, 60000);
     });
   }
 });
