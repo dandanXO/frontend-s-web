@@ -105,13 +105,13 @@
                 >
                   <div class="top-float">
                     <div class="top-subtitle">Get unlimited rewards!</div>
-                    <div class="top-title">VIP Rewards</div>
+                    <div class="top-title">{{ selectedPromo.title }}</div>
                   </div>
                   <div class="promo-content-inner">
                     <div class="content-title">{{ selectedPromo.title }}</div>
                   </div>
                   <div v-html="selectedPromo.pageContent"></div>
-                  <div class="join-container" :style="`top: calc(100vh - 127px - ${ui.bottomInsetHeight}px`">
+                  <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
                     <div class="promo-date">
                       <div class="date-txt" v-if="!isPromotionEnded">Promotion Ends</div>
                       <div class="date-timer">
@@ -347,7 +347,7 @@ export default defineComponent({
     }
 
     // promo timer
-    const endDate = new Date('01/02/2024 12:00:00').getTime();
+    const endDate = new Date('01/8/2024 12:00:00').getTime();
     const countdown = ref('');
     const isPromotionEnded = ref(false);
 

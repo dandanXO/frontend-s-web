@@ -93,7 +93,7 @@
       :slidesPerView="4.5"
       :spaceBetween="10"
       :scrollbar="{
-        hide: false
+        hide: true
       }"
       :modules="modules"
       class="cat-selection-wrapper"
@@ -2412,7 +2412,7 @@ onMounted(() => {
 
 .cat-selection-wrapper {
   // overflow-x: hidden;
-  padding-bottom: 20px;
+  // padding-bottom: 20px;
   margin-bottom: 10px;
   .cat-selection-container {
     display: flex;
@@ -2423,7 +2423,7 @@ onMounted(() => {
 
   .swiper-scrollbar.swiper-scrollbar-horizontal {
     bottom: 0px;
-    background: #2b374a;
+    background: rgba(43, 55, 74, 0.6);
     padding: 2px;
     height: 10px;
   }

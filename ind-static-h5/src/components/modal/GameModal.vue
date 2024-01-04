@@ -22,9 +22,9 @@
             </div> -->
           </div>
 
-          <div v-if="!drawerVisible" class="wallet-container">
+          <div v-if="!drawerVisible" class="wallet-container" @click="goToDeposit()">
             Add Cash &nbsp;
-            <q-btn dense rounded class="wallet-btn" @click="goToDeposit()">
+            <q-btn dense rounded class="wallet-btn">
               <img src="../../assets/images/index/icon-wallet.png" />
             </q-btn>
           </div>
@@ -87,6 +87,26 @@
         </div>
       </div>
     </q-dialog>
+
+    <q-dialog
+      v-model="fullDepositDialog"
+      persistent
+      maximized
+      transition-show="slide-up"
+      transition-hide="slide-down"
+      class="full-deposit-dialog"
+    >
+      <q-card class="full-deposit-card" @click="closeFullDepositDialog" id="fulldeposit">
+        <div class="back-bar">
+          <q-icon name="chevron_left" size="28px" />
+          Back
+        </div>
+
+        <q-card-section>
+          <DepositView></DepositView>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-scroll-area>
 </template>
 <script setup id="GameModal">
@@ -104,8 +124,15 @@ import { api } from "boot/axios";
 import { useQuasar, Platform, AppFullscreen, Notify } from "quasar";
 import { isAndroid } from "boot/utils";
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import DepositView from "../../pages/account/DepositView.vue";
 
 const props = defineProps(["closeFullGameDialog"]);
+
+const fullDepositDialog = ref(false);
+
+const closeFullDepositDialog = () => {
+  fullDepositDialog.value = false;
+};
 
 const $q = useQuasar();
 
@@ -227,12 +254,13 @@ const closeDialog = () => {
 };
 
 const goToDeposit = () => {
-  closeDialog();
-  props.closeFullGameDialog();
-  setTimeout(() => {
-    // router.push("/deposit");
-    router.push("/deposit?from=" + route.path);
-  }, 500);
+  fullDepositDialog.value = true;
+  // closeDialog();
+  // props.closeFullGameDialog();
+  // setTimeout(() => {
+  // router.push("/deposit");
+  // router.push("/deposit?from=" + route.path);
+  // }, 500);
 };
 
 const platformCodeImg = ref();
@@ -822,5 +850,22 @@ defineExpose({
   justify-content: center;
   flex-direction: column;
   gap: 10px;
+}
+
+.full-deposit-card {
+  background: #11131f;
+  margin: 0px;
+  padding: 0 16px;
+}
+
+.back-bar {
+  background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
+  min-height: 60px;
+  width: calc(100% + 32px);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  margin: 0 -16px;
 }
 </style>
