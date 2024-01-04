@@ -1,7 +1,6 @@
 <template>
   <!-- <q-card-section class="page-title">优惠活动</q-card-section> -->
   <ProfileSummary :homeProfile="true" />
-
   <div class="vip-promo-tab-wrapper" v-if="!isPromoDetail">
     <q-tabs
       v-model="vipPromoTab"
@@ -94,6 +93,7 @@
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
+                  v-if="selectedPromo.promoType"
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
@@ -241,8 +241,9 @@ export default defineComponent({
         isPromoDetail.value = true;
       }
 
-      // loadBanner();
-      // loadAll();
+      loadBanner();
+      loadAll();
+      updateCountdown();
     });
 
     watch(() => route.query, () => {
@@ -311,11 +312,10 @@ export default defineComponent({
         if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
           router.push({path: '/account/vip'});
         } else {
-          // router.push({path: '/promo', query: {name: promo.redirectUrl}})
           if (route.query.fromAccount) {
-            router.push({path: '/promo', query: {name: promo.title, fromAccount: true}})
+            router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
           } else {
-            router.push({path: '/promo', query: {name: promo.title}})
+            router.push({path: '/promo', query: {name: promo.redirectUrl}})
           }
           isPromoDetail.value = true
           selectedPromo.value = promo
@@ -361,9 +361,9 @@ export default defineComponent({
     }
 
     const goToJoinNow = () => {
-      if(selectedPromo.value.redirectUrl) {
-        router.push(selectedPromo.value.redirectUrl)
-      } else {
+      if(selectedPromo.value.redirectUrl === "EarnMoney") {
+        router.push('/earn-money')
+      } else if (selectedPromo.value.redirectUrl === "VIPrewards") {
         router.push('/vip')
       }
     }
@@ -409,11 +409,11 @@ export default defineComponent({
       clearInterval(countdownInterval);
     });
 
-    onMounted(() => {
-      loadBanner();
-      loadAll();
-      updateCountdown();
-    });
+    // onMounted(() => {
+    //   loadBanner();
+    //   loadAll();
+    //   updateCountdown();
+    // });
 
     return {
       promoState,
