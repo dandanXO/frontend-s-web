@@ -37,6 +37,9 @@
     <!-- add card dialog -->
     <AddBankCardModal ref="addBankCardModalRef" :loadCards="loadCards"></AddBankCardModal>
 
+    <!-- add card dialog -->
+    <UpdateBankCardModal ref="updateBankCardModalRef" :loadCards="loadCards"></UpdateBankCardModal>
+
     <div class="bank-card-container">
       <div
         v-for="(bc, bcIndex) in bankCardList"
@@ -45,20 +48,27 @@
         @click="handleBankCardClick(bcIndex)"
       >
         <div class="bank-card-add">
-          <div class="card-icon">
-            <img src="../../assets/images/account/bank-icon-bpi.png" alt="" />
-          </div>
+          <!-- 
+            <div class="card-icon">
+              <img src="../../assets/images/account/bank-icon-bpi.png" alt="" />
+            </div> 
+          -->
           <div class="card-label">{{ bc.bankName }}</div>
           <!--          <div class="card-label">{{ bc.bankName }}</div>-->
           <div class="card-num-wrapper">
-            <div class="card-num">{{ maskCardNumber(bc.cardNumber) }}</div>
+            <div class="card-num">{{ bc.cardNumber }}</div>
             <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(bc.cardNumber)" />
           </div>
           <div class="card-num-wrapper">
             <div class="">IFSC: {{ bc.cardAddress }}</div>
           </div>
-          <div class="card-unlink" @click.stop.prevent="onUnbindClick(bcIndex)">
-            <q-icon size="sm" name="link_off" />
+          <div class="options-wrapper">
+            <div class="card-update" @click.stop.prevent="onUpdateCardClick(bcIndex)">
+              <q-icon size="sm" name="settings" />
+            </div>
+            <div class="card-unlink" @click.stop.prevent="onUnbindClick(bcIndex)">
+              <q-icon size="sm" name="link_off" />
+            </div>
           </div>
         </div>
       </div>
@@ -88,6 +98,7 @@ import DialogHeader from "../../atoms//DialogHeader.vue";
 import ConfirmButton from "../../atoms//ConfirmButton.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
 import AddBankCardModal from "../../components/modal/AddBankCardModal.vue";
+import UpdateBankCardModal from "../../components/modal/UpdateBankCardModal.vue";
 
 const router = useRouter();
 const store = userStore();
@@ -170,8 +181,12 @@ const unbind = () => {
 const selectedBankIndex = ref();
 
 const addBankCardModalRef = ref();
+const updateBankCardModalRef = ref();
 const onAddCardClick = () => {
   addBankCardModalRef.value.onAddCardClick();
+};
+const onUpdateCardClick = (bcIndex) => {
+  updateBankCardModalRef.value.onUpdateCardClick(bankCardList.value[bcIndex]);
 };
 
 // init
@@ -216,7 +231,7 @@ onActivated(() => {
         height: auto;
         padding: 1rem 0 4rem;
 
-        .card-unlink {
+        .options-wrapper {
           display: none;
         }
 
@@ -246,11 +261,15 @@ onActivated(() => {
         gap: 0.5rem;
       }
 
-      .card-unlink {
+      .options-wrapper {
         position: absolute;
         top: 1rem;
         right: 1rem;
         color: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
       }
 
       .card-num-wrapper {
