@@ -217,9 +217,9 @@
         <!--        <em>1</em>-->
         <!--        person.-->
         <!--      </li>-->
-        <li class="dot-style">You can't get A's betting rebate</li>
-        <li class="dot-style">You can get 0.2% commission on the bet amount of B's entire team</li>
-        <li class="dot-style">You can get 0.7% commission on the bet amount of C the entire team</li>
+        <li class="dot-style">You can't get A's betting rebate.</li>
+        <li class="dot-style">You can get 0.2% commission on B's bet amount</li>
+        <li class="dot-style">You can get 0.7% commission on C's bet amount</li>
       </ul>
     </q-expansion-item>
   </div>
