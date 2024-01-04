@@ -35,7 +35,8 @@
     </div>
 
     <div class="qr-wrapper">
-      <VueQRCodeComponent :size="150" :text="selfTgurl" class="qr-code" />
+      <VueQRCodeComponent id="the-qrcode" :size="150" :text="selfTgurl" class="qr-code" />
+
       <q-btn label="Save" :size="'150'" class="save-btn" @click="downloadQRImg()" />
     </div>
   </div>
@@ -43,10 +44,12 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useQuasar, copyToClipboard } from "quasar";
+import { useQuasar, copyToClipboard, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import VueQRCodeComponent from "vue-qrcode-component";
+import html2canvas from "html2canvas";
+import { Filesystem, Encoding, Directory } from "@capacitor/filesystem";
 
 const $q = useQuasar();
 const store = userStore();
@@ -72,15 +75,47 @@ const copyShareLink = (selfTgurl) => {
     });
 };
 
-const downloadQRImg = () => {
-  const link = window.document.createElement("a");
-  const imgElement = document.querySelector('img[alt="Scan me!"]');
-  link.href = imgElement.src;
-  link.download = "myreferral";
+const downloadQRImg = async () => {
+  if (Platform.is.capacitor && Platform.is.android) {
+    try {
+      html2canvas(document.querySelector("#the-qrcode")).then(async function (canvas) {
+        document.body.appendChild(canvas);
+        const dataUrl = canvas.toDataURL("image/jpeg");
+        // console.log(dataUrl);
 
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+        // Save the image to the photo gallery
+        await Filesystem.writeFile({
+          path: `photos/qr-code.jpg`,
+          data: dataUrl,
+          directory: Directory.Documents,
+          recursive: true
+        });
+
+        console.log("QR Code image saved to gallery.");
+
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "QR Code image saved to photo gallery.",
+          icon: "check_circle_outline"
+        });
+
+        canvas.style.display = "none";
+      });
+    } catch (error) {
+      console.error("Error saving QR Code image:", error);
+    }
+  } else {
+    const link = window.document.createElement("a");
+    const imgElement = document.querySelector('img[alt="Scan me!"]');
+    link.href = imgElement.src;
+    link.download = "myreferral";
+
+    document.body.appendChild(link);
+
+    link.click();
+    document.body.removeChild(link);
+  }
 };
 
 onMounted(() => {
@@ -178,10 +213,12 @@ onMounted(() => {
       list-style-type: disc;
     }
   }
+
   :deep(.q-table__container) {
     background: transparent !important;
     border-radius: 12px;
   }
+
   .table-container {
     :deep(thead) {
       background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
@@ -263,17 +300,17 @@ onMounted(() => {
 }
 
 .agency-policy-main-img {
-    margin-left: -16px;
-    margin-right: -16px;
+  margin-left: -16px;
+  margin-right: -16px;
 
-    &:after {
-      content: "";
-      background: linear-gradient(to bottom, rgba(17, 19, 31, 0.9), rgba(255, 255, 255, 0));
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100px;
-      width: 100%;
-    }
+  &:after {
+    content: "";
+    background: linear-gradient(to bottom, rgba(17, 19, 31, 0.9), rgba(255, 255, 255, 0));
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100px;
+    width: 100%;
   }
+}
 </style>
