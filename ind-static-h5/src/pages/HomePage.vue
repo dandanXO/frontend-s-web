@@ -131,6 +131,33 @@
               :modules="gameModules"
               class="platform-game-container"
             >
+              <!-- Add Evolution in Hot Game -->
+              <template v-for="(item, index) in livecasino" :key="index">
+                <swiper-slide
+                  class="platform-game-item btn-effect"
+                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+                  v-if="item.name === 'Evo'"
+                >
+                  <div
+                    data-aos="zoom-in"
+                    data-aos-delay="100"
+                    data-aos-duration="1200"
+                    data-aos-once="true"
+                    data-aos-anchor="#home"
+                  >
+                    <div class="platform-game-img">
+                      <div
+                        class="game--bg"
+                        :style="{
+                          backgroundImage: `url(${require(`../assets/images/games/hot-games-evo.png`)})`
+                        }"
+                      ></div>
+                    </div>
+                    <div class="platform-game-title">{{ truncateText("Evolution", 22) }}</div>
+                  </div>
+                </swiper-slide>
+              </template>
+
               <template v-for="(item, index) in hotGameList" :key="index">
                 <swiper-slide
                   class="platform-game-item btn-effect"
@@ -557,7 +584,11 @@
     </template>
   </div>
 
-  <GameModal v-if="route.path !== '/account/profile'" ref="allGames" :closeFullGameDialog="closeFullGameDialog"></GameModal>
+  <GameModal
+    v-if="route.path !== '/account/profile'"
+    ref="allGames"
+    :closeFullGameDialog="closeFullGameDialog"
+  ></GameModal>
 
   <q-dialog
     width="100%"
