@@ -220,15 +220,6 @@ onActivated(() => {
 
   searchRecord(true);
 });
-
-onMounted(() => {
-  setTime();
-  getPlatformList();
-
-  // NOTE: fire together on search
-  searchRecord(true);
-  //   getGameBetRecordTotal();
-});
 </script>
 
 <style lang="scss">
