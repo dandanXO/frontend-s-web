@@ -145,7 +145,7 @@
         <template v-for="(lotteryGameItem, index) in lotteryGames" :key="`lottery-${index}`">
           <div
             v-if="lotteryGameItem.code === 'GPI'"
-            :class="`game-item btn-pointer ${lotteryGames.length === 1 ? 'mid-grid-column' : ''}`"
+            class="game-item btn-pointer"
             @click="playGame(lotteryGameItem.name, lotteryGameItem.code, 'thailottery')"
           >
             <div
@@ -159,7 +159,25 @@
                   }
                 })()
               }"
-            ></div>
+            />
+          </div>
+          <div
+            v-if="lotteryGameItem.code === 'GPI'"
+            class="game-item btn-pointer"
+            @click="playGame(lotteryGameItem.name, lotteryGameItem.code, 'sode')"
+          >
+            <div
+              class="platform-img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require('../assets/home/lottery/SODE.png')})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"
+            />
           </div>
         </template>
       </div>
