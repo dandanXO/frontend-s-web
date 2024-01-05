@@ -137,48 +137,52 @@
 
     <Transition>
       <div class="game-grid-lists" id="id-lottery-board" v-if="currentSelectedMenu === 'lottery'">
-        <div v-if="lotteryGames.length === 0" class="coming-soon-div">
-          <img src="../assets/home/coming-soon-img.png" />
-          <span>{{ $t("lang.coming_soon") }}</span>
-        </div>
+        <template v-if="!isShow">
+          <div v-if="lotteryGames.length === 0" class="coming-soon-div">
+            <img src="../assets/home/coming-soon-img.png" />
+            <span>{{ $t("lang.coming_soon") }}</span>
+          </div>
 
-        <template v-for="(lotteryGameItem, index) in lotteryGames" :key="`lottery-${index}`">
-          <div
-            v-if="lotteryGameItem.code === 'GPI'"
-            class="game-item btn-pointer"
-            @click="playGame(lotteryGameItem.name, lotteryGameItem.code, 'thailottery')"
-          >
+          <template v-for="(lotteryGameItem, index) in lotteryGames" :key="`lottery-${index}`">
             <div
-              class="platform-img"
-              :style="{
-                backgroundImage: (() => {
-                  try {
-                    return `url(${require(`../assets/home/lottery/${lotteryGameItem.code}.png`)})`;
-                  } catch (e) {
-                    return `url(${comingSoonImg})`;
-                  }
-                })()
-              }"
-            />
-          </div>
-          <div
-            v-if="lotteryGameItem.code === 'GPI'"
-            class="game-item btn-pointer"
-            @click="playGame(lotteryGameItem.name, lotteryGameItem.code, 'sode')"
-          >
+              class="game-item btn-pointer"
+              @click="selectLotteryPlat(lotteryGameItem)"
+            >
+              <div
+                class="platform-img"
+                :style="{
+                  backgroundImage: (() => {
+                    try {
+                      return `url(${require(`../assets/home/lottery/${lotteryGameItem.code}.png`)})`;
+                    } catch (e) {
+                      return `url(${comingSoonImg})`;
+                    }
+                  })()
+                }"
+              />
+            </div>
+          </template>
+        </template>
+        <template v-if="isShow">
+          <template v-for="(lotteryGamesMoreItem, index) in lotteryGamesMore" :key="`lottery-${index}`">
             <div
-              class="platform-img"
-              :style="{
-                backgroundImage: (() => {
-                  try {
-                    return `url(${require('../assets/home/lottery/SODE.png')})`;
-                  } catch (e) {
-                    return `url(${comingSoonImg})`;
-                  }
-                })()
-              }"
-            />
-          </div>
+              class="game-item btn-pointer"
+              @click="playGame(lotteryGamesMoreItem.name, 'GPI', lotteryGamesMoreItem.code)"
+            >
+              <div
+                class="platform-img"
+                :style="{
+                  backgroundImage: (() => {
+                    try {
+                      return `url(${`${gameImgURL}${lotteryGamesMoreItem.icon}`})`;
+                    } catch (e) {
+                      return `url(${comingSoonImg})`;
+                    }
+                  })()
+                }"
+              />
+            </div>
+          </template>
         </template>
       </div>
     </Transition>
@@ -1277,6 +1281,7 @@ export default defineComponent({
     const gameListData = ref([]);
     const fishPlatforms = ref([]);
     const lotteryGames = ref([]);
+    const lotteryGamesMore = ref([]);
 
     const gameBoardItemData = [
       { name: "slots", imgName: "home-slot.png", label: t("lang.slot_header") },
@@ -1377,6 +1382,11 @@ export default defineComponent({
       } else if (menuType === "sport") {
         selectedLiveTab.value = plat.name;
         liveTabs.value = plat.name;
+      } else if (menuType === "lottery") {
+        selectedPlat.code = plat.code;
+        selectedPlat.status = plat.status;
+
+        loadGameList("LOTTERY");
       }
     };
     const clearSearchInput = () => {
@@ -1399,12 +1409,14 @@ export default defineComponent({
       const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
       const code = selectedPlatId.value;
       const gameType = type;
-      const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+      const key = store.hasToken() ? `LOGGED_PLATFORM_GAMES_${code}_${gameType}_${regDevice}` : `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
 
+      var platformGamesApiUrl = store.hasToken() ? "/session/loggedInPlatformGames" : "/platformGames";
+      
       cached
         .get(key, () =>
           api
-            .get("/platformGames", {
+            .get(platformGamesApiUrl, {
               params: {
                 platformId: code,
                 gameType: gameType,
@@ -1464,6 +1476,8 @@ export default defineComponent({
               }
             });
             // console.log(miniGamesMore.value);
+          } else if (currentSelectedMenu.value === "lottery") {
+            lotteryGamesMore.value = res;
           } else {
             res.forEach((element) => {
               element.default = require("../assets/images/games/aviator/default.png");
@@ -1886,6 +1900,7 @@ export default defineComponent({
       imageLoading,
       slide: ref(0),
       imgURL: process.env.IMAGE_CDN + "/promo/",
+      gameImgURL: process.env.IMAGE_CDN + "/game/",
       banners,
       gameBoardRef,
       gameBoardItemRef,
@@ -1898,6 +1913,7 @@ export default defineComponent({
       liveCasinoGames,
       xfjGames,
       lotteryGames,
+      lotteryGamesMore,
       isShow,
       mainWallet,
       playGame,
