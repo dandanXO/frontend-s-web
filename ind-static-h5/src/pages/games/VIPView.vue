@@ -86,7 +86,7 @@
             Reward
           </div>
           <div class="reward-amt-wrapper">
-            <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
+            <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>
           </div>
         </div>
         <div class="unlock-status">
@@ -105,7 +105,7 @@
             Reward
           </div>
           <div class="reward-amt-wrapper">
-            <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>
+            <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
           </div>
         </div>
         <div class="unlock-status">
@@ -490,8 +490,8 @@ watch(
     const carouselVipLevel =
       vipCarouselIndex.value === vipCarouselRef.value.data.maxSlide.value ? 12 : Math.round(vipCarouselIndex.value) + 1;
 
-    const levelUpgrade = rows4.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
-    const monthlyReward = rows3.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
+    const levelUpgrade = rows3.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
+    const monthlyReward = rows4.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
     const dailyWithdrawalLimit = rows.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
 
     const vipInfo = vipItems.find(({ vipLevel }) => vipLevel === carouselVipLevel);
@@ -608,6 +608,7 @@ const columns3 = [
   { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" },
   { name: "flow", field: "flow", align: "center" }
 ];
+//row3 : Level Up Bonus.
 const rows3 = [
   {
     name: "VIP 1",
@@ -681,6 +682,7 @@ const columns4 = [
   },
   { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" }
 ];
+//row4 : Monthly Reward.
 const rows4 = [
   {
     name: "VIP 1",
