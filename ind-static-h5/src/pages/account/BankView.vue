@@ -293,6 +293,11 @@ onActivated(() => {
     &.bank-addcard {
       border: 1px solid #a73dff;
       background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+
+      &:active {
+        opacity: 0.9;
+        filter: brightness(0.9);
+      }
     }
 
     .bank-card-add {
