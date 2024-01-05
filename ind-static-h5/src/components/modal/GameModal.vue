@@ -1,6 +1,6 @@
 <template>
   <q-scroll-area>
-    <q-dialog v-model="visible" class="gameDialog" full-height full-width>
+    <q-dialog v-model="visible" class="gameDialog" full-height full-width persistent no-esc-dismiss no-backdrop-dismiss>
       <q-toolbar>
         <div class="topActions">
           <q-icon name="chevron_left" size="30px" @click="onExitClick" />
@@ -114,8 +114,10 @@ import { userStore } from "stores/index";
 // import { launchSessionGame } from "api/platform/platform";
 // import { isMobile } from "utils/utils";
 import { useRoute, useRouter } from "vue-router";
-import { ref, defineExpose, reactive, shallowRef } from "vue";
+import { ref, defineExpose, reactive, shallowRef, onActivated, onUnmounted, onDeactivated } from "vue";
 import DepositComponent from "components/depositComponent.vue";
+
+import { App } from "@capacitor/app";
 
 // import { transfer } from "api/personal/transfer";
 // import { message } from "ant-design-vue";
@@ -245,12 +247,13 @@ const submitTransfer = (amount) => {
     });
 };
 const closeDialog = () => {
-  visible.value = !visible.value;
+  visible.value = false;
   src.value = "";
   store.getBalance();
   // AppFullscreen.exit()
   if (isAndroid()) {
     screen.orientation.lock("portrait");
+    App.removeAllListeners();
   }
 };
 
@@ -291,6 +294,10 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   // // const iframeRef = ref(null);
   if (isAndroid()) {
     screen.orientation.unlock();
+
+    App.addListener("backButton", (backEvent) => {
+      onExitClick();
+    });
   }
   // iframe.find('HTML-Element').touchwipe({
   // wipeLeft: function() { alert("left"); },
