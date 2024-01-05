@@ -157,9 +157,8 @@ const searchRecord = (isNewSearch) => {
   const { startDate, endDate, platform } = searchForm;
 
   api
-    .post(
-      "/session/member/betRecord",
-      {
+    .get("/session/member/cassandraBetRecord", {
+      params: {
         startDate,
         endDate,
         platform,
@@ -167,13 +166,8 @@ const searchRecord = (isNewSearch) => {
         current: pagination.current,
         size: pagination.pageSize,
         pagingState: pagination.pagingState
-      },
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
       }
-    )
+    })
     .then((response) => {
       const { code, data } = response;
       if (code === 0) {
