@@ -557,7 +557,7 @@
     </template>
   </div>
 
-  <GameModal v-if="route.path === '/home'" ref="allGames" :closeFullGameDialog="closeFullGameDialog"></GameModal>
+  <GameModal v-if="route.path !== '/account/profile'" ref="allGames" :closeFullGameDialog="closeFullGameDialog"></GameModal>
 
   <q-dialog
     width="100%"
