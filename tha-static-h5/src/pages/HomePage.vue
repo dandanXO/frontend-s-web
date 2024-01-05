@@ -137,52 +137,48 @@
 
     <Transition>
       <div class="game-grid-lists" id="id-lottery-board" v-if="currentSelectedMenu === 'lottery'">
-        <template v-if="!isShow">
-          <div v-if="lotteryGames.length === 0" class="coming-soon-div">
-            <img src="../assets/home/coming-soon-img.png" />
-            <span>{{ $t("lang.coming_soon") }}</span>
-          </div>
+        <div v-if="lotteryGames.length === 0 && !isShow" class="coming-soon-div">
+          <img src="../assets/home/coming-soon-img.png" />
+          <span>{{ $t("lang.coming_soon") }}</span>
+        </div>
 
-          <template v-for="(lotteryGameItem, index) in lotteryGames" :key="`lottery-${index}`">
+        <template v-for="(lotteryGameItem, index) in lotteryGamesList" :key="`lottery-${index}`">
+          <div
+            v-if="!isShow"
+            class="game-item btn-pointer"
+            @click="selectLotteryPlat(lotteryGameItem)"
+          >
             <div
-              class="game-item btn-pointer"
-              @click="selectLotteryPlat(lotteryGameItem)"
-            >
-              <div
-                class="platform-img"
-                :style="{
-                  backgroundImage: (() => {
-                    try {
-                      return `url(${require(`../assets/home/lottery/${lotteryGameItem.code}.png`)})`;
-                    } catch (e) {
-                      return `url(${comingSoonImg})`;
-                    }
-                  })()
-                }"
-              />
-            </div>
-          </template>
-        </template>
-        <template v-if="isShow">
-          <template v-for="(lotteryGamesMoreItem, index) in lotteryGamesMore" :key="`lottery-${index}`">
+              class="platform-img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/home/lottery/${lotteryGameItem.code}.png`)})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"
+            />
+          </div>
+          <div
+            v-if="isShow"
+            class="game-item btn-pointer"
+            @click="playGame(lotteryGameItem.name, 'GPI', lotteryGameItem.code)"
+          >
             <div
-              class="game-item btn-pointer"
-              @click="playGame(lotteryGamesMoreItem.name, 'GPI', lotteryGamesMoreItem.code)"
-            >
-              <div
-                class="platform-img"
-                :style="{
-                  backgroundImage: (() => {
-                    try {
-                      return `url(${`${gameImgURL}${lotteryGamesMoreItem.icon}`})`;
-                    } catch (e) {
-                      return `url(${comingSoonImg})`;
-                    }
-                  })()
-                }"
-              />
-            </div>
-          </template>
+              class="platform-img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${`${gameImgURL}${lotteryGameItem.icon}`})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"
+            />
+          </div>
         </template>
       </div>
     </Transition>
@@ -1282,7 +1278,13 @@ export default defineComponent({
     const fishPlatforms = ref([]);
     const lotteryGames = ref([]);
     const lotteryGamesMore = ref([]);
-
+    const lotteryGamesList = computed(() => {
+      if(isShow.value) {
+        return lotteryGamesMore.value;
+      }
+      
+      return lotteryGames.value;
+    })
     const gameBoardItemData = [
       { name: "slots", imgName: "home-slot.png", label: t("lang.slot_header") },
       { name: "fish", imgName: "home-fish.png", label: t("lang.fish_header") },
@@ -1914,6 +1916,7 @@ export default defineComponent({
       xfjGames,
       lotteryGames,
       lotteryGamesMore,
+      lotteryGamesList,
       isShow,
       mainWallet,
       playGame,
