@@ -822,7 +822,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch } from "vue";
+import { onMounted, ref, reactive, computed, watch, onDeactivated } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -1431,6 +1431,13 @@ onMounted(() => {
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 });
+
+onDeactivated(() => {
+  if(route.path === '/account/profile') {
+    fullGameDialog.value = false;
+    return;
+  }
+})
 </script>
 
 <style scoped lang="scss">
