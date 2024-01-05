@@ -233,6 +233,7 @@ body.body--dark .q-footer {
     width: 370px;
     height: 370px;
     top: 50%;
+    pointer-events: none;
     left: 50%;
     margin-top: -50px;
     transform: translate(-50%, -50%);
