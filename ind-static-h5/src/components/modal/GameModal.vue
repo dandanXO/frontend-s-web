@@ -245,7 +245,7 @@ const submitTransfer = (amount) => {
     });
 };
 const closeDialog = () => {
-  visible.value = !visible.value;
+  visible.value = false;
   src.value = "";
   store.getBalance();
   // AppFullscreen.exit()
