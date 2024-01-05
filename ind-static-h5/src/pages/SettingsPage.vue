@@ -136,7 +136,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onActivated, ref } from "vue";
 import { userStore } from "src/stores";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
@@ -162,6 +162,10 @@ const confirmSignOutDialog = ref(false);
 const openConfirmSignOutDialog = () => {
   confirmSignOutDialog.value = !confirmSignOutDialog.value;
 };
+
+onActivated(() => {
+  store.getUnreadTotal();
+});
 
 const logout = () => {
   loadingLogout.value = true;

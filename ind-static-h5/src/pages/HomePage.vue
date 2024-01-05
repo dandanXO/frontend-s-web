@@ -916,7 +916,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch } from "vue";
+import { onMounted, ref, reactive, computed, watch, onActivated } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -1542,6 +1542,10 @@ const moveCsIcon = (ev) => {
   csDragPos.value = [csDragPos.value[0] - ev.delta.x, csDragPos.value[1] - ev.delta.y];
 };
 
+onActivated(() => {
+  store.getUnreadTotal();
+});
+
 onMounted(() => {
   getPlatList();
   loadData();
@@ -1551,7 +1555,6 @@ onMounted(() => {
   loadHotGameList();
   loadJILIFishGameList();
   loadJDBFishGameList();
-  store.getUnreadTotal();
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 });

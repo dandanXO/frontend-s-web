@@ -119,12 +119,7 @@
                         <q-icon name="all_inclusive" size="22px"></q-icon>
                       </div>
                     </div>
-                    <q-btn
-                      class="btn-join-now"
-                      no-caps
-                      label="Join Now"
-                      @click="goToJoinNow()"
-                    />
+                    <q-btn class="btn-join-now" no-caps label="Join Now" @click="goToJoinNow()" />
                   </div>
 
                   <!-- <div class="join-container">
@@ -243,6 +238,7 @@ export default defineComponent({
       loadBanner();
       loadAll();
       updateCountdown();
+      store.getUnreadTotal();
     });
 
     watch(() => route.query, () => {
