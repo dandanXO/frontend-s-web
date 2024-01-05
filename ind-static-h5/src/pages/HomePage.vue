@@ -188,6 +188,25 @@
 
           <div class="platform-game-wrapper" v-else>
             <div class="platform-game-container grid-view">
+              <template v-for="(item, index) in livecasino" :key="index">
+                <div
+                  class="platform-game-item btn-effect"
+                  v-if="item.name === 'Evo'"
+                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+                >
+                  <div class="platform-game-img">
+                    <div
+                      class="game--bg"
+                      :style="{
+                        backgroundImage: `url(${require(`../assets/images/games/hot-games-evo.png`)})`
+                      }"
+                    ></div>
+
+                    <div class="platform-game-title">{{ truncateText("Evolution", 22) }}</div>
+                  </div>
+                </div>
+              </template>
+
               <template v-for="(item, index) in hotGameList" :key="index">
                 <div
                   class="platform-game-item btn-effect"
