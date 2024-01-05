@@ -39,6 +39,8 @@
             </div>
           </div>
         </div>
+
+        <NoInfoComponent v-if="isNoInfo" noInfoTitle="No Record" shortenContainer="true"></NoInfoComponent>
       </q-tab-panel>
       <q-tab-panel name="week">
         <div v-for="(e, i) in weeklyDailyBetRebateData" :key="`${e}-${i}`" class="member-info">
@@ -56,6 +58,8 @@
             </div>
           </div>
         </div>
+
+        <NoInfoComponent v-if="isNoInfo" noInfoTitle="No Record" shortenContainer="true"></NoInfoComponent>
       </q-tab-panel>
     </q-tab-panels>
   </div>
@@ -65,6 +69,7 @@
 import { ref, reactive, onMounted } from "vue";
 import { api } from "boot/axios";
 import { convertToCommaAmount } from "src/boot/utils";
+import NoInfoComponent from "../../components/NoInfoComponent.vue";
 
 const activeKey = ref("month");
 
@@ -82,17 +87,21 @@ const getTotalBetRebateAPI = () => {
   });
 };
 
+const isNoInfo = ref(true);
+
 const monthlyDailyBetRebateData = ref([]);
 const weeklyDailyBetRebateData = ref([]);
 const getDailyBetRebateAPI = () => {
   api.get(`/session/member/dailyBetRebate?queryTime=30`).then((res) => {
     const { code, data } = res;
     if (code === 0) monthlyDailyBetRebateData.value = data;
+    if (data.length > 0) isNoInfo.value = false;
   });
 
   api.get(`/session/member/dailyBetRebate?queryTime=7`).then((res) => {
     const { code, data } = res;
     if (code === 0) weeklyDailyBetRebateData.value = data;
+    if (data.length > 0) isNoInfo.value = false;
   });
 };
 

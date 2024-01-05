@@ -1,5 +1,5 @@
 <template>
-  <div class="no-info-container">
+  <div class="no-info-container" :class="shortenContainer && 'shorten-container'">
     <img class="" src="../assets/images/account/nodata-folder.png" alt="" />
     <div class="no-info-text">{{ noInfoTitle }}</div>
     <p>Haven’t found any record</p>
@@ -7,18 +7,22 @@
 </template>
 
 <script setup>
-const props = defineProps(["noInfoTitle"]);
+const props = defineProps(["noInfoTitle","shortenContainer"]);
 </script>
 
 <style scoped lang="scss">
 .no-info-container {
   width: 100%;
-  min-height: calc(100vh - 280px);
+  min-height: calc(100vh - 130px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 10px;
+
+  &.shorten-container{
+    min-height: calc(50vh - 130px);
+  }
 
   img {
     width: 80px;

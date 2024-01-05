@@ -113,17 +113,16 @@
                   <div v-html="selectedPromo.pageContent"></div>
                   <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
                     <div class="promo-date">
-                      <div class="date-txt" v-if="!isPromotionEnded">Promotion Ends</div>
+                      <div class="date-txt">Promotion Ends</div>
                       <div class="date-timer">
                         <img src="../assets/images/promotion/timer-icon.svg" alt="" />
-                        {{ countdown }}
+                        <q-icon name="all_inclusive" size="22px"></q-icon>
                       </div>
                     </div>
                     <q-btn
                       class="btn-join-now"
                       no-caps
                       label="Join Now"
-                      :disabled="isPromotionEnded"
                       @click="goToJoinNow()"
                     />
                   </div>
