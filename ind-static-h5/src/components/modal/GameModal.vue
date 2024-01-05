@@ -390,7 +390,8 @@ const close = () => {
 };
 
 defineExpose({
-  open
+  open,
+  closeDialog
 });
 </script>
 

@@ -1434,7 +1434,7 @@ onMounted(() => {
 
 onDeactivated(() => {
   if(route.path === '/account/profile') {
-    fullGameDialog.value = false;
+    allGames.value.closeDialog();
   }
 })
 </script>
