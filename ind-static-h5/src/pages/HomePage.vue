@@ -557,7 +557,7 @@
     </template>
   </div>
 
-  <GameModal ref="allGames" :closeFullGameDialog="closeFullGameDialog"></GameModal>
+  <GameModal v-if="route.path === '/home'" ref="allGames" :closeFullGameDialog="closeFullGameDialog"></GameModal>
 
   <q-dialog
     width="100%"
@@ -822,7 +822,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch, onDeactivated } from "vue";
+import { onMounted, ref, reactive, computed, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -1431,12 +1431,6 @@ onMounted(() => {
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 });
-
-onDeactivated(() => {
-  if(route.path === '/account/profile') {
-    allGames.value.closeDialog();
-  }
-})
 </script>
 
 <style scoped lang="scss">

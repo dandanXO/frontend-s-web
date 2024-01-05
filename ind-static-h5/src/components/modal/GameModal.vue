@@ -245,7 +245,7 @@ const submitTransfer = (amount) => {
     });
 };
 const closeDialog = () => {
-  visible.value = false;
+  visible.value = !visible.value;
   src.value = "";
   store.getBalance();
   // AppFullscreen.exit()
@@ -390,8 +390,7 @@ const close = () => {
 };
 
 defineExpose({
-  open,
-  closeDialog
+  open
 });
 </script>
 
