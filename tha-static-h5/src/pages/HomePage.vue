@@ -137,16 +137,16 @@
 
     <Transition>
       <div class="game-grid-lists" id="id-lottery-board" v-if="currentSelectedMenu === 'lottery'">
-        <div v-if="lotteryGames.length === 0" class="coming-soon-div">
+        <div v-if="lotteryGames.length === 0 && !isShow" class="coming-soon-div">
           <img src="../assets/home/coming-soon-img.png" />
           <span>{{ $t("lang.coming_soon") }}</span>
         </div>
 
-        <template v-for="(lotteryGameItem, index) in lotteryGames" :key="`lottery-${index}`">
+        <template v-for="(lotteryGameItem, index) in lotteryGamesList" :key="`lottery-${index}`">
           <div
-            v-if="lotteryGameItem.code === 'GPI'"
-            :class="`game-item btn-pointer ${lotteryGames.length === 1 ? 'mid-grid-column' : ''}`"
-            @click="playGame(lotteryGameItem.name, lotteryGameItem.code, 'thailottery')"
+            v-if="!isShow"
+            class="game-item btn-pointer"
+            @click="selectLotteryPlat(lotteryGameItem)"
           >
             <div
               class="platform-img"
@@ -159,7 +159,25 @@
                   }
                 })()
               }"
-            ></div>
+            />
+          </div>
+          <div
+            v-if="isShow"
+            class="game-item btn-pointer"
+            @click="playGame(lotteryGameItem.name, 'GPI', lotteryGameItem.code)"
+          >
+            <div
+              class="platform-img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${`${gameImgURL}${lotteryGameItem.icon}`})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"
+            />
           </div>
         </template>
       </div>
@@ -1259,7 +1277,14 @@ export default defineComponent({
     const gameListData = ref([]);
     const fishPlatforms = ref([]);
     const lotteryGames = ref([]);
-
+    const lotteryGamesMore = ref([]);
+    const lotteryGamesList = computed(() => {
+      if(isShow.value) {
+        return lotteryGamesMore.value;
+      }
+      
+      return lotteryGames.value;
+    })
     const gameBoardItemData = [
       { name: "slots", imgName: "home-slot.png", label: t("lang.slot_header") },
       { name: "fish", imgName: "home-fish.png", label: t("lang.fish_header") },
@@ -1359,6 +1384,11 @@ export default defineComponent({
       } else if (menuType === "sport") {
         selectedLiveTab.value = plat.name;
         liveTabs.value = plat.name;
+      } else if (menuType === "lottery") {
+        selectedPlat.code = plat.code;
+        selectedPlat.status = plat.status;
+
+        loadGameList("LOTTERY");
       }
     };
     const clearSearchInput = () => {
@@ -1381,12 +1411,14 @@ export default defineComponent({
       const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
       const code = selectedPlatId.value;
       const gameType = type;
-      const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+      const key = store.hasToken() ? `LOGGED_PLATFORM_GAMES_${code}_${gameType}_${regDevice}` : `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
 
+      var platformGamesApiUrl = store.hasToken() ? "/session/loggedInPlatformGames" : "/platformGames";
+      
       cached
         .get(key, () =>
           api
-            .get("/platformGames", {
+            .get(platformGamesApiUrl, {
               params: {
                 platformId: code,
                 gameType: gameType,
@@ -1446,6 +1478,8 @@ export default defineComponent({
               }
             });
             // console.log(miniGamesMore.value);
+          } else if (currentSelectedMenu.value === "lottery") {
+            lotteryGamesMore.value = res;
           } else {
             res.forEach((element) => {
               element.default = require("../assets/images/games/aviator/default.png");
@@ -1868,6 +1902,7 @@ export default defineComponent({
       imageLoading,
       slide: ref(0),
       imgURL: process.env.IMAGE_CDN + "/promo/",
+      gameImgURL: process.env.IMAGE_CDN + "/game/",
       banners,
       gameBoardRef,
       gameBoardItemRef,
@@ -1880,6 +1915,8 @@ export default defineComponent({
       liveCasinoGames,
       xfjGames,
       lotteryGames,
+      lotteryGamesMore,
+      lotteryGamesList,
       isShow,
       mainWallet,
       playGame,

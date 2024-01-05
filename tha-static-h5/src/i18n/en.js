@@ -500,6 +500,7 @@ export default {
     504: "Request too frequent",
     601: "Token validation error",
     603: "Token not found",
+    608: "The current user's operations are too frequent. Please try again.",
     604: "Logged in successfully",
     707: "Insufficient balance",
     800: "Incorrect confirmation code",
