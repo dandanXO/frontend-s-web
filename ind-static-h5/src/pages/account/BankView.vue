@@ -7,19 +7,20 @@
 
         <q-card-section>
           <q-form>
-            <div class="input-title">Bank Card Number</div>
+            <div class="input-title">Bank Account Number</div>
             <q-input
               standout
               class="q-pb-xs dialog-input"
               hide-bottom-space
               filled
               v-model="unbindField.bankCardNumber"
-              label="Bank Card Number"
+              label="Bank Account Number"
               lazy-rules
               :rules="[
-                (val) => (val && val.length > 0) || 'Please Enter Bank Card Number',
+                (val) => (val && val.length > 0) || 'Please Enter Bank Account Number',
                 (val) =>
-                  (val && val == bankCardList[selectedBankIndex].cardNumber) || 'Please Enter The Correct Card Number'
+                  (val && val == bankCardList[selectedBankIndex].cardNumber) ||
+                  'Please Enter The Correct Account Number'
               ]"
               label-color="secondary"
             />
@@ -37,6 +38,9 @@
     <!-- add card dialog -->
     <AddBankCardModal ref="addBankCardModalRef" :loadCards="loadCards"></AddBankCardModal>
 
+    <!-- add card dialog -->
+    <UpdateBankCardModal ref="updateBankCardModalRef" :loadCards="loadCards"></UpdateBankCardModal>
+
     <div class="bank-card-container">
       <div
         v-for="(bc, bcIndex) in bankCardList"
@@ -45,17 +49,22 @@
         @click="handleBankCardClick(bcIndex)"
       >
         <div class="bank-card-add">
-          <div class="card-icon">
-            <img src="../../assets/images/account/bank-icon-bpi.png" alt="" />
-          </div>
+          <!--
+            <div class="card-icon">
+              <img src="../../assets/images/account/bank-icon-bpi.png" alt="" />
+            </div>
+          -->
           <div class="card-label">{{ bc.bankName }}</div>
           <!--          <div class="card-label">{{ bc.bankName }}</div>-->
           <div class="card-num-wrapper">
-            <div class="card-num">{{ maskCardNumber(bc.cardNumber) }}</div>
+            <div class="card-num">{{ bc.cardNumber }}</div>
             <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(bc.cardNumber)" />
           </div>
           <div class="card-num-wrapper">
             <div class="">IFSC: {{ bc.cardAddress }}</div>
+          </div>
+          <div class="card-update" @click.stop.prevent="onUpdateCardClick(bcIndex)">
+            <q-icon size="sm" name="settings" />
           </div>
           <div class="card-unlink" @click.stop.prevent="onUnbindClick(bcIndex)">
             <q-icon size="sm" name="link_off" />
@@ -69,7 +78,7 @@
           <!-- <div class="card-icon addcard-icon-div"> -->
           <!-- <q-icon class="add-card-icon" key="md" size="md" name="add" /> -->
           <!-- </div> -->
-          <div class="card-label" style="margin-top: 10px">Add Bank Card</div>
+          <div class="card-label" style="margin-top: 10px">Add Bank Account</div>
         </div>
       </div>
     </div>
@@ -88,6 +97,7 @@ import DialogHeader from "../../atoms//DialogHeader.vue";
 import ConfirmButton from "../../atoms//ConfirmButton.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
 import AddBankCardModal from "../../components/modal/AddBankCardModal.vue";
+import UpdateBankCardModal from "../../components/modal/UpdateBankCardModal.vue";
 
 const router = useRouter();
 const store = userStore();
@@ -126,7 +136,7 @@ const copy = (val) => {
       $q.notify({
         color: "position",
         position: "top",
-        message: `${maskCardNumber(val)} copied to clipboard`,
+        message: `${val} copied to clipboard`,
         icon: "check_circle_outline"
       });
     })
@@ -170,8 +180,12 @@ const unbind = () => {
 const selectedBankIndex = ref();
 
 const addBankCardModalRef = ref();
+const updateBankCardModalRef = ref();
 const onAddCardClick = () => {
   addBankCardModalRef.value.onAddCardClick();
+};
+const onUpdateCardClick = (bcIndex) => {
+  updateBankCardModalRef.value.onUpdateCardClick(bankCardList.value[bcIndex]);
 };
 
 // init
@@ -216,6 +230,7 @@ onActivated(() => {
         height: auto;
         padding: 1rem 0 4rem;
 
+        .card-update,
         .card-unlink {
           display: none;
         }
@@ -246,11 +261,19 @@ onActivated(() => {
         gap: 0.5rem;
       }
 
+      .card-update,
       .card-unlink {
         position: absolute;
         top: 1rem;
-        right: 1rem;
         color: black;
+      }
+
+      .card-update {
+        left: 1rem;
+      }
+
+      .card-unlink {
+        right: 1rem;
       }
 
       .card-num-wrapper {
@@ -270,6 +293,11 @@ onActivated(() => {
     &.bank-addcard {
       border: 1px solid #a73dff;
       background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+
+      &:active {
+        opacity: 0.9;
+        filter: brightness(0.9);
+      }
     }
 
     .bank-card-add {

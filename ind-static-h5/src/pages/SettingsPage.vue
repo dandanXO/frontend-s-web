@@ -112,7 +112,7 @@
       </q-card>
       <a @click="openConfirmSignOutDialog">
         <div class="acct-logout">
-          <div class="acct-nav-label">&nbsp;</div>
+          <div class="acct-nav-label">LOG OUT</div>
         </div>
       </a>
     </div>
@@ -152,7 +152,7 @@ const slide = ref(0);
 const imgURL = "";
 const btm_banners = ref([
   {
-    mobileImageUrl: require("../assets/images/account/account-banner-1.png")
+    mobileImageUrl: require("../assets/images/account/account-banner-2.jpg")
   }
 ]);
 
@@ -258,10 +258,10 @@ const logout = () => {
   padding: 20px 0px;
 
   h2 {
-    line-height: 36px;
+    line-height: 26px;
     color: #fff;
-    font-size: 26px;
-    margin: 0px 0px 10px;
+    font-size: 20px;
+    margin: 0px 0px 10px 28px;
     // width: calc(330px + 100px);
     text-transform: uppercase;
   }
@@ -341,8 +341,8 @@ const logout = () => {
         border-radius: 50%;
         aspect-ratio: 1/1;
         padding: 12px;
-        height: 80px;
-        width: 80px;
+        height: 56px;
+        width: 56px;
         cursor: pointer;
         display: flex;
         text-align: center;
@@ -352,7 +352,7 @@ const logout = () => {
         text-decoration: none;
 
         img {
-          width: 70%;
+          width: 90%;
           fill: white;
           padding: 0;
         }
@@ -381,6 +381,14 @@ const logout = () => {
   margin: 20px auto;
   aspect-ratio: 335/40;
   background-size: 100% 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .acct-nav-label {
+    color: rgba(206, 206, 206, 0.8);
+    font-size: 16px;
+  }
 
   &:active {
     filter: brightness(1.2);
@@ -404,5 +412,15 @@ const logout = () => {
   height: 42px;
   color: #5c46e7;
   border-radius: 8px;
+}
+</style>
+
+<style lang="scss">
+// .q-page-container {
+//   padding-bottom: 20px !important;
+// }
+
+.q-page {
+  min-height: 0 !important;
 }
 </style>

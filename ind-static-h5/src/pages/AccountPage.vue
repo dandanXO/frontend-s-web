@@ -505,7 +505,7 @@ import SwiperNav from "../components/SwiperNav.vue";
 import ContentView from "../components/ContentView.vue";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import ProfileProgressBanner from "../components/ProfileProgressBanner.vue";
-import { defineComponent, reactive, ref, onMounted, computed } from "vue";
+import { defineComponent, reactive, ref, onMounted, computed, onActivated } from "vue";
 import moment from "moment";
 import { api } from "boot/axios";
 import { useQuasar, copyToClipboard } from "quasar";
@@ -720,6 +720,10 @@ const getVersionNo = async () => {
 };
 
 const loadingLogout = ref(false);
+
+onActivated(() => {
+  loadInfo();
+});
 
 onMounted(() => {
   loadInfo();

@@ -152,7 +152,10 @@
           </template>
 
           <div class="top-wrapper">
-            <div class="title">Withdrawal Amount (200 - 20,000RS)</div>
+            <div class="title">
+              Withdrawal Amount ({{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin) }} -
+              {{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }} RS)
+            </div>
           </div>
 
           <div class="mid-wrapper">
@@ -256,6 +259,7 @@ import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import ConfirmButton from "../../atoms/ConfirmButton.vue";
+import { convertToCommaAmount } from "boot/utils";
 
 // modal
 const isLoadingContent = ref(false);

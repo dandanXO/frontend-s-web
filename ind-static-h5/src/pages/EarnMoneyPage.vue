@@ -90,7 +90,16 @@ const activeKey = ref("about");
 
 <style scoped lang="scss">
 .earn-money {
+  padding-top: 50px;
   .earn-money-tabs {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    z-index: 2;
+    background: #101115;
+    width: 100%;
+    padding-bottom: 12px;
+
     :deep(.q-tab) {
       margin: 0 15px;
       color: rgba(255, 255, 255, 0.3);
@@ -119,6 +128,7 @@ const activeKey = ref("about");
   .earn-money-panels {
     // background: radial-gradient(25% 50% at 50% 50%, #e01b84 0%, rgba(27, 28, 36, 0) 100%);
     background-image: url("../assets/images/earn-money/earn-money-bg.jpg");
+    min-height: 80vh;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;

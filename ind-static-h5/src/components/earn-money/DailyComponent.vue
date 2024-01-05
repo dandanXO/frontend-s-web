@@ -118,10 +118,10 @@
       </div>
       <div class="bot-container">
         <div class="amount-container">
-          <div class="amount-text">Recharge Amount</div>
+          <div class="amount-text">Bet Amount</div>
           <div class="amount">
             RS
-            <span>{{ convertToCommaAmount(e.rebateAmount, true) }}</span>
+            <span>{{ convertToCommaAmount(e.validBet, true) }}</span>
           </div>
         </div>
 
@@ -129,7 +129,7 @@
           <div class="amount-text text-right">Income</div>
           <div class="amount text-right">
             RS
-            <span>{{ convertToCommaAmount(e.validBet, true) }}</span>
+            <span>{{ convertToCommaAmount(e.rebateAmount, true) }}</span>
           </div>
         </div>
       </div>

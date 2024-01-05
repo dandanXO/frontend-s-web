@@ -256,6 +256,7 @@ const redeem = () => {};
       font-weight: 700;
       padding: 0.5rem 1.5rem;
       border-bottom-width: 0;
+      text-align:center !important;
     }
   }
 

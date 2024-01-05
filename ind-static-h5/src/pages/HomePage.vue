@@ -1,6 +1,5 @@
 <template>
   <ProfileSummary :homeProfile="true" />
-
   <q-carousel
     class="home"
     id="home"
@@ -58,16 +57,16 @@
   </q-carousel>
 
   <div class="home-wrapper" :class="detectAndroidVersion()">
-    <q-page-sticky position="bottom-right" :offset="[10, 0]" class="floating-btn">
-      <div @click="openCSInNewTab('https://direct.lc.chat/16887009/')">
-        <img src="../assets/images/index/icon-cs.png" alt="" />
+    <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
+      <div v-touch-pan.prevent.mouse="moveCsIcon" @click="openCSInNewTab('https://direct.lc.chat/16887009/')">
+        <div class="cs-icon-wrapper"></div>
       </div>
     </q-page-sticky>
 
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <RiVolumeUpLine style="fill: #5f4682" />
+          <RiVolumeUpLine style="fill: #5f4682; width: 24px; height: 24px" />
         </div>
         <div class="marquee-container">
           <marquee-text :repeat="5" :duration="announcementList.length * 120">
@@ -94,7 +93,7 @@
       :slidesPerView="4.5"
       :spaceBetween="10"
       :scrollbar="{
-        hide: false
+        hide: true
       }"
       :modules="modules"
       class="cat-selection-wrapper"
@@ -200,7 +199,7 @@
                 hide: true
               }"
               :modules="gameModules"
-              class="platform-game-container"
+              class="platform-game-container live-casino"
             >
               <template v-for="(item, index) in livecasino" :key="index">
                 <swiper-slide
@@ -558,7 +557,7 @@
     </template>
   </div>
 
-  <GameModal ref="allGames" :closeFullGameDialog="closeFullGameDialog"></GameModal>
+  <GameModal v-if="route.path !== '/account/profile'" ref="allGames" :closeFullGameDialog="closeFullGameDialog"></GameModal>
 
   <q-dialog
     width="100%"
@@ -582,49 +581,44 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isStationNotice">
-    <q-btn dense rounded icon="close" class="bg-yellow text-black announcement-close" v-close-popup />
-    <q-card style="width: 100%" class="bg-primary text-white">
-      <q-card-section class="q-mb-md">
-        <q-tabs
-          v-model="activeKey"
-          dense
-          class="text-grey"
-          active-color="bright"
-          indicator-color="bright"
-          align="justify"
-        >
-          <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
-        </q-tabs>
+  <q-dialog width="100%" class="announcement-dialog" v-model="isStationNotice">
+    <div class="popout-dialog" style="padding-top: 16px">
+      <q-btn dense rounded icon="close" class="bg-white text-black announcement-close" v-close-popup />
+      <q-card style="width: calc(100% - 0px); margin: auto; padding-left: 10px" class="announcement-card">
+        <q-card-section class="q-mb-md">
+          <q-tabs v-model="activeKey" dense class="text-white" align="justify">
+            <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
+          </q-tabs>
 
-        <q-separator />
+          <q-separator />
 
-        <q-tab-panels v-model="activeKey" animated>
-          <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
-            <q-list style="min-height: 65vh">
-              <div v-for="(ann, idx) in announcementList" :key="idx">
-                <span v-if="ann.typeId === tab.id">
-                  <q-expansion-item
-                    style="max-height: 65vh; overflow: auto"
-                    group="somegroup"
-                    icon="volume_up"
-                    :label="ann.title"
-                  >
-                    <q-card>
-                      <q-card-section>
-                        {{ ann.content }}
-                      </q-card-section>
-                    </q-card>
-                  </q-expansion-item>
+          <q-tab-panels v-model="activeKey" animated>
+            <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
+              <q-list style="min-height: auto">
+                <div v-for="(ann, idx) in announcementList" :key="idx">
+                  <span v-if="ann.typeId === tab.id">
+                    <q-expansion-item
+                      style="max-height: 65vh; overflow: auto"
+                      group="somegroup"
+                      icon="volume_up"
+                      :label="ann.title"
+                    >
+                      <q-card>
+                        <q-card-section>
+                          {{ ann.content }}
+                        </q-card-section>
+                      </q-card>
+                    </q-expansion-item>
 
-                  <q-separator></q-separator>
-                </span>
-              </div>
-            </q-list>
-          </q-tab-panel>
-        </q-tab-panels>
-      </q-card-section>
-    </q-card>
+                    <q-separator></q-separator>
+                  </span>
+                </div>
+              </q-list>
+            </q-tab-panel>
+          </q-tab-panels>
+        </q-card-section>
+      </q-card>
+    </div>
   </q-dialog>
 
   <q-dialog width="100%" v-model="isImportantAnnoucementModal">
@@ -877,6 +871,9 @@ const activateSlide = (clickedItem) => {
     item.active = item === clickedItem;
   });
 };
+
+const csDragPos = ref([10, 0]);
+const isDraggingCsIcon = ref(false);
 
 const slide = ref(0);
 
@@ -1283,8 +1280,36 @@ const openPopup = (noticeType) => {
   }
 };
 const gotoPromo = (banner) => {
-  const redirectU = "/promo?name=" + banner.redirectUrl;
-  // router.push(`${redirectU}`);
+  const urlPattern = /^\/url\/(.*)/;
+  const platformPattern = /^\/platform\/(.*)/;
+  const gamePattern = /^\/game\/(.*)/;
+
+  if (banner.redirectUrl.match(urlPattern)) {
+    const extractedUrl = banner.redirectUrl.match(urlPattern)[1];
+    router.push(`${extractedUrl}`);
+  } else if (banner.redirectUrl.match(platformPattern)) {
+    const extractedUrl = banner.redirectUrl.match(platformPattern)[1];
+
+    if (extractedUrl === "SABA") {
+      // gameName: SABA platformCode: SABA gameCode:  gameStatus: OPEN gameType: SPORT gameId: 50
+      playGame(extractedUrl, extractedUrl, "", "OPEN", "SPORT", "50");
+    } else if (extractedUrl === "Evo") {
+      // gameName: Evo platformCode: Evo gameCode:  gameStatus: OPEN gameType: LIVE gameId: 2
+      playGame(extractedUrl, extractedUrl, "", "OPEN", "LIVE", "2");
+    } else if (extractedUrl === "JILI") {
+      // gameName: JiliGames platformCode: JILI gameCode:  gameStatus: OPEN gameType: SLOT gameId: 8
+      openGame(extractedUrl, extractedUrl, "", "OPEN", "SLOT", "8");
+    }
+  } else if (banner.redirectUrl.match(gamePattern)) {
+    const extractedUrl = banner.redirectUrl.match(gamePattern)[1];
+    switch (extractedUrl) {
+      case "spribe/aviator":
+        // gameName: Aviator platformCode: Spribe gameCode: aviator gameStatus: OPEN gameType: CASUAL gameId: 9568
+        playGame("Aviator", "Spribe", "aviator", "CASUAL", "LIVE", "9568");
+      default:
+        return null;
+    }
+  }
 };
 
 const gotoSignIn = () => {
@@ -1385,6 +1410,12 @@ const detectAndroidVersion = () => {
   }
 
   return "not-android";
+};
+
+const moveCsIcon = (ev) => {
+  isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
+
+  csDragPos.value = [csDragPos.value[0] - ev.delta.x, csDragPos.value[1] - ev.delta.y];
 };
 
 onMounted(() => {
@@ -1830,14 +1861,37 @@ onMounted(() => {
 
 .announcement-close {
   position: absolute;
-  right: 4px;
-  top: 80px;
+  right: 0px;
+  top: 0px;
   z-index: 3;
+}
+
+.announcement-dialog {
+  height: calc(100vh - 108px);
+}
+
+.announcement-card {
+  height: 400px;
+  background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+  border-radius: 10px;
+  overflow-y: auto;
+
+  .q-tab__label {
+    font-size: 18px;
+  }
+
+  .q-card {
+    background: transparent;
+  }
+
+  .q-tab-panels {
+    background: transparent;
+    width: calc(100% - 10px);
+  }
 }
 
 .popout-dialog {
   width: 90%;
-
   max-width: 500px;
   position: relative;
   padding-top: 90px;
@@ -2067,6 +2121,14 @@ onMounted(() => {
   margin: auto;
 }
 
+.cs-icon-wrapper {
+  display: flex;
+  width: 70px;
+  height: 76px;
+  background: url("../assets/images/index/icon-cs.png") no-repeat center center;
+  background-size: contain;
+}
+
 .home-divider {
   border-top: 1px solid rgba(255, 255, 255, 0.3);
   height: 1px;
@@ -2147,18 +2209,18 @@ onMounted(() => {
   .title-game {
     margin-left: -8px;
     margin-right: -8px;
-    padding: 8px 12px 12px;
+    padding: 15px 12px 8px;
     display: flex;
     gap: 8px;
     align-items: center;
     background-image: url("../assets/images/index/title-bg.png");
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: top left;
+    background-position: center center;
 
     .txt-style {
       font-family: "Dongle", sans-serif;
-      font-size: 48px;
+      font-size: 2.6rem;
       font-weight: 700;
       letter-spacing: 1px;
       line-height: 1;
@@ -2246,10 +2308,16 @@ onMounted(() => {
   margin-bottom: 12px;
   column-gap: 8px;
   row-gap: 16px;
+  padding-bottom: 10px;
+
+  &.live-casino {
+    padding-top: 8px;
+    margin-bottom: 0px;
+  }
 
   .swiper-scrollbar.swiper-scrollbar-horizontal {
     bottom: 0px;
-    background: rgba(43, 55, 74, 0.4);
+    background: rgba(43, 55, 74, 0.6);
     padding: 2px;
     height: 10px;
   }
@@ -2327,7 +2395,7 @@ onMounted(() => {
 }
 
 .floating-btn {
-  z-index: 5;
+  z-index: 2001;
 
   img {
     width: 100%;
@@ -2388,8 +2456,8 @@ onMounted(() => {
 
 .cat-selection-wrapper {
   // overflow-x: hidden;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
+  // padding-bottom: 20px;
+  margin-bottom: 10px;
   .cat-selection-container {
     display: flex;
     gap: 6px;
@@ -2399,9 +2467,13 @@ onMounted(() => {
 
   .swiper-scrollbar.swiper-scrollbar-horizontal {
     bottom: 0px;
-    background: #2b374a;
+    background: rgba(43, 55, 74, 0.6);
     padding: 2px;
     height: 10px;
+  }
+
+  .swiper-scrollbar-drag {
+    background: rgba(255, 255, 255, 0.4);
   }
 }
 
@@ -2409,7 +2481,7 @@ onMounted(() => {
   background: #2b374a;
   // min-width: 80px;
   width: 80px;
-  height: 60px;
+  height: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2434,13 +2506,13 @@ onMounted(() => {
   .cat-icon {
     img {
       height: 100%;
-      max-height: 22px;
+      max-height: 19px;
     }
   }
 
   .cat-title {
+    font-size: 12px;
     font-weight: bold;
-    font-size: 14px;
     color: #bfc3c9;
   }
 }
@@ -2496,6 +2568,21 @@ onMounted(() => {
 .android-8 {
   .game-platform-img {
     height: 80px;
+  }
+}
+
+.announcement-card {
+  padding-top: 16px;
+
+  font-family: "Manrope", sans-serif;
+  .q-tab__label {
+    font-size: 16px;
+  }
+  .q-tab--active .q-tab__indicator {
+    height: 0px;
+  }
+  .q-item__label {
+    color: #fff;
   }
 }
 </style>

@@ -13,6 +13,7 @@ export const errorMessages = {
   601: "Token validation error",
   603: "Token not found",
   604: "Logged in successfully",
+  608: "The current user's operations are too frequent. Please try again.",
   707: "Insufficient balance",
   710: "Insufficient withdrawable balance",
   800: "Incorrect verification code",

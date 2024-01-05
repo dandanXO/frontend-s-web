@@ -1,115 +1,116 @@
 <template>
-  <div class="deposit-options">
-    <div class="lil-title">Select Amount</div>
-    <q-btn
-      flat
-      class="deposit-option-btn q-mt-sm"
-      :class="{ active: isUpi1Active }"
-      label="UPI"
-      @click="handleDepositUpiClick(1)"
-    />
-    <!-- <q-btn
+  <div class="deposit-wrapper">
+    <div class="deposit-options">
+      <div class="lil-title">Select Amount</div>
+      <q-btn
+        flat
+        class="deposit-option-btn q-mt-sm"
+        :class="{ active: isUpi1Active }"
+        label="UPI"
+        @click="handleDepositUpiClick(1)"
+      />
+      <!-- <q-btn
         flat
         class="deposit-option-btn label-on-discount"
         :class="{ active: isUpi2Active }"
         label="UPI2"
         @click="handleDepositUpiClick(2)"
       /> -->
-  </div>
+    </div>
 
-  <div class="deposit-item-container q-mt-md">
-    <template v-for="(item, index) in depositItems" :key="index">
-      <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
-        <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
-        <div :class="['deposit-svg', item.isActive && 'active']">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path
-              d="M8.12492 11.118L14.0828 5L15 5.94102L8.12492 13L4 8.76474L4.9165 7.82373L8.12492 11.118Z"
-              fill="white"
-            />
-          </svg>
+    <div class="deposit-item-container q-mt-md">
+      <template v-for="(item, index) in depositItems" :key="index">
+        <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
+          <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
+          <div :class="['deposit-svg', item.isActive && 'active']">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path
+                d="M8.12492 11.118L14.0828 5L15 5.94102L8.12492 13L4 8.76474L4.9165 7.82373L8.12492 11.118Z"
+                fill="white"
+              />
+            </svg>
+          </div>
+        </div>
+      </template>
+    </div>
+
+    <div v-if="isDisplay" class="inner-cont" style="overflow: auto">
+      <div class="submit-message">
+        <div class="line">
+          <span>Bank Name:</span>
+          <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
+          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('0')">
+            {{ copybtntxt0 }}
+          </q-btn>
+        </div>
+        <div class="line">
+          <span>Bank Account:</span>
+          <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
+          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('1')">
+            {{ copybtntxt1 }}
+          </q-btn>
+        </div>
+        <div class="line">
+          <span>Bank Card Number:</span>
+          <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
+          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('2')">
+            {{ copybtntxt2 }}
+          </q-btn>
+        </div>
+        <div class="line">
+          <span>Deposit Amount:</span>
+          <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
+          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('3')">
+            {{ copybtntxt3 }}
+          </q-btn>
         </div>
       </div>
-    </template>
-  </div>
-
-  <div v-if="isDisplay" class="inner-cont" style="overflow: auto">
-    <div class="submit-message">
-      <div class="line">
-        <span>Bank Name:</span>
-        <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
-        <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('0')">
-          {{ copybtntxt0 }}
-        </q-btn>
-      </div>
-      <div class="line">
-        <span>Bank Account:</span>
-        <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
-        <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('1')">
-          {{ copybtntxt1 }}
-        </q-btn>
-      </div>
-      <div class="line">
-        <span>Bank Card Number:</span>
-        <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
-        <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('2')">
-          {{ copybtntxt2 }}
-        </q-btn>
-      </div>
-      <div class="line">
-        <span>Deposit Amount:</span>
-        <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
-        <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('3')">
-          {{ copybtntxt3 }}
-        </q-btn>
-      </div>
     </div>
-  </div>
 
-  <div class="deposit-container" v-else>
-    <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
-      <div class="deposit-enter-amt" v-if="amountList.length === 0">
-        <div class="lil-title">Amount</div>
-        <q-input
-          class="deposit-input q-mt-sm"
+    <div class="deposit-container" v-else>
+      <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
+        <div class="deposit-enter-amt" v-if="amountList.length === 0">
+          <div class="lil-title">Amount</div>
+          <q-input
+            class="deposit-input q-mt-sm"
+            ref="depositAmtRef"
+            name="localAmount"
+            hide-bottom-space
+            filled
+            v-model="form.localAmount"
+            :rules="verifyDepositAmount"
+            dense
+            clearable
+          >
+            <template v-slot:prepend>
+              <span style="font-size: 26px" class="currency">
+                <template v-if="isUSDT">USDT</template>
+                <template v-else>{{ store.currency.value }}</template>
+              </span>
+            </template>
+          </q-input>
+        </div>
+
+        <q-select
+          v-else
           ref="depositAmtRef"
+          label="Select Amount"
           name="localAmount"
-          hide-bottom-space
           filled
+          :options="amountList"
           v-model="form.localAmount"
+          color="bright"
           :rules="verifyDepositAmount"
-          dense
-          clearable
+          padding="none"
         >
           <template v-slot:prepend>
             <span style="font-size: 26px" class="currency">
-              <template v-if="isUSDT">USDT</template>
-              <template v-else>{{ store.currency.value }}</template>
+              {{ store.currency.value }}
             </span>
           </template>
-        </q-input>
-      </div>
+        </q-select>
 
-      <q-select
-        v-else
-        ref="depositAmtRef"
-        label="Select Amount"
-        name="localAmount"
-        filled
-        :options="amountList"
-        v-model="form.localAmount"
-        color="bright"
-        :rules="verifyDepositAmount"
-        padding="none"
-      >
-        <template v-slot:prepend>
-          <span style="font-size: 26px" class="currency">
-            {{ store.currency.value }}
-          </span>
-        </template>
-      </q-select>
-
-      <!-- <div class="q-mt-md q-mb-md text-grey-7">
+        <!-- <div class="q-mt-md q-mb-md text-grey-7">
           Minimum Amount:
           {{ calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0 }}
           <br />
@@ -121,36 +122,37 @@
           }}
         </div> -->
 
-      <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="Exchange rate">
-        <span style="color: #fff">
-          1.00 USDT ≈ {{ activeMethod.currencyRate }}
-          {{ store.currency.value }}
-        </span>
-      </div>
+        <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="Exchange rate">
+          <span style="color: #fff">
+            1.00 USDT ≈ {{ activeMethod.currencyRate }}
+            {{ store.currency.value }}
+          </span>
+        </div>
 
-      <BankComponent
-        v-show="selectedPayType && bankCardList.length"
-        ref="payTypeClass"
-        :is="selectedPayType"
-        v-model="form.bankId"
-        :bank-list="bankCardList"
-        @selected="selectedBank"
-        @successful="isDeposited = true"
-      ></BankComponent>
+        <BankComponent
+          v-show="selectedPayType && bankCardList.length"
+          ref="payTypeClass"
+          :is="selectedPayType"
+          v-model="form.bankId"
+          :bank-list="bankCardList"
+          @selected="selectedBank"
+          @successful="isDeposited = true"
+        ></BankComponent>
 
-      <div v-if="activeMethod.msg" class="q-mt-md" v-html="activeMethod.msg"></div>
-    </q-form>
-  </div>
-
-  <div class="q-mt-lg">
-    <div :class="`btn-submit`" @click="confirmDeposit">
-      <q-spinner v-if="isLoadingInitPay || btnLoading" color="white" size="2em" :thickness="2"></q-spinner>
-      <template v-else>Submit</template>
+        <div v-if="activeMethod.msg" class="q-mt-md" v-html="activeMethod.msg"></div>
+      </q-form>
     </div>
-  </div>
 
-  <div class="node-wrapper" style="display: none">
-    <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
+    <div class="q-mt-lg">
+      <div :class="`btn-submit`" @click="confirmDeposit">
+        <q-spinner v-if="isLoadingInitPay || btnLoading" color="white" size="2em" :thickness="2"></q-spinner>
+        <template v-else>Submit</template>
+      </div>
+    </div>
+
+    <div class="node-wrapper" style="display: none">
+      <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
+    </div>
   </div>
 
   <q-dialog width="100%" v-model="isDeposited">
@@ -170,7 +172,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, shallowRef } from "vue";
+import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated } from "vue";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { cashier } from "boot/axios";
@@ -183,16 +185,18 @@ import { convertToCommaAmount } from "src/boot/utils";
 var qs = require("qs");
 const store = userStore();
 const router = useRouter();
+const emits = defineEmits(["closeModal"]);
 
 const checkNewUser = () => {
   if (store.realName == "" || store.realName == null) {
+    emits("closeModal");
     $q.notify({
       color: "negative",
       position: "top",
       message: "Please fill in your personal details",
       icon: "report_problem"
     });
-    router.push(`/account`);
+    router.push(`/account/profile`);
   }
 };
 
@@ -617,6 +621,11 @@ async function pDepo(deposit) {
     });
 }
 
+onActivated(() => {
+  initPay();
+  checkNewUser();
+});
+
 onMounted(() => {
   initPay();
   checkNewUser();
@@ -700,11 +709,13 @@ onMounted(() => {
 .deposit-item-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  row-gap: 12px;
+  row-gap: 10px;
+  column-gap: 10px;
 
   .deposit-item {
     margin: auto;
     position: relative;
+    width: 100%;
 
     .deposit-amt {
       border-radius: 4px;
@@ -714,7 +725,7 @@ onMounted(() => {
       justify-content: center;
       line-height: 1;
       padding: 3px;
-      width: 7.3rem;
+      width: 100%;
       height: 4.1rem;
       font-weight: 600;
       aspect-ratio: 106/64;
@@ -749,7 +760,8 @@ onMounted(() => {
   justify-content: center;
 
   .deposit-form {
-    width: 90%;
+    // width: 90%;
+    width: 100%;
 
     .deposit-enter-amt {
       margin: 20px auto 0 auto;
@@ -758,6 +770,11 @@ onMounted(() => {
         background-color: rgba(21, 0, 37, 0.5);
         border-radius: 5px;
         width: 100%;
+        height: 46px;
+
+        :deep(.q-field__control) {
+          height: 46px;
+        }
       }
 
       .currency {
@@ -770,14 +787,14 @@ onMounted(() => {
 
 .deposit-options {
   margin: 16px auto 0 auto;
-  width: 90%;
+  // width: 90%;
 
   .deposit-option-btn {
     color: #cccccc;
     background: #1d2635;
-    min-width: 100px;
+    min-width: 80px;
     border: 3px solid transparent;
-    height: 50px;
+    height: 38px;
     border-radius: 0.375rem;
     aspect-ratio: 77/38;
 
@@ -812,16 +829,16 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1;
   font-weight: 600;
-  height: 60px;
+  height: 46px;
   transition: 0.3s all;
   color: #ffffff;
   margin: auto;
   border-radius: 6px;
   background: #5c46e7;
-  width: 90%;
+  width: 100%;
   aspect-ratio: 335/46;
 
   &:before {
@@ -836,5 +853,10 @@ onMounted(() => {
 .lil-title {
   color: #576373;
   font-weight: 600;
+}
+
+.deposit-wrapper {
+  width: 95%;
+  margin: auto;
 }
 </style>

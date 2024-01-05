@@ -77,7 +77,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { onActivated, onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
@@ -155,31 +155,18 @@ const searchRecord = (isNewSearch) => {
   gameBetRecordData.value = [];
 
   const { startDate, endDate, platform } = searchForm;
-  // const paramsInfo = {
-  //   startDate,
-  //   endDate,
-  //   platform,
-  //   memberId: store.id,
-  //   current: pagination.current,
-  //   size: pagination.pageSize,
-  //   pagingState: pagination.pagingState
-  // };
-
-  // api.post(`/otp/sendNewEmail`, qs.stringify({
-  //       email: formDetail.email,
-  //       captchaCode: innerCaptchaRef.value,
-  //       codeId: updateSecurityVerified.codeId
-  //     }))
 
   api
-    .post("/session/member/cassandraBetRecord", {
-      startDate,
-      endDate,
-      platform,
-      memberId: store.id,
-      current: pagination.current,
-      size: pagination.pageSize,
-      pagingState: pagination.pagingState
+    .get("/session/member/cassandraBetRecord", {
+      params: {
+        startDate,
+        endDate,
+        platform,
+        memberId: store.id,
+        current: pagination.current,
+        size: pagination.pageSize,
+        pagingState: pagination.pagingState
+      }
     })
     .then((response) => {
       const { code, data } = response;
@@ -227,6 +214,13 @@ const getGameBetRecordTotal = () => {
     }
   });
 };
+onActivated(() => {
+  setTime();
+  getPlatformList();
+
+  searchRecord(true);
+});
+
 onMounted(() => {
   setTime();
   getPlatformList();

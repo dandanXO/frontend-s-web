@@ -1,7 +1,6 @@
 <template>
   <!-- <q-card-section class="page-title">优惠活动</q-card-section> -->
   <ProfileSummary :homeProfile="true" />
-
   <div class="vip-promo-tab-wrapper" v-if="!isPromoDetail">
     <q-tabs
       v-model="vipPromoTab"
@@ -94,6 +93,7 @@
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
+                  v-if="selectedPromo.promoType"
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
@@ -105,13 +105,13 @@
                 >
                   <div class="top-float">
                     <div class="top-subtitle">Get unlimited rewards!</div>
-                    <div class="top-title">VIP Rewards</div>
+                    <div class="top-title">{{ selectedPromo.title }}</div>
                   </div>
                   <div class="promo-content-inner">
-                    <div class="content-title">Invite to Earn</div>
+                    <div class="content-title">{{ selectedPromo.title }}</div>
                   </div>
                   <div v-html="selectedPromo.pageContent"></div>
-                  <div class="join-container">
+                  <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
                     <div class="promo-date">
                       <div class="date-txt" v-if="!isPromotionEnded">Promotion Ends</div>
                       <div class="date-timer">
@@ -124,7 +124,7 @@
                       no-caps
                       label="Join Now"
                       :disabled="isPromotionEnded"
-                      @click="goToVip()"
+                      @click="goToJoinNow()"
                     />
                   </div>
 
@@ -160,7 +160,7 @@
 </template>
 
 <script lang="js">
-import {ref, defineComponent, onMounted, reactive, watch, onBeforeUnmount} from "vue";
+import {ref, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
@@ -235,6 +235,17 @@ export default defineComponent({
       // },
     ];
 
+    onActivated(() => {
+      // if promo name is present, do not show promo list on first load
+      if(route.query.name) {
+        isPromoDetail.value = true;
+      }
+
+      loadBanner();
+      loadAll();
+      updateCountdown();
+    });
+
     watch(() => route.query, () => {
       if (route.query === null) {
         isPromoDetail.value = false
@@ -288,16 +299,23 @@ export default defineComponent({
     }
     const showPromoDetails = (promo) => {
       if (!store.token) {
-        isDisplayLogin.value = true
+        // isDisplayLogin.value = true
+
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: 'Please login to continue',
+          icon: "report_problem"
+        });
+        router.push(`/login`)
       } else {
         if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
           router.push({path: '/account/vip'});
         } else {
-          // router.push({path: '/promo', query: {name: promo.redirectUrl}})
           if (route.query.fromAccount) {
-            router.push({path: '/promo', query: {name: promo.title, fromAccount: true}})
+            router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
           } else {
-            router.push({path: '/promo', query: {name: promo.title}})
+            router.push({path: '/promo', query: {name: promo.redirectUrl}})
           }
           isPromoDetail.value = true
           selectedPromo.value = promo
@@ -342,12 +360,20 @@ export default defineComponent({
 
     }
 
+    const goToJoinNow = () => {
+      if(selectedPromo.value.redirectUrl === "EarnMoney") {
+        router.push('/earn-money')
+      } else if (selectedPromo.value.redirectUrl === "VIPrewards") {
+        router.push('/vip')
+      }
+    }
+
     const goToVip = () => {
       router.push('/vip')
     }
 
     // promo timer
-    const endDate = new Date('01/02/2024 12:00:00').getTime();
+    const endDate = new Date('01/8/2024 12:00:00').getTime();
     const countdown = ref('');
     const isPromotionEnded = ref(false);
 
@@ -383,11 +409,11 @@ export default defineComponent({
       clearInterval(countdownInterval);
     });
 
-    onMounted(() => {
-      loadBanner();
-      loadAll();
-      updateCountdown();
-    });
+    // onMounted(() => {
+    //   loadBanner();
+    //   loadAll();
+    //   updateCountdown();
+    // });
 
     return {
       promoState,
@@ -411,7 +437,9 @@ export default defineComponent({
       getCountdown,
       updateCountdown,
       countdownInterval,
-      goToVip
+      goToVip,
+      goToJoinNow,
+      ui
     }
   },
 });
@@ -432,7 +460,8 @@ export default defineComponent({
     background-color: #1b2232;
     border-radius: 8px;
     margin-bottom: 4px;
-    padding: 3px;
+    margin-top: 5px;
+    padding: 1px;
 
     :deep(.q-tab__label) {
       font-weight: 400;
@@ -450,9 +479,8 @@ export default defineComponent({
   }
 }
 </style>
-<style lang="scss">
+<style scoped lang="scss">
 .promo-container {
-  min-height: 100vh;
   .promo-view-container {
     ol {
       padding: 0 15px;
@@ -501,16 +529,18 @@ export default defineComponent({
 }
 
 .back-btn {
-  background: rgb(255, 255, 255, 0.2);
+  background: rgb(255, 255, 255, 0.4);
   margin: 12px;
   position: absolute;
   right: 0;
   top: 0;
+  z-index: 9;
 }
 </style>
 <style lang="scss">
 .promo-container {
   color: #ffffff;
+  min-height: calc(100vh - 160px);
 
   .all-promotions {
     padding-bottom: 20px;
@@ -525,8 +555,8 @@ export default defineComponent({
       background-repeat: no-repeat;
       background-position: center bottom;
       overflow: hidden;
-      height: 40vw;
-      max-height: 130px;
+      height: 170px;
+      // max-height: 130px;
       margin: 10px;
 
       img {
@@ -653,7 +683,7 @@ export default defineComponent({
               .promo-content {
                 width: 100%;
                 // width: unset;
-                height: 100%;
+                // height: 100%;
 
                 &.isDesktop {
                   display: block;
@@ -742,6 +772,16 @@ export default defineComponent({
 
     .selected-promo-wrapper {
       .banner-container {
+        &:after {
+          content: "";
+          background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(255, 255, 255, 0));
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 80px;
+          width: 100%;
+        }
+
         width: 100%;
 
         .promo-bg {
@@ -773,6 +813,11 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+        padding-bottom: 40px;
+
+        p {
+          font-size: 14px;
+        }
 
         img {
           margin-bottom: 5px;
@@ -986,7 +1031,8 @@ export default defineComponent({
   background: #3b2e95;
   padding: 12px 12px;
   position: fixed;
-  bottom: 66px;
+  //top: calc(100vh - 127px);
+  //bottom: 66px;
   left: 0;
   width: 100%;
   display: flex;

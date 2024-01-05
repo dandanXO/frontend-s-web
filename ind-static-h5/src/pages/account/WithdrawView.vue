@@ -136,7 +136,10 @@
       </template>
 
       <div class="top-wrapper">
-        <div class="title">Withdrawal Amount (200 - 20,000RS)</div>
+        <div class="title">
+          Withdrawal Amount ({{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin) }} -
+          {{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }} RS)
+        </div>
       </div>
 
       <div class="mid-wrapper">
@@ -707,10 +710,11 @@ const isValidCardAddress = () => {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1;
     font-weight: 600;
-    height: 60px;
+    height: 46px;
+    width: 100%;
     transition: 0.3s all;
     color: #ffffff;
     margin: auto;
