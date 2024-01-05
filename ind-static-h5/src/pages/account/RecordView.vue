@@ -155,32 +155,25 @@ const searchRecord = (isNewSearch) => {
   gameBetRecordData.value = [];
 
   const { startDate, endDate, platform } = searchForm;
-  // const paramsInfo = {
-  //   startDate,
-  //   endDate,
-  //   platform,
-  //   memberId: store.id,
-  //   current: pagination.current,
-  //   size: pagination.pageSize,
-  //   pagingState: pagination.pagingState
-  // };
-
-  // api.post(`/otp/sendNewEmail`, qs.stringify({
-  //       email: formDetail.email,
-  //       captchaCode: innerCaptchaRef.value,
-  //       codeId: updateSecurityVerified.codeId
-  //     }))
 
   api
-    .post("/session/member/betRecord", {
-      startDate,
-      endDate,
-      platform,
-      memberId: store.id,
-      current: pagination.current,
-      size: pagination.pageSize,
-      pagingState: pagination.pagingState
-    })
+    .post(
+      "/session/member/betRecord",
+      {
+        startDate,
+        endDate,
+        platform,
+        memberId: store.id,
+        current: pagination.current,
+        size: pagination.pageSize,
+        pagingState: pagination.pagingState
+      },
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      }
+    )
     .then((response) => {
       const { code, data } = response;
       if (code === 0) {

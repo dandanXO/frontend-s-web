@@ -30,7 +30,7 @@
                   {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, true) }}
                 </span>
 
-                <div @click="refreshBalance()" class="btn-refresh">
+                <div class="btn-refresh">
                   <q-icon name="sync" size="16px" color="white-7"></q-icon>
                 </div>
               </div>
@@ -166,13 +166,13 @@ const refreshBalance = () => {
 };
 
 const onClickLogo = () => {
-  if(isAndroid()) {
-    window.open("http://indwin7.com/", '_blank');
+  if (isAndroid()) {
+    window.open("http://indwin7.com/", "_blank");
     return;
   }
-  
-  router.push('/');
-}
+
+  router.push("/");
+};
 
 const onVipClick = () => {
   router.push({ path: "/vip", query: { redirect: route.path } });
@@ -251,7 +251,7 @@ onMounted(() => {
       position: absolute;
       right: 0px;
       top: 0px;
-      background: #8952FF;
+      background: #8952ff;
       border-radius: 100px;
       padding: 0px 3px;
       z-index: 1;
