@@ -131,6 +131,33 @@
               :modules="gameModules"
               class="platform-game-container"
             >
+              <!-- Add Evolution in Hot Game -->
+              <template v-for="(item, index) in livecasino" :key="index">
+                <swiper-slide
+                  class="platform-game-item btn-effect"
+                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+                  v-if="item.name === 'Evo'"
+                >
+                  <div
+                    data-aos="zoom-in"
+                    data-aos-delay="100"
+                    data-aos-duration="1200"
+                    data-aos-once="true"
+                    data-aos-anchor="#home"
+                  >
+                    <div class="platform-game-img">
+                      <div
+                        class="game--bg"
+                        :style="{
+                          backgroundImage: `url(${require(`../assets/images/games/hot-games-evo.png`)})`
+                        }"
+                      ></div>
+                    </div>
+                    <div class="platform-game-title">{{ truncateText("Evolution", 22) }}</div>
+                  </div>
+                </swiper-slide>
+              </template>
+
               <template v-for="(item, index) in hotGameList" :key="index">
                 <swiper-slide
                   class="platform-game-item btn-effect"
@@ -161,6 +188,25 @@
 
           <div class="platform-game-wrapper" v-else>
             <div class="platform-game-container grid-view">
+              <template v-for="(item, index) in livecasino" :key="index">
+                <div
+                  class="platform-game-item btn-effect"
+                  v-if="item.name === 'Evo'"
+                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+                >
+                  <div class="platform-game-img">
+                    <div
+                      class="game--bg"
+                      :style="{
+                        backgroundImage: `url(${require(`../assets/images/games/hot-games-evo.png`)})`
+                      }"
+                    ></div>
+
+                    <div class="platform-game-title">{{ truncateText("Evolution", 22) }}</div>
+                  </div>
+                </div>
+              </template>
+
               <template v-for="(item, index) in hotGameList" :key="index">
                 <div
                   class="platform-game-item btn-effect"
@@ -365,10 +411,36 @@
               :modules="gameModules"
               class="platform-game-container"
             >
-              <template v-for="(item, index) in fishGameList" :key="index">
+              <template v-for="(item, index) in fishGameJILIList" :key="index">
                 <swiper-slide
                   class="platform-game-item btn-effect"
                   @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
+                >
+                  <div
+                    data-aos="zoom-in"
+                    :data-aos-delay="100 * index"
+                    data-aos-duration="1200"
+                    data-aos-once="true"
+                    data-aos-anchor="#home"
+                  >
+                    <div class="platform-game-img">
+                      <div
+                        class="game--bg"
+                        :style="{
+                          backgroundImage: `url(${imgURLGame}${item.icon})`
+                        }"
+                      ></div>
+                    </div>
+
+                    <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
+                  </div>
+                </swiper-slide>
+              </template>
+
+              <template v-for="(item, index) in fishGameJDBList" :key="index">
+                <swiper-slide
+                  class="platform-game-item btn-effect"
+                  @click="playGame(item.name, 'JDB', item.code, item.status, item.gameType, item.id)"
                 >
                   <div
                     data-aos="zoom-in"
@@ -503,10 +575,28 @@
         </div>
 
         <div class="platform-game-container grid-view" v-else>
-          <template v-for="(item, index) in fishGameList" :key="index">
+          <template v-for="(item, index) in fishGameJILIList" :key="index">
             <div
               class="platform-game-item btn-effect"
               @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
+            >
+              <div class="platform-game-img">
+                <div
+                  class="game--bg"
+                  :style="{
+                    backgroundImage: `url(${imgURLGame}${item.icon})`
+                  }"
+                ></div>
+
+                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
+              </div>
+            </div>
+          </template>
+
+          <template v-for="(item, index) in fishGameJDBList" :key="index">
+            <div
+              class="platform-game-item btn-effect"
+              @click="playGame(item.name, 'JDB', item.code, item.status, item.gameType, item.id)"
             >
               <div class="platform-game-img">
                 <div
@@ -557,7 +647,11 @@
     </template>
   </div>
 
-  <GameModal v-if="route.path !== '/account/profile'" ref="allGames" :closeFullGameDialog="closeFullGameDialog"></GameModal>
+  <GameModal
+    v-if="route.path !== '/account/profile'"
+    ref="allGames"
+    :closeFullGameDialog="closeFullGameDialog"
+  ></GameModal>
 
   <q-dialog
     width="100%"
@@ -1056,11 +1150,11 @@ const loadHotGameList = () => {
     });
 };
 
-const fishGameList = ref([]);
+const fishGameJILIList = ref([]);
 
-const loadFishGameList = () => {
+const loadJILIFishGameList = () => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
-  const key = `PLATFORM_FISH_GAMES_${regDevice}`;
+  const key = `PLATFORM_JILI_FISH_GAMES_${regDevice}`;
 
   cached
     .get(key, () =>
@@ -1081,7 +1175,36 @@ const loadFishGameList = () => {
         .catch((err) => {})
     )
     .then((res) => {
-      fishGameList.value = res;
+      fishGameJILIList.value = res;
+    });
+};
+
+const fishGameJDBList = ref([]);
+
+const loadJDBFishGameList = () => {
+  const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
+  const key = `PLATFORM_JDB_FISH_GAMES_${regDevice}`;
+
+  cached
+    .get(key, () =>
+      api
+        .get("/platformGames", {
+          params: {
+            platformId: 31,
+            gameType: "FISH",
+            device: regDevice
+          }
+        })
+        .then((ret) => {
+          const res = ret;
+          if (res.code === 0) {
+            return res;
+          }
+        })
+        .catch((err) => {})
+    )
+    .then((res) => {
+      fishGameJDBList.value = res;
     });
 };
 
@@ -1425,7 +1548,8 @@ onMounted(() => {
   checkPlatform();
   getAppDownloadUrl();
   loadHotGameList();
-  loadFishGameList();
+  loadJILIFishGameList();
+  loadJDBFishGameList();
   store.getUnreadTotal();
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);

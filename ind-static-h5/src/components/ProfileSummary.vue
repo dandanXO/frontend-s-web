@@ -78,7 +78,10 @@
                 <q-avatar icon="mail" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Message</q-item-label>
+                <q-item-label>
+                  <span class="message-amt" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</span>
+                  Message
+                </q-item-label>
               </q-item-section>
             </q-item>
 
@@ -425,6 +428,22 @@ onMounted(() => {
   .infoboard-container .infoboard-wrapper.home-profile {
     padding: 0px 4px;
   }
+}
+
+.message-amt {
+  background-color: #8952ff;
+  border-radius: 30px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  font-size: 10px;
+  position: absolute;
+  bottom: 5px;
+  left: 15px;
+  font-weight: bold;
 }
 </style>
 
