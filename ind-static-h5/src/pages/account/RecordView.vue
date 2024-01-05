@@ -77,7 +77,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { onActivated, onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
@@ -214,6 +214,13 @@ const getGameBetRecordTotal = () => {
     }
   });
 };
+onActivated(() => {
+  setTime();
+  getPlatformList();
+
+  searchRecord(true);
+});
+
 onMounted(() => {
   setTime();
   getPlatformList();
