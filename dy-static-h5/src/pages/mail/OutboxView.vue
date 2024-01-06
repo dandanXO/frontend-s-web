@@ -119,7 +119,7 @@ const readAllMsg = () => {};
 
 const deleteMsg = (ids, spliceIndex, callback) => {
   api
-    .delete(`/session/feedback/delete?ids=${ids}`, {})
+    .post(`/session/feedback/delete?ids=${ids}`, {})
     .then((res) => {
       const { code } = res;
       if (code === 0) {

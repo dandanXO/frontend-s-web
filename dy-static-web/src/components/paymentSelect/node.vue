@@ -10,21 +10,16 @@
         class="node-item payment-method-item"
         :id="level + '_' + i"
         @click="clickItem(item)"
-        :class="[
-          item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : ''
-        ]"
-        :style="item.group && item.children.length === 0 ? 'display:none': ''"
+        :class="[item.children ? 'node-group' : '', selectItem === item ? 'active' : '']"
+        :style="item.group && item.children.length === 0 ? 'display:none' : ''"
         :key="i"
         v-for="(item, i) in list"
       >
         <div class="node-text">
           <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
           <div>{{ item.nodeName }}</div>
-          <div
-            class="promo"
-          >
-            <img v-if="item.promotionIcon" :src="`${imgURL}label/${item.promotionIcon}`">
+          <div class="promo">
+            <img v-if="item.promotionIcon" :src="`${imgURL}label/${item.promotionIcon}`" />
           </div>
           <div class="payment-method-wrapper">
             <div
@@ -50,16 +45,12 @@
       </div>
       <!-- </div> -->
       <!--      <el-button icon="el-icon-refresh" size="mini" v-if="level === 1" type="primary" @click="addNode()">submit</el-button>-->
-      
     </div>
     <div :key="i + nodeKey" v-for="(item, i) in list">
       <node
         @click="clickItem(item)"
         :name="item.nodeName"
-        :class="[
-          item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : ''
-        ]"
+        :class="[item.children ? 'node-group' : '', selectItem === item ? 'active' : '']"
         v-if="selectItem === item"
         :level="parseInt(level) + 1"
         :list="item.children"
@@ -112,7 +103,6 @@ export default defineComponent({
       if (item) {
         item.hasActive = true;
         this.selectItem = item;
-        this.$emit("clicked", this.selectItem);
         if (item.group) {
           this.$emit("clicked", item.children[0]);
         } else {
@@ -136,9 +126,7 @@ export default defineComponent({
         item.hasActive = true;
         this.selectItem = item;
         if (item.group) {
-          let activeChild = item.children.find(
-            (child) => child.hasActive === true
-          );
+          let activeChild = item.children.find((child) => child.hasActive === true);
           if (activeChild) {
             this.$emit("clicked", activeChild);
           } else {
@@ -184,8 +172,7 @@ $node-color: #4873f1;
   top: 8px;
   width: 6px;
   height: 6px;
-  background-image: linear-gradient(0deg, #04a509 0%, $group-color 100%),
-    linear-gradient(#ffffff, #ffffff);
+  background-image: linear-gradient(0deg, #04a509 0%, $group-color 100%), linear-gradient(#ffffff, #ffffff);
 }
 .title::before {
   top: 8px;
@@ -463,9 +450,9 @@ $node-color: #4873f1;
       background-size: 100%;
       background-position: top center;
       img {
-       padding: 0;
-       border: 0; 
-       background-color: transparent;
+        padding: 0;
+        border: 0;
+        background-color: transparent;
       }
       // top: -5px;
       // right: 0;
