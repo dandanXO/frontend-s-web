@@ -356,7 +356,20 @@
         </template>
       </el-table-column>
       <el-table-column prop="createBy" :label="t('fields.createBy')" min-width="150" />
-      <el-table-column prop="createTime" :label="t('fields.createTime')" min-width="150" />
+      <el-table-column prop="createTime" :label="t('fields.createTime')" min-width="150">
+        <template #default="scope">
+          <span v-if="scope.row.createTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.createTime !== null"
+            v-formatter="{
+              data: scope.row.createTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       :total="page.total"
@@ -403,6 +416,7 @@ import { TENANT } from "../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 import { hasPermission } from '../../../utils/util'
 import { getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n();
 const store = useStore()
@@ -459,6 +473,7 @@ const startDate = new Date();
 startDate.setDate(startDate.getDate() - 2);
 const defaultStartDate = convertDate(startDate);
 const defaultEndDate = convertDate(new Date());
+let timeZone = null;
 
 const page = reactive({
   pages: 0,
@@ -594,9 +609,13 @@ function checkQuery() {
       query[key] = value;
     }
   });
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.createTime !== null) {
     if (request.createTime.length === 2) {
-      query.createTime = request.createTime.join(",");
+      query.createTime = JSON.parse(JSON.stringify(request.createTime));
+      query.createTime[0] = formatInputTimeZone(query.createTime[0], timeZone, 'start');
+      query.createTime[1] = formatInputTimeZone(query.createTime[1], timeZone, 'end');
+      query.createTime = query.createTime.join(',')
     }
   }
 

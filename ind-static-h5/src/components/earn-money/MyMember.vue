@@ -1,196 +1,184 @@
 <template>
-  <div class="infoboard-container q-pa-md">
-    <img src="../../assets/images/earn-money/infoboard.png" />
-    <div class="infoboard-wrapper">
-      <div class="left-container">
-        <div class="infoboard">
-          <div>Income</div>
-          <div>0</div>
+  <div class="history">
+    <div class="history-summary">
+      <div class="frame">
+        <div class="content-wrapper">
+          <div class="title">Total Rebates</div>
+          <div class="amount">₹ {{ convertToCommaAmount(totalBetRebateData.totalRebate, true) }}</div>
+          <div class="date">Total Rebates from {{ totalBetRebateData.rebateFrom }}</div>
         </div>
-        <div class="infoboard">
-          <div>Direct Income</div>
-          <div>0</div>
-        </div>
-      </div>
-      <div class="right-container">
-        <img src="../../assets/images/index/more-btn.png" alt="" @click="showMoreButton()" />
       </div>
     </div>
+
+    <q-tabs
+      v-model="activeKey"
+      class="history-tabs q-mb-lg"
+      color="black"
+      no-caps
+      narrow-indicator
+      indicator-color="white"
+    >
+      <q-tab name="month" label="Month"></q-tab>
+      <q-tab name="week" label="Week"></q-tab>
+    </q-tabs>
+
+    <q-tab-panels v-model="activeKey" class="history-panels">
+      <q-tab-panel name="month">
+        <div v-for="(e, i) in monthlyDailyBetRebateData" :key="`${e}-${i}`" class="member-info">
+          <div class="amount-container">
+            <div class="amount-text">Date</div>
+            <div class="amount">
+              <span>{{ e.recordTime }}</span>
+            </div>
+          </div>
+
+          <div class="amount-container">
+            <div class="amount-text text-right">Rebate Amount</div>
+            <div class="amount text-right">
+              <span>{{ convertToCommaAmount(e.rebateAmount, true) }}</span>
+            </div>
+          </div>
+        </div>
+
+        <NoInfoComponent v-if="isNoInfo" noInfoTitle="No Record" shortenContainer="true"></NoInfoComponent>
+      </q-tab-panel>
+      <q-tab-panel name="week">
+        <div v-for="(e, i) in weeklyDailyBetRebateData" :key="`${e}-${i}`" class="member-info">
+          <div class="amount-container">
+            <div class="amount-text">Date</div>
+            <div class="amount">
+              <span>{{ e.recordTime }}</span>
+            </div>
+          </div>
+
+          <div class="amount-container">
+            <div class="amount-text text-right">Rebate Amount</div>
+            <div class="amount text-right">
+              <span>{{ convertToCommaAmount(e.rebateAmount, true) }}</span>
+            </div>
+          </div>
+        </div>
+
+        <NoInfoComponent v-if="isNoInfo" noInfoTitle="No Record" shortenContainer="true"></NoInfoComponent>
+      </q-tab-panel>
+    </q-tab-panels>
   </div>
-
-  <ContentView :contentTopStatus="`${isNoInfo ? '' : 'solid'}`">
-    <NoInfoComponent v-if="isNoInfo" noInfoTitle="No Member"></NoInfoComponent>
-    <div v-else class="member-info-container">
-      <div v-for="(e, i) in myMemberList" :key="`${e}-${i}`" class="member-info">
-        <div class="top-container">
-          <div class="id-container">
-            <span class="id">{{ e.id }}</span>
-            <img src="../../assets/images/index/vip.png" alt="" />
-          </div>
-          <div :class="`status ${e.status === 'Online' ? 'online' : 'offline'}`">{{ e.status }}</div>
-        </div>
-        <div class="bot-container">
-          <div class="amount-container">
-            <div class="amount-text">Recharge Amount</div>
-            <div class="amount">
-              RS
-              <span>{{ e.rechargeAmount }}</span>
-            </div>
-          </div>
-
-          <div class="amount-container">
-            <div class="amount-text">Income</div>
-            <div class="amount">
-              RS
-              <span>{{ e.income }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </ContentView>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import ContentView from "../ContentView.vue";
-import NoInfoComponent from "../NoInfoComponent.vue";
+import { ref, reactive, onMounted } from "vue";
+import { api } from "boot/axios";
+import { convertToCommaAmount } from "src/boot/utils";
+import NoInfoComponent from "../../components/NoInfoComponent.vue";
 
-// [
-//   { id: "Guest1321084", status: "Online", level: "vip1", rechargeAmount: 0, income: 0 },
-//   { id: "Guest1321084", status: "Offline", level: "vip1", rechargeAmount: 0, income: 0 },
-//   { id: "Guest1321084", status: "Online", level: "vip1", rechargeAmount: 0, income: 0 },
-//   { id: "Guest1321084", status: "Offline", level: "vip1", rechargeAmount: 0, income: 0 },
-//   { id: "Guest1321084", status: "Online", level: "vip1", rechargeAmount: 0, income: 0 }
-// ]
-const myMemberList = ref([]);
+const activeKey = ref("month");
+
+let totalBetRebateData = reactive({
+  totalRebate: 0,
+  rebateFrom: ""
+});
+const getTotalBetRebateAPI = () => {
+  api.get(`/session/member/totalBetRebate`).then((res) => {
+    const { code, data } = res;
+    if (code === 0) {
+      totalBetRebateData.totalRebate = data.totalRebate;
+      totalBetRebateData.rebateFrom = data.rebateFrom;
+    }
+  });
+};
 
 const isNoInfo = ref(true);
-if (myMemberList.value.length === 0) isNoInfo.value = true;
-else isNoInfo.value = false;
 
-const showMoreButton = () => {
-  console.log("show more button clicked");
+const monthlyDailyBetRebateData = ref([]);
+const weeklyDailyBetRebateData = ref([]);
+const getDailyBetRebateAPI = () => {
+  api.get(`/session/member/dailyBetRebate?queryTime=30`).then((res) => {
+    const { code, data } = res;
+    if (code === 0) monthlyDailyBetRebateData.value = data;
+    if (data.length > 0) isNoInfo.value = false;
+  });
+
+  api.get(`/session/member/dailyBetRebate?queryTime=7`).then((res) => {
+    const { code, data } = res;
+    if (code === 0) weeklyDailyBetRebateData.value = data;
+    if (data.length > 0) isNoInfo.value = false;
+  });
 };
+
+onMounted(() => {
+  getTotalBetRebateAPI();
+  getDailyBetRebateAPI();
+});
 </script>
 
-<style lang="scss">
-.infoboard-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+<style scoped lang="scss">
+.history {
+  .history-summary {
+    background: url("../../assets/images/earn-money/history-bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 0.625rem;
+    padding: 15px;
 
-  .infoboard-wrapper {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-    width: 22rem;
-    margin: 0 0 0 2rem;
+    .frame {
+      border-radius: 0.625rem;
+      border: 2px solid #fff;
+      padding: 2.5px;
 
-    .left-container {
-      width: 100%;
-
-      .infoboard {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        color: #fff;
-        margin: 1rem 0;
-
-        font-family: Helvetica;
-        font-size: 1rem;
-        font-style: normal;
-        font-weight: 700;
-        text-transform: capitalize;
-      }
-    }
-
-    .right-container {
-      img {
-        width: 1.75rem;
-      }
-    }
-  }
-
-  img {
-    width: 30rem;
-  }
-}
-
-.member-info-container {
-  position: absolute;
-  padding: 0 2rem;
-  width: 30rem;
-  height: 39.5rem;
-  overflow: scroll;
-  top: 14rem;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  .member-info {
-    border-radius: 1.25rem;
-    background: rgba(21, 0, 37, 0.2);
-    padding: 1.25rem;
-    margin: 1rem 0;
-
-    .top-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin: 0 0 1.5rem 0;
-
-      .id-container {
-        width: 50%;
-        display: flex;
-
-        .id {
-          color: #fff;
-          font-family: Helvetica;
-          font-size: 1.5rem;
-          font-style: normal;
-          font-weight: 700;
-          margin: 0 1rem 0 0;
-        }
-
-        img {
-          width: 5rem;
-        }
-      }
-
-      .status {
-        width: 5rem;
+      .content-wrapper {
+        border-radius: 0.625rem;
+        background: rgba(255, 255, 255, 0.7);
+        margin: 0 auto;
         text-align: center;
-        border-radius: 12.5rem;
-        background: rgba(250, 229, 118, 0.2);
-        font-family: Helvetica;
-        font-size: 1rem;
-        font-style: normal;
-        font-weight: 700;
+        padding: 50px 50px 5px 50px;
 
-        &.online {
-          color: rgba(250, 229, 118, 1);
+        .title {
+          color: #000;
+          font-size: 1.75rem;
+          font-weight: 600;
         }
 
-        &.offline {
-          color: rgba(255, 255, 255, 0.5);
+        .amount {
+          color: #f3930a;
+          font-size: 3rem;
+          font-weight: 700;
+        }
+
+        .date {
+          color: rgba(0, 0, 0, 0.6);
+          font-size: 1.25rem;
+          font-weight: 400;
+          margin-top: 25px;
         }
       }
     }
+  }
 
-    .bot-container {
+  .history-tabs {
+    :deep(.q-tab) {
+      color: rgba(255, 255, 255, 0.3);
+      border-radius: 0.25rem;
+    }
+
+    :deep(.q-tab--active) {
+      color: white;
+    }
+  }
+
+  .history-panels {
+    background: transparent;
+
+    .member-info {
+      border-radius: 1.25rem;
+      padding: 1.25rem;
+      margin: 0 0 1rem 0;
+      background: linear-gradient(180deg, rgba(139, 54, 248, 0.4) 0%, rgba(51, 74, 214, 0.4) 100%);
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      padding: 0 2.5rem 0 0;
 
       .amount-container {
         .amount-text {
-          color: rgba(255, 255, 255, 0.5);
+          color: white;
           font-family: Helvetica;
           font-size: 1rem;
           font-style: normal;
@@ -198,18 +186,8 @@ const showMoreButton = () => {
         }
 
         .amount {
-          text-align: center;
+          color: rgba(255, 255, 255, 0.5);
           font-size: 1rem;
-
-          span {
-            background: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-family: Helvetica;
-            font-style: normal;
-            font-weight: 700;
-          }
         }
       }
     }

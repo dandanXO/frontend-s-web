@@ -10,7 +10,7 @@
     >
       <div class="title-container">
         <h3 class="title">
-          XF ADMIN SYSTEM
+          ADMIN SYSTEM
         </h3>
       </div>
 
@@ -73,7 +73,7 @@
           :placeholder="$t('google.google_auth_code')"
           name="googleCode"
           type="text"
-          tabindex="1"
+          tabindex="3"
           autocomplete="on"
         />
       </el-form-item>

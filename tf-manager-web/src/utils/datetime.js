@@ -122,6 +122,63 @@ export const getShortcuts = t => {
   ]
 }
 
+export const getLogShortcuts = t => {
+  return [
+    {
+      text: t('fields.last5Min'),
+      value: () => {
+        const end = new Date()
+        const start = new Date()
+        start.setTime(
+          moment(start)
+            .subtract(5, 'minutes')
+            .format('x')
+        )
+        return [start, end]
+      },
+    },
+    {
+      text: t('fields.last15Min'),
+      value: () => {
+        const end = new Date()
+        const start = new Date()
+        start.setTime(
+          moment(start)
+            .subtract(15, 'minutes')
+            .format('x')
+        )
+        return [start, end]
+      },
+    },
+    {
+      text: t('fields.last30Min'),
+      value: () => {
+        const end = new Date()
+        const start = new Date()
+        start.setTime(
+          moment(start)
+            .subtract(30, 'minutes')
+            .format('x')
+        )
+        return [start, end]
+      },
+    },
+    {
+      text: t('fields.last1Hour'),
+      value: () => {
+        const end = new Date()
+        const start = new Date()
+        start.setTime(
+          moment(start)
+            .subtract(1, 'hours')
+            .format('x')
+        )
+        return [start, end]
+      },
+    },
+  ]
+}
+
 export const convertDateToStart = date => {
   var m = moment(date)
   m.set({ hour: 0, minute: 0, second: 0 })

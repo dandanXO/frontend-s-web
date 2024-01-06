@@ -155,7 +155,15 @@
       <el-table-column prop="port" :label="t('fields.port')" width="100" />
       <el-table-column prop="user" :label="t('fields.user')" width="200" />
       <el-table-column prop="fromEmail" :label="t('fields.from')" width="200" />
-      <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150" />
+      <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150">
+        <template #default="scope">
+          <span v-if="scope.row.updateTime === null">-</span>
+          <span
+            v-if="scope.row.updateTime !== null"
+            v-formatter="{data: scope.row.updateTime, timeZone: scope.row.timeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="150" />
       <el-table-column
         :label="t('fields.operate')"
@@ -285,6 +293,11 @@ async function loadSetting() {
   page.loading = true
   const { data: ret } = await getEmailSetting(request)
   page.pages = ret.pages
+  ret.records.forEach(data => {
+    data.timeZone = store.state.user.sites.find(e => e.siteName === data.siteName) !== undefined
+      ? store.state.user.sites.find(e => e.siteName === data.siteName).timeZone
+      : null
+  });
   page.records = ret.records
   page.loading = false
 }

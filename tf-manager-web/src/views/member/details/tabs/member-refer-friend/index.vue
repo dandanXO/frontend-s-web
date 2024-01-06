@@ -40,7 +40,7 @@
                        align="center" min-width="180"
       >
         <template #default="scope">
-          <span v-formatter="{data: scope.row.regTime,formatter: 'YYYY/MM/DD HH:mm:ss',type: 'date'}" />
+          <span v-formatter="{data: scope.row.regTime,timeZone: timeZone,type: 'date'}" />
         </template>
       </el-table-column>
       <el-table-column :label="t('fields.depositSerialNo')" prop="depositSerialNumber"
@@ -69,7 +69,7 @@
                        align="center" min-width="180"
       >
         <template #default="scope">
-          <span v-if="scope.row.dateReceived !== null" v-formatter="{data: scope.row.dateReceived,formatter: 'YYYY/MM/DD HH:mm:ss',type: 'date'}" />
+          <span v-if="scope.row.dateReceived !== null" v-formatter="{data: scope.row.dateReceived,timeZone: timeZone,type: 'date'}" />
           <span v-else>-</span>
         </template>
       </el-table-column> -->
@@ -94,6 +94,7 @@ import moment from 'moment';
 import { getMemberReferFriend } from "../../../../../api/member";
 import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 export default defineComponent({
   props: {
@@ -104,6 +105,10 @@ export default defineComponent({
     siteId: {
       type: String,
       required: true
+    },
+    timeZone: {
+      type: String,
+      required: true,
     }
   },
   setup(props) {
@@ -141,7 +146,10 @@ export default defineComponent({
         }
       });
       if (formData.regTime && formData.regTime.length === 2) {
-        query.regTime = formData.regTime.join(",");
+        query.regTime = JSON.parse(JSON.stringify(formData.regTime));
+        query.regTime[0] = formatInputTimeZone(query.regTime[0], props.timeZone, 'start');
+        query.regTime[1] = formatInputTimeZone(query.regTime[1], props.timeZone, 'end');
+        query.regTime = query.regTime.join(',')
       }
       query.referrerId = props.mbrId;
       query.siteId = props.siteId;

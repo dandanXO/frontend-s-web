@@ -121,7 +121,15 @@
       </el-table-column>
       <el-table-column prop="comeFrom" :label="t('fields.tigerCardSource')" width="160" />
       <el-table-column prop="beforeNum" :label="t('fields.tigerCardBeforeCount')" width="120" />
-      <el-table-column prop="opTime" :label="t('fields.operateTime')" width="200" />
+      <el-table-column prop="opTime" :label="t('fields.operateTime')" width="200">
+        <template #default="scope">
+          <span v-if="scope.row.opTime === null">-</span>
+          <span
+            v-if="scope.row.opTime !== null"
+            v-formatter="{data: scope.row.opTime, timeZone: timeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="cardDesc" :label="t('fields.description')" width="300" />
     </el-table>
     <el-pagination
@@ -144,8 +152,24 @@
       <el-table-column prop="realCount" :label="t('fields.tigerCardRealCount')" width="150" />
       <el-table-column prop="virtualCount" :label="t('fields.tigerCardVirtualCount')" width="150" />
       <el-table-column prop="sumAward" :label="t('fields.totalBonus')" width="200" />
-      <el-table-column prop="lotteryStartTime" :label="t('fields.startTime')" width="200" />
-      <el-table-column prop="lotteryEndTime" :label="t('fields.endTime')" width="200" />
+      <el-table-column prop="lotteryStartTime" :label="t('fields.startTime')" width="200">
+        <template #default="scope">
+          <span v-if="scope.row.lotteryStartTime === null">-</span>
+          <span
+            v-if="scope.row.lotteryStartTime !== null"
+            v-formatter="{data: scope.row.lotteryStartTime, timeZone: timeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="lotteryEndTime" :label="t('fields.endTime')" width="200">
+        <template #default="scope">
+          <span v-if="scope.row.lotteryEndTime === null">-</span>
+          <span
+            v-if="scope.row.lotteryEndTime !== null"
+            v-formatter="{data: scope.row.lotteryEndTime, timeZone: timeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="period" :label="t('fields.tigerCardPeriod')" width="160" />
       <el-table-column prop="lotteryTime" :label="t('fields.tigerCardTime')" width="200" />
       <el-table-column prop="bonusTime" :label="t('fields.tigerCardBonusTime')" width="200" />
@@ -217,7 +241,7 @@ import moment from 'moment'
 import { required } from '../../../utils/validate'
 import { ElMessage } from 'element-plus'
 import {
-  updateTigerCardSetting,
+  updateTigerCardSetting, insertTigerCardSetting,
   getTigerCardList, getTigerCardSetting,
 } from '../../../api/tiger-card'
 import { getSiteListSimple } from '../../../api/site'
@@ -225,6 +249,7 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n();
 const store = useStore()
@@ -234,6 +259,7 @@ const tigerCardSettingForm = ref(null)
 const siteList = reactive({
   list: [],
 })
+let timeZone = null
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
   new Date(2000, 1, 1, 23, 59, 59),
@@ -288,7 +314,8 @@ const form = reactive({
   lotteryStr: null,
   openStr: null,
   sumAward: null,
-  cardCount: null
+  cardCount: null,
+  siteId: null
 })
 
 const formRules = reactive({
@@ -344,6 +371,7 @@ async function loadTigerCardRecord() {
   const { data: ret } = await getTigerCardList(query)
   page.pages = ret.pages
   page.records = ret.records
+
   page.loading = false
 }
 
@@ -374,9 +402,13 @@ function checkQuery() {
       query[key] = value;
     }
   });
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
   if (request.queryTime !== null) {
     if (request.queryTime.length === 2) {
-      query.queryTime = request.queryTime.join(",");
+      query.queryTime = JSON.parse(JSON.stringify(request.queryTime));
+      query.queryTime[0] = formatInputTimeZone(query.queryTime[0], timeZone);
+      query.queryTime[1] = formatInputTimeZone(query.queryTime[1], timeZone);
+      query.queryTime = query.queryTime.join(',')
     }
   }
   return query;
@@ -396,7 +428,12 @@ function changePage(page) {
 function updateSetting() {
   tigerCardSettingForm.value.validate(async valid => {
     if (valid) {
-      await updateTigerCardSetting(form)
+      if (form.id) {
+        await updateTigerCardSetting(form)
+      } else {
+        form.siteId = request.siteId
+        await insertTigerCardSetting(form)
+      }
       uiControl.settingVisible = false
       await loadTigerCardSetting()
       ElMessage({ message: t('message.editSuccess'), type: 'success' })

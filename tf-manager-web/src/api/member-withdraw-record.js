@@ -69,6 +69,10 @@ export const getMemberWithdrawRecordAutopay = (memberWithdrawRecord) => {
   return https().request("/memberWithdrawRecord/getAutopay", Method.GET, memberWithdrawRecord, ContentType.form);
 };
 
+export const getMemberWithdrawRecordWaitingAutopay = (memberWithdrawRecord) => {
+  return https().request("/memberWithdrawRecord/getWaitingAutopay", Method.GET, memberWithdrawRecord, ContentType.form);
+};
+
 export const getAffiliateWithdrawRecordAutopay = (memberWithdrawRecord) => {
   return https().request("/memberWithdrawRecord/getAffiliateAutopay", Method.GET, memberWithdrawRecord, ContentType.form);
 };
@@ -99,6 +103,10 @@ export const fromAffiliatePendingToApply = async (ids) => {
 
 export const fromCheckingToApply = async (ids) => {
   await https().httpClient.post('/memberWithdrawRecord/checkingToApply?_method=PUT', JSON.stringify(ids), { headers: { "Content-Type": "application/json" } });
+};
+
+export const fromWaitingAutoPayToApply = async (ids) => {
+  await https().httpClient.post('/memberWithdrawRecord/waitingAutoPayToApply?_method=PUT', JSON.stringify(ids), { headers: { "Content-Type": "application/json" } });
 };
 
 export const fromAffiliateCheckingToApply = async (ids) => {
@@ -167,6 +175,18 @@ export const fromPayToFail = (id, cancelType, remark, wd) => {
 
 export const fromAffiliatePayToFail = (id, cancelType, remark, wd) => {
   return https().request(`/memberWithdrawRecord/${id}/affiliatePayToFail?_method=PUT`, Method.POST, { cancelType: cancelType, remark: remark, withdrawDate: wd }, ContentType.form);
+};
+
+export const fromApplyToAutopay = (id, withdrawPlatformId, wd) => {
+  return https().request(`/memberWithdrawRecord/${id}/applyToAutopay?_method=PUT`, Method.POST, { withdrawPlatformId: withdrawPlatformId, withdrawDate: wd }, ContentType.form);
+};
+
+export const autoWithdrawToFail = (id, wd) => {
+  return https().request(`/memberWithdrawRecord/${id}/autoWithdrawToFail?_method=PUT`, Method.POST, { withdrawDate: wd }, ContentType.form);
+};
+
+export const getMemberWithdrawRecordApplySimple = (memberWithdrawRecord) => {
+  return https().request("/memberWithdrawRecord/getSimpleApply", Method.GET, memberWithdrawRecord, ContentType.form);
 };
 
 export const fromPayToAutopay = (id, withdrawPlatformId, wd) => {

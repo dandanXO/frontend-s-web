@@ -62,7 +62,7 @@
                        sortable
       >
         <template #default="scope">
-          <span v-formatter="{data: scope.row.transferDate,formatter: 'YYYY/MM/DD HH:mm:ss',type: 'date'}" />
+          <span v-formatter="{data: scope.row.transferDate,timeZone: timeZone,type: 'date'}" />
         </template>
       </el-table-column>
     </el-table>
@@ -87,12 +87,17 @@ import { getMemberTransferRecord } from "../../../../../api/member";
 import { useI18n } from "vue-i18n";
 import { useRoute } from 'vue-router'
 import { getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 export default defineComponent({
   props: {
     mbrId: {
       type: String,
       required: true
+    },
+    timeZone: {
+      type: String,
+      required: true,
     }
   },
   setup(props) {
@@ -143,7 +148,10 @@ export default defineComponent({
         }
       });
       if (formData.times && formData.times.length === 2) {
-        query.times = formData.times.join(",");
+        query.times = JSON.parse(JSON.stringify(formData.times));
+        query.times[0] = formatInputTimeZone(query.times[0], props.timeZone, 'start');
+        query.times[1] = formatInputTimeZone(query.times[1], props.timeZone, 'end');
+        query.times = query.times.join(',')
       }
       query.siteId = site.id;
       query.memberId = props.mbrId;

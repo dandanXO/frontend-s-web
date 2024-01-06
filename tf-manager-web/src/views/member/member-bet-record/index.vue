@@ -8,6 +8,7 @@
           :placeholder="t('fields.site')"
           style="width: 120px"
           @focus="loadSites"
+          @change="loadPlatform"
         >
           <el-option
             v-for="item in siteList.list"
@@ -198,7 +199,7 @@
             <span v-if="scope.row.betTime === null">-</span>
             <span
               v-if="scope.row.betTime !== null"
-              v-formatter="{data: scope.row.betTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
+              v-formatter="{data: scope.row.betTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -207,7 +208,7 @@
             <span v-if="scope.row.settleTime === null || scope.row.betStatus === 'UNSETTLED'">-</span>
             <span
               v-if="scope.row.settleTime !== null && scope.row.betStatus !== 'UNSETTLED'"
-              v-formatter="{data: scope.row.settleTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
+              v-formatter="{data: scope.row.settleTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -258,6 +259,7 @@ import { useI18n } from "vue-i18n";
 import { getSiteListSimple } from '../../../api/site';
 import { useStore } from '../../../store';
 import { TENANT } from '../../../store/modules/user/action-types';
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n();
 const store = useStore()
@@ -304,6 +306,7 @@ const platform = reactive({
 const date = new Date();
 const defaultStartDate = convertStartDate(date);
 const defaultEndDate = convertDate(date);
+let timeZone = null;
 
 const request = reactive({
   size: 20,
@@ -375,6 +378,7 @@ async function loadSites() {
   const { data: site } = await getSiteListSimple();
   siteList.list = site;
   request.siteId = siteList.list[0].id;
+  await loadPlatform();
 };
 
 function checkQuery() {
@@ -385,9 +389,13 @@ function checkQuery() {
       query[key] = value;
     }
   });
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.betTime !== null) {
     if (request.betTime.length === 2) {
-      query.betTime = request.betTime.join(",");
+      query.betTime = JSON.parse(JSON.stringify(request.betTime));
+      query.betTime[0] = formatInputTimeZone(query.betTime[0], timeZone);
+      query.betTime[1] = formatInputTimeZone(query.betTime[1], timeZone);
+      query.betTime = query.betTime.join(',')
     }
   }
   if (request.status !== null) {
@@ -412,6 +420,7 @@ async function loadMemberBetRecords() {
   const { data: t } = await getMemberBetRecordListTotal(query);
   total.totalBet = t.totalBet;
   total.totalPayout = t.totalPayout;
+
   page.loading = false;
 }
 
@@ -441,7 +450,6 @@ onMounted(async() => {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
   }
-  await loadPlatform();
 })
 </script>
 

@@ -41,7 +41,7 @@
           <span v-if="scope.row.transferDate === null">-</span>
           <span
             v-if="scope.row.transferDate !== null"
-            v-formatter="{data: scope.row.transferDate, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
+            v-formatter="{data: scope.row.transferDate, timeZone: timeZone, type: 'date'}"
           />
         </template>
       </el-table-column>
@@ -65,6 +65,7 @@ import { getTransferRecords } from '@/api/member-affiliate';
 import { useI18n } from "vue-i18n";
 import { useRoute } from 'vue-router';
 import { getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n();
 const props = defineProps({
@@ -72,6 +73,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  timeZone: {
+    type: String,
+    required: true
+  }
 })
 
 const route = useRoute()
@@ -120,7 +125,10 @@ async function loadTransferRecords() {
   });
   if (request.transferDate !== null) {
     if (request.transferDate.length === 2) {
-      query.transferDate = request.transferDate.join(",");
+      query.transferDate = JSON.parse(JSON.stringify(request.transferDate));
+      query.transferDate[0] = formatInputTimeZone(query.transferDate[0], props.timeZone);
+      query.transferDate[1] = formatInputTimeZone(query.transferDate[1], props.timeZone);
+      query.transferDate = query.transferDate.join(',')
     }
   }
   query.siteId = site.id;

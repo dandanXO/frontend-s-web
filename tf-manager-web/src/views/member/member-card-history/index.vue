@@ -146,7 +146,20 @@
         prop="cardTime"
         :label="t('fields.cardTime')"
         width="170"
-      />
+      >
+        <template #default="scope">
+          <span v-if="scope.row.cardTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.cardTime !== null"
+            v-formatter="{
+              data: scope.row.cardTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
 
       <el-table-column prop="level" :label="t('fields.level')" width="80" />
 
@@ -195,12 +208,14 @@ import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
 import { getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n()
 const startDate = new Date()
 startDate.setDate(startDate.getDate())
 const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
+let timeZone = null
 
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
@@ -276,9 +291,13 @@ async function loadBankCardHistory() {
       query[key] = value
     }
   })
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.cardTime !== null) {
     if (request.cardTime.length === 2) {
-      query.cardTime = request.cardTime.join(',')
+      query.cardTime = JSON.parse(JSON.stringify(request.cardTime));
+      query.cardTime[0] = formatInputTimeZone(query.cardTime[0], timeZone, 'start');
+      query.cardTime[1] = formatInputTimeZone(query.cardTime[1], timeZone, 'end');
+      query.cardTime = query.cardTime.join(',')
     }
   }
 

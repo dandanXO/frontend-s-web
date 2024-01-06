@@ -264,6 +264,11 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="VIP" prop="vips">
+          <el-checkbox
+            v-model="checkboxes.vip.checkAll"
+            :indeterminate="checkboxes.vip.isIndeterminate"
+            @change="handleVIPCheckAllChange"
+          >{{ t('fields.checkall') }}</el-checkbox>
           <el-checkbox-group
             v-model="selectedVIPs.vipChecked"
             @change="handleCheckedChange('VIP')"
@@ -275,6 +280,11 @@
           </el-checkbox-group>
         </el-form-item>
         <el-form-item :label="t('fields.paymentType')" prop="payTypes">
+          <el-checkbox
+            v-model="checkboxes.paymentType.checkAll"
+            :indeterminate="checkboxes.paymentType.isIndeterminate"
+            @change="handlePaymentTypeCheckAllChange"
+          >{{ t('fields.checkall') }}</el-checkbox>
           <el-checkbox-group
             v-model="selectedPayTypes.payTypeChecked"
             @change="handleCheckedChange('PAYTYPE')"
@@ -391,7 +401,15 @@
       </el-table-column>
       <el-table-column prop="site" :label="t('fields.site')" width="120" />
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" />
-      <el-table-column prop="updateTime" :label="t('fields.updateTime')" />
+      <el-table-column prop="updateTime" :label="t('fields.updateTime')">
+        <template #default="scope">
+          <span v-if="scope.row.updateTime === null">-</span>
+          <span
+            v-if="scope.row.updateTime !== null"
+            v-formatter="{data: scope.row.updateTime, timeZone: scope.row.timeZone, type: 'date'}"
+          />
+        </template>
+      </el-table-column>
       <el-table-column
         :label="t('fields.operate')"
         align="right"
@@ -551,6 +569,17 @@ const paymentTypeList = reactive({
 const selectedVIPs = reactive({ vipChecked: [] })
 const selectedPayTypes = reactive({ payTypeChecked: [] })
 
+const checkboxes = reactive({
+  paymentType: {
+    checkAll: ref(false),
+    isIndeterminate: ref(false),
+  },
+  vip: {
+    checkAll: ref(false),
+    isIndeterminate: ref(false),
+  },
+})
+
 function disabledStartDate(time) {
   if (form.endTime !== null) {
     const changedDate = form.endTime.replace(/(..)\/(..)\/(....)/, '$3-$2-$1')
@@ -585,6 +614,27 @@ function handleCheckedChange(type) {
   } else if (type === 'PAYTYPE') {
     form.payTypes = JSON.stringify(selectedPayTypes.payTypeChecked.join(','))
   }
+  handleIndividualCheckChange()
+}
+
+const handleVIPCheckAllChange = (val) => {
+  selectedVIPs.vipChecked = []
+  if (val) {
+    vipList.list.forEach(vip => {
+      selectedVIPs.vipChecked.push(vip.id)
+    })
+  }
+  handleCheckedChange('VIP')
+}
+
+const handlePaymentTypeCheckAllChange = (val) => {
+  selectedPayTypes.payTypeChecked = []
+  if (val) {
+    paymentTypeList.list.forEach(paymentType => {
+      selectedPayTypes.payTypeChecked.push(paymentType.code)
+    })
+  }
+  handleCheckedChange('PAYTYPE')
 }
 
 function changeSite(siteId) {
@@ -607,6 +657,11 @@ async function loadPrivilegeInfo() {
   page.loading = true
   const { data: ret } = await getPrivilegeInfo(request)
   page.pages = ret.pages
+  ret.records.forEach(data => {
+    data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined
+      ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
+      : null
+  });
   page.records = ret.records
   page.loading = false
 }
@@ -632,6 +687,7 @@ function changePage(page) {
 }
 
 function showDialog(type) {
+  clearCheckAll()
   if (type === 'CREATE') {
     if (privilegeInfoForm.value) {
       privilegeInfoForm.value.resetFields()
@@ -697,7 +753,7 @@ async function showEdit(privilegeInfo) {
     payTypeArr.forEach(element => {
       selectedPayTypes.payTypeChecked.push(element)
     })
-
+    handleIndividualCheckChange()
     rollover.value = [];
     if (form.gameTypeRollover) {
       Object.entries(JSON.parse(form.gameTypeRollover)).forEach(([key, value]) => {
@@ -711,6 +767,27 @@ async function showEdit(privilegeInfo) {
       addRollover();
     }
   })
+}
+
+function handleCategoryChange(selectedList, checkboxData, dataList) {
+  const selectedCount = selectedList.filter(el => dataList.includes(el)).length
+  const listCount = dataList.length
+  checkboxData.checkAll = selectedCount === listCount
+  checkboxData.isIndeterminate = selectedCount > 0 && selectedCount < listCount
+}
+
+function handleIndividualCheckChange() {
+  const vipIds = [...new Set(vipList.list.map(el => el.id))];
+  handleCategoryChange(selectedVIPs.vipChecked, checkboxes.vip, vipIds)
+  const paymentCodes = [...new Set(paymentTypeList.list.map(el => el.code))];
+  handleCategoryChange(selectedPayTypes.payTypeChecked, checkboxes.paymentType, paymentCodes)
+}
+
+function clearCheckAll() {
+  checkboxes.vip.checkAll = false
+  checkboxes.vip.isIndeterminate = false
+  checkboxes.paymentType.checkAll = false
+  checkboxes.paymentType.isIndeterminate = false
 }
 
 /**

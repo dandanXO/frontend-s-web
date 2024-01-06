@@ -1,36 +1,57 @@
 <template>
-  <div class="dialog-header">
-    <div></div>
-    <div class="text-h5 dialog-title">Message Detail</div>
-    <img class="close-btn" src="../../assets/images/index/close-btn.png" alt="" @click="onCloseBtnClick()" />
-  </div>
+  <!--  <div class="dialog-header">-->
+  <!--    <div></div>-->
+  <!--    <div class="text-h5 dialog-title">Message Detail</div>-->
+  <!--    <img class="close-btn" src="../../assets/images/index/close-btn.png" alt="" @click="onCloseBtnClick()" />-->
+  <!--  </div>-->
 
-  <ContentView contentTopStatus="faded">
-    <div class="msg-detail-container">
+  <div class="msg-detail-container">
+    <div class="header">
       <div class="title">{{ mailDataRef.title }}</div>
-      <div class="send-time">{{ mailDataRef.sendTime && moment(mailDataRef.sendTime).format("YYYY-MM-DD HH:mm") }}</div>
-
-      <div class="title">{{ mailDataRef.title }}</div>
-      <div class="content">{{ mailDataRef.content }}</div>
+      <div class="send-time">{{ mailDataRef.sendTime && convertToGMT55(mailDataRef.sendTime) }}</div>
     </div>
-  </ContentView>
+    <div class="content">{{ mailDataRef.content }}</div>
+  </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
+import { api } from "boot/axios";
 import moment from "moment";
+import { convertToGMT55 } from "src/boot/utils";
 import ContentView from "../../components/ContentView.vue";
 
 const router = useRouter();
 const store = userStore();
+const qs = require("qs");
 
 const mailDataRef = ref(store.currentMailData);
 
 const onCloseBtnClick = () => {
   router.push("/account/message");
 };
+
+const updateMailReadStatus = () => {
+  api
+    .post(
+      "/session/inbox/read",
+      qs.stringify({
+        id: mailDataRef.value.id
+      })
+    )
+    .then((response) => {
+      store.addReadMsg(mailDataRef.value.id);
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
+};
+
+onMounted(() => {
+  updateMailReadStatus();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -55,22 +76,32 @@ const onCloseBtnClick = () => {
 }
 
 .msg-detail-container {
-  .title {
-    font-size: 1rem;
-    font-weight: 700;
-    margin: 0.25rem 0;
-  }
+  padding: 20px;
 
-  .send-time {
-    font-size: 1rem;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.5);
-    margin: 0.75rem 0;
+  .header {
+    display: grid;
+    grid-template-columns: 1fr 120px;
+    justify-content: space-between;
+    align-items: center;
+
+    .title {
+      font-size: 16px;
+      font-weight: 700;
+      margin: 1rem 0;
+    }
+
+    .send-time {
+      font-size: 12px;
+      // font-weight: 700;
+      color: rgba(255, 255, 255, 0.5);
+      margin: 0.75rem 0;
+      text-align: right;
+    }
   }
 
   .content {
-    font-size: 1rem;
-    font-weight: 700;
+    font-size: 14px;
+    // font-weight: 700;
     color: rgba(255, 255, 255, 0.5);
   }
 }

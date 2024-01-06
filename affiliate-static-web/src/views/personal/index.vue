@@ -48,9 +48,9 @@
                 </span>
               </el-form-item>
             </el-row>
-            <el-row v-if="store.state.user.siteId === 3" style="color: red; margin-left: 230px; font-size: 14px;">
+            <!-- <el-row v-if="store.state.user.siteId === 3" style="color: red; margin-left: 230px; font-size: 14px;">
               {{ t('message.inputEnglishRealName') }}
-            </el-row>
+            </el-row> -->
             <el-row class="info">
               <el-icon color="#1fdbb0">
                 <Icon :icon="bookCoins20Filled" class="stats-icon" />
@@ -450,25 +450,28 @@ const eForm = reactive({
   realName: null
 });
 
-const validateRealName = (rule, value, callback) => {
-  if (store.state.user.siteId === 3) {
-    if (value === "" || value === null) {
-      callback(new Error(' '));
-    } else {
-      if (value !== "") {
-        if (/^[A-Za-z]*$/.test(value) === false) {
-          callback(new Error(' '));
-        }
-      }
-      callback();
-    }
-  } else {
-    callback();
-  }
-};
+// const validateRealName = (rule, value, callback) => {
+//   if (store.state.user.siteId === 3) {
+//     if (value === "" || value === null) {
+//       callback(new Error(' '));
+//     } else {
+//       if (value !== "") {
+//         if (/^[A-Za-z]*$/.test(value) === false) {
+//           callback(new Error(' '));
+//         }
+//       }
+//       callback();
+//     }
+//   } else {
+//     callback();
+//   }
+// };
 
 const eFormRules = reactive({
-  realName: [{ validator: validateRealName, trigger: blur }]
+  realName: [
+    required(t('message.requiredRealName')),
+    // { validator: validateRealName, trigger: blur }
+  ]
 });
 
 const pwForm = reactive({

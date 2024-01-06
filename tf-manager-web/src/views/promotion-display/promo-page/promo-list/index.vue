@@ -93,25 +93,53 @@
       <el-table-column prop="siteName" :label="t('fields.site')" />
       <el-table-column prop="labelType" :label="t('fields.label')">
         <template #default="scope">
-          <div v-if="scope.row.labelType === 0">New</div>
-          <div v-if="scope.row.labelType === 1">Hot</div>
-          <div v-if="scope.row.labelType === 2">Normal</div>
+          <div v-if="scope.row.labelType === 0">{{ t('promoLabel.new') }}</div>
+          <div v-if="scope.row.labelType === 1">{{ t('promoLabel.hot') }}</div>
+          <div v-if="scope.row.labelType === 2">{{ t('promoLabel.normal') }}</div>
+          <div v-if="scope.row.labelType === 3">{{ t('promoLabel.recomend') }}</div>
+          <div v-if="scope.row.labelType === 4">{{ t('promoLabel.daily') }}</div>
+          <div v-if="scope.row.labelType === 5">{{ t('promoLabel.newbie') }}</div>
+          <div v-if="scope.row.labelType === 6">{{ t('promoLabel.limit') }}</div>
         </template>
       </el-table-column>
-      <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:promp:page:update:state'])">
+      <el-table-column prop="status" :label="t('fields.status')" min-width="200">
         <template #default="scope">
-          <el-switch
+          <el-radio-group
             v-model="scope.row.status"
-            active-color="#409EFF"
-            inactive-color="#F56C6C"
+            size="mini"
+            v-if="hasPermission(['sys:promp:page:update:state'])"
             @change="changePromoPagesState(scope.row.id, scope.row.status)"
+          >
+            <el-radio-button label="0">OPEN</el-radio-button>
+            <el-radio-button label="1">CLOSE</el-radio-button>
+            <el-radio-button label="2">TEST</el-radio-button>
+          </el-radio-group>
+          <div v-else>
+            <div v-if="scope.row.status === 0" style="color: green;">OPEN</div>
+            <div v-if="scope.row.status === 1" style="color:red">CLOSED</div>
+            <div v-if="scope.row.status === 2">TEST</div>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column prop="createTime" :label="t('fields.createTime')" min-width="200">
+        <template #default="scope">
+          <span v-if="scope.row.createTime === null">-</span>
+          <span
+            v-if="scope.row.createTime !== null"
+            v-formatter="{data: scope.row.createTime, timeZone: scope.row.timeZone, type: 'date'}"
           />
         </template>
       </el-table-column>
-      l
-      <el-table-column prop="createTime" :label="t('fields.createTime')" />
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
-      <el-table-column type="title" :label="t('fields.action')" v-if="hasPermission(['sys:promp:page:update'])|| hasPermission(['sys:promp:page:del'])">
+      <el-table-column
+        type="title"
+        :label="t('fields.action')"
+        v-if="
+          hasPermission(['sys:promp:page:update']) ||
+            hasPermission(['sys:promp:page:del'])
+        "
+        min-width="200"
+      >
         <template #default="scope">
           <el-button
             icon="el-icon-edit"
@@ -146,20 +174,20 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import { computed, onMounted, reactive, ref } from 'vue'
 import {
   getPromoPagesList,
-  updatePromoPagesState,
   deletePromoPages,
+  updatePromoPagesState
 } from '../../../../api/promoPages'
 import { useRoute, useRouter } from 'vue-router'
 import { getSiteListSimple } from '../../../../api/site'
 import { hasPermission } from '../../../../utils/util'
-import { useStore } from '../../../../store';
-import { TENANT } from "../../../../store/modules/user/action-types";
-import { useI18n } from "vue-i18n";
+import { useStore } from '../../../../store'
+import { TENANT } from '../../../../store/modules/user/action-types'
+import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n();
-const store = useStore();
-const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
-const site = ref(null);
+const { t } = useI18n()
+const store = useStore()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
+const site = ref(null)
 let choosePromo = []
 const siteList = reactive({
   list: [],
@@ -168,8 +196,8 @@ const siteList = reactive({
 const uiControl = reactive({
   removeBtn: true,
   promoState: [
-    { key: 1, displayName: 'active', value: true },
-    { key: 2, displayName: 'disable', value: false },
+    { key: 1, displayName: 'active', value: false },
+    { key: 2, displayName: 'disable', value: true },
   ],
 })
 const request = reactive({
@@ -177,7 +205,7 @@ const request = reactive({
   current: 1,
   title: null,
   status: null,
-  siteId: null
+  siteId: null,
 })
 
 const page = reactive({
@@ -188,7 +216,7 @@ const page = reactive({
 function resetQuery() {
   request.title = null
   request.status = null
-  request.siteId = site.value ? site.value.id : null;
+  request.siteId = site.value ? site.value.id : null
 }
 
 function changePage(page) {
@@ -229,6 +257,11 @@ function editPromo(promoPages) {
 async function loadPromoPages() {
   const { data: ret } = await getPromoPagesList(request)
   page.pages = ret.pages
+  ret.records.forEach(data => {
+    data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined
+      ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
+      : null
+  });
   page.records = ret.records
 }
 
@@ -238,14 +271,11 @@ async function loadSites() {
 }
 
 async function removePromo(promoPages) {
-  ElMessageBox.confirm(
-    t('message.confirmDelete'),
-    {
-      confirmButtonText: t('fields.confirm'),
-      cancelButtonText: t('fields.cancel'),
-      type: 'warning',
-    }
-  ).then(async () => {
+  ElMessageBox.confirm(t('message.confirmDelete'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
     if (promoPages) {
       await deletePromoPages([promoPages.id])
     } else {
@@ -258,6 +288,8 @@ async function removePromo(promoPages) {
 
 async function changePromoPagesState(id, status) {
   await updatePromoPagesState(id, status)
+  ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+  await loadPromoPages()
 }
 
 const route = useRoute()
@@ -266,12 +298,14 @@ onMounted(async () => {
   if (route.query.current != null) {
     request.current = Number(route.query.current)
   }
-  await loadSites();
+  await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
-    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
-    request.siteId = site.value.id;
+    site.value = siteList.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    request.siteId = site.value.id
   }
-  await loadPromoPages();
+  await loadPromoPages()
 })
 </script>
 

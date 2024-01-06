@@ -277,13 +277,29 @@
           :label="t('fields.depositDate')"
           align="center"
           min-width="150"
-        />
+        >
+          <template #default="scope">
+            <span v-if="scope.row.depositDate === null">-</span>
+            <span
+              v-if="scope.row.depositDate !== null"
+              v-formatter="{data: scope.row.depositDate, timeZone: timeZone, type: 'date'}"
+            />
+          </template>
+        </el-table-column>
         <el-table-column
           prop="finishDate"
           :label="t('fields.finishDate')"
           align="center"
           min-width="150"
-        />
+        >
+          <template #default="scope">
+            <span v-if="scope.row.finishDate === null">-</span>
+            <span
+              v-if="scope.row.finishDate !== null"
+              v-formatter="{data: scope.row.finishDate, timeZone: timeZone, type: 'date'}"
+            />
+          </template>
+        </el-table-column>
         <el-table-column
           prop="status"
           :label="t('fields.status')"
@@ -635,6 +651,7 @@ import { TENANT } from '../../../store/modules/user/action-types'
 import { getSiteListSimple } from '../../../api/site'
 import { getAllPaymentTypes } from "../../../api/payment-type";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 const { t } = useI18n()
 const store = useStore()
 const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
@@ -655,6 +672,7 @@ const priviList = reactive({
 const siteList = reactive({
   list: [],
 })
+let timeZone = null;
 
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
@@ -868,15 +886,22 @@ function checkQuery() {
       query[key] = value
     }
   })
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.depositDate !== null) {
     if (request.depositDate.length === 2) {
-      query.depositDate = request.depositDate.join(',')
+      query.depositDate = JSON.parse(JSON.stringify(request.depositDate));
+      query.depositDate[0] = formatInputTimeZone(query.depositDate[0], timeZone);
+      query.depositDate[1] = formatInputTimeZone(query.depositDate[1], timeZone);
+      query.depositDate = query.depositDate.join(',')
     }
   }
 
   if (request.finishDate !== null) {
     if (request.finishDate.length === 2) {
-      query.finishDate = request.finishDate.join(',')
+      query.finishDate = JSON.parse(JSON.stringify(request.finishDate));
+      query.finishDate[0] = formatInputTimeZone(query.finishDate[0], timeZone);
+      query.finishDate[1] = formatInputTimeZone(query.finishDate[1], timeZone);
+      query.finishDate = query.finishDate.join(',')
     }
   }
 
@@ -909,6 +934,7 @@ async function loadRecord() {
   } else {
     page.totalAmount = 0
   }
+
   page.loading = false
 }
 

@@ -28,7 +28,7 @@
             <span v-if="scope.row.createTime === null">-</span>
             <span
               v-if="scope.row.createTime !== null"
-              v-formatter="{data: scope.row.createTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
+              v-formatter="{data: scope.row.createTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -100,7 +100,7 @@
             <span v-if="scope.row.operationTime === null">-</span>
             <span
               v-if="scope.row.operationTime !== null"
-              v-formatter="{data: scope.row.operationTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
+              v-formatter="{data: scope.row.operationTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -123,11 +123,15 @@ import moment from 'moment';
 import { getMemberBank, getMemberBankLog } from '../../../../../api/member';
 import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
-
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 const props = defineProps({
   mbrId: {
     type: String,
     required: true
+  },
+  timeZone: {
+    type: String,
+    required: true,
   }
 })
 
@@ -205,7 +209,10 @@ async function loadMemberBankLog() {
   });
   if (memberBankLogRequest.operationTime !== null) {
     if (memberBankLogRequest.operationTime.length === 2) {
-      query.operationTime = memberBankLogRequest.operationTime.join(",");
+      query.operationTime = JSON.parse(JSON.stringify(memberBankLogRequest.operationTime));
+      query.operationTime[0] = formatInputTimeZone(query.operationTime[0], props.timeZone, 'start');
+      query.operationTime[1] = formatInputTimeZone(query.operationTime[1], props.timeZone, 'end');
+      query.operationTime = query.operationTime.join(",");
     }
   }
   query.memberId = props.mbrId;

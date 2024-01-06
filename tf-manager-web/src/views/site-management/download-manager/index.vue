@@ -79,7 +79,7 @@
             <span v-if="scope.row.requestTime === null">-</span>
             <span
               v-if="scope.row.requestTime !== null"
-              v-formatter="{data: scope.row.requestTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
+              v-formatter="{data: scope.row.requestTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -117,6 +117,7 @@ import { useI18n } from "vue-i18n";
 import { getSiteListSimple } from '../../../api/site';
 import { useStore } from '../../../store';
 import { TENANT, ADMIN } from '../../../store/modules/user/action-types';
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n();
 const store = useStore()
@@ -127,6 +128,7 @@ let selectedDate = "";
 const siteList = reactive({
   list: []
 });
+let timeZone = null;
 
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
@@ -197,7 +199,10 @@ function checkQuery() {
   });
   if (request.requestTime !== null) {
     if (request.requestTime.length === 2) {
-      query.requestTime = request.requestTime.join(",");
+      query.requestTime = JSON.parse(JSON.stringify(request.requestTime));
+      query.requestTime[0] = formatInputTimeZone(query.requestTime[0], timeZone);
+      query.requestTime[1] = formatInputTimeZone(query.requestTime[1], timeZone);
+      query.requestTime = query.requestTime.join(',')
     }
   }
   if (LOGIN_USER_TYPE.value !== ADMIN.value) {
@@ -219,6 +224,8 @@ async function loadRecords() {
   page.pages = ret.pages;
   page.records = ret.records;
   page.total = ret.total;
+
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false;
 }
 

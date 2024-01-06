@@ -1,38 +1,35 @@
 <template>
-  <ProfileSummary />
-
-  <SwiperNav :slideList="slideList" :onSlideClick="onSlideClick" :isActiveSlide="isActiveSlide"></SwiperNav>
-
-  <ContentView :contentTopStatus="`${isNoInfo ? '' : 'solid'}`">
+  <q-page class="account-table-page">
     <LoadingComponent v-if="isLoading"></LoadingComponent>
     <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Record"></NoInfoComponent>
     <div v-else v-for="(e, i) in discountData" :key="`${e}-${i}`" class="discount-table">
       <div class="discount-row discount-row--title">
         <div class="discount-col">
-          <span class="txt-gray">{{ e.recordTime }}</span>
+          <span class="txt-gray">{{ convertToGMT55(e.recordTime) }}</span>
         </div>
       </div>
       <div class="discount-row discount-row--content">
         <div class="discount-col">{{ e.privilegeName }}</div>
         <div class="discount-col">
           Amount:
-          <span class="txt-yellow">{{ e.amount }}</span>
+          <span class="txt-yellow">{{ convertToCommaAmount(e.amount, true) }}</span>
         </div>
       </div>
     </div>
-  </ContentView>
+  </q-page>
 </template>
 
 <script setup>
 import { onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
-import { updateDate } from "src/boot/utils";
+import { updateDate, convertToGMT8, convertToGMT55 } from "src/boot/utils";
 import SwiperNav from "../../components/SwiperNav.vue";
 import ContentView from "../../components/ContentView.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const router = useRouter();
 
@@ -52,12 +49,6 @@ const isActiveSlide = (e) => {
   return false;
 };
 
-const onSlideClick = (e, i) => {
-  if (e === currentSlide.value) return;
-  router.push(slideListPath.value[i]);
-  currentSlide.value = e;
-};
-
 const isLoading = ref(true);
 const isNoInfo = ref(true);
 
@@ -73,9 +64,12 @@ const searchDiscountRecord = () => {
   discountData.value = [];
 
   const { startDate, endDate } = searchForm;
+
+  const gmtStartDate = convertToGMT8(startDate);
+  const gmtEndDate = convertToGMT8(endDate);
   api
     .get("/session/member/privilege", {
-      params: { startDate, endDate, current: 1, size: 10 }
+      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: 10 }
     })
     .then((response) => {
       if (response.code === 0) {
@@ -100,20 +94,23 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .discount-table {
-  margin-bottom: 12px;
+  background: #171e2b80;
+  border-radius: 10px;
+  padding: 6px 4px;
+  margin-bottom: 10px;
+
   .discount-row {
     display: flex;
     justify-content: space-between;
     padding: 8px 12px;
+    flex-wrap: wrap;
 
     &--title {
-      background-color: rgba(21, 0, 37, 0.5);
       border-top-right-radius: 16px;
       border-top-left-radius: 16px;
     }
 
     &--content {
-      background-color: rgba(21, 0, 37, 0.2);
       flex-wrap: wrap;
     }
   }

@@ -1,96 +1,96 @@
 <template>
-  <ProfileSummary />
+  <q-page>
+    <!-- <ProfileSummary /> -->
 
-  <SwiperNav :slideList="slideList" :onSlideClick="onSlideClick" :isActiveSlide="isActiveSlide"></SwiperNav>
+    <div class="personal-center-container">
+      <ProfileProgressBanner />
 
-  <ContentView contentTopStatus="faded">
-    <q-form ref="profileFormRef" class="pc-form">
-      <div class="pc-form-item" @click="openPersonalCenterDialog">
-        <div class="pc-form-label">Full Name</div>
-        <div class="pc-form-input">
-          <q-input
-            v-model="formDetail.realName"
-            filled
-            dense
-            clearable
-            borderless
-            standout
-            hide-bottom-space
-            readonly
-          ></q-input>
-        </div>
-      </div>
-
-      <div class="pc-form-item" @click="openPersonalCenterDialog">
-        <div class="pc-form-label">Phone</div>
-        <div class="pc-form-input">
-          <q-input
-            v-model="formDetail.phone"
-            filled
-            dense
-            clearable
-            borderless
-            standout
-            hide-bottom-space
-            readonly
-          ></q-input>
-        </div>
-      </div>
-
-      <div class="pc-form-item" @click="openPersonalCenterDialog">
-        <div class="pc-form-label">Email</div>
-        <div class="pc-form-input">
-          <q-input
-            v-model="formDetail.email"
-            filled
-            dense
-            clearable
-            borderless
-            standout
-            hide-bottom-space
-            readonly
-          ></q-input>
-        </div>
-      </div>
-
-      <div class="pc-tip">
-        <div>
-          <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">Change Password</a>
-
-          <div class="pc-ver" v-if="appVersionNo">
-            Version:
-            <span>{{ appVersionNo }}</span>
+      <q-form ref="profileFormRef" class="pc-form">
+        <div class="pc-form-item" @click="openPersonalCenterDialog">
+          <div class="pc-form-label">Full Name</div>
+          <div class="pc-form-input">
+            <q-input
+              v-model="formDetail.realName"
+              filled
+              dense
+              clearable
+              borderless
+              standout
+              hide-bottom-space
+              readonly
+            ></q-input>
           </div>
         </div>
 
-        <div>
-          <q-btn
-            class="btn-refresh"
-            no-caps
-            text-color="white"
-            icon="refresh"
-            label="Updated"
-            :loading="loadingUpdated"
-            @click="startRefresh"
-          >
-            <template v-slot:loading>
-              <q-spinner class="on-left" style="color: #fed87d" />
-              Updating...
-            </template>
-          </q-btn>
+        <div class="pc-form-item" @click="openPersonalCenterDialog">
+          <div class="pc-form-label">Phone</div>
+          <div class="pc-form-input">
+            <q-input
+              v-model="formDetail.phone"
+              filled
+              dense
+              clearable
+              borderless
+              standout
+              hide-bottom-space
+              readonly
+            ></q-input>
+          </div>
         </div>
-      </div>
 
-      <div class="q-mt-md q-pl-lg q-pr-lg">
-        <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">Sign Out</q-btn>
-      </div>
+        <!-- <div class="pc-form-item" @click="openPersonalCenterDialog">
+          <div class="pc-form-label">Email</div>
+          <div class="pc-form-input">
+            <q-input
+              v-model="formDetail.email"
+              filled
+              dense
+              clearable
+              borderless
+              standout
+              hide-bottom-space
+              readonly
+            ></q-input>
+          </div>
+        </div> -->
 
-      <!-- <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn size="md" color="brightbtn" @click="updateState" label="保存信息" />
-      </div> -->
-    </q-form>
-  </ContentView>
+        <div class="pc-tip">
+          <div>
+            <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">Change Password</a>
 
+            <div class="pc-ver" v-if="appVersionNo">
+              Version:
+              <span>{{ appVersionNo }}</span>
+            </div>
+          </div>
+
+          <div>
+            <q-btn
+              class="btn-refresh"
+              no-caps
+              icon="refresh"
+              label="Updated"
+              :loading="loadingUpdated"
+              @click="startRefresh"
+            >
+              <template v-slot:loading>
+                <q-spinner class="on-left" style="color: #ae6def" />
+                Updating...
+              </template>
+            </q-btn>
+          </div>
+        </div>
+
+        <div class="q-mt-md">
+          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">Sign Out</q-btn>
+        </div>
+
+        <!-- <div class="text-center q-mt-md" v-if="canEdit">
+          <q-btn size="md" color="brightbtn" @click="updateState" label="保存信息" />
+        </div> -->
+      </q-form>
+    </div>
+  </q-page>
   <q-dialog width="100%" v-model="showCaptchaDialog">
     <q-card style="width: 100%; padding: 20px" class="bg-dark text-white text-center">
       <q-card-section class="q-mb-md">
@@ -232,7 +232,14 @@
 
   <q-dialog width="100%" v-model="changePasswordDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <q-btn
+        dense
+        rounded
+        icon="close"
+        class="bg-yellow text-black popout-close"
+        @click="openChangePasswordDialog()"
+        v-close-popup
+      />
       <div class="popout-dialog-container">
         <div class="txt-title">Change Password</div>
 
@@ -274,7 +281,12 @@
                 ref="passwordRef"
                 hide-bottom-space
                 :type="isPwd ? 'password' : 'text'"
-                :rules="[(val) => (val && val.length > 0) || 'Please insert new password']"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Please insert new password',
+                  (val) =>
+                    (val.length >= 6 && val.length <= 11) || 'The characters of new password must be between 6 and 11',
+                  () => isAlphanumeric(updatePwdInfo.password, 'New password')
+                ]"
               >
                 <template v-slot:append>
                   <q-icon
@@ -288,20 +300,20 @@
             </div>
           </div>
           <div class="pc-form-item">
-            <div class="pc-form-label">New Password Again</div>
+            <div class="pc-form-label">Confirm New Password</div>
             <div class="pc-form-input">
               <q-input
                 filled
                 dense
                 clearable
-                placeholder="Enter New Password Again"
+                placeholder="Enter Confirm New Password"
                 v-model="updatePwdInfo.confirmNewPwd"
                 ref="confirmPasswordRef"
                 hide-bottom-space
                 :type="isPwd ? 'password' : 'text'"
                 :rules="[
-                  (val) => (val && val.length > 0) || 'Please insert new password again',
-                  (val) => val === updatePwdInfo.password || 'Confimed password does not match with new password'
+                  (val) => (val && val.length > 0) || 'Please insert confirm new password',
+                  (val) => val === updatePwdInfo.password || 'Confirm password does not match with new password'
                 ]"
               >
                 <template v-slot:append>
@@ -365,7 +377,12 @@
                 ref="passwordRef"
                 hide-bottom-space
                 :type="isPwd ? 'password' : 'text'"
-                :rules="[(val) => (val && val.length > 0) || 'Please insert new password']"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Please insert new password',
+                  (val) =>
+                    (val.length >= 6 && val.length <= 11) || 'The characters of new password must be between 6 and 11',
+                  () => isAlphanumeric(updatePwdInfo.password, 'New password')
+                ]"
               >
                 <template v-slot:append>
                   <q-icon
@@ -379,20 +396,20 @@
             </div>
           </div>
           <div class="pc-form-item">
-            <div class="pc-form-label">New Password Again</div>
+            <div class="pc-form-label">Confirm New Password</div>
             <div class="pc-form-input">
               <q-input
                 filled
                 dense
                 clearable
-                placeholder="Enter New Password Again"
+                placeholder="Enter Confirm New Password"
                 v-model="updatePwdInfo.confirmNewPwd"
                 ref="confirmPasswordRef"
                 hide-bottom-space
                 :type="isPwd ? 'password' : 'text'"
                 :rules="[
-                  (val) => (val && val.length > 0) || 'Please insert new password again',
-                  (val) => val === updatePwdInfo.password || 'Confimed password does not match with new password'
+                  (val) => (val && val.length > 0) || 'Please insert confirm new password',
+                  (val) => val === updatePwdInfo.password || 'Confirm password does not match with new password'
                 ]"
               >
                 <template v-slot:append>
@@ -415,9 +432,23 @@
     </div>
   </q-dialog>
 
+  <q-dialog width="100%" v-model="guestKYCDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="popout-close" @click="closeGuestKYCDialog" />
+      <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="userKYCDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="popout-close" @click="closeUserKYCDialog" />
+      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
+    </div>
+  </q-dialog>
+
   <q-dialog width="100%" v-model="verificationCodeDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">Captcha Code Check</div>
 
@@ -454,7 +485,7 @@
 
   <q-dialog width="100%" v-model="confirmSignOutDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">Sign Out</div>
 
@@ -473,13 +504,16 @@
 import SwiperNav from "../components/SwiperNav.vue";
 import ContentView from "../components/ContentView.vue";
 import ProfileSummary from "../components/ProfileSummary.vue";
-import { defineComponent, reactive, ref, onMounted, computed } from "vue";
+import ProfileProgressBanner from "../components/ProfileProgressBanner.vue";
+import { defineComponent, reactive, ref, onMounted, computed, onActivated } from "vue";
 import moment from "moment";
 import { api } from "boot/axios";
 import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "src/stores";
 import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
+import KYCGuestForm from "../components/KYCGuestForm.vue";
+import KYCUserForm from "../components/KYCUserForm.vue";
 
 let slideList = ref(["Personal Center", "Discount", "Record", "Order", "Bank", "Message"]);
 let slideListPath = ref([
@@ -506,7 +540,7 @@ const logout = () => {
 
   store.memberLogout().then(() => {
     loadingLogout.value = false;
-    router.push("/");
+    router.push("/home");
   });
 };
 
@@ -518,6 +552,7 @@ const intervals = ref(null);
 
 const startRefresh = async () => {
   loadingUpdated.value = true;
+  loadInfo();
 
   store.getMemberInfo().then(() => {
     setTimeout(() => {
@@ -528,21 +563,54 @@ const startRefresh = async () => {
 
 const personalCenterDialog = ref(false);
 const openPersonalCenterDialog = () => {
-  if (store.guest) {
-    openNewChangePasswordDialog();
-  } else if (!personalState.memberInfo.realName || !personalState.memberInfo.phone || !personalState.memberInfo.email) {
-    personalCenterDialog.value = true;
+  if (store.guest && !personalState.memberInfo.realName) {
+    // openNewChangePasswordDialog();
+    openGuestKYCDialog();
+  } else if (!store.guest && !personalState.memberInfo.realName) {
+    openUserKYCDialog();
+  } else {
+    return false;
   }
+  // } else if (!personalState.memberInfo.realName || !personalState.memberInfo.phone || !personalState.memberInfo.email) {
+  //   personalCenterDialog.value = true;
+  // }
 };
 
 const closePersonalCenterDialog = () => {
-  loadInfo();
+  // loadInfo();
   personalCenterDialog.value = false;
 };
 
 const changePasswordDialog = ref(false);
 const openChangePasswordDialog = () => {
+  resetChangePasswordInfo();
   changePasswordDialog.value = !changePasswordDialog.value;
+};
+
+const userKYCDialog = ref(false);
+const openUserKYCDialog = () => {
+  userKYCDialog.value = true;
+};
+const closeUserKYCDialog = () => {
+  store.getMemberInfo().then(() => {
+    loadInfo();
+    userKYCDialog.value = false;
+  });
+};
+
+const guestKYCDialog = ref(false);
+const openGuestKYCDialog = () => {
+  guestKYCDialog.value = true;
+};
+const closeGuestKYCDialog = () => {
+  store.getMemberInfo().then(() => {
+    loadInfo();
+    guestKYCDialog.value = false;
+  });
+
+  // formDetail.realName = "";
+  // formDetail.phone = "";
+  // formDetail.password = "";
 };
 
 const changeNewPasswordDialog = ref(false);
@@ -574,17 +642,6 @@ const openVerificationCodeDialog = () => {
   getCode();
 };
 
-const confirmSignOutDialog = ref(false);
-const openConfirmSignOutDialog = () => {
-  confirmSignOutDialog.value = !confirmSignOutDialog.value;
-};
-
-const onSlideClick = (e, i) => {
-  if (e === currentSlide.value) return;
-  router.push(slideListPath.value[i]);
-  currentSlide.value = e;
-};
-
 const myMemberList = ref([]);
 
 let isNoInfoRef = ref(true);
@@ -610,11 +667,13 @@ const loadInfo = () => {
   personalState.memberInfo = userStore();
 
   if (store.guest && personalState.memberInfo.realName === null) {
-    openNewChangePasswordDialog();
+    // openNewChangePasswordDialog();
+    openGuestKYCDialog();
   }
 
   if (!store.guest && personalState.memberInfo.realName === null) {
-    openPersonalCenterDialog();
+    // openPersonalCenterDialog();
+    openUserKYCDialog();
   }
 
   // console.log(personalState.memberInfo);
@@ -661,6 +720,10 @@ const getVersionNo = async () => {
 };
 
 const loadingLogout = ref(false);
+
+onActivated(() => {
+  loadInfo();
+});
 
 onMounted(() => {
   loadInfo();
@@ -796,60 +859,130 @@ const updateState = () => {
   const updateInfo = {};
   updateInfo.realName = formDetail.realName;
   updateInfo.email = formDetail.email;
+  updateInfo.phone = formDetail.phone;
+  updateInfo.otpCode = formDetail.phoneOtpRef;
+  updateInfo.otpCodeId = verificationCodeID;
 
-  api.post("/session/account", qs.stringify(updateInfo)).then((r) => {
-    if (r.code === 0) {
-      profileFormRef.value.reset();
-
-      $q.notify({
-        color: "positive",
-        position: "top",
-        message: "Updated successfully",
-        icon: "check_circle_outline"
-      });
-
-      store.getMemberInfo().then(() => {
-        loadInfo();
-        personalCenterDialog.value = false;
-      });
-
-      btnLoading.value = false;
-    } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: r.message,
-        icon: "report_problem"
-      });
-      btnLoading.value = false;
-    }
-  });
-};
-
-const verifyNUpdatePhone = (callback) => {
   api
-    .post(
-      "/session/verifyAndUpdatePhone",
-      qs.stringify({
-        phone: formDetail.phone,
-        code: formDetail.phoneOtpRef,
-        codeId: verificationCodeID
-      })
-    )
-    .then((res) => {
-      callback && callback();
+    .post("/session/verifyAndUpdateAccount", qs.stringify(updateInfo))
+    .then((r) => {
+      if (r.code === 0) {
+        profileFormRef.value.reset();
+
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "Updated successfully",
+          icon: "check_circle_outline"
+        });
+
+        store.getMemberInfo().then(() => {
+          loadInfo();
+          personalCenterDialog.value = false;
+        });
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: r.message,
+          icon: "report_problem"
+        });
+      }
     })
-    .catch((e) => {
+    .catch(() => {})
+    .then(() => {
       btnLoading.value = false;
     });
 };
 
+const updateNewUserState = () => {
+  const updateInfo = {};
+  updateInfo.realName = formDetail.realName;
+
+  api
+    .post("/session/account", qs.stringify(updateInfo))
+    .then((r) => {
+      if (r.code === 0) {
+        profileFormRef.value.reset();
+
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "Updated successfully",
+          icon: "check_circle_outline"
+        });
+
+        store.getMemberInfo().then(() => {
+          loadInfo();
+          userKYCDialog.value = false;
+        });
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: r.message,
+          icon: "report_problem"
+        });
+      }
+    })
+    .catch(() => {})
+    .then(() => {
+      btnLoading.value = false;
+    });
+};
+
+// const updateNewGuestState = () => {
+//   const updateInfo = {};
+//   updateInfo.realName = formDetail.realName;
+//   updateInfo.phone = formDetail.phone;
+//   updateInfo.password = formDetail.password;
+
+//   api
+//     .post("/session/guest-password", qs.stringify(updateInfo))
+//     .then((r) => {
+//       if (r.code === 0) {
+//         profileFormRef.value.reset();
+
+//         $q.notify({
+//           color: "positive",
+//           position: "top",
+//           message: "Updated successfully",
+//           icon: "check_circle_outline"
+//         });
+
+//         store.getMemberInfo().then(() => {
+//           loadInfo();
+//           guestKYCDialog.value = false;
+//         });
+//       } else {
+//         $q.notify({
+//           color: "negative",
+//           position: "top",
+//           message: r.message,
+//           icon: "report_problem"
+//         });
+//       }
+//     })
+//     .catch(() => {})
+//     .then(() => {
+//       btnLoading.value = false;
+//     });
+// };
+
 const submitKYC = () => {
   btnLoading.value = true;
-  verifyNUpdatePhone(() => {
-    updateState();
-  });
+  updateState();
 };
+
+const submitKYCNewUser = () => {
+  btnLoading.value = true;
+  updateNewUserState();
+};
+
+// const submitKYCNewGuest = () => {
+//   btnLoading.value = true;
+//   updateNewGuestState();
+// };
 
 const isValidName = () => {
   const { realName } = formDetail;
@@ -866,8 +999,14 @@ const isValidName = () => {
 const isValidPhone = () => {
   const { phone } = formDetail;
 
-  const result = !phone ? "Please Enter Phone Number" : true;
-  return result;
+  if (!phone) {
+    return "Please Enter Phone Number";
+  }
+
+  const phoneRegex = /^\d{10}$/;
+  const isValid = phoneRegex.test(phone);
+
+  return isValid ? true : "Phone Number must be 10 digits";
 };
 
 const isValidOTP = () => {
@@ -952,12 +1091,17 @@ const updatePwdInfo = reactive({
   confirmNewPwd: ""
 });
 
+const isAlphanumeric = (value, translation) => {
+  const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
+  return passwordPattern.test(value) || `${translation} must be alphanumeric`;
+};
+
 const submitUpdatePwd = () => {
   oldPasswordRef.value.validate();
   passwordRef.value.validate();
   confirmPasswordRef.value.validate();
 
-  if (oldPasswordRef.value.hasError || passwordRef.value.hasError) {
+  if (oldPasswordRef.value.hasError || passwordRef.value.hasError || confirmPasswordRef.value.hasError) {
   } else {
     api
       .post(
@@ -976,6 +1120,7 @@ const submitUpdatePwd = () => {
             icon: "check_circle_outline"
           });
           // router.go("/account");
+          resetChangePasswordInfo();
           changePasswordDialog.value = false;
         } else {
           $q.notify({
@@ -996,7 +1141,7 @@ const submitUpdateNewPwd = () => {
   passwordRef.value.validate();
   confirmPasswordRef.value.validate();
 
-  if (passwordRef.value.hasError) {
+  if (passwordRef.value.hasError || confirmPasswordRef.value.hasError) {
   } else {
     api
       .post(
@@ -1030,9 +1175,28 @@ const submitUpdateNewPwd = () => {
       });
   }
 };
+
+const resetChangePasswordInfo = () => {
+  updatePwdInfo.confirmNewPwd = "";
+  updatePwdInfo.oldPassword = "";
+  updatePwdInfo.password = "";
+};
+
+const confirmSignOutDialog = ref(false);
+const openConfirmSignOutDialog = () => {
+  confirmSignOutDialog.value = !confirmSignOutDialog.value;
+};
 </script>
 
 <style lang="scss" scoped>
+.personal-center-container {
+  padding: 0 20px;
+}
+
+.progress-container {
+  background: linear-gradient(180deg, #d29e3a 0%, #d65033 100%);
+}
+
 .infoboard-container {
   display: flex;
   align-items: center;
@@ -1088,25 +1252,27 @@ const submitUpdateNewPwd = () => {
 
 .pc-form {
   margin-top: 20px;
+  width: 100%;
   .pc-form-item {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    margin-bottom: 12px;
+    gap: 8px;
+    margin-bottom: 25px;
   }
   .pc-form-label {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 1);
   }
   .pc-form-input {
     border-radius: 5px;
     position: relative;
 
     :deep(.q-field__control) {
-      background-color: rgba(21, 0, 37, 0.7) !important;
+      background: rgba(255, 255, 255, 0.15) !important;
+      border-radius: 4px;
     }
 
     :deep(.q-field__native) {
-      color: #ffffff;
+      color: rgba(255, 255, 255, 0.6);
     }
   }
 
@@ -1132,20 +1298,25 @@ const submitUpdateNewPwd = () => {
   align-items: center;
   font-size: 18px;
   line-height: 1;
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-  font-weight: 700;
+  font-weight: 400;
   width: 100%;
-  height: 48px;
+  height: 55px;
+  text-transform: uppercase;
   transition: 0.3s all;
-  background-image: url(../assets/images/account/btn-purple-pattern.png);
   color: #ffffff;
   margin: auto;
+  border-radius: 6px;
+  border: 1px solid #5e388b;
+  background: rgba(88, 23, 170, 0.6);
+
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
+  }
 }
 
 .pc-tip-chg-pwd {
-  color: #fae576;
+  color: #a73dff;
 }
 
 .pc-tip {
@@ -1164,26 +1335,33 @@ const submitUpdateNewPwd = () => {
 }
 
 .btn-refresh {
-  background: rgba(21, 0, 37, 0.7);
+  background: #48325a;
   border-radius: 8px;
-  font-weight: 700;
+  font-weight: 400;
   margin-top: auto;
+  color: #ae6def;
+  padding: 10px 20px;
 
   :deep(.q-icon) {
-    color: #fed87d;
+    color: #ae6def;
   }
 }
 
 .btn-cancel {
-  background: rgba(21, 0, 37, 0.5);
+  background: #ffffff20;
   font-weight: 700;
-  color: #ffffff;
+  color: #dcdcdc;
+  border: 1px solid #ffffff80;
   border-radius: 8px;
+  width: 140px;
+  height: 42px;
 }
 .btn-confirm {
-  background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+  background: linear-gradient(187.94deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
   font-weight: 700;
-  color: #150025;
+  width: 140px;
+  height: 42px;
+  color: #5c46e7;
   border-radius: 8px;
 }
 </style>

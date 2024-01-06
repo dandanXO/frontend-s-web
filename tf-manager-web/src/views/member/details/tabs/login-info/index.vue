@@ -42,8 +42,8 @@
           <span
             v-formatter="{
               data: scope.row.loginTime,
-              formatter: 'YYYY/MM/DD HH:mm:ss',
               type: 'date',
+              timeZone: timeZone
             }"
           />
         </template>
@@ -157,6 +157,7 @@ import { getMemberLoginRecord } from '../../../../../api/member'
 import { useStore } from '../../../../../store'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const store = useStore()
 export default defineComponent({
@@ -165,6 +166,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    timeZone: {
+      type: String,
+      required: true,
+    }
   },
   setup(props) {
     const { t } = useI18n()
@@ -191,7 +196,7 @@ export default defineComponent({
       total: 0,
       records: [],
       loading: false,
-      pagingState: '',
+      pagingState: ''
     })
     const formData = reactive({
       loginTime: [defaultStartDate, defaultEndDate],
@@ -213,7 +218,10 @@ export default defineComponent({
         }
       })
       if (formData.loginTime && formData.loginTime.length === 2) {
-        query.loginTime = formData.loginTime.join(',')
+        query.loginTime = JSON.parse(JSON.stringify(formData.loginTime));
+        query.loginTime[0] = formatInputTimeZone(query.loginTime[0], props.timeZone, 'start');
+        query.loginTime[1] = formatInputTimeZone(query.loginTime[1], props.timeZone, 'end');
+        query.loginTime = query.loginTime.join(',')
       }
       query.memberId = props.mbrId
       query.pagingState = memberData.pagingState

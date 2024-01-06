@@ -236,7 +236,7 @@
             v-if="scope.row.createTime !== null"
             v-formatter="{
               data: scope.row.createTime,
-              formatter: 'YYYY/MM/DD HH:mm:ss',
+              timeZone: timeZone,
               type: 'date',
             }"
           />
@@ -255,7 +255,7 @@
             v-if="scope.row.checkedTime !== null"
             v-formatter="{
               data: scope.row.checkedTime,
-              formatter: 'YYYY/MM/DD HH:mm:ss',
+              timeZone: timeZone,
               type: 'date',
             }"
           />
@@ -349,6 +349,7 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { getShortcuts } from '@/utils/datetime'
 import { hasPermission } from '../../../utils/util'
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n()
 const memberMainInfoForm = ref(null)
@@ -365,6 +366,7 @@ const startDate = new Date()
 startDate.setDate(startDate.getDate() - 2)
 const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
+let timeZone = null
 
 const uiControl = reactive({
   memberInfoDialogVisible: false,
@@ -496,8 +498,13 @@ async function loadMemberEditLog() {
       query[key] = value
     }
   })
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
+
   if (request.createTime.length === 2) {
-    query.createTime = request.createTime.join(',')
+    query.createTime = JSON.parse(JSON.stringify(request.createTime));
+    query.createTime[0] = formatInputTimeZone(query.createTime[0], timeZone, 'start');
+    query.createTime[1] = formatInputTimeZone(query.createTime[1], timeZone, 'end');
+    query.createTime = query.createTime.join(',')
   }
   const { data: ret } = await getMemberEditLogList(query)
   page.pages = ret.pages

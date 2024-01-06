@@ -139,7 +139,7 @@
             <span v-if="scope.row.betTime === null">-</span>
             <span
               v-if="scope.row.betTime !== null"
-              v-formatter="{data: scope.row.betTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
+              v-formatter="{data: scope.row.betTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -148,7 +148,7 @@
             <span v-if="scope.row.settleTime === null || scope.row.betStatus === 'UNSETTLED'">-</span>
             <span
               v-if="scope.row.settleTime !== null && scope.row.betStatus !== 'UNSETTLED'"
-              v-formatter="{data: scope.row.settleTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
+              v-formatter="{data: scope.row.settleTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -202,6 +202,7 @@ import { getPlatformsBySite } from '../../../../../api/platform';
 import { useI18n } from "vue-i18n";
 import { useRoute } from 'vue-router'
 import { useStore } from "@/store";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 const store = useStore()
 
 const { t } = useI18n();
@@ -209,6 +210,10 @@ const props = defineProps({
   mbrId: {
     type: String,
     required: true
+  },
+  timeZone: {
+    type: String,
+    required: true,
   }
 })
 
@@ -321,7 +326,10 @@ function checkQuery() {
   });
   if (request.betTime !== null) {
     if (request.betTime.length === 2) {
-      query.betTime = request.betTime.join(",");
+      query.betTime = JSON.parse(JSON.stringify(request.betTime));
+      query.betTime[0] = formatInputTimeZone(query.betTime[0], props.timeZone);
+      query.betTime[1] = formatInputTimeZone(query.betTime[1], props.timeZone);
+      query.betTime = query.betTime.join(',')
     }
   }
   if (request.status !== null) {

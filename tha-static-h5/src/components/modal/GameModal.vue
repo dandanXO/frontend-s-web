@@ -1,12 +1,6 @@
 <template>
-  <q-scroll-area
-  >
-    <q-dialog
-        v-model="visible"
-        class="gameDialog"
-        full-height
-        full-width
-    >
+  <q-scroll-area>
+    <q-dialog v-model="visible" class="gameDialog" full-height full-width>
       <!-- <q-toolbar>
       <q-avatar>
         <img src="https://cdn.quasar.dev/logo-v2/svg/logo.svg" />
@@ -18,37 +12,16 @@
 
       <q-btn flat round dense icon="close" v-close-popup />
     </q-toolbar> -->
-      <q-toolbar
-      >
+      <q-toolbar>
         <div class="topActions">
           <q-toolbar-title></q-toolbar-title>
-          <q-btn
-              v-if="!drawerVisible"
-              flat
-              @click="closeDialog()"
-              round
-              dense
-              icon="close"
-          />
-          <q-btn
-              v-if="!drawerVisible"
-              flat
-              @click="drawerVisible = !drawerVisible"
-              round
-              dense
-              icon="menu_open"
-          />
-          <q-btn
-              v-if="drawerVisible"
-              flat
-              @click="drawerVisible = !drawerVisible"
-              round
-              dense
-              icon="read_more"
-          />
+          <q-btn v-if="!drawerVisible" flat @click="closeDialog()" round dense icon="close" />
+          <q-btn v-if="!drawerVisible" flat @click="drawerVisible = !drawerVisible" round dense icon="menu_open" />
+          <q-btn v-if="drawerVisible" flat @click="drawerVisible = !drawerVisible" round dense icon="read_more" />
         </div>
 
-        <iframe
+        <template v-if="isInnerHtmlSrc === false">
+          <iframe
             @load="loadGame()"
             v-show="!logoShow"
             :src="src"
@@ -56,15 +29,21 @@
             scrolling="no"
             frameborder="0"
             class="game-iframe"
-        ></iframe>
-        <q-drawer
-            v-model="drawerVisible"
-            :breakpoint="500"
-            overlay
-            bordered
-            class="bg-primary"
-            side="right"
-        >
+          ></iframe>
+        </template>
+        <template v-else>
+          <iframe
+            @load="loadGame()"
+            v-show="!logoShow"
+            v-bind:srcdoc="src"
+            id="game-iframe"
+            scrolling="no"
+            frameborder="0"
+            class="game-iframe"
+          ></iframe>
+        </template>
+
+        <q-drawer v-model="drawerVisible" :breakpoint="500" overlay bordered class="bg-primary" side="right">
           <div class="q-pa-sm q-pt-sm">
             <div>
               <!-- Uncomment for quick Transfer -->
@@ -111,42 +90,43 @@
               </template> -->
               <template v-if="!quickTransferTab">
                 <div>
-                  <span class="menu-title">{{ $t('lang.urgent_deposit') }}</span>
+                  <span class="menu-title">{{ $t("lang.urgent_deposit") }}</span>
                 </div>
-                <DepositComponent/>
+                <DepositComponent />
               </template>
             </div>
           </div>
         </q-drawer>
       </q-toolbar>
     </q-dialog>
-    <q-dialog
-        v-model="visibleComingSoon"
-        class="gameDialog"
-        style="width: 100%; margin: 0 auto"
-    >
-      <img src="../../assets/logo-coming.png" style="width: 80%;"/>
+    <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">
+      <img src="../../assets/logo-coming.png" style="width: 80%" />
     </q-dialog>
   </q-scroll-area>
 </template>
 <script setup id="GameModal">
-import {userStore} from "stores/index";
+import { userStore } from "stores/index";
 // import { launchSessionGame } from "api/platform/platform";
 // import { isMobile } from "utils/utils";
-import {useRoute, useRouter} from "vue-router";
-import {ref, defineExpose, reactive, shallowRef} from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { ref, defineExpose, reactive, shallowRef } from "vue";
 import DepositComponent from "components/depositComponent.vue";
 
 // import { transfer } from "api/personal/transfer";
 // import { message } from "ant-design-vue";
-import {storeToRefs} from "pinia";
-import {api} from "boot/axios";
-import {useQuasar, Platform, AppFullscreen} from "quasar";
+import { storeToRefs } from "pinia";
+import { api } from "boot/axios";
+import { useQuasar, Platform, AppFullscreen } from "quasar";
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
+
+import { useI18n } from "vue-i18n";
+
 const $q = useQuasar();
 
+const { t } = useI18n();
+
 const store = userStore();
-const {token} = storeToRefs(store);
+const { token } = storeToRefs(store);
 
 const formRef = ref();
 const payTypeClass = ref();
@@ -201,6 +181,7 @@ const visible = ref(false);
 const visibleComingSoon = ref(false);
 const src = ref("");
 const logoShow = ref(true);
+const isInnerHtmlSrc = ref(false);
 const title = ref("");
 
 const transferInfo = ref({
@@ -211,45 +192,47 @@ const isClicked = ref("");
 const submitTransfer = (amount) => {
   transferInfo.value.amount = amount;
   api
-      .post("/session/balance/transfer/deposit", transferInfo.value)
-      .then((response) => {
-        if (response.code === 0) {
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: "สำเร็จ",
-            icon: "check_circle_outline"
-          });
-          isClicked.value = amount;
-          if (token) {
-            store.getBalance();
-          }
-          setTimeout(function () {
-            isClicked.value = null;
-          }, 1000);
+    .post("/session/balance/transfer/deposit", transferInfo.value)
+    .then((response) => {
+      if (response.code === 0) {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "สำเร็จ",
+          icon: "check_circle_outline"
+        });
+        isClicked.value = amount;
+        if (token) {
+          store.getBalance();
         }
-      })
-      .catch((error) => {
-        // $q.notify({
-        //   color: "negative",
-        //   position: "top",
-        //   message: error.message,
-        //   icon: "report_problem"
-        // });
-      });
+        setTimeout(function () {
+          isClicked.value = null;
+        }, 1000);
+      }
+    })
+    .catch((error) => {
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: error.message,
+      //   icon: "report_problem"
+      // });
+    });
 };
 const closeDialog = () => {
-  visible.value = !visible.value
-  src.value = ""
+  visible.value = !visible.value;
+  src.value = "";
   store.getBalance();
   // AppFullscreen.exit()
-}
+};
 const open = (gameName, platformCode, gameCode, gameType) => {
   // debugger;
   // AppFullscreen.request()
 
   localStorage.removeItem("isOpenFromAccount");
   localStorage.removeItem("isBacked");
+
+  isInnerHtmlSrc.value = false;
   // window.addEventListener(
   //   "message",
   //   (event) => {
@@ -282,14 +265,14 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   //   platform: platformCode
   // };
 
-// Get the iframe
-  const iFrame = document.getElementById('game-iframe');
+  // Get the iframe
+  const iFrame = document.getElementById("game-iframe");
 
-// Let's say that you want to access a button with the ID `'myButton'`,
-// you can access via the followi ng code:
-// const buttonInIFrame = iFrame.contentWindow.document.getElementById('iphone-tips-close-button');
-// buttonInIFrame.style.visible = visible;
-//   console.log(iframe)
+  // Let's say that you want to access a button with the ID `'myButton'`,
+  // you can access via the followi ng code:
+  // const buttonInIFrame = iFrame.contentWindow.document.getElementById('iphone-tips-close-button');
+  // buttonInIFrame.style.visible = visible;
+  //   console.log(iframe)
   title.value = gameName;
   const store = userStore();
   if (store.memberType !== "TEST" && gameType === "TEST") {
@@ -297,27 +280,47 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   } else {
     if (store.hasToken()) {
       visible.value = true;
-      var way = null
+      var way = null;
       if (Platform.is.android) {
-        way = "ANDROID"
+        way = "ANDROID";
       } else if (Platform.is.ios) {
-        way = "IOS"
+        way = "IOS";
       }
+
+      const apiParams = {
+        platform: platformCode,
+        gameCode: gameCode,
+        isMobile: Platform.is.mobile ? true : false,
+        way: way
+      };
+
+      if (platformCode === "CG") {
+        apiParams.language = t("lang.langVal");
+      }
+
       api
-          .get(`/session/launch?_time=${new Date().getTime()}`, {
-            params: {
-              platform: platformCode,
-              gameCode: gameCode,
-              isMobile: Platform.is.mobile ? true : false,
-              way: way
-            }
-          })
-          .then((ret) => {
-            const res = ret.data;
-            src.value = res.data;
-          });
+        .get(`/session/launch?_time=${new Date().getTime()}`, {
+          params: apiParams
+        })
+        .then((ret) => {
+          let srcDoc = ret.data.data;
+          var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
+          if (firstFourChars === "http") {
+            src.value = srcDoc;
+          } else {
+            isInnerHtmlSrc.value = true;
+
+            const scriptEndTag = "</" + "script>";
+            srcDoc = srcDoc
+              .replace(/<\/script>/g, scriptEndTag)
+              .replaceAll(/\\\"/g, '"')
+              .replaceAll(/\n/g, "");
+
+            src.value = srcDoc;
+          }
+        });
     } else {
-      router.push({path: "/login", query: {redirect: route.path}});
+      router.push({ path: "/login", query: { redirect: route.path } });
     }
   }
 };
@@ -347,7 +350,6 @@ defineExpose({
 #iphone-tips-close-button {
   visibility: visible !important;
 }
-
 </style>
 
 <style scoped lang="scss">
@@ -387,10 +389,11 @@ defineExpose({
   color: #ffffff;
 }
 
-:deep(.ant-form-vertical
-    .ant-form-item-label
-    > label, .ant-col-24.ant-form-item-label
-    > label, .ant-col-xl-24.ant-form-item-label > label) {
+:deep(
+    .ant-form-vertical .ant-form-item-label > label,
+    .ant-col-24.ant-form-item-label > label,
+    .ant-col-xl-24.ant-form-item-label > label
+  ) {
   color: #ffffff;
 }
 
@@ -508,8 +511,8 @@ defineExpose({
     position: absolute;
     border-radius: 10px;
     text-align: center;
-    background-color: $linear-bg-red;;
-    background-image: $linear-bg-red;;
+    background-color: $linear-bg-red;
+    background-image: $linear-bg-red;
     display: flex;
     justify-content: center;
     align-items: center;
