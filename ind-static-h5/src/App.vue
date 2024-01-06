@@ -12,12 +12,19 @@ import { userStore } from "src/stores";
 import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
 import { isAndroid } from "boot/utils";
 import { App } from "@capacitor/app";
+import { AddressbarColor } from "quasar";
+import { StatusBar, Style } from "@capacitor/status-bar";
+import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
+import { useUI } from "src/stores/ui";
+import axios from "axios";
 
 export default defineComponent({
   name: "App",
   setup() {
     var qs = require("qs");
     const store = userStore();
+    const ui = useUI();
+
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(true);
     const checkSID = () => {
@@ -70,6 +77,7 @@ export default defineComponent({
           console.log("setAttributionCallbackListener");
           console.log(e);
         });
+
         Adjust.create(adjustConfig);
         setTimeout(() => {
           Adjust.getAdid().then((aaid) => {
@@ -155,6 +163,75 @@ export default defineComponent({
       console.error("File error: " + error.code);
     };
 
+    const setStatusBarColor = () => {
+      AddressbarColor.set("#3E1474");
+      if (Platform.is.capacitor && Platform.is.android) {
+        StatusBar.hide();
+        StatusBar.setOverlaysWebView({ overlay: true });
+        StatusBar.setBackgroundColor({ color: "#3E1474" });
+        StatusBar.setStyle({ style: Style.Dark });
+        // if (cordova.platformId == "android") {
+        //   StatusBar.show();
+        //   StatusBar.overlaysWebView(true);
+        //   StatusBar.styleLightContent();
+        //   StatusBar.backgroundColorByHexString("#3E1474");
+        // } else {
+        //   StatusBar.overlaysWebView(false);
+        //   StatusBar.hide();
+        // }
+      }
+    };
+
+    const getInsetHeight = async () => {
+      const ua = navigator.userAgent.toLowerCase();
+      console.log(ua);
+      const isAndroidPixel =
+        ua.indexOf("android") > -1 &&
+        (ua.indexOf("pixel") > -1 || ua.indexOf("samsung") > -1 || ua.indexOf("galaxy") > -1);
+      if (Platform.is.capacitor && Platform.is.android && isAndroidPixel) {
+        const insets = await SafeArea.getSafeAreaInsets();
+        console.log(insets);
+        // alert(insets); // Ex. { "bottom":34, "top":47, "right":0, "left":0 }
+        if (insets.bottom > 0) {
+          // console.log("HERe");
+          ui.bottomInsetHeight = insets.bottom;
+        }
+      }
+    };
+
+    const handleVisibilityChange = (status) => {
+      if (Platform.is.capacitor && Platform.is.android) {
+        StatusBar.hide();
+      }
+    };
+
+    const getOnlineStatApi = async () => {
+      // console.log("Ok Online.");
+      const fpPromise = FingerprintJS.load();
+
+      const fp = await fpPromise;
+      const result = await fp.get();
+      const excludes = { value: ["timezone", "timeZoneOffset"] };
+      const allComponents = { ...result.components };
+      excludes.value.forEach((element) => {
+        delete allComponents[element];
+      });
+      const sidParam = FingerprintJS.hashComponents(allComponents);
+      const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
+      const theSid = store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam;
+      console.log(theSid);
+
+      if (theSid) {
+        const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
+          params: {
+            way: way,
+            sid: theSid,
+            siteCode: "ind"
+          }
+        });
+      }
+    };
+
     onMounted(async () => {
       // const info = await App.getInfo();
       // console.log("APP Info");
@@ -164,6 +241,8 @@ export default defineComponent({
       getAppInfo();
       initOrientation();
 
+      setStatusBarColor();
+
       document.addEventListener(
         "deviceready",
         () => {
@@ -171,6 +250,13 @@ export default defineComponent({
         },
         false
       );
+
+      document.addEventListener("visibilitychange", handleVisibilityChange);
+
+      getInsetHeight();
+
+      setTimeout(getOnlineStatApi, 2000);
+      setInterval(getOnlineStatApi, 60000);
     });
   }
 });

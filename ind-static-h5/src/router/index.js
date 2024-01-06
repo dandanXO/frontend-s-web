@@ -4,6 +4,8 @@ import { useUI } from "stores/ui";
 
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from "vue-router";
 import routes from "./routes";
+import { StatusBar } from "@capacitor/status-bar";
+import { Platform } from "quasar";
 
 /*
  * If not building with SSR mode, you can
@@ -33,10 +35,19 @@ export default route(function (/* { store, ssrContext } */) {
   Router.beforeEach((to, from, next) => {
     const user = userStore();
     const ui = useUI();
-    if (to.path === "/login" || to.path === "/register") {
+
+    if (user.token && from && from.href) {
+      user.getBalance();
+    }
+
+    if (to.path === "/login" || to.path === "/register" || to.path === "/forgot-password") {
       ui.hiddenFooter();
     } else {
       ui.showFooter();
+    }
+
+    if (Platform.is.capacitor && Platform.is.android) {
+      StatusBar.hide();
     }
 
     // if (to.name === "referCode") {

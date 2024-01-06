@@ -103,7 +103,9 @@ module.exports = configure(function (ctx) {
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-framework
     framework: {
       lang: "en-US",
-      config: {},
+      config: {
+        dark: true
+      },
 
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
@@ -117,7 +119,7 @@ module.exports = configure(function (ctx) {
       // directives: ["BackToTop"],
 
       // Quasar plugins
-      plugins: ["LocalStorage", "SessionStorage", "Notify", "Loading", "Dialog"]
+      plugins: ["LocalStorage", "SessionStorage", "Notify", "Loading", "Dialog", "AddressbarColor"]
     },
 
     // animations: 'all', // --- includes all animations
