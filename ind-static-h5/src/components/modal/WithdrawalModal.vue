@@ -484,8 +484,7 @@ const submitWithdrawBank = async () => {
           // props.loadCards();
           refreshBalance();
           getWithdrawalMethods();
-
-          emits("closeWithdraw");
+          isShowModal.value = false;
         }
       })
       .catch((error) => {

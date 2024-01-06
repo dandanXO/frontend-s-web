@@ -238,6 +238,7 @@
                 class="common-btn"
                 style="margin-left: 100px"
                 @click="submitLogin"
+                :loading="loadingBtn"
               >
                 登录
               </el-button>
@@ -1745,8 +1746,6 @@ export default defineComponent({
 
                   sessionStorage.removeItem("REFERRAL_CODE");
                 } else {
-                  loginForm.loginName = null
-                  loginForm.password = null
                   loginForm.captchaCode = null
                   getCode();
                 }
@@ -1756,6 +1755,7 @@ export default defineComponent({
             getCode();
           });
         });
+        loadingBtn.value = false
       })();
     };
 

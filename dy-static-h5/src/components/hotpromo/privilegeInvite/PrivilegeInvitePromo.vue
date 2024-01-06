@@ -152,14 +152,14 @@
       <div v-if="activeKey === 3" class="tab-content">
         <div class="tab-section">
           <div class="white-btns-container">
-            <a class="white-btn-style">
+            <a class="white-btn-style" @click="goToInvitePageOld(2)">
               <div class="white-btn-img">
                 <img src="../../../assets/images/privilege-invite/btn-img-refer.png" />
               </div>
               <div class="white-btn-text">邀请周存送</div>
             </a>
 
-            <a class="white-btn-style">
+            <a class="white-btn-style" @click="goToInvitePageOld(3)">
               <div class="white-btn-img">
                 <img src="../../../assets/images/privilege-invite/btn-img-friend.png" />
               </div>
@@ -326,6 +326,7 @@ import { getRecommendPrivilegeRecord, getRebateInfo } from "../../../api/privile
 import { userStore } from "stores/index";
 import VueQrious from "vue-qrious";
 import { api, eventapi } from "boot/axios";
+import { isAndroid } from "boot/utils";
 
 export default defineComponent({
   components: {
@@ -431,8 +432,16 @@ export default defineComponent({
     const getReferral = () => {
       api
         .get("/session/member/referralCode")
-        .then((res) => {
+        .then(async (res) => {
           if (res.code === 0) {
+            if (isAndroid()) {
+              const appDownloadUrl = await store.getAppDownloadUrl();
+              const appReferralLinkBaseURL = appDownloadUrl.replace(".app", ".com");
+              const appReferralLink = `${appReferralLinkBaseURL}/refer/${res.data}`;
+              referralLink.value = appReferralLink;
+              return;
+            }
+
             referralLink.value = `${window.location.origin}/refer/${res.data}`;
           }
         })
@@ -491,6 +500,10 @@ export default defineComponent({
     const registerMembers = ref(1);
     const bonusAmount = ref(1);
 
+    const goToInvitePageOld = (type) => {
+      router.push("/privilege/invite?type=" + type);
+    };
+
     const getInviteCount = () => {
       api
         .get("/session/referredBonus/count")
@@ -534,7 +547,8 @@ export default defineComponent({
       retrieve,
       getInviteCount,
       registerMembers,
-      bonusAmount
+      bonusAmount,
+      goToInvitePageOld
     };
   }
 });

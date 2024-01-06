@@ -361,6 +361,11 @@ const form = reactive({
   filePath: null,
 })
 
+const appUpload = reactive({
+  formData: null,
+  extension: null,
+})
+
 const formRules = reactive({
   os: [required(t('message.validateOsRequired'))],
   appType: [required(t('message.validateAppTypeRequired'))],
@@ -409,7 +414,12 @@ function showDialog(type) {
     if (appForm.value) {
       appForm.value.resetFields()
       uploadedApp.filePath = null
+      form.filePath = null
       form.id = null
+    }
+    // Clear the input file value when opening the dialog
+    if (inputApp.value) {
+      inputApp.value.value = ''
     }
     uiControl.dialogTitle = t('siteAppVersion.appUpload')
   } else {
@@ -447,18 +457,32 @@ function showEdit(app) {
   })
 }
 
-// function handleFilePreview() {}
-
 function create() {
   appForm.value.validate(async valid => {
     if (valid) {
       if (form.os === 'IOS') {
         form.apkType = 'NORMAL'
       }
-      await createSiteAppVersion(form)
-      uiControl.dialogVisible = false
-      await loadAppVersion()
-      ElMessage({ message: t('message.addSuccess'), type: 'success' })
+      var create = false
+      if (appUpload.formData != null) {
+        const getUploadApp = await uploadApp(
+          appUpload.formData,
+          appUpload.extension
+        )
+        if (getUploadApp.code === 0) {
+          form.filePath = getUploadApp.data
+          create = true
+        }
+      }
+
+      if (create) {
+        await createSiteAppVersion(form)
+        uiControl.dialogVisible = false
+        await loadAppVersion()
+        appUpload.formData = null
+        appUpload.extension = null
+        ElMessage({ message: t('message.addSuccess'), type: 'success' })
+      }
     }
   })
 }
@@ -469,10 +493,28 @@ function edit() {
       if (form.os === 'IOS') {
         form.apkType = 'NORMAL'
       }
-      await updateSiteAppVersion(form)
-      uiControl.dialogVisible = false
-      await loadAppVersion()
-      ElMessage({ message: t('message.editSuccess'), type: 'success' })
+      var update = false
+      if (appUpload.formData != null) {
+        const getUploadApp = await uploadApp(
+          appUpload.formData,
+          appUpload.extension
+        )
+        if (getUploadApp.code === 0) {
+          form.filePath = getUploadApp.data
+          update = true
+        }
+      } else {
+        update = true
+      }
+
+      if (update) {
+        await updateSiteAppVersion(form)
+        uiControl.dialogVisible = false
+        await loadAppVersion()
+        appUpload.formData = null
+        appUpload.extension = null
+        ElMessage({ message: t('message.editSuccess'), type: 'success' })
+      }
     }
   })
 }
@@ -502,17 +544,6 @@ function removeApp(app) {
 }
 
 async function attachApp(event) {
-  const data = await attachFile(event)
-  if (data.code === 0) {
-    form.filePath = data.data
-    inputApp.value.value = ''
-  } else {
-    uploadedApp.filePath = null
-    ElMessage({ message: t('message.failedToUploadApp'), type: 'error' })
-  }
-}
-
-async function attachFile(event) {
   const files = event.target.files[0]
 
   // Extract file extension
@@ -537,11 +568,9 @@ async function attachFile(event) {
     formData.append('appType', form.appType)
     formData.append('extension', fileExtension)
     uploadedApp.filePath = URL.createObjectURL(files)
-    ElMessage({
-      message: t('siteAppVersion.fileUploadedSuccessfully'),
-      type: 'success',
-    })
-    return await uploadApp(formData, fileExtension)
+    form.filePath = URL.createObjectURL(files)
+    appUpload.formData = formData
+    appUpload.extension = fileExtension
   }
 }
 

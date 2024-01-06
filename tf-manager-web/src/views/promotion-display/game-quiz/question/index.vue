@@ -447,17 +447,35 @@
         </el-row>
         <el-row>
           <el-form-item :label="t('fields.matchTime')" prop="matchTime">
-            <span>{{ viewForm.matchTime }}</span>
+            <span
+              v-formatter="{
+                data: viewForm.matchTime,
+                timeZone: timeZone,
+                type: 'date',
+              }"
+            />
           </el-form-item>
         </el-row>
         <el-row>
           <el-form-item :label="t('fields.startTime')" prop="startTime">
-            <span>{{ viewForm.startTime }}</span>
+            <span
+              v-formatter="{
+                data: viewForm.startTime,
+                timeZone: timeZone,
+                type: 'date',
+              }"
+            />
           </el-form-item>
         </el-row>
         <el-row>
           <el-form-item :label="t('fields.endTime')" prop="endTime">
-            <span>{{ viewForm.endTime }}</span>
+            <span
+              v-formatter="{
+                data: viewForm.endTime,
+                timeZone: timeZone,
+                type: 'date',
+              }"
+            />
           </el-form-item>
         </el-row>
         <div class="dialog-footer">
@@ -485,9 +503,48 @@
           <el-tag v-if="scope.row.status === 'CANCEL'" type="danger" size="mini">{{ t('status.gameQuiz.' + scope.row.status) }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="matchTime" :label="t('fields.matchTime')" width="180" />
-      <el-table-column prop="startTime" :label="t('fields.startTime')" width="180" />
-      <el-table-column prop="endTime" :label="t('fields.endTime')" width="180" />
+      <el-table-column prop="matchTime" :label="t('fields.matchTime')" width="180">
+        <template #default="scope">
+          <span v-if="scope.row.matchTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.matchTime !== null"
+            v-formatter="{
+              data: scope.row.matchTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="startTime" :label="t('fields.startTime')" width="180">
+        <template #default="scope">
+          <span v-if="scope.row.startTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.startTime !== null"
+            v-formatter="{
+              data: scope.row.startTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="endTime" :label="t('fields.endTime')" width="180">
+        <template #default="scope">
+          <span v-if="scope.row.endTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.endTime !== null"
+            v-formatter="{
+              data: scope.row.endTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column
         fixed="right"
         :label="t('fields.operate')"
@@ -602,6 +659,7 @@ const viewQuizForm = ref(null);
 const sites = reactive({
   list: []
 });
+let timeZone = null
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -813,6 +871,7 @@ async function loadGameQuiz() {
   const { data: ret } = await getGameQuiz(query);
   page.pages = ret.pages;
   page.records = ret.records;
+  timeZone = sites.list.find(e => e.id === request.siteId).timeZone
   page.total = ret.total;
   page.loading = false;
 }

@@ -7,8 +7,8 @@
           size="small"
           :placeholder="t('fields.site')"
           class="filter-item"
-          style="width: 120px;margin-left: 5px"
-          @change="loadAutoPaymentType()"
+          style="width: 120px; margin-left: 5px"
+          @change="handleChangeSite()"
         >
           <el-option
             v-for="item in list.sites"
@@ -52,7 +52,7 @@
         :rules="formRules"
         :inline="true"
         size="small"
-        label-width="200px"
+        label-width="150px"
       >
         <el-form-item :label="t('fields.payTypeName')" prop="paymentTypeCode" required>
           <el-select
@@ -62,7 +62,7 @@
             size="small"
             :placeholder="t('fields.pleaseChoose')"
             class="filter-item"
-            style="width: 200px; margin-bottom: 16px"
+            style="width: 200px;"
           >
             <el-option
               v-for="item in list.filteredPayTypes"
@@ -72,27 +72,8 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.minWithdrawAmount')" prop="withdrawAmountMin">
-          <el-input-number v-model="form.withdrawAmountMin" :min="0" class="form-input" :controls="false" />
-        </el-form-item>
-        <el-form-item :label="t('fields.maxWithdrawAmount')" prop="withdrawAmountMax">
-          <el-input-number
-            v-model="form.withdrawAmountMax"
-            :min="form.withdrawAmountMin"
-            class="form-input"
-            :controls="false"
-          />
-        </el-form-item>
-        <el-form-item :label="t('fields.minBalance')" prop="memberBalanceMin">
-          <el-input-number v-model="form.memberBalanceMin" :min="0" class="form-input" :controls="false" />
-        </el-form-item>
-        <el-form-item :label="t('fields.maxBalance')" prop="memberBalanceMax">
-          <el-input-number
-            v-model="form.memberBalanceMax"
-            :min="form.memberBalanceMin"
-            class="form-input"
-            :controls="false"
-          />
+        <el-form-item :label="t('fields.rule')" prop="rule">
+          <el-input type="textarea" :rows="6" v-model="form.rule" class="form-input" style="width: 300px;" />
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
@@ -183,8 +164,28 @@
           </div>
           <el-table :data="props.row.systemAutoWithdrawPlatfromVO" ref="table" size="small" style="margin-left: 60px; width: 50%;">
             <el-table-column :label="t('fields.withdrawPlatformName')" prop="withdrawPlatformName" />
-            <el-table-column :label="t('fields.minWithdrawAmount')" prop="withdrawAmountMin" />
-            <el-table-column :label="t('fields.maxWithdrawAmount')" prop="withdrawAmountMax" />
+            <el-table-column :label="t('fields.minWithdrawAmount')" prop="withdrawAmountMin" align="center">
+              <template #default="scope">
+                $
+                <span
+                  v-formatter="{
+                    data: scope.row.withdrawAmountMin,
+                    type: 'money',
+                  }"
+                />
+              </template>
+            </el-table-column>
+            <el-table-column :label="t('fields.maxWithdrawAmount')" prop="withdrawAmountMax" align="center">
+              <template #default="scope">
+                $
+                <span
+                  v-formatter="{
+                    data: scope.row.withdrawAmountMax,
+                    type: 'money',
+                  }"
+                />
+              </template>
+            </el-table-column>
             <el-table-column :label="t('fields.operate')" v-if="hasPermission(['sys:systemautowithdraw:add'])">
               <template #default="scope">
                 <el-button
@@ -199,10 +200,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="paymentTypeCode" :label="t('fields.payTypeName')" />
-      <el-table-column prop="withdrawAmountMin" :label="t('fields.minWithdrawAmount')" />
-      <el-table-column prop="withdrawAmountMax" :label="t('fields.maxWithdrawAmount')" />
-      <el-table-column prop="memberBalanceMin" :label="t('fields.minBalance')" />
-      <el-table-column prop="memberBalanceMax" :label="t('fields.maxBalance')" />
+      <el-table-column prop="rule" :label="t('fields.rule')" />
       <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
         <template #default="scope">
           <el-switch
@@ -300,8 +298,7 @@ const form = reactive({
   paymentTypeCode: null,
   withdrawAmountMax: 0,
   withdrawAmountMin: 0,
-  memberBalanceMax: 0,
-  memberBalanceMin: 0,
+  rule: null,
 })
 const formRules = reactive({
   name: [required(t('message.validateNameRequired'))],
@@ -335,7 +332,6 @@ async function loadSites() {
 async function loadPayTypes() {
   const { data: payType } = await getActivePaymentTypes()
   list.payTypes = payType
-  filterPayTypeByCurrency()
 }
 
 async function loadCurrency() {
@@ -344,34 +340,21 @@ async function loadCurrency() {
 }
 
 async function loadAutoPaymentType() {
-  const requestCopy = { ...request }
-  const query = {}
-  Object.entries(requestCopy).forEach(([key, value]) => {
-    if (value) {
-      query[key] = value
-    }
-  })
-  const { data: ret } = await getSystemAutoPaymentTypeList(query)
+  const { data: ret } = await getSystemAutoPaymentTypeList(request)
   page.records = ret
-  loadPayTypes()
-}
-
-function loadWithdrawName() {
-  list.siteWithdrawPlatform.forEach(platform => {
-    list.withdrawPlatform.forEach(item => {
-      if (item.id === platform.withdrawPlatformId) {
-        platform.name = item.name
-        platform.id = item.id
-        platform.type = item.type
-      }
-    })
-  })
 }
 
 async function loadSiteWithdrawPlatform(siteId) {
   const { data: ret } = await getSiteWithdrawPlatform(siteId);
   list.siteWithdrawPlatform = ret;
-  loadWithdrawName()
+  list.siteWithdrawPlatform.forEach(platform => {
+    const matchingItem = list.withdrawPlatform.find(item => item.id === platform.withdrawPlatformId);
+    if (matchingItem) {
+      platform.name = matchingItem.name;
+      platform.id = matchingItem.id;
+      platform.type = matchingItem.type;
+    }
+  });
 }
 
 async function loadWithdrawPlatform() {
@@ -403,6 +386,12 @@ function payTypeByExistingPayType() {
   list.filteredPayTypes = list.filteredPayTypes.filter(payType => {
     return !page.records.some(record => record.paymentTypeCode === payType.code);
   });
+}
+
+async function handleChangeSite() {
+  await loadAutoPaymentType()
+  await loadSiteWithdrawPlatform(request.siteId)
+  filterPayTypeByCurrency()
 }
 
 async function disableAll() {
@@ -479,6 +468,7 @@ function create() {
       await createSystemAutoPaymentType(form)
       uiControl.dialogVisible = false
       await loadAutoPaymentType()
+      payTypeByExistingPayType()
       ElMessage({ message: t('message.addSuccess'), type: 'success' })
     }
   })
@@ -530,7 +520,6 @@ function submitPlatform() {
 
 function changePage(page) {
   request.current = page
-  loadAutoPaymentType()
 }
 
 onMounted(async() => {
@@ -546,7 +535,8 @@ onMounted(async() => {
   await loadSiteWithdrawPlatform(request.siteId)
   loadCurrency()
   loadPayTypes()
-  loadAutoPaymentType()
+  await loadAutoPaymentType()
+  filterPayTypeByCurrency()
 })
 </script>
 

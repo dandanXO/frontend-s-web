@@ -76,6 +76,7 @@ import {userStore} from "src/stores";
 import {Platform, useQuasar} from "quasar";
 import {api} from "boot/axios"
 import {Clipboard} from '@capacitor/clipboard';
+import {isAndroid} from "boot/utils";
 
 export default defineComponent({
   name: "ShareView",
@@ -86,14 +87,6 @@ export default defineComponent({
     const $q = useQuasar();
     const store = userStore();
     const selfTgurl = ref("");
-
-    const refCode = ref("");
-
-    let tgDomain = location.origin;
-    if (store.isApp()) {
-      tgDomain = 'https://' + store.evip;
-    }
-
     const qrCode = computed(() => {
       return selfTgurl.value;
     });
@@ -150,14 +143,19 @@ export default defineComponent({
     const totalSignUp = ref(0)
     const totalTopUp = ref(0)
 
-    onMounted(() => {
-      api.get("/session/member/referralCode").then((res) => {
-        // console.log(reminderForm)
-        if (res.code === 0) {
-          refCode.value = res.data;
-          selfTgurl.value = tgDomain + "/refer/" + refCode.value;
+    const getReferral = () => {
+      api.get('/session/member/referralCode').then(async (res) => {
+        if(isAndroid()) {
+          const appDownloadUrl = await store.getAppDownloadUrl();
+          const appReferralLinkBaseURL = appDownloadUrl.replace('.app', '.com');
+          const appReferralLink = `${appReferralLinkBaseURL}/refer/${res.data}`;
+          selfTgurl.value = appReferralLink;
+          return;
         }
-      });
+
+        selfTgurl.value = `${window.location.origin}/refer/${res.data}`;
+      }).catch((err) => {
+      })
 
       api.get("/session/referred/count").then((res) => {
         console.log(res)
@@ -167,7 +165,10 @@ export default defineComponent({
         }
 
       })
+    };
 
+    onMounted(() => {
+      getReferral();
     });
 
     return {

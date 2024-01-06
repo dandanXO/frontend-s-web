@@ -22,39 +22,35 @@
         </el-button>
       </div>
     </div>
-    <el-table :data="page.records" ref="table"
-              row-key="id"
-              size="normal"
-              highlight-current-row
-              v-loading="page.loading"
-              style="margin-top: 15px;"
-    >
-      <template #empty>
-        <emptyComp />
-      </template>
-      <el-table-column prop="memberName" :label="t('fields.loginName')" align="center" min-width="150" />
-      <el-table-column prop="transferAmount" :label="t('fields.transferAmount')" align="center" min-width="100">
-        <template #default="scope">
-          $ <span v-formatter="{data: scope.row.transferAmount,type: 'money'}" />
-        </template>
-      </el-table-column>
-      <el-table-column prop="transferDate" :label="t('fields.transferDate')" align="center" min-width="150">
-        <template #default="scope">
-          <span v-if="scope.row.transferDate === null">-</span>
-          <span
-            v-if="scope.row.transferDate !== null"
-            v-formatter="{data: scope.row.transferDate, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column prop="rollover" :label="t('fields.rollover')" align="center" min-width="100" />
-      <el-table-column prop="type" :label="t('fields.transferType')" align="center" min-width="150">
-        <template #default="scope">
-          <el-tag v-if="scope.row.type === 'DEPOSIT'" type="success" size="normal">{{ t('transferType.' + scope.row.type) }}</el-tag>
-          <el-tag v-else-if="scope.row.type === 'COMMISSION'" type="warning" size="normal">{{ t('transferType.' + scope.row.type) }}</el-tag>
-        </template>
-      </el-table-column>
-    </el-table>
+    <table cellpadding="0" cellspacing="0" border="0" style="width: 98%; margin: 0 auto" class="custom-table">
+      <thead>
+        <tr>
+          <th scope="col">{{ t('fields.loginName') }}</th>
+          <th scope="col">{{ t('fields.transferAmount') }}</th>
+          <th scope="col">{{ t('fields.transferDate') }}</th>
+          <th scope="col">{{ t('fields.rollover') }}</th>
+          <th scope="col">{{ t('fields.transferType') }}</th>
+        </tr>
+      </thead>
+      <tbody v-if="page.records.length > 0">
+        <tr v-for="item in page.records" :key="item.id">
+          <td :data-label="t('fields.loginName')">{{ item.memberName }}</td>
+          <td :data-label="t('fields.transferAmount')">$ {{ item.transferAmount }}</td>
+          <td :data-label="t('fields.transferDate')">
+            <span v-if="item.transferDate === null">-</span>
+            <span v-if="item.transferDate !== null">{{ item.transferDate }}</span>
+          </td>
+          <td :data-label="t('fields.rollover')">{{ item.rollover }}</td>
+          <td :data-label="t('fields.transferType')">
+            <el-tag v-if="item.type === 'DEPOSIT'" type="success" size="normal">{{ t('transferType.' + item.type) }}</el-tag>
+            <el-tag v-else-if="item.type === 'COMMISSION'" type="warning" size="normal">{{ t('transferType.' + item.type) }}</el-tag>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div v-if="page.records.length === 0">
+      <emptyComp />
+    </div>
     <div class="table-footer">
       <span style="margin-right:20px;">{{ t('fields.totalTransfer') }}: $ <span v-formatter="{data: page.totalTransfer,type: 'money'}" /></span>
     </div>
