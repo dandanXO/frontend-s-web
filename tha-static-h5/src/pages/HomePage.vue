@@ -1145,9 +1145,12 @@ export default defineComponent({
 
           favGamesList.value.forEach((element) => {
             element.default = require("../assets/images/games/aviator/default.png");
-            element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${element.platformCode.toLowerCase()}/${
-              element.icon
-            }.png`;
+            if(element.icon.startsWith('3/')){
+              element.icon = `${process.env.IMAGE_CDN}/game/${element.icon}`;
+            }else{
+              element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${element.platformCode.toLowerCase()}/${element.icon}.png`;
+            }
+
           });
         }
       });
@@ -1282,7 +1285,7 @@ export default defineComponent({
       if(isShow.value) {
         return lotteryGamesMore.value;
       }
-      
+
       return lotteryGames.value;
     })
     const gameBoardItemData = [
@@ -1414,7 +1417,7 @@ export default defineComponent({
       const key = store.hasToken() ? `LOGGED_PLATFORM_GAMES_${code}_${gameType}_${regDevice}` : `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
 
       var platformGamesApiUrl = store.hasToken() ? "/session/loggedInPlatformGames" : "/platformGames";
-      
+
       cached
         .get(key, () =>
           api
@@ -1454,8 +1457,11 @@ export default defineComponent({
             });
             let games = [];
             minis.forEach((mini) => {
-              mini.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${mini.code}.png`;
-
+              if(mini.icon.startsWith('3/')){
+                mini.icon = `${process.env.IMAGE_CDN}/game/${mini.icon}`;
+              }else{
+                mini.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${mini.code}.png`;
+              }
               if (mini.name.indexOf("(铜)") > -1 || mini.name.indexOf("(银)") > -1 || mini.name.indexOf("(金)") > -1) {
                 games.push(mini);
               } else {
@@ -1483,9 +1489,12 @@ export default defineComponent({
           } else {
             res.forEach((element) => {
               element.default = require("../assets/images/games/aviator/default.png");
-              element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${
-                element.icon
-              }.png`;
+              if(element.icon.startsWith('3/')){
+                element.icon = `${process.env.IMAGE_CDN}/game/${element.icon}`;
+              }else{
+                element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${element.icon}.png`;
+              }
+
             });
             gameListData.value = res;
             gamePage.total = res.length;
