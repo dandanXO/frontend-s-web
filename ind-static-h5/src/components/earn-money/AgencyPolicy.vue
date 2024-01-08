@@ -113,7 +113,7 @@
     <q-expansion-item label="5. How to turn your friends into members?">
       <ul>
         <li class="dot-style">
-          Log in to IndWin7, share your recommendation link with your friends on the recommendation page, guide them to
+          Log in to 55Ace, share your recommendation link with your friends on the recommendation page, guide them to
           register from the link, and they can become your direct members.
         </li>
         <li class="dot-style">

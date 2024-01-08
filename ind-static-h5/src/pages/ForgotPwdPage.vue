@@ -12,7 +12,7 @@
   -->
 
     <div class="forgot-password-form-logo-img">
-      <img src="../assets/ind-win-7-logo.png" />
+      <img src="../assets/55-ace-logo.png" />
     </div>
 
     <q-form v-if="!isRequestSent" class="q-gutter-y-md rounded-borders">
@@ -493,7 +493,7 @@ onMounted(() => {
     display: block;
     width: 95%;
     margin: 20px auto;
-    max-width: 200px;
+    max-width: 300px;
   }
 }
 .forgot-password-form-grid {

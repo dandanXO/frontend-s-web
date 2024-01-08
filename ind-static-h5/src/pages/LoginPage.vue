@@ -7,7 +7,7 @@
     </div>
 
     <div class="login-form-logo-img">
-      <img src="../assets/ind-win-7-logo.png" />
+      <img src="../assets/55-ace-logo.png" />
     </div>
 
     <q-form ref="loginFormRef" @submit="onSubmit">
@@ -551,7 +551,7 @@ export default defineComponent({
     display: block;
     width: 95%;
     margin: 20px auto;
-    max-width: 200px;
+    max-width: 300px;
   }
 }
 .login-form-grid {

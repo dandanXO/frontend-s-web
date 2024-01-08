@@ -190,7 +190,7 @@ const refreshBalance = () => {
 
 const onClickLogo = () => {
   if (isAndroid()) {
-    window.open("http://indwin7.com/", "_blank");
+    window.open("http://55ace.com/", "_blank");
     return;
   }
 
@@ -450,7 +450,7 @@ onMounted(() => {
     margin: 0 auto;
 
     img {
-      max-width: 100px;
+      max-width: 123px;
       width: 100%;
       text-align: center;
     }
