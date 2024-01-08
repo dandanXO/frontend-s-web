@@ -1,4 +1,4 @@
-package com.ind.indwin7702;
+package com.ind.app55ace;
 
 import com.getcapacitor.BridgeActivity;
 

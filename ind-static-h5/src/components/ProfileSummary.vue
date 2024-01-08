@@ -141,14 +141,14 @@
       </div>
       <div class="profile-wrapper" v-else>
         <q-btn class="btn-style-purple" no-caps @click="router.push('/register')">Register</q-btn>
-        <q-btn no-caps @click="router.push('/login')">Login</q-btn>
+        <q-btn no-caps @click="goLogin()">Login</q-btn>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed, reactive } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
@@ -156,6 +156,7 @@ import { convertToCommaAmount, isAndroid } from "src/boot/utils";
 import { api } from "boot/axios";
 
 const props = defineProps(["homeProfile"]);
+const emits = defineEmits(["closeslot"]);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
@@ -167,6 +168,14 @@ const profileImg = [
     imgPath: ["profile-pic"]
   }
 ];
+
+const goLogin = () => {
+  if (props.homeProfile) {
+    emits("closeslot");
+  }
+  router.push("/login");
+};
+
 const randomProfileImg = computed(() => {
   const storedImg = sessionStorage.getItem("PROFILE_IMG");
   if (storedImg) {
@@ -250,9 +259,9 @@ const checkTopDownloadAppear = () => {
 const topDownloadUrl = ref("");
 
 const getTopDownloadUrl = () => {
-  api.get("/app/download/url?siteCode=ind").then((res) => {
+  api.get("/app/download/affiliate/url?siteCode=IND&affiliateCode=8999B3").then((res) => {
     if (res.code === 0) {
-      topDownloadUrl.value = res.data;
+      topDownloadUrl.value = res.data.url;
     }
   });
 };
@@ -294,6 +303,7 @@ onMounted(() => {
     .download-icon {
       width: 50px;
       min-width: 50px;
+
       img {
         width: 100%;
         display: block;
@@ -319,6 +329,7 @@ onMounted(() => {
       color: #fe9a9a;
       font-size: 20px;
     }
+
     .download-btn {
       // margin-left: auto;
       margin-right: auto;
@@ -416,6 +427,7 @@ onMounted(() => {
       position: relative;
       margin: 6px 6px 6px 12px;
     }
+
     .profile-pic-frame {
       background-image: url(../assets/images/common/profile-frame.png);
       width: 70px;
@@ -431,12 +443,14 @@ onMounted(() => {
       flex-direction: column;
       font-size: 16px;
     }
+
     .profile-name {
       display: flex;
       align-items: center;
       line-height: 1;
       gap: 10px;
     }
+
     .profile-agency {
       display: flex;
       gap: 0.75rem;
@@ -445,14 +459,17 @@ onMounted(() => {
         color: rgba(255, 255, 255, 0.5);
       }
     }
+
     .profile-rating {
       display: flex;
       gap: 6px;
+
       img {
         display: block;
         width: 20px;
       }
     }
+
     .profile-balance {
       position: relative;
       // background: rgba(255, 255, 255, 0.24);
@@ -473,6 +490,7 @@ onMounted(() => {
       font-size: 14px;
       color: rgba(255, 255, 255, 0.7);
       font-weight: bold;
+
       &:active {
         filter: brightness(0.75);
       }
@@ -482,6 +500,7 @@ onMounted(() => {
         white-space: nowrap;
       }
     }
+
     .profile-msg {
       margin-left: auto;
       position: relative;
@@ -522,6 +541,7 @@ onMounted(() => {
   margin-left: 20px;
   margin-bottom: 5px;
   margin-top: -10px;
+
   img {
     display: block;
     width: 100px;

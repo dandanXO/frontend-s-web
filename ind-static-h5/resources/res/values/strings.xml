@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">55Ace</string>
     <string name="title_activity_main">55Ace</string>
-    <string name="package_name">com.ind.indwin7702</string>
-    <string name="custom_url_scheme">com.ind.indwin7702</string>
+    <string name="package_name">com.ind.app55ace</string>
+    <string name="custom_url_scheme">com.ind.app55ace</string>
 </resources>

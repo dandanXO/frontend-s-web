@@ -750,7 +750,7 @@
     class="fullgame-dialog"
   >
     <q-card class="fullgame-card" id="fullgame">
-      <ProfileSummary :homeProfile="true" />
+      <ProfileSummary @closeslot="closeSlotModal" :homeProfile="true" />
       <q-card-section>
         <div class="home-wrapper fullgame-wrapper">
           <div class="fullgame-header">
@@ -1093,6 +1093,10 @@ const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId
   loadGameList(gameType, gameId);
   fullGameDialog.value = true;
   hotGameOn.value = false;
+};
+
+const closeSlotModal = () => {
+  fullGameDialog.value = false;
 };
 
 const closeFullGameDialog = () => {
