@@ -86,6 +86,15 @@
             @click="exportExcel"
           >{{ t('fields.exportToExcel') }}
           </el-button>
+          <el-button
+            icon="el-icon-upload"
+            size="mini"
+            type="danger"
+            v-permission="['sys:vip-rebate-record:cancel']"
+            @click="uiControl.importDialogVisible = true"
+          >
+            {{ t('fields.batchCancel') }}
+          </el-button>
         </div>
       </div>
     </div>
@@ -125,7 +134,8 @@
         <el-table-column prop="status" :label="t('fields.status')" align="center" min-width="120">
           <template #default="scope">
             <el-tag v-if="scope.row.status === 'DISTRIBUTED'" size="mini" type="success">{{ t('distributeStatus.' + scope.row.status) }}</el-tag>
-            <el-tag v-else size="mini" type="warning">{{ t('distributeStatus.' + scope.row.status) }}</el-tag>
+            <el-tag v-else-if="scope.row.status === 'PENDING'" size="mini" type="warning">{{ t('distributeStatus.' + scope.row.status) }}</el-tag>
+            <el-tag v-else size="mini" type="danger">{{ t('distributeStatus.' + scope.row.status) }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="platform" :label="t('fields.platform')" align="center" min-width="120">
@@ -158,7 +168,7 @@
             <span v-if="scope.row.distributeTime === null">-</span>
             <span
               v-if="scope.row.distributeTime !== null"
-              v-formatter="{data: scope.row.distributeTime, formatter: 'YYYY-MM-DD HH:mm:ss', type: 'date'}"
+              v-formatter="{data: scope.row.distributeTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -173,7 +183,7 @@
             <span v-if="scope.row.updateTime === null">-</span>
             <span
               v-if="scope.row.updateTime !== null"
-              v-formatter="{data: scope.row.updateTime, formatter: 'YYYY-MM-DD HH:mm:ss', type: 'date'}"
+              v-formatter="{data: scope.row.updateTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -206,7 +216,8 @@
         </el-table-column>
       </el-table>
       <div style="text-align: right;margin-top:10px;">
-        <span>{{ t('fields.totalRebateAmount') }}: $ <span v-formatter="{data: page.totalRebateAmount,type: 'money'}" /></span>
+        <span>{{ t('fields.totalValidBet') }}: $ <span v-formatter="{data: page.totalValidBet,type: 'money'}" /></span>
+        <span style="margin-left:20px;">{{ t('fields.totalRebateAmount') }}: $ <span v-formatter="{data: page.totalRebateAmount,type: 'money'}" /></span>
       </div>
       <el-pagination
         class="pagination"
@@ -323,6 +334,115 @@
       </el-table-column>
     </el-table>
   </el-dialog>
+
+  <el-dialog
+    :title="t('fields.massImport')"
+    v-model="uiControl.importDialogVisible"
+    append-to-body
+    width="1000px"
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+  >
+    <el-button
+      icon="el-icon-download"
+      size="mini"
+      type="primary"
+      @click="downloadTemplate"
+    >
+      {{ t('fields.downloadTemplate') }}
+    </el-button>
+    <el-button
+      icon="el-icon-upload"
+      size="mini"
+      type="success"
+      @click="chooseFile"
+    >
+      {{ t('fields.import') }}
+    </el-button>
+    <!-- eslint-disable -->
+    <input
+      id="importFile"
+      type="file"
+      accept=".xlsx, .xls"
+      @change="importToTable"
+      hidden
+    />
+    <el-form
+      ref="importRefForm"
+      :model="importForm"
+      :rules="importRules"
+      :inline="true"
+      size="small"
+      label-width="150px"
+      style="float: right;"
+    >
+      <el-form-item :label="t('fields.site')" prop="siteId">
+        <el-select
+          v-model="importForm.siteId"
+          :placeholder="t('fields.site')"
+          style="width: 150px;"
+          filterable
+          default-first-option
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item :label="t('fields.recordTime')" prop="recordTime">
+        <el-date-picker
+          v-model="importForm.recordTime"
+          format="DD/MM/YYYY"
+          value-format="YYYY-MM-DD"
+          size="small"
+          type="date"
+          :placeholder="t('fields.recordTime')"
+          style="margin-left: 5px; width: 150px"
+          :disabled-date="disabledDate"
+          :editable="false"
+          :clearable="false"
+        />
+      </el-form-item>
+    </el-form>
+    <el-table
+      :data="
+        importedPage.records.slice(
+          importedPage.size * (importedPage.current - 1),
+          importedPage.size * importedPage.current
+        )
+      "
+      v-loading="importedPage.loading"
+      ref="table"
+      row-key="id"
+      size="small"
+      :empty-text="t('fields.noData')"
+    >
+      <el-table-column prop="memberId" :label="t('fields.memberId')" width="300" />
+      <el-table-column prop="loginName" :label="t('fields.loginName')" width="330" />
+    </el-table>
+    <el-pagination
+      class="pagination"
+      @current-change="changeImportedPage"
+      layout="prev, pager, next"
+      :page-size="importedPage.size"
+      :page-count="importedPage.pages"
+      :current-page="importedPage.current"
+    />
+    <div class="dialog-footer">
+      <el-button
+        type="primary"
+        :disabled="importedPage.records.length === 0"
+        @click="confirmImport"
+        :loading="importedPage.buttonLoading"
+      >
+        {{ t('fields.confirmAndImport') }}
+      </el-button>
+      <el-button @click="clearImport">{{ t('fields.cancel') }}</el-button>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -334,20 +454,23 @@ import { useI18n } from "vue-i18n";
 import { getSiteListSimple } from '../../../api/site';
 import { useStore } from '../../../store';
 import { TENANT } from '../../../store/modules/user/action-types';
-import { adjustAmount, distribute, getTotal, getVipRebateRecord } from '../../../api/vip-rebate-record';
+import { adjustAmount, distribute, getTotal, getVipRebateRecord, batchCancel } from '../../../api/vip-rebate-record';
 import { required } from '../../../utils/validate';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { getVipRebateRecordDetails } from '../../../api/vip-rebate-record-detail';
+import { findIdByLoginName } from '../../../api/member';
 
 const { t } = useI18n();
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const adjustForm = ref(null)
+const importRefForm = ref(null);
 const recordDetails = ref([])
 const site = ref(null)
 const siteList = reactive({
   list: []
 });
+let timeZone = null;
 const exportPercentage = ref(0);
 const uiControl = reactive({
   dialogTitle: "",
@@ -366,12 +489,22 @@ const uiControl = reactive({
   ],
   status: [
     { key: 1, displayName: "PENDING", value: "PENDING" },
-    { key: 2, displayName: "DISTRIBUTED", value: "DISTRIBUTED" }
-  ]
+    { key: 2, displayName: "DISTRIBUTED", value: "DISTRIBUTED" },
+    { key: 3, displayName: "CANCEL", value: "CANCEL" }
+  ],
+  importDialogVisible: false,
 });
 
 const EXPORT_HEADER = [t('fields.loginName'), t('fields.vipLevel'), t('fields.platform'), t('fields.gameType'), t('fields.betAmount'),
   t('fields.amount'), t('fields.status'), t('fields.rebateDistributeTime'), t('fields.distributeBy'), t('fields.distributeTime'), t('fields.updateBy'), t('fields.updateTime')];
+
+const EXPORT_CANCEL_REBATE_LIST_HEADER = [
+  'Login Name',
+]
+
+const IMPORT_CANCEL_REBATE_LIST_JSON = [
+  'loginName',
+]
 
 const form = reactive({
   id: null,
@@ -387,7 +520,7 @@ const request = reactive({
   siteId: null,
   loginName: null,
   gameType: [],
-  status: ["PENDING", "DISTRIBUTED"]
+  status: ["PENDING", "DISTRIBUTED", "CANCEL"]
 });
 
 function resetQuery() {
@@ -395,7 +528,7 @@ function resetQuery() {
   request.siteId = siteList.list[0].id;
   request.loginName = null;
   request.gameType = [];
-  request.status = ["PENDING", "DISTRIBUTED"];
+  request.status = ["PENDING", "DISTRIBUTED", "CANCEL"];
 }
 
 const page = reactive({
@@ -403,7 +536,22 @@ const page = reactive({
   records: [],
   loading: false,
   detailsLoading: false,
-  totalRebateAmount: 0
+  totalRebateAmount: 0,
+  totalValidBet: 0
+});
+
+const importedPage = reactive({
+  pages: 0,
+  records: [],
+  loading: false,
+  size: 10,
+  current: 1,
+  buttonLoading: false,
+})
+
+const importForm = reactive({
+  siteId: null,
+  recordTime: convertDate(new Date())
 });
 
 function convertDate(date) {
@@ -434,10 +582,16 @@ const formRules = reactive({
   amount: [required(t('message.validateAmountRequired'))]
 })
 
+const importRules = reactive({
+  siteId: [required(t('message.validateSiteRequired'))],
+  recordTime: [required(t('message.validateRecordTimeRequired'))]
+});
+
 async function loadSites() {
   const { data: site } = await getSiteListSimple();
   siteList.list = site;
   request.siteId = siteList.list[0].id;
+  importForm.siteId = siteList.list[0].id
 };
 
 function checkQuery() {
@@ -471,7 +625,10 @@ async function loadVipRebateRecords() {
   page.records = ret.records;
   page.total = ret.total;
   const { data: total } = await getTotal(query);
-  page.totalRebateAmount = total;
+  page.totalRebateAmount = total.totalRebate;
+  page.totalValidBet = total.totalValidBet;
+
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false;
 }
 
@@ -585,6 +742,136 @@ function distributeRebate() {
     await distribute(query);
     await loadVipRebateRecords();
     ElMessage({ message: t('message.rebateSuccess'), type: "success" });
+  });
+}
+
+async function downloadTemplate() {
+  const exportCancelRebate = [EXPORT_CANCEL_REBATE_LIST_HEADER];
+  const maxLengthCancelRebate = [];
+  const wsCancelRebate = XLSX.utils.aoa_to_sheet(exportCancelRebate);
+  setWidth(exportCancelRebate, maxLengthCancelRebate);
+  const wsCancelRebateCols = maxLengthCancelRebate.map(w => {
+    return { width: w };
+  });
+  wsCancelRebate['!cols'] = wsCancelRebateCols;
+
+  const wb = XLSX.utils.book_new();
+  wb.SheetNames.push('Cancel_Rebate');
+  wb.Sheets.Cancel_Rebate = wsCancelRebate;
+  XLSX.writeFile(wb, 'cancel_rebate.xlsx');
+}
+
+function setWidth(exportData, maxLength) {
+  exportData.map(data => {
+    Object.keys(data).map(key => {
+      const value = data[key];
+
+      maxLength[key] =
+        typeof value === 'number'
+          ? maxLength[key] >= 10
+            ? maxLength[key]
+            : 10
+          : maxLength[key] >= value.length + 2
+            ? maxLength[key]
+            : value.length + 2
+    });
+  });
+}
+
+function chooseFile() {
+  document.getElementById('importFile').click();
+}
+
+function importToTable(file) {
+  importedPage.loading = true;
+  importedPage.buttonLoading = false;
+  const files = file.target.files[0];
+  const allowFileType = [
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/vnd.ms-excel',
+  ];
+  if (allowFileType.find(ftype => ftype.includes(files.type))) {
+    const fileReader = new FileReader();
+
+    fileReader.onload = async event => {
+      const { result } = event.target;
+      const workbook = XLSX.read(result, { type: 'binary' });
+      let data = [];
+      for (const sheet in workbook.Sheets) {
+        data = data.concat(
+          XLSX.utils.sheet_to_json(workbook.Sheets[sheet], {
+            header: IMPORT_CANCEL_REBATE_LIST_JSON,
+            range: 1,
+          })
+        );
+        for (const d of data) {
+          const { data: id } = await findIdByLoginName(d.loginName, importForm.siteId);
+          d.memberId = id;
+        }
+        break;
+      }
+      importedPage.records = data;
+      importedPage.pages = Math.ceil(
+        importedPage.records.length / importedPage.size
+      );
+    }
+    fileReader.readAsBinaryString(files);
+    document.getElementById('importFile').value = '';
+  } else {
+    ElMessage({ message: t('message.invalidFileType'), type: 'error' });
+  }
+  importedPage.loading = false;
+}
+
+function changeImportedPage(page) {
+  importedPage.current = page;
+}
+
+function clearImport() {
+  uiControl.importDialogVisible = false;
+  importedPage.buttonLoading = false;
+  importedPage.loading = false;
+  importedPage.records = [];
+  importedPage.pages = 0;
+  importedPage.current = 1;
+  importForm.cause = null;
+}
+
+async function confirmImport() {
+  importRefForm.value.validate(async (valid) => {
+    if (valid) {
+      importedPage.buttonLoading = true;
+      const recordCopy = { ...importedPage.records };
+      const data = [];
+      Object.entries(recordCopy).forEach(([key, value]) => {
+        const item = {};
+        if (value) {
+          item.recordTime = importForm.recordTime;
+          Object.entries(value).forEach(([k, v]) => {
+            if (k !== "loginName") {
+              item[k] = v;
+            }
+          });
+        }
+        data.push(item);
+      });
+
+      const records = [...data];
+      do {
+        if (records.length > 10000) {
+          await batchCancel(records.slice(0, 10000));
+          records.splice(0, 10000);
+        } else {
+          await batchCancel(records);
+          records.splice(0, records.length);
+        }
+      } while (records.length > 0)
+      importedPage.buttonLoading = false;
+      ElMessage({ message: t('message.cancelSuccess'), type: 'success' });
+      clearImport();
+      loadVipRebateRecords();
+      importForm.cause = null;
+    }
   });
 }
 

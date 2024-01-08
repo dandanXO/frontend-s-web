@@ -66,7 +66,7 @@
               v-if="scope.row.recordTime !== null"
               v-formatter="{
                 data: scope.row.recordTime,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
+                timeZone: timeZone,
                 type: 'date',
               }"
             />
@@ -188,12 +188,17 @@ import moment from 'moment'
 import { getMemberMoneyChangeList } from '../../../../../api/member'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const props = defineProps({
   mbrId: {
     type: String,
     required: true,
   },
+  timeZone: {
+    type: String,
+    required: true,
+  }
 })
 
 const { t } = useI18n()
@@ -263,7 +268,10 @@ async function loadMemberMoneyChange(frombutton) {
   })
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
-      query.recordTime = request.recordTime.join(',')
+      query.recordTime = JSON.parse(JSON.stringify(request.recordTime));
+      query.recordTime[0] = formatInputTimeZone(query.recordTime[0], props.timeZone, 'start');
+      query.recordTime[1] = formatInputTimeZone(query.recordTime[1], props.timeZone, 'end');
+      query.recordTime = query.recordTime.join(',')
     }
   }
   query.memberId = props.mbrId

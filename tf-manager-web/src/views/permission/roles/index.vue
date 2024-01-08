@@ -9,9 +9,7 @@
           :placeholder="t('fields.roleName')"
         />
         <el-select
-          v-if="
-            uiControl.siteVisible
-          "
+          v-if="uiControl.siteVisible"
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -95,10 +93,9 @@
           <el-input v-model="form.name" style="width: 450px" />
         </el-form-item>
         <el-form-item
-          v-if="
-            uiControl.siteVisible
-          "
-          :label="t('fields.site')" prop="siteId"
+          v-if="uiControl.siteVisible"
+          :label="t('fields.site')"
+          prop="siteId"
         >
           <el-select
             v-model="form.siteId"
@@ -127,8 +124,12 @@
           />
         </el-form-item>
         <div class="dialog-footer">
-          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-          <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
+          <el-button @click="uiControl.dialogVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="submit">
+            {{ t('fields.confirm') }}
+          </el-button>
         </div>
       </el-form>
     </el-dialog>
@@ -150,15 +151,72 @@
           :empty-text="t('fields.noData')"
         >
           <el-table-column type="selection" width="55" />
-          <el-table-column prop="name" :label="t('fields.roleName')" width="200" />
-          <el-table-column prop="siteName" :label="t('fields.siteName')" width="200" />
-          <el-table-column prop="remark" :label="t('fields.describe')" width="200" />
-          <el-table-column prop="createTime" :label="t('fields.createTime')" width="200" />
-          <el-table-column prop="createBy" :label="t('fields.createBy')" width="200" />
-          <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="200" />
-          <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="200" />
-          <el-table-column :label="t('fields.operate')" align="right"
-                           v-if="hasPermission(['sys:roles:update']) || hasPermission(['sys:roles:delete'])"
+          <el-table-column
+            prop="name"
+            :label="t('fields.roleName')"
+            width="200"
+          />
+          <el-table-column
+            prop="siteName"
+            :label="t('fields.siteName')"
+            width="200"
+          />
+          <el-table-column
+            prop="remark"
+            :label="t('fields.describe')"
+            width="200"
+          />
+          <el-table-column
+            prop="createTime"
+            :label="t('fields.createTime')"
+            width="200"
+          >
+            <template #default="scope">
+              <span v-if="scope.row.createTime === null">-</span>
+              <span
+                v-if="scope.row.createTime !== null"
+                v-formatter="{
+                  data: scope.row.createTime,
+                  timeZone: scope.row.timeZone,
+                  type: 'date',
+                }"
+              />
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="createBy"
+            :label="t('fields.createBy')"
+            width="200"
+          />
+          <el-table-column
+            prop="updateTime"
+            :label="t('fields.updateTime')"
+            width="200"
+          >
+            <template #default="scope">
+              <span v-if="scope.row.updateTime === null">-</span>
+              <span
+                v-if="scope.row.updateTime !== null"
+                v-formatter="{
+                  data: scope.row.updateTime,
+                  timeZone: scope.row.timeZone,
+                  type: 'date',
+                }"
+              />
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="updateBy"
+            :label="t('fields.updateBy')"
+            width="200"
+          />
+          <el-table-column
+            :label="t('fields.operate')"
+            align="right"
+            v-if="
+              hasPermission(['sys:roles:update']) ||
+                hasPermission(['sys:roles:delete'])
+            "
           >
             <template #default="scope">
               <el-button
@@ -214,6 +272,7 @@
             children: 'children',
           }"
           highlight-current
+          :filter-node-method="filterNode"
         />
       </el-card>
     </div>
@@ -235,16 +294,14 @@ import {
 import { fetchSimpleMenu } from '../../../api/menus'
 import { getSiteListSimple } from '../../../api/site'
 import { hasPermission } from '../../../utils/util'
-import { useStore } from "../../../store";
-import {
-  ADMIN, TENANT
-} from '../../../store/modules/user/action-types'
-import { useI18n } from "vue-i18n";
+import { useStore } from '../../../store'
+import { ADMIN, TENANT } from '../../../store/modules/user/action-types'
+import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n();
+const { t } = useI18n()
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
-const site = ref(null);
+const site = ref(null)
 const uiControl = reactive({
   dialogVisible: false,
   siteVisible: false,
@@ -260,7 +317,7 @@ const siteList = reactive({ list: [] })
 const rolesForm = ref(null)
 const tree = ref(null)
 const table = ref(null)
-let selectRolesId = 0;
+let selectRolesId = 0
 let rolesID = []
 const formRules = reactive({
   name: [required(t('message.validateRoleNameRequired'))],
@@ -282,10 +339,13 @@ const request = reactive({
   size: 30,
   current: 1,
   name: null,
-  siteId: null
+  siteId: null,
 })
 
-const menus = reactive({ list: [] })
+const menus = reactive({
+  list: [],
+  cloneList: [],
+})
 
 function showDialog(type) {
   if (type === 'CREATE') {
@@ -303,20 +363,28 @@ function showDialog(type) {
 async function loadData() {
   const { data: ret } = await getRoles(request)
   page.pages = ret.pages
+  ret.records.forEach(data => {
+    data.timeZone =
+      store.state.user.sites.find(e => e.siteName === data.siteName) !==
+      undefined
+        ? store.state.user.sites.find(e => e.siteName === data.siteName)
+          .timeZone
+        : null
+  })
   page.records = ret.records
 }
 
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   if (LOGIN_USER_TYPE.value === ADMIN.value) {
-    site.splice(0, 0, { id: 0, siteName: "System" });
+    site.splice(0, 0, { id: 0, siteName: 'System' })
   }
   siteList.list = site
 }
 
 function resetQuery() {
-  request.name = null;
-  request.siteId = site.value ? site.value.id : null;
+  request.name = null
+  request.siteId = site.value ? site.value.id : null
 }
 
 /**
@@ -345,7 +413,7 @@ function showEdit(roles) {
       }
     }
   })
-  form.siteId = siteList.list.find(s => s.siteName === roles.siteName).id;
+  form.siteId = siteList.list.find(s => s.siteName === roles.siteName).id
 }
 
 /**
@@ -393,19 +461,18 @@ function submit() {
 }
 
 async function loadTreeMenu() {
-  const { data: children } = await fetchSimpleMenu();
-  menus.list = children;
+  let requestSiteId = 0
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    requestSiteId = store.state.user.siteId
+  }
+  const { data: children } = await fetchSimpleMenu(requestSiteId)
+  menus.list = children
+  menus.cloneList = [...menus.list]
 }
 
-function selectRoles(val) {
+async function selectRoles(val) {
   selectRolesId = val.id
-  tree.value.setCheckedKeys([], false);
-  val.menus.forEach(e => {
-    const node = tree.value.getNode(e);
-    if (node && node.isLeaf) {
-      tree.value.setChecked(e, true);
-    }
-  })
+  tree.value.setCheckedKeys([], false)
   table.value.clearSelection()
   table.value.toggleRowSelection(val)
   uiControl.updatePermissionBtn = false
@@ -413,36 +480,74 @@ function selectRoles(val) {
 }
 
 async function updatePermission() {
-  const selectedMenus = tree.value.getCheckedNodes(false, true).map(c => c.id);
+  const selectedMenus = tree.value.getCheckedNodes(false, true).map(c => c.id)
   await updateRolePermission({ id: selectRolesId, menuIds: selectedMenus })
   await loadData()
   ElMessage({ message: t('message.updateSuccess'), type: 'success' })
 }
 
-function handleSelectionChange(val) {
+async function handleSelectionChange(val) {
   rolesID = val
   if (rolesID.length === 0) {
+    tree.value.setCheckedKeys([], false)
     uiControl.editBtn = true
     uiControl.removeBtn = true
     uiControl.updatePermissionBtn = true
+    for (let i = 0; i < menus.cloneList.length; i++) {
+      tree.value.remove(menus.cloneList[i])
+    }
+
+    for (let i = 0; i < menus.cloneList.length; i++) {
+      tree.value.append(menus.cloneList[i])
+    }
   } else if (rolesID.length === 1) {
     uiControl.editBtn = false
     uiControl.removeBtn = false
+    uiControl.updatePermissionBtn = false
+    const site = siteList.list.find(e => e.siteName === val[0].siteName)
+    let siteMenu = null;
+    if (site !== null) {
+      const { data: children } = await fetchSimpleMenu(site.id)
+      siteMenu = children
+    } else {
+      const { data: children } = await fetchSimpleMenu(0)
+      siteMenu = children
+    }
+    tree.value.setCheckedKeys([], false)
+
+    for (let i = 0; i < menus.cloneList.length; i++) {
+      tree.value.remove(menus.cloneList[i])
+    }
+
+    for (let i = 0; i < siteMenu.length; i++) {
+      tree.value.append(siteMenu[i])
+    }
+
+    val[0].menus.forEach(e => {
+      const node = tree.value.getNode(e)
+      if (node && node.isLeaf) {
+        tree.value.setChecked(e, true)
+      }
+    })
   } else {
+    tree.value.setCheckedKeys([], false)
     uiControl.editBtn = true
     uiControl.removeBtn = false
+    uiControl.updatePermissionBtn = false
   }
 }
 
+function filterNode(value, data) {
+  if (!value) return true
+  return !value.includes(data.id)
+}
+
 async function removeBatchRole() {
-  ElMessageBox.confirm(
-    t('message.confirmDelete'),
-    {
-      confirmButtonText: t('fields.confirm'),
-      cancelButtonText: t('fields.cancel'),
-      type: 'warning',
-    }
-  ).then(async () => {
+  ElMessageBox.confirm(t('message.confirmDelete'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
     await delBatchRoles(rolesID.map(r => r.id))
     await loadData()
     uiControl.updatePermissionBtn = true
@@ -470,13 +575,13 @@ async function removeBatchRole() {
 //
 // }
 
-onMounted(async() => {
+onMounted(async () => {
   await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
-    request.siteId = store.state.user.siteId;
-    form.siteId = store.state.user.siteId;
+    request.siteId = store.state.user.siteId
+    form.siteId = store.state.user.siteId
   } else {
-    uiControl.siteVisible = true;
+    uiControl.siteVisible = true
   }
   await loadData()
   await loadTreeMenu()

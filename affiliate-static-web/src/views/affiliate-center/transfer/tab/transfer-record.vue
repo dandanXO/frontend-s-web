@@ -71,9 +71,9 @@
 <script setup>
 import { onMounted, reactive } from 'vue';
 import { useStore } from "@/store";
-import moment from 'moment';
 import { getTransferRecords, getTotal } from '@/api/affiliate-member-transfer';
 import { useI18n } from "vue-i18n";
+import { getShortcuts, convertDateToStart, convertDateToEnd, disabledDate } from '@/utils/datetime';
 
 const store = useStore();
 const { t } = useI18n();
@@ -82,73 +82,12 @@ const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
   new Date(2000, 1, 1, 23, 59, 59),
 ];
-const shortcuts = [
-  {
-    text: t('fields.today'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).startOf('day').format('x'));
-      end.setTime(moment(end).endOf('day').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.yesterday'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'days').startOf('day').format('x'));
-      end.setTime(moment(end).subtract(1, 'days').endOf('day').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.thisWeek'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).startOf('isoWeek').format('x'));
-      end.setTime(moment(end).endOf('day').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.lastWeek'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'weeks').startOf('isoWeek').format('x'));
-      end.setTime(moment(end).subtract(1, 'weeks').endOf('isoWeek').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.thisMonth'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).startOf('month').format('x'));
-      end.setTime(moment(end).endOf('day').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.lastMonth'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'months').startOf('month').format('x'));
-      end.setTime(moment(end).subtract(1, 'months').endOf('month').format('x'));
-      return [start, end];
-    }
-  }
-];
+const shortcuts = getShortcuts(t);
 
 const request = reactive({
   size: 20,
   current: 1,
-  transferDate: [convertStartDate(new Date()), convertDate(new Date())]
+  transferDate: [convertDateToStart(new Date()), convertDateToEnd(new Date())]
 });
 
 const page = reactive({
@@ -158,18 +97,6 @@ const page = reactive({
   total: 0,
   totalTransfer: 0
 });
-
-function convertDate(date) {
-  return moment(date).endOf('day').format('YYYY-MM-DD HH:mm:ss');
-}
-
-function convertStartDate(date) {
-  return moment(date).startOf('day').format('YYYY-MM-DD HH:mm:ss');
-}
-
-function disabledDate(time) {
-  return time.getTime() > new Date().getTime();
-}
 
 async function loadTransferRecords() {
   page.loading = true;

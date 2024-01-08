@@ -275,7 +275,7 @@
               v-if="scope.row.withdrawDate !== null"
               v-formatter="{
                 data: scope.row.withdrawDate,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
+                timeZone: timeZone,
                 type: 'date',
               }"
             />
@@ -293,7 +293,7 @@
               v-if="scope.row.checkDate !== null"
               v-formatter="{
                 data: scope.row.checkDate,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
+                timeZone: timeZone,
                 type: 'date',
               }"
             />
@@ -324,7 +324,7 @@
               v-if="scope.row.paymentDate !== null"
               v-formatter="{
                 data: scope.row.paymentDate,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
+                timeZone: timeZone,
                 type: 'date',
               }"
             />
@@ -367,6 +367,22 @@
               {{ scope.row.confirmBy }}
             </span>
             <span v-else>-</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="fee"
+          :label="t('fields.fee')"
+          align="center"
+          min-width="120"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{
+                data: scope.row.fee,
+                type: 'money',
+              }"
+            />
           </template>
         </el-table-column>
         <el-table-column
@@ -514,7 +530,7 @@
               v-if="scope.row.operateTime !== null"
               v-formatter="{
                 data: scope.row.operateTime,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
+                timeZone: timeZone,
                 type: 'date',
               }"
             />
@@ -816,6 +832,7 @@ import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
 import { getSiteListSimple } from "@/api/site";
 import { TENANT } from "@/store/modules/user/action-types";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 const { t } = useI18n();
 const store = useStore()
 const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
@@ -841,6 +858,7 @@ const cancelTypeList = reactive({
 const siteList = reactive({
   list: [],
 })
+let timeZone = null;
 
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
@@ -1124,15 +1142,22 @@ function checkQuery() {
     }
   })
 
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.withdrawDate !== null) {
     if (request.withdrawDate.length === 2) {
-      query.withdrawDate = request.withdrawDate.join(',')
+      query.withdrawDate = JSON.parse(JSON.stringify(request.withdrawDate));
+      query.withdrawDate[0] = formatInputTimeZone(query.withdrawDate[0], timeZone);
+      query.withdrawDate[1] = formatInputTimeZone(query.withdrawDate[1], timeZone);
+      query.withdrawDate = query.withdrawDate.join(',')
     }
   }
 
   if (request.paymentDate !== null) {
     if (request.paymentDate.length === 2) {
-      query.paymentDate = request.paymentDate.join(',')
+      query.paymentDate = JSON.parse(JSON.stringify(request.paymentDate));
+      query.paymentDate[0] = formatInputTimeZone(query.paymentDate[0], timeZone);
+      query.paymentDate[1] = formatInputTimeZone(query.paymentDate[1], timeZone);
+      query.paymentDate = query.paymentDate.join(',')
     }
   }
 

@@ -2,10 +2,24 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-input
           v-model="request.loginName"
           size="small"
-          style="width: 200px"
+          style="width: 200px; margin-left: 5px"
           :placeholder="t('fields.loginName')"
         />
         <el-select
@@ -101,7 +115,20 @@
       <el-table-column prop="teamNameLocal" :label="t('fields.teamName')" />
       <el-table-column prop="type" :label="t('fields.type')" />
       <el-table-column prop="status" :label="t('fields.status')" />
-      <el-table-column prop="voteTime" :label="t('fields.voteTime')" />
+      <el-table-column prop="voteTime" :label="t('fields.voteTime')">
+        <template #default="scope">
+          <span v-if="scope.row.voteTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.voteTime !== null"
+            v-formatter="{
+              data: scope.row.voteTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column
         type="title"
         :label="t('fields.action')"
@@ -144,15 +171,24 @@ import {
   getTeamListSimple,
 } from '../../../../api/team-votes'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { onMounted, reactive } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
 import { useRoute } from 'vue-router'
 import { hasPermission } from '../../../../utils/util'
-// import { useStore } from '../../../../store';
+import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
+import { getSiteListSimple } from '../../../../api/site'
+import { TENANT } from '../../../../store/modules/user/action-types'
 
 const { t } = useI18n();
+const store = useStore();
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
+const site = ref(null);
+const siteList = reactive({
+  list: [],
+})
+let timeZone = null
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
   new Date(2000, 1, 1, 23, 59, 59),
@@ -183,6 +219,7 @@ function resetQuery() {
   request.teamVotesId = null
   request.loginName = null
   request.loginName = null
+  request.siteId = siteList.list[0].id
 }
 const request = reactive({
   size: 20,
@@ -192,6 +229,7 @@ const request = reactive({
   status: null,
   type: null,
   teamVotesId: null,
+  siteId: null
 })
 
 const page = reactive({
@@ -264,10 +302,24 @@ async function loadTeamVotesRecord() {
   const { data: ret } = await getTeamVotesRecord(query)
   page.pages = ret.pages
   page.records = ret.records
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
 }
+
+async function loadSites() {
+  const { data: site } = await getSiteListSimple()
+  siteList.list = site
+}
+
 onMounted(async () => {
   if (route.query.current != null) {
     request.current = Number(route.query.current)
+  }
+  await loadSites();
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
+    request.siteId = site.value.id;
+  } else {
+    request.siteId = siteList.list[0].id
   }
   await loadTeams()
   await loadTeamVotesRecord()

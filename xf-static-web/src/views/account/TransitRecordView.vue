@@ -259,7 +259,8 @@
                   <template
                     v-if="
                       scope.row.status === 'SUCCESS' &&
-                      (scope.row.currencyName === 'CNY' || scope.row.currencyName === 'AliCNY') &&
+                      (scope.row.currencyName === 'CNY' ||
+                        scope.row.currencyName === 'AliCNY') &&
                       scope.row.confirmStatus === 0
                     "
                   >
@@ -335,7 +336,6 @@
                     <span>{{ scope.row.recordTime }}</span>
                   </div>
                 </template>
-
 
                 <template v-if="tbl.dataIndex === 'platform'" #default="scope">
                   <div style="display: flex; align-items: center">
@@ -438,7 +438,10 @@
           </div>
         </el-tab-pane>
         <el-tab-pane name="gameBetRecord" label="投注记录">
-          <div v-if="searchForm.gameBetRecord.platform.length === 0" class="payout-total">
+          <div
+            v-if="searchForm.gameBetRecord.platform.length === 0"
+            class="payout-total"
+          >
             <div>总投注: {{ totalBetRecord.totalBet }}</div>
             <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
           </div>
@@ -1184,6 +1187,12 @@ export default defineComponent({
         if (v in searchForm) {
           searchForm[v].startDate = chgDate(7);
           searchForm[v].endDate = chgDate(0);
+          if(v === "gameBetRecord") {
+            // 结束时间如果不跟开始时间一个月，则从当月1号开始
+            if(moment(searchForm[v].startDate).format("YYYY-MM") !== moment(searchForm[v].endDate).format("YYYY-MM")) {
+              searchForm[v].startDate = moment(searchForm[v].endDate).format("YYYY-MM") + "-01";
+            }
+          }
         }
       });
       searchRecord();

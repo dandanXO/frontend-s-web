@@ -1,4 +1,5 @@
 import { Platform } from "quasar";
+import moment from "moment/moment";
 
 export const MAIN = "MAIN";
 
@@ -81,10 +82,26 @@ export const getImageUrl = (srcPath) => require(`/src/assets/${srcPath}`);
 export const updateDate = (val) => {
   const gapDate = new Date().getTime() - val * 24 * 60 * 60 * 1000;
   const oldDate = new Date(gapDate);
+
+  // Adjust the time to GMT+5.5
+  oldDate.setHours(oldDate.getHours() + 5);
+  oldDate.setMinutes(oldDate.getMinutes() + 30);
+
   const newDate = {
     Y: oldDate.getFullYear() + "-",
     M: oldDate.getMonth() + 1 < 10 ? "0" + (oldDate.getMonth() + 1 + "-") : oldDate.getMonth() + 1 + "-",
     D: oldDate.getDate() < 10 ? "0" + (oldDate.getDate() + "") : oldDate.getDate() + ""
   };
   return newDate.Y + newDate.M + newDate.D;
+};
+
+export const convertToGMT55 = (dateTime) => {
+  return moment(dateTime).utcOffset("+05:30").format("YYYY-MM-DD HH:mm:ss");
+};
+export const convertToGMT8 = (dateTime) => {
+  return moment(dateTime).utcOffset("+08:00").format("YYYY-MM-DD");
+};
+
+export const convertToCommaAmount = (amount, isForceDecimal) => {
+  return parseInt(amount, 10).toLocaleString("en-US", { minimumFractionDigits: isForceDecimal ? 2 : 0 });
 };

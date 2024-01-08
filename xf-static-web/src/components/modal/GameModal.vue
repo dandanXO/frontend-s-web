@@ -14,7 +14,7 @@
         v-show="!logoShow"
         v-bind:srcdoc="src"
         id="game-iframe"
-        :scrolling="iframeScroll ? 'yes' : 'no'"
+        scrolling="no"
         frameborder="0"
         class="game-iframe"
       ></iframe>
@@ -30,6 +30,7 @@
         class="game-iframe"
       ></iframe>
     </template>
+
     <div
       @click="showDrawer()"
       class="drawer-btn"
@@ -216,7 +217,12 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           src.value = res.data;
           visible.value = true;
         });
-      } else if (platformCode === "TCG" || platformCode === "VR" || platformCode === "LBkeno" || platformCode === "JOKER") {
+      } else if (
+        platformCode === "TCG" ||
+        platformCode === "VR" ||
+        platformCode === "LBkeno" ||
+        platformCode === "JOKER"
+      ) {
         launchSessionGame(platformCode, {
           gameCode: gameCode,
           isMobile: isMobile()

@@ -5,7 +5,7 @@
         <el-date-picker
           v-model="request.withdrawDate"
           format="DD/MM/YYYY"
-          value-format="YYYY-MM-DD"
+          value-format="YYYY-MM-DD HH:mm:ss"
           size="small"
           type="daterange"
           range-separator=":"
@@ -126,7 +126,7 @@
               v-if="scope.row.withdrawDate !== null"
               v-formatter="{
                 data: scope.row.withdrawDate,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
+                timeZone: timeZone,
                 type: 'date',
               }"
             />
@@ -145,7 +145,7 @@
               v-if="scope.row.checkDate !== null"
               v-formatter="{
                 data: scope.row.checkDate,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
+                timeZone: timeZone,
                 type: 'date',
               }"
             />
@@ -164,7 +164,7 @@
               v-if="scope.row.paymentDate !== null"
               v-formatter="{
                 data: scope.row.paymentDate,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
+                timeZone: timeZone,
                 type: 'date',
               }"
             />
@@ -334,6 +334,7 @@ import {
 } from '../../../../../api/member'
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n();
 const props = defineProps({
@@ -341,6 +342,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  timeZone: {
+    type: String,
+    required: true
+  }
 })
 
 const shortcuts = getShortcuts(t);
@@ -408,7 +413,10 @@ async function loadWithdrwalInfo() {
     }
   })
   if (request.withdrawDate && request.withdrawDate.length === 2) {
-    query.withdrawDate = request.withdrawDate.join(',')
+    query.withdrawDate = JSON.parse(JSON.stringify(request.withdrawDate));
+    query.withdrawDate[0] = formatInputTimeZone(query.withdrawDate[0], props.timeZone, 'start');
+    query.withdrawDate[1] = formatInputTimeZone(query.withdrawDate[1], props.timeZone, 'end');
+    query.withdrawDate = query.withdrawDate.join(',')
   }
   query.memberId = props.affId
   query.status = request.status

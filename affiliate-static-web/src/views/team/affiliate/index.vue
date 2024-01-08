@@ -237,6 +237,7 @@ import { getSite } from '../../../api/site';
 import { required, size } from "../../../utils/validate";
 import { ElMessage } from 'element-plus';
 import { useI18n } from "vue-i18n";
+import { getShortcuts, disabledDate } from '@/utils/datetime';
 
 const store = useStore();
 const { t } = useI18n();
@@ -265,64 +266,7 @@ const defaultEndDate = convertDate(new Date());
 const checkId = ref(null);
 const breadcrumbNameList = ref([]);
 
-const shortcuts = [
-  {
-    text: t('fields.today'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.yesterday'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'days').format('x'));
-      end.setTime(moment(end).subtract(1, 'days').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.thisWeek'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).startOf('isoWeek').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.lastWeek'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'weeks').startOf('isoWeek').format('x'));
-      end.setTime(moment(end).subtract(1, 'weeks').endOf('isoWeek').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.thisMonth'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).startOf('month').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.lastMonth'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'months').startOf('month').format('x'));
-      end.setTime(moment(end).subtract(1, 'months').endOf('month').format('x'));
-      return [start, end];
-    }
-  }
-];
+const shortcuts = getShortcuts(t);
 
 const request = reactive({
   regTime: [defaultStartDate, defaultEndDate],
@@ -358,10 +302,6 @@ const eForm = reactive({
 
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD');
-}
-
-function disabledDate(time) {
-  return time.getTime() > new Date().getTime();
 }
 
 const validatePassword = (rule, value, callback) => {

@@ -14,17 +14,18 @@
           item.children ? 'node-group' : '',
           selectItem === item ? 'active' : ''
         ]"
-        :style="item.group && item.children.length === 0 ? 'display:none': ''"
+        :style="item.group && item.children.length === 0 ? 'display:none' : ''"
         :key="i"
         v-for="(item, i) in list"
       >
         <div class="node-text">
           <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
           <div>{{ item.nodeName }}</div>
-          <div
-            class="promo"
-          >
-            <img v-if="item.promotionIcon" :src="`${imgURL}label/${item.promotionIcon}`">
+          <div class="promo">
+            <img
+              v-if="item.promotionIcon"
+              :src="`${imgURL}${item.promotionIcon}`"
+            />
           </div>
           <div class="payment-method-wrapper">
             <div
@@ -50,7 +51,6 @@
       </div>
       <!-- </div> -->
       <!--      <el-button icon="el-icon-refresh" size="mini" v-if="level === 1" type="primary" @click="addNode()">submit</el-button>-->
-
     </div>
     <div :key="i + nodeKey" v-for="(item, i) in list">
       <node
@@ -369,7 +369,7 @@ $node-color: #45fefa;
       }
 
       .node-txt-img {
-       background-color: #2a313e;
+        background-color: #2a313e;
         // background-color: #f7f7f7;
         display: flex;
         align-items: center;
@@ -466,9 +466,9 @@ $node-color: #45fefa;
       background-size: 100%;
       background-position: top center;
       img {
-       padding: 0;
-       border: 0;
-       background-color: transparent;
+        padding: 0;
+        border: 0;
+        background-color: transparent;
       }
       // top: -5px;
       // right: 0;

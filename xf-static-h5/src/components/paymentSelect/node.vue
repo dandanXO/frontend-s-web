@@ -26,7 +26,7 @@
           <div class="promo">
             <img
               v-if="item.promotionIcon"
-              :src="`${imgURL}label/${item.promotionIcon}`"
+              :src="`${imgURL}${item.promotionIcon}`"
             />
           </div>
 
@@ -409,13 +409,14 @@ $node-color: #33bcd4;
     .promo {
       position: absolute;
       right: -5px;
-      top: -5px;
+      top: -8px;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
       img {
         padding: 0;
         border: 0;
+        max-width: 40px;
         background-color: transparent;
       }
       ::after {

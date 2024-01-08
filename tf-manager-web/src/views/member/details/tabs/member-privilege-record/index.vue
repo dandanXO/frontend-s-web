@@ -82,7 +82,7 @@
             <!-- eslint-disable -->
             <span
               v-if="scope.row.recordTime !== null"
-              v-formatter="{ data: scope.row.recordTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date' }"
+              v-formatter="{ data: scope.row.recordTime, timeZone: timeZone, type: 'date' }"
             />
           </template>
         </el-table-column>
@@ -108,11 +108,16 @@ import moment from 'moment';
 import { getMemberPrivilegeRecord } from '../../../../../api/member';
 import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const props = defineProps({
   mbrId: {
     type: String,
     required: true
+  },
+  timeZone: {
+    type: String,
+    required: true,
   }
 })
 
@@ -171,7 +176,10 @@ async function loadMemberPrivilegeRecord() {
   });
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
-      query.recordTime = request.recordTime.join(",");
+      query.recordTime = JSON.parse(JSON.stringify(request.recordTime));
+      query.recordTime[0] = formatInputTimeZone(query.recordTime[0], props.timeZone, 'start');
+      query.recordTime[1] = formatInputTimeZone(query.recordTime[1], props.timeZone, 'end');
+      query.recordTime = query.recordTime.join(',')
     }
   }
   query.memberId = props.mbrId;

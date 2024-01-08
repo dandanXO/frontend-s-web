@@ -9,6 +9,10 @@ export const getTigerCardSetting = (query) => {
   return https().request("/tiger-card/setting", Method.GET, query, ContentType.form);
 };
 
+export const insertTigerCardSetting = (tigerCardSetting) => {
+  return https().request("/tiger-card", Method.POST, tigerCardSetting, ContentType.form);
+};
+
 export const updateTigerCardSetting = (tigerCardSetting) => {
   return https().request(`/tiger-card/${tigerCardSetting.id}?_method=PUT`, Method.POST, tigerCardSetting, ContentType.form);
 };

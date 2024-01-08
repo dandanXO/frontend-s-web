@@ -12,25 +12,33 @@ default:
   tags:
     - p8s1-runners
 
-.build-h5:
-  script:
-    - cd $PROJECT
-    - npm install
-    - npm install -g @quasar/cli
-    - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "test" ]; then npm run build:test; else npm run build:prod; fi
+#.build-h5:
+#  script:
+#    - cd $PROJECT
+#    - npm install
+#    - npm install -g @quasar/cli
+#    - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "test" ]; then npm run build:test; else npm run build:prod; fi
 
-.build-web:
-  script:
-    - cd $PROJECT
-    - npm install
-    - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "test" ]; then npm run build:test; else npm run build:prod; fi
+#.build-web:
+#  script:
+#    - cd $PROJECT
+#    - npm install
+#    - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "test" ]; then npm run build:test; else npm run build:prod; fi
 
 .build-projects:
   stage: build
+  variables:
+    NODE_OPTIONS: "--max-old-space-size=2048"
   cache:
     paths:
       - node_modules
   image: $CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX/node:16.17.0
+  script:
+    - cd $PROJECT
+    - npm install
+    - npm install -g @quasar/cli
+    - export NODE_OPTIONS="$NODE_OPTIONS" 
+    - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "test" ]; then npm run build:test; else npm run build:prod; fi
   artifacts:
    untracked: true
    expire_in: 24 hrs
@@ -113,12 +121,18 @@ deploy-xf-tutorials:
 
 #===============================================================================================
 
+deploy-ind-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: ind-download
+
+#===============================================================================================
+
 build-tf-manager-web:
-  extends:
-    - .build-projects
-    - .build-web
+  extends: .build-projects
   variables:
     PROJECT: tf-manager-web
+    NODE_OPTIONS: "--max-old-space-size=8192"
 
 build-image-tf-manager-web:
   extends: .docker-build
@@ -130,9 +144,7 @@ build-image-tf-manager-web:
 #===============================================================================================
 
 build-xf-static-h5:
-  extends:
-    - .build-projects
-    - .build-h5
+  extends: .build-projects
   variables:
     PROJECT: xf-static-h5
 
@@ -146,9 +158,7 @@ build-image-xf-static-h5:
 #===============================================================================================
 
 build-tha-static-h5:
-  extends:
-    - .build-projects
-    - .build-h5
+  extends: .build-projects
   variables:
     PROJECT: tha-static-h5
 
@@ -162,9 +172,7 @@ build-image-tha-static-h5:
 #===============================================================================================
 
 build-ind-static-h5:
-  extends:
-    - .build-projects
-    - .build-h5
+  extends: .build-projects
   variables:
     PROJECT: ind-static-h5
 
@@ -178,9 +186,7 @@ build-image-ind-static-h5:
 #===============================================================================================
 
 build-xf-static-web:
-  extends:
-    - .build-projects
-    - .build-web
+  extends: .build-projects
   variables:
     PROJECT: xf-static-web
 
@@ -194,9 +200,7 @@ build-image-xf-static-web:
 #===============================================================================================
 
 build-affiliate-static-web:
-  extends:
-    - .build-projects
-    - .build-web
+  extends: .build-projects
   variables:
     PROJECT: affiliate-static-web
 
@@ -210,9 +214,7 @@ build-image-affiliate-static-web:
 #===============================================================================================
 
 build-tha-landing:
-  extends:
-    - .build-projects
-    - .build-web
+  extends: .build-projects
   variables:
     PROJECT: tha-landing
 
@@ -222,3 +224,45 @@ build-image-tha-landing:
     PROJECT: tha-landing
   needs:
     - build-tha-landing
+
+#===============================================================================================
+
+build-dy-static-web:
+  extends: .build-projects
+  variables:
+    PROJECT: dy-static-web
+
+build-image-dy-static-web:
+  extends: .docker-build
+  variables:
+    PROJECT: dy-static-web
+  needs:
+    - build-dy-static-web
+
+#===============================================================================================
+
+build-dy-static-h5:
+  extends: .build-projects
+  variables:
+    PROJECT: dy-static-h5
+
+build-image-dy-static-h5:
+  extends: .docker-build
+  variables:
+    PROJECT: dy-static-h5
+  needs:
+    - build-dy-static-h5
+
+#===============================================================================================
+
+build-xf-lh-dy-affiliate-web:
+  extends: .build-projects
+  variables:
+    PROJECT: xf-lh-dy-affiliate-web
+
+build-image-xf-lh-dy-affiliate-web:
+  extends: .docker-build
+  variables:
+    PROJECT: xf-lh-dy-affiliate-web
+  needs:
+    - build-xf-lh-dy-affiliate-web

@@ -78,6 +78,22 @@
             :view-val="form.parentId"
           />
         </el-form-item>
+        <el-form-item :label="t('fields.site')" prop="sites">
+          <el-select
+            v-model="form.sites"
+            multiple
+            :placeholder="t('fields.pleaseChoose')"
+            filterable
+            style="width: 450px;"
+          >
+            <el-option
+              v-for="item in sitesList.value"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
       </el-form>
       <div class="dialog-footer">
         <el-button size="small" @click="resetForm">{{ t('fields.cancel') }}</el-button>
@@ -132,6 +148,7 @@ import { required } from "../../../utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { createMenu, deleteMenu, fetchMenu, MenuType, MenuViewScope, updateMenu } from "../../../api/menus";
 import { useI18n } from "vue-i18n";
+import { useStore } from "../../../store";
 
 const { t } = useI18n();
 const uiControl = reactive({
@@ -141,6 +158,7 @@ const uiControl = reactive({
   dialogType: "CREATE"
 });
 const list = reactive([]);
+const sitesList = reactive([]);
 const form = reactive({
   id: null,
   name: null,
@@ -154,7 +172,8 @@ const form = reactive({
   hidden: false,
   viewScope: MenuViewScope.ALL,
   menuSort: 1,
-  remark: null
+  remark: null,
+  sites: []
 });
 
 const formRules = reactive({
@@ -193,6 +212,8 @@ function showDialog(type) {
         form.tyviewScopepe = MenuViewScope.ALL;
       } else if (key === "hidden") {
         form.hidden = false;
+      } else if (key === "sites") {
+        form.sites = sitesList.value.map(item => item.id)
       } else {
         form[key] = null;
       }
@@ -290,7 +311,21 @@ function resetForm() {
   uiControl.dialogVisible = false;
 }
 
-onMounted(initList);
+function initSite() {
+  sitesList.value = useStore().state.user.sites;
+  if (sitesList.value[0].id !== 9999) {
+    sitesList.value.unshift({
+      id: 9999,
+      siteName: t('fields.allSites'),
+      siteCode: 'ALL'
+    })
+  }
+}
+
+onMounted(() => {
+  initList()
+  initSite()
+});
 
 </script>
 

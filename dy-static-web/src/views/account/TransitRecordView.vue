@@ -1041,18 +1041,10 @@ export default defineComponent({
         if (v in searchForm) {
           searchForm[v].startDate = chgDate(7);
           searchForm[v].endDate = chgDate(0);
-          if (v === 'gameBetRecord') {
-            const startMonth = new Date(searchForm[v].startDate).getMonth()
-            const endMonth = new Date(searchForm[v].endDate).getMonth()
-            if (startMonth !== endMonth) {
-              // Invalid date range, adjust the end date to the last day of the month
-              const firstDayOfMonth = 1;
-              // Convert the end date to a Date object
-              const startDateObject = new Date(searchForm[v].startDate);
-              // Set the day of the month to the last day of the month
-              startDateObject.setDate(firstDayOfMonth);
-              // Update searchForm[v].endDate with the adjusted Date object
-              searchForm[v].startDate = formatDate(startDateObject);
+          if(v === "gameBetRecord") {
+            // 结束时间如果不跟开始时间一个月，则从当月1号开始
+            if(moment(searchForm[v].startDate).format("YYYY-MM") !== moment(searchForm[v].endDate).format("YYYY-MM")) {
+              searchForm[v].startDate = moment(searchForm[v].endDate).format("YYYY-MM") + "-01";
             }
           }
         }

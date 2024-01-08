@@ -122,7 +122,20 @@
         prop="recordTime"
         :label="t('fields.recordTime')"
         width="200"
-      />
+      >
+        <template #default="scope">
+          <span v-if="scope.row.recordTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.recordTime !== null"
+            v-formatter="{
+              data: scope.row.recordTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column
         prop="privilegeType"
         :label="t('fields.privilegeType')"
@@ -313,12 +326,14 @@ import { ElMessage } from 'element-plus'
 import { getActivePrivilegeInfoBySiteId, getPrivilegeExcelMapping } from '../../../api/privilege-info'
 import { createBatchPrivilege, distributePrivilege } from '../../../api/member-privilege'
 import { findIdByLoginName } from '../../../api/member'
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n()
 const startDate = new Date()
 startDate.setDate(startDate.getDate())
 const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
+let timeZone = null
 
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
@@ -435,9 +450,13 @@ async function loadPrivilegeRecord() {
       query[key] = value
     }
   })
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
-      query.recordTime = request.recordTime.join(',')
+      query.recordTime = JSON.parse(JSON.stringify(request.recordTime));
+      query.recordTime[0] = formatInputTimeZone(query.recordTime[0], timeZone, 'start');
+      query.recordTime[1] = formatInputTimeZone(query.recordTime[1], timeZone, 'end');
+      query.recordTime = query.recordTime.join(',')
     }
   }
 
@@ -452,6 +471,7 @@ async function loadPrivilegeRecord() {
   } else {
     page.totalAmount = 0
   }
+
   page.loading = false
 }
 

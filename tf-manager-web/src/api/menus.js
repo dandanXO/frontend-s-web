@@ -23,8 +23,9 @@ export const fetchMenu = (parentId) => {
   return https().request("/authority/menu", Method.GET, { parentId: parentId });
 };
 
-export const fetchSimpleMenu = () => {
-  return https().request("/authority/menu/simple", Method.GET);
+export const fetchSimpleMenu = (id) => {
+  id = id === 0 ? null : id
+  return https().request('/authority/menu/simple', Method.GET, { id: id });
 };
 
 export const fetchSimpleChildMenu = (id) => {
@@ -37,6 +38,9 @@ export const fetchMenuName = (parentId) => {
 
 export const createMenu = (menu) => {
   const data = filterNull(menu);
+  if (data.sites.length > 0) {
+    data.sites = data.sites.join(',')
+  }
   return https().request(`/authority/menu`, Method.POST, data, ContentType.form);
 };
 

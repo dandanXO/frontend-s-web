@@ -1,17 +1,13 @@
 <template>
-  <ProfileSummary></ProfileSummary>
-
-  <SwiperNav :slideList="slideList" :onSlideClick="onSlideClick" :isActiveSlide="isActiveSlide"></SwiperNav>
-
-  <ContentView :contentTopStatus="`solid`">
-    <q-card class="search-container">
+  <q-page class="account-table-page">
+    <q-card flat class="search-container">
       <q-form layout="inline" :model="searchForm">
         <div class="date-field">
           <q-input filled v-model="searchForm.startDate" readonly>
-            <template v-slot:append>
-              <q-icon name="event" class="cursor-pointer">
+            <template v-slot:prepend>
+              <q-icon name="calendar_today" class="cursor-pointer text-purple-7">
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="searchForm.startDate" mask="YYYY-MM-DD">
+                  <q-date v-model="searchForm.startDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
                     <div class="row items-center justify-end">
                       <q-btn v-close-popup label="Close" color="white" flat />
                     </div>
@@ -20,11 +16,12 @@
               </q-icon>
             </template>
           </q-input>
+          <span>to</span>
           <q-input filled v-model="searchForm.endDate" readonly>
-            <template v-slot:append>
-              <q-icon name="event" class="cursor-pointer">
+            <template v-slot:prepend>
+              <q-icon name="calendar_today" class="cursor-pointer text-purple-7">
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="searchForm.endDate" mask="YYYY-MM-DD">
+                  <q-date v-model="searchForm.endDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
                     <div class="row items-center justify-end">
                       <q-btn v-close-popup label="Close" color="white" flat />
                     </div>
@@ -35,68 +32,67 @@
           </q-input>
         </div>
 
-        <div class="platform-field">
-          <q-select
-            class="platform"
-            v-model="searchForm.platform"
-            filled
-            :options="platformList"
-            label="Platforms"
-            option-label="name"
-            option-value="name"
-            emit-value
-            map-options
-          />
-          <q-btn class="search-btn" label="Search" @click="searchRecord" />
-        </div>
+        <!--        <div class="platform-field">-->
+        <!--          <q-btn class="search-btn" label="Search" @click="searchRecord(true)" />-->
+        <!--        </div>-->
       </q-form>
     </q-card>
 
     <LoadingComponent v-if="isLoading"></LoadingComponent>
     <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Record"></NoInfoComponent>
-    <q-card v-else v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
-      <q-card-section class="top-wrapper">
-        <div class="date">{{ moment(e.betTime).format("YYYY-MM-DD HH:mm") }}</div>
-        <q-btn
-          :class="`${e.payout > 0 ? 'bet-btn' : 'loss-btn'}`"
-          :label="`${e.payout > 0 ? 'Profit' : 'Loss'}`"
-        ></q-btn>
-      </q-card-section>
+    <template v-else>
+      <q-card v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
+        <q-card-section class="top-wrapper">
+          <div class="date">{{ convertToGMT55(e.betTime) }}</div>
+          <q-btn
+            :class="`${e.payout > 0 ? 'bet-btn' : 'loss-btn'}`"
+            :label="`${e.payout > 0 ? 'Profit' : 'Loss'}`"
+          ></q-btn>
+        </q-card-section>
 
-      <q-card-section class="mid-wrapper">
-        RS
-        <span>{{ e.payout }}</span>
-      </q-card-section>
+        <q-card-section class="mid-wrapper">
+          RS
+          <span :class="`${e.payout > 0 ? 'win-amt' : 'loss-amt'}`">{{ convertToCommaAmount(e.payout, true) }}</span>
+        </q-card-section>
 
-      <q-card-section class="bot-wrapper">
-        <div class="origin">
-          <div class="bet">Bet</div>
-          <div class="game-platform">Game Platform</div>
-        </div>
-        <div class="origin-val">
-          <div class="bet-val">{{ e.bet }}</div>
-          <div class="game-platform-val">{{ e.platform }}</div>
-        </div>
-      </q-card-section>
-    </q-card>
-  </ContentView>
+        <q-card-section class="bot-wrapper">
+          <div class="origin">
+            <div class="bet">Bet</div>
+            <div class="game-platform">Game Platform</div>
+          </div>
+          <div class="origin-val">
+            <div class="bet-val">{{ convertToCommaAmount(e.bet, true) }}</div>
+            <div class="game-platform-val">{{ e.platform }}</div>
+          </div>
+        </q-card-section>
+      </q-card>
+
+      <q-card class="pagination-container">
+        <q-btn class="pagination-btn" @click="onPrevPageClick()">&lt;</q-btn>
+        <!-- <div>{{ pagination.current }} / {{ pagination.pages }}</div> -->
+        <q-btn class="pagination-btn" @click="onNextPageClick()">></q-btn>
+      </q-card>
+    </template>
+  </q-page>
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { onActivated, onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
-import { updateDate } from "src/boot/utils";
-import moment from "moment";
+import { updateDate, convertToGMT8, convertToGMT55 } from "src/boot/utils";
 import SwiperNav from "../../components/SwiperNav.vue";
 import ContentView from "../../components/ContentView.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const router = useRouter();
 const store = userStore();
+
+const qs = require("qs");
 
 let slideList = ref(["Record", "Order", "Bank", "Message", "Personal Center", "Discount"]);
 let slideListPath = ref([
@@ -114,12 +110,6 @@ const isActiveSlide = (e) => {
   return false;
 };
 
-const onSlideClick = (e, i) => {
-  if (e === currentSlide.value) return;
-  router.push(slideListPath.value[i]);
-  currentSlide.value = e;
-};
-
 const isLoading = ref(true);
 const isNoInfo = ref(true);
 
@@ -132,25 +122,63 @@ const setTime = () => {
 const gameBetRecordData = ref([]);
 const pagination = reactive({
   pageSize: 10,
-  total: 0
+  total: 0,
+  pages: 1,
+  current: 1,
+  pagingState: null
 });
-const searchRecord = () => {
+
+const onPrevPageClick = () => {
+  if (pagination.current === 1) return;
+  pagination.current--;
+  searchRecord();
+};
+
+const onNextPageClick = () => {
+  if (pagination.current === pagination.pages) return;
+  pagination.current++;
+  searchRecord();
+};
+
+// api.post("/memberAccessLog", qs.stringify(obj))
+
+const searchRecord = (isNewSearch) => {
+  if (!searchForm.startDate || !searchForm.endDate) {
+    return;
+  }
+  if (isNewSearch) {
+    pagination.current = 1;
+    pagination.pagingState = null;
+  }
+
   isLoading.value = true;
   gameBetRecordData.value = [];
 
   const { startDate, endDate, platform } = searchForm;
+
   api
-    .get("/session/member/gameBetRecord", {
-      params: { startDate, endDate, platform, memberId: store.id, current: 1, size: 10 }
+    .get("/session/member/cassandraBetRecord", {
+      params: {
+        startDate,
+        endDate,
+        platform,
+        memberId: store.id,
+        current: pagination.current,
+        size: pagination.pageSize,
+        pagingState: pagination.pagingState
+      }
     })
     .then((response) => {
-      if (response.code === 0) {
-        const data = response.data.records;
+      const { code, data } = response;
+      if (code === 0) {
+        const records = data.records;
         pagination.total = data.length;
+        pagination.pages = data.pages;
+        pagination.pagingState = data.pagingState;
 
-        gameBetRecordData.value.push(...data);
+        gameBetRecordData.value.push(...records);
 
-        if (data.length === 0) isNoInfo.value = true;
+        if (records.length === 0) isNoInfo.value = true;
         else isNoInfo.value = false;
       }
     })
@@ -175,8 +203,8 @@ const getGameBetRecordTotal = () => {
   const obj = {
     memberId: store.id,
     platform: searchForm.platform,
-    startDate: searchForm.startDate,
-    endDate: searchForm.endDate
+    startDate: convertToGMT8(searchForm.startDate),
+    endDate: convertToGMT8(searchForm.endDate)
   };
   api.get("/session/member/gameBetRecordTotal", { params: obj }).then((res) => {
     if (res.code === 0) {
@@ -186,14 +214,11 @@ const getGameBetRecordTotal = () => {
     }
   });
 };
-
-onMounted(() => {
+onActivated(() => {
   setTime();
   getPlatformList();
 
-  // NOTE: fire together on search
-  searchRecord();
-  //   getGameBetRecordTotal();
+  searchRecord(true);
 });
 </script>
 
@@ -206,20 +231,37 @@ onMounted(() => {
 
   .date-field {
     display: flex;
+    align-items: center;
+
+    span {
+      color: #ffffff99;
+      padding: 0px 12px;
+    }
 
     .q-field__control,
     .q-field__marginal {
+      //border: 1px solid #b478ff4d;
       height: unset;
+    }
+
+    .q-field {
+      border: 1px solid #b478ff4d;
+      background: #28292b;
+      padding: 4px 3px;
+      border-radius: 8px;
     }
 
     .q-field__native {
       padding: 0;
+      color: #b0b0b0;
     }
   }
 
   .platform-field {
     display: flex;
     align-items: center;
+    justify-content: center;
+    margin-top: 10px;
 
     .platform {
       width: 50%;
@@ -279,6 +321,14 @@ onMounted(() => {
     }
   }
 
+  .win-amt {
+    color: $positive;
+  }
+
+  .loss-amt {
+    color: $negative;
+  }
+
   .mid-wrapper {
     font-size: 1rem;
     font-weight: 700;
@@ -333,6 +383,21 @@ onMounted(() => {
         font-weight: 700;
       }
     }
+  }
+}
+
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  border-bottom: 0;
+
+  .pagination-btn {
+    background: #7c28bd;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
   }
 }
 </style>

@@ -114,7 +114,20 @@
       <el-table-column prop="site" :label="t('fields.site')" width="120" />
       <el-table-column prop="memberName" :label="t('fields.loginName')" width="150" />
       <el-table-column prop="serialNumber" :label="t('fields.transferId')" width="250" />
-      <el-table-column prop="transferDate" :label="t('fields.transferTime')" width="150" />
+      <el-table-column prop="transferDate" :label="t('fields.transferTime')" width="150">
+        <template #default="scope">
+          <span v-if="scope.row.transferDate === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.transferDate !== null"
+            v-formatter="{
+              data: scope.row.transferDate,
+              timeZone: scope.row.timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="type" :label="t('fields.transferType')" width="100" />
       <el-table-column prop="amount" :label="t('fields.amount')" width="100" />
       <el-table-column prop="platformName" :label="t('fields.platform')" width="100" />
@@ -128,7 +141,14 @@
       <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150">
         <template #default="scope">
           <span v-if="scope.row.updateTime === null">-</span>
-          <span v-else>{{ scope.row.updateTime }}</span>
+          <span
+            v-if="scope.row.updateTime !== null"
+            v-formatter="{
+              data: scope.row.updateTime,
+              timeZone: scope.row.timeZone,
+              type: 'date',
+            }"
+          />
         </template>
       </el-table-column>
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="100">
@@ -170,6 +190,7 @@ import { getSiteListSimple } from "../../../api/site";
 import { useStore } from '../../../store';
 import { TENANT } from "../../../store/modules/user/action-types";
 import { getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n();
 const store = useStore();
@@ -276,11 +297,23 @@ async function loadTransferRecords() {
       query.siteId = siteIdList.join(',');
     }
     if (request.times && request.times.length === 2) {
-      query.times = request.times.join(',')
+      let timeZone = null
+      if (request.siteId) {
+        timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
+      }
+      query.times = JSON.parse(JSON.stringify(request.times));
+      query.times[0] = formatInputTimeZone(query.times[0], timeZone, 'start');
+      query.times[1] = formatInputTimeZone(query.times[1], timeZone, 'end');
+      query.times = query.times.join(',')
     }
   });
   const { data: ret } = await getTransferRecords(query);
   page.pages = ret.pages;
+  ret.records.forEach(data => {
+    data.timeZone = siteList.list.find(e => e.siteName === data.site) !== undefined
+      ? siteList.list.find(e => e.siteName === data.site).timeZone
+      : null
+  });
   page.records = ret.records;
   page.loading = false;
 }
