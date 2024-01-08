@@ -836,6 +836,7 @@ export default {
     menuIcon: 'Menu Icon',
     menuTitle: 'Menu Title',
     menuType: 'Menu Type',
+    menuOnlineUser: "Online User",
     message: 'Message',
     min: 'Min Profit',
     minAmount: 'Min Amount',
