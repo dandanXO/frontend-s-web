@@ -208,20 +208,20 @@ export default {
   },
   distributeStatus: {
     PENDING: 'กำลังดำเนินการ',
-    DISTRIBUTED: 'แจกจ่าย'
+    DISTRIBUTED: 'แจกจ่าย',
   },
   referFriendEvent: {
     INFO: 'ข้อมูลที่สมบูรณ์',
     FIRST: 'ฝากครั้งแรก',
-    SECOND: 'ฝากครั้งที่สอง'
+    SECOND: 'ฝากครั้งที่สอง',
   },
   rollover: {
     recordStatus: {
       ONGOING: 'กำลังดำเนินการอยู่',
       COMPLETED: 'สมบูรณ์แล้ว',
       VOID: 'เป็นโมฆะ',
-      CANCEL: 'ยกเลิก'
-    }
+      CANCEL: 'ยกเลิก',
+    },
   },
 
   fields: {
@@ -472,6 +472,7 @@ export default {
     depositBettingAmount: 'จำนวนเงินฝาก/เดิมพัน',
     depositCount: 'จำนวนเงินฝาก',
     depositDate: 'วันที่ฝาก',
+    deposited: 'ฝากแล้ว',
     depositExchangeRate: 'อัตราแลกเปลี่ยนเงินฝาก',
     depositMemberCount: 'จำนวนฝากเงินของสมาชิก',
     depositSerialNo: 'หมายเลขลำดับการฝากเงิน',
@@ -704,6 +705,7 @@ export default {
     nextLevel: 'ระดับถัดไป',
     nextLevelPoint: 'จุดระดับถัดไป',
     noData: 'ไม่มีข้อมูล',
+    noDeposit: 'ไม่มีเงินฝาก',
     noOfDeduction: 'จำนวนการหักเงิน',
     noOfDepositTimes: 'จำนวนครั้งที่ฝาก',
     noOfPrivilegeClaimed: 'จำนวนสมาชิกที่ีรับสิทธิไปแล้ว',
@@ -1030,8 +1032,8 @@ export default {
     view: 'ดู',
     viewLog: 'ดูบันทึก',
     vipLevel: 'ระดับวีไอพี',
-    vipRebateDetails: "รายละเอียดบันทึกการคืนเงิน VIP",
-    vipRebateRecord: "บันทึกส่วนลดวีไอพี",
+    vipRebateDetails: 'รายละเอียดบันทึกการคืนเงิน VIP',
+    vipRebateRecord: 'บันทึกส่วนลดวีไอพี',
     virtualVotes: 'โหวตเสมือนจริง',
     visitNumber: 'จำนวนผู้เข้าเยี่ยมชม',
     voteTime: 'เวลาลงคะแนน',
@@ -1109,9 +1111,12 @@ export default {
     confirmCopyTo: ' ถึง ',
     confirmDelete:
       'ยืนยันว่าคุณต้องการลบข้อมูลเหล่านี้ การดำเนินการนี้ไม่สามารถยกเลิกได้',
-    confirmRebate: 'ยืนยันว่าคุณต้องการกระจายส่วนลดทั้งหมด การดำเนินการไม่สามารถยกเลิกได้',
-    confirmRefer: 'ยืนยันว่าคุณต้องการแจกจ่ายโปรโมชั่นแนะนำเพื่อนทั้งหมด การดำเนินการนี้ไม่สามารถยกเลิกได้',
-    confirmReset: 'ยืนยันว่าคุณต้องการรีเซ็ตข้อมูลเหล่านี้ การดำเนินการนี้ไม่สามารถยกเลิกได้',
+    confirmRebate:
+      'ยืนยันว่าคุณต้องการกระจายส่วนลดทั้งหมด การดำเนินการไม่สามารถยกเลิกได้',
+    confirmRefer:
+      'ยืนยันว่าคุณต้องการแจกจ่ายโปรโมชั่นแนะนำเพื่อนทั้งหมด การดำเนินการนี้ไม่สามารถยกเลิกได้',
+    confirmReset:
+      'ยืนยันว่าคุณต้องการรีเซ็ตข้อมูลเหล่านี้ การดำเนินการนี้ไม่สามารถยกเลิกได้',
     confirmSettlement: 'ยืนยันว่าคุณต้องการดำเนินการระงับข้อพิพาทต่อไปหรือไม่?',
     confirmToChecking:
       'ยืนยันว่าคุณต้องการเปลี่ยนการชำระเงินกลับเป็นการตรวจสอบหรือไม่',
@@ -1189,8 +1194,7 @@ export default {
     updateToUnderReviewSuccess: 'อัปเดตเป็นอยู่ระหว่างตรวจสอบสำเร็จ',
     updateUserTypeSuccess: 'อัปเดตประเภทผู้ใช้งานสำเร็จ',
     updateVIPLevelSuccess: 'อัปเดตความสำเร็จระดับ VIP',
-    useCommaToSeparateDomain:
-      'กรุณาใช้ "," เพื่อแยกชื่อโดเมนหากใส่หลายโดเมน',
+    useCommaToSeparateDomain: 'กรุณาใช้ "," เพื่อแยกชื่อโดเมนหากใส่หลายโดเมน',
     validateAdsTypeRequired: 'ต้องระบุประเภทโฆษณา',
     validateActionRequired: 'จำเป็นต้องมีการดำเนินการ',
     validateActivePlayerRequired: 'จำเป็นต้องมีผู้เล่นที่ใช้งานอยู่',
@@ -1270,15 +1274,20 @@ export default {
     validateMallKeyRequired: 'จำเป็นต้องมีกุญแจห้าง',
     validateMallNameRequired: 'จำเป็นต้องมีชื่อห้าง',
     validateMaxDailyWithdrawRequired: 'ต้องถอนเงินสูงสุดต่อวัน',
-    validateMaxDailyWithdrawNumber: 'การถอนสูงสุดรายวันต้องไม่ต่ำกว่าหรือเท่ากับ 0',
-    validateMaxDailyWithdrawGreater: 'การถอนสูงสุดรายวันจะต้องมากกว่าจำนวนการถอนสูงสุด',
+    validateMaxDailyWithdrawNumber:
+      'การถอนสูงสุดรายวันต้องไม่ต่ำกว่าหรือเท่ากับ 0',
+    validateMaxDailyWithdrawGreater:
+      'การถอนสูงสุดรายวันจะต้องมากกว่าจำนวนการถอนสูงสุด',
     validateMaxDailyWithdrawTimesRequired: 'มีจำกัดจำนวนการถอนต่อวัน',
-    validateMaxDailyWithdrawTimesNumber: 'จำนวนการถอนต่อวันต้องไม่น้อยกว่าหรือเท่ากับ 0',
+    validateMaxDailyWithdrawTimesNumber:
+      'จำนวนการถอนต่อวันต้องไม่น้อยกว่าหรือเท่ากับ 0',
     validateMaxDepositRequired: 'ต้องมีเงินฝากสูงสุด',
     validateMaxDepositGreater: 'เงินฝากสูงสุดจะต้องมากกว่าเงินฝากขั้นต่ำ',
     validateMaxWithdrawAmountRequired: 'ต้องระบุจำนวนเงินถอนสูงสุด',
-    validateMaxWithdrawAmountNumber: 'จำนวนเงินถอนสูงสุดต้องไม่น้อยกว่าหรือเท่ากับ 0',
-    validateMaxWithdrawAmountGreater: 'จำนวนถอนสูงสุดต้องมากกว่าจำนวนถอนขั้นต่ำ',
+    validateMaxWithdrawAmountNumber:
+      'จำนวนเงินถอนสูงสุดต้องไม่น้อยกว่าหรือเท่ากับ 0',
+    validateMaxWithdrawAmountGreater:
+      'จำนวนถอนสูงสุดต้องมากกว่าจำนวนถอนขั้นต่ำ',
     validateMemberTypeRequired: 'ต้องระบุประเภทสมาชิก',
     validateMenuTitleRequired: 'ต้องระบุชื่อเมนู',
     validateMinBalanceRequired: 'ต้องมียอดคงเหลือขั้นต่ำ',
@@ -1286,7 +1295,8 @@ export default {
     validateMinDepositLesser: 'เงินฝากขั้นต่ำจะต้องน้อยกว่าเงินฝากสูงสุด',
     validateMinWithdrawRequired: 'ต้องระบุจำนวนการถอนขั้นต่ำ',
     validateMinWithdrawNumber: 'การถอนขั้นต่ำต้องไม่น้อยกว่าหรือเท่ากับ 0',
-    validateMinWithdrawLesser: 'จำนวนเงินถอนขั้นต่ำจะต้องน้อยกว่าจำนวนเงินถอนสูงสุด',
+    validateMinWithdrawLesser:
+      'จำนวนเงินถอนขั้นต่ำจะต้องน้อยกว่าจำนวนเงินถอนสูงสุด',
     validateMobileImageRequired: 'จำเป็นต้องมีรูปภาพบนมือถือ',
     validateMobileBannerRequired: 'ต้องมีแบนเนอร์บนมือถือ',
     validateMobileMessageRequired: 'จำเป็นต้องมีข้อความมือถือ',
@@ -1299,19 +1309,22 @@ export default {
     validateNextGetBetStartTime: 'ต้องระบุเวลาเริ่มรับเดิมพันครั้งถัดไป',
     validateNoNullValue: 'ไม่สามารถมีค่าว่างได้',
     validateNumberOnly: 'กรุณาใส่หมายเลข',
-    validateNumberFourDecimalOnly: 'กรุณากรอกตัวเลขที่มากกว่า 0 และมีทศนิยม 4 ตำแหน่งเท่านั้น',
+    validateNumberFourDecimalOnly:
+      'กรุณากรอกตัวเลขที่มากกว่า 0 และมีทศนิยม 4 ตำแหน่งเท่านั้น',
     validateOnlyThreeChar: 'กรุณากรอก 3 ตัวอักษร',
     validateParamRequired: 'ต้องระบุพารามิเตอร์',
     validatePasswordRequired: 'ต้องการรหัสผ่าน',
     validatePasswordSize: 'รหัสผ่านจะต้องมี 6-12 ตัวอักษร',
-    validatePaymentFeeFormat: 'ค่าธรรมเนียมการชำระเงินจะต้องอยู่ระหว่าง 0 ถึง 1',
+    validatePaymentFeeFormat:
+      'ค่าธรรมเนียมการชำระเงินจะต้องอยู่ระหว่าง 0 ถึง 1',
     validatePaymentNameRequired: 'ต้องระบุชื่อการชำระเงิน',
     validatePaymentTypeRequired: 'ต้องระบุประเภทการชำระเงิน',
     validatePayResultTypeRequired: 'ต้องระบุประเภทผลการจ่ายเงิน',
     validatePayTypeRequired: 'ต้องระบุประเภทการชำระเงิน',
     validatePayTypeCodeRequired: 'ต้องระบุรหัสประเภทการชำระเงิน',
     validatePayTypeNameRequired: 'ต้องระบุชื่อประเภทการชำระเงิน',
-    validatePayTypeNameCodeDifferent: 'ชื่อประเภทการชำระเงินและรหัสประเภทการชำระเงินไม่สามารถเป็นค่าเดียวกันได้',
+    validatePayTypeNameCodeDifferent:
+      'ชื่อประเภทการชำระเงินและรหัสประเภทการชำระเงินไม่สามารถเป็นค่าเดียวกันได้',
     validatePlatformRequired: 'จำเป็นต้องมีแพลตฟอร์ม',
     validatePlatformAccountRequired: 'ต้องมีบัญชีแพลตฟอร์ม',
     validatePlatformCodeRequired: 'ต้องระบุรหัสแพลตฟอร์ม',
@@ -1391,13 +1404,13 @@ export default {
     validateTemplateIdRequired: 'ต้องระบุรหัสเทมเพลต',
     requestExportToExcelDone1: 'คำขอถูกส่งเรียบร้อยแล้ว กรุณาคลิก',
     requestExportToExcelDone2: 'เพื่อการตรวจสอบความคืบหน้าและดาวน์โหลด',
-
   },
   menu: {
     undefined: 'ไม่ได้กำหนด',
     Dashboard: 'แดชบอร์ด',
     Member: 'สมาชิก',
     'Member List': 'รายชื่อสมาชิก',
+    'Member List ID': 'รายชื่อสมาชิก',
     'Member Details': 'รายละเอียดสมาชิก',
     'Member Edit Log': 'สมาชิกแก้ไขบันทึก',
     'Member Freeze Record': 'บันทึกสมาชิกที่โดนระงับ',
@@ -1416,7 +1429,8 @@ export default {
     Affiliate: 'พันธมิตร',
     'Affiliate Summary': 'สรุปพันธมิตร',
     'Affiliate Monthly Settlement': 'สรุปการชำระรายเดือนของพันธมิตร',
-    'Affiliate Monthly Settlement Detail': 'รายละเอียดการชำระบัญชีรายเดือนของพันธมิตร',
+    'Affiliate Monthly Settlement Detail':
+      'รายละเอียดการชำระบัญชีรายเดือนของพันธมิตร',
     'Affiliate Settlement': 'ค่าใช่จ่ายรายเดือนของพันธมิตร',
     'Affiliate Settlement Payment': 'สรุปรายจ่ายของพันธมิตร',
     'Affiliate Domain Management': 'การจัดการโดเมนพันธมิตร',
@@ -1442,8 +1456,10 @@ export default {
     'To be affiliate paid': 'เพื่อเป็นพันธมิตรจ่าย',
     'Affiliate Payment on going': 'กำลังดำเนินการจ่ายเงินพันธมิตร',
     'Crypto Affiliate Payment on going': 'กำลังจ่ายคลิปโตพันธมิตร',
-    'Ewallet Affiliate Payment on going': 'กำลังดำเนินการชำระเงินพันธมิตรแบบอีวอลเลท',
-    'Alipay Affiliate Payment on going': 'กำลังดำเนินการชำระเงินพันธมิตรแบบอารีเพ',
+    'Ewallet Affiliate Payment on going':
+      'กำลังดำเนินการชำระเงินพันธมิตรแบบอีวอลเลท',
+    'Alipay Affiliate Payment on going':
+      'กำลังดำเนินการชำระเงินพันธมิตรแบบอารีเพ',
     'Affiliate Automatic Payment': 'การชำระเงินอัตโนมัติของพันธมิตร',
     'Affiliate Suspend': 'พันธมิตรที่ถูกระงับ',
     'Under review': 'อยู่ระหว่างการตรวจสอบ',
@@ -1542,46 +1558,53 @@ export default {
     'Email Setting': 'ตั้งค่าอีเมล์',
     'SMS Setting': 'ตั้งค่า SMS',
     DownloadManager: 'ตัวจัดการการดาวน์โหลด',
-    GoogleAuth: 'Google อัตโนมัติ'
+    GoogleAuth: 'Google อัตโนมัติ',
   },
   google: {
-    google_auth_menu: "ตัวรับรองความถูกต้องของกูเกิ้ล",
-    download_install: "โหลดแอพ",
-    add_key: "เพิ่มคีย์ความปลอดภัย",
-    bind_verify: "ผูก Google Auth",
-    popup_title: "ตัวรับรองความถูกต้องของ Google",
-    popup_msg: "Google Authenticator คือเครื่องมือรหัสผ่านแบบไดนามิกที่จะรีเฟรชอัตโนมัติทุกๆ 30 วินาที เมื่อดำเนินการที่ละเอียดอ่อน เช่น การโอนเงิน ถอนเงิน หรือปรับการตั้งค่าความปลอดภัยในแบ็กเอนด์ของพร็อกซี คุณจะต้องป้อนรหัสยืนยันตัวตน 6 หลักนี้สำหรับการตรวจสอบสิทธิ์",
-    popup_hint: "เครื่องยืนยันตัวตนจะต้องใช้ร่วมกับบัญชีพร็อกซี",
-    i_know: "รับทราบ",
-    download_way: "วิธีการดาวน์โหลด：",
-    download_through_way: "1. ผ่านทางลิงค์ดาวน์โหลด：",
-    ios_download: "ดาวน์โหลด IOS",
-    android_download: "ดาวน์โหลดแอนดรอย",
-    ios_scan_download: "สแกนดาวน์โหลด IOS",
-    android_scan_download: "สแกนดาวน์โหลด Android",
-    if_cannot_download_you_can: "2. หากคุณไม่สามารถดาวน์โหลดได้ คุณสามารถค้นหาได้ใน Apple App Store\"",
-    or_search_in_google: "\", หรือค้นหาใน Android App Store.",
-    download_and_install: "\" ดาวน์โหลดและติดตั้ง。",
-    next_step: "ถัดไป",
-    keyin_pass: "ป้อนรหัสผ่าน & ถัดไป",
-    keyin_your_password: "กรอกรหัสผ่านเข้าสู่ระบบ",
-    tips_installed: "เคล็ดลับด่วน: เมื่อดาวน์โหลดและติดตั้งแล้ว เพียงคลิก \"ถัดไป\" เพื่อดำเนินการต่อ",
-    qr_code: "คิวอาร์โค้ด",
-    secret_key: "รหัสลับ",
-    add_step: "ขั้นตอนในการเพิ่ม",
-    add_step_desc: "เปิด Google Authenticator คลิกที่เครื่องหมาย \"+\" ที่มุมล่างขวา เลือก \"ป้อนรหัสด้วยตนเอง\" และป้อนบัญชีใดก็ได้เพื่อผูกเข้ากับรหัสลับที่กล่าวมาข้างต้น (การสแกนรหัส QR สามารถเพิ่มได้โดยอัตโนมัติ)",
-    check_example: "ดูตัวอย่าง",
-    back: "กลับ",
-    small_tips: "เคล็ดลับด่วน:",
-    small_tips_info_1: "1. หากคุณทำโทรศัพท์หายหรือถอนการติดตั้งแอปการตรวจสอบสิทธิ์ รหัสนี้สามารถช่วยคุณกู้คืนเครื่องตรวจสอบสิทธิ์ได้ กรุณาเก็บไว้อย่างปลอดภัย.",
-    small_tips_info_2: "2. เพื่อความปลอดภัยของบัญชีของคุณ โปรดอย่าทำเครื่องหมายบัญชีพร็อกซีและที่อยู่แบ็กเอนด์พร็อกซีในระหว่างกระบวนการผูกมัด.",
-    keyin_6_digit_google: "กรุณากรอกรหัสรับรองความถูกต้อง 6 หลักของ Google",
-    auth_code: "เครื่องรับรองความถูกต้องของ Google",
-    bind_now: "ผูกตอนนี้",
-    please_enter_password: "กรุณาใส่รหัสผ่านของคุณ",
-    added_success: "เพิ่มรหัส Google Authenticator สำเร็จแล้ว",
-    if_not_google_auth_then: "หากคุณไม่ได้ผูก Google Authenticator ก็ไม่จำเป็นต้องกรอก",
-    google_auth_code: "กรอกรหัส Google Authenticator 6 หลัก"
+    google_auth_menu: 'ตัวรับรองความถูกต้องของกูเกิ้ล',
+    download_install: 'โหลดแอพ',
+    add_key: 'เพิ่มคีย์ความปลอดภัย',
+    bind_verify: 'ผูก Google Auth',
+    popup_title: 'ตัวรับรองความถูกต้องของ Google',
+    popup_msg:
+      'Google Authenticator คือเครื่องมือรหัสผ่านแบบไดนามิกที่จะรีเฟรชอัตโนมัติทุกๆ 30 วินาที เมื่อดำเนินการที่ละเอียดอ่อน เช่น การโอนเงิน ถอนเงิน หรือปรับการตั้งค่าความปลอดภัยในแบ็กเอนด์ของพร็อกซี คุณจะต้องป้อนรหัสยืนยันตัวตน 6 หลักนี้สำหรับการตรวจสอบสิทธิ์',
+    popup_hint: 'เครื่องยืนยันตัวตนจะต้องใช้ร่วมกับบัญชีพร็อกซี',
+    i_know: 'รับทราบ',
+    download_way: 'วิธีการดาวน์โหลด：',
+    download_through_way: '1. ผ่านทางลิงค์ดาวน์โหลด：',
+    ios_download: 'ดาวน์โหลด IOS',
+    android_download: 'ดาวน์โหลดแอนดรอย',
+    ios_scan_download: 'สแกนดาวน์โหลด IOS',
+    android_scan_download: 'สแกนดาวน์โหลด Android',
+    if_cannot_download_you_can:
+      '2. หากคุณไม่สามารถดาวน์โหลดได้ คุณสามารถค้นหาได้ใน Apple App Store"',
+    or_search_in_google: '", หรือค้นหาใน Android App Store.',
+    download_and_install: '" ดาวน์โหลดและติดตั้ง。',
+    next_step: 'ถัดไป',
+    keyin_pass: 'ป้อนรหัสผ่าน & ถัดไป',
+    keyin_your_password: 'กรอกรหัสผ่านเข้าสู่ระบบ',
+    tips_installed:
+      'เคล็ดลับด่วน: เมื่อดาวน์โหลดและติดตั้งแล้ว เพียงคลิก "ถัดไป" เพื่อดำเนินการต่อ',
+    qr_code: 'คิวอาร์โค้ด',
+    secret_key: 'รหัสลับ',
+    add_step: 'ขั้นตอนในการเพิ่ม',
+    add_step_desc:
+      'เปิด Google Authenticator คลิกที่เครื่องหมาย "+" ที่มุมล่างขวา เลือก "ป้อนรหัสด้วยตนเอง" และป้อนบัญชีใดก็ได้เพื่อผูกเข้ากับรหัสลับที่กล่าวมาข้างต้น (การสแกนรหัส QR สามารถเพิ่มได้โดยอัตโนมัติ)',
+    check_example: 'ดูตัวอย่าง',
+    back: 'กลับ',
+    small_tips: 'เคล็ดลับด่วน:',
+    small_tips_info_1:
+      '1. หากคุณทำโทรศัพท์หายหรือถอนการติดตั้งแอปการตรวจสอบสิทธิ์ รหัสนี้สามารถช่วยคุณกู้คืนเครื่องตรวจสอบสิทธิ์ได้ กรุณาเก็บไว้อย่างปลอดภัย.',
+    small_tips_info_2:
+      '2. เพื่อความปลอดภัยของบัญชีของคุณ โปรดอย่าทำเครื่องหมายบัญชีพร็อกซีและที่อยู่แบ็กเอนด์พร็อกซีในระหว่างกระบวนการผูกมัด.',
+    keyin_6_digit_google: 'กรุณากรอกรหัสรับรองความถูกต้อง 6 หลักของ Google',
+    auth_code: 'เครื่องรับรองความถูกต้องของ Google',
+    bind_now: 'ผูกตอนนี้',
+    please_enter_password: 'กรุณาใส่รหัสผ่านของคุณ',
+    added_success: 'เพิ่มรหัส Google Authenticator สำเร็จแล้ว',
+    if_not_google_auth_then:
+      'หากคุณไม่ได้ผูก Google Authenticator ก็ไม่จำเป็นต้องกรอก',
+    google_auth_code: 'กรอกรหัส Google Authenticator 6 หลัก',
   },
   error: {
     400: 'คำขอไม่ถูกต้อง',
