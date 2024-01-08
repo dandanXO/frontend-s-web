@@ -551,7 +551,7 @@ export default defineComponent({
     display: block;
     width: 95%;
     margin: 20px auto;
-    max-width: 300px;
+    max-width: 200px;
   }
 }
 .login-form-grid {
