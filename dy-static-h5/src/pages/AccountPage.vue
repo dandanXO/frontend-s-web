@@ -241,7 +241,7 @@
             <!--            ({{ store.unreadInboxMail }})-->
           </div>
         </router-link>
-        <a href="https://partner.dyvip90.com/" target="_blank">
+        <a href="https://dy2-affiliate.mndofithly.com/" target="_blank">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_affiliate.svg" />
             <div class="acct-nav-label">加盟</div>
