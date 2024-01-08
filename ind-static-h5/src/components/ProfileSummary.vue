@@ -1,20 +1,22 @@
 <template>
-  <div style="height: 66px" v-if="topDownload"></div>
+  <div style="height: 56px" v-if="topDownload"></div>
   <div style="height: 80px"></div>
 
   <div class="top-download" v-if="topDownload">
     <div class="download-container">
-      <div class="download-icon"><img src="../assets/images/index/download/top-download-icon.png" /></div>
+      <!-- <div class="download-icon"><img src="../assets/images/index/download/top-download-icon.png" /></div>
       <div class="download-rating">
         <div class="rate-exp">Best experience!</div>
         <div class="rate-stars"><img src="../assets/images/index/download/top-download-stars.png" /></div>
-      </div>
+      </div> -->
+
       <div class="download-btn">
-        <a href="#" target="blank">
+        <a :href="topDownloadUrl">
           <img src="../assets/images/index/download/top-download-btn.png" />
         </a>
       </div>
-      <div class="download-close">
+      <div class="download-count">({{ topDownloadCount }}s)</div>
+      <div class="download-close" :style="!topDownloadcloseBtn && 'opacity:0'">
         <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
       </div>
     </div>
@@ -45,11 +47,12 @@
           <template v-else>
             <div class="flex-c-start">
               <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
-                <span class="balance-amount">
-                  <span style="font-family: 'Times New Roman', Times, serif">{{ store.currency.value }}</span>
-                  {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, true) }}
+                <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
+                  <span style="font-family: 'Times New Roman', Times, serif">
+                    {{ store.currency.value }}
+                  </span>
+                  {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, false) }}
                 </span>
-
                 <div class="btn-refresh">
                   <q-icon name="sync" size="16px" color="white-7"></q-icon>
                 </div>
@@ -150,11 +153,14 @@ import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, isAndroid } from "src/boot/utils";
+import { api } from "boot/axios";
 
 const props = defineProps(["homeProfile"]);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
+
+// const balance = ref(19999999);
 
 const profileImg = [
   {
@@ -209,15 +215,46 @@ const onLogout = () => {
 };
 
 const topDownload = ref(false);
+const topDownloadcloseBtn = ref(true);
+
+const topDownloadCount = ref(6);
 
 const closeTopdownload = () => {
   topDownload.value = false;
 };
 
-const checkTopDownloadAppear = () => {
-  if (store.token) {
-    topDownload.value = false;
+const countdown = () => {
+  if (topDownloadCount.value > 0) {
+    topDownloadCount.value--;
+    setTimeout(countdown, 1000); // Update every 1000 milliseconds (1 second)
   }
+};
+
+const checkTopDownloadAppear = () => {
+  if (!store.token && route.path === "/home") {
+    if (
+      ("standalone" in window.navigator && window.navigator.standalone) ||
+      (Platform.is.capacitor && Platform.is.android)
+    ) {
+      topDownload.value = false;
+    } else {
+      topDownload.value = true;
+      countdown();
+      setTimeout(() => {
+        topDownload.value = false;
+      }, 6000);
+    }
+  }
+};
+
+const topDownloadUrl = ref("");
+
+const getTopDownloadUrl = () => {
+  api.get("/app/download/url?siteCode=ind").then((res) => {
+    if (res.code === 0) {
+      topDownloadUrl.value = res.data;
+    }
+  });
 };
 
 onMounted(() => {
@@ -228,6 +265,7 @@ onMounted(() => {
     sessionStorage.setItem("PROFILE_IMG", imgPath);
   }
 
+  getTopDownloadUrl();
   checkTopDownloadAppear();
 });
 </script>
@@ -251,6 +289,7 @@ onMounted(() => {
     gap: 16px;
     width: 100%;
     align-items: center;
+    transition: 0.3s all;
 
     .download-icon {
       width: 50px;
@@ -265,14 +304,23 @@ onMounted(() => {
       .rate-exp {
         margin-bottom: 4px;
         text-wrap: nowrap;
+        font-size: 12px;
       }
 
       .rate-stars {
+        img {
+          display: block;
+          width: 100%;
+        }
       }
     }
 
+    .download-count {
+      color: #fe9a9a;
+      font-size: 20px;
+    }
     .download-btn {
-      margin-left: auto;
+      // margin-left: auto;
       margin-right: auto;
 
       img {
@@ -282,7 +330,10 @@ onMounted(() => {
     }
 
     .download-close {
+      margin-top: 4px;
       margin-bottom: auto;
+      opacity: 1;
+      transition: 1s all;
     }
   }
 }
@@ -306,7 +357,7 @@ onMounted(() => {
   &.with-top-download {
     border-top-right-radius: 25px;
     border-top-left-radius: 25px;
-    top: 66px;
+    top: 56px;
   }
 
   .infoboard-wrapper {
@@ -413,7 +464,11 @@ onMounted(() => {
       // margin-bottom: 10px;
       padding-top: 2px;
       padding-bottom: 2px;
-      width: 130px;
+      min-width: 130px;
+      width: 100%;
+      height: 28px;
+      padding-left: 12px;
+      padding-right: 8px;
 
       font-size: 14px;
       color: rgba(255, 255, 255, 0.7);
@@ -424,6 +479,7 @@ onMounted(() => {
 
       .balance-amount {
         padding-right: 18px;
+        white-space: nowrap;
       }
     }
     .profile-msg {

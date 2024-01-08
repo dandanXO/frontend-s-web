@@ -483,6 +483,12 @@ const rows3 = [
       }
     }
 
+    :deep(thead) {
+      th:nth-child(3) {
+        white-space: normal;
+      }
+    }
+
     .text-center {
       font-size: 0.95rem;
       font-weight: 700;
