@@ -9,12 +9,18 @@
     <BreadCrumb id="breadcrumb-container" class="breadcrumb-container" />
     <div class="right-menu">
       <div v-if="selectedData" class="statistics-container">
-        <select v-model="selectedSite" @change="updateData">
-          <option v-for="site in statisticsList.list" :key="site.siteCode" :value="site.siteCode">{{ site.siteCode }}</option>
-        </select>
+        <el-select placeholder="" class="lang-container right-menu-item" size="small" v-model="selectedSite" @change="updateData">
+          <el-option v-for="site in statisticsList.list" :key="site.siteCode" :value="site.siteCode">{{ site.siteCode }}</el-option>
+        </el-select>
       </div>
       <div v-if="selectedData" class="key-value-container">
-        <div>{{ displayData(selectedData) }}</div>
+        <div class="flex-div"><div class="green-circle-dot" /><div class="text-1">{{ $t('fields.menuOnlineUser') }} </div>
+          <div class="text-2">
+
+            Android: <span>{{ selectedData.ANDROID }}</span></div>
+          <div class="text-3">H5: <span>{{ selectedData.H5 }}</span></div>
+          <!--            {{ displayData(selectedData) }}</div>-->
+        </div>
       </div>
       <el-select
         class="lang-container right-menu-item"
@@ -144,6 +150,8 @@ export default {
     function updateData() {
       const selectedSiteData = statisticsList.list.find(site => site.siteCode === selectedSite.value);
       selectedData.value = selectedSiteData || null;
+
+      console.log(selectedData.value);
     }
 
     // 将对象转换为单行字符串
@@ -204,6 +212,9 @@ export default {
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
+  display:flex;
+  justify-content: flex-start;
+
   .hamburger-container {
     line-height: 46px;
     height: 100%;
@@ -228,8 +239,13 @@ export default {
   }
 
   .right-menu {
-    float: right;
+    margin-left:auto;
+    //float: right;
     height: 100%;
+    display:flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 4px;
     line-height: 50px;
 
     &:focus {
@@ -239,7 +255,7 @@ export default {
     .right-menu-item {
       display: inline-block;
       padding: 0 8px;
-      height: 100%;
+      height: 40px;
       font-size: 18px;
       color: #5a5e66;
       vertical-align: text-bottom;
@@ -256,9 +272,11 @@ export default {
 
     .avatar-container {
       .avatar-wrapper {
-        margin-top: 5px;
+        //margin-top: 5px;
         margin-right: 16px;
         margin-left: 16px;
+        width:40px;
+        height: 40px;
         position: relative;
 
         .user-avatar {
@@ -278,22 +296,69 @@ export default {
       }
     }
     .statistics-container{
-      margin-top: 5px;
-      right: 200px;
-      position: absolute;
+      display:flex;
+      align-items: center;
+      //margin-top: 5px;
+      //right: 200px;
+      //position: absolute;
+
+      .el-select{
+        line-height: 36px;
+        height: 36px;
+      }
     }
 
     .key-value-container {
-        margin-top: 5px;
-        margin-right: 10px;
-        right: 250px;
-        position: absolute;
+      display:flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap:5px;
+      margin-right: 16px;
+    }
+
+    .flex-div{
+      display:flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap:10px;
+
+      .text-1{
+        font-size: 14px;
+        line-height: 14px;
+        margin-right: 8px;
+        color: rgba(0, 0, 0, 0.45);
+      }
+
+      .text-2{
+        color: rgba(0, 0, 0, 0.8);
+
+        span{
+          color: #000;
+          font-weight: bold;
+        }
+      }
+      .text-3{
+        color: rgba(0, 0, 0, 0.8);
+
+        span{
+          color: #000;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .green-circle-dot{
+      display:inline-block;
+      width: 8px;
+      height:8px;
+      background: #67c23a;
+      border-radius: 50%;
     }
 
     .lang-container {
-      margin-top: 5px;
+      //margin-top: 5px;
       width: 100px;
-      position: relative;
+      //position: relative;
     }
   }
 }

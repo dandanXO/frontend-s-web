@@ -671,6 +671,7 @@ export default {
     menuIcon: 'ไอคอนเมนู',
     menuTitle: 'ชื่อเมนู',
     menuType: 'ประเภทเมนู',
+    menuOnlineUser: "จำนวนผู้ออนไลน์",
     message: 'ข้อความ',
     min: 'กำไรน้อยสุด',
     max: 'กำไรสูงสุด',

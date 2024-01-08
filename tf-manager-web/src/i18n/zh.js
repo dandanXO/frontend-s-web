@@ -842,6 +842,7 @@ export default {
     menuIcon: '菜单图标',
     menuTitle: '菜单标题',
     menuType: '菜单类型',
+    menuOnlineUser: "在线人数",
     message: '信息',
     min: '最低盈亏金额',
     minAmount: '最低金额',
