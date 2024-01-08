@@ -1724,6 +1724,7 @@ export default {
     Dashboard: 'Dashboard',
     Member: 'Member',
     'Member List': 'Member List',
+    'Member List ID': 'Member List',
     'Member Details': 'Member Details',
     'Member Edit Log': 'Member Edit Log',
     'Member Feedback': 'Member Feedback',

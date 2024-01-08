@@ -1699,6 +1699,7 @@ export default {
     Dashboard: '仪表盘',
     Member: '会员',
     'Member List': '会员列表',
+    'Member List ID': '会员列表',
     'Member Details': '会员信息',
     'Member Edit Log': '会员编辑日志',
     'Member Feedback': '会员反馈',

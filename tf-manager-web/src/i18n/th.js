@@ -1411,6 +1411,7 @@ export default {
     Dashboard: 'แดชบอร์ด',
     Member: 'สมาชิก',
     'Member List': 'รายชื่อสมาชิก',
+    'Member List ID': 'รายชื่อสมาชิก',
     'Member Details': 'รายละเอียดสมาชิก',
     'Member Edit Log': 'สมาชิกแก้ไขบันทึก',
     'Member Freeze Record': 'บันทึกสมาชิกที่โดนระงับ',
