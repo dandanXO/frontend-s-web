@@ -8,7 +8,7 @@
     />
     <BreadCrumb id="breadcrumb-container" class="breadcrumb-container" />
     <div class="right-menu">
-      <div class="statistics-container">
+      <div v-if="selectedData" class="statistics-container">
         <select v-model="selectedSite" @change="updateData">
           <option v-for="site in statisticsList.list" :key="site.siteCode" :value="site.siteCode">{{ site.siteCode }}</option>
         </select>
@@ -139,8 +139,6 @@ export default {
       const { data: memberStatistics } = response;
       const parsedStatistics = JSON.parse(memberStatistics);
       statisticsList.list = Array.isArray(parsedStatistics) ? parsedStatistics : [];
-      console.log(memberStatistics);
-      console.log(statisticsList.list);
     }
 
     function updateData() {
@@ -159,15 +157,22 @@ export default {
 
     onMounted(() => {
       loadMemberStatistics();
-      console.log("=====>" + siteId.value)
     })
 
     watch(statisticsList, () => {
       if (statisticsList.list.length > 0) {
         selectedSite.value = statisticsList.list[0].siteCode;
-        updateData();
       }
+      updateData();
     });
+
+    watch(() => useStore().state.socket.event, () => {
+      const memberStatistics = useStore().state.socket.event.filter(e => e.event === 'MEMBER_STATISTICS');
+      if (memberStatistics) {
+        const parsedStatistics = JSON.parse(memberStatistics[0].statistics);
+        statisticsList.list = Array.isArray(parsedStatistics) ? parsedStatistics : [];
+      }
+    }, { deep: true });
 
     return {
       sidebar,
@@ -280,6 +285,7 @@ export default {
 
     .key-value-container {
         margin-top: 5px;
+        margin-right: 10px;
         right: 250px;
         position: absolute;
     }
