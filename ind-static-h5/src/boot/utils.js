@@ -103,5 +103,8 @@ export const convertToGMT8 = (dateTime) => {
 };
 
 export const convertToCommaAmount = (amount, isForceDecimal) => {
+  if (amount === null) {
+    return 0;
+  }
   return parseInt(amount, 10).toLocaleString("en-US", { minimumFractionDigits: isForceDecimal ? 2 : 0 });
 };

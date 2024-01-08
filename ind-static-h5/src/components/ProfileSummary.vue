@@ -1,6 +1,28 @@
 <template>
+  <div style="height: 56px" v-if="topDownload"></div>
   <div style="height: 80px"></div>
-  <div class="infoboard-container" :class="!homeProfile && 'q-pa-md'">
+
+  <div class="top-download" v-if="topDownload">
+    <div class="download-container">
+      <!-- <div class="download-icon"><img src="../assets/images/index/download/top-download-icon.png" /></div>
+      <div class="download-rating">
+        <div class="rate-exp">Best experience!</div>
+        <div class="rate-stars"><img src="../assets/images/index/download/top-download-stars.png" /></div>
+      </div> -->
+
+      <div class="download-btn">
+        <a :href="topDownloadUrl">
+          <img src="../assets/images/index/download/top-download-btn.png" />
+        </a>
+      </div>
+      <div class="download-count">({{ topDownloadCount }}s)</div>
+      <div class="download-close" :style="!topDownloadcloseBtn && 'opacity:0'">
+        <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
+      </div>
+    </div>
+  </div>
+
+  <div class="infoboard-container" :class="{ 'q-pa-md': !homeProfile, 'with-top-download': topDownload }">
     <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" />
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-wrapper-extra">
@@ -25,11 +47,12 @@
           <template v-else>
             <div class="flex-c-start">
               <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
-                <span class="balance-amount">
-                  <span style="font-family: 'Times New Roman', Times, serif">{{ store.currency.value }}</span>
-                  {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, true) }}
+                <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
+                  <span style="font-family: 'Times New Roman', Times, serif">
+                    {{ store.currency.value }}
+                  </span>
+                  {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, false) }}
                 </span>
-
                 <div class="btn-refresh">
                   <q-icon name="sync" size="16px" color="white-7"></q-icon>
                 </div>
@@ -118,29 +141,41 @@
       </div>
       <div class="profile-wrapper" v-else>
         <q-btn class="btn-style-purple" no-caps @click="router.push('/register')">Register</q-btn>
-        <q-btn no-caps @click="router.push('/login')">Login</q-btn>
+        <q-btn no-caps @click="goLogin()">Login</q-btn>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed, reactive } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, isAndroid } from "src/boot/utils";
+import { api } from "boot/axios";
 
 const props = defineProps(["homeProfile"]);
+const emits = defineEmits(["closeslot"]);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
+
+// const balance = ref(19999999);
 
 const profileImg = [
   {
     imgPath: ["profile-pic"]
   }
 ];
+
+const goLogin = () => {
+  if (props.homeProfile) {
+    emits("closeslot");
+  }
+  router.push("/login");
+};
+
 const randomProfileImg = computed(() => {
   const storedImg = sessionStorage.getItem("PROFILE_IMG");
   if (storedImg) {
@@ -170,7 +205,7 @@ const refreshBalance = () => {
 
 const onClickLogo = () => {
   if (isAndroid()) {
-    window.open("http://indwin7.com/", "_blank");
+    window.open("http://55ace.com/", "_blank");
     return;
   }
 
@@ -188,6 +223,49 @@ const onLogout = () => {
   });
 };
 
+const topDownload = ref(false);
+const topDownloadcloseBtn = ref(true);
+
+const topDownloadCount = ref(6);
+
+const closeTopdownload = () => {
+  topDownload.value = false;
+};
+
+const countdown = () => {
+  if (topDownloadCount.value > 0) {
+    topDownloadCount.value--;
+    setTimeout(countdown, 1000); // Update every 1000 milliseconds (1 second)
+  }
+};
+
+const checkTopDownloadAppear = () => {
+  if (!store.token && route.path === "/home") {
+    if (
+      ("standalone" in window.navigator && window.navigator.standalone) ||
+      (Platform.is.capacitor && Platform.is.android)
+    ) {
+      topDownload.value = false;
+    } else {
+      topDownload.value = true;
+      countdown();
+      setTimeout(() => {
+        topDownload.value = false;
+      }, 6000);
+    }
+  }
+};
+
+const topDownloadUrl = ref("");
+
+const getTopDownloadUrl = () => {
+  api.get("/app/download/affiliate/url?siteCode=IND&affiliateCode=8999B3").then((res) => {
+    if (res.code === 0) {
+      topDownloadUrl.value = res.data.url;
+    }
+  });
+};
+
 onMounted(() => {
   if (!sessionStorage.getItem("PROFILE_IMG")) {
     const randomProfile = profileImg[0];
@@ -195,10 +273,82 @@ onMounted(() => {
     const imgPath = randomProfile.imgPath[randomIndex];
     sessionStorage.setItem("PROFILE_IMG", imgPath);
   }
+
+  getTopDownloadUrl();
+  checkTopDownloadAppear();
 });
 </script>
 
 <style scoped lang="scss">
+.top-download {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 500px;
+  margin: auto;
+  width: 100%;
+  height: 86px; /* adjust the height as needed */
+  padding: 8px 16px 28px;
+  background: linear-gradient(180deg, #0c2962 0%, #01030d 100%);
+  z-index: 98;
+
+  .download-container {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    align-items: center;
+    transition: 0.3s all;
+
+    .download-icon {
+      width: 50px;
+      min-width: 50px;
+
+      img {
+        width: 100%;
+        display: block;
+      }
+    }
+
+    .download-rating {
+      .rate-exp {
+        margin-bottom: 4px;
+        text-wrap: nowrap;
+        font-size: 12px;
+      }
+
+      .rate-stars {
+        img {
+          display: block;
+          width: 100%;
+        }
+      }
+    }
+
+    .download-count {
+      color: #fe9a9a;
+      font-size: 20px;
+    }
+
+    .download-btn {
+      // margin-left: auto;
+      margin-right: auto;
+
+      img {
+        width: 100%;
+        display: block;
+      }
+    }
+
+    .download-close {
+      margin-top: 4px;
+      margin-bottom: auto;
+      opacity: 1;
+      transition: 1s all;
+    }
+  }
+}
+
 .infoboard-container {
   display: flex;
   align-items: center;
@@ -213,6 +363,13 @@ onMounted(() => {
   width: 100%;
   max-width: 500px;
   z-index: 999;
+  transition: 0.3s all;
+
+  &.with-top-download {
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    top: 56px;
+  }
 
   .infoboard-wrapper {
     position: absolute;
@@ -270,6 +427,7 @@ onMounted(() => {
       position: relative;
       margin: 6px 6px 6px 12px;
     }
+
     .profile-pic-frame {
       background-image: url(../assets/images/common/profile-frame.png);
       width: 70px;
@@ -285,12 +443,14 @@ onMounted(() => {
       flex-direction: column;
       font-size: 16px;
     }
+
     .profile-name {
       display: flex;
       align-items: center;
       line-height: 1;
       gap: 10px;
     }
+
     .profile-agency {
       display: flex;
       gap: 0.75rem;
@@ -299,14 +459,17 @@ onMounted(() => {
         color: rgba(255, 255, 255, 0.5);
       }
     }
+
     .profile-rating {
       display: flex;
       gap: 6px;
+
       img {
         display: block;
         width: 20px;
       }
     }
+
     .profile-balance {
       position: relative;
       // background: rgba(255, 255, 255, 0.24);
@@ -318,19 +481,26 @@ onMounted(() => {
       // margin-bottom: 10px;
       padding-top: 2px;
       padding-bottom: 2px;
-      width: 130px;
+      min-width: 130px;
+      width: 100%;
+      height: 28px;
+      padding-left: 12px;
+      padding-right: 8px;
 
       font-size: 14px;
       color: rgba(255, 255, 255, 0.7);
       font-weight: bold;
+
       &:active {
         filter: brightness(0.75);
       }
 
       .balance-amount {
         padding-right: 18px;
+        white-space: nowrap;
       }
     }
+
     .profile-msg {
       margin-left: auto;
       position: relative;
@@ -371,6 +541,7 @@ onMounted(() => {
   margin-left: 20px;
   margin-bottom: 5px;
   margin-top: -10px;
+
   img {
     display: block;
     width: 100px;
