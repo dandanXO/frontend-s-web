@@ -1982,6 +1982,11 @@ export default {
     active: 'Active',
     settled: 'Settled',
   },
+  realtimeStatistics: {
+    APP: 'APP',
+    H5: 'H5',
+    APPLY_WITHDRAW: 'Apply Withdraw',
+  },
   error: {
     400: 'Bad Request',
     401: 'Unauthorized Request',

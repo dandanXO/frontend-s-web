@@ -14,12 +14,17 @@
         </el-select>
       </div>
       <div v-if="selectedData" class="key-value-container">
-        <div class="flex-div"><div class="green-circle-dot" /><div class="text-1">{{ $t('fields.menuOnlineUser') }} </div>
+        <div class="flex-div">
+          <div class="green-circle-dot" />
           <div class="text-2">
-
-            Android: <span>{{ selectedData.ANDROID }}</span></div>
-          <div class="text-3">H5: <span>{{ selectedData.H5 }}</span></div>
-          <!--            {{ displayData(selectedData) }}</div>-->
+            {{ $t('realtimeStatistics.APP') }}: <span>{{ selectedData.APP ? selectedData.APP : 0 }}</span>
+          </div>
+          <div class="text-2">
+            {{ $t('realtimeStatistics.H5') }}: <span>{{ selectedData.H5 ? selectedData.H5 : 0 }}</span>
+          </div>
+          <div class="text-2">
+            {{ $t('realtimeStatistics.APPLY_WITHDRAW') }}: <span>{{ selectedData.APPLY_WITHDRAW ? selectedData.APPLY_WITHDRAW : 0 }}</span>
+          </div>
         </div>
       </div>
       <el-select
@@ -154,15 +159,6 @@ export default {
       console.log(selectedData.value);
     }
 
-    // 将对象转换为单行字符串
-    function displayData(data) {
-      if (!data) return '';
-      return Object.entries(data)
-        .filter(([key]) => key !== 'siteCode')
-        .map(([key, value]) => `${key}: ${value}`)
-        .join(', ');
-    }
-
     onMounted(() => {
       loadMemberStatistics();
     })
@@ -197,7 +193,6 @@ export default {
       selectedSite,
       selectedData,
       updateData,
-      displayData,
     }
   },
 }
