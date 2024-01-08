@@ -246,12 +246,12 @@ export default {
     PROMO: 'Promo',
     HOMEPROMO: 'Home Promo',
     HOMEPOP: 'Home Pop',
-    CENTERPROMO: 'Center Promo'
+    CENTERPROMO: 'Center Promo',
   },
   distributeStatus: {
     PENDING: 'Pending',
     DISTRIBUTED: 'Distributed',
-    CANCEL: 'Cancel'
+    CANCEL: 'Cancel',
   },
   referFriendEvent: {
     INFO: 'Complete Info',
@@ -321,7 +321,7 @@ export default {
     NOTIFICATION: 'Notification',
     ACTIVITY: 'Activity',
     ANNOUNCEMENT: 'Announcement',
-    PAYMENT: 'Payment'
+    PAYMENT: 'Payment',
   },
   fields: {
     account: 'Account',
@@ -601,6 +601,7 @@ export default {
     depositBettingAmount: 'Deposit/Betting Amount',
     depositCount: 'Deposit Count',
     depositDate: 'Deposit Date',
+    deposited: 'Deposited',
     depositExchangeRate: 'Deposit Exchange Rate',
     depositMemberCount: 'Deposit Member Count',
     depositSerialNo: 'Deposit Serial Number',
@@ -871,6 +872,7 @@ export default {
     nextLevel: 'Next Level',
     nextLevelPoint: 'Next Level Point',
     noData: 'No Data',
+    noDeposit: 'No Deposit',
     noLimit: 'No Limit',
     noOfDeduction: 'Number of Deduction',
     noOfDepositTimes: 'Number of Deposit Times',
@@ -1335,7 +1337,7 @@ export default {
     processResult: 'Process Result',
     winner: 'Winner',
     teamIcon: 'Team Icon',
-    other: 'Other'
+    other: 'Other',
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
@@ -1501,7 +1503,8 @@ export default {
     validateChoiceThreeRequired: 'Please select game type',
     validateClassNameRequired: 'Class Name is required',
     validateCodeRequired: 'Code is required',
-    validateCodeExist: 'Code exists, please input a different code. - Existing Code : ',
+    validateCodeExist:
+      'Code exists, please input a different code. - Existing Code : ',
     validateColorRequired: 'Color is required',
     validateCommissionRequired: 'Commission is required',
     validateCommissionFormat: 'Commission must be between 0 to 1',
@@ -1720,6 +1723,7 @@ export default {
     Dashboard: 'Dashboard',
     Member: 'Member',
     'Member List': 'Member List',
+    'Member List ID': 'Member List',
     'Member Details': 'Member Details',
     'Member Edit Log': 'Member Edit Log',
     'Member Feedback': 'Member Feedback',
@@ -1884,7 +1888,7 @@ export default {
     'Email Setting': 'Email Setting',
     'SMS Setting': 'SMS Setting',
     DownloadManager: 'Download Manager',
-    "Error Queue": "Error Message Queue",
+    'Error Queue': 'Error Message Queue',
     GoogleAuth: 'Google Auth',
     'Image Setting': 'Image Setting',
     'Privi Christmas': 'Merry Christmas',
@@ -1964,15 +1968,15 @@ export default {
     editAppUpload: 'Edit App Upload',
   },
   affiliateApk: {
-    currentVersion: "Current Version",
-    buildStatus: "Build Status",
-    latestVersion: "Latest Version",
-    buildApk: "Build APK",
-    editParam: "Edit Param",
+    currentVersion: 'Current Version',
+    buildStatus: 'Build Status',
+    latestVersion: 'Latest Version',
+    buildApk: 'Build APK',
+    editParam: 'Edit Param',
     status: {
-      IN_QUEUE: "IN QUEUE",
-      IN_PROGRESS: "IN PROGRESS",
-      SUCCESS: "SUCCESS",
+      IN_QUEUE: 'IN QUEUE',
+      IN_PROGRESS: 'IN PROGRESS',
+      SUCCESS: 'SUCCESS',
     },
   },
   priviEvent: {
