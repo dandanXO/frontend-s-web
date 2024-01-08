@@ -61,7 +61,7 @@ const referralLink = ref("referralLink");
 const getReferral = () => {
   getReferralLink()
     .then((res) => {
-      if (res.code === 0) referralLink.value = `https://dy-web.test-psna.com/refer/${res.data}`;
+      if (res.code === 0) referralLink.value = "https://" + location.hostname + `/refer/${res.data}`;
     })
     .catch((err) => {
       console.log(err);
