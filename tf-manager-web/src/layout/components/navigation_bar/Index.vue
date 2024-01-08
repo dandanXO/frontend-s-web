@@ -8,6 +8,14 @@
     />
     <BreadCrumb id="breadcrumb-container" class="breadcrumb-container" />
     <div class="right-menu">
+      <div v-if="selectedData" class="statistics-container">
+        <select v-model="selectedSite" @change="updateData">
+          <option v-for="site in statisticsList.list" :key="site.siteCode" :value="site.siteCode">{{ site.siteCode }}</option>
+        </select>
+      </div>
+      <div v-if="selectedData" class="key-value-container">
+        <div>{{ displayData(selectedData) }}</div>
+      </div>
       <el-select
         class="lang-container right-menu-item"
         placeholder=""
@@ -58,7 +66,7 @@ import BreadCrumb from '@/components/bread-crumb/Index.vue'
 import Hamburger from '@/components/hamburger/Index.vue'
 import ForgetPasswordModal from '@/components/forgetpassword-modal/Index.vue'
 
-import { computed, reactive, toRefs } from 'vue'
+import { computed, reactive, toRefs, onMounted, ref, watch } from 'vue'
 import { useStore } from '@/store'
 import { AppActionTypes } from '@/store/modules/app/action-types'
 import { UserActionTypes } from '@/store/modules/user/action-types'
@@ -66,6 +74,7 @@ import { storeToRefs } from 'pinia'
 import { i18nStore } from '@/store/language'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
+import { getMemberStatistics } from '../../../api/member-statistics'
 
 export default {
   components: {
@@ -83,6 +92,9 @@ export default {
     })
     const device = computed(() => {
       return store.state.app.device.toString()
+    })
+    const siteId = computed(() => {
+      return store.state.siteId
     })
     const avatar = computed(() => {
       return store.state.user.avatar
@@ -115,8 +127,56 @@ export default {
       })
     }
 
+    const statisticsList = reactive({
+      list: [],
+    })
+
+    const selectedSite = ref(null);
+    const selectedData = ref(null);
+
+    async function loadMemberStatistics() {
+      const response = await getMemberStatistics();
+      const { data: memberStatistics } = response;
+      const parsedStatistics = JSON.parse(memberStatistics);
+      statisticsList.list = Array.isArray(parsedStatistics) ? parsedStatistics : [];
+    }
+
+    function updateData() {
+      const selectedSiteData = statisticsList.list.find(site => site.siteCode === selectedSite.value);
+      selectedData.value = selectedSiteData || null;
+    }
+
+    // 将对象转换为单行字符串
+    function displayData(data) {
+      if (!data) return '';
+      return Object.entries(data)
+        .filter(([key]) => key !== 'siteCode')
+        .map(([key, value]) => `${key}: ${value}`)
+        .join(', ');
+    }
+
+    onMounted(() => {
+      loadMemberStatistics();
+    })
+
+    watch(statisticsList, () => {
+      if (statisticsList.list.length > 0) {
+        selectedSite.value = statisticsList.list[0].siteCode;
+      }
+      updateData();
+    });
+
+    watch(() => useStore().state.socket.event, () => {
+      const memberStatistics = useStore().state.socket.event.filter(e => e.event === 'MEMBER_STATISTICS');
+      if (memberStatistics) {
+        const parsedStatistics = JSON.parse(memberStatistics[0].statistics);
+        statisticsList.list = Array.isArray(parsedStatistics) ? parsedStatistics : [];
+      }
+    }, { deep: true });
+
     return {
       sidebar,
+      siteId,
       device,
       avatar,
       name,
@@ -125,9 +185,15 @@ export default {
       ...toRefs(state),
       changePassword,
       goToGoogleAuth,
+      statisticsList,
+      selectedSite,
+      selectedData,
+      updateData,
+      displayData,
     }
   },
 }
+
 </script>
 
 <style lang="scss" scoped>
@@ -210,6 +276,18 @@ export default {
           font-size: 12px;
         }
       }
+    }
+    .statistics-container{
+      margin-top: 5px;
+      right: 200px;
+      position: absolute;
+    }
+
+    .key-value-container {
+        margin-top: 5px;
+        margin-right: 10px;
+        right: 250px;
+        position: absolute;
     }
 
     .lang-container {
