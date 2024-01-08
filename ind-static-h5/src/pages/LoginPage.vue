@@ -19,7 +19,7 @@
           v-model="loginForm.loginName"
           :rules="[
             (val) => (val && val.length > 0) || 'Please insert Phone number',
-            (val) => (val.length == 10) || 'The phone number must be 10 digits'
+            (val) => val.length == 10 || 'The phone number must be 10 digits'
           ]"
           label-color="brand"
           autocomplete="username"
@@ -184,22 +184,22 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
     const getCode = () => {
-      api
-        .get("/member/verificationCode")
-        .then((response) => {
-          if (response.code === 0) {
-            verificationImg.value = "data:image/png;base64," + response.data.img;
-            loginForm.codeId = response.data.id;
-          }
-        })
-        .catch((e) => {
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: e.message,
-            icon: "report_problem"
-          });
-        });
+      // api
+      //   .get("/member/verificationCode")
+      //   .then((response) => {
+      //     if (response.code === 0) {
+      //       verificationImg.value = "data:image/png;base64," + response.data.img;
+      //       loginForm.codeId = response.data.id;
+      //     }
+      //   })
+      //   .catch((e) => {
+      //     $q.notify({
+      //       color: "negative",
+      //       position: "top",
+      //       message: e.message,
+      //       icon: "report_problem"
+      //     });
+      //   });
     };
 
     const isCheckRmb = ref(false);

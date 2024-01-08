@@ -163,7 +163,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, watch } from "vue";
+import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
@@ -175,11 +175,6 @@ import AdjustWeb from "@adjustcom/adjust-web-sdk";
 export default defineComponent({
   name: "RegisterPage",
   setup() {
-    onMounted(() => {
-      getCode();
-      getReferralCode();
-      getAffiliateCode();
-    });
     const store = userStore();
     const verificationImg = ref("");
 
@@ -189,6 +184,8 @@ export default defineComponent({
     const showCaptchaDialog = ref(false);
     const phoneVerificationImg = ref("");
     const isAgreeReg = ref(false);
+
+    const affCode = ref("");
 
     const regForm = reactive({
       loginName: "",
@@ -205,19 +202,19 @@ export default defineComponent({
       smsCode: ""
     });
     const getCode = () => {
-      api
-        .get("/member/verificationCode")
-        .then((response) => {
-          if (response.code === 0) {
-            verificationImg.value = "data:image/png;base64," + response.data.img;
-            regForm.codeId = response.data.id;
-            regForm.captchaCode = "0000";
-            // verificationRef.value.resetValidation();
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      // api
+      //   .get("/member/verificationCode")
+      //   .then((response) => {
+      //     if (response.code === 0) {
+      //       verificationImg.value = "data:image/png;base64," + response.data.img;
+      //       regForm.codeId = response.data.id;
+      //       regForm.captchaCode = "0000";
+      //       // verificationRef.value.resetValidation();
+      //     }
+      //   })
+      //   .catch((e) => {
+      //     console.log(e);
+      //   });
     };
 
     const getInnerCode = () => {
@@ -238,10 +235,10 @@ export default defineComponent({
     const hasAffiliate = ref(false);
 
     const getAffiliateCode = () => {
-      const affCode = sessionStorage.getItem("AFFILIATE_CODE");
-      if (affCode) {
+      affCode.value = sessionStorage.getItem("AFFILIATE_CODE");
+      if (affCode.value) {
         hasAffiliate.value = true;
-        regForm.codeAffiliate = affCode;
+        regForm.codeAffiliate = affCode.value;
       }
     };
     const getReferralCode = () => {
@@ -294,6 +291,11 @@ export default defineComponent({
     const router = useRouter();
 
     const affRegEvent = ref("");
+    onActivated(() => {
+      getCode();
+      getReferralCode();
+      getAffiliateCode();
+    });
 
     const onSubmit = () => {
       loginNameRef.value.validate();
@@ -345,7 +347,7 @@ export default defineComponent({
             }
           }
 
-          if (regForm.regDevice !== "ANDROID") {
+          if (regForm.regDevice !== "ANDROID" || !affCode.value) {
             regForm.sid = sidParam;
           }
 
@@ -605,7 +607,7 @@ function charType(num) {
   -webkit-text-fill-color: transparent;
   font-size: 28px;
   text-align: center;
-  font-family: 'Manrope', sans-serif;
+  font-family: "Manrope", sans-serif;
   padding: 10px;
   display: flex;
   gap: 20px;
