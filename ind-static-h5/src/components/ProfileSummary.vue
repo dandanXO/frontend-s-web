@@ -1,6 +1,26 @@
 <template>
+  <div style="height: 66px" v-if="topDownload"></div>
   <div style="height: 80px"></div>
-  <div class="infoboard-container" :class="!homeProfile && 'q-pa-md'">
+
+  <div class="top-download" v-if="topDownload">
+    <div class="download-container">
+      <div class="download-icon"><img src="../assets/images/index/download/top-download-icon.png" /></div>
+      <div class="download-rating">
+        <div class="rate-exp">Best experience!</div>
+        <div class="rate-stars"><img src="../assets/images/index/download/top-download-stars.png" /></div>
+      </div>
+      <div class="download-btn">
+        <a href="#" target="blank">
+          <img src="../assets/images/index/download/top-download-btn.png" />
+        </a>
+      </div>
+      <div class="download-close">
+        <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
+      </div>
+    </div>
+  </div>
+
+  <div class="infoboard-container" :class="{ 'q-pa-md': !homeProfile, 'with-top-download': topDownload }">
     <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" />
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-wrapper-extra">
@@ -188,6 +208,18 @@ const onLogout = () => {
   });
 };
 
+const topDownload = ref(false);
+
+const closeTopdownload = () => {
+  topDownload.value = false;
+};
+
+const checkTopDownloadAppear = () => {
+  if (store.token) {
+    topDownload.value = false;
+  }
+};
+
 onMounted(() => {
   if (!sessionStorage.getItem("PROFILE_IMG")) {
     const randomProfile = profileImg[0];
@@ -195,10 +227,59 @@ onMounted(() => {
     const imgPath = randomProfile.imgPath[randomIndex];
     sessionStorage.setItem("PROFILE_IMG", imgPath);
   }
+
+  checkTopDownloadAppear();
 });
 </script>
 
 <style scoped lang="scss">
+.top-download {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 500px;
+  margin: auto;
+  width: 100%;
+  height: 86px; /* adjust the height as needed */
+  padding: 8px 16px 28px;
+  background: linear-gradient(180deg, #0c2962 0%, #01030d 100%);
+  z-index: 98;
+
+  .download-container {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    align-items: center;
+
+    .download-icon {
+      width: 50px;
+      img {
+        width: 100%;
+        display: block;
+      }
+    }
+
+    .download-rating {
+      .rate-exp {
+        margin-bottom: 4px;
+      }
+
+      .rate-stars {
+      }
+    }
+
+    .download-btn {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .download-close {
+      margin-bottom: auto;
+    }
+  }
+}
+
 .infoboard-container {
   display: flex;
   align-items: center;
@@ -213,6 +294,12 @@ onMounted(() => {
   width: 100%;
   max-width: 500px;
   z-index: 999;
+
+  &.with-top-download {
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    top: 66px;
+  }
 
   .infoboard-wrapper {
     position: absolute;

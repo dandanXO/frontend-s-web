@@ -104,12 +104,22 @@
     >
       <template v-for="(item, index) in categoriesList" :key="index">
         <swiper-slide>
-          <div class="cat-selection-item" :class="item.active && 'active'" @click="activateSlide(item)">
+          <div class="cat-menu-item" @click="activateSlide(item)">
+            <img
+              :src="
+                require(`../assets/images/index/category/cat-menu-${item.icon.toLowerCase()}${
+                  item.active ? '-active' : ''
+                }.png`)
+              "
+              alt=""
+            />
+          </div>
+          <!-- <div class="cat-selection-item" :class="item.active && 'active'" @click="activateSlide(item)">
             <div class="cat-icon">
               <img :src="require(`../assets/images/index/category/cat-${item.icon.toLowerCase()}.png`)" alt="" />
             </div>
             <div class="cat-title">{{ item.title }}</div>
-          </div>
+          </div> -->
         </swiper-slide>
       </template>
     </swiper>
@@ -2602,6 +2612,12 @@ onMounted(() => {
 
   .swiper-scrollbar-drag {
     background: rgba(255, 255, 255, 0.4);
+  }
+}
+
+.cat-menu-item {
+  img {
+    width: 100%;
   }
 }
 
