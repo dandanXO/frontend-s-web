@@ -254,6 +254,7 @@ onMounted(() => {
 
     .download-icon {
       width: 50px;
+      min-width: 50px;
       img {
         width: 100%;
         display: block;
@@ -263,6 +264,7 @@ onMounted(() => {
     .download-rating {
       .rate-exp {
         margin-bottom: 4px;
+        text-wrap: nowrap;
       }
 
       .rate-stars {
@@ -272,6 +274,11 @@ onMounted(() => {
     .download-btn {
       margin-left: auto;
       margin-right: auto;
+
+      img {
+        width: 100%;
+        display: block;
+      }
     }
 
     .download-close {
@@ -294,6 +301,7 @@ onMounted(() => {
   width: 100%;
   max-width: 500px;
   z-index: 999;
+  transition: 0.3s all;
 
   &.with-top-download {
     border-top-right-radius: 25px;
