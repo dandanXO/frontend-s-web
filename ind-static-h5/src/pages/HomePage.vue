@@ -1060,10 +1060,14 @@ const checkPlatform = () => {
     (Platform.is.android && Platform.is.capacitor)
   ) {
     isH5.value = false;
-    getVersionNo();
+    setTimeout(() => {
+      getVersionNo();
+    }, 1000);
   } else {
     isH5.value = true;
-    getVersionNo();
+    setTimeout(() => {
+      getVersionNo();
+    });
   }
 };
 
@@ -1465,17 +1469,17 @@ const getVersionNo = async () => {
     const info = await App.getInfo();
     // console.log("APP Info");
     // console.log(info);
-    var current_version = parseInt(info.version.replace(/./g, "") + info.build);
+    var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
     // info.version && info.build
     const appType = "ALL";
     const affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
-    // alert(affiliateCode);
+    // alert(affiliateCode) ;
     const res = await api.get(`/app/india/getAppData?affiliateCode=${affiliateCode}`);
     // console.log(res);
     if (res.code === 0) {
       // alert(JSON.stringify(res.data));
       var version_info = res.data.version;
-      var latest_ver_no = parseInt(version_info.replace(/./g, ""));
+      var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
       download_url.value = res.data.downloadUrl;
       console.log("H5 Url");
       console.log(res.data.h5Url);
