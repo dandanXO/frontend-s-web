@@ -1957,6 +1957,11 @@ export default {
     active: '活跃',
     settled: '已结算',
   },
+  realtimeStatistics: {
+    APP: 'APP',
+    H5: 'H5',
+    APPLY_WITHDRAW: '提现终审',
+  },
   error: {
     400: '请求无效',
     401: '用户未授权',
