@@ -450,7 +450,7 @@ onMounted(() => {
     margin: 0 auto;
 
     img {
-      max-width: 123px;
+      max-width: 100px;
       width: 100%;
       text-align: center;
     }
