@@ -5,19 +5,19 @@
         <el-input
           v-model="request.loginName"
           size="small"
-          style="width: 150px;"
+          style="width: 100px;"
           :placeholder="t('fields.loginName')"
         />
         <el-input
           v-model="request.email"
           size="small"
-          style="width: 150px; margin-left: 5px;"
+          style="width: 100px; margin-left: 5px;"
           :placeholder="t('fields.email')"
         />
         <el-input
           v-model="request.telephone"
           size="small"
-          style="width: 150px; margin-left: 5px;"
+          style="width: 100px; margin-left: 5px;"
           :placeholder="t('fields.telephone')"
         />
         <el-date-picker
@@ -38,7 +38,7 @@
           :editable="false"
         />
         <el-select
-          v-model="getDepositStatus"
+          v-model="request.depositStatus"
           size="small"
           :placeholder="t('fields.depositStatus')"
           class="filter-item"
@@ -54,9 +54,15 @@
           />
         </el-select>
         <el-input
+          v-model="request.affiliateCode"
+          size="small"
+          style="width: 100px; margin-left: 5px;"
+          :placeholder="t('fields.affiliateCode')"
+        />
+        <el-input
           v-model="request.lastLoginIp"
           size="small"
-          style="width: 150px; margin-left: 5px;"
+          style="width: 100px; margin-left: 5px;"
           :placeholder="t('fields.lastLoginIp')"
         />
         <el-select
@@ -738,7 +744,6 @@ const siteList = reactive({
 
 let timeZone = null
 let chooseMembers = []
-const getDepositStatus = null
 
 const uiControl = reactive({
   dialogVisible: false,
