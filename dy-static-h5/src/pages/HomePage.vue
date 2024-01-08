@@ -222,11 +222,11 @@
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
                               <div class="small-size q-mt-md">维护时间:</div>
                               <p class="small-size">
-                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
                               <p class="small-size">-</p>
                               <p class="small-size">
-                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
                             </template>
                           </div>
@@ -259,11 +259,11 @@
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
                               <div class="small-size q-mt-md">维护时间:</div>
                               <p class="small-size">
-                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
                               <p class="small-size">-</p>
                               <p class="small-size">
-                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
                             </template>
                           </div>
@@ -296,11 +296,11 @@
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
                               <div class="small-size q-mt-md">维护时间:</div>
                               <p class="small-size">
-                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
                               <p class="small-size">-</p>
                               <p class="small-size">
-                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
                             </template>
                           </div>
@@ -323,11 +323,11 @@
                           <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
                             <div class="small-size q-mt-md">维护时间:</div>
                             <p class="small-size">
-                              {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                             <p class="small-size">-</p>
                             <p class="small-size">
-                              {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                           </template>
                         </div>
@@ -360,11 +360,11 @@
                           <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
                             <div class="small-size q-mt-md">维护时间:</div>
                             <p class="small-size">
-                              {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                             <p class="small-size">-</p>
                             <p class="small-size">
-                              {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                           </template>
                         </div>
@@ -399,11 +399,11 @@
                               <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
                                 <div class="small-size q-mt-md">维护时间:</div>
                                 <p class="small-size">
-                                  {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                  {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                                 </p>
                                 <p class="small-size">-</p>
                                 <p class="small-size">
-                                  {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                  {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                                 </p>
                               </template>
                             </div>
@@ -439,11 +439,11 @@
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
                               <div class="small-size q-mt-md">维护时间:</div>
                               <p class="small-size">
-                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
                               <p class="small-size">-</p>
                               <p class="small-size">
-                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
                             </template>
                           </div>
@@ -476,11 +476,11 @@
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
                               <div class="small-size q-mt-md">维护时间:</div>
                               <p class="small-size">
-                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
                               <p class="small-size">-</p>
                               <p class="small-size">
-                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
                             </template>
                           </div>
@@ -515,11 +515,11 @@
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
                               <div class="small-size q-mt-md">维护时间:</div>
                               <p class="small-size">
-                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
                               <p class="small-size">-</p>
                               <p class="small-size">
-                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
                             </template>
                           </div>
@@ -552,11 +552,11 @@
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
                               <div class="small-size q-mt-md">维护时间:</div>
                               <p class="small-size">
-                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
                               <p class="small-size">-</p>
                               <p class="small-size">
-                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
                             </template>
                           </div>
@@ -589,11 +589,11 @@
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
                               <div class="small-size q-mt-md">维护时间:</div>
                               <p class="small-size">
-                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
                               <p class="small-size">-</p>
                               <p class="small-size">
-                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
                             </template>
                           </div>
@@ -627,11 +627,11 @@
                           <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
                             <div class="small-size q-mt-md">维护时间:</div>
                             <p class="small-size">
-                              {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                             <p class="small-size">-</p>
                             <p class="small-size">
-                              {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                           </template>
                         </div>
@@ -674,11 +674,11 @@
                         <template v-if="es.maintenanceStartTime && es.maintenanceEndTime">
                           <div class="small-size q-mt-md">维护时间:</div>
                           <p class="small-size">
-                            {{ moment(es.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                            {{ moment(es.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                           </p>
                           <p class="small-size">-</p>
                           <p class="small-size">
-                            {{ moment(es.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                            {{ moment(es.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                           </p>
                         </template>
                       </div>
@@ -728,11 +728,11 @@
                         <template v-if="sp.maintenanceStartTime && sp.maintenanceEndTime">
                           <div class="small-size q-mt-md">维护时间:</div>
                           <p class="small-size">
-                            {{ moment(sp.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                            {{ moment(sp.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                           </p>
                           <p class="small-size">-</p>
                           <p class="small-size">
-                            {{ moment(sp.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                            {{ moment(sp.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                           </p>
                         </template>
                       </div>
@@ -781,11 +781,11 @@
                           <template v-if="live.maintenanceStartTime && live.maintenanceEndTime">
                             <div class="small-size q-mt-md">维护时间:</div>
                             <p class="small-size">
-                              {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                             <p class="small-size">-</p>
                             <p class="small-size">
-                              {{ moment(live.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(live.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                           </template>
                         </div>
@@ -818,11 +818,11 @@
                           <template v-if="live.maintenanceStartTime && live.maintenanceEndTime">
                             <div class="small-size q-mt-md">维护时间:</div>
                             <p class="small-size">
-                              {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                             <p class="small-size">-</p>
                             <p class="small-size">
-                              {{ moment(live.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(live.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                           </template>
                         </div>
@@ -855,11 +855,11 @@
                           <template v-if="live.maintenanceStartTime && live.maintenanceEndTime">
                             <div class="small-size q-mt-md">维护时间:</div>
                             <p class="small-size">
-                              {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                             <p class="small-size">-</p>
                             <p class="small-size">
-                              {{ moment(live.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(live.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                           </template>
                         </div>
@@ -892,11 +892,11 @@
                           <template v-if="live.maintenanceStartTime && live.maintenanceEndTime">
                             <div class="small-size q-mt-md">维护时间:</div>
                             <p class="small-size">
-                              {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                             <p class="small-size">-</p>
                             <p class="small-size">
-                              {{ moment(live.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(live.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                           </template>
                         </div>
@@ -979,11 +979,11 @@
                             <template v-if="slt.maintenanceStartTime && slt.maintenanceEndTime">
                               <div class="small-size q-mt-md">维护时间:</div>
                               <p class="small-size">
-                                {{ moment(slt.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                {{ moment(slt.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
                               <p class="small-size">-</p>
                               <p class="small-size">
-                                {{ moment(slt.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                {{ moment(slt.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
                             </template>
                           </div>
@@ -1037,11 +1037,11 @@
                             <template v-if="slt.maintenanceStartTime && slt.maintenanceEndTime">
                               <div class="small-size q-mt-md">维护时间:</div>
                               <p class="small-size">
-                                {{ moment(slt.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                {{ moment(slt.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
                               <p class="small-size">-</p>
                               <p class="small-size">
-                                {{ moment(slt.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                                {{ moment(slt.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
                             </template>
                           </div>
@@ -1093,11 +1093,11 @@
                           <template v-if="poke.maintenanceStartTime && poke.maintenanceEndTime">
                             <div class="small-size q-mt-md">维护时间:</div>
                             <p class="small-size">
-                              {{ moment(poke.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(poke.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                             <p class="small-size">-</p>
                             <p class="small-size">
-                              {{ moment(poke.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(poke.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                           </template>
                         </div>
@@ -1130,11 +1130,11 @@
                           <template v-if="poke.maintenanceStartTime && poke.maintenanceEndTime">
                             <div class="small-size q-mt-md">维护时间:</div>
                             <p class="small-size">
-                              {{ moment(poke.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(poke.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                             <p class="small-size">-</p>
                             <p class="small-size">
-                              {{ moment(poke.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(poke.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                           </template>
                         </div>
@@ -1177,11 +1177,11 @@
                           <template v-if="lotter.maintenanceStartTime && lotter.maintenanceEndTime">
                             <div class="small-size q-mt-md">维护时间:</div>
                             <p class="small-size">
-                              {{ moment(lotter.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(lotter.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                             <p class="small-size">-</p>
                             <p class="small-size">
-                              {{ moment(lotter.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(lotter.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                           </template>
                         </div>
@@ -1214,11 +1214,11 @@
                           <template v-if="lotter.maintenanceStartTime && lotter.maintenanceEndTime">
                             <div class="small-size q-mt-md">维护时间:</div>
                             <p class="small-size">
-                              {{ moment(lotter.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(lotter.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                             <p class="small-size">-</p>
                             <p class="small-size">
-                              {{ moment(lotter.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(lotter.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                           </template>
                         </div>
@@ -1251,11 +1251,11 @@
                           <template v-if="lotter.maintenanceStartTime && lotter.maintenanceEndTime">
                             <div class="small-size q-mt-md">维护时间:</div>
                             <p class="small-size">
-                              {{ moment(lotter.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(lotter.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                             <p class="small-size">-</p>
                             <p class="small-size">
-                              {{ moment(lotter.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(lotter.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                           </template>
                         </div>
@@ -1298,11 +1298,11 @@
                           <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
                             <div class="small-size q-mt-md">维护时间:</div>
                             <p class="small-size">
-                              {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                             <p class="small-size">-</p>
                             <p class="small-size">
-                              {{ moment(fish.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(fish.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                           </template>
                         </div>
@@ -1335,11 +1335,11 @@
                           <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
                             <div class="small-size q-mt-md">维护时间:</div>
                             <p class="small-size">
-                              {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                             <p class="small-size">-</p>
                             <p class="small-size">
-                              {{ moment(fish.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(fish.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                           </template>
                         </div>
@@ -1372,11 +1372,11 @@
                           <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
                             <div class="small-size q-mt-md">维护时间:</div>
                             <p class="small-size">
-                              {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                             <p class="small-size">-</p>
                             <p class="small-size">
-                              {{ moment(fish.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+                              {{ moment(fish.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
                           </template>
                         </div>
