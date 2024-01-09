@@ -150,7 +150,6 @@ export default defineComponent({
     this.$nextTick(() => {
       this.firstTime(this.list[0]);
     });
-    this.firstTime(this.list[0]);
   }
 });
 </script>
