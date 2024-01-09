@@ -11,7 +11,7 @@
   </div>
 </template>
 <script lang="js">
-import {defineComponent, onMounted, ref} from "vue";
+import {defineComponent, onActivated, onMounted, ref} from "vue";
 import RecordComponent from "../../components/RecordComponent.vue";
 import moment from "moment";
 import {api} from "boot/axios";
@@ -25,7 +25,6 @@ export default defineComponent({
   setup() {
     const visible = ref(true);
     const tableData = ref([]);
-
     const isEnded = ref(false);
 
     var apiUrl = "/session/member/moneyChange";
@@ -128,7 +127,8 @@ export default defineComponent({
         label: "时间"
       }
     ]);
-    onMounted(() => {
+
+    onActivated(() => {
       current.value = 1;
       loadDepositTable();
     });

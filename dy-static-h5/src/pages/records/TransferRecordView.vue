@@ -11,7 +11,7 @@
   </div>
 </template>
 <script lang="js">
-import { defineComponent, onMounted, ref } from "vue";
+import {defineComponent, onActivated, onMounted, ref} from "vue";
 import RecordComponent from "../../components/RecordComponent.vue";
 import moment from "moment";
 import { api } from "boot/axios";
@@ -120,7 +120,7 @@ export default defineComponent({
       }
 
     ]);
-    onMounted(() => {
+    onActivated(() => {
       current.value = 1;
       loadDepositTable();
     });

@@ -11,7 +11,7 @@
   </div>
 </template>
 <script lang="js">
-import { onMounted, ref, defineComponent } from "vue";
+import {onMounted, ref, defineComponent, onActivated} from "vue";
 import RecordComponent from "../../components/RecordComponent.vue";
 import { api } from "boot/axios";
 import moment from "moment";
@@ -116,7 +116,7 @@ export default defineComponent({
         label: "提款日期"
       }
     ]);
-    onMounted(() => {
+    onActivated(() => {
       current.value = 1;
       loadDepositTable();
     });

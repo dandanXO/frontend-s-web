@@ -25,7 +25,7 @@
   </div>
 </template>
 <script lang="js">
-import { defineComponent, onMounted, ref } from "vue";
+import {defineComponent, onActivated, onMounted, ref} from "vue";
 import RecordComponent from "../../components/RecordComponent.vue";
 import { api } from "boot/axios";
 import moment from "moment/moment";
@@ -184,7 +184,7 @@ export default defineComponent({
         label: "投注状态"
       }
     ];
-    onMounted(async () => {
+    onActivated(async () => {
       await loadPlatformLists();
 
       const startMonth = moment(startDate).format("MM");
