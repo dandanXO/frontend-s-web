@@ -5,19 +5,19 @@
         <el-input
           v-model="request.loginName"
           size="small"
-          style="width: 150px;"
+          style="width: 100px;"
           :placeholder="t('fields.loginName')"
         />
         <el-input
           v-model="request.email"
           size="small"
-          style="width: 150px; margin-left: 5px;"
+          style="width: 100px; margin-left: 5px;"
           :placeholder="t('fields.email')"
         />
         <el-input
           v-model="request.telephone"
           size="small"
-          style="width: 150px; margin-left: 5px;"
+          style="width: 100px; margin-left: 5px;"
           :placeholder="t('fields.telephone')"
         />
         <el-date-picker
@@ -54,9 +54,15 @@
           />
         </el-select>
         <el-input
+          v-model="request.affiliateCode"
+          size="small"
+          style="width: 100px; margin-left: 5px;"
+          :placeholder="t('fields.affiliateCode')"
+        />
+        <el-input
           v-model="request.lastLoginIp"
           size="small"
-          style="width: 150px; margin-left: 5px;"
+          style="width: 100px; margin-left: 5px;"
           :placeholder="t('fields.lastLoginIp')"
         />
         <el-select
@@ -507,7 +513,7 @@
         <el-table-column
           prop="loginName"
           :label="t('fields.loginName')"
-          width="200"
+          width="150"
         >
           <template
             #default="scope"
@@ -546,9 +552,21 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="affiliateName"
+          :label="t('fields.affiliateName')"
+          width="150"
+        >
+          <template #default="scope">
+            <span v-if="scope.row.affiliateName === null">-</span>
+            <span v-if="scope.row.affiliateName !== null">
+              {{ scope.row.affiliateName }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="balance"
           :label="t('fields.balance')"
-          width="200"
+          width="150"
         >
           <template #default="scope">
             $
