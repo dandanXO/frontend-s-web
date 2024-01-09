@@ -5,7 +5,7 @@
       <div class="team-member-container">
         <div class="member-imgs" :style="`width: ${40 + limitedMembers * 15}px`">
           <q-avatar v-for="n in limitedMembers" :key="n" size="30px" class="overlapping" :style="`left: ${n * 15}px`">
-            <img :src="`https://cdn.quasar.dev/img/avatar${n + 1}.jpg`" />
+            <img :src="getRandomImageSource(n)" />
           </q-avatar>
         </div>
         <div class="member-amt">{{ memberVIPData.totalMembers }}</div>
@@ -210,6 +210,12 @@ progressValue.value = progressRef.value / maxProgress;
 const getProgressValue = () => {
   progressValueM.value = memberVIPData.value.memberCount / memberVIPData.value.nextLevelMemberCount;
   progressValueBA.value = memberVIPData.value.totalValidBet / memberVIPData.value.nextLevelBet;
+};
+
+const getRandomImageSource = (index) => {
+  const randomNumber = Math.floor(Math.random() * 5) + 1;
+
+  return require(`../../assets/images/earn-money/profile-img-${randomNumber}.png`);
 };
 
 // const memberVIPData = reactive({
@@ -441,6 +447,7 @@ onMounted(() => {
     .overlapping {
       border: 2px solid #9105e8;
       position: absolute;
+      box-sizing: content-box;
     }
   }
 
