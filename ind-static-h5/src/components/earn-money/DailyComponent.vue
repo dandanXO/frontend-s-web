@@ -5,7 +5,7 @@
       <div class="team-member-container">
         <div class="member-imgs" :style="`width: ${40 + limitedMembers * 15}px`">
           <q-avatar v-for="n in limitedMembers" :key="n" size="30px" class="overlapping" :style="`left: ${n * 15}px`">
-            <img :src="`https://cdn.quasar.dev/img/avatar${n + 1}.jpg`" />
+            <img :src="getRandomImageSource(n)" />
           </q-avatar>
         </div>
         <div class="member-amt">{{ memberVIPData.totalMembers }}</div>
@@ -208,29 +208,35 @@ const progressValueBA = ref(0);
 progressValue.value = progressRef.value / maxProgress;
 
 const getProgressValue = () => {
-  progressValueM.value = memberVIPData.value.memberCount / memberVIPData.value.nextLevelMemberCount;
-  progressValueBA.value = memberVIPData.value.totalValidBet / memberVIPData.value.nextLevelBet;
+  progressValueM.value = memberVIPData.memberCount / memberVIPData.nextLevelMemberCount;
+  progressValueBA.value = memberVIPData.totalValidBet / memberVIPData.nextLevelBet;
 };
 
-// const memberVIPData = reactive({
-//   rate: 0,
-//   memberCount: 0,
-//   totalValidBet: 0
-// });
+const getRandomImageSource = (index) => {
+  const randomNumber = Math.floor(Math.random() * 5) + 1;
 
-const memberVIPData = ref([]);
+  return require(`../../assets/images/earn-money/profile-img-${randomNumber}.png`);
+};
 
-// const limitedMembers = computed(() => {
-//   // Ensure that memberVIPData.totalMembers does not exceed 5
-//   return Math.min(memberVIPData.value.totalMembers, 5);
-// });
+// const memberVIPData = ref([]);
+const memberVIPData = reactive({
+  rate: 0,
+  currentLevelMemberCount: 0,
+  currentLevelBet: 0,
+  nextLevelRate: 0,
+  nextLevelMemberCount: 0,
+  nextLevelBet: 0,
+  memberCount: 0,
+  totalValidBet: 0,
+  totalMembers: 0
+});
 
 const limitedMembers = ref(0);
 const getLimitedMembers = () => {
-  if (memberVIPData.value.totalMembers > 5) {
+  if (memberVIPData.totalMembers > 5) {
     limitedMembers.value;
   } else {
-    limitedMembers.value = memberVIPData.value.totalMembers;
+    limitedMembers.value = memberVIPData.totalMembers;
   }
 };
 
@@ -238,16 +244,19 @@ const getVIPApi = () => {
   isLoading.referredBetRebateRecord = true;
 
   api.get("/session/member/betRebateStatus").then((res) => {
-    console.log("res~:", res);
     const { code, data } = res;
     if (code === 0) {
-      memberVIPData.value = data;
+      memberVIPData.rate = data.rate;
+      memberVIPData.currentLevelMemberCount = data.currentLevelMemberCount;
+      memberVIPData.currentLevelBet = data.currentLevelBet;
+      memberVIPData.nextLevelRate = data.nextLevelRate;
+      memberVIPData.nextLevelMemberCount = data.nextLevelMemberCount;
+      memberVIPData.nextLevelBet = data.nextLevelBet;
+      memberVIPData.memberCount = data.memberCount;
+      memberVIPData.totalValidBet = data.totalValidBet;
+      memberVIPData.totalMembers = data.totalMembers;
       getLimitedMembers();
       getProgressValue();
-      // memberVIPData.rate = data.rate;
-      // memberVIPData.nextLevelRate = data.nextLevelRate;
-      // memberVIPData.memberCount = data.memberCount;
-      // memberVIPData.totalValidBet = data.totalValidBet;
     }
   });
 };
@@ -441,6 +450,7 @@ onMounted(() => {
     .overlapping {
       border: 2px solid #9105e8;
       position: absolute;
+      box-sizing: content-box;
     }
   }
 
