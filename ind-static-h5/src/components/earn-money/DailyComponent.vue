@@ -208,8 +208,8 @@ const progressValueBA = ref(0);
 progressValue.value = progressRef.value / maxProgress;
 
 const getProgressValue = () => {
-  progressValueM.value = memberVIPData.value.memberCount / memberVIPData.value.nextLevelMemberCount;
-  progressValueBA.value = memberVIPData.value.totalValidBet / memberVIPData.value.nextLevelBet;
+  progressValueM.value = memberVIPData.memberCount / memberVIPData.nextLevelMemberCount;
+  progressValueBA.value = memberVIPData.totalValidBet / memberVIPData.nextLevelBet;
 };
 
 const getRandomImageSource = (index) => {
@@ -218,25 +218,25 @@ const getRandomImageSource = (index) => {
   return require(`../../assets/images/earn-money/profile-img-${randomNumber}.png`);
 };
 
-// const memberVIPData = reactive({
-//   rate: 0,
-//   memberCount: 0,
-//   totalValidBet: 0
-// });
-
-const memberVIPData = ref([]);
-
-// const limitedMembers = computed(() => {
-//   // Ensure that memberVIPData.totalMembers does not exceed 5
-//   return Math.min(memberVIPData.value.totalMembers, 5);
-// });
+// const memberVIPData = ref([]);
+const memberVIPData = reactive({
+  rate: 0,
+  currentLevelMemberCount: 0,
+  currentLevelBet: 0,
+  nextLevelRate: 0,
+  nextLevelMemberCount: 0,
+  nextLevelBet: 0,
+  memberCount: 0,
+  totalValidBet: 0,
+  totalMembers: 0
+});
 
 const limitedMembers = ref(0);
 const getLimitedMembers = () => {
-  if (memberVIPData.value.totalMembers > 5) {
+  if (memberVIPData.totalMembers > 5) {
     limitedMembers.value;
   } else {
-    limitedMembers.value = memberVIPData.value.totalMembers;
+    limitedMembers.value = memberVIPData.totalMembers;
   }
 };
 
@@ -244,16 +244,19 @@ const getVIPApi = () => {
   isLoading.referredBetRebateRecord = true;
 
   api.get("/session/member/betRebateStatus").then((res) => {
-    console.log("res~:", res);
     const { code, data } = res;
     if (code === 0) {
-      memberVIPData.value = data;
+      memberVIPData.rate = data.rate;
+      memberVIPData.currentLevelMemberCount = data.currentLevelMemberCount;
+      memberVIPData.currentLevelBet = data.currentLevelBet;
+      memberVIPData.nextLevelRate = data.nextLevelRate;
+      memberVIPData.nextLevelMemberCount = data.nextLevelMemberCount;
+      memberVIPData.nextLevelBet = data.nextLevelBet;
+      memberVIPData.memberCount = data.memberCount;
+      memberVIPData.totalValidBet = data.totalValidBet;
+      memberVIPData.totalMembers = data.totalMembers;
       getLimitedMembers();
       getProgressValue();
-      // memberVIPData.rate = data.rate;
-      // memberVIPData.nextLevelRate = data.nextLevelRate;
-      // memberVIPData.memberCount = data.memberCount;
-      // memberVIPData.totalValidBet = data.totalValidBet;
     }
   });
 };
