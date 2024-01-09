@@ -327,7 +327,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
 import { getVipList } from '../../../../api/vip'
 import { getFinancialLevels } from '../../../../api/financial-level'
@@ -344,6 +344,9 @@ import { hasPermission } from '../../../../utils/util'
 import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
+import { useRouter } from "vue-router";
+
+const router = useRouter()
 const checkBtnRef = ref();
 const checkBtnsRef = ref();
 const store = useStore();
@@ -394,6 +397,7 @@ const request = reactive({
   minWithdrawAmount: null,
   maxWithdrawAmount: null,
   vipId: null,
+  siteId: null,
 })
 
 function disabledDate(time) {
@@ -480,6 +484,10 @@ async function loadBanks() {
 async function loadRecord() {
   uiControl.dialogVisible = false
   page.loading = true
+  const urlSiteId = computed(() => router.currentRoute.value.query.site)
+  if (urlSiteId.value) {
+    request.siteId = urlSiteId.value
+  }
   const requestCopy = { ...request }
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
