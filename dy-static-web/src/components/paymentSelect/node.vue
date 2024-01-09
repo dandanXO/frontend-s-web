@@ -19,7 +19,7 @@
           <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
           <div>{{ item.nodeName }}</div>
           <div class="promo">
-            <img v-if="item.promotionIcon" :src="`${imgURL}label/${item.promotionIcon}`" />
+            <img v-if="item.promotionIcon" :src="`${imgURL}${item.promotionIcon}`" />
           </div>
           <div class="payment-method-wrapper">
             <div
@@ -453,6 +453,8 @@ $node-color: #4873f1;
         padding: 0;
         border: 0;
         background-color: transparent;
+        width: 40px;
+        max-width: 40px !important;
       }
       // top: -5px;
       // right: 0;
