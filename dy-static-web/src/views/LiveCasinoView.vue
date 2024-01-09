@@ -1,5 +1,5 @@
 <template>
-  <div class="platofrm__wrap">
+  <div class="platform__wrap">
     <div class="live-container">
       <div class="live-bg bg-circle"></div>
       <div class="live-bg bg-wave"></div>

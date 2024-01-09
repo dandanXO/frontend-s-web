@@ -19,7 +19,7 @@
           <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
           <div class="overflow">{{ item.nodeName }}</div>
           <div class="promo">
-            <img v-if="item.promotionIcon" :src="`${imgURL}label/${item.promotionIcon}`" />
+            <img v-if="item.promotionIcon" :src="`${imgURL}${item.promotionIcon}`" />
           </div>
 
           <div class="payment-method-wrapper">
@@ -202,7 +202,7 @@ $node-color: #4ab6fd;
     cursor: pointer;
 
     img {
-      max-width: 48px;
+      max-width: 60px;
       margin-bottom: 10px;
       width: 100%;
       height: auto;
@@ -370,7 +370,8 @@ $node-color: #4ab6fd;
         padding: 0;
         border: 0;
         background-color: transparent;
-        max-width: 60px;
+        max-width: 44px;
+        width: 44px;
       }
 
       ::after {
