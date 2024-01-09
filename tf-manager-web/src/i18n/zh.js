@@ -252,12 +252,12 @@ export default {
     PROMO: '优惠',
     HOMEPROMO: '首页优惠',
     HOMEPOP: '首页弹出窗',
-    CENTERPROMO: '中心优惠'
+    CENTERPROMO: '中心优惠',
   },
   distributeStatus: {
     PENDING: '未派发',
     DISTRIBUTED: '已派发',
-    CANCEL: '已取消'
+    CANCEL: '已取消',
   },
   referFriendEvent: {
     INFO: '完善个人信息',
@@ -327,7 +327,7 @@ export default {
     NOTIFICATION: '通知',
     ACTIVITY: '活动',
     ANNOUNCEMENT: '公告',
-    PAYMENT: '充提'
+    PAYMENT: '充提',
   },
   fields: {
     account: '账号',
@@ -606,6 +606,7 @@ export default {
     depositBettingAmount: '存款/投注',
     depositCount: '存款次数',
     depositDate: '存款日期',
+    deposited: '已存款',
     depositExchangeRate: '存款兑换率',
     depositMemberCount: '存款人数',
     depositSerialNo: '存款流水号',
@@ -842,7 +843,7 @@ export default {
     menuIcon: '菜单图标',
     menuTitle: '菜单标题',
     menuType: '菜单类型',
-    menuOnlineUser: "在线人数",
+    menuOnlineUser: '在线人数',
     message: '信息',
     min: '最低盈亏金额',
     minAmount: '最低金额',
@@ -878,6 +879,7 @@ export default {
     nextLevel: '晋级',
     nextLevelPoint: '晋级点数',
     noData: '查无数据',
+    noDeposit: '无存款',
     noLimit: '无限制',
     noOfDeduction: '扣除总数',
     noOfDepositTimes: '存款总数',
@@ -1697,6 +1699,7 @@ export default {
     Dashboard: '仪表盘',
     Member: '会员',
     'Member List': '会员列表',
+    'Member List ID': '会员列表',
     'Member Details': '会员信息',
     'Member Edit Log': '会员编辑日志',
     'Member Feedback': '会员反馈',
@@ -1861,8 +1864,8 @@ export default {
     'Email Setting': '邮件设置',
     'SMS Setting': '短信设置',
     DownloadManager: '下载中心',
-    GoogleAuth: "Google 验证中心",
-    "Error Queue": "错误消息",
+    GoogleAuth: 'Google 验证中心',
+    'Error Queue': '错误消息',
     'Image Setting': '图片设置',
     'Privi Christmas': '圣诞快乐',
     'Affiliate APK Build': '代理构建APK',
@@ -1940,16 +1943,16 @@ export default {
     editAppUpload: '编辑上载应用程序',
   },
   affiliateApk: {
-    currentVersion: "当前版本",
-    buildStatus: "构建状态",
-    latestVersion: "最新版本",
-    buildApk: "构建APK",
-    editParam: "编辑参数",
+    currentVersion: '当前版本',
+    buildStatus: '构建状态',
+    latestVersion: '最新版本',
+    buildApk: '构建APK',
+    editParam: '编辑参数',
     status: {
-      IN_QUEUE: "等待中",
-      IN_PROGRESS: "构建中",
-      SUCCESS: "成功",
-    }
+      IN_QUEUE: '等待中',
+      IN_PROGRESS: '构建中',
+      SUCCESS: '成功',
+    },
   },
   priviEvent: {
     status: '记录状态',

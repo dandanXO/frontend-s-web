@@ -104,12 +104,22 @@
     >
       <template v-for="(item, index) in categoriesList" :key="index">
         <swiper-slide>
-          <div class="cat-selection-item" :class="item.active && 'active'" @click="activateSlide(item)">
+          <div class="cat-menu-item" @click="activateSlide(item)">
+            <img
+              :src="
+                require(`../assets/images/index/category/cat-menu-${item.icon.toLowerCase()}${
+                  item.active ? '-active' : ''
+                }.png`)
+              "
+              alt=""
+            />
+          </div>
+          <!-- <div class="cat-selection-item" :class="item.active && 'active'" @click="activateSlide(item)">
             <div class="cat-icon">
               <img :src="require(`../assets/images/index/category/cat-${item.icon.toLowerCase()}.png`)" alt="" />
             </div>
             <div class="cat-title">{{ item.title }}</div>
-          </div>
+          </div> -->
         </swiper-slide>
       </template>
     </swiper>
@@ -740,7 +750,7 @@
     class="fullgame-dialog"
   >
     <q-card class="fullgame-card" id="fullgame">
-      <ProfileSummary :homeProfile="true" />
+      <ProfileSummary @closeslot="closeSlotModal" :homeProfile="true" />
       <q-card-section>
         <div class="home-wrapper fullgame-wrapper">
           <div class="fullgame-header">
@@ -1083,6 +1093,10 @@ const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId
   loadGameList(gameType, gameId);
   fullGameDialog.value = true;
   hotGameOn.value = false;
+};
+
+const closeSlotModal = () => {
+  fullGameDialog.value = false;
 };
 
 const closeFullGameDialog = () => {
@@ -2602,6 +2616,12 @@ onMounted(() => {
 
   .swiper-scrollbar-drag {
     background: rgba(255, 255, 255, 0.4);
+  }
+}
+
+.cat-menu-item {
+  img {
+    width: 100%;
   }
 }
 

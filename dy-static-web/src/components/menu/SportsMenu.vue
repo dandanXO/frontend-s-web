@@ -6,9 +6,15 @@
         :key="nav.code"
         @click="$emit('loadModal', nav.label, 'onlyPlatform', nav.code)"
       >
-        <div class="platform-box">
-          <!-- <img :src="require('../../assets/sports/sport_logo_'+ nav.icon + '.png')">
-                     -->
+        <div class="platform-box" :class="nav.underMaintenance === true ? 'maintenance' : ''">
+          <div class="maintenance-box" v-if="nav.underMaintenance === true">
+            <p>维护中</p>
+            <p v-if="nav.maintenanceStartTime && nav.maintenanceEndTime" class="small-size">
+              维护时间: {{ moment(nav.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}-
+              {{ moment(nav.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+            </p>
+          </div>
+
           <div class="imgbox" :style="`background-position-x: ${nav.percentage}`"></div>
           <div class="contents">
             <p class="platform-title">{{ nav.label }}体育</p>
@@ -35,6 +41,7 @@
 import { defineComponent, ref, onMounted, computed } from "vue";
 import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
+import moment from "moment";
 
 export default defineComponent({
   setup() {
@@ -74,7 +81,12 @@ export default defineComponent({
       }
     };
     const filteredNavigations = computed(() => {
-      return navigations.filter((nav) => platformsListDisplay.value.some((platform) => platform.code === nav.code));
+      return navigations
+        .filter((nav) => platformsListDisplay.value.some((platform) => platform.code === nav.code))
+        .map((nav) => ({
+          ...nav,
+          ...platformsListDisplay.value.find((platform) => platform.code === nav.code)
+        }));
     });
 
     onMounted(() => {
@@ -83,7 +95,8 @@ export default defineComponent({
 
     return {
       filteredNavigations,
-      getPlatList
+      getPlatList,
+      moment
     };
   }
 });

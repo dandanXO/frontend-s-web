@@ -1,6 +1,17 @@
 <template>
   <div class="section-wrapper">
-    <div class="title">My Team</div>
+    <div class="title-wrapper">
+      <div class="title">My Team</div>
+      <div class="team-member-container">
+        <div class="member-imgs" :style="`width: ${40 + limitedMembers * 15}px`">
+          <q-avatar v-for="n in limitedMembers" :key="n" size="30px" class="overlapping" :style="`left: ${n * 15}px`">
+            <img :src="`https://cdn.quasar.dev/img/avatar${n + 1}.jpg`" />
+          </q-avatar>
+        </div>
+        <div class="member-amt">{{ memberVIPData.totalMembers }}</div>
+      </div>
+    </div>
+
     <div class="subtitle-wrapper">
       <div class="subtitle">Today Status</div>
       <div class="chart-cat">
@@ -16,17 +27,37 @@
 
   <div class="content-wrapper">
     <div class="progress-bar-wrapper">
-      <div>{{ convertToCommaAmount(progressRef, true) }}</div>
-      <q-linear-progress size="15px" :value="progressValue" color="#FFB100" class="progress-bar">
+      <q-linear-progress size="15px" :value="progressValueM" color="#EC77FF" class="progress-bar-M">
+        <div class="linear-indicator linear-start">{{ memberVIPData.currentLevelMemberCount }}</div>
         <div class="absolute-full flex flex-center">
           <q-badge
             color="transparent"
             text-color="white"
-            :label="`${convertToCommaAmount(progressRef, true)}/${convertToCommaAmount(maxProgress, true)}`"
+            :label="`${convertToCommaAmount(memberVIPData.memberCount, false)}/${convertToCommaAmount(
+              memberVIPData.nextLevelMemberCount,
+              false
+            )}`"
           ></q-badge>
         </div>
+        <div class="linear-indicator linear-end">{{ memberVIPData.nextLevelMemberCount }}</div>
       </q-linear-progress>
-      <div>{{ convertToCommaAmount(maxProgress, true) }}</div>
+    </div>
+
+    <div class="progress-bar-wrapper">
+      <q-linear-progress size="15px" :value="progressValueBA" color="#FFA800" class="progress-bar-BA">
+        <div class="linear-indicator linear-start">{{ memberVIPData.currentLevelBet }}</div>
+        <div class="absolute-full flex flex-center">
+          <q-badge
+            color="transparent"
+            text-color="white"
+            :label="`${convertToCommaAmount(memberVIPData.totalValidBet, false)}/${convertToCommaAmount(
+              memberVIPData.nextLevelBet,
+              false
+            )}`"
+          ></q-badge>
+        </div>
+        <div class="linear-indicator linear-end">{{ convertToCommaAmount(memberVIPData.nextLevelBet) }}</div>
+      </q-linear-progress>
     </div>
 
     <div>
@@ -54,7 +85,7 @@
     <div class="top-container">
       <div class="left-container">
         <div class="title">Betting Amount</div>
-        <div class="value">₹ {{ convertToCommaAmount(totalBetRabteDailyDetailsData.validBet, true) }}</div>
+        <div class="value">₹ {{ convertToCommaAmount(totalBetRabteDailyDetailsData.validBet, false) }}</div>
         <div class="data-wrapper">
           <div class="img-wrapper">
             <img src="../../assets/images/earn-money/member.png" />
@@ -65,7 +96,7 @@
       </div>
       <div class="right-container text-right">
         <div class="title">Rebate Amount</div>
-        <div class="value">₹ {{ convertToCommaAmount(totalBetRabteDailyDetailsData.rebateAmount, true) }}</div>
+        <div class="value">₹ {{ convertToCommaAmount(totalBetRabteDailyDetailsData.rebateAmount, false) }}</div>
         <!-- <div class="data-wrapper right">
           <div class="img-wrapper">
             <img src="../../assets/images/earn-money/cash.png" />
@@ -170,24 +201,53 @@ const getReferredBetRebateRecord = () => {
 const maxProgress = store.levelUpDeposit.toFixed(2);
 const progressRef = ref(store.currentDeposit.toFixed(2));
 const progressValue = ref(0);
+
+const progressValueM = ref(0);
+const progressValueBA = ref(0);
+
 progressValue.value = progressRef.value / maxProgress;
 
-const memberVIPData = reactive({
-  rate: 0,
-  memberCount: 0,
-  totalValidBet: 0
-});
+const getProgressValue = () => {
+  progressValueM.value = memberVIPData.value.memberCount / memberVIPData.value.nextLevelMemberCount;
+  progressValueBA.value = memberVIPData.value.totalValidBet / memberVIPData.value.nextLevelBet;
+};
+
+// const memberVIPData = reactive({
+//   rate: 0,
+//   memberCount: 0,
+//   totalValidBet: 0
+// });
+
+const memberVIPData = ref([]);
+
+// const limitedMembers = computed(() => {
+//   // Ensure that memberVIPData.totalMembers does not exceed 5
+//   return Math.min(memberVIPData.value.totalMembers, 5);
+// });
+
+const limitedMembers = ref(0);
+const getLimitedMembers = () => {
+  if (memberVIPData.value.totalMembers > 5) {
+    limitedMembers.value;
+  } else {
+    limitedMembers.value = memberVIPData.value.totalMembers;
+  }
+};
 
 const getVIPApi = () => {
   isLoading.referredBetRebateRecord = true;
 
   api.get("/session/member/betRebateStatus").then((res) => {
+    console.log("res~:", res);
     const { code, data } = res;
     if (code === 0) {
-      memberVIPData.rate = data.rate;
-      memberVIPData.nextLevelRate = data.nextLevelRate;
-      memberVIPData.memberCount = data.memberCount;
-      memberVIPData.totalValidBet = data.totalValidBet;
+      memberVIPData.value = data;
+      getLimitedMembers();
+      getProgressValue();
+      // memberVIPData.rate = data.rate;
+      // memberVIPData.nextLevelRate = data.nextLevelRate;
+      // memberVIPData.memberCount = data.memberCount;
+      // memberVIPData.totalValidBet = data.totalValidBet;
     }
   });
 };
@@ -346,10 +406,42 @@ onMounted(() => {
 <style scoped lang="scss">
 .section-wrapper {
   margin: 0 0 10px 0;
+
+  .title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+  }
   .title {
     color: #fff;
     font-size: 18px;
     font-weight: 700;
+  }
+
+  .team-member-container {
+    background: rgba(217, 217, 217, 0.2);
+    padding: 6px 8px;
+    border-radius: 4px;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .member-imgs {
+      height: 30px;
+      width: 60px;
+      display: block;
+      position: relative;
+      margin-left: -15px;
+    }
+
+    .member-amt {
+    }
+
+    .overlapping {
+      border: 2px solid #9105e8;
+      position: absolute;
+    }
   }
 
   .subtitle-wrapper {
@@ -374,11 +466,11 @@ onMounted(() => {
         height: 10px;
 
         &.m {
-          background: #ffb100;
+          background: #ec77ff;
         }
 
         &.ba {
-          background: #00d1ff;
+          background: #ffa800;
         }
       }
     }
@@ -399,7 +491,7 @@ onMounted(() => {
     justify-content: center;
     margin: 0 0 15px 0;
 
-    .progress-bar {
+    .progress-bar-M {
       border-radius: 0.25rem;
 
       :deep(.q-linear-progress__track) {
@@ -408,7 +500,20 @@ onMounted(() => {
       }
 
       :deep(.q-linear-progress__model) {
-        background: #ffb100;
+        background: #ec77ff;
+      }
+    }
+
+    .progress-bar-BA {
+      border-radius: 0.25rem;
+
+      :deep(.q-linear-progress__track) {
+        background: #2b374a;
+        opacity: 1;
+      }
+
+      :deep(.q-linear-progress__model) {
+        background: #ffa800;
       }
     }
   }
@@ -637,6 +742,46 @@ onMounted(() => {
           }
         }
       }
+    }
+  }
+}
+
+.linear-indicator {
+  display: block;
+  position: absolute;
+  color: #ffffff;
+  font-size: 0.775rem;
+
+  &.linear-start {
+    padding-left: 16px;
+    left: 0;
+    &:before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: #ffffff;
+      border-radius: 50%;
+      position: absolute;
+
+      left: 3px;
+      top: 4px;
+    }
+  }
+
+  &.linear-end {
+    right: 0;
+    padding-right: 16px;
+
+    &:before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: #ffffff;
+      border-radius: 50%;
+      position: absolute;
+
+      right: 3px;
+      top: 4px;
     }
   }
 }

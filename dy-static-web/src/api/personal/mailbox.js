@@ -106,7 +106,7 @@ export function readFeedback(param) {
 
 export function deleteFeedback(param) {
   const { ids } = param;
-  return server.REST.delete(`/session/feedback/delete?ids=${ids}`);
+  return server.REST.post(`/session/feedback/delete?ids=${ids}`);
 }
 
 // POST /session/feedback?feedbackType={type}&title={title}&content={content}
