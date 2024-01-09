@@ -1470,6 +1470,7 @@ const getVersionNo = async () => {
     // console.log("APP Info");
     // console.log(info);
     var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
+    // alert("Cur:" + current_version);
     // info.version && info.build
     const appType = "ALL";
     const affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
@@ -1480,6 +1481,7 @@ const getVersionNo = async () => {
       // alert(JSON.stringify(res.data));
       var version_info = res.data.version;
       var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
+      // alert(latest_ver_no);
       download_url.value = res.data.downloadUrl;
       console.log("H5 Url");
       console.log(res.data.h5Url);
