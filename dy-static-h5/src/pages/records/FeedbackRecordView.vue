@@ -114,7 +114,7 @@ export default defineComponent({
         label: "类型"
       }
     ];
-    onActivated(() => {
+    onMounted(() => {
       current.value = 1;
       loadDepositTable();
     });

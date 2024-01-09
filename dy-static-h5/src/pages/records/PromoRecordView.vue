@@ -113,7 +113,7 @@ export default defineComponent({
         label: "记录时间"
       }
     ];
-    onActivated(() => {
+    onMounted(() => {
       current.value = 1;
       loadDepositTable();
     });

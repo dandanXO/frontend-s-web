@@ -129,7 +129,7 @@ export default defineComponent({
       }
     ]);
 
-    onActivated(() => {
+    onMounted(() => {
       current.value = 1;
       loadDepositTable();
     });

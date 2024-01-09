@@ -184,7 +184,7 @@ export default defineComponent({
         label: "投注状态"
       }
     ];
-    onActivated(async () => {
+    onMounted(async () => {
       await loadPlatformLists();
 
       const startMonth = moment(startDate).format("MM");

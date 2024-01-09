@@ -117,7 +117,7 @@ export default defineComponent({
         label: "提款日期"
       }
     ]);
-    onActivated(() => {
+    onMounted(() => {
       current.value = 1;
       loadDepositTable();
     });

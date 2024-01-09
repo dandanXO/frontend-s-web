@@ -161,14 +161,6 @@ import { Platform } from "quasar";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 import { translateRecord } from "src/directives/translate";
-import DepositRecordView from "pages/records/DepositRecordView.vue";
-import PromoRecordView from "pages/records/PromoRecordView.vue";
-import FeedbackRecordView from "pages/records/FeedbackRecordView.vue";
-import MoneyChangeRecordView from "pages/records/MoneyChangeRecordView.vue";
-import BetHistoryRecordView from "pages/records/BetHistoryRecordView.vue";
-import TransferRecordView from "pages/records/TransferRecordView.vue";
-import WithdrawRecordView from "pages/records/WithdrawRecordView.vue";
-
 import { RiArrowLeftLine } from "vue-remix-icons";
 
 export default defineComponent({
@@ -198,16 +190,6 @@ export default defineComponent({
         isH5.value = true;
       }
     };
-
-    const excludeAliveComponents = ref([
-      DepositRecordView,
-      FeedbackRecordView,
-      PromoRecordView,
-      WithdrawRecordView,
-      TransferRecordView,
-      BetHistoryRecordView,
-      MoneyChangeRecordView
-    ]);
 
     const loadTrackingScript = () => {
       const currentDomain = window.location.hostname;
@@ -737,7 +719,15 @@ export default defineComponent({
       changePlatform,
       checkPlatform,
       isH5,
-      excludeAliveComponents
+      excludeAliveComponents: [
+        "DepositRecordView",
+        "WithdrawRecordView",
+        "TransferRecordView",
+        "FeedbackRecordView",
+        "PromoRecordView",
+        "BetHistoryRecordView",
+        "MoneyChangeRecordView"
+      ]
     };
   }
 });

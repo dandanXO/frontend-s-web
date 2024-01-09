@@ -18,6 +18,7 @@ import moment from "moment/moment";
 import { cached, TIME_EXPIRED } from "boot/cache";
 
 export default defineComponent({
+  name: "DepositRecordView",
   components: {
     RecordComponent
   },
@@ -113,7 +114,7 @@ export default defineComponent({
         label: "存款编码"
       }
     ];
-    onActivated(() => {
+    onMounted(() => {
       current.value = 1;
       tableData.value = [];
       loadDepositTable();
