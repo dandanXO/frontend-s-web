@@ -19,6 +19,7 @@ import {userStore} from "src/stores";
 import {cached, TIME_EXPIRED} from "boot/cache";
 
 export default defineComponent({
+  name: "MoneyChangeRecordView",
   components: {
     RecordComponent
   },

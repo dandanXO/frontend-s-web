@@ -18,6 +18,7 @@ import moment from "moment";
 import { cached } from "boot/cache";
 
 export default defineComponent({
+  name: "WithdrawRecordView",
   components: {
     RecordComponent
   },

@@ -274,7 +274,7 @@ const routes = [
         component: () => import("pages/records/WithdrawRecordView.vue")
       }
     ],
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, keepAlive: false }
   },
   {
     path: "/account/records/transfer",
@@ -285,7 +285,7 @@ const routes = [
         component: () => import("pages/records/TransferRecordView.vue")
       }
     ],
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, keepAlive: false }
   },
   {
     path: "/account/records/moneyChange",
@@ -296,7 +296,7 @@ const routes = [
         component: () => import("pages/records/MoneyChangeRecordView.vue")
       }
     ],
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, keepAlive: false }
   },
   {
     path: "/account/records/promo",
@@ -307,7 +307,7 @@ const routes = [
         component: () => import("pages/records/PromoRecordView.vue")
       }
     ],
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, keepAlive: false }
   },
   {
     path: "/account/records/financeFeedBack",
@@ -318,7 +318,7 @@ const routes = [
         component: () => import("pages/records/FeedbackRecordView.vue")
       }
     ],
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, keepAlive: false }
   },
   {
     path: "/account/records/bet",
@@ -329,30 +329,30 @@ const routes = [
         component: () => import("pages/records/BetHistoryRecordView.vue")
       }
     ],
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, keepAlive: false }
   },
-  {
-    path: "/account/records/change",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/records/ChangeRecordView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/account/records/betrecord",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/records/BetRecordView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
+  // {
+  //   path: "/account/records/change",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [
+  //     {
+  //       path: "",
+  //       component: () => import("pages/records/ChangeRecordView.vue")
+  //     }
+  //   ],
+  //   meta: { requiresAuth: true, keepAlive: false }
+  // },
+  // {
+  //   path: "/account/records/betrecord",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [
+  //     {
+  //       path: "",
+  //       component: () => import("pages/records/BetRecordView.vue")
+  //     }
+  //   ],
+  //   meta: { requiresAuth: true, keepAlive: false }
+  // },
   {
     path: "/account/records/recommend",
     component: () => import("layouts/MainLayout.vue"),
@@ -375,17 +375,17 @@ const routes = [
     ],
     meta: { requiresAuth: true }
   },
-  {
-    path: "/account/records/bill",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/records/BillRecordView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
+  // {
+  //   path: "/account/records/bill",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [
+  //     {
+  //       path: "",
+  //       component: () => import("pages/records/BillRecordView.vue")
+  //     }
+  //   ],
+  //   meta: { requiresAuth: true }
+  // },
   {
     path: "/account/transit",
     component: () => import("layouts/MainLayout.vue"),

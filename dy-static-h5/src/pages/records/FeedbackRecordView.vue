@@ -18,6 +18,7 @@ import moment from "moment/moment";
 import { cached, TIME_EXPIRED } from "boot/cache";
 
 export default defineComponent({
+  name: "FeedbackRecordView",
   components: {
     RecordComponent
   },

@@ -18,6 +18,7 @@ import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
 
 export default defineComponent({
+  name: "TransferRecordView",
   components: {
     RecordComponent
   },
