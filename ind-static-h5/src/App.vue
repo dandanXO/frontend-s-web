@@ -185,9 +185,8 @@ export default defineComponent({
     const getInsetHeight = async () => {
       const ua = navigator.userAgent.toLowerCase();
       console.log(ua);
-      const isAndroidPixel =
-        ua.indexOf("android") > -1 &&
-        (ua.indexOf("pixel") > -1 || ua.indexOf("samsung") > -1 || ua.indexOf("galaxy") > -1);
+      const isAndroidPixel = ua.indexOf("android") > -1;
+      // && (ua.indexOf("pixel") > -1 || ua.indexOf("samsung") > -1 || ua.indexOf("galaxy") > -1);
       if (Platform.is.capacitor && Platform.is.android && isAndroidPixel) {
         const insets = await SafeArea.getSafeAreaInsets();
         console.log(insets);
@@ -253,7 +252,9 @@ export default defineComponent({
 
       document.addEventListener("visibilitychange", handleVisibilityChange);
 
-      getInsetHeight();
+      setTimeout(() => {
+        getInsetHeight();
+      }, 300);
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);
