@@ -23,7 +23,11 @@
             {{ $t('realtimeStatistics.H5') }}: <span>{{ selectedData.H5 ? selectedData.H5 : 0 }}</span>
           </div>
           <div class="text-2">
-            {{ $t('realtimeStatistics.APPLY_WITHDRAW') }}: <span>{{ selectedData.APPLY_WITHDRAW ? selectedData.APPLY_WITHDRAW : 0 }}</span>
+            {{ $t('realtimeStatistics.APPLY_WITHDRAW') }}:
+            <router-link v-if="hasPermission(['sys:withdraw:simple:list'])" :to="`/withdraw/withdraw-process-simple/apply?site=${selectedData.siteId}`">
+              <el-link type="primary">{{ selectedData.APPLY_WITHDRAW ? selectedData.APPLY_WITHDRAW : 0 }}</el-link>
+            </router-link>
+            <span v-else>{{ selectedData.APPLY_WITHDRAW ? selectedData.APPLY_WITHDRAW : 0 }}</span>
           </div>
         </div>
       </div>
@@ -86,8 +90,10 @@ import { i18nStore } from '@/store/language'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { getMemberStatistics } from '../../../api/member-statistics'
+import { hasPermission } from "@/utils/util";
 
 export default {
+  methods: { hasPermission },
   components: {
     BreadCrumb,
     Hamburger,
