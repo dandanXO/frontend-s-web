@@ -54,10 +54,10 @@
           />
         </el-select>
         <el-input
-          v-model="request.affiliateCode"
+          v-model="request.upLineLoginName"
           size="small"
           style="width: 100px; margin-left: 5px;"
-          :placeholder="t('fields.affiliateCode')"
+          :placeholder="t('fields.upLineLoginName')"
         />
         <el-input
           v-model="request.lastLoginIp"
@@ -552,13 +552,25 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="affiliateName"
+          :label="t('fields.upLineLoginName')"
+          width="150"
+        >
+          <template #default="scope">
+            <span v-if="scope.row.affiliateName === null">-</span>
+            <span v-if="scope.row.affiliateName !== null">
+              {{ scope.row.affiliateName }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="balance"
           :label="t('fields.balance')"
           width="200"
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.balance, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.balance, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column prop="regTime" :label="t('fields.registerTime')">
@@ -578,7 +590,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{data: scope.row.totalDeposit, type: 'money'}"
+              v-formatter="{ data: scope.row.totalDeposit, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -589,7 +601,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{data: scope.row.totalWithdraw, type: 'money'}"
+              v-formatter="{ data: scope.row.totalWithdraw, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -812,6 +824,7 @@ const request = reactive({
   birthday: [],
   regTime: [],
   depositStatus: null,
+  upLineLoginName: null,
 })
 
 const form = reactive({

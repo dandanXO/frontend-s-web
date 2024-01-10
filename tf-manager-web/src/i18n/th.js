@@ -1023,6 +1023,7 @@ export default {
     updateVIPLevel: 'อัพเดทระดับวีไอพี',
     upgradeToCheck: 'อัปเกรดเป็นอยู่ระหว่างการตรวจสอบ',
     upgradeToPaymentOnGoing: 'อัปเกรดเป็นการชำระเงิน',
+    upLineLoginName: 'ชื่อล็อกอินอัพไลน์',
     upload: 'ที่อัพโหลด',
     upperName: 'ชื่อของระดับที่สูงกว่า',
     username: 'ชื่อผู้ใช้',
