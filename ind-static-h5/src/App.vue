@@ -13,7 +13,7 @@ import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesom
 import { isAndroid } from "boot/utils";
 import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
-import { SafeArea, SafeAreaController } from "@aashu-dubey/capacitor-statusbar-safe-area";
+import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
 import { useUI } from "src/stores/ui";
 import axios from "axios";
 
@@ -193,7 +193,6 @@ export default defineComponent({
         if (insets.bottom > 0) {
           // console.log("HERe");
           ui.bottomInsetHeight = insets.bottom;
-          await SafeAreaController.injectCSSVariables();
         }
       }
     };
