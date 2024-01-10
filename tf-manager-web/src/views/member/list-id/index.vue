@@ -552,14 +552,14 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="affiliateName"
+          prop="referrerName"
           :label="t('fields.upLineLoginName')"
           width="150"
         >
           <template #default="scope">
-            <span v-if="scope.row.affiliateName === null">-</span>
-            <span v-if="scope.row.affiliateName !== null">
-              {{ scope.row.affiliateName }}
+            <span v-if="scope.row.referrerName === null">-</span>
+            <span v-if="scope.row.referrerName !== null">
+              {{ scope.row.referrerName }}
             </span>
           </template>
         </el-table-column>
