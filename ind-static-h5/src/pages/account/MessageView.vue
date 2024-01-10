@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onActivated } from "vue";
 import { useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { userStore } from "stores/index";
@@ -95,7 +95,7 @@ const onDetailsClick = (mailData) => {
   router.push("/account/message-detail");
 };
 
-onMounted(() => {
+onActivated(() => {
   loadInbox();
   store.setReadMsg();
 });
