@@ -351,7 +351,13 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`
+                          backgroundImage: (() => {
+                            try {
+                              return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                            } catch (e) {
+                              return '';
+                            }
+                          })()
                         }"
                       ></div>
                     </div>
@@ -386,7 +392,13 @@
                     <div
                       class="game--bg"
                       :style="{
-                        backgroundImage: `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`
+                        backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                            return '';
+                          }
+                        })()
                       }"
                     ></div>
                   </div>
@@ -678,7 +690,11 @@
           <div class="titles backgroundColor">Update Announcement</div>
         </div>
         <div class="contents">
-          <template v-if="isOutdatedApp">Your App Version Is Outdated, <br />Please Update The App Now</template>
+          <template v-if="isOutdatedApp">
+            Your App Version Is Outdated,
+            <br />
+            Please Update The App Now
+          </template>
           <template v-else>New Version Detected, Do You Want To Update?</template>
         </div>
         <div class="btnsreas">
