@@ -41,9 +41,10 @@
             v-show="!logoShow"
             :src="src"
             id="game-iframe"
-            scrolling="no"
+            scrolling="auto"
             frameborder="0"
             class="game-iframe"
+            :style="`height: calc(100% - 65px - ${ui.bottomInsetHeight}px);`"
           ></iframe>
         </template>
         <template v-else>
@@ -52,9 +53,10 @@
             v-show="!logoShow"
             v-bind:srcdoc="src"
             id="game-iframe"
-            scrolling="no"
+            scrolling="auto"
             frameborder="0"
             class="game-iframe"
+            :style="`height: calc(100% - 65px - ${ui.bottomInsetHeight}px);`"
           ></iframe>
         </template>
 
@@ -127,12 +129,14 @@ import { useQuasar, Platform, AppFullscreen, Notify } from "quasar";
 import { isAndroid } from "boot/utils";
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import DepositView from "../../pages/account/DepositView.vue";
+import { useUI } from "stores/ui";
 
 const props = defineProps(["closeFullGameDialog"]);
 
 const fullDepositDialog = ref(false);
 
 const $q = useQuasar();
+const ui = useUI();
 
 const store = userStore();
 const { token } = storeToRefs(store);
@@ -504,7 +508,6 @@ defineExpose({
 
 .game-iframe {
   width: 100%;
-  height: calc(100% - 65px);
 }
 
 // .game-iframe {

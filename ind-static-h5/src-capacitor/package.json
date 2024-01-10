@@ -1,8 +1,8 @@
 {
-  "name": "IndWin7",
-  "version": "1.0.3",
-  "description": "IndWin7 App",
-  "author": "Mika <mika@eagrp.net>",
+  "name": "55Ace",
+  "version": "1.0.6",
+  "description": "55Ace App",
+  "author": "KengHong <kenghongho@eagrp.net>",
   "private": true,
   "scripts": {
     "update": "npx cap sync && npx cap update android",

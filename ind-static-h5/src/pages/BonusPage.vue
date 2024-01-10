@@ -3,6 +3,7 @@
 
   <div class="bonus-page">
     <ProfileProgressBanner />
+
     <div class="detail-btn-container" @click="onDetailClick()">
       <span class="">Bonus Pot Detail</span>
     </div>

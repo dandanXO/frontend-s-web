@@ -11,7 +11,6 @@ import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
 import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
 import { isAndroid } from "boot/utils";
-import { App } from "@capacitor/app";
 import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
@@ -77,6 +76,7 @@ export default defineComponent({
           console.log("setAttributionCallbackListener");
           console.log(e);
         });
+
         Adjust.create(adjustConfig);
         setTimeout(() => {
           Adjust.getAdid().then((aaid) => {
@@ -184,9 +184,8 @@ export default defineComponent({
     const getInsetHeight = async () => {
       const ua = navigator.userAgent.toLowerCase();
       console.log(ua);
-      const isAndroidPixel =
-        ua.indexOf("android") > -1 &&
-        (ua.indexOf("pixel") > -1 || ua.indexOf("samsung") > -1 || ua.indexOf("galaxy") > -1);
+      const isAndroidPixel = ua.indexOf("android") > -1;
+      // && (ua.indexOf("pixel") > -1 || ua.indexOf("samsung") > -1 || ua.indexOf("galaxy") > -1);
       if (Platform.is.capacitor && Platform.is.android && isAndroidPixel) {
         const insets = await SafeArea.getSafeAreaInsets();
         console.log(insets);
@@ -252,7 +251,9 @@ export default defineComponent({
 
       document.addEventListener("visibilitychange", handleVisibilityChange);
 
-      getInsetHeight();
+      setTimeout(() => {
+        getInsetHeight();
+      }, 300);
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);

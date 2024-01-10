@@ -104,12 +104,22 @@
     >
       <template v-for="(item, index) in categoriesList" :key="index">
         <swiper-slide>
-          <div class="cat-selection-item" :class="item.active && 'active'" @click="activateSlide(item)">
+          <div class="cat-menu-item" @click="activateSlide(item)">
+            <img
+              :src="
+                require(`../assets/images/index/category/cat-menu-${item.icon.toLowerCase()}${
+                  item.active ? '-active' : ''
+                }.png`)
+              "
+              alt=""
+            />
+          </div>
+          <!-- <div class="cat-selection-item" :class="item.active && 'active'" @click="activateSlide(item)">
             <div class="cat-icon">
               <img :src="require(`../assets/images/index/category/cat-${item.icon.toLowerCase()}.png`)" alt="" />
             </div>
             <div class="cat-title">{{ item.title }}</div>
-          </div>
+          </div> -->
         </swiper-slide>
       </template>
     </swiper>
@@ -341,7 +351,13 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`
+                          backgroundImage: (() => {
+                            try {
+                              return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                            } catch (e) {
+                              return '';
+                            }
+                          })()
                         }"
                       ></div>
                     </div>
@@ -376,7 +392,13 @@
                     <div
                       class="game--bg"
                       :style="{
-                        backgroundImage: `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`
+                        backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                            return '';
+                          }
+                        })()
                       }"
                     ></div>
                   </div>
@@ -660,15 +682,23 @@
     show-cancel-button
     :showCancelButton="false"
     :showConfirmButton="false"
+    :persistent="isOutdatedApp"
   >
     <q-card style="width: 100%" class="bg-bright text-black">
       <div class="modalcontent">
         <div class="headers">
           <div class="titles backgroundColor">Update Announcement</div>
         </div>
-        <div class="contents">New Version Detected, Do You Want To Update?</div>
+        <div class="contents">
+          <template v-if="isOutdatedApp">
+            Your App Version Is Outdated,
+            <br />
+            Please Update The App Now
+          </template>
+          <template v-else>New Version Detected, Do You Want To Update?</template>
+        </div>
         <div class="btnsreas">
-          <div class="cacnels borderColor fontColor" @click="cancelUpdate">Cancel</div>
+          <div class="cacnels borderColor fontColor" @click="cancelUpdate" v-if="!isOutdatedApp">Cancel</div>
           <div class="confirmsbtns btncolor" @click="openDownloadPage">Update Now</div>
         </div>
       </div>
@@ -740,7 +770,7 @@
     class="fullgame-dialog"
   >
     <q-card class="fullgame-card" id="fullgame">
-      <ProfileSummary :homeProfile="true" />
+      <ProfileSummary @closeslot="closeSlotModal" :homeProfile="true" />
       <q-card-section>
         <div class="home-wrapper fullgame-wrapper">
           <div class="fullgame-header">
@@ -916,7 +946,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch } from "vue";
+import { onMounted, ref, reactive, computed, watch, onActivated } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -1050,10 +1080,14 @@ const checkPlatform = () => {
     (Platform.is.android && Platform.is.capacitor)
   ) {
     isH5.value = false;
-    getVersionNo();
+    setTimeout(() => {
+      getVersionNo();
+    }, 1000);
   } else {
     isH5.value = true;
-    getVersionNo();
+    setTimeout(() => {
+      getVersionNo();
+    });
   }
 };
 
@@ -1083,6 +1117,10 @@ const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId
   loadGameList(gameType, gameId);
   fullGameDialog.value = true;
   hotGameOn.value = false;
+};
+
+const closeSlotModal = () => {
+  fullGameDialog.value = false;
 };
 
 const closeFullGameDialog = () => {
@@ -1445,22 +1483,26 @@ const gotoSignUp = () => {
 
 const download_url = ref("");
 const isAppUpdateModal = ref(false);
+const isOutdatedApp = ref(false);
 const getVersionNo = async () => {
   // alert("run")
   if (Platform.is.android && Platform.is.capacitor) {
     const info = await App.getInfo();
     // console.log("APP Info");
     // console.log(info);
-    var current_version = parseInt(info.version.replace(/./g, "") + info.build);
+    var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
+    // alert("Cur:" + current_version);
     // info.version && info.build
     const appType = "ALL";
     const affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
+    // alert(affiliateCode) ;
     const res = await api.get(`/app/india/getAppData?affiliateCode=${affiliateCode}`);
     // console.log(res);
     if (res.code === 0) {
       // alert(JSON.stringify(res.data));
       var version_info = res.data.version;
-      var latest_ver_no = parseInt(version_info.replace(/./g, ""));
+      var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
+      // alert(latest_ver_no);
       download_url.value = res.data.downloadUrl;
       console.log("H5 Url");
       console.log(res.data.h5Url);
@@ -1498,6 +1540,8 @@ const getAppDownloadUrl = () => {
 const truncateText = (text, maxLength) => {
   if (text === "JiliGames") {
     text = "JILI";
+  } else if (text.startsWith("WC")) {
+    return text.substring(2);
   }
 
   if (window.innerWidth <= 450) {
@@ -1541,6 +1585,10 @@ const moveCsIcon = (ev) => {
   csDragPos.value = [csDragPos.value[0] - ev.delta.x, csDragPos.value[1] - ev.delta.y];
 };
 
+onActivated(() => {
+  store.getUnreadTotal();
+});
+
 onMounted(() => {
   getPlatList();
   loadData();
@@ -1550,7 +1598,6 @@ onMounted(() => {
   loadHotGameList();
   loadJILIFishGameList();
   loadJDBFishGameList();
-  store.getUnreadTotal();
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 });
@@ -1629,7 +1676,8 @@ onMounted(() => {
       box-sizing: border-box;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      gap: 20px;
       padding: 0 20px;
       margin-top: 0px;
 
@@ -1646,6 +1694,7 @@ onMounted(() => {
         letter-spacing: 1px;
         font-size: 14px;
         margin-right: 8px;
+        max-width: 200px;
       }
 
       .confirmsbtns {
@@ -1659,6 +1708,7 @@ onMounted(() => {
         background: $primary;
         letter-spacing: 1px;
         font-size: 14px;
+        max-width: 200px;
       }
     }
   }
@@ -2598,6 +2648,12 @@ onMounted(() => {
 
   .swiper-scrollbar-drag {
     background: rgba(255, 255, 255, 0.4);
+  }
+}
+
+.cat-menu-item {
+  img {
+    width: 100%;
   }
 }
 

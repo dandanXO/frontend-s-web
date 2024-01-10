@@ -113,7 +113,7 @@
     <q-expansion-item label="5. How to turn your friends into members?">
       <ul>
         <li class="dot-style">
-          Log in to IndWin7, share your recommendation link with your friends on the recommendation page, guide them to
+          Log in to 55Ace, share your recommendation link with your friends on the recommendation page, guide them to
           register from the link, and they can become your direct members.
         </li>
         <li class="dot-style">
@@ -480,6 +480,12 @@ const rows3 = [
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
           background: #502175;
         }
+      }
+    }
+
+    :deep(thead) {
+      th:nth-child(3) {
+        white-space: normal;
       }
     }
 
