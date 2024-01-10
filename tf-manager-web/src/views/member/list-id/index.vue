@@ -570,7 +570,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{ data: scope.row.balance, type: 'money' }" />
+            <span v-formatter="{data: scope.row.balance, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column prop="regTime" :label="t('fields.registerTime')">
@@ -590,7 +590,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{ data: scope.row.totalDeposit, type: 'money' }"
+              v-formatter="{data: scope.row.totalDeposit, type: 'money'}"
             />
           </template>
         </el-table-column>
@@ -601,7 +601,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{ data: scope.row.totalWithdraw, type: 'money' }"
+              v-formatter="{data: scope.row.totalWithdraw, type: 'money'}"
             />
           </template>
         </el-table-column>
