@@ -54,10 +54,10 @@
           />
         </el-select>
         <el-input
-          v-model="request.affiliateCode"
+          v-model="request.upLineLoginName"
           size="small"
           style="width: 100px; margin-left: 5px;"
-          :placeholder="t('fields.affiliateCode')"
+          :placeholder="t('fields.upLineLoginName')"
         />
         <el-input
           v-model="request.lastLoginIp"
@@ -553,7 +553,7 @@
         </el-table-column>
         <el-table-column
           prop="affiliateName"
-          :label="t('fields.affiliateName')"
+          :label="t('fields.upLineLoginName')"
           width="150"
         >
           <template #default="scope">
@@ -824,6 +824,7 @@ const request = reactive({
   birthday: [],
   regTime: [],
   depositStatus: null,
+  upLineLoginName: null,
 })
 
 const form = reactive({
