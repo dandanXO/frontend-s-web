@@ -493,7 +493,7 @@ const submittedFormStatus = ref(false);
     .prize-quiz-jc-container {
       width: 780px;
       height: 250px;
-      background: url("../../../assets/images/promotion/hotpromo/esportquiz/bg_jc_7.png") center no-repeat;
+      background: url("../../../assets/images/promotion/hotpromo/esportquiz/bg_jc_8.png") center no-repeat;
       padding-top: 50px;
       margin: 50px auto;
       display: flex;

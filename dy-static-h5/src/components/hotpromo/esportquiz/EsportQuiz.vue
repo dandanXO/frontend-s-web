@@ -520,7 +520,7 @@ function onSubmitClick() {
     margin: 0 auto;
 
     .prize-quiz-jc-container {
-      background: url("../../../assets/images/promotion/hotpromo/esportquiz/bg_jc_7.png") center no-repeat;
+      background: url("../../../assets/images/promotion/hotpromo/esportquiz/bg_jc_8.png") center no-repeat;
       background-size: contain;
       padding-top: 30px;
       margin: 50px auto;
