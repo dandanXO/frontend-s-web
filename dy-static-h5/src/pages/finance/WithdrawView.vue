@@ -3,26 +3,25 @@
     <!--    <AcctBal :platforms="platforms" />-->
     <div class="q-pa-md bg-white q-mx-sm q-my-md">
       <div class="account-content last">
-
         <label class="label">选择提款方式</label>
 
         <div class="withdrawalmethod">
           <div
-              v-for="(method, i) in withdrawalMethods"
-              :key="i"
-              class="txt-center withdraw-type-item"
-              @click="selectMethod(method, i)"
-              :class="{ active: i === activeItem }"
+            v-for="(method, i) in withdrawalMethods"
+            :key="i"
+            class="txt-center withdraw-type-item"
+            @click="selectMethod(method, i)"
+            :class="{ active: i === activeItem }"
           >
             <span class="promo" v-if="method.recommended">Recommended</span>
             <div class="withdraw-img">
-              <img :src="imgURL + '/withdraw/' + method.icon"/>
+              <img :src="imgURL + '/withdraw/' + method.icon" />
             </div>
             <div class="type-name">{{ method.name }}</div>
           </div>
         </div>
 
-        <q-separator style="margin-top:12px;margin-bottom: 15px;" />
+        <q-separator style="margin-top: 12px; margin-bottom: 15px" />
 
         <label class="label">{{ chooseLabel() }}</label>
         <q-form>
@@ -45,11 +44,7 @@
                 <q-item-section class="text-grey">
                   {{ "没有可用的" + chooseCard() }}
                   <router-link class="text-bright" to="/account/withdraw">
-                    {{
-                      isUSDT || isEWALLET
-                        ? "加" + chooseCard()
-                        : "绑定" + chooseCard()
-                    }}
+                    {{ isUSDT || isEWALLET ? "加" + chooseCard() : "绑定" + chooseCard() }}
                   </router-link>
                 </q-item-section>
               </q-item>
@@ -57,18 +52,12 @@
             <template v-slot:option="scope">
               <q-item v-bind="scope.itemProps">
                 <q-item-section avatar v-if="scope.opt.bankIcon">
-                  <img
-                    style="width: 30px"
-                    :src="imgURL + '/payment/' + scope.opt.bankIcon"
-                  />
+                  <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
                 </q-item-section>
                 <q-item-section>
                   <q-item-label>
                     {{ scope.opt.bankName }} - ****{{
-                      scope.opt.cardNumber.slice(
-                        scope.opt.cardNumber.length - 4,
-                        scope.opt.cardNumber.length
-                      )
+                      scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
                     }}
                   </q-item-label>
                 </q-item-section>
@@ -82,20 +71,14 @@
                 />
               </q-item-section>
               <q-item-section>
-                <q-item-label
-                  style="
-                    text-overflow: ellipsis;
-                    overflow: hidden;
-                    white-space: nowrap;
-                  "
-                >
+                <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
                   {{ scope.opt.bankName }} - {{ scope.opt.cardNumber }}
                 </q-item-label>
               </q-item-section>
             </template>
           </q-select>
 
-          <q-separator style="margin-top: 14px;margin-bottom:14px;"/>
+          <q-separator style="margin-top: 14px; margin-bottom: 14px" />
 
           <label class="label">提款金额</label>
           <q-input
@@ -106,16 +89,9 @@
             color="black"
             :rules="[
               (val) => (val && val.length > 0) || '请输入提款金额',
-              (val) =>
-                val >= selectedWithdrawalMethod.withdrawMin ||
-                '请输入正确的提款金额',
-              (val) =>
-                val <= selectedWithdrawalMethod.withdrawMax ||
-                '请输入正确的提款金额',
-              !isUSDT
-                ? (val) =>
-                    (!isUSDT && /^([1-9][0-9]*)$/.test(val)) || '金额应为正数'
-                : true
+              (val) => val >= selectedWithdrawalMethod.withdrawMin || '请输入正确的提款金额',
+              (val) => val <= selectedWithdrawalMethod.withdrawMax || '请输入正确的提款金额',
+              !isUSDT ? (val) => (!isUSDT && /^([1-9][0-9]*)$/.test(val)) || '金额应为正数' : true
             ]"
             clearable
           >
@@ -126,26 +102,16 @@
             </template>
             <template v-slot:append>
               <span style="font-size: 26px" class="text-bright">
-                <q-btn
-                    class="bigamount-btn"
-                    @click="updateWithdrawAmt"
-                    label="全额提款"
-                    color="dyblue"
-                />
+                <q-btn class="bigamount-btn" @click="updateWithdrawAmt" label="全额提款" color="dyblue" />
               </span>
             </template>
           </q-input>
           <div
-              class="q-mt-md q-mb-md text-center text-grey text-bold q-pb-md"
-              style="border-bottom: 1px solid #434343"
-              v-show="selectedWithdrawalMethod"
+            class="q-mt-md q-mb-md text-center text-grey text-bold q-pb-md"
+            style="border-bottom: 1px solid #434343"
+            v-show="selectedWithdrawalMethod"
           >
-            <template
-              v-if="
-                selectedWithdrawalMethod.withdrawMin &&
-                selectedWithdrawalMethod.withdrawMin
-              "
-            >
+            <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
               {{
                 "单笔提款: " +
                 selectedWithdrawalMethod.withdrawMin +
@@ -153,57 +119,35 @@
                 selectedWithdrawalMethod.withdrawMax +
                 "RMB"
               }}
-              <br style="margin-top:10px;"/>
+              <br style="margin-top: 10px" />
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
-              {{
-                "今日提款: " +
-                selectedWithdrawalMethod.withdrawMaxAmount +
-                "RMB"
-              }}
+              {{ "今日提款: " + selectedWithdrawalMethod.withdrawMaxAmount + "RMB" }}
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
-              {{
-                " 剩余: " + selectedWithdrawalMethod.withdrawMaxTimes + " 次"
-              }}
+              {{ " 剩余: " + selectedWithdrawalMethod.withdrawMaxTimes + " 次" }}
             </template>
           </div>
           <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
-            <div
-              class="q-my-md"
-              style="
-                display: flex;
-                justify-content: center;
-                align-items: center;
-              "
-            >
+            <div class="q-my-md" style="display: flex; justify-content: center; align-items: center">
               <span style="flex: 1">实施汇率：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
                 {{ store.currency.value }}
               </span>
             </div>
-            <div
-              class="q-mt-md"
-              style="
-                display: flex;
-                justify-content: center;
-                align-items: center;
-              "
-            >
+            <div class="q-mt-md" style="display: flex; justify-content: center; align-items: center">
               <span style="flex: 1">预计到帐：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 {{
-                  (selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin) ? '0.00' : (
-                    (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate) - 1
-                  ).toFixed(2)
+                  selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
+                    ? "0.00"
+                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2)
                 }}
                 USDT
               </span>
             </div>
-            <div class="q-mt-md text-neontb">
-              *特别说明：三方自动收取提币 1.00 USDT 手续费！
-            </div>
+            <div class="q-mt-md text-neontb">*特别说明：三方自动收取提币 1.00 USDT 手续费！</div>
           </div>
           <div v-else-if="isEWALLET">
             <div class="q-mt-md q-mb-md text-center">
@@ -234,12 +178,7 @@
             </a-select>
           </a-form-item> -->
           <div class="flex-box flex-justify-center">
-            <q-btn
-                style="width: 100%"
-                class="q-mt-md submit-btn"
-                @click="submitWithdraw"
-                label="立即提款"
-            />
+            <q-btn style="width: 100%" class="q-mt-md submit-btn" @click="submitWithdraw" label="立即提款" />
           </div>
           <div class="q-py-md text-orange">
             <div
@@ -256,7 +195,7 @@
     </div>
 
     <q-dialog v-model="hasWithdrawCard" persistent no-backdrop-dismiss no-esc-dismiss>
-      <q-card style="width: 100%; padding: 10px; flex-direction:column;" class="text-black">
+      <q-card style="width: 100%; padding: 10px; flex-direction: column" class="text-black">
         <q-card-section class="q-mb-md">
           <div class="text-h6 text-center">请先绑定银行卡</div>
         </q-card-section>
@@ -496,7 +435,7 @@ export default defineComponent({
     const openEWalletTutorial = (code) => {
       const urlMap = {
         'KDPAY': 'http://jiaocheng.kdpay123.com',
-        'EBPAY': 'https://www.ebpay009.com/syjc',
+        'EBPAY': 'https://www.ebpay24.com/',
         'OKPAY': 'https://me-qr.com/l/okpay'
       };
 
@@ -539,8 +478,6 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .withdraw-section {
-
-
   .withdrawalmethod {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -563,7 +500,7 @@ export default defineComponent({
         border-radius: 6px;
         margin-bottom: 5px;
         padding: 8px;
-        display:flex;
+        display: flex;
         align-items: center;
       }
 
@@ -588,8 +525,8 @@ export default defineComponent({
 
       .type-name {
         line-height: 1.1em;
-        font-size: .9em;
-        font-weight:600;
+        font-size: 0.9em;
+        font-weight: 600;
         overflow-wrap: break-word;
       }
 
@@ -621,19 +558,15 @@ export default defineComponent({
         margin-right: 60px;
       }
     }
-
-
-
   }
 
   .bigamount-btn {
-    background: linear-gradient(180deg, #52ACFF 0%, #3559DA 100%);
+    background: linear-gradient(180deg, #52acff 0%, #3559da 100%);
     height: 45px;
     width: 100px;
     letter-spacing: 1px;
     border-radius: 12px;
   }
-
 
   .label {
     font-weight: 600;
@@ -643,7 +576,7 @@ export default defineComponent({
   }
 
   .submit-btn {
-    background: linear-gradient(180deg, #52ACFF 0%, #3559DA 100%);
+    background: linear-gradient(180deg, #52acff 0%, #3559da 100%);
     height: 45px;
     letter-spacing: 1px;
     color: #fff;
