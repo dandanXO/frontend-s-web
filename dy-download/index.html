@@ -1,285 +1,343 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8"/>
     <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
 
     <title>东赢App下载</title>
     <!--<link rel="shortcut icon" href="images/test.ico" />-->
 
     <link
-      rel="stylesheet"
-      type="text/css"
-      href="./style/css/download.css?v=3"
+            rel="stylesheet"
+            type="text/css"
+            href="./style/css/download.css?v=3"
     />
 
     <link
-      rel="stylesheet"
-      type="text/css"
-      href="./style/css/swiper-3.4.1.min.css?v=3"
+            rel="stylesheet"
+            type="text/css"
+            href="./style/css/swiper-3.4.1.min.css?v=3"
     />
     <script
-      type="text/javascript"
-      src="./style/js/jquery-3.2.1.min.js?v=5"
+            type="text/javascript"
+            src="./style/js/jquery-3.2.1.min.js?v=5"
     ></script>
     <script
-      type="text/javascript"
-      src="./style/js/swiper-3.4.1.min.js?v=5"
+            type="text/javascript"
+            src="./style/js/swiper-3.4.1.min.js?v=5"
     ></script>
     <script type="text/javascript" src="./style/js/download.js?v=6"></script>
     <script
-      type="text/javascript"
-      src="./style/js/clipboard.min.js?v=5"
+            type="text/javascript"
+            src="./style/js/clipboard.min.js?v=5"
     ></script>
     <script
-      type="text/javascript"
-      src="https://kcx3zdl.ycylbj.com/xw-website.txt"
+            type="text/javascript"
+            src="https://kcx3zdl.ycylbj.com/xw-website.txt"
     ></script>
 
     <style type="text/css">
-      html,
-      body {
-        width: 100%;
-        height: 100%;
-        margin: 0%;
-      }
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0%;
+        }
 
-      .weixin_tip {
-        color: white;
-        font-size: 14px;
-        height: 100%;
-        text-align: center;
-        line-height: 20px;
-      }
+        .weixin_tip {
+            color: white;
+            font-size: 14px;
+            height: 100%;
+            text-align: center;
+            line-height: 20px;
+        }
 
-      .under-line {
-        margin: 10px 0 30px 0;
-      }
+        .under-line {
+            margin: 10px 0 30px 0;
+        }
 
-      .under-line:before {
-        content: "";
-        background: #53b9e8;
-        height: 1px;
-        display: block;
-      }
+        .under-line:before {
+            content: "";
+            background: #53b9e8;
+            height: 1px;
+            display: block;
+        }
 
-      .tip-list {
-        display: block;
-        text-align: left;
-        margin: 10px 0;
-        padding-left: 40px;
-      }
+        .tip-list {
+            display: block;
+            text-align: left;
+            margin: 10px 0;
+            padding-left: 40px;
+        }
 
-      .tip-list i {
-        border-radius: 50%;
-        background: #02476c;
-        color: white;
-        font-size: 13px;
-        padding: 5px 9px;
-        margin-right: 10px;
-      }
+        .tip-list i {
+            border-radius: 50%;
+            background: #02476c;
+            color: white;
+            font-size: 13px;
+            padding: 5px 9px;
+            margin-right: 10px;
+        }
     </style>
-  </head>
+</head>
 
-  <body>
-    <div class="download" style="display: block">
-      <div class="download_bg" style="height: auto">
+<body>
+<div class="download" style="display: block">
+    <div class="download_bg" style="height: auto">
         <img
-          src="./style/images/download_logo.png"
-          style="width: 60%; margin-top: 20px"
+                src="./style/images/download_logo.png"
+                style="width: 60%; margin-top: 20px"
         />
         <div class="host_address" id="web_show"></div>
         <img
-          class="customer_icon"
-          id="dy_customer"
-          src="./style/images/download_customer.png"
+                class="customer_icon"
+                id="dy_customer"
+                src="./style/images/download_customer.png"
         />
         <img
-          src="./style/images/download_text.png"
-          style="width: 90%; margin-top: 15px"
+                src="./style/images/download_text.png"
+                style="width: 90%; margin-top: 15px"
         />
         <img
-          src="./style/images/download_icons.png"
-          style="width: 80%; margin-top: 25px"
+                src="./style/images/download_icons.png"
+                style="width: 80%; margin-top: 25px"
         />
         <div class="games_title_container">
-          <div class="games_title_item">体育</div>
-          <div class="games_title_item">真人</div>
-          <div class="games_title_item">电竞</div>
-          <div class="games_title_item">棋牌</div>
-          <div class="games_title_item">电子</div>
-          <div class="games_title_item">彩票</div>
+            <div class="games_title_item">体育</div>
+            <div class="games_title_item">真人</div>
+            <div class="games_title_item">电竞</div>
+            <div class="games_title_item">棋牌</div>
+            <div class="games_title_item">电子</div>
+            <div class="games_title_item">彩票</div>
         </div>
 
         <div
-          class="download_btn"
-          style="margin-top: 15px"
-          id="btn_fast"
-          hidden="hidden"
+                class="download_btn"
+                style="margin-top: 15px"
+                id="btn_fast"
+                hidden="hidden"
         >
-          <a id="download_fast">东赢快捷APP（推荐使用,免安装）</a>
+            <a id="download_fast">东赢快捷APP（推荐使用,免安装）</a>
         </div>
-        <div class="download_btn" id="btn_1">
-          <a
-            id="download_1"
-            href="https://kcx3zdl.ycylbj.com/dy_app_signed.apk"
-            data-clipboard-text='FGH{"agentCode":null,"regFrom":null,"downloadUrl":"dd880.app"}'
-            >东赢全站APP（线路一）</a
-          >
+
+        <div id="android-lists" style="width:100%;margin:10px auto 0px;display:flex;flex-direction: column;align-items: center;gap:4px;">
+<!--            <div class="download_btn" id="btn_1">-->
+<!--                <a-->
+<!--                        id="download_1"-->
+<!--                        href="https://kcx3zdl.ycylbj.com/dy_app_signed.apk"-->
+<!--                        data-clipboard-text='FGH{"agentCode":null,"regFrom":null,"downloadUrl":"dd880.app"}'-->
+<!--                >东赢全站APP（线路一）</a-->
+<!--                >-->
+<!--            </div>-->
+<!--            <div class="download_btn" id="btn_2">-->
+<!--                <a-->
+<!--                        id="download_2"-->
+<!--                        data-clipboard-text='FGH{"agentCode":null,"regFrom":null,"downloadUrl":"dd880.app"}'-->
+<!--                >东赢全站APP（线路二）</a-->
+<!--                >-->
+<!--            </div>-->
         </div>
-        <div class="download_btn" id="btn_2" hidden="hidden">
-          <a
-            id="download_2"
-            data-clipboard-text='FGH{"agentCode":null,"regFrom":null,"downloadUrl":"dd880.app"}'
-            >东赢全站APP（线路二）</a
-          >
-        </div>
-        <div class="download_btn" id="btn_h5">
-          <a id="download_h5" href="https://dy86587.com/">手机网页版</a>
+
+        <div id="ios-lists" style="width:100%;margin:10px auto 0px;display:flex;flex-direction: column;align-items: center;gap:4px;">
+
         </div>
 
         <div class="download_des">
-          下载安装过程中请勿切换网络，推荐使用手机自带浏览器打开本页面下滑查看安装教程。
+            下载安装过程中请勿切换网络，推荐使用手机自带浏览器打开本页面下滑查看安装教程。
         </div>
         <div class="download_install_des">下滑查看安装教程</div>
-      </div>
+    </div>
 
-      <div class="swiper_parent">
+    <div class="swiper_parent">
         <div class="swiper-container swiper-container-horizontal">
-          <div
-            class="swiper-wrapper"
-            style="
+            <div
+                    class="swiper-wrapper"
+                    style="
               transition-duration: 0ms;
               transform: translate3d(0px, 0px, 0px);
             "
-          ></div>
-          <div class="swiper-pagination swiper-pagination-bullets"></div>
+            ></div>
+            <div class="swiper-pagination swiper-pagination-bullets"></div>
         </div>
-      </div>
     </div>
+</div>
 
-    <div class="weixin_tip" style="display: none">
-      <img
-        id="tips"
-        src="./style/images/wxtips_android.png"
-        alt=""
-        style="width: 100%; height: auto"
-      />
-      <!-- <div class="wx_title">
-        <span>由于腾讯的安全机制，阁下无法直接下载我们的产品，请跟随下列步骤进行下载。</span>
-        <div class="under-line"></div>
-        <span class="tip-list"><i>1</i>请点击右上角的菜单按钮，打开菜单</span>
-        <span class="tip-list"><i>2</i>点击使用默认浏览器打开下载</span>
-    </div> -->
-    </div>
+<div class="weixin_tip" style="display: none">
+    <img
+            id="tips"
+            src="./style/images/wxtips_android.png"
+            alt=""
+            style="width: 100%; height: auto"
+    />
+    <!-- <div class="wx_title">
+      <span>由于腾讯的安全机制，阁下无法直接下载我们的产品，请跟随下列步骤进行下载。</span>
+      <div class="under-line"></div>
+      <span class="tip-list"><i>1</i>请点击右上角的菜单按钮，打开菜单</span>
+      <span class="tip-list"><i>2</i>点击使用默认浏览器打开下载</span>
+  </div> -->
+</div>
 
-    <script>
-      var versionNo = "1.0.22";
+<script>
+    var dateTime = "2024-01-10 7.30pm";
 
-      var andList = [
-        { imgurl: "./style/images/web/android/01.png" },
-        { imgurl: "./style/images/web/android/02.png" },
-        { imgurl: "./style/images/web/android/03.png" },
-        { imgurl: "./style/images/web/android/04.png" },
-        { imgurl: "./style/images/web/android/05.png" },
-      ];
-      var iosList = [
-        { imgurl: "./style/images/web/ios/ios1.png" },
-        { imgurl: "./style/images/web/ios/ios2.png" },
-        { imgurl: "./style/images/web/ios/ios3.png" },
-        { imgurl: "./style/images/web/ios/ios4.png" },
-        { imgurl: "./style/images/web/ios/ios5.png" },
-        { imgurl: "./style/images/web/ios/ios6.png" },
-      ];
-      $(function () {
-        function is_weixin() {
-          var ua = navigator.userAgent.toLowerCase();
-          if (ua.match(/MicroMessenger/i) == "micromessenger") {
-            return true;
-          } else {
-            return false;
-          }
+    var andList = [
+        {imgurl: "./style/images/web/android/01.png"},
+        {imgurl: "./style/images/web/android/02.png"},
+        {imgurl: "./style/images/web/android/03.png"},
+        {imgurl: "./style/images/web/android/04.png"},
+        {imgurl: "./style/images/web/android/05.png"},
+    ];
+    var iosList = [
+        {imgurl: "./style/images/web/ios/ios1.png"},
+        {imgurl: "./style/images/web/ios/ios2.png"},
+        {imgurl: "./style/images/web/ios/ios3.png"},
+        {imgurl: "./style/images/web/ios/ios4.png"},
+        {imgurl: "./style/images/web/ios/ios5.png"},
+        {imgurl: "./style/images/web/ios/ios6.png"},
+    ];
+
+    var iosDownload = [];
+    var androidDownload = [];
+    var cnNums= ['一','二','三','四','五','六','七','八','九','十']
+    var host = window.location.host;
+
+    getApiUrl();
+
+    async function getApiUrl() {
+        try {
+            const response = await fetch(`https://ak4wc.ala8tehrnu.com/app/dy/getDownloadPage`);
+            const data = await response.json();
+            if (data) {
+                // console.log("data", data);
+                iosDownload = data.data.ios;
+                androidDownload = data.data.android;
+                console.log(iosDownload);
+                console.log(androidDownload);
+
+                checkPlatform();
+            }
+        } catch (error) {
+            console.log(error)
         }
+    }
 
+    function checkPlatform() {
         var isWeixin = is_weixin();
         if (isWeixin) {
-          $(".weixin_tip").show();
-          if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
-            $("#tips").attr("src", "/style/images/wxtips_ios.png");
-          } else if (/(Android)/i.test(navigator.userAgent)) {
-            $("#tips").attr("src", "/style/images/wxtips_android.png");
-          }
+            $(".weixin_tip").show();
+            if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                $("#tips").attr("src", "/style/images/wxtips_ios.png");
+            } else if (/(Android)/i.test(navigator.userAgent)) {
+                $("#tips").attr("src", "/style/images/wxtips_android.png");
+            }
         } else {
-          $(".download").show();
-          if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+        $(".download").show();
+        if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
             // alert('若要安装，请先打开设置-通用-设备管理-东赢体育');
             showIOS();
-          } else if (/(Android)/i.test(navigator.userAgent)) {
+        } else if (/(Android)/i.test(navigator.userAgent)) {
             showAndroid();
-          } else {
+        } else {
             //window.location.href="downloadty_com.html";
             showAndroid();
-          }
-
-          var host = window.location.host;
-          $("#download").click(function () {
-            var url = $(this).attr("href");
-            var type = "ALL_AND";
-            if (url.indexOf(".plist") != -1) {
-              type = "ALL_IOS";
-            }
-          });
         }
-      });
+        }
+        console.log(host);
+    }
 
-      function showAndroid() {
+    function is_weixin() {
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function showAndroid() {
         for (var i = 0; i < andList.length; i++) {
-          $(".swiper-wrapper").append(
-            '<div class="swiper-slide"><img src="' +
-              andList[i].imgurl +
-              '" alt=""/></div>'
-          );
+            $(".swiper-wrapper").append(
+                '<div class="swiper-slide"><img src="' +
+                andList[i].imgurl +
+                '" alt=""/></div>'
+            );
         }
         $("#download").attr(
-          "href",
-          "https://xinfa-files.s3.ap-southeast-1.amazonaws.com/app/dy_app_1.0.22.apk"
+            "href",
+            "https://xinfa-files.s3.ap-southeast-1.amazonaws.com/app/dy_app_1.0.22.apk"
         );
-      }
 
-      function showIOS() {
+        var androidHtml= '';
+        androidDownload.forEach((list, index) => {
+            for (const key in list) {
+                if (list.hasOwnProperty(key)) {
+                    const value = list[key];
+                    console.log(`Key: ${key}, Value: ${value}`);
+
+                    androidHtml = `
+            <div class="download_btn" id="btn_${index}">
+            <a
+                id="download_${index}"
+                href="${value}"
+                data-clipboard-text='FGH{"agentCode":null,"regFrom":null,"downloadUrl":"${host}"}'
+            >${key}</a
+            >
+        </div>
+` + androidHtml;
+                }
+            }
+
+            $("#android-lists").html(androidHtml)
+        })
+
+
+    }
+
+    function showIOS() {
         for (var i = 0; i < iosList.length; i++) {
-          $(".swiper-wrapper").append(
-            '<div class="swiper-slide"><img src="' +
-              iosList[i].imgurl +
-              '" alt=""/></div>'
-          );
+            $(".swiper-wrapper").append(
+                '<div class="swiper-slide"><img src="' +
+                iosList[i].imgurl +
+                '" alt=""/></div>'
+            );
         }
-        $("#download").attr("href", "./dy.mobileconfig");
-      }
 
-      var mySwiper = new Swiper(".swiper-container", {
+        var iosHTMl= '';
+        iosDownload.forEach((list, index) => {
+            for (const key in list) {
+                if (list.hasOwnProperty(key)) {
+                    const value = list[key];
+                    console.log(`Key: ${key}, Value: ${value}`);
+
+                    iosHTMl = iosHTMl + `
+            <div class="download_btn" id="btn_${index}">
+            <a
+                id="download_${index}"
+                href="${value}"
+                data-clipboard-text='FGH{"agentCode":null,"regFrom":null,"downloadUrl":"${host}"}'
+            >${key}</a
+            >
+        </div>
+`;
+                }
+            }
+
+            $("#ios-lists").html(iosHTMl)
+        })
+
+    }
+
+    var mySwiper = new Swiper(".swiper-container", {
         effect: "slide",
         pagination: ".swiper-pagination",
         initialSlide: 0,
         observer: true,
         observeParents: true,
-      });
+    });
 
-      function getIosPath() {
-        try {
-          if (getIsPath()) {
-            var path = getTestFlightIosPath();
-            $("#download").attr("href", path);
-          } else {
-            showIOS();
-          }
-        } catch (err) {
-          showIOS();
-        }
-      }
-    </script>
-  </body>
+</script>
+</body>
 </html>
