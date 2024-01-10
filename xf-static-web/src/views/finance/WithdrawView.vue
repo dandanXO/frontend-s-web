@@ -85,7 +85,12 @@
         <el-row>
           <el-col>
             <div
-              v-if="!isEWALLET && !isUSDT && !isALIPAY && selectedWithdrawalMethod.tips"
+              v-if="
+                !isEWALLET &&
+                !isUSDT &&
+                !isALIPAY &&
+                selectedWithdrawalMethod.tips
+              "
               class="selected-tip"
               v-html="selectedWithdrawalMethod.tips"
             ></div>
@@ -142,19 +147,25 @@
         >
           <div style="color: #9bffd1">
             {{
-              (selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin) ? '0.00' : (
-                (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate) - 1
-              ).toFixed(2)
+              selectedWithdrawalMethod &&
+              withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
+                ? "0.00"
+                : (
+                    withdrawInfo.amount /
+                      selectedWithdrawalMethod.exchangeRate -
+                    1
+                  ).toFixed(2)
             }}
             USDT
           </div>
-
         </el-form-item>
-        <div  v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="" style="color: #9bffd1;">
+        <div
+          v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
+          class=""
+          style="color: #9bffd1"
+        >
           *特别说明：三方自动收取提币 1.00 USDT 手续费！
         </div>
-
-
 
         <!-- K豆教程视频 -->
         <div style="margin-left: 150px" v-else-if="isEWALLET">
@@ -166,7 +177,7 @@
               K豆教程视频
             </span>
             <span v-else-if="selectedWithdrawalMethod.code === 'EBPAY'">
-              EB教程视频
+              EB使用教程
             </span>
             <span v-else-if="selectedWithdrawalMethod.code === 'OKPAY'">
               OK教程视频
@@ -354,10 +365,10 @@ export default defineComponent({
         loadBankCards().then((response) => {
           if (response.code === 0) {
             response.data.forEach(element => {
-              if (element.bankType === 'BANK') { 
+              if (element.bankType === 'BANK') {
                   if (element.bankCode !== 'alipay' && element.bankType.includes(selectedWithdrawalMethod.value.code)) {
                     withdrawState.bankCardList.push(element)
-                  } 
+                  }
                   if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
                     withdrawState.bankCardList.push(element)
                   }
@@ -428,7 +439,7 @@ export default defineComponent({
     const openEWalletTutorial = (code) => {
       const urlMap = {
         'KDPAY': 'http://jiaocheng.kdpay123.com',
-        'EBPAY': 'https://www.ebpay009.com/syjc',
+        'EBPAY': 'https://www.ebpay24.com/useTutorial',
         'OKPAY': 'https://me-qr.com/l/okpay'
       };
 
