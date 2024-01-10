@@ -11,10 +11,9 @@ import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
 import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
 import { isAndroid } from "boot/utils";
-import { App } from "@capacitor/app";
 import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
-import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
+import { SafeArea, SafeAreaController } from "@aashu-dubey/capacitor-statusbar-safe-area";
 import { useUI } from "src/stores/ui";
 import axios from "axios";
 
@@ -194,6 +193,7 @@ export default defineComponent({
         if (insets.bottom > 0) {
           // console.log("HERe");
           ui.bottomInsetHeight = insets.bottom;
+          await SafeAreaController.injectCSSVariables();
         }
       }
     };

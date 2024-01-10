@@ -504,7 +504,8 @@ defineExpose({
 
 .game-iframe {
   width: 100%;
-  height: calc(100% - 65px);
+  height: calc(100% - 65px - var(--safe-area-inset-bottom));
+  bottom: var(--safe-area-inset-bottom);
 }
 
 // .game-iframe {
