@@ -1223,6 +1223,7 @@ export default {
     updateVIPLevel: 'Update VIP Level',
     upgradeToCheck: 'UPGRADE_TO_UNDER_REVIEW',
     upgradeToPaymentOnGoing: 'UPGRADE_TO_PAYMENT_ON_GOING',
+    upLineLoginName: 'Upline Login Name',
     upload: 'Upload',
     upperName: 'Upper Name',
     username: 'Username',
