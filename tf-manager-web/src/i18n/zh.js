@@ -1230,6 +1230,7 @@ export default {
     updateVIPLevel: '更新VIP等级',
     upgradeToCheck: '升级至审核中',
     upgradeToPaymentOnGoing: '升级至支付中',
+    upLineLoginName: '上级用户名',
     upload: '上传',
     upperName: '所属上级',
     username: '用户名',
