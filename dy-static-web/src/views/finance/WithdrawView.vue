@@ -139,7 +139,7 @@
         <div style="margin-left: 150px" v-else-if="isEWALLET">
           <el-button class="common-btn" @click="openEWalletTutorial(selectedWithdrawalMethod.code)">
             <span v-if="selectedWithdrawalMethod.code === 'KDPAY'">K豆教程视频</span>
-            <span v-else-if="selectedWithdrawalMethod.code === 'EBPAY'">EB教程视频</span>
+            <span v-else-if="selectedWithdrawalMethod.code === 'EBPAY'">EB使用教程</span>
             <span v-else-if="selectedWithdrawalMethod.code === 'OKPAY'">OK教程视频</span>
           </el-button>
         </div>
@@ -391,7 +391,7 @@ export default defineComponent({
     const openEWalletTutorial = (code) => {
       const urlMap = {
         'KDPAY': 'http://jiaocheng.kdpay123.com',
-        'EBPAY': 'https://www.ebpay24.com/',
+        'EBPAY': 'https://www.ebpay24.com/useTutorial/',
         'OKPAY': 'https://me-qr.com/l/okpay'
       };
 
