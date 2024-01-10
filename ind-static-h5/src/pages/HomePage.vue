@@ -1540,6 +1540,8 @@ const getAppDownloadUrl = () => {
 const truncateText = (text, maxLength) => {
   if (text === "JiliGames") {
     text = "JILI";
+  } else if (text.startsWith("WC")) {
+    return text.substring(2);
   }
 
   if (window.innerWidth <= 450) {
