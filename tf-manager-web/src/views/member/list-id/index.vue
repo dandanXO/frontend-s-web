@@ -540,14 +540,14 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="affiliateCode"
-          :label="t('fields.affiliateCode')"
+          prop="affiliateName"
+          :label="t('fields.channelName')"
           width="150"
         >
           <template #default="scope">
-            <span v-if="scope.row.affiliateCode === null">-</span>
-            <span v-if="scope.row.affiliateCode !== null">
-              {{ scope.row.affiliateCode }}
+            <span v-if="scope.row.affiliateName === null">-</span>
+            <span v-if="scope.row.affiliateName !== null">
+              {{ scope.row.affiliateName }}
             </span>
           </template>
         </el-table-column>
