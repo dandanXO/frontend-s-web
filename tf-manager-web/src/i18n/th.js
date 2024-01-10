@@ -294,6 +294,7 @@ export default {
     affiliateBankCard: 'ธนาคารพันธมิตร',
     affiliateBankCardRecord: 'บันทึกบัตรธนาคารพันธมิตร',
     affiliateCode: 'รหัสพันธมิตร',
+    channelName: 'ชื่อช่อง',
     affiliateDomainList: 'รายการโดเมนพันธมิตร',
     affiliateInfo: 'ข้อมูลพันธมิตร',
     affiliateLevel: 'ระดับพันธมิตร',

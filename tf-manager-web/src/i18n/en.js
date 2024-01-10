@@ -400,6 +400,7 @@ export default {
     affiliateBankCard: 'Affiliate Bank Card',
     affiliateBankCardRecord: 'Affiliate Bank Card Record',
     affiliateCode: 'Affiliate Code',
+    channelName: 'Channel Name',
     affiliateDomainList: 'Affiliate Domain List',
     affiliateH5Link: 'Affiliate H5 Link',
     affiliateInfo: 'Affiliate Information',

@@ -406,6 +406,7 @@ export default {
     affiliateBankCard: '代理银行卡',
     affiliateBankCardRecord: '代理银行卡记录',
     affiliateCode: '代理代码',
+    channelName: '渠道名',
     affiliateDomainList: '代理域名列表',
     affiliateH5Link: 'H5版代理链接',
     affiliateInfo: '代理信息',
