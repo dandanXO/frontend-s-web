@@ -164,10 +164,6 @@
                       ></div>
                     </div>
 
-                    <div class="burning-hot">
-                      <img src="../assets/images/index/hot.png" />
-                    </div>
-
                     <div class="platform-game-title">{{ truncateText("Evolution", 22) }}</div>
                   </div>
                 </swiper-slide>
@@ -216,7 +212,6 @@
                         backgroundImage: `url(${require(`../assets/images/games/hot-games-evo.png`)})`
                       }"
                     ></div>
-
                     <div class="platform-game-title">{{ truncateText("Evolution", 22) }}</div>
                   </div>
                 </div>
@@ -286,7 +281,11 @@
                           }
                         })()
                       }"
-                    ></div>
+                    >
+                      <div v-if="item.name === 'Evo'" class="burning-hot">
+                        <img src="../assets/images/index/hot.png" />
+                      </div>
+                    </div>
                   </div>
                 </swiper-slide>
               </template>
@@ -313,7 +312,10 @@
                           }
                         })()
                       }"
-                    ></div>
+                    >
+                    <div v-if="item.name === 'Evo'" class="burning-hot">
+                        <img src="../assets/images/index/hot.png" />
+                      </div></div>
                   </div>
                 </div>
               </template>
@@ -408,7 +410,7 @@
                     ></div>
                   </div>
 
-                  <div v-if="item.name === 'JOKER'" class="burning-hot">
+                  <div v-if="item.name === 'JOKER' || item.name === 'PG'" class="burning-hot">
                     <img src="../assets/images/index/hot.png" />
                   </div>
 
@@ -2629,6 +2631,7 @@ onMounted(() => {
   top: 0;
   right: 0;
   width: 35%;
+  max-width: 50px;
 }
 
 .loading-spinner {
