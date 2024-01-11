@@ -107,6 +107,13 @@ deploy-tha-download:
 
 #===============================================================================================
 
+deploy-dy-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: dy-download
+
+#===============================================================================================
+
 deploy-xf-maintenance:
   extends: .s3-deploy
   variables:

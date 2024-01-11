@@ -400,6 +400,7 @@ export default {
     affiliateBankCard: 'Affiliate Bank Card',
     affiliateBankCardRecord: 'Affiliate Bank Card Record',
     affiliateCode: 'Affiliate Code',
+    channelName: 'Channel Name',
     affiliateDomainList: 'Affiliate Domain List',
     affiliateH5Link: 'Affiliate H5 Link',
     affiliateInfo: 'Affiliate Information',
@@ -839,6 +840,7 @@ export default {
     menuIcon: 'Menu Icon',
     menuTitle: 'Menu Title',
     menuType: 'Menu Type',
+    menuOnlineUser: 'Online User',
     message: 'Message',
     min: 'Min Profit',
     minAmount: 'Min Amount',
@@ -1990,6 +1992,11 @@ export default {
     cancel: 'Cancelled',
     active: 'Active',
     settled: 'Settled',
+  },
+  realtimeStatistics: {
+    APP: 'APP',
+    H5: 'H5',
+    APPLY_WITHDRAW: 'Apply Withdraw',
   },
   error: {
     400: 'Bad Request',

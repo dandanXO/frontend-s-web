@@ -97,7 +97,7 @@
 
     <q-page-container>
       <router-view v-slot="{ Component }">
-        <KeepAlive :max="8">
+        <KeepAlive :max="8" :exclude="excludeAliveComponents">
           <component :is="Component" />
         </KeepAlive>
       </router-view>
@@ -161,7 +161,6 @@ import { Platform } from "quasar";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 import { translateRecord } from "src/directives/translate";
-
 import { RiArrowLeftLine } from "vue-remix-icons";
 
 export default defineComponent({
@@ -719,7 +718,16 @@ export default defineComponent({
       platformsList,
       changePlatform,
       checkPlatform,
-      isH5
+      isH5,
+      excludeAliveComponents: [
+        "DepositRecordView",
+        "WithdrawRecordView",
+        "TransferRecordView",
+        "FeedbackRecordView",
+        "PromoRecordView",
+        "BetHistoryRecordView",
+        "MoneyChangeRecordView"
+      ]
     };
   }
 });

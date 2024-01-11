@@ -406,6 +406,7 @@ export default {
     affiliateBankCard: '代理银行卡',
     affiliateBankCardRecord: '代理银行卡记录',
     affiliateCode: '代理代码',
+    channelName: '渠道名',
     affiliateDomainList: '代理域名列表',
     affiliateH5Link: 'H5版代理链接',
     affiliateInfo: '代理信息',
@@ -845,6 +846,7 @@ export default {
     menuIcon: '菜单图标',
     menuTitle: '菜单标题',
     menuType: '菜单类型',
+    menuOnlineUser: '在线人数',
     message: '信息',
     min: '最低盈亏金额',
     minAmount: '最低金额',
@@ -1964,6 +1966,11 @@ export default {
     cancel: '已取消',
     active: '活跃',
     settled: '已结算',
+  },
+  realtimeStatistics: {
+    APP: 'APP',
+    H5: 'H5',
+    APPLY_WITHDRAW: '提现终审',
   },
   error: {
     400: '请求无效',

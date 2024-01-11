@@ -484,7 +484,7 @@ export default defineComponent({
       if (selectedWithdrawalMethod.value.code === 'KDPAY') {
         return 'K豆教程视频'
       } else if (selectedWithdrawalMethod.value.code === 'EBPAY') {
-        return 'EB教程视频'
+        return 'EB使用教程'
       } else if (selectedWithdrawalMethod.value.code === 'OKPAY') {
         return 'OK教程视频'
       }
@@ -492,7 +492,7 @@ export default defineComponent({
     const openEWalletTutorial = (code) => {
       const urlMap = {
         'KDPAY': 'http://jiaocheng.kdpay123.com',
-        'EBPAY': 'https://www.ebpay009.com/syjc',
+        'EBPAY': 'https://www.ebpay24.com/useTutorial',
         'OKPAY': 'https://me-qr.com/l/okpay'
       };
 

@@ -139,7 +139,7 @@ export default defineComponent({
     const getReferral = () => {
       getReferralLink().then((res) => {
         if(res.code === 0) {
-          referralLink.value = `https://dy-web.test-psna.com/refer/${res.data}`;
+          referralLink.value = 'https://' + location.hostname + `/refer/${res.data}`;
         }
       }).catch((err) => {
         console.log(err)

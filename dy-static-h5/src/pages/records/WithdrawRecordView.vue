@@ -11,13 +11,14 @@
   </div>
 </template>
 <script lang="js">
-import { onMounted, ref, defineComponent } from "vue";
+import {onMounted, ref, defineComponent, onActivated} from "vue";
 import RecordComponent from "../../components/RecordComponent.vue";
 import { api } from "boot/axios";
 import moment from "moment";
 import { cached } from "boot/cache";
 
 export default defineComponent({
+  name: "WithdrawRecordView",
   components: {
     RecordComponent
   },
