@@ -130,7 +130,7 @@
         <el-form label-suffix=" : " label-width="110px">
           <div class="info-row-container">
             <el-form-item :label="t('fields.packType')">
-              {{ channelPackInfo.appType }}
+              {{ $t(`appType.${channelPackInfo.appType}`) }}
             </el-form-item>
             <el-form-item :label="t('fields.buildStatus')">
               {{ $t(`packStatus.${channelPackInfo.status}`) }}
@@ -141,7 +141,7 @@
               {{ channelPackInfo.appName }}
             </el-form-item>
             <el-form-item :label="t('fields.osType')">
-              {{ channelPackInfo.osType }}
+              {{ $t(`osType.${channelPackInfo.osType}`) }}
             </el-form-item>
           </div>
           <div class="info-row-container">
@@ -149,7 +149,10 @@
               {{ channelPackInfo.version }}
             </el-form-item>
             <el-form-item :label="t('fields.packSize')">
-              {{ channelPackInfo.size }}
+              <span v-if="channelPackInfo.fileSize === ''">-</span>
+              <span v-else>
+                {{ channelPackInfo.fileSize }} MB
+              </span>
             </el-form-item>
           </div>
           <div class="info-row-container">
@@ -425,7 +428,7 @@ const channelPackInfo = reactive({
   appName: '',
   osType: '',
   version: '',
-  size: '100M',
+  size: '',
   downloadCount: '',
   finishTime: '',
   appIcon: '',
