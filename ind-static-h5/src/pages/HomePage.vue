@@ -163,6 +163,11 @@
                         }"
                       ></div>
                     </div>
+
+                    <div class="burning-hot">
+                      <img src="../assets/images/index/hot.png" />
+                    </div>
+
                     <div class="platform-game-title">{{ truncateText("Evolution", 22) }}</div>
                   </div>
                 </swiper-slide>
@@ -362,7 +367,7 @@
                       ></div>
                     </div>
 
-                    <div v-if="item.name === 'JOKER'" class="burning-hot">
+                    <div v-if="item.name === 'JOKER' || item.name === 'PG'" class="burning-hot">
                       <img src="../assets/images/index/hot.png" />
                     </div>
 
