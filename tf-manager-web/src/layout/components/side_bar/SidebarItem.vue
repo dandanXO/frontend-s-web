@@ -161,9 +161,9 @@ export default defineComponent({
     const spliceSocket = (event) => {
       const socket = JSON.parse(JSON.stringify(useStore().state.socket.event));
       socket.forEach(e => {
-        if (e.event === event) {
+        if (e.removeEvent === event) {
           useStore().state.socket.event.splice(useStore().state.socket.event.indexOf(e), 1);
-          sessionStorage.setItem(e.event, 0);
+          sessionStorage.setItem(event, 0);
         }
       });
     }
@@ -171,11 +171,7 @@ export default defineComponent({
     const checkOutstandingWithdraw = async () => {
       const query = checkQuery();
       const { data: ret } = await getMemberWithdrawRecordApply(query);
-      if (ret.records.length === 0) {
-        spliceSocket('WITHDRAW');
-      } else {
-        sessionStorage.setItem("WITHDRAW", ret.records.length);
-      }
+      sessionStorage.setItem("WITHDRAW", ret.records.length);
     };
 
     const checkOutstandingBeforePaid = async () => {
@@ -213,7 +209,8 @@ export default defineComponent({
     }, { deep: true });
 
     const checkTips = async () => {
-      if (menu.upperLevelWithdraw.includes(props.item.name)) {
+      const menuItem = props.item.name;
+      if (menu.upperLevelWithdraw.includes(menuItem)) {
         if ((sessionStorage.getItem('PAYMENT') && parseInt(sessionStorage.getItem('PAYMENT')) !== 0) ||
           (sessionStorage.getItem('WITHDRAW') && parseInt(sessionStorage.getItem('WITHDRAW')) !== 0) ||
           (sessionStorage.getItem('BEFORE_PAID') && parseInt(sessionStorage.getItem('BEFORE_PAID')) !== 0)) {
@@ -222,19 +219,19 @@ export default defineComponent({
           hasTips.value = false;
         }
       } else {
-        if (menu.payment === props.item.name) {
+        if (menu.payment === menuItem) {
           if (sessionStorage.getItem('PAYMENT') && parseInt(sessionStorage.getItem('PAYMENT')) !== 0) {
             hasTips.value = true;
           } else {
             hasTips.value = false;
           }
-        } else if (menu.withdraw === props.item.name || menu.autoWithdraw === props.item.name) {
+        } else if (menu.withdraw === menuItem || menu.autoWithdraw === menuItem) {
           if (sessionStorage.getItem('WITHDRAW') && parseInt(sessionStorage.getItem('WITHDRAW')) !== 0) {
             hasTips.value = true;
           } else {
             hasTips.value = false;
           }
-        } else if (menu.beforePaid === props.item.name) {
+        } else if (menu.beforePaid === menuItem) {
           if (sessionStorage.getItem('BEFORE_PAID') && parseInt(sessionStorage.getItem('BEFORE_PAID')) !== 0) {
             hasTips.value = true;
           } else {
