@@ -244,6 +244,8 @@ export default defineComponent({
       if(extensionState.value) {
         if (promo.redirectUrl.includes("page-vip")) {
           router.push({path: "/vip", query: {token: extensionToken.value}});
+        } else if (promo.redirectUrl.includes("Dongying-refer")) {
+          router.push({path: "/privilege/invite", query: {token: extensionToken.value}});
         }else{
           router.push({path: currentPath.value, query: {name: promo.redirectUrl, token: extensionToken.value}});
         }
@@ -263,7 +265,9 @@ export default defineComponent({
         } else {
           if (promo.redirectUrl.includes("page-vip")) {
             router.push({path: "/account/vip"});
-          } else {
+          }  else if (promo.redirectUrl.includes("Dongying-refer")) {
+            router.push({path: "/privilege/invite"});
+          }else {
             if (route.query.fromAccount) {
               router.push({path: "/promo", query: {name: promo.redirectUrl, fromAccount: true}});
             } else {
