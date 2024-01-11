@@ -29,169 +29,6 @@
   </div>
 
   <div class="tables-container-wrap1">
-    <!-- <el-card class="info-card">
-      <template #header>
-        <div class="clearfix">
-          <span class="role-span">报表总览</span>
-        </div>
-      </template>
-      <el-descriptions size="small" class="margin-top" :column="2" border>
-        <el-descriptions-item
-          label-align="left"
-          label-class-name="member-label"
-          class-name="member-context"
-        >
-          <template #label>
-            <div>
-              <svg-icon icon-class="user" style="height: 16px;width: 16px;" />
-              充值
-            </div>
-          </template>
-          <span>Test</span>
-        </el-descriptions-item>
-        <el-descriptions-item
-          label-align="left"
-          label-class-name="member-label"
-          class-name="member-context"
-        >
-          <template #label>
-            <div>
-              <svg-icon
-                icon-class="example"
-                style="height: 16px;width: 16px;"
-              />
-              提现
-            </div>
-          </template>
-          <span>Test</span>
-        </el-descriptions-item>
-        <el-descriptions-item
-          label-align="left"
-          label-class-name="member-label"
-          class-name="member-context"
-        >
-          <template #label>
-            <div>
-              <svg-icon icon-class="nested" style="height: 16px;width: 16px;" />
-              利润
-            </div>
-          </template>
-          <span>Test</span>
-        </el-descriptions-item>
-        <el-descriptions-item
-          label-align="left"
-          label-class-name="member-label"
-          class-name="member-context"
-          :column="2"
-        >
-          <template #label>
-            <div>
-              <svg-icon icon-class="nested" style="height: 16px;width: 16px;" />
-              总投注
-            </div>
-          </template>
-          <span>Test</span>
-        </el-descriptions-item>
-        <el-descriptions-item
-          label-align="left"
-          label-class-name="member-label"
-          class-name="member-context"
-          :column="2"
-        >
-          <template #label>
-            <div>
-              <svg-icon icon-class="nested" style="height: 16px;width: 16px;" />
-              总中奖
-            </div>
-          </template>
-          <span>Test</span>
-        </el-descriptions-item>
-        <el-descriptions-item
-          label-align="left"
-          label-class-name="member-label"
-          class-name="member-context"
-          :column="2"
-        >
-          <template #label>
-            <div>
-              <svg-icon icon-class="nested" style="height: 16px;width: 16px;" />
-              奖励
-            </div>
-          </template>
-          <span>Test</span>
-        </el-descriptions-item>
-        <el-descriptions-item
-          label-align="left"
-          label-class-name="member-label"
-          class-name="member-context"
-          :column="2"
-        >
-          <template #label>
-            <div>
-              <svg-icon icon-class="nested" style="height: 16px;width: 16px;" />
-              总返点
-            </div>
-          </template>
-          <span>Test</span>
-        </el-descriptions-item>
-        <el-descriptions-item
-          label-align="left"
-          label-class-name="member-label"
-          class-name="member-context"
-          :column="2"
-        >
-          <template #label>
-            <div>
-              <svg-icon icon-class="nested" style="height: 16px;width: 16px;" />
-              首充金额
-            </div>
-          </template>
-          <span>Test</span>
-        </el-descriptions-item>
-        <el-descriptions-item
-          label-align="left"
-          label-class-name="member-label"
-          class-name="member-context"
-          :column="2"
-        >
-          <template #label>
-            <div>
-              <svg-icon icon-class="nested" style="height: 16px;width: 16px;" />
-              首充人数
-            </div>
-          </template>
-          <span>Test</span>
-        </el-descriptions-item>
-        <el-descriptions-item
-          label-align="left"
-          label-class-name="member-label"
-          class-name="member-context"
-          :column="2"
-        >
-          <template #label>
-            <div>
-              <svg-icon icon-class="nested" style="height: 16px;width: 16px;" />
-              其他
-            </div>
-          </template>
-          <span>Test</span>
-        </el-descriptions-item>
-        <el-descriptions-item
-          label-align="left"
-          label-class-name="member-label"
-          class-name="member-context"
-          :column="2"
-        >
-          <template #label>
-            <div>
-              <svg-icon icon-class="nested" style="height: 16px;width: 16px;" />
-              总计
-            </div>
-          </template>
-          <span>Test</span>
-        </el-descriptions-item>
-      </el-descriptions>
-    </el-card> -->
     <el-card class="info-card">
       <template #header>
         <div class="clearfix">
@@ -211,7 +48,7 @@
         <el-descriptions-item
           label-align="left"
           label-class-name="member-label"
-          class-name="member-context"
+          class-name="member-context-report"
           v-for="(list, i) in item.list[0]"
           :key="i"
         >
@@ -227,7 +64,7 @@
           v-if="item.list[0].length % 2 !== 0"
           label-align="left"
           label-class-name="member-label"
-          class-name="member-context"
+          class-name="member-context-report"
         >
           <template #label>
             <div>
@@ -248,7 +85,7 @@
         <el-descriptions-item
           label-align="left"
           label-class-name="member-label"
-          class-name="member-context"
+          class-name="member-context-report"
         >
           <template #label>
             <div>
@@ -260,7 +97,7 @@
         <el-descriptions-item
           label-align="left"
           label-class-name="member-label"
-          class-name="member-context"
+          class-name="member-context-report"
         >
           <template #label>
             <div>
@@ -272,7 +109,7 @@
         <el-descriptions-item
           label-align="left"
           label-class-name="member-label"
-          class-name="member-context"
+          class-name="member-context-report"
         >
           <template #label>
             <div>
@@ -284,7 +121,7 @@
         <el-descriptions-item
           label-align="left"
           label-class-name="member-label"
-          class-name="member-context"
+          class-name="member-context-report"
         >
           <template #label>
             <div />
@@ -435,11 +272,11 @@ onMounted(async () => {
   }
 }
 
-.member-context {
+.member-context-report {
   width: 35%;
 }
 
-.member-context-red {
+.member-context-report-red {
   background: #ff0000;
   color: white;
 }
