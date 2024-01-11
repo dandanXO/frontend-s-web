@@ -2451,10 +2451,11 @@ onMounted(() => {
 
       .game--bg {
         border-radius: 8px;
-        background-size: cover;
+        background-size: 100% 100%;
         background-position: top center;
         height: 100%;
         width: 100%;
+        background-repeat: no-repeat;
       }
     }
 
@@ -2559,6 +2560,10 @@ onMounted(() => {
       color: #ffffff;
       font-weight: bold;
       font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100px;
     }
 
     img {
@@ -2708,11 +2713,12 @@ onMounted(() => {
   border-radius: 8px;
 
   .game--bg {
-    background-size: cover;
+    background-size: 100% 100%;
     background-position: center center;
     height: 100%;
     width: 100%;
     border-radius: 8px;
+    background-repeat: no-repeat;
   }
 }
 
