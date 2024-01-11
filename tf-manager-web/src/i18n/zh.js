@@ -737,6 +737,7 @@ export default {
     fundingInfo: '资金信息',
     gameAccountName: '游戏帐户名',
     gameCode: '游戏代码',
+    gameConsolidateReport: '游戏报表',
     gameMatch: '赛事',
     gameMatchRecord: '赛事记录',
     gameName: '游戏名称',

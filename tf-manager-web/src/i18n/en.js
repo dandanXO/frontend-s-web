@@ -731,6 +731,7 @@ export default {
     fundingInfo: 'Funding Information',
     gameAccountName: 'Game Account Name',
     gameCode: 'Game Code',
+    gameConsolidateReport: 'Game Consolidate Report',
     gameMatch: 'Game Match',
     gameMatchRecord: 'Game Match Record',
     gameName: 'Game Name',

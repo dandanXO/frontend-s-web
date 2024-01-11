@@ -592,6 +592,7 @@ export default {
     fundingInfo: 'ข้อมูลเงินทุน',
     gameAccountName: 'ชื่อบัญชีเกม',
     gameCode: 'รหัสเกม',
+    gameConsolidateReport: 'รายงานเกม',
     gameName: 'ชื่อเกม',
     gameType: 'ประเภทเกม',
     generateSummary: 'สร้างบทสรุป',

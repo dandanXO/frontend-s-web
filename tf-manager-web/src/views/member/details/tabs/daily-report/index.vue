@@ -195,7 +195,7 @@
     <el-card class="info-card">
       <template #header>
         <div class="clearfix">
-          <span class="role-span">游戏报表</span>
+          <span class="role-span">{{ t('fields.gameConsolidateReport') }}</span>
         </div>
       </template>
       <el-descriptions
