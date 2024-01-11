@@ -412,9 +412,9 @@ export default defineComponent({
         recommendedName: checkRecordFormData.user,
         token: store.token
       };
-      // getRecommendPrivilegeRecord(params).then((data) => {
-      //     console.log('here', data)
-      // })
+      getRecommendPrivilegeRecord(params).then((data) => {
+        console.log("here", data);
+      });
     };
 
     const shareInvite = () => {
