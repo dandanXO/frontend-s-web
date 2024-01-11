@@ -513,7 +513,7 @@
         <el-table-column
           prop="loginName"
           :label="t('fields.loginName')"
-          width="200"
+          width="150"
         >
           <template
             #default="scope"
@@ -540,14 +540,14 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="affiliateName"
-          :label="t('fields.channelName')"
+          prop="affiliateCode"
+          :label="t('fields.affiliateCode')"
           width="150"
         >
           <template #default="scope">
-            <span v-if="scope.row.affiliateName === null">-</span>
-            <span v-if="scope.row.affiliateName !== null">
-              {{ scope.row.affiliateName }}
+            <span v-if="scope.row.affiliateCode === null">-</span>
+            <span v-if="scope.row.affiliateCode !== null">
+              {{ scope.row.affiliateCode }}
             </span>
           </template>
         </el-table-column>
@@ -566,7 +566,7 @@
         <el-table-column
           prop="balance"
           :label="t('fields.balance')"
-          width="200"
+          width="150"
         >
           <template #default="scope">
             $
