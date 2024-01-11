@@ -36,6 +36,11 @@ const routes = [
     children: [{ path: "", component: () => import("pages/PromoPage.vue") }]
   },
   {
+    path: "/privilege/invite",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/PrivilegeInvite.vue") }]
+  },
+  {
     path: "/promotion",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/PromoPage.vue") }],
@@ -112,18 +117,6 @@ const routes = [
         path: "",
         name: "e-sport",
         component: () => import("pages/games/E-SportView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/share",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        name: "share",
-        component: () => import("pages/ShareView.vue")
       }
     ],
     meta: { requiresAuth: true }
@@ -281,7 +274,7 @@ const routes = [
         component: () => import("pages/records/WithdrawRecordView.vue")
       }
     ],
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, keepAlive: false }
   },
   {
     path: "/account/records/transfer",
@@ -292,7 +285,7 @@ const routes = [
         component: () => import("pages/records/TransferRecordView.vue")
       }
     ],
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, keepAlive: false }
   },
   {
     path: "/account/records/moneyChange",
@@ -303,7 +296,7 @@ const routes = [
         component: () => import("pages/records/MoneyChangeRecordView.vue")
       }
     ],
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, keepAlive: false }
   },
   {
     path: "/account/records/promo",
@@ -314,7 +307,7 @@ const routes = [
         component: () => import("pages/records/PromoRecordView.vue")
       }
     ],
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, keepAlive: false }
   },
   {
     path: "/account/records/financeFeedBack",
@@ -325,7 +318,7 @@ const routes = [
         component: () => import("pages/records/FeedbackRecordView.vue")
       }
     ],
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, keepAlive: false }
   },
   {
     path: "/account/records/bet",
@@ -336,30 +329,30 @@ const routes = [
         component: () => import("pages/records/BetHistoryRecordView.vue")
       }
     ],
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, keepAlive: false }
   },
-  {
-    path: "/account/records/change",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/records/ChangeRecordView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/account/records/betrecord",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/records/BetRecordView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
+  // {
+  //   path: "/account/records/change",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [
+  //     {
+  //       path: "",
+  //       component: () => import("pages/records/ChangeRecordView.vue")
+  //     }
+  //   ],
+  //   meta: { requiresAuth: true, keepAlive: false }
+  // },
+  // {
+  //   path: "/account/records/betrecord",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [
+  //     {
+  //       path: "",
+  //       component: () => import("pages/records/BetRecordView.vue")
+  //     }
+  //   ],
+  //   meta: { requiresAuth: true, keepAlive: false }
+  // },
   {
     path: "/account/records/recommend",
     component: () => import("layouts/MainLayout.vue"),
@@ -382,17 +375,17 @@ const routes = [
     ],
     meta: { requiresAuth: true }
   },
-  {
-    path: "/account/records/bill",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/records/BillRecordView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
+  // {
+  //   path: "/account/records/bill",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [
+  //     {
+  //       path: "",
+  //       component: () => import("pages/records/BillRecordView.vue")
+  //     }
+  //   ],
+  //   meta: { requiresAuth: true }
+  // },
   {
     path: "/account/transit",
     component: () => import("layouts/MainLayout.vue"),
@@ -560,6 +553,7 @@ const routes = [
   // but you can also remove it
   {
     path: "/:catchAll(.*)*",
+    redirect: "/",
     component: () => import("pages/ErrorNotFound.vue")
   }
 ];

@@ -200,7 +200,7 @@ const checkNewUser = () => {
       message: "Please fill in your personal details",
       icon: "report_problem"
     });
-    router.push(`/account`);
+    router.push(`/account/profile`);
   }
 };
 

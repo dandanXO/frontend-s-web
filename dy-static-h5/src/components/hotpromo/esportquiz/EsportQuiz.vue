@@ -179,7 +179,7 @@
         </table>
         <table v-else class="record-table" id="record-table"></table>
 
-        <div v-if="isHasRecord && tableInfo.length > 1" class="page-list">
+        <div v-if="isHasRecord && tableInfo.length > 0" class="page-list">
           <div class="prev page-item" @click="onPrevPageClick()">&lt;</div>
           <div
             v-for="(e, i) in paginationInfo.pageTotal"
@@ -202,7 +202,12 @@
 import { onMounted, ref, reactive } from "vue";
 import { userStore } from "../../../stores/index";
 import { useQuasar } from "quasar";
-import { getSportMatchQuizInfo, getMemberSportMatchRecord, submitMemberSportMatchQuiz } from "../../../api/index/promo";
+import {
+  getSportMatchQuizInfo,
+  getMemberSportMatchRecord,
+  submitMemberSportMatchQuiz,
+  getMemberSportQuizTotal
+} from "../../../api/index/promo";
 import moment from "moment";
 
 const $q = useQuasar();
@@ -221,6 +226,7 @@ onMounted(() => {
 
   getMatchInfo();
   getRecords();
+  getRecordsTotal();
 });
 
 const uiIsShowStatus = reactive({
@@ -295,22 +301,17 @@ const quizAttendTimesRecord = ref();
 const quizWonTimesRecord = ref();
 const paginationInfo = reactive({ pageSize: 5, pageNumber: 1, pageTotal: 5 });
 
-const isHasRecord = ref(true);
+const isHasRecord = ref(false);
 function getRecords() {
-  getMemberSportMatchRecord().then((res) => {
+  getMemberSportMatchRecord(paginationInfo.pageNumber, paginationInfo.pageSize).then((res) => {
     const { code, data } = res;
     if (code == 0) {
-      records.value = data.answers;
-      quizAttendTimesRecord.value = data.quizAttendTimes;
-      quizWonTimesRecord.value = data.quizWonTimes;
+      records.value = data.records;
 
-      const dataLength = data.answers.length;
-      if (dataLength) {
-        let pageTotal;
-        pageTotal = dataLength % paginationInfo.pageSize == 0 ? 0 : 1;
-        pageTotal = pageTotal + parseInt(dataLength / paginationInfo.pageSize);
-        paginationInfo.pageTotal = pageTotal;
-
+      const dataLength = data.total;
+      if (dataLength > 0) {
+        paginationInfo.pageNumber = data.current;
+        paginationInfo.pageTotal = data.pages;
         getRecordList();
 
         isHasRecord.value = true;
@@ -319,33 +320,45 @@ function getRecords() {
   });
 }
 
+const getRecordsTotal = () => {
+  getMemberSportQuizTotal().then((res) => {
+    const { code, data } = res;
+    if (code === 0) {
+      console.log(data);
+      quizAttendTimesRecord.value = data.quizAttendTimes;
+      quizWonTimesRecord.value = data.quizWonTimes;
+    }
+  });
+};
+
 function onPrevPageClick() {
   if (paginationInfo.pageNumber === 1) return;
 
   paginationInfo.pageNumber--;
-  getRecordList();
+  getRecords();
 }
 
 function onNextPageClick() {
   if (paginationInfo.pageNumber + 1 > paginationInfo.pageTotal) return;
 
   paginationInfo.pageNumber++;
-  getRecordList();
+  getRecords();
 }
 
 function onPaginationClick(pageIndex) {
   if (paginationInfo.pageNumber === pageIndex) return;
 
   paginationInfo.pageNumber = pageIndex;
-  getRecordList();
+  getRecords();
 }
 
 const tableInfo = ref([]);
 function getRecordList() {
-  const { pageSize, pageNumber } = paginationInfo;
-  const start = (pageNumber - 1) * pageSize;
-  const end = start + pageSize;
+  // const { pageSize } = paginationInfo;
+  const start = 0;
+  const end = records.value.length;
 
+  tableInfo.value = [];
   for (let i = start, l = end; i < l; i++) {
     const { createTime, answerOne, answerTwo, answerThree, status } = records.value[i];
 
@@ -507,7 +520,7 @@ function onSubmitClick() {
     margin: 0 auto;
 
     .prize-quiz-jc-container {
-      background: url("../../../assets/images/promotion/hotpromo/esportquiz/bg_jc_7.png") center no-repeat;
+      background: url("../../../assets/images/promotion/hotpromo/esportquiz/bg_jc_8.png") center no-repeat;
       background-size: contain;
       padding-top: 30px;
       margin: 50px auto;

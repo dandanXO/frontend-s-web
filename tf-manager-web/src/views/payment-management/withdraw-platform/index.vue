@@ -23,6 +23,20 @@
             :value="item.value"
           />
         </el-select>
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -297,7 +311,8 @@ const request = reactive({
   size: 30,
   current: 1,
   name: null,
-  status: null
+  status: null,
+  siteId: null,
 });
 const copyForm = reactive({
   name: null,
@@ -462,6 +477,7 @@ onMounted(async() => {
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     form.siteId = site.value.id;
+    request.siteId = site.value.id
   }
   await loadWithdrawPlatform();
   await loadCurrencyNames();
@@ -475,6 +491,7 @@ function showDialogCopy(withdrawPlatform) {
   copyForm.name = "";
   uiControl.dialogTitle = t('fields.copyPayment') + " -  " + withdrawPlatform.name;
   uiControl.dialogCopyVisible = true
+  // test
 }
 
 async function copySubmit() {

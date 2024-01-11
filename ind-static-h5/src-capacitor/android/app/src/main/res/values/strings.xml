@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">IndWin7</string>
-    <string name="title_activity_main">IndWin7</string>
-    <string name="package_name">com.ind.indwin7702</string>
-    <string name="custom_url_scheme">com.ind.indwin7702</string>
+    <string name="app_name">55Ace</string>
+    <string name="title_activity_main">55Ace</string>
+    <string name="package_name">com.ind.app55ace</string>
+    <string name="custom_url_scheme">com.ind.app55ace</string>
 </resources>

@@ -455,65 +455,65 @@ function clearInfo() {
 const depositAmtRef = ref("");
 
 async function confirmDeposit() {
-  if (form.bankId !== null || isUSDT.value) {
-    if (!extensionState.value && (store.phone === "" || store.phone === null)) {
-      isNewUser.value = true;
-    } else {
-      btnLoading.value = true;
-      depositAmtRef.value.validate();
-      if (depositAmtRef.value.hasError) {
-        btnLoading.value = false;
-      } else {
-        await cashier
-          .get(`/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`)
-          .then((d) => {
-            if (d.code === 11002) {
-              if (d.data && d.data.suggestion) {
-                form.localAmount = d.data.suggestion;
-                btnLoading.value = false;
-              }
-              $q.notify({
-                color: "negative",
-                position: "top",
-                message: d.message,
-                icon: "report_problem"
-              });
-            } else {
-              if (freePrivilege.value) {
-                if (selectedPrivilege.value) {
-                  form.privilegeId = selectedPrivilege.value.id + "," + freePrivilege.value.id;
-                } else {
-                  form.privilegeId = "," + freePrivilege.value.id;
-                }
-              } else {
-                if (selectedPrivilege.value) {
-                  form.privilegeId = selectedPrivilege.value.id;
-                } else {
-                  form.privilegeId = null;
-                }
-              }
-              form.paymentId = activeMethod.value.paymentId;
-              const copy = { ...form };
-              const data = {};
-              Object.entries(copy).forEach(([key, value]) => {
-                if (value) {
-                  data[key] = value;
-                }
-              });
-              data.bankCardId = 0;
-              pDepo(data);
-            }
-          });
-      }
-    }
+  // if (form.bankId !== null || isUSDT.value) {
+  if (!extensionState.value && (store.phone === "" || store.phone === null)) {
+    isNewUser.value = true;
   } else {
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: "请选择银行",
-      icon: "report_problem"
-    });
+    btnLoading.value = true;
+    depositAmtRef.value.validate();
+    if (depositAmtRef.value.hasError) {
+      btnLoading.value = false;
+    } else {
+      await cashier
+        .get(`/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`)
+        .then((d) => {
+          if (d.code === 11002) {
+            if (d.data && d.data.suggestion) {
+              form.localAmount = d.data.suggestion;
+              btnLoading.value = false;
+            }
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: d.message,
+              icon: "report_problem"
+            });
+          } else {
+            if (freePrivilege.value) {
+              if (selectedPrivilege.value) {
+                form.privilegeId = selectedPrivilege.value.id + "," + freePrivilege.value.id;
+              } else {
+                form.privilegeId = "," + freePrivilege.value.id;
+              }
+            } else {
+              if (selectedPrivilege.value) {
+                form.privilegeId = selectedPrivilege.value.id;
+              } else {
+                form.privilegeId = null;
+              }
+            }
+            form.paymentId = activeMethod.value.paymentId;
+            const copy = { ...form };
+            const data = {};
+            Object.entries(copy).forEach(([key, value]) => {
+              if (value) {
+                data[key] = value;
+              }
+            });
+            data.bankCardId = 0;
+            pDepo(data);
+          }
+        });
+    }
   }
+  // } else {
+  //   $q.notify({
+  //     color: "negative",
+  //     position: "top",
+  //     message: "请选择银行",
+  //     icon: "report_problem"
+  //   });
+  // }
 }
 
 async function pDepo(deposit) {
@@ -568,6 +568,16 @@ async function pDepo(deposit) {
               }
             } else {
               const newWin = window.open(`/`);
+              if (!newWin) {
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message: '无法打开充值页面。请检查游览器是否拦截弹窗页面，并修改为"允许弹窗"后再进行充值操作。',
+                  icon: "report_problem"
+                });
+                btnLoading.value = false;
+                return;
+              }
               newWin.localStorage.setItem("formDetails", JSON.stringify(form));
               if (response.payResultType === "GET_SUBMIT") {
                 newWin.location.href = response.requestUrl;

@@ -54,7 +54,7 @@
                   <el-option
                     v-for="poster in posterType"
                     :key="poster.name"
-                    :label="poster.display"
+                    :label="t(`posterType.${poster.name}`)"
                     :value="poster.name"
                   />
                 </el-select>
@@ -158,61 +158,41 @@
             </div>
           </div>
         </el-card> -->
-        <el-table
-          :stripe="true"
-          :fit="true"
-          :data="page.records"
-          :default-sort="{prop: 'updateTime', order: 'descending'}"
-          :v-model:current-page="request.current"
-          :v-model:page-size="request.size"
-          style="width: 100%;"
-        >
-          <el-table-column :label="t('fields.sequence')" type="index" />
-          <el-table-column prop="name" :label="t('fields.imageTitle')" />
-          <el-table-column prop="category" :label="t('fields.imageType')" />
-          <el-table-column :prop="path" :label="t('fields.image')">
-            <template #default="scope">
-              <el-image :src="posterDir + scope.row.path" fit="contain" style="max-height: 300px" />
-            </template>
-          </el-table-column>
-          <el-table-column prop="updateTime" :label="t('fields.uploadTime')">
-            <template #default="scope">
-              <div style="line-height: 16px;">{{ moment(scope.row.updateTime).format('YYYY-MM-DD') }}</div>
-              <div style="color: #7D8592; font-size: 12px;">{{ moment(scope.row.updateTime).format('HH:mm:ss') }}</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="size" :label="t('fields.imageSize')" />
-          <el-table-column prop="downloadNumber" :label="t('fields.downloadTime')" />
-          <el-table-column align="center" :label="t('fields.actions')">
-            <template #default="scope">
-              <el-link
-                :underline="false"
-                type="primary"
-                style="text-align:center; width: 100%;"
-                @click="generateQR(scope.row.id)"
-              >
-                {{ t('fields.generateQR') }}
-              </el-link>
-              <el-link
-                :underline="false"
-                type="primary"
-                style="text-align:center; width: 100%;"
-                @click="downloadImage(scope.row, scope.$index)"
-              >
-                <!-- <el-icon class="el-icon--right"><download /></el-icon> -->
-                {{ $t('fields.download') }}
-              </el-link>
-              <el-link
-                :underline="false"
-                type="primary"
-                style="text-align:center; width: 100%;"
-                @click="viewImage(scope.row, scope.$index)"
-              >
-                {{ $t('fields.settleView') }}
-              </el-link>
-            </template>
-          </el-table-column>
-        </el-table>
+        <table class="custom-table" cellpadding="0" cellspacing="0" border="0">
+          <thead>
+            <tr>
+              <th col="scope">{{ t('fields.sequence') }}</th>
+              <th col="scope">{{ t('fields.imageTitle') }}</th>
+              <th col="scope">{{ t('fields.imageType') }}</th>
+              <th col="scope">{{ t('fields.image') }}</th>
+              <th col="scope">{{ t('fields.uploadTime') }}</th>
+              <th col="scope">{{ t('fields.imageSize') }}</th>
+              <th col="scope">{{ t('fields.downloadTime') }}</th>
+              <th col="scope">{{ t('fields.actions') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in page.records" :key="item.id">
+              <td :data-label="t('fields.sequence')">{{ index + 1 }}</td>
+              <td :data-label="t('fields.imageTitle')">{{ item.name }}</td>
+              <td :data-label="t('fields.imageType')">{{ t('posterType.' + item.category) }}</td>
+              <td :data-label="t('fields.image')">
+                <img :src="posterDir + item.path" alt="image" style="max-height: 300px; width: auto;">
+              </td>
+              <td :data-label="t('fields.uploadTime')">
+                <div>{{ moment(item.updateTime).format('YYYY-MM-DD') }}</div>
+                <div style="color: #7D8592; font-size: 12px;">{{ moment(item.updateTime).format('HH:mm:ss') }}</div>
+              </td>
+              <td :data-label="t('fields.imageSize')">{{ item.size }}</td>
+              <td :data-label="t('fields.downloadTime')">{{ item.downloadNumber }}</td>
+              <td class="actions" :data-label="t('fields.actions')">
+                <el-link :underline="false" type="primary" @click="generateQR(item.id)">{{ t('fields.generateQR') }}</el-link>
+                <el-link :underline="false" type="primary" @click="downloadImage(item, index)">{{ $t('fields.download') }}</el-link>
+                <el-link :underline="false" type="primary" @click="viewImage(item, index)">{{ $t('fields.settleView') }}</el-link>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <el-pagination
         v-if="page.records.length !== 0"
@@ -252,14 +232,14 @@ const router = useRouter()
 let sizeList = []
 const posterDir = process.env.VUE_APP_IMAGE_CDN + '/poster/'
 const posterType = [
-  { name: 'OVERALL', display: t('posterType.overall') },
-  { name: 'APP', display: t('posterType.app') },
-  { name: 'SPONSOR', display: t('posterType.sponsor') },
-  { name: 'GIFT', display: t('posterType.gift') },
-  { name: 'COMPETITION', display: t('posterType.competition') },
-  { name: 'EVENT', display: t('posterType.event') },
-  { name: 'CRYPTO', display: t('posterType.crypto') },
-  { name: 'AFFILIATE', display: t('posterType.affiliate') },
+  { name: 'OVERALL' },
+  { name: 'APP' },
+  { name: 'SPONSOR' },
+  { name: 'GIFT' },
+  { name: 'COMPETITION' },
+  { name: 'EVENT' },
+  { name: 'CRYPTO' },
+  { name: 'AFFILIATE' },
 ]
 const shortcuts = [
   {
@@ -466,6 +446,19 @@ onMounted(() => {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+.custom-table {
+  width: 100%;
+  text-align: left;
+  .actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  img {
+    width: 100%;
+    max-width: 200px;
+  }
+}
 :deep(.el-table th.el-table__cell) {
   background: #F4F9FD;
   color:#333333;
@@ -537,5 +530,10 @@ onMounted(() => {
   //     }
   //   }
   // }
+}
+@media (max-width: 600px) {
+  .custom-table .actions {
+    flex-direction: row;
+  }
 }
 </style>

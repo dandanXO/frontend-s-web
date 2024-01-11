@@ -123,6 +123,7 @@
               </template>
             </router-link>
           </div>
+
           <div @mousetouch="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">
             <GameMenu ref="el" v-if="selectedMenu === 'Slots'" />
             <EsportsMenu ref="el" v-if="selectedMenu === 'Esports'" @load-modal="openGame" />
@@ -702,7 +703,7 @@ export default defineComponent({
       {code: "Lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true},
       {code: "Fishing", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true},
       {code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: true, hasicon: true},
-      {code: "Agent", name: "加盟", enName: "Affiliate", path: "https://xf-lh-dy-affiliate-web.test-psna.com/", hasicon: true},
+      {code: "Agent", name: "加盟", enName: "Affiliate", path: "https://dy2-affiliate.mndofithly.com/", hasicon: true},
       {code: "Sponsor", name: "赞助", enName: "Sponsor", path: "/sponsor", hasicon: true},
       {code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true},
       {code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true},
@@ -1396,6 +1397,10 @@ export default defineComponent({
           regForm.codeId = res.data.id;
           captchaForm.codeId = res.data.id;
           passForm.codeId = res.data.id
+
+          // reset captcha input when captcha changes
+          loginForm.captchaCode = "";
+          regForm.captchaCode = "";
         }
       })
     };
@@ -2252,9 +2257,36 @@ body {
       }
     }
 
+    .maintenance-box {
+      position: absolute;
+      top: 20%;
+      bottom: 20%;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: bold;
+      width: 70%;
+      z-index: 33;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+
+      p {
+        margin-top: 3px;
+        margin-bottom: 3px;
+      }
+
+      .small-size {
+        font-size: 16px;
+      }
+    }
+
     // maintenance state
     &.maintenance:after {
-      content: "维护中";
+      content: "";
       position: absolute;
       background: rgba(2, 9, 73, 0.4);
       top: 15%;

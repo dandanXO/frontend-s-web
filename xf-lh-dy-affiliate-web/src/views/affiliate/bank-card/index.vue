@@ -11,21 +11,35 @@
         <el-button class="addcardbtn" :icon="add" size="normal" @click="openDialog('bank')" type="primary"><svg-icon icon-class="add" style="display:inline-block; font-size: 20px;" /><span>{{ $t('fields.addBankCard') }}</span></el-button>
       </el-col>
     </el-row>
-    <div class="subtitle">绑定账户列表</div>
+    <div class="subtitle">{{ t('fields.bindAccountList') }}</div>
     <el-row class="cards">
-      <div class="minititle">绑定银行卡列表</div>
-      <el-table :fit="true" :data="personalState.bankList">
-        <template #default="scope">
-          <el-table-column prop="bankName" :label="t('fields.bank')" />
-          <el-table-column prop="cardNumber" :label="t('fields.cardNumber')" />
-          <el-table-column prop="cardAccount" :label="t('fields.cardAccount')" />
-          <el-table-column prop="cardAddress" :label="t('fields.cardAddress')" />
-          <el-table-column :label="t('fields.actions')" width="100">
-            <el-link type="primary" :underline="false" @click="confirmUnbind(scope.row)">Unbind</el-link>
-            <!-- <svg-icon icon-class="unlink" @click="confirmUnbind(scope.row)" /> -->
-          </el-table-column>
-        </template>
-      </el-table>
+      <div class="minititle">{{ t('fields.bindBankCardList') }}</div>
+      <table cellpadding="0" cellspacing="0" border="0" class="custom-table">
+        <thead>
+          <tr>
+            <th scope="col">{{ t('fields.bank') }}</th>
+            <th scope="col">{{ t('fields.cardNumber') }}</th>
+            <th scope="col">{{ t('fields.cardAccount') }}</th>
+            <th scope="col">{{ t('fields.cardAddress') }}</th>
+            <th scope="col">{{ t('fields.actions') }}</th>
+          </tr>
+        </thead>
+        <tbody v-if="personalState.bankList.length > 0">
+          <tr v-for="item in personalState.bankList" :key="item.id">
+            <td :data-label="t('fields.bank')">{{ item.bankName }}</td>
+            <td :data-label="t('fields.cardNumber') ">{{ item.cardNumber }}</td>
+            <td :data-label="t('fields.cardAccount')">{{ item.cardAccount }}</td>
+            <td :data-label="t('fields.cardAddress')">{{ item.cardAddress }}</td>
+            <td>
+              <el-link type="primary" :underline="false" @click="confirmUnbind(item)">{{ t('fields.unbind') }}</el-link>
+              <!-- <svg-icon icon-class="unlink" @click="confirmUnbind(item)" /> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-if="personalState.bankList.length === 0" style="margin: 0 auto; text-align: center; width: 100%;">
+        <emptyComp />
+      </div>
       <!-- <el-col class="card" v-for="(card, o) in personalState.bankCardList" :key="o">
         <el-card :body-style="{padding: '0px'}" :style="`background-image: url(${cardBG(card)})`">
           <div style="padding: 14px;">
@@ -72,35 +86,66 @@
       </el-col> -->
     </el-row>
     <el-row class="cards">
-      <div class="minititle">绑定虚拟账户列表</div>
-      <el-table :fit="true" :data="personalState.cryptoList">
-        <template #default="scope">
-          <el-table-column prop="bankName" :label="t('fields.bankName')" />
-          <el-table-column prop="bankCode" :label="t('fields.bankCode')" />
-          <el-table-column prop="cardNumber" :label="t('fields.cardNumber')" />
-          <el-table-column prop="cardAccount" :label="t('fields.cardAccount')" />
-          <el-table-column prop="cardAddress" :label="t('fields.cardAddress')" />
-          <el-table-column :label="t('fields.actions')" width="100">
-            <el-link type="primary" :underline="false" @click="confirmUnbind(scope.row)">Unbind</el-link>
-            <!-- <svg-icon icon-class="unlink" @click="confirmUnbind(scope.row)" /> -->
-          </el-table-column>
-        </template>
-      </el-table>
+      <div class="minititle">{{ t('fields.bindCryptoList') }}</div>
+      <table cellpadding="0" cellspacing="0" border="0" class="custom-table">
+        <thead>
+          <tr>
+            <th scope="col">{{ t('fields.bankName') }}</th>
+            <th scope="col">{{ t('fields.bankCode') }}</th>
+            <th scope="col">{{ t('fields.cardNumber') }}</th>
+            <th scope="col">{{ t('fields.cardAccount') }}</th>
+            <th scope="col">{{ t('fields.cardAddress') }}</th>
+            <th scope="col">{{ t('fields.actions') }}</th>
+          </tr>
+        </thead>
+        <tbody v-if="personalState.cryptoList.length > 0">
+          <tr v-for="item in personalState.cryptoList" :key="item.id">
+            <td :data-label="t('fields.bankName')">{{ item.bankName }}</td>
+            <td :data-label="t('fields.bankCode')">{{ item.bankCode }}</td>
+            <td :data-label="t('fields.cardNumber') ">{{ item.cardNumber }}</td>
+            <td :data-label="t('fields.cardAccount')">{{ item.cardAccount }}</td>
+            <td :data-label="t('fields.cardAddress')">{{ item.cardAddress }}</td>
+            <td>
+              <el-link type="primary" :underline="false" @click="confirmUnbind(item)">{{ t('fields.unbind') }}</el-link>
+              <!-- <svg-icon icon-class="unlink" @click="confirmUnbind(item)" /> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-if="personalState.cryptoList.length === 0" style="margin: 0 auto; text-align: center; width: 100%;">
+        <emptyComp />
+      </div>
     </el-row>
     <el-row class="cards">
-      <div class="minititle">绑定电子钱包列表</div>
-      <el-table :fit="true" :data="personalState.eWalletList">
-        <template #default="scope">
-          <el-table-column prop="bankName" :label="t('fields.bankName')" />
-          <el-table-column prop="bankCode" :label="t('fields.bankCode')" />
-          <el-table-column prop="cardNumber" :label="t('fields.cardNumber')" />
-          <el-table-column prop="cardAccount" :label="t('fields.cardAccount')" />
-          <el-table-column :label="t('fields.actions')" width="100">
-            <el-link type="primary" :underline="false" @click="confirmUnbind(scope.row)">Unbind</el-link>
-            <!-- <svg-icon icon-class="unlink" @click="confirmUnbind(scope.row)" /> -->
-          </el-table-column>
-        </template>
-      </el-table>
+      <div class="minititle">{{ t('fields.bindEWalletList') }}</div>
+      <table cellpadding="0" cellspacing="0" border="0" class="custom-table">
+        <thead>
+          <tr>
+            <th scope="col">{{ t('fields.bankName') }}</th>
+            <th scope="col">{{ t('fields.bankCode') }}</th>
+            <th scope="col">{{ t('fields.cardNumber') }}</th>
+            <th scope="col">{{ t('fields.cardAccount') }}</th>
+            <th scope="col">{{ t('fields.cardAddress') }}</th>
+            <th scope="col">{{ t('fields.actions') }}</th>
+          </tr>
+        </thead>
+        <tbody v-if="personalState.eWalletList.length === 1">
+          <tr v-for="item in personalState.eWalletList" :key="item.id">
+            <td :data-label="t('fields.bankName')">{{ item.bankName }}</td>
+            <td :data-label="t('fields.bankCode')">{{ item.bankCode }}</td>
+            <td :data-label="t('fields.cardNumber') ">{{ item.cardNumber }}</td>
+            <td :data-label="t('fields.cardAccount')">{{ item.cardAccount }}</td>
+            <td :data-label="t('fields.cardAddress')">{{ item.cardAddress }}</td>
+            <td>
+              <el-link type="primary" :underline="false" @click="confirmUnbind(item)">{{ t('fields.unbind') }}</el-link>
+              <!-- <svg-icon icon-class="unlink" @click="confirmUnbind(item)" /> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-if="personalState.eWalletList.length === 0" style="margin: 0 auto; text-align: center; width: 100%;">
+        <emptyComp />
+      </div>
     </el-row>
     <el-dialog
       width="90%"
@@ -173,6 +218,7 @@ import { loadBanks, loadBankCards, addBankCard, deleteBankCard } from "@/api/aff
 import { useI18n } from "vue-i18n";
 import { useStore } from "@/store";
 import router from "@/router";
+import emptyComp from "@/components/empty"
 
 onMounted(() => {
   loadCards();
@@ -242,63 +288,58 @@ const validateEmptyCardNo = async (r, v) => {
   return Promise.resolve();
 };
 
-const validateBankLength = async (r, v) => {
-  var min = 6;
-  var max = 12;
-  if (selectedBankType.value === 'Bank') {
-    if (store.state.user.siteId === 3) {
-      min = 10;
-      max = 15;
-    } else {
-      min = 16;
-      max = 19;
-    }
-  } else if (selectedBankType.value === 'Crypto') {
-    min = 34;
-    max = 36;
-  } else if (selectedBankType.value === 'e-Wallet') {
-    min = 34;
-    max = 34;
-    var selectedCode = null
-    banksList.value.forEach(bank => {
-      if (bank.id === bankCardInfo.bankId) {
-        selectedCode = bank.code
-      }
-    });
-    if (selectedCode === 'KDPAY') {
-      min = 34;
-      max = 34;
-    } else if (selectedCode === 'EBPAY') {
-      min = 34;
-      max = 34;
-    } else if (selectedCode === 'OKPAY') {
-      min = 16;
-      max = 16;
-    }
-  }
-  if (v === '') {
-    return Promise.reject(new Error(t('message.requiredCardNumber')));
-  } else if (v.length < min || v.length > max) {
-    if (min === max) {
-      return Promise.reject(new Error(t('message.lengthShouldBe') + min));
-    } else {
-      return Promise.reject(new Error(t('message.lengthShouldBe') + min + '-' + max));
-    }
-  } else {
-    return Promise.resolve();
-  }
-};
+// const validateBankLength = async (r, v) => {
+//   var min = 6;
+//   var max = 12;
+//   if (selectedBankType.value === 'Bank') {
+//     if (store.state.user.siteId === 3) {
+//       min = 10;
+//       max = 15;
+//     } else {
+//       min = 16;
+//       max = 19;
+//     }
+//   } else if (selectedBankType.value === 'Crypto') {
+//     min = 34;
+//     max = 36;
+//   } else if (selectedBankType.value === 'e-Wallet') {
+//     min = 34;
+//     max = 34;
+//     var selectedCode = null
+//     banksList.value.forEach(bank => {
+//       if (bank.id === bankCardInfo.bankId) {
+//         selectedCode = bank.code
+//       }
+//     });
+//     if (selectedCode === 'KDPAY') {
+//       min = 34;
+//       max = 34;
+//     } else if (selectedCode === 'EBPAY') {
+//       min = 34;
+//       max = 34;
+//     } else if (selectedCode === 'OKPAY') {
+//       min = 16;
+//       max = 16;
+//     }
+//   }
+//   if (v === '') {
+//     return Promise.reject(new Error(t('message.requiredCardNumber')));
+//   } else if (v.length < min || v.length > max) {
+//     if (min === max) {
+//       return Promise.reject(new Error(t('message.lengthShouldBe') + min));
+//     } else {
+//       return Promise.reject(new Error(t('message.lengthShouldBe') + min + '-' + max));
+//     }
+//   } else {
+//     return Promise.resolve();
+//   }
+// };
 
 const bankCardRules = {
   cardNumber: [
     {
       required: true,
       validator: validateEmptyCardNo,
-      trigger: "blur",
-    },
-    {
-      required: true,
-      validator: validateBankLength,
       trigger: "blur",
     }
   ],
@@ -525,5 +566,4 @@ const submitBankCard = () => {
       background-position: 50%;
     }
   }
-
 </style>

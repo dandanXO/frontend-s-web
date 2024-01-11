@@ -230,10 +230,9 @@ async function readAnnouncement(announcement) {
     await chooseAnnouncement.map(a => {
       readAffAnnouncementDetails(userId, a.id)
     })
+    ElMessage({ message: t('fields.bulk_read'), type: 'success' })
   }
   await loadAffiliateAnnouncement(type.getCurrentTab)
-
-  ElMessage({ message: t('fields.bulk_read'), type: 'success' })
 }
 
 async function removeAnnouncement(announcement) {

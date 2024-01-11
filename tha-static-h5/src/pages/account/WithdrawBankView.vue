@@ -519,7 +519,7 @@ export default defineComponent({
     }
     const loadCards = () => {
       personalState.bankCardList = [];
-      api.get("/session/bankCard").then((res) => {
+      api.get("/session/allBankCard").then((res) => {
         const response = res.data;
         if (response.code === 0) {
           response.data.forEach(element => {

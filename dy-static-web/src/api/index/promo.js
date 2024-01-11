@@ -77,8 +77,17 @@ export function getSportMatchQuizInfo() {
   return server.EVENT.get(`/quiz/upcoming`, {});
 }
 
-export function getMemberSportMatchRecord() {
-  return server.EVENT.get(`/quiz/answeredRecords`, {});
+export function getMemberSportMatchRecord(record) {
+  return server.EVENT.get(`/quiz/answeredRecords`, {
+    params: {
+      size: record.size,
+      current: record.current
+    }
+  });
+}
+
+export function getRecordsCount() {
+  return server.EVENT.get(`/quiz/recordsCount`, {});
 }
 
 export function submitMemberSportMatchQuiz(param) {

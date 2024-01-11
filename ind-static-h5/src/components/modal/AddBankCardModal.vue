@@ -1,11 +1,16 @@
 <template>
-  <q-dialog align-center v-model="isAddCardDialogOpen" width="500" class="modal-container">
-    <q-card>
-      <DialogHeader :title="dialogDisplays.title"></DialogHeader>
+  <q-dialog align-center v-model="isAddCardDialogOpen" width="500" ref="refBankCardModal" class="modal-container">
+    <div class="bankcard-dialog">
+      <q-btn rounded class="close-btn-div popout-close" v-close-popup>
+        <q-icon name="close"></q-icon>
+      </q-btn>
 
-      <q-card-section>
-        <q-form>
-          <!-- <div class="q-my-sm select-wrapper">
+      <q-card>
+        <DialogHeader :title="dialogDisplays.title"></DialogHeader>
+
+        <q-card-section>
+          <q-form>
+            <!-- <div class="q-my-sm select-wrapper">
             <div class="input-title">Card Type</div>
             <q-select
               standout
@@ -42,64 +47,65 @@
             />
           </div> -->
 
-          <div class="q-my-sm">
-            <div class="input-title">Holder Name</div>
-            <q-input
-              standout
-              class="q-pb-xs dialog-input"
-              hide-bottom-space
-              filled
-              v-model="bankCardField.cardAccount"
-              lazy-rules
-              label-color="secondary"
-              readonly
-            />
-          </div>
+            <div class="q-my-sm">
+              <div class="input-title">Holder Name</div>
+              <q-input
+                standout
+                class="q-pb-xs dialog-input"
+                hide-bottom-space
+                filled
+                v-model="bankCardField.cardAccount"
+                lazy-rules
+                label-color="secondary"
+                readonly
+              />
+            </div>
 
-          <div class="q-my-sm">
-            <div class="input-title">Account Number</div>
-            <q-input
-              type="number"
-              standout
-              class="q-pb-xs dialog-input"
-              hide-bottom-space
-              filled
-              v-model="bankCardField.cardNumber"
-              label="Enter Card Number"
-              lazy-rules
-              :rules="[(_) => isValidCardNumber()]"
-              label-color="secondary"
-            />
-          </div>
+            <div class="q-my-sm">
+              <div class="input-title">Account Number</div>
+              <q-input
+                type="number"
+                standout
+                class="q-pb-xs dialog-input"
+                hide-bottom-space
+                filled
+                v-model="bankCardField.cardNumber"
+                label="Enter Account Number"
+                lazy-rules
+                :rules="[(_) => isValidCardNumber()]"
+                label-color="secondary"
+              />
+            </div>
 
-          <div class="q-my-sm">
-            <div class="input-title">IFSC Code</div>
-            <q-input
-              standout
-              class="q-pb-xs dialog-input"
-              hide-bottom-space
-              filled
-              v-model="bankCardField.cardAddress"
-              label="Enter Bank IFSC Code"
-              lazy-rules
-              :rules="[(_) => isValidCardAddress()]"
-              label-color="secondary"
-            />
-          </div>
-        </q-form>
-      </q-card-section>
+            <div class="q-my-sm">
+              <div class="input-title">IFSC Code</div>
+              <q-input
+                standout
+                class="q-pb-xs dialog-input"
+                hide-bottom-space
+                filled
+                v-model="bankCardField.cardAddress"
+                label="Enter Bank IFSC Code"
+                lazy-rules
+                :rules="[(_) => isValidCardAddress()]"
+                label-color="secondary"
+              />
+            </div>
+          </q-form>
+        </q-card-section>
 
-      <ConfirmButton
-        label="Confirm"
-        :confirmFunc="addCard"
-        :isDisabled="
-          !(
-            // isValidBank() === true &&
-            (isValidCardAccount() === true && isValidCardNumber() === true && isValidCardAddress() === true)
-          ) || isDisableBtn
-        "
-      ></ConfirmButton>
-    </q-card>
+        <ConfirmButton
+          label="Confirm"
+          :confirmFunc="addCard"
+          :isDisabled="
+            !(
+              // isValidBank() === true &&
+              (isValidCardAccount() === true && isValidCardNumber() === true && isValidCardAddress() === true)
+            ) || isDisableBtn
+          "
+        ></ConfirmButton>
+      </q-card>
+    </div>
   </q-dialog>
 </template>
 
@@ -116,6 +122,8 @@ const props = defineProps(["loadCards"]);
 const qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
+
+const refBankCardModal = ref();
 
 // add card dialog
 const cardType = ["Bank" /*, "Crypto", "EWallet"*/];
@@ -137,6 +145,10 @@ const bankCardField = reactive({
 });
 const router = useRouter();
 
+const closeModal = () => {
+  refBankCardModal.value.hide();
+};
+
 const isAddCardDialogOpen = ref(false);
 const onAddCardClick = () => {
   store.getMemberInfo().then(() => {
@@ -147,7 +159,7 @@ const onAddCardClick = () => {
         message: "Please fill in your personal details",
         icon: "report_problem"
       });
-      router.push("/account");
+      router.push("/account/profile");
     } else {
       isAddCardDialogOpen.value = true;
 
@@ -179,7 +191,7 @@ const onAddCardClick = () => {
 };
 
 const dialogDisplays = reactive({
-  title: "Add Bank Card",
+  title: "Add Bank Account",
   selectionTitle: "Bank",
   selectionPlaceholder: "Select A Bank",
   selectionError: "Please Select A Bank"
@@ -190,7 +202,7 @@ const selectBankType = () => {
 
   if (currentCardType.value === "Bank") {
     currBankList.value = bankList;
-    dialogDisplays.title = "Add Bank Card";
+    dialogDisplays.title = "Add Bank Account";
     dialogDisplays.selectionTitle = "Bank";
     dialogDisplays.selectionPlaceholder = "Select A Bank";
     dialogDisplays.selectionError = "Please Select A Bank";
@@ -229,14 +241,14 @@ const isDisableBtn = ref(false);
 const isValidCardAccount = () => {
   const { cardAccount } = bankCardField;
 
-  const result = !cardAccount ? "Please Enter Card Account" : true;
+  const result = !cardAccount ? "Please Enter Account Number" : true;
   return result;
 };
 
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
 
-  const result = !cardNumber ? "Please Enter Card Number" : true;
+  const result = !cardNumber ? "Please Enter Account Number" : true;
   return result;
 };
 
@@ -281,8 +293,32 @@ defineExpose({
 
 <style lang="scss">
 .modal-container {
+  .q-dialog__inner {
+    max-width: 500px;
+    margin: 0 auto;
+    //max-height: calc(100vh - 108px);
+  }
+
+  .close-btn-div {
+    position: absolute;
+    background: #cfcfcf;
+    border-radius: 50%;
+    color: #787878;
+    padding: 8px;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0px;
+    right: 0;
+    z-index: 10;
+  }
+
   .input-title {
-    color: rgba(255, 255, 255, 0.5);
+    color: #fff;
+
     font-family: Helvetica;
     font-size: 1rem;
     font-style: normal;
@@ -293,20 +329,27 @@ defineExpose({
 
   .dialog-input {
     border-radius: 1.25rem;
-    background: rgba(21, 0, 37, 0.5);
+    min-height: 46px;
+
+    :deep(.q-field__control) {
+      min-height: 46px;
+    }
+    //background: rgba(21, 0, 37, 0.5);
   }
 
-  .q-dialog__inner > div {
+  .q-card {
     padding: 1.5rem;
-    border-radius: 3.5rem;
-    background-image: url("../../assets/images/index/modal-bg.png");
-    background-size: 100% 100%;
-    background-color: transparent;
-    width: 90%;
+    border-radius: 8px;
+    background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+    width: calc(100% - 16px);
   }
 
   .q-card__section {
     background: transparent;
+  }
+
+  .q-dialog__inner > div {
+    overflow: hidden;
   }
 }
 </style>

@@ -52,7 +52,7 @@
           >
             <template v-slot:append>
               <q-icon
-                color="yellow-7"
+                color="gray-7"
                 :name="isPwd ? 'visibility_off' : 'visibility'"
                 class="cursor-pointer"
                 @click="isPwd = !isPwd"
@@ -63,19 +63,17 @@
       </div>
     </div>
 
-    <div class="q-mt-md q-pl-lg q-pr-lg">
-      <q-btn
-        :loading="btnLoading"
-        rounded
-        flat
-        no-caps
-        class="btn-purple-pattern"
-        :disable="!(isValidName() === true && isValidPhone() === true)"
-        @click="submitKYCNewGuest"
-      >
-        Submit
-      </q-btn>
-    </div>
+    <q-btn
+      :loading="btnLoading"
+      rounded
+      flat
+      no-caps
+      class="style-btn-confirm"
+      :disable="!(isValidName() === true && isValidPhone() === true)"
+      @click="submitKYCNewGuest"
+    >
+      Submit
+    </q-btn>
   </div>
 </template>
 
@@ -96,6 +94,8 @@ const qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
 const router = useRouter();
+
+const isPwd = ref(true);
 
 const btnLoading = ref(false);
 
@@ -195,6 +195,7 @@ const updateNewGuestState = () => {
 
 .pc-form {
   margin-top: 20px;
+  width: 100%;
   .pc-form-item {
     display: flex;
     flex-direction: column;
@@ -202,14 +203,14 @@ const updateNewGuestState = () => {
     margin-bottom: 12px;
   }
   .pc-form-label {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 1);
   }
   .pc-form-input {
     border-radius: 5px;
     position: relative;
 
     :deep(.q-field__control) {
-      background-color: rgba(21, 0, 37, 0.7) !important;
+      background: rgba(255, 255, 255, 0.15) !important;
     }
 
     :deep(.q-field__native) {
@@ -296,5 +297,15 @@ const updateNewGuestState = () => {
   font-weight: 700;
   color: #150025;
   border-radius: 8px;
+}
+
+.style-btn-confirm {
+  color: #4a38b9;
+  border-radius: 8px;
+  background: linear-gradient(188deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
+  font-size: 16px;
+  font-weight: 600;
+  width: 100%;
+  margin-top: 16px;
 }
 </style>

@@ -134,19 +134,15 @@
                 <img src="../assets/home/dy.png" />
                 <div>东赢电竞</div>
               </div>
-              <div
-                class="game-platform"
-                @click="openGame('IM电竞', 'onlyPlatform', 'IMES')"
-                style="margin-left: 30px"
-              >
-                <img src="../assets/home/dy.png" />
-                <div>IM电竞 </div>
+              <div class="game-platform" @click="openGame('IM电竞', 'onlyPlatform', 'IMES')" style="margin-left: 30px">
+                <img src="../assets/home/IM.png" />
+                <div>IM电竞</div>
               </div>
               <div class="game-platform" @click="openGame('小艾', 'onlyPlatform', 'IA')" style="margin-left: 14px">
-                <img src="../assets/home/dy.png" />
+                <img src="../assets/home/IA.png" />
                 <div>小艾电竞</div>
               </div>
-              
+
               <!-- <div
                 class="game-platform"
                 @click="openGame('IM', 'onlyPlatform', 'IMES')"
@@ -178,14 +174,10 @@
                 @click="openGame('IM体育', 'IM', '')"
                 style="margin-top: 125px; margin-left: 36px"
               >
-                <img src="../assets/home/dy.png" />
+                <img src="../assets/home/IM.png" />
                 <div>IM体育</div>
               </div>
-              <div
-                class="game-platform"
-                @click="openGame('SABA体育', 'SABA', '')"
-                style="margin-left: 19px"
-              >
+              <div class="game-platform" @click="openGame('SABA体育', 'SABA', '')" style="margin-left: 19px">
                 <img src="../assets/home/dy.png" />
                 <div>SABA体育</div>
               </div>

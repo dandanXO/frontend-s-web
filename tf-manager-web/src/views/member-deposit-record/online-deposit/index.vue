@@ -122,7 +122,7 @@
             <el-tag v-if="scope.row.status === 'PENDING'">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="paymentType" :label="t('fields.paymentType')" align="center" min-width="110" />
+        <el-table-column v-if="request.siteId !== 5" prop="paymentType" :label="t('fields.paymentType')" align="center" min-width="110" />
         <el-table-column prop="privilegesName" :label="t('fields.privilege')" align="center" min-width="110">
           <template #default="scope">
             <span v-if="scope.row.privilegesName === null">-</span>
@@ -131,7 +131,7 @@
         </el-table-column>
         <el-table-column prop="vip" :label="t('fields.vipLevel')" align="center" min-width="80" />
         <el-table-column prop="currency" :label="t('fields.currency')" align="center" min-width="80" />
-        <el-table-column prop="localCurrencyAmount" :label="t('fields.localCurrencyAmount')" align="center" min-width="180">
+        <el-table-column v-if="request.siteId !== 5" prop="localCurrencyAmount" :label="t('fields.localCurrencyAmount')" align="center" min-width="180">
           <template #default="scope">
             $
             <span
@@ -139,7 +139,7 @@
             />
           </template>
         </el-table-column>
-        <el-table-column prop="currencyRate" :label="t('fields.currencyRate')" align="center" min-width="100" />
+        <el-table-column v-if="request.siteId !== 5" prop="currencyRate" :label="t('fields.currencyRate')" align="center" min-width="100" />
         <el-table-column prop="clientType" :label="t('fields.clientType')" align="center" min-width="110" />
         <el-table-column prop="updateBy" :label="t('fields.updateBy')" align="center" min-width="110">
           <template #default="scope">
@@ -228,6 +228,7 @@ import { TENANT } from "../../../store/modules/user/action-types";
 import { getSiteListSimple } from "../../../api/site";
 import { useStore } from '../../../store';
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 const { t } = useI18n();
 const supplementForm = ref(null);
 const cancelDepositForm = ref(null);
@@ -337,9 +338,13 @@ async function loadRecord() {
       query[key] = value;
     }
   });
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.depositDate !== null) {
     if (request.depositDate.length === 2) {
-      query.depositDate = request.depositDate.join(",");
+      query.depositDate = JSON.parse(JSON.stringify(request.depositDate));
+      query.depositDate[0] = formatInputTimeZone(query.depositDate[0], timeZone);
+      query.depositDate[1] = formatInputTimeZone(query.depositDate[1], timeZone);
+      query.depositDate = query.depositDate.join(',')
     }
   }
   const { data: ret } = await getDepositRecord(query);
@@ -352,9 +357,6 @@ async function loadRecord() {
   } else {
     page.totalAmount = 0;
   }
-
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
-
   page.loading = false;
 };
 

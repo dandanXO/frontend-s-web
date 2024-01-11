@@ -3,8 +3,6 @@
     <div v-for="e in snowCount" :key="`snow-${e}`" class="snow"></div>
 
     <div class="home-banner-wrapper">
-      <div class="xmas-antler left"><img src="../assets/images/common/xmas-antler-left.png" /></div>
-      <div class="xmas-antler right"><img src="../assets/images/common/xmas-antler-right.png" /></div>
       <q-carousel
         :class="!$q.screen.gt.sm ? 'home-banner-h5' : 'home-banner-web'"
         autoplay
@@ -65,6 +63,7 @@
           :class="currentSelectedMenu == e.name ? 'active-board' : ''"
           @click="switchMenu(e.name, i)"
         >
+          <img class="active-flag" :src="require(`../assets/home/game-board-item-bg-active-flag.png`)" />
           <img :src="require(`../assets/images/index/${e.imgName}`)" />
           <span>{{ e.label }}</span>
         </div>
@@ -138,10 +137,49 @@
 
     <Transition>
       <div class="game-grid-lists" id="id-lottery-board" v-if="currentSelectedMenu === 'lottery'">
-        <div v-if="lotteryGames.length === 0" class="coming-soon-div">
+        <div v-if="lotteryGames.length === 0 && !isShow" class="coming-soon-div">
           <img src="../assets/home/coming-soon-img.png" />
           <span>{{ $t("lang.coming_soon") }}</span>
         </div>
+
+        <template v-for="(lotteryGameItem, index) in lotteryGamesList" :key="`lottery-${index}`">
+          <div
+            v-if="!isShow"
+            class="game-item btn-pointer"
+            @click="selectLotteryPlat(lotteryGameItem)"
+          >
+            <div
+              class="platform-img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/home/lottery/${lotteryGameItem.code}.png`)})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"
+            />
+          </div>
+          <div
+            v-if="isShow"
+            class="game-item btn-pointer"
+            @click="playGame(lotteryGameItem.name, 'GPI', lotteryGameItem.code)"
+          >
+            <div
+              class="platform-img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${`${gameImgURL}${lotteryGameItem.icon}`})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"
+            />
+          </div>
+        </template>
       </div>
     </Transition>
     <Transition>
@@ -882,7 +920,6 @@
               <em>IPHONE</em>
             </span>
           </div>
-          <div class="btn-deco"><img src="../assets/images/common/home-popup-btn-deco.png" /></div>
         </router-link>
         <router-link to="/promo?id=80">
           <div class="popup-item">
@@ -893,7 +930,6 @@
               <em>20,000</em>
             </span>
           </div>
-          <div class="btn-deco"><img src="../assets/images/common/home-popup-btn-deco.png" /></div>
         </router-link>
         <!-- <router-link to="/promo?id=76">
           <div class="popup-item">
@@ -927,7 +963,6 @@
               ถอนไม่อั้น
             </span>
           </div>
-          <div class="btn-deco"><img src="../assets/images/common/home-popup-btn-deco.png" /></div>
         </router-link>
         <router-link to="/promo?id=76">
           <div class="popup-item">
@@ -1110,9 +1145,12 @@ export default defineComponent({
 
           favGamesList.value.forEach((element) => {
             element.default = require("../assets/images/games/aviator/default.png");
-            element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${element.platformCode.toLowerCase()}/${
-              element.icon
-            }.png`;
+            if(element.icon.startsWith('3/')){
+              element.icon = `${process.env.IMAGE_CDN}/game/${element.icon}`;
+            }else{
+              element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${element.platformCode.toLowerCase()}/${element.icon}.png`;
+            }
+
           });
         }
       });
@@ -1242,7 +1280,14 @@ export default defineComponent({
     const gameListData = ref([]);
     const fishPlatforms = ref([]);
     const lotteryGames = ref([]);
+    const lotteryGamesMore = ref([]);
+    const lotteryGamesList = computed(() => {
+      if(isShow.value) {
+        return lotteryGamesMore.value;
+      }
 
+      return lotteryGames.value;
+    })
     const gameBoardItemData = [
       { name: "slots", imgName: "home-slot.png", label: t("lang.slot_header") },
       { name: "fish", imgName: "home-fish.png", label: t("lang.fish_header") },
@@ -1270,6 +1315,7 @@ export default defineComponent({
         switchPlat(platformMinigame.value[0], menu);
       } else if (menu === "xfjGames") {
       } else if (menu === "lottery") {
+        switchPlat(lotteryGames.value[0], menu);
       } else if (menu === "esport") {
       }
 
@@ -1341,6 +1387,11 @@ export default defineComponent({
       } else if (menuType === "sport") {
         selectedLiveTab.value = plat.name;
         liveTabs.value = plat.name;
+      } else if (menuType === "lottery") {
+        selectedPlat.code = plat.code;
+        selectedPlat.status = plat.status;
+
+        loadGameList("LOTTERY");
       }
     };
     const clearSearchInput = () => {
@@ -1363,12 +1414,14 @@ export default defineComponent({
       const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
       const code = selectedPlatId.value;
       const gameType = type;
-      const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+      const key = store.hasToken() ? `LOGGED_PLATFORM_GAMES_${code}_${gameType}_${regDevice}` : `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+
+      var platformGamesApiUrl = store.hasToken() ? "/session/loggedInPlatformGames" : "/platformGames";
 
       cached
         .get(key, () =>
           api
-            .get("/platformGames", {
+            .get(platformGamesApiUrl, {
               params: {
                 platformId: code,
                 gameType: gameType,
@@ -1404,8 +1457,11 @@ export default defineComponent({
             });
             let games = [];
             minis.forEach((mini) => {
-              mini.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${mini.code}.png`;
-
+              if(mini.icon.startsWith('3/')){
+                mini.icon = `${process.env.IMAGE_CDN}/game/${mini.icon}`;
+              }else{
+                mini.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${mini.code}.png`;
+              }
               if (mini.name.indexOf("(铜)") > -1 || mini.name.indexOf("(银)") > -1 || mini.name.indexOf("(金)") > -1) {
                 games.push(mini);
               } else {
@@ -1428,12 +1484,17 @@ export default defineComponent({
               }
             });
             // console.log(miniGamesMore.value);
+          } else if (currentSelectedMenu.value === "lottery") {
+            lotteryGamesMore.value = res;
           } else {
             res.forEach((element) => {
               element.default = require("../assets/images/games/aviator/default.png");
-              element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${
-                element.icon
-              }.png`;
+              if(element.icon.startsWith('3/')){
+                element.icon = `${process.env.IMAGE_CDN}/game/${element.icon}`;
+              }else{
+                element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${element.icon}.png`;
+              }
+
             });
             gameListData.value = res;
             gamePage.total = res.length;
@@ -1588,8 +1649,9 @@ export default defineComponent({
         // const info = {
         //   version: "1.0.1"
         // };
-        var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
+        var current_version = parseInt(info.version.replace(/\./g, "") + info.build);
         ui.setVersion(info.version + " " + info.build);
+        // console.log("Current Ver: " + current_version);
 
         // info.version && info.build
         const appType = "ALL";
@@ -1598,8 +1660,9 @@ export default defineComponent({
         console.log(res, ">>res");
         if (res.data.code === 0) {
           var version_info = res.data.data.version;
-          var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
+          var latest_ver_no = parseInt(version_info.replace(/\./g, ""));
           download_url.value = res.data.data.url;
+          // console.log("latest_ver_no Ver: " + latest_ver_no);
 
           // alert(latest_ver_no);
           // console.log(download_url.value);
@@ -1809,6 +1872,11 @@ export default defineComponent({
       isShow.value = true;
       switchPlat(plat, "fish");
     };
+    const selectLotteryPlat = (plat) => {
+      selectedPlatId.value = plat.id;
+      isShow.value = true;
+      switchPlat(plat, "lottery");
+    };
     const selectCasualPlat = (plat) => {
       selectedPlatId.value = plat.id;
       isShow.value = true;
@@ -1843,6 +1911,7 @@ export default defineComponent({
       imageLoading,
       slide: ref(0),
       imgURL: process.env.IMAGE_CDN + "/promo/",
+      gameImgURL: process.env.IMAGE_CDN + "/game/",
       banners,
       gameBoardRef,
       gameBoardItemRef,
@@ -1855,6 +1924,8 @@ export default defineComponent({
       liveCasinoGames,
       xfjGames,
       lotteryGames,
+      lotteryGamesMore,
+      lotteryGamesList,
       isShow,
       mainWallet,
       playGame,
@@ -1882,6 +1953,7 @@ export default defineComponent({
       esportsGame,
       showFavourite,
       selectFishPlat,
+      selectLotteryPlat,
       selectSlotPlat,
       selectCasualPlat,
       platformMinigame,
@@ -1931,19 +2003,6 @@ export default defineComponent({
 @import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
 .home-banner-wrapper {
   position: relative;
-
-  .xmas-antler {
-    position: absolute;
-    top: -25%;
-
-    &.left {
-      left: -10.5%;
-    }
-
-    &.right {
-      right: -10.5%;
-    }
-  }
 }
 
 .midd {
@@ -1959,8 +2018,8 @@ export default defineComponent({
 
   .station-notice-wrapper {
     display: flex;
-    border-radius: 8px;
-    border: 1px solid $border-color;
+    border-radius: 10px;
+    border: 1px solid #9c1103;
     gap: 10px;
     padding: 2px 10px;
     justify-content: center;
@@ -2061,8 +2120,8 @@ export default defineComponent({
   column-gap: 8px;
   row-gap: 14px;
   width: calc(100% - 20px);
-  background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
-  padding: 6px 12px 6px;
+  // background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
+  padding: 35px 12px 16px;
   border-radius: 12px;
   overflow-x: auto;
 
@@ -2081,15 +2140,31 @@ export default defineComponent({
     text-align: center;
     padding: 12px 12px;
     white-space: nowrap;
+    background: url("../assets/home/game-board-item-bg.png") no-repeat center center;
+    background-size: 100% 100%;
+    position: relative;
+
+    .active-flag {
+      display: none;
+    }
 
     &.active-board {
       // background: $linear-bg-4;
-      background: #5555aa;
+      background: url("../assets/home/game-board-item-bg-active.png") no-repeat center center;
+      background-size: 100% 100%;
+
+      .active-flag {
+        display: block;
+        position: absolute;
+        top: -32px;
+        left: 20px;
+        width: 31px;
+        height: 33px;
+      }
     }
 
     &:hover {
       filter: brightness(0.88);
-      background: #5555aa;
     }
 
     &:active {
@@ -2830,20 +2905,25 @@ export default defineComponent({
     }
 
     .popup-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 92%;
-      margin: 0 auto 14px;
-      border: 2px solid #d483ff;
-      background: rgba(52, 41, 97, 0.9);
+      margin: 0 auto;
+      // border: 2px solid #d483ff;
+      // background: rgba(52, 41, 97, 0.9);
       border-radius: 11px;
       //margin-bottom: 14px;
-      line-height: 30px;
-      font-size: 22px;
+      line-height: 20px;
+      font-size: 16px;
       text-align: center;
       padding: 8px;
-      box-shadow: 0px 3px 2px 0px #ddb2ff42 inset;
-      box-shadow: 0px 0px 5px 3px #8000ffd9;
+      // box-shadow: 0px 3px 2px 0px #ddb2ff42 inset;
+      // box-shadow: 0px 0px 5px 3px #8000ffd9;
       cursor: pointer;
       text-shadow: 1px 2px 2px #000000;
+      background: url("../assets/images/common/home-popup-item-bg.png") no-repeat center center;
+      background-size: 100% 100%;
 
       &:hover {
         opacity: 0.9;
@@ -2855,17 +2935,15 @@ export default defineComponent({
 
       em {
         color: #ecff17;
-        font-size: 26px;
+        font-size: 16px;
         font-weight: 600;
         font-style: normal;
       }
-    }
 
-    .btn-deco {
-      position: absolute;
-      top: -5%;
-      z-index: 1;
-      padding: 0 20px;
+      span {
+        padding: 10px;
+        margin: 0px 35px;
+      }
     }
   }
 }
@@ -2911,8 +2989,8 @@ export default defineComponent({
     right: 0px;
     z-index: 15;
 
-    width: 152px;
-    height: 230px;
+    width: 125px;
+    height: 352px;
     background: url(../assets/home/xmas-line-btn.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -2923,21 +3001,22 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
+    gap: 0px;
     justify-content: flex-end;
 
     .line-title {
-      font-size: 18px;
+      font-size: 12px;
     }
 
     .line-img {
-      width: 100px;
+      width: 80px;
       height: auto;
       margin: 0 auto;
+      background: #fff;
     }
 
     .line-bottom {
-      font-size: 16px;
+      font-size: 12px;
     }
   }
 }

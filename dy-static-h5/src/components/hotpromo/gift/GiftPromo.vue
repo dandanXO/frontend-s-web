@@ -172,14 +172,14 @@
           <div style="position: absolute; right: 0; top: 27px">5000000</div>
         </div>
         <div style="margin: 25px 0; color: #596281">
-          注：流水只统计东赢电竞，CR体育，IM电竞/体育，沙巴体育，小艾电竞总流水。
+          注：流水只统计东赢电竞，IM电竞/体育，沙巴体育，小艾电竞总流水。
           <div class="exchange-btn exchange-record-btn active" @click="loadMemberRecords()">兑换记录</div>
         </div>
       </div>
       <div class="gift-container">
         <div v-for="(e, i) in giftListData" :key="`gift-list-${i}`" class="gift-item-box">
           <div>
-            <img :src="imgURL + e.siteId + '/' + e.mobileImgUrl" />
+            <img :src="imgURL + e.mobileImgUrl" />
           </div>
           <div class="gift-name">{{ e.name }}</div>
           <div class="gift-desc">需要流水金额：{{ e.redeemPoints }}</div>
@@ -207,7 +207,7 @@ import * as _ from "lodash";
 
 const $q = useQuasar();
 const store = userStore();
-const imgURL = process.env.IMAGE_CDN + "/promo/gifts/";
+const imgURL = process.env.IMAGE_CDN + "/promo/";
 
 const isGiftRecordLoading = ref(false);
 const isGiftRecordModalOpen = ref(false);

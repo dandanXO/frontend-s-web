@@ -1,34 +1,24 @@
 <template>
+  <ProfileSummary :homeProfile="true" />
+
   <div class="bonus-page">
-    <div class="progress-container">
-      <div class="left-container">
-        <img class="character-red-bg" src="../assets/images/bonus/character-red-bg.png" alt="" />
-        <img class="character-red" src="../assets/images/bonus/character-red.png" alt="" />
+    <ProfileProgressBanner />
 
-        <div class="bonus-pot-btn-container">
-          <img class="bonus-pot-btn-frame" src="../assets/images/bonus/bonus-pot-btn-frame.png" alt="" />
-          <img class="bonus-pot-btn" src="../assets/images/bonus/bonus-pot-btn.png" alt="" />
-          <span class="common-text">Bonus Pot</span>
-        </div>
-      </div>
-
-      <div class="right-container">
-        <div class="amount-progress-container">
-          <div class="common-text">VIP</div>
-          <div class="common-text">{{ `${progressRef} / ${maxProgress}` }}</div>
-        </div>
-        <q-linear-progress reverse rounded size="5px" :value="progressBarRef" class="progress-bar"></q-linear-progress>
-        <div class="common-text">Deposit Monthly To Win Gifts</div>
-
-        <div class="detail-btn-container absolute-bottom-right" @click="onDetailClick()">
-          <img class="detail-btn" src="../assets/images/bonus/detail-btn.png" alt="" />
-          <span class="common-text">Detail</span>
-        </div>
-      </div>
+    <div class="detail-btn-container" @click="onDetailClick()">
+      <span class="">Bonus Pot Detail</span>
     </div>
 
     <div class="vip-table-container">
-      <q-table flat :hide-pagination="true" :columns="columns" :rows="rows" row-key="name" :rows-per-page-options="[0]">
+      <q-table
+        flat
+        :hide-pagination="true"
+        :columns="columns"
+        :rows="rows"
+        row-key="name"
+        :rows-per-page-options="[0]"
+        bordered
+        :separator="'cell'"
+      >
         <template v-slot:header="props">
           <q-tr :props="props">
             <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
@@ -59,8 +49,14 @@
     </div>
 
     <div class="countdown-container">
-      <img class="character-blue" src="../assets/images/bonus/character-blue.png" alt="" />
-      <div class="right-container">
+      <div class="noticeboard">
+        You Can Get
+        <span>0.3%</span>
+        Of The Daily Wager As A Reward, Credited To Your Account Every Day At 0:00 Indian Time
+      </div>
+
+      <img class="character-blue" src="../assets/images/bonus/character-blue.png" alt="" style="display: none" />
+      <div class="right-container" style="display: none">
         <!-- <div class="countdown">
           <div class="common-text">
             Ready To
@@ -86,24 +82,12 @@
 import { ref } from "vue";
 import { date } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-import { userStore } from "stores/index";
+import ProfileSummary from "components/ProfileSummary.vue";
+import ProfileProgressBanner from "components/ProfileProgressBanner.vue";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const route = useRoute();
 const router = useRouter();
-const store = userStore();
-
-// progress bar
-const maxProgress = store.levelUpDeposit.toFixed(2);
-const progressRef = ref(store.currentDeposit.toFixed(2));
-
-/**
- * NOTE: q-linear-progress
- * the coloring on the bar done w/ css props "background" & "color"
- * figma required linear-gradient which wasn't available in "color"
- * hence switch "background" to "color" & "color" to "background", reverse value 1 - result.
- */
-let progressBarRef = ref();
-progressBarRef.value = 1 - progressRef.value / maxProgress;
 
 // detail btn
 const onDetailClick = () => {
@@ -125,68 +109,68 @@ const columns = [
 const rows = [
   {
     name: "VIP 0",
-    award: 0,
-    firstDay: 0
+    award: convertToCommaAmount(0),
+    firstDay: convertToCommaAmount(0)
   },
   {
     name: "VIP 1",
-    award: 20,
-    firstDay: 38
+    award: convertToCommaAmount(20),
+    firstDay: convertToCommaAmount(38)
   },
   {
     name: "VIP 2",
-    award: 25,
-    firstDay: 88
+    award: convertToCommaAmount(25),
+    firstDay: convertToCommaAmount(88)
   },
   {
     name: "VIP 3",
-    award: 50,
-    firstDay: 188
+    award: convertToCommaAmount(50),
+    firstDay: convertToCommaAmount(188)
   },
   {
     name: "VIP 4",
-    award: 100,
-    firstDay: 388
+    award: convertToCommaAmount(100),
+    firstDay: convertToCommaAmount(388)
   },
   {
     name: "VIP 5",
-    award: 200,
-    firstDay: 588
+    award: convertToCommaAmount(200),
+    firstDay: convertToCommaAmount(588)
   },
   {
     name: "VIP 6",
-    award: 300,
-    firstDay: 888
+    award: convertToCommaAmount(300),
+    firstDay: convertToCommaAmount(888)
   },
   {
     name: "VIP 7",
-    award: 1000,
-    firstDay: 1888
+    award: convertToCommaAmount(1000),
+    firstDay: convertToCommaAmount(1888)
   },
   {
     name: "VIP 8",
-    award: 2000,
-    firstDay: 3888
+    award: convertToCommaAmount(2000),
+    firstDay: convertToCommaAmount(3888)
   },
   {
     name: "VIP 9",
-    award: 3000,
-    firstDay: 8888
+    award: convertToCommaAmount(3000),
+    firstDay: convertToCommaAmount(8888)
   },
   {
     name: "VIP 10",
-    award: 10000,
-    firstDay: 28888
+    award: convertToCommaAmount(10000),
+    firstDay: convertToCommaAmount(28888)
   },
   {
     name: "VIP 11",
-    award: 20000,
-    firstDay: 58888
+    award: convertToCommaAmount(20000),
+    firstDay: convertToCommaAmount(58888)
   },
   {
     name: "VIP 12",
-    award: 30000,
-    firstDay: 88888
+    award: convertToCommaAmount(30000),
+    firstDay: convertToCommaAmount(88888)
   }
 ];
 
@@ -216,86 +200,23 @@ const redeem = () => {};
   padding: 0 1.75rem;
   overflow: hidden;
 
-  .progress-container {
+  .detail-btn-container {
+    background: linear-gradient(180deg, #ffe146 0%, #b54100 100%);
+    min-height: 50px;
     display: flex;
-    justify-content: space-between;
-    margin: 1.5rem 0 0 0;
-
-    .left-container {
-      position: relative;
-
-      .character-red-bg {
-        width: 7.5rem;
-      }
-
-      .character-red {
-        position: absolute;
-        left: 0.75rem;
-        top: -0.5rem;
-        width: 6.25rem;
-      }
-
-      .bonus-pot-btn-container {
-        position: absolute;
-        left: -0.75rem;
-        bottom: -1.25rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        .bonus-pot-btn-frame {
-          position: relative;
-          width: 9rem;
-        }
-
-        .bonus-pot-btn {
-          position: absolute;
-          width: 8.5rem;
-          left: 0.25rem;
-        }
-
-        span {
-          position: absolute;
-        }
-      }
-    }
-
-    .right-container {
-      position: relative;
-      top: 1rem;
-
-      .amount-progress-container {
-        display: flex;
-        justify-content: space-between;
-      }
-
-      .progress-bar {
-        border: 1px solid #fed87d;
-        background: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-        color: #320b5b;
-      }
-
-      .detail-btn-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        .detail-btn {
-          width: 7.5rem;
-        }
-
-        span {
-          position: absolute;
-        }
-      }
-    }
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
   }
 
   .vip-table-container {
-    margin: 2.5rem 0 1rem 0;
+    margin: 1.5rem 0 2rem 0;
 
     .q-table__card {
       background: transparent !important;
+      border-radius: 8px;
     }
 
     .vip-icon {
@@ -309,19 +230,25 @@ const redeem = () => {};
       justify-content: flex-end;
 
       .coin {
-        width: 1.5rem;
+        width: 2rem;
         margin: 0 0.5rem 0 0;
       }
     }
 
     thead > :first-child {
       background: rgba(21, 0, 37, 0.5);
+      background: linear-gradient(180deg, #41206f 0%, #1f2862 100%);
     }
     tbody > :nth-child(odd) {
       background: rgba(21, 0, 37, 0.2);
+      background: #652c93;
     }
     tbody > :nth-child(even) {
       background: rgba(21, 0, 37, 0.5);
+      background: #502175;
+    }
+    tbody > td {
+      border-width: 1px;
     }
 
     .text-center,
@@ -330,6 +257,7 @@ const redeem = () => {};
       font-weight: 700;
       padding: 0.5rem 1.5rem;
       border-bottom-width: 0;
+      text-align:center !important;
     }
   }
 
@@ -337,6 +265,23 @@ const redeem = () => {};
     display: flex;
     position: relative;
     line-height: 1.25;
+    background: url("../assets/images/bonus/bonus-page-daily-wager-reward-banner.png");
+    min-height: 150px;
+    margin-bottom: 20px;
+
+    .noticeboard {
+      background: #00000099;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      color: #d4cdd6;
+      line-height: 25px;
+      text-align: center;
+
+      span {
+        color: #fff;
+      }
+    }
 
     .character-blue {
       width: 15rem;
