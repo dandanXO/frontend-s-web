@@ -52,6 +52,7 @@
     "imagemin-pngquant": "^9.0.2",
     "imagemin-webpack-plugin": "^2.4.2",
     "moment": "^2.29.4",
+    "onesignal-cordova-plugin": "^5.0.4",
     "pinia": "^2.0.17",
     "qs": "^6.11.0",
     "quasar": "^2.7.7",
