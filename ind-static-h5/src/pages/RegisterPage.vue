@@ -237,14 +237,14 @@ export default defineComponent({
     const getAffiliateCode = () => {
       affCode.value = sessionStorage.getItem("AFFILIATE_CODE");
       if (affCode.value) {
-        hasAffiliate.value = true;
+        // hasAffiliate.value = true;
         regForm.codeAffiliate = affCode.value;
       }
     };
     const getReferralCode = () => {
       const refCode = sessionStorage.getItem("REFERRAL_CODE");
       if (refCode) {
-        hasAffiliate.value = true;
+        // hasAffiliate.value = true;
         regForm.referrer = refCode;
       }
     };
