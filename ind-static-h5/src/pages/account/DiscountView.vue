@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { onActivated, onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { updateDate, convertToGMT8, convertToGMT55 } from "src/boot/utils";
@@ -86,7 +86,7 @@ const searchDiscountRecord = () => {
     });
 };
 
-onMounted(() => {
+onActivated(() => {
   setTime();
   searchDiscountRecord();
 });
