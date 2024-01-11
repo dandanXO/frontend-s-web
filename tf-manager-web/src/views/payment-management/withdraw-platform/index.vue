@@ -491,7 +491,6 @@ function showDialogCopy(withdrawPlatform) {
   copyForm.name = "";
   uiControl.dialogTitle = t('fields.copyPayment') + " -  " + withdrawPlatform.name;
   uiControl.dialogCopyVisible = true
-  // test
 }
 
 async function copySubmit() {
