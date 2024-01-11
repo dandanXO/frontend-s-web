@@ -163,6 +163,7 @@
                         }"
                       ></div>
                     </div>
+
                     <div class="platform-game-title">{{ truncateText("Evolution", 22) }}</div>
                   </div>
                 </swiper-slide>
@@ -211,7 +212,6 @@
                         backgroundImage: `url(${require(`../assets/images/games/hot-games-evo.png`)})`
                       }"
                     ></div>
-
                     <div class="platform-game-title">{{ truncateText("Evolution", 22) }}</div>
                   </div>
                 </div>
@@ -281,7 +281,11 @@
                           }
                         })()
                       }"
-                    ></div>
+                    >
+                      <div v-if="item.name === 'Evo'" class="burning-hot">
+                        <img src="../assets/images/index/hot.png" />
+                      </div>
+                    </div>
                   </div>
                 </swiper-slide>
               </template>
@@ -308,7 +312,10 @@
                           }
                         })()
                       }"
-                    ></div>
+                    >
+                    <div v-if="item.name === 'Evo'" class="burning-hot">
+                        <img src="../assets/images/index/hot.png" />
+                      </div></div>
                   </div>
                 </div>
               </template>
@@ -351,12 +358,18 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`
+                          backgroundImage: (() => {
+                            try {
+                              return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                            } catch (e) {
+                              return '';
+                            }
+                          })()
                         }"
                       ></div>
                     </div>
 
-                    <div v-if="item.name === 'JOKER'" class="burning-hot">
+                    <div v-if="item.name === 'JOKER' || item.name === 'PG'" class="burning-hot">
                       <img src="../assets/images/index/hot.png" />
                     </div>
 
@@ -386,12 +399,18 @@
                     <div
                       class="game--bg"
                       :style="{
-                        backgroundImage: `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`
+                        backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                            return '';
+                          }
+                        })()
                       }"
                     ></div>
                   </div>
 
-                  <div v-if="item.name === 'JOKER'" class="burning-hot">
+                  <div v-if="item.name === 'JOKER' || item.name === 'PG'" class="burning-hot">
                     <img src="../assets/images/index/hot.png" />
                   </div>
 
@@ -670,15 +689,23 @@
     show-cancel-button
     :showCancelButton="false"
     :showConfirmButton="false"
+    :persistent="isOutdatedApp"
   >
     <q-card style="width: 100%" class="bg-bright text-black">
       <div class="modalcontent">
         <div class="headers">
           <div class="titles backgroundColor">Update Announcement</div>
         </div>
-        <div class="contents">New Version Detected, Do You Want To Update?</div>
+        <div class="contents">
+          <template v-if="isOutdatedApp">
+            Your App Version Is Outdated,
+            <br />
+            Please Update The App Now
+          </template>
+          <template v-else>New Version Detected, Do You Want To Update?</template>
+        </div>
         <div class="btnsreas">
-          <div class="cacnels borderColor fontColor" @click="cancelUpdate">Cancel</div>
+          <div class="cacnels borderColor fontColor" @click="cancelUpdate" v-if="!isOutdatedApp">Cancel</div>
           <div class="confirmsbtns btncolor" @click="openDownloadPage">Update Now</div>
         </div>
       </div>
@@ -1463,6 +1490,7 @@ const gotoSignUp = () => {
 
 const download_url = ref("");
 const isAppUpdateModal = ref(false);
+const isOutdatedApp = ref(false);
 const getVersionNo = async () => {
   // alert("run")
   if (Platform.is.android && Platform.is.capacitor) {
@@ -1519,6 +1547,8 @@ const getAppDownloadUrl = () => {
 const truncateText = (text, maxLength) => {
   if (text === "JiliGames") {
     text = "JILI";
+  } else if (text.startsWith("WC")) {
+    return text.substring(2);
   }
 
   if (window.innerWidth <= 450) {
@@ -1653,7 +1683,8 @@ onMounted(() => {
       box-sizing: border-box;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      gap: 20px;
       padding: 0 20px;
       margin-top: 0px;
 
@@ -1670,6 +1701,7 @@ onMounted(() => {
         letter-spacing: 1px;
         font-size: 14px;
         margin-right: 8px;
+        max-width: 200px;
       }
 
       .confirmsbtns {
@@ -1683,6 +1715,7 @@ onMounted(() => {
         background: $primary;
         letter-spacing: 1px;
         font-size: 14px;
+        max-width: 200px;
       }
     }
   }
@@ -2425,10 +2458,11 @@ onMounted(() => {
 
       .game--bg {
         border-radius: 8px;
-        background-size: cover;
+        background-size: 100% 100%;
         background-position: top center;
         height: 100%;
         width: 100%;
+        background-repeat: no-repeat;
       }
     }
 
@@ -2533,6 +2567,10 @@ onMounted(() => {
       color: #ffffff;
       font-weight: bold;
       font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100px;
     }
 
     img {
@@ -2593,6 +2631,7 @@ onMounted(() => {
   top: 0;
   right: 0;
   width: 35%;
+  max-width: 50px;
 }
 
 .loading-spinner {
@@ -2682,11 +2721,12 @@ onMounted(() => {
   border-radius: 8px;
 
   .game--bg {
-    background-size: cover;
+    background-size: 100% 100%;
     background-position: center center;
     height: 100%;
     width: 100%;
     border-radius: 8px;
+    background-repeat: no-repeat;
   }
 }
 

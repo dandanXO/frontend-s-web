@@ -121,7 +121,7 @@ const setTime = () => {
 
 const gameBetRecordData = ref([]);
 const pagination = reactive({
-  pageSize: 10,
+  pageSize: 20,
   total: 0,
   pages: 1,
   current: 1,

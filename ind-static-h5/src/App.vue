@@ -11,7 +11,6 @@ import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
 import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
 import { isAndroid } from "boot/utils";
-import { App } from "@capacitor/app";
 import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
