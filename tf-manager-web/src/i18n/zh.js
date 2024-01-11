@@ -24,6 +24,10 @@ export default {
       NORMAL: '正常',
       DISABLE: '禁用',
     },
+    belongType: {
+      OFFICIAL: '官网',
+      PACKAGE: '包网',
+    },
   },
   types: {
     NORMAL: '正常',
@@ -463,6 +467,7 @@ export default {
     bet: '下注金额',
     betAmount: '投注金额',
     betId: '投注单号',
+    belongType: '网页类型',
     betMoneyChange: '投注账变',
     betMoreThan: '投注金额大于',
     betRebateDetails: '投注返水记录明细',
@@ -652,6 +657,7 @@ export default {
     editBank: '编辑银行',
     editBankCard: '编辑银行卡',
     editBanner: '编辑广告',
+    editBelongType: '编辑网页类型',
     editCheck: '更改',
     editConfig: '编辑设置',
     editCurrency: '编辑货币',
