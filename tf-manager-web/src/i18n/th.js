@@ -30,6 +30,10 @@ export default {
       TEST: 'ทดสอบ',
       OUTSIDE: 'ด้านนอก',
     },
+    belongType: {
+      OFFICIAL: 'เว็บอย่างเป็นทางการ',
+      PACKAGE: 'แพ็คเกจเว็บ',
+    },
   },
   types: {
     NORMAL: 'ปกติ',
@@ -342,6 +346,7 @@ export default {
     bet: 'เดิมพัน',
     betAmount: 'จำนวนเงินเดิมพัน',
     betId: 'รหัสเดิมพัน',
+    belongType: 'ประเภทหน้าเว็บ',
     betMoneyChange: 'สมาชิกเดิมพันแลกเปลี่ยนเงิน',
     betMoreThan: 'เดิมพันมากกว่า',
     betRecords: 'บันทึกการเดิมพัน',
@@ -515,6 +520,7 @@ export default {
     editBank: 'แก้ไขธนาคาร',
     editBankCard: 'แก้ไขเลขที่บัญชีธนาคาร',
     editBanner: 'แก้ไขแบนเนอร์',
+    editBelongType: 'แก้ไขประเภทหน้า',
     editCurrency: 'แก้ไขสกุลเงิน',
     editCurrencyRate: 'แก้ไขอัตราแลกเปลี่ยน',
     editDepositSetting: 'แก้ไขการตั้งค่าการฝากเงิน',
