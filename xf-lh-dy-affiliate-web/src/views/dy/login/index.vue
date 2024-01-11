@@ -188,7 +188,7 @@ body {
   top: 50%;
   left: 50%;
   width: 1px;
-  height: 296px;
+  height: 30vh;
   background-color: #e3e4e6;
 }
 

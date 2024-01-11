@@ -97,7 +97,7 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style lang="scss" scoped>
 
 .swiper-slide {
   max-height: 100vh;
