@@ -459,7 +459,7 @@ $gold: #efcf68;
   .tabs {
     display: flex;
     justify-content: center;
-    gap: 25px;
+    gap: 10px;
     align-items: center;
     margin: 0 auto;
 
@@ -484,7 +484,8 @@ $gold: #efcf68;
       }
 
       h3 {
-        font-size: 17px;
+        font-size: 1.2em;
+        white-space: nowrap;
         color: #11131f;
         font-family: "Microsoft YaHei";
         font-weight: 800;
@@ -499,7 +500,7 @@ $gold: #efcf68;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     margin: 0 auto 20px;
-    padding: 30px 25px 40px;
+    padding: 30px 14px 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -535,17 +536,18 @@ $gold: #efcf68;
     justify-content: space-between;
     align-items: center;
 
+    flex-wrap: nowrap;
+
     margin: 30px auto 20px;
   }
 
   .info-item {
-    width: 130px;
+    flex: 1;
     height: 100px;
     border: solid 1px $gold;
   }
 
   .info-top {
-    width: 130px;
     height: 50px;
     background-color: $gold;
     text-align: center;
@@ -560,7 +562,6 @@ $gold: #efcf68;
   }
 
   .info-content {
-    width: 130px;
     height: 40px;
 
     text-align: center;
