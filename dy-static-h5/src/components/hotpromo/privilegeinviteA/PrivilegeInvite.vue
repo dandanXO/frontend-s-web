@@ -341,18 +341,25 @@
                 <div class="rebate-header">首存金额</div>
                 <div class="rebate-header">今日已获返利</div>
               </div>
-              <div class="no-item-table">
+              <div class="no-item-table" v-if="tableRecords.length === 0">
                 <p>暂无数据</p>
               </div>
-              <div class="listing-footer">
-                <div class="footer-div">
-                  <span class="pointer-s prev-page">&nbsp;&lt;&nbsp;&nbsp;</span>
-                  <div class="footer-page">
-                    <span id="record_page">1/1</span>
-                  </div>
-                  <span class="pointer-s next-page">&nbsp;&nbsp;&gt;&nbsp;</span>
-                </div>
+              <div class="record-table" v-else>
+                <template v-for="(list, i) of tableRecords" :key="i">
+                  <div>{{ list.loginName }}</div>
+                  <div>{{ list.depositOrBet }}</div>
+                  <div>{{ list.bonusAmount }}</div>
+                </template>
               </div>
+              <!--              <div class="listing-footer">-->
+              <!--                <div class="footer-div">-->
+              <!--                  <span class="pointer-s prev-page">&nbsp;&lt;&nbsp;&nbsp;</span>-->
+              <!--                  <div class="footer-page">-->
+              <!--                    <span id="record_page">1/1</span>-->
+              <!--                  </div>-->
+              <!--                  <span class="pointer-s next-page">&nbsp;&nbsp;&gt;&nbsp;</span>-->
+              <!--                </div>-->
+              <!--              </div>-->
             </div>
           </div>
         </q-card>
@@ -404,16 +411,19 @@ export default defineComponent({
       isCheckRecordModalVisible.value = toggleStatus;
     };
 
+    var tableRecords = ref([]);
     const getRecords = () => {
       const params = {
-        recordType: checkRecordFormData.recordType,
-        privilegeType: checkRecordFormData.privilegeType,
-        queryTime: checkRecordFormData.date,
-        recommendedName: checkRecordFormData.user,
+        rebateType: checkRecordFormData.recordType,
+        bonusType: checkRecordFormData.privilegeType,
+        date: checkRecordFormData.date,
+        loginName: checkRecordFormData.user,
         token: store.token
       };
+      tableRecords.value = [];
       getRecommendPrivilegeRecord(params).then((data) => {
         console.log("here", data);
+        tableRecords.value = data.data;
       });
     };
 
@@ -441,7 +451,8 @@ export default defineComponent({
       getRecords,
       checkRecordFormData,
       shareInvite,
-      rebateInfo
+      rebateInfo,
+      tableRecords
     };
   }
 });
@@ -742,6 +753,14 @@ $gold: #efcf68;
     grid-template-columns: repeat(3, 1fr);
     margin: 16px auto 0px;
     width: 100%;
+  }
+
+  .rebate-header {
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    background-color: $gold;
+    color: #11131f;
   }
 
   .no-item-table {
