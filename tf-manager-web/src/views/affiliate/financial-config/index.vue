@@ -89,62 +89,67 @@
         </div>
       </el-form>
     </el-dialog>
-    <el-table
-      :data="page.records"
-      v-loading="page.loading"
-      ref="table"
-      row-key="id"
-      size="small"
-      highlight-current-row
-      @selection-change="handleSelectionChange"
-      :empty-text="t('fields.noData')"
-      style="width: 100%;"
-    >
-      <el-table-column prop="affiliateCode" :label="t('fields.affiliateCode')" width="150">
-        <template #default="scope">
-          <span v-if="scope.row.affiliateCode === null">-</span>
-          <span v-if="scope.row.affiliateCode !== null">{{ scope.row.affiliateCode }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="paymentName" :label="t('fields.paymentName')" />
-      <el-table-column :label="t('fields.withdrawPlatformName')" prop="withdrawPlatformName" />
-      <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:affiliate-financial-config:update'])">
-        <template #default="scope">
-          <el-switch
-            v-model="scope.row.status"
-            active-color="#409EFF"
-            inactive-color="#F56C6C"
-            @change="changeStatus(scope.row, scope.row.status)"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:affiliate-financial-config:update'])">
-        <template #default="scope">
-          <el-button
-            icon="el-icon-edit"
-            size="mini"
-            type="success"
-            @click="showEdit(scope.row)"
-          />
-        </template>
-      </el-table-column>
-    </el-table>
-    <el-pagination
-      class="pagination"
-      @current-change="changePage"
-      layout="prev, pager, next"
-      :page-size="request.size"
-      :page-count="page.pages"
-      :current-page="request.current"
-    />
+    <el-card class="box-card" shadow="never" style="margin-top: 40px">
+      <template #header>
+        <div class="clearfix">
+          <span class="role-span">{{ t('fields.affiliateFinancialManagement') }}</span>
+        </div>
+      </template>
+      <el-table
+        :data="page.records"
+        v-loading="page.loading"
+        ref="table"
+        row-key="id"
+        size="small"
+        highlight-current-row
+        @selection-change="handleSelectionChange"
+        :empty-text="t('fields.noData')"
+        style="width: 100%;"
+      >
+        <el-table-column prop="affiliateCode" :label="t('fields.affiliateCode')" width="150">
+          <template #default="scope">
+            <span v-if="scope.row.affiliateCode === null">-</span>
+            <span v-if="scope.row.affiliateCode !== null">{{ scope.row.affiliateCode }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="paymentName" :label="t('fields.paymentName')" />
+        <el-table-column :label="t('fields.withdrawPlatformName')" prop="withdrawPlatformName" />
+        <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:affiliate-financial-config:update'])">
+          <template #default="scope">
+            <el-switch
+              v-model="scope.row.status"
+              active-color="#409EFF"
+              inactive-color="#F56C6C"
+              @change="changeStatus(scope.row, scope.row.status)"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:affiliate-financial-config:update'])">
+          <template #default="scope">
+            <el-button
+              icon="el-icon-edit"
+              size="mini"
+              type="success"
+              @click="showEdit(scope.row)"
+            />
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        class="pagination"
+        @current-change="changePage"
+        layout="prev, pager, next"
+        :page-size="request.size"
+        :page-count="page.pages"
+        :current-page="request.current"
+      />
+    </el-card>
   </div>
 </template>
 
 <script setup>
 import { nextTick, onMounted, reactive, ref, computed } from 'vue'
 import { getSiteListSimple } from '../../../api/site'
-import { getActivePaymentTypes } from '../../../api/payment-type'
-import { getCurrencyNames } from '../../../api/currency'
 import { getAffiliateFinancialConfigList, createAffiliateFinancialConfig, updateAffiliateFinancialConfig } from '../../../api/affiliate-financial-config'
 import { getWithdrawPlatforms } from "../../../api/withdraw-platform";
 import { getSiteWithdrawPlatform } from "../../../api/site-withdraw-platform";
@@ -165,9 +170,6 @@ const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: '',
   dialogType: 'CREATE',
-  platformDialogVisible: false,
-  platformDialogTitle: '',
-  platformDialogType: 'CREATE',
   dialogLoading: false,
 })
 const request = reactive({
@@ -177,14 +179,8 @@ const request = reactive({
 })
 const list = reactive({
   sites: [],
-  currencies: [],
-  payTypes: [],
-  filteredPayTypes: [],
-  siteCurrencyIds: [],
   withdrawPlatform: [],
   siteWithdrawPlatform: [],
-  withdrawPlatformByPayType: [],
-  exclusionList: [],
   paymentInfo: [],
 })
 const page = reactive({
@@ -209,16 +205,6 @@ async function loadSites() {
   list.sites = ret
 }
 
-async function loadPayTypes() {
-  const { data: payType } = await getActivePaymentTypes()
-  list.payTypes = payType
-}
-
-async function loadCurrency() {
-  const { data: ret } = await getCurrencyNames()
-  list.currencies = ret
-}
-
 async function loadPayment() {
   const { data: ret } = await getAllPayments(request)
   list.paymentInfo = ret
@@ -226,7 +212,8 @@ async function loadPayment() {
 
 async function loadAffiliateFinancialConfig() {
   const { data: ret } = await getAffiliateFinancialConfigList(request)
-  page.records = ret
+  page.records = ret.records
+  page.pages = ret.pages
 }
 
 async function loadSiteWithdrawPlatform(siteId) {
@@ -247,37 +234,10 @@ async function loadWithdrawPlatform() {
   list.withdrawPlatform = ret.records
 }
 
-function filterPayTypeByCurrency() {
-  const currentSite = list.sites.find(s => s.id === request.siteId)
-  const currencyCodeList = currentSite.currency.split(',').map(currencyName => currencyName)
-  list.siteCurrencyIds = [
-    ...currencyCodeList.map(currencyName => {
-      const currency = list.currencies.find(c => c.currencyCode.toUpperCase() === currencyName.toUpperCase())
-      return currency ? currency.id : null
-    }).filter(Boolean)
-  ]
-  list.filteredPayTypes = list.payTypes.filter(payTypeByCurrencyID)
-  payTypeByExistingPayType()
-}
-
-function payTypeByCurrencyID (record) {
-  if (record.currencyIds) {
-    const currencyIdsList = record.currencyIds.split(',')
-    return currencyIdsList.filter(currencyId => list.siteCurrencyIds.includes(parseInt(currencyId))).length > 0
-  }
-}
-
-function payTypeByExistingPayType() {
-  list.filteredPayTypes = list.filteredPayTypes.filter(payType => {
-    return !page.records.some(record => record.paymentTypeCode === payType.code);
-  });
-}
-
 async function handleChangeSite() {
   await loadAffiliateFinancialConfig()
   await loadPayment()
   await loadSiteWithdrawPlatform(request.siteId)
-  filterPayTypeByCurrency()
 }
 
 function changeStatus(data, status) {
@@ -318,7 +278,6 @@ function create() {
       await createAffiliateFinancialConfig(form)
       uiControl.dialogVisible = false
       await loadAffiliateFinancialConfig()
-      payTypeByExistingPayType()
       ElMessage({ message: t('message.addSuccess'), type: 'success' })
     }
   })
@@ -341,7 +300,6 @@ function submit() {
   uiControl.dialogLoading = true
   if (uiControl.dialogType === 'CREATE') {
     create()
-    payTypeByExistingPayType()
   } else if (uiControl.dialogType === 'EDIT') {
     edit()
   }
@@ -349,7 +307,10 @@ function submit() {
 }
 
 function changePage(page) {
-  request.current = page
+  if (request.current >= 1) {
+    request.current = page
+    loadAffiliateFinancialConfig()
+  }
 }
 
 onMounted(async() => {
@@ -364,10 +325,7 @@ onMounted(async() => {
   await loadWithdrawPlatform()
   await loadSiteWithdrawPlatform(request.siteId)
   await loadPayment()
-  loadCurrency()
-  loadPayTypes()
   await loadAffiliateFinancialConfig()
-  filterPayTypeByCurrency()
 })
 </script>
 
