@@ -1354,6 +1354,11 @@ export default {
     winner: 'Winner',
     teamIcon: 'Team Icon',
     other: 'Other',
+    dailyDetail: 'Daily Detail',
+    dailySummary: 'Daily Summary',
+    officialWebData: 'Official Web Data',
+    packageWebData: 'Package Web Data',
+    payoutAmount: 'Payout Amount',
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
@@ -1911,6 +1916,7 @@ export default {
     'Image Setting': 'Image Setting',
     'Privi Christmas': 'Merry Christmas',
     'Affiliate APK Build': 'Affiliate APK Build',
+    'Affiliate Daily Summary': 'Affiliate Daily Summary',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
