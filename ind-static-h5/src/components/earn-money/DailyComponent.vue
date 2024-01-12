@@ -559,6 +559,7 @@ onMounted(() => {
 }
 
 .info-wrapper {
+  margin-bottom: 15px;
   .info-container {
     display: flex;
     flex-direction: column;
