@@ -894,11 +894,16 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-body {
-  .bankModal {
-    .el-dialog__body {
-      padding: 20px;
-    }
+.bankModal {
+  .el-dialog__body {
+    padding: 20px;
+  }
+
+  .el-row {
+    width: 100% !important;
+  }
+  .el-form-item__content {
+    width: 100%;
   }
 }
 .passwordModal .ant-modal {
