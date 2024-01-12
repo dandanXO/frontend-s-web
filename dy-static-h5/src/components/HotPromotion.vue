@@ -7,7 +7,7 @@
       :loading-claim="btnLoading"
       @daily-slot="handleSlot()"
     />
-    <PrivilegeInvitePromo
+    <PrivilegeInvite
       v-if="
         !isCommonPromo &&
         store.token &&
@@ -77,7 +77,7 @@ import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendP
 import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
-import PrivilegeInvitePromo from "../components/hotpromo/privilegeInviteA/PrivilegeInvite.vue";
+import PrivilegeInvite from "../components/hotpromo/privilegeInviteA/PrivilegeInvite.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -95,7 +95,7 @@ export default defineComponent({
     EsportQuiz,
     LotteryPromo,
     GiftPromo,
-    PrivilegeInvitePromo
+    PrivilegeInvite
   },
   props: {
     list: {
