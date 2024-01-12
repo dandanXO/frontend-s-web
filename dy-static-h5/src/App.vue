@@ -12,6 +12,7 @@ import { userStore } from "src/stores";
 import { cached } from "boot/cache";
 import { useRouter } from "vue-router";
 import { isAndroid, isHuaweiPhone } from "boot/utils";
+import axios from "axios";
 
 export default defineComponent({
   name: "App",
@@ -112,6 +113,32 @@ export default defineComponent({
         }
       });
     };
+
+    const getOnlineStatApi = async () => {
+      // console.log("Ok Online.");
+      const fpPromise = FingerprintJS.load();
+
+      const fp = await fpPromise;
+      const result = await fp.get();
+      const excludes = { value: ["timezone", "timeZoneOffset"] };
+      const allComponents = { ...result.components };
+      excludes.value.forEach((element) => {
+        delete allComponents[element];
+      });
+      const sidParam = FingerprintJS.hashComponents(allComponents);
+      const way = "h5";
+
+      if (sidParam) {
+        const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
+          params: {
+            way: way,
+            sid: sidParam,
+            siteCode: "dy2"
+          }
+        });
+      }
+    };
+
     onMounted(() => {
       checkSID();
       // initCsWeb();
@@ -119,6 +146,9 @@ export default defineComponent({
       if (isAndroid() && !isHuaweiPhone()) {
         window.screen.orientation.lock("portrait");
       }
+
+      setTimeout(getOnlineStatApi, 2000);
+      setInterval(getOnlineStatApi, 60000);
     });
   }
   /*test*/
