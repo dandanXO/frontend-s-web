@@ -1,18 +1,20 @@
 <template>
   <div class="table-record">
-    <q-select
-      allowClear
-      rounded
-      outlined
-      dense
-      color="primary"
-      style="width: 320px; margin: 10px auto 8px; color: #000"
-      v-model="platform"
-      :options="platformsList"
-      placeholder="选择平台"
-      @update:model-value="searchRecord"
-    ></q-select>
-
+    <div class="flex-div">
+      <span>选择平台：</span>
+      <q-select
+        allowClear
+        rounded
+        outlined
+        dense
+        color="primary"
+        style="width: 320px; margin: 10px auto 8px; color: #000"
+        v-model="platform"
+        :options="platformsList"
+        placeholder="选择平台"
+        @update:model-value="searchRecord"
+      ></q-select>
+    </div>
     <RecordComponent
       ref="recordRef"
       recordType="bethistory"
@@ -32,6 +34,7 @@ import moment from "moment/moment";
 import { userStore } from "src/stores";
 import {cached} from "boot/cache";
 import * as _ from "lodash"
+import {translateRecord} from "src/directives/translate";
 
 
 export default defineComponent({
@@ -121,6 +124,52 @@ export default defineComponent({
       });
     };
 
+    const getGameName = (gameName) => {
+      if (!gameName) {
+        return ''
+      }
+
+      switch (gameName) {
+        case 'IMES':
+          return 'IM电竞';
+        case 'TCG':
+          return 'TCG彩票';
+        case 'MGP':
+          return 'MG电子';
+        case 'CQ9':
+          return 'CQ电子';
+        case 'SABA':
+          return 'SABA体育';
+        case 'TFGaming':
+          return 'DY电竞 ';
+        case 'SW':
+          return 'SW电子';
+        case 'GPS':
+          return 'GPS捕鱼';
+        case 'IA':
+          return '小艾电竞 ';
+        case 'DT':
+          return '大唐棋牌';
+        case 'IM':
+          return 'IM体育';
+        case 'BBIN':
+          return 'BBIN真人, BBIN电子, BBIN彩票';
+        case 'KY':
+          return '开元棋牌';
+        case 'PT':
+          return 'PT电子';
+        case 'PG':
+          return 'PG电子';
+        case 'AG':
+          return 'AG真人, XIN电子';
+        case 'ALLBET':
+          return 'ALLBET真人';
+
+        default:
+          return gameName;
+      }
+    }
+
     const loadPlatformLists = () => {
       cached.get("PLATFORMS", () => api.get("/platform").then((response) => {
         return response
@@ -128,12 +177,12 @@ export default defineComponent({
         console.log(data);
         _.each(data, function (item, index) {
           var option = {
-            label: item.name,
-            value: item.code,
+            label: getGameName(item.name),
+            value: item.name,
           }
           platformsList.value.push(option);
         })
-
+        console.log(platformsList.value);
       });
     }
 
@@ -211,4 +260,15 @@ export default defineComponent({
   }
 });
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.flex-div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  span {
+    font-size: 14px;
+    padding-left: 5px;
+  }
+}
+</style>
