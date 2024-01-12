@@ -2,7 +2,7 @@
   <div class="section-wrapper">
     <div class="title-wrapper">
       <div class="title">My Team</div>
-      <div class="team-member-container">
+      <div class="team-member-container" v-if="memberVIPData.totalMembers > 0">
         <div class="member-imgs" :style="`width: ${40 + limitedMembers * 15}px`">
           <q-avatar v-for="n in limitedMembers" :key="n" size="30px" class="overlapping" :style="`left: ${n * 15}px`">
             <img :src="getRandomImageSource(n)" />
@@ -81,7 +81,7 @@
     </div>
   </div>
 
-  <div class="content-wrapper">
+  <!-- <div class="content-wrapper">
     <div class="top-container">
       <div class="left-container">
         <div class="title">Betting Amount</div>
@@ -97,13 +97,13 @@
       <div class="right-container text-right">
         <div class="title">Rebate Amount</div>
         <div class="value">₹ {{ convertToCommaAmount(totalBetRabteDailyDetailsData.rebateAmount, false) }}</div>
-        <!-- <div class="data-wrapper right">
+        <div class="data-wrapper right">
           <div class="img-wrapper">
             <img src="../../assets/images/earn-money/cash.png" />
           </div>
           <div class="data-txt">Cash In:</div>
           <div class="data-amount">0</div>
-        </div> -->
+        </div>
       </div>
     </div>
     <div class="chart">
@@ -126,12 +126,62 @@
         <img src="../../assets/images/earn-money/arrow_right.png" />
       </div>
 
-      <!-- <Bar ref="chartRef" :data="chartData.data" :options="chartData.options" /> -->
+      <Bar ref="chartRef" :data="chartData.data" :options="chartData.options" />
+    </div>
+  </div> -->
+
+  <div class="info-wrapper">
+    <div class="info-container">
+      <div class="info-row">
+        <div class="info-content-item">
+          <div class="info-title">
+            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-01.png" /></div>
+            <div class="info-txt">Myself betting amount:</div>
+          </div>
+          <div class="info-amount">{{ store.currency.value }} {{ teamAmountData.myselfBetting }}</div>
+        </div>
+
+        <div class="info-content-item">
+          <div class="info-title">
+            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-02.png" /></div>
+            <div class="info-txt">Myself rebate:</div>
+          </div>
+          <div class="info-amount">{{ store.currency.value }} {{ teamAmountData.myselfRebate }}</div>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-content-item">
+          <div class="info-title">
+            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-03.png" /></div>
+            <div class="info-txt">Team betting amount:</div>
+          </div>
+          <div class="info-amount">{{ store.currency.value }} {{ teamAmountData.teamBetting }}</div>
+        </div>
+
+        <div class="info-content-item">
+          <div class="info-title">
+            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-04.png" /></div>
+            <div class="info-txt">Team rebate:</div>
+          </div>
+          <div class="info-amount">{{ store.currency.value }} {{ teamAmountData.teamRebate }}</div>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-content-item">
+          <div class="info-title">
+            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-05.png" /></div>
+            <div class="info-txt">Total:</div>
+            <div class="info-amount">{{ store.currency.value }} 155.42</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <LoadingComponent v-if="isLoading.referredBetRebateRecord"></LoadingComponent>
-  <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Member"></NoInfoComponent>
+  <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Member" shortenContainer="true"></NoInfoComponent>
   <div v-else class="member-info-container">
     <div class="section-wrapper">
       <div class="title">Daily Report</div>
@@ -352,52 +402,72 @@ const onSwiperArrowClick = (isRight) => {
   else swiperNav.slidePrev();
 };
 
-const totalBetRabteDailyDetailsData = reactive({
-  recordTime: "",
-  validBet: 0,
-  rebateAmount: 0,
-  memberCount: 0
-});
-const getChartAPI = () => {
-  const startDate = moment().subtract(6, "d").format("YYYY-MM-DD");
-  const endDate = moment().format("YYYY-MM-DD");
+// const totalBetRabteDailyDetailsData = reactive({
+//   recordTime: "",
+//   validBet: 0,
+//   rebateAmount: 0,
+//   memberCount: 0
+// });
+// const getChartAPI = () => {
+//   const startDate = moment().subtract(6, "d").format("YYYY-MM-DD");
+//   const endDate = moment().format("YYYY-MM-DD");
 
-  api.get(`/session/member/betRebateDailyDetails?start=${startDate}&end=${endDate}`).then((res) => {
+//   api.get(`/session/member/betRebateDailyDetails?start=${startDate}&end=${endDate}`).then((res) => {
+//     const { code, data } = res;
+//     if (code === 0) {
+//       data.forEach((e, i) => {
+//         totalBetRabteDailyDetailsData.validBet += e.validBet;
+//         totalBetRabteDailyDetailsData.rebateAmount += e.rebateAmount;
+//         totalBetRabteDailyDetailsData.memberCount += e.memberCount;
+
+//         // chartRef.value.chart.data.datasets[0].data[i] = e.validBet;
+
+//         chartData.data.datasets[0].data[i] = e.memberCount;
+//         chartData.data.datasets[0].borderRadius[i] = 6;
+//         chartData.data.labels[i] = moment(e.recordTime).format("DD MMM");
+
+//         chartData2.data.datasets[0].data[i] = e.validBet;
+//         chartData2.data.datasets[0].borderRadius[i] = 6;
+//         chartData2.data.labels[i] = moment(e.recordTime).format("DD MMM");
+//       });
+
+//       const maxChart = Math.max(...chartData.data.datasets[0].data);
+//       chartData.data.datasets[0].data.forEach((e, i) => {
+//         if (e === maxChart) chartData.data.datasets[0].backgroundColor[i] = "#00D1FF";
+//         else chartData.data.datasets[0].backgroundColor[i] = "#574BA0";
+//       });
+
+//       const maxChart2 = Math.max(...chartData2.data.datasets[0].data);
+//       chartData2.data.datasets[0].data.forEach((e, i) => {
+//         if (e === maxChart2) chartData2.data.datasets[0].backgroundColor[i] = "#FFB100";
+//         else chartData2.data.datasets[0].backgroundColor[i] = "#574BA0";
+//       });
+
+//       chartRef.value.chart.update();
+//       chartRef.value.chart.render();
+
+//       chartRef2.value.chart.update();
+//       chartRef2.value.chart.render();
+//     }
+//   });
+// };
+
+const teamAmountData = reactive({
+  myselfBetting: 0,
+  myselfRebate: 0,
+  teamBetting: 0,
+  teamRebate: 0
+});
+
+const getTeamAmountData = () => {
+  api.get(`/session/member/teamAmountData`).then((res) => {
     const { code, data } = res;
     if (code === 0) {
-      data.forEach((e, i) => {
-        totalBetRabteDailyDetailsData.validBet += e.validBet;
-        totalBetRabteDailyDetailsData.rebateAmount += e.rebateAmount;
-        totalBetRabteDailyDetailsData.memberCount += e.memberCount;
-
-        // chartRef.value.chart.data.datasets[0].data[i] = e.validBet;
-
-        chartData.data.datasets[0].data[i] = e.memberCount;
-        chartData.data.datasets[0].borderRadius[i] = 6;
-        chartData.data.labels[i] = moment(e.recordTime).format("DD MMM");
-
-        chartData2.data.datasets[0].data[i] = e.validBet;
-        chartData2.data.datasets[0].borderRadius[i] = 6;
-        chartData2.data.labels[i] = moment(e.recordTime).format("DD MMM");
-      });
-
-      const maxChart = Math.max(...chartData.data.datasets[0].data);
-      chartData.data.datasets[0].data.forEach((e, i) => {
-        if (e === maxChart) chartData.data.datasets[0].backgroundColor[i] = "#00D1FF";
-        else chartData.data.datasets[0].backgroundColor[i] = "#574BA0";
-      });
-
-      const maxChart2 = Math.max(...chartData2.data.datasets[0].data);
-      chartData2.data.datasets[0].data.forEach((e, i) => {
-        if (e === maxChart2) chartData2.data.datasets[0].backgroundColor[i] = "#FFB100";
-        else chartData2.data.datasets[0].backgroundColor[i] = "#574BA0";
-      });
-
-      chartRef.value.chart.update();
-      chartRef.value.chart.render();
-
-      chartRef2.value.chart.update();
-      chartRef2.value.chart.render();
+      console.log(data);
+      // teamAmountData.myselfBetting = myselfBetting;
+      // teamAmountData.myselfRebate = myselfRebate;
+      // teamAmountData.teamBetting = teamBetting;
+      // teamAmountData.teamRebate = teamRebate;
     }
   });
 };
@@ -408,7 +478,8 @@ onMounted(() => {
   getReferredBetRebateRecord();
 
   getVIPApi();
-  getChartAPI();
+  // getTeamAmountData();
+  // getChartAPI();
 });
 </script>
 
@@ -482,6 +553,66 @@ onMounted(() => {
         &.ba {
           background: #ffa800;
         }
+      }
+    }
+  }
+}
+
+.info-wrapper {
+  .info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    .info-row {
+      display: flex;
+      gap: 15px;
+
+      &:last-child {
+        .info-content-item {
+          padding-top: 16px;
+          padding-bottom: 16px;
+        }
+
+        .info-amount {
+          padding-top: 0;
+        }
+      }
+    }
+
+    .info-content-item {
+      width: 100%;
+      background: linear-gradient(180deg, rgba(139, 54, 248, 0.4) 0%, rgba(51, 74, 214, 0.4) 100%);
+      padding: 12px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+
+      .info-amount {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        font-size: 19px;
+        font-weight: 700;
+        margin-left: auto;
+        margin-top: auto;
+        padding-top: 12px;
+      }
+
+      .info-title {
+        display: flex;
+        gap: 8px;
+      }
+
+      .info-icon {
+        img {
+          display: block;
+          width: 27px;
+        }
+      }
+
+      .info-txt {
+        margin-top: 4px;
+        font-weight: 700;
       }
     }
   }
