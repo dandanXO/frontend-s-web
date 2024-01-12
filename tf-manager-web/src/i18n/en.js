@@ -1906,7 +1906,7 @@ export default {
     'Image Setting': 'Image Setting',
     'Privi Christmas': 'Merry Christmas',
     'Affiliate APK Build': 'Affiliate APK Build',
-    'Affiliate Daily Summary': 'Affiliate Daily Summary',
+    'Channel Summary': 'Channel Summary',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
