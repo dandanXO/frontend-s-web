@@ -1463,7 +1463,7 @@ export default defineComponent({
         case 'CQ9':
           return 'CQ电子';
         case 'SABA':
-          return 'IM电竞';
+          return 'SABA体育';
         case 'TFGaming':
           return 'DY电竞 ';
         case 'SW':
