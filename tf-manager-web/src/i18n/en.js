@@ -1460,6 +1460,7 @@ export default {
     twoPasswordNotMatch: 'Two password does not match',
     unlockMemberSuccess: 'Unlock Member Success',
     unlockUserSuccess: 'Unlock User Success',
+    updateBelongTypeSuccess: 'Update Web Belong Type Success',
     updateCommissionModelSuccess: 'Update Commission Model Success',
     updateCommissionRateSuccess: 'Update Commission Rate Success',
     updateFinancialLevelSuccess: 'Update Financial Level Success',

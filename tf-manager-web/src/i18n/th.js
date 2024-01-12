@@ -1191,6 +1191,7 @@ export default {
     twoPasswordNotMatch: 'รหัสผ่านทั้งสองไม่ตรงกัน',
     unlockMemberSuccess: 'สมาชิกปลดล็อคสำเร็จ',
     unlockUserSuccess: 'ปลดล็อกความสำเร็จของผู้ใช้',
+    updateBelongTypeSuccess: 'อัปเดตประเภทหน้าเว็บสำเร็จแล้ว',
     updateCommissionModelSuccess: 'อัปเดตความสำเร็จของโมเดลคอมมิชชั่น',
     updateCommissionRateSuccess: 'อัปเดตอัตราค่าคอมมิชชั่นสำเร็จ',
     updateFinancialLevelSuccess: 'อัพเดทความสำเร็จระดับการเงิน',
