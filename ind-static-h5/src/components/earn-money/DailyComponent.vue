@@ -173,7 +173,7 @@
           <div class="info-title">
             <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-05.png" /></div>
             <div class="info-txt">Total:</div>
-            <div class="info-amount">{{ store.currency.value }} 155.42</div>
+            <div class="info-amount">{{ store.currency.value }} {{ teamAmountData.totalRebate }}</div>
           </div>
         </div>
       </div>
@@ -456,18 +456,19 @@ const teamAmountData = reactive({
   myselfBetting: 0,
   myselfRebate: 0,
   teamBetting: 0,
-  teamRebate: 0
+  teamRebate: 0,
+  totalRebate: 0
 });
 
 const getTeamAmountData = () => {
-  api.get(`/session/member/teamAmountData`).then((res) => {
+  api.get(`/session/member/betRebateDailyDetails`).then((res) => {
     const { code, data } = res;
     if (code === 0) {
-      console.log(data);
-      // teamAmountData.myselfBetting = myselfBetting;
-      // teamAmountData.myselfRebate = myselfRebate;
-      // teamAmountData.teamBetting = teamBetting;
-      // teamAmountData.teamRebate = teamRebate;
+      teamAmountData.myselfBetting = data.selfValidBet;
+      teamAmountData.myselfRebate = data.selfRebate;
+      teamAmountData.teamBetting = data.teamValidBet;
+      teamAmountData.teamRebate = data.teamRebate;
+      teamAmountData.totalRebate = data.totalRebate;
     }
   });
 };
@@ -478,7 +479,7 @@ onMounted(() => {
   getReferredBetRebateRecord();
 
   getVIPApi();
-  // getTeamAmountData();
+  getTeamAmountData();
   // getChartAPI();
 });
 </script>
