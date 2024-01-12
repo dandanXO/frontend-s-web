@@ -1893,7 +1893,7 @@ export default {
     'Image Setting': '图片设置',
     'Privi Christmas': '圣诞快乐',
     'Affiliate APK Build': '代理构建APK',
-    'Affiliate Daily Summary': '代理日报总览',
+    'Channel Summary': '渠道报表',
   },
   google: {
     google_auth_menu: '谷歌验证',
