@@ -340,18 +340,25 @@
               <div class="rebate-header">首存金额</div>
               <div class="rebate-header">今日已获返利</div>
             </div>
-            <div class="no-item-table">
+            <div class="no-item-table" v-if="tableRecords.length === 0">
               <p>暂无数据</p>
             </div>
-            <div class="listing-footer">
-              <div class="footer-div">
-                <span class="pointer-s prev-page">&nbsp;&lt;&nbsp;&nbsp;</span>
-                <div class="footer-page">
-                  <span id="record_page">1/1</span>
-                </div>
-                <span class="pointer-s next-page">&nbsp;&nbsp;&gt;&nbsp;</span>
-              </div>
+            <div class="record-table" v-else>
+              <template v-for="list of tableRecords">
+                <div>{{ list.loginName }}</div>
+                <div>{{ list.depositOrBet }}</div>
+                <div>{{ list.bonusAmount }}</div>
+              </template>
             </div>
+            <!--            <div class="listing-footer">-->
+            <!--              <div class="footer-div">-->
+            <!--                <span class="pointer-s prev-page">&nbsp;&lt;&nbsp;&nbsp;</span>-->
+            <!--                <div class="footer-page">-->
+            <!--                  <span id="record_page">1/1</span>-->
+            <!--                </div>-->
+            <!--                <span class="pointer-s next-page">&nbsp;&nbsp;&gt;&nbsp;</span>-->
+            <!--              </div>-->
+            <!--            </div>-->
           </div>
         </div>
       </el-dialog>
@@ -373,6 +380,7 @@ export default defineComponent({
     const route = useRoute();
     const store = userStore();
     const activeKey = ref(1);
+
     const isCheckRecordModalVisible = ref(false);
     const rebateInfo = ref({
       fifteenDaysRebate: 0,
@@ -392,7 +400,7 @@ export default defineComponent({
     };
 
     const toggleCheckRecordModal = (toggleStatus) => {
-      if (toggleStatus === true) {
+      if (!store.hasToken()) {
         ElMessageBox.alert("请登录后再操作", "系统提示", {
           autofocus: false,
           center: true,
@@ -405,16 +413,19 @@ export default defineComponent({
       isCheckRecordModalVisible.value = toggleStatus;
     };
 
+    const tableRecords = ref([]);
     const getRecords = () => {
       const params = {
-        recordType: checkRecordFormData.recordType,
-        privilegeType: checkRecordFormData.privilegeType,
-        queryTime: checkRecordFormData.date,
-        recommendedName: checkRecordFormData.user,
+        rebateType: checkRecordFormData.recordType,
+        bonusType: checkRecordFormData.privilegeType,
+        date: checkRecordFormData.date,
+        loginName: checkRecordFormData.user,
         token: store.token
       };
+      tableRecords.value = [];
       getRecommendPrivilegeRecord(params).then((data) => {
         console.log("here", data);
+        tableRecords.value = data.data;
       });
     };
 
@@ -439,7 +450,8 @@ export default defineComponent({
       getRecords,
       checkRecordFormData,
       shareInvite,
-      rebateInfo
+      rebateInfo,
+      tableRecords
     };
   }
 });

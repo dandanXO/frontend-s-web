@@ -158,6 +158,8 @@ export default defineComponent({
       } else {
         if (promo.redirectUrl.includes("page-vip")) {
           router.push("/vip");
+        } else if (promo.redirectUrl.includes("Dongying-refer")) {
+          router.push("/privilege/invite");
         } else {
           router.push({ name: "promotion", query: { name: promo.redirectUrl } });
           isPromoDetail.value = true;

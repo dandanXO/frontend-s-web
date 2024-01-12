@@ -378,7 +378,7 @@ export default defineComponent({
       getVerificationCode()
         .then(res => {
           if (res.code === 0) {
-            verificationImg.value = 'data:image/png;base64,' + res.data.img
+            verificationImg.value = res.data.img
             state.regForm.codeId = res.data.id
           }
         })
@@ -715,7 +715,7 @@ export default defineComponent({
       onGetImage: async () => {
         state.dialogLoading = true
         state.coordinates.splice(0)
-        const { data } = await getVerificationImage('DY2')
+        const { data } = await getVerificationImage()
         Object.keys({ ...data.data }).forEach(field => {
           state[field] = data.data[field]
         })

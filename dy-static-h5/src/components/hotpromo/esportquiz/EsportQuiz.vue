@@ -164,17 +164,17 @@
             <th style="width: 25%">日期</th>
             <th style="width: 35%">答案</th>
             <th style="width: 20%">中奖记录</th>
-            <th style="width: 10%">中奖次数</th>
-            <th style="width: 10%">参与次数</th>
+            <!--            <th style="width: 10%">中奖次数</th>-->
+            <!--            <th style="width: 10%">参与次数</th>-->
           </tr>
           <tr v-for="(e, i) in tableInfo" :key="`table-info-${i}`">
             <td>{{ e.time }}</td>
             <td>{{ e.answer }}</td>
             <td :class="e.className">{{ e.statusText }}</td>
-            <template v-if="i === 0">
-              <td rowspan="2">{{ quizWonTimesRecord }}</td>
-              <td rowspan="2">{{ quizAttendTimesRecord }}</td>
-            </template>
+            <!--            <template v-if="i === 0">-->
+            <!--              <td rowspan="2">{{ quizWonTimesRecord }}</td>-->
+            <!--              <td rowspan="2">{{ quizAttendTimesRecord }}</td>-->
+            <!--            </template>-->
           </tr>
         </table>
         <table v-else class="record-table" id="record-table"></table>
@@ -520,7 +520,7 @@ function onSubmitClick() {
     margin: 0 auto;
 
     .prize-quiz-jc-container {
-      background: url("../../../assets/images/promotion/hotpromo/esportquiz/bg_jc_7.png") center no-repeat;
+      background: url("../../../assets/images/promotion/hotpromo/esportquiz/bg_jc_8.png") center no-repeat;
       background-size: contain;
       padding-top: 30px;
       margin: 50px auto;

@@ -161,7 +161,7 @@
       <div class="gift-container">
         <div v-for="(e, i) in giftListData" :key="`gift-list-${i}`" class="gift-item-box">
           <div>
-            <img :src="imgURL + e.siteId + '/' + e.desktopImgUrl" />
+            <img :src="imgURL + e.desktopImgUrl" />
           </div>
           <div class="gift-name">{{ e.name }}</div>
           <div class="gift-desc">需要流水金额：{{ e.redeemPoints }}</div>
@@ -188,7 +188,7 @@ import { TweenMax } from "gsap";
 import * as _ from "lodash";
 
 const store = userStore();
-const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/gifts/";
+const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
 
 const isGiftRecordLoading = ref(false);
 const isGiftRecordModalOpen = ref(false);

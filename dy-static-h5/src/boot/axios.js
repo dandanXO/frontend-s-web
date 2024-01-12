@@ -106,6 +106,7 @@ export default boot(({ app, router }) => {
       } else {
         if (
           (window.location.pathname !== "/promotion" ||
+            window.location.pathname !== "/privilege/invite" ||
             window.location.pathname !== "/deposit" ||
             window.location.pathname !== "/invitefriend" ||
             window.location.pathname !== "/vip") &&

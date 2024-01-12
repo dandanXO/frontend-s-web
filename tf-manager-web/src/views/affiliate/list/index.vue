@@ -2,8 +2,18 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-input v-model="request.loginName" size="small" style="width: 200px;" :placeholder="t('fields.loginName')" />
-        <el-input v-model="request.affiliateCode" size="small" style="width: 200px; margin-left: 5px;" :placeholder="t('fields.affiliateCode')" />
+        <el-input
+          v-model="request.loginName"
+          size="small"
+          style="width: 200px;"
+          :placeholder="t('fields.loginName')"
+        />
+        <el-input
+          v-model="request.affiliateCode"
+          size="small"
+          style="width: 200px; margin-left: 5px;"
+          :placeholder="t('fields.affiliateCode')"
+        />
         <el-select
           clearable
           v-model="request.affiliateStatus"
@@ -15,6 +25,20 @@
           <el-option
             v-for="item in uiControl.memberState"
             :key="item.key"
+            :label="item.displayName"
+            :value="item.value"
+          />
+        </el-select>
+        <el-select
+          v-model="request.belongType"
+          size="small"
+          :placeholder="t('fields.belongType')"
+          class="filter-item"
+          style="width: 120px;margin-left: 5px"
+        >
+          <el-option
+            v-for="item in uiControl.belongType"
+            :key="item.id"
             :label="item.displayName"
             :value="item.value"
           />
@@ -34,13 +58,27 @@
             :value="item.id"
           />
         </el-select>
-        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadAffiliates()">
+        <el-button
+          style="margin-left: 20px"
+          icon="el-icon-search"
+          size="mini"
+          type="success"
+          @click="loadAffiliates()"
+        >
           {{ t('fields.search') }}
         </el-button>
-        <el-button size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
+        <el-button size="mini" type="warning" @click="resetQuery()">
+          {{ t('fields.reset') }}
+        </el-button>
       </div>
       <div class="btn-group">
-        <el-button icon="el-icon-plus" size="mini" type="primary" v-permission="['sys:affiliate:add']" @click="showDialog('CREATE')">
+        <el-button
+          icon="el-icon-plus"
+          size="mini"
+          type="primary"
+          v-permission="['sys:affiliate:add']"
+          @click="showDialog('CREATE')"
+        >
           {{ t('fields.add') }}
         </el-button>
         <el-button
@@ -48,7 +86,8 @@
           type="primary"
           v-permission="['sys:affiliate:export']"
           @click="requestExportExcel"
-        >{{ t('fields.requestExportToExcel') }}
+        >
+          {{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
     </div>
@@ -59,8 +98,13 @@
         </div>
       </template>
 
-      <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
-                 :close-on-click-modal="false" :close-on-press-escape="false"
+      <el-dialog
+        :title="t('fields.exportToExcel')"
+        v-model="uiControl.messageVisible"
+        append-to-body
+        width="500px"
+        :close-on-click-modal="false"
+        :close-on-press-escape="false"
       >
         <span>{{ t('message.requestExportToExcelDone1') }}</span>
         <router-link :to="`/site-management/download-manager`">
@@ -71,8 +115,21 @@
         <span>{{ t('message.requestExportToExcelDone2') }}</span>
       </el-dialog>
 
-      <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="580px">
-        <el-form v-if="uiControl.dialogType === 'CREATE'" ref="memberForm" :model="form" :rules="formRules" :inline="true" size="small" label-width="150px">
+      <el-dialog
+        :title="uiControl.dialogTitle"
+        v-model="uiControl.dialogVisible"
+        append-to-body
+        width="580px"
+      >
+        <el-form
+          v-if="uiControl.dialogType === 'CREATE'"
+          ref="memberForm"
+          :model="form"
+          :rules="formRules"
+          :inline="true"
+          size="small"
+          label-width="150px"
+        >
           <el-form-item :label="t('fields.site')" prop="siteId">
             <el-select
               v-model="form.siteId"
@@ -92,7 +149,11 @@
             </el-select>
           </el-form-item>
           <el-form-item :label="t('fields.affiliateCode')" prop="affiliateCode">
-            <el-input v-model="form.affiliateCode" style="width: 350px;" maxlength="11" />
+            <el-input
+              v-model="form.affiliateCode"
+              style="width: 350px;"
+              maxlength="11"
+            />
           </el-form-item>
           <!-- <el-form-item :label="t('fields.affiliateLevel')" prop="affiliateLevel">
             <el-select
@@ -110,7 +171,10 @@
               />
             </el-select>
           </el-form-item> -->
-          <el-form-item :label="t('fields.commissionModel')" prop="commissionModel">
+          <el-form-item
+            :label="t('fields.commissionModel')"
+            prop="commissionModel"
+          >
             <el-select
               v-model="form.commissionModel"
               size="small"
@@ -143,32 +207,95 @@
             </el-select>
           </el-form-item>
           <el-form-item :label="t('fields.loginName')" prop="loginName">
-            <el-input v-model="form.loginName" style="width: 350px;" maxlength="11" />
+            <el-input
+              v-model="form.loginName"
+              style="width: 350px;"
+              maxlength="11"
+            />
           </el-form-item>
           <el-form-item :label="t('fields.password')" prop="password">
-            <el-input v-model="form.password" type="password" style="width: 350px;" maxlength="11" />
+            <el-input
+              v-model="form.password"
+              type="password"
+              style="width: 350px;"
+              maxlength="11"
+            />
           </el-form-item>
-          <el-form-item :label="t('fields.reenterPassword')" prop="reEnterPassword">
-            <el-input v-model="form.reEnterPassword" type="password" style="width: 350px;" maxlength="11" />
+          <el-form-item
+            :label="t('fields.reenterPassword')"
+            prop="reEnterPassword"
+          >
+            <el-input
+              v-model="form.reEnterPassword"
+              type="password"
+              style="width: 350px;"
+              maxlength="11"
+            />
           </el-form-item>
           <el-form-item :label="t('fields.telephone')" prop="telephone">
-            <el-input v-model="form.telephone" style="width: 350px;" maxlength="20" />
+            <el-input
+              v-model="form.telephone"
+              style="width: 350px;"
+              maxlength="20"
+            />
           </el-form-item>
           <el-form-item :label="t('fields.email')" prop="email">
-            <el-input v-model="form.email" style="width: 350px;" maxlength="50" />
+            <el-input
+              v-model="form.email"
+              style="width: 350px;"
+              maxlength="50"
+            />
           </el-form-item>
           <el-form-item :label="t('fields.commission')" prop="commission">
-            <el-input v-model="form.commission" style="width: 350px;" :maxlength="uiControl.commissionMax" @keypress="restrictCommissionDecimalInput($event)" />
+            <el-input
+              v-model="form.commission"
+              style="width: 350px;"
+              :maxlength="uiControl.commissionMax"
+              @keypress="restrictCommissionDecimalInput($event)"
+            />
           </el-form-item>
           <el-form-item :label="t('fields.revenueShare')" prop="revenueShare">
-            <el-input v-model="form.revenueShare" style="width: 350px;" :maxlength="uiControl.reveunueMax" @keypress="restrictRevenueDecimalInput($event)" />
+            <el-input
+              v-model="form.revenueShare"
+              style="width: 350px;"
+              :maxlength="uiControl.reveunueMax"
+              @keypress="restrictRevenueDecimalInput($event)"
+            />
+          </el-form-item>
+          <el-form-item :label="t('fields.belongType')" prop="belongType">
+            <el-select
+              v-model="form.belongType"
+              size="small"
+              :placeholder="t('fields.belongType')"
+              class="filter-item"
+              style="width: 350px"
+            >
+              <el-option
+                v-for="item in uiControl.belongType"
+                :key="item.key"
+                :label="item.displayName"
+                :value="item.value"
+              />
+            </el-select>
           </el-form-item>
           <div class="dialog-footer">
-            <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-            <el-button type="primary" @click="addAffiliate">{{ t('fields.confirm') }}</el-button>
+            <el-button @click="uiControl.dialogVisible = false">
+              {{ t('fields.cancel') }}
+            </el-button>
+            <el-button type="primary" @click="addAffiliate">
+              {{ t('fields.confirm') }}
+            </el-button>
           </div>
         </el-form>
-        <el-form v-if="uiControl.dialogType === 'DISABLE'" ref="freezeMemberForm" :model="freezeForm" :rules="freezeFormRules" :inline="true" size="small" label-width="150px">
+        <el-form
+          v-if="uiControl.dialogType === 'DISABLE'"
+          ref="freezeMemberForm"
+          :model="freezeForm"
+          :rules="freezeFormRules"
+          :inline="true"
+          size="small"
+          label-width="150px"
+        >
           <el-form-item :label="t('fields.disableType')" prop="freezeType">
             <el-select
               v-model="freezeForm.freezeType"
@@ -201,41 +328,77 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item :label="t('fields.remark')" prop="remark" :required="freezeForm.reason === 'Others'">
-            <el-input type="textarea" v-model="freezeForm.remark" :rows="6" style="width: 350px;" maxlength="500" show-word-limit />
+          <el-form-item
+            :label="t('fields.remark')"
+            prop="remark"
+            :required="freezeForm.reason === 'Others'"
+          >
+            <el-input
+              type="textarea"
+              v-model="freezeForm.remark"
+              :rows="6"
+              style="width: 350px;"
+              maxlength="500"
+              show-word-limit
+            />
           </el-form-item>
           <div class="dialog-footer">
-            <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-            <el-button type="primary" @click="freeze">{{ t('fields.confirm') }}</el-button>
+            <el-button @click="uiControl.dialogVisible = false">
+              {{ t('fields.cancel') }}
+            </el-button>
+            <el-button type="primary" @click="freeze">
+              {{ t('fields.confirm') }}
+            </el-button>
           </div>
         </el-form>
       </el-dialog>
-      <el-table :data="page.records" ref="table"
-                v-loading="page.loading"
-                row-key="id"
-                size="mini"
-                :resizable="true"
-                highlight-current-row
-                :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
-                :empty-text="t('fields.noData')"
+      <el-table
+        :data="page.records"
+        ref="table"
+        v-loading="page.loading"
+        row-key="id"
+        size="mini"
+        :resizable="true"
+        highlight-current-row
+        :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+        :empty-text="t('fields.noData')"
       >
-        <el-table-column prop="loginName" :label="t('fields.loginName')" width="180">
-          <template #default="scope" v-if="hasPermission(['sys:affiliate:detail'])">
+        <el-table-column
+          prop="loginName"
+          :label="t('fields.loginName')"
+          width="180"
+        >
+          <template
+            #default="scope"
+            v-if="hasPermission(['sys:affiliate:detail'])"
+          >
             <router-link :to="`details/${scope.row.id}?site=${request.siteId}`">
               <el-link type="primary">{{ scope.row.loginName }}</el-link>
             </router-link>
           </template>
         </el-table-column>
-        <el-table-column prop="affiliateCode" :label="t('fields.affiliateCode')" width="150">
+        <el-table-column
+          prop="affiliateCode"
+          :label="t('fields.affiliateCode')"
+          width="150"
+        >
           <template #default="scope">
             <span v-if="scope.row.affiliateCode === null">-</span>
-            <span v-if="scope.row.affiliateCode !== null">{{ scope.row.affiliateCode }}</span>
+            <span v-if="scope.row.affiliateCode !== null">
+              {{ scope.row.affiliateCode }}
+            </span>
           </template>
         </el-table-column>
-        <el-table-column prop="affiliateLevel" :label="t('fields.affiliateLevel')" width="150">
+        <el-table-column
+          prop="affiliateLevel"
+          :label="t('fields.affiliateLevel')"
+          width="150"
+        >
           <template #default="scope">
             <span v-if="scope.row.affiliateLevel === null">-</span>
-            <span v-if="scope.row.affiliateLevel !== null">{{ scope.row.affiliateLevel }}</span>
+            <span v-if="scope.row.affiliateLevel !== null">
+              {{ scope.row.affiliateLevel }}
+            </span>
           </template>
         </el-table-column>
         <!-- <el-table-column prop="commission" :label="t('fields.commission')" width="120">
@@ -250,24 +413,60 @@
             <span v-if="scope.row.revenueShare !== null">{{ scope.row.revenueShare * 100 }} %</span>
           </template>
         </el-table-column> -->
-        <el-table-column prop="downlineMember" :label="t('fields.totalDownlineMembers')" width="160">
+        <el-table-column
+          prop="downlineMember"
+          :label="t('fields.totalDownlineMembers')"
+          width="160"
+        >
           <template #default="scope">
             <span v-if="scope.row.downlineMember === null">0</span>
-            <span v-if="scope.row.downlineMember !== null">{{ scope.row.downlineMember }}</span>
+            <span v-if="scope.row.downlineMember !== null">
+              {{ scope.row.downlineMember }}
+            </span>
           </template>
         </el-table-column>
-        <el-table-column prop="downlineAffiliate" :label="t('fields.totalDownlineAffiliates')" width="160">
+        <el-table-column
+          prop="downlineAffiliate"
+          :label="t('fields.totalDownlineAffiliates')"
+          width="160"
+        >
           <template #default="scope">
             <span v-if="scope.row.downlineAffiliate === null">0</span>
-            <span v-if="scope.row.downlineAffiliate !== null">{{ scope.row.downlineAffiliate }}</span>
+            <span v-if="scope.row.downlineAffiliate !== null">
+              {{ scope.row.downlineAffiliate }}
+            </span>
           </template>
         </el-table-column>
-        <el-table-column prop="affiliateStatus" :label="t('fields.affiliateStatus')" width="120">
+        <el-table-column
+          prop="affiliateStatus"
+          :label="t('fields.affiliateStatus')"
+          width="120"
+        >
           <template #default="scope">
-            <el-tag v-if="scope.row.affiliateStatus === 'APPLY'" size="mini">{{ scope.row.affiliateStatus }}</el-tag>
-            <el-tag v-if="scope.row.affiliateStatus === 'NORMAL'" type="success" size="mini">{{ scope.row.affiliateStatus }}</el-tag>
-            <el-tag v-if="scope.row.affiliateStatus === 'DISABLE'" type="danger" size="mini">{{ scope.row.affiliateStatus }}</el-tag>
-            <el-tag v-if="scope.row.affiliateStatus === null" type="info" size="mini">-</el-tag>
+            <el-tag v-if="scope.row.affiliateStatus === 'APPLY'" size="mini">
+              {{ scope.row.affiliateStatus }}
+            </el-tag>
+            <el-tag
+              v-if="scope.row.affiliateStatus === 'NORMAL'"
+              type="success"
+              size="mini"
+            >
+              {{ scope.row.affiliateStatus }}
+            </el-tag>
+            <el-tag
+              v-if="scope.row.affiliateStatus === 'DISABLE'"
+              type="danger"
+              size="mini"
+            >
+              {{ scope.row.affiliateStatus }}
+            </el-tag>
+            <el-tag
+              v-if="scope.row.affiliateStatus === null"
+              type="info"
+              size="mini"
+            >
+              -
+            </el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="site" :label="t('fields.site')" width="120">
@@ -276,21 +475,57 @@
             <span v-if="scope.row.site !== null">{{ scope.row.site }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="balance" :label="t('fields.balance')" width="120">
+        <el-table-column
+          prop="belongType"
+          :label="t('fields.belongType')"
+          width="120"
+        >
           <template #default="scope">
-            $ <span v-formatter="{data: scope.row.balance,type: 'money'}" />
+            <span v-if="scope.row.belongType === 'OFFICIAL'">
+              {{ t('fields.affiliate.OFFICIAL') }}
+            </span>
+            <span v-if="scope.row.belongType === 'PACKAGE'">
+              {{ t('fields.affiliate.PACKAGE') }}
+            </span>
           </template>
         </el-table-column>
-        <el-table-column prop="regTime" :label="t('fields.registerTime')" width="150">
+        <el-table-column
+          prop="balance"
+          :label="t('fields.balance')"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span v-formatter="{data: scope.row.balance, type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="regTime"
+          :label="t('fields.registerTime')"
+          width="150"
+        >
           <template #default="scope">
             <span v-if="scope.row.regTime === null">-</span>
-            <span v-if="scope.row.regTime !== null" v-formatter="{data: scope.row.regTime,timeZone: timeZone,type: 'date'}" />
+            <span
+              v-if="scope.row.regTime !== null"
+              v-formatter="{
+                data: scope.row.regTime,
+                timeZone: timeZone,
+                type: 'date',
+              }"
+            />
           </template>
         </el-table-column>
-        <el-table-column prop="approveBy" :label="t('fields.createBy')" width="160">
+        <el-table-column
+          prop="approveBy"
+          :label="t('fields.createBy')"
+          width="160"
+        >
           <template #default="scope">
             <span v-if="scope.row.approveBy === null">-</span>
-            <span v-if="scope.row.approveBy !== null">{{ scope.row.approveBy }}</span>
+            <span v-if="scope.row.approveBy !== null">
+              {{ scope.row.approveBy }}
+            </span>
           </template>
         </el-table-column>
         <el-table-column
@@ -298,7 +533,10 @@
           align="center"
           fixed="right"
           width="120"
-          v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:affiliate:update:approval']))"
+          v-if="
+            !hasRole(['SUB_TENANT']) &&
+              hasPermission(['sys:affiliate:update:approval'])
+          "
         >
           <template #default="scope">
             <el-button
@@ -324,107 +562,119 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination class="pagination"
-                     @current-change="changePage"
-                     layout="prev, pager, next"
-                     :page-size="request.size"
-                     :page-count="page.pages"
-                     :current-page="request.current"
+      <el-pagination
+        class="pagination"
+        @current-change="changePage"
+        layout="prev, pager, next"
+        :page-size="request.size"
+        :page-count="page.pages"
+        :current-page="request.current"
       />
     </el-card>
   </div>
 </template>
 
 <script setup>
-
-import { computed, reactive, ref, onMounted } from "vue";
-import { ElMessage } from "element-plus";
-import { email, required, size } from "../../../utils/validate";
+import { computed, reactive, ref, onMounted } from 'vue'
+import { ElMessage } from 'element-plus'
+import { email, required, size } from '../../../utils/validate'
 import {
   getAffiliates,
   getParentAffiliates,
   getAffiliatesForExport,
   registerAffiliate,
   listApproveAffiliate,
-  listDisableAffiliate
-} from "../../../api/member-affiliate";
-import { getSiteListSimple } from "../../../api/site";
+  listDisableAffiliate,
+} from '../../../api/member-affiliate'
+import { getSiteListSimple } from '../../../api/site'
 import { hasPermission, hasRole } from '../../../utils/util'
-import { notEmpty } from "../../../utils/common";
-import { useStore } from '../../../store';
-import { TENANT } from "../../../store/modules/user/action-types";
-import { useI18n } from "vue-i18n";
-import moment from "moment/moment";
+import { notEmpty } from '../../../utils/common'
+import { useStore } from '../../../store'
+import { TENANT } from '../../../store/modules/user/action-types'
+import { useI18n } from 'vue-i18n'
+import moment from 'moment/moment'
 
-const { t } = useI18n();
-const store = useStore();
-const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
-const LOGIN_USER_NAME = computed(() => store.state.user.name);
-const site = ref(null);
-const memberForm = ref(null);
-const freezeMemberForm = ref(null);
-const table = ref(null);
+const { t } = useI18n()
+const store = useStore()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
+const LOGIN_USER_NAME = computed(() => store.state.user.name)
+const site = ref(null)
+const memberForm = ref(null)
+const freezeMemberForm = ref(null)
+const table = ref(null)
 const siteList = reactive({
-  list: []
-});
-let timeZone = null;
+  list: [],
+})
+let timeZone = null
 const freezeType = reactive({
   list: [
-    { key: 1, name: "NORMAL", value: "NORMAL" },
-    { key: 2, name: "TEMPORARY", value: "TEMPORARY" },
-    { key: 3, name: "PERMANENT", value: "PERMANENT" }
-  ]
-});
+    { key: 1, name: 'NORMAL', value: 'NORMAL' },
+    { key: 2, name: 'TEMPORARY', value: 'TEMPORARY' },
+    { key: 3, name: 'PERMANENT', value: 'PERMANENT' },
+  ],
+})
 
 const freezeReason = reactive({
   list: [
-    { key: 1, name: "Game Violation", value: "Game Violation" },
-    { key: 2, name: "Member Request", value: "Member Request" },
-    { key: 3, name: "Others", value: "Others" }
-  ]
-});
+    { key: 1, name: 'Game Violation', value: 'Game Violation' },
+    { key: 2, name: 'Member Request', value: 'Member Request' },
+    { key: 3, name: 'Others', value: 'Others' },
+  ],
+})
 
 const uiControl = reactive({
   dialogVisible: false,
-  dialogTitle: "",
-  dialogType: "CREATE",
+  dialogTitle: '',
+  dialogType: 'CREATE',
   searchDialogVisible: false,
   searchDialogTitle: t('fields.advancedSearch'),
   memberState: [
-    { key: 1, displayName: "ALL", value: null },
-    { key: 2, displayName: "APPLY", value: "APPLY" },
-    { key: 3, displayName: "NORMAL", value: "NORMAL" },
-    { key: 4, displayName: "DISABLE", value: "DISABLE" }
+    { key: 1, displayName: 'ALL', value: null },
+    { key: 2, displayName: 'APPLY', value: 'APPLY' },
+    { key: 3, displayName: 'NORMAL', value: 'NORMAL' },
+    { key: 4, displayName: 'DISABLE', value: 'DISABLE' },
   ],
   colors: [
     { color: '#f56c6c', percentage: 30 },
     { color: '#e6a23c', percentage: 70 },
-    { color: '#5cb87a', percentage: 100 }
+    { color: '#5cb87a', percentage: 100 },
   ],
   affiliateLevel: [
-    { key: 1, displayName: "AFFILIATE", value: "AFFILIATE" },
-    { key: 2, displayName: "SUPER AFFILIATE", value: "SUPER_AFFILIATE" },
-    { key: 3, displayName: "MASTER AFFILIATE", value: "MASTER_AFFILIATE" },
-    { key: 4, displayName: "CHIEF AFFILIATE", value: "CHIEF_AFFILIATE" }
+    { key: 1, displayName: 'AFFILIATE', value: 'AFFILIATE' },
+    { key: 2, displayName: 'SUPER AFFILIATE', value: 'SUPER_AFFILIATE' },
+    { key: 3, displayName: 'MASTER AFFILIATE', value: 'MASTER_AFFILIATE' },
+    { key: 4, displayName: 'CHIEF AFFILIATE', value: 'CHIEF_AFFILIATE' },
   ],
   commissionModel: [
-    { key: 1, displayName: "NORMAL", value: "NORMAL" },
-    { key: 2, displayName: "SIMPLE", value: "SIMPLE" },
+    { key: 1, displayName: 'NORMAL', value: 'NORMAL' },
+    { key: 2, displayName: 'SIMPLE', value: 'SIMPLE' },
   ],
   timeType: [
-    { key: 1, displayName: "MONTHLY", value: "MONTHLY" },
-    { key: 2, displayName: "WEEKLY", value: "WEEKLY" },
+    { key: 1, displayName: 'MONTHLY', value: 'MONTHLY' },
+    { key: 2, displayName: 'WEEKLY', value: 'WEEKLY' },
+  ],
+  belongType: [
+    {
+      key: 1,
+      displayName: t('affiliate.belongType.OFFICIAL'),
+      value: 'OFFICIAL',
+    },
+    {
+      key: 2,
+      displayName: t('affiliate.belongType.PACKAGE'),
+      value: 'PACKAGE',
+    },
   ],
   messageVisible: false,
   commissionMax: 2,
-  revenueMax: 2
-});
+  revenueMax: 2,
+})
 
 const page = reactive({
   pages: 0,
   records: [],
-  loading: false
-});
+  loading: false,
+})
 
 const request = reactive({
   size: 30,
@@ -432,8 +682,9 @@ const request = reactive({
   loginName: null,
   affiliateStatus: null,
   affiliateCode: null,
-  siteId: null
-});
+  siteId: null,
+  belongType: null,
+})
 
 const form = reactive({
   id: null,
@@ -448,51 +699,50 @@ const form = reactive({
   commission: 0,
   revenueShare: 0,
   commissionModel: null,
-  timeType: null
-});
+  timeType: null,
+  belongType: null,
+})
 
 const freezeForm = reactive({
   id: null,
   freezeType: null,
   reason: null,
   remark: null,
-  site: null
-});
+  site: null,
+})
 
 const validatePassword = (rule, value, callback) => {
-  if (value !== "" && form.reEnterPassword !== "") {
-    memberForm.value.validateField("reEnterPassword");
+  if (value !== '' && form.reEnterPassword !== '') {
+    memberForm.value.validateField('reEnterPassword')
   }
-  callback();
-};
+  callback()
+}
 
 const validateReEnterPassword = (rule, value, callback) => {
   if (value !== form.password) {
     callback(new Error(t('message.twoPasswordNotMatch')))
   }
-  callback();
-};
+  callback()
+}
 
 const validateCommission = (rule, value, callback) => {
-  if (value !== "" && (form.commission < 0 || form.commission > 1)) {
+  if (value !== '' && (form.commission < 0 || form.commission > 1)) {
     callback(new Error(t('message.validateCommissionFormat')))
   }
-  callback();
-};
+  callback()
+}
 
 const validateRevenue = (rule, value, callback) => {
-  if (value !== "" && (form.revenueShare < 0 || form.revenueShare > 1)) {
+  if (value !== '' && (form.revenueShare < 0 || form.revenueShare > 1)) {
     callback(new Error(t('message.validateRevenueShareFormat')))
   }
-  callback();
-};
+  callback()
+}
 
 function restrictCommissionDecimalInput(event) {
   var charCode = event.which ? event.which : event.keyCode
-  if (
-    (charCode < 48 || charCode > 57) && charCode !== 46
-  ) {
-    event.preventDefault();
+  if ((charCode < 48 || charCode > 57) && charCode !== 46) {
+    event.preventDefault()
   }
 
   if (
@@ -500,22 +750,20 @@ function restrictCommissionDecimalInput(event) {
     form.commission.toString().indexOf('.') > -1
   ) {
     if (charCode === 46) {
-      event.preventDefault();
+      event.preventDefault()
     }
-    uiControl.commissionMax = 4;
-  } else if (form.commission === "1") {
-    uiControl.commissionMax = 1;
+    uiControl.commissionMax = 4
+  } else if (form.commission === '1') {
+    uiControl.commissionMax = 1
   } else {
-    uiControl.commissionMax = 2;
+    uiControl.commissionMax = 2
   }
 }
 
 function restrictRevenueDecimalInput(event) {
   var charCode = event.which ? event.which : event.keyCode
-  if (
-    (charCode < 48 || charCode > 57) && charCode !== 46
-  ) {
-    event.preventDefault();
+  if ((charCode < 48 || charCode > 57) && charCode !== 46) {
+    event.preventDefault()
   }
 
   if (
@@ -523,156 +771,180 @@ function restrictRevenueDecimalInput(event) {
     form.revenueShare.toString().indexOf('.') > -1
   ) {
     if (charCode === 46) {
-      event.preventDefault();
+      event.preventDefault()
     }
-    uiControl.revenueMax = 4;
-  } else if (form.revenueShare === "1") {
-    uiControl.revenueMax = 1;
+    uiControl.revenueMax = 4
+  } else if (form.revenueShare === '1') {
+    uiControl.revenueMax = 1
   } else {
-    uiControl.revenueMax = 2;
+    uiControl.revenueMax = 2
   }
 }
 
 const formRules = reactive({
   // affiliateLevel: [required(t('message.validateAffiliateLevelRequired'))],
-  loginName: [required(t('message.validateLoginNameRequired')), size(6, 12, t('message.validateLoginNameSize'))],
-  password: [required(t('message.validatePasswordRequired')), size(6, 12, t('message.validatePasswordSize')), { validator: validatePassword, trigger: "blur" }],
-  reEnterPassword: [required(t('message.validateReenterPasswordRequired')), { validator: validateReEnterPassword, trigger: "blur" }],
+  loginName: [
+    required(t('message.validateLoginNameRequired')),
+    size(6, 12, t('message.validateLoginNameSize')),
+  ],
+  password: [
+    required(t('message.validatePasswordRequired')),
+    size(6, 12, t('message.validatePasswordSize')),
+    { validator: validatePassword, trigger: 'blur' },
+  ],
+  reEnterPassword: [
+    required(t('message.validateReenterPasswordRequired')),
+    { validator: validateReEnterPassword, trigger: 'blur' },
+  ],
   telephone: [required(t('message.validateTelephoneRequired'))],
-  email: [required(t('message.validateEmailRequired')), email(t('message.validateEmailFormat'))],
+  email: [
+    required(t('message.validateEmailRequired')),
+    email(t('message.validateEmailFormat')),
+  ],
   siteId: [required(t('message.validateSiteRequired'))],
-  commission: [required(t('message.validateCommissionRequired')), { validator: validateCommission, trigger: "blur" }],
-  revenueShare: [{ validator: validateRevenue, trigger: "blur" }],
+  commission: [
+    required(t('message.validateCommissionRequired')),
+    { validator: validateCommission, trigger: 'blur' },
+  ],
+  revenueShare: [{ validator: validateRevenue, trigger: 'blur' }],
   commissionModel: [required(t('message.validateCommissionModelRequired'))],
   timeType: [required(t('message.validateTimeTypeRequired'))],
-});
+})
 
 const freezeFormRules = reactive({
   freezeType: [required(t('message.validateFreezeTypeRequired'))],
-  reason: [required(t('message.validateReasonRequired'))]
-});
+  reason: [required(t('message.validateReasonRequired'))],
+})
 
 function resetQuery() {
-  request.loginName = null;
-  request.affiliateStatus = null;
-  request.affiliateCode = null;
-  request.siteId = site.value ? site.value.id : siteList.list[0].id;
-  uiControl.searchDialogVisible = false;
+  request.loginName = null
+  request.affiliateStatus = null
+  request.affiliateCode = null
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
+  request.belongType = null
+  uiControl.searchDialogVisible = false
 }
 
 function checkQuery() {
-  const requestCopy = { ...request };
-  const query = {};
+  const requestCopy = { ...request }
+  const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
     if (value) {
-      query[key] = value;
+      query[key] = value
     }
-  });
-  return query;
+  })
+  return query
 }
 
 async function loadAffiliates() {
-  page.loading = true;
-  uiControl.searchDialogVisible = false;
-  const query = checkQuery();
-  let result = {};
-  if (notEmpty(request.loginName) || notEmpty(request.affiliateStatus) ||
-    notEmpty(request.affiliateCode) || (request.siteId !== null && request.siteId !== "")) {
-    result = await getParentAffiliates(query);
+  page.loading = true
+  uiControl.searchDialogVisible = false
+  const query = checkQuery()
+  let result = {}
+  if (
+    notEmpty(request.loginName) ||
+    notEmpty(request.affiliateStatus) ||
+    notEmpty(request.affiliateCode) ||
+    (request.siteId !== null && request.siteId !== '')
+  ) {
+    result = await getParentAffiliates(query)
   } else {
-    result = await getAffiliates(query);
+    result = await getAffiliates(query)
   }
 
-  page.pages = result.data.pages;
-  page.records = result.data.records;
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
-  page.loading = false;
+  page.pages = result.data.pages
+  page.records = result.data.records
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
+  page.loading = false
 }
 
 async function requestExportExcel() {
-  const query = checkQuery();
-  query.requestBy = store.state.user.name;
-  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-  const { data: ret } = await getAffiliatesForExport(query);
+  const query = checkQuery()
+  query.requestBy = store.state.user.name
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+  const { data: ret } = await getAffiliatesForExport(query)
   if (ret) {
-    uiControl.messageVisible = true;
+    uiControl.messageVisible = true
   }
 }
 
 function changePage(page) {
   if (request.current >= 1) {
-    request.current = page;
-    loadAffiliates();
+    request.current = page
+    loadAffiliates()
   }
 }
 
 function showDialog(type, affiliate) {
-  if (type === "CREATE") {
+  if (type === 'CREATE') {
     if (memberForm.value) {
-      memberForm.value.resetFields();
+      memberForm.value.resetFields()
     }
-    form.siteId = siteList.list[0].id;
-    form.affiliateLevel = uiControl.affiliateLevel[0].value;
-    form.commissionModel = uiControl.commissionModel[0].value;
-    form.timeType = uiControl.timeType[0].value;
-    uiControl.dialogTitle = t('fields.addAffiliate');
-  } else if (type === "DISABLE") {
+    form.siteId = siteList.list[0].id
+    form.affiliateLevel = uiControl.affiliateLevel[0].value
+    form.commissionModel = uiControl.commissionModel[0].value
+    form.timeType = uiControl.timeType[0].value
+    form.belongType = uiControl.belongType[0].value
+    uiControl.dialogTitle = t('fields.addAffiliate')
+  } else if (type === 'DISABLE') {
     if (freezeMemberForm.value) {
-      freezeMemberForm.value.resetFields();
+      freezeMemberForm.value.resetFields()
     }
-    freezeForm.id = affiliate.id;
-    freezeForm.site = request.siteId;
-    freezeForm.freezeType = freezeType.list[0].value;
-    freezeForm.reason = freezeReason.list[0].value;
-    uiControl.dialogTitle = t('fields.disableAffiliate');
+    freezeForm.id = affiliate.id
+    freezeForm.site = request.siteId
+    freezeForm.freezeType = freezeType.list[0].value
+    freezeForm.reason = freezeReason.list[0].value
+    uiControl.dialogTitle = t('fields.disableAffiliate')
   }
-  uiControl.dialogType = type;
-  uiControl.dialogVisible = true;
+  uiControl.dialogType = type
+  uiControl.dialogVisible = true
 }
 
 function addAffiliate() {
-  memberForm.value.validate(async (valid) => {
+  memberForm.value.validate(async valid => {
     if (valid) {
-      await registerAffiliate(form);
-      uiControl.dialogVisible = false;
-      ElMessage({ message: t('message.registerSuccess'), type: "success" });
+      await registerAffiliate(form)
+      uiControl.dialogVisible = false
+      ElMessage({ message: t('message.registerSuccess'), type: 'success' })
       if (page.records.length !== 0) {
-        await loadAffiliates();
+        await loadAffiliates()
       }
     }
-  });
+  })
 }
 
 async function loadSites() {
-  const { data: site } = await getSiteListSimple();
-  siteList.list = site;
+  const { data: site } = await getSiteListSimple()
+  siteList.list = site
 }
 
 async function approve(affiliate) {
-  await listApproveAffiliate(affiliate.id, LOGIN_USER_NAME.value);
-  await loadAffiliates();
-  ElMessage({ message: t('message.affiliateApproved'), type: "success" });
+  await listApproveAffiliate(affiliate.id, LOGIN_USER_NAME.value)
+  await loadAffiliates()
+  ElMessage({ message: t('message.affiliateApproved'), type: 'success' })
 }
 
 function freeze() {
-  freezeMemberForm.value.validate(async (valid) => {
+  freezeMemberForm.value.validate(async valid => {
     if (valid) {
-      await listDisableAffiliate(freezeForm.id, freezeForm);
-      await loadAffiliates();
-      uiControl.dialogVisible = false;
-      ElMessage({ message: t('message.affiliateDisabled'), type: "success" });
+      await listDisableAffiliate(freezeForm.id, freezeForm)
+      await loadAffiliates()
+      uiControl.dialogVisible = false
+      ElMessage({ message: t('message.affiliateDisabled'), type: 'success' })
     }
-  });
+  })
 }
 
 onMounted(async () => {
-  await loadSites();
+  await loadSites()
   request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
-    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
-    request.siteId = site.value.id;
+    site.value = siteList.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    request.siteId = site.value.id
   }
-});
+})
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

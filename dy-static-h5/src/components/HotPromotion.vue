@@ -77,7 +77,7 @@ import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendP
 import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
-import PrivilegeInvitePromo from "../components/hotpromo/privilegeInvite/PrivilegeInvitePromo.vue";
+import PrivilegeInvitePromo from "../components/hotpromo/privilegeInviteA/PrivilegeInvite.vue";
 
 export default defineComponent({
   name: "HotPromo",

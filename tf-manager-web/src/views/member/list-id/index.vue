@@ -540,26 +540,26 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="affiliateCode"
-          :label="t('fields.affiliateCode')"
-          width="150"
-        >
-          <template #default="scope">
-            <span v-if="scope.row.affiliateCode === null">-</span>
-            <span v-if="scope.row.affiliateCode !== null">
-              {{ scope.row.affiliateCode }}
-            </span>
-          </template>
-        </el-table-column>
-        <el-table-column
           prop="affiliateName"
-          :label="t('fields.upLineLoginName')"
+          :label="t('fields.channelName')"
           width="150"
         >
           <template #default="scope">
             <span v-if="scope.row.affiliateName === null">-</span>
             <span v-if="scope.row.affiliateName !== null">
               {{ scope.row.affiliateName }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="referrerName"
+          :label="t('fields.upLineLoginName')"
+          width="150"
+        >
+          <template #default="scope">
+            <span v-if="scope.row.referrerName === null">-</span>
+            <span v-if="scope.row.referrerName !== null">
+              {{ scope.row.referrerName }}
             </span>
           </template>
         </el-table-column>
