@@ -1453,6 +1453,7 @@ export default {
     twoPasswordNotMatch: '重新输入密码不相同',
     unlockMemberSuccess: '成功解锁账号',
     unlockUserSuccess: '成功解锁用户',
+    updateBelongTypeSuccess: '网页类型更新成功',
     updateCommissionModelSuccess: '更新分红模式成功',
     updateCommissionRateSuccess: '更新分红比率成功',
     updateFinancialLevelSuccess: '更新会员组别成功',
