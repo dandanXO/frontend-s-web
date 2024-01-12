@@ -376,6 +376,7 @@ import { getRecommendPrivilegeRecord, getRebateInfo } from "../../../api/privile
 import { userStore } from "stores/index";
 
 export default defineComponent({
+  name: "PrivilegeInvite",
   components: {},
   setup() {
     const route = useRoute();
