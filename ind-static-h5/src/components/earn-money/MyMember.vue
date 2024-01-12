@@ -54,7 +54,7 @@
           <div class="amount-container">
             <div class="amount-text text-right">Rebate Amount</div>
             <div class="amount text-right">
-              <span>{{ convertToCommaAmount(e.rebateAmount, true) }}</span>
+              <span>₹ {{ convertToCommaAmount(e.rebateAmount, true) }}</span>
             </div>
           </div>
         </div>
