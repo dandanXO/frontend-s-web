@@ -1,18 +1,20 @@
 <template>
   <div class="table-record">
-    <q-select
-      allowClear
-      rounded
-      outlined
-      dense
-      color="primary"
-      style="width: 320px; margin: 10px auto 8px; color: #000"
-      v-model="platform"
-      :options="platformsList"
-      placeholder="选择平台"
-      @update:model-value="searchRecord"
-    ></q-select>
-
+    <div class="flex-div">
+      <span>选择平台：</span>
+      <q-select
+        allowClear
+        rounded
+        outlined
+        dense
+        color="primary"
+        style="width: 320px; margin: 10px auto 8px; color: #000"
+        v-model="platform"
+        :options="platformsList"
+        placeholder="选择平台"
+        @update:model-value="searchRecord"
+      ></q-select>
+    </div>
     <RecordComponent
       ref="recordRef"
       recordType="bethistory"
@@ -91,7 +93,7 @@ export default defineComponent({
         visible.value = true;
       }
 
-      var platformName = platform.value ? platform.value.value : "";
+      var platformName = platform.value ? getPlatformId(platform.value.value) : "";
 
 
       console.log(startDate);
@@ -120,6 +122,14 @@ export default defineComponent({
         }
       });
     };
+
+    const getPlatformId = (platformID) => {
+      if(platformID==='BBINDY'){
+        return 'BBIN'
+      }
+
+      return platformID;
+    }
 
     const loadPlatformLists = () => {
       cached.get("PLATFORMS", () => api.get("/platform").then((response) => {
@@ -211,4 +221,15 @@ export default defineComponent({
   }
 });
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.flex-div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  span {
+    font-size: 14px;
+    padding-left: 5px;
+  }
+}
+</style>
