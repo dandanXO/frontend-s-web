@@ -19,7 +19,7 @@
           v-model="loginForm.loginName"
           :rules="[
             (val) => (val && val.length > 0) || 'Please insert Phone number',
-            (val) => val.length == 10 || 'The phone number must be 10 digits'
+            (val) => (val.length >= 10 && val.length <= 20) || 'The phone number must be 10 digits or more'
           ]"
           label-color="brand"
           autocomplete="username"
@@ -105,6 +105,7 @@
 
     <div class="create-account">
       <span class="form-text">Not a member?</span>
+      &nbsp;
       <router-link class="form-text" to="/register" style="color: #ae6def">Create account</router-link>
     </div>
 

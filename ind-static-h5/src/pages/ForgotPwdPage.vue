@@ -57,7 +57,10 @@
           hide-bottom-space
           v-model="passwordForm.phone"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Please Enter Phone Number']"
+          :rules="[
+            (val) => (val && val.length > 0) || 'Please insert Phone number',
+            (val) => (val.length >= 10 && val.length <= 20) || 'The phone number must be 10 digits or more'
+          ]"
           outlined
           label-color="brand"
           color="white"

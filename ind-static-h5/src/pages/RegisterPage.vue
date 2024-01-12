@@ -21,7 +21,7 @@
           lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || 'Please insert Phone number',
-            (val) => val.length === 10 || 'The phone number must be 10 digits'
+            (val) => (val.length >= 10 && val.length <= 20) || 'The phone number must be 10 digits or more'
           ]"
           color="white"
           class="landing-input"
@@ -506,10 +506,10 @@ export default defineComponent({
         return "Please Enter Phone Number";
       }
 
-      const phoneRegex = /^\d{10}$/;
+      const phoneRegex = /^\d{10,20}$/;
       const isValid = phoneRegex.test(phone);
 
-      return isValid ? true : "Phone Number must be 10 digits";
+      return isValid ? true : "Phone Number must be 10 digits or more";
     };
 
     return {

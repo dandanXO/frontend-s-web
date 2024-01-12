@@ -63,6 +63,11 @@
       </div>
     </q-page-sticky>
 
+    <PushNotification
+      :pushNotificationData="pushNotificationData"
+      v-if="Platform.is.android && Platform.is.capacitor"
+    />
+
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
@@ -964,6 +969,7 @@ import MarqueeText from "vue-marquee-text-component";
 import { RiVolumeUpLine } from "vue-remix-icons";
 import { App } from "@capacitor/app";
 import OneSignal from "onesignal-cordova-plugin";
+import PushNotification from "../components/modal/PushNotification.vue";
 import { useUI } from "stores/ui";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import WithdrawalModal from "../components/modal/WithdrawalModal.vue";

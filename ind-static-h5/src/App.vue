@@ -230,27 +230,6 @@ export default defineComponent({
       }
     };
 
-    const OneSignalInit = () => {
-      // Uncomment to set OneSignal device logging to VERBOSE
-      // window["plugins"].OneSignal.Debug.setLogLevel(6);
-
-      // Uncomment to set OneSignal visual logging to VERBOSE
-      // window["plugins"].OneSignal.Debug.seAlertLevel(6);
-
-      // NOTE: Update the init value below with your OneSignal AppId.
-      window["plugins"].OneSignal.init("YOUR_ONESIGNAL_APP_ID");
-      window["plugins"].OneSignal.Notifications.setNotificationOpenedHandler(function (opened) {
-        let notificationData = JSON.stringify(opened);
-        console.log("notificationOpenedCallback: " + notificationData);
-      });
-
-      // iOS - Prompts the user for notification permissions.
-      //    * Since this shows a generic native prompt, we recommend instead using an In-App Message to prompt for notification permission (See step 6) to better communicate to your users what notifications they will get.
-      window["plugins"].OneSignal.Notifications.requestPermission(function (accepted) {
-        console.log("User accepted notifications: " + accepted);
-      });
-    };
-
     onMounted(async () => {
       // const info = await App.getInfo();
       // console.log("APP Info");
@@ -261,8 +240,6 @@ export default defineComponent({
       initOrientation();
 
       setStatusBarColor();
-
-      document.addEventListener("deviceready", OneSignalInit, false);
 
       document.addEventListener(
         "deviceready",
