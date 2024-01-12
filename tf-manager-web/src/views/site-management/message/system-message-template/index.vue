@@ -2,6 +2,21 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px;margin-left: 5px"
+          @focus="loadSites"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-date-picker
           v-model="request.sendTime"
           format="DD/MM/YYYY"
@@ -371,7 +386,7 @@
 
 <script setup>
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import * as XLSX from 'xlsx';
 import { getMemberNameList } from '../../../../api/member'
 import { getSiteListSimple } from '../../../../api/site'
@@ -386,11 +401,17 @@ import { required } from '../../../../utils/validate'
 import { hasRole } from '../../../../utils/util'
 import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
+import { TENANT } from '../../../../store/modules/user/action-types';
 
 const store = useStore();
 const { t } = useI18n();
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
+const site = ref(null);
 const dialogForm = ref(null)
 const importRefForm = ref(null);
+const siteList = reactive({
+  list: []
+});
 
 const EXPORT_MESSAGE_LIST_HEADER = [
   '标题',
@@ -456,6 +477,7 @@ const importRules = reactive({
 const request = reactive({
   size: 30,
   current: 1,
+  siteId: null,
   sendTime: [],
   type: null,
 })
@@ -463,6 +485,7 @@ const request = reactive({
 function resetQuery() {
   request.sendTime = [];
   request.type = null;
+  request.siteId = null;
 }
 
 const form = reactive({
@@ -685,6 +708,7 @@ async function loadMemberNameList() {
 async function loadSites() {
   list.sites = []
   const { data: ret } = await getSiteListSimple()
+  siteList.list = ret;
   ret.forEach(function (entry) {
     var singleObj = {}
     singleObj.key = entry.id
@@ -864,10 +888,16 @@ async function confirmImport() {
   });
 }
 
-onMounted(() => {
-  loadSystemMessageTemplate()
-  loadVipNameList()
-  loadSites()
+onMounted(async() => {
+  await loadSites();
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
+    request.siteId = site.value.id;
+  } else {
+    request.siteId = siteList.list[0].id;
+  }
+  await loadSystemMessageTemplate()
+  await loadVipNameList()
 })
 
 function changePage(page) {
