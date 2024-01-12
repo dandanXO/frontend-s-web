@@ -53,7 +53,6 @@
       size="small"
       highlight-current-row
       v-loading="page.loading"
-      height="500"
       :empty-text="t('fields.noData')"
       :summary-method="getSummaries"
       show-summary
@@ -272,7 +271,10 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{data: scope.row.totalBet - scope.row.totalPayout, type: 'money'}"
+              v-formatter="{
+                data: scope.row.totalBet - scope.row.totalPayout,
+                type: 'money',
+              }"
             />
           </template>
         </el-table-column>
@@ -283,9 +285,7 @@
         >
           <template #default="scope">
             $
-            <span
-              v-formatter="{data: scope.row.deposit, type: 'money'}"
-            />
+            <span v-formatter="{data: scope.row.deposit, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column
@@ -370,11 +370,10 @@ import { getSiteListSimple } from '../../../../api/site'
 import { useStore } from '../../../../store'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
-import { hasPermission } from '../../../../utils/util'
 
 defineExpose({
   loadSites,
-  loadSummaryRecord
+  loadSummaryRecord,
 })
 
 const { t } = useI18n()
@@ -489,67 +488,63 @@ function changePage(page) {
 }
 
 function getSummaries(param) {
-  if (hasPermission(['sys:report:summary:report:summary'])) {
-    const { columns } = param
-    var sums = []
-    const requestCopy = { ...request }
-    const query = {}
-    Object.entries(requestCopy).forEach(([key, value]) => {
-      if (value) {
-        query[key] = value
+  const { columns } = param
+  var sums = []
+  const requestCopy = { ...request }
+  const query = {}
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value
+    }
+  })
+  if (request.recordTime !== null) {
+    if (request.recordTime.length === 2) {
+      query.recordTime = request.recordTime.join(',')
+    }
+  }
+
+  if (totalPage.records.length > 0) {
+    columns.forEach((column, index) => {
+      if (index === 0) {
+        sums[index] = t('fields.total')
+      } else {
+        var prop = column.property
+        if (index === 6) {
+          sums[index] = totalPage.records[0][prop]
+        } else if (index === 3) {
+          sums[index] =
+            '$' +
+            parseFloat(
+              totalPage.records[0].validBet -
+                totalPage.records[0].companyWinLoss
+            ).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+        } else if (index === 10) {
+          sums[index] =
+            '$' +
+            parseFloat(
+              totalPage.records[0].depositAmount -
+                totalPage.records[0].withdrawAmount -
+                totalPage.records[0].depositAmount * 0.08 -
+                totalPage.records[0].companyWinLoss * 0.13
+            ).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+        } else {
+          sums[index] =
+            '$' +
+            parseFloat(totalPage.records[0][prop]).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+        }
       }
     })
-    if (request.recordTime !== null) {
-      if (request.recordTime.length === 2) {
-        query.recordTime = request.recordTime.join(',')
-      }
-    }
-
-    if (totalPage.records.length > 0) {
-      columns.forEach((column, index) => {
-        if (index === 0) {
-          sums[index] = t('fields.total')
-        } else {
-          var prop = column.property
-          if (index === 6) {
-            sums[index] = totalPage.records[0][prop]
-          } else if (index === 3) {
-            sums[index] =
-              '$' +
-              parseFloat(
-                totalPage.records[0].validBet -
-                  totalPage.records[0].companyWinLoss
-              ).toLocaleString('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })
-          } else if (index === 10) {
-            sums[index] =
-              '$' +
-              parseFloat(
-                totalPage.records[0].depositAmount -
-                  totalPage.records[0].withdrawAmount -
-                  totalPage.records[0].depositAmount * 0.08 -
-                  totalPage.records[0].companyWinLoss * 0.13
-              ).toLocaleString('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })
-          } else {
-            sums[index] =
-              '$' +
-              parseFloat(totalPage.records[0][prop]).toLocaleString('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })
-          }
-        }
-      })
-    }
-    return sums
-  } else {
-    return '-'
   }
+  return sums
 }
 
 // function changeMemberPage(page) {
@@ -632,7 +627,6 @@ async function requestExportExcel() {
 //     uiControl.messageVisible = true
 //   }
 // }
-
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
