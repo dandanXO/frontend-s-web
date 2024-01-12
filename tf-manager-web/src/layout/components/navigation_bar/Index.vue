@@ -23,10 +23,9 @@
             {{ $t('realtimeStatistics.H5') }}: <span>{{ selectedData.H5 ? selectedData.H5 : 0 }}</span>
           </div>
           <div class="text-2">
-            <router-link v-if="hasPermission(['sys:withdraw:simple:list'])" :to="`/withdraw/withdraw-process-simple/apply?site=${selectedData.siteId}`">
-              <el-link type="primary">{{ $t('realtimeStatistics.APPLY_WITHDRAW') }}: <span>{{ applyWithdrawCount }}</span></el-link>
+            <router-link :to="{path: `/withdraw/withdraw-process-simple/apply`, force: true}">
+              <el-link :disabled="!hasPermission(['sys:withdraw:simple:list'])" type="primary">{{ $t('realtimeStatistics.APPLY_WITHDRAW') }}: <span>{{ applyWithdrawCount }}</span></el-link>
             </router-link>
-            <span v-else>{{ $t('realtimeStatistics.APPLY_WITHDRAW') }}: <span>{{ applyWithdrawCount }}</span></span>
           </div>
         </div>
       </div>
