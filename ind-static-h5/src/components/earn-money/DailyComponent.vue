@@ -1,7 +1,6 @@
 <template>
   <div class="section-wrapper">
-    <div class="title-wrapper">
-      <div class="title">My Team</div>
+    <div class="team-member-wrapper">
       <div class="team-member-container" v-if="memberVIPData.totalMembers > 0">
         <div class="member-imgs" :style="`width: ${40 + limitedMembers * 15}px`">
           <q-avatar v-for="n in limitedMembers" :key="n" size="30px" class="overlapping" :style="`left: ${n * 15}px`">
@@ -12,15 +11,18 @@
       </div>
     </div>
 
-    <div class="subtitle-wrapper">
-      <div class="subtitle">Today Status</div>
-      <div class="chart-cat">
-        <div class="square m"></div>
-        <div>Member</div>
-      </div>
-      <div class="chart-cat">
-        <div class="square ba"></div>
-        <div>Bet Amount</div>
+    <div class="title-wrapper">
+      <div class="title-txt">My Team (Today)</div>
+
+      <div class="subtitle-wrapper">
+        <div class="chart-cat">
+          <div class="square m"></div>
+          <div>Member</div>
+        </div>
+        <div class="chart-cat">
+          <div class="square ba"></div>
+          <div>Bet Amount</div>
+        </div>
       </div>
     </div>
   </div>
@@ -130,12 +132,32 @@
     </div>
   </div> -->
 
-  <div class="info-wrapper">
+  <div class="info-wrapper q-pt-lg">
+    <div class="title-txt">Yesterday Report (Total)</div>
     <div class="info-container">
+      <div class="info-row">
+        <div class="info-content-item longer-item">
+          <div class="longer-group">
+            <div class="info-title">
+              <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-06.png" /></div>
+              <div class="info-txt">Level:</div>
+              <div class="info-amount">{{ teamAmountData.agentLevel }}</div>
+            </div>
+          </div>
+
+          <div class="longer-group">
+            <div class="info-title">
+              <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-01.png" /></div>
+              <div class="info-txt">Rate:</div>
+              <div class="info-amount">{{ teamAmountData.agentRate }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="info-row">
         <div class="info-content-item">
           <div class="info-title">
-            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-01.png" /></div>
+            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-07.png" /></div>
             <div class="info-txt">Myself betting amount:</div>
           </div>
           <div class="info-amount">{{ store.currency.value }} {{ teamAmountData.myselfBetting }}</div>
@@ -169,7 +191,7 @@
       </div>
 
       <div class="info-row">
-        <div class="info-content-item">
+        <div class="info-content-item last-item">
           <div class="info-title">
             <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-05.png" /></div>
             <div class="info-txt">Total:</div>
@@ -183,8 +205,8 @@
   <LoadingComponent v-if="isLoading.referredBetRebateRecord"></LoadingComponent>
   <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Member" shortenContainer="true"></NoInfoComponent>
   <div v-else class="member-info-container">
-    <div class="section-wrapper">
-      <div class="title">Daily Report</div>
+    <div class="section-wrapper q-pt-lg">
+      <div class="title-txt">Team details (Yesterday)</div>
       <div class="subtitle">{{ moment().utcOffset("+05:30").format("YYYY-MM-DD") }}</div>
     </div>
 
@@ -457,7 +479,9 @@ const teamAmountData = reactive({
   myselfRebate: 0,
   teamBetting: 0,
   teamRebate: 0,
-  totalRebate: 0
+  totalRebate: 0,
+  agentLevel: 0,
+  agentRate: 0
 });
 
 const getTeamAmountData = () => {
@@ -500,30 +524,11 @@ onMounted(() => {
     font-weight: 700;
   }
 
-  .team-member-container {
-    background: rgba(217, 217, 217, 0.2);
-    padding: 6px 8px;
-    border-radius: 4px;
-    position: relative;
-    display: flex;
-    align-items: center;
-
-    .member-imgs {
-      height: 30px;
-      width: 60px;
-      display: block;
-      position: relative;
-      margin-left: -15px;
-    }
-
-    .member-amt {
-    }
-
-    .overlapping {
-      border: 2px solid #9105e8;
-      position: absolute;
-      box-sizing: content-box;
-    }
+  .subtitle {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+    padding-top: 12px;
   }
 
   .subtitle-wrapper {
@@ -559,35 +564,87 @@ onMounted(() => {
   }
 }
 
+.team-member-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  .team-member-container {
+    background: rgba(217, 217, 217, 0.2);
+    padding: 6px 8px;
+    border-radius: 4px;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .member-imgs {
+      height: 30px;
+      width: 60px;
+      display: block;
+      position: relative;
+      margin-left: -15px;
+    }
+
+    .member-amt {
+    }
+
+    .overlapping {
+      border: 2px solid #9105e8;
+      position: absolute;
+      box-sizing: content-box;
+    }
+  }
+}
+
 .info-wrapper {
-  margin-bottom: 15px;
   .info-container {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    margin-top: 12px;
     .info-row {
       display: flex;
       gap: 15px;
+    }
 
-      &:last-child {
-        .info-content-item {
-          padding-top: 16px;
-          padding-bottom: 16px;
+    .info-content-item {
+      width: 100%;
+      background: linear-gradient(180deg, rgba(139, 54, 248, 0.4) 0%, rgba(51, 74, 214, 0.4) 100%);
+      padding: 20px 12px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+
+      &.longer-item {
+        flex-direction: row;
+        gap: 36px;
+
+        .longer-group {
+          flex: 1;
+          position: relative;
+
+          &:first-child:before {
+            content: "";
+            position: absolute;
+            width: 1px;
+            height: calc(100% + 10px);
+            background: rgba(255, 255, 255, 0.25);
+            right: -20px;
+            top: -5px;
+          }
         }
 
         .info-amount {
           padding-top: 0;
         }
       }
-    }
 
-    .info-content-item {
-      width: 100%;
-      background: linear-gradient(180deg, rgba(139, 54, 248, 0.4) 0%, rgba(51, 74, 214, 0.4) 100%);
-      padding: 12px;
-      border-radius: 12px;
-      display: flex;
-      flex-direction: column;
+      &.last-item {
+        padding-top: 16px;
+        padding-bottom: 16px;
+
+        .info-amount {
+          padding-top: 0;
+        }
+      }
 
       .info-amount {
         display: flex;
@@ -624,7 +681,7 @@ onMounted(() => {
   border-radius: 0.75rem;
   background: #6759c0;
   padding: 15px;
-  margin: 0 0 15px 0;
+  margin: 0;
 
   // top section
   .progress-bar-wrapper {
@@ -927,5 +984,11 @@ onMounted(() => {
       top: 4px;
     }
   }
+}
+
+.title-txt {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
 }
 </style>
