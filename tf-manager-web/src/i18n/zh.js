@@ -1359,6 +1359,11 @@ export default {
     rank: '等级',
     processResult: '结算结果',
     winner: '贏家',
+    dailyDetail: '日报详情',
+    dailySummary: '每日全总览',
+    officialWebData: '官方数据',
+    packageWebData: '包网数据',
+    payoutAmount: '派彩金额',
   },
   message: {
     addRemarkSuccess: '新增备注成功',
@@ -1886,6 +1891,7 @@ export default {
     'Image Setting': '图片设置',
     'Privi Christmas': '圣诞快乐',
     'Affiliate APK Build': '代理构建APK',
+    'Affiliate Daily Summary': '代理日报总览',
   },
   google: {
     google_auth_menu: '谷歌验证',
