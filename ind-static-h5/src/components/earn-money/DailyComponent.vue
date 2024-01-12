@@ -185,7 +185,7 @@
   <div v-else class="member-info-container">
     <div class="section-wrapper">
       <div class="title">Daily Report</div>
-      <div class="subtitle">{{ moment().format("YYYY-MM-DD") }}</div>
+      <div class="subtitle">{{ moment().utcOffset("+05:30").format("YYYY-MM-DD") }}</div>
     </div>
 
     <div v-for="(e, i) in myMemberList" :key="`${e}-${i}`" class="member-info">
