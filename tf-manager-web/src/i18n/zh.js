@@ -296,6 +296,8 @@ export default {
       1: '哪方获胜?',
       2: '让分局 (包括加时)',
       3: '总回合 (包括加时) 击杀总数',
+      4: '两队总回合局数/击杀',
+      5: '击杀最高队伍?',
     },
     answers: {
       CSGO: {
@@ -303,18 +305,24 @@ export default {
         handicapBelow: '+4.5 或以下',
         killBig: '总回合大 21.5',
         killSmall: '总回合小 21.5',
+        killSignal: '单',
+        killDouble: '双',
       },
       LOL: {
         handicapAbove: '-4.5 或以上',
         handicapBelow: '+4.5 或以下',
         killBig: '总击杀大 25.5',
         killSmall: '总击杀小 25.5',
+        killSignal: '单',
+        killDouble: '双',
       },
       DOTA2: {
         handicapAbove: '-10.5 或以上',
         handicapBelow: '+10.5 或以下',
         killBig: '总击杀大 49.5',
         killSmall: '总击杀小 49.5',
+        killSignal: '单',
+        killDouble: '双',
       },
     },
   },

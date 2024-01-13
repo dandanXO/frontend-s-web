@@ -290,6 +290,8 @@ export default {
       1: 'Which team won?',
       2: 'Handicap (Including Overtime)',
       3: 'Total Number of Kills in Total Rounds (Including Overtime)',
+      4: 'Total rounds/kills for both teams',
+      5: 'Kill the highest team?',
     },
     answers: {
       CSGO: {
@@ -297,18 +299,24 @@ export default {
         handicapBelow: '+4.5 Or Below',
         killBig: 'Total Rounds Big 21.5',
         killSmall: 'Total Rounds Small 21.5',
+        killSignal: 'Signal',
+        killDouble: 'Double',
       },
       LOL: {
         handicapAbove: '-4.5 Or Above',
         handicapBelow: '+4.5 Or Below',
         killBig: 'Total Kills Big 25.5',
         killSmall: 'Total Kills Small 25.5',
+        killSignal: 'Signal',
+        killDouble: 'Double',
       },
       DOTA2: {
         handicapAbove: '-10.5 Or Above',
         handicapBelow: '+10.5 Or Below',
         killBig: 'Total Kills Big 49.5',
         killSmall: 'Total Kills Small 49.5',
+        killSignal: 'Signal',
+        killDouble: 'Double',
       },
     },
   },
