@@ -3,20 +3,17 @@
     <div class="header-container">
       <div class="search">
         <div>
-          <el-input
+          <el-select
             v-model="request.loginName"
-            style="width: 200px"
-            size="small"
-            maxlength="50"
-            :placeholder="t('fields.loginName')"
-          />
-          <el-input
-            v-model="request.affiliateCode"
-            style="width: 200px; margin-left: 10px; margin-bottom: 10px;"
-            size="small"
-            maxlength="50"
-            :placeholder="t('fields.affiliateCode')"
-          />
+            :placeholder="t('fields.platform')"
+          >
+            <el-option
+              v-for="aff in affiliateNames"
+              :key="aff.name"
+              :label="aff.name"
+              :value="aff.name"
+            />
+          </el-select>
           <el-date-picker
             v-model="request.recordTime"
             format="DD/MM/YYYY"
@@ -210,11 +207,12 @@
 </template>
 
 <script setup>
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { hasPermission } from '../../../../utils/util'
 import moment from 'moment'
 import { queryDailySummary } from '../../../../api/affiliate-daily-summary'
 import { getSiteListSimple } from '../../../../api/site'
+import { getAffiliateList } from '../../../../api/affiliate-record'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
 
@@ -232,6 +230,7 @@ startDate.setTime(
 )
 const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
+const affiliateNames = ref([]);
 
 const request = reactive({
   size: 20,
@@ -246,6 +245,10 @@ async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
   request.siteId = siteList.list.filter(x => x.siteCode === 'IND')[0].id
+  const { data: affiliates } = await getAffiliateList(request.siteId);
+  affiliateNames.value = affiliates.map(a => {
+    return { name: a.loginName };
+  })
 }
 
 function convertDate(date) {
