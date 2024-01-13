@@ -166,9 +166,11 @@ export default defineComponent({
       AddressbarColor.set("#3E1474");
       if (Platform.is.capacitor && Platform.is.android) {
         StatusBar.hide();
-        StatusBar.setOverlaysWebView({ overlay: true });
         StatusBar.setBackgroundColor({ color: "#3E1474" });
         StatusBar.setStyle({ style: Style.Dark });
+        StatusBar.setOverlaysWebView({ overlay: true }).then((res) => {
+          getInsetHeight();
+        });
         // if (cordova.platformId == "android") {
         //   StatusBar.show();
         //   StatusBar.overlaysWebView(true);
@@ -239,8 +241,6 @@ export default defineComponent({
       getAppInfo();
       initOrientation();
 
-      setStatusBarColor();
-
       document.addEventListener(
         "deviceready",
         () => {
@@ -251,9 +251,7 @@ export default defineComponent({
 
       document.addEventListener("visibilitychange", handleVisibilityChange);
 
-      setTimeout(() => {
-        getInsetHeight();
-      }, 300);
+      setStatusBarColor();
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);
