@@ -96,7 +96,7 @@
           {{
             activeMethod.depositMax
               ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value)
-              : "No Limit"
+              : " "
           }}
         </div>
 
