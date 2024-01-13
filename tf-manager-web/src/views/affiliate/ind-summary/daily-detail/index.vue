@@ -247,6 +247,7 @@ async function loadSites() {
   request.siteId = siteList.list.filter(x => x.siteCode === 'IND')[0].id
   const { data: affiliates } = await getAffiliateList(request.siteId);
   affiliateNames.value = affiliates.map(a => {
+    console.log(a)
     return { name: a.loginName };
   })
 }
