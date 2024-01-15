@@ -171,7 +171,7 @@
         </div>
       </div>
       <div class="info-row">
-        <div class="info-content-item">
+        <div class="info-content-item line-side">
           <div class="info-title">
             <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-07.png" /></div>
             <div class="info-txt">Myself betting amount:</div>
@@ -195,7 +195,7 @@
       </div>
 
       <div class="info-row">
-        <div class="info-content-item">
+        <div class="info-content-item line-side">
           <div class="info-title">
             <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-03.png" /></div>
             <div class="info-txt">Team betting amount:</div>
@@ -222,7 +222,7 @@
         <div class="info-content-item last-item">
           <div class="info-title">
             <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-05.png" /></div>
-            <div class="info-txt">Total:</div>
+            <div class="info-txt">Total rebate:</div>
             <div
               class="info-amount"
               :class="checkTeamAmountData(teamAmountData.totalRebate) === 'Calculating' ? 'font-smaller' : ''"
@@ -644,16 +644,28 @@ onMounted(() => {
     .info-row {
       display: flex;
       gap: 15px;
+      background: linear-gradient(180deg, rgba(139, 54, 248, 0.4) 0%, rgba(51, 74, 214, 0.4) 100%);
+      border-radius: 12px;
     }
 
     .info-content-item {
       width: 100%;
-      background: linear-gradient(180deg, rgba(139, 54, 248, 0.4) 0%, rgba(51, 74, 214, 0.4) 100%);
+
       padding: 20px 12px;
       border-radius: 12px;
       display: flex;
       flex-direction: column;
+      position: relative;
 
+      &.line-side:before {
+        content: "";
+        position: absolute;
+        width: 1px;
+        height: calc(100% - 20px);
+        background: rgba(255, 255, 255, 0.25);
+        right: -10px;
+        top: 10px;
+      }
       &.longer-item {
         flex-direction: row;
         gap: 36px;
@@ -666,10 +678,10 @@ onMounted(() => {
             content: "";
             position: absolute;
             width: 1px;
-            height: calc(100% + 10px);
+            height: calc(100% + 20px);
             background: rgba(255, 255, 255, 0.25);
             right: -20px;
-            top: -5px;
+            top: -10px;
           }
         }
 
