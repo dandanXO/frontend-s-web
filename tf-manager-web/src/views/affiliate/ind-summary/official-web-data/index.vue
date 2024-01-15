@@ -292,12 +292,16 @@ function getSummaries(param) {
         sums[index] = t('fields.total')
       } else {
         var prop = column.property
-        sums[index] =
+        if (index === 6) {
+          sums[index] = total.data[prop]
+        } else {
+          sums[index] =
           '$' +
           parseFloat(total.data[prop]).toLocaleString('en-US', {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
           })
+        }
       }
     })
   }
