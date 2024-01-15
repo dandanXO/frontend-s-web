@@ -146,96 +146,103 @@
         </div>
       </el-form>
     </el-dialog>
-    <el-table
-      :data="page.records"
-      v-loading="page.loading"
-      ref="table"
-      row-key="id"
-      size="small"
-      highlight-current-row
-      @selection-change="handleSelectionChange"
-      :empty-text="t('fields.noData')"
-      style="width: 100%;"
-    >
-      <el-table-column type="expand">
-        <template #default="props">
-          <div class="clearfix">
-            <span style="margin-left: 60px; font-size: small;font-weight:bold">{{ t('fields.withdrawPlatform') }}</span>
-          </div>
-          <el-table :data="props.row.systemAutoWithdrawPlatfromVO" ref="table" size="small" style="margin-left: 60px; width: 50%;">
-            <el-table-column :label="t('fields.withdrawPlatformName')" prop="withdrawPlatformName" />
-            <el-table-column :label="t('fields.minWithdrawAmount')" prop="withdrawAmountMin" align="center">
-              <template #default="scope">
-                $
-                <span
-                  v-formatter="{
-                    data: scope.row.withdrawAmountMin,
-                    type: 'money',
-                  }"
-                />
-              </template>
-            </el-table-column>
-            <el-table-column :label="t('fields.maxWithdrawAmount')" prop="withdrawAmountMax" align="center">
-              <template #default="scope">
-                $
-                <span
-                  v-formatter="{
-                    data: scope.row.withdrawAmountMax,
-                    type: 'money',
-                  }"
-                />
-              </template>
-            </el-table-column>
-            <el-table-column :label="t('fields.operate')" v-if="hasPermission(['sys:systemautowithdraw:add'])">
-              <template #default="scope">
-                <el-button
-                  icon="el-icon-delete"
-                  size="mini"
-                  type="success"
-                  @click="deletePlatform(scope.row)"
-                />
-              </template>
-            </el-table-column>
-          </el-table>
-        </template>
-      </el-table-column>
-      <el-table-column prop="paymentTypeCode" :label="t('fields.payTypeName')" />
-      <el-table-column prop="rule" :label="t('fields.rule')" />
-      <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
-        <template #default="scope">
-          <el-switch
-            v-model="scope.row.status"
-            active-color="#409EFF"
-            inactive-color="#F56C6C"
-            @change="changeStatus(scope.row, scope.row.status)"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
-        <template #default="scope">
-          <el-button
-            icon="el-icon-edit"
-            size="mini"
-            type="success"
-            @click="showEdit(scope.row)"
-          />
-          <el-button
-            icon="el-icon-plus"
-            size="mini"
-            type="warning"
-            @click="showPlatfromDialog('CREATE', scope.row)"
-          />
-        </template>
-      </el-table-column>
-    </el-table>
-    <el-pagination
-      class="pagination"
-      @current-change="changePage"
-      layout="prev, pager, next"
-      :page-size="request.size"
-      :page-count="page.pages"
-      :current-page="request.current"
-    />
+    <el-card class="box-card" shadow="never" style="margin-top: 40px">
+      <template #header>
+        <div class="clearfix">
+          <span class="role-span">{{ t('fields.autoWithdrawSetting') }}</span>
+        </div>
+      </template>
+      <el-table
+        :data="page.records"
+        v-loading="page.loading"
+        ref="table"
+        row-key="id"
+        size="small"
+        highlight-current-row
+        @selection-change="handleSelectionChange"
+        :empty-text="t('fields.noData')"
+        style="width: 100%;"
+      >
+        <el-table-column type="expand">
+          <template #default="props">
+            <div class="clearfix">
+              <span style="margin-left: 60px; font-size: small;font-weight:bold">{{ t('fields.withdrawPlatform') }}</span>
+            </div>
+            <el-table :data="props.row.systemAutoWithdrawPlatfromVO" ref="table" size="small" style="margin-left: 60px; width: 50%;">
+              <el-table-column :label="t('fields.withdrawPlatformName')" prop="withdrawPlatformName" />
+              <el-table-column :label="t('fields.minWithdrawAmount')" prop="withdrawAmountMin" align="center">
+                <template #default="scope">
+                  $
+                  <span
+                    v-formatter="{
+                      data: scope.row.withdrawAmountMin,
+                      type: 'money',
+                    }"
+                  />
+                </template>
+              </el-table-column>
+              <el-table-column :label="t('fields.maxWithdrawAmount')" prop="withdrawAmountMax" align="center">
+                <template #default="scope">
+                  $
+                  <span
+                    v-formatter="{
+                      data: scope.row.withdrawAmountMax,
+                      type: 'money',
+                    }"
+                  />
+                </template>
+              </el-table-column>
+              <el-table-column :label="t('fields.operate')" v-if="hasPermission(['sys:systemautowithdraw:add'])">
+                <template #default="scope">
+                  <el-button
+                    icon="el-icon-delete"
+                    size="mini"
+                    type="success"
+                    @click="deletePlatform(scope.row)"
+                  />
+                </template>
+              </el-table-column>
+            </el-table>
+          </template>
+        </el-table-column>
+        <el-table-column prop="paymentTypeCode" :label="t('fields.payTypeName')" />
+        <el-table-column prop="rule" :label="t('fields.rule')" />
+        <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
+          <template #default="scope">
+            <el-switch
+              v-model="scope.row.status"
+              active-color="#409EFF"
+              inactive-color="#F56C6C"
+              @change="changeStatus(scope.row, scope.row.status)"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
+          <template #default="scope">
+            <el-button
+              icon="el-icon-edit"
+              size="mini"
+              type="success"
+              @click="showEdit(scope.row)"
+            />
+            <el-button
+              icon="el-icon-plus"
+              size="mini"
+              type="warning"
+              @click="showPlatfromDialog('CREATE', scope.row)"
+            />
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        class="pagination"
+        @current-change="changePage"
+        layout="prev, pager, next"
+        :page-size="request.size"
+        :page-count="page.pages"
+        :current-page="request.current"
+      />
+    </el-card>
   </div>
 </template>
 

@@ -55,7 +55,7 @@ export default defineComponent({
     Scrollbar,
     CustomerServicePage,
     SupportPage,
-    LoginRegisterPage
+    LoginRegisterPage,
   },
   setup() {
     const isMobileView = ref(false)
@@ -80,7 +80,7 @@ export default defineComponent({
       } else {
         isMobileView.value = true
       }
-    };
+    }
     onBeforeUnmount(() => {
       // Remove the event listener before the component is unmounted
       window.removeEventListener('resize', handleResize)
@@ -98,9 +98,8 @@ export default defineComponent({
 </script>
 
 <style>
-
-.swiper-slide {
-  max-height: 100vh;
+body {
+  overflow: hidden;
 }
 .dialog400 {
   max-width: 400px;
@@ -147,6 +146,7 @@ export default defineComponent({
 
 .swiper-pagination {
   right: 20px !important;
+  position: fixed;
 }
 
 .swiper-pagination .swiper-pagination-bullet {
@@ -188,7 +188,7 @@ export default defineComponent({
   top: 50%;
   left: 50%;
   width: 1px;
-  height: 296px;
+  height: 30vh;
   background-color: #e3e4e6;
 }
 
@@ -198,5 +198,10 @@ export default defineComponent({
 
 .swiper-pagination:after {
   transform: translate(-50%, 84px);
+}
+@media (max-width: 768px) {
+  body {
+    overflow-y: auto;
+  }
 }
 </style>

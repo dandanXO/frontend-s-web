@@ -44,6 +44,7 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/promotion" ||
       to.path === "/deposit" ||
       to.path === "/invitefriend" ||
+      to.path === "/privilege/invite" ||
       to.path === "/vip"
     ) {
       ui.hiddenFooter();
@@ -51,7 +52,13 @@ export default route(function (/* { store, ssrContext } */) {
       ui.showFooter();
     }
 
-    if (to.path === "/promotion" || to.path === "/deposit" || to.path === "/invitefriend" || to.path === "/vip") {
+    if (
+      to.path === "/promotion" ||
+      to.path === "/deposit" ||
+      to.path === "/invitefriend" ||
+      to.path === "/vip" ||
+      to.path === "/privilege/invite"
+    ) {
       if (isAndroid()) {
         localStorage.setItem("TOKEN", to.query.token);
       } else {

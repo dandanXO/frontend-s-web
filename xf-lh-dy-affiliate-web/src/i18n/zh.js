@@ -387,6 +387,7 @@ export default {
     packSize: '包大小',
     packDownloadUrl: '渠道包链接',
     unchanged: '无修改',
+    unbind: '解绑',
   },
   message: {
     addSuccess: '新增成功',
@@ -506,14 +507,14 @@ export default {
     contactUs: '联系我们'
   },
   posterType: {
-    overall: '综合推广图',
-    app: 'APP推广图',
-    sponsor: '赞助推广图',
-    gift: '赠送推广图',
-    competition: '赛事推广图',
-    event: '活动推广图',
-    crypto: '虚拟币推广图',
-    affiliate: '代理福利图',
+    OVERALL: '综合推广图',
+    APP: 'APP推广图',
+    SPONSOR: '赞助推广图',
+    GIFT: '赠送推广图',
+    COMPETITION: '赛事推广图',
+    EVENT: '活动推广图',
+    CRYPTO: '虚拟币推广图',
+    AFFILIATE: '代理福利图',
   },
   packStatus: {
     IN_QUEUE: '等待中',

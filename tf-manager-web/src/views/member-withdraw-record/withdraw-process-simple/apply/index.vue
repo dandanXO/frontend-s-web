@@ -484,10 +484,7 @@ async function loadBanks() {
 async function loadRecord() {
   uiControl.dialogVisible = false
   page.loading = true
-  const urlSiteId = computed(() => router.currentRoute.value.query.site)
-  if (urlSiteId.value) {
-    request.siteId = urlSiteId.value
-  }
+  request.siteId = computed(() => router.currentRoute.value.query.site)
   const requestCopy = { ...request }
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {

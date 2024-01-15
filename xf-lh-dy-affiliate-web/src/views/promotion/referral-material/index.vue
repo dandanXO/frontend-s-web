@@ -54,7 +54,7 @@
                   <el-option
                     v-for="poster in posterType"
                     :key="poster.name"
-                    :label="poster.display"
+                    :label="t(`posterType.${poster.name}`)"
                     :value="poster.name"
                   />
                 </el-select>
@@ -175,7 +175,7 @@
             <tr v-for="(item, index) in page.records" :key="item.id">
               <td :data-label="t('fields.sequence')">{{ index + 1 }}</td>
               <td :data-label="t('fields.imageTitle')">{{ item.name }}</td>
-              <td :data-label="t('fields.imageType')">{{ item.category }}</td>
+              <td :data-label="t('fields.imageType')">{{ t('posterType.' + item.category) }}</td>
               <td :data-label="t('fields.image')">
                 <img :src="posterDir + item.path" alt="image" style="max-height: 300px; width: auto;">
               </td>
@@ -232,14 +232,14 @@ const router = useRouter()
 let sizeList = []
 const posterDir = process.env.VUE_APP_IMAGE_CDN + '/poster/'
 const posterType = [
-  { name: 'OVERALL', display: t('posterType.overall') },
-  { name: 'APP', display: t('posterType.app') },
-  { name: 'SPONSOR', display: t('posterType.sponsor') },
-  { name: 'GIFT', display: t('posterType.gift') },
-  { name: 'COMPETITION', display: t('posterType.competition') },
-  { name: 'EVENT', display: t('posterType.event') },
-  { name: 'CRYPTO', display: t('posterType.crypto') },
-  { name: 'AFFILIATE', display: t('posterType.affiliate') },
+  { name: 'OVERALL' },
+  { name: 'APP' },
+  { name: 'SPONSOR' },
+  { name: 'GIFT' },
+  { name: 'COMPETITION' },
+  { name: 'EVENT' },
+  { name: 'CRYPTO' },
+  { name: 'AFFILIATE' },
 ]
 const shortcuts = [
   {

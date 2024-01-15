@@ -271,7 +271,7 @@ import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
-
+console.log("test")
 export default defineComponent({
   name: "RegisterPage",
   emits: ["changeTab"],

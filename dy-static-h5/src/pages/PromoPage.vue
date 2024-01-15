@@ -80,7 +80,11 @@
                   "
                 ></div> -->
                 <div>
-                  <img v-if="!!imgURL && !!selectedPromo.mobileBannerUrl" :src="imgURL + selectedPromo.mobileBannerUrl" style="width: 100%; display: block" />
+                  <img
+                    v-if="!!imgURL && !!selectedPromo.mobileBannerUrl"
+                    :src="imgURL + selectedPromo.mobileBannerUrl"
+                    style="width: 100%; display: block"
+                  />
                 </div>
               </div>
               <div class="inner">
@@ -238,7 +242,11 @@ export default defineComponent({
     const showPromoDetails = (promo) => {
       // extension
       if(extensionState.value) {
-        router.push({path: currentPath.value, query: {name: promo.redirectUrl, token: extensionToken.value}});
+        if (promo.redirectUrl.includes("page-vip")) {
+          router.push({path: "/vip", query: {token: extensionToken.value}});
+        }else{
+          router.push({path: currentPath.value, query: {name: promo.redirectUrl, token: extensionToken.value}});
+        }
         isPromoDetail.value = true;
         selectedPromo.value = promo;
         if (isAndroid()) {
@@ -253,7 +261,6 @@ export default defineComponent({
         if (!store.token) {
           isDisplayLogin.value = true;
         } else {
-
           if (promo.redirectUrl.includes("page-vip")) {
             router.push({path: "/account/vip"});
           } else {
@@ -883,12 +890,20 @@ export default defineComponent({
 }
 
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>
