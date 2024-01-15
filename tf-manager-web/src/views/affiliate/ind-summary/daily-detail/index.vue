@@ -332,9 +332,11 @@ function getSummaries(param) {
     columns.forEach((column, index) => {
       if (index === 0) {
         sums[index] = t('fields.total')
-      } else {
+      } else if (index > 1) {
         var prop = column.property
-        if (index > 1) {
+        if (index === 7) {
+          sums[index] = total.data[prop]
+        } else {
           sums[index] =
           '$' +
           parseFloat(total.data[prop]).toLocaleString('en-US', {
