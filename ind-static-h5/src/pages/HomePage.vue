@@ -170,7 +170,7 @@
                     </div>
 
                     <div class="platform-game-title">
-                      {{ truncateText(item.name === "Evo" ? "Evolution" : item.name, 22) }}
+                      {{ truncateText(item.alias ? item.alias : item.name, 22) }}
                     </div>
                   </div>
                 </swiper-slide>
@@ -220,7 +220,7 @@
                       }"
                     ></div>
                     <div class="platform-game-title">
-                      {{ truncateText(item.name === "Evo" ? "Evolution" : item.name, 22) }}
+                      {{ truncateText(item.alias ? item.alias : item.name, 22) }}
                     </div>
                   </div>
                 </div>
@@ -383,7 +383,7 @@
                       <img src="../assets/images/index/hot.png" />
                     </div>
 
-                    <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
+                    <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
                   </div>
                 </swiper-slide>
               </template>
@@ -424,7 +424,7 @@
                     <img src="../assets/images/index/hot.png" />
                   </div>
 
-                  <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
+                  <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
                 </div>
               </template>
             </div>
