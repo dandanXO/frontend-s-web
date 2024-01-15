@@ -18,3 +18,12 @@ export const queryDailySummaryByType = form => {
     ContentType.form
   )
 }
+
+export const queryDailySummaryTotal = form => {
+  return https().request(
+    '/affiliate-daily-summary/getTotal',
+    Method.GET,
+    form,
+    ContentType.form
+  )
+}

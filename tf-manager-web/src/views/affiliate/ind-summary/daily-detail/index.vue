@@ -5,7 +5,8 @@
         <div>
           <el-select
             v-model="request.loginName"
-            :placeholder="t('fields.platform')"
+            :placeholder="t('fields.affiliateName')"
+            multiple
           >
             <el-option
               v-for="aff in affiliateNames"
@@ -18,7 +19,6 @@
             v-model="request.recordTime"
             format="DD/MM/YYYY"
             value-format="YYYY-MM-DD"
-            size="small"
             type="daterange"
             range-separator=":"
             :start-placeholder="t('fields.startDate')"
@@ -33,13 +33,12 @@
           <el-button
             style="margin-left: 20px"
             icon="el-icon-search"
-            size="mini"
             type="success"
             @click="loadRecord()"
           >
             {{ t('fields.search') }}
           </el-button>
-          <el-button size="mini" @click="resetQuery()">
+          <el-button @click="resetQuery()">
             {{ t('fields.reset') }}
           </el-button>
         </div>
@@ -56,6 +55,8 @@
         row-key="id"
         :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
         :empty-text="t('fields.noData')"
+        :summary-method="getSummaries"
+        show-summary
       >
         <el-table-column
           prop="recordTime"
@@ -210,7 +211,10 @@
 import { onMounted, reactive, ref } from 'vue'
 import { hasPermission } from '../../../../utils/util'
 import moment from 'moment'
-import { queryDailySummary } from '../../../../api/affiliate-daily-summary'
+import {
+  queryDailySummary,
+  queryDailySummaryTotal,
+} from '../../../../api/affiliate-daily-summary'
 import { getSiteListSimple } from '../../../../api/site'
 import { getAffiliateList } from '../../../../api/affiliate-record'
 import { useI18n } from 'vue-i18n'
@@ -230,7 +234,7 @@ startDate.setTime(
 )
 const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
-const affiliateNames = ref([]);
+const affiliateNames = ref([])
 
 const request = reactive({
   size: 20,
@@ -241,14 +245,17 @@ const request = reactive({
   affiliateCode: null,
 })
 
+const total = reactive({
+  data: null,
+})
+
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
   request.siteId = siteList.list.filter(x => x.siteCode === 'IND')[0].id
-  const { data: affiliates } = await getAffiliateList(request.siteId);
+  const { data: affiliates } = await getAffiliateList(request.siteId)
   affiliateNames.value = affiliates.map(a => {
-    console.log(a)
-    return { name: a.loginName };
+    return { name: a.loginName }
   })
 }
 
@@ -299,6 +306,9 @@ function checkQuery() {
       query.recordTime = query.recordTime.join(',')
     }
   }
+  if (request.loginName !== null) {
+    query.loginName = request.loginName.join(',')
+  }
   return query
 }
 
@@ -306,10 +316,36 @@ async function loadRecord() {
   page.loading = true
   const query = checkQuery()
   const { data: ret } = await queryDailySummary(query)
+  const { data: ret1 } = await queryDailySummaryTotal(query)
+  total.data = ret1
   page.pages = ret.pages
   page.records = ret.records
   page.total = ret.total
   page.loading = false
+}
+
+function getSummaries(param) {
+  const { columns } = param
+  var sums = []
+
+  if (total.data) {
+    columns.forEach((column, index) => {
+      if (index === 0) {
+        sums[index] = t('fields.total')
+      } else {
+        var prop = column.property
+        if (index > 1) {
+          sums[index] =
+          '$' +
+          parseFloat(total.data[prop]).toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        }
+      }
+    })
+  }
+  return sums
 }
 
 onMounted(async () => {
@@ -326,6 +362,7 @@ onMounted(async () => {
   width: 100%;
   display: block;
   justify-content: flex-start;
+  margin-bottom: 5px;
 }
 
 .btn-group {
