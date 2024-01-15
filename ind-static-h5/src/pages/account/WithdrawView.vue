@@ -232,10 +232,10 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, watch, computed } from "vue";
+import { onMounted, onActivated, ref, reactive, watch, computed } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { convertToCommaAmount } from "src/boot/utils";
 
@@ -243,6 +243,7 @@ import { convertToCommaAmount } from "src/boot/utils";
 const qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
+const route = useRoute();
 const router = useRouter();
 
 const imgURL = process.env.IMAGE_CDN;
@@ -513,13 +514,19 @@ const withdrawGo = (callback) => {
 };
 
 const goToBank = () => {
-  router.push("/account/bank");
+  router.push("/account/bank?from=" + route.path);
 };
 
 onMounted(() => {
   refreshBalance();
   getWithdrawalMethods();
   loadCards();
+});
+
+onActivated(() => {
+  refreshBalance();
+  loadCards();
+  getWithdrawalMethods();
 });
 
 const isValidCardNumber = () => {

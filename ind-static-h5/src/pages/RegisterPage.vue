@@ -21,7 +21,7 @@
           lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || 'Please insert Phone number',
-            (val) => (val.length >= 10 && val.length <= 20) || 'The phone number must be 10 digits or more'
+            (val) => (val && val.length === 10) || 'The phone number must have 10 digits'
           ]"
           color="white"
           class="landing-input"

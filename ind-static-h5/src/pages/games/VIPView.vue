@@ -463,25 +463,27 @@ const { vipItems, lastVipLevel } = rows.reduce(
 );
 
 onActivated(() => {
-  const vipLevelNum = Number(store.vip.replace("VIP", ""));
-  vipLevel.value = vipLevelNum;
+  store.getMemberInfo().then(() => {
+    const vipLevelNum = Number(store.vip.replace("VIP", ""));
+    vipLevel.value = vipLevelNum;
 
-  // if vip0, show vip1 slide
-  if (vipLevelNum === 0) {
-    vipCarouselIndex.value = vipLevelNum;
-  }
-  // if vip level higher than existing info available, show last vip level slide
-  else if (vipLevelNum > lastVipLevel) {
-    // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
-    vipCarouselIndex.value = lastVipLevel - 1;
-  }
-  // show vip slide correspond to current vip level
-  else {
-    // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
-    vipCarouselIndex.value = vipLevelNum - 1;
-  }
+    // if vip0, show vip1 slide
+    if (vipLevelNum === 0) {
+      vipCarouselIndex.value = vipLevelNum;
+    }
+    // if vip level higher than existing info available, show last vip level slide
+    else if (vipLevelNum > lastVipLevel) {
+      // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
+      vipCarouselIndex.value = lastVipLevel - 1;
+    }
+    // show vip slide correspond to current vip level
+    else {
+      // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
+      vipCarouselIndex.value = vipLevelNum - 1;
+    }
 
-  vipCarouselRef.value.data.currentSlide.value = vipCarouselIndex.value;
+    vipCarouselRef.value.data.currentSlide.value = vipCarouselIndex.value;
+  });
 });
 
 watch(
