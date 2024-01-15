@@ -12,7 +12,6 @@
     </div>
     <div class="content">{{ mailDataRef.content }}</div>
   </div>
-  <pre>mailDataRef:{{ mailDataRef }}</pre>
 </template>
 
 <script setup>
