@@ -518,15 +518,13 @@ const goToBank = () => {
 };
 
 onMounted(() => {
-  refreshBalance();
   getWithdrawalMethods();
   loadCards();
 });
 
 onActivated(() => {
-  refreshBalance();
-  loadCards();
   getWithdrawalMethods();
+  loadCards();
 });
 
 const isValidCardNumber = () => {

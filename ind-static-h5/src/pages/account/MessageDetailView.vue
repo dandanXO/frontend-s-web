@@ -12,10 +12,11 @@
     </div>
     <div class="content">{{ mailDataRef.content }}</div>
   </div>
+  <pre>mailDataRef:{{ mailDataRef }}</pre>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onActivated, ref } from "vue";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
@@ -49,7 +50,8 @@ const updateMailReadStatus = () => {
     });
 };
 
-onMounted(() => {
+onActivated(() => {
+  mailDataRef.value = store.currentMailData;
   updateMailReadStatus();
 });
 </script>
