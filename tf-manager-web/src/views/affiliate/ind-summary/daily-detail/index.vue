@@ -4,7 +4,7 @@
       <div class="search">
         <div>
           <el-select
-            v-model="request.loginName"
+            v-model="request.loginNameList"
             :placeholder="t('fields.affiliateName')"
             multiple
           >
@@ -241,7 +241,7 @@ const request = reactive({
   current: 1,
   siteId: null,
   recordTime: [defaultStartDate, defaultEndDate],
-  loginName: null,
+  loginNameList: null,
   affiliateCode: null,
 })
 
@@ -275,7 +275,7 @@ function disabledDate(time) {
 
 function resetQuery() {
   request.recordTime = [defaultStartDate, defaultEndDate]
-  request.loginName = null
+  request.loginNameList = null
   request.affiliateCode = null
 }
 
@@ -306,8 +306,8 @@ function checkQuery() {
       query.recordTime = query.recordTime.join(',')
     }
   }
-  if (request.loginName !== null) {
-    query.loginName = request.loginName.join(',')
+  if (request.loginNameList !== null) {
+    query.loginNameList = request.loginNameList.join(',')
   }
   return query
 }
