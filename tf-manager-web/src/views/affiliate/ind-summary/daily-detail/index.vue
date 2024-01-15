@@ -104,7 +104,7 @@
         </el-table-column>
         <el-table-column
           prop="bet"
-          :label="t('fields.betAmount')"
+          :label="t('fields.indBet')"
           align="center"
         >
           <template #default="scope">
@@ -114,7 +114,7 @@
         </el-table-column>
         <el-table-column
           prop="payout"
-          :label="t('fields.payoutAmount')"
+          :label="t('fields.payout')"
           align="center"
         >
           <template #default="scope">
@@ -124,7 +124,7 @@
         </el-table-column>
         <el-table-column
           prop="profit"
-          :label="t('fields.profit')"
+          :label="t('fields.indProfit')"
           align="center"
         >
           <template #default="scope">
@@ -134,7 +134,7 @@
         </el-table-column>
         <el-table-column
           prop="depositAmount"
-          :label="t('fields.depositAmount')"
+          :label="t('fields.memberDetailDeposit')"
           align="center"
         >
           <template #default="scope">
@@ -146,12 +146,12 @@
         </el-table-column>
         <el-table-column
           prop="depositCount"
-          :label="t('fields.depositCount')"
+          :label="t('fields.memberDepositCount')"
           align="center"
         />
         <el-table-column
           prop="bonus"
-          :label="t('fields.bonusAmount')"
+          :label="t('fields.indBonusAmount')"
           align="center"
         >
           <template #default="scope">
@@ -161,7 +161,7 @@
         </el-table-column>
         <el-table-column
           prop="rebateAmount"
-          :label="t('fields.rebateAmount')"
+          :label="t('fields.indRebateAmount')"
           align="center"
         >
           <template #default="scope">
@@ -173,7 +173,7 @@
         </el-table-column>
         <el-table-column
           prop="adjustment"
-          :label="t('fields.adjustAmount')"
+          :label="t('fields.indAdjustAmount')"
           align="center"
         >
           <template #default="scope">
@@ -183,7 +183,7 @@
         </el-table-column>
         <el-table-column
           prop="netProfit"
-          :label="t('fields.netProfit')"
+          :label="t('fields.grossProfit')"
           align="center"
         >
           <template #default="scope">

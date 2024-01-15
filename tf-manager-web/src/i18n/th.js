@@ -1107,6 +1107,13 @@ export default {
     progress: 'ความคืบหน้า',
     download: 'ดาวน์โหลด',
     updateProgress: 'อัพเดทความคืบหน้า',
+    indBet: 'วางเดิมพัน',
+    indProfit: 'การเดิมพันกำไร',
+    memberDepositCount: 'จำนวนเครื่องชาร์จทั้งหมด',
+    indBonusAmount: 'จำนวนโบนัส',
+    indRebateAmount: 'จำนวนเงินคืน',
+    indAdjustAmount: 'จำนวนการปรับปรุงกองทุน',
+    grossProfit: 'กำไรขั้นต้น'
   },
   message: {
     addRemarkSuccess: 'เพิ่มหมายเหตุความสำเร็จ',
