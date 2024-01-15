@@ -151,7 +151,7 @@
                 <swiper-slide
                   class="platform-game-item btn-effect"
                   @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
-                  v-if="item.name === 'Evo'"
+                  v-if="item.name === 'Evo' || item.name === 'WCPT'"
                 >
                   <div
                     data-aos="zoom-in"
@@ -164,12 +164,14 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${require(`../assets/images/games/hot-games-evo.png`)})`
+                          backgroundImage: `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`
                         }"
                       ></div>
                     </div>
 
-                    <div class="platform-game-title">{{ truncateText("Evolution", 22) }}</div>
+                    <div class="platform-game-title">
+                      {{ truncateText(item.name === "Evo" ? "Evolution" : item.name, 22) }}
+                    </div>
                   </div>
                 </swiper-slide>
               </template>
@@ -207,17 +209,19 @@
               <template v-for="(item, index) in livecasino" :key="index">
                 <div
                   class="platform-game-item btn-effect"
-                  v-if="item.name === 'Evo'"
+                  v-if="item.name === 'Evo' || item.name === 'WCPT'"
                   @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
                 >
                   <div class="platform-game-img">
                     <div
                       class="game--bg"
                       :style="{
-                        backgroundImage: `url(${require(`../assets/images/games/hot-games-evo.png`)})`
+                        backgroundImage: `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`
                       }"
                     ></div>
-                    <div class="platform-game-title">{{ truncateText("Evolution", 22) }}</div>
+                    <div class="platform-game-title">
+                      {{ truncateText(item.name === "Evo" ? "Evolution" : item.name, 22) }}
+                    </div>
                   </div>
                 </div>
               </template>
@@ -287,7 +291,7 @@
                         })()
                       }"
                     >
-                      <div v-if="item.name === 'Evo'" class="burning-hot">
+                      <div v-if="item.name === 'Evo' || item.name === 'WCPT'" class="burning-hot">
                         <img src="../assets/images/index/hot.png" />
                       </div>
                     </div>
@@ -318,9 +322,10 @@
                         })()
                       }"
                     >
-                    <div v-if="item.name === 'Evo'" class="burning-hot">
+                      <div v-if="item.name === 'Evo' || item.name === 'WCPT'" class="burning-hot">
                         <img src="../assets/images/index/hot.png" />
-                      </div></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </template>
@@ -1425,6 +1430,7 @@ const getPlatList = () => {
           lottery.value.push(lottObj);
         }
       });
+      livecasino.value.sort((a, b) => a.id - b.id);
     })
     .catch((err) => {});
 };
