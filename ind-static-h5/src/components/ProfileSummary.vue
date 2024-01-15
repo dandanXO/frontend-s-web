@@ -96,7 +96,7 @@
               </q-item-section>
             </q-item>
 
-            <q-item clickable v-close-popup @click="router.push('/account/message')">
+            <q-item clickable v-close-popup @click="router.push('/account/message?from=' + route.path)">
               <q-item-section avatar>
                 <q-avatar icon="mail" />
               </q-item-section>
@@ -108,7 +108,7 @@
               </q-item-section>
             </q-item>
 
-            <q-item clickable v-close-popup @click="router.push('/account/order')">
+            <q-item clickable v-close-popup @click="router.push('/account/order?from=' + route.path)">
               <q-item-section avatar>
                 <q-avatar icon="receipt" />
               </q-item-section>
@@ -119,7 +119,7 @@
 
             <hr class="menu-line" />
 
-            <q-item clickable v-close-popup @click="router.push('/account/bank')">
+            <q-item clickable v-close-popup @click="router.push('/account/bank?from=' + route.path)">
               <q-item-section avatar>
                 <q-avatar icon="account_balance" />
               </q-item-section>

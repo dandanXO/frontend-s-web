@@ -35,7 +35,7 @@
           <div class="amount-container">
             <div class="amount-text text-right">Rebate Amount</div>
             <div class="amount text-right">
-              <span>{{ convertToCommaAmount(e.rebateAmount, true) }}</span>
+              <span>₹ {{ convertToCommaAmount(e.rebateAmount, true) }}</span>
             </div>
           </div>
         </div>
@@ -54,7 +54,7 @@
           <div class="amount-container">
             <div class="amount-text text-right">Rebate Amount</div>
             <div class="amount text-right">
-              <span>{{ convertToCommaAmount(e.rebateAmount, true) }}</span>
+              <span>₹ {{ convertToCommaAmount(e.rebateAmount, true) }}</span>
             </div>
           </div>
         </div>
@@ -178,16 +178,18 @@ onMounted(() => {
 
       .amount-container {
         .amount-text {
-          color: white;
+          color: rgba(255, 255, 255, 0.5);
           font-family: Helvetica;
-          font-size: 1rem;
+          font-size: 0.95rem;
           font-style: normal;
-          font-weight: 700;
+          font-weight: 400;
+          margin-bottom: 6px;
         }
 
         .amount {
-          color: rgba(255, 255, 255, 0.5);
+          color: white;
           font-size: 1rem;
+          font-weight: 700;
         }
       }
     }
