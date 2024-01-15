@@ -510,13 +510,16 @@ watch(
       return (currentDeposit / levelUpDeposit) * 100;
     })();
 
+    // alert(vipLevel);
+    // alert(vipCarouselIndex.value);
+
     currentVipLevelStats.value = {
       levelUpgrade,
       monthlyReward,
       dailyWithdrawalLimit,
       levelUpPercentage,
       progressBarText: `${currentDeposit} / ${levelUpDeposit}`,
-      rewardUnlocked: currentDeposit >= levelUpDeposit
+      rewardUnlocked: vipLevel > vipCarouselIndex.value
     };
   }
 );
