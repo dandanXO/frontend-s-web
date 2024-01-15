@@ -209,7 +209,7 @@ const request = reactive({
   current: 1,
   siteId: null,
   recordTime: [defaultStartDate, defaultEndDate],
-  belongType: 'PACKAGE'
+  belongType: 'PACKAGE',
 })
 
 const total = reactive({
@@ -292,14 +292,12 @@ function getSummaries(param) {
         sums[index] = t('fields.total')
       } else {
         var prop = column.property
-        if (index > 1) {
-          sums[index] =
+        sums[index] =
           '$' +
           parseFloat(total.data[prop]).toLocaleString('en-US', {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
           })
-        }
       }
     })
   }
