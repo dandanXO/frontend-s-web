@@ -1370,6 +1370,13 @@ export default {
     officialWebData: 'Official Web Data',
     packageWebData: 'Package Web Data',
     payoutAmount: 'Payout Amount',
+    indBet: 'Bet Amount',
+    indProfit: 'Profit',
+    memberDepositCount: 'Deposit Count',
+    indBonusAmount: 'Bonus Amount',
+    indRebateAmount: 'Rebate Amount',
+    indAdjustAmount: 'Adjust Amount',
+    grossProfit: 'Gross Profit',
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
