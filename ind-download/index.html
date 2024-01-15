@@ -301,7 +301,7 @@
                                                         <div class="VfPpkd-dgl2Hf-ppHlrf-sM5MNb"
                                                              data-is-touch-wrapper="true">
                                                             <button id="installButton"
-                                                                    class="VfPpkd-LgbsSe VfPpkd-LgbsSe-OWXEXe-k8QpJ VfPpkd-LgbsSe-OWXEXe-dgl2Hf nCP5yc AjY5Oe DuMIQc LQeN7 MjT6xe sOCCfd brKGGd BhQfub zwjsl"
+                                                                    class=" VfPpkd-LgbsSe VfPpkd-LgbsSe-OWXEXe-k8QpJ VfPpkd-LgbsSe-OWXEXe-dgl2Hf nCP5yc AjY5Oe DuMIQc LQeN7 MjT6xe sOCCfd brKGGd BhQfub zwjsl disabled-btn"
                                                                     aria-label="Instalar" >
                                                                 <!-- ... 其他按钮内容 ... -->
                                                                 <span jsname="V67aGc" class="VfPpkd-vQzf8d"
@@ -1663,6 +1663,10 @@
                 console.log("data", data);
                 apiUrl = data.data.url;
                 adjustUrlCode = data.data.adjustUrlCode;
+
+                button = document.getElementById("installButton");
+                button.classList.remove("disabled-btn");
+
                 if(autoDownload=="1"){
                     downloadApk(code, pp, fbclid, fbpid)
                 }
