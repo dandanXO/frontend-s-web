@@ -138,18 +138,34 @@
       <div class="info-row">
         <div class="info-content-item longer-item">
           <div class="longer-group">
-            <div class="info-title">
+            <div
+              class="info-title"
+              :class="checkTeamAmountData(teamAmountData.agentLevel) === 'Calculating' ? 'f-wrap' : ''"
+            >
               <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-06.png" /></div>
               <div class="info-txt">Level:</div>
-              <div class="info-amount">{{ teamAmountData.agentLevel }}</div>
+              <div
+                class="info-amount"
+                :class="checkTeamAmountData(teamAmountData.agentLevel) === 'Calculating' ? 'font-smaller' : ''"
+              >
+                {{ checkTeamAmountData(teamAmountData.agentLevel) }}
+              </div>
             </div>
           </div>
 
           <div class="longer-group">
-            <div class="info-title">
+            <div
+              class="info-title"
+              :class="checkTeamAmountData(teamAmountData.agentLevel) === 'Calculating' ? 'f-wrap' : ''"
+            >
               <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-01.png" /></div>
               <div class="info-txt">Rate:</div>
-              <div class="info-amount">{{ teamAmountData.agentRate }}</div>
+              <div
+                class="info-amount"
+                :class="checkTeamAmountData(teamAmountData.agentRate) === 'Calculating' ? 'font-smaller' : ''"
+              >
+                {{ checkTeamAmountData(teamAmountData.agentRate) }}
+              </div>
             </div>
           </div>
         </div>
@@ -168,7 +184,13 @@
             <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-02.png" /></div>
             <div class="info-txt">Myself rebate:</div>
           </div>
-          <div class="info-amount">{{ store.currency.value }} {{ teamAmountData.myselfRebate }}</div>
+          <div
+            class="info-amount"
+            :class="checkTeamAmountData(teamAmountData.myselfRebate) === 'Calculating' ? 'font-smaller' : ''"
+          >
+            <span>{{ store.currency.value }}&nbsp;</span>
+            {{ checkTeamAmountData(teamAmountData.myselfRebate) }}
+          </div>
         </div>
       </div>
 
@@ -186,7 +208,13 @@
             <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-04.png" /></div>
             <div class="info-txt">Team rebate:</div>
           </div>
-          <div class="info-amount">{{ store.currency.value }} {{ teamAmountData.teamRebate }}</div>
+          <div
+            class="info-amount"
+            :class="checkTeamAmountData(teamAmountData.teamRebate) === 'Calculating' ? 'font-smaller' : ''"
+          >
+            <span>{{ store.currency.value }}&nbsp;</span>
+            {{ checkTeamAmountData(teamAmountData.teamRebate) }}
+          </div>
         </div>
       </div>
 
@@ -195,7 +223,13 @@
           <div class="info-title">
             <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-05.png" /></div>
             <div class="info-txt">Total:</div>
-            <div class="info-amount">{{ store.currency.value }} {{ teamAmountData.totalRebate }}</div>
+            <div
+              class="info-amount"
+              :class="checkTeamAmountData(teamAmountData.totalRebate) === 'Calculating' ? 'font-smaller' : ''"
+            >
+              <span>{{ store.currency.value }}&nbsp;</span>
+              {{ checkTeamAmountData(teamAmountData.totalRebate) }}
+            </div>
           </div>
         </div>
       </div>
@@ -493,8 +527,14 @@ const getTeamAmountData = () => {
       teamAmountData.teamBetting = data.teamValidBet;
       teamAmountData.teamRebate = data.teamRebate;
       teamAmountData.totalRebate = data.totalRebate;
+      teamAmountData.agentLevel = data.level;
+      teamAmountData.agentRate = data.rate;
     }
   });
+};
+
+const checkTeamAmountData = (value) => {
+  return value === -1 ? "Calculating" : value;
 };
 
 onMounted(() => {
@@ -655,11 +695,25 @@ onMounted(() => {
         margin-left: auto;
         margin-top: auto;
         padding-top: 12px;
+
+        &.font-smaller {
+          font-size: 12px;
+          margin-bottom: 2px;
+          font-weight: 400;
+
+          span {
+            display: none;
+          }
+        }
       }
 
       .info-title {
         display: flex;
         gap: 8px;
+
+        &.f-wrap {
+          flex-wrap: wrap;
+        }
       }
 
       .info-icon {
