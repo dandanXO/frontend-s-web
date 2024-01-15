@@ -252,6 +252,7 @@
           <div class="vip-name">{{ e.vipName }}</div>
         </div>
         <!-- <div :class="`status ${e.status === 'Online' ? 'online' : 'offline'}`">{{ e.status }}</div> -->
+        <div class="status online">Team Member</div>
       </div>
       <div class="bot-container">
         <div class="amount-container">
@@ -922,10 +923,10 @@ onMounted(() => {
         .id {
           color: #fff;
           font-family: Helvetica;
-          font-size: 1.5rem;
+          font-size: 1.3rem;
           font-style: normal;
-          font-weight: 700;
-          margin: 0 1rem 0 0;
+          font-weight: 400;
+          // margin: 0 1rem 0 0;
         }
 
         .vip-name {
@@ -948,14 +949,15 @@ onMounted(() => {
       }
 
       .status {
-        width: 5rem;
+        width: auto;
         text-align: center;
         border-radius: 12.5rem;
         background: rgba(250, 229, 118, 0.2);
         font-family: Helvetica;
         font-size: 1rem;
         font-style: normal;
-        font-weight: 700;
+        font-weight: 400;
+        padding: 0.25rem 0.75rem 0.15rem;
 
         &.online {
           color: rgba(250, 229, 118, 1);
