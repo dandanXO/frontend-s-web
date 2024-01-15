@@ -45,6 +45,8 @@
         row-key="id"
         :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
         :empty-text="t('fields.noData')"
+        :summary-method="getSummaries"
+        show-summary
       >
         <el-table-column
           prop="recordTime"
@@ -179,7 +181,10 @@
 <script setup>
 import { onMounted, reactive } from 'vue'
 import moment from 'moment'
-import { queryDailySummaryByType } from '../../../../api/affiliate-daily-summary'
+import {
+  queryDailySummaryByType,
+  queryDailySummaryTotal,
+} from '../../../../api/affiliate-daily-summary'
 import { getSiteListSimple } from '../../../../api/site'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
@@ -204,7 +209,11 @@ const request = reactive({
   current: 1,
   siteId: null,
   recordTime: [defaultStartDate, defaultEndDate],
-  belongType: 'PACKAGE'
+  belongType: 'PACKAGE',
+})
+
+const total = reactive({
+  data: null,
 })
 
 async function loadSites() {
@@ -265,10 +274,34 @@ async function loadRecord() {
   page.loading = true
   const query = checkQuery()
   const { data: ret } = await queryDailySummaryByType(query)
+  const { data: ret1 } = await queryDailySummaryTotal(query)
+  total.data = ret1
   page.pages = ret.pages
   page.records = ret.records
   page.total = ret.total
   page.loading = false
+}
+
+function getSummaries(param) {
+  const { columns } = param
+  var sums = []
+
+  if (total.data) {
+    columns.forEach((column, index) => {
+      if (index === 0) {
+        sums[index] = t('fields.total')
+      } else {
+        var prop = column.property
+        sums[index] =
+          '$' +
+          parseFloat(total.data[prop]).toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+      }
+    })
+  }
+  return sums
 }
 
 onMounted(async () => {
