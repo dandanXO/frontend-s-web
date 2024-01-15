@@ -729,6 +729,7 @@ const uiControl = reactive({
     { key: 10, displayName: t('withdrawStatus.SUCCESS'), value: 'SUCCESS' },
     { key: 11, displayName: t('withdrawStatus.FAIL'), value: 'FAIL' },
     { key: 12, displayName: t('withdrawStatus.PENDING'), value: 'PENDING' },
+    { key: 13, displayName: t('withdrawStatus.WAITING_AUTO_PAY'), value: 'WAITING_AUTO_PAY' },
   ],
   colors: [
     { color: '#f56c6c', percentage: 30 },

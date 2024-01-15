@@ -130,7 +130,7 @@
     <el-dialog class="bankModal" width="500" v-model="bankCardModalState.visible" :footer="null" title="绑定银行卡">
       <el-form ref="bankCardFormRef" :model="bankCardInfo" :rules="bankCardRules">
         <el-form-item prop="bankId" :rules="[{ required: true, message: '请选择银行', trigger: 'blur' }]">
-          <el-row :gutter="20">
+          <el-row :gutter="20" style="width: 100% !important">
             <el-col :span="6">
               <el-select placeholder="类型" v-model="selectedBankType" style="width: 100%" @change="selectBankType">
                 <el-option v-for="bank in bankTypes" :key="bank.value" :value="bank.value" :label="bank.text">
@@ -894,11 +894,16 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-body {
-  .bankModal {
-    .el-dialog__body {
-      padding: 20px;
-    }
+.bankModal {
+  .el-dialog__body {
+    padding: 20px;
+  }
+
+  .el-row {
+    width: 100% !important;
+  }
+  .el-form-item__content {
+    width: 100%;
   }
 }
 .passwordModal .ant-modal {

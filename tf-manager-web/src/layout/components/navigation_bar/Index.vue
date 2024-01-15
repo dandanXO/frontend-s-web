@@ -23,11 +23,9 @@
             {{ $t('realtimeStatistics.H5') }}: <span>{{ selectedData.H5 ? selectedData.H5 : 0 }}</span>
           </div>
           <div class="text-2">
-            {{ $t('realtimeStatistics.APPLY_WITHDRAW') }}:
-            <router-link v-if="hasPermission(['sys:withdraw:simple:list'])" :to="`/withdraw/withdraw-process-simple/apply?site=${selectedData.siteId}`">
-              <el-link type="primary">{{ selectedData.APPLY_WITHDRAW ? selectedData.APPLY_WITHDRAW : 0 }}</el-link>
+            <router-link :to="{path: `/withdraw/withdraw-process-simple/apply`, force: true}">
+              <el-link :disabled="!hasPermission(['sys:withdraw:simple:list'])" type="primary">{{ $t('realtimeStatistics.APPLY_WITHDRAW') }}: <span>{{ applyWithdrawCount }}</span></el-link>
             </router-link>
-            <span v-else>{{ selectedData.APPLY_WITHDRAW ? selectedData.APPLY_WITHDRAW : 0 }}</span>
           </div>
         </div>
       </div>
@@ -150,6 +148,7 @@ export default {
 
     const selectedSite = ref(null);
     const selectedData = ref(null);
+    const applyWithdrawCount = ref(0);
 
     async function loadMemberStatistics() {
       const response = await getMemberStatistics();
@@ -161,16 +160,20 @@ export default {
     function updateData() {
       const selectedSiteData = statisticsList.list.find(site => site.siteCode === selectedSite.value);
       selectedData.value = selectedSiteData || null;
+    }
 
-      console.log(selectedData.value);
+    function updateApplyWithdrawCount() {
+      applyWithdrawCount.value = sessionStorage.getItem('WITHDRAW') || 0;
     }
 
     onMounted(() => {
       loadMemberStatistics();
+      updateApplyWithdrawCount();
     })
 
     watch(statisticsList, () => {
       if (statisticsList.list.length > 0) {
+        statisticsList.list.sort((a, b) => b.APPLY_WITHDRAW - a.APPLY_WITHDRAW);
         selectedSite.value = statisticsList.list[0].siteCode;
       }
       updateData();
@@ -178,10 +181,11 @@ export default {
 
     watch(() => useStore().state.socket.event, () => {
       const memberStatistics = useStore().state.socket.event.filter(e => e.event === 'MEMBER_STATISTICS');
-      if (memberStatistics) {
+      if (memberStatistics.length > 0) {
         const parsedStatistics = JSON.parse(memberStatistics[0].statistics);
         statisticsList.list = Array.isArray(parsedStatistics) ? parsedStatistics : [];
       }
+      updateApplyWithdrawCount();
     }, { deep: true });
 
     return {
@@ -199,6 +203,8 @@ export default {
       selectedSite,
       selectedData,
       updateData,
+      applyWithdrawCount,
+      updateApplyWithdrawCount
     }
   },
 }

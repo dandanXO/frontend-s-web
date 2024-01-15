@@ -319,6 +319,7 @@ const dateClosePopup = ref(true);
     }
 
     .q-tab {
+      flex: 1;
       color: white;
       border-radius: 0;
 
@@ -331,10 +332,17 @@ const dateClosePopup = ref(true);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 30px;
+      flex-direction: column;
+      gap: 10px;
       color: #ffffff;
       background: white;
       padding: 30px 20px;
+
+      .left-container {
+        img {
+          max-width: 150px;
+        }
+      }
 
       .right-container {
         display: flex;
@@ -344,6 +352,7 @@ const dateClosePopup = ref(true);
         width: 320px;
 
         .desc {
+          width: 90%;
           color: #87898a;
           line-height: 1.75em;
           font-size: 14px;
@@ -351,7 +360,7 @@ const dateClosePopup = ref(true);
         }
 
         form {
-          margin: 20px 0;
+          margin: 6px 0;
 
           :deep(.q-field__native) {
             font-size: 16px;

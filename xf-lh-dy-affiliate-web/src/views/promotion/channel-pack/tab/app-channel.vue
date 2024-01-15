@@ -99,7 +99,7 @@ import {
   getVersion,
 } from '../../../../api/channel-pack'
 import { useStore } from '../../../../store'
-import { required } from '../../../../utils/validate'
+// import { required } from '../../../../utils/validate'
 import { getAffiliateInfo } from '../../../../api/affiliate'
 
 const { t } = useI18n()
@@ -113,7 +113,7 @@ const form = reactive({
   os: 'ANDROID',
   apkType: 'NORMAL',
   version: '1.1.1',
-  name: '',
+  name: null,
   icon: null,
 })
 const inputImage = ref(null)
@@ -133,9 +133,7 @@ const uploadedImage = reactive({
   url: null,
 })
 
-const formRules = reactive({
-  name: [required(t('message.validateAppNameRequired'))],
-})
+const formRules = reactive({})
 
 async function attachImage(event) {
   const data = await attachPhoto(event)
@@ -180,6 +178,9 @@ function onAppTypeChange(val) {
 async function submitCreatePack() {
   requestForm.value.validate(async valid => {
     if (valid) {
+      if (form.name === null) {
+        form.name = form.appType.replace("_", " ") + ' ' + affInfo.affiliateCode
+      }
       await createChannelPack(form)
       resetForm()
       ElMessage({ message: t('message.packRequestInQueue'), type: 'success' })

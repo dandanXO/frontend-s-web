@@ -102,24 +102,19 @@ export default defineComponent({
     const checkOutstandingWithdraw = async() => {
       const query = checkQuery();
       const { data: ret } = await getMemberWithdrawRecordApply(query);
-      if (ret.records.length === 0) {
-        spliceSocket('WITHDRAW');
-        sessionStorage.setItem("WITHDRAW", 0);
-      } else {
-        sessionStorage.setItem("WITHDRAW", ret.records.length);
-      }
-      console.log('getMemberWithdrawRecordApply', ret)
+      sessionStorage.setItem("WITHDRAW", ret.total);
     };
 
     const checkOutstandingAutoWithdraw = async() => {
       const query = checkQuery();
       const { data: ret } = await getMemberWithdrawRecordApplySimple(query);
-      if (ret.records.length === 0) {
-        spliceSocket('WITHDRAW');
-        sessionStorage.setItem("WITHDRAW", 0);
-      } else {
-        sessionStorage.setItem("WITHDRAW", ret.records.length);
-      }
+      sessionStorage.setItem("WITHDRAW", ret.total);
+      // if (ret.records.length === 0) {
+      //   spliceSocket('WITHDRAW');
+      //   sessionStorage.setItem("WITHDRAW", 0);
+      // } else {
+      //   sessionStorage.setItem("WITHDRAW", ret.records.length);
+      // }
     };
 
     const checkOutstandingBeforePaid = async() => {
