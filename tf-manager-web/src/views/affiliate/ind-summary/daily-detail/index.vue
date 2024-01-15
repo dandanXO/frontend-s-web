@@ -5,7 +5,7 @@
         <div>
           <el-select
             v-model="request.loginNameList"
-            :placeholder="t('fields.affiliateName')"
+            :placeholder="t('fields.platform')"
             multiple
           >
             <el-option
@@ -75,7 +75,7 @@
         </el-table-column>
         <el-table-column
           prop="loginName"
-          :label="t('fields.loginName')"
+          :label="t('fields.platform')"
           align="left"
           min-width="100"
         >
