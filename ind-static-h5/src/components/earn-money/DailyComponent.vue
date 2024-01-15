@@ -341,7 +341,7 @@ const memberVIPData = reactive({
 const limitedMembers = ref(0);
 const getLimitedMembers = () => {
   if (memberVIPData.totalMembers > 5) {
-    limitedMembers.value;
+    limitedMembers.value = 5;
   } else {
     limitedMembers.value = memberVIPData.totalMembers;
   }

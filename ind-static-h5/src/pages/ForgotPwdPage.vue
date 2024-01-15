@@ -52,8 +52,10 @@
 
         <span class="forgot-password-form-field-label">Phone Number</span>
         <q-input
+          type="tel"
+          pattern="\d*"
+          maxlength="10"
           ref="phoneRef"
-          type="number"
           hide-bottom-space
           v-model="passwordForm.phone"
           lazy-rules

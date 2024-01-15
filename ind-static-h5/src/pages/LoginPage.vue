@@ -14,6 +14,9 @@
       <div v-if="!loginType" class="login-form-grid">
         <span class="login-form-field-label">Phone Number</span>
         <q-input
+          type="tel"
+          pattern="\d*"
+          maxlength="10"
           hide-bottom-space
           ref="loginNameRef"
           v-model="loginForm.loginName"

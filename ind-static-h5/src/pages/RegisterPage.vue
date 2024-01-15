@@ -14,9 +14,11 @@
       <div class="register-form-grid">
         <span class="register-form-field-label">Phone Number</span>
         <q-input
+          type="tel"
+          pattern="\d*"
+          maxlength="10"
           ref="loginNameRef"
           hide-bottom-space
-          type="number"
           v-model="regForm.loginName"
           lazy-rules
           :rules="[
