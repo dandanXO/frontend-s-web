@@ -5,7 +5,6 @@
         <div class="content-wrapper">
           <div class="title">Total Rebates</div>
           <div class="amount">₹ {{ convertToCommaAmount(totalBetRebateData.totalRebate, false) }}</div>
-          <div class="date">Total Rebates from {{ totalBetRebateData.rebateFrom }}</div>
         </div>
       </div>
     </div>
@@ -130,8 +129,7 @@ onMounted(() => {
         background: rgba(255, 255, 255, 0.7);
         margin: 0 auto;
         text-align: center;
-        padding: 50px 50px 5px 50px;
-
+        padding: 30px 50px 25px 50px;
         .title {
           color: #000;
           font-size: 1.75rem;

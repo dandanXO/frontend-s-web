@@ -2487,7 +2487,7 @@ onMounted(() => {
     }
 
     .game-platform-img {
-      background-color: #cccccc;
+      // background-color: #cccccc;
       width: 100%;
       aspect-ratio: 1/1;
       background-size: cover;
