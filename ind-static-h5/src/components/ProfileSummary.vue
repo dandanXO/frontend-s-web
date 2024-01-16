@@ -23,7 +23,7 @@
   </div>
 
   <div class="infoboard-container" :class="{ 'q-pa-md': !homeProfile, 'with-top-download': topDownload }">
-    <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" />
+    <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-wrapper-extra">
         <div class="logo-img">
@@ -432,7 +432,7 @@ onMounted(() => {
     }
 
     .profile-pic-frame {
-      background-image: url(../assets/images/common/profile-frame.png);
+      // background-image: url(../assets/images/common/profile-frame.png);
       width: 70px;
       height: 70px;
       background-size: 100%;

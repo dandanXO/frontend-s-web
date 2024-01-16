@@ -879,7 +879,7 @@ onMounted(() => {
       position: relative;
       &:after {
         content: "";
-        background-image: url(../../assets/images/index/popout/label-discount.png);
+        // background-image: url(../../assets/images/index/popout/label-discount.png);
         background-repeat: no-repeat;
         display: block;
         position: absolute;
