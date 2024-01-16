@@ -2006,6 +2006,8 @@ export default {
   realtimeStatistics: {
     APP: 'APP',
     H5: 'H5',
+    Mobile: 'Mobile',
+    PC: 'PC',
     APPLY_WITHDRAW: '提现终审',
   },
   error: {

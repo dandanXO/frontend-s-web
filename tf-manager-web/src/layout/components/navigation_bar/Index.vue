@@ -8,19 +8,14 @@
     />
     <BreadCrumb id="breadcrumb-container" class="breadcrumb-container" />
     <div class="right-menu">
-      <div v-if="selectedData" class="statistics-container">
-        <el-select placeholder="" class="lang-container right-menu-item" size="small" v-model="selectedSite" @change="updateData">
-          <el-option v-for="site in statisticsList.list" :key="site.siteCode" :value="site.siteCode">{{ site.siteCode }}</el-option>
-        </el-select>
-      </div>
       <div v-if="selectedData" class="key-value-container">
         <div class="flex-div">
           <div class="green-circle-dot" />
           <div class="text-2">
-            {{ $t('realtimeStatistics.APP') }}: <span>{{ selectedData.APP ? selectedData.APP : 0 }}</span>
+            {{ $t('realtimeStatistics.Mobile') }}: <span>{{ selectedData.Mobile ? selectedData.Mobile : 0 }}</span>
           </div>
           <div class="text-2">
-            {{ $t('realtimeStatistics.H5') }}: <span>{{ selectedData.H5 ? selectedData.H5 : 0 }}</span>
+            {{ $t('realtimeStatistics.PC') }}: <span>{{ selectedData.PC ? selectedData.PC : 0 }}</span>
           </div>
           <div class="text-2">
             <router-link :to="{path: `/withdraw/withdraw-process-simple/apply`, force: true}">
