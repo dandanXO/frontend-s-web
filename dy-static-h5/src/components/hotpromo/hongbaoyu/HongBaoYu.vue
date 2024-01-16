@@ -44,6 +44,7 @@
   </q-dialog>
 </template>
 <script setup>
+import { defineProps } from "vue";
 import { eventapi } from "src/boot/axios";
 import { ref } from "vue";
 import { userStore } from "src/stores";
@@ -55,10 +56,17 @@ const winAmount = ref(0);
 const isClaimModal = ref(false);
 const loadingClaim = ref(false);
 
+const props = defineProps({
+  promoCode: {
+    type: String,
+    required: true
+  }
+});
+
 const getPromotion = () => {
   loadingClaim.value = true;
   eventapi
-    .get("/redPacketVip/claim?promoCode=dy-red-packet-rain")
+    .get(`/redPacketVip/claim?promoCode=${props.promoCode}`)
     .then((res) => {
       if (res.code === 0) {
         winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;

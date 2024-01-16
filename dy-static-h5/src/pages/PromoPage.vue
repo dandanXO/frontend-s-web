@@ -373,6 +373,9 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .promo-container {
+  h3 {
+    font-size: 18px;
+  }
   .selected-promo {
     ol {
       padding: 0 15px;

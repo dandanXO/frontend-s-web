@@ -93,11 +93,7 @@
           {{ calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0 }}
           <br />
           最高金额:
-          {{
-            activeMethod.depositMax
-              ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value)
-              : " "
-          }}
+          {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value) : " " }}
         </div>
 
         <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="兑换率">
@@ -461,7 +457,11 @@ async function confirmDeposit() {
   } else {
     btnLoading.value = true;
     depositAmtRef.value.validate();
-    if (depositAmtRef.value.hasError) {
+    if (selectedPayType.value && bankCardList.value.length > 0) {
+      await payTypeClass.value.validateBank(form.bankId);
+    }
+
+    if (depositAmtRef.value.hasError || (selectedPayType.value && bankCardList.value.length > 0 && !form.bankId)) {
       btnLoading.value = false;
     } else {
       await cashier
