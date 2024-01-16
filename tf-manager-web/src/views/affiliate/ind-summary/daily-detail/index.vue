@@ -93,6 +93,54 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="depositAmount"
+          :label="t('fields.depositAmount')"
+          align="center"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.depositAmount, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="withdrawAmount"
+          :label="t('fields.withdrawAmount')"
+          align="center"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.withdrawAmount, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          :label="t('fields.depositWithdrawalProfit')"
+          align="center"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{
+                data: scope.row.depositAmount - scope.row.withdrawAmount,
+                type: 'money',
+              }"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="registerCount"
+          :label="t('fields.registerCount')"
+          align="center"
+        />
+        <el-table-column
+          prop="ftdCount"
+          :label="t('fields.ftdCount')"
+          align="center"
+        />
+        <el-table-column
           prop="ftdAmount"
           :label="t('fields.ftdAmount')"
           align="center"
@@ -102,11 +150,7 @@
             <span v-formatter="{data: scope.row.ftdAmount, type: 'money'}" />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="bet"
-          :label="t('fields.indBet')"
-          align="center"
-        >
+        <el-table-column prop="bet" :label="t('fields.indBet')" align="center">
           <template #default="scope">
             $
             <span v-formatter="{data: scope.row.bet, type: 'money'}" />
@@ -134,19 +178,22 @@
         </el-table-column>
         <el-table-column
           prop="depositAmount"
-          :label="t('fields.memberDetailDeposit')"
+          :label="t('fields.totalMemberDepositAmount')"
           align="center"
         >
           <template #default="scope">
             $
             <span
-              v-formatter="{data: scope.row.depositAmount, type: 'money'}"
+              v-formatter="{
+                data: scope.row.depositAmount,
+                type: 'money',
+              }"
             />
           </template>
         </el-table-column>
         <el-table-column
           prop="depositCount"
-          :label="t('fields.memberDepositCount')"
+          :label="t('fields.totalMemberDepositCount')"
           align="center"
         />
         <el-table-column
@@ -327,22 +374,31 @@ async function loadRecord() {
 function getSummaries(param) {
   const { columns } = param
   var sums = []
-
   if (total.data) {
     columns.forEach((column, index) => {
       if (index === 0) {
         sums[index] = t('fields.total')
       } else if (index > 1) {
         var prop = column.property
-        if (index === 7) {
+        if (index === 5 || index === 6 || index === 12) {
           sums[index] = total.data[prop]
+        } else if (index === 4) {
+          // profit depositWithdrawal = deposit - withdrawal
+          sums[index] =
+            '$' +
+            parseFloat(
+              total.data.depositAmount - total.data.withdrawAmount
+            ).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
         } else {
           sums[index] =
-          '$' +
-          parseFloat(total.data[prop]).toLocaleString('en-US', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
+            '$' +
+            parseFloat(total.data[prop]).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
         }
       }
     })

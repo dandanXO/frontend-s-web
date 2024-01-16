@@ -483,6 +483,7 @@ export default {
     depositMemberCount: 'จำนวนฝากเงินของสมาชิก',
     depositSerialNo: 'หมายเลขลำดับการฝากเงิน',
     depositStatus: 'สถานะการฝากเงิน',
+    depositWithdrawalProfit: 'ฝากและถอนกำไร',
     describe: 'อธิบาย',
     description: 'คำอธิบาย',
     desktopImage: 'รูปภาพเดสก์ท็อป',
@@ -979,6 +980,8 @@ export default {
     totalFailWithdraw: 'จำนวนการถอนล้มเหลวทั้งหมด',
     totalFailWithdrawAmount: 'จำนวนการถอนล้มเหลวทั้งหมด',
     totalFirstDeposit: 'ยอดรวมการฝากครั้งแรก',
+    totalMemberDepositAmount: 'จำนวนเงินที่เติมทั้งหมด',
+    totalMemberDepositCount: 'จำนวนการชาร์จทั้งหมด',
     totalNoOfDeposits: 'ยอดรวมการฝากครั้งแรก',
     totalNoOfWithdrawals: 'จำนวนการถอนทั้งหมด',
     totalPayout: 'จ่ายไปทั้งหมด',
@@ -1113,7 +1116,7 @@ export default {
     indBonusAmount: 'จำนวนโบนัส',
     indRebateAmount: 'จำนวนเงินคืน',
     indAdjustAmount: 'จำนวนการปรับปรุงกองทุน',
-    grossProfit: 'กำไรขั้นต้น'
+    grossProfit: 'กำไรขั้นต้น',
   },
   message: {
     addRemarkSuccess: 'เพิ่มหมายเหตุความสำเร็จ',
