@@ -4,10 +4,10 @@
       <template v-for="(item, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(index)" :class="['deposit-item', item.isActive && 'active']">
           <div class="deposit-icon">
-            <img
-              :src="require(`../assets/images/index/popout/deposit-coin-${item.amount}.png`)"
-              :alt="item.amount + ' Coin'"
-            />
+            <!--            <img-->
+            <!--              :src="require(`../assets/images/index/popout/deposit-coin-${item.amount}.png`)"-->
+            <!--              :alt="item.amount + ' Coin'"-->
+            <!--            />-->
             <div class="deposit-hot-label" v-if="isUpi2Active">+₹{{ item.hotLabel }}</div>
           </div>
           <div class="deposit-amt">{{ item.amount }}</div>
