@@ -4,7 +4,7 @@
       <div class="withdrawal-modal-view-top">
         <div class="withdrawal-modal-view-top--title">Withdrawal</div>
         <div class="withdrawal-modal-view-top--img">
-          <img class="top-bg" src="../../assets/images/common/content-frame-top-short.png" />
+          <!-- <img class="top-bg" src="../../assets/images/common/content-frame-top-short.png" /> -->
         </div>
 
         <q-btn
@@ -584,7 +584,7 @@ const isValidCardAddress = () => {
   margin: auto;
 
   .withdrawal-modal-view-top {
-    background: url(../../assets/images/common/content-frame-top-short.png) no-repeat top center/contain;
+    // background: url(../../assets/images/common/content-frame-top-short.png) no-repeat top center/contain;
     position: relative;
     margin-top: 40px;
 
@@ -625,7 +625,7 @@ const isValidCardAddress = () => {
 
   .withdrawal-modal-view-middle {
     position: relative;
-    background: url(../../assets/images/common/content-frame-middle-short.png) round top/100% auto;
+    // background: url(../../assets/images/common/content-frame-middle-short.png) round top/100% auto;
     min-height: 435px;
     padding: 16px;
     margin-top: -1px;
@@ -820,7 +820,7 @@ const isValidCardAddress = () => {
   }
 
   .withdrawal-modal-view-bottom {
-    background: url(../../assets/images/common/content-frame-bottom-short.png) round top/100% auto;
+    // background: url(../../assets/images/common/content-frame-bottom-short.png) round top/100% auto;
     min-height: 50px;
     position: relative;
     margin-bottom: 60px;
@@ -834,7 +834,7 @@ const isValidCardAddress = () => {
       content: "";
       position: absolute;
       bottom: -40px;
-      background: url(../../assets/images/common/content-frame-down-icon.png) no-repeat center/contain;
+      // background: url(../../assets/images/common/content-frame-down-icon.png) no-repeat center/contain;
       display: block;
       width: 100%;
       height: 30px;

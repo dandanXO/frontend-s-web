@@ -2,11 +2,11 @@
   <div>
     <div class="goldenegg-container">
       <div class="goldeneggs">
-        <img @click="hitEgg" v-for="v in 4" :key="v" src="../../../assets/images/promotion/hotpromo/goldenegg/web.png">
+        <!-- <img @click="hitEgg" v-for="v in 4" :key="v" src="../../../assets/images/promotion/hotpromo/goldenegg/web.png"> -->
       </div>
 
       <div class="goldeneggs">
-        <img @click="hitEgg" v-for="v in 4" :key="v" src="../../../assets/images/promotion/hotpromo/goldenegg/web.png">
+        <!-- <img @click="hitEgg" v-for="v in 4" :key="v" src="../../../assets/images/promotion/hotpromo/goldenegg/web.png"> -->
       </div>
       <div class="noEggs">
         剩余砸蛋次数 {{ info.leftCount }}</div>
@@ -82,7 +82,7 @@ onMounted(() => {
     position: relative;
     height: 7.5rem;
     min-height:120px;
-    background: url(../../../assets/images/promotion/hotpromo/goldenegg/bg.png)no-repeat bottom;
+    // background: url(../../../assets/images/promotion/hotpromo/goldenegg/bg.png)no-repeat bottom;
     background-size:100% 40%;
     padding-bottom:50px;
     display: flex;
@@ -111,7 +111,7 @@ body
   .wonBox {
     width: 500px;
     height: 26.5rem;
-    background: url(../../../assets/images/promotion/hotpromo/goldenegg/winbox.png)no-repeat center center;
+    // background: url(../../../assets/images/promotion/hotpromo/goldenegg/winbox.png)no-repeat center center;
     background-size: contain;
     box-shadow: none;
     .wincontents {

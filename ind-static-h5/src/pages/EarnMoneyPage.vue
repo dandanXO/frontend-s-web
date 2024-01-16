@@ -93,23 +93,33 @@ const activeKey = ref("about");
   padding-top: 50px;
   .earn-money-tabs {
     position: fixed;
-    top: 76px;
+    padding-left: 16px;
+    padding-right: 16px;
+    top: 68px;
     left: 0;
-    z-index: 2;
+    z-index: 999;
     background: #101115;
     width: 100%;
     padding-bottom: 6px;
-    padding-top: 6px;
+    padding-top: 12px;
+
+    :deep(.q-tabs__content) {
+      background: #422171;
+      border-radius: 12px;
+      padding: 4px;
+    }
 
     :deep(.q-tab) {
-      margin: 0 15px;
-      color: rgba(255, 255, 255, 0.3);
-      border-radius: 4px;
+      // margin: 0 15px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.5);
+      border-radius: 8px;
       height: 55px;
-      width: 66px;
-      background: rgba(232, 232, 232, 0.2);
+      width: 25%;
+      background: #4f26a6;
       font-size: 12px;
       font-weight: 500;
+      border: 2px solid #303030;
     }
 
     :deep(.q-tab__content) {
@@ -119,6 +129,7 @@ const activeKey = ref("about");
     :deep(.q-tab--active) {
       color: white;
       background: #5c46e7;
+      border: 2px solid #422171;
 
       svg {
         fill: white;
@@ -136,7 +147,7 @@ const activeKey = ref("about");
   }
 
   svg {
-    fill: rgba(255, 255, 255, 0.3);
+    fill: rgba(255, 255, 255, 0.5);
   }
 }
 </style>

@@ -2,20 +2,17 @@
   <div class="deposit-wrapper">
     <div class="deposit-options">
       <div class="lil-title">Select Amount</div>
-      <q-btn
-        flat
-        class="deposit-option-btn q-mt-sm"
-        :class="{ active: isUpi1Active }"
-        label="UPI"
-        @click="handleDepositUpiClick(1)"
-      />
-      <!-- <q-btn
-        flat
-        class="deposit-option-btn label-on-discount"
-        :class="{ active: isUpi2Active }"
-        label="UPI2"
-        @click="handleDepositUpiClick(2)"
-      /> -->
+      <div class="deposit-option-container">
+        <template v-for="(item, index) in payMethods" :key="item + index">
+          <q-btn
+            flat
+            class="deposit-option-btn q-mt-sm"
+            :label="item.nodeName"
+            :class="{ active: activeNodeName === item.nodeName }"
+            @click="handleDepositNodeClick(item)"
+          />
+        </template>
+      </div>
     </div>
 
     <div class="deposit-item-container q-mt-md">
@@ -169,6 +166,20 @@
       </div>
     </q-card>
   </q-dialog>
+
+  <q-dialog width="100%" v-model="guestKYCDialog" persistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
+      <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="userKYCDialog" persistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
+      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
+    </div>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -181,6 +192,8 @@ import liff from "@line/liff";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import { convertToCommaAmount } from "src/boot/utils";
+import KYCGuestForm from "../../components/KYCGuestForm.vue";
+import KYCUserForm from "../../components/KYCUserForm.vue";
 
 var qs = require("qs");
 const store = userStore();
@@ -196,14 +209,14 @@ const checkNewUser = () => {
       message: "Please fill in your personal details",
       icon: "report_problem"
     });
-    router.push(`/account/profile`);
+    // router.push(`/account/profile`);
   }
 };
 
 const isDeposited = ref(false);
 const btnLoading = ref(false);
 const payTypeClass = ref();
-const payMethods = reactive([]);
+const payMethods = ref([]);
 const paymentNode = ref([]);
 const activeMethod = ref({});
 const bankCardList = ref([]);
@@ -292,6 +305,13 @@ const handleDepositItemClick = (index) => {
   });
 };
 
+const activeNodeName = ref(null);
+const activeCode = ref(null);
+const handleDepositNodeClick = (item) => {
+  activeNodeName.value = item.nodeName;
+  activeCode.value = item.code;
+};
+
 const isUpi1Active = ref(true);
 const isUpi2Active = ref(false);
 
@@ -313,6 +333,8 @@ function initPay() {
   });
 
   payMethods.value = [];
+  console.log('SDFSDFDSCLEAR?')
+
   cashier.get("/session/deposit/index/").then((res) => {
     $q.loading.hide();
     isLoadingInitPay.value = false;
@@ -322,10 +344,15 @@ function initPay() {
       d.payments.forEach((element) => {
         element.promoValue = "";
         element.promoStyle = "right: -5px; top: 0px; padding: 20px;";
-        payMethods.push(element);
+        payMethods.value.push(element);
       });
-      if (payMethods[0].extra && payMethods[0].extra.banks) {
-        bankCardList.value = payMethods[0].extra.banks;
+      if (payMethods.value[0].extra && payMethods.value[0].extra.banks) {
+        bankCardList.value = payMethods.value[0].extra.banks;
+      }
+
+      if (payMethods.value.length > 0) {
+        activeNodeName.value = payMethods.value[0].nodeName;
+        activeCode.value = payMethods.value[0].code;
       }
     }
 
@@ -488,6 +515,7 @@ async function confirmDeposit() {
             }
           });
           data.bankCardId = 0;
+          data.code = activeCode.value;
 
           pDepo(data);
         }
@@ -500,7 +528,8 @@ async function pDepo(deposit) {
     bankCardId: deposit.bankCardId,
     localAmount: deposit.localAmount,
     paymentId: deposit.paymentId,
-    bankId: deposit.bankId
+    bankId: deposit.bankId,
+    code: deposit.code
   };
 
   if (deposit.privilegeId) {
@@ -621,14 +650,54 @@ async function pDepo(deposit) {
     });
 }
 
+// KYC Dialog
+const personalState = reactive({
+  memberInfo: {}
+});
+const userKYCDialog = ref(false);
+const openUserKYCDialog = () => {
+  userKYCDialog.value = true;
+};
+const closeUserKYCDialog = () => {
+  store.getMemberInfo().then(() => {
+    loadInfo();
+    userKYCDialog.value = false;
+  });
+};
+
+const guestKYCDialog = ref(false);
+const openGuestKYCDialog = () => {
+  guestKYCDialog.value = true;
+};
+const closeGuestKYCDialog = () => {
+  store.getMemberInfo().then(() => {
+    loadInfo();
+    guestKYCDialog.value = false;
+  });
+};
+
+const loadInfo = () => {
+  personalState.memberInfo = userStore();
+
+  if (store.guest && personalState.memberInfo.realName === null) {
+    openGuestKYCDialog();
+  }
+
+  if (!store.guest && personalState.memberInfo.realName === null) {
+    openUserKYCDialog();
+  }
+};
+
 onActivated(() => {
   initPay();
   checkNewUser();
+  loadInfo();
 });
 
 onMounted(() => {
   initPay();
   checkNewUser();
+  loadInfo();
 });
 </script>
 
@@ -789,6 +858,10 @@ onMounted(() => {
   margin: 16px auto 0 auto;
   // width: 90%;
 
+  .deposit-option-container {
+    display: flex;
+    gap: 12px;
+  }
   .deposit-option-btn {
     color: #cccccc;
     background: #1d2635;
@@ -807,7 +880,7 @@ onMounted(() => {
       position: relative;
       &:after {
         content: "";
-        background-image: url(../../assets/images/index/popout/label-discount.png);
+        // background-image: url(../../assets/images/index/popout/label-discount.png);
         background-repeat: no-repeat;
         display: block;
         position: absolute;
