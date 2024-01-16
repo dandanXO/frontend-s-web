@@ -3,7 +3,7 @@
     <div class="withdrawal-summary">
       <div class="balance">
         <div class="title">Cash Balance</div>
-        <span class="amount">{{ convertToCommaAmount(store.balance, true) }}</span>
+        <span class="amount">{{ convertToCommaAmount(store.balance, false) }}</span>
       </div>
 
       <div class="separator"></div>
@@ -13,7 +13,7 @@
         <span class="amount">
           {{
             withdrawalMethods[withdrawalDialogTab].withdrawableBalance >= 0
-              ? convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawableBalance, true)
+              ? convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawableBalance, false)
               : "0.00"
           }}
         </span>
