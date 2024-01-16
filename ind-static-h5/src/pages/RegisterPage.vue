@@ -14,14 +14,16 @@
       <div class="register-form-grid">
         <span class="register-form-field-label">Phone Number</span>
         <q-input
+          type="tel"
+          pattern="\d*"
+          maxlength="10"
           ref="loginNameRef"
           hide-bottom-space
-          type="number"
           v-model="regForm.loginName"
           lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || 'Please insert Phone number',
-            (val) => val.length === 10 || 'The phone number must be 10 digits'
+            (val) => (val && val.length === 10) || 'The phone number must have 10 digits'
           ]"
           color="white"
           class="landing-input"
@@ -506,10 +508,10 @@ export default defineComponent({
         return "Please Enter Phone Number";
       }
 
-      const phoneRegex = /^\d{10}$/;
+      const phoneRegex = /^\d{10,20}$/;
       const isValid = phoneRegex.test(phone);
 
-      return isValid ? true : "Phone Number must be 10 digits";
+      return isValid ? true : "Phone Number must be 10 digits or more";
     };
 
     return {

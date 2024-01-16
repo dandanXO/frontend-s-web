@@ -24514,3 +24514,8 @@ body:not(.P9KVBf) .P9KVBf .dzkqwc:not(:disabled) {
         padding-left: 0px;
     }
 }
+
+.disabled-btn{
+    pointer-events: none;
+    background-color: grey !important;
+ }

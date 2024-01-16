@@ -32,3 +32,7 @@ export const updateStatus = (id, state) => {
 export const updateMaintenance = (id, maintenance) => {
   return https().request(`/sitePlatform/${id}/maintenance?_method=PUT`, Method.POST, maintenance, ContentType.form);
 };
+
+export const updateAlias = (id, alias) => {
+  return https().request(`/sitePlatform/${id}/alias?_method=PUT`, Method.POST, { alias: alias }, ContentType.form);
+};

@@ -1,8 +1,7 @@
 <template>
   <div class="section-wrapper">
-    <div class="title-wrapper">
-      <div class="title">My Team</div>
-      <div class="team-member-container">
+    <div class="team-member-wrapper">
+      <div class="team-member-container" v-if="memberVIPData.totalMembers > 0">
         <div class="member-imgs" :style="`width: ${40 + limitedMembers * 15}px`">
           <q-avatar v-for="n in limitedMembers" :key="n" size="30px" class="overlapping" :style="`left: ${n * 15}px`">
             <img :src="getRandomImageSource(n)" />
@@ -12,15 +11,18 @@
       </div>
     </div>
 
-    <div class="subtitle-wrapper">
-      <div class="subtitle">Today Status</div>
-      <div class="chart-cat">
-        <div class="square m"></div>
-        <div>Member</div>
-      </div>
-      <div class="chart-cat">
-        <div class="square ba"></div>
-        <div>Bet Amount</div>
+    <div class="title-wrapper">
+      <div class="title-txt">My Team (Today)</div>
+
+      <div class="subtitle-wrapper">
+        <div class="chart-cat">
+          <div class="square m"></div>
+          <div>Member</div>
+        </div>
+        <div class="chart-cat">
+          <div class="square ba"></div>
+          <div>Bet Amount</div>
+        </div>
       </div>
     </div>
   </div>
@@ -81,7 +83,7 @@
     </div>
   </div>
 
-  <div class="content-wrapper">
+  <!-- <div class="content-wrapper">
     <div class="top-container">
       <div class="left-container">
         <div class="title">Betting Amount</div>
@@ -97,13 +99,13 @@
       <div class="right-container text-right">
         <div class="title">Rebate Amount</div>
         <div class="value">₹ {{ convertToCommaAmount(totalBetRabteDailyDetailsData.rebateAmount, false) }}</div>
-        <!-- <div class="data-wrapper right">
+        <div class="data-wrapper right">
           <div class="img-wrapper">
             <img src="../../assets/images/earn-money/cash.png" />
           </div>
           <div class="data-txt">Cash In:</div>
           <div class="data-amount">0</div>
-        </div> -->
+        </div>
       </div>
     </div>
     <div class="chart">
@@ -126,16 +128,120 @@
         <img src="../../assets/images/earn-money/arrow_right.png" />
       </div>
 
-      <!-- <Bar ref="chartRef" :data="chartData.data" :options="chartData.options" /> -->
+      <Bar ref="chartRef" :data="chartData.data" :options="chartData.options" />
+    </div>
+  </div> -->
+
+  <div class="info-wrapper q-pt-lg">
+    <div class="title-txt">Yesterday Report (Total)</div>
+    <div class="info-container">
+      <div class="info-row">
+        <div class="info-content-item longer-item">
+          <div class="longer-group">
+            <div
+              class="info-title"
+              :class="checkTeamAmountData(teamAmountData.agentLevel) === 'Calculating' ? 'f-wrap' : ''"
+            >
+              <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-06.png" /></div>
+              <div class="info-txt">Level:</div>
+              <div
+                class="info-amount"
+                :class="checkTeamAmountData(teamAmountData.agentLevel) === 'Calculating' ? 'font-smaller' : ''"
+              >
+                {{ checkTeamAmountData(teamAmountData.agentLevel) }}
+              </div>
+            </div>
+          </div>
+
+          <div class="longer-group">
+            <div
+              class="info-title"
+              :class="checkTeamAmountData(teamAmountData.agentLevel) === 'Calculating' ? 'f-wrap' : ''"
+            >
+              <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-01.png" /></div>
+              <div class="info-txt">Rate:</div>
+              <div
+                class="info-amount"
+                :class="checkTeamAmountData(teamAmountData.agentRate) === 'Calculating' ? 'font-smaller' : ''"
+              >
+                {{ checkTeamAmountData(teamAmountData.agentRate) }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-content-item line-side">
+          <div class="info-title">
+            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-07.png" /></div>
+            <div class="info-txt">Myself betting amount:</div>
+          </div>
+          <div class="info-amount">{{ store.currency.value }} {{ teamAmountData.myselfBetting }}</div>
+        </div>
+
+        <div class="info-content-item">
+          <div class="info-title">
+            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-02.png" /></div>
+            <div class="info-txt">Myself rebate:</div>
+          </div>
+          <div
+            class="info-amount"
+            :class="checkTeamAmountData(teamAmountData.myselfRebate) === 'Calculating' ? 'font-smaller' : ''"
+          >
+            <span>{{ store.currency.value }}&nbsp;</span>
+            {{ checkTeamAmountData(teamAmountData.myselfRebate) }}
+          </div>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-content-item line-side">
+          <div class="info-title">
+            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-03.png" /></div>
+            <div class="info-txt">Team betting amount:</div>
+          </div>
+          <div class="info-amount">{{ store.currency.value }} {{ teamAmountData.teamBetting }}</div>
+        </div>
+
+        <div class="info-content-item">
+          <div class="info-title">
+            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-04.png" /></div>
+            <div class="info-txt">Team rebate:</div>
+          </div>
+          <div
+            class="info-amount"
+            :class="checkTeamAmountData(teamAmountData.teamRebate) === 'Calculating' ? 'font-smaller' : ''"
+          >
+            <span>{{ store.currency.value }}&nbsp;</span>
+            {{ checkTeamAmountData(teamAmountData.teamRebate) }}
+          </div>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-content-item last-item">
+          <div class="info-title">
+            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-05.png" /></div>
+            <div class="info-txt">Total rebate:</div>
+            <div
+              class="info-amount"
+              :class="checkTeamAmountData(teamAmountData.totalRebate) === 'Calculating' ? 'font-smaller' : ''"
+            >
+              <span>{{ store.currency.value }}&nbsp;</span>
+              {{ checkTeamAmountData(teamAmountData.totalRebate) }}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <LoadingComponent v-if="isLoading.referredBetRebateRecord"></LoadingComponent>
-  <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Member"></NoInfoComponent>
+  <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Member" shortenContainer="true"></NoInfoComponent>
   <div v-else class="member-info-container">
-    <div class="section-wrapper">
-      <div class="title">Daily Report</div>
-      <div class="subtitle">{{ moment().format("YYYY-MM-DD") }}</div>
+    <div class="section-wrapper q-pt-lg">
+      <div class="title-txt">Team details (Yesterday)</div>
+      <div class="subtitle">{{ moment().utcOffset("+05:30").format("YYYY-MM-DD") }}</div>
     </div>
 
     <div v-for="(e, i) in myMemberList" :key="`${e}-${i}`" class="member-info">
@@ -146,6 +252,7 @@
           <div class="vip-name">{{ e.vipName }}</div>
         </div>
         <!-- <div :class="`status ${e.status === 'Online' ? 'online' : 'offline'}`">{{ e.status }}</div> -->
+        <div class="status online">Team Member</div>
       </div>
       <div class="bot-container">
         <div class="amount-container">
@@ -234,7 +341,7 @@ const memberVIPData = reactive({
 const limitedMembers = ref(0);
 const getLimitedMembers = () => {
   if (memberVIPData.totalMembers > 5) {
-    limitedMembers.value;
+    limitedMembers.value = 5;
   } else {
     limitedMembers.value = memberVIPData.totalMembers;
   }
@@ -352,54 +459,83 @@ const onSwiperArrowClick = (isRight) => {
   else swiperNav.slidePrev();
 };
 
-const totalBetRabteDailyDetailsData = reactive({
-  recordTime: "",
-  validBet: 0,
-  rebateAmount: 0,
-  memberCount: 0
-});
-const getChartAPI = () => {
-  const startDate = moment().subtract(6, "d").format("YYYY-MM-DD");
-  const endDate = moment().format("YYYY-MM-DD");
+// const totalBetRabteDailyDetailsData = reactive({
+//   recordTime: "",
+//   validBet: 0,
+//   rebateAmount: 0,
+//   memberCount: 0
+// });
+// const getChartAPI = () => {
+//   const startDate = moment().subtract(6, "d").format("YYYY-MM-DD");
+//   const endDate = moment().format("YYYY-MM-DD");
 
-  api.get(`/session/member/betRebateDailyDetails?start=${startDate}&end=${endDate}`).then((res) => {
+//   api.get(`/session/member/betRebateDailyDetails?start=${startDate}&end=${endDate}`).then((res) => {
+//     const { code, data } = res;
+//     if (code === 0) {
+//       data.forEach((e, i) => {
+//         totalBetRabteDailyDetailsData.validBet += e.validBet;
+//         totalBetRabteDailyDetailsData.rebateAmount += e.rebateAmount;
+//         totalBetRabteDailyDetailsData.memberCount += e.memberCount;
+
+//         // chartRef.value.chart.data.datasets[0].data[i] = e.validBet;
+
+//         chartData.data.datasets[0].data[i] = e.memberCount;
+//         chartData.data.datasets[0].borderRadius[i] = 6;
+//         chartData.data.labels[i] = moment(e.recordTime).format("DD MMM");
+
+//         chartData2.data.datasets[0].data[i] = e.validBet;
+//         chartData2.data.datasets[0].borderRadius[i] = 6;
+//         chartData2.data.labels[i] = moment(e.recordTime).format("DD MMM");
+//       });
+
+//       const maxChart = Math.max(...chartData.data.datasets[0].data);
+//       chartData.data.datasets[0].data.forEach((e, i) => {
+//         if (e === maxChart) chartData.data.datasets[0].backgroundColor[i] = "#00D1FF";
+//         else chartData.data.datasets[0].backgroundColor[i] = "#574BA0";
+//       });
+
+//       const maxChart2 = Math.max(...chartData2.data.datasets[0].data);
+//       chartData2.data.datasets[0].data.forEach((e, i) => {
+//         if (e === maxChart2) chartData2.data.datasets[0].backgroundColor[i] = "#FFB100";
+//         else chartData2.data.datasets[0].backgroundColor[i] = "#574BA0";
+//       });
+
+//       chartRef.value.chart.update();
+//       chartRef.value.chart.render();
+
+//       chartRef2.value.chart.update();
+//       chartRef2.value.chart.render();
+//     }
+//   });
+// };
+
+const teamAmountData = reactive({
+  myselfBetting: 0,
+  myselfRebate: 0,
+  teamBetting: 0,
+  teamRebate: 0,
+  totalRebate: 0,
+  agentLevel: 0,
+  agentRate: 0
+});
+
+const getTeamAmountData = () => {
+  api.get(`/session/member/betRebateDailyDetails`).then((res) => {
     const { code, data } = res;
     if (code === 0) {
-      data.forEach((e, i) => {
-        totalBetRabteDailyDetailsData.validBet += e.validBet;
-        totalBetRabteDailyDetailsData.rebateAmount += e.rebateAmount;
-        totalBetRabteDailyDetailsData.memberCount += e.memberCount;
-
-        // chartRef.value.chart.data.datasets[0].data[i] = e.validBet;
-
-        chartData.data.datasets[0].data[i] = e.memberCount;
-        chartData.data.datasets[0].borderRadius[i] = 6;
-        chartData.data.labels[i] = moment(e.recordTime).format("DD MMM");
-
-        chartData2.data.datasets[0].data[i] = e.validBet;
-        chartData2.data.datasets[0].borderRadius[i] = 6;
-        chartData2.data.labels[i] = moment(e.recordTime).format("DD MMM");
-      });
-
-      const maxChart = Math.max(...chartData.data.datasets[0].data);
-      chartData.data.datasets[0].data.forEach((e, i) => {
-        if (e === maxChart) chartData.data.datasets[0].backgroundColor[i] = "#00D1FF";
-        else chartData.data.datasets[0].backgroundColor[i] = "#574BA0";
-      });
-
-      const maxChart2 = Math.max(...chartData2.data.datasets[0].data);
-      chartData2.data.datasets[0].data.forEach((e, i) => {
-        if (e === maxChart2) chartData2.data.datasets[0].backgroundColor[i] = "#FFB100";
-        else chartData2.data.datasets[0].backgroundColor[i] = "#574BA0";
-      });
-
-      chartRef.value.chart.update();
-      chartRef.value.chart.render();
-
-      chartRef2.value.chart.update();
-      chartRef2.value.chart.render();
+      teamAmountData.myselfBetting = data.selfValidBet;
+      teamAmountData.myselfRebate = data.selfRebate;
+      teamAmountData.teamBetting = data.teamValidBet;
+      teamAmountData.teamRebate = data.teamRebate;
+      teamAmountData.totalRebate = data.totalRebate;
+      teamAmountData.agentLevel = data.level;
+      teamAmountData.agentRate = data.rate;
     }
   });
+};
+
+const checkTeamAmountData = (value) => {
+  return value === -1 ? "Calculating" : value;
 };
 
 onMounted(() => {
@@ -408,7 +544,8 @@ onMounted(() => {
   getReferredBetRebateRecord();
 
   getVIPApi();
-  getChartAPI();
+  getTeamAmountData();
+  // getChartAPI();
 });
 </script>
 
@@ -428,30 +565,11 @@ onMounted(() => {
     font-weight: 700;
   }
 
-  .team-member-container {
-    background: rgba(217, 217, 217, 0.2);
-    padding: 6px 8px;
-    border-radius: 4px;
-    position: relative;
-    display: flex;
-    align-items: center;
-
-    .member-imgs {
-      height: 30px;
-      width: 60px;
-      display: block;
-      position: relative;
-      margin-left: -15px;
-    }
-
-    .member-amt {
-    }
-
-    .overlapping {
-      border: 2px solid #9105e8;
-      position: absolute;
-      box-sizing: content-box;
-    }
+  .subtitle {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+    padding-top: 12px;
   }
 
   .subtitle-wrapper {
@@ -487,11 +605,150 @@ onMounted(() => {
   }
 }
 
+.team-member-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  .team-member-container {
+    background: rgba(217, 217, 217, 0.2);
+    padding: 6px 8px;
+    border-radius: 4px;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .member-imgs {
+      height: 30px;
+      width: 60px;
+      display: block;
+      position: relative;
+      margin-left: -15px;
+    }
+
+    .member-amt {
+    }
+
+    .overlapping {
+      border: 2px solid #9105e8;
+      position: absolute;
+      box-sizing: content-box;
+    }
+  }
+}
+
+.info-wrapper {
+  .info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 12px;
+    .info-row {
+      display: flex;
+      gap: 15px;
+      background: linear-gradient(180deg, rgba(139, 54, 248, 0.4) 0%, rgba(51, 74, 214, 0.4) 100%);
+      border-radius: 12px;
+    }
+
+    .info-content-item {
+      width: 100%;
+
+      padding: 20px 12px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+
+      &.line-side:before {
+        content: "";
+        position: absolute;
+        width: 1px;
+        height: calc(100% - 20px);
+        background: rgba(255, 255, 255, 0.25);
+        right: -10px;
+        top: 10px;
+      }
+      &.longer-item {
+        flex-direction: row;
+        gap: 36px;
+
+        .longer-group {
+          flex: 1;
+          position: relative;
+
+          &:first-child:before {
+            content: "";
+            position: absolute;
+            width: 1px;
+            height: calc(100% + 20px);
+            background: rgba(255, 255, 255, 0.25);
+            right: -20px;
+            top: -10px;
+          }
+        }
+
+        .info-amount {
+          padding-top: 0;
+        }
+      }
+
+      &.last-item {
+        padding-top: 16px;
+        padding-bottom: 16px;
+
+        .info-amount {
+          padding-top: 0;
+        }
+      }
+
+      .info-amount {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        font-size: 19px;
+        font-weight: 700;
+        margin-left: auto;
+        margin-top: auto;
+        padding-top: 12px;
+
+        &.font-smaller {
+          font-size: 12px;
+          margin-bottom: 2px;
+          font-weight: 400;
+
+          span {
+            display: none;
+          }
+        }
+      }
+
+      .info-title {
+        display: flex;
+        gap: 8px;
+
+        &.f-wrap {
+          flex-wrap: wrap;
+        }
+      }
+
+      .info-icon {
+        img {
+          display: block;
+          width: 27px;
+        }
+      }
+
+      .info-txt {
+        margin-top: 4px;
+        font-weight: 700;
+      }
+    }
+  }
+}
+
 .content-wrapper {
   border-radius: 0.75rem;
   background: #6759c0;
   padding: 15px;
-  margin: 0 0 15px 0;
+  margin: 0;
 
   // top section
   .progress-bar-wrapper {
@@ -678,10 +935,10 @@ onMounted(() => {
         .id {
           color: #fff;
           font-family: Helvetica;
-          font-size: 1.5rem;
+          font-size: 1.3rem;
           font-style: normal;
-          font-weight: 700;
-          margin: 0 1rem 0 0;
+          font-weight: 400;
+          // margin: 0 1rem 0 0;
         }
 
         .vip-name {
@@ -704,14 +961,15 @@ onMounted(() => {
       }
 
       .status {
-        width: 5rem;
+        width: auto;
         text-align: center;
         border-radius: 12.5rem;
         background: rgba(250, 229, 118, 0.2);
         font-family: Helvetica;
         font-size: 1rem;
         font-style: normal;
-        font-weight: 700;
+        font-weight: 400;
+        padding: 0.25rem 0.75rem 0.15rem;
 
         &.online {
           color: rgba(250, 229, 118, 1);
@@ -794,5 +1052,11 @@ onMounted(() => {
       top: 4px;
     }
   }
+}
+
+.title-txt {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
 }
 </style>

@@ -4,10 +4,15 @@
       <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
         <router-link :to="`/promotion?name=${banner.redirectUrl}`">
           <div
+            v-if="banner && banner.desktopImageUrl"
             class="promo-bg isDesktop"
             :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'"
           ></div>
-          <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"></div>
+          <div
+            v-if="banner && banner.mobileImageUrl"
+            class="promo-bg isMobile"
+            :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"
+          ></div>
         </router-link>
       </el-carousel-item>
     </el-carousel>
@@ -680,12 +685,12 @@ export default defineComponent({
     const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
     const gameMenu = ref(null);
     const banners = ref([
-      {
-        src: "83ac7ea8-c77d-4cf0-976a-7f1a5e1b0027.png"
-      },
-      {
-        src: "9ba30f5e-162a-429e-a811-ad918c958fbd.jpg"
-      }
+      // {
+      //   src: "83ac7ea8-c77d-4cf0-976a-7f1a5e1b0027.png"
+      // },
+      // {
+      //   src: "9ba30f5e-162a-429e-a811-ad918c958fbd.jpg"
+      // }
     ]);
     const isImportantAnnoucementModal = ref(false);
     const openGame = (gameName, platType, gameCode, scrollingState) => {

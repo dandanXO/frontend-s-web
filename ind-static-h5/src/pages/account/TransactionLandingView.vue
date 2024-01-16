@@ -10,7 +10,7 @@
         <DepositView></DepositView>
       </q-tab-panel>
       <q-tab-panel name="withdraw">
-        <WithdrawView></WithdrawView>
+        <WithdrawView ref="withdrawViewRef"></WithdrawView>
       </q-tab-panel>
     </q-tab-panels>
   </div>
@@ -24,12 +24,18 @@ import WithdrawView from "../account/WithdrawView.vue";
 
 const route = useRoute();
 const activeKey = ref("");
+const withdrawViewRef = ref(null);
 
 watch(
   () => route.path,
   () => {
     if (route.path === "/deposit") activeKey.value = "deposit";
-    else if (route.path === "/withdraw") activeKey.value = "withdraw";
+    else if (route.path === "/withdraw") {
+      activeKey.value = "withdraw";
+      if (withdrawViewRef.value && typeof withdrawViewRef.value.onActivated === "function") {
+        withdrawViewRef.value.onActivated();
+      }
+    }
   }
 );
 </script>
