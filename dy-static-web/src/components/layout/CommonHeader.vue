@@ -2499,7 +2499,7 @@ body {
       flex-direction: column-reverse;
       max-width: 340px;
       padding: 30px 40px 0;
-      gap: 9px;
+      gap: 29px;
       // .imgbox {
       //   max-width: 320px;
       //   overflow: hidden;
@@ -2515,8 +2515,8 @@ body {
       //   }
       // }
       .imgbox {
-        width: 310px;
-        height: 180px;
+        width: 260px;
+        height: 160px;
         background-image: url(../../assets/home/header_esport_new_01.png);
         background-size: cover;
         overflow: hidden;
