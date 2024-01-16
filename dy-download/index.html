@@ -119,6 +119,7 @@
             <a id="download_fast">东赢快捷APP（推荐使用,免安装）</a>
         </div>
 
+        <div style="width:100%; text-align: center;padding:20px 0px 10px;font-size:18px;font-weight: bold;" id="before-load">加载中。。。</div>
         <div id="android-lists" style="width:100%;margin:10px auto 0px;display:flex;flex-direction: column;align-items: center;gap:4px;">
 <!--            <div class="download_btn" id="btn_1">-->
 <!--                <a-->
@@ -202,10 +203,16 @@
 
     getApiUrl();
 
+    $("#dy_customer").click(function(e){
+        window.open("https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=H5&lang=zh-CN")
+    })
+
     async function getApiUrl() {
         try {
             const response = await fetch(`https://ak4wc.ala8tehrnu.com/app/dy/getDownloadPage`);
             const data = await response.json();
+
+            $("#before-load").hide();
             if (data) {
                 // console.log("data", data);
                 iosDownload = data.data.ios;
@@ -261,10 +268,10 @@
                 '" alt=""/></div>'
             );
         }
-        $("#download").attr(
-            "href",
-            "https://xinfa-files.s3.ap-southeast-1.amazonaws.com/app/dy_app_1.0.22.apk"
-        );
+        // $("#download").attr(
+        //     "href",
+        //     "https://xinfa-files.s3.ap-southeast-1.amazonaws.com/app/dy_app_1.0.22.apk"
+        // );
 
         var androidHtml= '';
         androidDownload.forEach((list, index) => {

@@ -636,6 +636,7 @@ async function pDepo(deposit) {
             }
           }
         }
+        selectedPrivilege.value = "";
       } else {
         $q.notify({
           color: "negative",
