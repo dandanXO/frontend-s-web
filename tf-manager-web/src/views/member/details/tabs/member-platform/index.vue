@@ -49,7 +49,7 @@
       </div>
     </div>
     <el-table
-      :data="page.records"
+      :data="memberPlatform.list"
       ref="table"
       row-key="id"
       size="small"
@@ -105,14 +105,6 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      class="pagination"
-      @current-change="changePage"
-      layout="prev, pager, next"
-      :page-size="request.size"
-      :page-count="page.pages"
-      :current-page="request.current"
-    />
   </div>
 </template>
 
@@ -152,39 +144,28 @@ const platform = reactive({
   list: [],
 })
 
+const memberPlatform = reactive({
+  list: [],
+})
+
 const uiControl = reactive({
   removeBtn: true,
 })
 const request = reactive({
-  size: 30,
-  current: 1,
   id: null,
   platform: null,
   siteId: null,
-})
-
-const page = reactive({
-  pages: 0,
-  records: [],
 })
 
 function resetQuery() {
   request.platform = null
 }
 
-function changePage(page) {
-  request.current = page
-  loadMemberPlatform()
-}
-
 async function loadMemberPlatform() {
   request.id = props.mbrId
   request.siteId = site.id
-  console.log(request.site)
-  console.log(request.id)
   const { data: ret } = await getMemberPlatformList(request)
-  page.pages = ret.pages
-  page.records = ret.records
+  memberPlatform.list = ret
 }
 
 async function loadPlatform() {
