@@ -338,7 +338,7 @@ export default defineComponent({
           // regForm.sid = store.googleadid ? store.googleadid : store.aaid;
           if (store.googleadid) {
             regForm.sid = store.googleadid;
-          } else if (store.googleadid) {
+          } else if (store.aaid) {
             regForm.sid = store.aaid;
           } else {
             regForm.sid = sidParam;
