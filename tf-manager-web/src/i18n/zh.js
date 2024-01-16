@@ -1735,6 +1735,7 @@ export default {
     validateConfigValueRequired: '设置值必填',
     resultCalculateSuccess: '结果结算成功',
     buildIsInQueue: '构建等待中',
+    roleMustOnlyOne: '请选择一个需要授权的角色',
   },
   menu: {
     undefined: '',
