@@ -1759,6 +1759,7 @@ export default {
     validateConfigValueRequired: 'Config Value is required',
     resultCalculateSuccess: 'Result is calculated successfully',
     buildIsInQueue: 'Build is in queue',
+    roleMustOnlyOne: 'Please select a role that requires authorization',
   },
   menu: {
     undefined: '',

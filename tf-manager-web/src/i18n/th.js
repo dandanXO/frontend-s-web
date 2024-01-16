@@ -1429,6 +1429,7 @@ export default {
     validateTemplateIdRequired: 'ต้องระบุรหัสเทมเพลต',
     requestExportToExcelDone1: 'คำขอถูกส่งเรียบร้อยแล้ว กรุณาคลิก',
     requestExportToExcelDone2: 'เพื่อการตรวจสอบความคืบหน้าและดาวน์โหลด',
+    roleMustOnlyOne: 'โปรดเลือกบทบาทที่ต้องได้รับอนุมัติ',
   },
   menu: {
     undefined: 'ไม่ได้กำหนด',
