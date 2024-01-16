@@ -93,20 +93,21 @@ const activeKey = ref("about");
   padding-top: 50px;
   .earn-money-tabs {
     position: fixed;
-    top: 76px;
+    top: 68px;
     left: 0;
-    z-index: 2;
+    z-index: 999;
     background: #101115;
     width: 100%;
     padding-bottom: 6px;
-    padding-top: 6px;
+    padding-top: 12px;
 
     :deep(.q-tab) {
-      margin: 0 15px;
+      // margin: 0 15px;
+      margin: 0 2%;
       color: rgba(255, 255, 255, 0.3);
       border-radius: 4px;
       height: 55px;
-      width: 66px;
+      width: 23%;
       background: rgba(232, 232, 232, 0.2);
       font-size: 12px;
       font-weight: 500;

@@ -517,13 +517,27 @@ const goToBank = () => {
   router.push("/account/bank?from=" + route.path);
 };
 
+const checkNewUser = () => {
+  if (store.realName == "" || store.realName == null) {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: "Please fill in your personal details",
+      icon: "report_problem"
+    });
+    router.push(`/deposit`);
+  }
+};
+
 onMounted(() => {
   getWithdrawalMethods();
+  checkNewUser();
   loadCards();
 });
 
 onActivated(() => {
   getWithdrawalMethods();
+  checkNewUser();
   loadCards();
 });
 

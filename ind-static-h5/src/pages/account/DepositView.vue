@@ -169,6 +169,20 @@
       </div>
     </q-card>
   </q-dialog>
+
+  <q-dialog width="100%" v-model="guestKYCDialog" persistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
+      <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="userKYCDialog" persistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
+      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
+    </div>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -181,6 +195,8 @@ import liff from "@line/liff";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import { convertToCommaAmount } from "src/boot/utils";
+import KYCGuestForm from "../../components/KYCGuestForm.vue";
+import KYCUserForm from "../../components/KYCUserForm.vue";
 
 var qs = require("qs");
 const store = userStore();
@@ -196,7 +212,7 @@ const checkNewUser = () => {
       message: "Please fill in your personal details",
       icon: "report_problem"
     });
-    router.push(`/account/profile`);
+    // router.push(`/account/profile`);
   }
 };
 
@@ -621,14 +637,54 @@ async function pDepo(deposit) {
     });
 }
 
+// KYC Dialog
+const personalState = reactive({
+  memberInfo: {}
+});
+const userKYCDialog = ref(false);
+const openUserKYCDialog = () => {
+  userKYCDialog.value = true;
+};
+const closeUserKYCDialog = () => {
+  store.getMemberInfo().then(() => {
+    loadInfo();
+    userKYCDialog.value = false;
+  });
+};
+
+const guestKYCDialog = ref(false);
+const openGuestKYCDialog = () => {
+  guestKYCDialog.value = true;
+};
+const closeGuestKYCDialog = () => {
+  store.getMemberInfo().then(() => {
+    loadInfo();
+    guestKYCDialog.value = false;
+  });
+};
+
+const loadInfo = () => {
+  personalState.memberInfo = userStore();
+
+  if (store.guest && personalState.memberInfo.realName === null) {
+    openGuestKYCDialog();
+  }
+
+  if (!store.guest && personalState.memberInfo.realName === null) {
+    openUserKYCDialog();
+  }
+};
+
 onActivated(() => {
   initPay();
   checkNewUser();
+  loadInfo();
 });
 
 onMounted(() => {
   initPay();
   checkNewUser();
+  loadInfo();
 });
 </script>
 
