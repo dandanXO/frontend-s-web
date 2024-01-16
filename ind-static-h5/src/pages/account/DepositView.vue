@@ -352,6 +352,7 @@ function initPay() {
 
       if (payMethods.value.length > 0) {
         activeNodeName.value = payMethods.value[0].nodeName;
+        activeCode.value = payMethods.value[0].code;
       }
     }
 
