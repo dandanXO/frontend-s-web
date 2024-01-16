@@ -629,6 +629,7 @@ export default {
     depositMemberCount: '存款人数',
     depositSerialNo: '存款流水号',
     depositStatus: '存款状态',
+    depositWithdrawalProfit: '存提利润',
     describe: '描述',
     description: '描述',
     desktopImage: '桌面图像',
@@ -1194,6 +1195,8 @@ export default {
     totalFailWithdraw: '提款失败数量',
     totalFailWithdrawAmount: '提款失败总额',
     totalFirstDeposit: '总首存用户',
+    totalMemberDepositAmount: '总充值金额',
+    totalMemberDepositCount: '总充值人数',
     totalNoOfDeposits: '存款总数',
     totalNoOfWithdrawals: '提款总数',
     totalPayout: '总派彩',
@@ -1382,7 +1385,7 @@ export default {
     indBonusAmount: '奖励金额',
     indRebateAmount: '返点金额',
     indAdjustAmount: '资金修正金额',
-    grossProfit: '毛利润'
+    grossProfit: '毛利润',
   },
   message: {
     addRemarkSuccess: '新增备注成功',

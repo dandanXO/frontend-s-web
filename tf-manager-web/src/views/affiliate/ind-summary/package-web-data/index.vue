@@ -64,6 +64,54 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="depositAmount"
+          :label="t('fields.depositAmount')"
+          align="center"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.depositAmount, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="withdrawAmount"
+          :label="t('fields.withdrawAmount')"
+          align="center"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.withdrawAmount, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          :label="t('fields.depositWithdrawalProfit')"
+          align="center"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{
+                data: scope.row.depositAmount - scope.row.withdrawAmount,
+                type: 'money',
+              }"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="registerCount"
+          :label="t('fields.registerCount')"
+          align="center"
+        />
+        <el-table-column
+          prop="ftdCount"
+          :label="t('fields.ftdCount')"
+          align="center"
+        />
+        <el-table-column
           prop="ftdAmount"
           :label="t('fields.ftdAmount')"
           align="center"
@@ -105,19 +153,22 @@
         </el-table-column>
         <el-table-column
           prop="depositAmount"
-          :label="t('fields.depositAmount')"
+          :label="t('fields.totalMemberDepositAmount')"
           align="center"
         >
           <template #default="scope">
             $
             <span
-              v-formatter="{data: scope.row.depositAmount, type: 'money'}"
+              v-formatter="{
+                data: scope.row.totalMemberDepositAmount,
+                type: 'money',
+              }"
             />
           </template>
         </el-table-column>
         <el-table-column
           prop="depositCount"
-          :label="t('fields.depositCount')"
+          :label="t('fields.totalMemberDepositCount')"
           align="center"
         />
         <el-table-column
@@ -292,15 +343,25 @@ function getSummaries(param) {
         sums[index] = t('fields.total')
       } else {
         var prop = column.property
-        if (index === 6) {
+        if (index === 4 || index === 5 || index === 11) {
           sums[index] = total.data[prop]
+        } else if (index === 3) {
+          // profit depositWithdrawal = deposit - withdrawal
+          sums[index] =
+            '$' +
+            parseFloat(
+              total.data.depositAmount - total.data.withdrawAmount
+            ).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
         } else {
           sums[index] =
-          '$' +
-          parseFloat(total.data[prop]).toLocaleString('en-US', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
+            '$' +
+            parseFloat(total.data[prop]).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
         }
       }
     })
