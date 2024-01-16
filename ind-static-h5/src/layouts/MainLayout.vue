@@ -177,13 +177,21 @@ export default defineComponent({
           hasPage.value = false;
           pageName.value = "";
         } else if (route.path === "/account/bank") {
-          prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = "Bank";
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "/account";
+          }
         } else if (route.path === "/account/message") {
-          prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = "Message";
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "/account";
+          }
         } else if (route.path === "/account/message-detail") {
           prevPage.value = "/account/message";
           hasPage.value = true;
@@ -193,9 +201,13 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = "Record";
         } else if (route.path === "/account/order") {
-          prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = "Order";
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "/account";
+          }
         } else if (route.path === "/account/discount") {
           prevPage.value = "/account";
           hasPage.value = true;
@@ -249,18 +261,20 @@ export default defineComponent({
             }
           }
         } else if (route.path === "/finance/deposit") {
-          prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = "Deposit";
-          if (route.query.redirect) {
-            prevPage.value = route.query.redirect;
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "/account";
           }
         } else if (route.path === "/finance/withdraw") {
-          prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = "Withdrawal";
-          if (route.query.redirect) {
-            prevPage.value = route.query.redirect;
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "/account";
           }
         } else if (route.path === "/account/transfer") {
           prevPage.value = "/account";

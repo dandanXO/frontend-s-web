@@ -52,12 +52,17 @@
 
         <span class="forgot-password-form-field-label">Phone Number</span>
         <q-input
+          type="tel"
+          pattern="\d*"
+          maxlength="10"
           ref="phoneRef"
-          type="number"
           hide-bottom-space
           v-model="passwordForm.phone"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Please Enter Phone Number']"
+          :rules="[
+            (val) => (val && val.length > 0) || 'Please insert Phone number',
+            (val) => (val && val.length === 10) || 'The phone number must have 10 digits'
+          ]"
           outlined
           label-color="brand"
           color="white"

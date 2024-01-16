@@ -14,12 +14,15 @@
       <div v-if="!loginType" class="login-form-grid">
         <span class="login-form-field-label">Phone Number</span>
         <q-input
+          type="tel"
+          pattern="\d*"
+          maxlength="10"
           hide-bottom-space
           ref="loginNameRef"
           v-model="loginForm.loginName"
           :rules="[
             (val) => (val && val.length > 0) || 'Please insert Phone number',
-            (val) => val.length == 10 || 'The phone number must be 10 digits'
+            (val) => (val && val.length === 10) || 'The phone number must have 10 digits'
           ]"
           label-color="brand"
           autocomplete="username"
@@ -105,6 +108,7 @@
 
     <div class="create-account">
       <span class="form-text">Not a member?</span>
+      &nbsp;
       <router-link class="form-text" to="/register" style="color: #ae6def">Create account</router-link>
     </div>
 
@@ -202,7 +206,7 @@ export default defineComponent({
       //   });
     };
 
-    const isCheckRmb = ref(false);
+    const isCheckRmb = ref(true);
 
     const phoneVerificationRef = ref();
     const telephoneRef = ref();

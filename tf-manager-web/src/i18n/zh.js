@@ -1375,6 +1375,13 @@ export default {
     officialWebData: '官方数据',
     packageWebData: '包网数据',
     payoutAmount: '派彩金额',
+    indBet: '下注',
+    indProfit: '下注派彩利润',
+    memberDepositCount: '总充值人数',
+    indBonusAmount: '奖励金额',
+    indRebateAmount: '返点金额',
+    indAdjustAmount: '资金修正金额',
+    grossProfit: '毛利润'
   },
   message: {
     addRemarkSuccess: '新增备注成功',

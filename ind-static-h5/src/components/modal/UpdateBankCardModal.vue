@@ -18,9 +18,10 @@
                 hide-bottom-space
                 filled
                 v-model="bankCardField.cardAccount"
+                label="Enter Holder Name"
                 lazy-rules
+                :rules="[(_) => isValidCardAccount()]"
                 label-color="secondary"
-                readonly
               />
             </div>
 
@@ -126,7 +127,12 @@ const isDisableBtn = ref(false);
 const isValidCardAccount = () => {
   const { cardAccount } = bankCardField;
 
-  const result = !cardAccount ? "Please Enter Card Account" : true;
+  const result = !cardAccount
+    ? "Please Enter Holder Name"
+    : cardAccount.length < 2
+    ? "Please Insert 2 or More Characters"
+    : true;
+
   return result;
 };
 

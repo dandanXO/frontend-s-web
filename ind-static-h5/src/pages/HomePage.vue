@@ -63,6 +63,11 @@
       </div>
     </q-page-sticky>
 
+    <PushNotification
+      :pushNotificationData="pushNotificationData"
+      v-if="Platform.is.android && Platform.is.capacitor"
+    />
+
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
@@ -146,7 +151,7 @@
                 <swiper-slide
                   class="platform-game-item btn-effect"
                   @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
-                  v-if="item.name === 'Evo'"
+                  v-if="item.name === 'Evo' || item.name === 'WCPT'"
                 >
                   <div
                     data-aos="zoom-in"
@@ -159,12 +164,14 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${require(`../assets/images/games/hot-games-evo.png`)})`
+                          backgroundImage: `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`
                         }"
                       ></div>
                     </div>
 
-                    <div class="platform-game-title">{{ truncateText("Evolution", 22) }}</div>
+                    <div class="platform-game-title">
+                      {{ truncateText(item.alias ? item.alias : item.name, 22) }}
+                    </div>
                   </div>
                 </swiper-slide>
               </template>
@@ -202,17 +209,19 @@
               <template v-for="(item, index) in livecasino" :key="index">
                 <div
                   class="platform-game-item btn-effect"
-                  v-if="item.name === 'Evo'"
+                  v-if="item.name === 'Evo' || item.name === 'WCPT'"
                   @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
                 >
                   <div class="platform-game-img">
                     <div
                       class="game--bg"
                       :style="{
-                        backgroundImage: `url(${require(`../assets/images/games/hot-games-evo.png`)})`
+                        backgroundImage: `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`
                       }"
                     ></div>
-                    <div class="platform-game-title">{{ truncateText("Evolution", 22) }}</div>
+                    <div class="platform-game-title">
+                      {{ truncateText(item.alias ? item.alias : item.name, 22) }}
+                    </div>
                   </div>
                 </div>
               </template>
@@ -282,7 +291,7 @@
                         })()
                       }"
                     >
-                      <div v-if="item.name === 'Evo'" class="burning-hot">
+                      <div v-if="item.name === 'Evo' || item.name === 'WCPT'" class="burning-hot">
                         <img src="../assets/images/index/hot.png" />
                       </div>
                     </div>
@@ -313,9 +322,10 @@
                         })()
                       }"
                     >
-                    <div v-if="item.name === 'Evo'" class="burning-hot">
+                      <div v-if="item.name === 'Evo' || item.name === 'WCPT'" class="burning-hot">
                         <img src="../assets/images/index/hot.png" />
-                      </div></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </template>
@@ -373,7 +383,7 @@
                       <img src="../assets/images/index/hot.png" />
                     </div>
 
-                    <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
+                    <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
                   </div>
                 </swiper-slide>
               </template>
@@ -414,7 +424,7 @@
                     <img src="../assets/images/index/hot.png" />
                   </div>
 
-                  <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
+                  <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
                 </div>
               </template>
             </div>
@@ -963,6 +973,8 @@ import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
 import { RiVolumeUpLine } from "vue-remix-icons";
 import { App } from "@capacitor/app";
+import OneSignal from "onesignal-cordova-plugin";
+import PushNotification from "../components/modal/PushNotification.vue";
 import { useUI } from "stores/ui";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import WithdrawalModal from "../components/modal/WithdrawalModal.vue";
@@ -1418,6 +1430,7 @@ const getPlatList = () => {
           lottery.value.push(lottObj);
         }
       });
+      livecasino.value.sort((a, b) => a.id - b.id);
     })
     .catch((err) => {});
 };
@@ -1592,6 +1605,33 @@ const moveCsIcon = (ev) => {
   csDragPos.value = [csDragPos.value[0] - ev.delta.x, csDragPos.value[1] - ev.delta.y];
 };
 
+const pushNotificationData = ref();
+
+const populatePushNotificationData = (data) => {
+  pushNotificationData.value = data;
+};
+
+const initOneSignal = () => {
+  OneSignal.initialize("9ed390f0-6b59-4fc1-8228-d0621bfab9db");
+
+  let myClickListener = async function (event) {
+    console.log("CLICK PUSH");
+    let notificationData = event;
+    console.log(notificationData);
+    console.log(notificationData.notification.title);
+    console.log(notificationData.notification.body);
+    console.log(notificationData.notification.additionalData);
+    populatePushNotificationData(notificationData.notification);
+  };
+  OneSignal.Notifications.addEventListener("click", myClickListener);
+
+  // Prompts the user for notification permissions.
+  //    * Since this shows a generic native prompt, we recommend instead using an In-App Message to prompt for notification permission (See step 7) to better communicate to your users what notifications they will get.
+  OneSignal.Notifications.requestPermission(true).then((accepted) => {
+    console.log("User accepted notifications: " + accepted);
+  });
+};
+
 onActivated(() => {
   store.getUnreadTotal();
 });
@@ -1607,6 +1647,10 @@ onMounted(() => {
   loadJDBFishGameList();
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+
+  if (Platform.is.android && Platform.is.capacitor) {
+    initOneSignal();
+  }
 });
 </script>
 

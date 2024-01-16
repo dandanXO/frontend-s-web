@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { api, cashier, eventapi } from "boot/axios";
 import { SessionStorage, Notify, Platform } from "quasar";
 import LocalStorage from "boot/local-storage";
+import OneSignal from "onesignal-cordova-plugin";
 import { isAndroid } from "boot/utils";
 
 var qs = require("qs");
@@ -43,7 +44,8 @@ export const userStore = defineStore("userStore", {
       readMsgLists: [],
       aaid: "",
       googleadid: "",
-      h5Url: "https://www.55ace.com/"
+      h5Url: "https://www.55ace.com/",
+      hasUpdatedOneSignal: false
     };
   },
   actions: {
@@ -228,6 +230,13 @@ export const userStore = defineStore("userStore", {
           this.levelUpDeposit = parseFloat(levelUpDeposit);
           this.guest = guest;
 
+          if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
+            OneSignal.login(this.nickName);
+            OneSignal.User.addTag("user_name", this.nickName);
+            OneSignal.User.addTag("VIP", this.vip);
+            this.hasUpdatedOneSignal = true;
+          }
+
           if (evip) {
             var exclusive = JSON.parse(evip);
             this.evip = exclusive.wap;
@@ -278,6 +287,12 @@ export const userStore = defineStore("userStore", {
       return api.post("/session/logout").then(() => {
         LocalStorage.remove("TOKEN");
         SessionStorage.remove("TOKEN");
+
+        this.hasUpdatedOneSignal = false;
+
+        if (isAndroid() && OneSignal !== undefined) {
+          OneSignal.logout();
+        }
 
         location.href = "/";
       });

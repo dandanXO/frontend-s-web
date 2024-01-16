@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, nextTick } from "vue";
 import { Platform, useQuasar } from "quasar";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
@@ -162,22 +162,18 @@ export default defineComponent({
       console.error("File error: " + error.code);
     };
 
-    const setStatusBarColor = () => {
+    const setStatusBarColor = async () => {
       AddressbarColor.set("#3E1474");
       if (Platform.is.capacitor && Platform.is.android) {
-        StatusBar.hide();
-        StatusBar.setOverlaysWebView({ overlay: true });
-        StatusBar.setBackgroundColor({ color: "#3E1474" });
-        StatusBar.setStyle({ style: Style.Dark });
-        // if (cordova.platformId == "android") {
-        //   StatusBar.show();
-        //   StatusBar.overlaysWebView(true);
-        //   StatusBar.styleLightContent();
-        //   StatusBar.backgroundColorByHexString("#3E1474");
-        // } else {
-        //   StatusBar.overlaysWebView(false);
-        //   StatusBar.hide();
-        // }
+        console.log("STATUSBARR");
+        await StatusBar.hide();
+        await StatusBar.setOverlaysWebView({ overlay: true });
+        await StatusBar.setBackgroundColor({ color: "#3E1474" });
+        await StatusBar.setStyle({ style: Style.Dark });
+
+        // setTimeout(() => {
+        //   getInsetHeight();
+        // }, 250);
       }
     };
 
@@ -239,21 +235,16 @@ export default defineComponent({
       getAppInfo();
       initOrientation();
 
-      setStatusBarColor();
-
       document.addEventListener(
         "deviceready",
         () => {
           onDeviceReady();
+          setStatusBarColor();
         },
         false
       );
 
       document.addEventListener("visibilitychange", handleVisibilityChange);
-
-      setTimeout(() => {
-        getInsetHeight();
-      }, 300);
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);
