@@ -2,20 +2,17 @@
   <div class="deposit-wrapper">
     <div class="deposit-options">
       <div class="lil-title">Select Amount</div>
-      <q-btn
-        flat
-        class="deposit-option-btn q-mt-sm"
-        :class="{ active: isUpi1Active }"
-        label="UPI"
-        @click="handleDepositUpiClick(1)"
-      />
-      <!-- <q-btn
-        flat
-        class="deposit-option-btn label-on-discount"
-        :class="{ active: isUpi2Active }"
-        label="UPI2"
-        @click="handleDepositUpiClick(2)"
-      /> -->
+      <div class="deposit-option-container">
+        <template v-for="(item, index) in payMethods" :key="item + index">
+          <q-btn
+            flat
+            class="deposit-option-btn q-mt-sm"
+            :label="item.nodeName"
+            :class="{ active: activeNodeName === item.nodeName }"
+            @click="handleDepositNodeClick(item)"
+          />
+        </template>
+      </div>
     </div>
 
     <div class="deposit-item-container q-mt-md">
@@ -219,7 +216,7 @@ const checkNewUser = () => {
 const isDeposited = ref(false);
 const btnLoading = ref(false);
 const payTypeClass = ref();
-const payMethods = reactive([]);
+const payMethods = ref([]);
 const paymentNode = ref([]);
 const activeMethod = ref({});
 const bankCardList = ref([]);
@@ -308,6 +305,13 @@ const handleDepositItemClick = (index) => {
   });
 };
 
+const activeNodeName = ref(null);
+const activeCode = ref(null);
+const handleDepositNodeClick = (item) => {
+  activeNodeName.value = item.nodeName;
+  activeCode.value = item.code;
+};
+
 const isUpi1Active = ref(true);
 const isUpi2Active = ref(false);
 
@@ -329,6 +333,8 @@ function initPay() {
   });
 
   payMethods.value = [];
+  console.log('SDFSDFDSCLEAR?')
+
   cashier.get("/session/deposit/index/").then((res) => {
     $q.loading.hide();
     isLoadingInitPay.value = false;
@@ -338,10 +344,14 @@ function initPay() {
       d.payments.forEach((element) => {
         element.promoValue = "";
         element.promoStyle = "right: -5px; top: 0px; padding: 20px;";
-        payMethods.push(element);
+        payMethods.value.push(element);
       });
-      if (payMethods[0].extra && payMethods[0].extra.banks) {
-        bankCardList.value = payMethods[0].extra.banks;
+      if (payMethods.value[0].extra && payMethods.value[0].extra.banks) {
+        bankCardList.value = payMethods.value[0].extra.banks;
+      }
+
+      if (payMethods.value.length > 0) {
+        activeNodeName.value = payMethods.value[0].nodeName;
       }
     }
 
@@ -504,6 +514,7 @@ async function confirmDeposit() {
             }
           });
           data.bankCardId = 0;
+          data.code = activeCode.value;
 
           pDepo(data);
         }
@@ -516,7 +527,8 @@ async function pDepo(deposit) {
     bankCardId: deposit.bankCardId,
     localAmount: deposit.localAmount,
     paymentId: deposit.paymentId,
-    bankId: deposit.bankId
+    bankId: deposit.bankId,
+    code: deposit.code
   };
 
   if (deposit.privilegeId) {
@@ -845,6 +857,10 @@ onMounted(() => {
   margin: 16px auto 0 auto;
   // width: 90%;
 
+  .deposit-option-container {
+    display: flex;
+    gap: 12px;
+  }
   .deposit-option-btn {
     color: #cccccc;
     background: #1d2635;

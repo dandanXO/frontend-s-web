@@ -93,6 +93,8 @@ const activeKey = ref("about");
   padding-top: 50px;
   .earn-money-tabs {
     position: fixed;
+    padding-left: 16px;
+    padding-right: 16px;
     top: 68px;
     left: 0;
     z-index: 999;
@@ -101,16 +103,23 @@ const activeKey = ref("about");
     padding-bottom: 6px;
     padding-top: 12px;
 
+    :deep(.q-tabs__content) {
+      background: #422171;
+      border-radius: 12px;
+      padding: 4px;
+    }
+
     :deep(.q-tab) {
       // margin: 0 15px;
-      margin: 0 2%;
+      margin: 0;
       color: rgba(255, 255, 255, 0.3);
-      border-radius: 4px;
+      border-radius: 8px;
       height: 55px;
-      width: 23%;
+      width: 25%;
       background: rgba(232, 232, 232, 0.2);
       font-size: 12px;
       font-weight: 500;
+      border: 2px solid #303030;
     }
 
     :deep(.q-tab__content) {
@@ -120,6 +129,7 @@ const activeKey = ref("about");
     :deep(.q-tab--active) {
       color: white;
       background: #5c46e7;
+      border: 2px solid #422171;
 
       svg {
         fill: white;
