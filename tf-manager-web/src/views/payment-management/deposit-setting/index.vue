@@ -267,7 +267,7 @@ async function loadFinancialLevels() {
 };
 
 async function handleSiteNameCheckedChange() {
-  await loadPayTypes()
+  filterPayTypeByCurrency()
   form.payType = filteredPayTypeList.list[0].code;
   await loadFinancialLevels()
   await loadDepositSetting()
