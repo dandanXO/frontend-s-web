@@ -260,7 +260,7 @@
           </div>
         </div>
         <!-- <div :class="`status ${e.status === 'Online' ? 'online' : 'offline'}`">{{ e.status }}</div> -->
-        <div class="status online">Team Member: {{ e.memberCount > 0 ? e.memberCount + 1  : "..." }}</div>
+        <div class="status online">Team Member: {{ e.memberCount > 0 ? e.memberCount  : "..." }}</div>
       </div>
       <div class="bot-container">
         <div class="amount-container">
