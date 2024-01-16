@@ -112,11 +112,11 @@ const activeKey = ref("about");
     :deep(.q-tab) {
       // margin: 0 15px;
       margin: 0;
-      color: rgba(255, 255, 255, 0.3);
+      color: rgba(255, 255, 255, 0.5);
       border-radius: 8px;
       height: 55px;
       width: 25%;
-      background: rgba(232, 232, 232, 0.2);
+      background: #4f26a6;
       font-size: 12px;
       font-weight: 500;
       border: 2px solid #303030;
@@ -147,7 +147,7 @@ const activeKey = ref("about");
   }
 
   svg {
-    fill: rgba(255, 255, 255, 0.3);
+    fill: rgba(255, 255, 255, 0.5);
   }
 }
 </style>
