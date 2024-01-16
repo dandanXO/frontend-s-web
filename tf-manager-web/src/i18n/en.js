@@ -271,6 +271,7 @@ export default {
     },
   },
   rebateLevel: {
+    LEVEL_0: 'Level 0',
     LEVEL_1: 'Level 1',
     LEVEL_2: 'Level 2',
     LEVEL_3: 'Level 3',

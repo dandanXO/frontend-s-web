@@ -277,6 +277,7 @@ export default {
     },
   },
   rebateLevel: {
+    LEVEL_0: '等级 0',
     LEVEL_1: '等级 1',
     LEVEL_2: '等级 2',
     LEVEL_3: '等级 3',
