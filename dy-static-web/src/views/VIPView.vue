@@ -58,7 +58,8 @@
                         @click="onVIPButtonClick('dy2-vip-monthly')"
                         :disabled="btnIsDisabled || btnIsRedeemMonthly"
                       >
-                        <span v-if="btnIsRedeemMonthly">已</span>领取
+                        <span v-if="btnIsRedeemMonthly">已</span>
+                        领取
                       </button>
                       <!-- </div> -->
                     </template>
@@ -79,7 +80,8 @@
                         @click="onVIPButtonClick('dy2-vip-birthday')"
                         :disabled="btnIsDisabled || btnIsRedeemBirthday"
                       >
-                        <span v-if="btnIsRedeemBirthday">已</span>领取
+                        <span v-if="btnIsRedeemBirthday">已</span>
+                        领取
                       </button>
                     </template>
                   </div>
@@ -121,7 +123,7 @@
             <tr>
               <th>等级</th>
               <th>升级要求/元</th>
-              <th>保级要求</th>
+              <!--              <th>保级要求</th>-->
               <th style="text-align: center">
                 生日礼金
                 <br />
@@ -142,7 +144,7 @@
             <tr>
               <td>VIP1</td>
               <td>有一笔存款</td>
-              <td>无</td>
+              <!--              <td>无</td>-->
               <td>无</td>
               <td>无</td>
               <td>无</td>
@@ -152,7 +154,7 @@
             <tr>
               <td>VIP2</td>
               <td>5000≤累积存款</td>
-              <td>1888≤一个月内累积存款</td>
+              <!--              <td>1888≤一个月内累积存款</td>-->
               <td>38元</td>
               <td>28元</td>
               <td>存款至少100元可申请每月一次再存20% 最高奖金588元</td>
@@ -162,7 +164,7 @@
             <tr>
               <td>VIP3</td>
               <td>50000≤累积存款</td>
-              <td>10888≤一个月内累积存款</td>
+              <!--              <td>10888≤一个月内累积存款</td>-->
               <td>108元</td>
               <td>88元</td>
               <td>存款至少100元可申请每月一次再存20%最高奖金888元</td>
@@ -172,7 +174,7 @@
             <tr>
               <td>VIP4</td>
               <td>250000≤累积存款</td>
-              <td>38888≤一个月内累积存款</td>
+              <!--              <td>38888≤一个月内累积存款</td>-->
               <td>388元</td>
               <td>188元</td>
               <td>存款至少100元可申请每周一次再存25% 最高奖金888元</td>
@@ -182,7 +184,7 @@
             <tr>
               <td>VIP5</td>
               <td>500000≤累积存款</td>
-              <td>58888≤一个月内累积存款</td>
+              <!--              <td>58888≤一个月内累积存款</td>-->
               <td>688元</td>
               <td>388元</td>
               <td>存款至少500元可申请每月一次再存50% 最高奖金1888元</td>
@@ -192,7 +194,7 @@
             <tr>
               <td>VIP6</td>
               <td>2500000≤累积存款</td>
-              <td>88888≤一个月内累积存款</td>
+              <!--              <td>88888≤一个月内累积存款</td>-->
               <td>1088元</td>
               <td>888元</td>
               <td>存款至少500元可申请每周一次再存30% 最高奖金2888元</td>
@@ -202,7 +204,7 @@
             <tr>
               <td>VIP7</td>
               <td>5000000≤累积存款</td>
-              <td>188888≤一个月内累积存款</td>
+              <!--              <td>188888≤一个月内累积存款</td>-->
               <td>6888元</td>
               <td>2888元</td>
               <td>存款至少500元可申请每周一次再存35% 最高奖金3888元</td>
@@ -212,7 +214,7 @@
             <tr>
               <td>VIP8</td>
               <td>8000000≤累积存款</td>
-              <td>288888≤一个月内累积存款</td>
+              <!--              <td>288888≤一个月内累积存款</td>-->
               <td>8888元</td>
               <td>5888元</td>
               <td>存款至少500元可申请每周一次再存40% 最高奖金5888元</td>
@@ -222,7 +224,7 @@
             <tr>
               <td>VIP9</td>
               <td>12000000≤累积存款</td>
-              <td>588888≤一个月内累积存款</td>
+              <!--              <td>588888≤一个月内累积存款</td>-->
               <td>10888元</td>
               <td>6888元</td>
               <td>存款至少500元可申请每周一次再存45% 最高奖金8888元</td>
@@ -232,7 +234,7 @@
             <tr>
               <td>VIP10</td>
               <td>20000000≤累积存款</td>
-              <td>888888≤一个月内累积存款</td>
+              <!--              <td>888888≤一个月内累积存款</td>-->
               <td>18888元</td>
               <td>8888元</td>
               <td>存款至少500元可申请每周一次再存50% 最高奖金12888元</td>
@@ -355,26 +357,26 @@
           <br />
           VIP等级达到相应的要求可每天晋升一级，但VIP等级不可越级晋升。
         </li>
+        <!--        <li style="">-->
+        <!--          <span class="role-list-decimal">3</span>-->
+        <!--          降级标准-->
+        <!--          <br />-->
+        <!--          如果会员在上月（自然月）内没有完成相应的保级要求，系统会在月初自动降级一个等级，相应的返水及其它优惠也会随之调整至降级后的等级。-->
+        <!--        </li>-->
         <li style="">
           <span class="role-list-decimal">3</span>
-          降级标准
-          <br />
-          如果会员在上月（自然月）内没有完成相应的保级要求，系统会在月初自动降级一个等级，相应的返水及其它优惠也会随之调整至降级后的等级。
-        </li>
-        <li style="">
-          <span class="role-list-decimal">4</span>
           生日礼金
           <br />
           VIP2或以上等级会员可享受生日礼金，每年仅可领取一次。（生日彩金1倍流水即可提款）
         </li>
         <li style="">
-          <span class="role-list-decimal">5</span>
+          <span class="role-list-decimal">4</span>
           每月红包
           <br />
           每月1号会员即可登录账户领取每月红包。（每月红包彩金3倍流水即可提款）
         </li>
         <li style="">
-          <span class="role-list-decimal" style="top: 10px">6</span>
+          <span class="role-list-decimal" style="top: 10px">5</span>
           东赢保留对活动的修改，停止及最终解释权。
         </li>
       </ul>
@@ -418,7 +420,7 @@ export default defineComponent({
       },
       {
         level: 2,
-        description: `升级要求 &gt; 5000≤累积存款<br> 保级要求 &gt; 1888≤一个月内累积存款`,
+        description: `升级要求 &gt; 5000≤累积存款<br>`,
         monthlyBonus: "28",
         birthdayBonus: "38",
         cunsong: `存款至少100元可申请每月一次再存20% 最高奖金588元`,
@@ -426,8 +428,7 @@ export default defineComponent({
       },
       {
         level: 3,
-        description: `升级要求 &gt; 50000≤累积存款<br>
-            保级要求 &gt; 10888≤一个月内累积存款`,
+        description: `升级要求 &gt; 50000≤累积存款<br>`,
         monthlyBonus: "88",
         birthdayBonus: "108",
         cunsong: `存款至少100元可申请每月一次再存20% 最高奖金888元`,
@@ -435,8 +436,7 @@ export default defineComponent({
       },
       {
         level: 4,
-        description: `升级要求 &gt; 250000≤累积存款<br>
-            保级要求 &gt; 38888≤一个月内累积存款`,
+        description: `升级要求 &gt; 250000≤累积存款<br>`,
         monthlyBonus: "188",
         birthdayBonus: "388",
         cunsong: `存款至少100元可申请每周一次再存25% 最高奖金888元`,
@@ -444,8 +444,7 @@ export default defineComponent({
       },
       {
         level: 5,
-        description: `升级要求 &gt; 500000≤累积存款<br>
-            保级要求 &gt; 58888≤一个月内累积存款`,
+        description: `升级要求 &gt; 500000≤累积存款<br>`,
         monthlyBonus: "388",
         birthdayBonus: "688",
         cunsong: `存款至少500元可申请每月一次再存50% 最高奖金1888元`,
@@ -453,8 +452,7 @@ export default defineComponent({
       },
       {
         level: 6,
-        description: `升级要求 &gt; 2500000≤累积存款<br>
-            保级要求 &gt; 88888≤一个月内累积存款`,
+        description: `升级要求 &gt; 2500000≤累积存款<br>`,
         monthlyBonus: "888",
         birthdayBonus: "1088",
         cunsong: `存款至少500元可申请每周一次再存30% 最高奖金2888元`,
@@ -462,8 +460,7 @@ export default defineComponent({
       },
       {
         level: 7,
-        description: `升级要求 &gt; 5000000≤累积存款<br>
-            保级要求 &gt; 188888≤一个月内累积存款`,
+        description: `升级要求 &gt; 5000000≤累积存款<br>`,
         monthlyBonus: "2888",
         birthdayBonus: "6888",
         cunsong: `存款至少500元可申请每周一次再存35% 最高奖金3888元`,
@@ -471,8 +468,7 @@ export default defineComponent({
       },
       {
         level: 8,
-        description: `升级要求 &gt; 8000000≤累积存款<br>
-            保级要求 &gt; 288888≤一个月内累积存款`,
+        description: `升级要求 &gt; 8000000≤累积存款<br>`,
         monthlyBonus: "5888",
         birthdayBonus: "8888",
         cunsong: `存款至少500元可申请每周一次再存40% 最高奖金5888元`,
@@ -480,8 +476,7 @@ export default defineComponent({
       },
       {
         level: 9,
-        description: `升级要求 &gt; 12000000≤累积存款<br>
-            保级要求 &gt; 588888≤一个月内累积存款`,
+        description: `升级要求 &gt; 12000000≤累积存款<br>`,
         monthlyBonus: "6888",
         birthdayBonus: "10888",
         cunsong: `存款至少500元可申请每周一次再存45% 最高奖金8888元`,
@@ -489,8 +484,7 @@ export default defineComponent({
       },
       {
         level: 10,
-        description: `升级要求 &gt; 20000000≤累积存款<br>
-            保级要求 &gt; 888888≤一个月内累积存款`,
+        description: `升级要求 &gt; 20000000≤累积存款<br>`,
         monthlyBonus: "8888",
         birthdayBonus: "18888",
         cunsong: `存款至少500元可申请每周一次再存50% 最高奖金12888元`,
@@ -649,12 +643,11 @@ export default defineComponent({
                 type: "success"
               });
 
-              if (bonusItem === 'dy2-vip-monthly') {
+              if (bonusItem === "dy2-vip-monthly") {
                 btnIsRedeemMonthly.value = true;
-              } else if (bonusItem === 'dy2-vip-birthday') {
+              } else if (bonusItem === "dy2-vip-birthday") {
                 btnIsRedeemBirthday.value = true;
               }
-
 
               // location.href = `/center/deposit`;
             }
@@ -741,11 +734,11 @@ export default defineComponent({
     };
 
     const checkPrivilegeClaimMonthly = () => {
-      checkPrivilegeClaim('monthly', btnIsRedeemMonthly);
+      checkPrivilegeClaim("monthly", btnIsRedeemMonthly);
     };
 
     const checkPrivilegeClaimBirthday = () => {
-      checkPrivilegeClaim('birthday', btnIsRedeemBirthday);
+      checkPrivilegeClaim("birthday", btnIsRedeemBirthday);
     };
 
     onMounted(() => {
@@ -754,11 +747,10 @@ export default defineComponent({
         selectedVIP.value = vipLevel.value ? parseInt(vipLevel.value) - 1 : 0;
       }
 
-      if(store.token){
+      if (store.token) {
         checkPrivilegeClaimMonthly();
         checkPrivilegeClaimBirthday();
       }
-     
     });
 
     return {
