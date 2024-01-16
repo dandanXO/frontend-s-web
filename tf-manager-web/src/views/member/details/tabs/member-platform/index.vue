@@ -40,7 +40,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:promp:page:del']"
+          v-permission="['sys:member:platform:del']"
           @click="removeMemberPlatform()"
           :disabled="uiControl.removeBtn"
         >
@@ -87,6 +87,7 @@
             icon="el-icon-remove"
             size="mini"
             type="danger"
+            v-permission="['sys:member:platform:del']"
             @click="removeMemberPlatform(scope.row)"
           />
         </template>
