@@ -788,7 +788,7 @@
     transition-hide="slide-down"
     class="fullgame-dialog"
   >
-    <q-card class="fullgame-card" id="fullgame" v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
+    <q-card class="fullgame-card" id="fullgame">
       <ProfileSummary @closeslot="closeSlotModal" :homeProfile="true" />
       <q-card-section>
         <div class="home-wrapper fullgame-wrapper">
@@ -1632,16 +1632,6 @@ const initOneSignal = () => {
   OneSignal.Notifications.requestPermission(true).then((accepted) => {
     console.log("User accepted notifications: " + accepted);
   });
-};
-
-// Handle swipe left
-const swipeLeft = () => {
-  fullGameDialog.value = false;
-};
-
-// Handle swipe right
-const swipeRight = () => {
-  fullGameDialog.value = false;
 };
 
 onActivated(() => {
