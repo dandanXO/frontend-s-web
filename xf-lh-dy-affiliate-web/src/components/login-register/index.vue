@@ -378,7 +378,8 @@ export default defineComponent({
       getVerificationCode()
         .then(res => {
           if (res.code === 0) {
-            verificationImg.value = res.data.img
+            // Data Image
+            verificationImg.value = 'data:image/png;base64,' + res.data.img
             state.regForm.codeId = res.data.id
           }
         })
