@@ -174,7 +174,7 @@ const cardInfo = reactive({
 
 const rankingPage = reactive({
   current: 1,
-  pageSize: 2,
+  pageSize: 5,
   records: [],
   loading: false
 });
