@@ -1,4 +1,8 @@
 <template>
+  <!--  <pre>extensionState: {{ extensionState }}</pre>-->
+  <!--  <pre>extensionToken: {{ extensionToken }}</pre>-->
+  <!--  <pre>store:{{ store }}</pre>-->
+
   <div class="q-pa-md deposit-section" style="overflow: auto; background: #fff; margin: 8px 8px">
     <div class="q-mb-sm">
       <span class="additional-tips">如果遇到存款问题，请立即联系在线客服解决！</span>
@@ -89,11 +93,7 @@
           {{ calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0 }}
           <br />
           最高金额:
-          {{
-            activeMethod.depositMax
-              ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value)
-              : "No Limit"
-          }}
+          {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value) : " " }}
         </div>
 
         <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="兑换率">
@@ -192,7 +192,7 @@
 </template>
 
 <script setup id="DepositComponent">
-import { ref, reactive, onMounted, onActivated, shallowRef, onBeforeUnmount } from "vue";
+import { ref, reactive, onMounted, onActivated, shallowRef } from "vue";
 import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
@@ -203,9 +203,10 @@ import liff from "@line/liff";
 var qs = require("qs");
 
 import { userStore } from "stores/index";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const store = userStore();
+const route = useRoute();
 const router = useRouter();
 const formRef = ref();
 const isNewUser = ref(false);
@@ -450,65 +451,69 @@ function clearInfo() {
 const depositAmtRef = ref("");
 
 async function confirmDeposit() {
-  if (form.bankId !== null || isUSDT.value) {
-    if (store.phone === "" || store.phone === null) {
-      isNewUser.value = true;
-    } else {
-      btnLoading.value = true;
-      depositAmtRef.value.validate();
-      if (depositAmtRef.value.hasError) {
-        btnLoading.value = false;
-      } else {
-        await cashier
-          .get(`/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`)
-          .then((d) => {
-            if (d.code === 11002) {
-              if (d.data && d.data.suggestion) {
-                form.localAmount = d.data.suggestion;
-                btnLoading.value = false;
-              }
-              $q.notify({
-                color: "negative",
-                position: "top",
-                message: d.message,
-                icon: "report_problem"
-              });
-            } else {
-              if (freePrivilege.value) {
-                if (selectedPrivilege.value) {
-                  form.privilegeId = selectedPrivilege.value.id + "," + freePrivilege.value.id;
-                } else {
-                  form.privilegeId = "," + freePrivilege.value.id;
-                }
-              } else {
-                if (selectedPrivilege.value) {
-                  form.privilegeId = selectedPrivilege.value.id;
-                } else {
-                  form.privilegeId = null;
-                }
-              }
-              form.paymentId = activeMethod.value.paymentId;
-              const copy = { ...form };
-              const data = {};
-              Object.entries(copy).forEach(([key, value]) => {
-                if (value) {
-                  data[key] = value;
-                }
-              });
-              data.bankCardId = 0;
-              pDepo(data);
-            }
-          });
-      }
-    }
+  // if (form.bankId !== null || isUSDT.value) {
+  if (!extensionState.value && (store.phone === "" || store.phone === null)) {
+    isNewUser.value = true;
   } else {
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: "请选择银行",
-      icon: "report_problem"
-    });
+    btnLoading.value = true;
+    depositAmtRef.value.validate();
+    if (selectedPayType.value && bankCardList.value.length > 0) {
+      await payTypeClass.value.validateBank(form.bankId);
+    }
+
+    if (depositAmtRef.value.hasError || (selectedPayType.value && bankCardList.value.length > 0 && !form.bankId)) {
+      btnLoading.value = false;
+    } else {
+      await cashier
+        .get(`/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`)
+        .then((d) => {
+          if (d.code === 11002) {
+            if (d.data && d.data.suggestion) {
+              form.localAmount = d.data.suggestion;
+              btnLoading.value = false;
+            }
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: d.message,
+              icon: "report_problem"
+            });
+          } else {
+            if (freePrivilege.value) {
+              if (selectedPrivilege.value) {
+                form.privilegeId = selectedPrivilege.value.id + "," + freePrivilege.value.id;
+              } else {
+                form.privilegeId = "," + freePrivilege.value.id;
+              }
+            } else {
+              if (selectedPrivilege.value) {
+                form.privilegeId = selectedPrivilege.value.id;
+              } else {
+                form.privilegeId = null;
+              }
+            }
+            form.paymentId = activeMethod.value.paymentId;
+            const copy = { ...form };
+            const data = {};
+            Object.entries(copy).forEach(([key, value]) => {
+              if (value) {
+                data[key] = value;
+              }
+            });
+            data.bankCardId = 0;
+            pDepo(data);
+          }
+        });
+    }
   }
+  // } else {
+  //   $q.notify({
+  //     color: "negative",
+  //     position: "top",
+  //     message: "请选择银行",
+  //     icon: "report_problem"
+  //   });
+  // }
 }
 
 async function pDepo(deposit) {
@@ -563,6 +568,16 @@ async function pDepo(deposit) {
               }
             } else {
               const newWin = window.open(`/`);
+              if (!newWin) {
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message: '无法打开充值页面。请检查游览器是否拦截弹窗页面，并修改为"允许弹窗"后再进行充值操作。',
+                  icon: "report_problem"
+                });
+                btnLoading.value = false;
+                return;
+              }
               newWin.localStorage.setItem("formDetails", JSON.stringify(form));
               if (response.payResultType === "GET_SUBMIT") {
                 newWin.location.href = response.requestUrl;
@@ -621,6 +636,7 @@ async function pDepo(deposit) {
             }
           }
         }
+        selectedPrivilege.value = "";
       } else {
         $q.notify({
           color: "negative",
@@ -648,13 +664,34 @@ async function pDepo(deposit) {
     });
 }
 
+const currentPath = ref(route.path);
+const extensionState = ref(false);
+const extensionToken = ref("");
+const checkExtension = () => {
+  // console.log(currentPath.value);
+  if (currentPath.value === "/deposit") {
+    // const eToken = ref(route.query.name);
+    extensionToken.value = route.query.token;
+    extensionState.value = true;
+
+    // store.dispatch("token", extensionToken);
+
+    console.log(store);
+  }
+};
+
 onMounted(() => {
   initPay();
-  // checkNewUser();
+  if (route.meta && route.meta.isApp) {
+    checkExtension();
+  }
 });
 
 onActivated(() => {
-  checkNewUser();
+  console.log(route.meta.isApp);
+  if (route.meta && !route.meta.isApp) {
+    checkNewUser();
+  }
 });
 </script>
 

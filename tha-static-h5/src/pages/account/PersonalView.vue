@@ -134,7 +134,10 @@
                     clearable
                     v-model="formDetail.realName"
                     :placeholder="$t('lang.name')"
-                    :rules="[(val) => (val && val.length > 0) || $t('lang.enter_lastname'), isValidName]"
+                    :rules="[
+                      (val) => (val && val.length > 0 && val.length < 50) || $t('lang.enter_lastname'),
+                      isValidName
+                    ]"
                   ></q-input>
                 </div>
               </div>
@@ -515,7 +518,7 @@ export default defineComponent({
       return phonePattern.test(updateSecurityVerified.phone) || t('lang.invalid_phone_num');
     };
     const isValidName = () => {
-      const namrPattern = /^[A-Za-z ]+$/;
+      const namrPattern = /^[a-zA-Zก-๙ ]+$/;
       return namrPattern.test(formDetail.value.realName) || t('lang.only_alphabet_allowed');
     }
 
@@ -993,6 +996,7 @@ export default defineComponent({
         width: 100px;
         height: auto;
         margin: 0 auto;
+        background-color: #fff;
       }
 
       .line-bottom {

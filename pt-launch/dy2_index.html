@@ -132,17 +132,16 @@ margin: 5em auto;
 					+ '&real=1'
 					+ '&username='
 					+ getQueryVariable('username')
-					+ '&lang=zh-cn&tempToken='
+					+ 'swipeUpOff=true&lang=zh-cn&tempToken='
 					+ temptoken
 					+ '&lobby='
 					+ location.href.substring(0,
 							location.href.lastIndexOf('/') + 1)
-					+ '/PTGame'
 					+ '&support='
 					+ ''
 					+ '&logout='
 					+ location.href.substring(0,
-							location.href.lastIndexOf('/') + 1) + '/PTGame';
+							location.href.lastIndexOf('/') + 1) ;
 		}
 		document.location = clientUrl;
 	}

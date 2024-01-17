@@ -602,6 +602,8 @@ function importToTable(file) {
           XLSX.utils.sheet_to_json(workbook.Sheets[sheet], {
             header: IMPORT_TELEPHONE_LIST_JSON,
             range: 1,
+            raw: false,
+            rawNumbers: false,
           })
         )
         break

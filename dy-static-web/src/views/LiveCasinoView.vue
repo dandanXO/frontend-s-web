@@ -1,5 +1,5 @@
 <template>
-  <div class="platofrm__wrap">
+  <div class="platform__wrap">
     <div class="live-container">
       <div class="live-bg bg-circle"></div>
       <div class="live-bg bg-wave"></div>
@@ -161,7 +161,7 @@ export default defineComponent({
     const platformsList = ref([]);
     const platformsListDisplay = ref([]);
     const getPlatList = () => {
-      if (store.memberType === "TEST") {
+      if (store.token) {
         getLoggedInPlatformList().then((res) => {
           platformsList.value = res;
           platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("LIVE"));

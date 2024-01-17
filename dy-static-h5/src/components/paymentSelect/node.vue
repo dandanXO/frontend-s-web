@@ -1,41 +1,35 @@
 <template>
   <div class="node" v-if="list && list.length !== 0">
-    <div v-if="level === 1"/>
+    <div v-if="level === 1" />
     <!-- <div class="title" v-else>{{ name }}</div> -->
     <div class="account-title-container" v-else>
       <span class="account-title">{{ name }}</span>
     </div>
     <div class="node-content payment-method-wrapper">
       <div
-          class="node-item payment-method-item"
-          :id="level + '_' + i"
-          @click="clickItem(item)"
-          :class="[
-          item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : ''
-        ]"
-          :style="item.group && item.children.length === 0 ? 'display:none': ''"
-          :key="i"
-          v-for="(item, i) in list"
+        class="node-item payment-method-item"
+        :id="level + '_' + i"
+        @click="clickItem(item)"
+        :class="[item.children ? 'node-group' : '', selectItem === item ? 'active' : '']"
+        :style="item.group && item.children.length === 0 ? 'display:none' : ''"
+        :key="i"
+        v-for="(item, i) in list"
       >
         <div class="node-text">
-          <div class="node-txt-img"><img :src="imgURL + item.nodeIcon"/></div>
+          <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
           <div class="overflow">{{ item.nodeName }}</div>
           <div class="promo">
-            <img
-                v-if="item.promotionIcon"
-                :src="`${imgURL}label/${item.promotionIcon}`"
-            />
+            <img v-if="item.promotionIcon" :src="`${imgURL}${item.promotionIcon}`" />
           </div>
 
           <div class="payment-method-wrapper">
             <div
-                class="payment-method-item"
-                v-for="pm in payMethods"
-                :key="pm.id"
-                :class="{ active: pm.nodeName === activeMethod }"
+              class="payment-method-item"
+              v-for="pm in payMethods"
+              :key="pm.id"
+              :class="{ active: pm.nodeName === activeMethod }"
             >
-              <img :src="imgURL + pm.nodeIcon"/>
+              <img :src="imgURL + pm.nodeIcon" />
               <div>{{ pm.nodeName }}</div>
             </div>
           </div>
@@ -44,25 +38,23 @@
     </div>
     <div :key="i + nodeKey" v-for="(item, i) in list">
       <node
-          @click="clickChildItem(item)"
-          :name="item.nodeName"
-          :class="[
-          item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : ''
-        ]"
-          v-if="selectItem === item"
-          :level="parseInt(level) + 1"
-          :list="item.children"
-          v-bind="$attrs"
+        @click="clickChildItem(item)"
+        :name="item.nodeName"
+        :class="[item.children ? 'node-group' : '', selectItem === item ? 'active' : '']"
+        v-if="selectItem === item"
+        :level="parseInt(level) + 1"
+        :list="item.children"
+        v-bind="$attrs"
       />
     </div>
   </div>
 </template>
 
 <script>
-import {defineComponent, reactive} from "vue";
+import { defineComponent, reactive } from "vue";
 
 const imgURL = process.env.IMAGE_CDN + "/payment/";
+console.log(process.env.IMAGE_CDN);
 export default defineComponent({
   name: "NodeComp",
   order: 1,
@@ -111,7 +103,6 @@ export default defineComponent({
       if (item) {
         item.hasActive = true;
         this.selectItem = item;
-        this.$emit("clicked", this.selectItem);
         if (item.group) {
           this.$emit("clicked", item.children[0]);
         } else {
@@ -135,9 +126,7 @@ export default defineComponent({
         item.hasActive = true;
         this.selectItem = item;
         if (item.group) {
-          let activeChild = item.children.find(
-              (child) => child.hasActive === true
-          );
+          let activeChild = item.children.find((child) => child.hasActive === true);
           if (activeChild) {
             this.$emit("clicked", activeChild);
           } else {
@@ -184,8 +173,7 @@ $node-color: #4ab6fd;
   top: 8px;
   width: 6px;
   height: 6px;
-  background-image: linear-gradient(0deg, #04a509 0%, $group-color 100%),
-  linear-gradient(#ffffff, #ffffff);
+  background-image: linear-gradient(0deg, #04a509 0%, $group-color 100%), linear-gradient(#ffffff, #ffffff);
 }
 
 .title::before {
@@ -214,18 +202,17 @@ $node-color: #4ab6fd;
     cursor: pointer;
 
     img {
-      max-width: 75px;
+      max-width: 60px;
       margin-bottom: 10px;
       width: 100%;
       height: auto;
     }
 
-
     &.active {
       // background: rgba(255,255,255, .2);
 
       .node-txt-img {
-        border-color: #0089ED !important;
+        border-color: #0089ed !important;
 
         &:before {
           display: block;
@@ -233,7 +220,7 @@ $node-color: #4ab6fd;
           position: absolute;
           top: 0px;
           left: 0px;
-          background-color: #0089ED;
+          background-color: #0089ed;
           height: 15px;
           width: 15px;
           z-index: 3;
@@ -249,7 +236,7 @@ $node-color: #4ab6fd;
       }
 
       .overflow {
-        color: #0089ED;
+        color: #0089ed;
         font-weight: 600;
       }
     }
@@ -288,7 +275,6 @@ $node-color: #4ab6fd;
         margin-bottom: 12px;
       }
     }
-
   }
 
   .node-content {
@@ -332,7 +318,7 @@ $node-color: #4ab6fd;
         width: 5rem;
         height: 5rem;
         margin-bottom: 5px;
-        border: 2px solid #C2C2C2;
+        border: 2px solid #c2c2c2;
         border-radius: 4px;
 
         img {
@@ -345,7 +331,7 @@ $node-color: #4ab6fd;
       }
 
       .overflow {
-        font-size: .9em;
+        font-size: 0.9em;
       }
     }
   }
@@ -384,7 +370,8 @@ $node-color: #4ab6fd;
         padding: 0;
         border: 0;
         background-color: transparent;
-        max-width: 60px;
+        max-width: 44px;
+        width: 44px;
       }
 
       ::after {

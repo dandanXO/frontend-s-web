@@ -1,9 +1,5 @@
 <template>
-  <ProfileSummary />
-
-  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>
-
-  <ContentView contentTopStatus="solid">
+  <q-page class="account-table-page">
     <q-tabs
       v-model="orderOptionTab"
       dense
@@ -45,7 +41,7 @@
           </div>
           <div class="order-row order-row--content">
             <div class="order-subrow">
-              <div class="order-col">{{ e.withdrawAmount }}</div>
+              <div class="order-col">{{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
               <div class="order-col">BANK</div>
             </div>
             <div class="order-subrow">
@@ -81,7 +77,7 @@
           </div>
           <div class="order-row order-row--content">
             <div class="order-subrow">
-              <div class="order-col">{{ e.depositAmount }}</div>
+              <div class="order-col">{{ convertToCommaAmount(e.depositAmount, true) }}</div>
               <div class="order-col">{{ e.paymentType }}</div>
             </div>
             <div class="order-subrow">
@@ -98,22 +94,22 @@
         </div>
       </q-tab-panel>
     </q-tab-panels>
-  </ContentView>
 
-  <q-input style="width: 100%; opacity: 0" filled color="white" ref="copyinput" v-model="text_copied" />
+    <q-input style="width: 100%; opacity: 0" filled color="white" ref="copyinput" v-model="text_copied" />
+  </q-page>
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { onActivated, onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { updateDate, convertToGMT8, convertToGMT55 } from "src/boot/utils";
 import SwiperNav from "../../components/SwiperNav.vue";
-import ContentView from "../../components/ContentView.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
 import { useQuasar } from "quasar";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const $q = useQuasar();
 const router = useRouter();
@@ -256,7 +252,7 @@ const getDepositStatus = (depositStatus) => {
   }
 };
 
-onMounted(() => {
+onActivated(() => {
   setTime();
 
   // NOTE: load both 1st, change if need implement search field
@@ -267,17 +263,24 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .order-option-tab {
-  background-color: rgba(21, 0, 37, 0.6);
+  background-color: #101114;
   border-radius: 8px;
-  margin-bottom: 4px;
+  width: calc(100% - 20px);
+  //margin-bottom: 10px;
+  margin: 0px auto 10px;
+  border: 1px solid #5c46e7;
+  aspect-ratio: 335/32;
 
   :deep(.q-tab__label) {
     font-weight: 700;
   }
 
   :deep(.q-tab--active) {
-    color: #000000;
-    background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+    border-radius: 6px;
+    color: #fff;
+    margin: 1px;
+    background: linear-gradient(0deg, #5c46e7, #5c46e7), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+      linear-gradient(0deg, #5c46e7, #5c46e7);
   }
 }
 
@@ -285,11 +288,15 @@ onMounted(() => {
   background: transparent;
 
   :deep(.q-tab-panel) {
-    // padding: 8px 12px;
     padding: 0;
+    width: calc(100% - 20px);
+    margin: auto;
   }
   .order-table {
-    margin-top: 12px;
+    background: #171e2b80;
+    border-radius: 10px;
+    padding: 6px 4px;
+    margin-bottom: 10px;
     .order-row {
       display: flex;
       justify-content: space-between;
@@ -297,13 +304,11 @@ onMounted(() => {
       flex-wrap: wrap;
 
       &--title {
-        background-color: rgba(21, 0, 37, 0.5);
         border-top-right-radius: 16px;
         border-top-left-radius: 16px;
       }
 
       &--content {
-        background-color: rgba(21, 0, 37, 0.2);
         flex-wrap: wrap;
         flex-direction: column;
       }

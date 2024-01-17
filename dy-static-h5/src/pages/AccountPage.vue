@@ -172,12 +172,6 @@
     </div>
 
     <q-item-section class="acct-nav">
-      <!-- <div class="acct-header-icon">
-        <img
-          src="../assets/images/account/personal_menu_title_icon.png"
-          width="10"
-        />
-      </div> -->
       <div class="acct-title">
         <div class="acct-title-1">我的功能</div>
         <!-- <div id="vipDomain" class="vipurl">专属网址：{{ store.evip }}</div> -->
@@ -247,7 +241,7 @@
             <!--            ({{ store.unreadInboxMail }})-->
           </div>
         </router-link>
-        <a href="https://partner.dyvip90.com/" target="_blank">
+        <a href="https://dy2-affiliate.mndofithly.com/" target="_blank">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_affiliate.svg" />
             <div class="acct-nav-label">加盟</div>
@@ -262,7 +256,7 @@
       </div>
     </q-item-section>
 
-    <q-card class="card-account-banner">
+    <q-card class="card-account-banner" v-if="btm_banners.length > 0">
       <q-card-section>
         <q-carousel
           class="account"

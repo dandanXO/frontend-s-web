@@ -160,7 +160,7 @@ export default {
     affiliate_table_3: "Commission Rates",
     affiliate_table_title: "Details and Commission Levels",
     only_letter_number_allowed: "Only English letters and numbers are allowed",
-    only_alphabet_allowed: "Only English letters are allowed",
+    only_alphabet_allowed: "Only English or Thai letters are allowed",
     password_between_6_12: "Password length must be between 6-12 characters",
     password_must_at_least_good: "The password security level must be at least good",
     confirm_pass: "Confirm Password",
@@ -434,8 +434,7 @@ export default {
     my_b_line_refer_total: "Cash back from referred level 2:",
     bet_amount: "Bet amount:",
     amount_paid: "Amount paid:",
-    register_name_must_be_english_name:
-      "Register real name must be English name which is same as your withdrawal bank account name.",
+    register_name_must_be_english_name: "Register real name must be same as your withdrawal bank account name.",
     fav_game_added: "Game has been added to your favorite games list.",
     fav_game_removed: "Game has been removed from your favorite games list.",
     update_app_title: "Update App",
@@ -483,7 +482,9 @@ export default {
     after_success_go_to_setting: "After the download is successful, go to Settings to install the App.",
     press_install: "Press 'Profile Downloaded', and then press Install.",
     after_success_you_click_join_and_have_fun:
-      "After successful installation, you can click to join and have fun with us immediately."
+      "After successful installation, you can click to join and have fun with us immediately.",
+    participate: "Participate",
+    sent_success: "Sent Successfully"
   },
   error: {
     101: "Platform not found",
@@ -499,6 +500,7 @@ export default {
     504: "Request too frequent",
     601: "Token validation error",
     603: "Token not found",
+    608: "The current user's operations are too frequent. Please try again.",
     604: "Logged in successfully",
     707: "Insufficient balance",
     800: "Incorrect confirmation code",
@@ -547,6 +549,9 @@ export default {
     15201: "Incorrect old code",
     15202: "New code must match old code",
     21000: "This game is already in your favorite games list.",
+    24001: "The attendance record already exists.",
+    24002: "Detected same IP",
+    24005: "Does not meet the minimum deposit amount",
     30000: "Member data not found",
     30001: "Member has already received the promotion",
     30002: "Member has sent the number today",

@@ -3,14 +3,22 @@
     <q-header elevated>
       <q-card-section v-if="!store.hasToken()" class="top-section justify-between items-center" horizontal>
         <q-card-actions v-if="$q.screen.gt.md">
-          <q-btn size="md" class="register-btn" to="/register">{{ $t("lang.register") }}</q-btn>
+          <div class="btn-deco-wrapper">
+            <q-btn size="md" class="register-btn" to="/register">{{ $t("lang.register") }}</q-btn>
+          </div>
         </q-card-actions>
         <div class="logo">
           <router-link to="/"><img src="../assets/logo.png" /></router-link>
         </div>
         <q-card-actions>
-          <q-btn size="md" class="login-btn" to="/login">{{ $t("lang.login") }}</q-btn>
-          <q-btn v-if="!$q.screen.gt.md" size="md" class="register-btn" to="/register">{{ $t("lang.register") }}</q-btn>
+          <div class="btn-deco-wrapper">
+            <q-btn size="md" class="login-btn" to="/login">{{ $t("lang.login") }}</q-btn>
+          </div>
+          <div v-if="!$q.screen.gt.md" class="btn-deco-wrapper">
+            <q-btn size="md" class="register-btn" to="/register">
+              {{ $t("lang.register") }}
+            </q-btn>
+          </div>
         </q-card-actions>
       </q-card-section>
       <!--      v-if="hasPage"-->
@@ -29,25 +37,11 @@
           <router-link to="/"><img src="../assets/logo.png" /></router-link>
         </div>
 
-        <q-btn v-if="store.hasToken()" class="flex header-vip-btn" to="/vip" no-caps flat>
+        <q-btn v-if="store.hasToken()" class="flex header-vip-btn" to="/vip" no-caps flat label="VIP" stack>
           <img class="vip-btn btn-pointer" src="../assets/images/menu/vip-icon.png" />
         </q-btn>
       </q-card-section>
     </q-header>
-
-    <q-page-sticky v-if="showSticky && isHomePage" class="home-sticky-div" position="right" :offset="[0, 0]">
-      <div class="home-sticky">
-        <img class="sticky-bear" src="../assets/home/line-bear.png" />
-        <q-btn name="close" height="20" width="20" size="xs" @click="closeLineSticky" class="sticky-close-btn">
-          <q-icon name="close"></q-icon>
-        </q-btn>
-        <div class="sticky-container">
-          <div class="line-title">LINE</div>
-          <img src="../assets/home/line-bg.png" class="line-img" />
-          <div class="line-bottom">line ID:@jolly88</div>
-        </div>
-      </div>
-    </q-page-sticky>
 
     <q-drawer v-model="ui.leftDrawerOpen" bordered overlay :width="350" :breakpoint="1280" class="drawer-left">
       <div v-if="store.hasToken()" class="drawer-container">
@@ -103,7 +97,7 @@
       <q-tabs v-model="tab" no-caps class="footer-nav" :breakpoint="0" align="justify">
         <q-route-tab to="/" name="home" exact>
           <img class="footer-icon" :src="tab === 'home' ? footers['home']['active'] : footers['home']['icon']" />
-          <span>{{ $t("lang.home_page") }}</span>
+          <span class="footer-label">{{ $t("lang.home_page") }}</span>
         </q-route-tab>
 
         <q-route-tab to="/finance/withdraw" name="withdraw">
@@ -111,7 +105,15 @@
             class="footer-icon"
             :src="tab === 'withdraw' ? footers['withdraw']['active'] : footers['withdraw']['icon']"
           />
-          <span>{{ $t("lang.withdraw_footer") }}</span>
+          <span class="footer-label">{{ $t("lang.withdraw_footer") }}</span>
+        </q-route-tab>
+
+        <q-route-tab to="/finance/deposit" name="deposit" class="middle-menu">
+          <img
+            class="footer-icon"
+            :src="tab === 'deposit' ? footers['deposit']['active'] : footers['deposit']['icon']"
+          />
+          <span class="footer-label">{{ $t("lang.deposit_footer") }}</span>
         </q-route-tab>
 
         <!-- <q-route-tab to="/finance/deposit" name="deposit">
@@ -128,14 +130,6 @@
           <span>{{ $t('lang.withdraw_footer') }}</span>
         </q-route-tab> -->
 
-        <q-route-tab to="/finance/deposit" name="deposit" class="middle-menu">
-          <div class="footer-icon-wrapper">
-            <img class="footer-icon" :src="footers['deposit']['icon']" />
-          </div>
-
-          <span>{{ $t("lang.deposit_footer") }}</span>
-        </q-route-tab>
-
         <!-- <q-route-tab to="/account/mail" name="notice">
           <img class="footer-icon"
                :src="(tab === 'notice') ? footers['notice']['active']  :  footers['notice']['icon'] "/>
@@ -143,7 +137,7 @@
         </q-route-tab> -->
         <q-route-tab to="/getapp" name="app">
           <img class="footer-icon" :src="tab === 'app' ? footers['app']['active'] : footers['app']['icon']" />
-          <span>APP</span>
+          <span class="footer-label">APP</span>
         </q-route-tab>
         <q-route-tab to="/liveChat" id="cs-web-id" class="cs-web-id" name="cs" @click="openLiveChat($event, router)">
           <img
@@ -151,7 +145,7 @@
             :class="tab != 'cs' ? 'breathing-icon' : ''"
             :src="tab === 'cs' ? footers['cs']['active'] : footers['cs']['icon']"
           />
-          <span>{{ $t("lang.cs_footer") }}</span>
+          <span class="footer-label">{{ $t("lang.cs_footer") }}</span>
         </q-route-tab>
       </q-tabs>
     </q-footer>
@@ -398,18 +392,6 @@ export default defineComponent({
       ui.leftDrawerOpen = !ui.leftDrawerOpen;
     };
 
-    const showSticky = ref(true);
-    const checkSticky = () => {
-      const stickyOff = localStorage.getItem("LINE_STICKY_OFF");
-      if (stickyOff === "true") {
-        showSticky.value = false;
-      }
-    };
-    const closeLineSticky = () => {
-      showSticky.value = false;
-      localStorage.setItem("LINE_STICKY_OFF", "true");
-    };
-
     const openAffiliatePage = () => {
       router.push("/affiliate");
     };
@@ -422,7 +404,6 @@ export default defineComponent({
     onMounted(() => {
       checkRoute();
       store.getBalance();
-      checkSticky();
     });
 
     return {
@@ -431,7 +412,6 @@ export default defineComponent({
       logout,
       store,
       isHomePage,
-      closeLineSticky,
       scrollPageRef,
       pageName,
       hasPage,
@@ -444,7 +424,6 @@ export default defineComponent({
       headerIcon,
       languageVal,
       langOptions,
-      showSticky,
       hasLang,
       mainWalletValue,
       openAffiliatePage,
@@ -464,6 +443,22 @@ export default defineComponent({
 }
 </style>
 <style scoped lang="scss">
+.footer-nav {
+  .footer-label {
+    font-weight: normal;
+  }
+
+  .footer-label {
+    color: #c9c9c9;
+  }
+
+  .q-tab--active {
+    .footer-label {
+      color: #ffffff;
+      -webkit-text-fill-color: #ffffff;
+    }
+  }
+}
 path {
   stroke-width: 0.5;
   stroke-dasharray: 3212;
@@ -498,7 +493,8 @@ svg path {
 }
 
 .footer-icon {
-  width: 22px;
+  //width: 22px;
+  width: 26px;
   filter: brightness(1.4);
   margin-bottom: 4px;
 }
@@ -513,6 +509,10 @@ svg path {
   // margin-top: -30px;
   z-index: 9;
   opacity: 1;
+
+  .footer-icon {
+    width: 35px;
+  }
 
   .footer-icon-wrapper {
     // background: linear-gradient(90deg, #cf027d 0%, #ff6370 100%),
@@ -545,9 +545,11 @@ svg path {
 
 .vip-btn {
   width: 24px;
+  order: -1;
 }
 
 .point-rebate-div {
+  position: relative;
   min-width: 130px;
   height: 30px;
   background: $third-color;
@@ -557,6 +559,7 @@ svg path {
   border-radius: 15px;
   margin-left: 8px;
   margin-right: auto;
+  z-index: 2;
 
   span {
     color: $white;
@@ -620,77 +623,13 @@ svg path {
   line-height: 1rem;
 }
 
+.btn-deco-wrapper {
+  position: relative;
+}
+
 .drawer-container {
   padding: 10px 16px;
   width: calc(100%);
-}
-
-.home-sticky-div {
-  z-index: 4000;
-}
-.home-sticky {
-  //display:none;
-  position: relative;
-  width: 175px;
-  height: 240px;
-
-  .sticky-bear {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: 55;
-  }
-
-  .sticky-close-btn {
-    position: absolute;
-    right: 5px;
-    top: 37px;
-    z-index: 30;
-    border-radius: 50%;
-    width: 20px;
-    padding: 0px;
-    line-height: 20px;
-    height: 20px;
-    background: $white;
-    color: $text-gray;
-
-    &:active {
-      filter: brightness(0.8);
-    }
-  }
-
-  .sticky-container {
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-    z-index: 15;
-
-    width: 152px;
-    height: 192px;
-    background: $primary;
-    border-radius: 10px 0px 0px 10px;
-
-    color: $white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3px;
-    justify-content: center;
-
-    .line-title {
-      font-size: 18px;
-    }
-
-    .line-img {
-      width: 100px;
-      height: auto;
-      margin: 0 auto;
-    }
-
-    .line-bottom {
-      font-size: 16px;
-    }
-  }
 }
 
 @media (min-width: 600px) {
@@ -725,8 +664,5 @@ svg path {
   .header-vip-btn {
     margin-left: 130px;
   }
-}
-
-@media (min-width: 1024px) {
 }
 </style>

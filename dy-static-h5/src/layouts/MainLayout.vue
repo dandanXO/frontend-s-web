@@ -97,7 +97,7 @@
 
     <q-page-container>
       <router-view v-slot="{ Component }">
-        <KeepAlive :max="8">
+        <KeepAlive :max="8" :exclude="excludeAliveComponents">
           <component :is="Component" />
         </KeepAlive>
       </router-view>
@@ -161,7 +161,6 @@ import { Platform } from "quasar";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 import { translateRecord } from "src/directives/translate";
-
 import { RiArrowLeftLine } from "vue-remix-icons";
 
 export default defineComponent({
@@ -478,7 +477,7 @@ export default defineComponent({
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "存款";
-        } else if (route.path === "/finance/depositMobile") {
+        } else if (route.path === "/deposit") {
           hasPage.value = false;
           pageName.value = "存款";
           prevPage.value = "";
@@ -540,6 +539,10 @@ export default defineComponent({
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "呼朋唤友";
+        } else if (route.path === "/privilege/invite") {
+          prevPage.value = "promo";
+          hasPage.value = true;
+          pageName.value = "邀请好友";
         } else if (route.path === "/account/announcement") {
           prevPage.value = "account";
           hasPage.value = true;
@@ -715,7 +718,16 @@ export default defineComponent({
       platformsList,
       changePlatform,
       checkPlatform,
-      isH5
+      isH5,
+      excludeAliveComponents: [
+        "DepositRecordView",
+        "WithdrawRecordView",
+        "TransferRecordView",
+        "FeedbackRecordView",
+        "PromoRecordView",
+        "BetHistoryRecordView",
+        "MoneyChangeRecordView"
+      ]
     };
   }
 });

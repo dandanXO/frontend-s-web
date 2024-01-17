@@ -135,17 +135,17 @@
             <th style="width: 25%">日期</th>
             <th style="width: 35%">答案</th>
             <th style="width: 20%">中奖记录</th>
-            <th style="width: 10%">中奖次数</th>
-            <th style="width: 10%">参与次数</th>
+            <!--            <th style="width: 10%">中奖次数</th>-->
+            <!--            <th style="width: 10%">参与次数</th>-->
           </tr>
           <tr v-for="(e, i) in tableInfo" :key="`table-info-${i}`">
             <td>{{ e.time }}</td>
             <td>{{ e.answer }}</td>
             <td :class="e.className">{{ e.statusText }}</td>
-            <template v-if="i === 0">
-              <td rowspan="2">{{ quizWonTimesRecord }}</td>
-              <td rowspan="2">{{ quizAttendTimesRecord }}</td>
-            </template>
+            <!--            <template v-if="i === 0">-->
+            <!--              <td :rowspan="recordsLength">{{ quizWonTimesRecord }}</td>-->
+            <!--              <td :rowspan="recordsLength">{{ quizAttendTimesRecord }}</td>-->
+            <!--            </template>-->
           </tr>
         </table>
         <table v-else class="record-table" id="record-table"></table>
@@ -157,10 +157,10 @@
         <div v-if="isHasRecord" class="page-list">
           <div class="prev page-item" @click="onPrevPageClick()">&lt;</div>
           <div
-            v-for="(e, i) in paginationInfo.pageTotal"
+            v-for="(e, i) in recordsPagination.pages"
             :key="`page-content-${i}`"
             :id="`page-number-${e}`"
-            :class="`page-number page-item ${paginationInfo.pageNumber === e ? 'active' : ''}`"
+            :class="`page-number page-item ${recordsPagination.current === e ? 'active' : ''}`"
             @click="onPaginationClick(e)"
           >
             {{ e }}
@@ -177,7 +177,12 @@
 import { onMounted, ref, reactive } from "vue";
 import { userStore } from "@/store";
 import { ElMessage } from "element-plus";
-import { getSportMatchQuizInfo, getMemberSportMatchRecord, submitMemberSportMatchQuiz } from "@/api/index/promo";
+import {
+  getSportMatchQuizInfo,
+  getMemberSportMatchRecord,
+  getRecordsCount,
+  submitMemberSportMatchQuiz
+} from "@/api/index/promo";
 import moment from "moment";
 
 const store = userStore();
@@ -263,55 +268,66 @@ function getMatchInfo() {
 const records = ref([]);
 const quizAttendTimesRecord = ref();
 const quizWonTimesRecord = ref();
+const recordsLength = ref();
+const recordsPagination = reactive({ size: 5, current: 1, total: 0, pages: 0 });
 const paginationInfo = reactive({ pageSize: 5, pageNumber: 1, pageTotal: 0 });
 
 const isHasRecord = ref(false);
 function getRecords() {
-  getMemberSportMatchRecord().then((res) => {
+  getMemberSportMatchRecord(recordsPagination).then((res) => {
+    console.log("data", res.data);
     const { code, data } = res;
     if (code == 0) {
-      records.value = data.answers;
-      quizAttendTimesRecord.value = data.quizAttendTimes;
-      quizWonTimesRecord.value = data.quizWonTimes;
+      records.value = data.records;
+      recordsPagination.total = data.total;
+      recordsPagination.pages = data.pages + 1;
+      // quizAttendTimesRecord.value = data.quizAttendTimes;
+      // quizWonTimesRecord.value = data.quizWonTimes;
 
-      const dataLength = data.answers.length;
+      recordsLength.value = data.records.length;
+      const dataLength = data.records.length;
       if (dataLength) {
         let pageTotal;
         pageTotal = dataLength % paginationInfo.pageSize == 0 ? 0 : 1;
         pageTotal = pageTotal + parseInt(dataLength / paginationInfo.pageSize);
         paginationInfo.pageTotal = pageTotal;
-
         getRecordList();
-
         isHasRecord.value = true;
       }
+    }
+  });
+
+  getRecordsCount().then((res) => {
+    const { code, data } = res;
+    if (code == 0) {
+      quizAttendTimesRecord.value = data.quizAttendTimes;
+      quizWonTimesRecord.value = data.quizWonTimes;
     }
   });
 }
 
 function onPrevPageClick() {
-  if (paginationInfo.pageNumber === 1) return;
-
-  paginationInfo.pageNumber--;
-  getRecordList();
+  if (recordsPagination.current > 1) {
+    recordsPagination.current = recordsPagination.current - 1;
+    getRecords();
+  }
 }
 
 function onNextPageClick() {
-  if (paginationInfo.pageNumber + 1 > paginationInfo.pageTotal) return;
-
-  paginationInfo.pageNumber++;
-  getRecordList();
+  if (recordsPagination.pages > recordsPagination.current) {
+    recordsPagination.current = recordsPagination.current + 1;
+    getRecords();
+  }
 }
 
 function onPaginationClick(pageIndex) {
-  if (paginationInfo.pageNumber === pageIndex) return;
-
-  paginationInfo.pageNumber = pageIndex;
-  getRecordList();
+  recordsPagination.current = pageIndex;
+  getRecords();
 }
 
 const tableInfo = ref([]);
 function getRecordList() {
+  tableInfo.value = [];
   const { pageSize, pageNumber } = paginationInfo;
   const start = (pageNumber - 1) * pageSize;
   const end = Math.min(start + pageSize, records.value.length); // Ensure end does not exceed array length
@@ -477,7 +493,7 @@ const submittedFormStatus = ref(false);
     .prize-quiz-jc-container {
       width: 780px;
       height: 250px;
-      background: url("../../../assets/images/promotion/hotpromo/esportquiz/bg_jc_7.png") center no-repeat;
+      background: url("../../../assets/images/promotion/hotpromo/esportquiz/bg_jc_8.png") center no-repeat;
       padding-top: 50px;
       margin: 50px auto;
       display: flex;

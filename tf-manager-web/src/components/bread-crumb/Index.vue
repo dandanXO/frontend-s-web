@@ -4,19 +4,23 @@
     separator-class="el-icon-arrow-right"
   >
     <transition-group name="breadcrumb">
-      <el-breadcrumb-item
-        v-for="(item, index) in breadcrumbs"
-        :key="item.path"
+      <template v-for="(item, index) in breadcrumbs"
+                :key="item.path"
       >
-        <span
-          v-if="item.redirect === 'noredirect' || index === breadcrumbs.length-1"
-          class="no-redirect"
-        >{{ $t('menu.' + item.name) }}</span>
-        <a
-          v-else
-          @click.prevent="handleLink(item)"
-        >{{ $t('menu.' + item.name) }}</a>
-      </el-breadcrumb-item>
+        <el-breadcrumb-item
+          v-if="item.name"
+        >
+          <span
+            v-if="item.redirect === 'noredirect' || index === breadcrumbs.length-1"
+            class="no-redirect"
+          >{{ $t('menu.' + item.name) }}</span>
+          <a
+            v-else
+            @click.prevent="handleLink(item)"
+          >{{ $t('menu.' + item.name) }}</a>
+
+        </el-breadcrumb-item>
+      </template>
     </transition-group>
   </el-breadcrumb>
 </template>
@@ -57,6 +61,7 @@ export default defineComponent({
         state.breadcrumbs = matched.filter((item) => {
           return item.meta && item.meta.title && item.meta.breadcrumb !== false
         })
+        // console.log(state.breadcrumbs);
       },
       isDashboard(route) {
         const name = route && route.name

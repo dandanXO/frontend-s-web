@@ -159,7 +159,7 @@
           <div class="notice">
             <img src="../assets/index/home-announce-icon.png" width="18px" />
           </div>
-          <marquee-text :repeat="5" :duration="announcementList.length * 150">
+          <marquee-text :repeat="5" :duration="announcementList.length < 10 ? announcementList.length * 3 : 24">
             <div v-if="announcementList">
               <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
                 {{ a.content }}
@@ -216,6 +216,20 @@
                             <h3>{{ hot.name }}</h3>
                             <span>真人娱乐</span>
                           </div>
+
+                          <div class="maintenance-box" v-if="hot.underMaintenance">
+                            <p>维护中</p>
+                            <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
+                              <div class="small-size q-mt-md">维护时间:</div>
+                              <p class="small-size">
+                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                              </p>
+                              <p class="small-size">-</p>
+                              <p class="small-size">
+                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                              </p>
+                            </template>
+                          </div>
                         </div>
                       </template>
                       <template v-else-if="hot.code === 'PMLIVE' && hot.name === 'PMLIVE'">
@@ -238,6 +252,20 @@
                           <div class="game-title">
                             <h3>{{ hot.title }}</h3>
                             <span>真人娱乐</span>
+                          </div>
+
+                          <div class="maintenance-box" v-if="hot.underMaintenance">
+                            <p>维护中</p>
+                            <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
+                              <div class="small-size q-mt-md">维护时间:</div>
+                              <p class="small-size">
+                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                              </p>
+                              <p class="small-size">-</p>
+                              <p class="small-size">
+                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                              </p>
+                            </template>
                           </div>
                         </div>
                       </template>
@@ -262,6 +290,20 @@
                             <h3>{{ hot.name }}</h3>
                             <span>真人娱乐</span>
                           </div>
+
+                          <div class="maintenance-box" v-if="hot.underMaintenance">
+                            <p>维护中</p>
+                            <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
+                              <div class="small-size q-mt-md">维护时间:</div>
+                              <p class="small-size">
+                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                              </p>
+                              <p class="small-size">-</p>
+                              <p class="small-size">
+                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                              </p>
+                            </template>
+                          </div>
                         </div>
                       </template>
                     </template>
@@ -274,6 +316,20 @@
                         <div class="game-title">
                           <h3>{{ hot.title }}</h3>
                           <span>体育赛事</span>
+                        </div>
+
+                        <div class="maintenance-box" v-if="hot.underMaintenance">
+                          <p>维护中</p>
+                          <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
+                            <div class="small-size q-mt-md">维护时间:</div>
+                            <p class="small-size">
+                              {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                            <p class="small-size">-</p>
+                            <p class="small-size">
+                              {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                          </template>
                         </div>
                       </div>
                     </template>
@@ -297,6 +353,20 @@
                         <div class="game-title">
                           <h3>{{ hot.title }}</h3>
                           <span>电竞赛事</span>
+                        </div>
+
+                        <div class="maintenance-box" v-if="hot.underMaintenance">
+                          <p>维护中</p>
+                          <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
+                            <div class="small-size q-mt-md">维护时间:</div>
+                            <p class="small-size">
+                              {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                            <p class="small-size">-</p>
+                            <p class="small-size">
+                              {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                          </template>
                         </div>
                       </div>
                     </template>
@@ -322,6 +392,20 @@
                             <div class="game-title">
                               <h3>{{ hot.title }}</h3>
                               <span>电子游戏</span>
+                            </div>
+
+                            <div class="maintenance-box" v-if="hot.underMaintenance">
+                              <p>维护中</p>
+                              <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
+                                <div class="small-size q-mt-md">维护时间:</div>
+                                <p class="small-size">
+                                  {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                                </p>
+                                <p class="small-size">-</p>
+                                <p class="small-size">
+                                  {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                                </p>
+                              </template>
                             </div>
                           </router-link>
                         </div>
@@ -349,6 +433,20 @@
                             <h3>{{ hot.title }}</h3>
                             <span>棋牌游戏</span>
                           </div>
+
+                          <div class="maintenance-box" v-if="hot.underMaintenance">
+                            <p>维护中</p>
+                            <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
+                              <div class="small-size q-mt-md">维护时间:</div>
+                              <p class="small-size">
+                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                              </p>
+                              <p class="small-size">-</p>
+                              <p class="small-size">
+                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                              </p>
+                            </template>
+                          </div>
                         </div>
                       </template>
                       <template v-else>
@@ -371,6 +469,20 @@
                           <div class="game-title">
                             <h3>{{ hot.title }}</h3>
                             <span>棋牌游戏</span>
+                          </div>
+
+                          <div class="maintenance-box" v-if="hot.underMaintenance">
+                            <p>维护中</p>
+                            <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
+                              <div class="small-size q-mt-md">维护时间:</div>
+                              <p class="small-size">
+                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                              </p>
+                              <p class="small-size">-</p>
+                              <p class="small-size">
+                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                              </p>
+                            </template>
                           </div>
                         </div>
                       </template>
@@ -397,6 +509,20 @@
                             <h3>{{ hot.title }}</h3>
                             <span>彩票游戏</span>
                           </div>
+
+                          <div class="maintenance-box" v-if="hot.underMaintenance">
+                            <p>维护中</p>
+                            <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
+                              <div class="small-size q-mt-md">维护时间:</div>
+                              <p class="small-size">
+                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                              </p>
+                              <p class="small-size">-</p>
+                              <p class="small-size">
+                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                              </p>
+                            </template>
+                          </div>
                         </div>
                       </template>
                       <template v-else-if="hot.code === 'BBINDY' && hot.name === 'BBIN'">
@@ -419,6 +545,20 @@
                           <div class="game-title">
                             <h3>{{ hot.title }}</h3>
                             <span>彩票游戏</span>
+                          </div>
+
+                          <div class="maintenance-box" v-if="hot.underMaintenance">
+                            <p>维护中</p>
+                            <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
+                              <div class="small-size q-mt-md">维护时间:</div>
+                              <p class="small-size">
+                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                              </p>
+                              <p class="small-size">-</p>
+                              <p class="small-size">
+                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                              </p>
+                            </template>
                           </div>
                         </div>
                       </template>
@@ -443,6 +583,20 @@
                             <h3>{{ hot.title }}</h3>
                             <span>彩票游戏</span>
                           </div>
+
+                          <div class="maintenance-box" v-if="hot.underMaintenance">
+                            <p>维护中</p>
+                            <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
+                              <div class="small-size q-mt-md">维护时间:</div>
+                              <p class="small-size">
+                                {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                              </p>
+                              <p class="small-size">-</p>
+                              <p class="small-size">
+                                {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                              </p>
+                            </template>
+                          </div>
                         </div>
                       </template>
                     </template>
@@ -466,6 +620,20 @@
                         <div class="game-title">
                           <h3>{{ hot.name }}</h3>
                           <span>热门游戏</span>
+                        </div>
+
+                        <div class="maintenance-box" v-if="hot.underMaintenance">
+                          <p>维护中</p>
+                          <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
+                            <div class="small-size q-mt-md">维护时间:</div>
+                            <p class="small-size">
+                              {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                            <p class="small-size">-</p>
+                            <p class="small-size">
+                              {{ moment(hot.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                          </template>
                         </div>
                       </div>
                     </template>
@@ -499,6 +667,20 @@
                       <div class="game-title">
                         <h3>{{ es.title }}</h3>
                         <span>电竞赛事</span>
+                      </div>
+
+                      <div class="maintenance-box" v-if="es.underMaintenance">
+                        <p>维护中</p>
+                        <template v-if="es.maintenanceStartTime && es.maintenanceEndTime">
+                          <div class="small-size q-mt-md">维护时间:</div>
+                          <p class="small-size">
+                            {{ moment(es.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                          </p>
+                          <p class="small-size">-</p>
+                          <p class="small-size">
+                            {{ moment(es.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                          </p>
+                        </template>
                       </div>
                     </div>
                   </div>
@@ -540,6 +722,20 @@
                         <h3>{{ sp.title }}</h3>
                         <span>体育赛事</span>
                       </div>
+
+                      <div class="maintenance-box" v-if="sp.underMaintenance">
+                        <p>维护中</p>
+                        <template v-if="sp.maintenanceStartTime && sp.maintenanceEndTime">
+                          <div class="small-size q-mt-md">维护时间:</div>
+                          <p class="small-size">
+                            {{ moment(sp.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                          </p>
+                          <p class="small-size">-</p>
+                          <p class="small-size">
+                            {{ moment(sp.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                          </p>
+                        </template>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -579,6 +775,20 @@
                           <h3>{{ live.name }}</h3>
                           <span>真人娱乐</span>
                         </div>
+
+                        <div class="maintenance-box" v-if="live.underMaintenance">
+                          <p>维护中</p>
+                          <template v-if="live.maintenanceStartTime && live.maintenanceEndTime">
+                            <div class="small-size q-mt-md">维护时间:</div>
+                            <p class="small-size">
+                              {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                            <p class="small-size">-</p>
+                            <p class="small-size">
+                              {{ moment(live.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                          </template>
+                        </div>
                       </div>
                     </template>
                     <template v-else-if="live.code === 'PMLIVE' && live.name === 'PMLIVE'">
@@ -601,6 +811,20 @@
                         <div class="game-title">
                           <h3>DB</h3>
                           <span>真人娱乐</span>
+                        </div>
+
+                        <div class="maintenance-box" v-if="live.underMaintenance">
+                          <p>维护中</p>
+                          <template v-if="live.maintenanceStartTime && live.maintenanceEndTime">
+                            <div class="small-size q-mt-md">维护时间:</div>
+                            <p class="small-size">
+                              {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                            <p class="small-size">-</p>
+                            <p class="small-size">
+                              {{ moment(live.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                          </template>
                         </div>
                       </div>
                     </template>
@@ -625,6 +849,20 @@
                           <h3>SEXY</h3>
                           <span>真人娱乐</span>
                         </div>
+
+                        <div class="maintenance-box" v-if="live.underMaintenance">
+                          <p>维护中</p>
+                          <template v-if="live.maintenanceStartTime && live.maintenanceEndTime">
+                            <div class="small-size q-mt-md">维护时间:</div>
+                            <p class="small-size">
+                              {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                            <p class="small-size">-</p>
+                            <p class="small-size">
+                              {{ moment(live.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                          </template>
+                        </div>
                       </div>
                     </template>
                     <template v-else>
@@ -647,6 +885,20 @@
                         <div class="game-title">
                           <h3>{{ live.name }}</h3>
                           <span>真人娱乐</span>
+                        </div>
+
+                        <div class="maintenance-box" v-if="live.underMaintenance">
+                          <p>维护中</p>
+                          <template v-if="live.maintenanceStartTime && live.maintenanceEndTime">
+                            <div class="small-size q-mt-md">维护时间:</div>
+                            <p class="small-size">
+                              {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                            <p class="small-size">-</p>
+                            <p class="small-size">
+                              {{ moment(live.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                          </template>
                         </div>
                       </div>
                     </template>
@@ -721,6 +973,20 @@
                             <h3>{{ slt.title }}</h3>
                             <span>电子游戏</span>
                           </div>
+
+                          <div class="maintenance-box" v-if="slt.underMaintenance">
+                            <p>维护中</p>
+                            <template v-if="slt.maintenanceStartTime && slt.maintenanceEndTime">
+                              <div class="small-size q-mt-md">维护时间:</div>
+                              <p class="small-size">
+                                {{ moment(slt.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                              </p>
+                              <p class="small-size">-</p>
+                              <p class="small-size">
+                                {{ moment(slt.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                              </p>
+                            </template>
+                          </div>
                         </router-link>
                       </div>
                     </div>
@@ -765,6 +1031,20 @@
                             <h3>{{ slt.title }}</h3>
                             <span>电子游戏</span>
                           </div>
+
+                          <div class="maintenance-box" v-if="slt.underMaintenance">
+                            <p>维护中</p>
+                            <template v-if="slt.maintenanceStartTime && slt.maintenanceEndTime">
+                              <div class="small-size q-mt-md">维护时间:</div>
+                              <p class="small-size">
+                                {{ moment(slt.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                              </p>
+                              <p class="small-size">-</p>
+                              <p class="small-size">
+                                {{ moment(slt.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                              </p>
+                            </template>
+                          </div>
                         </router-link>
                       </div>
                     </div>
@@ -807,6 +1087,20 @@
                           <h3>{{ poke.title }}</h3>
                           <span>棋牌游戏</span>
                         </div>
+
+                        <div class="maintenance-box" v-if="poke.underMaintenance">
+                          <p>维护中</p>
+                          <template v-if="poke.maintenanceStartTime && poke.maintenanceEndTime">
+                            <div class="small-size q-mt-md">维护时间:</div>
+                            <p class="small-size">
+                              {{ moment(poke.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                            <p class="small-size">-</p>
+                            <p class="small-size">
+                              {{ moment(poke.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                          </template>
+                        </div>
                       </div>
                     </template>
                     <template v-else>
@@ -829,6 +1123,20 @@
                         <div class="game-title">
                           <h3>{{ poke.title }}</h3>
                           <span>棋牌游戏</span>
+                        </div>
+
+                        <div class="maintenance-box" v-if="poke.underMaintenance">
+                          <p>维护中</p>
+                          <template v-if="poke.maintenanceStartTime && poke.maintenanceEndTime">
+                            <div class="small-size q-mt-md">维护时间:</div>
+                            <p class="small-size">
+                              {{ moment(poke.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                            <p class="small-size">-</p>
+                            <p class="small-size">
+                              {{ moment(poke.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                          </template>
                         </div>
                       </div>
                     </template>
@@ -863,6 +1171,20 @@
                           <h3>{{ lotter.title }}</h3>
                           <span>彩票游戏</span>
                         </div>
+
+                        <div class="maintenance-box" v-if="lotter.underMaintenance">
+                          <p>维护中</p>
+                          <template v-if="lotter.maintenanceStartTime && lotter.maintenanceEndTime">
+                            <div class="small-size q-mt-md">维护时间:</div>
+                            <p class="small-size">
+                              {{ moment(lotter.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                            <p class="small-size">-</p>
+                            <p class="small-size">
+                              {{ moment(lotter.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                          </template>
+                        </div>
                       </div>
                     </template>
                     <template v-else-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'">
@@ -886,6 +1208,20 @@
                           <h3>{{ lotter.title }}</h3>
                           <span>彩票游戏</span>
                         </div>
+
+                        <div class="maintenance-box" v-if="lotter.underMaintenance">
+                          <p>维护中</p>
+                          <template v-if="lotter.maintenanceStartTime && lotter.maintenanceEndTime">
+                            <div class="small-size q-mt-md">维护时间:</div>
+                            <p class="small-size">
+                              {{ moment(lotter.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                            <p class="small-size">-</p>
+                            <p class="small-size">
+                              {{ moment(lotter.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                          </template>
+                        </div>
                       </div>
                     </template>
                     <template v-else>
@@ -908,6 +1244,20 @@
                         <div class="game-title">
                           <h3>{{ lotter.title }}</h3>
                           <span>彩票游戏</span>
+                        </div>
+
+                        <div class="maintenance-box" v-if="lotter.underMaintenance">
+                          <p>维护中</p>
+                          <template v-if="lotter.maintenanceStartTime && lotter.maintenanceEndTime">
+                            <div class="small-size q-mt-md">维护时间:</div>
+                            <p class="small-size">
+                              {{ moment(lotter.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                            <p class="small-size">-</p>
+                            <p class="small-size">
+                              {{ moment(lotter.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                          </template>
                         </div>
                       </div>
                     </template>
@@ -942,6 +1292,20 @@
                           <h3>{{ fish.name }}</h3>
                           <span>捕鱼游戏</span>
                         </div>
+
+                        <div class="maintenance-box" v-if="fish.underMaintenance">
+                          <p>维护中</p>
+                          <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
+                            <div class="small-size q-mt-md">维护时间:</div>
+                            <p class="small-size">
+                              {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                            <p class="small-size">-</p>
+                            <p class="small-size">
+                              {{ moment(fish.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                          </template>
+                        </div>
                       </div>
                     </template>
                     <template v-else-if="fish.code === 'AG' && fish.name === 'AG'">
@@ -965,6 +1329,20 @@
                           <h3>{{ fish.name }}</h3>
                           <span>捕鱼游戏</span>
                         </div>
+
+                        <div class="maintenance-box" v-if="fish.underMaintenance">
+                          <p>维护中</p>
+                          <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
+                            <div class="small-size q-mt-md">维护时间:</div>
+                            <p class="small-size">
+                              {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                            <p class="small-size">-</p>
+                            <p class="small-size">
+                              {{ moment(fish.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                          </template>
+                        </div>
                       </div>
                     </template>
                     <template v-else>
@@ -987,6 +1365,20 @@
                         <div class="game-title">
                           <h3>{{ fish.name }}</h3>
                           <span>捕鱼游戏</span>
+                        </div>
+
+                        <div class="maintenance-box" v-if="fish.underMaintenance">
+                          <p>维护中</p>
+                          <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
+                            <div class="small-size q-mt-md">维护时间:</div>
+                            <p class="small-size">
+                              {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                            <p class="small-size">-</p>
+                            <p class="small-size">
+                              {{ moment(fish.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                          </template>
                         </div>
                       </div>
                     </template>
@@ -1108,6 +1500,7 @@ SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 import PlatformBlock from "components/platform/PlatformBlock.vue";
 import { translateRecord } from "src/directives/translate";
 import { isAndroid, isHuaweiPhone } from "boot/utils";
+import moment from "moment";
 
 export default defineComponent({
   name: "IndexPage",
@@ -1802,16 +2195,9 @@ export default defineComponent({
     const downloadUrl = ref("");
 
     const getAppDownloadUrl = () => {
-      api
-        .get("/config/appDownloadUrl")
-        .then((res) => {
-          // console.log(res);
-          downloadUrl.value = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-          downloadUrl.value = "https://dy9367.app/";
-        });
+      store.getAppDownloadUrl().then((url) => {
+        downloadUrl.value = url;
+      });
     };
 
     const closeTopBox = () => {
@@ -1922,7 +2308,8 @@ export default defineComponent({
       scrollPosition,
       scrollSlotRef,
       isShowBackTop,
-      isShowDownload
+      isShowDownload,
+      moment
     };
   }
 });
@@ -2218,6 +2605,36 @@ export default defineComponent({
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
+          }
+
+          .maintenance-box {
+            position: absolute;
+            top: 0;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            color: #ffffff;
+            font-size: 22px;
+            font-weight: bold;
+            z-index: 33;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            width: 100%;
+            height: 100%;
+            border-radius: 3vw;
+            background: rgba(2, 9, 73, 0.4);
+            text-align: center;
+
+            p {
+              margin-top: 0px;
+              margin-bottom: 0px;
+            }
+
+            .small-size {
+              font-size: 12px;
+            }
           }
 
           .game-bg {
@@ -2627,6 +3044,16 @@ export default defineComponent({
           transform: scale(1.2);
         }
       }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .maintenance-box {
+    font-size: 4vw !important;
+
+    .small-size {
+      font-size: 2vw !important;
     }
   }
 }

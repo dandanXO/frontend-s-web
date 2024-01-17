@@ -1,25 +1,37 @@
 <template>
-  <div class="infoboard-container" :class="!homeProfile && 'q-pa-md'">
-    <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" />
-    <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
-      <div class="profile-wrapper" v-if="store.hasToken()">
-        <div class="profile-pic">
-          <q-avatar size="60px">
-            <img :src="profileImagePath" />
-          </q-avatar>
-          <div class="profile-pic-frame" v-if="!homeProfile"></div>
-        </div>
-        <div class="profile-details-container">
-          <div class="profile-name">
-            {{ store.realName ? store.realName : store.nickName }}
-            <div class="vip-details" @click="onVipClick">
-              <img src="../assets/images/index/icon-vip-badge.png" alt="" />
-              <div class="vip-level">
-                {{ store.vip }}
-              </div>
-            </div>
-          </div>
+  <div style="height: 56px" v-if="topDownload"></div>
+  <div style="height: 80px"></div>
 
+  <div class="top-download" v-if="topDownload">
+    <div class="download-container">
+      <!-- <div class="download-icon"><img src="../assets/images/index/download/top-download-icon.png" /></div>
+      <div class="download-rating">
+        <div class="rate-exp">Best experience!</div>
+        <div class="rate-stars"><img src="../assets/images/index/download/top-download-stars.png" /></div>
+      </div> -->
+
+      <div class="download-btn">
+        <a :href="topDownloadUrl">
+          <img src="../assets/images/index/download/top-download-btn.png" />
+        </a>
+      </div>
+      <div class="download-count">({{ topDownloadCount }}s)</div>
+      <div class="download-close" :style="!topDownloadcloseBtn && 'opacity:0'">
+        <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
+      </div>
+    </div>
+  </div>
+
+  <div class="infoboard-container" :class="{ 'q-pa-md': !homeProfile, 'with-top-download': topDownload }">
+    <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
+    <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
+      <div class="profile-wrapper-extra">
+        <div class="logo-img">
+          <img src="../assets/logo.png" @click="onClickLogo" />
+        </div>
+      </div>
+      <div class="profile-wrapper" v-if="store.hasToken()">
+        <div class="profile-details-container">
           <template v-if="!homeProfile">
             <div class="profile-rating">
               <img src="../assets/images/index/profile-rating-off.png" alt="" />
@@ -35,26 +47,101 @@
           <template v-else>
             <div class="flex-c-start">
               <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
-                <span class="balance-amount">
-                  {{ isLoadingBalance ? "Loading..." : store.balance.toFixed(2) }}
+                <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
+                  <span style="font-family: 'Times New Roman', Times, serif">
+                    {{ store.currency.value }}
+                  </span>
+                  {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, false) }}
                 </span>
-              </div>
-              <div style="margin-top: 10px" @click="refreshBalance()">
-                <q-icon class="btn-pointer" name="sync" size="30px" color="yellow-7"></q-icon>
+                <div class="btn-refresh">
+                  <q-icon name="sync" size="16px" color="white-7"></q-icon>
+                </div>
               </div>
             </div>
           </template>
         </div>
 
-        <div class="profile-msg btn-effect" v-if="homeProfile">
+        <div>
+          <q-btn square class="style-blue-btn" icon="add" dense @click="router.push('/deposit?from=' + route.path)" />
+        </div>
+        <!-- <div class="profile-msg btn-effect" v-if="homeProfile">
           <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
           <q-chip v-if="store.unreadInboxMail" class="notification" color="red" size="xs"></q-chip>
-        </div>
+        </div> -->
+        <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown">
+          <template v-slot:label>
+            <div class="profile-pic">
+              <div class="unread-total" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</div>
+              <q-avatar size="50px">
+                <img :src="profileImagePath" />
+              </q-avatar>
+              <div class="profile-pic-frame" v-if="!homeProfile"></div>
+
+              <div class="vip-details">
+                <img src="../assets/images/index/vip-row.png" alt="" />
+                <div class="vip-level">
+                  {{ store.vip }}
+                </div>
+              </div>
+            </div>
+          </template>
+
+          <q-list style="background: #303954" dense unelevated flat class="dropdown-list">
+            <q-item clickable v-close-popup @click="onVipClick">
+              <q-item-section avatar>
+                <q-avatar icon="diamond" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>VIP</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-close-popup @click="router.push('/account/message?from=' + route.path)">
+              <q-item-section avatar>
+                <q-avatar icon="mail" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>
+                  <span class="message-amt" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</span>
+                  Message
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-close-popup @click="router.push('/account/order?from=' + route.path)">
+              <q-item-section avatar>
+                <q-avatar icon="receipt" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Order</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <hr class="menu-line" />
+
+            <q-item clickable v-close-popup @click="router.push('/account/bank?from=' + route.path)">
+              <q-item-section avatar>
+                <q-avatar icon="account_balance" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Bank</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-close-popup @click="onLogout()">
+              <q-item-section avatar>
+                <q-avatar icon="logout" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Log out</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
       </div>
-      <div class="profile-wrapper-extra" v-else>
-        <div class="logo-img">
-          <img src="../assets/logo.png" />
-        </div>
+      <div class="profile-wrapper" v-else>
+        <q-btn class="btn-style-purple" no-caps @click="router.push('/register')">Register</q-btn>
+        <q-btn no-caps @click="goLogin()">Login</q-btn>
       </div>
     </div>
   </div>
@@ -62,19 +149,33 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
+import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
+import { convertToCommaAmount, isAndroid } from "src/boot/utils";
+import { api } from "boot/axios";
 
 const props = defineProps(["homeProfile"]);
+const emits = defineEmits(["closeslot"]);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
 
+// const balance = ref(19999999);
+
 const profileImg = [
   {
-    imgPath: ["profile-pic-01", "profile-pic-02", "profile-pic-03", "profile-pic-04", "profile-pic-05"]
+    imgPath: ["profile-pic"]
   }
 ];
+
+const goLogin = () => {
+  if (props.homeProfile) {
+    emits("closeslot");
+  }
+  router.push("/login");
+};
+
 const randomProfileImg = computed(() => {
   const storedImg = sessionStorage.getItem("PROFILE_IMG");
   if (storedImg) {
@@ -102,8 +203,67 @@ const refreshBalance = () => {
   }
 };
 
+const onClickLogo = () => {
+  if (isAndroid()) {
+    window.open("http://55ace.com/", "_blank");
+    return;
+  }
+
+  router.push("/");
+};
+
 const onVipClick = () => {
   router.push({ path: "/vip", query: { redirect: route.path } });
+};
+
+const onLogout = () => {
+  store.memberLogout().then(() => {
+    // location.reload();
+    router.push("/home");
+  });
+};
+
+const topDownload = ref(false);
+const topDownloadcloseBtn = ref(true);
+
+const topDownloadCount = ref(6);
+
+const closeTopdownload = () => {
+  topDownload.value = false;
+};
+
+const countdown = () => {
+  if (topDownloadCount.value > 0) {
+    topDownloadCount.value--;
+    setTimeout(countdown, 1000); // Update every 1000 milliseconds (1 second)
+  }
+};
+
+const checkTopDownloadAppear = () => {
+  if (!store.token && route.path === "/home") {
+    if (
+      ("standalone" in window.navigator && window.navigator.standalone) ||
+      (Platform.is.capacitor && Platform.is.android)
+    ) {
+      topDownload.value = false;
+    } else {
+      topDownload.value = true;
+      countdown();
+      setTimeout(() => {
+        topDownload.value = false;
+      }, 6000);
+    }
+  }
+};
+
+const topDownloadUrl = ref("");
+
+const getTopDownloadUrl = () => {
+  api.get("/app/download/affiliate/url?siteCode=IND&affiliateCode=8999B3").then((res) => {
+    if (res.code === 0) {
+      topDownloadUrl.value = res.data.url;
+    }
+  });
 };
 
 onMounted(() => {
@@ -113,23 +273,112 @@ onMounted(() => {
     const imgPath = randomProfile.imgPath[randomIndex];
     sessionStorage.setItem("PROFILE_IMG", imgPath);
   }
+
+  getTopDownloadUrl();
+  checkTopDownloadAppear();
 });
 </script>
 
 <style scoped lang="scss">
+.top-download {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 500px;
+  margin: auto;
+  width: 100%;
+  height: 86px; /* adjust the height as needed */
+  padding: 8px 16px 28px;
+  background: linear-gradient(180deg, #0c2962 0%, #01030d 100%);
+  z-index: 98;
+
+  .download-container {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    align-items: center;
+    transition: 0.3s all;
+
+    .download-icon {
+      width: 50px;
+      min-width: 50px;
+
+      img {
+        width: 100%;
+        display: block;
+      }
+    }
+
+    .download-rating {
+      .rate-exp {
+        margin-bottom: 4px;
+        text-wrap: nowrap;
+        font-size: 12px;
+      }
+
+      .rate-stars {
+        img {
+          display: block;
+          width: 100%;
+        }
+      }
+    }
+
+    .download-count {
+      color: #fe9a9a;
+      font-size: 20px;
+    }
+
+    .download-btn {
+      // margin-left: auto;
+      margin-right: auto;
+
+      img {
+        width: 100%;
+        display: block;
+      }
+    }
+
+    .download-close {
+      margin-top: 4px;
+      margin-bottom: auto;
+      opacity: 1;
+      transition: 1s all;
+    }
+  }
+}
+
 .infoboard-container {
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  background: linear-gradient(180deg, #2d0f54 0%, #101114 100%);
+  box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
+  overflow-x: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  // min-height: 82px;
+  max-width: 500px;
+  z-index: 999;
+  transition: 0.3s all;
+
+  &.with-top-download {
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    top: 56px;
+  }
 
   .infoboard-wrapper {
     position: absolute;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-end;
+    justify-content: space-between;
     gap: 1.5rem;
-    width: 22rem;
+    // width: 22rem;
+    width: 100%;
     margin: 0;
 
     &.home-profile {
@@ -137,33 +386,59 @@ onMounted(() => {
       width: 100%;
       gap: 0;
       justify-content: space-between;
+      padding: 0 12px;
+      // overflow-y: hidden;
 
       .profile-pic {
-        margin: 0;
+        margin-top: -20px;
+        margin-right: 20px;
       }
     }
   }
 
+  .profile-dropdown {
+    margin-top: 15px;
+  }
   .profile-wrapper {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 12px;
     padding-top: 10px;
     padding-bottom: 10px;
+    margin-bottom: 4px;
     width: 100%;
+    position: relative;
+
+    .unread-total {
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      background: #8952ff;
+      border-radius: 100px;
+      padding: 0px 3px;
+      z-index: 1;
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+    }
 
     .profile-pic {
       position: relative;
       margin: 6px 6px 6px 12px;
     }
+
     .profile-pic-frame {
-      background-image: url(../assets/images/common/profile-frame.png);
+      // background-image: url(../assets/images/common/profile-frame.png);
       width: 70px;
       height: 70px;
       background-size: 100%;
       position: absolute;
-      top: -12px;
-      left: -10px;
+      top: -8px;
+      left: -4px;
     }
 
     .profile-details-container {
@@ -171,40 +446,14 @@ onMounted(() => {
       flex-direction: column;
       font-size: 16px;
     }
+
     .profile-name {
       display: flex;
       align-items: center;
       line-height: 1;
       gap: 10px;
-
-      .vip-details {
-        position: relative;
-        margin-left: 20px;
-        margin-bottom: 5px;
-        img {
-          display: block;
-          width: 30px;
-          position: absolute;
-          top: -3px;
-          left: -21px;
-        }
-
-        .vip-level {
-          background: linear-gradient(93.61deg, #ffd84d 11.24%, #d97d00 91.82%),
-            linear-gradient(217.27deg, rgba(255, 255, 255, 0.55) -9.02%, rgba(255, 255, 255, 0) 53.03%);
-          border-radius: 0px 2px 5px 0px;
-          width: 38px;
-          height: 13px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 10px;
-          line-height: 1.1;
-          padding-top: 2px;
-          padding-bottom: 4px;
-        }
-      }
     }
+
     .profile-agency {
       display: flex;
       gap: 0.75rem;
@@ -213,48 +462,48 @@ onMounted(() => {
         color: rgba(255, 255, 255, 0.5);
       }
     }
+
     .profile-rating {
       display: flex;
       gap: 6px;
+
       img {
         display: block;
         width: 20px;
       }
     }
+
     .profile-balance {
       position: relative;
-      background: rgba(255, 255, 255, 0.24);
+      // background: rgba(255, 255, 255, 0.24);
+      background: rgba(103, 38, 154, 0.9);
       border-radius: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-top: 10px;
-      padding-top: 1px;
-      padding-bottom: 1px;
-      width: 115px;
+      // margin-bottom: 10px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      min-width: 130px;
+      width: 100%;
+      height: 28px;
+      padding-left: 12px;
+      padding-right: 8px;
+
       font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: bold;
+
       &:active {
         filter: brightness(0.75);
       }
 
-      &:before {
-        content: "";
-        position: absolute;
-        top: -4px;
-        left: -3px;
-        background-image: url(../assets/images/index/icon-balance.png);
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: 30px 30px;
-        display: block;
-        width: 30px;
-        height: 30px;
-      }
-
       .balance-amount {
-        margin-left: 15px;
+        padding-right: 18px;
+        white-space: nowrap;
       }
     }
+
     .profile-msg {
       margin-left: auto;
       position: relative;
@@ -270,15 +519,14 @@ onMounted(() => {
   .profile-wrapper-extra {
     display: flex;
     align-items: center;
-    padding-top: 8px;
+    padding-top: 10px;
+    margin-bottom: auto;
     width: 100%;
   }
 
   .logo-img {
     width: 100%;
-
     margin: 0 auto;
-    text-align: center;
 
     img {
       max-width: 100px;
@@ -290,5 +538,124 @@ onMounted(() => {
   img {
     width: 30rem;
   }
+}
+
+.vip-details {
+  position: relative;
+  margin-left: 20px;
+  margin-bottom: 5px;
+  margin-top: -10px;
+
+  img {
+    display: block;
+    width: 100px;
+    position: absolute;
+    top: -17px;
+    left: -45px;
+  }
+
+  .vip-level {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    line-height: 1.1;
+    padding-top: 3px;
+    padding-bottom: 4px;
+    z-index: 3;
+    color: #334ad6;
+    font-weight: 700;
+    font-style: italic;
+  }
+}
+
+.vip-chevron {
+  position: absolute;
+  top: 25px;
+  right: -25px;
+}
+
+.btn-refresh {
+  position: absolute;
+  top: 0;
+  right: 10px;
+}
+
+.style-blue-btn {
+  background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+  border-radius: 5px;
+}
+
+.menu-line {
+  border-color: rgba(243, 244, 246, 0.1);
+}
+
+@media (max-width: 375px) {
+  .infoboard-container .profile-wrapper .profile-balance {
+    width: 100px;
+  }
+
+  .infoboard-container .profile-wrapper {
+    gap: 4px;
+  }
+
+  .infoboard-container .infoboard-wrapper.home-profile {
+    padding: 0px 4px;
+  }
+}
+
+.message-amt {
+  background-color: #8952ff;
+  border-radius: 30px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  font-size: 10px;
+  position: absolute;
+  bottom: 5px;
+  left: 15px;
+  font-weight: bold;
+}
+</style>
+
+<style lang="scss">
+.q-btn-dropdown--simple * + .q-btn-dropdown__arrow {
+  margin-left: -12px !important;
+}
+
+.q-btn-dropdown--simple {
+  width: 80px !important;
+}
+
+.q-item__label {
+  color: #c5c7ff;
+  font-weight: 500;
+}
+
+.q-avatar {
+  i.q-icon {
+    color: #7b80a9;
+  }
+}
+
+.q-item__section--avatar {
+  min-width: 40px;
+}
+
+.q-item__section--side {
+  padding-right: 6px;
+}
+
+.q-menu--dark {
+  // box-shadow: none;
+  box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.2) !important;
+}
+
+.dropdown-list {
+  // box-shadow: 14px 14px 14px rgba(0, 0, 0, 0.4) !important;
 }
 </style>

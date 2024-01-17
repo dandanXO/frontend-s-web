@@ -363,10 +363,10 @@
   </div>
 </template>
 
-<script lang="js">
+<script setup>
 import { defineComponent, reactive, ref, onMounted, toRaw } from "vue";
 import { ElMessage } from "element-plus";
-import { InfoFilled } from "@element-plus/icons-vue"
+import { InfoFilled } from "@element-plus/icons-vue";
 import { userStore } from "@/store";
 import { getDevice } from "@/utils/utils";
 import {
@@ -380,537 +380,503 @@ import {
 } from "@/api/personal/personal";
 import { getVerificationCode } from "@/api/index/login";
 import moment from "moment";
-import { lsGet, lsStore, lsRemove, getTimeout } from '@/utils/utils'
+import { lsGet, lsStore, lsRemove, getTimeout } from "@/utils/utils";
 
-export default defineComponent({
-  name: "PersonalView",
-  components: {
-    InfoFilled
-  },
-  setup() {
+// Send Verification Code
+const emailKey = `emailKey`;
+const phoneKey = `phoneKey`;
+const sendOtpDisabledKey = `sendOtpDisabled`;
 
-    // Send Verification Code
-    const emailKey = `emailKey`
-    const phoneKey = `phoneKey`
-    const sendOtpDisabledKey = `sendOtpDisabled`
+const sendOtpDisabledTimeout = 60;
+const sendOtpDisabledTimeoutLeft = getTimeout(sendOtpDisabledKey);
 
-    const sendOtpDisabledTimeout = 60
-    const sendOtpDisabledTimeoutLeft = getTimeout(sendOtpDisabledKey)
+let cachedEmail = lsGet(emailKey);
+let cachedTelephone = lsGet(phoneKey);
+let initialSendOtpDisabledTimeout = false;
 
-    let cachedEmail = lsGet(emailKey);
-    let cachedTelephone = lsGet(phoneKey);
-    let initialSendOtpDisabledTimeout = false
+if (sendOtpDisabledTimeoutLeft) {
+  initialSendOtpDisabledTimeout = true;
+} else {
+  lsRemove(sendOtpDisabledKey);
+  lsRemove(emailKey);
+  lsRemove(phoneKey);
 
-    if (sendOtpDisabledTimeoutLeft) {
-      initialSendOtpDisabledTimeout = true
-    } else {
-      lsRemove(sendOtpDisabledKey)
-      lsRemove(emailKey)
-      lsRemove(phoneKey)
+  cachedEmail = "";
+  cachedTelephone = "";
+}
 
-      cachedEmail = '';
-      cachedTelephone = '';
-    }
+const disableSendVerificationButton = ref(initialSendOtpDisabledTimeout);
+const disableSendPhoneButton = ref(initialSendOtpDisabledTimeout);
+const countDown = ref(sendOtpDisabledTimeoutLeft);
+const countDownPhone = ref(sendOtpDisabledTimeoutLeft);
 
-    const disableSendVerificationButton = ref(initialSendOtpDisabledTimeout);
-    const disableSendPhoneButton = ref(initialSendOtpDisabledTimeout);
-    const countDown = ref(sendOtpDisabledTimeoutLeft);
-    const countDownPhone = ref(sendOtpDisabledTimeoutLeft);
+const loadingBtn = ref(false);
+const loadingPwBtn = ref(false);
+const loadingSecurityBtn = ref(false);
+const loadingPhoneBtn = ref(false);
+const isEmailSending = ref(false);
+const isPhoneSending = ref(false);
+const verificationDetails = reactive({
+  memberInfo: {}
+});
+const verificationPhoneDetails = reactive({
+  memberInfo: {}
+});
+const personalState = reactive({
+  memberInfo: {},
+  bankCardList: []
+});
 
-    const loadingBtn = ref(false)
-    const loadingPwBtn = ref(false)
-    const loadingSecurityBtn = ref(false)
-    const loadingPhoneBtn = ref(false)
-    const isEmailSending = ref(false)
-    const isPhoneSending = ref(false)
-    const verificationDetails = reactive({
-      memberInfo: {}
-    });
-    const verificationPhoneDetails = reactive({
-      memberInfo: {}
-    });
-    const personalState = reactive({
-      memberInfo: {},
-      bankCardList: []
-    });
+onMounted(() => {
+  if (sendOtpDisabledTimeoutLeft) countdownTimer();
 
-    onMounted(() => {
-
-      if(sendOtpDisabledTimeoutLeft)
-        countdownTimer();
-
-      loadInfo();
-      getCode();
-    });
-      const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
-      var left = (screen.width - popupWinWidth) * 2;
-      var top = (screen.height - popupWinHeight) / 4;
-      window.open(pageURL, pageTitle,
-                    'resizable=yes, width=' + popupWinWidth
-                    + ', height=' + popupWinHeight + ', top='
-                    + top + ', left=' + left);
-    }
-    const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
-    const store = userStore();
-    const getCode = () => {
-      updateSecurityVerified.captchaCode = ''
-      updatePhoneVerified.captchaCode = ''
-      getVerificationCode().then((res) => {
-        if (res.code === 0) {
-          verificationImg.value = "data:image/png;base64," + res.data.img;
-          updateSecurityVerified.codeId = res.data.id;
-          updatePhoneVerified.codeId = res.data.id;
-        }
-      }).catch(() => {
-          // console.log(e.message);
-        // message.error(e.message);
-      });
-    };
-    const updateSecurityModalVisible = ref(false);
-    const updateSecurityFormRef = ref();
-    const captchaUpdateRef = ref();
-    const updateSecurityVerified = reactive({
-      verificationCode: "",
-      emailAddress: "",
-    });
-    const updatePhoneVerified = reactive({
-      verificationCode: "",
-      phone: "",
-    });
-    const verificationImg = ref("");
-    const loadInfo = () => {
-      loadMemberInfo().then((response) => {
-        if (response.code === 0) {
-          personalState.memberInfo = response.data;
-          if (personalState.memberInfo.birthday) {
-            personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
-          }
-        }
-      }).catch((error) => {
-        console.log("error", error);
-      });
-    }
-
-    const verificationModalVisible = ref(false)
-    const updateSecurityModal = () => {
-      updateSecurityVerified.emailAddress = cachedEmail;
-      updateSecurityVerified.verificationCode = "";
-      updateSecurityModalVisible.value = true;
-    };    
-    const openVerificationModal = () => {
-      updateSecurityFormRef.value.validateField('emailAddress').then((resp) => {
-          // captchaForm.captchaCode = "";
-          getCode();
-          verificationModalVisible.value = true;
-
-        }).catch((err) => {
-            ElMessage({
-              message: '请输入有效的邮件',
-              type: 'error',
-            })
-        })
-    }
-    const verifyVerificationCode = () => {
-      captchaUpdateRef.value
-        .validate()
-        .then(() => {
-      isEmailSending.value = true
-      verificationDetails.memberInfo.email = updateSecurityVerified.emailAddress
-
-      const emailDetails =  {
-        email: updateSecurityVerified.emailAddress,
-        captchaCode: updateSecurityVerified.captchaCode,
-        codeId: updateSecurityVerified.codeId
+  loadInfo();
+  getCode();
+});
+const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
+  var left = (screen.width - popupWinWidth) * 2;
+  var top = (screen.height - popupWinHeight) / 4;
+  window.open(
+    pageURL,
+    pageTitle,
+    "resizable=yes, width=" + popupWinWidth + ", height=" + popupWinHeight + ", top=" + top + ", left=" + left
+  );
+};
+const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
+const store = userStore();
+const getCode = () => {
+  updateSecurityVerified.captchaCode = "";
+  updatePhoneVerified.captchaCode = "";
+  getVerificationCode()
+    .then((res) => {
+      if (res.code === 0) {
+        verificationImg.value = "data:image/png;base64," + res.data.img;
+        updateSecurityVerified.codeId = res.data.id;
+        updatePhoneVerified.codeId = res.data.id;
       }
+    })
+    .catch(() => {
+      // console.log(e.message);
+      // message.error(e.message);
+    });
+};
+const updateSecurityModalVisible = ref(false);
+const updateSecurityFormRef = ref();
+const captchaUpdateRef = ref();
+const updateSecurityVerified = reactive({
+  verificationCode: "",
+  emailAddress: ""
+});
+const updatePhoneVerified = reactive({
+  verificationCode: "",
+  phone: ""
+});
+const verificationImg = ref("");
+const loadInfo = () => {
+  loadMemberInfo()
+    .then((response) => {
+      if (response.code === 0) {
+        personalState.memberInfo = response.data;
+        if (personalState.memberInfo.birthday) {
+          personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
+        }
+      }
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
+};
 
-      sendEmail(emailDetails).then((res) => {
+const verificationModalVisible = ref(false);
+const updateSecurityModal = () => {
+  updateSecurityVerified.emailAddress = cachedEmail;
+  updateSecurityVerified.verificationCode = "";
+  updateSecurityModalVisible.value = true;
+};
+const openVerificationModal = () => {
+  updateSecurityFormRef.value
+    .validateField("emailAddress")
+    .then((resp) => {
+      // captchaForm.captchaCode = "";
+      getCode();
+      verificationModalVisible.value = true;
+    })
+    .catch((err) => {
+      ElMessage({
+        message: "请输入有效的邮件",
+        type: "error"
+      });
+    });
+};
+const verifyVerificationCode = () => {
+  captchaUpdateRef.value.validate().then(() => {
+    isEmailSending.value = true;
+    verificationDetails.memberInfo.email = updateSecurityVerified.emailAddress;
+
+    const emailDetails = {
+      email: updateSecurityVerified.emailAddress,
+      captchaCode: updateSecurityVerified.captchaCode,
+      codeId: updateSecurityVerified.codeId
+    };
+
+    sendEmail(emailDetails)
+      .then((res) => {
         if (res.code === 0) {
-
-          disableSendVerificationButton.value = true
+          disableSendVerificationButton.value = true;
 
           const now = new Date();
 
-          now.setSeconds(now.getSeconds() + sendOtpDisabledTimeout)
+          now.setSeconds(now.getSeconds() + sendOtpDisabledTimeout);
 
           lsStore(sendOtpDisabledKey, now.getTime());
-          lsStore(emailKey, verificationDetails.memberInfo.email)
+          lsStore(emailKey, verificationDetails.memberInfo.email);
 
-          countDown.value = sendOtpDisabledTimeout
-          countdownTimer()
+          countDown.value = sendOtpDisabledTimeout;
+          countdownTimer();
 
-          verificationDetails.memberInfo.codeId = res.data.codeId
+          verificationDetails.memberInfo.codeId = res.data.codeId;
           verificationModalVisible.value = false;
 
           ElMessage({
-            message: '成功',
-            type: 'success',
-          })
+            message: "成功",
+            type: "success"
+          });
 
-          isEmailSending.value = false
+          isEmailSending.value = false;
         }
-     }).catch((e) => {
-          console.log(e.message);
+      })
+      .catch((e) => {
+        console.log(e.message);
         // message.error(e.message);
-        getCode()
-        isEmailSending.value = false
+        getCode();
+        isEmailSending.value = false;
       });
+  });
+};
+const submitUpdateSecurity = () => {
+  loadingSecurityBtn.value = true;
 
-    })
-    }
-    const submitUpdateSecurity = () => {
-      loadingSecurityBtn.value = true;
+  if (
+    !updateSecurityVerified.emailAddress ||
+    !updateSecurityVerified.verificationCode ||
+    !updateSecurityVerified.captchaCode
+  ) {
+    ElMessage({
+      message: "请输入有效的验证码",
+      type: "error"
+    });
 
-      if (!updateSecurityVerified.emailAddress || !updateSecurityVerified.verificationCode || !updateSecurityVerified.captchaCode){
-        ElMessage({
-          message: '请输入有效的验证码',
-          type: 'error',
-          })
-
-        loadingSecurityBtn.value = false;
-      } else {
-        updateSecurityFormRef.value
-        .validate()
-        .then(() => {
-          verificationDetails.memberInfo.code = updateSecurityVerified.verificationCode
-          verifyEmail(verificationDetails.memberInfo).then((res) => {
+    loadingSecurityBtn.value = false;
+  } else {
+    updateSecurityFormRef.value
+      .validate()
+      .then(() => {
+        verificationDetails.memberInfo.code = updateSecurityVerified.verificationCode;
+        verifyEmail(verificationDetails.memberInfo)
+          .then((res) => {
             if (res.code === 0) {
-
               ElMessage({
-                message: '成功',
-                type: 'success',
-              })
+                message: "成功",
+                type: "success"
+              });
 
-              updateSecurityModalVisible.value = false
+              updateSecurityModalVisible.value = false;
 
-              loadInfo()
-
+              loadInfo();
             }
-          }).catch((e) => {
+          })
+          .catch((e) => {
             console.log(e.message);
             // message.error(e.message);
           });
-        }).catch((error) => {
+      })
+      .catch((error) => {
         console.log("error", error);
       });
-      loadingSecurityBtn.value = false
-      }
+    loadingSecurityBtn.value = false;
+  }
+};
+// Phone
 
+const verificationPhoneModalVisible = ref(false);
+// const openPhoneVerificationModal = () => {
+//   getCode();
+//   verificationPhoneModalVisible.value = true;
+// }
+const openPhoneVerificationModal = () => {
+  updatePhoneFormRef.value
+    .validateField("phone")
+    .then((resp) => {
+      // captchaForm.captchaCode = "";
+      getCode();
+      verificationPhoneModalVisible.value = true;
+      console.log();
+    })
+    .catch((err) => {
+      ElMessage({
+        message: "请输入有效的电话号码",
+        type: "error"
+      });
+    });
+};
+
+const updatePhoneModalVisible = ref(false);
+const updatePhoneFormRef = ref();
+const updatePhoneModal = () => {
+  updatePhoneVerified.phone = lsGet(phoneKey);
+  updatePhoneVerified.phoneCode = "";
+  updatePhoneModalVisible.value = true;
+};
+const verifyPhoneVerificationCode = () => {
+  captchaUpdateRef.value.validate().then(() => {
+    isPhoneSending.value = true;
+    verificationPhoneDetails.memberInfo.phone = updatePhoneVerified.phone;
+
+    const phoneDetails = {
+      telephone: updatePhoneVerified.phone,
+      captchaCode: updatePhoneVerified.captchaCode,
+      codeId: updatePhoneVerified.codeId
     };
-    // Phone
 
-    const verificationPhoneModalVisible = ref(false)
-    // const openPhoneVerificationModal = () => {
-    //   getCode();
-    //   verificationPhoneModalVisible.value = true;
-    // }
-    const openPhoneVerificationModal = () => {
-      updatePhoneFormRef.value.validateField('phone').then((resp) => {
-          // captchaForm.captchaCode = "";
-          getCode();
-          verificationPhoneModalVisible.value = true;
-          console.log()
-
-        }).catch((err) => {
-            ElMessage({
-              message: '请输入有效的电话号码',
-              type: 'error',
-            })
-        })
-    }
-
-    const updatePhoneModalVisible = ref(false)
-    const updatePhoneFormRef = ref();
-    const updatePhoneModal = () => {
-      updatePhoneVerified.phone = cachedTelephone;
-      updatePhoneVerified.phoneCode = "";
-      updatePhoneModalVisible.value = true;
-    };
-    const verifyPhoneVerificationCode = () => {
-      captchaUpdateRef.value
-        .validate()
-        .then(() => {
-
-      isPhoneSending.value = true
-      verificationPhoneDetails.memberInfo.phone = updatePhoneVerified.phone
-
-      const phoneDetails =  {
-        telephone: updatePhoneVerified.phone,
-        captchaCode: updatePhoneVerified.captchaCode,
-        codeId: updatePhoneVerified.codeId
-      }
-
-      sendSms(phoneDetails).then((res) => {
+    sendSms(phoneDetails)
+      .then((res) => {
         if (res.code === 0) {
-
-          disableSendPhoneButton.value = true
+          disableSendPhoneButton.value = true;
 
           const now = new Date();
 
-          now.setSeconds(now.getSeconds() + sendOtpDisabledTimeout)
+          now.setSeconds(now.getSeconds() + sendOtpDisabledTimeout);
 
           lsStore(sendOtpDisabledKey, now.getTime());
-          lsStore(phoneKey, verificationPhoneDetails.memberInfo.phone)
+          lsStore(phoneKey, verificationPhoneDetails.memberInfo.phone);
 
-          countDown.value = sendOtpDisabledTimeout
-          countdownTimer()
+          countDown.value = sendOtpDisabledTimeout;
+          countdownTimer();
 
-          verificationPhoneDetails.memberInfo.codeId = res.data.codeId
+          verificationPhoneDetails.memberInfo.codeId = res.data.codeId;
           verificationPhoneModalVisible.value = false;
 
           ElMessage({
-            message: '成功',
-            type: 'success',
-          })
+            message: "成功",
+            type: "success"
+          });
 
-          isPhoneSending.value = false
+          isPhoneSending.value = false;
         }
-     }).catch((e) => {
-          console.log(e.message);
+      })
+      .catch((e) => {
+        console.log(e.message);
         // message.error(e.message);
-        getCode()
-        isPhoneSending.value = false
+        getCode();
+        isPhoneSending.value = false;
       });
-
-    })
-    }
-    const submitUpdatePhone = () => {
-      loadingPhoneBtn.value = true
-      updatePhoneFormRef.value
-        .validate()
-        .then(() => {
-          verificationPhoneDetails.memberInfo.code = updatePhoneVerified.verificationCode
-          verifySms(verificationPhoneDetails.memberInfo).then((res) => {
-            if (res.code === 0) {
-              ElMessage({
-                message: '成功',
-                type: 'success',
-              })
-              updatePhoneModalVisible.value = false
-              store.getMemberInfo()
-              loadInfo()
-            }
-          }).catch((e) => {
-            console.log(e.message);
-            // message.error(e.message);
-          });
-        }).catch((error) => {
-        console.log("error", error);
-      });
-
-
-      loadingPhoneBtn.value = false
-    };
-
-    const countdownTimer = () => {
-      if (countDown.value > 0) {
-        setTimeout(() => {
-          countDown.value -= 1
-          countdownTimer()
-        }, 1000)
-      } else {
-        lsRemove(sendOtpDisabledKey);
-        lsRemove(phoneKey);
-
-        disableSendVerificationButton.value = false
-        disableSendPhoneButton.value = false
+  });
+};
+const submitUpdatePhone = () => {
+  loadingPhoneBtn.value = true;
+  updatePhoneFormRef.value
+    .validate()
+    .then(() => {
+      if (!verificationPhoneDetails.memberInfo.codeId) {
+        ElMessage.error("请重新发送验证码");
+        return;
       }
-    }
-
-    const updateSecurityVerifiedRules = {
-      emailAddress: [
-        {
-          required: true,
-          message: "请输入邮箱地址",
-          trigger: "blur",
-        },
-        {
-          type: "email",
-          message: "邮箱地址不符合",
-          trigger: "blur",
-        },
-      ],
-      verificationCode: [
-        {
-          required: true,
-          message: "请输入验证码",
-          trigger: "blur",
-        },
-        {
-          min: 4,
-          message: "长度应为 4",
-          trigger: "blur",
-        },
-      ],
-    };
-
-    const updatePhoneVerifiedRules = {
-      phone: [
-        {
-          required: true,
-          message: "请输入电话号码",
-          trigger: "blur",
-        },
-      ],
-      verificationCode: [
-        {
-          required: true,
-          message: "请输入验证码",
-          trigger: "blur",
-        },
-        {
-          min: 4,
-          message: "长度应为 4",
-          trigger: "blur",
-        },
-      ],
-    };
-    //update pwd
-    const updatePwdModalVisible = ref(false);
-    const updatePwdFormRef = ref();
-    const updatePwdInfo = reactive({
-      oldPassword: "",
-      password: ""
-    });
-    const updatePwdModal = () => {
-      updatePwdInfo.oldPassword = "";
-      updatePwdInfo.password = "";
-      updatePwdModalVisible.value = true;
-    };
-    const submitUpdatePwd = () => {
-      loadingPwBtn.value = true
-      updatePwdFormRef.value
-        .validate()
-        .then(() => {
-          changePwd(updatePwdInfo.oldPassword, updatePwdInfo.password).then((response) => {
-            if (response.code === 0) {
-              // message.success("success");
-              ElMessage({
-                message: '成功',
-                type: 'success',
-              })
-              updatePwdInfo.oldPassword = ""
-              updatePwdInfo.password = ""
-              updatePwdModalVisible.value = false;
-            } else {
-              // message.error(response.message);
-            }
-          }).catch((error) => {
-            console.log(error.message);
-            // message.error(error.message, 4)
-          });
-        }).catch((error) => {
-          console.log("error", error);
-      });
-      loadingPwBtn.value = false
-    };
-    const updatePwdRules = {
-      oldPassword: [
-        {
-          required: true,
-          message: "请输入旧密码",
-          trigger: "blur"
-        },
-        {
-          min: 6,
-          max: 12,
-          message: "长度应为 6 到 12 数字",
-          trigger: "blur"
-        }
-      ],
-      password: [
-        {
-          required: true,
-          message: "请输入新密码",
-          trigger: "blur"
-        },
-        {
-          min: 6,
-          max: 12,
-          message: "长度应为 6 到 12 数字",
-          trigger: "blur"
-        }
-      ]
-    };
-
-    const isEdit = ref(false)
-    const updateFormDetails = reactive(
-      {
-      }
-    )
-    const updateFormRef = ref()
-    const updateState = () => {
-      loadingBtn.value = true
-      updateFormRef.value
-        .validate()
-        .then(() => {
-          updateAccount(toRaw(updateFormDetails)).then((ret) => {
-            if (ret.code === 0) {
-              ElMessage({
-                message: '提交成功',
-                type: 'success',
-              })
-              loadInfo();
-              isEdit.value = false;
-            }
-          }).catch((err) => {
-            console.log(err.message);
-          })
+      verificationPhoneDetails.memberInfo.code = updatePhoneVerified.verificationCode;
+      verifySms(verificationPhoneDetails.memberInfo)
+        .then((res) => {
+          if (res.code === 0) {
+            ElMessage({
+              message: "成功",
+              type: "success"
+            });
+            updatePhoneModalVisible.value = false;
+            store.getMemberInfo();
+            loadInfo();
+          }
         })
+        .catch((e) => {
+          console.log(e.message);
+          // message.error(e.message);
+        });
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
 
-      loadingBtn.value = false
-    }
+  loadingPhoneBtn.value = false;
+};
 
-    return {
-      personalState,
-      updateSecurityFormRef,
-      updateSecurityVerified,
-      updateSecurityModal,
-      updateSecurityModalVisible,
-      updateSecurityVerifiedRules,
-      submitUpdateSecurity,
-      updatePhoneFormRef,
-      updatePhoneVerified,
-      updatePhoneModal,
-      updatePhoneModalVisible,
-      updatePhoneVerifiedRules,
-      verificationPhoneModalVisible,
-      submitUpdatePhone,
-      updatePwdFormRef,
-      updatePwdInfo,
-      updatePwdModal,
-      updatePwdModalVisible,
-      updatePwdRules,
-      submitUpdatePwd,
-      loadInfo,
-      isEdit,
-      updateFormDetails,
-      updateState,
-      getVerificationCode,
-      verificationModalVisible,
-      openVerificationModal,
-      openPhoneVerificationModal,
-      verificationImg,
-      getCode,
-      verifyVerificationCode,
-      verifyPhoneVerificationCode,
-      isEmailSending,
-      isPhoneSending,
-      updateFormRef,
-      store,
-      regDevice,
-      openWindow,
-      captchaUpdateRef,
-      loadingBtn,
-      loadingPwBtn,
-      loadingSecurityBtn,
-      loadingPhoneBtn,
-      disableSendVerificationButton,
-      disableSendPhoneButton,
-      countDown,
-      countDownPhone
-    };
+const countdownTimer = () => {
+  if (countDown.value > 0) {
+    setTimeout(() => {
+      countDown.value -= 1;
+      countdownTimer();
+    }, 1000);
+  } else {
+    lsRemove(sendOtpDisabledKey);
+    lsRemove(phoneKey);
+
+    disableSendVerificationButton.value = false;
+    disableSendPhoneButton.value = false;
   }
+};
+
+const updateSecurityVerifiedRules = {
+  emailAddress: [
+    {
+      required: true,
+      message: "请输入邮箱地址",
+      trigger: "blur"
+    },
+    {
+      type: "email",
+      message: "邮箱地址不符合",
+      trigger: "blur"
+    }
+  ],
+  verificationCode: [
+    {
+      required: true,
+      message: "请输入验证码",
+      trigger: "blur"
+    },
+    {
+      min: 4,
+      message: "长度应为 4",
+      trigger: "blur"
+    }
+  ]
+};
+
+console.log("jesus");
+const isValidPhone = (r, v) => {
+  const phonePattern = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
+  if (!v) {
+    return Promise.reject("请输入电话号码");
+  } else if (phonePattern.test(v)) {
+    return Promise.resolve();
+  } else {
+    return Promise.reject("请输入有效的电话号码");
+  }
+};
+
+const updatePhoneVerifiedRules = {
+  phone: [
+    {
+      required: true,
+      trigger: "blur",
+      validator: isValidPhone
+    }
+  ],
+  verificationCode: [
+    {
+      required: true,
+      message: "请输入验证码",
+      trigger: "blur"
+    },
+    {
+      min: 4,
+      message: "长度应为 4",
+      trigger: "blur"
+    }
+  ]
+};
+
+//update pwd
+const updatePwdModalVisible = ref(false);
+const updatePwdFormRef = ref();
+const updatePwdInfo = reactive({
+  oldPassword: "",
+  password: ""
 });
+const updatePwdModal = () => {
+  updatePwdInfo.oldPassword = "";
+  updatePwdInfo.password = "";
+  updatePwdModalVisible.value = true;
+};
+const submitUpdatePwd = () => {
+  loadingPwBtn.value = true;
+  updatePwdFormRef.value
+    .validate()
+    .then(() => {
+      changePwd(updatePwdInfo.oldPassword, updatePwdInfo.password)
+        .then((response) => {
+          if (response.code === 0) {
+            // message.success("success");
+            ElMessage({
+              message: "成功",
+              type: "success"
+            });
+            updatePwdInfo.oldPassword = "";
+            updatePwdInfo.password = "";
+            updatePwdModalVisible.value = false;
+          } else {
+            // message.error(response.message);
+          }
+        })
+        .catch((error) => {
+          console.log(error.message);
+          // message.error(error.message, 4)
+        });
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
+  loadingPwBtn.value = false;
+};
+const updatePwdRules = {
+  oldPassword: [
+    {
+      required: true,
+      message: "请输入旧密码",
+      trigger: "blur"
+    },
+    {
+      min: 6,
+      max: 12,
+      message: "长度应为 6 到 12 数字",
+      trigger: "blur"
+    }
+  ],
+  password: [
+    {
+      required: true,
+      message: "请输入新密码",
+      trigger: "blur"
+    },
+    {
+      min: 6,
+      max: 12,
+      message: "长度应为 6 到 12 数字",
+      trigger: "blur"
+    }
+  ]
+};
+
+const isEdit = ref(false);
+const updateFormDetails = reactive({});
+const updateFormRef = ref();
+const updateState = () => {
+  loadingBtn.value = true;
+  updateFormRef.value.validate().then(() => {
+    updateAccount(toRaw(updateFormDetails))
+      .then((ret) => {
+        if (ret.code === 0) {
+          ElMessage({
+            message: "提交成功",
+            type: "success"
+          });
+          loadInfo();
+          isEdit.value = false;
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  });
+
+  loadingBtn.value = false;
+};
 </script>
 
 <style scoped lang="scss">

@@ -229,6 +229,7 @@ import FileUpload from "components/FileUpload.vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { translateRecord } from "../directives/translate.js";
+import { useUI } from "stores/ui";
 
 export default defineComponent({
   components: {
@@ -267,11 +268,12 @@ export default defineComponent({
     }
   },
   emits: ["loadnewdata"],
-  setup(props, { emit }) {
+  setup(props, context) {
     const truncatedList = ref([]);
     const comList = ref({});
     const $q = useQuasar();
     const qs = require("qs");
+    const ui = useUI();
     const isConfirmWithdraw = ref(false);
     const passDet = ref(null);
 
@@ -288,7 +290,7 @@ export default defineComponent({
             });
             done();
           } else if (comList.value.length === 0) {
-            emit("loadnewdata");
+            context.emit("loadnewdata");
             done();
           }
         }
@@ -299,6 +301,12 @@ export default defineComponent({
       isConfirmWithdraw.value = true;
       passDet.value = det;
     };
+
+    const clearTable = () => {
+      truncatedList.value = [];
+    };
+
+    context.expose({ clearTable });
 
     const openWithdrawConfirm = () => {
       const obj = {
@@ -388,7 +396,7 @@ export default defineComponent({
     };
 
     const getImageLink = (linkId) => {
-      reminderForm.photos = `https://xinfa-files.s3.ap-southeast-1.amazonaws.com/order/2/${linkId}`;
+      reminderForm.photos = process.env.IMAGE_CDN + `/order/${ui.siteId}/${linkId}`;
     };
 
     const submitReminder = () => {

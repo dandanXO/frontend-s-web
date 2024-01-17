@@ -140,6 +140,13 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.alias')" prop="alias">
+          <el-input
+            style="width: 300px"
+            v-model="form.alias"
+            :placeholder="t('fields.alias')"
+          />
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -159,6 +166,7 @@
       <el-table-column prop="siteName" :label="t('fields.siteName')" width="200" />
       <el-table-column prop="platformName" :label="t('fields.platformName')" width="200" />
       <el-table-column prop="platformAccountName" :label="t('fields.platformAccount')" width="200" />
+      <el-table-column prop="alias" :label="t('fields.alias')" width="180" />
       <el-table-column prop="status" :label="t('fields.status')" width="200">
         <template #default="scope">
           <el-tag v-if="scope.row.status === 'OPEN'" type="success">
@@ -257,6 +265,7 @@ const form = reactive({
   platformId: null,
   status: null,
   platformAccountId: null,
+  alias: null
 })
 
 const formRules = reactive({

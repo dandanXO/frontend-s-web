@@ -1,6 +1,8 @@
 import { server } from "@/utils/request";
 import cached from "@/utils/cache";
 
+const SESSION_STORAGE_PREFIX_KEY = `MAILINBOX`;
+
 export function loadMailbox(type, pageNum, pageSize) {
   return server.REST.post("auth/mailbox", {
     type,
@@ -9,8 +11,18 @@ export function loadMailbox(type, pageNum, pageSize) {
   });
 }
 
+// if read or delete function is called, clear existing cache to retrieve lastest data
+export function clearMailInboxCache() {
+  for (var key in sessionStorage) {
+    if (key.startsWith(SESSION_STORAGE_PREFIX_KEY)) {
+      sessionStorage.removeItem(key);
+    }
+  }
+}
+
 export function mailInbox(mailQuery) {
-  const key = `MAILINBOX_${mailQuery.current}_${mailQuery.size}_${mailQuery.orderBy}_${mailQuery.messageType}`;
+  const key = `${SESSION_STORAGE_PREFIX_KEY}_${mailQuery.current}_${mailQuery.size}_${mailQuery.orderBy}_${mailQuery.messageType}`;
+
   return cached.get(key, () =>
     server.REST.get("/session/inbox", {
       params: {
@@ -42,7 +54,7 @@ export function readMultipleMail(mailQuery) {
 
 export function readAllMail(mailQuery) {
   return server.REST.post("/session/inbox/readAll", {
-    type: mailQuery
+    type: mailQuery !== null ? mailQuery : undefined
   });
 }
 
@@ -60,7 +72,7 @@ export function deleteMultipleMail(mailQuery) {
 
 export function deleteAllMail(mailQuery) {
   return server.REST.post("/session/inbox/deleteAll", {
-    type: mailQuery
+    type: mailQuery !== null ? mailQuery : undefined
   });
 }
 
@@ -94,7 +106,7 @@ export function readFeedback(param) {
 
 export function deleteFeedback(param) {
   const { ids } = param;
-  return server.REST.delete(`/session/feedback/delete?ids=${ids}`);
+  return server.REST.post(`/session/feedback/delete?ids=${ids}`);
 }
 
 // POST /session/feedback?feedbackType={type}&title={title}&content={content}

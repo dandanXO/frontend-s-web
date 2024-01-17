@@ -1,124 +1,84 @@
 <template>
-
   <div class="vipcard">
     <q-card-section class="vip-name">{{ store.displayName ? store.displayName : store.nickName }}</q-card-section>
     <q-card-section class="top-section">
       <div class="vip-badge">
-        <img
-            v-if="vip === 'VIP0'"
-            src="../assets/vip/badge/badge-0.png"
-        />
-        <img
-            v-if="vip === 'VIP1'"
-            src="../assets/vip/badge/badge-1.png"
-        />
-        <img
-            v-if="vip === 'VIP2'"
-            src="../assets/vip/badge/badge-2.png"
-        />
-        <img
-            v-if="vip === 'VIP3'"
-            src="../assets/vip/badge/badge-3.png"
-        />
-        <img
-            v-if="vip === 'VIP4'"
-            src="../assets/vip/badge/badge-4.png"
-        />
-        <img
-            v-if="vip === 'VIP5'"
-            src="../assets/vip/badge/badge-5.png"
-        />
-        <img
-            v-if="vip === 'VIP6'"
-            src="../assets/vip/badge/badge-6.png"
-        />
-        <img
-            v-if="vip === 'VIP7'"
-            src="../assets/vip/badge/badge-7.png"
-        />
+        <img v-if="vip === 'VIP0'" src="../assets/vip/badge/badge-0.png" />
+        <img v-if="vip === 'VIP1'" src="../assets/vip/badge/badge-1.png" />
+        <img v-if="vip === 'VIP2'" src="../assets/vip/badge/badge-2.png" />
+        <img v-if="vip === 'VIP3'" src="../assets/vip/badge/badge-3.png" />
+        <img v-if="vip === 'VIP4'" src="../assets/vip/badge/badge-4.png" />
+        <img v-if="vip === 'VIP5'" src="../assets/vip/badge/badge-5.png" />
+        <img v-if="vip === 'VIP6'" src="../assets/vip/badge/badge-6.png" />
+        <img v-if="vip === 'VIP7'" src="../assets/vip/badge/badge-7.png" />
       </div>
 
       <q-card-section class="acct-section">
-        <div class="label">{{ $t('lang.main_account') }}</div>
+        <div class="label">{{ $t("lang.main_account") }}</div>
         <div class="amt">{{ mainWallet }}</div>
       </q-card-section>
-      <q-separator vertical/>
+      <q-separator vertical />
     </q-card-section>
 
     <q-select
-        class="lang-container"
-        placeholder=""
-        style="min-height: 30px;height:30px;width: 120px;margin-left:auto;margin-right:8px;"
-        v-model="languageVal"
-        :options="langOptions"
-        option-label="label"
-        option-value="value"
-        emit-value
-        map-options
-    >
-    </q-select>
+      class="lang-container"
+      placeholder=""
+      style="min-height: 30px; height: 30px; width: 120px; margin-left: auto; margin-right: 8px"
+      v-model="languageVal"
+      :options="langOptions"
+      option-label="label"
+      option-value="value"
+      emit-value
+      map-options
+    ></q-select>
   </div>
   <q-item-section class="acct-nav">
     <router-link to="/account/personal">
-      <q-card class="acct-nav-item"
-              :class="route.path === '/account/personal' ? 'active-class' : '' "
-      >
-        <RiUser5Line/>
+      <q-card class="acct-nav-item" :class="route.path === '/account/personal' ? 'active-class' : ''">
+        <RiUser5Line />
         <div class="acct-nav-label">{{ $t("lang.personal_information") }}</div>
       </q-card>
     </router-link>
     <router-link to="/account/transit">
-      <q-card class="acct-nav-item"
-              :class="route.path === '/account/transit' ? 'active-class' : '' "
-      >
-        <RiShieldFlashLine/>
-        <div class="acct-nav-label">{{ $t('lang.transaction_records') }}</div>
+      <q-card class="acct-nav-item" :class="route.path === '/account/transit' ? 'active-class' : ''">
+        <RiShieldFlashLine />
+        <div class="acct-nav-label">{{ $t("lang.transaction_records") }}</div>
       </q-card>
     </router-link>
     <router-link to="/promo">
-      <q-card class="acct-nav-item"
-              :class="route.path === '/promo' ? 'active-class' : '' "
-      >
-        <RiCoinsLine/>
-        <div class="acct-nav-label">{{ $t('lang.promo_page') }}</div>
+      <q-card class="acct-nav-item" :class="route.path === '/promo' ? 'active-class' : ''">
+        <RiCoinsLine />
+        <div class="acct-nav-label">{{ $t("lang.promo_page") }}</div>
       </q-card>
     </router-link>
 
     <router-link to="/account/withdraw">
-      <q-card class="acct-nav-item"
-              :class="route.path === '/account/withdraw' ? 'active-class' : '' "
-      >
-        <RiBankLine/>
-        <div class="acct-nav-label">{{ $t('lang.withdraw_bank_account') }}</div>
+      <q-card class="acct-nav-item" :class="route.path === '/account/withdraw' ? 'active-class' : ''">
+        <RiBankLine />
+        <div class="acct-nav-label">{{ $t("lang.withdraw_bank_account") }}</div>
       </q-card>
     </router-link>
 
     <router-link to="/account/mail">
-      <q-card class="acct-nav-item"
-              :class="route.path === '/account/mail' ? 'active-class' : '' "
-      >
-        <RiMailLine/>
+      <q-card class="acct-nav-item" :class="route.path === '/account/mail' ? 'active-class' : ''">
+        <RiMailLine />
         <div class="acct-nav-label mailnav">
-          <span>{{ $t('lang.mail_header') }}</span>
-          <q-chip style="margin: 0;" color="red">{{ unreadNumber }}</q-chip>
+          <span>{{ $t("lang.mail_header") }}</span>
+          <q-chip style="margin: 0" color="red">{{ unreadNumber }}</q-chip>
         </div>
       </q-card>
     </router-link>
 
     <router-link to="/affiliate">
-      <q-card class="acct-nav-item"
-              :class="route.path === '/affiliate' ? 'active-class' : '' "
-      >
-        <RiTeamLine/>
-        <div class="acct-nav-label">{{ $t('lang.affiliate_page') }}</div>
+      <q-card class="acct-nav-item" :class="route.path === '/affiliate' ? 'active-class' : ''">
+        <RiTeamLine />
+        <div class="acct-nav-label">{{ $t("lang.affiliate_page") }}</div>
       </q-card>
     </router-link>
     <router-link v-if="!isH5()" to="/getapp">
-      <q-card class="acct-nav-item"
-              :class="route.path === '/getapp' ? 'active-class' : '' "
-      >
-        <RiTabletLine/>
-        <div class="acct-nav-label">{{ $t('lang.app') }}</div>
+      <q-card class="acct-nav-item" :class="route.path === '/getapp' ? 'active-class' : ''">
+        <RiTabletLine />
+        <div class="acct-nav-label">{{ $t("lang.app") }}</div>
       </q-card>
     </router-link>
     <!--      <router-link to="/vip">-->
@@ -128,32 +88,25 @@
     <!--        </q-card>-->
     <!--      </router-link>-->
     <router-link to="/share">
-      <q-card class="acct-nav-item"
-              :class="route.path === '/share' ? 'active-class' : '' "
-      >
-        <RiShareBoxLine/>
-        <div class="acct-nav-label">{{ $t('lang.share_page') }}</div>
+      <q-card class="acct-nav-item" :class="route.path === '/share' ? 'active-class' : ''">
+        <RiShareBoxLine />
+        <div class="acct-nav-label">{{ $t("lang.share_page") }}</div>
       </q-card>
     </router-link>
     <a @click="logout">
       <q-card class="acct-nav-item logout-btn">
-        <RiLogoutBoxLine/>
-        <div class="acct-nav-label">{{ $t('lang.logout') }}</div>
+        <RiLogoutBoxLine />
+        <div class="acct-nav-label">{{ $t("lang.logout") }}</div>
       </q-card>
     </a>
   </q-item-section>
 
-  <div class="version-text text-right"
-       v-if="isH5()"
-       style="margin-right: 10px;">
-    App Version: {{ versionNo }}
-  </div>
-
+  <div class="version-text text-right" v-if="isH5()" style="margin-right: 10px">App Version: {{ versionNo }}</div>
 </template>
 
 <script>
-import {defineComponent, ref, computed, onMounted, watch} from "vue";
-import {userStore} from "stores/index";
+import { defineComponent, ref, computed, onMounted, watch } from "vue";
+import { userStore } from "stores/index";
 import {
   RiWalletLine,
   RiBankCardLine,
@@ -168,12 +121,12 @@ import {
   RiLogoutBoxLine,
   RiTabletLine
 } from "vue-remix-icons";
-import {useRoute, useRouter} from "vue-router";
-import {useUI} from "stores/ui";
-import {useI18n} from "vue-i18n";
-import {storeToRefs} from "pinia";
-import {i18nStore} from "src/router/language";
-import {isH5} from "boot/utils"
+import { useRoute, useRouter } from "vue-router";
+import { useUI } from "stores/ui";
+import { useI18n } from "vue-i18n";
+import { storeToRefs } from "pinia";
+import { i18nStore } from "src/router/language";
+import { isH5 } from "boot/utils";
 
 export default defineComponent({
   name: "AccountPage",
@@ -199,7 +152,7 @@ export default defineComponent({
     const logout = () => {
       store.memberLogout().then(() => {
         ui.leftDrawerOpen = false;
-        router.push('/')
+        router.push("/");
       });
     };
 
@@ -208,7 +161,7 @@ export default defineComponent({
     });
 
     const unreadNumber = computed(() => {
-      return store.unreadCount
+      return store.unreadCount;
     });
     const vip = computed(() => {
       return store.vip;
@@ -216,58 +169,58 @@ export default defineComponent({
 
     const mainWallet = computed(() => {
       const balanceWithTwoDecimalPlaces = parseFloat(store.balance).toFixed(2);
-      return store.currency.value + ' ' + balanceWithTwoDecimalPlaces;
+      return store.currency.value + " " + balanceWithTwoDecimalPlaces;
     });
 
     onMounted(async () => {
-      if(!store.id && route.path !== "/" ){
-        await store.getMemberInfo()
+      if (!store.id && route.path !== "/") {
+        await store.getMemberInfo();
       }
-      await getBalance()
+      await getBalance();
     });
 
     const openDeposit = () => {
       // to="finance/deposit"
       localStorage.setItem("isOpenFromAccount", JSON.stringify(true));
-      router.push('finance/deposit');
-    }
+      router.push("finance/deposit");
+    };
 
-    const {t} = useI18n()
-    const {languageVal} = storeToRefs(i18nStore());
-    const {setLanguage} = i18nStore()
+    const { t } = useI18n();
+    const { languageVal } = storeToRefs(i18nStore());
+    const { setLanguage } = i18nStore();
     watch(languageVal, (newVal) => {
       setLanguage(languageVal.value);
 
       checkRefresh();
     });
 
-    const refreshPages = ['/vip', '/account/transit'];
+    const refreshPages = ["/vip", "/account/transit"];
     const checkRefresh = () => {
       // console.log(route.path);
       if (refreshPages.indexOf(route.path) > -1) {
-        location.reload()
+        location.reload();
       }
-    }
+    };
 
     const langOptions = [
       {
-        label: 'ไทย',
-        value: 'th',
+        label: "ไทย",
+        value: "th"
       },
       {
-        label: 'English',
-        value: 'en',
+        label: "English",
+        value: "en"
       }
-    ]
+    ];
 
     const getBalance = () => {
       setInterval(function () {
         // console.log("Get Balance")
         if (store.hasToken()) {
-          store.getBalance()
+          store.getBalance();
         }
       }, 20000);
-    }
+    };
     return {
       logout,
       mainWallet,
@@ -418,13 +371,12 @@ export default defineComponent({
       padding: 0;
     }
 
-
     &.active-class {
-      background: $linear-bg-2;
+      background: $linear-bg-new;
     }
 
     &.logout-btn:active {
-      background: $linear-bg-2;
+      background: $linear-bg-new;
     }
   }
 }

@@ -4,7 +4,7 @@
       <div class="withdrawal-modal-view-top">
         <div class="withdrawal-modal-view-top--title">Withdrawal</div>
         <div class="withdrawal-modal-view-top--img">
-          <img class="top-bg" src="../../assets/images/common/content-frame-top-short.png" />
+          <!-- <img class="top-bg" src="../../assets/images/common/content-frame-top-short.png" /> -->
         </div>
 
         <q-btn
@@ -152,7 +152,10 @@
           </template>
 
           <div class="top-wrapper">
-            <div class="title">Withdrawal Amount (200 - 20,000RS)</div>
+            <div class="title">
+              Withdrawal Amount ({{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin) }} -
+              {{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }} RS)
+            </div>
           </div>
 
           <div class="mid-wrapper">
@@ -256,6 +259,7 @@ import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import ConfirmButton from "../../atoms/ConfirmButton.vue";
+import { convertToCommaAmount } from "boot/utils";
 
 // modal
 const isLoadingContent = ref(false);
@@ -480,8 +484,7 @@ const submitWithdrawBank = async () => {
           // props.loadCards();
           refreshBalance();
           getWithdrawalMethods();
-
-          emits("closeWithdraw");
+          isShowModal.value = false;
         }
       })
       .catch((error) => {
@@ -581,7 +584,7 @@ const isValidCardAddress = () => {
   margin: auto;
 
   .withdrawal-modal-view-top {
-    background: url(../../assets/images/common/content-frame-top-short.png) no-repeat top center/contain;
+    // background: url(../../assets/images/common/content-frame-top-short.png) no-repeat top center/contain;
     position: relative;
     margin-top: 40px;
 
@@ -622,7 +625,7 @@ const isValidCardAddress = () => {
 
   .withdrawal-modal-view-middle {
     position: relative;
-    background: url(../../assets/images/common/content-frame-middle-short.png) round top/100% auto;
+    // background: url(../../assets/images/common/content-frame-middle-short.png) round top/100% auto;
     min-height: 435px;
     padding: 16px;
     margin-top: -1px;
@@ -636,18 +639,19 @@ const isValidCardAddress = () => {
     }
 
     .withdrawal-summary {
-      border-radius: 0.5rem;
+      font-family: "Manrope", sans-serif;
+      border-radius: 10px;
       background: #370a40;
       padding: 1rem;
       margin-top: 0;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: space-around;
 
       text-align: center;
-      font-family: Helvetica;
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       font-weight: 700;
+      aspect-ratio: 335/82;
 
       .balance {
         margin: 0 0 0 1rem;
@@ -816,7 +820,7 @@ const isValidCardAddress = () => {
   }
 
   .withdrawal-modal-view-bottom {
-    background: url(../../assets/images/common/content-frame-bottom-short.png) round top/100% auto;
+    // background: url(../../assets/images/common/content-frame-bottom-short.png) round top/100% auto;
     min-height: 50px;
     position: relative;
     margin-bottom: 60px;
@@ -830,7 +834,7 @@ const isValidCardAddress = () => {
       content: "";
       position: absolute;
       bottom: -40px;
-      background: url(../../assets/images/common/content-frame-down-icon.png) no-repeat center/contain;
+      // background: url(../../assets/images/common/content-frame-down-icon.png) no-repeat center/contain;
       display: block;
       width: 100%;
       height: 30px;

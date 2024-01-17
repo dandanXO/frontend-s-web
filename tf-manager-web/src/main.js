@@ -21,8 +21,28 @@ dayjs.Ls.en.weekStart = 1;
 const app = createApp(App);
 app.use(ElementPlus)
 
-const baseApi = process.env.VUE_APP_BASE_API;
-const baseWss = process.env.VUE_APP_SOCKET;
+const currentHost = window.location.host
+let baseApi;
+let baseWss;
+
+switch (currentHost) {
+  case process.env.VUE_APP_IND_HOST:
+    baseApi = process.env.VUE_APP_IND_API;
+    baseWss = process.env.VUE_APP_IND_SOCKET;
+    break;
+  case process.env.VUE_APP_TH_HOST:
+    baseApi = process.env.VUE_APP_TH_API;
+    baseWss = process.env.VUE_APP_TH_SOCKET;
+    break;
+  case process.env.VUE_APP_DY_HOST:
+    baseApi = process.env.VUE_APP_DY_API;
+    baseWss = process.env.VUE_APP_DY_SOCKET;
+    break;
+  default:
+    baseApi = process.env.VUE_APP_BASE_API;
+    baseWss = process.env.VUE_APP_SOCKET;
+    break;
+}
 
 var hasUrl = false;
 if (baseApi.indexOf(",") > -1) {

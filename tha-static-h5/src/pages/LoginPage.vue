@@ -7,7 +7,11 @@
         filled
         v-model="loginForm.loginName"
         :label="$t('lang.input_username')"
-        :rules="[(val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty')]"
+        :rules="[
+            (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
+            (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
+            (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
+        ]"
         color="white"
         autocomplete="username"
         clearable

@@ -32,11 +32,11 @@ const routes = [
   //   component: () => import("layouts/MainLayout.vue"),
   //   children: [{ path: "", component: () => import("pages/HomePage.vue") }]
   // },
-  // {
-  //   path: "/promo",
-  //   component: () => import("layouts/MainLayout.vue"),
-  //   children: [{ path: "", component: () => import("pages/PromoPage.vue") }]
-  // },
+  {
+    path: "/promo",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/PromoPage.vue") }]
+  },
   {
     path: "/earn-money",
     component: () => import("layouts/MainLayout.vue"),
@@ -53,12 +53,12 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/LiveChatPage.vue") }]
   },
-  {
-    path: "/bonus",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/BonusPage.vue") }],
-    meta: { requiresAuth: true }
-  },
+  // {
+  //   path: "/bonus",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [{ path: "", component: () => import("pages/BonusPage.vue") }],
+  //   meta: { requiresAuth: true }
+  // },
   // {
   //   path: "/maintenance",
   //   component: () => import("layouts/MainLayout.vue"),
@@ -200,6 +200,12 @@ const routes = [
   {
     path: "/account",
     component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/SettingsPage.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/profile",
+    component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/AccountPage.vue") }],
     meta: { requiresAuth: true }
   },
@@ -251,6 +257,28 @@ const routes = [
       {
         path: "",
         component: () => import("pages/account/PromotionView.vue")
+      }
+    ],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/deposit",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/account/TransactionLandingView.vue")
+      }
+    ],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/withdraw",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/account/TransactionLandingView.vue")
       }
     ],
     meta: { requiresAuth: true }

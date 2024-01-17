@@ -28,3 +28,7 @@ export const getSummariesForExport = (query) => {
 export const updateSettlementState = (ids, state) => {
   return https().request("/affiliateRecord/month-summary/settle?_method=PUT", Method.POST, { ids: ids.join(","), state: state }, ContentType.form);
 };
+
+export const getAffiliateList = (siteId) => {
+  return https().request(`/affiliateRecord/getAllAffiliateBySiteId?siteId=${siteId}`, Method.GET);
+}

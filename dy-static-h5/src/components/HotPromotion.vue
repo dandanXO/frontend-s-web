@@ -7,7 +7,7 @@
       :loading-claim="btnLoading"
       @daily-slot="handleSlot()"
     />
-    <PrivilegeInvitePromo
+    <PrivilegeInvite
       v-if="
         !isCommonPromo &&
         store.token &&
@@ -19,7 +19,7 @@
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-tiger-card'" />
     <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
-    <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
+    <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" :promo-code="list.promoCode" />
     <UpcomingMatchPromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" platformType="NBA" />
     <UpcomingMatchPromo
       v-if="
@@ -77,7 +77,7 @@ import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendP
 import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
-import PrivilegeInvitePromo from "../components/hotpromo/privilegeInvite/PrivilegeInvitePromo.vue";
+import PrivilegeInvite from "../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -95,7 +95,7 @@ export default defineComponent({
     EsportQuiz,
     LotteryPromo,
     GiftPromo,
-    PrivilegeInvitePromo
+    PrivilegeInvite
   },
   props: {
     list: {

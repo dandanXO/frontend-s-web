@@ -142,12 +142,11 @@
         </template>
         <el-table
           :data="page.records"
-          ref="table"
+          ref="rolesTable"
           row-key="id"
           size="small"
           highlight-current-row
-          @selection-change="handleSelectionChange"
-          @current-change="selectRoles"
+          @select="selectRoles"
           :empty-text="t('fields.noData')"
         >
           <el-table-column type="selection" width="55" />
@@ -316,7 +315,7 @@ const siteList = reactive({ list: [] })
 
 const rolesForm = ref(null)
 const tree = ref(null)
-const table = ref(null)
+const rolesTable = ref()
 let selectRolesId = 0
 let rolesID = []
 const formRules = reactive({
@@ -448,7 +447,7 @@ function remove(roles) {
 }
 
 function changePage(page) {
-  request.page = page
+  request.current = page
   loadData()
 }
 
@@ -470,25 +469,13 @@ async function loadTreeMenu() {
   menus.cloneList = [...menus.list]
 }
 
-async function selectRoles(val) {
-  selectRolesId = val.id
-  tree.value.setCheckedKeys([], false)
-  table.value.clearSelection()
-  table.value.toggleRowSelection(val)
-  uiControl.updatePermissionBtn = false
-  uiControl.editBtn = false
-}
-
-async function updatePermission() {
-  const selectedMenus = tree.value.getCheckedNodes(false, true).map(c => c.id)
-  await updateRolePermission({ id: selectRolesId, menuIds: selectedMenus })
-  await loadData()
-  ElMessage({ message: t('message.updateSuccess'), type: 'success' })
-}
-
-async function handleSelectionChange(val) {
-  rolesID = val
+async function selectRoles(selection, val) {
+  if (!selection.length) {
+    return;
+  }
+  rolesID = selection;
   if (rolesID.length === 0) {
+    selectRolesId = 0
     tree.value.setCheckedKeys([], false)
     uiControl.editBtn = true
     uiControl.removeBtn = true
@@ -501,12 +488,13 @@ async function handleSelectionChange(val) {
       tree.value.append(menus.cloneList[i])
     }
   } else if (rolesID.length === 1) {
+    selectRolesId = selection[0].id
     uiControl.editBtn = false
     uiControl.removeBtn = false
     uiControl.updatePermissionBtn = false
-    const site = siteList.list.find(e => e.siteName === val[0].siteName)
-    let siteMenu = null;
-    if (site !== null) {
+    const site = siteList.list.find(e => e.siteName === rolesID[0].siteName)
+    let siteMenu;
+    if (site) {
       const { data: children } = await fetchSimpleMenu(site.id)
       siteMenu = children
     } else {
@@ -523,18 +511,30 @@ async function handleSelectionChange(val) {
       tree.value.append(siteMenu[i])
     }
 
-    val[0].menus.forEach(e => {
+    rolesID[0].menus.forEach(e => {
       const node = tree.value.getNode(e)
       if (node && node.isLeaf) {
         tree.value.setChecked(e, true)
       }
     })
   } else {
+    selectRolesId = 0
     tree.value.setCheckedKeys([], false)
     uiControl.editBtn = true
     uiControl.removeBtn = false
     uiControl.updatePermissionBtn = false
   }
+}
+
+async function updatePermission() {
+  if (!selectRolesId) {
+    ElMessage({ message: t('message.roleMustOnlyOne'), type: 'error' })
+    return;
+  }
+  const selectedMenus = tree.value.getCheckedNodes(false, true).map(c => c.id)
+  await updateRolePermission({ id: selectRolesId, menuIds: selectedMenus })
+  await loadData()
+  ElMessage({ message: t('message.updateSuccess'), type: 'success' })
 }
 
 function filterNode(value, data) {

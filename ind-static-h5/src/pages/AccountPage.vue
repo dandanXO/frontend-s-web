@@ -1,96 +1,96 @@
 <template>
-  <ProfileSummary />
+  <q-page>
+    <!-- <ProfileSummary /> -->
 
-  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>
+    <div class="personal-center-container">
+      <ProfileProgressBanner />
 
-  <ContentView contentTopStatus="faded">
-    <q-form ref="profileFormRef" class="pc-form">
-      <div class="pc-form-item" @click="openPersonalCenterDialog">
-        <div class="pc-form-label">Full Name</div>
-        <div class="pc-form-input">
-          <q-input
-            v-model="formDetail.realName"
-            filled
-            dense
-            clearable
-            borderless
-            standout
-            hide-bottom-space
-            readonly
-          ></q-input>
-        </div>
-      </div>
-
-      <div class="pc-form-item" @click="openPersonalCenterDialog">
-        <div class="pc-form-label">Phone</div>
-        <div class="pc-form-input">
-          <q-input
-            v-model="formDetail.phone"
-            filled
-            dense
-            clearable
-            borderless
-            standout
-            hide-bottom-space
-            readonly
-          ></q-input>
-        </div>
-      </div>
-
-      <!-- <div class="pc-form-item" @click="openPersonalCenterDialog">
-        <div class="pc-form-label">Email</div>
-        <div class="pc-form-input">
-          <q-input
-            v-model="formDetail.email"
-            filled
-            dense
-            clearable
-            borderless
-            standout
-            hide-bottom-space
-            readonly
-          ></q-input>
-        </div>
-      </div> -->
-
-      <div class="pc-tip">
-        <div>
-          <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">Change Password</a>
-
-          <div class="pc-ver" v-if="appVersionNo">
-            Version:
-            <span>{{ appVersionNo }}</span>
+      <q-form ref="profileFormRef" class="pc-form">
+        <div class="pc-form-item" @click="openPersonalCenterDialog">
+          <div class="pc-form-label">Full Name</div>
+          <div class="pc-form-input">
+            <q-input
+              v-model="formDetail.realName"
+              filled
+              dense
+              clearable
+              borderless
+              standout
+              hide-bottom-space
+              readonly
+            ></q-input>
           </div>
         </div>
 
-        <div>
-          <q-btn
-            class="btn-refresh"
-            no-caps
-            text-color="white"
-            icon="refresh"
-            label="Updated"
-            :loading="loadingUpdated"
-            @click="startRefresh"
-          >
-            <template v-slot:loading>
-              <q-spinner class="on-left" style="color: #fed87d" />
-              Updating...
-            </template>
-          </q-btn>
+        <div class="pc-form-item" @click="openPersonalCenterDialog">
+          <div class="pc-form-label">Phone</div>
+          <div class="pc-form-input">
+            <q-input
+              v-model="formDetail.phone"
+              filled
+              dense
+              clearable
+              borderless
+              standout
+              hide-bottom-space
+              readonly
+            ></q-input>
+          </div>
         </div>
-      </div>
 
-      <div class="q-mt-md q-pl-lg q-pr-lg">
-        <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">Sign Out</q-btn>
-      </div>
+        <!-- <div class="pc-form-item" @click="openPersonalCenterDialog">
+          <div class="pc-form-label">Email</div>
+          <div class="pc-form-input">
+            <q-input
+              v-model="formDetail.email"
+              filled
+              dense
+              clearable
+              borderless
+              standout
+              hide-bottom-space
+              readonly
+            ></q-input>
+          </div>
+        </div> -->
 
-      <!-- <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn size="md" color="brightbtn" @click="updateState" label="保存信息" />
-      </div> -->
-    </q-form>
-  </ContentView>
+        <div class="pc-tip">
+          <div>
+            <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">Change Password</a>
 
+            <div class="pc-ver" v-if="appVersionNo">
+              Version:
+              <span>{{ appVersionNo }}</span>
+            </div>
+          </div>
+
+          <div>
+            <q-btn
+              class="btn-refresh"
+              no-caps
+              icon="refresh"
+              label="Updated"
+              :loading="loadingUpdated"
+              @click="startRefresh"
+            >
+              <template v-slot:loading>
+                <q-spinner class="on-left" style="color: #ae6def" />
+                Updating...
+              </template>
+            </q-btn>
+          </div>
+        </div>
+
+        <div class="q-mt-md">
+          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">Sign Out</q-btn>
+        </div>
+
+        <!-- <div class="text-center q-mt-md" v-if="canEdit">
+          <q-btn size="md" color="brightbtn" @click="updateState" label="保存信息" />
+        </div> -->
+      </q-form>
+    </div>
+  </q-page>
   <q-dialog width="100%" v-model="showCaptchaDialog">
     <q-card style="width: 100%; padding: 20px" class="bg-dark text-white text-center">
       <q-card-section class="q-mb-md">
@@ -434,21 +434,21 @@
 
   <q-dialog width="100%" v-model="guestKYCDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" @click="closeGuestKYCDialog" />
+      <q-btn dense rounded icon="close" class="popout-close" @click="closeGuestKYCDialog" />
       <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
     </div>
   </q-dialog>
 
   <q-dialog width="100%" v-model="userKYCDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" @click="closeUserKYCDialog" />
+      <q-btn dense rounded icon="close" class="popout-close" @click="closeUserKYCDialog" />
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
 
   <q-dialog width="100%" v-model="verificationCodeDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">Captcha Code Check</div>
 
@@ -485,7 +485,7 @@
 
   <q-dialog width="100%" v-model="confirmSignOutDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">Sign Out</div>
 
@@ -502,9 +502,9 @@
 
 <script setup>
 import SwiperNav from "../components/SwiperNav.vue";
-import ContentView from "../components/ContentView.vue";
 import ProfileSummary from "../components/ProfileSummary.vue";
-import { defineComponent, reactive, ref, onMounted, computed } from "vue";
+import ProfileProgressBanner from "../components/ProfileProgressBanner.vue";
+import { defineComponent, reactive, ref, onMounted, computed, onActivated } from "vue";
 import moment from "moment";
 import { api } from "boot/axios";
 import { useQuasar, copyToClipboard } from "quasar";
@@ -641,11 +641,6 @@ const openVerificationCodeDialog = () => {
   getCode();
 };
 
-const confirmSignOutDialog = ref(false);
-const openConfirmSignOutDialog = () => {
-  confirmSignOutDialog.value = !confirmSignOutDialog.value;
-};
-
 const myMemberList = ref([]);
 
 let isNoInfoRef = ref(true);
@@ -724,6 +719,10 @@ const getVersionNo = async () => {
 };
 
 const loadingLogout = ref(false);
+
+onActivated(() => {
+  loadInfo();
+});
 
 onMounted(() => {
   loadInfo();
@@ -1181,9 +1180,22 @@ const resetChangePasswordInfo = () => {
   updatePwdInfo.oldPassword = "";
   updatePwdInfo.password = "";
 };
+
+const confirmSignOutDialog = ref(false);
+const openConfirmSignOutDialog = () => {
+  confirmSignOutDialog.value = !confirmSignOutDialog.value;
+};
 </script>
 
 <style lang="scss" scoped>
+.personal-center-container {
+  padding: 0 20px;
+}
+
+.progress-container {
+  background: linear-gradient(180deg, #d29e3a 0%, #d65033 100%);
+}
+
 .infoboard-container {
   display: flex;
   align-items: center;
@@ -1239,25 +1251,27 @@ const resetChangePasswordInfo = () => {
 
 .pc-form {
   margin-top: 20px;
+  width: 100%;
   .pc-form-item {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    margin-bottom: 12px;
+    gap: 8px;
+    margin-bottom: 25px;
   }
   .pc-form-label {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 1);
   }
   .pc-form-input {
     border-radius: 5px;
     position: relative;
 
     :deep(.q-field__control) {
-      background-color: rgba(21, 0, 37, 0.7) !important;
+      background: rgba(255, 255, 255, 0.15) !important;
+      border-radius: 4px;
     }
 
     :deep(.q-field__native) {
-      color: #ffffff;
+      color: rgba(255, 255, 255, 0.6);
     }
   }
 
@@ -1283,16 +1297,17 @@ const resetChangePasswordInfo = () => {
   align-items: center;
   font-size: 18px;
   line-height: 1;
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-  font-weight: 700;
+  font-weight: 400;
   width: 100%;
-  height: 48px;
+  height: 55px;
+  text-transform: uppercase;
   transition: 0.3s all;
-  background-image: url(../assets/images/account/btn-purple-pattern.png);
   color: #ffffff;
   margin: auto;
+  border-radius: 6px;
+  border: 1px solid #5e388b;
+  background: rgba(88, 23, 170, 0.6);
+
   &:active {
     filter: brightness(0.85);
     transform: translate(0px, 1px);
@@ -1300,7 +1315,7 @@ const resetChangePasswordInfo = () => {
 }
 
 .pc-tip-chg-pwd {
-  color: #fae576;
+  color: #a73dff;
 }
 
 .pc-tip {
@@ -1319,26 +1334,33 @@ const resetChangePasswordInfo = () => {
 }
 
 .btn-refresh {
-  background: rgba(21, 0, 37, 0.7);
+  background: #48325a;
   border-radius: 8px;
-  font-weight: 700;
+  font-weight: 400;
   margin-top: auto;
+  color: #ae6def;
+  padding: 10px 20px;
 
   :deep(.q-icon) {
-    color: #fed87d;
+    color: #ae6def;
   }
 }
 
 .btn-cancel {
-  background: rgba(21, 0, 37, 0.5);
+  background: #ffffff20;
   font-weight: 700;
-  color: #ffffff;
+  color: #dcdcdc;
+  border: 1px solid #ffffff80;
   border-radius: 8px;
+  width: 140px;
+  height: 42px;
 }
 .btn-confirm {
-  background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+  background: linear-gradient(187.94deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
   font-weight: 700;
-  color: #150025;
+  width: 140px;
+  height: 42px;
+  color: #5c46e7;
   border-radius: 8px;
 }
 </style>

@@ -2,46 +2,47 @@
   <div class="login-container">
     <div class="back-left">
       <router-link :to="'/landing'">
-        <q-btn dense rounded icon="reply" class="bg-yellow text-black q-mt-sm" />
+        <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
       </router-link>
     </div>
 
-    <div class="landing-img">
-      <img src="../assets/images/login/landing-img.png" />
+    <div class="login-form-logo-img">
+      <img src="../assets/55-ace-logo.png" />
     </div>
 
     <q-form ref="loginFormRef" @submit="onSubmit">
-      <div v-if="!loginType" class="q-gutter-y-md">
+      <div v-if="!loginType" class="login-form-grid">
+        <span class="login-form-field-label">Phone Number</span>
         <q-input
+          type="tel"
+          pattern="\d*"
+          maxlength="10"
           hide-bottom-space
           ref="loginNameRef"
           v-model="loginForm.loginName"
-          label="Phone Number"
           :rules="[
             (val) => (val && val.length > 0) || 'Please insert Phone number',
-            (val) => (val.length >= 7 && val.length <= 12) || 'The phone number must be between 7 and 12'
+            (val) => (val && val.length === 10) || 'The phone number must have 10 digits'
           ]"
           label-color="brand"
           autocomplete="username"
-          rounded
           outlined
           color="white"
-          class="landing-input"
+          class="landing-input login-form-field"
         ></q-input>
 
+        <span class="login-form-field-label">Password</span>
         <q-input
           ref="passwordRef"
           hide-bottom-space
           v-model="loginForm.password"
-          label="Password"
           :type="isPwd ? 'password' : 'text'"
           :rules="[(val) => (val && val.length > 0) || 'Please insert password']"
           label-color="brand"
           autocomplete="current-password"
-          rounded
           outlined
           color="white"
-          class="landing-input"
+          class="landing-input login-form-field"
         >
           <template v-slot:append>
             <q-icon
@@ -75,6 +76,11 @@
         <!--        </q-input>-->
       </div>
 
+      <div class="forgot-password">
+        <router-link class="form-text" to="/forgot-password">Forgot Password</router-link>
+      </div>
+
+      <!--
       <div class="row items-center justify-between q-mt-sm">
         <div class="mui-row" :class="isCheckRmb ? 'checked' : ''">
           <q-checkbox
@@ -87,29 +93,32 @@
           />
         </div>
       </div>
+       -->
 
       <div>
-        <q-btn @click.prevent="onSubmit" type="submit" class="btn-yellow" label="Login" rounded no-caps />
+        <q-btn @click.prevent="onSubmit" type="submit" class="login-btn" label="Login" rounded no-caps />
       </div>
 
-      <div class="q-mt-sm">
-        <q-btn
-          @click="guestLogin()"
-          rounded
-          flat
-          no-caps
-          class="btn-purple"
-          label="Play As Guest"
-          v-if="Platform.is.capacitor"
-        />
-      </div>
+      <!-- <div class="q-mt-sm">
+        <q-btn @click="goRegister()" rounded flat no-caps class="btn-purple" label="Register" />
+      </div> -->
     </q-form>
 
-    <div class="tip-container">
+    <hr class="end-of-form-separator" />
+
+    <div class="create-account">
+      <span class="form-text">Not a member?</span>
+      &nbsp;
+      <router-link class="form-text" to="/register" style="color: #ae6def">Create account</router-link>
+    </div>
+
+    <!--
+      <div class="tip-container">
       <router-link class="landing-tip" to="/forgot-password">Forgot Password ?</router-link>
 
       <router-link class="landing-tip" to="/register">Sign Up Now</router-link>
     </div>
+    -->
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
@@ -179,25 +188,25 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
     const getCode = () => {
-      api
-        .get("/member/verificationCode")
-        .then((response) => {
-          if (response.code === 0) {
-            verificationImg.value = "data:image/png;base64," + response.data.img;
-            loginForm.codeId = response.data.id;
-          }
-        })
-        .catch((e) => {
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: e.message,
-            icon: "report_problem"
-          });
-        });
+      // api
+      //   .get("/member/verificationCode")
+      //   .then((response) => {
+      //     if (response.code === 0) {
+      //       verificationImg.value = "data:image/png;base64," + response.data.img;
+      //       loginForm.codeId = response.data.id;
+      //     }
+      //   })
+      //   .catch((e) => {
+      //     $q.notify({
+      //       color: "negative",
+      //       position: "top",
+      //       message: e.message,
+      //       icon: "report_problem"
+      //     });
+      //   });
     };
 
-    const isCheckRmb = ref(false);
+    const isCheckRmb = ref(true);
 
     const phoneVerificationRef = ref();
     const telephoneRef = ref();
@@ -280,6 +289,10 @@ export default defineComponent({
         });
     };
 
+    const goRegister = () => {
+      router.push("/register");
+    };
+
     const onSubmit = () => {
       $q.loading.show({
         message: "Logging in"
@@ -293,7 +306,7 @@ export default defineComponent({
         excludes.value.forEach((element) => {
           delete allComponents[element];
         });
-        // const sidParam = FingerprintJS.hashComponents(allComponents);
+        const sidParam = FingerprintJS.hashComponents(allComponents);
 
         if (loginType.value === false) {
           loginNameRef.value.validate();
@@ -310,7 +323,7 @@ export default defineComponent({
               .memberLogin({
                 loginName: loginForm.loginName,
                 password: loginForm.password,
-                sid: store.aaid,
+                sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
                 captchaCode: loginForm.captchaCode,
                 codeId: loginForm.codeId
               })
@@ -396,6 +409,8 @@ export default defineComponent({
       way: "ANDROID"
     });
 
+    const affQuickRegEvent = ref("");
+
     const guestLogin = () => {
       $q.loading.show({
         message: "Playing as guest"
@@ -403,7 +418,7 @@ export default defineComponent({
 
       (async () => {
         // guestLoginInfo.sid = guestDeviceInfo.value;
-        guestLoginInfo.sid = store.getAaid();
+        guestLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
 
         api
           .post("/member/quickRegister", qs.stringify(guestLoginInfo))
@@ -421,13 +436,15 @@ export default defineComponent({
 
               //ADJUST TRACKEVENT.
               if (Platform.is.android && Platform.is.capacitor) {
-                var adjustEvent = new AdjustEvent("vm6pjs");
+                affQuickRegEvent.value = sessionStorage.getItem("AFFILIATE_QUICK_REGISTER_EVENT");
+                var adjustEvent = new AdjustEvent(affQuickRegEvent.value);
+                // alert(affQuickRegEvent.value);
                 Adjust.trackEvent(adjustEvent);
               } else {
                 const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-                AdjustWeb.trackEvent({
-                  eventToken: "vm6pjs"
-                });
+                // AdjustWeb.trackEvent({
+                //   eventToken: "vm6pjs"
+                // });
               }
 
               store.autoLogin(res.data);
@@ -486,6 +503,7 @@ export default defineComponent({
       loginForm,
       loginFormRef,
       onSubmit,
+      goRegister,
       store,
       isPwd: ref(true),
       tab,
@@ -508,12 +526,73 @@ export default defineComponent({
       guestLogin,
       guestDeviceInfo,
       getAppInfo,
-      Platform
+      Platform,
+      affQuickRegEvent
     };
   }
 });
 </script>
 <style scoped lang="scss">
+.login-container {
+  min-height: 100vh;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: url("../assets/images/index/auth-bg.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.back-left {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+}
+
+.login-form-logo-img {
+  img {
+    display: block;
+    width: 95%;
+    margin: 20px auto;
+    max-width: 200px;
+  }
+}
+.login-form-grid {
+  display: grid;
+  grid-auto-flow: row;
+  gap: 7px;
+
+  .login-form-field-label {
+    margin-top: 15px;
+  }
+}
+.login-btn {
+  background-color: #8b00ff;
+  width: 100%;
+  height: 56px;
+  border-radius: 4px;
+  margin-top: 30px;
+}
+.forgot-password {
+  margin: 8px 0px 0px;
+  text-align: right;
+}
+
+.end-of-form-separator {
+  margin: 35px 0px 0px;
+  border-color: #ffffff26;
+}
+
+.create-account {
+  margin: 20px 0px;
+  text-align: center;
+}
+.form-text {
+  color: #b3b0b8;
+  text-decoration: none;
+}
+
 .tip-container {
   display: flex;
   justify-content: space-between;
@@ -533,7 +612,8 @@ export default defineComponent({
     padding-right: 20px;
   }
   :deep(.q-field__control):before {
-    border-color: #ffdd27;
+    border-color: #1e1f24;
+    background-color: #1e1f24;
     border-width: 2px;
   }
 }

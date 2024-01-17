@@ -13,7 +13,10 @@
     <SportSafetyPromo v-if="!isCommonPromo && list.redirectUrl === 'sport-safety'" />
     <NbaGamePromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token" />
-    <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu' && store.token" />
+    <HongBaoYuPromo
+      v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu' && store.token"
+      :promo-code="list.promoCode"
+    />
     <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
     <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz' && !isCommonPromo"></EsportQuiz>
@@ -85,7 +88,7 @@ export default defineComponent({
     EsportQuiz,
     LotteryPromo,
     PrivilegeInvite,
-    GiftPromo,
+    GiftPromo
     // VIPUpgradePromo,
     // ReferBonusPromo
     // DailyBonus

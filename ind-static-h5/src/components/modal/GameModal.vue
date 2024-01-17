@@ -1,20 +1,33 @@
 <template>
   <q-scroll-area>
-    <q-dialog v-model="visible" class="gameDialog" full-height full-width>
+    <q-dialog v-model="visible" class="gameDialog" full-height full-width persistent no-esc-dismiss no-backdrop-dismiss>
       <q-toolbar>
         <div class="topActions">
-          <q-btn v-if="!drawerVisible" dense rounded icon="reply" class="bg-yellow text-black" @click="onExitClick" />
+          <q-icon name="chevron_left" size="30px" @click="onExitClick" />
           <div class="game-logo-img">
-            <img :src="require(`../../assets/images/index/logo/logo-${platformCodeImg.toLowerCase()}.png`)" />
+            <img src="../../assets/logo.png" />
+            <!-- <div
+              class="game-logo"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../../assets/images/index/logo/logo-${platformCodeImg.toLowerCase()}.png`)})`;
+                  } catch (e) {
+                    return '';
+                  }
+                })()
+              }"
+            >
+              &nbsp;
+            </div> -->
           </div>
-          <q-btn
-            v-if="!drawerVisible"
-            dense
-            rounded
-            icon="add"
-            class="bg-yellow text-black"
-            @click="handleDrawerVisible"
-          />
+
+          <div v-if="!drawerVisible" class="wallet-container" @click="goToDeposit()">
+            Add Cash &nbsp;
+            <q-btn dense rounded class="wallet-btn">
+              <img src="../../assets/images/index/icon-wallet.png" />
+            </q-btn>
+          </div>
         </div>
 
         <div class="loader-container">
@@ -22,15 +35,30 @@
           <div>Loading... Please wait...</div>
         </div>
 
-        <iframe
-          @load="loadGame()"
-          v-show="!logoShow"
-          :src="src"
-          id="game-iframe"
-          scrolling="no"
-          frameborder="0"
-          class="game-iframe"
-        ></iframe>
+        <template v-if="isInnerHtmlSrc === false">
+          <iframe
+            @load="loadGame()"
+            v-show="!logoShow"
+            :src="src"
+            id="game-iframe"
+            scrolling="auto"
+            frameborder="0"
+            class="game-iframe"
+            :style="`height: calc(100% - 65px - ${ui.bottomInsetHeight}px);`"
+          ></iframe>
+        </template>
+        <template v-else>
+          <iframe
+            @load="loadGame()"
+            v-show="!logoShow"
+            v-bind:srcdoc="src"
+            id="game-iframe"
+            scrolling="auto"
+            frameborder="0"
+            class="game-iframe"
+            :style="`height: calc(100% - 65px - ${ui.bottomInsetHeight}px);`"
+          ></iframe>
+        </template>
 
         <q-dialog width="100%" v-model="drawerVisible" presistent>
           <div class="popout-dialog">
@@ -51,7 +79,7 @@
 
     <q-dialog width="100%" v-model="isExitDialogOpen" presistent>
       <div class="popout-dialog">
-        <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+        <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
         <div class="popout-dialog-container">
           <div class="txt-content q-mt-md text-center">Are you sure want to quit? Click Confirm to quit the game.</div>
           <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
@@ -61,6 +89,26 @@
         </div>
       </div>
     </q-dialog>
+
+    <q-dialog
+      v-model="fullDepositDialog"
+      persistent
+      maximized
+      transition-show="slide-up"
+      transition-hide="slide-down"
+      class="full-deposit-dialog"
+    >
+      <q-card class="full-deposit-card" id="fulldeposit">
+        <div class="back-bar" @click="closeFullDepositDialog">
+          <q-icon name="chevron_left" size="28px" />
+          Back
+        </div>
+
+        <q-card-section>
+          <DepositView @closeModal="closeDialog"></DepositView>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-scroll-area>
 </template>
 <script setup id="GameModal">
@@ -68,19 +116,27 @@ import { userStore } from "stores/index";
 // import { launchSessionGame } from "api/platform/platform";
 // import { isMobile } from "utils/utils";
 import { useRoute, useRouter } from "vue-router";
-import { ref, defineExpose, reactive, shallowRef } from "vue";
+import { ref, defineExpose, reactive, shallowRef, onActivated, onUnmounted, onDeactivated } from "vue";
 import DepositComponent from "components/depositComponent.vue";
+
+import { App } from "@capacitor/app";
 
 // import { transfer } from "api/personal/transfer";
 // import { message } from "ant-design-vue";
 import { storeToRefs } from "pinia";
 import { api } from "boot/axios";
 import { useQuasar, Platform, AppFullscreen, Notify } from "quasar";
+import { isAndroid } from "boot/utils";
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import DepositView from "../../pages/account/DepositView.vue";
+import { useUI } from "stores/ui";
 
 const props = defineProps(["closeFullGameDialog"]);
 
+const fullDepositDialog = ref(false);
+
 const $q = useQuasar();
+const ui = useUI();
 
 const store = userStore();
 const { token } = storeToRefs(store);
@@ -99,6 +155,11 @@ const isMobileDrawerActive = ref(false);
 const values = ref(["100", "200", "300", "500", "1000"]);
 const hasPrivilege = ref(false);
 // const quickTransferTab = ref(false);
+
+const closeFullDepositDialog = () => {
+  fullDepositDialog.value = false;
+  store.getBalance();
+};
 
 const checkAmount = reactive({
   flag: true,
@@ -148,6 +209,7 @@ const handleDrawerVisible = () => {
 const router = useRouter();
 const route = useRoute();
 const visible = ref(false);
+const isInnerHtmlSrc = ref(false);
 const visibleComingSoon = ref(false);
 const src = ref("");
 const logoShow = ref(true);
@@ -189,20 +251,34 @@ const submitTransfer = (amount) => {
     });
 };
 const closeDialog = () => {
-  visible.value = !visible.value;
+  visible.value = false;
   src.value = "";
   store.getBalance();
   // AppFullscreen.exit()
-  screen.orientation.lock("portrait");
+  if (isAndroid()) {
+    screen.orientation.lock("portrait");
+    App.removeAllListeners();
+  }
+};
+
+const goToDeposit = () => {
+  fullDepositDialog.value = true;
+  // closeDialog();
+  // props.closeFullGameDialog();
+  // setTimeout(() => {
+  // router.push("/deposit");
+  // router.push("/deposit?from=" + route.path);
+  // }, 500);
 };
 
 const platformCodeImg = ref();
 const open = (gameName, platformCode, gameCode, gameType) => {
   // debugger;
   // AppFullscreen.request()
-
+  isInnerHtmlSrc.value = false;
   platformCodeImg.value = platformCode;
 
+  //TESt
   localStorage.removeItem("isOpenFromAccount");
   localStorage.removeItem("isBacked");
   // window.addEventListener(
@@ -220,7 +296,13 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   //     var gameIfrm = document.getElementById('game-iframe');
   //     gameIfrm.requestFullscreen();
   // // const iframeRef = ref(null);
-  screen.orientation.unlock();
+  if (isAndroid()) {
+    screen.orientation.unlock();
+
+    App.addListener("backButton", (backEvent) => {
+      onExitClick();
+    });
+  }
   // iframe.find('HTML-Element').touchwipe({
   // wipeLeft: function() { alert("left"); },
   // wipeRight: function() { alert("right"); },
@@ -248,9 +330,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.hasToken()) {
-      if (platformCode !== "PG") {
-        visible.value = true;
-      }
+      visible.value = true;
 
       var way = null;
       if ("standalone" in window.navigator && window.navigator.standalone) {
@@ -274,15 +354,31 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           }
         })
         .then((res) => {
-          if (platformCode === "PG") {
-            if (way === "ANDROID") {
-              cordova.InAppBrowser.open(res.data, "_blank", "location=no,zoom=no");
-            } else {
-              window.location.href = res.data;
-            }
+          let srcDoc = res.data;
+          var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
+          if (firstFourChars === "http") {
+            src.value = srcDoc;
           } else {
-            src.value = res.data;
+            isInnerHtmlSrc.value = true;
+
+            const scriptEndTag = "</" + "script>";
+            srcDoc = srcDoc
+              .replace(/<\/script>/g, scriptEndTag)
+              .replace(/\\\"/g, '"')
+              .replace(/\n/g, "");
+
+            src.value = srcDoc;
           }
+
+          // if (platformCode === "PG") {
+          // if (way === "ANDROID") {
+          //   cordova.InAppBrowser.open(res.data, "_blank", "location=no,zoom=no");
+          // } else {
+          //   window.location.href = res.data;
+          // }
+          // } else {
+          //   src.value = res.data;
+          // }
         });
     } else {
       props.closeFullGameDialog();
@@ -377,12 +473,11 @@ defineExpose({
   align-items: flex-start;
   flex-direction: column;
   padding: 0;
-  background: transparent;
-  background-image: url(../../assets/images/index/modal-bg.png);
-  background-size: cover;
-  background-position: top center;
+  background: #1d1d27;
 
   .topActions {
+    background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
+    box-shadow: 0px 3 7px 0px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -390,7 +485,18 @@ defineExpose({
     align-items: center;
 
     .game-logo-img {
-      height: 25px;
+      height: 50px;
+      position: absolute;
+      top: 10px;
+      left: 45px;
+      .game-logo {
+        width: 30vw;
+        background-position: center;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+
       img {
         display: block;
         height: 100%;
@@ -402,7 +508,6 @@ defineExpose({
 
 .game-iframe {
   width: 100%;
-  height: calc(100% - 65px);
 }
 
 // .game-iframe {
@@ -574,7 +679,7 @@ defineExpose({
   }
 
   .popout-dialog-container-gold {
-    background-image: url(../../assets/images/index/popout/deposit-bg.png);
+    // background-image: url(../../assets/images/index/popout/deposit-bg.png);
     background-position: bottom center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -583,7 +688,7 @@ defineExpose({
   }
 
   .popout-main-title {
-    background-image: url(../../assets/images/index/popout/popout-title.png);
+    // background-image: url(../../assets/images/index/popout/popout-title.png);
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center center;
@@ -624,7 +729,7 @@ defineExpose({
 
     .deposit-item {
       .deposit-icon {
-        background-image: url(../../assets/images/index/popout/deposit-item-frame.png);
+        // background-image: url(../../assets/images/index/popout/deposit-item-frame.png);
         background-position: top center;
         background-size: contain;
         background-repeat: no-repeat;
@@ -643,14 +748,14 @@ defineExpose({
       }
 
       &.active > .deposit-icon {
-        background-image: url(../../assets/images/index/popout/deposit-item-frame-active.png);
+        // background-image: url(../../assets/images/index/popout/deposit-item-frame-active.png);
       }
 
       .deposit-hot-label {
         position: absolute;
         top: 0;
         right: 0;
-        background-image: url(../../assets/images/index/popout/hot-label.png);
+        // background-image: url(../../assets/images/index/popout/hot-label.png);
         background-size: 100%;
         background-repeat: no-repeat;
         background-position: center center;
@@ -665,7 +770,7 @@ defineExpose({
       }
 
       .deposit-amt {
-        background-image: url(../../assets/images/index/popout/deposit-item-frame-amount.png);
+        // background-image: url(../../assets/images/index/popout/deposit-item-frame-amount.png);
         background-position: center center;
         background-size: contain;
         background-repeat: no-repeat;
@@ -720,7 +825,7 @@ defineExpose({
         position: relative;
         &:after {
           content: "";
-          background-image: url(../../assets/images/index/popout/label-discount.png);
+          // background-image: url(../../assets/images/index/popout/label-discount.png);
           background-repeat: no-repeat;
           display: block;
           position: absolute;
@@ -756,5 +861,22 @@ defineExpose({
   justify-content: center;
   flex-direction: column;
   gap: 10px;
+}
+
+.full-deposit-card {
+  background: #11131f;
+  margin: 0px;
+  padding: 0 16px;
+}
+
+.back-bar {
+  background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
+  min-height: 60px;
+  width: calc(100% + 32px);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  margin: 0 -16px;
 }
 </style>

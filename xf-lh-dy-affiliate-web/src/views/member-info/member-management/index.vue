@@ -205,23 +205,6 @@
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
-                <!-- <el-link class="more">More</el-link>
-                <div class="absbuttons" v-if="isMore">
-                  <button @click="showMemberInfo(item)">
-                    {{ t('fields.memberInfo') }}
-                  </button>
-                  <button @click="transferRedirect(item.loginName)">
-                    {{ t('menu.Transfer') }}
-                  </button>
-                  <button @click="showEditTag(item)">{{ t('fields.editTag') }}</button>
-                  <button @click="showEditRemark(item)">{{ t('fields.remark') }}</button>
-                  <button @click="showDepositRecord(item)">
-                    {{ t('fields.depositRecord') }}
-                  </button>
-                  <button @click="showGameRecord(item.loginName)">
-                    {{ t('fields.betRecord') }}
-                  </button> -->
-                <!-- </div> -->
               </td>
             </tr>
           </tbody>

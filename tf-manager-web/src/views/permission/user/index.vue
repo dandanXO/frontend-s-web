@@ -244,6 +244,29 @@
             style="width: 350px;"
           />
         </el-form-item>
+        <el-form-item
+          v-if="
+            uiControl.dialogType === 'CREATE' || uiControl.dialogType === 'EDIT'
+          "
+          :label="t('fields.vcallName')"
+          prop="vcallId"
+        >
+          <el-select
+            v-model="form.vcallId"
+            size="small"
+            class="filter-item"
+            style="width: 350px"
+            :placeholder="t('fields.pleaseChoose')"
+            clearable
+          >
+            <el-option
+              v-for="item in netPhone.list"
+              :key="item.name"
+              :label="item.name"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -289,6 +312,11 @@
         <template #default="scope">
           <el-tag v-if="scope.row.attempt === 3 && scope.row.lastAttemptDate === today" type="danger">{{ scope.row.lockStatus = 'LOCKED' }}</el-tag>
           <el-tag v-else type="success">{{ scope.row.lockStatus = 'NORMAL' }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="vcallName" :label="t('fields.vcallName')" width="200">
+        <template #default="scope">
+          {{ scope.row.vcallName }}
         </template>
       </el-table-column>
       <el-table-column prop="roles" :label="t('fields.role')" width="200">
@@ -382,6 +410,7 @@ import {
   unlockUser
 } from '../../../api/user'
 import { getSimpleRoles } from '../../../api/roles'
+import { getNetPhone } from '../../../api/vcall'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import {
@@ -409,6 +438,7 @@ const userTypeList = computed(() => {
 })
 const today = moment(new Date()).format('YYYY-MM-DD');
 const siteList = reactive({ list: [] })
+const netPhone = reactive({ list: [] })
 const userForm = ref(null)
 const uiControl = reactive({
   dialogVisible: false,
@@ -450,7 +480,8 @@ const form = reactive({
   userType:
     LOGIN_USER_TYPE.value === TENANT.value ? LOGIN_USER_TYPE.value : null,
   queryRestriction: null,
-  queryNumber: 10
+  queryNumber: 10,
+  vcallId: null,
 })
 
 const validateconfirm = (rule, value, callback) => {
@@ -542,6 +573,7 @@ function showDialog(type) {
       LOGIN_USER_TYPE.value === TENANT.value ? LOGIN_USER_TYPE.value : null
     form.queryRestriction = null
     form.queryNumber = 10
+    form.vcallId = null;
     uiControl.dialogTitle = t('fields.addUser')
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editUser')
@@ -564,10 +596,15 @@ function showEdit(user) {
   nextTick(() => {
     for (const key in user) {
       if (Object.keys(form).find(k => k === key)) {
-        form[key] = user[key]
+        if (key === 'vcallId' && user[key] === 0) {
+          form[key] = null
+        } else {
+          form[key] = user[key]
+        }
       }
     }
-    form.id = user.id
+    form.id = user.id;
+    // console.log(form);
   })
 }
 
@@ -661,6 +698,11 @@ async function loadSites() {
   siteList.list = site
 }
 
+async function loadNetPhone() {
+  const { data: ret } = await getNetPhone()
+  netPhone.list = ret
+}
+
 function toSiteName(row, column, cellValue, index) {
   if (row.siteId) {
     return siteList.list.find(site => site.id === row.siteId).siteName
@@ -688,7 +730,7 @@ watch(
     if (uiControl.dialogType === 'CREATE') {
       form.roles = null
     } else if (uiControl.dialogType === 'EDIT') {
-      if (oldValue && value !== oldValue) {
+      if (oldValue && value && value !== oldValue) {
         form.roles = null;
       }
     }
@@ -717,6 +759,7 @@ onMounted(async () => {
   await loadRoles()
   loadUser()
   loadSites()
+  loadNetPhone()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     uiControl.userTypeSelect = true
     uiControl.siteSelectVisible = false

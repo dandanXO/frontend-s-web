@@ -6,11 +6,17 @@
         v-for="nav in filteredNavigations"
         :key="nav.code"
         @click="nav.path ? router.push(nav.path) : $emit('loadModal', nav.label, nav.code, nav.gameCode)"
+        :class="nav.underMaintenance === true ? 'maintenance' : ''"
       >
-        <img
-          class="plat-icon"
-          :src="require('../../assets/lottery/logo_' + nav.icon + '.png')"
-        />
+        <div class="maintenance-box" v-if="nav.underMaintenance === true">
+          <p>维护中</p>
+          <p v-if="nav.maintenanceStartTime && nav.maintenanceEndTime" class="small-size">
+            维护时间: {{ moment(nav.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}-
+            {{ moment(nav.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+          </p>
+        </div>
+
+        <img class="plat-icon" :src="require('../../assets/lottery/logo_' + nav.icon + '.png')" />
 
         <p class="platform-title">{{ nav.label }}</p>
 
@@ -22,12 +28,10 @@
 
 <script>
 import { defineComponent, ref, onMounted, computed } from "vue";
-import {
-  getPlatformListDisplay,
-  getLoggedInPlatformList
-} from "@/api/platform/platform";
+import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
+import moment from "moment";
 
 export default defineComponent({
   setup() {
@@ -63,28 +67,25 @@ export default defineComponent({
     const platformsList = ref([]);
     const platformsListDisplay = ref([]);
     const getPlatList = () => {
-      if (store.memberType === "TEST") {
+      if (store.token) {
         getLoggedInPlatformList().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("LOTTERY")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("LOTTERY"));
         });
       } else {
         getPlatformListDisplay().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("LOTTERY")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("LOTTERY"));
         });
       }
     };
     const filteredNavigations = computed(() => {
-      return navigations.filter((nav) =>
-        platformsListDisplay.value.some(
-          (platform) => platform.code === nav.code
-        )
-      );
+      return navigations
+        .filter((nav) => platformsListDisplay.value.some((platform) => platform.code === nav.code))
+        .map((nav) => ({
+          ...nav,
+          ...platformsListDisplay.value.find((platform) => platform.code === nav.code)
+        }));
     });
 
     onMounted(() => {
@@ -94,7 +95,8 @@ export default defineComponent({
     return {
       filteredNavigations,
       getPlatList,
-      router
+      router,
+      moment
     };
   }
 });

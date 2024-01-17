@@ -217,6 +217,19 @@
         </el-form-item>
       </el-col>
     </el-row>
+    <el-form-item :label="t('fields.param')" prop="param">
+      <div v-for="(item, index) in param" :key="index">
+        <el-input style="width: 170px; margin-top: 5px;" v-model="item.key" /> : <el-input style="width: 170px " v-model="item.value" />
+        <el-button v-if="index === param.length - 1" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
+                   @click="addParam()" plain
+        >{{ t('fields.add') }}
+        </el-button>
+        <el-button v-else icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
+                   @click="delParam(index)" plain
+        >{{ t('fields.delete') }}
+        </el-button>
+      </div>
+    </el-form-item>
     <el-form-item :label="t('fields.content')" prop="pageContent">
       <!-- editor here -->
       <Editor v-model:value="form.pageContent" @input="getInput" />
@@ -360,6 +373,7 @@ const store = useStore()
 const site = ref(null)
 const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
 const promoForm = ref(null)
+const param = ref([]);
 
 const form = reactive({
   id: null,
@@ -381,6 +395,7 @@ const form = reactive({
   createTime: null,
   createBy: null,
   hasPromo: false,
+  param: null,
 })
 
 const uiControl = reactive({
@@ -513,6 +528,7 @@ function getInput(value) {
 function create() {
   promoForm.value.validate(async valid => {
     if (valid) {
+      form.param = constructParam();
       await createPromoPages(form)
       // redirect to promotion pages
       back()
@@ -524,12 +540,34 @@ function create() {
 function edit() {
   promoForm.value.validate(async valid => {
     if (valid) {
+      form.param = constructParam();
       await updatePromoPages(form)
       // redirect to promotion pages
       back()
       ElMessage({ message: t('message.editSuccess'), type: 'success' })
     }
   })
+}
+
+function addParam() {
+  param.value.push({
+    key: "",
+    value: ""
+  })
+}
+
+function delParam(index) {
+  param.value.splice(index, 1);
+}
+
+function constructParam() {
+  const json = {};
+  Object.values(param.value).forEach((item) => {
+    if (item.key) {
+      json[item.key] = item.value;
+    }
+  });
+  return JSON.stringify(json);
 }
 
 function submit() {
@@ -567,6 +605,16 @@ async function loadForm(id, siteId) {
     promoArr.forEach(element => {
       selected.promoTypeChecked.push(element)
     })
+    param.value = [];
+    if (form.param) {
+      Object.entries(JSON.parse(form.param)).forEach(([key, value]) => {
+        const json = {};
+        json.key = key;
+        json.value = value;
+        param.value.push(json);
+      })
+    }
+    addParam();
   })
 }
 
@@ -652,7 +700,6 @@ function submitImage() {
   }
   uiControl.imageSelectionVisible = false
 }
-// test
 onMounted(() => {
   console.log('new page ')
   loadSites()
@@ -662,6 +709,8 @@ onMounted(() => {
   if (route.name.includes('Edit')) {
     uiControl.titleDisable = true
     loadForm(route.params.id, route.params.siteId)
+  } else {
+    addParam()
   }
 })
 </script>

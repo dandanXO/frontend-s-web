@@ -83,9 +83,40 @@ export default boot(({ app, router }) => {
     return Promise.reject(error);
   };
 
+  async function refreshTokenAndRetry(errorresp) {
+    Notify.create({
+      spinner: true,
+      type: "warning",
+      timeout: 1000,
+      position: "top",
+      message: "Refreshing..."
+    });
+    // debugger;
+    const originalRequest = errorresp.config;
+    const res = await api.post("/member/token/refresh");
+    // console.log(res);
+    SessionStorage.set("TOKEN", res.data);
+    LocalStorage.set("TOKEN", res.data);
+    store.token = res.data;
+    originalRequest.headers.token = store.token;
+
+    return new Promise((resolve, reject) => {
+      // 在这里可以修改原始请求的配置，例如添加新的令牌
+      // 重新发起请求
+      axios(originalRequest)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  }
+
   // const route = useRoute();
   // const router = useRouter();
   const onResponse = (response) => {
+    // debugger;
     Loading.show();
     let res = response.data;
     if (typeof response.data === "string") {
@@ -94,6 +125,8 @@ export default boot(({ app, router }) => {
 
     if (res.code !== ResponseCode.SUCCESS) {
       Loading.hide();
+      const messageTranslated = errorMessages[res.code] || "Error";
+
       if (res.code === ResponseCode.ERROR_SYSTEM) {
         return res;
       }
@@ -109,6 +142,14 @@ export default boot(({ app, router }) => {
       if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
         location.reload();
       } else {
+        if (
+          res.code === ResponseCode.ERROR_NAME_EXIST ||
+          res.code === ResponseCode.ERROR_TOKEN_LOGGED ||
+          res.code === ResponseCode.ERROR_TOKEN_EXPIRED
+        ) {
+          // debugger;
+          return refreshTokenAndRetry(response);
+        }
         if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
           return Dialog.create({
             class: "login-card",
@@ -121,18 +162,6 @@ export default boot(({ app, router }) => {
             router.push("/login");
           });
         }
-        if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED) {
-          SessionStorage.remove("TOKEN");
-          LocalStorage.remove("TOKEN");
-          window.location.href = "/";
-        }
-        if (res.code === ResponseCode.ERROR_TOKEN_LOGGED) {
-          SessionStorage.remove("TOKEN");
-          LocalStorage.remove("TOKEN");
-          window.location.href = "/";
-        }
-
-        const messageTranslated = errorMessages[res.code] || "Error";
 
         Notify.create({
           type: "negative",

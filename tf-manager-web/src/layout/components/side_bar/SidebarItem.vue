@@ -58,7 +58,11 @@ import { isExternal } from "@/utils/validate";
 import SidebarItemLink from "./SidebarItemLink.vue";
 import { useStore } from "../../../store";
 import moment from "moment";
-import { getMemberWithdrawRecordApply, getMemberWithdrawRecordBeforePaid, getMemberWithdrawRecordPay } from "../../../api/member-withdraw-record";
+import {
+  getMemberWithdrawRecordApply,
+  getMemberWithdrawRecordBeforePaid,
+  getMemberWithdrawRecordPay
+} from "../../../api/member-withdraw-record";
 import { useI18n } from "vue-i18n";
 
 export default defineComponent({
@@ -81,17 +85,18 @@ export default defineComponent({
   },
   setup(props) {
     // eslint-disable-next-line
-    const { t } = useI18n();
+    const {t} = useI18n();
     const startDate = new Date();
     startDate.setDate(startDate.getDate());
     const defaultStartDate = convertDate(startDate);
     const defaultEndDate = convertDate(new Date());
     const hasTips = ref(false);
     const menu = reactive({
-      upperLevelWithdraw: ['Withdrawal Management', 'Withdrawal Process'],
+      upperLevelWithdraw: ['Withdrawal Management', 'Withdrawal Process', 'Withdrawal Auto Process'],
       withdraw: 'Applying',
       beforePaid: 'To be paid',
-      payment: 'Payment on going'
+      payment: 'Payment on going',
+      autoWithdraw: 'AutoWithdraw Under review',
     })
 
     const alwaysShowRootMenu = computed(() => {
@@ -156,24 +161,20 @@ export default defineComponent({
     const spliceSocket = (event) => {
       const socket = JSON.parse(JSON.stringify(useStore().state.socket.event));
       socket.forEach(e => {
-        if (e.event === event) {
+        if (e.removeEvent === event) {
           useStore().state.socket.event.splice(useStore().state.socket.event.indexOf(e), 1);
-          sessionStorage.setItem(e.event, 0);
+          sessionStorage.setItem(event, 0);
         }
       });
     }
 
-    const checkOutstandingWithdraw = async() => {
+    const checkOutstandingWithdraw = async () => {
       const query = checkQuery();
       const { data: ret } = await getMemberWithdrawRecordApply(query);
-      if (ret.records.length === 0) {
-        spliceSocket('WITHDRAW');
-      } else {
-        sessionStorage.setItem("WITHDRAW", ret.records.length);
-      }
+      sessionStorage.setItem("WITHDRAW", ret.records.length);
     };
 
-    const checkOutstandingBeforePaid = async() => {
+    const checkOutstandingBeforePaid = async () => {
       const query = checkQuery();
       const { data: ret } = await getMemberWithdrawRecordBeforePaid(query);
       if (ret.records.length === 0) {
@@ -183,7 +184,7 @@ export default defineComponent({
       }
     };
 
-    const checkOutstandingPayment = async() => {
+    const checkOutstandingPayment = async () => {
       const query = checkQuery();
       const { data: ret } = await getMemberWithdrawRecordPay(query);
       if (ret.records.length === 0) {
@@ -207,29 +208,30 @@ export default defineComponent({
       checkTips();
     }, { deep: true });
 
-    const checkTips = async() => {
-      if (menu.upperLevelWithdraw.includes(props.item.name)) {
+    const checkTips = async () => {
+      const menuItem = props.item.name;
+      if (menu.upperLevelWithdraw.includes(menuItem)) {
         if ((sessionStorage.getItem('PAYMENT') && parseInt(sessionStorage.getItem('PAYMENT')) !== 0) ||
-        (sessionStorage.getItem('WITHDRAW') && parseInt(sessionStorage.getItem('WITHDRAW')) !== 0) ||
-        (sessionStorage.getItem('BEFORE_PAID') && parseInt(sessionStorage.getItem('BEFORE_PAID')) !== 0)) {
+          (sessionStorage.getItem('WITHDRAW') && parseInt(sessionStorage.getItem('WITHDRAW')) !== 0) ||
+          (sessionStorage.getItem('BEFORE_PAID') && parseInt(sessionStorage.getItem('BEFORE_PAID')) !== 0)) {
           hasTips.value = true;
         } else {
           hasTips.value = false;
         }
       } else {
-        if (menu.payment === props.item.name) {
+        if (menu.payment === menuItem) {
           if (sessionStorage.getItem('PAYMENT') && parseInt(sessionStorage.getItem('PAYMENT')) !== 0) {
             hasTips.value = true;
           } else {
             hasTips.value = false;
           }
-        } else if (menu.withdraw === props.item.name) {
+        } else if (menu.withdraw === menuItem || menu.autoWithdraw === menuItem) {
           if (sessionStorage.getItem('WITHDRAW') && parseInt(sessionStorage.getItem('WITHDRAW')) !== 0) {
             hasTips.value = true;
           } else {
             hasTips.value = false;
           }
-        } else if (menu.beforePaid === props.item.name) {
+        } else if (menu.beforePaid === menuItem) {
           if (sessionStorage.getItem('BEFORE_PAID') && parseInt(sessionStorage.getItem('BEFORE_PAID')) !== 0) {
             hasTips.value = true;
           } else {
@@ -251,7 +253,7 @@ export default defineComponent({
       return path.resolve(props.basePath, routePath);
     };
 
-    onMounted(async() => {
+    onMounted(async () => {
       await checkTips();
     })
 
@@ -298,6 +300,7 @@ export default defineComponent({
 
     ::v-deep(.el-sub-menu__title) {
       display: flex;
+
       & > span {
         display: inline-block;
         padding-left: 5px;
@@ -308,9 +311,9 @@ export default defineComponent({
 }
 
 .nest-menu {
-  .el-sub-menu{
-    ::v-deep(.el-sub-menu__title){
-      background-color: #1f2d3d!important;
+  .el-sub-menu {
+    ::v-deep(.el-sub-menu__title) {
+      background-color: #1f2d3d !important;
     }
   }
 }
@@ -322,10 +325,12 @@ svg {
 .simple-mode {
   .el-menu-item {
     display: flex;
+
     span {
       margin-left: 20px;
     }
   }
+
   ::v-deep(.el-sub-menu__title) {
     display: flex;
 

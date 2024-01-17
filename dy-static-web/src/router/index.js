@@ -98,11 +98,11 @@ const routes = [
         name: "referCode",
         component: () => {}
       },
-      // {
-      //   path: "/privilege/invite",
-      //   name: "invite",
-      //   component: () => import("../views/PrivilegeInvite.vue")
-      // },
+      {
+        path: "/privilege/invite",
+        name: "invite",
+        component: () => import("../views/PrivilegeInvite.vue")
+      },
       {
         path: "/center",
         name: "center",
@@ -120,17 +120,18 @@ const routes = [
         name: "agentCode",
         component: () => {}
       }
+      // {
+      //   path: "/test",
+      //   name: "test",
+      //   component: () => import(/* webpackChunkName: "depositLoading" */ "../components/TestIframe.vue")
+      // },
     ]
+  },
+  {
+    path: "/:catchAll(.*)*",
+    redirect: "/",
+    component: () => {}
   }
-  // {
-  //   path: '/game',
-  //   name: 'game',
-  //   component: LayoutView,
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   // component: () => import(/* webpackChunkName: "Game" */ '../views/GameView.vue'
-  // }
 ];
 
 const router = createRouter({

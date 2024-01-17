@@ -27,6 +27,8 @@ default:
 
 .build-projects:
   stage: build
+  variables:
+    NODE_OPTIONS: "--max-old-space-size=2048"
   cache:
     paths:
       - node_modules
@@ -35,6 +37,7 @@ default:
     - cd $PROJECT
     - npm install
     - npm install -g @quasar/cli
+    - export NODE_OPTIONS="$NODE_OPTIONS" 
     - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "test" ]; then npm run build:test; else npm run build:prod; fi
   artifacts:
    untracked: true
@@ -104,6 +107,13 @@ deploy-tha-download:
 
 #===============================================================================================
 
+deploy-dy-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: dy-download
+
+#===============================================================================================
+
 deploy-xf-maintenance:
   extends: .s3-deploy
   variables:
@@ -129,6 +139,7 @@ build-tf-manager-web:
   extends: .build-projects
   variables:
     PROJECT: tf-manager-web
+    NODE_OPTIONS: "--max-old-space-size=8192"
 
 build-image-tf-manager-web:
   extends: .docker-build

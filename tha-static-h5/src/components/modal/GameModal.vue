@@ -20,15 +20,29 @@
           <q-btn v-if="drawerVisible" flat @click="drawerVisible = !drawerVisible" round dense icon="read_more" />
         </div>
 
-        <iframe
-          @load="loadGame()"
-          v-show="!logoShow"
-          :src="src"
-          id="game-iframe"
-          scrolling="no"
-          frameborder="0"
-          class="game-iframe"
-        ></iframe>
+        <template v-if="isInnerHtmlSrc === false">
+          <iframe
+            @load="loadGame()"
+            v-show="!logoShow"
+            :src="src"
+            id="game-iframe"
+            scrolling="auto"
+            frameborder="0"
+            class="game-iframe"
+          ></iframe>
+        </template>
+        <template v-else>
+          <iframe
+            @load="loadGame()"
+            v-show="!logoShow"
+            v-bind:srcdoc="src"
+            id="game-iframe"
+            scrolling="auto"
+            frameborder="0"
+            class="game-iframe"
+          ></iframe>
+        </template>
+
         <q-drawer v-model="drawerVisible" :breakpoint="500" overlay bordered class="bg-primary" side="right">
           <div class="q-pa-sm q-pt-sm">
             <div>
@@ -167,6 +181,7 @@ const visible = ref(false);
 const visibleComingSoon = ref(false);
 const src = ref("");
 const logoShow = ref(true);
+const isInnerHtmlSrc = ref(false);
 const title = ref("");
 
 const transferInfo = ref({
@@ -216,6 +231,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
   localStorage.removeItem("isOpenFromAccount");
   localStorage.removeItem("isBacked");
+
+  isInnerHtmlSrc.value = false;
   // window.addEventListener(
   //   "message",
   //   (event) => {
@@ -286,8 +303,21 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           params: apiParams
         })
         .then((ret) => {
-          const res = ret.data;
-          src.value = res.data;
+          let srcDoc = ret.data.data;
+          var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
+          if (firstFourChars === "http") {
+            src.value = srcDoc;
+          } else {
+            isInnerHtmlSrc.value = true;
+
+            const scriptEndTag = "</" + "script>";
+            srcDoc = srcDoc
+              .replace(/<\/script>/g, scriptEndTag)
+              .replace(/\\\"/g, '"')
+              .replace(/\n/g, "");
+
+            src.value = srcDoc;
+          }
         });
     } else {
       router.push({ path: "/login", query: { redirect: route.path } });

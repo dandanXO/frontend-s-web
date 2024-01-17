@@ -132,6 +132,7 @@
           </template>
           <span v-if="memberDetail.telephone !== null">{{ memberDetail.telephone }}</span>
           <span v-if="memberDetail.telephone === null">-</span>
+
           <el-button
             type="info"
             size="mini"
@@ -142,6 +143,25 @@
           >
             {{ t('fields.show') }}
           </el-button>
+
+          <el-button
+            style="margin-left: 5px"
+            icon="el-icon-phone"
+            size="mini"
+            type="success"
+            v-if="memberDetail.telephone !== null && uiControl.showCall"
+            v-permission="['sys:member:call:phone']"
+            @click="callPhone(memberDetail.id, memberDetail.siteId)"
+          />
+          <el-button
+            style="margin-left: 5px"
+            icon="el-icon-video-pause"
+            size="mini"
+            type="danger"
+            v-if="memberDetail.telephone !== null && uiControl.showCall1"
+            v-permission="['sys:member:stop:phone']"
+            @click="stopPhone(memberDetail.id, memberDetail.siteId)"
+          />
         </el-descriptions-item>
         <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context">
           <template #label>
@@ -542,6 +562,22 @@
             </div>
           </el-descriptions-item>
         </el-descriptions>
+        <el-descriptions :column="3" style="margin-top: 10px">
+          <el-descriptions-item :label="t('fields.bet')">
+            <div style="display: inline-block;" v-loading="loading.total">
+              <div class="balance">
+                $ <span v-formatter="{data: memberDetail.totalBet,type: 'money'}" />
+              </div>
+            </div>
+          </el-descriptions-item>
+          <el-descriptions-item :label="t('fields.payout')">
+            <div style="display: inline-block;" v-loading="loading.total">
+              <div class="balance">
+                $ <span v-formatter="{data: memberDetail.totalPayout,type: 'money'}" />
+              </div>
+            </div>
+          </el-descriptions-item>
+        </el-descriptions>
       </div>
     </el-card>
 
@@ -809,6 +845,7 @@ import { useStore } from "../../../../../store";
 import { AppActionTypes } from '@/store/modules/app/action-types'
 import { useI18n } from "vue-i18n";
 import { changeNewAffilaite } from "../../../../../api/member-affiliate";
+import { callTelephone, stopTelephone } from "../../../../../api/vcall";
 
 const store = useStore()
 export default defineComponent({
@@ -827,7 +864,9 @@ export default defineComponent({
     const uiControl = reactive({
       dialogVisible: false,
       dialogTitle: "",
-      dialogType: ""
+      dialogType: "",
+      showCall: false,
+      showCall1: false,
     });
     const route = useRoute()
     const site = reactive({
@@ -1433,6 +1472,24 @@ export default defineComponent({
       loading.affiliateInfo = false;
     }
 
+    async function callPhone(id, site) {
+      var res = await callTelephone(id, site);
+      if (res.data === 'true') {
+        ElMessage({ message: t('message.success'), type: "success" });
+      } else {
+        ElMessage({ message: t('fields.fail'), type: "fail" });
+      }
+    }
+
+    async function stopPhone(id, site) {
+      var res = await stopTelephone(id, site);
+      if (res.data === 'true') {
+        ElMessage({ message: t('message.success'), type: "success" });
+      } else {
+        ElMessage({ message: t('fields.fail'), type: "fail" });
+      }
+    }
+
     onMounted(async () => {
       loading.accountInfo = true;
       loading.affiliateInfo = true;
@@ -1460,6 +1517,10 @@ export default defineComponent({
 
       await loadBalance();
       loading.fundingInfo = false;
+      if (site.id === '3') {
+        uiControl.showCall = true;
+        uiControl.showCall1 = true;
+      }
     });
 
     return {
@@ -1535,7 +1596,9 @@ export default defineComponent({
       logoutPlayer,
       affForm,
       affFormRules,
-      changeAffiliate
+      changeAffiliate,
+      callPhone,
+      stopPhone
     };
   }
 });
@@ -1592,7 +1655,7 @@ export default defineComponent({
   flex: 1;
 
   * {
-    // add back paddings supposed to be present
+    // add back paddings supposed to be present 1
     padding-top: 10px;
     padding-bottom: 10px;
     display: flex;

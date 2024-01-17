@@ -261,8 +261,8 @@ const download_type = ref("android");
   width: 95%;
   margin: 0 auto;
   min-height: 100vh;
-  background: url("../assets/images/common/bg-img.png") no-repeat top center;
-  background-size: cover;
+  // background: url("../assets/images/common/bg-img.jpg") no-repeat top center;
+  // background-size: cover;
 
   .getapp {
     display: flex;

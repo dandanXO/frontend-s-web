@@ -115,9 +115,9 @@
 <script setup>
 import { onMounted, reactive } from 'vue';
 import { useStore } from "@/store";
-import moment from 'moment';
 import { getMemberDepositRecords, getTotal } from '../../../api/affiliate-deposit-record';
 import { useI18n } from "vue-i18n";
+import { getShortcuts, convertDateToStart, convertDateToEnd, disabledDate } from '@/utils/datetime';
 
 const store = useStore();
 const { t } = useI18n();
@@ -135,74 +135,12 @@ const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
   new Date(2000, 1, 1, 23, 59, 59),
 ];
-const shortcuts = [
-  {
-    text: t('fields.today'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(
-        moment(start)
-          .startOf('day')
-          .format('x')
-      )
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.yesterday'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'days').startOf('day').format('x'));
-      end.setTime(moment(end).subtract(1, 'days').endOf('day').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.thisWeek'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).startOf('isoWeek').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.lastWeek'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'weeks').startOf('isoWeek').format('x'));
-      end.setTime(moment(end).subtract(1, 'weeks').endOf('isoWeek').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.thisMonth'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).startOf('month').format('x'));
-      return [start, end];
-    }
-  },
-  {
-    text: t('fields.lastMonth'),
-    value: () => {
-      const end = new Date();
-      const start = new Date();
-      start.setTime(moment(start).subtract(1, 'months').startOf('month').format('x'));
-      end.setTime(moment(end).subtract(1, 'months').endOf('month').format('x'));
-      return [start, end];
-    }
-  }
-];
+const shortcuts = getShortcuts(t);
 
 const request = reactive({
   size: 20,
   current: 1,
-  depositDate: [convertStartDate(new Date()), convertDate(new Date())],
+  depositDate: [convertDateToStart(new Date()), convertDateToEnd(new Date())],
   loginName: null,
   status: null
 });
@@ -215,20 +153,8 @@ const page = reactive({
   totalDeposit: 0
 });
 
-function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD HH:mm:ss');
-}
-
-function convertStartDate(date) {
-  return moment(date).startOf('day').format('YYYY-MM-DD HH:mm:ss');
-}
-
-function disabledDate(time) {
-  return time.getTime() > new Date().getTime();
-}
-
 function resetQuery() {
-  request.depositDate = [convertStartDate(new Date()), convertDate(new Date())];
+  request.depositDate = [convertDateToStart(new Date()), convertDateToEnd(new Date())];
   request.loginName = null;
   request.status = null;
 }

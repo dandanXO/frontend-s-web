@@ -4,10 +4,10 @@
       <template v-for="(item, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(index)" :class="['deposit-item', item.isActive && 'active']">
           <div class="deposit-icon">
-            <img
-              :src="require(`../assets/images/index/popout/deposit-coin-${item.amount}.png`)"
-              :alt="item.amount + ' Coin'"
-            />
+            <!--            <img-->
+            <!--              :src="require(`../assets/images/index/popout/deposit-coin-${item.amount}.png`)"-->
+            <!--              :alt="item.amount + ' Coin'"-->
+            <!--            />-->
             <div class="deposit-hot-label" v-if="isUpi2Active">+₹{{ item.hotLabel }}</div>
           </div>
           <div class="deposit-amt">{{ item.amount }}</div>
@@ -200,7 +200,7 @@ const checkNewUser = () => {
       message: "Please fill in your personal details",
       icon: "report_problem"
     });
-    router.push(`/account`);
+    router.push(`/account/profile`);
   }
 };
 
@@ -697,7 +697,7 @@ onMounted(() => {
 
   .deposit-item {
     .deposit-icon {
-      background-image: url(../assets/images/index/popout/deposit-item-frame.png);
+      // background-image: url(../assets/images/index/popout/deposit-item-frame.png);
       background-position: top center;
       background-size: contain;
       background-repeat: no-repeat;
@@ -717,14 +717,14 @@ onMounted(() => {
     }
 
     &.active > .deposit-icon {
-      background-image: url(../assets/images/index/popout/deposit-item-frame-active.png);
+      // background-image: url(../assets/images/index/popout/deposit-item-frame-active.png);
     }
 
     .deposit-hot-label {
       position: absolute;
       top: 0;
       right: 0;
-      background-image: url(../assets/images/index/popout/hot-label.png);
+      // background-image: url(../assets/images/index/popout/hot-label.png);
       background-size: 100%;
       background-repeat: no-repeat;
       background-position: center center;
@@ -739,7 +739,7 @@ onMounted(() => {
     }
 
     .deposit-amt {
-      background-image: url(../assets/images/index/popout/deposit-item-frame-amount.png);
+      // background-image: url(../assets/images/index/popout/deposit-item-frame-amount.png);
       background-position: center center;
       background-size: contain;
       background-repeat: no-repeat;
@@ -808,7 +808,7 @@ onMounted(() => {
       position: relative;
       &:after {
         content: "";
-        background-image: url(../assets/images/index/popout/label-discount.png);
+        // background-image: url(../assets/images/index/popout/label-discount.png);
         background-repeat: no-repeat;
         display: block;
         position: absolute;
@@ -835,7 +835,7 @@ onMounted(() => {
   width: 180px;
   height: 60px;
   transition: 0.3s all;
-  background-image: url(../assets/images/index/popout/btn-go.png);
+  // background-image: url(../assets/images/index/popout/btn-go.png);
   color: #ffffff;
   margin: auto;
 

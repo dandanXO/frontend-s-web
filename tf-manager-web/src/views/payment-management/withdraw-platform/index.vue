@@ -23,6 +23,20 @@
             :value="item.value"
           />
         </el-select>
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -151,7 +165,24 @@
             </el-select>
           </el-form-item>
         </el-row>
-
+        <el-row>
+          <el-form-item :label="t('fields.feeRate')" prop="fee">
+            <el-input-number
+              v-model="form.fee"
+              :precision="3"
+              :step="0.10"
+              :min="0"
+              :max="1"
+              :controls="false"
+              class="form-input"
+            />
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-form-item :label="t('fields.subtractAmount')" prop="subtractAmount">
+            <el-input-number v-model="form.subtractAmount" class="form-input" :controls="false" />
+          </el-form-item>
+        </el-row>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false" class="footer_btn">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit" class="footer_btn">{{ t('fields.confirm') }}</el-button>
@@ -280,7 +311,8 @@ const request = reactive({
   size: 30,
   current: 1,
   name: null,
-  status: null
+  status: null,
+  siteId: null,
 });
 const copyForm = reactive({
   name: null,
@@ -302,6 +334,8 @@ const form = reactive({
   callbackUrl: null,
   balanceUrl: null,
   type: "",
+  subtractAmount: 0,
+  fee: 0,
   status: true
 });
 const formRules = reactive({
@@ -350,10 +384,7 @@ async function loadPayTypes() {
 }
 
 function filterPayTypeByCurrency(siteId) {
-  console.log('siteId', siteId)
   const currentSite = siteList.list.find(s => s.id === siteId)
-  console.log('siteList.list', siteList.list)
-  console.log('currentSite', currentSite)
   const currencyCodeList = currentSite.currency.split(',').map(currencyName => currencyName)
   list.siteCurrencyIds = [
     ...currencyCodeList.map(currencyName => {
@@ -446,6 +477,7 @@ onMounted(async() => {
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     form.siteId = site.value.id;
+    request.siteId = site.value.id
   }
   await loadWithdrawPlatform();
   await loadCurrencyNames();

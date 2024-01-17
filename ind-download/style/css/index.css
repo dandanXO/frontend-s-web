@@ -24495,3 +24495,27 @@ body:not(.P9KVBf) .P9KVBf .dzkqwc:not(:disabled) {
     top: calc(50% - 28px);
     transform: rotate(-180deg);
 }
+
+.title-main{
+    display:flex;
+    align-items:baseline;
+}
+.title-main span{
+    padding-left: 15px;
+    font-size: 20px;
+    padding-bottom: 5px;
+}
+
+@media (max-width: 600px){
+    .title-main{
+        flex-direction: column;
+    }
+    .title-main span {
+        padding-left: 0px;
+    }
+}
+
+.disabled-btn{
+    pointer-events: none;
+    background-color: grey !important;
+ }

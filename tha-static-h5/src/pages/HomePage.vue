@@ -1,40 +1,43 @@
 <template>
   <div class="main-section">
-    <q-carousel
-      :class="!$q.screen.gt.sm ? 'home-banner-h5' : 'home-banner-web'"
-      autoplay
-      navigation
-      v-model="slide"
-      swipeable
-      infinite
-    >
-      <template v-slot:navigation-icon="{ active, onClick }">
-        <q-btn padding="3px 10px" v-if="active" size="xs" color="brand" @click="onClick" />
-        <q-btn padding="3px 10px" v-else size="xs" color="white" @click="onClick" />
-      </template>
+    <div v-for="e in snowCount" :key="`snow-${e}`" class="snow"></div>
 
-      <!--      <q-carousel-slide-->
-      <!--        name="mainSlide"-->
-      <!--        class="column no-wrap flex-center"-->
-      <!--        :img-src="-->
-      <!--          !$q.screen.gt.sm-->
-      <!--            ? require('../assets/images/index/main-home-banner-mobile.jpg')-->
-      <!--            : require('../assets/images/index/main-home-banner-desktop.jpg')-->
-      <!--        "-->
-      <!--        @click="gotoPromo(0)"-->
-      <!--      >-->
-      <!--        <h1 class="main-slide-txt">ออนไลน์คาสิโนที่ไว้ใจได้-Jolly88</h1>-->
-      <!--      </q-carousel-slide>-->
+    <div class="home-banner-wrapper">
+      <q-carousel
+        :class="!$q.screen.gt.sm ? 'home-banner-h5' : 'home-banner-web'"
+        autoplay
+        navigation
+        v-model="slide"
+        swipeable
+        infinite
+      >
+        <template v-slot:navigation-icon="{ active, onClick }">
+          <q-btn padding="3px 10px" v-if="active" size="xs" color="brand" @click="onClick" />
+          <q-btn padding="3px 10px" v-else size="xs" color="white" @click="onClick" />
+        </template>
 
-      <q-carousel-slide
-        v-for="(banner, i) in banners"
-        :key="i"
-        :name="i"
-        class="column no-wrap flex-center"
-        :img-src="!$q.screen.gt.sm ? imgURL + banner.mobileImageUrl : imgURL + banner.desktopImageUrl"
-        @click="gotoPromo(banner)"
-      ></q-carousel-slide>
-    </q-carousel>
+        <!--      <q-carousel-slide-->
+        <!--        name="mainSlide"-->
+        <!--        class="column no-wrap flex-center"-->
+        <!--        :img-src="-->
+        <!--          !$q.screen.gt.sm-->
+        <!--            ? require('../assets/images/index/main-home-banner-mobile.jpg')-->
+        <!--            : require('../assets/images/index/main-home-banner-desktop.jpg')-->
+        <!--        "-->
+        <!--        @click="gotoPromo(0)"-->
+        <!--      >-->
+        <!--        <h1 class="main-slide-txt">ออนไลน์คาสิโนที่ไว้ใจได้-Jolly88</h1>-->
+        <!--      </q-carousel-slide>-->
+        <q-carousel-slide
+          v-for="(banner, i) in banners"
+          :key="i"
+          :name="i"
+          class="column no-wrap flex-center"
+          :img-src="!$q.screen.gt.sm ? imgURL + banner.mobileImageUrl : imgURL + banner.desktopImageUrl"
+          @click="gotoPromo(banner)"
+        ></q-carousel-slide>
+      </q-carousel>
+    </div>
 
     <div class="midd">
       <div class="station-notice-wrapper">
@@ -60,6 +63,7 @@
           :class="currentSelectedMenu == e.name ? 'active-board' : ''"
           @click="switchMenu(e.name, i)"
         >
+          <img class="active-flag" :src="require(`../assets/home/game-board-item-bg-active-flag.png`)" />
           <img :src="require(`../assets/images/index/${e.imgName}`)" />
           <span>{{ e.label }}</span>
         </div>
@@ -133,10 +137,49 @@
 
     <Transition>
       <div class="game-grid-lists" id="id-lottery-board" v-if="currentSelectedMenu === 'lottery'">
-        <div v-if="lotteryGames.length === 0" class="coming-soon-div">
+        <div v-if="lotteryGames.length === 0 && !isShow" class="coming-soon-div">
           <img src="../assets/home/coming-soon-img.png" />
           <span>{{ $t("lang.coming_soon") }}</span>
         </div>
+
+        <template v-for="(lotteryGameItem, index) in lotteryGamesList" :key="`lottery-${index}`">
+          <div
+            v-if="!isShow"
+            class="game-item btn-pointer"
+            @click="selectLotteryPlat(lotteryGameItem)"
+          >
+            <div
+              class="platform-img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/home/lottery/${lotteryGameItem.code}.png`)})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"
+            />
+          </div>
+          <div
+            v-if="isShow"
+            class="game-item btn-pointer"
+            @click="playGame(lotteryGameItem.name, 'GPI', lotteryGameItem.code)"
+          >
+            <div
+              class="platform-img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${`${gameImgURL}${lotteryGameItem.icon}`})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"
+            />
+          </div>
+        </template>
       </div>
     </Transition>
     <Transition>
@@ -166,8 +209,6 @@
             }"
           ></div>
         </div>
-
-
       </div>
     </Transition>
     <Transition>
@@ -789,36 +830,67 @@
     </q-card>
   </q-dialog>
 
-  <q-page-sticky v-if="specialInviteBonusEligible" position="right" :offset="[0, 0]">
-    <div class="special-invite-bonus-sticky" @click="redeemSpecialInviteBonus" />
+  <q-page-sticky
+    v-if="showSticky || specialInviteBonusEligible"
+    class="home-sticky-div"
+    position="right"
+    :offset="[0, 0]"
+  >
+    <div v-if="showSticky" class="home-sticky">
+      <!-- <img class="sticky-bear" src="../assets/home/line-bear.png" /> -->
+      <q-btn name="close" height="20" width="20" size="xs" @click="closeLineSticky" class="sticky-close-btn">
+        <q-icon name="close"></q-icon>
+      </q-btn>
+      <div class="sticky-container">
+        <div class="line-title">LINE</div>
+        <img src="../assets/home/line-bg.png" class="line-img" />
+        <div class="line-bottom">line ID:@jolly88</div>
+      </div>
+    </div>
+
+    <div v-if="specialInviteBonusEligible" class="bonus-sticky-box">
+      <div class="special-invite-bonus-sticky" @click="redeemSpecialInviteBonus" />
+    </div>
   </q-page-sticky>
 
   <q-dialog class="special-invite-bonus-popup" width="100%" v-model="specialInviteBonusPopupVisible">
     <div class="special-invite-bonus-container">
       <div class="header-decoration-wrapper">
         <div class="header-decoration">
-          <img class="confetti" src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-confetti.png" width="250" />
-          <img class="money-bags" src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-money-bags.png" width="150" />
+          <img
+            class="confetti"
+            src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-confetti.png"
+            width="250"
+          />
+          <img
+            class="money-bags"
+            src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-money-bags.png"
+            width="150"
+          />
         </div>
       </div>
       <div class="special-invite-bonus-content">
         <div class="title-wrapper">
-          <div class="title">โบนัสพิเศษสำหรับสมาชิกที่ได้รับเชิญ </div>
+          <div class="title">โบนัสพิเศษสำหรับสมาชิกที่ได้รับเชิญ</div>
           <div class="reward-amt">200</div>
         </div>
         <div class="desc-wrapper">
-          <div class="desc-title">
-            ข้อกำหนดและเงื่อนไข
-          </div>
+          <div class="desc-title">ข้อกำหนดและเงื่อนไข</div>
           <div class="desc-content">
-            - โบนัสนี้สามารถ ถอนได้ที่ 2000 บาทเท่านั้น<br>
-            - สามารถแจ้งถอนได้เมื่อยอดเครดิตถึง 2000 บาท<br>
-            - ยอดเงินที่เหลือตจะถูกหักออกทันทีหลังการถอนสำเร็จ<br>
-            - โบนัสนี้ไม่สามารถใช้ซื้อฟรีสปินได้<br>
+            - โบนัสนี้สามารถ ถอนได้ที่ 2000 บาทเท่านั้น
+            <br />
+            - สามารถแจ้งถอนได้เมื่อยอดเครดิตถึง 2000 บาท
+            <br />
+            - ยอดเงินที่เหลือตจะถูกหักออกทันทีหลังการถอนสำเร็จ
+            <br />
+            - โบนัสนี้ไม่สามารถใช้ซื้อฟรีสปินได้
+            <br />
             - บัญชีที่มี IP เดียวกันหรือข้อมูลที่คล้ายกันจะถูกตัดสิทธิ์จากการรับโปรโมชั่นนี้
           </div>
         </div>
-        <div class="special-invite-bonus-popup-confirm-btn" @click="toggleSpecialInviteBonusPopup(false)">{{ $t("lang.confirm") }}</div>
+        <div class="special-invite-bonus-popup-confirm-btn" @click="toggleSpecialInviteBonusPopup(false)">
+          {{ $t("lang.confirm") }}
+        </div>
       </div>
     </div>
   </q-dialog>
@@ -842,7 +914,7 @@
         <router-link to="/promo?id=81">
           <div class="popup-item">
             <span>
-              คลิกเพื่อหมุน รางวัลสูงสุด
+              คลิกเพื่อหมุนวงล้อ รางวัลสูงสุด
               <em>8,880</em>
               และ
               <em>IPHONE</em>
@@ -859,7 +931,7 @@
             </span>
           </div>
         </router-link>
-        <router-link to="/promo?id=76">
+        <!-- <router-link to="/promo?id=76">
           <div class="popup-item">
             <span>
               เลือกรับ
@@ -869,8 +941,8 @@
               ถอนไม่อั้น
             </span>
           </div>
-        </router-link>
-<!--        <router-link to="/promo?id=77">
+        </router-link> -->
+        <!--        <router-link to="/promo?id=77">
           <div class="popup-item">
             <span>
               โบนัส
@@ -892,14 +964,15 @@
             </span>
           </div>
         </router-link>
-<!--        <router-link to="/promo?id=79">
+        <router-link to="/promo?id=76">
           <div class="popup-item">
             <span>
-              ประกันยอดเสีย
-              <em>10,000</em>
+              ฝากครั้งแรกรับ
+              <em>100%-200%</em>
+              เล่นได้ทุกเกมส์ ถอนไม่อั้น
             </span>
           </div>
-        </router-link>-->
+        </router-link>
       </div>
     </div>
   </q-dialog>
@@ -960,6 +1033,8 @@ export default defineComponent({
     // RiUserShared2Line
   },
   setup() {
+    const snowCount = 10;
+
     const $q = useQuasar();
     const { t } = useI18n();
     const ui = useUI();
@@ -981,6 +1056,19 @@ export default defineComponent({
     const route = useRoute();
     const router = useRouter();
     const store = userStore();
+
+    const showSticky = ref(true);
+    const checkSticky = () => {
+      const stickyOff = localStorage.getItem("LINE_STICKY_OFF");
+      if (stickyOff === "true") {
+        showSticky.value = false;
+      }
+    };
+    const closeLineSticky = () => {
+      showSticky.value = false;
+      localStorage.setItem("LINE_STICKY_OFF", "true");
+    };
+
     const mainWallet = computed(() => {
       return store.balance;
     });
@@ -1057,9 +1145,12 @@ export default defineComponent({
 
           favGamesList.value.forEach((element) => {
             element.default = require("../assets/images/games/aviator/default.png");
-            element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${element.platformCode.toLowerCase()}/${
-              element.icon
-            }.png`;
+            if(element.icon.startsWith('3/')){
+              element.icon = `${process.env.IMAGE_CDN}/game/${element.icon}`;
+            }else{
+              element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${element.platformCode.toLowerCase()}/${element.icon}.png`;
+            }
+
           });
         }
       });
@@ -1189,7 +1280,14 @@ export default defineComponent({
     const gameListData = ref([]);
     const fishPlatforms = ref([]);
     const lotteryGames = ref([]);
+    const lotteryGamesMore = ref([]);
+    const lotteryGamesList = computed(() => {
+      if(isShow.value) {
+        return lotteryGamesMore.value;
+      }
 
+      return lotteryGames.value;
+    })
     const gameBoardItemData = [
       { name: "slots", imgName: "home-slot.png", label: t("lang.slot_header") },
       { name: "fish", imgName: "home-fish.png", label: t("lang.fish_header") },
@@ -1217,6 +1315,7 @@ export default defineComponent({
         switchPlat(platformMinigame.value[0], menu);
       } else if (menu === "xfjGames") {
       } else if (menu === "lottery") {
+        switchPlat(lotteryGames.value[0], menu);
       } else if (menu === "esport") {
       }
 
@@ -1288,6 +1387,11 @@ export default defineComponent({
       } else if (menuType === "sport") {
         selectedLiveTab.value = plat.name;
         liveTabs.value = plat.name;
+      } else if (menuType === "lottery") {
+        selectedPlat.code = plat.code;
+        selectedPlat.status = plat.status;
+
+        loadGameList("LOTTERY");
       }
     };
     const clearSearchInput = () => {
@@ -1310,12 +1414,14 @@ export default defineComponent({
       const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
       const code = selectedPlatId.value;
       const gameType = type;
-      const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+      const key = store.hasToken() ? `LOGGED_PLATFORM_GAMES_${code}_${gameType}_${regDevice}` : `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+
+      var platformGamesApiUrl = store.hasToken() ? "/session/loggedInPlatformGames" : "/platformGames";
 
       cached
         .get(key, () =>
           api
-            .get("/platformGames", {
+            .get(platformGamesApiUrl, {
               params: {
                 platformId: code,
                 gameType: gameType,
@@ -1351,8 +1457,11 @@ export default defineComponent({
             });
             let games = [];
             minis.forEach((mini) => {
-              mini.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${mini.code}.png`;
-
+              if(mini.icon.startsWith('3/')){
+                mini.icon = `${process.env.IMAGE_CDN}/game/${mini.icon}`;
+              }else{
+                mini.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${mini.code}.png`;
+              }
               if (mini.name.indexOf("(铜)") > -1 || mini.name.indexOf("(银)") > -1 || mini.name.indexOf("(金)") > -1) {
                 games.push(mini);
               } else {
@@ -1375,12 +1484,17 @@ export default defineComponent({
               }
             });
             // console.log(miniGamesMore.value);
+          } else if (currentSelectedMenu.value === "lottery") {
+            lotteryGamesMore.value = res;
           } else {
             res.forEach((element) => {
               element.default = require("../assets/images/games/aviator/default.png");
-              element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${
-                element.icon
-              }.png`;
+              if(element.icon.startsWith('3/')){
+                element.icon = `${process.env.IMAGE_CDN}/game/${element.icon}`;
+              }else{
+                element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${element.icon}.png`;
+              }
+
             });
             gameListData.value = res;
             gamePage.total = res.length;
@@ -1535,8 +1649,9 @@ export default defineComponent({
         // const info = {
         //   version: "1.0.1"
         // };
-        var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
+        var current_version = parseInt(info.version.replace(/\./g, "") + info.build);
         ui.setVersion(info.version + " " + info.build);
+        // console.log("Current Ver: " + current_version);
 
         // info.version && info.build
         const appType = "ALL";
@@ -1545,8 +1660,9 @@ export default defineComponent({
         console.log(res, ">>res");
         if (res.data.code === 0) {
           var version_info = res.data.data.version;
-          var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
+          var latest_ver_no = parseInt(version_info.replace(/\./g, ""));
           download_url.value = res.data.data.url;
+          // console.log("latest_ver_no Ver: " + latest_ver_no);
 
           // alert(latest_ver_no);
           // console.log(download_url.value);
@@ -1629,43 +1745,47 @@ export default defineComponent({
 
     const checkRedeemSpecialInviteBonusEligiblity = () => {
       if (store.hasToken()) {
-        eventapi.get('/privi/telephone/canRedeem', {
+        eventapi
+          .get("/privi/telephone/canRedeem", {
+            params: {
+              promoCode: "special-invitation-bonus"
+            }
+          })
+          .then((res) => {
+            if (res.data.data === true) {
+              specialInviteBonusEligible.value = true;
+            }
+          });
+      }
+    };
+
+    const redeemSpecialInviteBonus = () => {
+      eventapi
+        .get("/privi/telephone/redeem", {
           params: {
             promoCode: "special-invitation-bonus"
           }
-        }).then((res) => {
-          if(res.data.data === true) {
-            specialInviteBonusEligible.value = true;
-          }
         })
-      }
-    }
+        .then((res) => {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: t("lang.success"),
+            icon: "check_circle_outline"
+          });
 
-    const redeemSpecialInviteBonus = () => {
-      eventapi.get('/privi/telephone/redeem', {
-        params: {
-          promoCode: "special-invitation-bonus"
-        }
-      }).then((res) => {
-        $q.notify({
-          color: "positive",
-          position: "top",
-          message: t("lang.success"),
-          icon: "check_circle_outline"
+          specialInviteBonusAmt.value = res.data.data;
+          toggleSpecialInviteBonusPopup(true);
         });
-
-        specialInviteBonusAmt.value = res.data.data
-        toggleSpecialInviteBonusPopup(true);
-      })
-    }
+    };
 
     const toggleSpecialInviteBonusPopup = (status) => {
-      if(status === false) {
+      if (status === false) {
         specialInviteBonusEligible.value = false;
       }
 
       specialInviteBonusPopupVisible.value = status;
-    }
+    };
 
     onMounted(() => {
       checkPlatform();
@@ -1673,6 +1793,7 @@ export default defineComponent({
       loadHomeData();
       getAppDownloadUrl();
       getVersionNo();
+      checkSticky();
 
       checkSpinWheelPromo();
       checkRedeemSpecialInviteBonusEligiblity();
@@ -1751,6 +1872,11 @@ export default defineComponent({
       isShow.value = true;
       switchPlat(plat, "fish");
     };
+    const selectLotteryPlat = (plat) => {
+      selectedPlatId.value = plat.id;
+      isShow.value = true;
+      switchPlat(plat, "lottery");
+    };
     const selectCasualPlat = (plat) => {
       selectedPlatId.value = plat.id;
       isShow.value = true;
@@ -1781,9 +1907,11 @@ export default defineComponent({
     };
 
     return {
+      snowCount,
       imageLoading,
       slide: ref(0),
       imgURL: process.env.IMAGE_CDN + "/promo/",
+      gameImgURL: process.env.IMAGE_CDN + "/game/",
       banners,
       gameBoardRef,
       gameBoardItemRef,
@@ -1796,6 +1924,8 @@ export default defineComponent({
       liveCasinoGames,
       xfjGames,
       lotteryGames,
+      lotteryGamesMore,
+      lotteryGamesList,
       isShow,
       mainWallet,
       playGame,
@@ -1823,6 +1953,7 @@ export default defineComponent({
       esportsGame,
       showFavourite,
       selectFishPlat,
+      selectLotteryPlat,
       selectSlotPlat,
       selectCasualPlat,
       platformMinigame,
@@ -1839,6 +1970,8 @@ export default defineComponent({
       scrollPageRef,
       announcementList,
       isStationNotice,
+      closeLineSticky,
+      showSticky,
       isHomePromoModal,
       openPopup,
       noticeTitle,
@@ -1868,6 +2001,9 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
+.home-banner-wrapper {
+  position: relative;
+}
 
 .midd {
   display: flex;
@@ -1882,8 +2018,8 @@ export default defineComponent({
 
   .station-notice-wrapper {
     display: flex;
-    border-radius: 8px;
-    border: 1px solid $border-color;
+    border-radius: 10px;
+    border: 1px solid #9c1103;
     gap: 10px;
     padding: 2px 10px;
     justify-content: center;
@@ -1984,8 +2120,8 @@ export default defineComponent({
   column-gap: 8px;
   row-gap: 14px;
   width: calc(100% - 20px);
-  background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
-  padding: 6px 12px 6px;
+  // background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
+  padding: 35px 12px 16px;
   border-radius: 12px;
   overflow-x: auto;
 
@@ -2004,15 +2140,31 @@ export default defineComponent({
     text-align: center;
     padding: 12px 12px;
     white-space: nowrap;
+    background: url("../assets/home/game-board-item-bg.png") no-repeat center center;
+    background-size: 100% 100%;
+    position: relative;
+
+    .active-flag {
+      display: none;
+    }
 
     &.active-board {
       // background: $linear-bg-4;
-      background: #5555aa;
+      background: url("../assets/home/game-board-item-bg-active.png") no-repeat center center;
+      background-size: 100% 100%;
+
+      .active-flag {
+        display: block;
+        position: absolute;
+        top: -32px;
+        left: 20px;
+        width: 31px;
+        height: 33px;
+      }
     }
 
     &:hover {
       filter: brightness(0.88);
-      background: #5555aa;
     }
 
     &:active {
@@ -2591,15 +2743,56 @@ export default defineComponent({
   }
 }
 
+.bonus-sticky-box {
+  width: 100%;
+  height: 136px;
+  margin-top: 10px;
+}
+
 .special-invite-bonus-sticky {
   background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-sticky.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   width: 190px;
   height: 136px;
-  position: absolute;
-  top: 10%;
-  right: 0;
+  //position: absolute;/**/
+  //right: 50%;
+  //top: 0;
+
+  animation: tilt-shaking 2s ease-in-out infinite;
+}
+
+@keyframes tilt-shaking {
+  0% {
+    transform: rotate(0deg);
+  }
+  3% {
+    transform: rotate(6deg);
+  }
+  6% {
+    transform: rotate(0deg);
+  }
+  9% {
+    transform: rotate(-6deg);
+  }
+  12% {
+    transform: rotate(0deg);
+  }
+  15% {
+    transform: rotate(6deg);
+  }
+  18% {
+    transform: rotate(0deg);
+  }
+  21% {
+    transform: rotate(-6deg);
+  }
+  24% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
 .special-invite-bonus-container {
@@ -2623,7 +2816,6 @@ export default defineComponent({
       }
     }
   }
-  
 
   .special-invite-bonus-content {
     background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-bg.png");
@@ -2645,7 +2837,7 @@ export default defineComponent({
       .reward-amt {
         font-size: 30px;
         font-weight: 700;
-        color: #FFE35A;
+        color: #ffe35a;
         margin-left: 20px;
       }
     }
@@ -2655,11 +2847,11 @@ export default defineComponent({
       flex-direction: column;
 
       .desc-title {
-        color: #FFCF1F;
+        color: #ffcf1f;
       }
 
       .desc-content {
-        color: #E79DFF;
+        color: #e79dff;
       }
     }
 
@@ -2709,23 +2901,29 @@ export default defineComponent({
     a:active,
     a:focus {
       color: #fff9e2;
+      position: relative;
     }
 
     .popup-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 92%;
-      margin: 0 auto 14px;
-      border: 2px solid #d483ff;
-      background: rgba(52, 41, 97, 0.9);
+      margin: 0 auto;
+      // border: 2px solid #d483ff;
+      // background: rgba(52, 41, 97, 0.9);
       border-radius: 11px;
       //margin-bottom: 14px;
-      line-height: 30px;
-      font-size: 22px;
+      line-height: 20px;
+      font-size: 16px;
       text-align: center;
       padding: 8px;
-      box-shadow: 0px 3px 2px 0px #ddb2ff42 inset;
-      box-shadow: 0px 0px 5px 3px #8000ffd9;
+      // box-shadow: 0px 3px 2px 0px #ddb2ff42 inset;
+      // box-shadow: 0px 0px 5px 3px #8000ffd9;
       cursor: pointer;
       text-shadow: 1px 2px 2px #000000;
+      background: url("../assets/images/common/home-popup-item-bg.png") no-repeat center center;
+      background-size: 100% 100%;
 
       &:hover {
         opacity: 0.9;
@@ -2737,10 +2935,88 @@ export default defineComponent({
 
       em {
         color: #ecff17;
-        font-size: 26px;
+        font-size: 16px;
         font-weight: 600;
         font-style: normal;
       }
+
+      span {
+        padding: 10px;
+        margin: 0px 35px;
+      }
+    }
+  }
+}
+
+.home-sticky-div {
+  z-index: 4000;
+}
+
+.home-sticky {
+  //display:none;
+  position: relative;
+  width: 175px;
+  height: 240px;
+
+  .sticky-bear {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 55;
+  }
+
+  .sticky-close-btn {
+    position: absolute;
+    right: 5px;
+    top: 37px;
+    z-index: 30;
+    border-radius: 50%;
+    width: 20px;
+    padding: 0px;
+    line-height: 20px;
+    height: 20px;
+    background: $white;
+    color: $text-gray;
+
+    &:active {
+      filter: brightness(0.8);
+    }
+  }
+
+  .sticky-container {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    z-index: 15;
+
+    width: 125px;
+    height: 352px;
+    background: url(../assets/home/xmas-line-btn.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    padding: 10px 0;
+    border-radius: 10px 0px 0px 10px;
+
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+    justify-content: flex-end;
+
+    .line-title {
+      font-size: 12px;
+    }
+
+    .line-img {
+      width: 80px;
+      height: auto;
+      margin: 0 auto;
+      background: #fff;
+    }
+
+    .line-bottom {
+      font-size: 12px;
     }
   }
 }
@@ -2762,6 +3038,50 @@ export default defineComponent({
   @media (min-width: 1280px) {
     font-size: 2.5rem;
     max-width: 20rem;
+  }
+}
+
+@function random_range($min, $max) {
+  $rand: random();
+  $random_range: $min + floor($rand * (($max - $min) + 1));
+  @return $random_range;
+}
+
+.snow {
+  $total: 50;
+  position: absolute;
+  z-index: 0;
+  width: 23px;
+  height: 23px;
+  background: url(../assets/images/common/snow.png);
+  background-repeat: no-repeat;
+
+  @for $i from 1 through $total {
+    $random-x: random(1000000) * 0.0001vw;
+    $random-offset: random_range(-100000, 100000) * 0.0001vw;
+    $random-x-end: $random-x + $random-offset;
+    $random-x-end-yoyo: $random-x + ($random-offset / 2);
+    $random-yoyo-time: random_range(30000, 80000) / 100000;
+    $random-yoyo-y: $random-yoyo-time * 100vh;
+    $random-scale: random(10000) * 0.0001 + 1;
+    $fall-duration: random_range(10, 30) * 1s;
+    $fall-delay: random(10) * -1s;
+
+    &:nth-child(#{$i}) {
+      opacity: random(10000) * 0.0001;
+      transform: translate($random-x, -10px) scale($random-scale);
+      animation: fall-#{$i} $fall-duration $fall-delay linear infinite;
+    }
+
+    @keyframes fall-#{$i} {
+      #{percentage($random-yoyo-time)} {
+        transform: translate($random-x-end, $random-yoyo-y) scale($random-scale);
+      }
+
+      to {
+        transform: translate($random-x-end-yoyo, 100vh) scale($random-scale);
+      }
+    }
   }
 }
 </style>

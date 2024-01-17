@@ -1,16 +1,13 @@
 <template>
-  <ProfileSummary></ProfileSummary>
-
-  <SwiperNav :slideList="slideList" :slideListPath="slideListPath" :isActiveSlide="isActiveSlide"></SwiperNav>
-  <ContentView :contentTopStatus="`solid`">
-    <q-card class="search-container">
+  <q-page class="account-table-page">
+    <q-card flat class="search-container">
       <q-form layout="inline" :model="searchForm">
         <div class="date-field">
           <q-input filled v-model="searchForm.startDate" readonly>
-            <template v-slot:append>
-              <q-icon name="event" class="cursor-pointer">
+            <template v-slot:prepend>
+              <q-icon name="calendar_today" class="cursor-pointer text-purple-7">
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="searchForm.startDate" mask="YYYY-MM-DD">
+                  <q-date v-model="searchForm.startDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
                     <div class="row items-center justify-end">
                       <q-btn v-close-popup label="Close" color="white" flat />
                     </div>
@@ -19,11 +16,12 @@
               </q-icon>
             </template>
           </q-input>
+          <span>to</span>
           <q-input filled v-model="searchForm.endDate" readonly>
-            <template v-slot:append>
-              <q-icon name="event" class="cursor-pointer">
+            <template v-slot:prepend>
+              <q-icon name="calendar_today" class="cursor-pointer text-purple-7">
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="searchForm.endDate" mask="YYYY-MM-DD">
+                  <q-date v-model="searchForm.endDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
                     <div class="row items-center justify-end">
                       <q-btn v-close-popup label="Close" color="white" flat />
                     </div>
@@ -33,27 +31,21 @@
             </template>
           </q-input>
         </div>
-
-        <div class="platform-field">
-          <!-- <q-select
-            class="platform"
-            v-model="searchForm.platform"
-            filled
-            :options="platformList"
-            label="Platforms"
-            option-label="name"
-            option-value="name"
-            emit-value
-            map-options
-          /> -->
-          <q-btn class="search-btn" label="Search" @click="searchRecord(true)" />
-        </div>
+        <!--        <div class="platform-field">-->
+        <!--          <q-btn class="search-btn" label="Search" @click="searchRecord(true)" />-->
+        <!--        </div>-->
       </q-form>
     </q-card>
 
     <LoadingComponent v-if="isLoading"></LoadingComponent>
     <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Record"></NoInfoComponent>
+
     <template v-else>
+      <NoInfoComponent
+        v-if="isNoInfoAtEnd"
+        shortenContainer="true"
+        noInfoTitle="You have reached the end of the page."
+      ></NoInfoComponent>
       <q-card v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
         <q-card-section class="top-wrapper">
           <div class="date">{{ convertToGMT55(e.betTime) }}</div>
@@ -65,7 +57,7 @@
 
         <q-card-section class="mid-wrapper">
           RS
-          <span :class="`${e.payout > 0 ? 'win-amt' : 'loss-amt'}`">{{ e.payout }}</span>
+          <span :class="`${e.payout > 0 ? 'win-amt' : 'loss-amt'}`">{{ convertToCommaAmount(e.payout, true) }}</span>
         </q-card-section>
 
         <q-card-section class="bot-wrapper">
@@ -74,7 +66,7 @@
             <div class="game-platform">Game Platform</div>
           </div>
           <div class="origin-val">
-            <div class="bet-val">{{ e.bet }}</div>
+            <div class="bet-val">{{ convertToCommaAmount(e.bet, true) }}</div>
             <div class="game-platform-val">{{ e.platform }}</div>
           </div>
         </q-card-section>
@@ -83,26 +75,30 @@
       <q-card class="pagination-container">
         <q-btn class="pagination-btn" @click="onPrevPageClick()">&lt;</q-btn>
         <!-- <div>{{ pagination.current }} / {{ pagination.pages }}</div> -->
-        <q-btn class="pagination-btn" @click="onNextPageClick()">></q-btn>
+        <q-btn class="pagination-btn" :disable="isNextBtnDisable" @click="onNextPageClick()">></q-btn>
       </q-card>
     </template>
-  </ContentView>
+  </q-page>
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { onActivated, onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { updateDate, convertToGMT8, convertToGMT55 } from "src/boot/utils";
 import SwiperNav from "../../components/SwiperNav.vue";
-import ContentView from "../../components/ContentView.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
+import { convertToCommaAmount } from "src/boot/utils";
+import { useQuasar } from "quasar";
 
 const router = useRouter();
 const store = userStore();
+
+const qs = require("qs");
+const $q = useQuasar();
 
 let slideList = ref(["Record", "Order", "Bank", "Message", "Personal Center", "Discount"]);
 let slideListPath = ref([
@@ -122,6 +118,7 @@ const isActiveSlide = (e) => {
 
 const isLoading = ref(true);
 const isNoInfo = ref(true);
+const isNoInfoAtEnd = ref(false);
 
 const searchForm = reactive({ startDate: "", endDate: "", platform: "", memberId: store.id });
 const setTime = () => {
@@ -129,9 +126,11 @@ const setTime = () => {
   searchForm.endDate = updateDate(0);
 };
 
+const isNextBtnDisable = ref(false);
+
 const gameBetRecordData = ref([]);
 const pagination = reactive({
-  pageSize: 10,
+  pageSize: 20,
   total: 0,
   pages: 1,
   current: 1,
@@ -145,12 +144,26 @@ const onPrevPageClick = () => {
 };
 
 const onNextPageClick = () => {
-  if (pagination.current === pagination.pages) return;
-  pagination.current++;
-  searchRecord();
+  if (!isNextBtnDisable.value) {
+    if (pagination.current === pagination.pages) return;
+    pagination.current++;
+    searchRecord();
+  } else {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: "You have reached end of the page",
+      icon: "report_problem"
+    });
+  }
 };
 
+// api.post("/memberAccessLog", qs.stringify(obj))
+
 const searchRecord = (isNewSearch) => {
+  if (!searchForm.startDate || !searchForm.endDate) {
+    return;
+  }
   if (isNewSearch) {
     pagination.current = 1;
     pagination.pagingState = null;
@@ -160,6 +173,7 @@ const searchRecord = (isNewSearch) => {
   gameBetRecordData.value = [];
 
   const { startDate, endDate, platform } = searchForm;
+
   api
     .get("/session/member/cassandraBetRecord", {
       params: {
@@ -181,9 +195,21 @@ const searchRecord = (isNewSearch) => {
         pagination.pagingState = data.pagingState;
 
         gameBetRecordData.value.push(...records);
+        isNextBtnDisable.value = false;
+        isNoInfoAtEnd.value = false;
 
-        if (records.length === 0) isNoInfo.value = true;
-        else isNoInfo.value = false;
+        if (records.length === 0 && pagination.current === 1) {
+          isNoInfo.value = true;
+        } else if (records.length === 0 && pagination.current > 1) {
+          isNoInfo.value = false;
+          isNextBtnDisable.value = true;
+          isNoInfoAtEnd.value = true;
+        } else if (records.length < 20) {
+          isNoInfo.value = false;
+          isNextBtnDisable.value = true;
+        } else {
+          isNoInfo.value = false;
+        }
       }
     })
     .catch((error) => {})
@@ -218,13 +244,12 @@ const getGameBetRecordTotal = () => {
     }
   });
 };
-onMounted(() => {
+
+onActivated(() => {
   setTime();
   getPlatformList();
 
-  // NOTE: fire together on search
   searchRecord(true);
-  //   getGameBetRecordTotal();
 });
 </script>
 
@@ -237,14 +262,29 @@ onMounted(() => {
 
   .date-field {
     display: flex;
+    align-items: center;
+
+    span {
+      color: #ffffff99;
+      padding: 0px 12px;
+    }
 
     .q-field__control,
     .q-field__marginal {
+      //border: 1px solid #b478ff4d;
       height: unset;
+    }
+
+    .q-field {
+      border: 1px solid #b478ff4d;
+      background: #28292b;
+      padding: 4px 3px;
+      border-radius: 8px;
     }
 
     .q-field__native {
       padding: 0;
+      color: #b0b0b0;
     }
   }
 

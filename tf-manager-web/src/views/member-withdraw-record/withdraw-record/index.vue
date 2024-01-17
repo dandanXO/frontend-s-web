@@ -370,6 +370,22 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="fee"
+          :label="t('fields.fee')"
+          align="center"
+          min-width="120"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{
+                data: scope.row.fee,
+                type: 'money',
+              }"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
           :label="t('fields.operate')"
           align="center"
           min-width="280"
@@ -816,6 +832,7 @@ import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
 import { getSiteListSimple } from "@/api/site";
 import { TENANT } from "@/store/modules/user/action-types";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 const { t } = useI18n();
 const store = useStore()
 const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
@@ -877,6 +894,7 @@ const uiControl = reactive({
     { key: 10, displayName: t('withdrawStatus.SUCCESS'), value: 'SUCCESS' },
     { key: 11, displayName: t('withdrawStatus.FAIL'), value: 'FAIL' },
     { key: 12, displayName: t('withdrawStatus.PENDING'), value: 'PENDING' },
+    { key: 13, displayName: t('withdrawStatus.WAITING_AUTO_PAY'), value: 'WAITING_AUTO_PAY' },
   ],
   colors: [
     { color: '#f56c6c', percentage: 30 },
@@ -1125,15 +1143,22 @@ function checkQuery() {
     }
   })
 
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.withdrawDate !== null) {
     if (request.withdrawDate.length === 2) {
-      query.withdrawDate = request.withdrawDate.join(',')
+      query.withdrawDate = JSON.parse(JSON.stringify(request.withdrawDate));
+      query.withdrawDate[0] = formatInputTimeZone(query.withdrawDate[0], timeZone);
+      query.withdrawDate[1] = formatInputTimeZone(query.withdrawDate[1], timeZone);
+      query.withdrawDate = query.withdrawDate.join(',')
     }
   }
 
   if (request.paymentDate !== null) {
     if (request.paymentDate.length === 2) {
-      query.paymentDate = request.paymentDate.join(',')
+      query.paymentDate = JSON.parse(JSON.stringify(request.paymentDate));
+      query.paymentDate[0] = formatInputTimeZone(query.paymentDate[0], timeZone);
+      query.paymentDate[1] = formatInputTimeZone(query.paymentDate[1], timeZone);
+      query.paymentDate = query.paymentDate.join(',')
     }
   }
 
@@ -1198,9 +1223,6 @@ async function loadRecord() {
   } else {
     page.totalAmount = 0
   }
-
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
-
   page.loading = false
 }
 

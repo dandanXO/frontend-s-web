@@ -5,8 +5,8 @@
     style="transform: none"
   >
     <q-btn
+      class="back-to-top-btn"
       padding="sm"
-      :color="ui.themeColor"
       @click="scrollToTop"
       fab
       icon="keyboard_arrow_up"
@@ -31,3 +31,9 @@ export default defineComponent({
   }
 });
 </script>
+<style lang="scss" >
+.back-to-top-btn {
+  border: 3px solid #D92515;
+  color: #D92515;
+}
+</style>

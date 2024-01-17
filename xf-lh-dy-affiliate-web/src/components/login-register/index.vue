@@ -716,7 +716,7 @@ export default defineComponent({
       onGetImage: async () => {
         state.dialogLoading = true
         state.coordinates.splice(0)
-        const { data } = await getVerificationImage('DY2')
+        const { data } = await getVerificationImage()
         Object.keys({ ...data.data }).forEach(field => {
           state[field] = data.data[field]
         })

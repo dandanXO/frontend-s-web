@@ -59,11 +59,16 @@
       row-key="id"
       size="small"
       highlight-current-row
-      @selection-change="handleSelectionChange"
       :empty-text="t('fields.noData')"
     >
       <el-table-column prop="siteName" :label="t('fields.siteName')" min-width="200" />
       <el-table-column prop="platformName" :label="t('fields.platformName')" min-width="200" />
+      <el-table-column prop="alias" :label="t('fields.alias')" min-width="200">
+        <template #default="scope">
+          <span v-if="scope.row.alias === null">-</span>
+          <span v-else>{{ scope.row.alias }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="status" :label="t('fields.status')" min-width="300">
         <template #default="scope">
           <el-radio-group
@@ -135,6 +140,17 @@
           />
         </template>
       </el-table-column>
+      <el-table-column :label="t('fields.operate')" align="center" fixed="right" width="100" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:site-platform:update:alias'])">
+        <template #default="scope">
+          <el-button
+            icon="el-icon-edit"
+            size="mini"
+            type="success"
+            v-permission="['sys:site-platform:update:alias']"
+            @click="showEdit(scope.row)"
+          />
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       class="pagination"
@@ -160,7 +176,7 @@
       size="small"
       label-width="200px"
     >
-      <el-form-item :label="t('fields.maintenanceTime')" prop="maintenanceTime">
+      <el-form-item :label="t('fields.maintenanceTime')" prop="maintenanceTime" v-if="uiControl.dialogType === 'MAINTENANCE'">
         <el-date-picker
           type="datetimerange"
           format="YYYY-MM-DD HH:mm:ss"
@@ -169,9 +185,17 @@
           style="width: 350px;"
         />
       </el-form-item>
+      <el-form-item :label="t('fields.alias')" prop="alias" v-if="uiControl.dialogType === 'ALIAS'">
+        <el-input
+          style="width: 350px"
+          v-model="form.alias"
+          :placeholder="t('fields.alias')"
+        />
+      </el-form-item>
       <div class="dialog-footer">
         <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-        <el-button type="primary" @click="maintenance">{{ t('fields.confirm') }}</el-button>
+        <el-button v-if="uiControl.dialogType === 'MAINTENANCE'" type="primary" @click="maintenance">{{ t('fields.confirm') }}</el-button>
+        <el-button v-if="uiControl.dialogType === 'ALIAS'" type="primary" @click="updatePlatformAlias">{{ t('fields.confirm') }}</el-button>
       </div>
     </el-form>
   </el-dialog>
@@ -182,7 +206,8 @@ import { computed, onMounted, reactive, ref } from 'vue'
 import {
   getSitePlatformList,
   updateStatus,
-  updateMaintenance
+  updateMaintenance,
+  updateAlias
 } from '../../../api/site-platform'
 import { getSiteListSimple } from '../../../api/site'
 import { getPlatformNames } from '../../../api/platform'
@@ -190,6 +215,8 @@ import { useStore } from '../../../store';
 import { TENANT } from "../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 import { ElMessage } from 'element-plus';
+import { required } from '../../../utils/validate';
+import { hasRole, hasPermission } from '../../../utils/util'
 
 const { t } = useI18n();
 const store = useStore();
@@ -217,7 +244,8 @@ const request = reactive({
 const form = reactive({
   id: null,
   underMaintenance: null,
-  maintenanceTime: []
+  maintenanceTime: [],
+  alias: null
 })
 
 const sites = reactive({
@@ -226,6 +254,11 @@ const sites = reactive({
 
 const platforms = reactive({
   list: [],
+})
+
+const formRules = reactive({
+  maintenanceTime: [required(t('message.validateMaintenanceTimeRequired'))],
+  alias: [required(t('message.validateAliasRequired'))]
 })
 
 function resetQuery() {
@@ -266,12 +299,25 @@ async function updateState(id, status) {
   await loadSitePlatform();
 }
 
-function showDialog(type) {
-  if (type === 'MAINTENANCE') {
-    if (formRef.value) {
-      formRef.value.resetFields()
+async function updatePlatformAlias() {
+  formRef.value.validate(async (valid) => {
+    if (valid) {
+      await updateAlias(form.id, form.alias);
+      uiControl.dialogVisible = false;
+      await loadSitePlatform();
+      ElMessage({ message: t('message.updateSuccess'), type: 'success' })
     }
+  })
+}
+
+function showDialog(type) {
+  if (formRef.value) {
+    formRef.value.resetFields()
+  }
+  if (type === 'MAINTENANCE') {
     uiControl.dialogTitle = t('fields.updateMaintenanceTime')
+  } else if (type === 'ALIAS') {
+    uiControl.dialogTitle = t('fields.updateAlias')
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
@@ -307,6 +353,11 @@ async function maintenance() {
       ElMessage({ message: t('message.updateSuccess'), type: 'success' })
     }
   })
+}
+
+async function showEdit(row) {
+  form.id = row.id;
+  showDialog('ALIAS');
 }
 
 onMounted(async() => {
