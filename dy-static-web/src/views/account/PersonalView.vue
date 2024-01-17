@@ -623,7 +623,7 @@ const openPhoneVerificationModal = () => {
 const updatePhoneModalVisible = ref(false);
 const updatePhoneFormRef = ref();
 const updatePhoneModal = () => {
-  updatePhoneVerified.phone = cachedTelephone;
+  updatePhoneVerified.phone = lsGet(phoneKey);
   updatePhoneVerified.phoneCode = "";
   updatePhoneModalVisible.value = true;
 };
@@ -677,6 +677,10 @@ const submitUpdatePhone = () => {
   updatePhoneFormRef.value
     .validate()
     .then(() => {
+      if (!verificationPhoneDetails.memberInfo.codeId) {
+        ElMessage.error("请重新发送验证码");
+        return;
+      }
       verificationPhoneDetails.memberInfo.code = updatePhoneVerified.verificationCode;
       verifySms(verificationPhoneDetails.memberInfo)
         .then((res) => {

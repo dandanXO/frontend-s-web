@@ -679,7 +679,7 @@ defineExpose({
   }
 
   .popout-dialog-container-gold {
-    background-image: url(../../assets/images/index/popout/deposit-bg.png);
+    // background-image: url(../../assets/images/index/popout/deposit-bg.png);
     background-position: bottom center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -688,7 +688,7 @@ defineExpose({
   }
 
   .popout-main-title {
-    background-image: url(../../assets/images/index/popout/popout-title.png);
+    // background-image: url(../../assets/images/index/popout/popout-title.png);
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center center;
@@ -729,7 +729,7 @@ defineExpose({
 
     .deposit-item {
       .deposit-icon {
-        background-image: url(../../assets/images/index/popout/deposit-item-frame.png);
+        // background-image: url(../../assets/images/index/popout/deposit-item-frame.png);
         background-position: top center;
         background-size: contain;
         background-repeat: no-repeat;
@@ -748,14 +748,14 @@ defineExpose({
       }
 
       &.active > .deposit-icon {
-        background-image: url(../../assets/images/index/popout/deposit-item-frame-active.png);
+        // background-image: url(../../assets/images/index/popout/deposit-item-frame-active.png);
       }
 
       .deposit-hot-label {
         position: absolute;
         top: 0;
         right: 0;
-        background-image: url(../../assets/images/index/popout/hot-label.png);
+        // background-image: url(../../assets/images/index/popout/hot-label.png);
         background-size: 100%;
         background-repeat: no-repeat;
         background-position: center center;
@@ -770,7 +770,7 @@ defineExpose({
       }
 
       .deposit-amt {
-        background-image: url(../../assets/images/index/popout/deposit-item-frame-amount.png);
+        // background-image: url(../../assets/images/index/popout/deposit-item-frame-amount.png);
         background-position: center center;
         background-size: contain;
         background-repeat: no-repeat;
@@ -825,7 +825,7 @@ defineExpose({
         position: relative;
         &:after {
           content: "";
-          background-image: url(../../assets/images/index/popout/label-discount.png);
+          // background-image: url(../../assets/images/index/popout/label-discount.png);
           background-repeat: no-repeat;
           display: block;
           position: absolute;

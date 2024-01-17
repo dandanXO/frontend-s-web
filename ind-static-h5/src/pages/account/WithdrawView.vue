@@ -3,7 +3,7 @@
     <div class="withdrawal-summary">
       <div class="balance">
         <div class="title">Cash Balance</div>
-        <span class="amount">{{ convertToCommaAmount(store.balance, true) }}</span>
+        <span class="amount">{{ convertToCommaAmount(store.balance, false) }}</span>
       </div>
 
       <div class="separator"></div>
@@ -13,7 +13,7 @@
         <span class="amount">
           {{
             withdrawalMethods[withdrawalDialogTab].withdrawableBalance >= 0
-              ? convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawableBalance, true)
+              ? convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawableBalance, false)
               : "0.00"
           }}
         </span>
@@ -517,13 +517,27 @@ const goToBank = () => {
   router.push("/account/bank?from=" + route.path);
 };
 
+const checkNewUser = () => {
+  if (store.realName == "" || store.realName == null) {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: "Please fill in your personal details",
+      icon: "report_problem"
+    });
+    router.push(`/deposit`);
+  }
+};
+
 onMounted(() => {
   getWithdrawalMethods();
+  checkNewUser();
   loadCards();
 });
 
 onActivated(() => {
   getWithdrawalMethods();
+  checkNewUser();
   loadCards();
 });
 

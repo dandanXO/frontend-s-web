@@ -271,6 +271,7 @@ export default {
     },
   },
   rebateLevel: {
+    LEVEL_0: 'Level 0',
     LEVEL_1: 'Level 1',
     LEVEL_2: 'Level 2',
     LEVEL_3: 'Level 3',
@@ -623,6 +624,7 @@ export default {
     depositMemberCount: 'Deposit Member Count',
     depositSerialNo: 'Deposit Serial Number',
     depositStatus: 'Deposit Status',
+    depositWithdrawalProfit: 'Deposit Withdrawal Profit',
     describe: 'Describe',
     description: 'Description',
     desktopImage: 'Desktop Image',
@@ -974,6 +976,7 @@ export default {
     profitpositive: 'Positive Profit',
     profitnegative: 'Negative Profit',
     promo: 'Promo',
+    promoApplication: 'Promo Application',
     promoCode: 'Promo Code',
     promoPages: 'Promotion Pages',
     promoStyle: 'Promo Style',
@@ -1187,6 +1190,8 @@ export default {
     totalFailWithdraw: 'Total Fail Withdraw',
     totalFailWithdrawAmount: 'Total Fail Withdraw Amount',
     totalFirstDeposit: 'Total First Deposit',
+    totalMemberDepositAmount: 'Total Deposit Amount',
+    totalMemberDepositCount: 'Total Deposit Count',
     totalNoOfDeposits: 'Total number of deposits',
     totalNoOfWithdrawals: 'Total number of withdrawals',
     totalPayout: 'Total Payout',
@@ -1759,6 +1764,7 @@ export default {
     validateConfigValueRequired: 'Config Value is required',
     resultCalculateSuccess: 'Result is calculated successfully',
     buildIsInQueue: 'Build is in queue',
+    roleMustOnlyOne: 'Please select a role that requires authorization',
   },
   menu: {
     undefined: '',
@@ -1862,6 +1868,7 @@ export default {
     Gift: 'Gift Management',
     'Gift Info': 'Gift Info',
     'Gift Record': 'Gift Records',
+    'Promo Application': 'Promo Application',
     'Site Management': 'Site Management',
     Message: 'Message',
     Announcement: 'Announcement',
@@ -2032,6 +2039,8 @@ export default {
   realtimeStatistics: {
     APP: 'APP',
     H5: 'H5',
+    Mobile: 'Mobile',
+    PC: 'PC',
     APPLY_WITHDRAW: 'Apply Withdraw',
   },
   error: {
