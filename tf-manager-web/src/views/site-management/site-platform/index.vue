@@ -25,6 +25,7 @@
           class="filter-item"
           style="width: 200px; margin-left: 5px"
           @focus="loadPlatforms"
+          filterable
         >
           <el-option
             v-for="item in platforms.list"
