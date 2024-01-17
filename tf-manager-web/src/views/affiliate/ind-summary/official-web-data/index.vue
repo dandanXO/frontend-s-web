@@ -43,7 +43,7 @@
         :data="page.records"
         v-loading="page.loading"
         row-key="id"
-        :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
         :empty-text="t('fields.noData')"
         :summary-method="getSummaries"
         show-summary
@@ -71,7 +71,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{data: scope.row.depositAmount, type: 'money'}"
+              v-formatter="{ data: scope.row.depositAmount, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -83,7 +83,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{data: scope.row.withdrawAmount, type: 'money'}"
+              v-formatter="{ data: scope.row.withdrawAmount, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -118,7 +118,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.ftdAmount, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.ftdAmount, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -128,7 +128,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.bet, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.bet, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -138,7 +138,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.payout, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.payout, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -148,7 +148,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.profit, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.profit, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -160,7 +160,7 @@
             $
             <span
               v-formatter="{
-                data: scope.row.totalMemberDepositAmount,
+                data: scope.row.depositAmount,
                 type: 'money',
               }"
             />
@@ -178,7 +178,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.bonus, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.bonus, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -189,7 +189,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{data: scope.row.rebateAmount, type: 'money'}"
+              v-formatter="{ data: scope.row.rebateAmount, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -200,7 +200,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.adjustment, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.adjustment, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -210,7 +210,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.netProfit, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.netProfit, type: 'money' }" />
           </template>
         </el-table-column>
       </el-table>
