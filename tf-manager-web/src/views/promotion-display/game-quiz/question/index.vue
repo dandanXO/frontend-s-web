@@ -27,7 +27,6 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 280px; margin-left: 10px;"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
           :default-time="defaultTime"
@@ -634,10 +633,6 @@ function convertDate(date) {
 
 function convertStartDate(date) {
   return moment(date).startOf('day').format('YYYY-MM-DD HH:mm:ss');
-}
-
-function disabledDate(time) {
-  return false;
 }
 
 function disabledStartDate(time) {
