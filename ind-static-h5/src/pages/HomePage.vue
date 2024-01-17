@@ -224,9 +224,9 @@
                         backgroundImage: `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`
                       }"
                     ></div>
-                    <div class="platform-game-title">
-                      {{ truncateText(item.alias ? item.alias : item.name, 22) }}
-                    </div>
+                  </div>
+                  <div class="platform-game-title">
+                    {{ truncateText(item.alias ? item.alias : item.name, 22) }}
                   </div>
                 </div>
               </template>
@@ -243,9 +243,8 @@
                         backgroundImage: `url(${imgURLGame}${item.icon})`
                       }"
                     ></div>
-
-                    <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                   </div>
+                  <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                 </div>
               </template>
             </div>
@@ -631,9 +630,8 @@
                     backgroundImage: `url(${imgURLGame}${item.icon})`
                   }"
                 ></div>
-
-                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
               </div>
+              <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
             </div>
           </template>
 
@@ -649,9 +647,8 @@
                     backgroundImage: `url(${imgURLGame}${item.icon})`
                   }"
                 ></div>
-
-                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
               </div>
+              <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
             </div>
           </template>
         </div>
@@ -2830,7 +2827,8 @@ onMounted(() => {
   background-size: cover;
   background-position: center center;
   position: relative;
-  // background-image: url("../assets/images/index/mini-game-bg.png");
+  background-image: url("../assets/images/index/mini-game-bg.png");
+  // background-image: url("../assets/images/index/item-game-maintenance.png");
   border-radius: 8px;
 
   .game--bg {
@@ -2840,6 +2838,7 @@ onMounted(() => {
     width: 100%;
     border-radius: 8px;
     background-repeat: no-repeat;
+    // background-image: url("../assets/images/index/mini-game-bg.png");
   }
 }
 
