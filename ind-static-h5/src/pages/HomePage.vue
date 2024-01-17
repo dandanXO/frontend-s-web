@@ -96,7 +96,7 @@
 
     <swiper
       :slidesPerView="4.5"
-      :spaceBetween="10"
+      :spaceBetween="0"
       :scrollbar="{
         hide: true
       }"
@@ -109,7 +109,12 @@
     >
       <template v-for="(item, index) in categoriesList" :key="index">
         <swiper-slide>
-          <div class="cat-menu-item" @click="activateSlide(item)">
+          <div
+            class="menu-category-btn"
+            :class="`cat-${item.icon.toLowerCase()} ${item.active && 'active'}`"
+            @click="activateSlide(item)"
+          ></div>
+          <!-- <div class="cat-menu-item" @click="activateSlide(item)">
             <img
               :src="
                 require(`../assets/images/index/category/cat-menu-${item.icon.toLowerCase()}${
@@ -118,7 +123,7 @@
               "
               alt=""
             />
-          </div>
+          </div> -->
           <!-- <div class="cat-selection-item" :class="item.active && 'active'" @click="activateSlide(item)">
             <div class="cat-icon">
               <img :src="require(`../assets/images/index/category/cat-${item.icon.toLowerCase()}.png`)" alt="" />
@@ -2705,6 +2710,57 @@ onMounted(() => {
 
   .swiper-scrollbar-drag {
     background: rgba(255, 255, 255, 0.4);
+  }
+}
+
+.menu-category-btn {
+  background-image: url("../assets/images/index/category/menu-category-btns.png");
+  background-size: 156px 379px;
+  background-position: 0px 0px;
+  width: 73px;
+  height: 55px;
+  background-repeat: no-repeat;
+
+  &.cat-lobby {
+    background-position: -83px 0px;
+    &.active {
+      background-position: 0px 0px;
+    }
+  }
+
+  &.cat-hot {
+    background-position: -83px -65px;
+    &.active {
+      background-position: 0px -65px;
+    }
+  }
+
+  &.cat-casino {
+    background-position: -83px -130px;
+    &.active {
+      background-position: 0px -130px;
+    }
+  }
+
+  &.cat-slot {
+    background-position: -83px -195px;
+    &.active {
+      background-position: 0px -195px;
+    }
+  }
+
+  &.cat-fishing {
+    background-position: -83px -260px;
+    &.active {
+      background-position: 0px -260px;
+    }
+  }
+
+  &.cat-sport {
+    background-position: -83px -325px;
+    &.active {
+      background-position: 0px -325px;
+    }
   }
 }
 
