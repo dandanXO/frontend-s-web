@@ -96,7 +96,7 @@
 
     <swiper
       :slidesPerView="4.5"
-      :spaceBetween="0"
+      :spaceBetween="10"
       :scrollbar="{
         hide: true
       }"
@@ -109,11 +109,11 @@
     >
       <template v-for="(item, index) in categoriesList" :key="index">
         <swiper-slide>
-          <div
+          <!-- <div
             class="menu-category-btn"
             :class="`cat-${item.icon.toLowerCase()} ${item.active && 'active'}`"
             @click="activateSlide(item)"
-          ></div>
+          ></div> -->
           <!-- <div class="cat-menu-item" @click="activateSlide(item)">
             <img
               :src="
@@ -124,12 +124,12 @@
               alt=""
             />
           </div> -->
-          <!-- <div class="cat-selection-item" :class="item.active && 'active'" @click="activateSlide(item)">
+          <div class="cat-selection-item" :class="item.active && 'active'" @click="activateSlide(item)">
             <div class="cat-icon">
               <img :src="require(`../assets/images/index/category/cat-${item.icon.toLowerCase()}.png`)" alt="" />
             </div>
             <div class="cat-title">{{ item.title }}</div>
-          </div> -->
+          </div>
         </swiper-slide>
       </template>
     </swiper>
@@ -791,7 +791,7 @@
     transition-hide="slide-down"
     class="fullgame-dialog"
   >
-    <q-card class="fullgame-card" id="fullgame">
+    <q-card class="fullgame-card" id="fullgame" v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
       <ProfileSummary @closeslot="closeSlotModal" :homeProfile="true" />
       <q-card-section>
         <div class="home-wrapper fullgame-wrapper">
@@ -1635,6 +1635,16 @@ const initOneSignal = () => {
   OneSignal.Notifications.requestPermission(true).then((accepted) => {
     console.log("User accepted notifications: " + accepted);
   });
+};
+
+// Handle swipe left
+const swipeLeft = () => {
+  fullGameDialog.value = false;
+};
+
+// Handle swipe right
+const swipeRight = () => {
+  fullGameDialog.value = false;
 };
 
 onActivated(() => {
@@ -2714,7 +2724,7 @@ onMounted(() => {
 }
 
 .menu-category-btn {
-  background-image: url("../assets/images/index/category/menu-category-btns.png");
+  // background-image: url("../assets/images/index/category/menu-category-btns.png");
   background-size: 156px 379px;
   background-position: 0px 0px;
   width: 73px;
@@ -2780,7 +2790,7 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  padding-top: 6px;
+  padding-top: 3px;
   transition: 0.3s all;
   width: 100%;
 
@@ -2798,8 +2808,9 @@ onMounted(() => {
 
   .cat-icon {
     img {
-      height: 100%;
-      max-height: 19px;
+      display: block;
+      width: 100%;
+      max-width: 28px;
     }
   }
 
@@ -2807,6 +2818,8 @@ onMounted(() => {
     font-size: 12px;
     font-weight: bold;
     color: #bfc3c9;
+    font-family: "Poppins", sans-serif;
+    letter-spacing: 0.5px;
   }
 }
 
