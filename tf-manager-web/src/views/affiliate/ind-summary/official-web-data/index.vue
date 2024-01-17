@@ -160,7 +160,7 @@
             $
             <span
               v-formatter="{
-                data: scope.row.totalMemberDepositAmount,
+                data: scope.row.depositAmount,
                 type: 'money',
               }"
             />
