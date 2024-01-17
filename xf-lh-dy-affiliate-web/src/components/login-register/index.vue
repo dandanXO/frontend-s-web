@@ -137,6 +137,21 @@
                       />
                     </el-form-item>
                   </el-tooltip>
+                  <el-form-item prop="captchaCode">
+                    <el-input
+                      ref="verificationRef"
+                      v-model="regForm.captchaCode"
+                      :placeholder="'验证码'"
+                      name="captchaCode"
+                      type="text"
+                      tabindex="7"
+                      autocomplete="on"
+                    >
+                      <template #append class="verification">
+                        <img :src="verificationImg" @click="getCode()">
+                      </template>
+                    </el-input>
+                  </el-form-item>
                   <el-button
                     class="common-btn"
                     :loading="loading"
@@ -144,10 +159,10 @@
                     style="width:100%;"
                     @click.prevent="handleRegister"
                   >
-                    下一步
+                    申请
                   </el-button>
                 </div>
-                <div v-if="step === 2">
+                <!--div v-if="step === 2">
                   <el-form-item prop="realName">
                     <el-input
                       ref="realNameRef"
@@ -181,7 +196,7 @@
                       autocomplete="on"
                     />
                   </el-form-item>
-                  <!-- <el-form-item prop="birthday">
+                  <!- <el-form-item prop="birthday">
                         <el-date-picker
                             v-model="regForm.birthday"
                             type="date"
@@ -191,23 +206,8 @@
                             popper-class="custom-date-picker"
                             :disabled-date="disabledDate"
                         />
-                        </el-form-item> -->
-                  <el-form-item prop="captchaCode">
-                    <el-input
-                      ref="verificationRef"
-                      v-model="regForm.captchaCode"
-                      :placeholder="'验证码'"
-                      name="captchaCode"
-                      type="text"
-                      tabindex="7"
-                      autocomplete="on"
-                    >
-                      <template #append class="verification">
-                        <img :src="verificationImg" @click="getCode()">
-                      </template>
-                    </el-input>
-                  </el-form-item>
-                  <!-- <el-form-item prop="codeAffiliate" v-if="!hasAffiliate">
+                        </el-form-item>
+                        <el-form-item prop="codeAffiliate" v-if="!hasAffiliate">
                         <el-input v-if="hasAffiliate"
                                     ref="codeAffiliateRef"
                                     v-model="regForm.codeAffiliate"
@@ -227,8 +227,8 @@
                             tabindex="8"
                             autocomplete="on"
                         />
-                        </el-form-item> -->
-                  <el-button
+                        </el-form-item>
+                        <el-button
                     class="common-btn"
                     :loading="loading"
                     type="danger"
@@ -237,7 +237,7 @@
                   >
                     申请
                   </el-button>
-                </div>
+                </div> -->
               </el-form>
             </div>
             <div class="bot">&nbsp;</div>
@@ -378,7 +378,8 @@ export default defineComponent({
       getVerificationCode()
         .then(res => {
           if (res.code === 0) {
-            verificationImg.value = res.data.img
+            // Data Image
+            verificationImg.value = 'data:image/png;base64,' + res.data.img
             state.regForm.codeId = res.data.id
           }
         })
@@ -445,8 +446,8 @@ export default defineComponent({
           },
           {
             min: 6,
-            max: 13,
-            message: '由6-13位数字或字母组成',
+            max: 12,
+            message: '由6-12位数字或字母组成',
             trigger: 'blur',
           },
         ],
@@ -458,8 +459,8 @@ export default defineComponent({
           },
           {
             min: 6,
-            max: 13,
-            message: '由6-13位数字或字母组成',
+            max: 12,
+            message: '由6-12位数字或字母组成',
             trigger: 'blur',
           },
         ],
@@ -579,11 +580,11 @@ export default defineComponent({
         state.regForm.siteId = 6
         regFormRef.value.validate(async valid => {
           if (valid) {
-            if (step.value === 1) {
-              step.value = 2
-              return
-            } else {
-            }
+            // if (step.value === 1) {
+            //   step.value = 2
+            //   return
+            // } else {
+            // }
             state.loading = true
             try {
               await store.dispatch(

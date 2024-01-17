@@ -335,7 +335,14 @@ export default defineComponent({
             delete allComponents[element];
           });
           const sidParam = FingerprintJS.hashComponents(allComponents);
-          regForm.sid = store.googleadid ? store.googleadid : store.aaid;
+          // regForm.sid = store.googleadid ? store.googleadid : store.aaid;
+          if (store.googleadid) {
+            regForm.sid = store.googleadid;
+          } else if (store.aaid) {
+            regForm.sid = store.aaid;
+          } else {
+            regForm.sid = sidParam;
+          }
 
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
           if ("standalone" in window.navigator && window.navigator.standalone) {

@@ -18,8 +18,25 @@
           />
         </el-select>
         <el-select
+          filterable
           clearable
-          v-model="request.paymentId"
+          v-model="request.affiliateId"
+          size="small"
+          :placeholder="t('fields.affiliate')"
+          class="filter-item"
+          style="width: 200px; margin-left: 5px;"
+        >
+          <el-option
+            v-for="item in list.affiliates"
+            :key="item.affiliateId"
+            :label="item.loginName"
+            :value="item.affiliateId"
+          />
+        </el-select>
+        <el-select
+          filterable
+          clearable
+          v-model="request.paymentIds"
           size="small"
           :placeholder="t('fields.paymentName')"
           class="filter-item"
@@ -85,12 +102,13 @@
         size="small"
         label-width="150px"
       >
-        <el-form-item :label="t('fields.affiliateCode')" prop="affiliateId" required>
+        <el-form-item :label="t('fields.affiliate')" prop="affiliateId" required>
           <el-select
+            filterable
             clearable
             v-model="form.affiliateId"
             size="small"
-            :placeholder="t('fields.affiliateCode')"
+            :placeholder="t('fields.affiliate')"
             class="filter-item"
             style="width: 350px; margin-bottom: 10px"
           >
@@ -104,6 +122,7 @@
         </el-form-item>
         <el-form-item :label="t('fields.paymentName')" prop="paymentIds" required>
           <el-select
+            filterable
             multiple
             clearable
             v-model="selected.paymentId"
@@ -167,7 +186,7 @@
             #default="scope"
             v-if="hasPermission(['sys:affiliate:detail'])"
           >
-            <router-link :to="`details/${scope.row.id}?site=${scope.row.siteId}`">
+            <router-link :to="`details/${scope.row.affiliateId}?site=${scope.row.siteId}`">
               <el-link type="primary">{{ scope.row.loginName }}</el-link>
             </router-link>
           </template>
@@ -336,6 +355,7 @@ function showEdit(data) {
         form[key] = data[key]
       }
     }
+
     selected.paymentId = []
     if (form.paymentIds !== null) {
       const paymentIdList = form.paymentIds.split(',')

@@ -2131,7 +2131,7 @@ onMounted(() => {
   }
 
   .popout-dialog-container--yel {
-    background-image: url(../assets/images/index/popout/deposit-bg.png) !important;
+    // background-image: url(../assets/images/index/popout/deposit-bg.png) !important;
     background-position: bottom center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -2140,7 +2140,7 @@ onMounted(() => {
   }
 
   .popout-main-title {
-    background-image: url(../assets/images/index/popout/popout-title.png);
+    // background-image: url(../assets/images/index/popout/popout-title.png);
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center center;
@@ -2181,7 +2181,7 @@ onMounted(() => {
 
     .deposit-item {
       .deposit-icon {
-        background-image: url(../assets/images/index/popout/deposit-item-frame.png);
+        // background-image: url(../assets/images/index/popout/deposit-item-frame.png);
         background-position: top center;
         background-size: contain;
         background-repeat: no-repeat;
@@ -2201,14 +2201,14 @@ onMounted(() => {
       }
 
       &.active > .deposit-icon {
-        background-image: url(../assets/images/index/popout/deposit-item-frame-active.png);
+        // background-image: url(../assets/images/index/popout/deposit-item-frame-active.png);
       }
 
       .deposit-hot-label {
         position: absolute;
         top: 0;
         right: 0;
-        background-image: url(../assets/images/index/popout/hot-label.png);
+        // background-image: url(../assets/images/index/popout/hot-label.png);
         background-size: 100%;
         background-repeat: no-repeat;
         background-position: center center;
@@ -2223,7 +2223,7 @@ onMounted(() => {
       }
 
       .deposit-amt {
-        background-image: url(../assets/images/index/popout/deposit-item-frame-amount.png);
+        // background-image: url(../assets/images/index/popout/deposit-item-frame-amount.png);
         background-position: center center;
         background-size: contain;
         background-repeat: no-repeat;
@@ -2280,7 +2280,7 @@ onMounted(() => {
 
         &:after {
           content: "";
-          background-image: url(../assets/images/index/popout/label-discount.png);
+          // background-image: url(../assets/images/index/popout/label-discount.png);
           background-repeat: no-repeat;
           display: block;
           position: absolute;
@@ -2487,7 +2487,7 @@ onMounted(() => {
     }
 
     .game-platform-img {
-      background-color: #cccccc;
+      // background-color: #cccccc;
       width: 100%;
       aspect-ratio: 1/1;
       background-size: cover;

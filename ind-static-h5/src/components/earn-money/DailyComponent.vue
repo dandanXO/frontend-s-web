@@ -12,7 +12,7 @@
     </div>
 
     <div class="title-wrapper">
-      <div class="title-txt">My Team (Today)</div>
+      <div class="title-txt">My Team (Yesterday)</div>
 
       <div class="subtitle-wrapper">
         <div class="chart-cat">
@@ -176,7 +176,9 @@
             <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-07.png" /></div>
             <div class="info-txt">Myself betting amount:</div>
           </div>
-          <div class="info-amount">{{ store.currency.value }} {{ teamAmountData.myselfBetting }}</div>
+          <div class="info-amount">
+            {{ store.currency.value }} {{ convertToCommaAmount(teamAmountData.myselfBetting, false) }}
+          </div>
         </div>
 
         <div class="info-content-item">
@@ -189,7 +191,7 @@
             :class="checkTeamAmountData(teamAmountData.myselfRebate) === 'Calculating' ? 'font-smaller' : ''"
           >
             <span>{{ store.currency.value }}&nbsp;</span>
-            {{ checkTeamAmountData(teamAmountData.myselfRebate) }}
+            {{ convertToCommaAmount(checkTeamAmountData(teamAmountData.myselfRebate), false) }}
           </div>
         </div>
       </div>
@@ -200,7 +202,10 @@
             <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-03.png" /></div>
             <div class="info-txt">Team betting amount:</div>
           </div>
-          <div class="info-amount">{{ store.currency.value }} {{ teamAmountData.teamBetting }}</div>
+          <div class="info-amount">
+            {{ store.currency.value }}
+            {{ convertToCommaAmount(checkTeamAmountData(teamAmountData.teamBetting), false) }}
+          </div>
         </div>
 
         <div class="info-content-item">
@@ -213,7 +218,7 @@
             :class="checkTeamAmountData(teamAmountData.teamRebate) === 'Calculating' ? 'font-smaller' : ''"
           >
             <span>{{ store.currency.value }}&nbsp;</span>
-            {{ checkTeamAmountData(teamAmountData.teamRebate) }}
+            {{ convertToCommaAmount(checkTeamAmountData(teamAmountData.teamRebate), false) }}
           </div>
         </div>
       </div>
@@ -228,7 +233,7 @@
               :class="checkTeamAmountData(teamAmountData.totalRebate) === 'Calculating' ? 'font-smaller' : ''"
             >
               <span>{{ store.currency.value }}&nbsp;</span>
-              {{ checkTeamAmountData(teamAmountData.totalRebate) }}
+              {{ convertToCommaAmount(checkTeamAmountData(teamAmountData.totalRebate), false) }}
             </div>
           </div>
         </div>
@@ -249,17 +254,20 @@
         <div class="id-container">
           <span class="id">{{ e.loginName }}</span>
           <img src="../../assets/images/index/icon-vip-badge.png" alt="" />
-          <div class="vip-name">{{ e.vipName }}</div>
+          <div class="vip-name">
+            <template v-if="e.rebateLevel == -1">...</template>
+            <template v-else>{{ e.rebateLevel }}</template>
+          </div>
         </div>
         <!-- <div :class="`status ${e.status === 'Online' ? 'online' : 'offline'}`">{{ e.status }}</div> -->
-        <div class="status online">Team Member</div>
+        <div class="status online">Team Member: {{ e.memberCount > 0 ? e.memberCount  : "..." }}</div>
       </div>
       <div class="bot-container">
         <div class="amount-container">
           <div class="amount-text">Bet Amount</div>
           <div class="amount">
             RS
-            <span>{{ convertToCommaAmount(e.validBet, true) }}</span>
+            <span>{{ convertToCommaAmount(e.validBet, false) }}</span>
           </div>
         </div>
 
@@ -267,7 +275,7 @@
           <div class="amount-text text-right">Income</div>
           <div class="amount text-right">
             RS
-            <span>{{ convertToCommaAmount(e.rebateAmount, true) }}</span>
+            <span>{{ convertToCommaAmount(e.rebateAmount, false) }}</span>
           </div>
         </div>
       </div>
@@ -558,6 +566,7 @@ onMounted(() => {
     justify-content: space-between;
     align-items: center;
     height: 40px;
+    flex-wrap: wrap;
   }
   .title {
     color: #fff;
@@ -578,6 +587,7 @@ onMounted(() => {
     color: rgba(255, 255, 255, 0.7);
     font-size: 0.9375rem;
     font-weight: 500;
+    margin-left: auto;
 
     .subtitle {
       font-size: 12px;
@@ -947,9 +957,9 @@ onMounted(() => {
           background: linear-gradient(94deg, #ffd84d 11.24%, #d97d00 91.82%);
           position: relative;
           right: 1rem;
-          width: 3.25rem;
+          // width: 3.25rem;
           text-align: right;
-          padding: 0 0.5rem 0 0;
+          padding: 0 0.5rem 0 0.75rem;
           font-size: 0.75rem;
           font-weight: 700;
         }

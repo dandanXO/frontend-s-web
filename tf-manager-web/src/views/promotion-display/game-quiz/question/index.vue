@@ -637,7 +637,7 @@ function convertStartDate(date) {
 }
 
 function disabledDate(time) {
-  return time.getTime() > new Date().getTime();
+  return false;
 }
 
 function disabledStartDate(time) {

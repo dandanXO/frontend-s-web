@@ -244,6 +244,9 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .promo-container {
+  h3 {
+    font-size: 16px;
+  }
   // background: #090b19;
   .all-promotions {
     background: url(../assets/promo/bg-top.jpg) no-repeat center top;

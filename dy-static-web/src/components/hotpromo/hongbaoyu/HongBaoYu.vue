@@ -38,9 +38,16 @@
   </el-dialog>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, defineProps } from "vue";
 import { claimDailyRainItem } from "@/api/index/promo";
 import { userStore } from "@/store";
+
+const props = defineProps({
+  promoCode: {
+    type: String,
+    required: true
+  }
+});
 
 const store = userStore();
 const privilegeClaimedModalVisible = ref(false);
@@ -50,7 +57,7 @@ const winAmount = ref(0);
 const loadingClaim = ref(false);
 const getPromotion = () => {
   loadingClaim.value = true;
-  claimDailyRainItem("dy-red-packet-rain")
+  claimDailyRainItem(props.promoCode)
     .then((res) => {
       loadingClaim.value = false;
       if (res.code === 0) {
