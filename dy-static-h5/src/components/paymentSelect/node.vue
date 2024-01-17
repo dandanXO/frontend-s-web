@@ -188,7 +188,7 @@ $node-color: #4ab6fd;
 
 .payment-method-wrapper {
   // display: flex;
-  grid-gap: 15px;
+  grid-gap: 20px;
   // flex-wrap: wrap;
   // justify-content: space-evenly;
   display: grid;
@@ -279,7 +279,7 @@ $node-color: #4ab6fd;
 
   .node-content {
     column-gap: 10px;
-    row-gap: 15px;
+    row-gap: 10px;
 
     .payment-method-item {
       text-align: center;
@@ -290,7 +290,7 @@ $node-color: #4ab6fd;
       display: flex;
       justify-content: center;
       width: 100%;
-      max-width: 5rem;
+      max-width: 4.5rem;
 
       .payment-method-wrapper {
         display: none;
@@ -315,8 +315,8 @@ $node-color: #4ab6fd;
         align-items: center;
         justify-content: center;
         box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
-        width: 5rem;
-        height: 5rem;
+        width: 4rem;
+        height: 4rem;
         margin-bottom: 5px;
         border: 2px solid #c2c2c2;
         border-radius: 4px;
@@ -370,8 +370,8 @@ $node-color: #4ab6fd;
         padding: 0;
         border: 0;
         background-color: transparent;
-        max-width: 44px;
-        width: 44px;
+        max-width: 40px;
+        width: 40px;
       }
 
       ::after {
@@ -382,8 +382,5 @@ $node-color: #4ab6fd;
 }
 
 @media (max-width: 380px) {
-  .payment-method-wrapper {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }
 </style>
