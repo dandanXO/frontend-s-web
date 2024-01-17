@@ -63,8 +63,13 @@
               @focus="loadSportPlatformOptions()"
               clearable
             >
-              <el-option v-for="platform in sportPlatformOptions" :key="platform" :value="platform" :label="platform">
-                {{ platform }}
+              <el-option
+                v-for="platform in sportPlatformOptions"
+                :key="platform.value"
+                :value="platform.value"
+                :label="platform.alias"
+              >
+                {{ platform.alias }}
               </el-option>
             </el-select>
           </el-form-item>
@@ -102,6 +107,7 @@ import {
   getSportInsurancePlatformOptions,
   submitSportInsuranceForm
 } from "@/api/promotion/sportSafety";
+import { getLoggedInPlatformList } from "@/api/platform/platform";
 
 const store = userStore();
 const matchDetails = ref([]);
@@ -144,8 +150,21 @@ const formatDate = (dateTimeString) => {
 };
 
 const loadSportPlatformOptions = () => {
+  sportPlatformOptions.value = [];
+
   getSportInsurancePlatformOptions().then((res) => {
-    sportPlatformOptions.value = res.data;
+    for (let i = 0, l = res.data.length; i < l; i++) {
+      const currResData = res.data[i];
+      platformsListDisplay.value.forEach((e) => {
+        if (currResData === e.code) {
+          const obj = {
+            value: currResData,
+            alias: e.alias
+          };
+          sportPlatformOptions.value.push(obj);
+        }
+      });
+    }
   });
 };
 
@@ -226,8 +245,18 @@ const nextSlide = () => {
 
 const iconImageBasePath = `${process.env.VUE_APP_IMAGE_CDN}/promo`;
 
+const platformsList = ref([]);
+const platformsListDisplay = ref([]);
+const getPlatList = () => {
+  getLoggedInPlatformList().then((res) => {
+    platformsList.value = res;
+    platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("SPORT"));
+  });
+};
+
 onMounted(() => {
   init();
+  getPlatList();
 });
 </script>
 
