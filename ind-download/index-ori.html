@@ -104,7 +104,7 @@
                                         <div class="VfPpkd-dgl2Hf-ppHlrf-sM5MNb">
                                             <button id="installButton"
                                                     class="install-btn VfPpkd-LgbsSe VfPpkd-LgbsSe-OWXEXe-k8QpJ VfPpkd-LgbsSe-OWXEXe-dgl2Hf nCP5yc AjY5Oe DuMIQc LQeN7 MjT6xe sOCCfd brKGGd BhQfub zwjsl disabled-btn">
-                                                Install
+                                                Loading...
                                             </button>
                                         </div>
                                     </div>
@@ -676,6 +676,7 @@ var adjustUrlCode = '';
 getApiUrl();
 
 async function getApiUrl() {
+    var button;
     try {
         const response = await fetch(`https://tljwn.plan2wtion.com/app/download/affiliate/url?siteCode=IND&affiliateCode=${affidValue}`);
         const data = await response.json();
@@ -685,7 +686,12 @@ async function getApiUrl() {
             adjustUrlCode = data.data.adjustUrlCode;
 
             button = document.getElementById("installButton");
+            button.innerText = "Install"
             button.classList.remove("disabled-btn");
+            button.onclick = function () {
+                downloadApk(code, pp, fbclid, fbpid)
+                return false;
+            }
 
             if (autoDownload == "1") {
                 downloadApk(code, pp, fbclid, fbpid)
@@ -745,25 +751,6 @@ function isIOS() {
     //ios
     return isiOS;
 }
-
-button = document.getElementById("installButton");
-button.onclick = function () {
-    downloadApk(code, pp, fbclid, fbpid)
-    return false;
-}
-
-downloadbtn = document.getElementById("downloadbtn");
-downloadbtn.onclick = function () {
-    downloadApk(code, pp, fbclid, fbpid);
-    return false;
-}
-
-installbtn = document.getElementById("installbtn");
-installbtn.onclick = function () {
-    downloadApk(code, pp, fbclid, fbpid)
-    return false;
-}
-
 
 thelist = document.getElementById("scroll-list");
 thelist705 = document.getElementById("scroll-list-705");
