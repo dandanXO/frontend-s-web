@@ -311,55 +311,51 @@ const columns4 = [
 const rows4 = [
   {
     level: 1,
-    rebates: 0.3
+    rebates: 0.1
   },
   {
     level: 2,
-    rebates: 0.4
+    rebates: 0.2
   },
   {
     level: 3,
-    rebates: 0.5
+    rebates: 0.3
   },
   {
     level: 4,
-    rebates: 0.6
+    rebates: 0.4
   },
   {
     level: 5,
-    rebates: 0.7
+    rebates: 0.5
   },
   {
     level: 6,
-    rebates: 0.8
+    rebates: 0.6
   },
   {
     level: 7,
-    rebates: 0.9
+    rebates: 0.7
   },
   {
     level: 8,
-    rebates: 1.0
+    rebates: 0.8
   },
   {
     level: 9,
-    rebates: 1.1
+    rebates: 0.9
   },
   {
     level: 10,
-    rebates: 1.2
+    rebates: "1.0"
   },
   {
     level: 11,
-    rebates: 1.3
+    rebates: 1.1
   },
   {
     level: 12,
-    rebates: 1.4
-  },
-  {
-    level: 13,
-    rebates: 1.5
+    rebates: 1.2
   }
 ];
 
