@@ -36,7 +36,7 @@
         <el-select
           filterable
           clearable
-          v-model="request.paymentId"
+          v-model="request.paymentIds"
           size="small"
           :placeholder="t('fields.paymentName')"
           class="filter-item"
@@ -186,7 +186,7 @@
             #default="scope"
             v-if="hasPermission(['sys:affiliate:detail'])"
           >
-            <router-link :to="`details/${scope.row.id}?site=${scope.row.siteId}`">
+            <router-link :to="`details/${scope.row.affiliateId}?site=${scope.row.siteId}`">
               <el-link type="primary">{{ scope.row.loginName }}</el-link>
             </router-link>
           </template>
