@@ -293,6 +293,7 @@ export default {
       3: 'Total Number of Kills in Total Rounds (Including Overtime)',
       4: 'Total rounds/kills for both teams',
       5: 'Kill the highest team?',
+      6: 'Which team first blood',
     },
     answers: {
       CSGO: {
