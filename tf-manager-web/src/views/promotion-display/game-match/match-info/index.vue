@@ -27,7 +27,6 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 280px; margin-left: 10px;"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
         />
@@ -437,10 +436,6 @@ function convertDate(date) {
 
 function disabledStartDate(time) {
   return time.getTime() <= moment(new Date()).subtract(1, 'days').endOf('day').format('x');
-}
-
-function disabledDate(time) {
-  return time.getTime() > new Date().getTime();
 }
 
 const request = reactive({
