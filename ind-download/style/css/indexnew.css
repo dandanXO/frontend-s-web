@@ -1875,7 +1875,8 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
 
     .title-main {
         flex-direction: column;
-        line-height: 55px;
+        line-height: 2.4rem;
+        font-size: 1.5rem;
     }
 
     .JU1wdd {
@@ -1891,6 +1892,10 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
         padding-left: 0px;
         white-space: normal;
         line-height: 20px;
+    }
+
+    .brKGGd {
+        width: 100%;
     }
 }
 
