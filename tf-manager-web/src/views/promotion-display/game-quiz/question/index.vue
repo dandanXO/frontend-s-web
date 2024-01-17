@@ -680,7 +680,8 @@ const uiControl = reactive({
     { key: 1, displayName: 'gameQuiz.questions.2', value: 'gameQuiz.questions.2' },
     { key: 2, displayName: 'gameQuiz.questions.3', value: 'gameQuiz.questions.3' },
     { key: 3, displayName: 'gameQuiz.questions.4', value: 'gameQuiz.questions.4' },
-    { key: 4, displayName: 'gameQuiz.questions.5', value: 'gameQuiz.questions.5' }
+    { key: 4, displayName: 'gameQuiz.questions.5', value: 'gameQuiz.questions.5' },
+    { key: 5, displayName: 'gameQuiz.questions.6', value: 'gameQuiz.questions.6' }
   ]
 });
 const page = reactive({
@@ -1027,7 +1028,7 @@ function populateChoice() {
     } else if (question.key === 3) {
       choiceTwo.value[0].value = t('gameQuiz.answers.' + form.gameType + '.killSignal')
       choiceTwo.value[1].value = t('gameQuiz.answers.' + form.gameType + '.killDouble')
-    } else if (question.key === 4) {
+    } else if (question.key === 4 || question.key === 5) {
       choiceTwo.value[0].value = form.homeTeam
       choiceTwo.value[1].value = form.awayTeam
     }
@@ -1044,7 +1045,7 @@ function populateChoice() {
     } else if (question.key === 3) {
       choiceThree.value[0].value = t('gameQuiz.answers.' + form.gameType + '.killSignal')
       choiceThree.value[1].value = t('gameQuiz.answers.' + form.gameType + '.killDouble')
-    } else if (question.key === 4) {
+    } else if (question.key === 4 || question.key === 5) {
       choiceThree.value[0].value = form.homeTeam
       choiceThree.value[1].value = form.awayTeam
     }
