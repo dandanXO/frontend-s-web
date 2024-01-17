@@ -218,7 +218,6 @@
       >
         <template #default="scope">
           <el-button
-            v-if="scope.row.status === 'PENDING_SETTLE'"
             size="small"
             type="success"
             v-permission="['sys:game-match-record:update']"
@@ -228,7 +227,6 @@
             {{ t('fields.settle') }}
           </el-button>
           <el-button
-            v-if="scope.row.status === 'PENDING_SETTLE'"
             size="small"
             type="danger"
             v-permission="['sys:game-match-record:update']"
