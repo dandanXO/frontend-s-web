@@ -192,7 +192,7 @@
             <span v-formatter="{data: scope.row.profit, type: 'money'}" />
           </template>
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           prop="depositAmount"
           :label="t('fields.totalMemberDepositAmount')"
           align="center"
@@ -207,7 +207,7 @@
               }"
             />
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column
           prop="depositCount"
           :label="t('fields.totalMemberDepositCount')"
@@ -417,7 +417,7 @@ function getSummaries(param) {
         sums[index] = t('fields.total')
       } else if (index > 1) {
         var prop = column.property
-        if (index === 5 || index === 6 || index === 12) {
+        if (index === 5 || index === 6 || index === 11) {
           sums[index] = total.data[prop]
         } else if (index === 4) {
           // profit depositWithdrawal = deposit - withdrawal
