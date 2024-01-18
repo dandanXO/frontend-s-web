@@ -88,6 +88,7 @@
                 </div>
               </div>
               <div class="inner">
+                <!-- <pre>SelectedPromo: ~{{ selectedPromo }}</pre> -->
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
                   <HotPromotion :list="selectedPromo" />
                 </div>
