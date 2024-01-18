@@ -3,6 +3,17 @@ export default {
     title: 'Affiliate System',
     logout: 'Logout',
     changePassword: 'Change Password',
+    login: "Login",
+    signup: "Signup",
+    username: "Username",
+    loginnow: "Login Now",
+    password: "Password",
+    apply: "Apply",
+    verificationcode: "Verification Code",
+    verification_title: "Security Check, Please click steps by steps：",
+    verify_success: "Verify Success",
+    refresh: "Refresh",
+    submit: "Submit"
   },
   depositStatus: {
     SUCCESS: 'Success',

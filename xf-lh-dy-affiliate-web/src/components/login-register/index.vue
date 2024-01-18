@@ -1,5 +1,7 @@
 <template>
-  <div class="firstPage">
+  <div class="firstPage"
+       :class="props.siteId !== '5' ? '' : 'ind-firstPage'"
+  >
     <div class="inner">
       <div class="loginPage">
         <div class="left">
@@ -12,17 +14,8 @@
         <div class="right">
           <div class="bg">
             <div class="top">
-              <div class="log" v-if="currentSite.lang === 'EN'">{{ isReg ? 'Register' : 'Login' }}</div>
-              <div class="log" v-else>{{ isReg ? '注册' : '登录' }}</div>
-              <div class="topright" v-if="currentSite.lang === 'EN'">
-                <span class="noaccabs">
-                  {{ isReg ? 'Already have account? ' : 'No Account? ' }}
-                </span>
-                <a @click="isReg = !isReg" class="signlog">
-                  {{ isReg ? 'Please Login' : 'Register Now' }}
-                </a>
-              </div>
-              <div class="topright" v-else>
+              <div class="log">{{ isReg ? $t('common.signup') : $t('common.login') }}</div>
+              <div class="topright" v-if="props.siteId !== '5'">
                 <span class="noaccabs">
                   {{ isReg ? '已经有账号? ' : '没有帐户？' }}
                 </span>
@@ -81,7 +74,7 @@
                   style="width:100%;"
                   @click.prevent="handleLogin"
                 >
-                  {{ currentSite.lang === 'EN' ? 'Login Now' : '立即登录' }}
+                  {{ $t('common.loginnow') }}
                 </el-button>
               </el-form>
               <el-form
@@ -150,7 +143,7 @@
                     <el-input
                       ref="verificationRef"
                       v-model="regForm.captchaCode"
-                      :placeholder="currentSite.lang === 'EN' ? 'Verification Code' : '验证码'"
+                      :placeholder="$t('common.verificationcode')"
                       name="captchaCode"
                       type="text"
                       tabindex="7"
@@ -168,7 +161,7 @@
                     style="width:100%;"
                     @click.prevent="handleRegister"
                   >
-                    {{ currentSite.lang === 'EN' ? 'Register' : '申请' }}
+                    {{ $t('common.apply') }}
                   </el-button>
                 </div>
                 <!--div v-if="step === 2">
@@ -259,7 +252,7 @@
     v-model="showDialog"
     custom-class="dialog400"
     @close="onCloseDialog"
-    :title="(currentSite.lang === 'EN' ? 'Safety Verification: ' : '安全验证, 请依次点击：') + words.join(' , ')"
+    :title="$t('common.verification_title') + words.join(' , ')"
   >
     <div
       id="loadDiv"
@@ -297,7 +290,7 @@
             color: 'rgb(130, 208, 130)',
           }"
         >
-          {{ currentSite.lang === 'EN' ? 'Success' : '验证成功' }}
+          {{ $t('common.verify_success') }}
         </span>
       </div>
     </div>
@@ -308,7 +301,7 @@
         style="margin-top: 20px;"
         @click="onGetImage()"
       >
-        {{ currentSite.lang === 'EN' ? 'Refresh' : '刷新' }}
+        {{ $t('common.refresh') }}
       </el-button>
       <el-button
         type="success"
@@ -317,7 +310,7 @@
         @click="userLogin()"
         :disabled="coordinates.length === 0"
       >
-        {{ currentSite.lang === 'EN' ? 'Submit' : '提交' }}
+        {{ $t('common.submit') }}
       </el-button>
     </div>
   </el-dialog>
@@ -347,9 +340,11 @@ import { UserActionTypes } from '@/store/modules/user/action-types'
 import { ElNotification } from 'element-plus'
 import dyLogo from '@/assets/images/dy/logowhitee.png'
 import xfLogo from '@/assets/images/xf/logowhitee.png'
-import indLogo from '@/assets/images/ind/55-ace-logo.png'
+import indLogo from '@/assets/images/ind/ind-logo.png'
 import { getVerificationImage } from '@/api/verification'
 import { getVerificationCode } from '@/api/user'
+import { useI18n } from "vue-i18n";
+import { i18nStore } from "@/store/language";
 
 export default defineComponent({
   props: {
@@ -409,6 +404,7 @@ export default defineComponent({
     const router = useRouter()
     const route = useRoute()
     const store = useStore()
+    const { t } = useI18n()
     const hasAffiliate = ref(false)
     const step = ref(1)
     const state = reactive({
@@ -423,14 +419,14 @@ export default defineComponent({
         userName: [
           {
             required: true,
-            message: '请输入用户名',
+            message: t('message.requiredLoginName'),
             trigger: 'blur',
           },
         ],
         password: [
           {
             required: true,
-            message: '请输入密码',
+            message: t('message.requiredPassword'),
             trigger: 'blur',
           },
         ],
@@ -769,27 +765,30 @@ export default defineComponent({
       }
     )
     const currentSite = ref({});
+    const i18nStoreLanguage = i18nStore();
+    const { setLanguage } = i18nStoreLanguage;
     const populateCurrentSiteData = () => {
-      switch (props.siteId) {
-        case '6':
-          currentSite.value.firstLiner = '从东赢开始'
-          currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
-          currentSite.value.logo = dyLogo
-          state.loginForm.site = 'DY2'
-          break;
-        case '1':
-          currentSite.value.firstLiner = '从兴发开始'
-          currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
-          currentSite.value.logo = xfLogo
-          state.loginForm.site = 'XF1'
-          break;
-        case '5':
-          currentSite.value.firstLiner = 'INDWIN'
-          currentSite.value.secondLiner = 'Become Legend<br>Or Become Praiser of Legend'
-          currentSite.value.logo = indLogo
-          currentSite.value.lang = 'EN'
-          state.loginForm.site = 'IND'
-          break;
+      if (props.siteId === '6') {
+        currentSite.value.firstLiner = '从东赢开始'
+        currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
+        currentSite.value.logo = dyLogo
+        state.loginForm.site = 'DY2'
+        setLanguage('zh');
+      }
+      if (props.siteId === '1') {
+        currentSite.value.firstLiner = '从兴发开始'
+        currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
+        currentSite.value.logo = xfLogo
+        state.loginForm.site = 'XF1'
+        setLanguage('zh');
+      }
+      if (props.siteId === '5') {
+        currentSite.value.firstLiner = 'Starts from 55ACE'
+        currentSite.value.secondLiner = 'Become a legend<br>Or become the eulogist of legend?'
+        currentSite.value.logo = indLogo
+        state.loginForm.site = 'IND';
+        currentSite.value.lang = 'EN'
+        setLanguage('en');
       }
     }
     onMounted(() => {
@@ -832,7 +831,9 @@ export default defineComponent({
       hasAffiliate,
       step,
       isReg,
-      currentSite
+      currentSite,
+      props,
+      t
     }
   },
 })
@@ -1082,6 +1083,38 @@ a {
       }
     }
   }
+
+  &.ind-firstPage{
+    background: url('../../assets/images/ind/ind-bg.png') no-repeat center;
+
+    .logo {
+      position: absolute;
+      left: 70px;
+      top: 40px;
+      width: 207px;
+    }
+
+    .loginPage .left .first-liner{
+      max-width: 750px;
+      width: 750px;
+    }
+
+    .loginPage .left .second-liner{
+      max-width: 600px;
+      width: 600px;
+    }
+
+    .inner{
+     max-width: 1300px;
+    }
+
+    .common-btn{
+      background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%);
+
+    }
+
+  }
+
 }
 
 @media (max-width: 768px) {
@@ -1128,6 +1161,38 @@ a {
       top: 20px;
       width: 120px;
     }
+
+    &.ind-firstPage{
+      .logo {
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        width: 150px;
+      }
+
+      .loginPage{
+        padding-top: 30px;
+      }
+      .loginPage .left{
+        width: calc(100% - 20px);
+
+      }
+      .loginPage .left .first-liner{
+        max-width: none;
+        width: 100%;
+      }
+
+      .loginPage .left .second-liner{
+        max-width: none;
+        width: 100%;
+      }
+
+      .common-btn{
+        background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%);
+      }
+
+    }
+
   }
   .wrapper {
     .affiliate {

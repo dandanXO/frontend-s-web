@@ -11,21 +11,21 @@
     <SwiperSlide>
       <LoginRegisterPage siteId="5" />
     </SwiperSlide>
-    <SwiperSlide>
-      <CustomerServicePage />
-    </SwiperSlide>
-    <SwiperSlide>
-      <SupportPage />
-    </SwiperSlide>
-    <Navigation />
-    <Pagination />
-    <Mousewheel />
-    <Scrollbar />
+    <!--    <SwiperSlide>-->
+    <!--      <CustomerServicePage />-->
+    <!--    </SwiperSlide>-->
+    <!--    <SwiperSlide>-->
+    <!--      <SupportPage />-->
+    <!--    </SwiperSlide>-->
+    <!--    <Navigation />-->
+    <!--    <Pagination />-->
+    <!--    <Mousewheel />-->
+    <!--    <Scrollbar />-->
   </Swiper>
   <div v-if="isMobileView">
     <LoginRegisterPage siteId="5" />
-    <CustomerServicePage />
-    <SupportPage />
+    <!--    <CustomerServicePage />-->
+    <!--    <SupportPage />-->
   </div>
 </template>
 <script>
@@ -40,21 +40,13 @@ import SwiperCore, {
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/swiper-bundle.css'
-import CustomerServicePage from '@/components/customer-service'
 import LoginRegisterPage from '@/components/login-register'
-import SupportPage from '@/components/support-page'
 // extra components
 SwiperCore.use([Mousewheel, Pagination, Navigation, Scrollbar])
 export default defineComponent({
   components: {
     Swiper,
     SwiperSlide,
-    Navigation,
-    Pagination,
-    Mousewheel,
-    Scrollbar,
-    CustomerServicePage,
-    SupportPage,
     LoginRegisterPage,
   },
   setup() {

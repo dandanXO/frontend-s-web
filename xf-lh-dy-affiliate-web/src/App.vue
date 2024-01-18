@@ -25,10 +25,12 @@ onMounted(() => {
     link.href = '/my-favicon.ico';
   }else if(window.location.pathname.indexOf("th") > -1 || window.location.pathname.indexOf("ph") > -1){
     link.href = '/th-favicon.ico';
+  }else if(window.location.pathname.indexOf("ind") > -1 || window.location.pathname.indexOf("ind") > -1){
+    link.href = '/ind-favicon.ico';
   }else{
     link.href = '/favicon.ico';
   }
-  
+
   // change path according to hostname
   if (window.location.pathname === '/login') {
     if (window.location.host.indexOf('xf') > -1) {
