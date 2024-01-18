@@ -1,7 +1,7 @@
 <template>
   <div v-if="upcomingMatchDetails.length > 0">
     <swiper
-      :slides-per-view="props.platformType === 'NBA' ? 1 : 2"
+      :slides-per-view="props.platformType === 'NBA' || upcomingMatchDetails.length < 2 ? 1 : 2"
       :loop="false"
       @swiper="onSwiper"
       :space-between="20"
