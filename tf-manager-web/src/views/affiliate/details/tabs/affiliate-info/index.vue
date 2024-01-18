@@ -1238,6 +1238,7 @@ import {
 } from '../../../../../api/member-affiliate'
 import { useStore } from '../../../../../store'
 import { useI18n } from 'vue-i18n'
+import { getConfigList } from '../../../../../api/config'
 
 const { t } = useI18n()
 const store = useStore()
@@ -1505,14 +1506,9 @@ async function loadFinancialLevels() {
 }
 
 async function loadReferralLink() {
-  if (memberDetail.siteId === '1') {
-    link.value = 'https://xf1869.com/agent/' + affiliateDetails.affiliateCode
-  } else if (memberDetail.siteId === '2') {
-    link.value =
-      'https://www.dy1698.com/agent/' + affiliateDetails.affiliateCode
-  } else if (memberDetail.siteId === '3') {
-    link.value =
-      'https://www.jolly8858.com/agent/' + affiliateDetails.affiliateCode
+  const { data: affiliateUrl } = await getConfigList("affiliate_web_link", memberDetail.siteId);
+  if (affiliateUrl[0].value) {
+    link.value = affiliateUrl[0].value + '/agent/' + affiliateDetails.affiliateCode;
   } else {
     link.value = ''
   }
