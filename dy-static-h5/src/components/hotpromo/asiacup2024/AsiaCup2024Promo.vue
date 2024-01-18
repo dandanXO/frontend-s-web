@@ -15,7 +15,7 @@
             <div class="right-container">
               <div class="desc-title">2024亚战指南</div>
 
-              <div @click="handleClaim('asian-cup-A', '亚战指南')">
+              <div @click="handleClaim('asian-cup-A', '亚战指南')" class="click-btn">
                 <img src="../../../assets/images/promotion/hotpromo/asiacup2024/click-btn.png" />
               </div>
             </div>
@@ -103,7 +103,7 @@
             <div class="right-container">
               <div class="desc-title">2024投注好礼</div>
 
-              <div @click="handleClaim('asian-cup-B', '投注好礼')">
+              <div @click="handleClaim('asian-cup-B', '投注好礼')" class="click-btn">
                 <img src="../../../assets/images/promotion/hotpromo/asiacup2024/click-btn.png" />
               </div>
             </div>
@@ -445,6 +445,13 @@ const handleClaim = (applyPromoCode, applyPromoTitle) => {
   .hint-title {
     font-size: 18px;
     color: #fff;
+  }
+}
+
+.click-btn {
+  transition: 0.3s all;
+  &:hover {
+    filter: brightness(1.5);
   }
 }
 </style>

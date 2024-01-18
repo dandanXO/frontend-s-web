@@ -15,7 +15,7 @@
             <div class="right-container">
               <div class="desc-title">LPL呐喊助威</div>
 
-              <div @click="handleClaim('lpl-summer-A', '呐喊助威')">
+              <div @click="handleClaim('lpl-summer-A', '呐喊助威')" class="click-btn">
                 <img src="../../../assets/images/promotion/hotpromo/lpl-summer/click-btn.png" />
               </div>
             </div>
@@ -105,7 +105,7 @@
             <div class="right-container">
               <div class="desc-title">LPL倍投赠礼</div>
 
-              <div @click="handleClaim('lpl-summer-B', '倍投赠礼')">
+              <div @click="handleClaim('lpl-summer-B', '倍投赠礼')" class="click-btn">
                 <img src="../../../assets/images/promotion/hotpromo/lpl-summer/click-btn.png" />
               </div>
             </div>
@@ -448,6 +448,13 @@ const handleClaim = (applyPromoCode, applyPromoTitle) => {
   .hint-title {
     font-size: 18px;
     color: #fff;
+  }
+}
+
+.click-btn {
+  transition: 0.3s all;
+  &:hover {
+    filter: brightness(1.5);
   }
 }
 </style>
