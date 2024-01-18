@@ -258,6 +258,7 @@ const onClaimBtnClicked = (isBtnOne) => {
   font-size: 20px;
   font-weight: 700;
   padding: 20px 70px;
+  border: 1px solid #2f7cf7;
 }
 
 .lpl-tabs .tab:not(.active):hover {
