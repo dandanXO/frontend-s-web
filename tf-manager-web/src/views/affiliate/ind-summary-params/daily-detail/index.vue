@@ -336,11 +336,28 @@ async function loadSites() {
   })
 }
 
+let previouseLoginNameList = ref(null)
+
 async function loadSitesWithPreDefineAffiliate() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
   request.siteId = siteList.list.filter(x => x.siteCode === 'IND')[0].id
   const { data: affiliates } = await getAffiliateList(request.siteId)
+
+  if (
+    route.query.loginNameList !== null &&
+    route.query.loginNameList !== undefined
+  ) {
+    if (previouseLoginNameList.value !== null) {
+      if (route.query.loginNameList !== previouseLoginNameList.value) {
+        resetQuery()
+        loadRecord()
+      }
+    } else {
+      previouseLoginNameList = route.query.loginNameList
+      loadRecord()
+    }
+  }
 
   const loginNameArray = getFromRouter.loginNameList.split(',')
   affiliateNames.value = affiliates

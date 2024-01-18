@@ -247,7 +247,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, watch } from 'vue'
+import { onMounted, reactive, watch, ref, defineExpose } from 'vue'
 import moment from 'moment'
 import {
   queryDailySummaryByType,
@@ -258,6 +258,10 @@ import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
 import { formatInputTimeZone } from '@/utils/format-timeZone'
 import { useRoute } from 'vue-router'
+
+defineExpose({
+  loadSites,
+})
 
 const { t } = useI18n()
 const siteList = reactive({
@@ -291,10 +295,27 @@ const total = reactive({
   data: null,
 })
 
+let previouseLoginNameList = ref(null)
+
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
   request.siteId = siteList.list.filter(x => x.siteCode === 'IND')[0].id
+
+  if (
+    route.query.loginNameList !== null &&
+    route.query.loginNameList !== undefined
+  ) {
+    if (previouseLoginNameList.value !== null) {
+      if (route.query.loginNameList !== previouseLoginNameList.value) {
+        resetQuery()
+        loadRecord()
+      }
+    } else {
+      previouseLoginNameList = route.query.loginNameList
+      loadRecord()
+    }
+  }
 }
 
 function convertDate(date) {
