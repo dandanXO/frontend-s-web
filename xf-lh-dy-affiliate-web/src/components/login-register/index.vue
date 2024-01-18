@@ -345,6 +345,7 @@ import indLogo from '@/assets/images/ind/ind-logo.png'
 import { getVerificationImage } from '@/api/verification'
 import { getVerificationCode } from '@/api/user'
 import { useI18n } from "vue-i18n";
+import { i18nStore } from "@/store/language";
 
 export default defineComponent({
   props: {
@@ -419,14 +420,14 @@ export default defineComponent({
         userName: [
           {
             required: true,
-            message: '请输入用户名',
+            message: t('message.requiredLoginName'),
             trigger: 'blur',
           },
         ],
         password: [
           {
             required: true,
-            message: '请输入密码',
+            message: t('message.requiredPassword'),
             trigger: 'blur',
           },
         ],
@@ -765,24 +766,29 @@ export default defineComponent({
       }
     )
     const currentSite = ref({});
+    const i18nStoreLanguage = i18nStore();
+    const { setLanguage } = i18nStoreLanguage;
     const populateCurrentSiteData = () => {
       if (props.siteId === '6') {
         currentSite.value.firstLiner = '从东赢开始'
         currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
         currentSite.value.logo = dyLogo
         state.loginForm.site = 'DY2'
+        setLanguage('zh');
       }
       if (props.siteId === '1') {
         currentSite.value.firstLiner = '从兴发开始'
         currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
         currentSite.value.logo = xfLogo
         state.loginForm.site = 'XF1'
+        setLanguage('zh');
       }
       if (props.siteId === 'IND') {
         currentSite.value.firstLiner = 'Starts from 55ACE'
         currentSite.value.secondLiner = 'Become a legend<br>Or become the eulogist of legend?'
         currentSite.value.logo = indLogo
         state.loginForm.site = 'IND'
+        setLanguage('en');
       }
     }
     onMounted(() => {
