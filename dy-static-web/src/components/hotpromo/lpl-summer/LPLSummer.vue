@@ -110,7 +110,7 @@
           <img src="../../../assets/promo/lpl-s13/actv-details.png" alt="content-title" />
         </div>
         <div class="lpl-actives">
-          <p>活动期间，当日投注LPL+LCK赛事总有效投注≥1000即可根据对应倍投彩金，每日最高可获1088元。</p>
+          <p>活动期间，当日投注LPL+LCK赛事总有效投注≥1000即可根据对应倍投彩金，每日最高可获1288元。</p>
         </div>
 
         <table class="lpl-table-div">
