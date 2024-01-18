@@ -482,10 +482,10 @@
         >
           <template #default="scope">
             <span v-if="scope.row.belongType === 'OFFICIAL'">
-              {{ t('fields.affiliate.OFFICIAL') }}
+              {{ t('affiliate.belongType.OFFICIAL') }}
             </span>
             <span v-if="scope.row.belongType === 'PACKAGE'">
-              {{ t('fields.affiliate.PACKAGE') }}
+              {{ t('affiliate.belongType.PACKAGE') }}
             </span>
           </template>
         </el-table-column>

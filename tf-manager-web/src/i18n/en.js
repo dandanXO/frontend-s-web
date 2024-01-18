@@ -1821,6 +1821,8 @@ export default {
     Applying: 'Applying',
     'Affiliate Applying': 'AffiliateApplying',
     'Affiliate Under review': 'Affiliate Under review',
+    BW1: 'BW1',
+    BW2: 'BW2',
     'To be affiliate paid': 'To be affiliate paid',
     'Affiliate Payment on going': 'Affiliate Payment on going',
     'Crypto Affiliate Payment on going': 'Crypto Affiliate Payment on going',

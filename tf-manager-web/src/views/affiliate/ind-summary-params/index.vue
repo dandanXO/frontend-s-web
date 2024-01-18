@@ -19,5 +19,9 @@ const { t } = useI18n()
 const activeName = ref('daily-detail')
 const summaryTab = ref()
 
-function checkTab(val) {}
+function checkTab(val) {
+  if (val === 'daily-summary') {
+    summaryTab.value.loadSites()
+  }
+}
 </script>
