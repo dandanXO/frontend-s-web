@@ -181,7 +181,9 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-vip-upgrade-bonus" ||
       this.list.redirectUrl === "dy2-refer-bonus" ||
       this.list.redirectUrl === "asian-cup-2024" ||
-      this.list.redirectUrl === "lpl-summer"
+      this.list.redirectUrl === "lpl-summer" ||
+      this.list.redirectUrl === "dy-promo-application-A" ||
+      this.list.redirectUrl === "dy-promo-application-B"
     ) {
       this.isCommonPromo = false;
     } else {
