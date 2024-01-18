@@ -1,6 +1,6 @@
 <template>
   <div class="firstPage"
-       :class="props.siteId !== 'IND' ? '' : 'ind-firstPage'"
+       :class="props.siteId !== '5' ? '' : 'ind-firstPage'"
   >
     <div class="inner">
       <div class="loginPage">
@@ -14,17 +14,8 @@
         <div class="right">
           <div class="bg">
             <div class="top">
-              <div class="log" v-if="currentSite.lang === 'EN'">{{ isReg ? 'Register' : 'Login' }}</div>
-              <div class="log" v-else>{{ isReg ? '注册' : '登录' }}</div>
-              <div class="topright" v-if="currentSite.lang === 'EN'">
-                <span class="noaccabs">
-                  {{ isReg ? 'Already have account? ' : 'No Account? ' }}
-                </span>
-                <a @click="isReg = !isReg" class="signlog">
-                  {{ isReg ? 'Please Login' : 'Register Now' }}
-                </a>
-              </div>
-              <div class="topright" v-else>
+              <div class="log">{{ isReg ? $t('common.signup') : $t('common.login') }}</div>
+              <div class="topright" v-if="props.siteId !== '5'">
                 <span class="noaccabs">
                   {{ isReg ? '已经有账号? ' : '没有帐户？' }}
                 </span>
@@ -1170,6 +1161,38 @@ a {
       top: 20px;
       width: 120px;
     }
+
+    &.ind-firstPage{
+      .logo {
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        width: 150px;
+      }
+
+      .loginPage{
+        padding-top: 30px;
+      }
+      .loginPage .left{
+        width: calc(100% - 20px);
+
+      }
+      .loginPage .left .first-liner{
+        max-width: none;
+        width: 100%;
+      }
+
+      .loginPage .left .second-liner{
+        max-width: none;
+        width: 100%;
+      }
+
+      .common-btn{
+        background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%);
+      }
+
+    }
+
   }
   .wrapper {
     .affiliate {
