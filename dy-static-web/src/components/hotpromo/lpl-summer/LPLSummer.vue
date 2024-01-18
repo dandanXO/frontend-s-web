@@ -19,7 +19,7 @@
               :class="`claim-btn ${claimBtnStatus.btnOne ? 'disable-pointer' : ''}`"
               @click="onClaimBtnClicked(true)"
             >
-              <img src="../../../assets/promo/lpl-s13/click-btn.png" />
+              <div>立即申請</div>
             </span>
           </div>
         </div>
@@ -32,7 +32,7 @@
               :class="`claim-btn ${claimBtnStatus.btnTwo ? 'disable-pointer' : ''}`"
               @click="onClaimBtnClicked(false)"
             >
-              <img src="../../../assets/promo/lpl-s13/click-btn.png" />
+              <div>立即申請</div>
             </span>
           </div>
         </div>
@@ -227,10 +227,6 @@ const onClaimBtnClicked = (isBtnOne) => {
   width: 100%;
 }
 
-.pointer-s {
-  cursor: pointer;
-}
-
 .lpl-tabs {
   display: flex;
   gap: 10px;
@@ -254,13 +250,13 @@ const onClaimBtnClicked = (isBtnOne) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: #f3f4f6;
+  border-radius: 0.375rem;
   cursor: pointer;
   padding: 40px;
-  background-size: contain;
   font-family: Microsoft Yahei UI;
   font-size: 20px;
+  font-weight: 700;
   padding: 20px 70px;
 }
 
@@ -269,18 +265,13 @@ const onClaimBtnClicked = (isBtnOne) => {
 }
 
 .lpl-tabs .tab.active {
-  background-image: url("../../../assets/promo/asian-cup-2024/active-tab.png");
+  border: 1px solid #e5e7eb;
+  background: linear-gradient(180deg, #2ca1fe 0%, #2f7cf7 100%);
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
 }
 
 .lpl-tabs .tab.active .grad-txt {
-  font-weight: 700;
-  background-image: linear-gradient(180deg, #ffd600 0%, #ffffff 100%);
-  background-size: 100%;
-  background-repeat: repeat;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-background-clip: text;
-  -moz-text-fill-color: transparent;
+  color: white;
 }
 .claim-btn-div {
   display: none;
@@ -318,6 +309,12 @@ const onClaimBtnClicked = (isBtnOne) => {
 
 .claim-btn {
   cursor: pointer;
+  border-radius: 6.25rem;
+  background: linear-gradient(180deg, #2ca1fe 0%, #c481fe 100%);
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.15);
+  padding: 15px 75px;
+  color: white;
+  font-weight: bold;
 
   &.disable-pointer {
     pointer-events: none;
@@ -429,11 +426,10 @@ const onClaimBtnClicked = (isBtnOne) => {
 
 .lpl-hint .hint-wrapper {
   text-align: center;
-  background-image: url("../../../assets/promo/asian-cup-2024/active-tab.png");
   padding: 5px;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
   width: 250px;
+  border-radius: 0.375rem;
+  background-image: linear-gradient(0deg, #0494fc 0, #15bdfc 100%), linear-gradient(#d0d1d3, #d0d1d3);
   aspect-ratio: 168/54;
   display: flex;
   flex-direction: column;
@@ -446,58 +442,10 @@ const onClaimBtnClicked = (isBtnOne) => {
   color: white;
 }
 
-p.color-lightgreen {
-  color: #d3d3d3;
+.lpl-hint .hint-wrapper p {
+  color: white;
   font-size: 14px;
-  width: 1200px;
+  width: unset;
   margin: 0 auto;
-}
-
-/* teaM Header*/
-.content-team-header {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0px;
-}
-
-.team-header-left p {
-  margin: 4px 0px 0px;
-  font-size: 16px;
-  line-height: 18px;
-}
-
-.team-myvote-total {
-  margin-right: 16px;
-}
-
-.content-team-grid {
-  display: grid;
-  grid-template-columns: auto auto auto auto auto auto auto auto;
-  padding: 0px 5px 16px;
-}
-
-/* Responsive CSS */
-@media only screen and (max-width: 1299px) {
-  .lpl-section-prizepool {
-    width: 100%;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .content-team-grid {
-    grid-template-columns: auto auto auto auto auto auto;
-  }
-}
-
-@media only screen and (max-width: 600px) {
-  .content-team-grid {
-    grid-template-columns: auto auto auto auto;
-  }
-}
-
-@media only screen and (max-width: 361px) {
-  .content-team-grid {
-    grid-template-columns: auto auto;
-  }
 }
 </style>
