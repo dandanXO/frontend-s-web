@@ -788,7 +788,7 @@
     transition-hide="slide-down"
     class="fullgame-dialog"
   >
-    <q-card class="fullgame-card" id="fullgame" v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
+    <q-card class="fullgame-card" id="fullgame">
       <ProfileSummary @closeslot="closeSlotModal" :homeProfile="true" />
       <q-card-section>
         <div class="home-wrapper fullgame-wrapper">
@@ -1614,7 +1614,7 @@ const populatePushNotificationData = (data) => {
 };
 
 const initOneSignal = () => {
-  OneSignal.initialize("9ed390f0-6b59-4fc1-8228-d0621bfab9db");
+  OneSignal.initialize("5fd20672-11f1-4c8a-8e24-23c7eed428fb");
 
   let myClickListener = async function (event) {
     console.log("CLICK PUSH");
@@ -1632,16 +1632,6 @@ const initOneSignal = () => {
   OneSignal.Notifications.requestPermission(true).then((accepted) => {
     console.log("User accepted notifications: " + accepted);
   });
-};
-
-// Handle swipe left
-const swipeLeft = () => {
-  fullGameDialog.value = false;
-};
-
-// Handle swipe right
-const swipeRight = () => {
-  fullGameDialog.value = false;
 };
 
 onActivated(() => {

@@ -1,4 +1,3 @@
-
 html, body {
     height: 100%;
     overflow: hidden
@@ -17,12 +16,8 @@ body {
     font-family: 'Material Icons';
     font-style: normal;
     font-weight: 400;
-    src: url(https://example.com/MaterialIcons-Regular.eot); /* For IE6-8 */
-    src: local('Material Icons'),
-    local('MaterialIcons-Regular'),
-    url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'),
-    url(https://example.com/MaterialIcons-Regular.woff) format('woff'),
-    url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
+    src: url(https://example.com/MaterialIcons-Regular.eot);
+    src: local('Material Icons'), local('MaterialIcons-Regular'), url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'), url(https://example.com/MaterialIcons-Regular.woff) format('woff'), url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
 }
 
 textarea {
@@ -97,7 +92,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     z-index: 1
 }
 
-
 .VfPpkd-N5Lhkf {
     position: relative;
     cursor: pointer;
@@ -133,14 +127,12 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     margin-top: 56px
 }
 
-
 .wkMJlb {
     margin: 0 auto;
     min-height: 56px;
     position: relative;
     width: calc(100% - 48px)
 }
-
 
 .YWi3ub {
     max-width: 1296px
@@ -157,7 +149,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     line-height: 48px;
     margin-right: 24px
 }
-
 
 .AU8vyc {
     display: block;
@@ -196,11 +187,9 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     padding-bottom: 72px
 }
 
-
 .GMGZAc:not(:disabled), .CmHxkb:not(:disabled), .KvNvKe:not(:disabled), .dMOumf:not(:disabled) {
     color: rgb(95, 99, 104)
 }
-
 
 .SSPGKf {
     position: relative;
@@ -257,12 +246,10 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     display: inline-flex;
     flex-direction: column;
     justify-content: flex-end;
-    position: relative
+    position: relative;
+    margin-top: 15px;
 }
 
-.hnnXjf:not(.XcNflb) {
-    margin-top: 48px
-}
 
 .Il7kR, .qxNhq {
     align-items: flex-start;
@@ -311,7 +298,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     font-weight: 500
 }
 
-
 .title-main {
     font-family: "Google Sans Display", Roboto, Arial, sans-serif;
     line-height: 4.75rem;
@@ -327,7 +313,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     font-size: 20px;
     font-weight: bold;
 }
-
 
 .Vbfug {
     font-family: "Google Sans", Roboto, Arial, sans-serif;
@@ -373,9 +358,7 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     padding: 0 14px
 }
 
-
 .wVqUob {
-    /*padding: 0 16px;*/
     position: relative;
     min-width: 92px;
     width: 92px;
@@ -508,7 +491,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     color: rgb(95, 99, 104)
 }
 
-
 .jECfAf a {
     color: rgb(95, 99, 104);
     fill: rgb(95, 99, 104);
@@ -545,7 +527,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     height: calc(100% + 4px);
     width: calc(100% + 4px)
 }
-
 
 .VfPpkd-LgbsSe-OWXEXe-dgl2Hf {
     margin-top: 6px;
@@ -585,7 +566,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     stroke: rgb(26, 115, 232)
 }
 
-
 .LQeN7 .VfPpkd-J1Ukfc-LhBDec {
     pointer-events: none;
     border: 2px solid rgb(24, 90, 188);
@@ -612,7 +592,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     height: 36px;
     border-radius: 4px
 }
-
 
 .HcyOxe {
     container-type: inline-size;
@@ -705,7 +684,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     font-size: 16px
 }
 
-
 .kW9Bj {
     align-items: center;
     display: flex;
@@ -727,7 +705,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
 .HJV0ef {
     padding-bottom: 16px
 }
-
 
 .P4w39d {
     display: flex;
@@ -774,7 +751,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     align-items: center
 }
 
-
 .Qjdn7d {
     font-family: Roboto, Arial, sans-serif;
     line-height: 1rem;
@@ -808,7 +784,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     align-items: center;
     justify-content: space-between
 }
-
 
 .gSGphe {
     display: grid;
@@ -892,7 +867,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     margin-top: 12px
 }
 
-
 .NC0Ppb {
     font-family: Roboto, Arial, sans-serif;
     font-size: .75rem;
@@ -906,7 +880,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     color: rgb(154, 160, 166);
     fill: rgb(154, 160, 166)
 }
-
 
 .VfPpkd-ksKsZd-XxIAqe::before, .VfPpkd-ksKsZd-XxIAqe::after {
     position: absolute;
@@ -969,7 +942,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     color: #056449
 }
 
-
 .VMq4uf {
     color: rgb(32, 33, 36);
     fill: rgb(32, 33, 36);
@@ -983,7 +955,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     display: flex;
     justify-content: space-between
 }
-
 
 .bARER {
     font-family: Roboto, Helvetica, Arial, sans-serif;
@@ -1018,7 +989,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     font-weight: 500
 }
 
-
 .xg1aie {
     font-family: Roboto, Helvetica, Arial, sans-serif;
     font-size: .875rem;
@@ -1049,7 +1019,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     transition: border .28s cubic-bezier(.4, 0, .2, 1)
 }
 
-
 .Rj2Mlf {
     font-family: "Google Sans", Roboto, Arial, sans-serif;
     font-size: .875rem;
@@ -1067,7 +1036,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     width: 100%;
     z-index: 0
 }
-
 
 .PDpWxe {
     will-change: unset
@@ -1133,7 +1101,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     max-height: fit-content;
     width: unset
 }
-
 
 .B5GQxf {
     border-width: 0;
@@ -1347,7 +1314,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     padding-left: 16px
 }
 
-
 .OBVQ7 {
     z-index: 1;
     align-items: center;
@@ -1424,11 +1390,9 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     stop-color: rgb(154, 160, 166)
 }
 
-
 .ghyPEc .VUoKZ {
     position: fixed
 }
-
 
 .IqBfM {
     bottom: auto;
@@ -1436,7 +1400,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     right: auto;
     width: auto
 }
-
 
 .ecJEib .AOq4tb, .ecJEib .ydMMEb {
     height: 64px
@@ -1454,12 +1417,10 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     height: 36px;
     font-size: 36px;
     line-height: 36px;
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: center;
 }
-
-
 
 .brKGGd {
     font-family: "Google Sans", Roboto, Arial, sans-serif;
@@ -1632,6 +1593,7 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
 
     .JU1wdd {
         margin-left: 0;
+        margin-right: 0px;
         width: 100%
     }
 
@@ -1639,7 +1601,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
         width: 0
     }
 }
-
 
 @media screen and (min-width: 1280px) {
     .brKGGd {
@@ -1655,7 +1616,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
         padding: 10px 16px
     }
 }
-
 
 @media screen and (min-width: 1280px) {
     .UbmABe {
@@ -1675,13 +1635,11 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     }
 }
 
-
 @media screen and (min-width: 600px) {
     .Uc6QCc {
         margin-bottom: 0
     }
 }
-
 
 @media screen and (min-width: 600px) {
     .XcNflb .cN0oRe {
@@ -1727,7 +1685,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
         width: 72px
     }
 }
-
 
 @media (hover: hover) {
     .glB9Ve {
@@ -1777,7 +1734,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
         padding: 0 28px 20px
     }
 }
-
 
 @media screen and (min-width: 840px) {
     .glB9Ve {
@@ -1883,15 +1839,20 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
         width: 100%;
     }
 
-
+    .hnnXjf{
+        margin-top: 20px;
+    }
 }
 
 @media (max-width: 600px) {
-
     .title-main span {
         padding-left: 0px;
         white-space: normal;
         line-height: 20px;
+    }
+
+    .l8YSdd{
+        overflow: hidden;
     }
 
     .brKGGd {
@@ -1928,7 +1889,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     .Il7kR .Fd93Bb, .Il7kR .tv4jIf {
         width: 800px
     }
-
 
     .p5VxAd {
         font-family: "Google Sans Display", Roboto, Arial, sans-serif;
