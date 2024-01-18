@@ -256,7 +256,7 @@ import {
 import { getSiteListSimple } from '../../../../api/site'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
-import { formatInputTimeZone } from '@/utils/format-timeZone'
+// import { formatInputTimeZone } from '@/utils/format-timeZone'
 import { useRoute } from 'vue-router'
 
 defineExpose({
@@ -351,19 +351,25 @@ function checkQuery() {
       query[key] = value
     }
   })
-  const timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
+  // const timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
       query.recordTime = JSON.parse(JSON.stringify(request.recordTime))
-      query.recordTime[0] = formatInputTimeZone(
-        query.recordTime[0],
-        timeZone,
-        'start'
+      // query.recordTime[0] = formatInputTimeZone(
+      //   query.recordTime[0],
+      //   timeZone,
+      //   'start'
+      // )
+      // query.recordTime[1] = formatInputTimeZone(
+      //   query.recordTime[1],
+      //   timeZone,
+      //   'end'
+      // )
+      query.recordTime[0] = moment(query.recordTime[0]).format(
+        'YYYY-MM-DD 00:00:00'
       )
-      query.recordTime[1] = formatInputTimeZone(
-        query.recordTime[1],
-        timeZone,
-        'end'
+      query.recordTime[1] = moment(query.recordTime[1]).format(
+        'YYYY-MM-DD 23:59:59'
       )
       query.recordTime = query.recordTime.join(',')
     }
