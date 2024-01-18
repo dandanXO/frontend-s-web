@@ -24,7 +24,7 @@
           </div>
         </div>
 
-        <div :class="`claim-btn-div ${!isTabOne ? 'active' : ''}`" @click="onClaimBtnClicked(false)">
+        <div :class="`claim-btn-div ${!isTabOne ? 'active' : ''}`">
           <img class="claim-img" src="../../../assets/promo/lpl-s13/btn2-claim.png" />
           <div class="claim-rgt">
             <span class="claim-title">LPL倍投赠礼</span>
