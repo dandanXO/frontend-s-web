@@ -86,7 +86,7 @@
         </el-button>
       </div>
       <div class="btn-group">
-        <el-button icon="el-icon-setting" size="mini" type="primary" @click="uiControl.settingVisible = true">
+        <el-button v-permission="['promo:tigerCard:updateSetting']" icon="el-icon-setting" size="mini" type="primary" @click="uiControl.settingVisible = true">
           修改配置
         </el-button>
       </div>
