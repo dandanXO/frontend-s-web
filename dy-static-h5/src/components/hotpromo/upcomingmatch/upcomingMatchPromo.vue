@@ -1,40 +1,40 @@
 <template>
-  <div v-if="upcomingMatchDetails">
+  <div v-if="upcomingMatchDetails.length > 0">
     <swiper
-      :slides-per-view="1"
+      :slides-per-view="props.platformType === 'NBA' ? 1 : 2"
       :loop="false"
       @swiper="onSwiper"
-      :space-between="50"
+      :space-between="20"
       @slideChange="onSlideChange"
       class="swiper-wrapper"
     >
-      <!-- <template v-for="(item, index) in upcomingMatchDetails" :key="index"> -->
-      <swiper-slide>
-        <div class="bet-info-box">
-          <div class="bet-info-date">{{ upcomingMatchDetails.matchTime }}</div>
+      <template v-for="(upcomingMatchDetail, index) in upcomingMatchDetails" :key="index">
+        <swiper-slide>
+          <div class="bet-info-box">
+            <div class="bet-info-date">{{ upcomingMatchDetail.matchTime }}</div>
 
-          <div class="bet-info-title" v-html="upcomingMatchDetails.matchTitle" />
+            <div class="bet-info-title" v-html="upcomingMatchDetail.matchTitle" />
 
-          <div class="bet-info-details">
-            <div class="info-team info-team-one">
-              <div class="info-team-logo">
-                <img :src="imgURL + upcomingMatchDetails.teamOneIcon" />
+            <div class="bet-info-details">
+              <div class="info-team info-team-one">
+                <div class="info-team-logo">
+                  <img :src="imgURL + upcomingMatchDetail.teamOneIcon" />
+                </div>
+                <div class="info-team-name" v-html="upcomingMatchDetail.teamOne" />
               </div>
-              <div class="info-team-name" v-html="upcomingMatchDetails.teamOne" />
-            </div>
 
-            <div class="bet-info-vs">VS</div>
+              <div class="bet-info-vs">VS</div>
 
-            <div class="info-team info-team-two">
-              <div class="info-team-logo">
-                <img :src="imgURL + upcomingMatchDetails.teamTwoIcon" />
+              <div class="info-team info-team-two">
+                <div class="info-team-logo">
+                  <img :src="imgURL + upcomingMatchDetail.teamTwoIcon" />
+                </div>
+                <div class="info-team-name" v-html="upcomingMatchDetail.teamTwo" />
               </div>
-              <div class="info-team-name" v-html="upcomingMatchDetails.teamTwo" />
             </div>
           </div>
-        </div>
-      </swiper-slide>
-      <!-- </template> -->
+        </swiper-slide>
+      </template>
     </swiper>
     <!-- <div class="swiper-button-prev" @click="prevSlide"></div> -->
     <!-- <div class="swiper-button-next" @click="nextSlide"></div> -->

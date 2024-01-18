@@ -23,16 +23,16 @@
 
             <q-select
               filled
-              v-model="insuranceInfo.platform"
-              :options="platformOptions"
-              option-value="value"
-              option-label="alias"
+              v-model="insuranceInfo.gameMatchId"
+              :options="gameOptions"
+              option-value="id"
+              option-label="label"
               emit-value
               map-options
               ref="insurancePlatform"
-              label="投注平台"
+              label="选择赛事"
               color="dyblue"
-              :rules="[(v) => !!v || '请选择投注平台']"
+              :rules="[(v) => !!v || '请选择赛事']"
             />
 
             <q-input
@@ -41,10 +41,19 @@
               label="注单号"
               ref="insuranceTransactionId"
               color="dyblue"
-              :rules="[(v) => !!v || '请输入注单号']"
+              :rules="[
+                (v) => !!v || '请输入注单号',
+                (val) => (val && val.length > 9 && val.length < 25) || '注单号必须为9到25位'
+              ]"
             />
           </q-form>
         </q-card-section>
+
+        <q-card-actions align="center">
+          <div class="flex flex-center">
+            <q-btn class="q-mr-md" label="申请记录" color="dyblue" size="large" @click="openRecordModal" />
+          </div>
+        </q-card-actions>
 
         <q-card-actions align="center">
           <div class="flex flex-center">
@@ -52,6 +61,18 @@
             <q-btn color="dyblue" label="提交" @click="handleSubmit" />
           </div>
         </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="isRecordModal">
+      <q-card class="">
+        <q-card-section class="q-mb-md row justify-center">
+          <div class="text-h6">申请记录</div>
+
+          <div class="record-container">
+            <q-table :loading="tableData.loading" :columns="columns" :rows="rankingRecord()" square></q-table>
+          </div>
+        </q-card-section>
       </q-card>
     </q-dialog>
   </div>
@@ -69,6 +90,7 @@ var qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
 const insuranceFormModal = ref(false);
+const isRecordModal = ref(false);
 
 const props = defineProps({
   platformType: String
@@ -76,10 +98,41 @@ const props = defineProps({
 
 const insuranceInfo = reactive({
   accountId: "",
-  platform: "",
   transactionId: "",
   gameMatchId: ""
 });
+const tableData = reactive({
+  current: 1,
+  pageSize: 5,
+  pages: 1,
+  total: 0,
+  records: [],
+  loading: false
+});
+const columns = [
+  {
+    label: "用户名",
+    field: "loginName"
+  },
+  {
+    label: "注单号",
+    field: "transactionId"
+  },
+  {
+    label: "申请时间",
+    field: "createTime"
+  },
+  {
+    label: "状态",
+    field: "status"
+  },
+  {
+    label: "备注",
+    field: "remark"
+  }
+];
+
+const gameOptions = ref([]);
 const platformListDetails = ref([]);
 const insuranceAccountId = ref();
 const insurancePlatform = ref();
@@ -88,29 +141,52 @@ const insuranceTransactionId = ref();
 const platformDetails = ref([]);
 const platformOptions = ref([]);
 
-const getPlatformList = () => {
-  platformOptions.value = [];
-  eventapi
-    .get(`/game-match/platform/${props.platformType}`)
-    .then((res) => {
-      if (res.code === 0) {
-        for (let i = 0, l = res.data.length; i < l; i++) {
-          const currResData = res.data[i];
-          platformsListDisplay.value.forEach((e) => {
-            if (currResData === e.code) {
-              const obj = {
-                value: currResData,
-                alias: e.alias
-              };
-              platformOptions.value.push(obj);
-            }
-          });
-        }
-      }
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
+// const getPlatformList = () => {
+//   platformOptions.value = [];
+//   eventapi
+//     .get(`/game-match/platform/${props.platformType}`)
+//     .then((res) => {
+//       if (res.code === 0) {
+//         for (let i = 0, l = res.data.length; i < l; i++) {
+//           const currResData = res.data[i];
+//           platformsListDisplay.value.forEach((e) => {
+//             if (currResData === e.code) {
+//               const obj = {
+//                 value: currResData,
+//                 alias: e.alias
+//               };
+//               platformOptions.value.push(obj);
+//             }
+//           });
+//         }
+//       }
+//     })
+//     .catch((err) => {
+//       console.log(err.message);
+//     });
+// };
+
+const pageNumChange = (i) => {
+  rankingPage.current = i;
+};
+
+const openRecordModal = () => {
+  eventapi.get(`/game-match/records/${props.platformType}`).then((res) => {
+    if (res.code === 0) {
+      tableData.records = res.data.records;
+      tableData.current = res.data.current;
+      tableData.total = res.data.total;
+      tableData.pages = res.data.pages;
+      isRecordModal.value = true;
+    }
+  });
+};
+
+const rankingRecord = () => {
+  return tableData.records.filter(
+    (item, index) =>
+      index < tableData.current * tableData.pageSize && index >= tableData.pageSize * (tableData.current - 1)
+  );
 };
 
 const getPlatformDetails = () => {
@@ -119,7 +195,14 @@ const getPlatformDetails = () => {
     .then((res) => {
       if (res.code === 0) {
         platformDetails.value = res.data;
-        insuranceInfo.gameMatchId = res.data.id;
+
+        platformDetails.value.forEach((match) => {
+          const obj = {
+            id: match.id,
+            label: match.matchTitle
+          };
+          gameOptions.value.push(obj);
+        });
       }
     })
     .catch((err) => {
@@ -135,7 +218,7 @@ const handleSubmit = () => {
   insurancePlatform.value.validate();
   insuranceTransactionId.value.validate();
 
-  if (insurancePlatform.value.hasError || insuranceTransactionId.value.hasError) {
+  if (insuranceTransactionId.value.hasError || insurancePlatform.value.hasError) {
   } else {
     eventapi
       .post("/game-match/submit", qs.stringify(insuranceInfo))
@@ -168,7 +251,7 @@ const handleSubmit = () => {
 
 const handleOpenDialog = () => {
   autoPreFillForm();
-  getPlatformList();
+  // getPlatformList();
   getPlatformDetails();
   insuranceFormModal.value = true;
 };
@@ -211,5 +294,8 @@ onMounted(() => {
     gap: 10px;
     margin-bottom: 20px;
   }
+}
+.insurance-card .q-form {
+  margin-bottom: 0px;
 }
 </style>

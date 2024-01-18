@@ -10,8 +10,12 @@
             <div>
               <RiVolumeUpFill style="fill: #2db9e2; width: 20px !important" @click="openPopup(announcementList)" />
             </div>
-            <div class="station-notice">
-              <Vue3Marquee :clone="false" :duration="130" style="width: 720px">
+            <div class="station-notice" v-if="announcementList.length > 0">
+              <Vue3Marquee
+                :clone="false"
+                :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 3 : 70"
+                style="width: 720px"
+              >
                 <div
                   v-for="(word, index) in announcementList"
                   :key="index"
@@ -21,6 +25,7 @@
                 ></div>
               </Vue3Marquee>
             </div>
+
             <template v-if="store.token">
               <div class="mailbox-notify" @click="checkMailboxUnread">
                 <router-link to="/center/mailbox">
@@ -1309,6 +1314,15 @@ export default defineComponent({
         }
       })
     }
+    const calculateMaxContentLength = () => {
+      let maxLength = 0;
+      for (const announcement of announcementList.value) {
+        if (announcement.content.length > maxLength) {
+          maxLength = announcement.content.length;
+        }
+      }
+      return maxLength;
+    };
     const announcementTabChange = () => {
       // homeState.tabMatchs.forEach(element => {
       //   if (nk === element.gameId) {
@@ -1684,7 +1698,8 @@ export default defineComponent({
       jumpOut,
       isMailboxUnread,
       mailboxUnreadTotal,
-      checkMailboxUnread
+      checkMailboxUnread,
+      calculateMaxContentLength
     }
   }
 });
