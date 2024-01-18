@@ -346,7 +346,7 @@ async function loadSitesWithPreDefineAffiliate() {
 
   if (
     route.query.loginNameList !== null &&
-    route.query.loginNameList !== undefined
+      route.query.loginNameList !== undefined
   ) {
     if (previouseLoginNameList.value !== null) {
       if (route.query.loginNameList !== previouseLoginNameList.value) {
@@ -432,11 +432,11 @@ function checkQuery() {
       )
     }
   }
-
-  if (getFromRouter.loginNameList != null) {
-    query.loginNameList = getFromRouter.loginNameList
-  } else {
+  debugger;
+  if (request.loginNameList != null && request.loginNameList.length > 0) {
     query.loginNameList = request.loginNameList.join(',')
+  } else {
+    query.loginNameList = getFromRouter.loginNameList
   }
 
   return query
@@ -468,20 +468,20 @@ function getSummaries(param) {
         } else if (index === 4) {
           // profit depositWithdrawal = deposit - withdrawal
           sums[index] =
-            '$' +
-            parseFloat(
-              total.data.depositAmount - total.data.withdrawAmount
-            ).toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })
+              '$' +
+              parseFloat(
+                total.data.depositAmount - total.data.withdrawAmount
+              ).toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })
         } else {
           sums[index] =
-            '$' +
-            parseFloat(total.data[prop]).toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })
+              '$' +
+              parseFloat(total.data[prop]).toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })
         }
       }
     })
@@ -494,7 +494,7 @@ onMounted(async () => {
   watch(() => {
     if (
       route.query.loginNameList !== null &&
-      route.query.loginNameList !== undefined
+        route.query.loginNameList !== undefined
     ) {
       getFromRouter.loginNameList = route.query.loginNameList
       loadSitesWithPreDefineAffiliate()
