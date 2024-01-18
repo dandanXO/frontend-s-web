@@ -35,11 +35,12 @@ onMounted(() => {
   if (window.location.pathname === '/login') {
     if (window.location.host.indexOf('xf') > -1) {
       window.location.pathname = '/xf/login'
+    } else if (window.location.host.indexOf('ind') > -1) {
+      window.location.pathname = '/ind/login'
     } else {
       window.location.pathname = '/dy/login'
     }
   }
-
 });
 
 </script>

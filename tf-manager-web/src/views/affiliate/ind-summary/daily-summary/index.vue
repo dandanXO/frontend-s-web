@@ -68,6 +68,7 @@
         prop="depositAmount"
         :label="t('fields.depositAmount')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $
@@ -80,6 +81,7 @@
         prop="withdrawAmount"
         :label="t('fields.withdrawAmount')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $
@@ -91,6 +93,7 @@
       <el-table-column
         :label="t('fields.depositWithdrawalProfit')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $
@@ -106,16 +109,19 @@
         prop="registerCount"
         :label="t('fields.registerCount')"
         align="center"
+        width="180"
       />
       <el-table-column
         prop="fdp"
         :label="t('fields.ftdCount')"
         align="center"
+        width="120"
       />
       <el-table-column
         prop="fdAmount"
         :label="t('fields.ftdAmount')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $
@@ -126,6 +132,7 @@
         prop="validBet"
         :label="t('fields.betAmount')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $
@@ -136,6 +143,7 @@
         prop="payout"
         :label="t('fields.payoutAmount')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $
@@ -151,6 +159,7 @@
         prop="companyWinLoss"
         :label="t('fields.profit')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $
@@ -163,6 +172,7 @@
         prop="depositAmount"
         :label="t('fields.totalMemberDepositAmount')"
         align="center"
+        width="180"
       >
         <template #default="scope">
           $
@@ -178,11 +188,13 @@
         prop="depositCount"
         :label="t('fields.totalMemberDepositCount')"
         align="center"
+        width="180"
       />
       <el-table-column
         prop="bonus"
         :label="t('fields.bonusAmount')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $
@@ -193,6 +205,7 @@
         prop="rebateAmount"
         :label="t('fields.rebateAmount')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $
@@ -203,6 +216,7 @@
         prop="adjustment"
         :label="t('fields.adjustAmount')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $
@@ -213,6 +227,7 @@
         prop="netProfit"
         :label="t('fields.netProfit')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $

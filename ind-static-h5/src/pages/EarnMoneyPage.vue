@@ -60,7 +60,12 @@
       </q-tab>
     </q-tabs>
 
-    <q-tab-panels v-model="activeKey" class="earn-money-panels">
+    <q-tab-panels
+      v-model="activeKey"
+      class="earn-money-panels"
+      v-touch-swipe.left="swipeLeft"
+      v-touch-swipe.right="swipeRight"
+    >
       <q-tab-panel name="about">
         <AgencyPolicy></AgencyPolicy>
       </q-tab-panel>
@@ -86,6 +91,28 @@ import EarnComponent from "../components/earn-money/EarnComponent.vue";
 import ProfileSummary from "components/ProfileSummary.vue";
 
 const activeKey = ref("about");
+
+// Define the order of the tabs
+const tabsOrder = ["about", "history", "daily", "earn"];
+
+// Function to find the next index with wrapping
+const findNextIndex = (currentIndex, arrayLength) => (currentIndex + 1) % arrayLength;
+
+// Function to find the previous index with wrapping
+const findPreviousIndex = (currentIndex, arrayLength) => (currentIndex - 1 + arrayLength) % arrayLength;
+
+const swipeLeft = () => {
+  const currentIndex = tabsOrder.findIndex((tab) => tab === activeKey.value);
+  const nextIndex = findNextIndex(currentIndex, tabsOrder.length);
+  activeKey.value = tabsOrder[nextIndex];
+};
+
+// Handle swipe right
+const swipeRight = () => {
+  const currentIndex = tabsOrder.findIndex((tab) => tab === activeKey.value);
+  const previousIndex = findPreviousIndex(currentIndex, tabsOrder.length);
+  activeKey.value = tabsOrder[previousIndex];
+};
 </script>
 
 <style scoped lang="scss">

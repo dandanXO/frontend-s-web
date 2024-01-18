@@ -14,8 +14,17 @@
         <div class="right">
           <div class="bg">
             <div class="top">
-              <div class="log">{{ isReg ? $t('common.signup') : $t('common.login') }}</div>
-              <div class="topright" v-if="props.siteId !== 'IND'">
+              <div class="log" v-if="currentSite.lang === 'EN'">{{ isReg ? 'Register' : 'Login' }}</div>
+              <div class="log" v-else>{{ isReg ? '注册' : '登录' }}</div>
+              <div class="topright" v-if="currentSite.lang === 'EN'">
+                <span class="noaccabs">
+                  {{ isReg ? 'Already have account? ' : 'No Account? ' }}
+                </span>
+                <a @click="isReg = !isReg" class="signlog">
+                  {{ isReg ? 'Please Login' : 'Register Now' }}
+                </a>
+              </div>
+              <div class="topright" v-else>
                 <span class="noaccabs">
                   {{ isReg ? '已经有账号? ' : '没有帐户？' }}
                 </span>
@@ -37,7 +46,7 @@
                   <el-input
                     ref="userNameRef"
                     v-model="loginForm.userName"
-                    :placeholder="$t('common.username')"
+                    :placeholder="currentSite.lang === 'EN' ? 'Username' : '用户名'"
                     name="username"
                     type="text"
                     tabindex="1"
@@ -57,7 +66,7 @@
                       ref="passwordRef"
                       v-model="loginForm.password"
                       :type="passwordType"
-                      :placeholder="$t('common.password')"
+                      :placeholder="currentSite.lang === 'EN' ? 'Password' : '密码'"
                       name="password"
                       tabindex="2"
                       autocomplete="no-fill"
@@ -90,7 +99,7 @@
                     <el-input
                       ref="userNameRef"
                       v-model="regForm.userName"
-                      :placeholder="'合营账户'"
+                      :placeholder="currentSite.lang === 'EN' ? 'Affiliate Account' : '合营账户'"
                       name="userName"
                       type="text"
                       tabindex="1"
@@ -109,7 +118,7 @@
                         ref="passwordRef"
                         v-model="regForm.password"
                         :type="passwordType"
-                        :placeholder="'密码'"
+                        :placeholder="currentSite.lang === 'EN' ? 'Password' : '密码'"
                         name="password"
                         tabindex="2"
                         autocomplete="on"
@@ -130,7 +139,7 @@
                         ref="confirmPwdRef"
                         v-model="regForm.confirmPwd"
                         :type="passwordType"
-                        :placeholder="'密码确认'"
+                        :placeholder="currentSite.lang === 'EN' ? 'Confirm Password' : '密码确认'"
                         name="password"
                         tabindex="3"
                         autocomplete="on"
@@ -250,7 +259,6 @@
   </div>
   <el-dialog
     v-model="showDialog"
-    width="95%"
     custom-class="dialog400"
     @close="onCloseDialog"
     :title="$t('common.verification_title') + words.join(' , ')"
@@ -783,11 +791,12 @@ export default defineComponent({
         state.loginForm.site = 'XF1'
         setLanguage('zh');
       }
-      if (props.siteId === 'IND') {
+      if (props.siteId === '5') {
         currentSite.value.firstLiner = 'Starts from 55ACE'
         currentSite.value.secondLiner = 'Become a legend<br>Or become the eulogist of legend?'
         currentSite.value.logo = indLogo
-        state.loginForm.site = 'IND'
+        state.loginForm.site = 'IND';
+        currentSite.value.lang = 'EN'
         setLanguage('en');
       }
     }

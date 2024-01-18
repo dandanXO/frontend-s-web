@@ -57,11 +57,13 @@
         :empty-text="t('fields.noData')"
         :summary-method="getSummaries"
         show-summary
+        highlight-current-row
       >
         <el-table-column
           prop="recordTime"
           :label="t('fields.recordTime')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             <span
@@ -78,6 +80,7 @@
           :label="t('fields.platform')"
           align="left"
           min-width="100"
+          width="120"
         >
           <template
             #default="scope"
@@ -96,6 +99,7 @@
           prop="depositAmount"
           :label="t('fields.depositAmount')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
@@ -108,6 +112,7 @@
           prop="withdrawAmount"
           :label="t('fields.withdrawAmount')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
@@ -119,6 +124,7 @@
         <el-table-column
           :label="t('fields.depositWithdrawalProfit')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
@@ -134,23 +140,31 @@
           prop="registerCount"
           :label="t('fields.registerCount')"
           align="center"
+          width="150"
         />
         <el-table-column
           prop="ftdCount"
           :label="t('fields.ftdCount')"
           align="center"
+          width="120"
         />
         <el-table-column
           prop="ftdAmount"
           :label="t('fields.ftdAmount')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
             <span v-formatter="{data: scope.row.ftdAmount, type: 'money'}" />
           </template>
         </el-table-column>
-        <el-table-column prop="bet" :label="t('fields.indBet')" align="center">
+        <el-table-column
+          prop="bet"
+          :label="t('fields.indBet')"
+          align="center"
+          width="120"
+        >
           <template #default="scope">
             $
             <span v-formatter="{data: scope.row.bet, type: 'money'}" />
@@ -160,6 +174,7 @@
           prop="payout"
           :label="t('fields.payout')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
@@ -170,6 +185,7 @@
           prop="profit"
           :label="t('fields.indProfit')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
@@ -180,6 +196,7 @@
           prop="depositAmount"
           :label="t('fields.totalMemberDepositAmount')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
@@ -195,11 +212,13 @@
           prop="depositCount"
           :label="t('fields.totalMemberDepositCount')"
           align="center"
+          width="120"
         />
         <el-table-column
           prop="bonus"
           :label="t('fields.indBonusAmount')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
@@ -210,6 +229,7 @@
           prop="rebateAmount"
           :label="t('fields.indRebateAmount')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
@@ -222,6 +242,7 @@
           prop="adjustment"
           :label="t('fields.indAdjustAmount')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
@@ -232,6 +253,7 @@
           prop="netProfit"
           :label="t('fields.grossProfit')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
@@ -302,6 +324,7 @@ async function loadSites() {
   siteList.list = site
   request.siteId = siteList.list.filter(x => x.siteCode === 'IND')[0].id
   const { data: affiliates } = await getAffiliateList(request.siteId)
+
   affiliateNames.value = affiliates.map(a => {
     return { name: a.loginName }
   })
@@ -365,9 +388,11 @@ function checkQuery() {
       )
     }
   }
-  if (request.loginNameList !== null) {
+
+  if (request.loginNameList != null) {
     query.loginNameList = request.loginNameList.join(',')
   }
+
   return query
 }
 
