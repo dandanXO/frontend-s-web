@@ -15,9 +15,7 @@
             <div class="right-container">
               <div class="desc-title">LPL呐喊助威</div>
 
-              <div @click="handleClaim('lpl-summer-A', '呐喊助威')" class="click-btn">
-                <img src="../../../assets/images/promotion/hotpromo/lpl-summer/click-btn.png" />
-              </div>
+              <q-btn class="claim-btn" label="立即申请" @click="handleClaim('lpl-summer-A', '呐喊助威')" />
             </div>
 
             <div>
@@ -30,7 +28,7 @@
                 </p>
               </div>
 
-              <table>
+              <table class="promo-table">
                 <thead>
                   <tr>
                     <th style="width: 100px">达成条件</th>
@@ -105,9 +103,7 @@
             <div class="right-container">
               <div class="desc-title">LPL倍投赠礼</div>
 
-              <div @click="handleClaim('lpl-summer-B', '倍投赠礼')" class="click-btn">
-                <img src="../../../assets/images/promotion/hotpromo/lpl-summer/click-btn.png" />
-              </div>
+              <q-btn class="claim-btn" label="立即申请" @click="handleClaim('lpl-summer-B', '倍投赠礼')" />
             </div>
 
             <div>
@@ -122,7 +118,7 @@
                 </p>
               </div>
 
-              <table>
+              <table class="promo-table">
                 <thead>
                   <tr>
                     <th style="width: 400px">基础</th>
@@ -234,11 +230,12 @@ const handleClaim = (applyPromoCode, applyPromoTitle) => {
     .q-tabs {
       height: 54px;
       text-align: center;
-      background: transparent;
+      background: #f3f4f6;
       margin: 0;
       padding: 0;
       border-radius: 0;
       box-shadow: none;
+      border-radius: 8px;
     }
 
     .q-tab {
@@ -249,27 +246,25 @@ const handleClaim = (applyPromoCode, applyPromoTitle) => {
       span {
         display: block;
         line-height: 1;
-        font-size: 16px;
-        font-weight: 700;
+        font-size: 18px;
+        font-weight: 500;
+        color: #374151;
       }
 
       &--active {
         // background: #6ad8ff;
         background-color: transparent;
-        background-image: url("../../../assets/images/promotion/hotpromo/lpl-summer/active-tab.png");
+        // background-image: url("../../../assets/images/promotion/hotpromo/asiacup2024/active-tab.png");
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: center center;
-        color: #ffd600;
+        background: linear-gradient(180deg, #2ca1fe 0%, #2f7cf7 100%);
+        border-radius: 8px;
+        color: #ffffff;
 
         span {
-          background-image: linear-gradient(180deg, #ffd600 0, #fff 100%);
-          background-size: 100% 100%;
-          background-repeat: repeat;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          -moz-background-clip: text;
-          -moz-text-fill-color: transparent;
+          color: #ffffff;
+          font-weight: 700;
         }
       }
     }
@@ -308,7 +303,7 @@ const handleClaim = (applyPromoCode, applyPromoTitle) => {
 
         .desc-title {
           width: 90%;
-          color: #a3712f;
+          color: #2f7cf7;
           font-weight: 600;
           font-size: 40px;
           line-height: 1;
@@ -433,7 +428,8 @@ const handleClaim = (applyPromoCode, applyPromoTitle) => {
 
 .hint-wrapper {
   text-align: center;
-  background-image: url("../../../assets/images/promotion/hotpromo/lpl-summer/active-tab.png");
+  // background-image: url("../../../assets/images/promotion/hotpromo/asiacup2024/active-tab.png");
+  background: linear-gradient(180deg, #2ca1fe 0%, #2f7cf7 100%);
   padding: 15px 5px 5px;
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -444,6 +440,7 @@ const handleClaim = (applyPromoCode, applyPromoTitle) => {
   align-items: center;
   justify-content: center;
   color: #fff;
+  border-radius: 16px;
 
   .hint-title {
     font-size: 18px;
@@ -456,5 +453,20 @@ const handleClaim = (applyPromoCode, applyPromoTitle) => {
   &:hover {
     filter: brightness(1.5);
   }
+}
+
+.claim-btn {
+  border-radius: 100px;
+  background: linear-gradient(180deg, #2ca1fe 0%, #c481fe 100%);
+  color: #ffffff;
+  width: 180px;
+  font-weight: 700;
+  font-size: 16px;
+  height: 40px;
+}
+
+table.promo-table th {
+  background: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039) !important;
+  color: white !important;
 }
 </style>

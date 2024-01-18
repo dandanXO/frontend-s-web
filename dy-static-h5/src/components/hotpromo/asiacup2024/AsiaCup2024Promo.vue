@@ -15,9 +15,7 @@
             <div class="right-container">
               <div class="desc-title">2024亚战指南</div>
 
-              <div @click="handleClaim('asian-cup-A', '亚战指南')" class="click-btn">
-                <img src="../../../assets/images/promotion/hotpromo/asiacup2024/click-btn.png" />
-              </div>
+              <q-btn class="claim-btn" label="立即申请" @click="handleClaim('asian-cup-A', '亚战指南')" />
             </div>
 
             <div>
@@ -30,7 +28,7 @@
                 </p>
               </div>
 
-              <table>
+              <table class="promo-table">
                 <tbody>
                   <tr>
                     <th>任意赛事早盘有效投注</th>
@@ -89,6 +87,30 @@
                   <p class="color-lightgreen">胜方赢球3个 且零封对手</p>
                 </div>
               </div>
+
+              <div class="img-liner q-mt-xl">
+                <img src="../../../assets/images/promotion/hotpromo/asiacup2024/promo_rule.png" />
+              </div>
+              <div>
+                <p>1.活动期间，投注亚洲杯赛事有效投注≥500元且亚洲杯赛事触发事件即可申请对应彩金奖励。</p>
+                <p>
+                  2.满足活动条件的会员需在当日的23:59:59前登录该页面并点击【立即申请】，逾事不予补偿，申请成功后系统将于次日24小时内自动派发至会员钱包，彩金仅需3倍流水即可取款。
+                </p>
+                <p>
+                  3.本活动限SABA体育与IM体育场馆的早盘盘口参与，滚球盘有效投注不予计算该活动流水内，其他场馆不予本活动统计范围内。
+                </p>
+                <p>4.活动彩金不累计多场触发条件，彩金按当日触发金额最高条件派发金额。</p>
+                <p>
+                  5.
+                  仅计算已结算并产生输赢结果的注单，任何平局、串关、取消的注单不予计算，任何低于欧洲盘1.5、香港盘0.5赔率以下的注单以及在同一赛事中同时投注对等盘口将不予计算。
+                </p>
+                <p>
+                  6.
+                  每位有效会员、每一手机号码、电子邮箱、相同银行卡、每一个IP地址、每一台电脑以及其他登录设备只能享受一次活动优惠，如有任何违规者或任何团体以不正常的方式进行套取活动优惠，我站保留在不通知的情况下冻结或关
+                  闭相关账户的权利，并不退还款项，且用户列入黑名单。
+                </p>
+                <p>7. 为避免文字理解差异，本站保留最终解释权。</p>
+              </div>
             </div>
           </div>
         </q-tab-panel>
@@ -103,9 +125,7 @@
             <div class="right-container">
               <div class="desc-title">2024投注好礼</div>
 
-              <div @click="handleClaim('asian-cup-B', '投注好礼')" class="click-btn">
-                <img src="../../../assets/images/promotion/hotpromo/asiacup2024/click-btn.png" />
-              </div>
+              <q-btn class="claim-btn" label="立即申请" @click="handleClaim('asian-cup-B', '投注好礼')" />
             </div>
 
             <div>
@@ -118,7 +138,7 @@
                 </p>
               </div>
 
-              <table>
+              <table class="promo-table">
                 <tbody>
                   <tr>
                     <th>有效投注</th>
@@ -157,32 +177,32 @@
                   </tr>
                 </tbody>
               </table>
+
+              <div class="img-liner q-mt-xl">
+                <img src="../../../assets/images/promotion/hotpromo/asiacup2024/promo_rule.png" />
+              </div>
+              <div class="lpl-ruler">
+                <p>1. 活动期间，投注亚洲杯赛程赛事有效投注≥2000元即可申请彩金奖励。</p>
+                <p>
+                  2.
+                  满足活动条件的会员需在当日的23:59:59前登录该页面并点击【立即申请】，逾事不予补偿，申请成功后系统将于次日24小时内自动派发至会员钱包，彩金仅需3倍流水即可取款。
+                </p>
+                <p>3. 本活动限SABA体育与IM体育场馆，其他场馆不予本活动统计范围内。</p>
+                <p>
+                  4.
+                  仅计算已结算并产生输赢结果的注单，任何平局、串关、取消的注单不予计算，任何低于欧洲盘1.5、香港盘0.5赔率以下的注单以及在同一赛事中同时投注对等盘口将不予计。
+                </p>
+                <p>
+                  5.
+                  每位有效会员、每一手机号码、电子邮箱、相同银行卡、每一个IP地址、每一台电脑以及其他登录设备只能享受一次活动优惠，如有任何违规者或任何团体以不正常的方式进行套取活动优惠，我站保留在不通知的情况下冻结或关
+                  闭相关账户的权利，并不退还款项，且用户列入黑名单。
+                </p>
+                <p>6. 为避免文字理解差异，本站保留最终解释权。</p>
+              </div>
             </div>
           </div>
         </q-tab-panel>
       </q-tab-panels>
-
-      <div class="img-liner">
-        <img src="../../../assets/images/promotion/hotpromo/asiacup2024/promo_rule.png" />
-      </div>
-      <div>
-        <p>1. 活动期间，投注亚洲杯赛程赛事有效投注≥2000元即可申请彩金奖励。</p>
-        <p>
-          2.
-          满足活动条件的会员需在当日的23:59:59前登录该页面并点击【立即申请】，逾事不予补偿，申请成功后系统将于次日24小时内自动派发至会员钱包，彩金仅需3倍流水即可取款。
-        </p>
-        <p>3. 本活动限熊猫体育与IM体育场馆，其他场馆不予本活动统计范围内。</p>
-        <p>
-          4.
-          仅计算已结算并产生输赢结果的注单，任何平局、串关、取消的注单不予计算，任何低于欧洲盘1.5、香港盘0.5赔率以下的注单以及在同一赛事中同时投注对等盘口将不予计。
-        </p>
-        <p>
-          5.
-          每位有效会员、每一手机号码、电子邮箱、相同银行卡、每一个IP地址、每一台电脑以及其他登录设备只能享受一次活动优惠，如有任何违规者或任何团体以不正常的方式进行套取活动优惠，我站保留在不通知的情况下冻结或关
-          闭相关账户的权利，并不退还款项，且用户列入黑名单。
-        </p>
-        <p>6. 为避免文字理解差异，本站保留最终解释权。</p>
-      </div>
     </div>
   </div>
 </template>
@@ -231,11 +251,12 @@ const handleClaim = (applyPromoCode, applyPromoTitle) => {
     .q-tabs {
       height: 54px;
       text-align: center;
-      background: transparent;
+      background: #f3f4f6;
       margin: 0;
       padding: 0;
       border-radius: 0;
       box-shadow: none;
+      border-radius: 8px;
     }
 
     .q-tab {
@@ -246,27 +267,25 @@ const handleClaim = (applyPromoCode, applyPromoTitle) => {
       span {
         display: block;
         line-height: 1;
-        font-size: 16px;
-        font-weight: 700;
+        font-size: 18px;
+        font-weight: 500;
+        color: #374151;
       }
 
       &--active {
         // background: #6ad8ff;
         background-color: transparent;
-        background-image: url("../../../assets/images/promotion/hotpromo/asiacup2024/active-tab.png");
+        // background-image: url("../../../assets/images/promotion/hotpromo/asiacup2024/active-tab.png");
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: center center;
-        color: #ffd600;
+        background: linear-gradient(180deg, #2ca1fe 0%, #2f7cf7 100%);
+        border-radius: 8px;
+        color: #ffffff;
 
         span {
-          background-image: linear-gradient(180deg, #ffd600 0, #fff 100%);
-          background-size: 100% 100%;
-          background-repeat: repeat;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          -moz-background-clip: text;
-          -moz-text-fill-color: transparent;
+          color: #ffffff;
+          font-weight: 700;
         }
       }
     }
@@ -305,7 +324,7 @@ const handleClaim = (applyPromoCode, applyPromoTitle) => {
 
         .desc-title {
           width: 90%;
-          color: #a3712f;
+          color: #2f7cf7;
           font-weight: 600;
           font-size: 40px;
           line-height: 1;
@@ -430,7 +449,8 @@ const handleClaim = (applyPromoCode, applyPromoTitle) => {
 
 .hint-wrapper {
   text-align: center;
-  background-image: url("../../../assets/images/promotion/hotpromo/asiacup2024/active-tab.png");
+  // background-image: url("../../../assets/images/promotion/hotpromo/asiacup2024/active-tab.png");
+  background: linear-gradient(180deg, #2ca1fe 0%, #2f7cf7 100%);
   padding: 15px 5px 5px;
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -441,6 +461,7 @@ const handleClaim = (applyPromoCode, applyPromoTitle) => {
   align-items: center;
   justify-content: center;
   color: #fff;
+  border-radius: 16px;
 
   .hint-title {
     font-size: 18px;
@@ -453,5 +474,20 @@ const handleClaim = (applyPromoCode, applyPromoTitle) => {
   &:hover {
     filter: brightness(1.5);
   }
+}
+
+.claim-btn {
+  border-radius: 100px;
+  background: linear-gradient(180deg, #2ca1fe 0%, #c481fe 100%);
+  color: #ffffff;
+  width: 180px;
+  font-weight: 700;
+  font-size: 16px;
+  height: 40px;
+}
+
+table.promo-table th {
+  background: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039) !important;
+  color: white !important;
 }
 </style>
