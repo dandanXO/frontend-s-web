@@ -388,6 +388,24 @@ export default {
     packDownloadUrl: '渠道包链接',
     unchanged: '无修改',
     unbind: '解绑',
+    depositWithdrawalProfit: '存提利润',
+    registerCount: '新注册用户人数',
+    ftdCount: '首存人数',
+    ftdAmount: '首存金额',
+    indBet: '下注',
+    indProfit: '下注派彩利润',
+    last3Months: '上3个月',
+    total: '总计',
+    betAmount: '投注金额',
+    payoutAmount: '派彩金额',
+    totalMemberDepositAmount: '总充值金额',
+    totalMemberDepositCount: '总充值人数',
+    bonusAmount: '奖励金额',
+    rebateAmount: '返点金额',
+    indBonusAmount: '奖励金额',
+    indRebateAmount: '返点金额',
+    indAdjustAmount: '资金修正金额',
+    grossProfit: '毛利润'
   },
   message: {
     addSuccess: '新增成功',
@@ -504,7 +522,9 @@ export default {
     'Finance Report': '财务报表',
     'Settlement Report': '佣金报表',
     'Channel Pack': '渠道打包',
-    contactUs: '联系我们'
+    contactUs: '联系我们',
+    'Daily Detail': '日报详情',
+    'Daily Summary': '每日全总览'
   },
   posterType: {
     OVERALL: '综合推广图',

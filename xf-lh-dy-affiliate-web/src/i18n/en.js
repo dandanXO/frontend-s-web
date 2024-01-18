@@ -391,6 +391,24 @@ export default {
     packDownloadUrl: 'Channel Pack Download Url',
     unchanged: 'Unchanged',
     unbind: 'Unbind',
+    depositWithdrawalProfit: 'Deposit Withdrawal Profit',
+    registerCount: 'Register Count',
+    ftdCount: 'FTD Count',
+    ftdAmount: 'FTD Amount',
+    indBet: 'Bet',
+    indProfit: 'Profit',
+    last3Months: 'Last 3 Months',
+    total: 'Total',
+    betAmount: 'Bet Amount',
+    payoutAmount: 'Payout Amount',
+    totalMemberDepositAmount: 'Total Member Deposit Amount',
+    totalMemberDepositCount: 'Total Member Deposit Count',
+    bonusAmount: 'Bonus Amount',
+    rebateAmount: 'Rebate Amount',
+    indBonusAmount: 'Bonus Amount',
+    indRebateAmount: 'Rebate Amount',
+    indAdjustAmount: 'Adjust Amount',
+    grossProfit: 'Gross Profit'
   },
   message: {
     adjustSuccess: 'Adjust Success',
@@ -512,7 +530,9 @@ export default {
     'Finance Report': 'Finance Report',
     'Settlement Report': 'Settlement Report',
     'Channel Pack': 'Channel Pack',
-    contactUs: 'Contact Us'
+    contactUs: 'Contact Us',
+    'Daily Detail': 'Daily Detail',
+    'Daily Summary': 'Daily Summary'
   },
   posterType: {
     OVERALL: 'Overall Referral',
