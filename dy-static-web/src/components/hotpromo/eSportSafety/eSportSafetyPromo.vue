@@ -50,6 +50,7 @@
     >
       <div class="esport-insurance-modal-container">
         <el-form
+          style="text-align: center"
           label-width="100px"
           id="esport-insurance-form"
           :rules="eSportInsuranceFormValidationRules"
@@ -63,8 +64,13 @@
               @focus="loadESportPlatformOptions()"
               clearable
             >
-              <el-option v-for="platform in eSportPlatformOptions" :key="platform" :value="platform" :label="platform">
-                {{ platform }}
+              <el-option
+                v-for="platform in eSportPlatformOptions"
+                :key="platform.value"
+                :value="platform.value"
+                :label="platform.alias"
+              >
+                {{ platform.alias }}
               </el-option>
             </el-select>
           </el-form-item>
@@ -102,6 +108,7 @@ import {
   getESportInsurancePlatformOptions,
   submitESportInsuranceForm
 } from "@/api/promotion/eSportSafety";
+import { getLoggedInPlatformList } from "@/api/platform/platform";
 
 const store = userStore();
 const matchDetails = ref([]);
@@ -144,8 +151,20 @@ const formatDate = (dateTimeString) => {
 };
 
 const loadESportPlatformOptions = () => {
+  eSportPlatformOptions.value = [];
   getESportInsurancePlatformOptions().then((res) => {
-    eSportPlatformOptions.value = res.data;
+    for (let i = 0, l = res.data.length; i < l; i++) {
+      const currResData = res.data[i];
+      platformsListDisplay.value.forEach((e) => {
+        if (currResData === e.code) {
+          const obj = {
+            value: currResData,
+            alias: e.alias
+          };
+          eSportPlatformOptions.value.push(obj);
+        }
+      });
+    }
   });
 };
 
@@ -201,8 +220,10 @@ const submitForm = async (elForm) => {
       if (res.code === 0) {
         ElMessage.success({
           type: "success",
-          message: "成功"
+          message: "提交成功"
         });
+        eSportInsuranceFormRef.value.resetFields();
+        isESportInsuranceModalVisible.value = false;
       }
 
       isSubmitting.value = false;
@@ -226,8 +247,18 @@ const nextSlide = () => {
 
 const iconImageBasePath = `${process.env.VUE_APP_IMAGE_CDN}/promo`;
 
+const platformsList = ref([]);
+const platformsListDisplay = ref([]);
+const getPlatList = () => {
+  getLoggedInPlatformList().then((res) => {
+    platformsList.value = res;
+    platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("ESPORT"));
+  });
+};
+
 onMounted(() => {
   init();
+  getPlatList();
 });
 </script>
 

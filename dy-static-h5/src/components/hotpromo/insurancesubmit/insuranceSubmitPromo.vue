@@ -25,6 +25,10 @@
               filled
               v-model="insuranceInfo.platform"
               :options="platformOptions"
+              option-value="value"
+              option-label="alias"
+              emit-value
+              map-options
               ref="insurancePlatform"
               label="投注平台"
               color="dyblue"
@@ -58,6 +62,8 @@ import { ref, onMounted, reactive, defineProps } from "vue";
 import { userStore } from "stores/index";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
+import { api } from "boot/axios";
+import { cached } from "boot/cache";
 
 var qs = require("qs");
 const $q = useQuasar();
@@ -83,11 +89,23 @@ const platformDetails = ref([]);
 const platformOptions = ref([]);
 
 const getPlatformList = () => {
+  platformOptions.value = [];
   eventapi
     .get(`/game-match/platform/${props.platformType}`)
     .then((res) => {
       if (res.code === 0) {
-        platformOptions.value = res.data;
+        for (let i = 0, l = res.data.length; i < l; i++) {
+          const currResData = res.data[i];
+          platformsListDisplay.value.forEach((e) => {
+            if (currResData === e.code) {
+              const obj = {
+                value: currResData,
+                alias: e.alias
+              };
+              platformOptions.value.push(obj);
+            }
+          });
+        }
       }
     })
     .catch((err) => {
@@ -155,8 +173,28 @@ const handleOpenDialog = () => {
   insuranceFormModal.value = true;
 };
 
+const platformsList = ref([]);
+const platformsListDisplay = ref([]);
+const platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
+const platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
+const getPlatList = () => {
+  cached
+    .get(platformApiKey, () =>
+      api.get(platformApiUrl).then((res) => {
+        return res;
+      })
+    )
+    .then((res) => {
+      platformsList.value = res;
+      platformsListDisplay.value = platformsList.value.filter((element) =>
+        element.gameType.includes(props.platformType)
+      );
+    })
+    .catch((err) => {});
+};
+
 onMounted(() => {
-  // getPlatformList();
+  getPlatList();
 });
 </script>
 

@@ -14,7 +14,9 @@
       <div class="text-center position-relative">
         <div class="huka-btn huka-take-btn waves-effect" @click="getNewTigerCard">领取虎卡</div>
 
-        <div v-if="cardInfo.cardDetail.leftCount > 0" class="redeem-tips">剩下 {{ cardInfo.cardDetail.leftCount }} 次机会领取</div>
+        <div v-if="cardInfo.cardDetail.leftCount > 0" class="redeem-tips">
+          剩下 {{ cardInfo.cardDetail.leftCount }} 次机会领取
+        </div>
       </div>
 
       <div class="content">
@@ -141,7 +143,7 @@ const cardInfo = reactive({
 
 const rankingPage = reactive({
   current: 1,
-  pageSize: 2,
+  pageSize: 5,
   records: [],
   loading: false
 });
@@ -193,12 +195,11 @@ const getNewTigerCard = () => {
     .catch(() => {})
     .then(() => {
       isPageLoading.value = false;
-      pageInit()
+      pageInit();
     });
 };
 
 const compoundCard = () => {
-
   isPageLoading.value = true;
   pageLoadingText.value = "正合成大奖卡";
   synthesisCard({ promoCode: "dy2-tiger-card" })
