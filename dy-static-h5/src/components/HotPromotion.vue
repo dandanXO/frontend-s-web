@@ -41,6 +41,21 @@
     <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz' && !isCommonPromo"></EsportQuiz>
     <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery' && !isCommonPromo && store.token"></LotteryPromo>
     <GiftPromo v-if="list.redirectUrl === 'dy2-gift' && !isCommonPromo && store.token"></GiftPromo>
+
+    <AsiaCup2024Promo
+      v-if="
+        (list.redirectUrl === 'asian-cup-2024' || list.redirectUrl === 'dy-promo-application-A') &&
+        !isCommonPromo &&
+        store.token
+      "
+    ></AsiaCup2024Promo>
+    <LplSummerPromo
+      v-if="
+        (list.redirectUrl === 'lpl-summer' || list.redirectUrl === 'dy-promo-application-B') &&
+        !isCommonPromo &&
+        store.token
+      "
+    ></LplSummerPromo>
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -78,6 +93,8 @@ import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 import PrivilegeInvite from "../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue";
+import AsiaCup2024Promo from "../components/hotpromo/asiacup2024/AsiaCup2024Promo.vue";
+import LplSummerPromo from "../components/hotpromo/lplsummer/LplSummerPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -95,7 +112,9 @@ export default defineComponent({
     EsportQuiz,
     LotteryPromo,
     GiftPromo,
-    PrivilegeInvite
+    PrivilegeInvite,
+    AsiaCup2024Promo,
+    LplSummerPromo
   },
   props: {
     list: {
@@ -160,7 +179,11 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-gift" ||
       this.list.redirectUrl === "Dongying-refer" ||
       this.list.redirectUrl === "dy2-vip-upgrade-bonus" ||
-      this.list.redirectUrl === "dy2-refer-bonus"
+      this.list.redirectUrl === "dy2-refer-bonus" ||
+      this.list.redirectUrl === "asian-cup-2024" ||
+      this.list.redirectUrl === "lpl-summer" ||
+      this.list.redirectUrl === "dy-promo-application-A" ||
+      this.list.redirectUrl === "dy-promo-application-B"
     ) {
       this.isCommonPromo = false;
     } else {

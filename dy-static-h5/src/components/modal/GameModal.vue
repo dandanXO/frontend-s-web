@@ -339,6 +339,10 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
               src.value = srcData;
               visible.value = true;
+            } else if (platformCode == "SABA") {
+              // newWin.location.href = response.data;
+              var currentUrl = window.location.hostname;
+              window.location.href = response.data + `&homeUrl=${currentUrl}`;
             } else {
               // newWin.location.href = response.data;
               window.location.href = response.data;
