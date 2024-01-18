@@ -1,7 +1,7 @@
 <template>
   <div>
     <swiper
-      :slides-per-view="2"
+      :slides-per-view="matchDetails.length > 1 ? 2 : 1"
       :spaceBetween="20"
       :loop="true"
       @swiper="onSwiper"
@@ -21,6 +21,8 @@
               </div>
 
               <div class="bet-info-vs">
+                <span>{{ item.matchTitle }}</span>
+                <br />
                 VS
                 <br />
                 {{ formatDate(item.matchTime).time }}
@@ -83,17 +85,8 @@
           </el-form-item> -->
 
           <el-form-item prop="gameMatchId" name="gameMatchId" label="游戏比赛: ">
-            <el-select
-              v-model="sportInsuranceFormData.gameMatchId"
-              placeholder="游戏比赛"
-              clearable
-            >
-              <el-option
-                v-for="item in matchDetails"
-                :key="item.value"
-                :value="item.id"
-                :label="item.matchTitle"
-              >
+            <el-select v-model="sportInsuranceFormData.gameMatchId" placeholder="游戏比赛" clearable>
+              <el-option v-for="item in matchDetails" :key="item.value" :value="item.id" :label="item.matchTitle">
                 {{ item.matchTitle }}
               </el-option>
             </el-select>
@@ -330,8 +323,8 @@ onMounted(() => {
 
   .bet-info-vs {
     font-weight: bolder;
-    font-size: 28px;
-    line-height: 1.3;
+    font-size: 21px;
+    line-height: 1.2;
     text-align: center;
   }
 
@@ -347,7 +340,7 @@ onMounted(() => {
       flex-direction: column;
       gap: 12px;
       align-items: center;
-      width: 280px;
+      width: 110px;
       padding-bottom: 20px;
 
       .info-team-logo {
