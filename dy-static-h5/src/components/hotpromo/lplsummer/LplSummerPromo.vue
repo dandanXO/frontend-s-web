@@ -202,7 +202,6 @@ const handleClaim = (applyPromoCode, applyPromoTitle) => {
   eventapi
     .post("/promo-application/apply", qs.stringify({ promoCode: applyPromoCode, promoTitle: applyPromoTitle }))
     .then((res) => {
-      console.log("RES", res);
       if (res.code === 0) {
         $q.notify({
           color: "positive",
