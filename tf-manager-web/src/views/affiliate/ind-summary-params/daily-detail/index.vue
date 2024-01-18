@@ -277,7 +277,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import { hasPermission } from '../../../../utils/util'
 import moment from 'moment'
 import {
@@ -289,6 +289,7 @@ import { getAffiliateList } from '../../../../api/affiliate-record'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
 import { formatInputTimeZone } from '@/utils/format-timeZone'
+import { useRoute } from 'vue-router'
 
 const { t } = useI18n()
 const siteList = reactive({
@@ -315,6 +316,11 @@ const request = reactive({
   affiliateCode: null,
 })
 
+const route = useRoute()
+const getFromRouter = reactive({
+  loginNameList: route.query.loginNameList,
+})
+
 const total = reactive({
   data: null,
 })
@@ -328,6 +334,18 @@ async function loadSites() {
   affiliateNames.value = affiliates.map(a => {
     return { name: a.loginName }
   })
+}
+
+async function loadSitesWithPreDefineAffiliate() {
+  const { data: site } = await getSiteListSimple()
+  siteList.list = site
+  request.siteId = siteList.list.filter(x => x.siteCode === 'IND')[0].id
+  const { data: affiliates } = await getAffiliateList(request.siteId)
+
+  const loginNameArray = getFromRouter.loginNameList.split(',')
+  affiliateNames.value = affiliates
+    .filter(a => loginNameArray.includes(a.loginName))
+    .map(a => ({ name: a.loginName }))
 }
 
 function convertDate(date) {
@@ -389,7 +407,9 @@ function checkQuery() {
     }
   }
 
-  if (request.loginNameList != null) {
+  if (getFromRouter.loginNameList != null) {
+    query.loginNameList = getFromRouter.loginNameList
+  } else {
     query.loginNameList = request.loginNameList.join(',')
   }
 
@@ -444,7 +464,21 @@ function getSummaries(param) {
 }
 
 onMounted(async () => {
-  await loadSites()
+  // await loadSites()
+  watch(() => {
+    if (
+      route.query.loginNameList !== null &&
+      route.query.loginNameList !== undefined
+    ) {
+      getFromRouter.loginNameList = route.query.loginNameList
+      loadSitesWithPreDefineAffiliate()
+      resetQuery()
+    } else {
+      getFromRouter.loginNameList = null
+      loadSites()
+      resetQuery()
+    }
+  })
 })
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>

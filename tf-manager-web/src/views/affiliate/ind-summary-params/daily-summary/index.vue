@@ -3,27 +3,16 @@
     <div class="header-container">
       <div class="search">
         <div>
-          <el-select
-            v-model="request.loginNameList"
-            :placeholder="t('fields.platform')"
-            multiple
-          >
-            <el-option
-              v-for="aff in affiliateNames"
-              :key="aff.name"
-              :label="aff.name"
-              :value="aff.name"
-            />
-          </el-select>
           <el-date-picker
             v-model="request.recordTime"
             format="DD/MM/YYYY"
             value-format="YYYY-MM-DD"
+            size="small"
             type="daterange"
             range-separator=":"
             :start-placeholder="t('fields.startDate')"
             :end-placeholder="t('fields.endDate')"
-            style="width: 300px; margin-left: 10px"
+            style="width: 300px;"
             :shortcuts="shortcuts"
             :disabled-date="disabledDate"
             :editable="false"
@@ -33,12 +22,13 @@
           <el-button
             style="margin-left: 20px"
             icon="el-icon-search"
+            size="mini"
             type="success"
             @click="loadRecord()"
           >
             {{ t('fields.search') }}
           </el-button>
-          <el-button @click="resetQuery()">
+          <el-button size="mini" @click="resetQuery()">
             {{ t('fields.reset') }}
           </el-button>
         </div>
@@ -73,26 +63,6 @@
                 type: 'date',
               }"
             />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="loginName"
-          :label="t('fields.platform')"
-          align="left"
-          min-width="100"
-          width="120"
-        >
-          <template
-            #default="scope"
-            v-if="hasPermission(['sys:member:detail'])"
-          >
-            <router-link
-              :to="
-                `/affiliate/details/${scope.row.affiliateId}?site=${request.siteId}`
-              "
-            >
-              <el-link type="primary">{{ scope.row.loginName }}</el-link>
-            </router-link>
           </template>
         </el-table-column>
         <el-table-column
@@ -140,7 +110,7 @@
           prop="registerCount"
           :label="t('fields.registerCount')"
           align="center"
-          width="150"
+          width="120"
         />
         <el-table-column
           prop="ftdCount"
@@ -161,7 +131,7 @@
         </el-table-column>
         <el-table-column
           prop="bet"
-          :label="t('fields.indBet')"
+          :label="t('fields.betAmount')"
           align="center"
           width="120"
         >
@@ -172,7 +142,7 @@
         </el-table-column>
         <el-table-column
           prop="payout"
-          :label="t('fields.payout')"
+          :label="t('fields.payoutAmount')"
           align="center"
           width="120"
         >
@@ -183,7 +153,7 @@
         </el-table-column>
         <el-table-column
           prop="profit"
-          :label="t('fields.indProfit')"
+          :label="t('fields.profit')"
           align="center"
           width="120"
         >
@@ -216,7 +186,7 @@
         />
         <el-table-column
           prop="bonus"
-          :label="t('fields.indBonusAmount')"
+          :label="t('fields.bonusAmount')"
           align="center"
           width="120"
         >
@@ -227,7 +197,7 @@
         </el-table-column>
         <el-table-column
           prop="rebateAmount"
-          :label="t('fields.indRebateAmount')"
+          :label="t('fields.rebateAmount')"
           align="center"
           width="120"
         >
@@ -240,7 +210,7 @@
         </el-table-column>
         <el-table-column
           prop="adjustment"
-          :label="t('fields.indAdjustAmount')"
+          :label="t('fields.adjustAmount')"
           align="center"
           width="120"
         >
@@ -251,7 +221,7 @@
         </el-table-column>
         <el-table-column
           prop="netProfit"
-          :label="t('fields.grossProfit')"
+          :label="t('fields.netProfit')"
           align="center"
           width="120"
         >
@@ -277,22 +247,26 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
-import { hasPermission } from '../../../../utils/util'
+import { onMounted, reactive, watch } from 'vue'
 import moment from 'moment'
 import {
-  queryDailySummary,
+  queryDailySummaryByType,
   queryDailySummaryTotal,
 } from '../../../../api/affiliate-daily-summary'
 import { getSiteListSimple } from '../../../../api/site'
-import { getAffiliateList } from '../../../../api/affiliate-record'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
 import { formatInputTimeZone } from '@/utils/format-timeZone'
+import { useRoute } from 'vue-router'
 
 const { t } = useI18n()
 const siteList = reactive({
   list: [],
+})
+
+const route = useRoute()
+const getFromRouter = reactive({
+  loginNameList: route.query.loginNameList,
 })
 
 const shortcuts = getShortcuts(t)
@@ -304,7 +278,6 @@ startDate.setTime(
 )
 const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
-const affiliateNames = ref([])
 
 const request = reactive({
   size: 20,
@@ -312,7 +285,6 @@ const request = reactive({
   siteId: null,
   recordTime: [defaultStartDate, defaultEndDate],
   loginNameList: null,
-  affiliateCode: null,
 })
 
 const total = reactive({
@@ -323,11 +295,6 @@ async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
   request.siteId = siteList.list.filter(x => x.siteCode === 'IND')[0].id
-  const { data: affiliates } = await getAffiliateList(request.siteId)
-
-  affiliateNames.value = affiliates.map(a => {
-    return { name: a.loginName }
-  })
 }
 
 function convertDate(date) {
@@ -346,8 +313,6 @@ function disabledDate(time) {
 
 function resetQuery() {
   request.recordTime = [defaultStartDate, defaultEndDate]
-  request.loginNameList = null
-  request.affiliateCode = null
 }
 
 const page = reactive({
@@ -380,17 +345,11 @@ function checkQuery() {
         'end'
       )
       query.recordTime = query.recordTime.join(',')
-    } else {
-      query.recordTime = formatInputTimeZone(
-        request.recordTime[0],
-        timeZone,
-        'start'
-      )
     }
   }
 
-  if (request.loginNameList != null) {
-    query.loginNameList = request.loginNameList.join(',')
+  if (getFromRouter.loginNameList != null) {
+    query.loginNameList = getFromRouter.loginNameList
   }
 
   return query
@@ -399,7 +358,7 @@ function checkQuery() {
 async function loadRecord() {
   page.loading = true
   const query = checkQuery()
-  const { data: ret } = await queryDailySummary(query)
+  const { data: ret } = await queryDailySummaryByType(query)
   const { data: ret1 } = await queryDailySummaryTotal(query)
   total.data = ret1
   page.pages = ret.pages
@@ -411,15 +370,16 @@ async function loadRecord() {
 function getSummaries(param) {
   const { columns } = param
   var sums = []
+
   if (total.data) {
     columns.forEach((column, index) => {
       if (index === 0) {
         sums[index] = t('fields.total')
-      } else if (index > 1) {
+      } else {
         var prop = column.property
-        if (index === 5 || index === 6 || index === 12) {
+        if (index === 4 || index === 5 || index === 11) {
           sums[index] = total.data[prop]
-        } else if (index === 4) {
+        } else if (index === 3) {
           // profit depositWithdrawal = deposit - withdrawal
           sums[index] =
             '$' +
@@ -445,6 +405,16 @@ function getSummaries(param) {
 
 onMounted(async () => {
   await loadSites()
+  watch(() => {
+    if (
+      route.query.loginNameList !== null &&
+      route.query.loginNameList !== undefined
+    ) {
+      getFromRouter.loginNameList = route.query.loginNameList
+    } else {
+      getFromRouter.loginNameList = null
+    }
+  })
 })
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
@@ -457,7 +427,7 @@ onMounted(async () => {
   width: 100%;
   display: block;
   justify-content: flex-start;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .btn-group {
