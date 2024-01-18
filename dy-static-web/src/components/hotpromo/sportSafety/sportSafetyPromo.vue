@@ -50,6 +50,7 @@
     >
       <div class="sport-insurance-modal-container">
         <el-form
+          style="text-align: center"
           label-width="100px"
           id="sport-insurance-form"
           :rules="sportInsuranceFormValidationRules"
@@ -220,8 +221,10 @@ const submitForm = async (elForm) => {
       if (res.code === 0) {
         ElMessage.success({
           type: "success",
-          message: "成功"
+          message: "提交成功"
         });
+        sportInsuranceFormRef.value.resetFields();
+        isSportInsuranceModalVisible.value = false;
       }
 
       isSubmitting.value = false;
