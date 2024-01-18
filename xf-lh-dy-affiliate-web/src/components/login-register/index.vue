@@ -12,8 +12,17 @@
         <div class="right">
           <div class="bg">
             <div class="top">
-              <div class="log">{{ isReg ? '注册' : '登录' }}</div>
-              <div class="topright">
+              <div class="log" v-if="currentSite.lang === 'EN'">{{ isReg ? 'Register' : 'Login' }}</div>
+              <div class="log" v-else>{{ isReg ? '注册' : '登录' }}</div>
+              <div class="topright" v-if="currentSite.lang === 'EN'">
+                <span class="noaccabs">
+                  {{ isReg ? 'Already have account? ' : 'No Account? ' }}
+                </span>
+                <a @click="isReg = !isReg" class="signlog">
+                  {{ isReg ? 'Please Login' : 'Register Now' }}
+                </a>
+              </div>
+              <div class="topright" v-else>
                 <span class="noaccabs">
                   {{ isReg ? '已经有账号? ' : '没有帐户？' }}
                 </span>
@@ -35,7 +44,7 @@
                   <el-input
                     ref="userNameRef"
                     v-model="loginForm.userName"
-                    :placeholder="'用户名'"
+                    :placeholder="currentSite.lang === 'EN' ? 'Username' : '用户名'"
                     name="username"
                     type="text"
                     tabindex="1"
@@ -55,7 +64,7 @@
                       ref="passwordRef"
                       v-model="loginForm.password"
                       :type="passwordType"
-                      :placeholder="'密码'"
+                      :placeholder="currentSite.lang === 'EN' ? 'Password' : '密码'"
                       name="password"
                       tabindex="2"
                       autocomplete="no-fill"
@@ -72,7 +81,7 @@
                   style="width:100%;"
                   @click.prevent="handleLogin"
                 >
-                  立即登录
+                  {{ currentSite.lang === 'EN' ? 'Login Now' : '立即登录' }}
                 </el-button>
               </el-form>
               <el-form
@@ -88,7 +97,7 @@
                     <el-input
                       ref="userNameRef"
                       v-model="regForm.userName"
-                      :placeholder="'合营账户'"
+                      :placeholder="currentSite.lang === 'EN' ? 'Affiliate Account' : '合营账户'"
                       name="userName"
                       type="text"
                       tabindex="1"
@@ -107,7 +116,7 @@
                         ref="passwordRef"
                         v-model="regForm.password"
                         :type="passwordType"
-                        :placeholder="'密码'"
+                        :placeholder="currentSite.lang === 'EN' ? 'Password' : '密码'"
                         name="password"
                         tabindex="2"
                         autocomplete="on"
@@ -128,7 +137,7 @@
                         ref="confirmPwdRef"
                         v-model="regForm.confirmPwd"
                         :type="passwordType"
-                        :placeholder="'密码确认'"
+                        :placeholder="currentSite.lang === 'EN' ? 'Confirm Password' : '密码确认'"
                         name="password"
                         tabindex="3"
                         autocomplete="on"
@@ -141,7 +150,7 @@
                     <el-input
                       ref="verificationRef"
                       v-model="regForm.captchaCode"
-                      :placeholder="'验证码'"
+                      :placeholder="currentSite.lang === 'EN' ? 'Verification Code' : '验证码'"
                       name="captchaCode"
                       type="text"
                       tabindex="7"
@@ -159,7 +168,7 @@
                     style="width:100%;"
                     @click.prevent="handleRegister"
                   >
-                    申请
+                    {{ currentSite.lang === 'EN' ? 'Register' : '申请' }}
                   </el-button>
                 </div>
                 <!--div v-if="step === 2">
@@ -248,10 +257,9 @@
   </div>
   <el-dialog
     v-model="showDialog"
-    width="95%"
     custom-class="dialog400"
     @close="onCloseDialog"
-    :title="'安全验证, 请依次点击：' + words.join(' , ')"
+    :title="(currentSite.lang === 'EN' ? 'Safety Verification: ' : '安全验证, 请依次点击：') + words.join(' , ')"
   >
     <div
       id="loadDiv"
@@ -289,7 +297,7 @@
             color: 'rgb(130, 208, 130)',
           }"
         >
-          验证成功
+          {{ currentSite.lang === 'EN' ? 'Success' : '验证成功' }}
         </span>
       </div>
     </div>
@@ -300,7 +308,7 @@
         style="margin-top: 20px;"
         @click="onGetImage()"
       >
-        刷新
+        {{ currentSite.lang === 'EN' ? 'Refresh' : '刷新' }}
       </el-button>
       <el-button
         type="success"
@@ -309,7 +317,7 @@
         @click="userLogin()"
         :disabled="coordinates.length === 0"
       >
-        提交
+        {{ currentSite.lang === 'EN' ? 'Submit' : '提交' }}
       </el-button>
     </div>
   </el-dialog>
@@ -339,6 +347,7 @@ import { UserActionTypes } from '@/store/modules/user/action-types'
 import { ElNotification } from 'element-plus'
 import dyLogo from '@/assets/images/dy/logowhitee.png'
 import xfLogo from '@/assets/images/xf/logowhitee.png'
+import indLogo from '@/assets/images/ind/55-ace-logo.png'
 import { getVerificationImage } from '@/api/verification'
 import { getVerificationCode } from '@/api/user'
 
@@ -761,17 +770,26 @@ export default defineComponent({
     )
     const currentSite = ref({});
     const populateCurrentSiteData = () => {
-      if (props.siteId === '6') {
-        currentSite.value.firstLiner = '从东赢开始'
-        currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
-        currentSite.value.logo = dyLogo
-        state.loginForm.site = 'DY2'
-      }
-      if (props.siteId === '1') {
-        currentSite.value.firstLiner = '从兴发开始'
-        currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
-        currentSite.value.logo = xfLogo
-        state.loginForm.site = 'XF1'
+      switch (props.siteId) {
+        case '6':
+          currentSite.value.firstLiner = '从东赢开始'
+          currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
+          currentSite.value.logo = dyLogo
+          state.loginForm.site = 'DY2'
+          break;
+        case '1':
+          currentSite.value.firstLiner = '从兴发开始'
+          currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
+          currentSite.value.logo = xfLogo
+          state.loginForm.site = 'XF1'
+          break;
+        case '5':
+          currentSite.value.firstLiner = 'INDWIN'
+          currentSite.value.secondLiner = 'Become Legend<br>Or Become Praiser of Legend'
+          currentSite.value.logo = indLogo
+          currentSite.value.lang = 'EN'
+          state.loginForm.site = 'IND'
+          break;
       }
     }
     onMounted(() => {
