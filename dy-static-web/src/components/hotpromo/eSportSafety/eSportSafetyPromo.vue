@@ -1,6 +1,13 @@
 <template>
   <div>
-    <swiper :slides-per-view="1" :loop="true" @swiper="onSwiper" @slideChange="onSlideChange" class="swiper-wrapper">
+    <swiper
+      :slides-per-view="2"
+      :spaceBetween="20"
+      :loop="true"
+      @swiper="onSwiper"
+      @slideChange="onSlideChange"
+      class="swiper-wrapper"
+    >
       <template v-for="(item, index) in matchDetails" :key="item.id">
         <swiper-slide>
           <div class="bet-info-box">
@@ -57,7 +64,7 @@
           ref="eSportInsuranceFormRef"
           :model="eSportInsuranceFormData"
         >
-          <el-form-item prop="platform" name="platform" label="投注平台: ">
+          <!-- <el-form-item prop="platform" name="platform" label="投注平台: ">
             <el-select
               v-model="eSportInsuranceFormData.platform"
               placeholder="投注平台"
@@ -73,18 +80,26 @@
                 {{ platform.alias }}
               </el-option>
             </el-select>
+          </el-form-item> -->
+
+          <el-form-item prop="gameMatchId" name="gameMatchId" label="游戏比赛: ">
+            <el-select v-model="eSportInsuranceFormData.gameMatchId" placeholder="游戏比赛" clearable>
+              <el-option v-for="item in matchDetails" :key="item.value" :value="item.id" :label="item.matchTitle">
+                {{ item.matchTitle }}
+              </el-option>
+            </el-select>
           </el-form-item>
 
-          <el-form-item prop="gameMatchId" name="gameMatchId" label="" style="display: none">
+          <!-- <el-form-item prop="gameMatchId" name="gameMatchId" label="" style="display: none">
             <el-input v-model="eSportInsuranceFormData.gameMatchId" readonly />
-          </el-form-item>
+          </el-form-item> -->
 
           <el-form-item prop="nickName" name="nickName" label="账号: ">
             <el-input v-model="nickName" readonly />
           </el-form-item>
 
           <el-form-item prop="transactionId" name="transactionId" label="注单号: ">
-            <el-input v-model="eSportInsuranceFormData.transactionId" minlength="14" maxlength="16" />
+            <el-input v-model="eSportInsuranceFormData.transactionId" minlength="9" maxlength="25" />
           </el-form-item>
 
           <el-button :loading="loadingBtn" size="large" @click="submitForm(eSportInsuranceFormRef)" class="common-btn">
@@ -114,8 +129,8 @@ const store = userStore();
 const matchDetails = ref([]);
 const isESportInsuranceModalVisible = ref(false);
 const eSportInsuranceFormData = reactive({
-  gameMatchId: null,
-  platform: "",
+  gameMatchId: "",
+  // platform: "",
   transactionId: ""
 });
 const nickName = store.nickName;
@@ -124,6 +139,13 @@ const eSportInsuranceFormRef = ref();
 const isSubmitting = ref(false);
 
 const eSportInsuranceFormValidationRules = {
+  gameMatchId: [
+    {
+      required: true,
+      message: "游戏比赛不能为空",
+      trigger: "blur"
+    }
+  ],
   transactionId: [
     {
       required: true,
@@ -131,8 +153,8 @@ const eSportInsuranceFormValidationRules = {
       trigger: "blur"
     },
     {
-      pattern: "^.{14,16}$",
-      message: "注单号必须为14-16位",
+      pattern: "^.{9,25}$",
+      message: "注单号必须为9-25位",
       trigger: "blur"
     }
   ],
