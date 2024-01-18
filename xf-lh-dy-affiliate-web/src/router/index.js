@@ -26,10 +26,22 @@ export const constantRoutes = [
     component: () => import(/* webpackChunkName: "loginAffiliate" */"../views/dy/login/index.vue")
   },
   {
+    path: "/ind/login",
+    name: "INDWIN Login",
+    meta: { hidden: true },
+    component: () => import(/* webpackChunkName: "loginAffiliate" */"../views/ind/login/index.vue")
+  },
+  {
     path: "/dy/register",
     name: "DY Register",
     meta: { hidden: true },
     component: () => import(/* webpackChunkName: "registerAffiliate" */"../views/dy/register/index.vue")
+  },
+  {
+    path: "/ind/register",
+    name: "INDWIN Register",
+    meta: { hidden: true },
+    component: () => import(/* webpackChunkName: "registerAffiliate" */"../views/ind/register/index.vue")
   },
   {
     path: '/',

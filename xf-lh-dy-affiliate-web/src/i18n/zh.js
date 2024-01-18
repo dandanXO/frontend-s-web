@@ -3,6 +3,17 @@ export default {
     title: '代理系统',
     logout: '登出',
     changePassword: '更改密码',
+    login: "登录",
+    verification_title: "安全验证, 请依次点击：",
+    signup: "注册",
+    username: "用户名",
+    loginnow: "立即登录",
+    password: "密码",
+    apply: "申请",
+    verificationcode: "验证码",
+    verify_success: "验证成功",
+    refresh: "刷新",
+    submit: "提交"
   },
   depositStatus: {
     SUCCESS: '存款成功',

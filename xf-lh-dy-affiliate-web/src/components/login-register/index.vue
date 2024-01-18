@@ -1,5 +1,7 @@
 <template>
-  <div class="firstPage">
+  <div class="firstPage"
+       :class="props.siteId !== 'IND' ? '' : 'ind-firstPage'"
+  >
     <div class="inner">
       <div class="loginPage">
         <div class="left">
@@ -12,8 +14,8 @@
         <div class="right">
           <div class="bg">
             <div class="top">
-              <div class="log">{{ isReg ? '注册' : '登录' }}</div>
-              <div class="topright">
+              <div class="log">{{ isReg ? $t('common.signup') : $t('common.login') }}</div>
+              <div class="topright" v-if="props.siteId !== 'IND'">
                 <span class="noaccabs">
                   {{ isReg ? '已经有账号? ' : '没有帐户？' }}
                 </span>
@@ -35,7 +37,7 @@
                   <el-input
                     ref="userNameRef"
                     v-model="loginForm.userName"
-                    :placeholder="'用户名'"
+                    :placeholder="$t('common.username')"
                     name="username"
                     type="text"
                     tabindex="1"
@@ -55,7 +57,7 @@
                       ref="passwordRef"
                       v-model="loginForm.password"
                       :type="passwordType"
-                      :placeholder="'密码'"
+                      :placeholder="$t('common.password')"
                       name="password"
                       tabindex="2"
                       autocomplete="no-fill"
@@ -72,7 +74,7 @@
                   style="width:100%;"
                   @click.prevent="handleLogin"
                 >
-                  立即登录
+                  {{ $t('common.loginnow') }}
                 </el-button>
               </el-form>
               <el-form
@@ -141,7 +143,7 @@
                     <el-input
                       ref="verificationRef"
                       v-model="regForm.captchaCode"
-                      :placeholder="'验证码'"
+                      :placeholder="$t('common.verificationcode')"
                       name="captchaCode"
                       type="text"
                       tabindex="7"
@@ -159,7 +161,7 @@
                     style="width:100%;"
                     @click.prevent="handleRegister"
                   >
-                    申请
+                    {{ $t('common.apply') }}
                   </el-button>
                 </div>
                 <!--div v-if="step === 2">
@@ -251,7 +253,7 @@
     width="95%"
     custom-class="dialog400"
     @close="onCloseDialog"
-    :title="'安全验证, 请依次点击：' + words.join(' , ')"
+    :title="$t('common.verification_title') + words.join(' , ')"
   >
     <div
       id="loadDiv"
@@ -289,7 +291,7 @@
             color: 'rgb(130, 208, 130)',
           }"
         >
-          验证成功
+          {{ $t('common.verify_success') }}
         </span>
       </div>
     </div>
@@ -300,7 +302,7 @@
         style="margin-top: 20px;"
         @click="onGetImage()"
       >
-        刷新
+        {{ $t('common.refresh') }}
       </el-button>
       <el-button
         type="success"
@@ -309,7 +311,7 @@
         @click="userLogin()"
         :disabled="coordinates.length === 0"
       >
-        提交
+        {{ $t('common.submit') }}
       </el-button>
     </div>
   </el-dialog>
@@ -339,8 +341,10 @@ import { UserActionTypes } from '@/store/modules/user/action-types'
 import { ElNotification } from 'element-plus'
 import dyLogo from '@/assets/images/dy/logowhitee.png'
 import xfLogo from '@/assets/images/xf/logowhitee.png'
+import indLogo from '@/assets/images/ind/ind-logo.png'
 import { getVerificationImage } from '@/api/verification'
 import { getVerificationCode } from '@/api/user'
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   props: {
@@ -400,6 +404,7 @@ export default defineComponent({
     const router = useRouter()
     const route = useRoute()
     const store = useStore()
+    const { t } = useI18n()
     const hasAffiliate = ref(false)
     const step = ref(1)
     const state = reactive({
@@ -773,6 +778,12 @@ export default defineComponent({
         currentSite.value.logo = xfLogo
         state.loginForm.site = 'XF1'
       }
+      if (props.siteId === 'IND') {
+        currentSite.value.firstLiner = 'Starts from 55ACE'
+        currentSite.value.secondLiner = 'Become a legend<br>Or become the eulogist of legend?'
+        currentSite.value.logo = indLogo
+        state.loginForm.site = 'IND'
+      }
     }
     onMounted(() => {
       // const swiper = new Swiper('.swiper-container', swiperOptions);
@@ -814,7 +825,9 @@ export default defineComponent({
       hasAffiliate,
       step,
       isReg,
-      currentSite
+      currentSite,
+      props,
+      t
     }
   },
 })
@@ -1064,6 +1077,38 @@ a {
       }
     }
   }
+
+  &.ind-firstPage{
+    background: url('../../assets/images/ind/ind-bg.png') no-repeat center;
+
+    .logo {
+      position: absolute;
+      left: 70px;
+      top: 40px;
+      width: 207px;
+    }
+
+    .loginPage .left .first-liner{
+      max-width: 750px;
+      width: 750px;
+    }
+
+    .loginPage .left .second-liner{
+      max-width: 600px;
+      width: 600px;
+    }
+
+    .inner{
+     max-width: 1300px;
+    }
+
+    .common-btn{
+      background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%);
+
+    }
+
+  }
+
 }
 
 @media (max-width: 768px) {
