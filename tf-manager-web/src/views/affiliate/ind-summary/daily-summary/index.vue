@@ -185,10 +185,16 @@
         </template>
       </el-table-column> -->
       <el-table-column
-        prop="depositCount"
-        :label="t('fields.totalMemberDepositCount')"
+        prop="totalDepositNumber"
+        :label="t('fields.totalDepositMemberCount')"
         align="center"
-        width="180"
+        width="120"
+      />
+      <el-table-column
+        prop="betCount"
+        :label="t('fields.totalBetMemberCount')"
+        align="center"
+        width="120"
       />
       <el-table-column
         prop="bonus"
@@ -570,7 +576,7 @@ function getSummaries(param) {
         sums[index] = t('fields.total')
       } else {
         var prop = column.property
-        if (index === 5 || index === 10) {
+        if (index === 5 || index === 10 || index === 11) {
           sums[index] = totalPage.records[0][prop]
         } else if (index === 4) {
           sums[index] = totalPage.records[0].registerCount
@@ -595,7 +601,7 @@ function getSummaries(param) {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
             })
-        } else if (index === 14) {
+        } else if (index === 15) {
           sums[index] =
             '$' +
             parseFloat(
