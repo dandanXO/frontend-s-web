@@ -9,10 +9,10 @@
               </div>
               <div class="right-container">
                 <div class="desc-title">热血迎蓝 战火延续</div>
-  
+
                 <q-btn class="claim-btn" label="立即申请" @click="handleClaim('basketball-hot', '热血迎蓝', 'NBA')" />
               </div>
-  
+
               <div>
                 <div class="img-liner">
                   <img src="../../../assets/images/promotion/hotpromo/asiacup2024/promo_title.png" />
@@ -22,7 +22,7 @@
                     活动期间，会员每天投注体育场馆的NBA赛事与CBA赛事，总有效投注额≥3,000元，即可点击【立即申请】按钮申请彩金，每日最高888元流水彩金！彩金仅需5倍流水即可取款！
                   </p>
                 </div>
-  
+
                 <table class="promo-table">
                   <tbody>
                     <tr>
@@ -69,12 +69,12 @@
                     </tr>
                   </tbody>
                 </table>
-  
+
                 <div class="img-liner q-mt-xl">
                   <img src="../../../assets/images/promotion/hotpromo/asiacup2024/promo_rule.png" />
                 </div>
                 <div>
-                  <p>1. 本活动计算雷火电竞、IM体育与熊猫体育的NBA&CBA当日全部赛事有效投注，每日达到对应有效投注即可领取对应流水彩金。</p>
+                  <p>1. 本活动计算雷火电竞与IM体育的NBA&CBA当日全部赛事有效投注，每日达到对应有效投注即可领取对应流水彩金。</p>
                   <p>
                     2. 满足活动条件的会员需在当日的23:59:59前登录该页面并点击【立即申请】按钮进行活动申请，逾事不予补偿，申请成功后系统将于次日24小时内自动派发至会员钱包，彩金仅需5倍流水即可取款。
                   </p>
@@ -91,23 +91,23 @@
             </div>
           </q-tab-panel>
         </q-tab-panels>
-        
+
       </div>
     </div>
   </template>
-  
+
   <script setup>
   import { ref, reactive } from "vue";
   import { userStore } from "stores/index";
   import { useQuasar } from "quasar";
   import { eventapi } from "src/boot/axios";
-  
+
   const $q = useQuasar();
   const store = userStore();
   var qs = require("qs");
-  
+
   const activeKey = ref("asia-war-guide");
-  
+
   const handleClaim = (applyPromoCode, applyPromoTitle, applyGameType) => {
     eventapi
       .post("/promo-application/apply", qs.stringify({ promoCode: applyPromoCode, promoTitle: applyPromoTitle, gameType: applyGameType}))
@@ -130,11 +130,11 @@
       });
   };
   </script>
-  
+
   <style scoped lang="scss">
   .promo-4 {
     padding: 5px;
-  
+
     .tabs {
       .q-tabs {
         height: 54px;
@@ -147,12 +147,12 @@
         border-radius: 8px;
         border: 1px solid #2f7cf7;
       }
-  
+
       .q-tab {
         flex: 1;
         color: #87898a;
         border-radius: 0;
-  
+
         span {
           display: block;
           line-height: 1;
@@ -160,7 +160,7 @@
           font-weight: 500;
           color: #374151;
         }
-  
+
         &--active {
           // background: #6ad8ff;
           background-color: transparent;
@@ -171,14 +171,14 @@
           background: linear-gradient(180deg, #2ca1fe 0%, #2f7cf7 100%);
           border-radius: 8px;
           color: #ffffff;
-  
+
           span {
             color: #ffffff;
             font-weight: 700;
           }
         }
       }
-  
+
       .tab1 {
         display: flex;
         align-items: center;
@@ -188,13 +188,13 @@
         color: #3f3f3f;
         background: white;
         padding: 30px 0px;
-  
+
         .left-container {
           img {
             max-width: 150px;
           }
         }
-  
+
         .right-container {
           display: flex;
           flex-direction: column;
@@ -202,7 +202,7 @@
           justify-content: center;
           width: 320px;
           margin-bottom: 30px;
-  
+
           .desc {
             width: 90%;
             color: #87898a;
@@ -210,7 +210,7 @@
             font-size: 14px;
             text-align: center;
           }
-  
+
           .desc-title {
             width: 100%;
             color: #2f7cf7;
@@ -221,10 +221,10 @@
             text-align: center;
             font-family: YouSheBiaoTiHei;
           }
-  
+
           form {
             margin: 6px 0;
-  
+
             :deep(.q-field__native) {
               font-size: 16px;
               height: 48px;
@@ -237,7 +237,7 @@
           }
         }
       }
-  
+
       .tab2,
       .tab3 {
         .firstrow {
@@ -248,33 +248,33 @@
           padding: 20px;
           flex-wrap: wrap;
           gap: 20px;
-  
+
           .date {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 15px;
             color: #87898a;
-  
+
             :deep(.q-field__append) {
               padding: 0;
             }
-  
+
             :deep(.q-field__native) {
               width: 100px;
               padding: 0;
             }
-  
+
             :deep(.q-field__control),
             :deep(.q-field__marginal) {
               height: 30px;
             }
           }
-  
+
           :deep(.q-toggle__label) {
             color: #87898a;
           }
-  
+
           .retrieve-btn {
             height: 30px;
             line-height: 30px;
@@ -286,21 +286,21 @@
             margin-left: auto;
           }
         }
-  
+
         :deep(.q-table th) {
           background: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
           color: white;
         }
-  
+
         :deep(.q-table td) {
           text-wrap: wrap;
         }
-  
+
         :deep(.q-table__bottom--nodata) {
           margin: 0 auto;
         }
       }
-  
+
       .common-btn {
         color: white;
         height: 50px;
@@ -315,27 +315,27 @@
       }
     }
   }
-  
+
   .img-liner {
     margin-bottom: 20px;
-  
+
     img {
       display: block;
       width: 100%;
     }
   }
-  
+
   .text-center {
     text-align: center;
   }
-  
+
   .container-hint {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     gap: 8px;
   }
-  
+
   .hint-wrapper {
     text-align: center;
     // background-image: url("../../../assets/images/promotion/hotpromo/asiacup2024/active-tab.png");
@@ -351,20 +351,20 @@
     justify-content: center;
     color: #fff;
     border-radius: 16px;
-  
+
     .hint-title {
       font-size: 18px;
       color: #fff;
     }
   }
-  
+
   .click-btn {
     transition: 0.3s all;
     &:hover {
       filter: brightness(1.5);
     }
   }
-  
+
   .claim-btn {
     border-radius: 100px;
     background: linear-gradient(180deg, #2ca1fe 0%, #c481fe 100%);
@@ -374,10 +374,9 @@
     font-size: 16px;
     height: 40px;
   }
-  
+
   table.promo-table th {
     background: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039) !important;
     color: white !important;
   }
   </style>
-  
