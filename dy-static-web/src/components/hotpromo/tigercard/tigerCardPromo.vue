@@ -74,6 +74,29 @@
         </div>
       </div>
     </div>
+
+    <div class="bottom-content">
+      <p class="text-center">
+        <img :src="require(`../../../assets/images/promotion/title_event_content.png`)" />
+      </p>
+      <p>活动时间:</p>
+
+      <table class="promo-table" v-if="cardInfo.cardDetail.setting">
+        <tbody>
+          <tr>
+            <td>期数</td>
+            <td>集卡时间</td>
+            <td>开奖时间</td>
+          </tr>
+          <tr>
+            <td>{{ cardInfo.cardDetail.setting.periodStr }}</td>
+            <td>{{ cardInfo.cardDetail.setting.lotteryStr }}</td>
+            <td>{{ cardInfo.cardDetail.setting.openStr }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <el-dialog align-center v-model="isGiftModal" title="赠送虎卡" width="500">
       <el-form :rules="sendRules" ref="hukaFormRef" style="padding: 20px" :model="form">
         <el-form-item prop="type" label="虎卡" :label-width="formLabelWidth">
@@ -657,5 +680,34 @@ body {
 .huka-ranking-pagination .next-page,
 .huka-ranking-pagination .prev-page {
   cursor: pointer;
+}
+
+.bottom-content {
+  margin: 60px auto 0;
+  max-width: 1300px;
+  width: 95%;
+  text-align: left;
+  padding: 0 20px;
+  overflow: auto;
+}
+
+.text-center {
+  text-align: center;
+}
+
+table.promo-table {
+  margin: 10px auto;
+  min-width: 80%;
+  text-align: center;
+  border-collapse: collapse;
+  tr:first-child td {
+    background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
+    color: #ffffff;
+    border: 0;
+  }
+  td {
+    border: 1px solid #dcdce8;
+    padding: 10px;
+  }
 }
 </style>
