@@ -134,7 +134,11 @@
       <el-table-column prop="siteName" :label="t('fields.site')" width="120" />
       <el-table-column prop="loginName" :label="t('fields.loginName')" width="150" />
       <el-table-column prop="vipName" :label="t('fields.vipLevel')" width="120" />
-      <el-table-column prop="matchTitle" :label="t('fields.matchTitle')" width="280" />
+      <el-table-column prop="matchTitle" :label="t('fields.matchTitle')" width="280">
+        <template #default="scope">
+          <span>{{ scope.row.matchTitle + ' ' + scope.row.teamOne + ' vs ' + scope.row.teamTwo }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="gameType" :label="t('fields.gameType')" width="140">
         <template #default="scope">
           <span>{{ t('gameType.' + scope.row.gameType) }}</span>

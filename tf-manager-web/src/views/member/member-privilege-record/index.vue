@@ -81,6 +81,14 @@
         >
           {{ t('fields.massImport') }}
         </el-button>
+        <el-button
+          icon="el-icon-download"
+          size="mini"
+          type="warning"
+          v-permission="['sys:member-privilege:export']"
+          @click="exportExcel"
+        >{{ t('fields.exportToExcel') }}
+        </el-button>
       </div>
     </div>
 
@@ -346,6 +354,10 @@ const siteList = reactive({
   list: [],
 })
 const selectedPrivilege = ref(null);
+const exportPercentage = ref(0);
+
+const EXPORT_HEADER = [t('fields.loginName'), t('fields.privilegeName'), t('fields.alias'), t('fields.amount'),
+  t('fields.recordTime'), t('fields.privilegeType'), t('fields.privilegeSerialNo'), t('fields.depositSerialNo')];
 
 const EXPORT_MEMBER_PRIVILEGE_LIST_HEADER = [
   'Login Name',
@@ -369,7 +381,8 @@ const uiControl = reactive({
   dialogTitle: t('fields.distributePrivilege'),
   dialogVisible: false,
   dialogType: "DISTRIBUTE",
-  promoAmountInput: true
+  promoAmountInput: true,
+  progressBarVisible: false
 });
 
 const page = reactive({
@@ -441,8 +454,7 @@ function resetQuery() {
   request.siteId = site.value ? site.value.id : siteList.list[0].id
 }
 
-async function loadPrivilegeRecord() {
-  page.loading = true
+function checkQuery() {
   const requestCopy = { ...request }
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
@@ -459,7 +471,12 @@ async function loadPrivilegeRecord() {
       query.recordTime = query.recordTime.join(',')
     }
   }
+  return query;
+}
 
+async function loadPrivilegeRecord() {
+  page.loading = true
+  const query = checkQuery()
   const { data: ret } = await getPrivilegeRecord(query)
 
   page.pages = ret.pages
@@ -744,6 +761,43 @@ async function confirmImport() {
   ElMessage({ message: t('message.importSuccess'), type: 'success' });
   clearImport();
   loadPrivilegeRecord();
+}
+
+async function exportExcel() {
+  uiControl.progressBarVisible = true;
+  const query = checkQuery();
+  query.current = 1;
+  const { data: ret } = await getPrivilegeRecord(query);
+  const exportData = [EXPORT_HEADER];
+  const maxLength = [];
+
+  pushRecordToData(ret.records, exportData);
+  exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
+  query.current = ret.current;
+
+  while (query.current < ret.pages) {
+    query.current += 1;
+    const { data: ret } = await getPrivilegeRecord(query);
+    pushRecordToData(ret.records, exportData);
+    exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
+  }
+  const ws = XLSX.utils.aoa_to_sheet(exportData);
+  exportData.map(data => {
+    Object.keys(data).map(key => {
+      const value = data[key];
+
+      maxLength[key] = typeof value === 'number'
+        ? (maxLength[key] >= 10 ? maxLength[key] : 10)
+        : (maxLength[key] >= value.length + 2 ? maxLength[key] : value.length + 2);
+    });
+  });
+  const wsCols = maxLength.map(w => { return { width: w } });
+  ws['!cols'] = wsCols;
+  const wb = XLSX.utils.book_new();
+  wb.SheetNames.push('Member_Privilege_Record');
+  wb.Sheets.Member_Privilege_Record = ws;
+  XLSX.writeFile(wb, "member_privilege_record.xlsx");
+  exportPercentage.value = 100;
 }
 
 onMounted(async () => {
