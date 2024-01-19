@@ -7,7 +7,7 @@
     <q-dialog v-model="insuranceFormModal" persistent>
       <q-card class="insurance-card">
         <q-card-section class="q-mb-md row justify-center">
-          <div class="text-h6">保险</div>
+          <div class="text-h6">{{ props.platformType == "ESPORT" ? "电竞保险" : "体育保险" }}</div>
         </q-card-section>
 
         <q-card-section class="row items-center">
