@@ -32,3 +32,7 @@ export const getDevices = () => {
 export const createBatchGame = (games) => {
   return https(5 * 60 * 1000).request("/game/createBatch", Method.POST, { platformGames: JSON.stringify(games) }, ContentType.form);
 };
+
+export const getExport = (data) => {
+  return https().request("/game/gameExport", Method.GET, data, ContentType.form);
+};
