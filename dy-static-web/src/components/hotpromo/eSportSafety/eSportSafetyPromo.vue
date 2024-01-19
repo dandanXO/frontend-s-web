@@ -104,11 +104,36 @@
             <el-input v-model="eSportInsuranceFormData.transactionId" minlength="9" maxlength="25" />
           </el-form-item>
 
+          <el-button
+            :loading="loadingBtn"
+            size="large"
+            @click="loadESportInsuranceRecords(matchDetails[0].gameType)"
+            class="common-btn second"
+          >
+            申请记录
+          </el-button>
+
           <el-button :loading="loadingBtn" size="large" @click="submitForm(eSportInsuranceFormRef)" class="common-btn">
             确定
           </el-button>
         </el-form>
       </div>
+    </el-dialog>
+
+    <el-dialog v-model="insuranceRecordsModalVisible" title="电竞场馆申请记录" width="80%" center align-center>
+      <el-table :data="insuranceRecords" stripe style="width: 100%">
+        <el-table-column prop="loginName" label="账号" />
+        <el-table-column prop="transactionId" label="注单号" />
+        <el-table-column prop="createTime" label="申请时间" width="200px" />
+        <el-table-column prop="status" label="状态" />
+        <el-table-column prop="id" label="备注" />
+      </el-table>
+
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button type="primary" @click="insuranceRecordsModalVisible = false">确认</el-button>
+        </span>
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -123,7 +148,8 @@ import { userStore } from "@/store";
 import {
   getUpcomingESportMatches,
   getESportInsurancePlatformOptions,
-  submitESportInsuranceForm
+  submitESportInsuranceForm,
+  getESportInsuranceRecords
 } from "@/api/promotion/eSportSafety";
 import { getLoggedInPlatformList } from "@/api/platform/platform";
 
@@ -277,6 +303,18 @@ const getPlatList = () => {
   getLoggedInPlatformList().then((res) => {
     platformsList.value = res;
     platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("ESPORT"));
+  });
+};
+
+// get Insurance Records
+const insuranceRecords = ref([]);
+const insuranceRecordsModalVisible = ref(false);
+const loadESportInsuranceRecords = (gameType) => {
+  getESportInsuranceRecords(gameType).then((res) => {
+    isESportInsuranceModalVisible.value = false;
+    insuranceRecordsModalVisible.value = true;
+    insuranceRecords.value = res.data.records;
+    // console.log("RES", res);
   });
 };
 
