@@ -148,6 +148,13 @@ const nbaInsuranceFormRef = ref();
 const isSubmitting = ref(false);
 
 const nbaInsuranceFormValidationRules = {
+  gameMatchId: [
+    {
+      required: true,
+      message: "游戏比赛不能为空",
+      trigger: "blur"
+    }
+  ],
   transactionId: [
     {
       required: true,
