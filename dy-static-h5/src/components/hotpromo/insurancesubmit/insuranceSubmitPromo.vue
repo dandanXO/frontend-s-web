@@ -76,6 +76,7 @@
               :loading="tableData.loading"
               :columns="columns"
               :rows="rankingRecord()"
+              rows-per-page-label="每页数"
               square
             ></q-table>
           </div>
@@ -107,6 +108,10 @@ const insuranceInfo = reactive({
   accountId: "",
   transactionId: "",
   gameMatchId: ""
+});
+const pagination = reactive({
+  rowsPerPage: 1,
+  page: 0
 });
 const tableData = reactive({
   current: 1,
@@ -190,10 +195,7 @@ const openRecordModal = () => {
 };
 
 const rankingRecord = () => {
-  return tableData.records.filter(
-    (item, index) =>
-      index < tableData.current * tableData.pageSize && index >= tableData.pageSize * (tableData.current - 1)
-  );
+  return tableData.records;
 };
 
 const getPlatformDetails = () => {
