@@ -198,7 +198,6 @@
             format="YYYY-MM-DD HH:mm:ss"
             value-format="YYYY-MM-DD HH:mm:ss"
             v-model="form.matchTime"
-            :disabled-date="disabledStartDate"
             style="width: 350px;"
           />
         </el-form-item>
@@ -208,7 +207,6 @@
             format="YYYY-MM-DD HH:mm:ss"
             value-format="YYYY-MM-DD HH:mm:ss"
             v-model="form.startTime"
-            :disabled-date="disabledStartDate"
             style="width: 350px;"
           />
         </el-form-item>
@@ -218,7 +216,6 @@
             format="YYYY-MM-DD HH:mm:ss"
             value-format="YYYY-MM-DD HH:mm:ss"
             v-model="form.endTime"
-            :disabled-date="disabledStartDate"
             style="width: 350px;"
           />
         </el-form-item>
@@ -652,10 +649,6 @@ function convertDate(date) {
 
 function convertStartDate(date) {
   return moment(date).startOf('day').format('YYYY-MM-DD HH:mm:ss');
-}
-
-function disabledStartDate(time) {
-  return time.getTime() <= moment(new Date()).subtract(1, 'days').endOf('day').format('x');
 }
 
 const request = reactive({

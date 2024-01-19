@@ -193,7 +193,6 @@
             format="YYYY-MM-DD HH:mm:ss"
             value-format="YYYY-MM-DD HH:mm:ss"
             v-model="form.matchTime"
-            :disabled-date="disabledStartDate"
             style="width: 350px;"
           />
         </el-form-item>
@@ -432,10 +431,6 @@ const selectedId = ref(null);
 
 function convertDate(date) {
   return moment(date).endOf('day').format('YYYY-MM-DD');
-}
-
-function disabledStartDate(time) {
-  return time.getTime() <= moment(new Date()).subtract(1, 'days').endOf('day').format('x');
 }
 
 const request = reactive({
