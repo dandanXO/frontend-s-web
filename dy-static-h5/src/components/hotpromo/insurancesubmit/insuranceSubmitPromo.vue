@@ -43,7 +43,7 @@
               color="dyblue"
               :rules="[
                 (v) => !!v || '请输入注单号',
-                (val) => (val && val.length > 9 && val.length < 25) || '注单号必须为9到25位'
+                (val) => (val && val.length > 8 && val.length < 26) || '注单号必须为9到25位'
               ]"
             />
           </q-form>
