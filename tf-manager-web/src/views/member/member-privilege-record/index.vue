@@ -313,6 +313,24 @@
       <el-button @click="clearImport(); uiControl.dialogVisible = false;">{{ t('fields.cancel') }}</el-button>
     </div>
   </el-dialog>
+  <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.progressBarVisible" append-to-body width="500px"
+             :close-on-click-modal="false" :close-on-press-escape="false"
+  >
+    <el-progress :text-inside="true" :stroke-width="26" :percentage="exportPercentage"
+                 :color="uiControl.colors" v-if="exportPercentage !== 100"
+    />
+    <el-result
+      icon="success"
+      :title="t('fields.successfullyExport')"
+      v-if="exportPercentage === 100"
+    />
+    <div class="dialog-footer">
+      <el-button type="primary" :disabled="exportPercentage !== 100"
+                 @click="uiControl.progressBarVisible = false"
+      >{{ t('fields.done') }}
+      </el-button>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup>
