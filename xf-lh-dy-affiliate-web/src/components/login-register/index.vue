@@ -638,13 +638,7 @@ export default defineComponent({
         state.coordinates.splice(0)
       },
       onSuccess: async () => {
-        state.resultDisplay = 'flex'
-        var image = document.getElementById('imageRef')
-        state.imageOffSetWidth = image.offsetWidth
-        state.imageOffSetHeight = image.offsetHeight
-        state.dialogLoading = false
-        image.style.opacity = '0.1'
-        setTimeout(() => {
+        if (state.loginForm.site === 'IND') {
           router
             .push({
               path: state.redirect || '/',
@@ -653,7 +647,24 @@ export default defineComponent({
             .catch(err => {
               console.warn(err)
             })
-        }, 500)
+        } else {
+          state.resultDisplay = 'flex'
+          var image = document.getElementById('imageRef')
+          state.imageOffSetWidth = image.offsetWidth
+          state.imageOffSetHeight = image.offsetHeight
+          state.dialogLoading = false
+          image.style.opacity = '0.1'
+          setTimeout(() => {
+            router
+              .push({
+                path: state.redirect || '/',
+                query: state.otherQuery,
+              })
+              .catch(err => {
+                console.warn(err)
+              })
+          }, 500)
+        }
       },
       onClickImage: e => {
         if (state.coordinates.length < 5) {
