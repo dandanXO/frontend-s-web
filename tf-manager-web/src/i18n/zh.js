@@ -802,6 +802,7 @@ export default {
     last30Min: '最近30分钟',
     last1Hour: '最近1小时',
     lastWeek: '上周',
+    latestFetchBetRecordTime: '最近抓取投注记录时间',
     level: '级别',
     levelUpCredit: '升级金额',
     limitNumber: '限量',

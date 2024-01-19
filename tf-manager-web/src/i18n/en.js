@@ -796,6 +796,7 @@ export default {
     last30Min: 'Last 30 Minutes',
     last1Hour: 'Last 1 Hour',
     lastWeek: 'Last Week',
+    latestFetchBetRecordTime: 'Latest Fetch Bet Record Time',
     level: 'Level',
     levelUpCredit: 'Level Up Credit',
     limitNumber: 'Limit Number',
