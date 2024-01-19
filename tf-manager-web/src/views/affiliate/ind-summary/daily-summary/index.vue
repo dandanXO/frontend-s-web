@@ -595,7 +595,7 @@ function getSummaries(param) {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
             })
-        } else if (index === 15) {
+        } else if (index === 14) {
           sums[index] =
             '$' +
             parseFloat(
