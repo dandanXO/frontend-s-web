@@ -28,7 +28,6 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 280px; margin-left: 10px;"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
         />
@@ -278,10 +277,6 @@ const shortcuts = getShortcuts(t);
 
 function convertDate(date) {
   return moment(date).endOf('day').format('YYYY-MM-DD');
-}
-
-function disabledDate(time) {
-  return time.getTime() > new Date().getTime();
 }
 
 const request = reactive({
