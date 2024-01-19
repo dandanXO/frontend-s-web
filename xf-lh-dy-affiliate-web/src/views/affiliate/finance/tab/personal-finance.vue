@@ -110,7 +110,7 @@
       </div>
       <div class="grid-item">
         <div class="grid-item-label">
-          <span>{{ t('fields.winLoss') }}</span>
+          <span>{{ t('fields.netProfit') }}</span>
         </div>
         <div class="grid-item-value">
           {{ data.netWinLoss }}
