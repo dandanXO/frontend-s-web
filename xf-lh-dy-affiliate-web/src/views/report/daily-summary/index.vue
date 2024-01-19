@@ -37,7 +37,6 @@
 
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <el-table
-        height="600"
         size="small"
         :resizable="true"
         :data="page.records"
