@@ -51,7 +51,7 @@
 
         <q-card-actions align="center">
           <div class="flex flex-center">
-            <q-btn class="q-mr-md" label="申请记录" color="dyblue" size="large" @click="openRecordModal" />
+            <q-btn label="申请记录" color="dyblue" class="common-btn" @click="openRecordModal" />
           </div>
         </q-card-actions>
 
@@ -65,12 +65,19 @@
     </q-dialog>
 
     <q-dialog v-model="isRecordModal">
-      <q-card class="">
-        <q-card-section class="q-mb-md row justify-center">
-          <div class="text-h6">申请记录</div>
+      <q-card class="insurance-dialog">
+        <q-card-section class="modal-record-div q-mb-md column justify-center">
+          <div class="h6-div">申请记录</div>
 
           <div class="record-container">
-            <q-table :loading="tableData.loading" :columns="columns" :rows="rankingRecord()" square></q-table>
+            <q-table
+              class="record-insurance-table"
+              :grid="$q.screen.lt.sm"
+              :loading="tableData.loading"
+              :columns="columns"
+              :rows="rankingRecord()"
+              square
+            ></q-table>
           </div>
         </q-card-section>
       </q-card>
@@ -103,7 +110,7 @@ const insuranceInfo = reactive({
 });
 const tableData = reactive({
   current: 1,
-  pageSize: 5,
+  pageSize: 3,
   pages: 1,
   total: 0,
   records: [],
@@ -195,7 +202,7 @@ const getPlatformDetails = () => {
     .then((res) => {
       if (res.code === 0) {
         platformDetails.value = res.data;
-
+        gameOptions.value = [];
         platformDetails.value.forEach((match) => {
           const obj = {
             id: match.id,
@@ -295,7 +302,30 @@ onMounted(() => {
     margin-bottom: 20px;
   }
 }
+
+.insurance-dialog {
+  margin: 10px;
+  width: calc(100% - 20px);
+  max-width: 500px;
+
+  .h6-div {
+    background: linear-gradient(0deg, #4fb2ff 0, #6daddf 100%), linear-gradient(#d0d1d3, #d0d1d3);
+    width: calc(100%);
+    text-align: center;
+    line-height: 30px;
+    font-size: 16px;
+  }
+
+  .record-container {
+    width: 100%;
+  }
+}
+
 .insurance-card .q-form {
   margin-bottom: 0px;
+}
+
+.modal-record-div {
+  align-items: center;
 }
 </style>
