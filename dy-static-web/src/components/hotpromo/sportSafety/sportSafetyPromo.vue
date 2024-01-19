@@ -86,8 +86,8 @@
 
           <el-form-item prop="gameMatchId" name="gameMatchId" label="游戏比赛: ">
             <el-select v-model="sportInsuranceFormData.gameMatchId" placeholder="游戏比赛" clearable>
-              <el-option v-for="item in matchDetails" :key="item.value" :value="item.id" :label="item.matchTitle">
-                {{ item.matchTitle }}
+              <el-option v-for="item in matchDetails" :key="item.value" :value="item.id" :label="`${item.matchTitle} -${item.teamOne} vs ${item.teamTwo}`">
+                {{ `${item.matchTitle} -${item.teamOne} vs ${item.teamTwo}` }}
               </el-option>
             </el-select>
           </el-form-item>
@@ -107,7 +107,7 @@
           <el-button
             :loading="loadingBtn"
             size="large"
-            @click="loadESportInsuranceRecords(insuranceRecordsParam)"
+            @click="loadSportInsuranceRecords(insuranceRecordsParam)"
             class="common-btn second"
           >
             申请记录
@@ -261,9 +261,9 @@ const onSlideChange = (slide) => {
 const init = () => {
   getUpcomingSportMatches()
     .then((res) => {
-      console.log("RES", res);
       if (res.code === 0 && res.data) {
         matchDetails.value = Array.isArray(res.data) ? res.data : [res.data];
+        insuranceRecordsParam.gameType = matchDetails.value[0].gameType;
       }
     })
     .catch((err) => {
