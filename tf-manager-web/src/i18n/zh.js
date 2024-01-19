@@ -3,6 +3,10 @@ export default {
     title: 'TF仪表板',
     logout: '登出',
     changePassword: '更换密码',
+    status: {
+      OPEN: '开启',
+      CLOSE: '关闭'
+    }
   },
   affiliate: {
     commissionModel: {

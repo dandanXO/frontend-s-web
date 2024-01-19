@@ -3,6 +3,10 @@ export default {
     title: 'TF Dashboard',
     logout: 'Logout',
     changePassword: 'Change Password',
+    status: {
+      OPEN: 'Open',
+      CLOSE: 'Close'
+    }
   },
   affiliate: {
     commissionModel: {
