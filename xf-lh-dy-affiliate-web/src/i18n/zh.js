@@ -416,7 +416,9 @@ export default {
     indBonusAmount: '奖励金额',
     indRebateAmount: '返点金额',
     indAdjustAmount: '资金修正金额',
-    grossProfit: '毛利润'
+    grossProfit: '毛利润',
+    totalBetMemberCount: '总下注人数',
+    totalDepositMemberCount: '总充值人数',
   },
   message: {
     addSuccess: '新增成功',

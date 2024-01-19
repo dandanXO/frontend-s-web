@@ -419,7 +419,9 @@ export default {
     indBonusAmount: 'Bonus Amount',
     indRebateAmount: 'Rebate Amount',
     indAdjustAmount: 'Adjust Amount',
-    grossProfit: 'Gross Profit'
+    grossProfit: 'Gross Profit',
+    totalBetMemberCount: 'Total Member Bet Count',
+    totalDepositMemberCount: 'Total Member Deposit Count',
   },
   message: {
     adjustSuccess: 'Adjust Success',
