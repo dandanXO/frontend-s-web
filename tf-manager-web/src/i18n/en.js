@@ -1896,6 +1896,7 @@ export default {
     'Site Platform Management': 'Site Platform Management',
     'Game Match': 'Game Match',
     'Game Quiz': 'Game Quiz',
+    'Member Rebate': 'Member Rebate',
     Permission: 'Permission',
     Menu: 'Menu',
     Roles: 'Roles',

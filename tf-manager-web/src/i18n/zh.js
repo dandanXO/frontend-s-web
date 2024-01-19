@@ -1871,6 +1871,7 @@ export default {
     'Site Platform Management': '平台站点管理',
     'Game Match': '电竞体育保险投注',
     'Game Quiz': '全民竞猜',
+    'Member Rebate': '会员返水',
     Permission: '权限',
     Menu: '菜单',
     Roles: '角色',
