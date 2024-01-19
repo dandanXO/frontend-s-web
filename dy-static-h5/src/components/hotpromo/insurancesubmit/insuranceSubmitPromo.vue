@@ -208,7 +208,10 @@ const getPlatformDetails = () => {
         platformDetails.value.forEach((match) => {
           const obj = {
             id: match.id,
-            label: match.matchTitle
+            matchTitle: match.matchTitle,
+            teamOne: match.teamOne,
+            teamTwo: match.teamTwo,
+            label: `${match.matchTitle} - (${match.teamOne} vs ${match.teamTwo})`,
           };
           gameOptions.value.push(obj);
         });

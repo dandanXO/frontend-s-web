@@ -3,7 +3,7 @@
     <swiper
       :slides-per-view="matchDetails.length > 1 ? 2 : 1"
       :spaceBetween="20"
-      :loop="true"
+      :loop="false"
       @swiper="onSwiper"
       @slideChange="onSlideChange"
       class="swiper-wrapper"
@@ -86,8 +86,13 @@
 
           <el-form-item prop="gameMatchId" name="gameMatchId" label="游戏比赛: ">
             <el-select v-model="sportInsuranceFormData.gameMatchId" placeholder="游戏比赛" clearable>
-              <el-option v-for="item in matchDetails" :key="item.value" :value="item.id" :label="item.matchTitle">
-                {{ item.matchTitle }}
+              <el-option
+                v-for="item in matchDetails"
+                :key="item.value"
+                :value="item.id"
+                :label="`${item.matchTitle} - (${item.teamOne} vs ${item.teamTwo})`"
+              >
+                {{ `${item.matchTitle} - (${item.teamOne} vs ${item.teamTwo})` }}
               </el-option>
             </el-select>
           </el-form-item>
@@ -107,7 +112,7 @@
           <el-button
             :loading="loadingBtn"
             size="large"
-            @click="loadESportInsuranceRecords(insuranceRecordsParam)"
+            @click="loadSportInsuranceRecords(insuranceRecordsParam)"
             class="common-btn second"
           >
             申请记录
@@ -120,7 +125,7 @@
       </div>
     </el-dialog>
 
-    <el-dialog v-model="insuranceRecordsModalVisible" title="体育场馆申请记录" width="80%" center align-center>
+    <el-dialog v-model="insuranceRecordsModalVisible" title="体育场馆申请记录" width="800px" center align-center>
       <el-table :data="insuranceRecords" stripe style="width: 100%">
         <el-table-column prop="loginName" label="账号" />
         <el-table-column prop="transactionId" label="注单号" />
@@ -261,9 +266,9 @@ const onSlideChange = (slide) => {
 const init = () => {
   getUpcomingSportMatches()
     .then((res) => {
-      console.log("RES", res);
       if (res.code === 0 && res.data) {
         matchDetails.value = Array.isArray(res.data) ? res.data : [res.data];
+        insuranceRecordsParam.gameType = matchDetails.value[0].gameType;
       }
     })
     .catch((err) => {
