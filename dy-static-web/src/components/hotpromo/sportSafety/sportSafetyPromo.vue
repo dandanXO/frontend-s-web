@@ -107,7 +107,7 @@
           <el-button
             :loading="loadingBtn"
             size="large"
-            @click="loadSportInsuranceRecords(matchDetails[0].gameType)"
+            @click="loadESportInsuranceRecords(insuranceRecordsParam)"
             class="common-btn second"
           >
             申请记录
@@ -126,8 +126,22 @@
         <el-table-column prop="transactionId" label="注单号" />
         <el-table-column prop="createTime" label="申请时间" width="200px" />
         <el-table-column prop="status" label="状态" />
-        <el-table-column prop="id" label="备注" />
+        <el-table-column prop="remark" label="备注" />
       </el-table>
+
+      <template v-if="insuranceRecordsParam.total > insuranceRecordsParam.size">
+        <div class="record-pagination">
+          <el-icon @click="recordPageControl('left')">
+            <ArrowLeft />
+          </el-icon>
+
+          <span>{{ insuranceRecordsParam.current }} / {{ insuranceRecordsParam.maxPage }}</span>
+
+          <el-icon @click="recordPageControl('right')">
+            <ArrowRight />
+          </el-icon>
+        </div>
+      </template>
 
       <template #footer>
         <span class="dialog-footer">
@@ -152,6 +166,8 @@ import {
   getSportInsuranceRecords
 } from "@/api/promotion/sportSafety";
 import { getLoggedInPlatformList } from "@/api/platform/platform";
+
+import { ArrowRight, ArrowLeft } from "@element-plus/icons-vue";
 
 const store = userStore();
 const matchDetails = ref([]);
@@ -309,17 +325,48 @@ const getPlatList = () => {
 };
 
 // get Insurance Records
+const insuranceRecordsParam = reactive({
+  gameType: "",
+  size: 5,
+  current: 1,
+  total: 0,
+  maxPage: 0
+});
+
 const insuranceRecords = ref([]);
 const insuranceRecordsModalVisible = ref(false);
-const loadSportInsuranceRecords = (gameType) => {
-  getSportInsuranceRecords(gameType).then((res) => {
+const loadSportInsuranceRecords = (param) => {
+  getSportInsuranceRecords(param).then((res) => {
     isSportInsuranceModalVisible.value = false;
     insuranceRecordsModalVisible.value = true;
     insuranceRecords.value = res.data.records;
-    // console.log("RES", res);
+
+    insuranceRecordsParam.gameType = res.data.records[0].gameType;
+    insuranceRecordsParam.records = res.data.records;
+    insuranceRecordsParam.current = res.data.current;
+    insuranceRecordsParam.total = res.data.total;
+    insuranceRecordsParam.maxPage = Math.ceil(insuranceRecordsParam.total / insuranceRecordsParam.size);
   });
 };
 
+const recordPageControl = (direction) => {
+  if (direction === "left") {
+    if (insuranceRecordsParam.current > 1) {
+      insuranceRecordsParam.current--;
+      loadSportInsuranceRecords(insuranceRecordsParam);
+    } else {
+      ElMessage.error("已经是第一页了");
+    }
+  } else {
+    let maxPage = insuranceRecordsParam.maxPage;
+    if (maxPage === insuranceRecordsParam.current) {
+      ElMessage.error("这是最后一页了");
+    } else {
+      insuranceRecordsParam.current++;
+      loadSportInsuranceRecords(insuranceRecordsParam);
+    }
+  }
+};
 onMounted(() => {
   init();
   getPlatList();

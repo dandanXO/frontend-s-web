@@ -12,6 +12,6 @@ export function submitSportInsuranceForm(params) {
   return server.EVENT.post("/game-match/submit", params);
 }
 
-export function getSportInsuranceRecords(gameType) {
-  return server.EVENT.get(`/game-match/records/${gameType}`);
+export function getESportInsuranceRecords(params) {
+  return server.EVENT.get(`/game-match/records/${params.gameType}?size=${params.size}&current=${params.current}`);
 }
