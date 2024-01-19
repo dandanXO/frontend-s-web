@@ -576,8 +576,12 @@ export default defineComponent({
       handleLogin: () => {
         loginFormRef.value.validate(async valid => {
           if (valid) {
-            methods.onGetImage()
-            state.showDialog = true
+            if (state.loginForm.site === 'IND') {
+              methods.userLogin()
+            } else {
+              methods.onGetImage()
+              state.showDialog = true
+            }
           }
         })
       },
