@@ -115,7 +115,7 @@ const onClaimBtnClicked = () => {
     return;
   }
 
-  const param = { promoCode: "", promoTitle: "" };
+  const param = { promoCode: "", promoTitle: "", gameType: "" };
   param.promoCode = "basketball-hot";
   param.promoTitle = "热血迎蓝";
   param.gameType = "NBA";
