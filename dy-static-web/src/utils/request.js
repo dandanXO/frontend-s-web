@@ -10,22 +10,33 @@ const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
 const crArray = process.env.VUE_APP_CR_API.split(",");
 
-var rstApi = getInitApi(rstArray, "DY_WEB_RST_URL");
-var crtApi = getInitApi(crArray, "DY_WEB_CRT_URL");
-var evtApi = getInitApi(evtArray, "DY_WEB_EVT_URL");
+const isGlobalDY = window.location.hostname.indexOf("dy988") > -1;
+
+if (isGlobalDY) {
+  var rstApi = "https://apc2ttgdgl.grsib6dfily.com";
+  var evtApi = "https://pr5z5egdgl.grsib6dfily.com";
+  var crtApi = "https://cad5kegdgl.grsib6dfily.com";
+} else {
+  var rstApi = getInitApi(rstArray, "DY_WEB_RST_URL");
+  var crtApi = getInitApi(crArray, "DY_WEB_CRT_URL");
+  var evtApi = getInitApi(evtArray, "DY_WEB_EVT_URL");
+}
 
 function getInitApi(apiLinks, urlLsName) {
   var successRstUrl = localStorage.getItem(urlLsName);
   if (successRstUrl) {
-    axios.get(successRstUrl + "/ping").then((res) => {
-      console.log(res);
-      if (res.status !== 200) {
+    axios
+      .get(successRstUrl + "/ping")
+      .then((res) => {
+        console.log(res);
+        if (res.status !== 200) {
+          localStorage.removeItem(urlLsName);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
         localStorage.removeItem(urlLsName);
-      }
-    }).catch((err) => {
-      console.log(err);
-      localStorage.removeItem(urlLsName);
-    });
+      });
 
     return successRstUrl;
   } else {
@@ -48,7 +59,6 @@ function getInitApi(apiLinks, urlLsName) {
     return initApi;
   }
 }
-
 
 const onRequest = (config) => {
   const store = userStore();

@@ -8,13 +8,21 @@ import i18n from "../i18n/index";
 import axios from "axios";
 import { getRndInteger } from "boot/utils";
 
+const isGlobalDY = window.location.hostname.indexOf("dy988") > -1;
+
 const rstArray = process.env.RST_API;
 const crArray = process.env.CR_API;
 const evtArray = process.env.EVT_API;
 
-var rstApi = getInitApi(rstArray, "DY_H5_RST_URL");
-var crtApi = getInitApi(crArray, "DY_H5_CRT_URL");
-var evtApi = getInitApi(evtArray, "DY_H5_EVT_URL");
+if (isGlobalDY) {
+  var rstApi = "https://apc2ttgdgl.grsib6dfily.com";
+  var evtApi = "https://pr5z5egdgl.grsib6dfily.com";
+  var crtApi = "https://cad5kegdgl.grsib6dfily.com";
+} else {
+  var rstApi = getInitApi(rstArray, "DY_H5_RST_URL");
+  var crtApi = getInitApi(crArray, "DY_H5_CRT_URL");
+  var evtApi = getInitApi(evtArray, "DY_H5_EVT_URL");
+}
 
 const api = axios.create({ baseURL: rstApi });
 const cashier = axios.create({ baseURL: crtApi });

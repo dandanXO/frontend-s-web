@@ -546,6 +546,7 @@ async function pDepo(deposit) {
           btnLoading.value = false;
         } else {
           if (
+            !extensionState.value &&
             (Platform.is.desktop || Platform.is.webkit) &&
             !Platform.is.capacitor &&
             Platform.is.name !== "webkit" &&
