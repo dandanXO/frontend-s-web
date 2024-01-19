@@ -37,9 +37,9 @@
           </div>
         </div>
         <div v-if="!store.token" class="right-contents">
-          <a class="common-btn grey" @click="loginDialogVisible = true">登录</a>
-          <a class="common-btn" @click="registerDialogVisible = true">开设账户</a>
-          <a class="common-link" @click="forgetPassDialogVisible = true">忘记账号？</a>
+          <a class="common-btn grey" @click="openLoginDialog">登录</a>
+          <a class="common-btn" @click="openRegisterDialog">开设账户</a>
+          <a class="common-link" @click="openForgotDialog">忘记账号？</a>
         </div>
         <div class="details" v-if="store.token">
           <el-dropdown @command="handleCommand" trigger="click">
@@ -623,13 +623,13 @@
 <script lang="js">
 
 import "vue3-carousel/dist/carousel.css";
-import {defineComponent, onMounted, onActivated, ref, reactive, watch} from "vue";
-import {useRoute, useRouter} from "vue-router";
-import {userStore} from "@/store/index";
-import {getVerificationCode, register, findAccount} from "@/api/index/login";
-import {sendSms, getAnnouncement} from "@/api/personal/personal";
-import {ElMessage} from "element-plus";
-import {Vue3Marquee} from 'vue3-marquee';
+import { defineComponent, onMounted, onActivated, ref, reactive, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { userStore } from "@/store/index";
+import { getVerificationCode, register, findAccount } from "@/api/index/login";
+import { sendSms, getAnnouncement } from "@/api/personal/personal";
+import { ElMessage } from "element-plus";
+import { Vue3Marquee } from "vue3-marquee";
 import {
   RiVolumeUpFill,
   RiAccountCircleLine,
@@ -644,24 +644,24 @@ import {
   RiVipCrownLine,
   RiSmartphoneLine,
   RiMailFill
-} from 'vue-remix-icons';
-import GameMenu from '@/components/menu/GameMenu.vue'
-import EsportsMenu from '@/components/menu/EsportsMenu.vue'
-import SportsMenu from '@/components/menu/SportsMenu.vue'
-import LiveCasinoMenu from '@/components/menu/LiveCasinoMenu.vue'
-import LotteryMenu from '@/components/menu/LotteryMenu.vue'
-import PokerMenu from '@/components/menu/PokerMenu.vue'
-import FishingMenu from '@/components/menu/FishingMenu.vue'
-import PromotionMenu from '@/components/menu/PromotionMenu.vue'
-import AppMenu from '@/components/menu/AppMenu.vue'
-import 'vue3-marquee/dist/style.css'
-import {useElementSize} from '@vueuse/core'
-import {ArrowDown, Refresh, ArrowRight, ArrowLeft} from '@element-plus/icons-vue'
-import {storeToRefs} from "pinia";
+} from "vue-remix-icons";
+import GameMenu from "@/components/menu/GameMenu.vue";
+import EsportsMenu from "@/components/menu/EsportsMenu.vue";
+import SportsMenu from "@/components/menu/SportsMenu.vue";
+import LiveCasinoMenu from "@/components/menu/LiveCasinoMenu.vue";
+import LotteryMenu from "@/components/menu/LotteryMenu.vue";
+import PokerMenu from "@/components/menu/PokerMenu.vue";
+import FishingMenu from "@/components/menu/FishingMenu.vue";
+import PromotionMenu from "@/components/menu/PromotionMenu.vue";
+import AppMenu from "@/components/menu/AppMenu.vue";
+import "vue3-marquee/dist/style.css";
+import { useElementSize } from "@vueuse/core";
+import { ArrowDown, Refresh, ArrowRight, ArrowLeft } from "@element-plus/icons-vue";
+import { storeToRefs } from "pinia";
 import GameModal from "@/components/modal/GameModal";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
-import moment from 'moment';
-import { lsGet, lsStore, lsRemove, getTimeout } from '@/utils/utils'
+import moment from "moment";
+import { lsGet, lsStore, lsRemove, getTimeout } from "@/utils/utils";
 import { getUnreadMailTotal } from "@/api/personal/mailbox";
 
 export default defineComponent({
@@ -695,44 +695,50 @@ export default defineComponent({
     RiVipCrownLine,
     RiSmartphoneLine,
     RiMailFill
-},
+  },
   data: () => ({
     // carousel settings
     navigations: [
-      {code: "Home", name: "首页", enName: "Home", path: "/home"},
-      {code: "Esports", name: "电子竞技", enName: "Esports", path: "/esports", submenu: true},
-      {code: "Sports", name: "体育", enName: "Sports", path: "/sports", submenu: true},
-      {code: "Live Casino", name: "真人", enName: "Live", path: "/live-casino", submenu: true},
-      {code: "Poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true},
-      {code: "Slots", name: "老虎机", enName: "Slots", path: "/game", submenu: true},
-      {code: "Lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true},
-      {code: "Fishing", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true},
-      {code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: true, hasicon: true},
-      {code: "Agent", name: "加盟", enName: "Affiliate", path: "https://dy2-affiliate.mndofithly.com/", hasicon: true},
-      {code: "Sponsor", name: "赞助", enName: "Sponsor", path: "/sponsor", hasicon: true},
-      {code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true},
-      {code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true},
+      { code: "Home", name: "首页", enName: "Home", path: "/home" },
+      { code: "Esports", name: "电子竞技", enName: "Esports", path: "/esports", submenu: true },
+      { code: "Sports", name: "体育", enName: "Sports", path: "/sports", submenu: true },
+      { code: "Live Casino", name: "真人", enName: "Live", path: "/live-casino", submenu: true },
+      { code: "Poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true },
+      { code: "Slots", name: "老虎机", enName: "Slots", path: "/game", submenu: true },
+      { code: "Lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true },
+      { code: "Fishing", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true },
+      { code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: true, hasicon: true },
+      {
+        code: "Agent",
+        name: "加盟",
+        enName: "Affiliate",
+        path: "https://dy2-affiliate.mndofithly.com/",
+        hasicon: true
+      },
+      { code: "Sponsor", name: "赞助", enName: "Sponsor", path: "/sponsor", hasicon: true },
+      { code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true },
+      { code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true }
     ]
   }),
   setup() {
 
     // Register
-    const registerTelephoneKey = `registerTelephoneKey`
-    const registerSendOtpDisabledKey = `registeredSendOtpDisabled`
+    const registerTelephoneKey = `registerTelephoneKey`;
+    const registerSendOtpDisabledKey = `registeredSendOtpDisabled`;
 
-    const registerSendOtpDisabledTimeout = 60
-    const registerSendOtpDisabledTimeoutLeft = getTimeout(registerSendOtpDisabledKey)
+    const registerSendOtpDisabledTimeout = 60;
+    const registerSendOtpDisabledTimeoutLeft = getTimeout(registerSendOtpDisabledKey);
 
     let cachedTelephone = lsGet(registerTelephoneKey);
-    let initialRegisterSendOtpDisabledTimeout = false
+    let initialRegisterSendOtpDisabledTimeout = false;
 
     if (registerSendOtpDisabledTimeoutLeft) {
-      initialRegisterSendOtpDisabledTimeout = true
+      initialRegisterSendOtpDisabledTimeout = true;
     } else {
-      lsRemove(registerSendOtpDisabledKey)
-      lsRemove(registerTelephoneKey)
+      lsRemove(registerSendOtpDisabledKey);
+      lsRemove(registerTelephoneKey);
 
-      cachedTelephone = '';
+      cachedTelephone = "";
     }
 
     const disableSendVerificationButton = ref(initialRegisterSendOtpDisabledTimeout);
@@ -740,28 +746,28 @@ export default defineComponent({
 
     const loadingBtn = ref(false);
     const store = userStore();
-    const {token} = storeToRefs(store);
+    const { token } = storeToRefs(store);
     const router = useRouter();
     const route = useRoute();
-    const loginDialogVisible = ref(false)
-    const registerDialogVisible = ref(false)
-    const forgetPassDialogVisible = ref(false)
-    const noticeDialogVisible = ref(false)
-    const captchaDialogVisible = ref(false)
+    const loginDialogVisible = ref(false);
+    const registerDialogVisible = ref(false);
+    const forgetPassDialogVisible = ref(false);
+    const noticeDialogVisible = ref(false);
+    const captchaDialogVisible = ref(false);
     const el = ref(null);
     const scroll = ref(0);
     const selectedMenu = ref(false);
-    const {height} = useElementSize(el);
+    const { height } = useElementSize(el);
     const showSubMenu = (nav) => {
       if (nav.submenu === true) {
-        selectedMenu.value = nav.code
+        selectedMenu.value = nav.code;
       } else {
-        selectedMenu.value = ''
+        selectedMenu.value = "";
       }
-    }
+    };
     let validatePass = async (r, v) => {
       if (v === "") {
-        return Promise.reject('请输入密码');
+        return Promise.reject("请输入密码");
       } else {
         return validatePassStrength(r, v);
       }
@@ -798,10 +804,10 @@ export default defineComponent({
         //     strength = "strong";
         //     break;
         // }
-      // } else {
+        // } else {
         // strength = "weak";
-      // }
-      // if (strength === "weak") {
+        // }
+        // if (strength === "weak") {
         // return Promise.reject("密码至少应该是好的");
       } else {
         return Promise.resolve();
@@ -846,23 +852,23 @@ export default defineComponent({
     };
     let validatePhoneNumber = async (r, v) => {
       var reg = /^\d+$/;
-      if (v === '') {
-        return Promise.reject('请验证您的电话号码');
+      if (v === "") {
+        return Promise.reject("请验证您的电话号码");
       } else if (!reg.test(v)) {
-        return Promise.reject('电话号码只允许使用数字');
+        return Promise.reject("电话号码只允许使用数字");
       } else {
         return Promise.resolve();
       }
     };
     const loginForm = reactive({
-      name: '',
-    })
-    const loginRef = ref([])
-    const mobileLoginRef = ref([])
-    const captchaRef = ref([])
+      name: ""
+    });
+    const loginRef = ref([]);
+    const mobileLoginRef = ref([]);
+    const captchaRef = ref([]);
     const hasAffiliate = ref(false);
-    const regCountdown = ref(registerSendOtpDisabledTimeoutLeft)
-    const loginCountdown = ref(0)
+    const regCountdown = ref(registerSendOtpDisabledTimeoutLeft);
+    const loginCountdown = ref(0);
 
     const loginRules = {
       loginName: [
@@ -948,7 +954,7 @@ export default defineComponent({
       loginName: "",
       password: "",
       confirmPwd: "",
-      telephone: cachedTelephone ?? '',
+      telephone: cachedTelephone ?? "",
       email: "",
       captchaCode: "",
       regHost: location.hostname,
@@ -966,30 +972,30 @@ export default defineComponent({
           min: 2,
           max: 12,
           message: "长度应为 2 至 12",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           validator: validateRealName,
-          trigger: "change",
-        },
+          trigger: "change"
+        }
       ],
       loginName: [
         {
           min: 6,
           max: 12,
           message: "长度应为 6 至 12",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           validator: validateName,
-          trigger: "change",
-        },
+          trigger: "change"
+        }
       ],
       password: [
         {
           validator: validatePass,
-          trigger: "change",
-        },
+          trigger: "change"
+        }
         // {
         //   required: true,
         //   message: "Password is required",
@@ -1018,14 +1024,14 @@ export default defineComponent({
         // },
         {
           validator: validatePass2,
-          trigger: "change",
-        },
+          trigger: "change"
+        }
       ],
       telephone: [
         {
           validator: validatePhoneNumber,
-          trigger: "change",
-        },
+          trigger: "change"
+        }
       ],
       // birthday: [
       //   {
@@ -1044,66 +1050,66 @@ export default defineComponent({
           min: 6,
           max: 6,
           message: "长度应为 6",
-          trigger: "blur",
-        },
+          trigger: "blur"
+        }
       ],
       email: [
         {
           required: true,
           message: "请输入您的邮箱",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           type: "email",
           message: "电子邮件地址无效",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           max: 50,
           message: "长度应小于 50",
-          trigger: "blur",
-        },
+          trigger: "blur"
+        }
       ],
       captchaCode: [
         {
           required: true,
           message: "需要验证码",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           min: 4,
           max: 4,
           message: "长度应为 4",
-          trigger: "change",
-        },
-      ],
+          trigger: "change"
+        }
+      ]
     };
     const passForm = reactive({
-      email: '',
-    })
+      email: ""
+    });
 
-    const passRef = ref([])
+    const passRef = ref([]);
     const forgetPassRules = {
 
       email: [
         {
           required: true,
           message: "请输入您的邮箱",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           type: "email",
           message: "电子邮件地址无效",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           max: 50,
           message: "长度应小于 50",
-          trigger: "blur",
-        },
-      ],
+          trigger: "blur"
+        }
+      ]
 
-    }
+    };
     const passRules = {
       loginName: [
         {
@@ -1143,40 +1149,40 @@ export default defineComponent({
     const getAffiliateCode = () => {
       const affCode = sessionStorage.getItem("AFFILIATE_CODE");
       if (affCode) {
-        hasAffiliate.value = true
+        hasAffiliate.value = true;
         regForm.codeAffiliate = affCode;
       }
-    }
+    };
 
     const onLogout = () => {
       store.memberLogout().then(() => {
         location.reload();
       });
     };
-    const registerRef = ref([])
+    const registerRef = ref([]);
     const resetRegForm = (formEl) => {
-      if (!formEl) return
-      formEl.resetFields()
-    }
+      if (!formEl) return;
+      formEl.resetFields();
+    };
 
-    const sendOtp = async() => {
+    const sendOtp = async () => {
 
-      if (captchaForm.type === 'REGISTER') {
+      if (captchaForm.type === "REGISTER") {
         const smsDetail = {
           telephone: regForm.telephone,
           captchaCode: captchaForm.captchaCode,
           codeId: captchaForm.codeId
-        }
+        };
         sendSms(smsDetail)
           .then((response) => {
             if (response.code == 0) {
-              disableSendVerificationButton.value = true
+              disableSendVerificationButton.value = true;
 
               regForm.smsCodeId = response.data.codeId;
 
               ElMessage({
-                type: 'success',
-                message: '发送手机验证码成功'
+                type: "success",
+                message: "发送手机验证码成功"
               });
 
               captchaDialogVisible.value = false;
@@ -1190,58 +1196,58 @@ export default defineComponent({
               lsStore(registerSendOtpDisabledKey, now.getTime());
               lsStore(registerTelephoneKey, regForm.telephone);
 
-              countdownTimer('REGISTER')
+              countdownTimer("REGISTER");
             } else {
               getCode();
             }
-          })
-      } else if (captchaForm.type === 'LOGIN') {
+          });
+      } else if (captchaForm.type === "LOGIN") {
         const smsDetail = {
           telephone: loginForm.phoneNumber,
           captchaCode: captchaForm.captchaCode,
           codeId: captchaForm.codeId
-        }
+        };
         sendSms(smsDetail)
           .then((response) => {
             if (response.code == 0) {
               loginForm.smsCodeId = response.data.codeId;
               ElMessage({
-                type: 'success',
-                message: '发送手机验证码成功'
+                type: "success",
+                message: "发送手机验证码成功"
               });
               captchaDialogVisible.value = false;
               getCode();
               loginCountdown.value = 30;
-              countdownTimer('LOGIN')
+              countdownTimer("LOGIN");
             } else {
               getCode();
             }
-          })
+          });
       }
     };
 
     const countdownTimer = (type) => {
-      if (type === 'REGISTER') {
+      if (type === "REGISTER") {
         if (regCountdown.value > 0) {
           setTimeout(() => {
-            regCountdown.value -= 1
-            countdownTimer('REGISTER')
-          }, 1000)
+            regCountdown.value -= 1;
+            countdownTimer("REGISTER");
+          }, 1000);
         } else {
           lsRemove(registerSendOtpDisabledKey);
           lsRemove(registerTelephoneKey);
 
-          disableSendVerificationButton.value = false
+          disableSendVerificationButton.value = false;
         }
-      } else if (type === 'LOGIN') {
+      } else if (type === "LOGIN") {
         if (loginCountdown.value > 0) {
           setTimeout(() => {
-            loginCountdown.value -= 1
-            countdownTimer('LOGIN')
-          }, 1000)
+            loginCountdown.value -= 1;
+            countdownTimer("LOGIN");
+          }, 1000);
         }
       }
-    }
+    };
 
     const openCaptchaForm = (type) => {
       captchaForm.captchaCode = "";
@@ -1251,69 +1257,69 @@ export default defineComponent({
     };
 
     const submitRegisterForm = async (elForm) => {
-      if (!elForm) return
+      if (!elForm) return;
       await elForm.validate((valid) => {
         if (valid) {
           const fpPromise = FingerprintJS.load();
           (async () => {
             const fp = await fpPromise;
             const result = await fp.get();
-            const excludes = {value: ["timezone", "timeZoneOffset"]};
-            const allComponents = {...result.components};
+            const excludes = { value: ["timezone", "timeZoneOffset"] };
+            const allComponents = { ...result.components };
             excludes.value.forEach((element) => {
               delete allComponents[element];
             });
             const sidParam = FingerprintJS.hashComponents(allComponents);
             regForm.sid = sidParam;
             register(regForm)
-                .then((response) => {
-                  const regResult = response.code;
-                  if (regResult === 0) {
-                    ElMessage({
-                      type: 'success',
-                      message: '注册成功'
-                    });
-                    store.autoLogin(response.data);
-                    registerDialogVisible.value = false;
-                    store.regPageVisible = false
-                    // loginDialogVisible.value = true;
+              .then((response) => {
+                const regResult = response.code;
+                if (regResult === 0) {
+                  ElMessage({
+                    type: "success",
+                    message: "注册成功"
+                  });
+                  store.autoLogin(response.data);
+                  registerDialogVisible.value = false;
+                  store.regPageVisible = false;
+                  // loginDialogVisible.value = true;
 
-                    sessionStorage.removeItem("REFERRAL_CODE");
-                    // getCode();
-                  } else {
-                    getCode();
-                    // message.error(response.message);
-                  }
-                })
+                  sessionStorage.removeItem("REFERRAL_CODE");
+                  // getCode();
+                } else {
+                  getCode();
+                  // message.error(response.message);
+                }
+              });
           })();
         } else {
           getCode();
         }
-      })
-    }
+      });
+    };
 
-    const modalGame = ref(null)
+    const modalGame = ref(null);
     const openGame = (gameName, code, gameCode) => {
       modalGame.value.open(gameName, code, gameCode);
-    }
+    };
 
-    const announcementActive = ref('1')
-    const announcementList = ref([])
-    const announcementTypes = ref([])
+    const announcementActive = ref("1");
+    const announcementList = ref([]);
+    const announcementTypes = ref([]);
     const loadAnnouncement = () => {
       getAnnouncement().then((res) => {
         if (res.code === 0) {
-          const d = res.data.announcements
-          announcementTypes.value = res.data.type
+          const d = res.data.announcements;
+          announcementTypes.value = res.data.type;
           if (res.data.type && res.data.type.length > 0) {
-            announcementActive.value =  res.data.type[0].id
+            announcementActive.value = res.data.type[0].id;
           }
-          announcementList.value = d
+          announcementList.value = d;
           // announcementList.value = d.announcements
           // announcementList.value = res.data.announcements
         }
-      })
-    }
+      });
+    };
     const calculateMaxContentLength = () => {
       let maxLength = 0;
       for (const announcement of announcementList.value) {
@@ -1330,23 +1336,23 @@ export default defineComponent({
       //   }
       // });
     };
-    const isStationNotice = ref(false)
-    const noticeTitle = ref('')
+    const isStationNotice = ref(false);
+    const noticeTitle = ref("");
     const openPopup = (noticeType) => {
       if (noticeType) {
-        announcementActive.value = '3'
-        noticeTitle.value = noticeType.title
-        isStationNotice.value = true
+        announcementActive.value = "3";
+        noticeTitle.value = noticeType.title;
+        isStationNotice.value = true;
       }
-    }
+    };
 
     onActivated(() => {
       store.token && checkMailboxUnread();
-    })
+    });
 
     onMounted(() => {
       if (regCountdown.value > 0)
-        countdownTimer('REGISTER')
+        countdownTimer("REGISTER");
 
 
       getAffiliateCode();
@@ -1360,26 +1366,26 @@ export default defineComponent({
       }
 
       if (store.loginPageVisible) {
-        loginDialogVisible.value = true
+        loginDialogVisible.value = true;
       } else {
-        loginDialogVisible.value = false
+        loginDialogVisible.value = false;
       }
     });
 
     watch(() => store.loginPageVisible, () => {
       if (store.loginPageVisible) {
-        loginDialogVisible.value = true
+        loginDialogVisible.value = true;
       } else {
-        loginDialogVisible.value = false
+        loginDialogVisible.value = false;
       }
       // Optionally you can set immediate: true config for the watcher to run on init
       // }, { immediate: true });
     });
     watch(() => store.regPageVisible, () => {
       if (store.regPageVisible) {
-        registerDialogVisible.value = true
+        registerDialogVisible.value = true;
       } else {
-        registerDialogVisible.value = false
+        registerDialogVisible.value = false;
       }
       // Optionally you can set immediate: true config for the watcher to run on init
       // }, { immediate: true });
@@ -1393,15 +1399,15 @@ export default defineComponent({
         registerDialogVisible.value = true;
         regForm.referrer = referCode;
       }
-    }
+    };
 
 
-    const isLoadingBalance = ref(false)
+    const isLoadingBalance = ref(false);
     const refreshBalance = () => {
       isLoadingBalance.value = true;
       store.getBalance().then(() => {
         isLoadingBalance.value = false;
-      })
+      });
     };
     const getCode = () => {
       getVerificationCode().then((res) => {
@@ -1410,13 +1416,13 @@ export default defineComponent({
           loginForm.codeId = res.data.id;
           regForm.codeId = res.data.id;
           captchaForm.codeId = res.data.id;
-          passForm.codeId = res.data.id
+          passForm.codeId = res.data.id;
 
           // reset captcha input when captcha changes
           loginForm.captchaCode = "";
           regForm.captchaCode = "";
         }
-      })
+      });
     };
     const verificationImg = ref("");
     const submitForgetPass = () => {
@@ -1425,17 +1431,17 @@ export default defineComponent({
           if (res.code === 0) {
             ElMessage.success("您的帐号已经发送到注册邮箱");
           }
-        })
+        });
       });
-    }
+    };
     const submitLogin = () => {
-      loadingBtn.value = true
+      loadingBtn.value = true;
       const fpPromise = FingerprintJS.load();
       (async () => {
         const fp = await fpPromise;
         const result = await fp.get();
-        const excludes = {value: ["timezone", "timeZoneOffset"]};
-        const allComponents = {...result.components};
+        const excludes = { value: ["timezone", "timeZoneOffset"] };
+        const allComponents = { ...result.components };
         excludes.value.forEach((element) => {
           delete allComponents[element];
         });
@@ -1443,50 +1449,50 @@ export default defineComponent({
 
         loginRef.value.validate().then(() => {
           store
-              .memberLogin({
-                loginName: loginForm.loginName,
-                password: loginForm.password,
-                sid: sidParam,
-                captchaCode: loginForm.captchaCode,
-                codeId: loginForm.codeId,
-              })
-              .then(() => {
-                // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
-                if (store.token) {
-                  // router.push(jumpUrl);
-                  loginDialogVisible.value = false;
-                  store.loginPageVisible = false;
+            .memberLogin({
+              loginName: loginForm.loginName,
+              password: loginForm.password,
+              sid: sidParam,
+              captchaCode: loginForm.captchaCode,
+              codeId: loginForm.codeId
+            })
+            .then(() => {
+              // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
+              if (store.token) {
+                // router.push(jumpUrl);
+                loginDialogVisible.value = false;
+                store.loginPageVisible = false;
 
-                  sessionStorage.removeItem("REFERRAL_CODE");
-                  loginForm.loginName = null
-                  loginForm.password = null
-                  loginForm.captchaCode = null
+                sessionStorage.removeItem("REFERRAL_CODE");
+                loginForm.loginName = null;
+                loginForm.password = null;
+                loginForm.captchaCode = null;
 
-                  checkMailboxUnread();
-                } else {
-                  // loginForm.loginName = null
-                  // loginForm.password = null
-                  // loginForm.captchaCode = null
-                  getCode();
-                }
-              }).catch((error) => {
-                // message.error(error.message);
-                console.log(error.message);
+                checkMailboxUnread();
+              } else {
+                // loginForm.loginName = null
+                // loginForm.password = null
+                // loginForm.captchaCode = null
                 getCode();
+              }
+            }).catch((error) => {
+            // message.error(error.message);
+            console.log(error.message);
+            getCode();
           });
         });
-          loadingBtn.value = false
+        loadingBtn.value = false;
       })();
     };
 
     const phoneLogin = () => {
-      loadingBtn.value = true
+      loadingBtn.value = true;
       const fpPromise = FingerprintJS.load();
       (async () => {
         const fp = await fpPromise;
         const result = await fp.get();
-        const excludes = {value: ["timezone", "timeZoneOffset"]};
-        const allComponents = {...result.components};
+        const excludes = { value: ["timezone", "timeZoneOffset"] };
+        const allComponents = { ...result.components };
         excludes.value.forEach((element) => {
           delete allComponents[element];
         });
@@ -1494,50 +1500,50 @@ export default defineComponent({
 
         mobileLoginRef.value.validate().then(() => {
           store
-              .telephoneLogin({
-                phoneNumber: loginForm.phoneNumber,
-                sid: sidParam,
-                code: loginForm.code,
-                smsCodeId: loginForm.smsCodeId,
-              })
-              .then(() => {
-                // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
-                if (store.token) {
-                  // router.push(jumpUrl);
-                  loginDialogVisible.value = false;
-                  store.loginPageVisible = false;
+            .telephoneLogin({
+              phoneNumber: loginForm.phoneNumber,
+              sid: sidParam,
+              code: loginForm.code,
+              smsCodeId: loginForm.smsCodeId
+            })
+            .then(() => {
+              // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
+              if (store.token) {
+                // router.push(jumpUrl);
+                loginDialogVisible.value = false;
+                store.loginPageVisible = false;
 
-                  sessionStorage.removeItem("REFERRAL_CODE");
-                } else {
-                  loginForm.phoneNumber = null
-                  loginForm.code = null
-                }
-              }).catch((error) => {
+                sessionStorage.removeItem("REFERRAL_CODE");
+              } else {
+                loginForm.phoneNumber = null;
+                loginForm.code = null;
+              }
+            }).catch((error) => {
             // message.error(error.message);
             console.log(error.message);
           });
         });
       })();
-      loadingBtn.value = false
+      loadingBtn.value = false;
     };
 
     const handleCommand = (command) => {
-      if (command === 'a') {
-        router.push('/center/personal');
+      if (command === "a") {
+        router.push("/center/personal");
       }
-      if (command === 'b') {
-        router.push('/center/deposit');
+      if (command === "b") {
+        router.push("/center/deposit");
       }
-      if (command === 'c') {
-        router.push('/center/transfer');
+      if (command === "c") {
+        router.push("/center/transfer");
       }
-      if (command === 'd') {
-        router.push('/promotion');
+      if (command === "d") {
+        router.push("/promotion");
       }
-      if (command === 'e') {
-        onLogout()
+      if (command === "e") {
+        onLogout();
       }
-    }
+    };
     // const submitRegisterForm = () => {
     //   registerRef.value
     //     .validate()
@@ -1570,64 +1576,77 @@ export default defineComponent({
 
     // watch(
     //     () => regForm.password,
-        // () => {
-        //   pwdStrength.value = "";
+    // () => {
+    //   pwdStrength.value = "";
 
-        //   var pwd = regForm.password;
-        //   var result = 0;
-        //   for (var i = 0, len = pwd.length; i < len; ++i) {
-        //     result |= charType(pwd.charCodeAt(i));
-        //   }
+    //   var pwd = regForm.password;
+    //   var result = 0;
+    //   for (var i = 0, len = pwd.length; i < len; ++i) {
+    //     result |= charType(pwd.charCodeAt(i));
+    //   }
 
-        //   var level = 0;
-        //   for (i = 0; i <= 4; i++) {
-        //     if (result & 1) {
-        //       level++;
-        //     }
-        //     result = result >>> 1;
-        //   }
+    //   var level = 0;
+    //   for (i = 0; i <= 4; i++) {
+    //     if (result & 1) {
+    //       level++;
+    //     }
+    //     result = result >>> 1;
+    //   }
 
-        //   // console.log(level);
+    //   // console.log(level);
 
-        //   if (pwd.length >= 6) {
-        //     switch (level) {
-        //       case 1:
-        //         pwdStrength.value = "weak";
-        //         break;
-        //       case 2:
-        //         pwdStrength.value = "normal";
-        //         break;
-        //       case 3:
-        //       case 4:
-        //         pwdStrength.value = "strong";
-        //         break;
-        //     }
-        //   } else {
-        //     pwdStrength.value = "weak";
-        //   }
+    //   if (pwd.length >= 6) {
+    //     switch (level) {
+    //       case 1:
+    //         pwdStrength.value = "weak";
+    //         break;
+    //       case 2:
+    //         pwdStrength.value = "normal";
+    //         break;
+    //       case 3:
+    //       case 4:
+    //         pwdStrength.value = "strong";
+    //         break;
+    //     }
+    //   } else {
+    //     pwdStrength.value = "weak";
+    //   }
 
-        //   // console.log(pwdStrength.value);
-        // },
+    //   // console.log(pwdStrength.value);
+    // },
     // );
     const todayDate = () => {
-      return 'GTM+8 ' + moment().utcOffset('+08:00').format('M/D/YYYY, h:mm:ss A ') + moment(new Date()).locale('zh-cn').format('dddd');
-    }
+      return "GTM+8 " + moment().utcOffset("+08:00").format("M/D/YYYY, h:mm:ss A ") + moment(new Date()).locale("zh-cn").format("dddd");
+    };
     const jumpOut = (path) => {
-      window.location.href=path
-    }
+      window.location.href = path;
+    };
 
-    const isMailboxUnread = ref(false)
+    const isMailboxUnread = ref(false);
     const mailboxUnreadTotal = ref(0);
+
+    const openForgotDialog = () => {
+      getCode();
+      forgetPassDialogVisible.value = true;
+    };
+    const openRegisterDialog = () => {
+      getCode();
+      registerDialogVisible.value = true;
+    };
+    const openLoginDialog = () => {
+      getCode();
+      loginDialogVisible.value = true;
+    };
 
     const checkMailboxUnread = () => {
       getUnreadMailTotal().then((res) => {
-        const {code, data} = res;
-        if ( code === 0 ) mailboxUnreadTotal.value = data
+        const { code, data } = res;
+        if (code === 0) mailboxUnreadTotal.value = data;
       })
-      .catch((error) => {
-        console.log(error)
-      })
-    }
+        .catch((error) => {
+          console.log(error);
+        });
+    };
 
     return {
       token,
@@ -1652,6 +1671,9 @@ export default defineComponent({
       captchaRef,
       submitLogin,
       regForm,
+      openLoginDialog,
+      openRegisterDialog,
+      openForgotDialog,
       registerDialogVisible,
       submitRegisterForm,
       registerRef,
@@ -1689,7 +1711,7 @@ export default defineComponent({
       announcementActive,
       announcementTabChange,
       announcementTypes,
-      typeActive: '1',
+      typeActive: "1",
       getAffiliateCode,
       hasAffiliate,
       countdownTimer,
@@ -1700,7 +1722,7 @@ export default defineComponent({
       mailboxUnreadTotal,
       checkMailboxUnread,
       calculateMaxContentLength
-    }
+    };
   }
 });
 </script>
@@ -1710,6 +1732,7 @@ body {
   .el-button.is-disabled:hover {
     background-color: #a8b5c3;
   }
+
   .el-input.wTip .el-input-group__append {
     background: none;
     border: 0;
@@ -1717,6 +1740,7 @@ body {
     font-size: 12px;
     box-shadow: none;
   }
+
   .el-dropdown {
     cursor: pointer;
   }
@@ -1789,6 +1813,7 @@ body {
       &:hover {
         opacity: 0.9;
       }
+
       &:active {
         filter: brightness(0.9);
       }
@@ -1855,6 +1880,7 @@ body {
             gap: 10px;
             max-height: 20px;
             overflow: hidden;
+
             .station-notice {
               display: flex;
               justify-content: center;
@@ -1888,6 +1914,7 @@ body {
       background: $primary;
       position: relative;
       box-shadow: 0 0 10px 0 rgba(168, 168, 168, 1);
+
       .top-nav-inner {
         max-width: $maxwidth;
         margin: 0 auto;
@@ -1897,17 +1924,20 @@ body {
         justify-content: space-between;
         align-items: center;
         gap: 30px;
+
         .logospon {
           display: flex;
           justify-content: center;
           align-items: center;
           gap: 10px;
+
           .seperator {
             background: #8f99a3;
             width: 1px;
             height: 60px;
           }
         }
+
         .logo {
           width: 107px;
 
@@ -1930,6 +1960,7 @@ body {
             flex-direction: column;
             text-decoration: none;
             gap: 2px;
+
             &.icon {
               gap: 0;
             }
@@ -1941,6 +1972,7 @@ body {
               display: block;
               margin: 0 auto;
             }
+
             span:first-child {
               color: #000000;
               font-size: 1rem;
@@ -1953,6 +1985,7 @@ body {
               display: flex;
               flex-direction: column;
               gap: 8px;
+
               &:after {
                 content: "";
                 width: 26px;
@@ -1974,6 +2007,7 @@ body {
 
               span:last-child {
                 color: $link-active;
+
                 &:after {
                   background: $link-active;
                   -webkit-transform: scaleX(1);
@@ -1993,6 +2027,7 @@ body {
             left: 0;
             top: 100%;
             width: 100%;
+
             > div {
               max-width: $maxwidth;
               margin: 0 auto;
@@ -2035,14 +2070,17 @@ body {
       height: 35px;
     }
   }
+
   .registered-right {
     flex: 2;
     padding: 73px 44px;
     background: url(../../assets/images/index/reg-bg.jpg) no-repeat center center;
     background-size: cover;
+
     .el-row {
       width: 100%;
     }
+
     form .title {
       height: 18px;
       font-size: 18px;
@@ -2053,6 +2091,7 @@ body {
       width: 100%;
       text-align: left;
       display: block;
+
       &.account {
         margin-top: 52px;
       }
@@ -2117,6 +2156,7 @@ body {
       height: 35px;
     }
   }
+
   .content-form {
     flex: 2;
     // padding: 73px 44px;
@@ -2129,9 +2169,11 @@ body {
     .el-tabs {
       // max-width: 500px;
     }
+
     .el-row {
       width: 100%;
     }
+
     form .title {
       height: 18px;
       font-size: 18px;
@@ -2142,6 +2184,7 @@ body {
       width: 100%;
       text-align: left;
       display: block;
+
       &.account {
         margin-top: 52px;
       }
@@ -2251,6 +2294,7 @@ body {
   // max-width: 1280px;
   justify-content: space-evenly;
   align-items: center;
+
   .platform-title {
     font-size: 40px;
     color: #343434;
@@ -2329,6 +2373,7 @@ body {
     &.slot-ag {
       background-image: url("../../assets/game/header_slot_ag.png");
     }
+
     &.slot-pt {
       background-image: url("../../assets/game/header_slot_pt.png");
     }
@@ -2372,6 +2417,7 @@ body {
     &.live-ag {
       background-image: url("../../assets/live/live_ag.png");
     }
+
     &.live-allbet {
       background-image: url("../../assets/live/live_allbet.png");
     }
@@ -2379,21 +2425,27 @@ body {
     &.live-bbin {
       background-image: url("../../assets/live/live_bbin.png");
     }
+
     &.live-pm {
       background-image: url("../../assets/live/live_pm.png");
     }
+
     &.live-bg {
       background-image: url("../../assets/live/live_bg.png");
     }
+
     &.live-sexy {
       background-image: url("../../assets/live/live_sexy.png");
     }
+
     &.lottery-tcg {
       background-image: url("../../assets/lottery/lottery_tcg.webp");
     }
+
     &.lottery-bbin {
       background-image: url("../../assets/lottery/lottery_bbin.webp");
     }
+
     &.lottery-sgwin {
       background-image: url("../../assets/lottery/lottery_sgwin.webp");
     }
@@ -2402,28 +2454,33 @@ body {
   &.games,
   &.live {
     justify-content: center;
+
     .platform-box {
       max-width: 160px;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       display: flex;
+
       .plat-icon {
         height: 40px;
         width: unset;
       }
     }
   }
+
   &.games,
   &.live,
   &.lottery {
     justify-content: center;
+
     .platform-box {
       max-width: 160px;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       display: flex;
+
       .plat-icon {
         height: 40px;
         width: unset;
@@ -2431,6 +2488,7 @@ body {
       }
     }
   }
+
   &.games {
     .platform-box {
       .plat-icon {
@@ -2484,6 +2542,7 @@ body {
       }
     }
   }
+
   &.live,
   &.games,
   &.fish,
@@ -2494,6 +2553,7 @@ body {
       margin: 9px 0 15px;
     }
   }
+
   &.sports,
   &.poker,
   &.promo {
@@ -2538,12 +2598,14 @@ body {
         -webkit-transition: all 0.5s ease-out;
         transition: all 0.5s ease-out;
       }
+
       &:hover {
         .imgbox {
           -webkit-transform: scale(1.03);
           transform: scale(1.03);
         }
       }
+
       .platform-slogan {
         height: 21px;
         margin: 0 auto;
@@ -2552,6 +2614,7 @@ body {
       }
     }
   }
+
   &.sports,
   &.poker {
     .platform-box {
@@ -2560,6 +2623,7 @@ body {
       align-items: center;
       justify-content: space-evenly;
       gap: 15px;
+
       .imgbox {
         width: 340px;
         height: 300px;
@@ -2568,12 +2632,14 @@ body {
         -webkit-transition: all 0.5s ease-out;
         transition: all 0.5s ease-out;
       }
+
       &:hover {
         .imgbox {
           -webkit-transform: scale(1.03);
           transform: scale(1.03);
         }
       }
+
       .contents {
         padding-right: 0px;
         text-align: left;
@@ -2585,9 +2651,11 @@ body {
       }
     }
   }
+
   &.sports {
     .platform-box {
       padding: 0;
+
       .imgbox {
         background-image: url(../../assets/home/header_sport_new_2.png);
         // background-size: 320%;
@@ -2600,14 +2668,17 @@ body {
 
         flex: 6;
       }
+
       .contents {
         flex: 4;
       }
     }
   }
+
   &.poker {
     .platform-box {
       max-width: 500px;
+
       .imgbox {
         width: 225px;
         height: 250px;
@@ -2618,6 +2689,7 @@ body {
 
   &.app {
     gap: 30px;
+
     .platform-box {
       flex: unset;
     }
@@ -2651,6 +2723,7 @@ body {
 
   &.fish {
     justify-content: center;
+
     .platform-box {
       padding: 25px 10px;
       max-width: 180px;
@@ -2660,12 +2733,14 @@ body {
     }
   }
 }
+
 .register-dialog {
   .el-dialog__header .el-dialog__headerbtn {
     .el-dialog {
       &__close {
         color: #000000;
         opacity: 0.5;
+
         &:hover {
           opacity: 1;
           color: #000000;
@@ -2682,6 +2757,7 @@ body {
   &:hover {
     opacity: 0.9;
   }
+
   &:active {
     filter: brightness(0.9);
   }

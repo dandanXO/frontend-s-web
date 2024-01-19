@@ -79,6 +79,27 @@
         </div>
       </div>
     </div>
+
+    <div class="bottom-content">
+      <p>
+        <img :src="require(`../../../assets/images/promotion/title_event_time.png`)" />
+      </p>
+      <table v-if="cardInfo.cardDetail.setting">
+        <tbody>
+          <tr>
+            <td>期数</td>
+            <td>集卡时间</td>
+            <td>开奖时间</td>
+          </tr>
+          <tr>
+            <td>{{ cardInfo.cardDetail.setting.periodStr }}</td>
+            <td>{{ cardInfo.cardDetail.setting.lotteryStr }}</td>
+            <td>{{ cardInfo.cardDetail.setting.openStr }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <q-dialog align-center v-model="isGiftModal" title="赠送虎卡" width="500">
       <q-card class="q-pa-md" style="width: 100%">
         <q-form @submit="submitRegisterForm" @reset="resetRegForm" class="q-gutter-md">
@@ -731,5 +752,9 @@ body {
 .huka-ranking-pagination .next-page,
 .huka-ranking-pagination .prev-page {
   cursor: pointer;
+}
+
+.bottom-content {
+  margin-top: 30px;
 }
 </style>
