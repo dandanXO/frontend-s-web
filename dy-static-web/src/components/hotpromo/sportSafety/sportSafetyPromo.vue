@@ -87,7 +87,7 @@
           <el-form-item prop="gameMatchId" name="gameMatchId" label="游戏比赛: ">
             <el-select v-model="sportInsuranceFormData.gameMatchId" placeholder="游戏比赛" clearable>
               <el-option v-for="item in matchDetails" :key="item.value" :value="item.id" :label="`${item.matchTitle} -${item.teamOne} vs ${item.teamTwo}`">
-                {{ `${item.matchTitle} -${item.teamOne} vs ${item.teamTwo}` }}
+                {{ `${item.matchTitle} - (${item.teamOne} vs ${item.teamTwo})` }}
               </el-option>
             </el-select>
           </el-form-item>
