@@ -246,6 +246,7 @@ export default {
     POKER: '棋牌',
     LOTTERY: '彩票',
     CASUAL: '小游戏',
+    NBA: 'NBA'
   },
   homeBannerType: {
     HOME: '首页',
@@ -378,7 +379,7 @@ export default {
     addFinancialLevel: '新增会员组别',
     addGame: '新增游戏',
     addGameMatch: '新增赛事',
-    addGameQuiz: '新增赛事问答',
+    addGameQuiz: '新增竞猜',
     addGift: '新增奖品',
     addIpLabel: '新增 IP 标签',
     additionalTicketDetail: '加票信息',
@@ -1049,6 +1050,7 @@ export default {
     responseBody: '返回参数',
     resend: '重发',
     reset: '重置',
+    resettleGameQuiz: '重新结算竞猜',
     result: '结果',
     resultDate: '开彩日期',
     resultNumber: '开彩号码',

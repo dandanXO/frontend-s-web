@@ -240,6 +240,7 @@ export default {
     POKER: 'POKER',
     LOTTERY: 'LOTTERY',
     CASUAL: 'CASUAL',
+    NBA: 'NBA'
   },
   homeBannerType: {
     HOME: 'Home',
@@ -1043,6 +1044,7 @@ export default {
     responseBody: 'Response Body',
     resend: 'Resend',
     reset: 'Reset',
+    resettleGameQuiz: 'Resettle Game Quiz',
     result: 'Result',
     resultDate: 'Result Date',
     resultNumber: 'Result Number',

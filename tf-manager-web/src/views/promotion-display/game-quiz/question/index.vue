@@ -78,7 +78,7 @@
       width="780px"
     >
       <el-form
-        v-if="uiControl.dialogType === 'CREATE'"
+        v-if="uiControl.dialogType === 'CREATE' || uiControl.dialogType === 'EDIT'"
         ref="gameQuizForm"
         :model="form"
         :rules="formRules"
@@ -125,10 +125,10 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.homeTeam')" prop="homeTeam">
+        <el-form-item v-if="uiControl.dialogType === 'CREATE'" :label="t('fields.homeTeam')" prop="homeTeam">
           <el-input v-model="form.homeTeam" style="width: 350px;" maxlength="50" @change="populateChoiceOne" />
         </el-form-item>
-        <el-form-item :label="t('fields.awayTeam')" prop="awayTeam">
+        <el-form-item v-if="uiControl.dialogType === 'CREATE'" :label="t('fields.awayTeam')" prop="awayTeam">
           <el-input v-model="form.awayTeam" style="width: 350px;" maxlength="50" @change="populateChoiceOne" />
         </el-form-item>
         <el-form-item
@@ -138,15 +138,15 @@
         >
           <el-input v-model="form.poolAmount" style="width: 350px;" />
         </el-form-item>
-        <el-form-item :label="t('fields.questionOne')" prop="questionOne">
+        <el-form-item v-if="uiControl.dialogType === 'CREATE'" :label="t('fields.questionOne')" prop="questionOne">
           <el-input v-model="form.questionOne" style="width: 350px;" maxlength="50" disabled />
         </el-form-item>
-        <el-form-item :label="t('fields.choiceOne')" prop="choiceOne">
+        <el-form-item v-if="uiControl.dialogType === 'CREATE'" :label="t('fields.choiceOne')" prop="choiceOne">
           <div v-for="(item, index) in choiceOne" :key="index">
             <el-input style="width: 350px; margin-top: 5px;" v-model="item.value" disabled />
           </div>
         </el-form-item>
-        <el-form-item :label="t('fields.questionTwo')" prop="questionTwo">
+        <el-form-item v-if="uiControl.dialogType === 'CREATE'" :label="t('fields.questionTwo')" prop="questionTwo">
           <el-select
             v-model="form.questionTwo"
             size="small"
@@ -164,12 +164,12 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.choiceTwo')" prop="choiceTwo">
+        <el-form-item v-if="uiControl.dialogType === 'CREATE'" :label="t('fields.choiceTwo')" prop="choiceTwo">
           <div v-for="(item, index) in choiceTwo" :key="index">
             <el-input style="width: 350px; margin-top: 5px;" v-model="item.value" disabled />
           </div>
         </el-form-item>
-        <el-form-item :label="t('fields.questionThree')" prop="questionThree">
+        <el-form-item v-if="uiControl.dialogType === 'CREATE'" :label="t('fields.questionThree')" prop="questionThree">
           <el-select
             v-model="form.questionThree"
             size="small"
@@ -187,7 +187,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.choiceThree')" prop="choiceThree">
+        <el-form-item v-if="uiControl.dialogType === 'CREATE'" :label="t('fields.choiceThree')" prop="choiceThree">
           <div v-for="(item, index) in choiceThree" :key="index">
             <el-input style="width: 350px; margin-top: 5px;" v-model="item.value" disabled />
           </div>
@@ -224,12 +224,12 @@
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-          <el-button type="primary" @click="create">{{ t('fields.confirm') }}</el-button>
+          <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
 
       <el-form
-        v-if="uiControl.dialogType === 'EDIT'"
+        v-if="uiControl.dialogType === 'END'"
         ref="endQuizForm"
         :model="endForm"
         :rules="endFormRules"
@@ -548,10 +548,19 @@
         fixed="right"
         :label="t('fields.operate')"
         align="center"
-        width="300"
+        width="400"
         v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:game-quiz:update']) || hasPermission(['sys:game-quiz:list']))"
       >
         <template #default="scope">
+          <el-button
+            size="small"
+            type="primary"
+            v-permission="['sys:game-quiz:update']"
+            @click="showEdit(scope.row)"
+            style="cursor: pointer"
+          >
+            {{ t('fields.edit') }}
+          </el-button>
           <el-button
             size="small"
             type="warning"
@@ -566,7 +575,7 @@
             size="small"
             type="success"
             v-permission="['sys:game-quiz:update']"
-            @click="showEdit(scope.row)"
+            @click="showEnd(scope.row)"
             style="cursor: pointer; margin-left: 5px;"
           >
             {{ t('fields.endQuiz') }}
@@ -580,6 +589,16 @@
             style="cursor: pointer; margin-left: 5px"
           >
             {{ t('fields.cancelQuiz') }}
+          </el-button>
+          <el-button
+            v-if="scope.row.status === 'CANCEL' || scope.row.status === 'ENDED'"
+            size="small"
+            type="success"
+            v-permission="['sys:game-quiz:update']"
+            @click="showEnd(scope.row)"
+            style="cursor: pointer; margin-left: 5px;"
+          >
+            {{ t('fields.resettleGameQuiz') }}
           </el-button>
         </template>
       </el-table-column>
@@ -604,7 +623,7 @@ import { computed, reactive, ref } from "vue";
 import { required } from "@/utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { getSiteListSimple } from "@/api/site";
-import { getGameQuiz, createGameQuiz, updateGameQuiz, cancelGameQuiz } from "@/api/game-quiz";
+import { getGameQuiz, createGameQuiz, updateGameQuiz, endGameQuiz, cancelGameQuiz } from "@/api/game-quiz";
 import { hasRole, hasPermission } from "@/utils/util";
 import { nextTick, onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
@@ -687,6 +706,7 @@ const page = reactive({
 });
 
 const form = reactive({
+  id: null,
   siteId: null,
   quizTitle: null,
   gameType: null,
@@ -879,6 +899,7 @@ function showDialog(type) {
     gameQuizForm.value.resetFields();
   }
   if (type === 'CREATE') {
+    form.id = null;
     form.siteId = request.siteId;
     choiceOne.value = [];
     choiceTwo.value = [];
@@ -887,6 +908,8 @@ function showDialog(type) {
     form.questionOne = t('gameQuiz.questions.1');
     uiControl.dialogTitle = t('fields.addGameQuiz');
   } else if (type === 'EDIT') {
+    uiControl.dialogTitle = t('fields.edit');
+  } else if (type === 'END') {
     uiControl.dialogTitle = t('fields.endQuiz');
   } else if (type === 'VIEW') {
     uiControl.dialogTitle = t('fields.quizDetails');
@@ -897,6 +920,17 @@ function showDialog(type) {
 
 function showEdit(quiz) {
   showDialog('EDIT');
+  nextTick(() => {
+    for (const key in quiz) {
+      if (Object.keys(form).find(k => k === key)) {
+        form[key] = quiz[key];
+      }
+    }
+  });
+}
+
+function showEnd(quiz) {
+  showDialog('END');
   nextTick(() => {
     for (const key in quiz) {
       if (Object.keys(endForm).find(k => k === key)) {
@@ -923,6 +957,14 @@ function showDetails(quiz) {
   });
 }
 
+function submit() {
+  if (uiControl.dialogType === 'CREATE') {
+    create();
+  } else if (uiControl.dialogType === 'EDIT') {
+    edit();
+  }
+}
+
 function create() {
   form.choiceOne = constructChoice(1)
   form.choiceTwo = constructChoice(2)
@@ -933,6 +975,20 @@ function create() {
       uiControl.dialogVisible = false;
       await loadGameQuiz();
       ElMessage({ message: t('message.addSuccess'), type: "success" });
+    }
+  });
+}
+
+function edit() {
+  form.choiceOne = constructChoice(1)
+  form.choiceTwo = constructChoice(2)
+  form.choiceThree = constructChoice(3)
+  gameQuizForm.value.validate(async (valid) => {
+    if (valid) {
+      await updateGameQuiz(form.id, form);
+      uiControl.dialogVisible = false;
+      await loadGameQuiz();
+      ElMessage({ message: t('message.updateSuccess'), type: "success" });
     }
   });
 }
@@ -983,7 +1039,7 @@ async function endQuiz() {
   answers.answerThree = endForm.answerThree
   endQuizForm.value.validate(async (valid) => {
     if (valid) {
-      await updateGameQuiz(endForm.id, answers);
+      await endGameQuiz(endForm.id, answers);
       uiControl.dialogVisible = false;
       await loadGameQuiz();
       ElMessage({ message: t('message.updateSuccess'), type: "success" });

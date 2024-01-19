@@ -317,9 +317,10 @@ const uiControl = reactive({
     { key: 4, displayName: 'CANCEL', value: 'CANCEL' }
   ],
   gameType: [
-    { key: 1, displayName: 'SPORT', value: 'SPORT' },
-    { key: 2, displayName: 'ESPORT', value: 'ESPORT' },
-  ]
+    { key: 1, displayName: 'NBA', value: 'NBA' },
+    { key: 2, displayName: 'SPORT', value: 'SPORT' },
+    { key: 3, displayName: 'ESPORT', value: 'ESPORT' },
+  ],
 });
 const page = reactive({
   pages: 0,
