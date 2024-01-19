@@ -82,10 +82,9 @@
 
     <div class="bottom-content">
       <p>
-        <img :src="require(`../../../assets/images/promotion/title_event_content.png`)" />
+        <img :src="require(`../../../assets/images/promotion/title_event_time.png`)" />
       </p>
-      <p>活动时间:</p>
-      <table>
+      <table v-if="cardInfo.cardDetail.setting">
         <tbody>
           <tr>
             <td>期数</td>
