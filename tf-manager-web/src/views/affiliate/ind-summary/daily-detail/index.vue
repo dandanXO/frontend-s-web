@@ -319,6 +319,7 @@ const request = reactive({
   recordTime: [defaultStartDate, defaultEndDate],
   loginNameList: null,
   affiliateCode: null,
+  affiliateLevel: 'SUPER_AFFILIATE',
 })
 
 const total = reactive({
@@ -331,9 +332,9 @@ async function loadSites() {
   request.siteId = siteList.list.filter(x => x.siteCode === 'IND')[0].id
   const { data: affiliates } = await getAffiliateList(request.siteId)
 
-  affiliateNames.value = affiliates.map(a => {
-    return { name: a.loginName }
-  })
+  affiliateNames.value = affiliates
+    .filter(a => a.affiliateLevel === 'SUPER_AFFILIATE')
+    .map(a => ({ name: a.loginName }))
 }
 
 function convertDate(date) {
@@ -407,6 +408,8 @@ function checkQuery() {
   if (request.loginNameList != null) {
     query.loginNameList = request.loginNameList.join(',')
   }
+
+  query.affiliateLevel = request.affiliateLevel
 
   return query
 }

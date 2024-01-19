@@ -320,6 +320,7 @@ const request = reactive({
   recordTime: [defaultStartDate, defaultEndDate],
   loginNameList: null,
   affiliateCode: null,
+  affiliateLevel: 'SUPER_AFFILIATE',
 })
 
 const route = useRoute()
@@ -367,7 +368,11 @@ async function loadSitesWithPreDefineAffiliate() {
 
   const loginNameArray = getFromRouter.loginNameList.split(',')
   affiliateNames.value = affiliates
-    .filter(a => loginNameArray.includes(a.loginName))
+    .filter(
+      a =>
+        loginNameArray.includes(a.loginName) &&
+        a.affiliateLevel === 'SUPER_AFFILIATE'
+    )
     .map(a => ({ name: a.loginName }))
 }
 
@@ -444,6 +449,8 @@ function checkQuery() {
   } else {
     query.loginNameList = getFromRouter.loginNameList
   }
+
+  query.affiliateLevel = request.affiliateLevel
 
   return query
 }
