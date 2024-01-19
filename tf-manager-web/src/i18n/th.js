@@ -1486,6 +1486,7 @@ export default {
     'Affiliate Under review': 'พันธมิตรอยู่ระหว่างการตรวจสอบ',
     BW1: 'BW1',
     BW2: 'BW2',
+    BW3: 'BW3',
     'To be affiliate paid': 'เพื่อเป็นพันธมิตรจ่าย',
     'Affiliate Payment on going': 'กำลังดำเนินการจ่ายเงินพันธมิตร',
     'Crypto Affiliate Payment on going': 'กำลังจ่ายคลิปโตพันธมิตร',

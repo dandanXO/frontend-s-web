@@ -1799,6 +1799,7 @@ export default {
     'Affiliate Under review': '审核中',
     BW1: 'BW1',
     BW2: 'BW2',
+    BW3: 'BW3',
     'To be affiliate paid': '待支付',
     'Affiliate Payment on going': '支付中',
     'Crypto Affiliate Payment on going': '数字币支付中',
