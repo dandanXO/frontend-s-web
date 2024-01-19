@@ -104,11 +104,50 @@
             <el-input v-model="eSportInsuranceFormData.transactionId" minlength="9" maxlength="25" />
           </el-form-item>
 
+          <el-button
+            :loading="loadingBtn"
+            size="large"
+            @click="loadESportInsuranceRecords(insuranceRecordsParam)"
+            class="common-btn second"
+          >
+            申请记录
+          </el-button>
+
           <el-button :loading="loadingBtn" size="large" @click="submitForm(eSportInsuranceFormRef)" class="common-btn">
             确定
           </el-button>
         </el-form>
       </div>
+    </el-dialog>
+
+    <el-dialog v-model="insuranceRecordsModalVisible" title="电竞场馆申请记录" width="80%" center align-center>
+      <el-table :data="insuranceRecords" stripe style="width: 100%">
+        <el-table-column prop="loginName" label="账号" />
+        <el-table-column prop="transactionId" label="注单号" />
+        <el-table-column prop="createTime" label="申请时间" width="200px" />
+        <el-table-column prop="status" label="状态" />
+        <el-table-column prop="remark" label="备注" />
+      </el-table>
+
+      <template v-if="insuranceRecordsParam.total > insuranceRecordsParam.size">
+        <div class="record-pagination">
+          <el-icon @click="recordPageControl('left')">
+            <ArrowLeft />
+          </el-icon>
+
+          <span>{{ insuranceRecordsParam.current }} / {{ insuranceRecordsParam.maxPage }}</span>
+
+          <el-icon @click="recordPageControl('right')">
+            <ArrowRight />
+          </el-icon>
+        </div>
+      </template>
+
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button type="primary" @click="insuranceRecordsModalVisible = false">确认</el-button>
+        </span>
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -123,9 +162,12 @@ import { userStore } from "@/store";
 import {
   getUpcomingESportMatches,
   getESportInsurancePlatformOptions,
-  submitESportInsuranceForm
+  submitESportInsuranceForm,
+  getESportInsuranceRecords
 } from "@/api/promotion/eSportSafety";
 import { getLoggedInPlatformList } from "@/api/platform/platform";
+
+import { ArrowRight, ArrowLeft } from "@element-plus/icons-vue";
 
 const store = userStore();
 const matchDetails = ref([]);
@@ -220,6 +262,7 @@ const init = () => {
     .then((res) => {
       if (res.code === 0 && res.data) {
         matchDetails.value = Array.isArray(res.data) ? res.data : [res.data];
+        insuranceRecordsParam.gameType = matchDetails.value[0].gameType;
       }
     })
     .catch((err) => {
@@ -278,6 +321,50 @@ const getPlatList = () => {
     platformsList.value = res;
     platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("ESPORT"));
   });
+};
+
+// get Insurance Records
+const insuranceRecordsParam = reactive({
+  gameType: "",
+  size: 5,
+  current: 1,
+  total: 0,
+  maxPage: 0
+});
+
+const insuranceRecords = ref([]);
+const insuranceRecordsModalVisible = ref(false);
+const loadESportInsuranceRecords = (param) => {
+  getESportInsuranceRecords(param).then((res) => {
+    isESportInsuranceModalVisible.value = false;
+    insuranceRecordsModalVisible.value = true;
+    insuranceRecords.value = res.data.records;
+
+    insuranceRecordsParam.gameType = res.data.records[0].gameType;
+    insuranceRecordsParam.records = res.data.records;
+    insuranceRecordsParam.current = res.data.current;
+    insuranceRecordsParam.total = res.data.total;
+    insuranceRecordsParam.maxPage = Math.ceil(insuranceRecordsParam.total / insuranceRecordsParam.size);
+  });
+};
+
+const recordPageControl = (direction) => {
+  if (direction === "left") {
+    if (insuranceRecordsParam.current > 1) {
+      insuranceRecordsParam.current--;
+      loadESportInsuranceRecords(insuranceRecordsParam);
+    } else {
+      ElMessage.error("已经是第一页了");
+    }
+  } else {
+    let maxPage = insuranceRecordsParam.maxPage;
+    if (maxPage === insuranceRecordsParam.current) {
+      ElMessage.error("这是最后一页了");
+    } else {
+      insuranceRecordsParam.current++;
+      loadESportInsuranceRecords(insuranceRecordsParam);
+    }
+  }
 };
 
 onMounted(() => {
@@ -365,6 +452,20 @@ onMounted(() => {
         font-weight: bolder;
       }
     }
+  }
+}
+
+.record-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+  align-items: center;
+  font-size: 26px;
+  line-height: 1;
+
+  span {
+    font-size: 20px;
   }
 }
 </style>
