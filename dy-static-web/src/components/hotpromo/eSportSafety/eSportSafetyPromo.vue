@@ -3,7 +3,7 @@
     <swiper
       :slides-per-view="matchDetails.length > 1 ? 2 : 1"
       :spaceBetween="20"
-      :loop="true"
+      :loop="false"
       @swiper="onSwiper"
       @slideChange="onSlideChange"
       class="swiper-wrapper"
@@ -125,7 +125,7 @@
       </div>
     </el-dialog>
 
-    <el-dialog v-model="insuranceRecordsModalVisible" title="电竞场馆申请记录" width="80%" center align-center>
+    <el-dialog v-model="insuranceRecordsModalVisible" title="电竞场馆申请记录" width="800px" center align-center>
       <el-table :data="insuranceRecords" stripe style="width: 100%">
         <el-table-column prop="loginName" label="账号" />
         <el-table-column prop="transactionId" label="注单号" />
