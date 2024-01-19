@@ -209,8 +209,14 @@
           </template>
         </el-table-column> -->
         <el-table-column
-          prop="depositCount"
-          :label="t('fields.totalMemberDepositCount')"
+          prop="depositMembersCount"
+          :label="t('fields.totalDepositMemberCount')"
+          align="center"
+          width="120"
+        />
+        <el-table-column
+          prop="betMembersCount"
+          :label="t('fields.totalBetMemberCount')"
           align="center"
           width="120"
         />
@@ -426,7 +432,7 @@ function getSummaries(param) {
         sums[index] = t('fields.total')
       } else if (index > 1) {
         var prop = column.property
-        if (index === 5 || index === 6 || index === 11) {
+        if (index === 5 || index === 6 || index === 11 || index === 12) {
           sums[index] = total.data[prop]
         } else if (index === 4) {
           // profit depositWithdrawal = deposit - withdrawal
