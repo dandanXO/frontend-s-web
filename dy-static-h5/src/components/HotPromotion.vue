@@ -19,7 +19,7 @@
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-tiger-card'" />
     <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
-    <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
+    <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" :promo-code="list.promoCode" />
     <UpcomingMatchPromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" platformType="NBA" />
     <UpcomingMatchPromo
       v-if="
@@ -41,6 +41,22 @@
     <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz' && !isCommonPromo"></EsportQuiz>
     <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery' && !isCommonPromo && store.token"></LotteryPromo>
     <GiftPromo v-if="list.redirectUrl === 'dy2-gift' && !isCommonPromo && store.token"></GiftPromo>
+
+    <AsiaCup2024Promo
+      v-if="
+        (list.redirectUrl === 'asian-cup-2024' || list.redirectUrl === 'dy-promo-application-A') &&
+        !isCommonPromo &&
+        store.token
+      "
+    ></AsiaCup2024Promo>
+    <BasketballHot v-if="list.redirectUrl === '/dy-promo-basketball' && !isCommonPromo"></BasketballHot>
+    <LplSummerPromo
+      v-if="
+        (list.redirectUrl === 'lpl-summer' || list.redirectUrl === 'dy-promo-application-B') &&
+        !isCommonPromo &&
+        store.token
+      "
+    ></LplSummerPromo>
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -78,6 +94,9 @@ import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 import PrivilegeInvite from "../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue";
+import AsiaCup2024Promo from "../components/hotpromo/asiacup2024/AsiaCup2024Promo.vue";
+import BasketballHot from "../components/hotpromo/basketballHot/BasketballHot.vue";
+import LplSummerPromo from "../components/hotpromo/lplsummer/LplSummerPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -95,7 +114,10 @@ export default defineComponent({
     EsportQuiz,
     LotteryPromo,
     GiftPromo,
-    PrivilegeInvite
+    PrivilegeInvite,
+    AsiaCup2024Promo,
+    BasketballHot,
+    LplSummerPromo
   },
   props: {
     list: {
@@ -160,7 +182,12 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-gift" ||
       this.list.redirectUrl === "Dongying-refer" ||
       this.list.redirectUrl === "dy2-vip-upgrade-bonus" ||
-      this.list.redirectUrl === "dy2-refer-bonus"
+      this.list.redirectUrl === "dy2-refer-bonus" ||
+      this.list.redirectUrl === "asian-cup-2024" ||
+      this.list.redirectUrl === "/dy-promo-basketball" ||
+      this.list.redirectUrl === "lpl-summer" ||
+      this.list.redirectUrl === "dy-promo-application-A" ||
+      this.list.redirectUrl === "dy-promo-application-B"
     ) {
       this.isCommonPromo = false;
     } else {

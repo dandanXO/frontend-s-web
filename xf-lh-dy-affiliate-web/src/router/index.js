@@ -32,6 +32,18 @@ export const constantRoutes = [
     component: () => import(/* webpackChunkName: "registerAffiliate" */"../views/dy/register/index.vue")
   },
   {
+    path: "/ind/login",
+    name: "IND Login",
+    meta: { hidden: true },
+    component: () => import(/* webpackChunkName: "loginAffiliate" */"../views/ind/login/index.vue")
+  },
+  {
+    path: "/ind/register",
+    name: "IND Register",
+    meta: { hidden: true },
+    component: () => import(/* webpackChunkName: "registerAffiliate" */"../views/ind/register/index.vue")
+  },
+  {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
@@ -241,6 +253,28 @@ export const constantRoutes = [
         name: 'Contact Us',
         meta: {
           title: 'contact-us',
+        },
+      },
+    ],
+  },
+  {
+    path: '/report',
+    component: Layout,
+    children: [
+      {
+        path: 'daily-detail',
+        component: () => import('../views/report/daily-detail/index.vue'),
+        name: 'Daily Detail',
+        meta: {
+          title: 'Daily Detail',
+        },
+      },
+      {
+        path: 'daily-summary',
+        component: () => import('../views/report/daily-summary/index.vue'),
+        name: 'Daily Summary',
+        meta: {
+          title: 'Daily Summary',
         },
       },
     ],

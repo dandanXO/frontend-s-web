@@ -8,6 +8,7 @@
       :options="bankList"
       option-value="id"
       option-label="name"
+      ref="refSelectBank"
       :rules="verifyBank"
       @update:model-value="selectBank()"
     />
@@ -30,11 +31,10 @@ const props = defineProps({
   }
 });
 const emits = defineEmits(["selected", "successful"]);
-const verifyBank = ref([
-  (val) => (props.bankList && !!val) || "请输入银行"
-]);
+const verifyBank = ref([(val) => (props.bankList && !!val) || "请输入银行"]);
 
 const selectedBankId = ref();
+const refSelectBank = ref();
 
 function selectBank() {
   // console.log(selectedBankId)
@@ -42,6 +42,7 @@ function selectBank() {
 }
 
 async function validateBank(value) {
+  refSelectBank.value.validate();
   if (value !== null && value !== "") {
     return true;
   } else {
@@ -50,16 +51,15 @@ async function validateBank(value) {
 }
 const qs = require("qs");
 async function submitDeposit(deposit) {
-
   const obj = {
     bankCardId: deposit.bankCardId,
     localAmount: deposit.localAmount,
     paymentId: deposit.paymentId,
     bankId: selectedBankId.value.id
-  }
+  };
 
   if (deposit.privilegeId) {
-    obj.privilegeId = deposit.privilegeId
+    obj.privilegeId = deposit.privilegeId;
   }
   await cashier.post("/session/payment/submit", qs.stringify(obj)).then((res) => {
     if (res.code === 0) {

@@ -88,6 +88,7 @@
                 </div>
               </div>
               <div class="inner">
+                <!-- <pre>SelectedPromo: ~{{ selectedPromo }}</pre> -->
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
                   <HotPromotion :list="selectedPromo" />
                 </div>
@@ -289,7 +290,7 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      const platformApiUrl = (store.hasToken() && window.location.pathname !== "/promotion") ? "/session/loggedInPromoPages" : "/promo/page";
+      const platformApiUrl = (store.hasToken() || (window.location.pathname === "/promotion" && extensionState.value===true)) ? "/session/loggedInPromoPages" : "/promo/page";
 
       isFetchingPromo.value = window.location.pathname === "/promotion";
 
@@ -373,6 +374,9 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .promo-container {
+  h3 {
+    font-size: 18px;
+  }
   .selected-promo {
     ol {
       padding: 0 15px;

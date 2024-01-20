@@ -120,3 +120,15 @@ export function redeemGift(param) {
 export function getGiftRecord() {
   return server.EVENT.get(`/gift/record`, {});
 }
+
+export function promoApply(param) {
+  const { promoCode, promoTitle } = param;
+  return server.EVENT.post(`/promo-application/apply`, { promoCode, promoTitle });
+}
+
+export function promoApplyWithGameType(param) {
+  const { promoCode, promoTitle, gameType } = param;
+  return server.EVENT.post(`/promo-application/apply`, { promoCode, promoTitle, gameType });
+}
+
+

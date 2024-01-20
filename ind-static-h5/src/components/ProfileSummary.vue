@@ -23,7 +23,7 @@
   </div>
 
   <div class="infoboard-container" :class="{ 'q-pa-md': !homeProfile, 'with-top-download': topDownload }">
-    <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" />
+    <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-wrapper-extra">
         <div class="logo-img">
@@ -357,10 +357,10 @@ onMounted(() => {
   background: linear-gradient(180deg, #2d0f54 0%, #101114 100%);
   box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
   overflow-x: hidden;
-
   position: fixed;
   top: 0;
   width: 100%;
+  // min-height: 82px;
   max-width: 500px;
   z-index: 999;
   transition: 0.3s all;
@@ -387,7 +387,7 @@ onMounted(() => {
       gap: 0;
       justify-content: space-between;
       padding: 0 12px;
-      overflow-y: hidden;
+      // overflow-y: hidden;
 
       .profile-pic {
         margin-top: -20px;
@@ -396,6 +396,9 @@ onMounted(() => {
     }
   }
 
+  .profile-dropdown {
+    margin-top: 15px;
+  }
   .profile-wrapper {
     display: flex;
     align-items: center;
@@ -403,7 +406,7 @@ onMounted(() => {
     gap: 12px;
     padding-top: 10px;
     padding-bottom: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 4px;
     width: 100%;
     position: relative;
 
@@ -429,7 +432,7 @@ onMounted(() => {
     }
 
     .profile-pic-frame {
-      background-image: url(../assets/images/common/profile-frame.png);
+      // background-image: url(../assets/images/common/profile-frame.png);
       width: 70px;
       height: 70px;
       background-size: 100%;
@@ -516,7 +519,8 @@ onMounted(() => {
   .profile-wrapper-extra {
     display: flex;
     align-items: center;
-    padding-top: 16px;
+    padding-top: 10px;
+    margin-bottom: auto;
     width: 100%;
   }
 

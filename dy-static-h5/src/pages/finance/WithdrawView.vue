@@ -215,7 +215,7 @@
 
 <script lang="js">
 /* eslint-disable */
-import {defineComponent, reactive, ref, onMounted, computed} from "vue";
+import {defineComponent, reactive, ref, onMounted, computed, onActivated} from "vue";
 import {userStore} from "stores/index";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
@@ -246,7 +246,7 @@ export default defineComponent({
     });
     const withdrawalMethods = ref([]);
     const selectedWithdrawalMethod = ref([]);
-    onMounted(() => {
+    onActivated(() => {
       getWithdrawalMethods();
       store.getBalance();
       // loadPlatform()
@@ -332,6 +332,7 @@ export default defineComponent({
       withdrawInfo.cardId = null;
       selectedWithdrawalMethod.value = method;
       withdrawInfo.withdrawCode = method.code;
+      console.log("WITHDRAW CODE:" + withdrawInfo.withdrawCode)
       isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
       isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY')
       isALIPAY.value = withdrawInfo.withdrawCode.includes('ALIPAY')

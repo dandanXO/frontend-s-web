@@ -60,7 +60,12 @@
       </q-tab>
     </q-tabs>
 
-    <q-tab-panels v-model="activeKey" class="earn-money-panels">
+    <q-tab-panels
+      v-model="activeKey"
+      class="earn-money-panels"
+      v-touch-swipe.left="swipeLeft"
+      v-touch-swipe.right="swipeRight"
+    >
       <q-tab-panel name="about">
         <AgencyPolicy></AgencyPolicy>
       </q-tab-panel>
@@ -86,6 +91,28 @@ import EarnComponent from "../components/earn-money/EarnComponent.vue";
 import ProfileSummary from "components/ProfileSummary.vue";
 
 const activeKey = ref("about");
+
+// Define the order of the tabs
+const tabsOrder = ["about", "history", "daily", "earn"];
+
+// Function to find the next index with wrapping
+const findNextIndex = (currentIndex, arrayLength) => (currentIndex + 1) % arrayLength;
+
+// Function to find the previous index with wrapping
+const findPreviousIndex = (currentIndex, arrayLength) => (currentIndex - 1 + arrayLength) % arrayLength;
+
+const swipeLeft = () => {
+  const currentIndex = tabsOrder.findIndex((tab) => tab === activeKey.value);
+  const nextIndex = findNextIndex(currentIndex, tabsOrder.length);
+  activeKey.value = tabsOrder[nextIndex];
+};
+
+// Handle swipe right
+const swipeRight = () => {
+  const currentIndex = tabsOrder.findIndex((tab) => tab === activeKey.value);
+  const previousIndex = findPreviousIndex(currentIndex, tabsOrder.length);
+  activeKey.value = tabsOrder[previousIndex];
+};
 </script>
 
 <style scoped lang="scss">
@@ -93,23 +120,33 @@ const activeKey = ref("about");
   padding-top: 50px;
   .earn-money-tabs {
     position: fixed;
-    top: 76px;
+    padding-left: 16px;
+    padding-right: 16px;
+    top: 68px;
     left: 0;
-    z-index: 2;
+    z-index: 999;
     background: #101115;
     width: 100%;
     padding-bottom: 6px;
-    padding-top: 6px;
+    padding-top: 12px;
+
+    :deep(.q-tabs__content) {
+      background: #422171;
+      border-radius: 12px;
+      padding: 4px;
+    }
 
     :deep(.q-tab) {
-      margin: 0 15px;
-      color: rgba(255, 255, 255, 0.3);
-      border-radius: 4px;
+      // margin: 0 15px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.5);
+      border-radius: 8px;
       height: 55px;
-      width: 66px;
-      background: rgba(232, 232, 232, 0.2);
+      width: 25%;
+      background: #4f26a6;
       font-size: 12px;
       font-weight: 500;
+      border: 2px solid #303030;
     }
 
     :deep(.q-tab__content) {
@@ -119,6 +156,7 @@ const activeKey = ref("about");
     :deep(.q-tab--active) {
       color: white;
       background: #5c46e7;
+      border: 2px solid #422171;
 
       svg {
         fill: white;
@@ -136,7 +174,7 @@ const activeKey = ref("about");
   }
 
   svg {
-    fill: rgba(255, 255, 255, 0.3);
+    fill: rgba(255, 255, 255, 0.5);
   }
 }
 </style>

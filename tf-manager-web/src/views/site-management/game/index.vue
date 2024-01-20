@@ -111,6 +111,14 @@
         >
           {{ t('fields.massImport') }}
         </el-button>
+        <el-button
+          size="mini"
+          type="primary"
+          v-permission="['sys:game:export']"
+          @click="requestExportExcel"
+        >
+          {{ t('fields.requestExportToExcel') }}
+        </el-button>
       </div>
     </div>
 
@@ -511,6 +519,17 @@
       :page-count="page.pages"
       :current-page="request.current"
     />
+    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
+               :close-on-click-modal="false" :close-on-press-escape="false"
+    >
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.DownloadManager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
+    </el-dialog>
   </div>
 </template>
 
@@ -526,6 +545,7 @@ import {
   updateGame,
   getGameTypes,
   createBatchGame,
+  getExport,
 } from '../../../api/game'
 import {
   getPlatformExcelMapping, getPlatformsBySite,
@@ -537,6 +557,7 @@ import { hasRole, hasPermission } from '../../../utils/util'
 import { useStore } from '../../../store';
 import { TENANT } from "../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
+import moment from 'moment'
 
 const { t } = useI18n();
 const store = useStore();
@@ -590,6 +611,7 @@ const uiControl = reactive({
   removeBtn: true,
   importDialogVisible: false,
   imageSelectionVisible: false,
+  messageVisible: false,
 })
 const page = reactive({
   pages: 0,
@@ -610,7 +632,9 @@ const request = reactive({
   name: null,
   platform: null,
   siteId: null,
-  gameType: null
+  gameType: null,
+  requestBy: null,
+  requestTime: null,
 })
 const imageRequest = reactive({
   size: 10,
@@ -1037,6 +1061,15 @@ function handleChangeSite(value) {
 //     }
 //   })
 // }
+
+async function requestExportExcel() {
+  request.requestBy = store.state.user.name;
+  request.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+  const { data: ret } = await getExport(request);
+  if (ret) {
+    uiControl.messageVisible = true;
+  }
+}
 
 function selectImage(item) {
   selectedImage.id = item.id

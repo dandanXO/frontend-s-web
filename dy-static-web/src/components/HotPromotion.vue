@@ -13,12 +13,18 @@
     <SportSafetyPromo v-if="!isCommonPromo && list.redirectUrl === 'sport-safety'" />
     <NbaGamePromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token" />
-    <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu' && store.token" />
+    <HongBaoYuPromo
+      v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu' && store.token"
+      :promo-code="list.promoCode"
+    />
     <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
     <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz' && !isCommonPromo"></EsportQuiz>
     <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery' && !isCommonPromo && store.token"></LotteryPromo>
     <GiftPromo v-if="list.redirectUrl === 'dy2-gift' && !isCommonPromo && store.token"></GiftPromo>
+    <AsianCup2024 v-if="list.redirectUrl === 'dy-promo-application-A' && !isCommonPromo && store.token"></AsianCup2024>
+    <BasketballHot v-if="list.redirectUrl === '/dy-promo-basketball' && !isCommonPromo && store.token"></BasketballHot> 
+    <LPLSummer v-if="list.redirectUrl === 'dy-promo-application-B' && !isCommonPromo && store.token"></LPLSummer>
     <!-- <VIPUpgradePromo v-if="list.redirectUrl === 'dy2-vip-upgrade-bonus' && !isCommonPromo && store.token" />
     <ReferBonusPromo v-if="list.redirectUrl === 'dy2-refer-bonus' && !isCommonPromo && store.token" /> -->
     <PrivilegeInvite
@@ -62,6 +68,9 @@ import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import PrivilegeInvite from "../components/hotpromo/privilegeInvite/PrivilegeInvite.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
+import AsianCup2024 from "../components/hotpromo/asian-cup-2024/AsianCup2024.vue";
+import BasketballHot from "../components/hotpromo/basketball-hot/BasketballHot.vue";
+import LPLSummer from "../components/hotpromo/lpl-summer/LPLSummer.vue";
 // import VIPUpgradePromo from "../components/hotpromo/vipupgrade/VIPUpgradePromo.vue";
 // import ReferBonusPromo from "../components/hotpromo/referbonus/ReferBonusPromo.vue";
 import { ElMessage } from "element-plus";
@@ -86,6 +95,9 @@ export default defineComponent({
     LotteryPromo,
     PrivilegeInvite,
     GiftPromo,
+    AsianCup2024,
+    BasketballHot,
+    LPLSummer
     // VIPUpgradePromo,
     // ReferBonusPromo
     // DailyBonus
@@ -224,6 +236,9 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-lottery" ||
       this.list.redirectUrl === "Dongying-quiz" ||
       this.list.redirectUrl === "dy2-gift" ||
+      this.list.redirectUrl === "dy-promo-application-A" ||
+      this.list.redirectUrl === "/dy-promo-basketball" ||
+      this.list.redirectUrl === "dy-promo-application-B" ||
       this.list.redirectUrl === "Dongying-refer" ||
       this.list.redirectUrl === "dy2-vip-upgrade-bonus" ||
       this.list.redirectUrl === "dy2-refer-bonus"

@@ -17,6 +17,63 @@
             :value="item.id"
           />
         </el-select>
+        <el-select
+          filterable
+          clearable
+          v-model="request.affiliateId"
+          size="small"
+          :placeholder="t('fields.affiliate')"
+          class="filter-item"
+          style="width: 200px; margin-left: 5px;"
+        >
+          <el-option
+            v-for="item in list.affiliates"
+            :key="item.affiliateId"
+            :label="item.loginName"
+            :value="item.affiliateId"
+          />
+        </el-select>
+        <el-select
+          filterable
+          clearable
+          v-model="request.paymentIds"
+          size="small"
+          :placeholder="t('fields.paymentName')"
+          class="filter-item"
+          style="width: 200px; margin-left: 5px;"
+        >
+          <el-option
+            v-for="item in list.paymentInfo"
+            :key="item.id"
+            :label="item.paymentName"
+            :value="item.id"
+          />
+        </el-select>
+        <el-select
+          filterable
+          clearable
+          v-model="request.withdrawPlatformId"
+          size="small"
+          :placeholder="t('fields.withdrawPlatformName')"
+          class="filter-item"
+          style="width: 200px; margin-left: 5px;"
+        >
+          <el-option
+            v-for="item in list.siteWithdrawPlatform"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-select>
+        <el-button
+          style="margin-left: 20px"
+          icon="el-icon-search"
+          size="mini"
+          type="success"
+          @click="loadAffiliateFinancialConfig()"
+        >
+          {{ t('fields.search') }}
+        </el-button>
       </div>
       <div class="btn-group">
         <el-button
@@ -45,17 +102,35 @@
         size="small"
         label-width="150px"
       >
-        <el-form-item :label="t('fields.affiliateCode')" prop="affiliateCode" required>
-          <el-input v-model="form.affiliateCode" style="width: 350px;" maxlength="11" />
-        </el-form-item>
-        <el-form-item :label="t('fields.paymentName')" prop="paymentId" required>
+        <el-form-item :label="t('fields.affiliate')" prop="affiliateId" required>
           <el-select
+            filterable
             clearable
-            v-model="form.paymentId"
+            v-model="form.affiliateId"
+            size="small"
+            :placeholder="t('fields.affiliate')"
+            class="filter-item"
+            style="width: 350px; margin-bottom: 10px"
+          >
+            <el-option
+              v-for="item in list.affiliates"
+              :key="item.affiliateId"
+              :label="item.loginName"
+              :value="item.affiliateId"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.paymentName')" prop="paymentIds" required>
+          <el-select
+            filterable
+            multiple
+            clearable
+            v-model="selected.paymentId"
             size="small"
             :placeholder="t('fields.paymentName')"
             class="filter-item"
             style="width: 350px; margin-bottom: 10px"
+            @change="handleChangePayments()"
           >
             <el-option
               v-for="item in list.paymentInfo"
@@ -65,13 +140,13 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.withdrawPlatform')" prop="withdrawPlatformId" required>
+        <el-form-item :label="t('fields.withdrawPlatformName')" prop="withdrawPlatformId" required>
           <el-select
             filterable
             clearable
             v-model="form.withdrawPlatformId"
             size="small"
-            :placeholder="t('fields.pleaseChoose')"
+            :placeholder="t('fields.withdrawPlatformName')"
             class="filter-item"
             style="width: 350px;"
           >
@@ -104,8 +179,18 @@
         highlight-current-row
         @selection-change="handleSelectionChange"
         :empty-text="t('fields.noData')"
-        style="width: 100%;"
+        style="width: 100%"
       >
+        <el-table-column prop="loginName" :label="t('fields.loginName')" width="150">
+          <template
+            #default="scope"
+            v-if="hasPermission(['sys:affiliate:detail'])"
+          >
+            <router-link :to="`details/${scope.row.affiliateId}?site=${scope.row.siteId}`">
+              <el-link type="primary">{{ scope.row.loginName }}</el-link>
+            </router-link>
+          </template>
+        </el-table-column>
         <el-table-column prop="affiliateCode" :label="t('fields.affiliateCode')" width="150">
           <template #default="scope">
             <span v-if="scope.row.affiliateCode === null">-</span>
@@ -153,6 +238,7 @@ import { getSiteListSimple } from '../../../api/site'
 import { getAffiliateFinancialConfigList, createAffiliateFinancialConfig, updateAffiliateFinancialConfig } from '../../../api/affiliate-financial-config'
 import { getWithdrawPlatforms } from "../../../api/withdraw-platform";
 import { getSiteWithdrawPlatform } from "../../../api/site-withdraw-platform";
+import { getAffiliateList } from '../../../api/affiliate-record'
 import { required } from '../../../utils/validate'
 import { ElMessage } from 'element-plus'
 import { useStore } from '../../../store'
@@ -182,6 +268,7 @@ const list = reactive({
   withdrawPlatform: [],
   siteWithdrawPlatform: [],
   paymentInfo: [],
+  affiliates: [],
 })
 const page = reactive({
   pages: 1,
@@ -191,14 +278,16 @@ const page = reactive({
 const form = reactive({
   id: null,
   affiliateCode: null,
-  paymentId: null,
+  paymentIds: null,
   status: true,
   withdrawPlatformId: null,
+  affiliateId: null,
 })
 const formRules = reactive({
   name: [required(t('message.validateNameRequired'))],
   code: [required(t('message.validateCodeRequired'))],
 })
+const selected = reactive({ paymentId: [] })
 
 async function loadSites() {
   const { data: ret } = await getSiteListSimple()
@@ -214,6 +303,9 @@ async function loadAffiliateFinancialConfig() {
   const { data: ret } = await getAffiliateFinancialConfigList(request)
   page.records = ret.records
   page.pages = ret.pages
+  page.records.forEach(item => {
+    item.paymentName = item.paymentName.split(",").join(", ")
+  })
 }
 
 async function loadSiteWithdrawPlatform(siteId) {
@@ -234,10 +326,20 @@ async function loadWithdrawPlatform() {
   list.withdrawPlatform = ret.records
 }
 
+async function loadAffiliates() {
+  const { data: ret } = await getAffiliateList(request.siteId);
+  list.affiliates = ret
+}
+
 async function handleChangeSite() {
   await loadAffiliateFinancialConfig()
   await loadPayment()
   await loadSiteWithdrawPlatform(request.siteId)
+  await loadAffiliates()
+}
+
+function handleChangePayments() {
+  form.paymentIds = selected.paymentId.join(',')
 }
 
 function changeStatus(data, status) {
@@ -253,6 +355,15 @@ function showEdit(data) {
         form[key] = data[key]
       }
     }
+    console.log(form)
+    console.log(data)
+    selected.paymentId = []
+    if (form.paymentIds !== null) {
+      const paymentIdList = form.paymentIds.split(',')
+      paymentIdList.forEach(element => {
+        selected.paymentId.push(Number(element))
+      })
+    }
   })
 }
 
@@ -262,6 +373,7 @@ function showDialog(type) {
       affiliateFinancialConfigForm.value.resetFields()
     }
     form.id = null
+    selected.paymentId = []
     uiControl.dialogTitle = t('fields.addAffiliateFinancialConfig')
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editAffiliateFinancialConfig')
@@ -322,6 +434,7 @@ onMounted(async() => {
     site.value = list.sites[0];
     request.siteId = site.value.id;
   }
+  await loadAffiliates()
   await loadWithdrawPlatform()
   await loadSiteWithdrawPlatform(request.siteId)
   await loadPayment()

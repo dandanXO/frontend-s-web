@@ -3,6 +3,10 @@ export default {
     title: 'TF Dashboard',
     logout: 'Logout',
     changePassword: 'Change Password',
+    status: {
+      OPEN: 'Open',
+      CLOSE: 'Close'
+    }
   },
   affiliate: {
     commissionModel: {
@@ -240,6 +244,7 @@ export default {
     POKER: 'POKER',
     LOTTERY: 'LOTTERY',
     CASUAL: 'CASUAL',
+    NBA: 'NBA'
   },
   homeBannerType: {
     HOME: 'Home',
@@ -271,6 +276,7 @@ export default {
     },
   },
   rebateLevel: {
+    LEVEL_0: 'Level 0',
     LEVEL_1: 'Level 1',
     LEVEL_2: 'Level 2',
     LEVEL_3: 'Level 3',
@@ -624,6 +630,7 @@ export default {
     depositMemberCount: 'Deposit Member Count',
     depositSerialNo: 'Deposit Serial Number',
     depositStatus: 'Deposit Status',
+    depositWithdrawalProfit: 'Deposit Withdrawal Profit',
     describe: 'Describe',
     description: 'Description',
     desktopImage: 'Desktop Image',
@@ -793,6 +800,7 @@ export default {
     last30Min: 'Last 30 Minutes',
     last1Hour: 'Last 1 Hour',
     lastWeek: 'Last Week',
+    latestFetchBetRecordTime: 'Latest Fetch Bet Record Time',
     level: 'Level',
     levelUpCredit: 'Level Up Credit',
     limitNumber: 'Limit Number',
@@ -975,6 +983,7 @@ export default {
     profitpositive: 'Positive Profit',
     profitnegative: 'Negative Profit',
     promo: 'Promo',
+    promoApplication: 'Promo Application',
     promoCode: 'Promo Code',
     promoPages: 'Promotion Pages',
     promoStyle: 'Promo Style',
@@ -1040,6 +1049,7 @@ export default {
     responseBody: 'Response Body',
     resend: 'Resend',
     reset: 'Reset',
+    resettleGameQuiz: 'Resettle Game Quiz',
     result: 'Result',
     resultDate: 'Result Date',
     resultNumber: 'Result Number',
@@ -1171,6 +1181,7 @@ export default {
     totalBalance: 'Total Balance',
     totalBet: 'Total Bet',
     totalBetAmount: 'Total Bet Amount',
+    totalBetMemberCount: 'Total Member Bet Count',
     totalBetRecords: 'Total Bet Records',
     totalBonus: 'Total Bonus',
     totalCommission: 'Total Commission',
@@ -1179,6 +1190,7 @@ export default {
     totalDeposit: 'Total Deposit',
     totalDepositAmount: 'Total Deposit Amount',
     totalDepositCount: 'Total Deposit Count',
+    totalDepositMemberCount: 'Total Member Deposit Count',
     totalDepositedAmount: 'Total deposited amount',
     totalDepositNumber: 'Total Deposit Member',
     totalDownlineAffiliates: 'Total Downline Affiliates',
@@ -1188,6 +1200,8 @@ export default {
     totalFailWithdraw: 'Total Fail Withdraw',
     totalFailWithdrawAmount: 'Total Fail Withdraw Amount',
     totalFirstDeposit: 'Total First Deposit',
+    totalMemberDepositAmount: 'Total Deposit Amount',
+    totalMemberDepositCount: 'Total Deposit Count',
     totalNoOfDeposits: 'Total number of deposits',
     totalNoOfWithdrawals: 'Total number of withdrawals',
     totalPayout: 'Total Payout',
@@ -1760,6 +1774,7 @@ export default {
     validateConfigValueRequired: 'Config Value is required',
     resultCalculateSuccess: 'Result is calculated successfully',
     buildIsInQueue: 'Build is in queue',
+    roleMustOnlyOne: 'Please select a role that requires authorization',
   },
   menu: {
     undefined: '',
@@ -1817,6 +1832,9 @@ export default {
     Applying: 'Applying',
     'Affiliate Applying': 'AffiliateApplying',
     'Affiliate Under review': 'Affiliate Under review',
+    BW1: 'BW1',
+    BW2: 'BW2',
+    BW3: 'BW3',
     'To be affiliate paid': 'To be affiliate paid',
     'Affiliate Payment on going': 'Affiliate Payment on going',
     'Crypto Affiliate Payment on going': 'Crypto Affiliate Payment on going',
@@ -1863,6 +1881,7 @@ export default {
     Gift: 'Gift Management',
     'Gift Info': 'Gift Info',
     'Gift Record': 'Gift Records',
+    'Promo Application': 'Promo Application',
     'Site Management': 'Site Management',
     Message: 'Message',
     Announcement: 'Announcement',

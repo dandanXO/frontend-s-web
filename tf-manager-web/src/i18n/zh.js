@@ -3,6 +3,10 @@ export default {
     title: 'TF仪表板',
     logout: '登出',
     changePassword: '更换密码',
+    status: {
+      OPEN: '开启',
+      CLOSE: '关闭'
+    }
   },
   affiliate: {
     commissionModel: {
@@ -246,6 +250,7 @@ export default {
     POKER: '棋牌',
     LOTTERY: '彩票',
     CASUAL: '小游戏',
+    NBA: 'NBA'
   },
   homeBannerType: {
     HOME: '首页',
@@ -277,6 +282,7 @@ export default {
     },
   },
   rebateLevel: {
+    LEVEL_0: '等级 0',
     LEVEL_1: '等级 1',
     LEVEL_2: '等级 2',
     LEVEL_3: '等级 3',
@@ -377,7 +383,7 @@ export default {
     addFinancialLevel: '新增会员组别',
     addGame: '新增游戏',
     addGameMatch: '新增赛事',
-    addGameQuiz: '新增赛事问答',
+    addGameQuiz: '新增竞猜',
     addGift: '新增奖品',
     addIpLabel: '新增 IP 标签',
     additionalTicketDetail: '加票信息',
@@ -479,7 +485,7 @@ export default {
     bet: '下注金额',
     betAmount: '投注金额',
     betId: '投注单号',
-    belongType: '网页类型',
+    belongType: '代理归属',
     betMoneyChange: '投注账变',
     betMoreThan: '投注金额大于',
     betRebateDetails: '投注返水记录明细',
@@ -629,6 +635,7 @@ export default {
     depositMemberCount: '存款人数',
     depositSerialNo: '存款流水号',
     depositStatus: '存款状态',
+    depositWithdrawalProfit: '存提利润',
     describe: '描述',
     description: '描述',
     desktopImage: '桌面图像',
@@ -799,6 +806,7 @@ export default {
     last30Min: '最近30分钟',
     last1Hour: '最近1小时',
     lastWeek: '上周',
+    latestFetchBetRecordTime: '最近抓取投注记录时间',
     level: '级别',
     levelUpCredit: '升级金额',
     limitNumber: '限量',
@@ -981,6 +989,7 @@ export default {
     profitpositive: '正数',
     profitnegative: '负数',
     promo: '优惠',
+    promoApplication: '优惠申请',
     promoCode: '优惠代码',
     promoPages: '优惠页面',
     promoStyle: '优惠方式',
@@ -1046,6 +1055,7 @@ export default {
     responseBody: '返回参数',
     resend: '重发',
     reset: '重置',
+    resettleGameQuiz: '重新结算竞猜',
     result: '结果',
     resultDate: '开彩日期',
     resultNumber: '开彩号码',
@@ -1177,6 +1187,7 @@ export default {
     totalBalance: '总余额',
     totalBet: '总投注',
     totalBetAmount: '总投注额',
+    totalBetMemberCount: '总下注人数',
     totalBetRecords: '总投注记录',
     totalBonus: '总奖金',
     totalCommission: '总分红',
@@ -1185,6 +1196,7 @@ export default {
     totalDeposit: '总存款',
     totalDepositAmount: '存款总额',
     totalDepositCount: '总存款次数',
+    totalDepositMemberCount: '总充值人数',
     totalDepositedAmount: '存款总额',
     totalDepositNumber: '总充值会员数',
     totalDownlineAffiliates: '总直属代理',
@@ -1194,6 +1206,8 @@ export default {
     totalFailWithdraw: '提款失败数量',
     totalFailWithdrawAmount: '提款失败总额',
     totalFirstDeposit: '总首存用户',
+    totalMemberDepositAmount: '总充值金额',
+    totalMemberDepositCount: '总充值人数',
     totalNoOfDeposits: '存款总数',
     totalNoOfWithdrawals: '提款总数',
     totalPayout: '总派彩',
@@ -1382,7 +1396,7 @@ export default {
     indBonusAmount: '奖励金额',
     indRebateAmount: '返点金额',
     indAdjustAmount: '资金修正金额',
-    grossProfit: '毛利润'
+    grossProfit: '毛利润',
   },
   message: {
     addRemarkSuccess: '新增备注成功',
@@ -1735,6 +1749,7 @@ export default {
     validateConfigValueRequired: '设置值必填',
     resultCalculateSuccess: '结果结算成功',
     buildIsInQueue: '构建等待中',
+    roleMustOnlyOne: '请选择一个需要授权的角色',
   },
   menu: {
     undefined: '',
@@ -1791,6 +1806,9 @@ export default {
     Applying: '申请中',
     'Affiliate Applying': '申请中',
     'Affiliate Under review': '审核中',
+    BW1: 'BW1',
+    BW2: 'BW2',
+    BW3: 'BW3',
     'To be affiliate paid': '待支付',
     'Affiliate Payment on going': '支付中',
     'Crypto Affiliate Payment on going': '数字币支付中',
@@ -1838,6 +1856,7 @@ export default {
     Gift: '奖品兑换管理',
     'Gift Info': '奖品列表',
     'Gift Record': '奖品兑换记录',
+    'Promo Application': '优惠申请记录',
     'Site Management': '站点管理',
     Message: '信息',
     Announcement: '公告',

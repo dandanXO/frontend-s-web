@@ -92,7 +92,6 @@ import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import { api } from "boot/axios";
 import SwiperNav from "../../components/SwiperNav.vue";
-import ContentView from "../../components/ContentView.vue";
 import DialogHeader from "../../atoms//DialogHeader.vue";
 import ConfirmButton from "../../atoms//ConfirmButton.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";

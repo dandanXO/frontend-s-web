@@ -1,6 +1,13 @@
 <template>
   <div>
-    <swiper :slides-per-view="1" :loop="true" @swiper="onSwiper" @slideChange="onSlideChange" class="swiper-wrapper">
+    <swiper
+      :slides-per-view="matchDetails.length > 1 ? 2 : 1"
+      :spaceBetween="20"
+      :loop="false"
+      @swiper="onSwiper"
+      @slideChange="onSlideChange"
+      class="swiper-wrapper"
+    >
       <template v-for="(item, index) in matchDetails" :key="item.id">
         <swiper-slide>
           <div class="bet-info-box">
@@ -14,6 +21,8 @@
               </div>
 
               <div class="bet-info-vs">
+                <span>{{ item.matchTitle }}</span>
+                <br />
                 VS
                 <br />
                 {{ formatDate(item.matchTime).time }}
@@ -50,42 +59,100 @@
     >
       <div class="sport-insurance-modal-container">
         <el-form
+          style="text-align: center"
           label-width="100px"
           id="sport-insurance-form"
           :rules="sportInsuranceFormValidationRules"
           ref="sportInsuranceFormRef"
           :model="sportInsuranceFormData"
         >
-          <el-form-item prop="platform" name="platform" label="投注平台: ">
+          <!-- <el-form-item prop="platform" name="platform" label="投注平台: ">
             <el-select
               v-model="sportInsuranceFormData.platform"
               placeholder="投注平台"
               @focus="loadSportPlatformOptions()"
               clearable
             >
-              <el-option v-for="platform in sportPlatformOptions" :key="platform" :value="platform" :label="platform">
-                {{ platform }}
+              <el-option
+                v-for="platform in sportPlatformOptions"
+                :key="platform.value"
+                :value="platform.value"
+                :label="platform.alias"
+              >
+                {{ platform.alias }}
+              </el-option>
+            </el-select>
+          </el-form-item> -->
+
+          <el-form-item prop="gameMatchId" name="gameMatchId" label="游戏比赛: ">
+            <el-select v-model="sportInsuranceFormData.gameMatchId" placeholder="游戏比赛" clearable>
+              <el-option
+                v-for="item in matchDetails"
+                :key="item.value"
+                :value="item.id"
+                :label="`${item.matchTitle} - (${item.teamOne} vs ${item.teamTwo})`"
+              >
+                {{ `${item.matchTitle} - (${item.teamOne} vs ${item.teamTwo})` }}
               </el-option>
             </el-select>
           </el-form-item>
 
-          <el-form-item prop="gameMatchId" name="gameMatchId" label="" style="display: none">
+          <!-- <el-form-item prop="gameMatchId" name="gameMatchId" label="" style="display: none">
             <el-input v-model="sportInsuranceFormData.gameMatchId" readonly />
-          </el-form-item>
+          </el-form-item> -->
 
           <el-form-item prop="nickName" name="nickName" label="账号: ">
             <el-input v-model="nickName" readonly />
           </el-form-item>
 
           <el-form-item prop="transactionId" name="transactionId" label="注单号: ">
-            <el-input v-model="sportInsuranceFormData.transactionId" minlength="14" maxlength="16" />
+            <el-input v-model="sportInsuranceFormData.transactionId" minlength="9" maxlength="25" />
           </el-form-item>
+
+          <el-button
+            :loading="loadingBtn"
+            size="large"
+            @click="loadSportInsuranceRecords(insuranceRecordsParam)"
+            class="common-btn second"
+          >
+            申请记录
+          </el-button>
 
           <el-button :loading="loadingBtn" size="large" @click="submitForm(sportInsuranceFormRef)" class="common-btn">
             确定
           </el-button>
         </el-form>
       </div>
+    </el-dialog>
+
+    <el-dialog v-model="insuranceRecordsModalVisible" title="体育场馆申请记录" width="800px" center align-center>
+      <el-table :data="insuranceRecords" stripe style="width: 100%">
+        <el-table-column prop="loginName" label="账号" />
+        <el-table-column prop="transactionId" label="注单号" />
+        <el-table-column prop="createTime" label="申请时间" width="200px" />
+        <el-table-column prop="status" label="状态" />
+        <el-table-column prop="remark" label="备注" />
+      </el-table>
+
+      <template v-if="insuranceRecordsParam.total > insuranceRecordsParam.size">
+        <div class="record-pagination">
+          <el-icon @click="recordPageControl('left')">
+            <ArrowLeft />
+          </el-icon>
+
+          <span>{{ insuranceRecordsParam.current }} / {{ insuranceRecordsParam.maxPage }}</span>
+
+          <el-icon @click="recordPageControl('right')">
+            <ArrowRight />
+          </el-icon>
+        </div>
+      </template>
+
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button type="primary" @click="insuranceRecordsModalVisible = false">确认</el-button>
+        </span>
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -100,15 +167,19 @@ import { userStore } from "@/store";
 import {
   getUpcomingSportMatches,
   getSportInsurancePlatformOptions,
-  submitSportInsuranceForm
+  submitSportInsuranceForm,
+  getSportInsuranceRecords
 } from "@/api/promotion/sportSafety";
+import { getLoggedInPlatformList } from "@/api/platform/platform";
+
+import { ArrowRight, ArrowLeft } from "@element-plus/icons-vue";
 
 const store = userStore();
 const matchDetails = ref([]);
 const isSportInsuranceModalVisible = ref(false);
 const sportInsuranceFormData = reactive({
   gameMatchId: null,
-  platform: "",
+  // platform: "",
   transactionId: ""
 });
 const nickName = store.nickName;
@@ -117,6 +188,13 @@ const sportInsuranceFormRef = ref();
 const isSubmitting = ref(false);
 
 const sportInsuranceFormValidationRules = {
+  gameMatchId: [
+    {
+      required: true,
+      message: "游戏比赛不能为空",
+      trigger: "blur"
+    }
+  ],
   transactionId: [
     {
       required: true,
@@ -124,8 +202,8 @@ const sportInsuranceFormValidationRules = {
       trigger: "blur"
     },
     {
-      pattern: "^.{14,16}$",
-      message: "注单号必须为14-16位",
+      pattern: "^.{9,25}$",
+      message: "注单号必须为9-25位",
       trigger: "blur"
     }
   ],
@@ -144,8 +222,21 @@ const formatDate = (dateTimeString) => {
 };
 
 const loadSportPlatformOptions = () => {
+  sportPlatformOptions.value = [];
+
   getSportInsurancePlatformOptions().then((res) => {
-    sportPlatformOptions.value = res.data;
+    for (let i = 0, l = res.data.length; i < l; i++) {
+      const currResData = res.data[i];
+      platformsListDisplay.value.forEach((e) => {
+        if (currResData === e.code) {
+          const obj = {
+            value: currResData,
+            alias: e.alias
+          };
+          sportPlatformOptions.value.push(obj);
+        }
+      });
+    }
   });
 };
 
@@ -177,6 +268,7 @@ const init = () => {
     .then((res) => {
       if (res.code === 0 && res.data) {
         matchDetails.value = Array.isArray(res.data) ? res.data : [res.data];
+        insuranceRecordsParam.gameType = matchDetails.value[0].gameType;
       }
     })
     .catch((err) => {
@@ -201,8 +293,10 @@ const submitForm = async (elForm) => {
       if (res.code === 0) {
         ElMessage.success({
           type: "success",
-          message: "成功"
+          message: "提交成功"
         });
+        sportInsuranceFormRef.value.resetFields();
+        isSportInsuranceModalVisible.value = false;
       }
 
       isSubmitting.value = false;
@@ -226,8 +320,61 @@ const nextSlide = () => {
 
 const iconImageBasePath = `${process.env.VUE_APP_IMAGE_CDN}/promo`;
 
+const platformsList = ref([]);
+const platformsListDisplay = ref([]);
+const getPlatList = () => {
+  getLoggedInPlatformList().then((res) => {
+    platformsList.value = res;
+    platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("SPORT"));
+  });
+};
+
+// get Insurance Records
+const insuranceRecordsParam = reactive({
+  gameType: "",
+  size: 5,
+  current: 1,
+  total: 0,
+  maxPage: 0
+});
+
+const insuranceRecords = ref([]);
+const insuranceRecordsModalVisible = ref(false);
+const loadSportInsuranceRecords = (param) => {
+  getSportInsuranceRecords(param).then((res) => {
+    isSportInsuranceModalVisible.value = false;
+    insuranceRecordsModalVisible.value = true;
+    insuranceRecords.value = res.data.records;
+
+    insuranceRecordsParam.gameType = res.data.records[0].gameType;
+    insuranceRecordsParam.records = res.data.records;
+    insuranceRecordsParam.current = res.data.current;
+    insuranceRecordsParam.total = res.data.total;
+    insuranceRecordsParam.maxPage = Math.ceil(insuranceRecordsParam.total / insuranceRecordsParam.size);
+  });
+};
+
+const recordPageControl = (direction) => {
+  if (direction === "left") {
+    if (insuranceRecordsParam.current > 1) {
+      insuranceRecordsParam.current--;
+      loadSportInsuranceRecords(insuranceRecordsParam);
+    } else {
+      ElMessage.error("已经是第一页了");
+    }
+  } else {
+    let maxPage = insuranceRecordsParam.maxPage;
+    if (maxPage === insuranceRecordsParam.current) {
+      ElMessage.error("这是最后一页了");
+    } else {
+      insuranceRecordsParam.current++;
+      loadSportInsuranceRecords(insuranceRecordsParam);
+    }
+  }
+};
 onMounted(() => {
   init();
+  getPlatList();
 });
 </script>
 
@@ -273,8 +420,8 @@ onMounted(() => {
 
   .bet-info-vs {
     font-weight: bolder;
-    font-size: 28px;
-    line-height: 1.3;
+    font-size: 21px;
+    line-height: 1.2;
     text-align: center;
   }
 
@@ -283,14 +430,13 @@ onMounted(() => {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background: #d1d1d1;
 
     .info-team {
       display: flex;
       flex-direction: column;
       gap: 12px;
       align-items: center;
-      width: 280px;
+      width: 110px;
       padding-bottom: 20px;
 
       .info-team-logo {
