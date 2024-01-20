@@ -1866,7 +1866,7 @@ export default defineComponent({
     const hotLives = ref(["AG"]);
     const hotEsports = ref(["TFGaming", "IMES"]);
     const hotSports = ref(["IM", "PM"]);
-    const hotPokers = ref([""]);
+    const hotPokers = ref(["KY"]);
     const hotLotterys = ref([""]);
 
     var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
@@ -2012,7 +2012,7 @@ export default defineComponent({
               poker.value.push(pokerObj);
 
               if (hotPokers.value.indexOf(element.name) > -1) {
-                pokerObj.order = 6;
+                pokerObj.order = 7;
                 hotgames.value.push(pokerObj);
               }
             }
