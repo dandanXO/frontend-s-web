@@ -149,7 +149,7 @@
                     <td>888</td>
                   </tr>
                   <tr>
-                    <td>VIP10~VIP12</td>
+                    <td>VIP10</td>
                     <td>1288</td>
                   </tr>
                 </tbody>
