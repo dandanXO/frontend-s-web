@@ -4,11 +4,11 @@
       <q-tab-panels v-model="activeKey">
         <q-tab-panel name="asia-war-guide">
           <div class="tab1">
-            <div class="left-container">
-              <img src="../../../assets/images/promotion/hotpromo/asiacup2024/btn1-claim.png" />
-            </div>
+            <!--            <div class="left-container">-->
+            <!--              <img src="../../../assets/images/promotion/hotpromo/asiacup2024/btn1-claim.png" />-->
+            <!--            </div>-->
             <div class="right-container">
-              <div class="desc-title">热血迎蓝 战火延续</div>
+              <!--              <div class="desc-title">热血迎蓝 战火延续</div>-->
 
               <q-btn class="claim-btn" label="立即申请" @click="handleClaim('basketball-hot', '热血迎蓝', 'NBA')" />
             </div>
