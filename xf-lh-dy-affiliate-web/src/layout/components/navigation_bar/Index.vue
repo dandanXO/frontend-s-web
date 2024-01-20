@@ -108,6 +108,7 @@ export default {
     }
     const changePassword = async (formObj) => {
       formObj.affId = store.state.user.id;
+      formObj.siteId = store.state.user.siteId;
       await store.dispatch(UserActionTypes.ACTION_UPDATE_LOGIN, formObj);
     };
     return {
