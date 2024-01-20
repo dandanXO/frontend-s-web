@@ -23,7 +23,7 @@
         </div>
       </div>
 
-      <div class="home-header-section" style="height: 50px">
+      <div class="home-header-section" style="height: 50px; padding: 1px 10px">
         <div class="header-left">
           <img class="top-logo" id="logo" src="../assets/index/logo.png" />
         </div>
@@ -91,6 +91,7 @@
           @swiper="setSecondSwiper"
           :controller="{ control: firstSwiper }"
           class="firstSwiper"
+          :navigation="{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }"
         >
           <swiper-slide
             :class="tab.name && { tbact: selectedTab === tab.name }"
@@ -107,6 +108,9 @@
               <span>{{ selectedTab !== tab.name ? tab.label : tab.labelact }}</span>
             </div>
           </swiper-slide>
+
+          <div class="swiper-button-prev"><span class="material-icons">arrow_back_ios</span></div>
+          <div class="swiper-button-next"><span class="material-icons">arrow_forward_ios</span></div>
         </swiper>
       </div>
     </div>
@@ -1485,7 +1489,7 @@ import { RiVolumeUpLine } from "vue-remix-icons";
 import { useUI } from "stores/ui";
 import { Scrollbar } from "swiper";
 // Import Swiper Vue.js components
-import SwiperCore, { Keyboard, Mousewheel, HashNavigation, A11y } from "swiper";
+import SwiperCore, { Keyboard, Mousewheel, HashNavigation, A11y, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Thumbs, Controller, Grid } from "swiper";
 // Import Swiper styles
@@ -1495,7 +1499,7 @@ import "swiper/css/scrollbar";
 import { App } from "@capacitor/app";
 import * as _ from "lodash";
 
-SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
+SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation, Navigation, Pagination]);
 
 import PlatformBlock from "components/platform/PlatformBlock.vue";
 import { translateRecord } from "src/directives/translate";
@@ -1866,7 +1870,7 @@ export default defineComponent({
     const hotLives = ref(["AG"]);
     const hotEsports = ref(["TFGaming", "IMES"]);
     const hotSports = ref(["IM", "PM"]);
-    const hotPokers = ref([""]);
+    const hotPokers = ref(["KY"]);
     const hotLotterys = ref([""]);
 
     var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
@@ -2012,7 +2016,7 @@ export default defineComponent({
               poker.value.push(pokerObj);
 
               if (hotPokers.value.indexOf(element.name) > -1) {
-                pokerObj.order = 6;
+                pokerObj.order = 7;
                 hotgames.value.push(pokerObj);
               }
             }
@@ -2396,7 +2400,7 @@ export default defineComponent({
 }
 
 .home-header-section {
-  padding: 1px 10px;
+  padding: 1px 0px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -3094,5 +3098,55 @@ export default defineComponent({
 .login.with-register {
   font-size: 16px;
   font-weight: bold;
+}
+
+.home-header-section {
+  .swiper-button-next {
+    background: rgba(0, 0, 0, 0.3);
+    height: 60px;
+    width: 20px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > span {
+      height: 30px;
+      color: var(--q-primary);
+      width: 18px;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+
+  .swiper-button-prev {
+    background: rgba(0, 0, 0, 0.3);
+    height: 60px;
+    width: 20px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > span {
+      height: 30px;
+      color: var(--q-primary);
+      width: 18px;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+  }
 }
 </style>

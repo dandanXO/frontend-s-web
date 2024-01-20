@@ -146,7 +146,7 @@
           <div
             v-if="!isShow"
             class="game-item btn-pointer"
-            @click="selectLotteryPlat(lotteryGameItem)"
+            @click="playGame(lotteryGameItem.name, lotteryGameItem.code, lotteryGameItem.gameCode)"
           >
             <div
               class="platform-img"
@@ -924,9 +924,7 @@
         <router-link to="/promo?id=80">
           <div class="popup-item">
             <span>
-              แนะนำเพื่อน รับโบนัสสูงถึง
-              <em>6,888</em>
-              รับเงินคืนสูงสุด
+              แนะนำเพื่อนรับเงินคืนสูงสุด
               <em>20,000</em>
             </span>
           </div>
@@ -1145,12 +1143,13 @@ export default defineComponent({
 
           favGamesList.value.forEach((element) => {
             element.default = require("../assets/images/games/aviator/default.png");
-            if(element.icon.startsWith('3/')){
+            if (element.icon.startsWith("3/")) {
               element.icon = `${process.env.IMAGE_CDN}/game/${element.icon}`;
-            }else{
-              element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${element.platformCode.toLowerCase()}/${element.icon}.png`;
+            } else {
+              element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${element.platformCode.toLowerCase()}/${
+                element.icon
+              }.png`;
             }
-
           });
         }
       });
@@ -1282,12 +1281,12 @@ export default defineComponent({
     const lotteryGames = ref([]);
     const lotteryGamesMore = ref([]);
     const lotteryGamesList = computed(() => {
-      if(isShow.value) {
+      if (isShow.value) {
         return lotteryGamesMore.value;
       }
 
       return lotteryGames.value;
-    })
+    });
     const gameBoardItemData = [
       { name: "slots", imgName: "home-slot.png", label: t("lang.slot_header") },
       { name: "fish", imgName: "home-fish.png", label: t("lang.fish_header") },
@@ -1414,7 +1413,9 @@ export default defineComponent({
       const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
       const code = selectedPlatId.value;
       const gameType = type;
-      const key = store.hasToken() ? `LOGGED_PLATFORM_GAMES_${code}_${gameType}_${regDevice}` : `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+      const key = store.hasToken()
+        ? `LOGGED_PLATFORM_GAMES_${code}_${gameType}_${regDevice}`
+        : `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
 
       var platformGamesApiUrl = store.hasToken() ? "/session/loggedInPlatformGames" : "/platformGames";
 
@@ -1457,10 +1458,12 @@ export default defineComponent({
             });
             let games = [];
             minis.forEach((mini) => {
-              if(mini.icon.startsWith('3/')){
+              if (mini.icon.startsWith("3/")) {
                 mini.icon = `${process.env.IMAGE_CDN}/game/${mini.icon}`;
-              }else{
-                mini.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${mini.code}.png`;
+              } else {
+                mini.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${
+                  mini.code
+                }.png`;
               }
               if (mini.name.indexOf("(铜)") > -1 || mini.name.indexOf("(银)") > -1 || mini.name.indexOf("(金)") > -1) {
                 games.push(mini);
@@ -1489,12 +1492,13 @@ export default defineComponent({
           } else {
             res.forEach((element) => {
               element.default = require("../assets/images/games/aviator/default.png");
-              if(element.icon.startsWith('3/')){
+              if (element.icon.startsWith("3/")) {
                 element.icon = `${process.env.IMAGE_CDN}/game/${element.icon}`;
-              }else{
-                element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${element.icon}.png`;
+              } else {
+                element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${
+                  element.icon
+                }.png`;
               }
-
             });
             gameListData.value = res;
             gamePage.total = res.length;

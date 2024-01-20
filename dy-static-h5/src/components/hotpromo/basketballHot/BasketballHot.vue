@@ -31,25 +31,25 @@
                     <th>流水倍数</th>
                   </tr>
                   <tr>
-                    <td>≥3000</td>
+                    <td>≥2,000</td>
                     <td>8</td>
                     <td rowspan="9">5倍有效流水</td>
                   </tr>
                   <tr>
-                    <td>≥10,000</td>
+                    <td>≥5,000</td>
                     <td>28</td>
                   </tr>
                   <tr>
-                    <td>≥15,000</td>
-                    <td>38</td>
+                    <td>≥10,000</td>
+                    <td>58</td>
                   </tr>
                   <tr>
                     <td>≥30,000</td>
-                    <td>68</td>
+                    <td>88</td>
                   </tr>
                   <tr>
                     <td>≥60,000</td>
-                    <td>88</td>
+                    <td>158</td>
                   </tr>
                   <tr>
                     <td>≥100,000</td>
