@@ -208,10 +208,10 @@ export default defineComponent({
         name: "poker",
         label: "棋牌"
       },
-      // {
-      //   name: "other",
-      //   label: "其它"
-      // }
+      {
+        name: "other",
+        label: "其它"
+      }
     ];
 
     watch(() => route.query, () => {
