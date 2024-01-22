@@ -222,7 +222,7 @@ function showDialog(type) {
       bankForm.value.resetFields()
       form.id = null
     }
-    form.siteId = site.value ? site.value.id : null
+    form.siteId = request.siteId
     uiControl.dialogTitle = t('fields.addAdjustmentReason')
   } else {
     uiControl.dialogTitle = t('fields.editAdjustmentReason')
