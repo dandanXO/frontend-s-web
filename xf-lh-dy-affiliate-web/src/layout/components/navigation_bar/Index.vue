@@ -85,6 +85,8 @@ export default {
         await store.dispatch(UserActionTypes.ACTION_LOGOUT);
         if (siteId === "3" || siteId === 3) {
           router.push("/th/login")
+        } else if (siteId === "5" || siteId === 5) {
+          router.push("/ind/login")
         } else {
           location.reload();
         }
