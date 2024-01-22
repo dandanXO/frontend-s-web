@@ -20,7 +20,7 @@
       </div>
 
       <div class="join-container">
-        <div class="join-btn" @click="router.push('/center/share')">
+        <div class="join-btn" @click="goToHongbaoyu()">
           <img src="../../../assets/images/promotion/hotpromo/cny2024/btn-join.png" />
         </div>
       </div>
@@ -130,7 +130,7 @@
       </div>
 
       <div class="join-container">
-        <div class="join-btn" @click="router.push('/promotion?name=hongbaoyu')">
+        <div class="join-btn" @click="router.push('/center/share')">
           <img src="../../../assets/images/promotion/hotpromo/cny2024/btn-join.png" />
         </div>
       </div>
@@ -218,6 +218,12 @@ const router = useRouter();
 const currentTab = ref("tabOne");
 const onTabClick = (flag) => {
   currentTab.value = flag;
+};
+
+const goToHongbaoyu = async () => {
+  // Navigate to the root path
+  await router.push("/");
+  router.push("/promotion?name=hongbaoyu");
 };
 </script>
 
