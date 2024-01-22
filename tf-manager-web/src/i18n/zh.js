@@ -1940,6 +1940,7 @@ export default {
     'Privi Christmas': '圣诞快乐',
     'Affiliate APK Build': '代理构建APK',
     'Channel Summary': '渠道报表',
+    'Adjustment Reason': '平账原因',
   },
   google: {
     google_auth_menu: '谷歌验证',
