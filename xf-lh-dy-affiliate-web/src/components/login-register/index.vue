@@ -1132,6 +1132,19 @@ a {
 
 }
 
+@media (max-width: 1100px) {
+  .firstPage {
+    height: auto;
+    .inner {
+      padding-top: 100px;
+    }
+
+    .loginPage {
+      flex-direction: column;
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .firstPage {
     height: auto;
