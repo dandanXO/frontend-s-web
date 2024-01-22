@@ -23,7 +23,7 @@
           :placeholder="t('fields.site')"
           class="filter-item"
           style="width: 120px;margin-left: 5px"
-          @change="loadReqCause"
+          @change="loadCauseBySiteId"
         >
           <el-option
             v-for="item in siteList.list"
@@ -40,13 +40,13 @@
           :placeholder="t('fields.cause')"
           class="filter-item"
           style="width: 120px;margin-left: 5px"
-          @focus="loadReqCause"
+          @focus="loadCauseBySiteId"
         >
           <el-option
-            v-for="item in reqAdjustTypeList.list"
-            :key="item.id"
-            :label="item.value"
-            :value="item.value"
+            v-for="item in adjustTypeList.list"
+            :key="item"
+            :label="item"
+            :value="item"
           />
         </el-select>
         <el-select
@@ -176,10 +176,10 @@
             @focus="loadAdjustType"
           >
             <el-option
-              v-for="item in importAdjustTypeList.list"
-              :key="item.id"
-              :label="item.value"
-              :value="item.value"
+              v-for="item in adjustTypeList.list"
+              :key="item"
+              :label="item"
+              :value="item"
             />
           </el-select>
         </el-form-item>
@@ -275,9 +275,9 @@
           >
             <el-option
               v-for="item in adjustTypeList.list"
-              :key="item.id"
-              :label="item.value"
-              :value="item.value"
+              :key="item"
+              :label="item"
+              :value="item"
             />
           </el-select>
         </el-form-item>
@@ -409,8 +409,8 @@ import {
   getTotalDeductionAmount, getNumberOfReimburse, getNumberOfDeduct, createBatchAmountAdjust, getExport
 } from "../../../api/member-amount-adjust";
 import { getSiteListSimple } from "../../../api/site";
+import { getReasonsSimple } from "../../../api/site-adjustment-reason";
 import { findIdByLoginName, getMemberBalanceByLoginNameSite } from "../../../api/member";
-import { getConfigList } from '../../../api/config';
 import { useStore } from '../../../store';
 import { TENANT } from "../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
@@ -428,12 +428,6 @@ const siteList = reactive({
   list: []
 });
 const adjustTypeList = reactive({
-  list: []
-})
-const reqAdjustTypeList = reactive({
-  list: []
-})
-const importAdjustTypeList = reactive({
   list: []
 })
 
@@ -578,19 +572,9 @@ async function loadFormSelect() {
 
 async function loadCauseBySiteId() {
   if (form.siteId) {
-    const { data: adjustType } = await getConfigList("adjust_type", form.siteId);
+    const { data: adjustType } = await getReasonsSimple(form.siteId);
     adjustTypeList.list = adjustType;
   }
-}
-
-async function loadReqCause() {
-  const { data: adjustType } = await getConfigList("adjust_type", request.siteId);
-  reqAdjustTypeList.list = adjustType;
-}
-
-async function loadAdjustType() {
-  const { data: adjustType } = await getConfigList("adjust_type");
-  importAdjustTypeList.list = adjustType;
 }
 
 function resetQuery() {
@@ -872,8 +856,8 @@ onMounted(async () => {
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
-    await loadReqCause();
   }
+  await loadCauseBySiteId();
   await loadMemberAmountAdjust()
 });
 
