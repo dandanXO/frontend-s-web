@@ -7,7 +7,7 @@
     <q-dialog v-model="insuranceFormModal" persistent>
       <q-card class="insurance-card">
         <q-card-section class="q-mb-md row justify-center">
-          <div class="text-h6">保险</div>
+          <div class="text-h6">{{ props.platformType == "ESPORT" ? "电竞保险" : "体育保险" }}</div>
         </q-card-section>
 
         <q-card-section class="row items-center">
@@ -23,16 +23,16 @@
 
             <q-select
               filled
-              v-model="insuranceInfo.platform"
-              :options="platformOptions"
-              option-value="value"
-              option-label="alias"
+              v-model="insuranceInfo.gameMatchId"
+              :options="gameOptions"
+              option-value="id"
+              option-label="label"
               emit-value
               map-options
               ref="insurancePlatform"
-              label="投注平台"
+              label="选择赛事"
               color="dyblue"
-              :rules="[(v) => !!v || '请选择投注平台']"
+              :rules="[(v) => !!v || '请选择赛事']"
             />
 
             <q-input
@@ -41,10 +41,19 @@
               label="注单号"
               ref="insuranceTransactionId"
               color="dyblue"
-              :rules="[(v) => !!v || '请输入注单号']"
+              :rules="[
+                (v) => !!v || '请输入注单号',
+                (val) => (val && val.length > 8 && val.length < 26) || '注单号必须为9到25位'
+              ]"
             />
           </q-form>
         </q-card-section>
+
+        <q-card-actions align="center">
+          <div class="flex flex-center">
+            <q-btn label="申请记录" color="dyblue" class="common-btn" @click="openRecordModal" />
+          </div>
+        </q-card-actions>
 
         <q-card-actions align="center">
           <div class="flex flex-center">
@@ -52,6 +61,26 @@
             <q-btn color="dyblue" label="提交" @click="handleSubmit" />
           </div>
         </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="isRecordModal">
+      <q-card class="insurance-dialog">
+        <q-card-section class="modal-record-div q-mb-md column justify-center">
+          <div class="h6-div">申请记录</div>
+
+          <div class="record-container">
+            <q-table
+              class="record-insurance-table"
+              :grid="$q.screen.lt.sm"
+              :loading="tableData.loading"
+              :columns="columns"
+              :rows="rankingRecord()"
+              rows-per-page-label="每页数"
+              square
+            ></q-table>
+          </div>
+        </q-card-section>
       </q-card>
     </q-dialog>
   </div>
@@ -69,6 +98,7 @@ var qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
 const insuranceFormModal = ref(false);
+const isRecordModal = ref(false);
 
 const props = defineProps({
   platformType: String
@@ -76,10 +106,45 @@ const props = defineProps({
 
 const insuranceInfo = reactive({
   accountId: "",
-  platform: "",
   transactionId: "",
   gameMatchId: ""
 });
+const pagination = reactive({
+  rowsPerPage: 1,
+  page: 0
+});
+const tableData = reactive({
+  current: 1,
+  pageSize: 3,
+  pages: 1,
+  total: 0,
+  records: [],
+  loading: false
+});
+const columns = [
+  {
+    label: "用户名",
+    field: "loginName"
+  },
+  {
+    label: "注单号",
+    field: "transactionId"
+  },
+  {
+    label: "申请时间",
+    field: "createTime"
+  },
+  {
+    label: "状态",
+    field: "status"
+  },
+  {
+    label: "备注",
+    field: "remark"
+  }
+];
+
+const gameOptions = ref([]);
 const platformListDetails = ref([]);
 const insuranceAccountId = ref();
 const insurancePlatform = ref();
@@ -88,29 +153,49 @@ const insuranceTransactionId = ref();
 const platformDetails = ref([]);
 const platformOptions = ref([]);
 
-const getPlatformList = () => {
-  platformOptions.value = [];
-  eventapi
-    .get(`/game-match/platform/${props.platformType}`)
-    .then((res) => {
-      if (res.code === 0) {
-        for (let i = 0, l = res.data.length; i < l; i++) {
-          const currResData = res.data[i];
-          platformsListDisplay.value.forEach((e) => {
-            if (currResData === e.code) {
-              const obj = {
-                value: currResData,
-                alias: e.alias
-              };
-              platformOptions.value.push(obj);
-            }
-          });
-        }
-      }
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
+// const getPlatformList = () => {
+//   platformOptions.value = [];
+//   eventapi
+//     .get(`/game-match/platform/${props.platformType}`)
+//     .then((res) => {
+//       if (res.code === 0) {
+//         for (let i = 0, l = res.data.length; i < l; i++) {
+//           const currResData = res.data[i];
+//           platformsListDisplay.value.forEach((e) => {
+//             if (currResData === e.code) {
+//               const obj = {
+//                 value: currResData,
+//                 alias: e.alias
+//               };
+//               platformOptions.value.push(obj);
+//             }
+//           });
+//         }
+//       }
+//     })
+//     .catch((err) => {
+//       console.log(err.message);
+//     });
+// };
+
+const pageNumChange = (i) => {
+  rankingPage.current = i;
+};
+
+const openRecordModal = () => {
+  eventapi.get(`/game-match/records/${props.platformType}`).then((res) => {
+    if (res.code === 0) {
+      tableData.records = res.data.records;
+      tableData.current = res.data.current;
+      tableData.total = res.data.total;
+      tableData.pages = res.data.pages;
+      isRecordModal.value = true;
+    }
+  });
+};
+
+const rankingRecord = () => {
+  return tableData.records;
 };
 
 const getPlatformDetails = () => {
@@ -119,7 +204,17 @@ const getPlatformDetails = () => {
     .then((res) => {
       if (res.code === 0) {
         platformDetails.value = res.data;
-        insuranceInfo.gameMatchId = res.data.id;
+        gameOptions.value = [];
+        platformDetails.value.forEach((match) => {
+          const obj = {
+            id: match.id,
+            matchTitle: match.matchTitle,
+            teamOne: match.teamOne,
+            teamTwo: match.teamTwo,
+            label: `${match.matchTitle} - (${match.teamOne} vs ${match.teamTwo})`,
+          };
+          gameOptions.value.push(obj);
+        });
       }
     })
     .catch((err) => {
@@ -135,7 +230,7 @@ const handleSubmit = () => {
   insurancePlatform.value.validate();
   insuranceTransactionId.value.validate();
 
-  if (insurancePlatform.value.hasError || insuranceTransactionId.value.hasError) {
+  if (insuranceTransactionId.value.hasError || insurancePlatform.value.hasError) {
   } else {
     eventapi
       .post("/game-match/submit", qs.stringify(insuranceInfo))
@@ -168,7 +263,7 @@ const handleSubmit = () => {
 
 const handleOpenDialog = () => {
   autoPreFillForm();
-  getPlatformList();
+  // getPlatformList();
   getPlatformDetails();
   insuranceFormModal.value = true;
 };
@@ -211,5 +306,31 @@ onMounted(() => {
     gap: 10px;
     margin-bottom: 20px;
   }
+}
+
+.insurance-dialog {
+  margin: 10px;
+  width: calc(100% - 20px);
+  max-width: 500px;
+
+  .h6-div {
+    background: linear-gradient(0deg, #4fb2ff 0, #6daddf 100%), linear-gradient(#d0d1d3, #d0d1d3);
+    width: calc(100%);
+    text-align: center;
+    line-height: 30px;
+    font-size: 16px;
+  }
+
+  .record-container {
+    width: 100%;
+  }
+}
+
+.insurance-card .q-form {
+  margin-bottom: 0px;
+}
+
+.modal-record-div {
+  align-items: center;
 }
 </style>

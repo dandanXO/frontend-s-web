@@ -190,20 +190,20 @@ const mailboxState = reactive({
   }
 });
 
-const loadNotifyMailbox = () => {
-  mailboxNotifyData.value = {
-    type: null,
-    orderBy: "sendTime"
-  };
-  mailInbox(mailboxNotifyData.value)
-    .then((res) => {
-      const response = res;
-      mailboxNotifyState.value = response.records;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
+// const loadNotifyMailbox = () => {
+//   mailboxNotifyData.value = {
+//     type: null,
+//     orderBy: "sendTime"
+//   };
+//   mailInbox(mailboxNotifyData.value)
+//     .then((res) => {
+//       const response = res;
+//       mailboxNotifyState.value = response.records;
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// };
 
 const hasUnreadMessages = (type) => {
   return mailboxNotifyState.value.some((item) => item.type === type && item.readTime === null);
@@ -216,7 +216,7 @@ const isAnyReadTimeNull = (mailboxList) => {
 const shouldDisplayTrue = ref(false);
 
 const loadPersonalMailbox = () => {
-  loadNotifyMailbox();
+  // loadNotifyMailbox();
 
   mailboxState.mailboxList[mailboxState.active].list = [];
   if (mailboxState.active === "inbox") {

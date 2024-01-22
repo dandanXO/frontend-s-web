@@ -23,6 +23,7 @@
     <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery' && !isCommonPromo && store.token"></LotteryPromo>
     <GiftPromo v-if="list.redirectUrl === 'dy2-gift' && !isCommonPromo && store.token"></GiftPromo>
     <AsianCup2024 v-if="list.redirectUrl === 'dy-promo-application-A' && !isCommonPromo && store.token"></AsianCup2024>
+    <BasketballHot v-if="list.redirectUrl === '/dy-promo-basketball' && !isCommonPromo && store.token"></BasketballHot> 
     <LPLSummer v-if="list.redirectUrl === 'dy-promo-application-B' && !isCommonPromo && store.token"></LPLSummer>
     <!-- <VIPUpgradePromo v-if="list.redirectUrl === 'dy2-vip-upgrade-bonus' && !isCommonPromo && store.token" />
     <ReferBonusPromo v-if="list.redirectUrl === 'dy2-refer-bonus' && !isCommonPromo && store.token" /> -->
@@ -68,6 +69,7 @@ import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import PrivilegeInvite from "../components/hotpromo/privilegeInvite/PrivilegeInvite.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 import AsianCup2024 from "../components/hotpromo/asian-cup-2024/AsianCup2024.vue";
+import BasketballHot from "../components/hotpromo/basketball-hot/BasketballHot.vue";
 import LPLSummer from "../components/hotpromo/lpl-summer/LPLSummer.vue";
 // import VIPUpgradePromo from "../components/hotpromo/vipupgrade/VIPUpgradePromo.vue";
 // import ReferBonusPromo from "../components/hotpromo/referbonus/ReferBonusPromo.vue";
@@ -94,6 +96,7 @@ export default defineComponent({
     PrivilegeInvite,
     GiftPromo,
     AsianCup2024,
+    BasketballHot,
     LPLSummer
     // VIPUpgradePromo,
     // ReferBonusPromo
@@ -234,6 +237,7 @@ export default defineComponent({
       this.list.redirectUrl === "Dongying-quiz" ||
       this.list.redirectUrl === "dy2-gift" ||
       this.list.redirectUrl === "dy-promo-application-A" ||
+      this.list.redirectUrl === "/dy-promo-basketball" ||
       this.list.redirectUrl === "dy-promo-application-B" ||
       this.list.redirectUrl === "Dongying-refer" ||
       this.list.redirectUrl === "dy2-vip-upgrade-bonus" ||

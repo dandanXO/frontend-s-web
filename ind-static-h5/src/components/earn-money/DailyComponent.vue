@@ -156,7 +156,7 @@
           <div class="longer-group">
             <div
               class="info-title"
-              :class="checkTeamAmountData(teamAmountData.agentLevel) === 'Calculating' ? 'f-wrap' : ''"
+              :class="checkTeamAmountData(teamAmountData.agentRate) === 'Calculating' ? 'f-wrap' : ''"
             >
               <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-01.png" /></div>
               <div class="info-txt">Rate:</div>
@@ -177,7 +177,8 @@
             <div class="info-txt">Myself betting amount:</div>
           </div>
           <div class="info-amount">
-            {{ store.currency.value }} {{ convertToCommaAmount(teamAmountData.myselfBetting, false) }}
+            {{ store.currency.value }}
+            {{ convertToCommaAmount(checkTeamAmountData(teamAmountData.myselfBetting), false) }}
           </div>
         </div>
 
@@ -260,7 +261,7 @@
           </div>
         </div>
         <!-- <div :class="`status ${e.status === 'Online' ? 'online' : 'offline'}`">{{ e.status }}</div> -->
-        <div class="status online">Team Member: {{ e.memberCount > 0 ? e.memberCount  : "..." }}</div>
+        <div class="status online">Team Member: {{ e.memberCount > 0 ? e.memberCount : "..." }}</div>
       </div>
       <div class="bot-container">
         <div class="amount-container">

@@ -68,6 +68,7 @@
         prop="depositAmount"
         :label="t('fields.depositAmount')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $
@@ -80,6 +81,7 @@
         prop="withdrawAmount"
         :label="t('fields.withdrawAmount')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $
@@ -91,6 +93,7 @@
       <el-table-column
         :label="t('fields.depositWithdrawalProfit')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $
@@ -106,16 +109,19 @@
         prop="registerCount"
         :label="t('fields.registerCount')"
         align="center"
+        width="180"
       />
       <el-table-column
         prop="fdp"
         :label="t('fields.ftdCount')"
         align="center"
+        width="120"
       />
       <el-table-column
         prop="fdAmount"
         :label="t('fields.ftdAmount')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $
@@ -126,6 +132,7 @@
         prop="validBet"
         :label="t('fields.betAmount')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $
@@ -136,6 +143,7 @@
         prop="payout"
         :label="t('fields.payoutAmount')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $
@@ -151,6 +159,7 @@
         prop="companyWinLoss"
         :label="t('fields.profit')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $
@@ -159,10 +168,11 @@
           />
         </template>
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         prop="depositAmount"
         :label="t('fields.totalMemberDepositAmount')"
         align="center"
+        width="180"
       >
         <template #default="scope">
           $
@@ -173,16 +183,24 @@
             }"
           />
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
-        prop="depositCount"
-        :label="t('fields.totalMemberDepositCount')"
+        prop="totalDepositNumber"
+        :label="t('fields.totalDepositMemberCount')"
         align="center"
+        width="120"
+      />
+      <el-table-column
+        prop="betCount"
+        :label="t('fields.totalBetMemberCount')"
+        align="center"
+        width="120"
       />
       <el-table-column
         prop="bonus"
         :label="t('fields.bonusAmount')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $
@@ -193,6 +211,7 @@
         prop="rebateAmount"
         :label="t('fields.rebateAmount')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $
@@ -203,6 +222,7 @@
         prop="adjustment"
         :label="t('fields.adjustAmount')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $
@@ -213,6 +233,7 @@
         prop="netProfit"
         :label="t('fields.netProfit')"
         align="center"
+        width="120"
       >
         <template #default="scope">
           $
@@ -555,7 +576,7 @@ function getSummaries(param) {
         sums[index] = t('fields.total')
       } else {
         var prop = column.property
-        if (index === 5 || index === 11) {
+        if (index === 5 || index === 10 || index === 11) {
           sums[index] = totalPage.records[0][prop]
         } else if (index === 4) {
           sums[index] = totalPage.records[0].registerCount

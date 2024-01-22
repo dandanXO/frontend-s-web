@@ -151,7 +151,6 @@
         <el-form-item :label="t('fields.sequence')" prop="sequence">
           <el-input-number
             v-model="form.sequence"
-            :min="1"
             controls-position="right"
             @change="handleChange"
           />
@@ -325,6 +324,7 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" />
+      <el-table-column prop="sequence" :label="t('fields.sequence')" width="80" />
       <el-table-column prop="title" :label="t('fields.title')" />
       <el-table-column prop="category" :label="t('fields.category')">
         <template #default="scope">
@@ -340,6 +340,8 @@
             inactive-color="#F56C6C"
             @change="changeBannerState(scope.row.id, scope.row.state)"
           />
+          <el-tag v-if="scope.row.state" size="mini" type="success" style="margin-left: 10px;">{{ t('common.status.OPEN') }}</el-tag>
+          <el-tag v-else size="mini" type="danger" style="margin-left: 10px;">{{ t('common.status.CLOSE') }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="createTime" :label="t('fields.createTime')">

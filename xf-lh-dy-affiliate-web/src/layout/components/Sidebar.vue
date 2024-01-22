@@ -1,7 +1,15 @@
 <template>
-  <nav class="sidebar" :class="isExpanded ? 'expanded': ''" style="position: relative;">
-
-    <el-button type="primary" class="expansionbtn" circle @click="toggleExpansion">
+  <nav
+    class="sidebar"
+    :class="isExpanded ? 'expanded' : ''"
+    style="position: relative;"
+  >
+    <el-button
+      type="primary"
+      class="expansionbtn"
+      circle
+      @click="toggleExpansion"
+    >
       <ArrowLeftBold style="width: 10px" v-if="isExpanded" />
       <ArrowRightBold style="width: 10px" v-if="!isExpanded" />
     </el-button>
@@ -15,17 +23,36 @@
         :key="nav.id"
         :class="`route-wrapper ${nav.active ? 'active' : ''}`"
       >
-        <div v-if="nav.display && isExpanded" class="route-title" @click="checkMenu(nav)">{{ nav.title }}
+        <div
+          v-if="nav.display && isExpanded"
+          class="route-title"
+          @click="checkMenu(nav)"
+        >
+          {{ nav.title }}
           <ArrowUpBold style="width: 10px" v-if="nav.menuShown" />
-          <ArrowDownBold style="width: 10px" v-if="!nav.menuShown" /></div>
+          <ArrowDownBold style="width: 10px" v-if="!nav.menuShown" />
+        </div>
         <div
           v-for="child in nav.children"
           :key="child.id"
           :class="`route-container ${child.active ? 'active' : ''}`"
-          :style="child.isMenuShow ? 'height: auto;' : 'height: 0px; overflow:hidden'"
+          :style="
+            child.isMenuShow ? 'height: auto;' : 'height: 0px; overflow:hidden'
+          "
         >
-          <RouterLink :to="nav.path + child.path" class="route" v-if="child.isMainNav">
-            <div class="route-content" :style="!isExpanded && child.icon === 'speech-bubbles' ? 'margin-top: 50px': ''">
+          <RouterLink
+            :to="nav.path + child.path"
+            class="route"
+            v-if="child.isMainNav"
+          >
+            <div
+              class="route-content"
+              :style="
+                !isExpanded && child.icon === 'speech-bubbles'
+                  ? 'margin-top: 50px'
+                  : ''
+              "
+            >
               <svg-icon
                 :icon-class="`${child.icon}`"
                 :style="child.active ? 'color: #179cff' : ''"
@@ -46,18 +73,36 @@
 import { onMounted, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { ArrowLeftBold, ArrowRightBold, ArrowUpBold, ArrowDownBold, Expand, Fold } from '@element-plus/icons-vue'
-import { i18nStore } from "@/store/language";
-import { storeToRefs } from "pinia";
+import {
+  ArrowLeftBold,
+  ArrowRightBold,
+  ArrowUpBold,
+  ArrowDownBold,
+  Expand,
+  Fold,
+} from '@element-plus/icons-vue'
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from 'pinia'
+import { useStore } from '@/store'
 
 const { t } = useI18n()
 const route = useRoute()
 const navigationData = ref([])
-const mainNavigationData = ['Dashboard', 'Transfer', 'Settlement Report', "commissionInfo", "Referral Link", "contactUs"];
-const isExpanded = ref(true);
+const mainNavigationData = [
+  'Dashboard',
+  'Transfer',
+  'Settlement Report',
+  'commissionInfo',
+  'Referral Link',
+  'contactUs',
+  'Daily Detail',
+  'Daily Summary'
+]
+const isExpanded = ref(true)
+const store = useStore()
 
-const i18nStoreLanguage = i18nStore();
-const { languageVal } = storeToRefs(i18nStoreLanguage);
+const i18nStoreLanguage = i18nStore()
+const { languageVal } = storeToRefs(i18nStoreLanguage)
 
 const setActiveNav = () => {
   const currentPath = route.path.substring(route.path.lastIndexOf('/'))
@@ -67,9 +112,9 @@ const setActiveNav = () => {
       // due to the usage of <use> mechanism and svg-sprite-loader
       // referred icon is out of component scope
       // thus unable to style within component directly
-      const iconEl = document.querySelector(`symbol#icon-${c.icon} > path`);
-      const activeIconColor = '#3f8cff';
-      const defaultIconColor = '#7D8592';
+      const iconEl = document.querySelector(`symbol#icon-${c.icon} > path`)
+      const activeIconColor = '#3f8cff'
+      const defaultIconColor = '#7D8592'
       c.isMenuShow = true
       if (c.path === currentPath) {
         c.active = true
@@ -105,220 +150,249 @@ const setActiveNav = () => {
 const toggleExpansion = () => {
   isExpanded.value = !isExpanded.value
   if (!isExpanded.value) {
-    navigationData.value.forEach((item) => {
-      item.children.forEach((childItem) => {
+    navigationData.value.forEach(item => {
+      item.children.forEach(childItem => {
         childItem.isMenuShow = true
-        childItem.isMainNav = false;
-        mainNavigationData.forEach((matchingItem) => {
+        childItem.isMainNav = false
+        mainNavigationData.forEach(matchingItem => {
           if (matchingItem === childItem.label) {
-            childItem.isMainNav = true;
+            childItem.isMainNav = true
           }
-        });
-      });
-    });
+        })
+      })
+    })
   } else {
-    navigationData.value.forEach((item) => {
-      item.children.forEach((childItem) => {
-        childItem.isMainNav = true;
-      });
-    });
+    navigationData.value.forEach(item => {
+      item.children.forEach(childItem => {
+        childItem.isMainNav = true
+      })
+    })
   }
 }
-const checkMenu = (nav) => {
+const checkMenu = nav => {
   nav.menuShown = !nav.menuShown
   nav.children.forEach(child => {
     child.isMenuShow = !child.isMenuShow
-  });
+  })
 }
 const getNavigationData = () => {
-  navigationData.value = [
-    {
-      title: t('menu.Dashboard'),
-      label: 'Dashboard',
-      display: false,
-      path: '',
-      children: [
-        {
-          path: '/dashboard',
-          title: t('menu.Dashboard'),
-          label: 'Dashboard',
-          active: false,
-          isMainNav: true,
-          icon: 'home',
-        },
-      ],
-    },
-    {
-      title: t('menu.Downline Info'),
-      label: 'Downline',
-      display: true,
-      path: '/downline',
-      children: [
-        {
-          path: '/member',
-          title: t('menu.Member'),
-          label: 'Member',
-          active: false,
-          isMainNav: true,
-          icon: 'squares',
-        },
-        {
-          path: '/affiliate',
-          title: t('menu.Affiliate'),
-          label: 'Affiliate',
-          active: false,
-          isMainNav: true,
-          icon: 'affiliate',
-        },
-        {
-          path: '/game-record',
-          title: t('menu.Bet Record'),
-          label: 'Bet Record',
-          active: false,
-          isMainNav: true,
-          icon: 'clock',
-        },
-      ],
-    },
-    {
-      title: t('menu.financeCentre'),
-      display: true,
-      path: '/affiliate',
-      children: [
-        {
-          path: '/bank-card',
-          title: t('menu.Bind Bank Cards'),
-          label: 'Bind Bank Cards',
-          active: false,
-          isMainNav: true,
-          icon: 'money-bag',
-        },
-        {
-          path: '/withdraw-request',
-          title: t('menu.Bank Withdrawal'),
-          label: 'Bank Withdrawal',
-          active: false,
-          isMainNav: true,
-          icon: 'form-w-pencil',
-        },
-        {
-          path: '/transfer',
-          title: t('menu.Transfer'),
-          label: 'Transfer',
-          active: false,
-          isMainNav: true,
-          icon: 'users',
-        },
-        {
-          path: '/deposit',
-          title: t('menu.Deposit'),
-          label: 'Deposit',
-          active: false,
-          isMainNav: true,
-          icon: 'wallet',
-        },
-        {
-          path: '/finance',
-          title: t('menu.Finance Report'),
-          label: 'Finance Report',
-          active: false,
-          isMainNav: true,
-          icon: 'report',
-        },
-        {
-          path: '/settlement',
-          title: t('menu.Settlement Report'),
-          label: 'Settlement Report',
-          active: false,
-          isMainNav: true,
-          icon: 'money',
-        },
-        {
-          path: '/credit-flow',
-          title: t('fields.creditFlow'),
-          label: 'creditFlow',
-          active: false,
-          isMainNav: true,
-          icon: 'ledger',
-        },
-      ],
-    },
-    {
-      title: t('menu.Referral Centre'),
-      display: true,
-      path: '/promotion',
-      children: [
-        {
-          path: '/referral-link',
-          title: t('menu.Referral Link'),
-          label: 'Referral Link',
-          active: false,
-          isMainNav: true,
-          icon: 'link',
-        },
-        {
-          path: '/referral-material',
-          title: t('menu.Referral Material'),
-          label: 'Referral Material',
-          active: false,
-          isMainNav: true,
-          icon: 'photo',
-        },
-        {
-          path: '/channel-pack',
-          title: t('menu.Channel Pack'),
-          label: 'Channel Pack',
-          active: false,
-          isMainNav: true,
-          icon: 'folder',
-        },
-      ],
-    },
-    {
-      title: t('menu.Personal Center'),
-      label: 'Personal Center',
-      display: true,
-      path: '/personal',
-      children: [
-        // {
-        //   path: '/vip',
-        //   title: 'VIP专享',
-        //   active: false,
-        //   icon: 'link',
-        // },
-        // {
-        //   path: '/overflow',
-        //   title: '溢出申请',
-        //   active: false,
-        //   icon: 'form',
-        // },
-        {
-          path: '/announcement',
-          title: t('fields.systemAnnouncement'),
-          label: 'systemAnnouncement',
-          active: false,
-          isMainNav: true,
-          icon: 'speaker',
-        },
-        {
-          path: '/commission-info',
-          title: t('commissionInfo.commissionInfo'),
-          label: 'commissionInfo',
-          active: false,
-          isMainNav: true,
-          icon: 'commission',
-        },
-        {
-          path: '/contact-us',
-          title: t('menu.contactUs'),
-          label: 'contactUs',
-          active: false,
-          isMainNav: true,
-          icon: 'speech-bubbles',
-        },
-      ],
-    },
-  ];
+  if (parseInt(store.state.user.siteId) === 5) {
+    navigationData.value = [
+      {
+        title: t('menu.Daily Report'),
+        label: 'Daily Report',
+        display: false,
+        path: '/report',
+        children: [
+          {
+            path: '/daily-detail',
+            title: t('menu.Daily Detail'),
+            label: 'Daily Detail',
+            active: false,
+            isMainNav: true,
+            icon: 'report',
+          },
+          {
+            path: '/daily-summary',
+            title: t('menu.Daily Summary'),
+            label: 'Daily Summary',
+            active: false,
+            isMainNav: true,
+            icon: 'report',
+          },
+        ],
+      }
+    ]
+  } else {
+    navigationData.value = [
+      {
+        title: t('menu.Dashboard'),
+        label: 'Dashboard',
+        display: false,
+        path: '',
+        children: [
+          {
+            path: '/dashboard',
+            title: t('menu.Dashboard'),
+            label: 'Dashboard',
+            active: false,
+            isMainNav: true,
+            icon: 'home',
+          },
+        ],
+      },
+      {
+        title: t('menu.Downline Info'),
+        label: 'Downline',
+        display: true,
+        path: '/downline',
+        children: [
+          {
+            path: '/member',
+            title: t('menu.Member'),
+            label: 'Member',
+            active: false,
+            isMainNav: true,
+            icon: 'squares',
+          },
+          {
+            path: '/affiliate',
+            title: t('menu.Affiliate'),
+            label: 'Affiliate',
+            active: false,
+            isMainNav: true,
+            icon: 'affiliate',
+          },
+          {
+            path: '/game-record',
+            title: t('menu.Bet Record'),
+            label: 'Bet Record',
+            active: false,
+            isMainNav: true,
+            icon: 'clock',
+          },
+        ],
+      },
+      {
+        title: t('menu.financeCentre'),
+        display: true,
+        path: '/affiliate',
+        children: [
+          {
+            path: '/bank-card',
+            title: t('menu.Bind Bank Cards'),
+            label: 'Bind Bank Cards',
+            active: false,
+            isMainNav: true,
+            icon: 'money-bag',
+          },
+          {
+            path: '/withdraw-request',
+            title: t('menu.Bank Withdrawal'),
+            label: 'Bank Withdrawal',
+            active: false,
+            isMainNav: true,
+            icon: 'form-w-pencil',
+          },
+          {
+            path: '/transfer',
+            title: t('menu.Transfer'),
+            label: 'Transfer',
+            active: false,
+            isMainNav: true,
+            icon: 'users',
+          },
+          {
+            path: '/deposit',
+            title: t('menu.Deposit'),
+            label: 'Deposit',
+            active: false,
+            isMainNav: true,
+            icon: 'wallet',
+          },
+          {
+            path: '/finance',
+            title: t('menu.Finance Report'),
+            label: 'Finance Report',
+            active: false,
+            isMainNav: true,
+            icon: 'report',
+          },
+          {
+            path: '/settlement',
+            title: t('menu.Settlement Report'),
+            label: 'Settlement Report',
+            active: false,
+            isMainNav: true,
+            icon: 'money',
+          },
+          {
+            path: '/credit-flow',
+            title: t('fields.creditFlow'),
+            label: 'creditFlow',
+            active: false,
+            isMainNav: true,
+            icon: 'ledger',
+          },
+        ],
+      },
+      {
+        title: t('menu.Referral Centre'),
+        display: true,
+        path: '/promotion',
+        children: [
+          {
+            path: '/referral-link',
+            title: t('menu.Referral Link'),
+            label: 'Referral Link',
+            active: false,
+            isMainNav: true,
+            icon: 'link',
+          },
+          {
+            path: '/referral-material',
+            title: t('menu.Referral Material'),
+            label: 'Referral Material',
+            active: false,
+            isMainNav: true,
+            icon: 'photo',
+          },
+          {
+            path: '/channel-pack',
+            title: t('menu.Channel Pack'),
+            label: 'Channel Pack',
+            active: false,
+            isMainNav: true,
+            icon: 'folder',
+          },
+        ],
+      },
+      {
+        title: t('menu.Personal Center'),
+        label: 'Personal Center',
+        display: true,
+        path: '/personal',
+        children: [
+          // {
+          //   path: '/vip',
+          //   title: 'VIP专享',
+          //   active: false,
+          //   icon: 'link',
+          // },
+          // {
+          //   path: '/overflow',
+          //   title: '溢出申请',
+          //   active: false,
+          //   icon: 'form',
+          // },
+          {
+            path: '/announcement',
+            title: t('fields.systemAnnouncement'),
+            label: 'systemAnnouncement',
+            active: false,
+            isMainNav: true,
+            icon: 'speaker',
+          },
+          {
+            path: '/commission-info',
+            title: t('commissionInfo.commissionInfo'),
+            label: 'commissionInfo',
+            active: false,
+            isMainNav: true,
+            icon: 'commission',
+          },
+          {
+            path: '/contact-us',
+            title: t('menu.contactUs'),
+            label: 'contactUs',
+            active: false,
+            isMainNav: true,
+            icon: 'speech-bubbles',
+          },
+        ],
+      },
+    ]
+  }
 }
 onMounted(() => {
   if (window.innerWidth < 768) {
@@ -336,7 +410,7 @@ onMounted(() => {
     }
   )
 
-  getNavigationData();
+  getNavigationData()
   // watch(isExpanded, () => {
   //   if (mainNavigationData && navigationData.value) {
   //     mainNavigationData.forEach((item) => {
@@ -357,13 +431,12 @@ onMounted(() => {
   //   }
   // })
   setActiveNav()
-});
-
-watch(languageVal, (newVal) => {
-  getNavigationData();
-  setActiveNav()
 })
 
+watch(languageVal, newVal => {
+  getNavigationData()
+  setActiveNav()
+})
 </script>
 
 <style scoped lang="scss">
@@ -373,27 +446,23 @@ watch(languageVal, (newVal) => {
   flex-direction: column;
   border-radius: 1rem;
   &.expanded {
-  width: 90%;
-  max-width: 250px;
-  .route-wrapper {
-
-    padding: 0.5rem 0 0.5rem 0;
+    width: 90%;
+    max-width: 250px;
+    .route-wrapper {
+      padding: 0.5rem 0 0.5rem 0;
       .route-container.active {
-
-    border-right: 5px solid #3f8cff;
-  }
-    .route-content {
-
+        border-right: 5px solid #3f8cff;
+      }
+      .route-content {
         display: flex;
         gap: 0.5rem;
         padding: 0.5rem 2rem 0.5rem 0.5rem;
         margin: 0px 10px;
+      }
     }
-
-  }
   }
   .expansionbtn {
-    position:absolute;
+    position: absolute;
     right: -10px;
     width: 30px;
     min-height: 30px;
@@ -402,13 +471,14 @@ watch(languageVal, (newVal) => {
   }
   .mobilehamburg {
     display: none;
-    position:fixed;
+    position: fixed;
     left: 10px;
     top: 10px;
     padding: 0;
     border: 0;
     margin-left: 0;
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       background: unset;
     }
   }
@@ -430,25 +500,22 @@ watch(languageVal, (newVal) => {
     margin: 0 0 1rem 0;
 
     .route {
-      color: #7D8592;
+      color: #7d8592;
       text-decoration: none;
     }
   }
 
   .navigation {
     font-size: 1rem;
-    &::-webkit-scrollbar-track
-    {
-      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
       background-color: #ffffff;
     }
-    &::-webkit-scrollbar
-    {
+    &::-webkit-scrollbar {
       width: 5px;
       background-color: #ffffff;
     }
-    &::-webkit-scrollbar-thumb
-    {
+    &::-webkit-scrollbar-thumb {
       background-color: #98c0fc;
     }
 
@@ -459,8 +526,8 @@ watch(languageVal, (newVal) => {
       justify-content: space-between;
     }
 
-    .route-title:has(~.active) {
-      color: #3F8CFF;
+    .route-title:has(~ .active) {
+      color: #3f8cff;
     }
 
     .route-wrapper {
@@ -469,7 +536,7 @@ watch(languageVal, (newVal) => {
       font-family: PFMed;
 
       .route {
-        color: #7D8592;
+        color: #7d8592;
         text-decoration: none;
         font-size: 16px;
       }
@@ -492,7 +559,7 @@ watch(languageVal, (newVal) => {
   .route-container.active .route-content {
     background-color: #ecf3ff;
     border-radius: 0.5rem;
-    color: #3F8CFF;
+    color: #3f8cff;
   }
 }
 @media (max-width: 992px) {

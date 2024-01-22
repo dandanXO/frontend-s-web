@@ -4,6 +4,7 @@
       <img class="logo" src="../../../assets/images/xf/logo.png" v-if="siteId === '1' || siteId === 1"> <!--XF-->
       <img class="logo" src="../../../assets/images/dy/logo.png" v-if="siteId === '6' || siteId === 6"> <!--DY-->
       <img class="logo" src="../../../assets/images/home/logo_w_text.png" v-if="siteId === '7' || siteId === 7"> <!--LH-->
+      <img class="logo" src="../../../assets/images/ind/logo.png" v-if="siteId === '5' || siteId === 5"> <!--LH-->
     </div>
     <div class="right-menu">
       <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage">

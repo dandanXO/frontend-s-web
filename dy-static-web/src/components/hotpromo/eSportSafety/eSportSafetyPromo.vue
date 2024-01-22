@@ -1,6 +1,13 @@
 <template>
   <div>
-    <swiper :slides-per-view="1" :loop="true" @swiper="onSwiper" @slideChange="onSlideChange" class="swiper-wrapper">
+    <swiper
+      :slides-per-view="matchDetails.length > 1 ? 2 : 1"
+      :spaceBetween="20"
+      :loop="false"
+      @swiper="onSwiper"
+      @slideChange="onSlideChange"
+      class="swiper-wrapper"
+    >
       <template v-for="(item, index) in matchDetails" :key="item.id">
         <swiper-slide>
           <div class="bet-info-box">
@@ -14,6 +21,8 @@
               </div>
 
               <div class="bet-info-vs">
+                <span>{{ item.matchTitle }}</span>
+                <br />
                 VS
                 <br />
                 {{ formatDate(item.matchTime).time }}
@@ -57,7 +66,7 @@
           ref="eSportInsuranceFormRef"
           :model="eSportInsuranceFormData"
         >
-          <el-form-item prop="platform" name="platform" label="投注平台: ">
+          <!-- <el-form-item prop="platform" name="platform" label="投注平台: ">
             <el-select
               v-model="eSportInsuranceFormData.platform"
               placeholder="投注平台"
@@ -73,25 +82,77 @@
                 {{ platform.alias }}
               </el-option>
             </el-select>
+          </el-form-item> -->
+
+          <el-form-item prop="gameMatchId" name="gameMatchId" label="游戏比赛: ">
+            <el-select v-model="eSportInsuranceFormData.gameMatchId" placeholder="游戏比赛" clearable>
+              <el-option
+                v-for="item in matchDetails"
+                :key="item.value"
+                :value="item.id"
+                :label="`${item.matchTitle} - (${item.teamOne} vs ${item.teamTwo})`"
+              >
+                {{ `${item.matchTitle} - (${item.teamOne} vs ${item.teamTwo})` }}
+              </el-option>
+            </el-select>
           </el-form-item>
 
-          <el-form-item prop="gameMatchId" name="gameMatchId" label="" style="display: none">
+          <!-- <el-form-item prop="gameMatchId" name="gameMatchId" label="" style="display: none">
             <el-input v-model="eSportInsuranceFormData.gameMatchId" readonly />
-          </el-form-item>
+          </el-form-item> -->
 
           <el-form-item prop="nickName" name="nickName" label="账号: ">
             <el-input v-model="nickName" readonly />
           </el-form-item>
 
           <el-form-item prop="transactionId" name="transactionId" label="注单号: ">
-            <el-input v-model="eSportInsuranceFormData.transactionId" minlength="14" maxlength="16" />
+            <el-input v-model="eSportInsuranceFormData.transactionId" minlength="9" maxlength="25" />
           </el-form-item>
+
+          <el-button
+            :loading="loadingBtn"
+            size="large"
+            @click="loadESportInsuranceRecords(insuranceRecordsParam)"
+            class="common-btn second"
+          >
+            申请记录
+          </el-button>
 
           <el-button :loading="loadingBtn" size="large" @click="submitForm(eSportInsuranceFormRef)" class="common-btn">
             确定
           </el-button>
         </el-form>
       </div>
+    </el-dialog>
+
+    <el-dialog v-model="insuranceRecordsModalVisible" title="电竞场馆申请记录" width="800px" center align-center>
+      <el-table :data="insuranceRecords" stripe style="width: 100%">
+        <el-table-column prop="loginName" label="账号" />
+        <el-table-column prop="transactionId" label="注单号" />
+        <el-table-column prop="createTime" label="申请时间" width="200px" />
+        <el-table-column prop="status" label="状态" />
+        <el-table-column prop="remark" label="备注" />
+      </el-table>
+
+      <template v-if="insuranceRecordsParam.total > insuranceRecordsParam.size">
+        <div class="record-pagination">
+          <el-icon @click="recordPageControl('left')">
+            <ArrowLeft />
+          </el-icon>
+
+          <span>{{ insuranceRecordsParam.current }} / {{ insuranceRecordsParam.maxPage }}</span>
+
+          <el-icon @click="recordPageControl('right')">
+            <ArrowRight />
+          </el-icon>
+        </div>
+      </template>
+
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button type="primary" @click="insuranceRecordsModalVisible = false">确认</el-button>
+        </span>
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -106,16 +167,19 @@ import { userStore } from "@/store";
 import {
   getUpcomingESportMatches,
   getESportInsurancePlatformOptions,
-  submitESportInsuranceForm
+  submitESportInsuranceForm,
+  getESportInsuranceRecords
 } from "@/api/promotion/eSportSafety";
 import { getLoggedInPlatformList } from "@/api/platform/platform";
+
+import { ArrowRight, ArrowLeft } from "@element-plus/icons-vue";
 
 const store = userStore();
 const matchDetails = ref([]);
 const isESportInsuranceModalVisible = ref(false);
 const eSportInsuranceFormData = reactive({
-  gameMatchId: null,
-  platform: "",
+  gameMatchId: "",
+  // platform: "",
   transactionId: ""
 });
 const nickName = store.nickName;
@@ -124,6 +188,13 @@ const eSportInsuranceFormRef = ref();
 const isSubmitting = ref(false);
 
 const eSportInsuranceFormValidationRules = {
+  gameMatchId: [
+    {
+      required: true,
+      message: "游戏比赛不能为空",
+      trigger: "blur"
+    }
+  ],
   transactionId: [
     {
       required: true,
@@ -131,8 +202,8 @@ const eSportInsuranceFormValidationRules = {
       trigger: "blur"
     },
     {
-      pattern: "^.{14,16}$",
-      message: "注单号必须为14-16位",
+      pattern: "^.{9,25}$",
+      message: "注单号必须为9-25位",
       trigger: "blur"
     }
   ],
@@ -196,6 +267,7 @@ const init = () => {
     .then((res) => {
       if (res.code === 0 && res.data) {
         matchDetails.value = Array.isArray(res.data) ? res.data : [res.data];
+        insuranceRecordsParam.gameType = matchDetails.value[0].gameType;
       }
     })
     .catch((err) => {
@@ -256,6 +328,50 @@ const getPlatList = () => {
   });
 };
 
+// get Insurance Records
+const insuranceRecordsParam = reactive({
+  gameType: "",
+  size: 5,
+  current: 1,
+  total: 0,
+  maxPage: 0
+});
+
+const insuranceRecords = ref([]);
+const insuranceRecordsModalVisible = ref(false);
+const loadESportInsuranceRecords = (param) => {
+  getESportInsuranceRecords(param).then((res) => {
+    isESportInsuranceModalVisible.value = false;
+    insuranceRecordsModalVisible.value = true;
+    insuranceRecords.value = res.data.records;
+
+    insuranceRecordsParam.gameType = res.data.records[0].gameType;
+    insuranceRecordsParam.records = res.data.records;
+    insuranceRecordsParam.current = res.data.current;
+    insuranceRecordsParam.total = res.data.total;
+    insuranceRecordsParam.maxPage = Math.ceil(insuranceRecordsParam.total / insuranceRecordsParam.size);
+  });
+};
+
+const recordPageControl = (direction) => {
+  if (direction === "left") {
+    if (insuranceRecordsParam.current > 1) {
+      insuranceRecordsParam.current--;
+      loadESportInsuranceRecords(insuranceRecordsParam);
+    } else {
+      ElMessage.error("已经是第一页了");
+    }
+  } else {
+    let maxPage = insuranceRecordsParam.maxPage;
+    if (maxPage === insuranceRecordsParam.current) {
+      ElMessage.error("这是最后一页了");
+    } else {
+      insuranceRecordsParam.current++;
+      loadESportInsuranceRecords(insuranceRecordsParam);
+    }
+  }
+};
+
 onMounted(() => {
   init();
   getPlatList();
@@ -304,8 +420,8 @@ onMounted(() => {
 
   .bet-info-vs {
     font-weight: bolder;
-    font-size: 28px;
-    line-height: 1.3;
+    font-size: 21px;
+    line-height: 1.2;
     text-align: center;
   }
 
@@ -320,7 +436,7 @@ onMounted(() => {
       flex-direction: column;
       gap: 12px;
       align-items: center;
-      width: 280px;
+      width: 120px;
       padding-bottom: 20px;
 
       .info-team-logo {
@@ -341,6 +457,20 @@ onMounted(() => {
         font-weight: bolder;
       }
     }
+  }
+}
+
+.record-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+  align-items: center;
+  font-size: 26px;
+  line-height: 1;
+
+  span {
+    font-size: 20px;
   }
 }
 </style>
