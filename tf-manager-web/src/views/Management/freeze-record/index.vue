@@ -22,8 +22,14 @@
         <el-input
           v-model="request.memberName"
           size="small"
-          style="width: 150px;"
+          style="width: 150px;margin-left: 5px"
           :placeholder="t('fields.memberName')"
+        />
+        <el-input
+          v-model="request.telephone"
+          size="small"
+          style="width: 150px;margin-left: 5px"
+          :placeholder="t('fields.telephone')"
         />
         <el-select
           clearable

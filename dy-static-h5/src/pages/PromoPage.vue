@@ -290,7 +290,7 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      const platformApiUrl = (store.hasToken() && window.location.pathname !== "/promotion") ? "/session/loggedInPromoPages" : "/promo/page";
+      const platformApiUrl = (store.hasToken() || (window.location.pathname === "/promotion" && extensionState.value===true)) ? "/session/loggedInPromoPages" : "/promo/page";
 
       isFetchingPromo.value = window.location.pathname === "/promotion";
 

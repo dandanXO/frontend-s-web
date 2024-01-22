@@ -395,8 +395,10 @@ import {
 } from '../../api/affiliate-summary'
 import { useI18n } from 'vue-i18n'
 import AnnouncementComponent from '../../views/personal/announcement/index.vue'
+import { useRouter } from "vue-router";
 
 const store = useStore()
+const router = useRouter()
 // eslint-disable-next-line
 const { t } = useI18n()
 const uiControl = reactive({
@@ -622,6 +624,9 @@ function checkQuery(dateType) {
 }
 
 onMounted(() => {
+  if (store.state.user.siteCode === 'IND') {
+    router.push("/report/daily-detail")
+  }
   affiliateLevel.value = store.state.user.affiliateLevel
   loadMemberSummary()
   loadCommissionSummary()

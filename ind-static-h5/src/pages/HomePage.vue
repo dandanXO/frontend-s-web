@@ -109,7 +109,12 @@
     >
       <template v-for="(item, index) in categoriesList" :key="index">
         <swiper-slide>
-          <div class="cat-menu-item" @click="activateSlide(item)">
+          <!-- <div
+            class="menu-category-btn"
+            :class="`cat-${item.icon.toLowerCase()} ${item.active && 'active'}`"
+            @click="activateSlide(item)"
+          ></div> -->
+          <!-- <div class="cat-menu-item" @click="activateSlide(item)">
             <img
               :src="
                 require(`../assets/images/index/category/cat-menu-${item.icon.toLowerCase()}${
@@ -118,13 +123,13 @@
               "
               alt=""
             />
-          </div>
-          <!-- <div class="cat-selection-item" :class="item.active && 'active'" @click="activateSlide(item)">
+          </div> -->
+          <div class="cat-selection-item" :class="item.active && 'active'" @click="activateSlide(item)">
             <div class="cat-icon">
               <img :src="require(`../assets/images/index/category/cat-${item.icon.toLowerCase()}.png`)" alt="" />
             </div>
             <div class="cat-title">{{ item.title }}</div>
-          </div> -->
+          </div>
         </swiper-slide>
       </template>
     </swiper>
@@ -219,9 +224,9 @@
                         backgroundImage: `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`
                       }"
                     ></div>
-                    <div class="platform-game-title">
-                      {{ truncateText(item.alias ? item.alias : item.name, 22) }}
-                    </div>
+                  </div>
+                  <div class="platform-game-title">
+                    {{ truncateText(item.alias ? item.alias : item.name, 22) }}
                   </div>
                 </div>
               </template>
@@ -238,9 +243,8 @@
                         backgroundImage: `url(${imgURLGame}${item.icon})`
                       }"
                     ></div>
-
-                    <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                   </div>
+                  <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                 </div>
               </template>
             </div>
@@ -626,9 +630,8 @@
                     backgroundImage: `url(${imgURLGame}${item.icon})`
                   }"
                 ></div>
-
-                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
               </div>
+              <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
             </div>
           </template>
 
@@ -644,9 +647,8 @@
                     backgroundImage: `url(${imgURLGame}${item.icon})`
                   }"
                 ></div>
-
-                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
               </div>
+              <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
             </div>
           </template>
         </div>
@@ -1612,7 +1614,7 @@ const populatePushNotificationData = (data) => {
 };
 
 const initOneSignal = () => {
-  OneSignal.initialize("9ed390f0-6b59-4fc1-8228-d0621bfab9db");
+  OneSignal.initialize("5fd20672-11f1-4c8a-8e24-23c7eed428fb");
 
   let myClickListener = async function (event) {
     console.log("CLICK PUSH");
@@ -2708,6 +2710,57 @@ onMounted(() => {
   }
 }
 
+.menu-category-btn {
+  // background-image: url("../assets/images/index/category/menu-category-btns.png");
+  background-size: 156px 379px;
+  background-position: 0px 0px;
+  width: 73px;
+  height: 55px;
+  background-repeat: no-repeat;
+
+  &.cat-lobby {
+    background-position: -83px 0px;
+    &.active {
+      background-position: 0px 0px;
+    }
+  }
+
+  &.cat-hot {
+    background-position: -83px -65px;
+    &.active {
+      background-position: 0px -65px;
+    }
+  }
+
+  &.cat-casino {
+    background-position: -83px -130px;
+    &.active {
+      background-position: 0px -130px;
+    }
+  }
+
+  &.cat-slot {
+    background-position: -83px -195px;
+    &.active {
+      background-position: 0px -195px;
+    }
+  }
+
+  &.cat-fishing {
+    background-position: -83px -260px;
+    &.active {
+      background-position: 0px -260px;
+    }
+  }
+
+  &.cat-sport {
+    background-position: -83px -325px;
+    &.active {
+      background-position: 0px -325px;
+    }
+  }
+}
+
 .cat-menu-item {
   img {
     width: 100%;
@@ -2724,7 +2777,7 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  padding-top: 6px;
+  padding-top: 3px;
   transition: 0.3s all;
   width: 100%;
 
@@ -2742,8 +2795,9 @@ onMounted(() => {
 
   .cat-icon {
     img {
-      height: 100%;
-      max-height: 19px;
+      display: block;
+      width: 100%;
+      max-width: 28px;
     }
   }
 
@@ -2751,6 +2805,8 @@ onMounted(() => {
     font-size: 12px;
     font-weight: bold;
     color: #bfc3c9;
+    font-family: "Poppins", sans-serif;
+    letter-spacing: 0.5px;
   }
 }
 
@@ -2761,7 +2817,8 @@ onMounted(() => {
   background-size: cover;
   background-position: center center;
   position: relative;
-  // background-image: url("../assets/images/index/mini-game-bg.png");
+  background-image: url("../assets/images/index/mini-game-bg.png");
+  // background-image: url("../assets/images/index/item-game-maintenance.png");
   border-radius: 8px;
 
   .game--bg {
@@ -2771,6 +2828,7 @@ onMounted(() => {
     width: 100%;
     border-radius: 8px;
     background-repeat: no-repeat;
+    // background-image: url("../assets/images/index/mini-game-bg.png");
   }
 }
 

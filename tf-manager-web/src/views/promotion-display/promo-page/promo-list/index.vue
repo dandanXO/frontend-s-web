@@ -87,11 +87,12 @@
       :empty-text="t('fields.noData')"
     >
       <el-table-column type="selection" />
-      <el-table-column prop="title" :label="t('fields.title')" />
-      <el-table-column prop="promoCode" :label="t('fields.code')" />
-      <el-table-column prop="redirectUrl" :label="t('fields.redirect')" />
-      <el-table-column prop="siteName" :label="t('fields.site')" />
-      <el-table-column prop="labelType" :label="t('fields.label')">
+      <el-table-column prop="sequence" :label="t('fields.sequence')" width="60" />
+      <el-table-column prop="title" :label="t('fields.title')" min-width="200" />
+      <el-table-column prop="promoCode" :label="t('fields.code')" min-width="150" />
+      <el-table-column prop="redirectUrl" :label="t('fields.redirect')" min-width="150" />
+      <el-table-column prop="siteName" :label="t('fields.site')" min-width="120" />
+      <el-table-column prop="labelType" :label="t('fields.label')" min-width="80">
         <template #default="scope">
           <div v-if="scope.row.labelType === 0">{{ t('promoLabel.new') }}</div>
           <div v-if="scope.row.labelType === 1">{{ t('promoLabel.hot') }}</div>
@@ -121,7 +122,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="createTime" :label="t('fields.createTime')" min-width="200">
+      <el-table-column prop="createTime" :label="t('fields.createTime')" min-width="180">
         <template #default="scope">
           <span v-if="scope.row.createTime === null">-</span>
           <span
@@ -130,7 +131,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="createBy" :label="t('fields.createBy')" />
+      <el-table-column prop="createBy" :label="t('fields.createBy')" min-width="80" />
       <el-table-column
         type="title"
         :label="t('fields.action')"

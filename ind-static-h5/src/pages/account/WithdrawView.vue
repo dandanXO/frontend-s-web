@@ -170,14 +170,7 @@
           <div class="desc-wrapper">
             <div class="desc">Withdrew Amount</div>
           </div>
-          <div class="desc">
-            RS:{{
-              convertToCommaAmount(
-                withdrawalMethods[withdrawalDialogTab].withdrawMax -
-                  withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount
-              )
-            }}
-          </div>
+          <div class="desc">RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }}</div>
         </div>
         <div class="info">
           <div class="desc-wrapper">

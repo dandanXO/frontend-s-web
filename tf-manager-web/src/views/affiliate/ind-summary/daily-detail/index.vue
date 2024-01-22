@@ -57,11 +57,13 @@
         :empty-text="t('fields.noData')"
         :summary-method="getSummaries"
         show-summary
+        highlight-current-row
       >
         <el-table-column
           prop="recordTime"
           :label="t('fields.recordTime')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             <span
@@ -78,6 +80,7 @@
           :label="t('fields.platform')"
           align="left"
           min-width="100"
+          width="120"
         >
           <template
             #default="scope"
@@ -96,6 +99,7 @@
           prop="depositAmount"
           :label="t('fields.depositAmount')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
@@ -108,6 +112,7 @@
           prop="withdrawAmount"
           :label="t('fields.withdrawAmount')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
@@ -119,6 +124,7 @@
         <el-table-column
           :label="t('fields.depositWithdrawalProfit')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
@@ -134,23 +140,31 @@
           prop="registerCount"
           :label="t('fields.registerCount')"
           align="center"
+          width="150"
         />
         <el-table-column
           prop="ftdCount"
           :label="t('fields.ftdCount')"
           align="center"
+          width="120"
         />
         <el-table-column
           prop="ftdAmount"
           :label="t('fields.ftdAmount')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
             <span v-formatter="{data: scope.row.ftdAmount, type: 'money'}" />
           </template>
         </el-table-column>
-        <el-table-column prop="bet" :label="t('fields.indBet')" align="center">
+        <el-table-column
+          prop="bet"
+          :label="t('fields.indBet')"
+          align="center"
+          width="120"
+        >
           <template #default="scope">
             $
             <span v-formatter="{data: scope.row.bet, type: 'money'}" />
@@ -160,6 +174,7 @@
           prop="payout"
           :label="t('fields.payout')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
@@ -170,16 +185,18 @@
           prop="profit"
           :label="t('fields.indProfit')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
             <span v-formatter="{data: scope.row.profit, type: 'money'}" />
           </template>
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           prop="depositAmount"
           :label="t('fields.totalMemberDepositAmount')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
@@ -190,16 +207,24 @@
               }"
             />
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column
-          prop="depositCount"
-          :label="t('fields.totalMemberDepositCount')"
+          prop="depositMembersCount"
+          :label="t('fields.totalDepositMemberCount')"
           align="center"
+          width="120"
+        />
+        <el-table-column
+          prop="betMembersCount"
+          :label="t('fields.totalBetMemberCount')"
+          align="center"
+          width="120"
         />
         <el-table-column
           prop="bonus"
           :label="t('fields.indBonusAmount')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
@@ -210,6 +235,7 @@
           prop="rebateAmount"
           :label="t('fields.indRebateAmount')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
@@ -222,6 +248,7 @@
           prop="adjustment"
           :label="t('fields.indAdjustAmount')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
@@ -232,6 +259,7 @@
           prop="netProfit"
           :label="t('fields.grossProfit')"
           align="center"
+          width="120"
         >
           <template #default="scope">
             $
@@ -266,7 +294,7 @@ import { getSiteListSimple } from '../../../../api/site'
 import { getAffiliateList } from '../../../../api/affiliate-record'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
-import { formatInputTimeZone } from '@/utils/format-timeZone'
+// import { formatInputTimeZone } from '@/utils/format-timeZone'
 
 const { t } = useI18n()
 const siteList = reactive({
@@ -291,6 +319,7 @@ const request = reactive({
   recordTime: [defaultStartDate, defaultEndDate],
   loginNameList: null,
   affiliateCode: null,
+  affiliateLevel: 'SUPER_AFFILIATE',
 })
 
 const total = reactive({
@@ -302,9 +331,10 @@ async function loadSites() {
   siteList.list = site
   request.siteId = siteList.list.filter(x => x.siteCode === 'IND')[0].id
   const { data: affiliates } = await getAffiliateList(request.siteId)
-  affiliateNames.value = affiliates.map(a => {
-    return { name: a.loginName }
-  })
+
+  affiliateNames.value = affiliates
+    .filter(a => a.affiliateLevel === 'SUPER_AFFILIATE')
+    .map(a => ({ name: a.loginName }))
 }
 
 function convertDate(date) {
@@ -342,32 +372,45 @@ function checkQuery() {
       query[key] = value
     }
   })
-  const timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
+  // const timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
       query.recordTime = JSON.parse(JSON.stringify(request.recordTime))
-      query.recordTime[0] = formatInputTimeZone(
-        query.recordTime[0],
-        timeZone,
-        'start'
+      // query.recordTime[0] = formatInputTimeZone(
+      //   query.recordTime[0],
+      //   timeZone,
+      //   'start'
+      // )
+      // query.recordTime[1] = formatInputTimeZone(
+      //   query.recordTime[1],
+      //   timeZone,
+      //   'end'
+      // )
+      query.recordTime[0] = moment(query.recordTime[0]).format(
+        'YYYY-MM-DD 00:00:00'
       )
-      query.recordTime[1] = formatInputTimeZone(
-        query.recordTime[1],
-        timeZone,
-        'end'
+      query.recordTime[1] = moment(query.recordTime[1]).format(
+        'YYYY-MM-DD 23:59:59'
       )
       query.recordTime = query.recordTime.join(',')
     } else {
-      query.recordTime = formatInputTimeZone(
-        request.recordTime[0],
-        timeZone,
-        'start'
+      // query.recordTime = formatInputTimeZone(
+      //   request.recordTime[0],
+      //   timeZone,
+      //   'start'
+      // )
+      query.recordTime[0] = moment(query.recordTime[0]).format(
+        'YYYY-MM-DD 00:00:00'
       )
     }
   }
-  if (request.loginNameList !== null) {
+
+  if (request.loginNameList != null) {
     query.loginNameList = request.loginNameList.join(',')
   }
+
+  query.affiliateLevel = request.affiliateLevel
+
   return query
 }
 
@@ -392,7 +435,7 @@ function getSummaries(param) {
         sums[index] = t('fields.total')
       } else if (index > 1) {
         var prop = column.property
-        if (index === 5 || index === 6 || index === 12) {
+        if (index === 5 || index === 6 || index === 11 || index === 12) {
           sums[index] = total.data[prop]
         } else if (index === 4) {
           // profit depositWithdrawal = deposit - withdrawal

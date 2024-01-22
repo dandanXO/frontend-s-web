@@ -62,15 +62,15 @@
       highlight-current-row
       :empty-text="t('fields.noData')"
     >
-      <el-table-column prop="siteName" :label="t('fields.siteName')" min-width="200" />
-      <el-table-column prop="platformName" :label="t('fields.platformName')" min-width="200" />
-      <el-table-column prop="alias" :label="t('fields.alias')" min-width="200">
+      <el-table-column prop="siteName" :label="t('fields.siteName')" min-width="150" />
+      <el-table-column prop="platformName" :label="t('fields.platformName')" min-width="150" />
+      <el-table-column prop="alias" :label="t('fields.alias')" min-width="150">
         <template #default="scope">
           <span v-if="scope.row.alias === null">-</span>
           <span v-else>{{ scope.row.alias }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="status" :label="t('fields.status')" min-width="300">
+      <el-table-column prop="status" :label="t('fields.status')" min-width="280">
         <template #default="scope">
           <el-radio-group
             v-model="scope.row.status"
@@ -96,7 +96,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="maintenanceStartTime" :label="t('fields.maintenanceStartTime')" min-width="200">
+      <el-table-column prop="maintenanceStartTime" :label="t('fields.maintenanceStartTime')" min-width="180">
         <template #default="scope">
           <span v-if="scope.row.maintenanceStartTime === null">-</span>
           <span
@@ -109,13 +109,31 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="maintenanceEndTime" :label="t('fields.maintenanceEndTime')" min-width="200">
+      <el-table-column prop="maintenanceEndTime" :label="t('fields.maintenanceEndTime')" min-width="180">
         <template #default="scope">
           <span v-if="scope.row.maintenanceEndTime === null">-</span>
           <span
             v-else
             v-formatter="{
               data: scope.row.maintenanceEndTime,
+              timeZone: scope.row.timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="latestFetchBetRecordTime"
+        :label="t('fields.latestFetchBetRecordTime')"
+        align="center"
+        min-width="190"
+      >
+        <template #default="scope">
+          <span v-if="scope.row.latestFetchBetRecordTime === null">-</span>
+          <span
+            v-if="scope.row.latestFetchBetRecordTime !== null"
+            v-formatter="{
+              data: scope.row.latestFetchBetRecordTime,
               timeZone: scope.row.timeZone,
               type: 'date',
             }"

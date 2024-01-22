@@ -159,7 +159,7 @@
           <div class="notice">
             <img src="../assets/index/home-announce-icon.png" width="18px" />
           </div>
-          <marquee-text :repeat="5" :duration="announcementList.length < 10 ? announcementList.length * 3 : 24">
+          <marquee-text :repeat="5" :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 3 : 70">
             <div v-if="announcementList">
               <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
                 {{ a.content }}
@@ -2098,6 +2098,16 @@ export default defineComponent({
         }
       });
     };
+    const calculateMaxContentLength = () => {
+      let maxLength = 0;
+      for (const announcement of announcementList.value) {
+        if (announcement.content.length > maxLength) {
+          maxLength = announcement.content.length;
+        }
+      }
+      return maxLength;
+    };
+
     const isStationNotice = ref(false);
     const noticeTitle = ref("");
     const activeKey = ref(null);
@@ -2309,7 +2319,8 @@ export default defineComponent({
       scrollSlotRef,
       isShowBackTop,
       isShowDownload,
-      moment
+      moment,
+      calculateMaxContentLength
     };
   }
 });

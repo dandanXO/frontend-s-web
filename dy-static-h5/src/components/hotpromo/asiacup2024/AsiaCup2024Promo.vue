@@ -256,6 +256,7 @@ const handleClaim = (applyPromoCode, applyPromoTitle) => {
       border-radius: 0;
       box-shadow: none;
       border-radius: 8px;
+      border: 1px solid #2f7cf7;
     }
 
     .q-tab {

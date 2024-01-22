@@ -3,6 +3,10 @@ export default {
     title: 'TF Dashboard',
     logout: 'Logout',
     changePassword: 'Change Password',
+    status: {
+      OPEN: 'Open',
+      CLOSE: 'Close'
+    }
   },
   affiliate: {
     commissionModel: {
@@ -240,6 +244,7 @@ export default {
     POKER: 'POKER',
     LOTTERY: 'LOTTERY',
     CASUAL: 'CASUAL',
+    NBA: 'NBA'
   },
   homeBannerType: {
     HOME: 'Home',
@@ -293,6 +298,7 @@ export default {
       3: 'Total Number of Kills in Total Rounds (Including Overtime)',
       4: 'Total rounds/kills for both teams',
       5: 'Kill the highest team?',
+      6: 'Which team first blood',
     },
     answers: {
       CSGO: {
@@ -381,6 +387,7 @@ export default {
     addMember: 'Add Member',
     addMemberAmountAdjust: 'Add Member Amount Adjust',
     addMemberPrivilegeBlacklist: 'Add Member Privilege Blacklist',
+    addMemberRebateRule: 'Add Member Rebate Rule',
     addMenu: 'Add Menu',
     addNodes: 'Add Nodes',
     addPayType: 'Add Pay Type',
@@ -678,6 +685,7 @@ export default {
     editGift: 'Edit Gift',
     editIpLabel: 'Edit IP Label',
     editJob: 'Edit Job',
+    editMemberRebateRule: 'Edit Member Rebate Rule',
     editMenu: 'Edit Menu',
     editPayType: 'Edit Pay Type',
     editPlatform: 'Edit Platform',
@@ -794,6 +802,7 @@ export default {
     last30Min: 'Last 30 Minutes',
     last1Hour: 'Last 1 Hour',
     lastWeek: 'Last Week',
+    latestFetchBetRecordTime: 'Latest Fetch Bet Record Time',
     level: 'Level',
     levelUpCredit: 'Level Up Credit',
     limitNumber: 'Limit Number',
@@ -1042,6 +1051,7 @@ export default {
     responseBody: 'Response Body',
     resend: 'Resend',
     reset: 'Reset',
+    resettleGameQuiz: 'Resettle Game Quiz',
     result: 'Result',
     resultDate: 'Result Date',
     resultNumber: 'Result Number',
@@ -1173,6 +1183,7 @@ export default {
     totalBalance: 'Total Balance',
     totalBet: 'Total Bet',
     totalBetAmount: 'Total Bet Amount',
+    totalBetMemberCount: 'Total Member Bet Count',
     totalBetRecords: 'Total Bet Records',
     totalBonus: 'Total Bonus',
     totalCommission: 'Total Commission',
@@ -1181,6 +1192,7 @@ export default {
     totalDeposit: 'Total Deposit',
     totalDepositAmount: 'Total Deposit Amount',
     totalDepositCount: 'Total Deposit Count',
+    totalDepositMemberCount: 'Total Member Deposit Count',
     totalDepositedAmount: 'Total deposited amount',
     totalDepositNumber: 'Total Deposit Member',
     totalDownlineAffiliates: 'Total Downline Affiliates',
@@ -1822,6 +1834,8 @@ export default {
     Applying: 'Applying',
     'Affiliate Applying': 'AffiliateApplying',
     'Affiliate Under review': 'Affiliate Under review',
+    BW1: 'BW1',
+    BW2: 'BW2',
     'To be affiliate paid': 'To be affiliate paid',
     'Affiliate Payment on going': 'Affiliate Payment on going',
     'Crypto Affiliate Payment on going': 'Crypto Affiliate Payment on going',
@@ -1882,6 +1896,7 @@ export default {
     'Site Platform Management': 'Site Platform Management',
     'Game Match': 'Game Match',
     'Game Quiz': 'Game Quiz',
+    'Member Rebate': 'Member Rebate',
     Permission: 'Permission',
     Menu: 'Menu',
     Roles: 'Roles',
@@ -2162,6 +2177,8 @@ export default {
     15003: 'VIP rebate rule exists for given VIP level and game type',
     15004: 'VIP rebate rule does not exist',
     15005: 'VIP rebate already distributed',
+    15008: 'Member rebate rule exists for given login name and game type',
+    15009: 'Member rebate rule does not exist',
     15010: 'Financial level name already exist on the site',
     15012: 'Financial level does not exist',
     15020: 'Deposit Record does not exist',
