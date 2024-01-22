@@ -208,6 +208,9 @@
                 :label="tutorialLabel()"
               />
             </div>
+            <div class="q-mt-md text-orange" v-if="['KDPAY', 'EBPAY', 'OKPAY'].includes(selectedWithdrawalMethod.code)">
+              <span>*特别说明：提款钱包和游戏账号的姓名务必一致</span>
+            </div>
           </div>
           <!-- <a-form-item
             class="select"
