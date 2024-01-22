@@ -57,6 +57,8 @@
         store.token
       "
     ></LplSummerPromo>
+
+    <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo' && !isCommonPromo && store.token"></Cny2024Promo>
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -97,6 +99,7 @@ import PrivilegeInvite from "../components/hotpromo/privilegeinviteA/PrivilegeIn
 import AsiaCup2024Promo from "../components/hotpromo/asiacup2024/AsiaCup2024Promo.vue";
 import BasketballHot from "../components/hotpromo/basketballHot/BasketballHot.vue";
 import LplSummerPromo from "../components/hotpromo/lplsummer/LplSummerPromo.vue";
+import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -117,7 +120,8 @@ export default defineComponent({
     PrivilegeInvite,
     AsiaCup2024Promo,
     BasketballHot,
-    LplSummerPromo
+    LplSummerPromo,
+    Cny2024Promo
   },
   props: {
     list: {
@@ -187,7 +191,8 @@ export default defineComponent({
       this.list.redirectUrl === "/dy-promo-basketball" ||
       this.list.redirectUrl === "lpl-summer" ||
       this.list.redirectUrl === "dy-promo-application-A" ||
-      this.list.redirectUrl === "dy-promo-application-B"
+      this.list.redirectUrl === "dy-promo-application-B" ||
+      this.list.redirectUrl === "dy2-cny2024-promo"
     ) {
       this.isCommonPromo = false;
     } else {

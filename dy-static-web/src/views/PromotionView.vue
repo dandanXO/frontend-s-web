@@ -65,7 +65,7 @@
             "
           ></div>
         </div>
-        <div class="inner">
+        <div class="inner" :class="selectedPromo.promoCode === 'dy2-cny2024-promo' && 'cny2024'">
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
             <HotPromotion :list="selectedPromo" />
           </div>
@@ -592,6 +592,11 @@ export default defineComponent({
         display: flex;
         flex-direction: column;
         gap: 20px;
+
+        &.cny2024 {
+          width: 100%;
+          max-width: 100%;
+        }
 
         .hot-promo {
           // background: #201f29;
