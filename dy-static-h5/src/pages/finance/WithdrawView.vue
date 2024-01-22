@@ -150,6 +150,7 @@
             <div class="q-mt-md text-neontb">*特别说明：三方自动收取提币 1.00 USDT 手续费！</div>
           </div>
           <div v-else-if="isEWALLET">
+            <span class="tip-text">*特别说明：提款钱包和游戏账号的姓名务必一致</span>
             <div class="q-mt-md q-mb-md text-center">
               <q-btn
                 style="border: 1px solid #000000; color: #000000"
