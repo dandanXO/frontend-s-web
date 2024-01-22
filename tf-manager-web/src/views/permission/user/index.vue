@@ -9,6 +9,21 @@
           :placeholder="t('fields.username')"
         />
         <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+          @change="siteChange"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+        <el-select
           clearable
           v-model="request.enable"
           size="small"
@@ -721,6 +736,10 @@ function roleTxt(roleId) {
       return r.name;
     }
   }
+}
+
+async function siteChange() {
+  await loadRoles(request.siteId)
 }
 
 watch(
