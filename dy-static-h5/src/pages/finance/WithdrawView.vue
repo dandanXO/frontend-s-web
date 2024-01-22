@@ -585,4 +585,8 @@ export default defineComponent({
     border-radius: 12px;
   }
 }
+
+.tip-text {
+  color: #ff7f10;
+}
 </style>

@@ -735,5 +735,6 @@ export default defineComponent({
   margin-bottom: 10px;
   display: block;
   width: 100%;
+  color: #ff7f10;
 }
 </style>
