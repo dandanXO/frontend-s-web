@@ -1477,6 +1477,7 @@ export default {
     replyFeedback: '回复用户反馈',
     resetSuccess: '清除成功',
     resendSuccess: '重发成功',
+    selectDateNotMoreThan3Month: '日期范围不能超过3个月，请重新选择',
     selectSiteFirst: '请先选择站点',
     selectSiteAndGameTypeFirst: '请先选择站点和游戏类型',
     selectPreviousLevel: '请选择上级',

@@ -1485,6 +1485,7 @@ export default {
     replyFeedback: 'Reply Feedback',
     resetSuccess: 'Reset Success',
     resendSuccess: 'Resend Success',
+    selectDateNotMoreThan3Month: 'The date range cannot exceed 3 months. Please choose again',
     selectPreviousLevel: 'Please select previous level',
     selectSiteFirst: 'Please select a site first',
     selectSiteAndGameTypeFirst: 'Please select a site and a game type first',
