@@ -197,7 +197,7 @@
             <span v-if="scope.row.affiliateCode !== null">{{ scope.row.affiliateCode }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="paymentName" :label="t('fields.paymentName')" />
+        <el-table-column prop="paymentName" :label="t('fields.paymentName')" class="line-break" />
         <el-table-column :label="t('fields.withdrawPlatformName')" prop="withdrawPlatformName" />
         <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:affiliate-financial-config:update'])">
           <template #default="scope">
@@ -304,7 +304,7 @@ async function loadAffiliateFinancialConfig() {
   page.records = ret.records
   page.pages = ret.pages
   page.records.forEach(item => {
-    item.paymentName = item.paymentName.split(",").join(", ")
+    item.paymentName = item.paymentName.split(",").join("\n")
   })
 }
 
@@ -518,5 +518,9 @@ onMounted(async() => {
 
 .el-icon-caret-bottom {
   color: green;
+}
+
+.line-break{
+  white-space: pre;
 }
 </style>
