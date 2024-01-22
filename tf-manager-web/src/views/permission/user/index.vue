@@ -482,6 +482,7 @@ const request = reactive({
   current: 1,
   name: null,
   enable: null,
+  siteId: null,
 })
 const options = ref([])
 
@@ -535,6 +536,7 @@ let chooseUser = []
 function resetQuery() {
   request.name = null
   request.enable = null
+  request.siteId = null
 }
 
 function handleSelectionChange(val) {
