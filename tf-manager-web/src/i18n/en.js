@@ -1965,6 +1965,7 @@ export default {
     'Privi Christmas': 'Merry Christmas',
     'Affiliate APK Build': 'Affiliate APK Build',
     'Channel Summary': 'Channel Summary',
+    'Adjustment Reason': 'Adjustment Reason',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
