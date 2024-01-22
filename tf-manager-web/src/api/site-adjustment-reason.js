@@ -18,5 +18,5 @@ export const updateReason = async (reason) => {
 };
 
 export const deleteReasons = async (ids) => {
-  await https().request(`/siteMoneyChangeReason?_method=DELETE`, Method.POST, { ids: ids.join(",") }, ContentType.form);
+  await https().request(`/siteAdjustmentReason?_method=DELETE`, Method.POST, { ids: ids.join(",") }, ContentType.form);
 };
