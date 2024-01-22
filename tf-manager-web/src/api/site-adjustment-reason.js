@@ -5,6 +5,10 @@ export const getReasons = (request) => {
   return https().request("/siteAdjustmentReason", Method.GET, request, ContentType.form);
 };
 
+export const getReasonsSimple = (siteId) => {
+  return https().request(`/siteAdjustmentReason/simple`, Method.GET, { siteId: siteId }, ContentType.form);
+};
+
 export const getReasonTypes = () => {
   return https().request("/siteAdjustmentReason/reasonTypes", Method.GET, ContentType.form);
 };
