@@ -164,7 +164,6 @@ async function loadCreditFlow() {
 
   const { data: ret } = await getCreditFlow(query)
 
-  console.log('ret : ', ret)
   page.pages = ret.pages
   page.records = ret.records
 
