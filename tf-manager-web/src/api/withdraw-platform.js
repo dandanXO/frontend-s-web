@@ -5,6 +5,10 @@ export const getWithdrawPlatforms = (withdrawPlatform) => {
   return https().request("/withdrawPlatform", Method.GET, withdrawPlatform, ContentType.form);
 };
 
+export const getWithdrawPlatformsSimpleBySiteId = (siteId) => {
+  return https().request("/withdrawPlatform/simpleList", Method.GET, { siteId: siteId }, ContentType.form);
+};
+
 export const createWithdrawPlatform = (withdrawPlatform) => {
   return https().request("/withdrawPlatform", Method.POST, withdrawPlatform, ContentType.form);
 };
