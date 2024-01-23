@@ -126,6 +126,7 @@ export default {
       PATCH: 'PATCH',
       BET_N_PAYOUT: 'BET AND PAYOUT',
       AFFILIATE_TRANSFER: 'AFFILIATE TRANSFER',
+      VIP_REBATE: 'VIP REBATE'
     },
     subType: {
       DEPOSIT: 'Wallet to Game',
