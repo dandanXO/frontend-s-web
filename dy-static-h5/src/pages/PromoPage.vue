@@ -87,8 +87,7 @@
                   />
                 </div>
               </div>
-              <div class="inner">
-                <!-- <pre>SelectedPromo: ~{{ selectedPromo }}</pre> -->
+              <div class="inner" :class="selectedPromo.promoCode === 'dy2-cny2024-promo' && 'cny2024'">
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
                   <HotPromotion :list="selectedPromo" />
                 </div>
@@ -693,6 +692,10 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
+        &.cny2024 {
+          width: 100%;
+        }
 
         img {
           margin-bottom: 10px;
