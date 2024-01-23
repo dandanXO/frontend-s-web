@@ -158,6 +158,9 @@
               </el-select>
             </el-col>
           </el-row>
+          <span v-if="selectedBankType === 'e-Wallet'" class="tip-text">
+            *特别说明：提款钱包和游戏账号的姓名务必一致
+          </span>
         </el-form-item>
         <el-form-item>
           <el-input disabled v-model="bankCardInfo.cardAccount" />
@@ -904,6 +907,12 @@ export default defineComponent({
   }
   .el-form-item__content {
     width: 100%;
+  }
+
+  .tip-text {
+    display: block;
+    width: 100%;
+    color: #ff7f10;
   }
 }
 .passwordModal .ant-modal {
