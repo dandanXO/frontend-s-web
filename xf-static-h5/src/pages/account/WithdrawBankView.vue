@@ -210,6 +210,7 @@
               :rules="isCrypto || isEWALLET ? cardCryptoRules : cardNumberRules"
               ref="cardNumberRef"
               color="white"
+              style="padding-bottom:10px;"
           >
           </q-input>
 
@@ -224,6 +225,9 @@
               color="white"
           />
 
+          <div class="q-mt-sm q-mb-sm text-orange" v-if="isEWALLET">
+            <span>*特别说明：提款钱包和游戏账号的姓名务必一致</span>
+          </div>
 
           <q-input
               filled
