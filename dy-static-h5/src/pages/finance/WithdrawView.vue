@@ -150,6 +150,7 @@
             <div class="q-mt-md text-neontb">*特别说明：三方自动收取提币 1.00 USDT 手续费！</div>
           </div>
           <div v-else-if="isEWALLET">
+            <span class="tip-text">*特别说明：提款钱包和游戏账号的姓名务必一致</span>
             <div class="q-mt-md q-mb-md text-center">
               <q-btn
                 style="border: 1px solid #000000; color: #000000"
@@ -436,7 +437,7 @@ export default defineComponent({
     const openEWalletTutorial = (code) => {
       const urlMap = {
         'KDPAY': 'http://jiaocheng.kdpay123.com',
-        'EBPAY': 'https://www.ebpay24.com/useTutorial/',
+        'EBPAY': 'https://www.ebpay24.com',
         'OKPAY': 'https://me-qr.com/l/okpay'
       };
 
@@ -583,5 +584,9 @@ export default defineComponent({
     color: #fff;
     border-radius: 12px;
   }
+}
+
+.tip-text {
+  color: #ff7f10;
 }
 </style>

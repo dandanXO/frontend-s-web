@@ -56,7 +56,8 @@ elTables.forEach((elTable) => {
 
 <style lang="scss">
 ::-webkit-scrollbar {
-  width: 5px;
+  //width: 5px;
+  //height: 10px;
 }
 .el-form-item {
   align-items: center;
@@ -171,7 +172,7 @@ elTables.forEach((elTable) => {
 }
 
 @media screen and (max-width: 600px) {
-  table:not(.el-date-table) {
+  table.el-responsive-table {
     border: 0;
 
     caption {

@@ -85,6 +85,8 @@ export default {
         await store.dispatch(UserActionTypes.ACTION_LOGOUT);
         if (siteId === "3" || siteId === 3) {
           router.push("/th/login")
+        } else if (siteId === "5" || siteId === 5) {
+          router.push("/ind/login")
         } else {
           location.reload();
         }
@@ -108,6 +110,7 @@ export default {
     }
     const changePassword = async (formObj) => {
       formObj.affId = store.state.user.id;
+      formObj.siteId = store.state.user.siteId;
       await store.dispatch(UserActionTypes.ACTION_UPDATE_LOGIN, formObj);
     };
     return {

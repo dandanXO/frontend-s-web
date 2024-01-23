@@ -47,7 +47,6 @@
 
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <el-table
-        height="600"
         size="small"
         :resizable="true"
         :data="page.records"
@@ -282,6 +281,7 @@
 </template>
 
 <script setup>
+/* eslint-disable */
 import { onMounted, reactive } from 'vue'
 import moment from 'moment'
 import {

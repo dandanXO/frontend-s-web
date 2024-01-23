@@ -110,7 +110,7 @@
       </div>
       <div class="grid-item">
         <div class="grid-item-label">
-          <span>{{ t('fields.winLoss') }}</span>
+          <span>{{ t('fields.netProfit') }}</span>
         </div>
         <div class="grid-item-value">
           {{ data.netWinLoss }}
@@ -163,14 +163,14 @@
           <th scope="col">{{ t('fields.bonus') }}</th>
         </tr>
       </thead>
-      <tbody v-if="data.depositData.length > 0">
+      <tbody v-if="data.bonusData.length > 0">
         <tr v-for="item in data.bonusData" :key="item.id">
           <td :data-label="t('fields.privilegeType')">{{ item.type }}</td>
           <td :data-label="t('fields.bonus')">{{ item.amount }}</td>
         </tr>
       </tbody>
     </table>
-    <div v-if="data.depositData.length === 0">
+    <div v-if="data.bonusData.length === 0">
       <emptyComp />
     </div>
   </el-dialog>

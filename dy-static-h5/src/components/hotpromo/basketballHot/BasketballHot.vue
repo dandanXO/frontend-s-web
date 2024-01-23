@@ -4,11 +4,11 @@
       <q-tab-panels v-model="activeKey">
         <q-tab-panel name="asia-war-guide">
           <div class="tab1">
-            <div class="left-container">
-              <img src="../../../assets/images/promotion/hotpromo/asiacup2024/btn1-claim.png" />
-            </div>
+            <!--            <div class="left-container">-->
+            <!--              <img src="../../../assets/images/promotion/hotpromo/asiacup2024/btn1-claim.png" />-->
+            <!--            </div>-->
             <div class="right-container">
-              <div class="desc-title">热血迎蓝 战火延续</div>
+              <!--              <div class="desc-title">热血迎蓝 战火延续</div>-->
 
               <q-btn class="claim-btn" label="立即申请" @click="handleClaim('basketball-hot', '热血迎蓝', 'NBA')" />
             </div>
@@ -31,25 +31,25 @@
                     <th>流水倍数</th>
                   </tr>
                   <tr>
-                    <td>≥3000</td>
+                    <td>≥2,000</td>
                     <td>8</td>
                     <td rowspan="9">5倍有效流水</td>
                   </tr>
                   <tr>
-                    <td>≥10,000</td>
+                    <td>≥5,000</td>
                     <td>28</td>
                   </tr>
                   <tr>
-                    <td>≥15,000</td>
-                    <td>38</td>
+                    <td>≥10,000</td>
+                    <td>58</td>
                   </tr>
                   <tr>
                     <td>≥30,000</td>
-                    <td>68</td>
+                    <td>88</td>
                   </tr>
                   <tr>
                     <td>≥60,000</td>
-                    <td>88</td>
+                    <td>158</td>
                   </tr>
                   <tr>
                     <td>≥100,000</td>
@@ -75,7 +75,7 @@
               </div>
               <div>
                 <p>
-                  1. 本活动计算沙巴体育与IM体育的NBA&CBA当日全部赛事有效投注，每日达到对应有效投注即可领取对应流水彩金。
+                  1. 本活动计算IM体育的NBA&CBA当日全部赛事有效投注，每日达到对应有效投注即可领取对应流水彩金。
                 </p>
                 <p>
                   2.

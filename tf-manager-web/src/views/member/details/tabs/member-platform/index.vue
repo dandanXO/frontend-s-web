@@ -164,8 +164,10 @@ function resetQuery() {
 async function loadMemberPlatform() {
   request.id = props.mbrId
   request.siteId = site.id
-  const { data: ret } = await getMemberPlatformList(request)
-  memberPlatform.list = ret
+  if (request.id) {
+    const { data: ret } = await getMemberPlatformList(request)
+    memberPlatform.list = ret
+  }
 }
 
 async function loadPlatform() {

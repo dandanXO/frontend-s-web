@@ -208,6 +208,9 @@
                 :label="tutorialLabel()"
               />
             </div>
+            <div class="q-mt-md text-orange" v-if="['KDPAY', 'EBPAY', 'OKPAY'].includes(selectedWithdrawalMethod.code)">
+              <span>*特别说明：提款钱包和游戏账号的姓名务必一致</span>
+            </div>
           </div>
           <!-- <a-form-item
             class="select"
@@ -492,7 +495,7 @@ export default defineComponent({
     const openEWalletTutorial = (code) => {
       const urlMap = {
         'KDPAY': 'http://jiaocheng.kdpay123.com',
-        'EBPAY': 'https://www.ebpay24.com/useTutorial',
+        'EBPAY': 'https://www.ebpay24.com',
         'OKPAY': 'https://me-qr.com/l/okpay'
       };
 
