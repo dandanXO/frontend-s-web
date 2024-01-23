@@ -1,7 +1,7 @@
 <template>
   <div class="promo-4">
     <div class="tabs">
-      <q-tabs v-model="activeKey">
+      <q-tabs style="display: none" v-model="activeKey">
         <q-tab name="shout-and-cheer"><span>呐喊助威</span></q-tab>
         <q-tab name="betting-bonus"><span>倍投赠礼</span></q-tab>
       </q-tabs>
@@ -194,7 +194,7 @@ const $q = useQuasar();
 const store = userStore();
 var qs = require("qs");
 
-const activeKey = ref("shout-and-cheer");
+const activeKey = ref("betting-bonus");
 
 const handleClaim = (applyPromoCode, applyPromoTitle) => {
   eventapi

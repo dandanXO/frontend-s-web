@@ -1,28 +1,28 @@
 <template>
   <div class="lpl-body">
     <div class="lpl-container">
-      <div class="lpl-tabs">
-        <div :class="`tab tab-1 ${isTabOne ? 'active' : ''}`" @click="onTabClick(true)">
-          <span class="grad-txt">呐喊助威</span>
-        </div>
+      <div class="lpl-tabs" style="display: none">
+        <!--        <div :class="`tab tab-1 ${isTabOne ? 'active' : ''}`" @click="onTabClick(true)">-->
+        <!--          <span class="grad-txt">呐喊助威</span>-->
+        <!--        </div>-->
         <div :class="`tab tab-2 ${!isTabOne ? 'active' : ''}`" @click="onTabClick(false)">
           <span class="grad-txt">倍投赠礼</span>
         </div>
       </div>
 
       <div class="lpl-claim-btns">
-        <div :class="`claim-btn-div ${isTabOne ? 'active' : ''}`">
-          <img class="claim-img" src="../../../assets/promo/lpl-s13/btn2-claim.png" />
-          <div class="claim-rgt">
-            <span class="claim-title">LPL呐喊助威</span>
-            <span
-              :class="`claim-btn ${claimBtnStatus.btnOne ? 'disable-pointer' : ''}`"
-              @click="onClaimBtnClicked(true)"
-            >
-              <div>立即申請</div>
-            </span>
-          </div>
-        </div>
+        <!--        <div :class="`claim-btn-div ${isTabOne ? 'active' : ''}`">-->
+        <!--          <img class="claim-img" src="../../../assets/promo/lpl-s13/btn2-claim.png" />-->
+        <!--          <div class="claim-rgt">-->
+        <!--            <span class="claim-title">LPL呐喊助威</span>-->
+        <!--            <span-->
+        <!--              :class="`claim-btn ${claimBtnStatus.btnOne ? 'disable-pointer' : ''}`"-->
+        <!--              @click="onClaimBtnClicked(true)"-->
+        <!--            >-->
+        <!--              <div>立即申請</div>-->
+        <!--            </span>-->
+        <!--          </div>-->
+        <!--        </div>-->
 
         <div :class="`claim-btn-div ${!isTabOne ? 'active' : ''}`">
           <img class="claim-img" src="../../../assets/promo/lpl-s13/btn2-claim.png" />
@@ -184,7 +184,7 @@ import { promoApply } from "@/api/index/promo";
 
 const store = userStore();
 
-const isTabOne = ref(true);
+const isTabOne = ref(false);
 const onTabClick = (flag) => {
   isTabOne.value = flag;
 };
@@ -196,6 +196,10 @@ const claimBtnStatus = reactive({
 const onClaimBtnClicked = (isBtnOne) => {
   if (!store.token) {
     ElMessage.error("请登入后操作");
+    return;
+  }
+  if (isBtnOne) {
+    ElMessage.error("活动已结束。");
     return;
   }
 
