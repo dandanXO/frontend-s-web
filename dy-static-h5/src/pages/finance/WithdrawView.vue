@@ -437,7 +437,7 @@ export default defineComponent({
     const openEWalletTutorial = (code) => {
       const urlMap = {
         'KDPAY': 'http://jiaocheng.kdpay123.com',
-        'EBPAY': 'https://www.ebpay24.com/useTutorial/',
+        'EBPAY': 'https://www.ebpay24.com',
         'OKPAY': 'https://me-qr.com/l/okpay'
       };
 
@@ -584,5 +584,9 @@ export default defineComponent({
     color: #fff;
     border-radius: 12px;
   }
+}
+
+.tip-text {
+  color: #ff7f10;
 }
 </style>

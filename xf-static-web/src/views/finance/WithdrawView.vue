@@ -169,7 +169,14 @@
 
         <!-- K豆教程视频 -->
         <div style="margin-left: 150px" v-else-if="isEWALLET">
-          <div style="margin:15px 0px" v-if="['KDPAY' , 'OKPAY', 'EBPAY'].includes(selectedWithdrawalMethod.code)">
+          <div
+            style="margin: 15px 0px; color: #ff7f10"
+            v-if="
+              ['KDPAY', 'OKPAY', 'EBPAY'].includes(
+                selectedWithdrawalMethod.code
+              )
+            "
+          >
             *特别说明：提款钱包和游戏账号的姓名务必一致
           </div>
           <el-button

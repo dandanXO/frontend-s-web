@@ -55,7 +55,13 @@
     </div>
   </el-form>
 
-  <table class="custom-table" style="margin: 10px auto; width: 100%;" cellpadding="0" cellspacing="0" border="0">
+  <table
+    class="custom-table"
+    style="margin: 10px auto; width: 100%;"
+    cellpadding="0"
+    cellspacing="0"
+    border="0"
+  >
     <thead>
       <tr>
         <th scope="col">{{ t('fields.creditFlowId') }}</th>
@@ -71,10 +77,14 @@
         <td data-label="ID">{{ row.id }}</td>
         <td data-label="Date">
           <span v-if="row.date === null">-</span>
-          <span v-if="row.date !== null">{{ formatDate(row.date) }}</span>
+          <span v-if="row.date !== null">
+            {{ moment(row.date).format('YYYY/MM/DD HH:mm:ss') }}
+          </span>
         </td>
         <td date-label="Serial Number">{{ row.serialNumber }}</td>
-        <td date-label="Credit Flow Type">{{ $t(`creditFlowType.${row.type}`) }}</td>
+        <td date-label="Credit Flow Type">
+          {{ $t(`creditFlowType.${row.type}`) }}
+        </td>
         <td date-label="Amount">{{ row.amount }}</td>
         <td date-label="Credit Flow Balance">{{ row.balance }}</td>
       </tr>
@@ -100,6 +110,7 @@ import { useI18n } from 'vue-i18n'
 
 import { getCreditFlow } from '../../../../api/affiliate-credit-flow'
 import emptyComp from '@/components/empty'
+import moment from 'moment'
 
 const store = useStore()
 const { t } = useI18n()
