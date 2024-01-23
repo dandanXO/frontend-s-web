@@ -15,14 +15,14 @@
           <div class="bg">
             <div class="top">
               <div class="log">{{ isReg ? $t('common.signup') : $t('common.login') }}</div>
-              <div class="topright" v-if="props.siteId !== '5'">
-                <span class="noaccabs">
-                  {{ isReg ? '已经有账号? ' : '没有帐户？' }}
-                </span>
-                <a @click="isReg = !isReg" class="signlog">
-                  {{ isReg ? '请登录' : '立即注册' }}
-                </a>
-              </div>
+              <!--              <div class="topright" v-if="props.siteId !== '5'">-->
+              <!--                <span class="noaccabs">-->
+              <!--                  {{ isReg ? '已经有账号? ' : '没有帐户？' }}-->
+              <!--                </span>-->
+              <!--                <a @click="isReg = !isReg" class="signlog">-->
+              <!--                  {{ isReg ? '请登录' : '立即注册' }}-->
+              <!--                </a>-->
+              <!--              </div>-->
             </div>
             <div class="mid">
               <el-form
@@ -68,14 +68,30 @@
                   </el-form-item>
                 </el-tooltip>
 
-                <el-button
-                  class="common-btn"
-                  type="danger"
-                  style="width:100%;"
-                  @click.prevent="handleLogin"
-                >
-                  {{ $t('common.loginnow') }}
-                </el-button>
+                <div class="flex-c-center-div">
+                  <el-button
+                    class="common-btn"
+                    type="danger"
+                    style="width:50%;"
+                    @click.prevent="handleLogin"
+                  >
+                    {{ $t('common.loginnow') }}
+                  </el-button>
+                  <el-button
+                    class="common-btn default-btn"
+                    type="primary"
+                    style="width:50%;"
+                    @click="isReg = !isReg"
+                  >
+                    {{ $t('common.register_affi') }}
+                  </el-button>
+                </div>
+
+                <div v-if="props.siteId !== '5' " class="flex-c-center-div">
+                  <div class="contact-div" @click="swipeToContactUs">
+                    {{ $t('common.contact_us') }}</div>
+                </div>
+
               </el-form>
               <el-form
                 v-if="isReg"
@@ -154,15 +170,29 @@
                       </template>
                     </el-input>
                   </el-form-item>
-                  <el-button
-                    class="common-btn"
-                    :loading="loading"
-                    type="danger"
-                    style="width:100%;"
-                    @click.prevent="handleRegister"
-                  >
-                    {{ $t('common.apply') }}
-                  </el-button>
+
+                  <div class="flex-c-center-div">
+                    <el-button
+                      class="common-btn"
+                      :loading="loading"
+                      type="danger"
+                      style="width:50%;"
+                      @click.prevent="handleRegister"
+                    >
+                      {{ $t('common.apply') }}
+                    </el-button>
+                    <el-button
+                      class="common-btn default-btn"
+                      style="width:50%;"
+                      @click="isReg = !isReg"
+                    >
+                      {{ $t('common.back_login') }}
+                    </el-button>
+                  </div>
+                  <div v-if="props.siteId !== '5' " class="flex-c-center-div">
+                    <div class="contact-div" @click="swipeToContactUs">
+                      {{ $t('common.contact_us') }}</div>
+                  </div>
                 </div>
                 <!--div v-if="step === 2">
                   <el-form-item prop="realName">
@@ -779,6 +809,13 @@ export default defineComponent({
         }
       }
     )
+
+    const swipeToContactUs = () => {
+      var myElement = document.getElementById('login-swiper');
+      console.log(myElement);
+      myElement.swiper.slideTo(1)
+    }
+
     const currentSite = ref({});
     const i18nStoreLanguage = i18nStore();
     const { setLanguage } = i18nStoreLanguage;
@@ -848,7 +885,8 @@ export default defineComponent({
       isReg,
       currentSite,
       props,
-      t
+      t,
+      swipeToContactUs
     }
   },
 })
@@ -876,6 +914,21 @@ a {
   &:hover {
     opacity: 1;
   }
+
+  &.default-btn{
+    background-color: transparent;
+    border: 1px solid #458bff;
+    color: #458bff;
+  }
+
+  &:hover{
+    opacity: 0.9;
+  }
+  &:active{
+    filter: brightness(0.85);
+    transform: translate(0px , 1px);
+  }
+
 }
 :deep(.el-input-group__append) {
   background-color: #ffffff;
@@ -1125,11 +1178,35 @@ a {
 
     .common-btn{
       background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%);
-
+      color: #fff;
     }
 
   }
 
+}
+
+.flex-c-center-div{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 10px;
+  text-align:center;
+
+  .contact-div{
+    margin-top: 10px;
+    width: 50%;
+    padding: 10px 20px 0px;
+    cursor: pointer;
+
+    &:hover{
+      opacity: 0.9;
+    }
+    &:active{
+      filter:brightness(0.85);
+      transform: translate(0px, 1px);
+    }
+  }
 }
 
 @media (max-width: 1100px) {
