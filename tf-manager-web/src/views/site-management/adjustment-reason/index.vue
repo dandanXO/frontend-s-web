@@ -92,12 +92,29 @@
             :placeholder="t('fields.adjustmentReasonType')"
             class="filter-item"
             style="width: 490px; margin-bottom: 10px"
+            @change="loadReasonItems"
           >
             <el-option
               v-for="item in list.reasonTypes"
               :key="item"
               :label="item"
               :value="item"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item v-if="list.detailItems.length > 0" :label="t('fields.details')" prop="reasonItemId">
+          <el-select
+            v-model="form.reasonItemId"
+            size="small"
+            :placeholder="t('fields.details')"
+            class="filter-item"
+            style="width: 490px; margin-bottom: 10px"
+          >
+            <el-option
+              v-for="item in list.detailItems"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
             />
           </el-select>
         </el-form-item>
@@ -154,6 +171,9 @@ import {
   deleteReasons,
 } from '../../../api/site-adjustment-reason'
 import { getSiteListSimple } from '../../../api/site'
+import { getPaymentsSimpleBySiteId } from '../../../api/payment-display'
+import { getSimplePrivilegeBySiteId } from '../../../api/privilege-info'
+import { getWithdrawPlatformsSimpleBySiteId } from '../../../api/withdraw-platform'
 import { required } from '../../../utils/validate'
 import { hasRole, hasPermission } from '../../../utils/util'
 import { useStore } from '../../../store';
@@ -183,6 +203,7 @@ const form = reactive({
   id: null,
   siteId: null,
   reasonType: null,
+  reasonItemId: null,
   reason: null
 })
 
@@ -196,6 +217,7 @@ const list = reactive({
   site: [],
   reasonTypes: [],
   records: [],
+  detailItems: [],
 })
 
 let chooseCard = []
@@ -221,6 +243,7 @@ function showDialog(type) {
     if (bankForm.value) {
       bankForm.value.resetFields()
       form.id = null
+      list.detailItems = []
     }
     form.siteId = request.siteId
     uiControl.dialogTitle = t('fields.addAdjustmentReason')
@@ -236,26 +259,56 @@ function showDialog(type) {
 
 function showEdit(banner) {
   showDialog('EDIT')
-
   nextTick(() => {
     for (const key in banner) {
       if (Object.keys(form).find(k => k === key)) {
         form[key] = banner[key]
       }
     }
-    console.log(form)
+    loadReasonItems()
   })
 }
 
 async function loadReasons() {
   const { data: ret } = await getReasons(request)
   list.records = ret
-  console.log(list.records);
 }
 
 async function loadReasonTypes() {
   const { data: ret } = await getReasonTypes()
   list.reasonTypes = ret
+}
+
+async function loadReasonItems() {
+  switch (form.reasonType) {
+    case 'BONUS':
+      await loadPrivileges();
+      break;
+    case 'DEPOSIT':
+      await loadPayments();
+      break;
+    case 'WITHDRAW':
+      await loadWithdrawPlatforms();
+      break;
+    default:
+      list.detailItems = []
+      break;
+  }
+}
+
+async function loadPrivileges() {
+  const { data: ret } = await getSimplePrivilegeBySiteId(request.siteId)
+  list.detailItems = ret.map(item => ({ id: item.id, name: item.alias ? item.alias : item.name }))
+}
+
+async function loadPayments() {
+  const { data: ret } = await getPaymentsSimpleBySiteId(request.siteId)
+  list.detailItems = ret.map(item => ({ id: item.id, name: item.paymentName }))
+}
+
+async function loadWithdrawPlatforms() {
+  const { data: ret } = await getWithdrawPlatformsSimpleBySiteId(request.siteId)
+  list.detailItems = ret.map(item => ({ id: item.id, name: item.name }))
 }
 
 function create() {
