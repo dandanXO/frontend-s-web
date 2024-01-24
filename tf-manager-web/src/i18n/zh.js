@@ -126,6 +126,7 @@ export default {
       PATCH: '修补',
       BET_N_PAYOUT: '投注并派彩',
       AFFILIATE_TRANSFER: '代理代存',
+      VIP_REBATE: 'VIP返水'
     },
     subType: {
       DEPOSIT: '主账号转入平台',

@@ -1,6 +1,10 @@
 import https from "@/utils/https";
 import { ContentType, Method } from "axios-mapper";
 
+export const getPaymentsSimpleBySiteId = (siteId) => {
+  return https().request("/system-payment/simpleList", Method.GET, { siteId: siteId }, ContentType.form);
+};
+
 export const getAllPayments = (data) => {
   return https().request("/system-payment/all", Method.GET, data, ContentType.form);
 };

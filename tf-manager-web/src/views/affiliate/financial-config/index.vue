@@ -102,7 +102,7 @@
         size="small"
         label-width="150px"
       >
-        <el-form-item :label="t('fields.affiliate')" prop="affiliateId" required>
+        <el-form-item :label="t('fields.affiliate')" prop="affiliateId">
           <el-select
             filterable
             clearable
@@ -120,7 +120,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.paymentName')" prop="paymentIds" required>
+        <el-form-item :label="t('fields.paymentName')" prop="paymentIds">
           <el-select
             filterable
             multiple
@@ -140,7 +140,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.withdrawPlatformName')" prop="withdrawPlatformId" required>
+        <el-form-item :label="t('fields.withdrawPlatformName')" prop="withdrawPlatformId">
           <el-select
             filterable
             clearable
@@ -177,11 +177,10 @@
         row-key="id"
         size="small"
         highlight-current-row
-        @selection-change="handleSelectionChange"
         :empty-text="t('fields.noData')"
         style="width: 100%"
       >
-        <el-table-column prop="loginName" :label="t('fields.loginName')" width="150">
+        <el-table-column prop="loginName" :label="t('fields.affiliateName')" width="150">
           <template
             #default="scope"
             v-if="hasPermission(['sys:affiliate:detail'])"
@@ -197,7 +196,11 @@
             <span v-if="scope.row.affiliateCode !== null">{{ scope.row.affiliateCode }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="paymentName" :label="t('fields.paymentName')" class="line-break" />
+        <el-table-column prop="paymentName" :label="t('fields.paymentName')">
+          <template #default="scope">
+            <span class="line-break">{{ scope.row.paymentName }}</span>
+          </template>
+        </el-table-column>
         <el-table-column :label="t('fields.withdrawPlatformName')" prop="withdrawPlatformName" />
         <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:affiliate-financial-config:update'])">
           <template #default="scope">
@@ -236,7 +239,7 @@
 import { nextTick, onMounted, reactive, ref, computed } from 'vue'
 import { getSiteListSimple } from '../../../api/site'
 import { getAffiliateFinancialConfigList, createAffiliateFinancialConfig, updateAffiliateFinancialConfig } from '../../../api/affiliate-financial-config'
-import { getWithdrawPlatforms } from "../../../api/withdraw-platform";
+import { getWithdrawPlatformsSimpleBySiteId } from "../../../api/withdraw-platform";
 import { getSiteWithdrawPlatform } from "../../../api/site-withdraw-platform";
 import { getAffiliateList } from '../../../api/affiliate-record'
 import { required } from '../../../utils/validate'
@@ -245,7 +248,7 @@ import { useStore } from '../../../store'
 import { useI18n } from "vue-i18n";
 import { TENANT } from '../../../store/modules/user/action-types'
 import { hasPermission } from '../../../utils/util'
-import { getAllPayments } from "../../../api/payment-display";
+import { getPaymentsSimpleBySiteId } from "../../../api/payment-display";
 
 const { t } = useI18n()
 const store = useStore()
@@ -284,8 +287,9 @@ const form = reactive({
   affiliateId: null,
 })
 const formRules = reactive({
-  name: [required(t('message.validateNameRequired'))],
-  code: [required(t('message.validateCodeRequired'))],
+  affiliateId: [required(t('message.validateAffiliateNameRequired'))],
+  paymentIds: [required(t('message.validatePaymentNameRequired'))],
+  withdrawPlatformId: [required(t('message.validateWithdrawPlatformNameRequired'))],
 })
 const selected = reactive({ paymentId: [] })
 
@@ -295,7 +299,7 @@ async function loadSites() {
 }
 
 async function loadPayment() {
-  const { data: ret } = await getAllPayments(request)
+  const { data: ret } = await getPaymentsSimpleBySiteId(request.siteId)
   list.paymentInfo = ret
 }
 
@@ -316,14 +320,13 @@ async function loadSiteWithdrawPlatform(siteId) {
     if (matchingItem) {
       platform.name = matchingItem.name;
       platform.id = matchingItem.id;
-      platform.type = matchingItem.type;
     }
   });
 }
 
 async function loadWithdrawPlatform() {
-  const { data: ret } = await getWithdrawPlatforms();
-  list.withdrawPlatform = ret.records
+  const { data: ret } = await getWithdrawPlatformsSimpleBySiteId(request.siteId);
+  list.withdrawPlatform = ret
 }
 
 async function loadAffiliates() {
@@ -334,6 +337,7 @@ async function loadAffiliates() {
 async function handleChangeSite() {
   await loadAffiliateFinancialConfig()
   await loadPayment()
+  await loadWithdrawPlatform()
   await loadSiteWithdrawPlatform(request.siteId)
   await loadAffiliates()
 }
@@ -355,7 +359,8 @@ function showEdit(data) {
         form[key] = data[key]
       }
     }
-
+    console.log(form)
+    console.log(data)
     selected.paymentId = []
     if (form.paymentIds !== null) {
       const paymentIdList = form.paymentIds.split(',')
@@ -519,7 +524,7 @@ onMounted(async() => {
   color: green;
 }
 
-.line-break{
+.line-break {
   white-space: pre;
 }
 </style>
