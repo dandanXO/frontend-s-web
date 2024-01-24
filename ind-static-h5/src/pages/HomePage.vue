@@ -1432,7 +1432,8 @@ const getPlatList = () => {
           lottery.value.push(lottObj);
         }
       });
-      livecasino.value.sort((a, b) => a.id - b.id);
+      livecasino.value.sort((a, b) => a.sequence - b.sequence);
+      sport.value.sort((a, b) => a.sequence - b.sequence);
     })
     .catch((err) => {});
 };
@@ -1545,19 +1546,19 @@ const cancelUpdate = () => {
   isAppUpdateModal.value = false;
 };
 
-const downloadUrl = ref("");
+// const downloadUrl = ref("");
 
-const getAppDownloadUrl = () => {
-  api
-    .get("/config/appDownloadUrl")
-    .then((res) => {
-      // console.log(res);
-      downloadUrl.value = res.data;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+// const getAppDownloadUrl = () => {
+//   api
+//     .get("/config/appDownloadUrl")
+//     .then((res) => {
+//       // console.log(res);
+//       downloadUrl.value = res.data;
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
 
 const truncateText = (text, maxLength) => {
   if (text === "JiliGames") {
@@ -1643,7 +1644,6 @@ onMounted(() => {
   loadData();
   loadAnnouncement();
   checkPlatform();
-  getAppDownloadUrl();
   loadHotGameList();
   loadJILIFishGameList();
   loadJDBFishGameList();
