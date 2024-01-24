@@ -511,6 +511,7 @@ export default {
     byprofitdesc: '负盈利高到低',
     bydateasc: '日期高到低',
     bydatedesc: '日期低到高',
+    bulkApprove: '批量批准',
     callbackUrl: '回调地址',
     cancel: '取消',
     cancelDeposit: '取消存款',
