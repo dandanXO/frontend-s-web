@@ -143,42 +143,60 @@
         </div>
 
         <template v-for="(lotteryGameItem, index) in lotteryGamesList" :key="`lottery-${index}`">
-          <div
-            v-if="!isShow"
-            class="game-item btn-pointer"
-            @click="playGame(lotteryGameItem.name, lotteryGameItem.code, lotteryGameItem.gameCode)"
-          >
+          <template v-if="lotteryGameItem.code === 'GPI'">
             <div
-              class="platform-img"
-              :style="{
-                backgroundImage: (() => {
-                  try {
-                    return `url(${require(`../assets/home/lottery/${lotteryGameItem.code}.png`)})`;
-                  } catch (e) {
-                    return `url(${comingSoonImg})`;
-                  }
-                })()
-              }"
-            />
-          </div>
-          <div
-            v-if="isShow"
-            class="game-item btn-pointer"
-            @click="playGame(lotteryGameItem.name, 'GPI', lotteryGameItem.code)"
-          >
+              v-if="!isShow"
+              class="game-item btn-pointer"
+              @click="playGame(lotteryGameItem.name, lotteryGameItem.code, 'thailottery')"
+            >
+              <div
+                class="platform-img"
+                :style="{
+                  backgroundImage: (() => {
+                    try {
+                      return `url(${require(`../assets/home/lottery/${lotteryGameItem.code}.png`)})`;
+                    } catch (e) {
+                      return `url(${comingSoonImg})`;
+                    }
+                  })()
+                }"
+              />
+            </div>
+          </template>
+          <template v-else>
+            <div v-if="!isShow" class="game-item btn-pointer" @click="selectLotteryPlat(lotteryGameItem)">
+              <div
+                class="platform-img"
+                :style="{
+                  backgroundImage: (() => {
+                    try {
+                      return `url(${require(`../assets/home/lottery/${lotteryGameItem.code}.png`)})`;
+                    } catch (e) {
+                      return `url(${comingSoonImg})`;
+                    }
+                  })()
+                }"
+              />
+            </div>
             <div
-              class="platform-img"
-              :style="{
-                backgroundImage: (() => {
-                  try {
-                    return `url(${`${gameImgURL}${lotteryGameItem.icon}`})`;
-                  } catch (e) {
-                    return `url(${comingSoonImg})`;
-                  }
-                })()
-              }"
-            />
-          </div>
+              v-if="isShow"
+              class="game-item btn-pointer"
+              @click="playGame(lotteryGameItem.name, selectedPlat.code, lotteryGameItem.code)"
+            >
+              <div
+                class="platform-img"
+                :style="{
+                  backgroundImage: (() => {
+                    try {
+                      return `url(${`${gameImgURL}${lotteryGameItem.icon}`})`;
+                    } catch (e) {
+                      return `url(${comingSoonImg})`;
+                    }
+                  })()
+                }"
+              />
+            </div>
+          </template>
         </template>
       </div>
     </Transition>
@@ -1877,6 +1895,7 @@ export default defineComponent({
       switchPlat(plat, "fish");
     };
     const selectLotteryPlat = (plat) => {
+      // debugger;
       selectedPlatId.value = plat.id;
       isShow.value = true;
       switchPlat(plat, "lottery");
@@ -2005,6 +2024,7 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
+
 .home-banner-wrapper {
   position: relative;
 }
