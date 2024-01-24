@@ -13,7 +13,10 @@ export default {
     verification_title: "Security Check, Please click steps by steps：",
     verify_success: "Verify Success",
     refresh: "Refresh",
-    submit: "Submit"
+    submit: "Submit",
+    register_affi: "Register Now",
+    back_login: "Back Login",
+    contact_us: "Contact Us"
   },
   depositStatus: {
     SUCCESS: 'Success',

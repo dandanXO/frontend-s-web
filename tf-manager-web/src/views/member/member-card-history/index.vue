@@ -11,24 +11,24 @@
           range-separator=":"
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
-          style="width: 200px;margin-left:5px"
-          :shortcuts="shortcuts"
+          style="width: 220px; margin-left:5px"
           :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
+          @change="handleCalendarChange"
         />
 
         <el-input
           v-model="request.realName"
           size="small"
-          style="width: 120px;margin-left:5px"
+          style="width: 120px; margin-left:5px"
           :placeholder="t('fields.realName')"
         />
 
         <el-input
           v-model="request.loginName"
           size="small"
-          style="width: 120px;margin-left:5px"
+          style="width: 120px; margin-left:5px"
           :placeholder="t('fields.loginName')"
         />
 
@@ -207,8 +207,8 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
-import { getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { ElMessage } from "element-plus";
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -258,14 +258,25 @@ const request = reactive({
   cardType: null,
 })
 
-const shortcuts = getShortcuts(t);
 function disabledDate(time) {
   return (
     time.getTime() <=
       moment(new Date())
-        .subtract(4, 'weeks')
+        .subtract(1, 'years')
         .format('x') || time.getTime() > new Date().getTime()
   )
+}
+
+function handleCalendarChange(event) {
+  var date1 = new Date(event[0])
+  var date2 = new Date(event[1])
+  if (date1 !== null && date2 !== null) {
+    var dayDifference = Math.abs(date1.getTime() - date2.getTime()) / (1000 * 60 * 60 * 24)
+    if (dayDifference > 90) {
+      request.cardTime = [defaultStartDate, defaultEndDate]
+      ElMessage({ message: t('message.selectDateNotMoreThan3Month'), type: "error" })
+    }
+  }
 }
 
 function convertDate(date) {

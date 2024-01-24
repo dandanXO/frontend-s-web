@@ -25,7 +25,7 @@ onMounted(() => {
     link.href = '/my-favicon.ico';
   }else if(window.location.pathname.indexOf("th") > -1 || window.location.pathname.indexOf("ph") > -1){
     link.href = '/th-favicon.ico';
-  }else if(window.location.pathname.indexOf("ind") > -1 || window.location.pathname.indexOf("ind") > -1){
+  }else if(window.location.pathname.indexOf("ind") > -1 || window.location.hostname.indexOf("ind-") > -1){
     link.href = '/ind-favicon.ico';
   }else{
     link.href = '/favicon.ico';
@@ -35,7 +35,7 @@ onMounted(() => {
   if (window.location.pathname === '/login') {
     if (window.location.host.indexOf('xf') > -1) {
       window.location.pathname = '/xf/login'
-    } else if (window.location.host.indexOf('ind') > -1) {
+    } else if (window.location.host.indexOf('ind') > -1 || window.location.hostname.indexOf("ind-") > -1) {
       window.location.pathname = '/ind/login'
     } else {
       window.location.pathname = '/dy/login'

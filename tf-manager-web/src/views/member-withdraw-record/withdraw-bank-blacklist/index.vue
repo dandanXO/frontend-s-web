@@ -2,9 +2,24 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+          @change="handleSiteChange()"
+        >
+          <el-option
+            v-for="item in list.sites"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-input
           v-model="request.bankCardNumber"
-          style="width: 300px"
+          style="width: 300px; margin-left: 5px"
           size="small"
           maxlength="50"
           :placeholder="t('fields.bankCardNumber')"
@@ -112,7 +127,7 @@
 
 <script setup>
 
-import { reactive, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 import moment from 'moment';
 import { required } from "../../../utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -123,11 +138,16 @@ import { hasRole, hasPermission } from "../../../utils/util";
 import { onMounted } from "@vue/runtime-core";
 import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
+import { TENANT } from "../../../store/modules/user/action-types";
+import { useStore } from '../../../store';
+import { getSiteListSimple } from '../../../api/site'
 
 const { t } = useI18n();
-
+const store = useStore();
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const shortcuts = getShortcuts(t);
 const blacklistForm = ref(null);
+const site = ref(null);
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -150,6 +170,10 @@ const form = reactive({
 const formRules = reactive({
   bankCardNumber: [required(t('message.validateBankCardNumberRequired'))]
 });
+
+const list = reactive({
+  sites: [],
+})
 
 let chooseBankCard = [];
 
@@ -176,7 +200,8 @@ const request = reactive({
   size: 20,
   current: 1,
   bankCardNumber: null,
-  createTime: [defaultStartDate, defaultEndDate]
+  createTime: [defaultStartDate, defaultEndDate],
+  siteId: null
 });
 
 function handleSelectionChange(val) {
@@ -190,6 +215,9 @@ function handleSelectionChange(val) {
   }
 }
 
+function handleSiteChange() {
+  loadWithdrawalBankBlacklist()
+}
 function resetQuery() {
   request.bankCardNumber = null
   request.createTime = [defaultStartDate, defaultEndDate]
@@ -217,6 +245,11 @@ async function loadWithdrawalBankBlacklist() {
   page.loading = false;
 }
 
+async function loadSites() {
+  const { data: ret } = await getSiteListSimple()
+  list.sites = ret
+}
+
 function showDialog(type) {
   if (blacklistForm.value) {
     blacklistForm.value.resetFields();
@@ -235,6 +268,7 @@ function create() {
   }
   blacklistForm.value.validate(async (valid) => {
     if (valid) {
+      form.siteId = request.siteId
       await createWithdrawalBankBlacklist(form);
       uiControl.dialogVisible = false;
       await loadWithdrawalBankBlacklist();
@@ -268,8 +302,16 @@ function submit() {
   }
 }
 
-onMounted(() => {
-  loadWithdrawalBankBlacklist();
+onMounted(async () => {
+  await loadSites();
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = list.sites.find(s => s.siteName === store.state.user.siteName);
+  } else {
+    site.value = list.sites[0];
+  }
+  request.siteId = site.value.id
+
+  await loadWithdrawalBankBlacklist();
 });
 
 </script>

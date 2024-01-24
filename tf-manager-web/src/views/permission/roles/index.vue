@@ -360,6 +360,9 @@ function showDialog(type) {
 }
 
 async function loadData() {
+  rolesTable.value.clearSelection();
+  selectRolesId = 0;
+  rolesID = [];
   const { data: ret } = await getRoles(request)
   page.pages = ret.pages
   ret.records.forEach(data => {
