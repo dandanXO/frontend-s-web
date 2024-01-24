@@ -505,6 +505,7 @@ export default {
     byprofitdesc: 'Sort by profit DESC',
     bydateasc: 'Sort by date ASC',
     bydatedesc: 'Sort by date DESC',
+    bulkApprove: 'Bulk Approve',
     callbackUrl: 'Callback URL',
     cancel: 'Cancel',
     cancelDeposit: 'Cancel Deposit',
