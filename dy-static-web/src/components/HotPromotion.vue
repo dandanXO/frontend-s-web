@@ -26,6 +26,9 @@
     <BasketballHot v-if="list.redirectUrl === '/dy-promo-basketball' && !isCommonPromo && store.token"></BasketballHot>
     <LPLSummer v-if="list.redirectUrl === 'dy-promo-application-B' && !isCommonPromo && store.token"></LPLSummer>
     <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo' && !isCommonPromo && store.token"></Cny2024Promo>
+    <BbDacha2024Promo
+      v-if="list.redirectUrl === 'dy2-bb-dacha-2024' && !isCommonPromo && store.token"
+    ></BbDacha2024Promo>
     <!-- <VIPUpgradePromo v-if="list.redirectUrl === 'dy2-vip-upgrade-bonus' && !isCommonPromo && store.token" />
     <ReferBonusPromo v-if="list.redirectUrl === 'dy2-refer-bonus' && !isCommonPromo && store.token" /> -->
     <PrivilegeInvite
@@ -73,6 +76,7 @@ import AsianCup2024 from "../components/hotpromo/asian-cup-2024/AsianCup2024.vue
 import BasketballHot from "../components/hotpromo/basketball-hot/BasketballHot.vue";
 import LPLSummer from "../components/hotpromo/lpl-summer/LPLSummer.vue";
 import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
+import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
 // import VIPUpgradePromo from "../components/hotpromo/vipupgrade/VIPUpgradePromo.vue";
 // import ReferBonusPromo from "../components/hotpromo/referbonus/ReferBonusPromo.vue";
 import { ElMessage } from "element-plus";
@@ -100,7 +104,8 @@ export default defineComponent({
     AsianCup2024,
     BasketballHot,
     LPLSummer,
-    Cny2024Promo
+    Cny2024Promo,
+    BbDacha2024Promo
     // VIPUpgradePromo,
     // ReferBonusPromo
     // DailyBonus
@@ -245,7 +250,8 @@ export default defineComponent({
       this.list.redirectUrl === "Dongying-refer" ||
       this.list.redirectUrl === "dy2-vip-upgrade-bonus" ||
       this.list.redirectUrl === "dy2-refer-bonus" ||
-      this.list.redirectUrl === "dy2-cny2024-promo"
+      this.list.redirectUrl === "dy2-cny2024-promo" || 
+      this.list.redirectUrl === "dy2-bb-dacha-2024"
     ) {
       this.isCommonPromo = false;
     } else {

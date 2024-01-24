@@ -5,9 +5,9 @@
         <span class="grad-txt">新年红包雨</span>
       </div>
 
-      <div :class="`tab tab-2 ${currentTab === 'tabTwo' ? 'active' : ''}`" @click="onTabClick('tabTwo')">
+      <!-- <div :class="`tab tab-2 ${currentTab === 'tabTwo' ? 'active' : ''}`" @click="onTabClick('tabTwo')">
         <span class="grad-txt">新年惊喜翻倍礼包</span>
-      </div>
+      </div> -->
 
       <div :class="`tab tab-3 ${currentTab === 'tabThree' ? 'active' : ''}`" @click="onTabClick('tabThree')">
         <span class="grad-txt">亲朋好友 欢度新年</span>
@@ -69,7 +69,7 @@
       </div>
     </div>
 
-    <div :class="`cny-container ${currentTab === 'tabTwo' ? 'active' : ''}`">
+    <!-- <div :class="`cny-container ${currentTab === 'tabTwo' ? 'active' : ''}`">
       <div class="head-title">
         <img src="../../../assets/images/promotion/hotpromo/cny2024/head-title-02.png" />
       </div>
@@ -122,7 +122,7 @@
           <li>为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
         </ol>
       </div>
-    </div>
+    </div> -->
 
     <div :class="`cny-section-content ${currentTab === 'tabThree' ? 'active' : ''}`">
       <div class="head-title">
