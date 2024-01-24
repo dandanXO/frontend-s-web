@@ -149,6 +149,12 @@
         :label="t('fields.privilegeType')"
         width="120"
       />
+      <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="200">
+        <template #default="scope">
+          <span v-if="scope.row.updateBy === null">-</span>
+          <span v-else>{{ scope.row.updateBy }}</span>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       class="pagination"
@@ -375,7 +381,8 @@ const selectedPrivilege = ref(null);
 const exportPercentage = ref(0);
 
 const EXPORT_HEADER = [t('fields.loginName'), t('fields.privilegeName'), t('fields.alias'), t('fields.amount'),
-  t('fields.recordTime'), t('fields.privilegeType'), t('fields.privilegeSerialNo'), t('fields.depositSerialNo')];
+  t('fields.recordTime'), t('fields.privilegeType'), t('fields.privilegeSerialNo'), t('fields.depositSerialNo'),
+  t('fields.updateBy')];
 
 const EXPORT_MEMBER_PRIVILEGE_LIST_HEADER = [
   'Login Name',
