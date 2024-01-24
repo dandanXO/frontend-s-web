@@ -2041,6 +2041,12 @@ export default {
     PC: 'PC',
     APPLY_WITHDRAW: '提现终审',
   },
+  loginDevice: {
+    WEB: '网页',
+    H5: 'H5',
+    ANDROID: '安卓',
+    IOS: '苹果',
+  },
   error: {
     400: '请求无效',
     401: '用户未授权',

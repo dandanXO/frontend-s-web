@@ -1647,6 +1647,12 @@ export default {
       'หากคุณไม่ได้ผูก Google Authenticator ก็ไม่จำเป็นต้องกรอก',
     google_auth_code: 'กรอกรหัส Google Authenticator 6 หลัก',
   },
+  loginDevice: {
+    WEB: 'WEB',
+    H5: 'H5',
+    ANDROID: 'ANDROID',
+    IOS: 'IOS',
+  },
   error: {
     400: 'คำขอไม่ถูกต้อง',
     401: 'คำขอที่ไม่ได้รับอนุญาต',

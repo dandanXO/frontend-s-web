@@ -2067,6 +2067,12 @@ export default {
     PC: 'PC',
     APPLY_WITHDRAW: 'Apply Withdraw',
   },
+  loginDevice: {
+    WEB: 'WEB',
+    H5: 'H5',
+    ANDROID: 'ANDROID',
+    IOS: 'IOS',
+  },
   error: {
     400: 'Bad Request',
     401: 'Unauthorized Request',

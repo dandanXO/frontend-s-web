@@ -119,7 +119,7 @@
         </el-table-column>
         <el-table-column
           :label="t('fields.paymentType')"
-          prop="paymentType"
+          prop="paymentTypeName"
           align="center"
           min-width="180"
         />
@@ -175,21 +175,28 @@
               type="warning"
               size="mini"
             >
-              {{ scope.row.status }}
+              {{ t('depositStatus.PENDING') }}
             </el-tag>
             <el-tag
               v-else-if="scope.row.status === 'CLOSED'"
               type="danger"
               size="mini"
             >
-              {{ scope.row.status }}
+              {{ t('depositStatus.CLOSED') }}
             </el-tag>
             <el-tag
-              v-else-if="scope.row.status === 'SUCCESS' || scope.row.status === 'SUPPLEMENT_SUCCESS'"
+              v-else-if="scope.row.status === 'SUCCESS'"
               type="success"
               size="mini"
             >
-              {{ scope.row.status }}
+              {{ t('depositStatus.SUCCESS') }}
+            </el-tag>
+            <el-tag
+              v-else-if="scope.row.status === 'SUPPLEMENT_SUCCESS'"
+              type="success"
+              size="mini"
+            >
+              {{ t('depositStatus.SUPPLEMENT_SUCCESS') }}
             </el-tag>
             <span v-else>-</span>
           </template>
