@@ -126,6 +126,7 @@ export default {
       PATCH: '修补',
       BET_N_PAYOUT: '投注并派彩',
       AFFILIATE_TRANSFER: '代理代存',
+      VIP_REBATE: 'VIP返水'
     },
     subType: {
       DEPOSIT: '主账号转入平台',
@@ -510,6 +511,7 @@ export default {
     byprofitdesc: '负盈利高到低',
     bydateasc: '日期高到低',
     bydatedesc: '日期低到高',
+    bulkApprove: '批量批准',
     callbackUrl: '回调地址',
     cancel: '取消',
     cancelDeposit: '取消存款',

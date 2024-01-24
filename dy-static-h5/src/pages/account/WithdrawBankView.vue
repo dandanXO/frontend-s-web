@@ -99,6 +99,10 @@
                   map-options
                 />
               </div>
+              <span v-if="selectedBankType === '电子钱包'" class="tip-text">
+                *特别说明：提款钱包和游戏账号的姓名务必一致
+              </span>
+
               <div class="col-12">
                 <q-select
                   ref="bankCardRef"
@@ -1017,5 +1021,11 @@ export default defineComponent({
 
 .q-toolbar {
   background: transparent;
+}
+
+.tip-text {
+  display: block;
+  width: 100%;
+  color: #ff7f10;
 }
 </style>

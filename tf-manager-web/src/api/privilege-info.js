@@ -21,6 +21,10 @@ export const getAllPrivilegeInfoBySiteId = (siteId) => {
   return https().request("/privilegeInfo/allPriviList", Method.GET, { siteId: siteId }, ContentType.form);
 };
 
+export const getSimplePrivilegeBySiteId = (siteId) => {
+  return https().request("/privilegeInfo/simplePriviList", Method.GET, { siteId: siteId }, ContentType.form);
+}
+
 export const getPrivilegeExcelMapping = (siteId) => {
   return https().request("/privilegeInfo/excelMapping", Method.GET, { siteId: siteId }, ContentType.form);
 };

@@ -162,8 +162,10 @@ export default {
     }
 
     onMounted(() => {
-      loadMemberStatistics();
-      updateApplyWithdrawCount();
+      if (store.state.user.siteId && hasPermission(['sys:member-stats:list'])) {
+        loadMemberStatistics();
+        updateApplyWithdrawCount();
+      }
     })
 
     watch(statisticsList, () => {

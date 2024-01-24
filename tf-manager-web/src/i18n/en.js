@@ -126,6 +126,7 @@ export default {
       PATCH: 'PATCH',
       BET_N_PAYOUT: 'BET AND PAYOUT',
       AFFILIATE_TRANSFER: 'AFFILIATE TRANSFER',
+      VIP_REBATE: 'VIP REBATE'
     },
     subType: {
       DEPOSIT: 'Wallet to Game',
@@ -504,6 +505,7 @@ export default {
     byprofitdesc: 'Sort by profit DESC',
     bydateasc: 'Sort by date ASC',
     bydatedesc: 'Sort by date DESC',
+    bulkApprove: 'Bulk Approve',
     callbackUrl: 'Callback URL',
     cancel: 'Cancel',
     cancelDeposit: 'Cancel Deposit',

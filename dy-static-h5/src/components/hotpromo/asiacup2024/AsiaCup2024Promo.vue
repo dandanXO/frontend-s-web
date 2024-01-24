@@ -9,11 +9,11 @@
       <q-tab-panels v-model="activeKey">
         <q-tab-panel name="asia-war-guide">
           <div class="tab1">
-            <div class="left-container">
+            <!-- <div class="left-container">
               <img src="../../../assets/images/promotion/hotpromo/asiacup2024/btn1-claim.png" />
-            </div>
+            </div> -->
             <div class="right-container">
-              <div class="desc-title">2024亚战指南</div>
+              <!-- <div class="desc-title">2024亚战指南</div> -->
 
               <q-btn class="claim-btn" label="立即申请" @click="handleClaim('asian-cup-A', '亚战指南')" />
             </div>
@@ -119,11 +119,11 @@
       <q-tab-panels v-model="activeKey">
         <q-tab-panel name="betting-bonus">
           <div class="tab1">
-            <div class="left-container">
+            <!-- <div class="left-container">
               <img src="../../../assets/images/promotion/hotpromo/asiacup2024/btn2-claim.png" />
-            </div>
+            </div> -->
             <div class="right-container">
-              <div class="desc-title">2024投注好礼</div>
+              <!-- <div class="desc-title">2024投注好礼</div> -->
 
               <q-btn class="claim-btn" label="立即申请" @click="handleClaim('asian-cup-B', '投注好礼')" />
             </div>

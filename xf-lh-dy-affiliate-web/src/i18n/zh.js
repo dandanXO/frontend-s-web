@@ -13,7 +13,10 @@ export default {
     verificationcode: "验证码",
     verify_success: "验证成功",
     refresh: "刷新",
-    submit: "提交"
+    submit: "提交",
+    register_affi: "注册代理",
+    back_login: "回到登录",
+    contact_us: "联系我们"
   },
   depositStatus: {
     SUCCESS: '存款成功',
