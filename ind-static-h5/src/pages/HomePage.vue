@@ -1432,8 +1432,6 @@ const getPlatList = () => {
           lottery.value.push(lottObj);
         }
       });
-      livecasino.value.sort((a, b) => a.sequence - b.sequence);
-      sport.value.sort((a, b) => a.sequence - b.sequence);
     })
     .catch((err) => {});
 };
