@@ -3,7 +3,7 @@
     <div class="tabs">
       <q-tabs v-model="activeKey">
         <q-tab name="angpao-rain" label="新年红包雨" />
-        <q-tab name="cny-gift-pack" label="新年惊喜翻倍礼包" />
+        <!-- <q-tab name="cny-gift-pack" label="新年惊喜翻倍礼包" /> -->
         <q-tab name="cny-celebration" label="亲朋好友 欢度新年" />
       </q-tabs>
 
@@ -64,7 +64,7 @@
         </q-tab-panel>
       </q-tab-panels>
 
-      <q-tab-panels v-model="activeKey">
+      <!-- <q-tab-panels v-model="activeKey">
         <q-tab-panel name="cny-gift-pack">
           <div class="head-title">
             <img src="../../../assets/images/promotion/hotpromo/cny2024/head-title-02.png" />
@@ -121,7 +121,7 @@
             </ol>
           </div>
         </q-tab-panel>
-      </q-tab-panels>
+      </q-tab-panels> -->
 
       <q-tab-panels v-model="activeKey">
         <q-tab-panel name="cny-celebration">
@@ -249,6 +249,10 @@ const goToHongbaoyu = async () => {
       box-shadow: none;
     }
 
+    :deep(.q-tabs__content) {
+      justify-content: center;
+    }
+
     .q-tab {
       flex: 1;
       color: #c60000;
@@ -259,6 +263,7 @@ const goToHongbaoyu = async () => {
       background-position: bottom center;
       background-color: transparent;
       padding: 0 0 12px;
+      max-width: 150px;
 
       &--active {
         // background: #6ad8ff;
@@ -268,7 +273,7 @@ const goToHongbaoyu = async () => {
 
       :deep(.q-tab__label) {
         font-weight: 800;
-        font-size: 11px;
+        font-size: 12px;
       }
     }
 

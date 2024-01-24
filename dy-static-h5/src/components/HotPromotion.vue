@@ -59,6 +59,9 @@
     ></LplSummerPromo>
 
     <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo' && !isCommonPromo && store.token"></Cny2024Promo>
+    <BbDacha2024Promo
+      v-if="list.redirectUrl === 'dy2-bb-dacha-2024' && !isCommonPromo && store.token"
+    ></BbDacha2024Promo>
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -100,6 +103,7 @@ import AsiaCup2024Promo from "../components/hotpromo/asiacup2024/AsiaCup2024Prom
 import BasketballHot from "../components/hotpromo/basketballHot/BasketballHot.vue";
 import LplSummerPromo from "../components/hotpromo/lplsummer/LplSummerPromo.vue";
 import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
+import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -121,7 +125,8 @@ export default defineComponent({
     AsiaCup2024Promo,
     BasketballHot,
     LplSummerPromo,
-    Cny2024Promo
+    Cny2024Promo,
+    BbDacha2024Promo
   },
   props: {
     list: {
@@ -192,7 +197,8 @@ export default defineComponent({
       this.list.redirectUrl === "lpl-summer" ||
       this.list.redirectUrl === "dy-promo-application-A" ||
       this.list.redirectUrl === "dy-promo-application-B" ||
-      this.list.redirectUrl === "dy2-cny2024-promo"
+      this.list.redirectUrl === "dy2-cny2024-promo" ||
+      this.list.redirectUrl === "dy2-bb-dacha-2024"
     ) {
       this.isCommonPromo = false;
     } else {

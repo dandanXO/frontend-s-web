@@ -53,6 +53,19 @@
         </el-button>
       </div>
     </div>
+    <div class="btn-group">
+      <el-button
+        v-permission="['sys:withdraw:simple:approve']"
+        ref="checkBtnRef"
+        size="mini"
+        type="primary"
+        :disabled="uiControl.toApproveBtn"
+        @click="toCheck()"
+        @keydown.enter.prevent
+      >
+        {{ t('fields.bulkApprove') }}
+      </el-button>
+    </div>
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <el-table
         height="600"
@@ -63,6 +76,7 @@
         v-loading="page.loading"
         :empty-text="t('fields.noData')"
       >
+        <el-table-column type="selection" width="40" />
         <el-table-column
           prop="serialNumber"
           :label="t('fields.serialNo')"
@@ -374,8 +388,7 @@ const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: '',
   dialogType: 'SEARCH',
-  toCheckBtn: true,
-  toPendingBtn: true,
+  toApproveBtn: true,
 })
 
 let chooseRecord = []
@@ -424,13 +437,11 @@ function resetQuery() {
 
 function handleSelectionChange(val) {
   chooseRecord = val
-  if (chooseRecord.length === 0 || chooseRecord.length > 3) {
-    uiControl.toCheckBtn = true
-    uiControl.toPendingBtn = true
-    ElMessage.warning("最多只能选择三条记录");
+  if (chooseRecord.length > 10) {
+    uiControl.toApproveBtn = true
+    ElMessage.warning("最多只能选择十条记录");
   } else {
-    uiControl.toCheckBtn = false
-    uiControl.toPendingBtn = false
+    uiControl.toApproveBtn = false
   }
 }
 
@@ -523,10 +534,14 @@ async function loadWithdrawPlatforms(id, wd) {
 }
 
 async function toCheck(memberWithdrawRecord) {
-  await loadWithdrawPlatforms(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate)
-  console.log('memberWithdrawRecord', memberWithdrawRecord)
   if (memberWithdrawRecord) {
+    await loadWithdrawPlatforms(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate)
     await fromApplyToAutopay(memberWithdrawRecord.id, withdrawPlatformList.list[0].id, memberWithdrawRecord.withdrawDate)
+  } else {
+    await loadWithdrawPlatforms(chooseRecord[0].id, chooseRecord[0].withdrawDate);
+    await Promise.all(chooseRecord.map(async (a) => {
+      await fromApplyToAutopay(a.id, withdrawPlatformList.list[0].id, a.withdrawDate);
+    }));
   }
   await loadRecord()
   ElMessage({ message: t('message.updateWithdraw'), type: 'success' })
