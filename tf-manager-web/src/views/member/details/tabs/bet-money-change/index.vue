@@ -81,17 +81,17 @@
         </el-table-column>
         <el-table-column prop="result" :label="t('fields.result')" align="center" min-width="140">
           <template #default="scope">
-            <el-tag v-if="scope.row.result === 'WIN'" size="mini" type="success">{{ scope.row.result }}</el-tag>
-            <el-tag v-else-if="scope.row.result === 'LOSS'" size="mini" type="danger">{{ scope.row.result }}</el-tag>
-            <el-tag v-else size="mini" type="warning">{{ scope.row.result }}</el-tag>
+            <el-tag v-if="scope.row.result === 'WIN'" size="mini" type="success">{{ t('result.win') }}</el-tag>
+            <el-tag v-else-if="scope.row.result === 'LOSS'" size="mini" type="danger">{{ t('result.loss') }}</el-tag>
+            <el-tag v-else size="mini" type="warning">{{ t('result.draw') }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="betStatus" :label="t('fields.betStatus')" align="center" min-width="140">
           <template #default="scope">
-            <el-tag v-if="scope.row.betStatus === 'SETTLE'" size="mini" type="success">{{ scope.row.betStatus }}</el-tag>
-            <el-tag v-else-if="scope.row.betStatus === 'BET'" size="mini" type="secondary">{{ scope.row.betStatus }}</el-tag>
-            <el-tag v-else-if="scope.row.betStatus === 'CANCEL'" size="mini" type="danger">{{ scope.row.betStatus }}</el-tag>
-            <el-tag v-else size="mini" type="warning">{{ scope.row.betStatus }}</el-tag>
+            <el-tag v-if="scope.row.betStatus === 'SETTLE'" size="mini" type="success">{{ t('betStatus.SETTLED') }}</el-tag>
+            <el-tag v-else-if="scope.row.betStatus === 'BET'" size="mini" type="secondary">{{ t('betStatus.BET') }}</el-tag>
+            <el-tag v-else-if="scope.row.betStatus === 'CANCEL'" size="mini" type="danger">{{ t('betStatus.CANCEL') }}</el-tag>
+            <el-tag v-else size="mini" type="warning">{{ t('betStatus.UNSETTLED') }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="gameType" :label="t('fields.gameType')" align="center" min-width="140">

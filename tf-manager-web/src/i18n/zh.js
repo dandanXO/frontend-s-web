@@ -192,6 +192,7 @@ export default {
     },
   },
   betStatus: {
+    BET: '下注中',
     UNSETTLED: '未结算',
     SETTLED: '已结算',
     CANCEL: '已取消',
@@ -2046,6 +2047,11 @@ export default {
     H5: 'H5',
     ANDROID: '安卓',
     IOS: '苹果',
+  },
+  result: {
+    win: '赢',
+    draw: '和',
+    loss: '输',
   },
   error: {
     400: '请求无效',

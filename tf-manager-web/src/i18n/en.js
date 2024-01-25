@@ -185,6 +185,7 @@ export default {
     },
   },
   betStatus: {
+    BET: 'BET',
     UNSETTLED: 'UNSETTLED',
     SETTLED: 'SETTLED',
     CANCEL: 'CANCEL',
@@ -2072,6 +2073,11 @@ export default {
     H5: 'H5',
     ANDROID: 'ANDROID',
     IOS: 'IOS',
+  },
+  result: {
+    win: 'WIN',
+    draw: 'DRAW',
+    loss: 'LOSS',
   },
   error: {
     400: 'Bad Request',
