@@ -164,7 +164,11 @@
             </div>
           </template>
           <template v-else>
-            <div v-if="!isShow" class="game-item btn-pointer" @click="selectLotteryPlat(lotteryGameItem)">
+            <div
+              v-if="!isShow"
+              class="game-item btn-pointer"
+              @click="playGame(lotteryGameItem.name, lotteryGameItem.code, '')"
+            >
               <div
                 class="platform-img"
                 :style="{
