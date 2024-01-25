@@ -1,15 +1,65 @@
 <template>
-  <div>
-    <div class="">
-      <!--      <button v-if="promoNotReady && bonusOpened" class="check-tip">活动未开启</button>-->
-      <div class="receive-container" v-if="!promoNotReady && !bonusOpened">
-        <!--        <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/icon.png`)" />-->
-        <div class="contents" v-if="!bonusOpened">
-          <q-btn class="claim-btn" :loading="loadingClaim" @click="getPromotion">点击领取</q-btn>
+  <div class="hongbaoyu-container">
+    <div class="receive-container" v-if="!promoNotReady && !bonusOpened">
+      <img :src="require(`../../../assets/images/hongbaoyu/hongbao-bg.png`)" />
+      <div class="contents" v-if="!bonusOpened">
+        <el-button class="promo-common-btn" size="large" :loading="loadingClaim" @click="getPromotion"></el-button>
+      </div>
+    </div>
+
+    <div class="winner-container">
+      <img class="title" :src="require(`../../../assets/images/hongbaoyu/win-prize-title.png`)" />
+
+      <div class="winner-wrapper">
+        <img :src="require(`../../../assets/images/hongbaoyu/record-bg.png`)" />
+
+        <div class="contents">
+          <div class="winner">
+            <div>2024-01-05 15:30</div>
+            <div>1801****9833</div>
+            <div>1000USDT*1</div>
+          </div>
+          <div class="winner">
+            <div>2024-01-05 15:30</div>
+            <div>1801****9833</div>
+            <div>1000USDT*1</div>
+          </div>
+          <div class="winner">
+            <div>2024-01-05 15:30</div>
+            <div>1801****9833</div>
+            <div>1000USDT*1</div>
+          </div>
+          <div class="winner">
+            <div>2024-01-05 15:30</div>
+            <div>1801****9833</div>
+            <div>1000USDT*1</div>
+          </div>
+          <div class="winner">
+            <div>2024-01-05 15:30</div>
+            <div>1801****9833</div>
+            <div>1000USDT*1</div>
+          </div>
         </div>
       </div>
-      <!--      <p v-if="bonusOpened" class="money-account"><span>{{ winAmount }}</span>元</p>-->
-      <!--      <div class="red-packet" :class="bonusOpened ? 'open' : ''"></div>-->
+    </div>
+
+    <div class="content-container">
+      <img class="title" :src="require(`../../../assets/images/hongbaoyu/content-title.png`)" />
+
+      <div class="contents">
+        <div class="bullet-wrapper">
+          <img :src="require(`../../../assets/images/hongbaoyu/coin-bullet.png`)" />
+          <span>所有雷火当日累积存款500元或以上会员均可参与限时红包活动</span>
+        </div>
+        <div class="bullet-wrapper">
+          <img :src="require(`../../../assets/images/hongbaoyu/coin-bullet.png`)" />
+          <span>红包为18-888不等，奖金只限进行电竟及体育</span>
+        </div>
+        <div class="bullet-wrapper">
+          <img :src="require(`../../../assets/images/hongbaoyu/coin-bullet.png`)" />
+          <span>此奖金只需1倍有效流水即可.</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -29,7 +79,7 @@
 
       <q-card-section class="row items-center">
         <div class="red-packet-opened">
-          <!--          <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/red-packet-opened.png`)" />-->
+          <!--          <img :src="require(`../../../../../../../../../assets/images/promotion/hotpromo/hongbaoyu/red-packet-opened.png`)" />-->
 
           <span class="grats">恭喜获得奖金</span>
           <span class="amount">{{ winAmount }}</span>
@@ -98,50 +148,114 @@ const getPromotionPrize = () => {
 </script>
 
 <style scoped lang="scss">
-.receive-container {
-  margin: 0.55rem auto;
+.hongbaoyu-container {
+  margin: 0px auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  position: relative;
+  justify-content: center;
   flex-direction: column;
-  width: 100%;
-  //background: url(../../../assets/images/promotion/hotpromo/hongbaoyu/hongbaoyu.png) no-repeat center center;
+  position: relative;
 
-  img {
-    width: 65% !important;
-    margin: 0 auto;
-  }
+  background: url("../../../assets/images/hongbaoyu/mobile-bg.png");
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  height: 1080px;
 
-  .claim-btn {
-    color: #ffffff;
-    background: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000) !important;
-    border: 0;
-  }
-
-  .red-packet {
+  .receive-container {
+    position: relative;
     width: 50%;
-    height: 140px;
-    margin: 0 auto 20px;
-    //background: url(../../../assets/images/promotion/hotpromo/hongbaoyu/package_red.png) no-repeat center center;
-    background-size: contain;
 
-    &.open {
-      //background-image: url(../../../assets/images/promotion/hotpromo/hongbaoyu/img_repacket_open.png);
+    .contents {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      bottom: 10%;
+      left: 7.5%;
+
+      .promo-common-btn {
+        background: transparent;
+        background-image: url("../../../assets/images/hongbaoyu/open-hongbao-btn.png") !important;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        border: unset;
+        height: 100px;
+        padding: 0 100px;
+      }
+
+      :deep(.el-button) {
+        span {
+          color: #271500;
+          font-weight: 700;
+        }
+      }
     }
   }
 
-  .receive-btn {
-    width: 140px;
-    left: 0;
-    right: 0;
-    bottom: -20px;
-    margin: 0px auto;
-    cursor: pointer;
+  .winner-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 
-    //img {
-    //  width: 100%;
-    //}
+    .title {
+      width: 50% !important;
+      z-index: 1;
+    }
+
+    .winner-wrapper {
+      position: relative;
+      top: -15%;
+      padding: 0 10px;
+
+      .contents {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 15px 30px;
+
+        .winner {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border-bottom: 2px solid #fee2b9;
+          color: white;
+          padding: 2px 10px;
+        }
+      }
+    }
+  }
+
+  .content-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    .title {
+      width: 50% !important;
+    }
+
+    .contents {
+      .bullet-wrapper {
+        display: flex;
+        align-items: center;
+
+        img {
+          width: 20px;
+        }
+
+        span {
+          color: #fcd6a3;
+          font-weight: 400;
+        }
+      }
+    }
   }
 
   .check-tip,
@@ -169,13 +283,30 @@ const getPromotionPrize = () => {
   .money-account {
     left: 0;
     right: 0;
-    top: 0px;
+    top: 20px;
     margin: auto;
     text-align: center;
-    font-size: 18px;
+    font-size: 1.5rem;
 
     span {
-      font-size: 30px;
+      font-size: 2.5rem;
+    }
+  }
+
+  .receive-btn {
+    text-align: center;
+    line-height: 0.83rem;
+    color: #fff;
+    padding: 0;
+    margin: 0.3rem auto 0;
+    width: 180px;
+    left: 0;
+    right: 0;
+    bottom: -15px;
+    cursor: pointer;
+
+    img {
+      width: 100%;
     }
   }
 }

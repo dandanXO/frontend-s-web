@@ -4,8 +4,63 @@
       <img :src="require(`../assets/images/hongbaoyu/hongbao-bg.png`)" />
       <div class="contents" v-if="!bonusOpened">
         <el-button class="promo-common-btn" size="large" :loading="loadingClaim" @click="getPromotion">
-          点击领取
+          打开红包
         </el-button>
+      </div>
+    </div>
+
+    <div class="winner-container">
+      <img :src="require(`../assets/images/hongbaoyu/win-prize-title.png`)" />
+
+      <div class="winner-wrapper">
+        <img :src="require(`../assets/images/hongbaoyu/record-bg.png`)" />
+
+        <div class="contents">
+          <div class="winner">
+            <div>2024-01-05 15:30</div>
+            <div>1801****9833</div>
+            <div>1000USDT*1</div>
+          </div>
+          <div class="winner">
+            <div>2024-01-05 15:30</div>
+            <div>1801****9833</div>
+            <div>1000USDT*1</div>
+          </div>
+          <div class="winner">
+            <div>2024-01-05 15:30</div>
+            <div>1801****9833</div>
+            <div>1000USDT*1</div>
+          </div>
+          <div class="winner">
+            <div>2024-01-05 15:30</div>
+            <div>1801****9833</div>
+            <div>1000USDT*1</div>
+          </div>
+          <div class="winner">
+            <div>2024-01-05 15:30</div>
+            <div>1801****9833</div>
+            <div>1000USDT*1</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-container">
+      <img :src="require(`../assets/images/hongbaoyu/content-title.png`)" />
+
+      <div class="contents">
+        <div class="bullet-wrapper">
+          <img :src="require(`../assets/images/hongbaoyu/coin-bullet.png`)" />
+          <span>所有雷火当日累积存款500元或以上会员均可参与限时红包活动</span>
+        </div>
+        <div class="bullet-wrapper">
+          <img :src="require(`../assets/images/hongbaoyu/coin-bullet.png`)" />
+          <span>红包为18-888不等，奖金只限进行电竟及体育</span>
+        </div>
+        <div class="bullet-wrapper">
+          <img :src="require(`../assets/images/hongbaoyu/coin-bullet.png`)" />
+          <span>此奖金只需1倍有效流水即可.</span>
+        </div>
       </div>
     </div>
   </div>
@@ -29,6 +84,7 @@
     </div>
   </el-dialog>
 </template>
+
 <script setup>
 import { ref, defineProps } from "vue";
 import { claimDailyRainItem } from "@/api/index/promo";
@@ -92,10 +148,103 @@ const getPromotionPrize = () => {
   position: relative;
   //width: 100%;
   width: 1440px;
-  height: 1600px;
+  height: 1900px;
   background: url("../assets/images/hongbaoyu/web-bg.png");
-  background-size: 100% auto;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
+
+  .receive-container {
+    position: relative;
+    top: 225px;
+
+    img {
+      width: 465px;
+    }
+
+    .contents {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      bottom: 15%;
+      left: 17.5%;
+
+      .promo-common-btn {
+        background: transparent;
+        background-image: url("../assets/images/hongbaoyu/open-btn.png") !important;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        border: unset;
+        height: 125px;
+        padding: 0 125px;
+      }
+
+      :deep(.el-button) {
+        span {
+          color: #271500;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+  .winner-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: 150px;
+
+    img {
+      z-index: 1;
+    }
+
+    .winner-wrapper {
+      position: relative;
+      top: -10%;
+
+      .contents {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 85%;
+        padding: 67.5px 87.5px 87.5px 87.5px;
+
+        .winner {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border-bottom: 2px solid #fee2b9;
+          color: white;
+          padding: 15px;
+        }
+      }
+    }
+  }
+
+  .content-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: 125px;
+
+    .contents {
+      .bullet-wrapper {
+        display: flex;
+        align-items: center;
+
+        span {
+          color: #fcd6a3;
+          font-weight: 400;
+        }
+      }
+    }
+  }
 
   .check-tip,
   .money-account,
