@@ -13,7 +13,7 @@
     >
       <div class="competiton-team team-one">
         <div :class="`team-logo ${data.votedTeam === data.homeTeam ? 'team-logo--voted' : ''}`">
-          <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/game-logo-01.png" />
+          <img :src="imgURL + data.homeTeamIcon" />
         </div>
         <div class="team-name">{{ data.homeTeam }}</div>
         <div v-if="(data.votedTeam && data.votedTeam === data.homeTeam) || !data.votedTeam" class="team-vote">
@@ -43,7 +43,7 @@
 
       <div class="competiton-team team-two">
         <div :class="`team-logo ${data.votedTeam === data.awayTeam ? 'team-logo--voted' : ''}`">
-          <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/game-logo-02.png" />
+          <img :src="imgURL + data.awayTeamIcon" />
         </div>
         <div class="team-name">{{ data.awayTeam }}</div>
         <div v-if="(data.votedTeam && data.votedTeam === data.awayTeam) || !data.votedTeam" class="team-vote">
@@ -181,34 +181,26 @@
       <table class="promo-table record-table">
         <thead>
           <tr>
-            <th>比赛时间</th>
+            <th>投票时间</th>
             <th>参赛队伍</th>
             <th>投票队伍</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>2024.1.10 15:30</td>
-            <td>EDG | RNG</td>
-            <td>RNG</td>
-          </tr>
-          <tr>
-            <td>2024.1.10 15:30</td>
-            <td>EDG | RNG</td>
-            <td>RNG</td>
-          </tr>
-          <tr>
-            <td>2024.1.10 15:30</td>
-            <td>EDG | RNG</td>
-            <td>RNG</td>
-          </tr>
+          <template v-for="(record, index) in answeredRecords" :key="index">
+            <tr>
+              <td>{{ record.createTime }}</td>
+              <td>{{ record.quizTitle }}</td>
+              <td>{{ record.answerOne }}</td>
+            </tr>
+          </template>
         </tbody>
       </table>
     </div>
   </el-dialog>
 
   <el-dialog v-model="confirmVoteDialog" width="500px" align-center persistent title="投票">
-    <div class="dialog-header">您确定要把票投给 {{ submitParam.answerOne }}电子竞技俱乐部 吗？</div>
+    <div class="dialog-header">您确定要把票投给 {{ submitParam.answerOne }} 吗？</div>
     <div class="dialog-footer">
       <el-button color="grey" @click="confirmVoteDialog = false">取消</el-button>
       <el-button type="primary" @click="handleSubmitVote()">确定</el-button>
@@ -230,6 +222,7 @@ const handleTabClick = (tab) => {
 // dialogs
 const tableRecordDialog = ref(false);
 const confirmVoteDialog = ref(false);
+const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
 
 let submitParam = reactive({ quizId: "", quizTitle: "", answerOne: "" });
 const handleVoteClick = (selectedData) => {
@@ -374,6 +367,8 @@ table.promo-table.record-table {
       position: relative;
 
       .team-logo {
+        width: 100px;
+        height: 100px;
         max-width: 100px;
         margin: 0 auto;
         position: relative;

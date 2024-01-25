@@ -13,7 +13,7 @@
     >
       <div class="competiton-team team-one">
         <div :class="`team-logo ${data.votedTeam === data.homeTeam ? 'team-logo--voted' : ''}`">
-          <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/game-logo-01.png" />
+          <img :src="imgURL + `promo/` + data.homeTeamIcon" />
         </div>
         <div class="team-name">{{ data.homeTeam }}</div>
         <div v-if="(data.votedTeam && data.votedTeam === data.homeTeam) || !data.votedTeam" class="team-vote">
@@ -43,7 +43,7 @@
 
       <div class="competiton-team team-two">
         <div :class="`team-logo ${data.votedTeam === data.awayTeam ? 'team-logo--voted' : ''}`">
-          <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/game-logo-02.png" />
+          <img :src="imgURL + `promo/` + data.awayTeamIcon" />
         </div>
         <div class="team-name">{{ data.awayTeam }}</div>
         <div v-if="(data.votedTeam && data.votedTeam === data.awayTeam) || !data.votedTeam" class="team-vote">
@@ -190,27 +190,19 @@
       <table class="promo-table" cellspacing="0" cellpading="0">
         <thead>
           <tr>
-            <th>比赛时间</th>
+            <th>投票时间</th>
             <th>参赛队伍</th>
             <th>投票队伍</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>2024.1.10 15:30</td>
-            <td>EDG | RNG</td>
-            <td>RNG</td>
-          </tr>
-          <tr>
-            <td>2024.1.10 15:30</td>
-            <td>EDG | RNG</td>
-            <td>RNG</td>
-          </tr>
-          <tr>
-            <td>2024.1.10 15:30</td>
-            <td>EDG | RNG</td>
-            <td>RNG</td>
-          </tr>
+          <template v-for="(record, index) in answeredRecords" :key="index">
+            <tr>
+              <td>{{ record.createTime }}</td>
+              <td>{{ record.quizTitle }}</td>
+              <td>{{ record.answerOne }}</td>
+            </tr>
+          </template>
         </tbody>
       </table>
     </div>
@@ -219,7 +211,7 @@
   <q-dialog v-model="confirmVoteDialog" persistent>
     <q-card class="confirm-vote-card">
       <q-card-section class="q-mb-md row justify-center">
-        <div class="text-h6">您确定要把票投给 {{ submitParam.answerOne }}电子竞技俱乐部 吗？</div>
+        <div class="text-h6">您确定要把票投给 {{ submitParam.answerOne }} 吗？</div>
       </q-card-section>
 
       <q-card-actions align="center">
@@ -242,7 +234,7 @@ const $q = useQuasar();
 
 // tabs
 const activeKey = ref("tabOne");
-
+const imgURL = process.env.IMAGE_CDN + "/";
 // dialogs
 const tableRecordDialog = ref(false);
 const confirmVoteDialog = ref(false);
