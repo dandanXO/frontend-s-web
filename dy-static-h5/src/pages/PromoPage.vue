@@ -87,7 +87,13 @@
                   />
                 </div>
               </div>
-              <div class="inner" :class="selectedPromo.promoCode === 'dy2-cny2024-promo' && 'cny2024'">
+              <div
+                class="inner"
+                :class="{
+                  cny2024: selectedPromo.promoCode === 'dy2-cny2024-promo',
+                  hongbaoyu: selectedPromo.promoCode === 'hongbaoyu'
+                }"
+              >
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
                   <HotPromotion :list="selectedPromo" />
                 </div>
@@ -166,7 +172,7 @@ export default defineComponent({
       {code: "FISH", img: "game", label: "老虎机/捕鱼"}
     ]);
     const getPromoLabel = (labelType) => {
-      switch(labelType) {
+      switch (labelType) {
         case 0:
           return '最新';
         case 1:
@@ -190,7 +196,7 @@ export default defineComponent({
     const selectedPromo = ref({});
     const route = useRoute();
     const router = useRouter();
-        const $q = useQuasar();
+    const $q = useQuasar();
     const ui = useUI();
     const isDisplayLogin = ref(false);
 
@@ -228,35 +234,35 @@ export default defineComponent({
       //   }
       // })
       api
-          .get("/promo/banner?category=PROMO")
-          .then((response) => {
-            if (response.code === 0) {
-              banner.value = response.data[0];
-            } else {
-              // $q.notify({
-              //   color: "negative",
-              //   position: "top",
-              //   message: ret.message,
-              //   icon: "report_problem"
-              // });
-            }
-            // banners.value = response.data;
-          });
+        .get("/promo/banner?category=PROMO")
+        .then((response) => {
+          if (response.code === 0) {
+            banner.value = response.data[0];
+          } else {
+            // $q.notify({
+            //   color: "negative",
+            //   position: "top",
+            //   message: ret.message,
+            //   icon: "report_problem"
+            // });
+          }
+          // banners.value = response.data;
+        });
     };
     const showPromoDetails = (promo) => {
       // extension
-      if(extensionState.value) {
+      if (extensionState.value) {
         if (promo.redirectUrl.includes("page-vip")) {
           router.push({path: "/vip", query: {token: extensionToken.value}});
-        }else{
+        } else {
           router.push({path: currentPath.value, query: {name: promo.redirectUrl, token: extensionToken.value}});
         }
         isPromoDetail.value = true;
         selectedPromo.value = promo;
         if (isAndroid()) {
-            LocalStorage.set("TOKEN", extensionToken.value, 86400);
+          LocalStorage.set("TOKEN", extensionToken.value, 86400);
         } else {
-            SessionStorage.set("TOKEN", extensionToken.value);
+          SessionStorage.set("TOKEN", extensionToken.value);
         }
         store.token = extensionToken.value;
 
@@ -293,7 +299,7 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      const platformApiUrl = (store.hasToken() || (window.location.pathname === "/promotion" && extensionState.value===true)) ? "/session/loggedInPromoPages" : "/promo/page";
+      const platformApiUrl = (store.hasToken() || (window.location.pathname === "/promotion" && extensionState.value === true)) ? "/session/loggedInPromoPages" : "/promo/page";
 
       isFetchingPromo.value = window.location.pathname === "/promotion";
 
@@ -331,7 +337,7 @@ export default defineComponent({
 
 
     const checkExtension = () => {
-      if (currentPath.value === "/promotion"){
+      if (currentPath.value === "/promotion") {
         // const eToken = ref(route.query.name);
         extensionToken.value = route.query.token;
         extensionState.value = true;
@@ -341,7 +347,7 @@ export default defineComponent({
 
     onActivated(() => {
       // if promo name is present, do not show promo list on first load
-      if(route.query.name) {
+      if (route.query.name) {
         isPromoDetail.value = true;
       }
 
@@ -380,10 +386,12 @@ export default defineComponent({
   h3 {
     font-size: 18px;
   }
+
   .selected-promo {
     ol {
       padding: 0 15px;
     }
+
     table {
       margin: 10px auto 20px;
       width: 98%;
@@ -685,13 +693,22 @@ export default defineComponent({
       }
 
       .inner {
-        max-width: 1400px;
+        max-width: 600px;
         width: 90%;
         margin: 20px auto;
         display: flex;
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
+        &.hongbaoyu {
+          margin: 0px;
+          width: 100%;
+
+          .hot-promo {
+            border-radius: 0px;
+          }
+        }
 
         &.cny2024 {
           width: 100%;

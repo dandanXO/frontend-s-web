@@ -79,7 +79,7 @@
 
       <q-card-section class="row items-center">
         <div class="red-packet-opened">
-          <!--          <img :src="require(`../../../../../../../../../assets/images/promotion/hotpromo/hongbaoyu/red-packet-opened.png`)" />-->
+          <img :src="require(`../../../assets/images/hongbaoyu/hongbao-bg.png`)" />
 
           <span class="grats">恭喜获得奖金</span>
           <span class="amount">{{ winAmount }}</span>
@@ -171,7 +171,8 @@ const getPromotionPrize = () => {
       justify-content: center;
       position: absolute;
       bottom: 10%;
-      left: 7.5%;
+      left: 50%;
+      transform: translate(-50%, 0);
 
       .promo-common-btn {
         background: transparent;
@@ -179,7 +180,8 @@ const getPromotionPrize = () => {
         background-size: 100% 100%;
         background-repeat: no-repeat;
         border: unset;
-        height: 100px;
+        aspect-ratio: 392/168;
+        //height: 100px;
         padding: 0 100px;
       }
 
@@ -316,6 +318,7 @@ const getPromotionPrize = () => {
   img {
     display: block;
     width: 100%;
+    padding-right: 15px;
   }
 
   .grats {
@@ -324,11 +327,11 @@ const getPromotionPrize = () => {
     display: flex;
     justify-content: center;
     top: 0;
-    margin-top: 20%;
+    margin-top: 58%;
     color: #fffbfb;
     text-align: center;
     font-family: PingFang SC;
-    font-size: 24px;
+    font-size: 1.3em;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
@@ -341,10 +344,10 @@ const getPromotionPrize = () => {
     display: flex;
     justify-content: center;
     top: 0;
-    margin-top: 45%;
+    margin-top: 65%;
     // left: -15px;
-    color: #f23b1d;
-    font-size: 36px;
+    color: #fff;
+    font-size: 1.8em;
     font-weight: bold;
     padding-right: 15px;
   }

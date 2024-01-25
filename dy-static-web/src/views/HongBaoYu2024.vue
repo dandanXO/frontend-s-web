@@ -74,8 +74,7 @@
   >
     <div class="modal-div">
       <div class="red-packet-opened">
-        <!--        <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/red-packet-opened.png`)" />-->
-        <!-- <img src="../../../assets/images/promotion/hotpromo/red-packet-opened.png" /> -->
+        <img :src="require(`../assets/images/hongbaoyu/hongbao-bg.png`)" />
         <div class="grats">恭喜中奖！</div>
         <div class="amount">{{ winAmount }}</div>
 
@@ -90,12 +89,7 @@ import { ref, defineProps } from "vue";
 import { claimDailyRainItem } from "@/api/index/promo";
 import { userStore } from "@/store";
 
-const props = defineProps({
-  promoCode: {
-    type: String,
-    required: true
-  }
-});
+const promoCode = ref("hongbaoyu");
 
 const store = userStore();
 const privilegeClaimedModalVisible = ref(false);
@@ -105,7 +99,7 @@ const winAmount = ref(0);
 const loadingClaim = ref(false);
 const getPromotion = () => {
   loadingClaim.value = true;
-  claimDailyRainItem(props.promoCode)
+  claimDailyRainItem(promoCode.value)
     .then((res) => {
       loadingClaim.value = false;
       if (res.code === 0) {
@@ -312,6 +306,7 @@ const getPromotionPrize = () => {
 
   img {
     width: 500px;
+    padding-right: 30px;
   }
 
   .grats {
@@ -319,15 +314,16 @@ const getPromotionPrize = () => {
     width: 100%;
     display: flex;
     justify-content: center;
-    top: 0;
-    margin-top: 100px;
-
+    top: 330px;
+    margin-top: 0px;
+    z-index: 22;
+    text-align: center;
     color: #fffbfb;
-
     text-align: center;
     font-family: PingFang SC;
     font-size: 36px;
     font-style: normal;
+    padding-left: 10px;
     font-weight: 600;
     line-height: normal;
   }
@@ -338,9 +334,9 @@ const getPromotionPrize = () => {
     display: flex;
     justify-content: center;
     top: 0;
-    margin-top: 250px;
-    left: -15px;
-    color: #f23b1d;
+    margin-top: 270px;
+    left: 0px;
+    color: #fff;
     font-size: 50px;
     font-weight: bold;
   }
