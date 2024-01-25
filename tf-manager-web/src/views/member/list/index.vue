@@ -188,6 +188,19 @@
               :editable="false"
             />
           </el-form-item>
+          <el-form-item :label="t('fields.accurate')" prop="accurate">
+            <el-checkbox
+              v-model="request.accurateLoginName"
+              size="large"
+            />
+            {{ t('fields.loginName') }}
+            <el-checkbox
+              v-model="request.accurateRealName"
+              size="large"
+              style="margin-left:20px"
+            />
+            {{ t('fields.realName') }}
+          </el-form-item>
           <div class="dialog-footer">
             <el-button @click="resetQuery()">{{ t('fields.cancel') }}</el-button>
             <el-button type="primary" @click="loadMembers()">{{ t('fields.search') }}</el-button>
@@ -488,7 +501,9 @@ const request = reactive({
   status: null,
   siteId: null,
   birthday: [],
-  regTime: []
+  regTime: [],
+  accurateLoginName: false,
+  accurateRealName: false,
 });
 
 const form = reactive({
@@ -573,6 +588,7 @@ function regTimeBlur() {
 
 function resetQuery() {
   request.loginName = null;
+  request.realName = null;
   request.email = null;
   request.telephone = null;
   request.lastLoginIp = null;
@@ -588,6 +604,8 @@ function resetQuery() {
   request.siteId = siteList.list[0].id;
   request.birthday = [];
   request.regTime = [];
+  request.accurateLoginName = false;
+  request.accurateRealName = false;
   uiControl.searchDialogVisible = false;
 }
 

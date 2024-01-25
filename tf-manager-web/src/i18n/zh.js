@@ -192,7 +192,7 @@ export default {
     },
   },
   betStatus: {
-    BET: '下注中',
+    BET: '下注',
     UNSETTLED: '未结算',
     SETTLED: '已结算',
     CANCEL: '已取消',
@@ -356,6 +356,7 @@ export default {
     accountInfo: '账号信息',
     accountNumber: '账户号码',
     accountStatus: '账号状态',
+    accurate: '精准查询',
     action: '操作',
     activeMember: '活跃会员',
     activeMemberCount: '活跃会员数',
