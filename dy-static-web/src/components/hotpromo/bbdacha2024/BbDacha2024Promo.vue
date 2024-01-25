@@ -4,19 +4,31 @@
   </div>
 
   <div class="competition-container">
-    <div class="competition-item">
+    <div
+      v-for="(data, dataIndex) in upcomingData"
+      :key="`upcoming-${dataIndex}`"
+      :class="`competition-item ${
+        data.votedTeam ? 'competition-item--voted' : data.status === 'ENDED' ? 'competition-item--ended' : ''
+      }`"
+    >
       <div class="competiton-team team-one">
-        <div class="team-logo">
+        <div :class="`team-logo ${data.votedTeam === data.homeTeam ? 'team-logo--voted' : ''}`">
           <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/game-logo-01.png" />
         </div>
-        <div class="team-name">EDG电子竞技俱乐部</div>
-        <div class="team-vote">
-          <button class="vote-btn" @click="handleVoteClick">投票</button>
+        <div class="team-name">{{ data.homeTeam }}</div>
+        <div v-if="(data.votedTeam && data.votedTeam === data.homeTeam) || !data.votedTeam" class="team-vote">
+          <button
+            class="vote-btn"
+            @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.homeTeam })"
+            :disable="data.votedTeam && data.votedTeam === data.homeTeam"
+          >
+            {{ data.votedTeam && data.votedTeam === data.homeTeam ? "已投票" : data.votedTeam ? "" : "投票" }}
+          </button>
         </div>
       </div>
 
       <div class="competition-details">
-        <div class="details-date">1月24日 15:30</div>
+        <div class="details-date">{{ data.matchTime }}</div>
 
         <div class="details-match">
           2024BB
@@ -24,84 +36,24 @@
           别墅冬季杯 常规赛
         </div>
 
-        <div class="details-status"><span>进行中</span></div>
+        <div class="details-status">
+          <span>{{ data.status === "ONGOING" ? "进行中" : data.status === "ENDED" ? "已结束" : "" }}</span>
+        </div>
       </div>
 
       <div class="competiton-team team-two">
-        <div class="team-logo">
+        <div :class="`team-logo ${data.votedTeam === data.awayTeam ? 'team-logo--voted' : ''}`">
           <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/game-logo-02.png" />
         </div>
-        <div class="team-name">京东电子竞技俱部</div>
-        <div class="team-vote">
-          <button class="vote-btn" @click="handleVoteClick">投票</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="competition-item competition-item--voted">
-      <div class="competiton-team team-one">
-        <div class="team-logo team-logo--voted">
-          <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/game-logo-01.png" />
-        </div>
-        <div class="team-name">EDG电子竞技俱</div>
-        <div class="team-vote">
-          <button class="vote-btn" disable>已投票</button>
-        </div>
-      </div>
-
-      <div class="competition-details">
-        <div class="details-date">1月24日 15:30</div>
-
-        <div class="details-match">
-          2024BB
-          <br />
-          别墅冬季杯 常规赛
-        </div>
-
-        <div class="details-status"><span>进行中</span></div>
-      </div>
-
-      <div class="competiton-team team-two">
-        <div class="team-logo">
-          <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/game-logo-02.png" />
-        </div>
-        <div class="team-name">京东电子竞技部</div>
-        <div class="team-vote">
-          <button class="vote-btn" style="display: none">投票</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="competition-item competition-item--ended">
-      <div class="competiton-team team-one">
-        <div class="team-logo">
-          <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/game-logo-01.png" />
-        </div>
-        <div class="team-name">EDG电子竞技俱</div>
-        <div class="team-vote">
-          <button class="vote-btn">投票</button>
-        </div>
-      </div>
-
-      <div class="competition-details">
-        <div class="details-date">1月24日 15:30</div>
-
-        <div class="details-match">
-          2024BB
-          <br />
-          别墅冬季杯 常规赛
-        </div>
-
-        <div class="details-status"><span>已结束</span></div>
-      </div>
-
-      <div class="competiton-team team-two">
-        <div class="team-logo">
-          <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/game-logo-02.png" />
-        </div>
-        <div class="team-name">京东电子竞技部</div>
-        <div class="team-vote">
-          <button class="vote-btn">投票</button>
+        <div class="team-name">{{ data.awayTeam }}</div>
+        <div v-if="(data.votedTeam && data.votedTeam === data.awayTeam) || !data.votedTeam" class="team-vote">
+          <button
+            class="vote-btn"
+            @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.awayTeam })"
+            :disable="data.votedTeam && data.votedTeam === data.awayTeam"
+          >
+            {{ data.votedTeam && data.votedTeam === data.awayTeam ? "已投票" : data.votedTeam ? "" : "投票" }}
+          </button>
         </div>
       </div>
     </div>
@@ -256,22 +208,18 @@
   </el-dialog>
 
   <el-dialog v-model="confirmVoteDialog" width="500px" align-center persistent title="投票">
-    <div class="dialog-header">您确定要把票投给 EDG电子竞技俱乐部 吗？</div>
+    <div class="dialog-header">您确定要把票投给 {{ submitParam.answerOne }}电子竞技俱乐部 吗？</div>
     <div class="dialog-footer">
       <el-button color="grey" @click="confirmVoteDialog = false">取消</el-button>
-      <el-button type="primary" @click="handleSubmitVote('first')">确定</el-button>
+      <el-button type="primary" @click="handleSubmitVote()">确定</el-button>
     </div>
   </el-dialog>
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
-import { userStore } from "@/store";
-
-import { useRouter } from "vue-router";
-
-const store = userStore();
-const router = useRouter();
+import { ref, reactive, onMounted } from "vue";
+import { getBBDachaUpcoming, getBBDachaAnsweredRecords, submitBBDacha } from "@/api/index/promo";
+import moment from "moment";
 
 // tabs
 const activeKey = ref("tabOne");
@@ -283,13 +231,66 @@ const handleTabClick = (tab) => {
 const tableRecordDialog = ref(false);
 const confirmVoteDialog = ref(false);
 
-const handleVoteClick = () => {
+let submitParam = reactive({ quizId: "", quizTitle: "", answerOne: "" });
+const handleVoteClick = (selectedData) => {
+  submitParam = selectedData;
   confirmVoteDialog.value = true;
 };
 
 const handleSubmitVote = () => {
-  confirmVoteDialog.value = false;
+  submitBBDacha(submitParam)
+    .then((res) => {
+      if (res.code === 0) getData();
+    })
+    .catch(() => {})
+    .then(() => {
+      confirmVoteDialog.value = false;
+    });
 };
+
+const upcomingData = ref([]);
+const answeredRecords = ref([]);
+const getData = () => {
+  Promise.all([getBBDachaUpcoming(), getBBDachaAnsweredRecords()]).then((values) => {
+    const [bbDachaUpcoming, bbDachaAnsweredRecords] = values;
+    if (bbDachaAnsweredRecords.code === 0) {
+      if (
+        bbDachaAnsweredRecords.data &&
+        bbDachaAnsweredRecords.data.records &&
+        bbDachaAnsweredRecords.data.records.length
+      ) {
+        answeredRecords.value = bbDachaAnsweredRecords.data.records;
+      }
+    }
+
+    if (bbDachaUpcoming.code === 0) {
+      if (bbDachaUpcoming.data && bbDachaUpcoming.data.length) {
+        upcomingData.value = bbDachaUpcoming.data;
+
+        let isFirstTime = {};
+        for (let i = 0, l = answeredRecords.value.length; i < l; i++) {
+          const currRecord = answeredRecords.value[i];
+
+          upcomingData.value.forEach((e) => {
+            const { matchTime, id } = e;
+
+            if (!isFirstTime[id]) {
+              const timeCN = moment(matchTime).locale("zh_cn");
+              e.matchTime = timeCN.format("MMM Do HH:mm");
+
+              isFirstTime[id] = true;
+            }
+
+            if (currRecord.quizId === id) e.votedTeam = currRecord.answerOne;
+          });
+        }
+      }
+    }
+  });
+};
+onMounted(() => {
+  getData();
+});
 </script>
 
 <style scoped lang="scss">
@@ -431,6 +432,7 @@ table.promo-table.record-table {
         [disable] {
           background: #dddddd;
           color: #ffffff;
+          pointer-events: none;
 
           &:hover {
             filter: brightness(1);

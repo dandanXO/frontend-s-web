@@ -131,4 +131,15 @@ export function promoApplyWithGameType(param) {
   return server.EVENT.post(`/promo-application/apply`, { promoCode, promoTitle, gameType });
 }
 
+export function getBBDachaUpcoming() {
+  return server.EVENT.get(`/bb-dacha/upcoming`, {});
+}
 
+export function getBBDachaAnsweredRecords() {
+  return server.EVENT.get(`/bb-dacha/answeredRecords`, {});
+}
+
+export function submitBBDacha(param) {
+  const { quizId, quizTitle, answerOne } = param;
+  return server.EVENT.post(`/bb-dacha/submit`, { quizId, quizTitle, answerOne });
+}
