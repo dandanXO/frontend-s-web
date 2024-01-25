@@ -164,7 +164,11 @@
             </div>
           </template>
           <template v-else>
-            <div v-if="!isShow" class="game-item btn-pointer" @click="selectLotteryPlat(lotteryGameItem)">
+            <div
+              v-if="!isShow"
+              class="game-item btn-pointer"
+              @click="playGame(lotteryGameItem.name, lotteryGameItem.code, '')"
+            >
               <div
                 class="platform-img"
                 :style="{
@@ -180,7 +184,7 @@
             </div>
             <div
               v-if="isShow"
-              class="game-item btn-pointer"
+              class="game-item btn-pointer lottery-tcg-list"
               @click="playGame(lotteryGameItem.name, selectedPlat.code, lotteryGameItem.code)"
             >
               <div
@@ -195,6 +199,8 @@
                   })()
                 }"
               />
+
+              <span class="game-name">{{ lotteryGameItem.name }}</span>
             </div>
           </template>
         </template>
@@ -2567,6 +2573,35 @@ export default defineComponent({
   img {
     width: 100%;
     display: block;
+  }
+}
+
+#id-lottery-board {
+  row-gap: 25px;
+}
+
+.lottery-tcg-list {
+  &.game-item {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 15px;
+    padding: 9px;
+    background-image: url("../assets/images/index/thai-tcg-bg.png");
+    background-size: 100% 100%;
+
+    .platform-img {
+      aspect-ratio: 1/1;
+    }
+
+    .game-name {
+      width: 100%;
+      display: block;
+      padding: 10px 0px;
+      white-space: normal;
+      line-height: 14px;
+      height: 30px;
+      text-align: center;
+    }
   }
 }
 
