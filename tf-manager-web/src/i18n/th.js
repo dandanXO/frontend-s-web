@@ -153,6 +153,7 @@ export default {
     },
   },
   betStatus: {
+    BET: 'เดิมพัน',
     UNSETTLED: 'ยังไม่ได้ชำระ',
     SETTLED: 'ชำระแล้ว',
     CANCEL: 'ยกเลิก',
@@ -1652,6 +1653,11 @@ export default {
     H5: 'H5',
     ANDROID: 'ANDROID',
     IOS: 'IOS',
+  },
+  result: {
+    win: 'WIN',
+    draw: 'DRAW',
+    loss: 'LOSS',
   },
   error: {
     400: 'คำขอไม่ถูกต้อง',
