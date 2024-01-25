@@ -350,6 +350,7 @@ export default {
     accountInfo: 'Account Information',
     accountNumber: 'Account Number',
     accountStatus: 'Account Status',
+    accurate: 'Accurate Search',
     action: 'Action',
     activeMember: 'Active Member',
     activeMemberCount: 'Active Member Count',

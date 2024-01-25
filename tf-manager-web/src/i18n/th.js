@@ -235,6 +235,7 @@ export default {
     accountInfo: 'ข้อมูลเกี่ยวกับบัญชี',
     accountNumber: 'หมายเลขบัญชี',
     accountStatus: 'สถานะบัญชี',
+    accurate: 'Accurate Search',
     action: 'การกระทำ',
     activeMember: 'สมาชิกที่ใช้งานอยู่',
     activeMemberCount: 'จำนวนสมาชิกที่ใช้งานอยู่',
