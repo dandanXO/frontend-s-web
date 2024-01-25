@@ -143,3 +143,11 @@ export function submitBBDacha(param) {
   const { quizId, quizTitle, answerOne } = param;
   return server.EVENT.post(`/bb-dacha/submit`, { quizId, quizTitle, answerOne });
 }
+
+export function getCurrentStepInit() {
+  return server.EVENT.get(`/game-steps/initiate`, {});
+}
+
+export function submitGameStep() {
+  return server.EVENT.post(`/game-steps/step`);
+}
