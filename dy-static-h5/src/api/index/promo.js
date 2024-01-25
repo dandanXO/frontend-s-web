@@ -80,3 +80,16 @@ export function redeemGift(param) {
 export function getGiftRecord() {
   return eventapi.get(`/gift/record`, {});
 }
+
+export function getBBDachaUpcoming() {
+  return eventapi.get(`/bb-dacha/upcoming`, {});
+}
+
+export function getBBDachaAnsweredRecords() {
+  return eventapi.get(`/bb-dacha/answeredRecords`, {});
+}
+
+export function submitBBDacha(param) {
+  const { quizId, quizTitle, answerOne } = param;
+  return eventapi.post(`/bb-dacha/submit`, qs.stringify({ quizId, quizTitle, answerOne }));
+}

@@ -11,10 +11,7 @@
               <el-tab-pane v-for="(item, index) in mailboxMessageTypeData" :key="index" :name="item.type">
                 <template #label>
                   <span class="mailTab-label">
-                    <div
-                      class="red-dot-icon"
-                      v-if="hasUnreadMessages(item.type) || (item.type === 'ALL' && hasUnreadMessages(null))"
-                    />
+                    <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" />
                     <span>
                       {{ item.name }}
                     </span>
@@ -166,7 +163,13 @@ const changeMailboxType = (nk) => {
   loadPersonalMailbox();
 };
 
-const mailboxNotifyState = ref([]);
+const mailboxNotifyState = reactive({
+  NOTIFICATION: [],
+  ACTIVITY: [],
+  ANNOUNCEMENT: [],
+  PAYMENT: [],
+  ALL: []
+});
 
 const mailboxState = reactive({
   active: "inbox",
@@ -190,23 +193,37 @@ const mailboxState = reactive({
   }
 });
 
-// const loadNotifyMailbox = () => {
-//   mailboxNotifyData.value = {
-//     type: null,
-//     orderBy: "sendTime"
-//   };
-//   mailInbox(mailboxNotifyData.value)
-//     .then((res) => {
-//       const response = res;
-//       mailboxNotifyState.value = response.records;
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//     });
-// };
+const loadNotifyMailbox = () => {
+  mailboxNotifyData.value = {
+    type: null,
+    orderBy: "sendTime",
+    current: 1,
+    size: 20,
+    messageType: null
+  };
+  mailInbox(mailboxNotifyData.value)
+    .then((res) => {
+      const response = res;
+      mailboxNotifyState.value = response.records;
+
+      response.records.forEach((record) => {
+        var type = record.type;
+        mailboxNotifyState[type].push(record);
+        mailboxNotifyState["ALL"].push(record);
+      });
+
+      console.log(mailboxNotifyState);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 const hasUnreadMessages = (type) => {
-  return mailboxNotifyState.value.some((item) => item.type === type && item.readTime === null);
+  if (type === "ALL") {
+    return mailboxNotifyState["ALL"].some((item) => item.readTime === null);
+  }
+  return mailboxNotifyState[type].some((item) => item.type === type && item.readTime === null);
 };
 
 const isAnyReadTimeNull = (mailboxList) => {
@@ -216,8 +233,6 @@ const isAnyReadTimeNull = (mailboxList) => {
 const shouldDisplayTrue = ref(false);
 
 const loadPersonalMailbox = () => {
-  // loadNotifyMailbox();
-
   mailboxState.mailboxList[mailboxState.active].list = [];
   if (mailboxState.active === "inbox") {
     mailboxData.value = {
@@ -438,7 +453,7 @@ const deleteMultipleMsg = () => {
 
 onMounted(() => {
   loadPersonalMailbox();
-  // loadNotifyMailbox();
+  loadNotifyMailbox();
   // getMailCatNotify();
   // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
 });
