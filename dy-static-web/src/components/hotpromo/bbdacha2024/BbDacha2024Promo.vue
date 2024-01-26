@@ -4,6 +4,8 @@
   </div>
 
   <div class="competition-container">
+    <p v-if="isLoaded && upcomingData.length === 0" style="text-align: center">目前没有赛事。</p>
+
     <div
       v-for="(data, dataIndex) in upcomingData"
       :key="`upcoming-${dataIndex}`"
@@ -241,6 +243,7 @@ const handleSubmitVote = () => {
     });
 };
 
+const isLoaded = ref(false);
 const upcomingData = ref([]);
 const answeredRecords = ref([]);
 const getData = () => {
@@ -255,6 +258,8 @@ const getData = () => {
         answeredRecords.value = bbDachaAnsweredRecords.data.records;
       }
     }
+
+    isLoaded.value = true;
 
     if (bbDachaUpcoming.code === 0) {
       if (bbDachaUpcoming.data && bbDachaUpcoming.data.length) {
