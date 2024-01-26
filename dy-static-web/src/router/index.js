@@ -105,7 +105,7 @@ const routes = [
       },
       {
         path: "/privilege/hongbaoyu",
-        name: "invite",
+        name: "hongbaoyu",
         component: () => import("../views/HongBaoYu2024.vue")
       },
       {
