@@ -40,6 +40,9 @@
         store.token
       "
     />
+    <CnyStepGame2024Promo
+      v-if="list.redirectUrl === 'dy2-cny-step-game' && !isCommonPromo && store.token"
+    ></CnyStepGame2024Promo>
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -77,6 +80,7 @@ import BasketballHot from "../components/hotpromo/basketball-hot/BasketballHot.v
 import LPLSummer from "../components/hotpromo/lpl-summer/LPLSummer.vue";
 import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
 import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
+import CnyStepGame2024Promo from "../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue";
 // import VIPUpgradePromo from "../components/hotpromo/vipupgrade/VIPUpgradePromo.vue";
 // import ReferBonusPromo from "../components/hotpromo/referbonus/ReferBonusPromo.vue";
 import { ElMessage } from "element-plus";
@@ -105,7 +109,8 @@ export default defineComponent({
     BasketballHot,
     LPLSummer,
     Cny2024Promo,
-    BbDacha2024Promo
+    BbDacha2024Promo,
+    CnyStepGame2024Promo
     // VIPUpgradePromo,
     // ReferBonusPromo
     // DailyBonus
@@ -250,8 +255,9 @@ export default defineComponent({
       this.list.redirectUrl === "Dongying-refer" ||
       this.list.redirectUrl === "dy2-vip-upgrade-bonus" ||
       this.list.redirectUrl === "dy2-refer-bonus" ||
-      this.list.redirectUrl === "dy2-cny2024-promo" || 
-      this.list.redirectUrl === "dy2-bb-dacha-2024"
+      this.list.redirectUrl === "dy2-cny2024-promo" ||
+      this.list.redirectUrl === "dy2-bb-dacha-2024" ||
+      this.list.redirectUrl === "dy2-cny-step-game"
     ) {
       this.isCommonPromo = false;
     } else {

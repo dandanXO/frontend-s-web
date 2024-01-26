@@ -131,4 +131,32 @@ export function promoApplyWithGameType(param) {
   return server.EVENT.post(`/promo-application/apply`, { promoCode, promoTitle, gameType });
 }
 
+export function getBBDachaUpcoming() {
+  return server.EVENT.get(`/bb-dacha/upcoming`, {});
+}
 
+export function getBBDachaAnsweredRecords() {
+  return server.EVENT.get(`/bb-dacha/answeredRecords`, {});
+}
+
+export function submitBBDacha(param) {
+  const { quizId, quizTitle, answerOne } = param;
+  return server.EVENT.post(`/bb-dacha/submit`, { quizId, quizTitle, answerOne });
+}
+
+export function getCurrentStepInit() {
+  return server.EVENT.get(`/game-steps/initiate`, {});
+}
+
+export function submitGameStep() {
+  return server.EVENT.post(`/game-steps/step`);
+}
+
+export function getStepRecords(current) {
+  return server.EVENT.get(`/game-steps/records`, {
+    params: {
+      size: 10,
+      current: current
+    }
+  });
+}
