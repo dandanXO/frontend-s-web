@@ -1660,6 +1660,12 @@ export default {
     draw: 'DRAW',
     loss: 'LOSS',
   },
+  freeze: {
+    NORMAL: 'Normal',
+    TEMPORARY: 'Temporary',
+    PERMANENT: 'Permanent',
+    UNFREEZE: 'Unfreeze',
+  },
   error: {
     400: 'คำขอไม่ถูกต้อง',
     401: 'คำขอที่ไม่ได้รับอนุญาต',

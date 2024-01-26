@@ -87,7 +87,7 @@
             {{ t('fields.freeze') }}
           </el-button>
           <el-button v-if="memberDetail.status === 'FROZEN'" type="info" size="mini" style="float: right;"
-                     v-permission="['sys:member:update:state']" @click="changeToNormal(memberDetail.id)"
+                     v-permission="['sys:member:update:state']" @click="showDialog('UNFREEZE_MEMBER')"
           >
             {{ t('fields.open') }}
           </el-button>
@@ -641,6 +641,35 @@
           <el-button type="primary" @click="freeze">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
+      <el-form v-if="uiControl.dialogType === 'UNFREEZE_MEMBER'" ref="unfreezeMemberForm" :model="unfreezeForm"
+               :rules="unfreezeFormRules" :inline="true" size="small" label-width="150px"
+      >
+        <el-form-item :label="t('fields.reason')" prop="reason">
+          <el-select
+            v-model="unfreezeForm.reason"
+            size="small"
+            :placeholder="t('fields.reason')"
+            class="filter-item"
+            style="width: 350px;"
+          >
+            <el-option
+              v-for="item in freezeReason.list"
+              :key="item.key"
+              :label="item.name"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.remark')" prop="remark">
+          <el-input type="textarea" v-model="unfreezeForm.remark" :rows="6" style="width: 350px;" maxlength="500"
+                    show-word-limit
+          />
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
+          <el-button type="primary" @click="unfreeze">{{ t('fields.confirm') }}</el-button>
+        </div>
+      </el-form>
       <el-form v-if="uiControl.dialogType === 'UPDATE_VIP'" ref="updateVipForm" :model="vipForm" :rules="vipFormRules"
                :inline="true" size="small" label-width="150px"
       >
@@ -830,7 +859,7 @@ import {
   deleteMemberRemark,
   getMemberRealName,
   getMemberEmail,
-  getMemberTelephone, normalMember, getAffiliateInfo,
+  getMemberTelephone, normalMember, getAffiliateInfo, unfreezeMember,
   updateMemberType,
   unlockMember,
   refreshBalance,
@@ -885,6 +914,7 @@ export default defineComponent({
 
     const updatePasswordForm = ref(null);
     const freezeMemberForm = ref(null);
+    const unfreezeMemberForm = ref(null);
     const updateVipForm = ref(null);
     const updateFinancialForm = ref(null);
     const updateRiskForm = ref(null);
@@ -1005,6 +1035,13 @@ export default defineComponent({
       site: null
     });
 
+    const unfreezeForm = reactive({
+      id: null,
+      remark: null,
+      reason: null,
+      site: null
+    });
+
     const vipForm = reactive({
       vip: null
     });
@@ -1069,6 +1106,10 @@ export default defineComponent({
     const freezeFormRules = reactive({
       freezeType: [required(t('message.validateFreezeTypeRequired'))],
       reason: [required(t('message.validateReasonRequired'))]
+    });
+
+    const unfreezeFormRules = reactive({
+      remark: [required(t('message.validateRemarkRequired'))]
     });
 
     const vipFormRules = reactive({
@@ -1161,6 +1202,13 @@ export default defineComponent({
         freezeForm.reason = freezeReason.list[0].value;
         freezeForm.site = site.id;
         uiControl.dialogTitle = t('fields.freezeMember');
+      } else if (type === "UNFREEZE_MEMBER") {
+        if (unfreezeMemberForm.value) {
+          unfreezeMemberForm.value.resetFields();
+        }
+        unfreezeForm.remark = "";
+        unfreezeForm.site = site.id;
+        uiControl.dialogTitle = t('fields.unfreezeMember');
       } else if (type === "UPDATE_VIP") {
         if (updateVipForm.value) {
           updateVipForm.value.resetFields();
@@ -1264,6 +1312,20 @@ export default defineComponent({
       freezeMemberForm.value.validate(async (valid) => {
         if (valid) {
           await freezeMember(props.mbrId, freezeForm);
+          const data = await getMemberDetails(props.mbrId, site.id);
+          Object.keys({ ...data.data }).forEach(detailField => {
+            memberDetail[detailField] = data.data[detailField];
+          });
+          uiControl.dialogVisible = false;
+          ElMessage({ message: t('message.freezeMemberSuccess'), type: "success" });
+        }
+      });
+    };
+
+    const unfreeze = () => {
+      unfreezeMemberForm.value.validate(async (valid) => {
+        if (valid) {
+          await unfreezeMember(props.mbrId, unfreezeForm);
           const data = await getMemberDetails(props.mbrId, site.id);
           Object.keys({ ...data.data }).forEach(detailField => {
             memberDetail[detailField] = data.data[detailField];
@@ -1545,6 +1607,9 @@ export default defineComponent({
       freezeMemberForm,
       freezeForm,
       freezeFormRules,
+      unfreezeMemberForm,
+      unfreezeForm,
+      unfreezeFormRules,
       updateVipForm,
       vipForm,
       vipFormRules,
@@ -1575,6 +1640,7 @@ export default defineComponent({
       changePassword,
       transferFund,
       freeze,
+      unfreeze,
       updateField,
       addRemark,
       editRemark,

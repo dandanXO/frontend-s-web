@@ -2080,6 +2080,12 @@ export default {
     draw: 'DRAW',
     loss: 'LOSS',
   },
+  freeze: {
+    NORMAL: 'Normal',
+    TEMPORARY: 'Temporary',
+    PERMANENT: 'Permanent',
+    UNFREEZE: 'Unfreeze',
+  },
   error: {
     400: 'Bad Request',
     401: 'Unauthorized Request',
