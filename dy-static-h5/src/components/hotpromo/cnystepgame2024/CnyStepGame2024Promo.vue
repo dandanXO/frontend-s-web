@@ -2,33 +2,10 @@
   <div class="stepgame-wrapper" id="id-stepgame-wrapper">
     <div class="stepgame-container" id="id-stepgame-container">
       <!--      <div class="head-title">-->
-      <!--        <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/head-title-01.png" />-->
+      <!--        <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/top-title.png" />-->
       <!--      </div>-->
 
       <div class="game-container" id="id-game-container">
-        <div class="game-btns-container">
-          <button class="game-btn game-btn--01" :disabled="isBtnLoading" @click="handleSpin">
-            转盘次数 ({{ spinLeft }})
-          </button>
-        </div>
-
-        <div class="game-spin-wheel-container">
-          <div class="game-spin-wheel-frame">
-            <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/spin-wheel-frame.png" />
-          </div>
-          <div class="game-spin-wheel">
-            <div class="spin-wheel-shadow" :class="smoothSpinOn && 'shadow-spin'"></div>
-            <div class="spin-wheel-board" :class="smoothSpinOn && 'smooth-spin'">
-              <div style="transition: 1s all" :class="`spin-to-${spinToNum}`">
-                <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/spin-wheel-board.png" />
-              </div>
-            </div>
-            <div class="spin-wheel-pin">
-              <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/spin-wheel-pin.png" />
-            </div>
-          </div>
-        </div>
-
         <div class="game-item-container">
           <div
             class="game-item-player"
@@ -84,13 +61,36 @@
         </div>
       </div>
     </div>
+
+    <div class="game-btns-container">
+      <button class="game-btn game-btn--01" :disabled="isBtnLoading" @click="handleSpin">
+        转盘次数 ({{ spinLeft }})
+      </button>
+    </div>
+
+    <div class="game-spin-wheel-container">
+      <div class="game-spin-wheel-frame">
+        <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/spin-wheel-frame.png" />
+      </div>
+      <div class="game-spin-wheel">
+        <div class="spin-wheel-shadow" :class="smoothSpinOn && 'shadow-spin'"></div>
+        <div class="spin-wheel-board" :class="smoothSpinOn && 'smooth-spin'">
+          <div style="transition: 1s all" :class="`spin-to-${spinToNum}`">
+            <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/spin-wheel-board.png" />
+          </div>
+        </div>
+        <div class="spin-wheel-pin">
+          <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/spin-wheel-pin.png" />
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="game-side-btns-container">
     <div class="game-side-btn" @click="gameRulesDialog = true">
       <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/side-btn-01.png" />
     </div>
-    <div class="game-side-btn" @click="gameRecordsDialog = true">
+    <div class="game-side-btn" @click="openRecordDialog()">
       <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/side-btn-02.png" />
     </div>
   </div>
@@ -114,25 +114,27 @@
         </div>
       </div>
       <div class="dialog-body">
-        <ol>
-          <li>本活动全体用户皆可参与，参与前需完善个人资料，绑定手机号码及银行卡；</li>
-          <li>本活动共仅能通关一次，每个阶段每个档位奖励仅能领取一次；</li>
-          <li>本活动转盘每日免费转动3次超出免费次数每存款200元即可活动一次转动转盘机会，每日最高可转动20次转盘；</li>
-          <li>本活动转盘数字定义:抽中正数即往前进相应步数，抽中0保持原关卡不动，抽中负数即往后退相应步数。</li>
-          <li>
-            本活动获取关卡奖励需到达指定关卡。例：用户从第12关出发，抽中6即往前进6步，到达关卡18，只能领取关卡18的奖励，不能领取关卡8的奖励。
-          </li>
-          <li>本活动所得彩金将实时派发至用户【中心钱包】，彩金仅需完成1倍流水即可提交出款申请。</li>
-          <li>
-            本活动仅对已结算并产生输赢结果的有效投注进行计算，任何走水、串关、特殊投注、取消的赛事不计算有效投注。
-          </li>
-          <li>本活动与其它优惠活动共享。（特殊活动除外）</li>
-          <li>同一姓名、手机号、银行卡号、邮箱地址等信息的用户账号，仅可参与一次，若有违规者，将不享受此优惠。</li>
-          <li>
-            任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单。
-          </li>
-          <li>为避免文字理解差异，本活动最终解释权归雷火电竞所有。</li>
-        </ol>
+        <div class="dialog-list">
+          <ol>
+            <li>本活动全体用户皆可参与，参与前需完善个人资料，绑定手机号码及银行卡；</li>
+            <li>本活动共仅能通关一次，每个阶段每个档位奖励仅能领取一次；</li>
+            <li>本活动转盘每日免费转动3次超出免费次数每存款200元即可活动一次转动转盘机会，每日最高可转动20次转盘；</li>
+            <li>本活动转盘数字定义:抽中正数即往前进相应步数，抽中0保持原关卡不动，抽中负数即往后退相应步数。</li>
+            <li>
+              本活动获取关卡奖励需到达指定关卡。例：用户从第12关出发，抽中6即往前进6步，到达关卡18，只能领取关卡18的奖励，不能领取关卡8的奖励。
+            </li>
+            <li>本活动所得彩金将实时派发至用户【中心钱包】，彩金仅需完成1倍流水即可提交出款申请。</li>
+            <li>
+              本活动仅对已结算并产生输赢结果的有效投注进行计算，任何走水、串关、特殊投注、取消的赛事不计算有效投注。
+            </li>
+            <li>本活动与其它优惠活动共享。（特殊活动除外）</li>
+            <li>同一姓名、手机号、银行卡号、邮箱地址等信息的用户账号，仅可参与一次，若有违规者，将不享受此优惠。</li>
+            <li>
+              任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单。
+            </li>
+            <li>为避免文字理解差异，本活动最终解释权归雷火电竞所有。</li>
+          </ol>
+        </div>
       </div>
     </div>
   </q-dialog>
@@ -159,25 +161,27 @@
   </q-dialog>
 
   <q-dialog v-model="wonBonusDialog" width="500px" align-center class="game-dialog">
-    <div class="close-btn">
-      <q-btn
-        @click="wonBonusDialog = false"
-        v-close-popup
-        rounded
-        icon="close"
-        color="white"
-        height="40"
-        width="40"
-      ></q-btn>
-    </div>
-    <div class="dialog-header">
-      <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/game-head-title-04.png" />
-    </div>
-    <div class="dialog-body won-bonus-body">
-      <div class="won-txt">
-        恭喜您获得
-        <span>{{ wonBonus }}</span>
-        元奖金！
+    <div class="dialog-html">
+      <div class="dialog-header">
+        <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/game-head-title-04.png" />
+        <div class="dialog-close">
+          <q-btn
+            @click="wonBonusDialog = false"
+            v-close-popup
+            rounded
+            class="close-btn"
+            icon="close"
+            height="30"
+            width="30"
+          ></q-btn>
+        </div>
+      </div>
+      <div class="dialog-body won-bonus-body">
+        <div class="won-txt">
+          恭喜您获得
+          <span>{{ wonBonus }}</span>
+          元奖金！
+        </div>
       </div>
     </div>
   </q-dialog>
@@ -188,21 +192,30 @@
 import { ref, computed, onUnmounted, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
-import { getCurrentStepInit, submitGameStep } from "../../../api/index/promo";
+import { getCurrentStepInit, submitGameStep, getStepRecords } from "../../../api/index/promo";
 
 const store = userStore();
 const router = useRouter();
 
 const gameRulesDialog = ref(false);
 const gameRecordsDialog = ref(false);
+
 const wonBonusDialog = ref(false);
+const wonBonus = ref(0);
 
 const isBtnLoading = ref(false);
 
 const smoothSpinOn = ref(false);
 const spinToNum = ref(0);
 
-const wonBonus = ref(0);
+const stepRecords = ref([]);
+const openRecordDialog = () => {
+  getStepRecords().then((res) => {
+    if (res.code === 0) {
+      gameRecordsDialog.value = true;
+    }
+  });
+};
 
 const handleSpin = () => {
   isBtnLoading.value = true;
@@ -291,58 +304,58 @@ const stepPositionMapping = {
   5: { row: 1, column: 6 },
   6: { row: 1, column: 7 },
   7: { row: 2, column: 7 },
-  8: { row: 3, column: 7 },
-  9: { row: 3, column: 6 },
-  10: { row: 3, column: 5 },
-  11: { row: 3, column: 4 },
-  12: { row: 3, column: 3 },
-  13: { row: 3, column: 2 },
+  8: { row: 2, column: 6 },
+  9: { row: 2, column: 5 },
+  10: { row: 2, column: 4 },
+  11: { row: 2, column: 3 },
+  12: { row: 2, column: 2 },
+  13: { row: 2, column: 1 },
   14: { row: 3, column: 1 },
-  15: { row: 4, column: 1 },
-  16: { row: 5, column: 1 },
-  17: { row: 5, column: 2 },
-  18: { row: 5, column: 3 },
-  19: { row: 5, column: 4 },
-  20: { row: 5, column: 5 },
-  21: { row: 5, column: 6 },
-  22: { row: 5, column: 7 },
-  23: { row: 6, column: 7 },
-  24: { row: 7, column: 7 },
-  25: { row: 7, column: 6 },
-  26: { row: 7, column: 5 },
-  27: { row: 7, column: 4 },
-  28: { row: 7, column: 3 },
-  29: { row: 7, column: 2 },
-  30: { row: 7, column: 1 },
-  31: { row: 8, column: 1 },
-  32: { row: 9, column: 1 },
-  33: { row: 9, column: 2 },
-  34: { row: 9, column: 3 },
-  35: { row: 9, column: 4 },
-  36: { row: 9, column: 5 },
-  37: { row: 9, column: 6 },
-  38: { row: 9, column: 7 },
-  39: { row: 10, column: 7 },
-  40: { row: 11, column: 7 },
-  41: { row: 11, column: 6 },
-  42: { row: 11, column: 5 },
-  43: { row: 11, column: 4 },
-  44: { row: 11, column: 3 },
-  45: { row: 11, column: 2 },
-  46: { row: 11, column: 1 },
-  47: { row: 12, column: 1 },
-  48: { row: 13, column: 1 },
-  49: { row: 13, column: 2 },
-  50: { row: 13, column: 3 },
-  51: { row: 13, column: 4 },
-  52: { row: 13, column: 5 },
-  53: { row: 13, column: 6 },
-  54: { row: 13, column: 7 },
-  55: { row: 14, column: 7 },
-  56: { row: 15, column: 7 },
-  57: { row: 15, column: 6 },
-  58: { row: 15, column: 5 },
-  59: { row: 15, column: 4 }
+  15: { row: 3, column: 2 },
+  16: { row: 3, column: 3 },
+  17: { row: 3, column: 4 },
+  18: { row: 3, column: 5 },
+  19: { row: 3, column: 6 },
+  20: { row: 3, column: 7 },
+  21: { row: 4, column: 7 },
+  22: { row: 4, column: 6 },
+  23: { row: 4, column: 5 },
+  24: { row: 4, column: 4 },
+  25: { row: 4, column: 3 },
+  26: { row: 4, column: 2 },
+  27: { row: 4, column: 1 },
+  28: { row: 5, column: 1 },
+  29: { row: 5, column: 2 },
+  30: { row: 5, column: 3 },
+  31: { row: 5, column: 4 },
+  32: { row: 5, column: 5 },
+  33: { row: 5, column: 6 },
+  34: { row: 5, column: 7 },
+  35: { row: 6, column: 7 },
+  36: { row: 6, column: 6 },
+  37: { row: 6, column: 5 },
+  38: { row: 6, column: 4 },
+  39: { row: 6, column: 3 },
+  40: { row: 6, column: 2 },
+  41: { row: 6, column: 1 },
+  42: { row: 7, column: 1 },
+  43: { row: 7, column: 2 },
+  44: { row: 7, column: 3 },
+  45: { row: 7, column: 4 },
+  46: { row: 7, column: 5 },
+  47: { row: 7, column: 6 },
+  48: { row: 7, column: 7 },
+  49: { row: 8, column: 7 },
+  50: { row: 8, column: 6 },
+  51: { row: 8, column: 5 },
+  52: { row: 8, column: 4 },
+  53: { row: 8, column: 3 },
+  54: { row: 8, column: 2 },
+  55: { row: 8, column: 1 },
+  56: { row: 9, column: 1 },
+  57: { row: 9, column: 2 },
+  58: { row: 9, column: 3 },
+  59: { row: 9, column: 4 }
 };
 
 const playerPosition = computed(() => {
@@ -411,38 +424,47 @@ const handlePlayerStepDirect = (targetStep) => {
 onMounted(() => {
   loadGamePlayerCurrentStep();
 
+  resizeGame();
   window.addEventListener(
     "resize",
     function () {
-      var currentWidth = window.innerWidth;
-      if (currentWidth < 500) {
-        var scaleVar = currentWidth / 500;
-        var gameEle = document.getElementById("id-game-container");
-        gameEle.style.transformOrigin = "left top";
-        gameEle.style.transform = `scale(${scaleVar})`;
-
-        var marginTopVar = 205 * scaleVar;
-        gameEle.style.marginTop = `${marginTopVar}px`;
-
-        var wrapperEle = document.getElementById("id-stepgame-wrapper");
-        var containerEle = document.getElementById("id-stepgame-container");
-        if (currentWidth < 450) {
-          // var pdTopVar = 0 * scaleVar;
-          wrapperEle.style.paddingBottom = `0px`;
-        } else {
-          wrapperEle.style.paddingBottom = `240px`;
-        }
-        if (currentWidth < 400) {
-          var mbVar = 500 - currentWidth;
-          containerEle.style.marginBottom = `-${mbVar}px`;
-        } else {
-          containerEle.style.marginBottom = `0px`;
-        }
-      }
+      resizeGame();
     },
     true
   );
 });
+
+const resizeGame = () => {
+  var currentWidth = window.innerWidth;
+  var gameEle = document.getElementById("id-game-container");
+  if (currentWidth < 500) {
+    var scaleVar = currentWidth / 500;
+
+    gameEle.style.transformOrigin = "left top";
+    gameEle.style.transform = `scale(${scaleVar})`;
+
+    var marginTopVar = 105 * scaleVar;
+    gameEle.style.marginTop = `${marginTopVar}px`;
+
+    var ptTopVar = 110 * scaleVar;
+    gameEle.style.paddingBottom = `${ptTopVar}px`;
+
+    var wrapperEle = document.getElementById("id-stepgame-wrapper");
+    var containerEle = document.getElementById("id-stepgame-container");
+    if (currentWidth < 410) {
+      // var pdTopVar = 0 * scaleVar;
+      wrapperEle.style.paddingBottom = `0px`;
+    } else {
+      wrapperEle.style.paddingBottom = `110px`;
+    }
+    // if (currentWidth < 400) {
+    //   var mbVar = 500 - currentWidth;
+    //   containerEle.style.marginBottom = `-${mbVar}px`;
+    // } else {
+    //   containerEle.style.marginBottom = `0px`;
+    // }
+  }
+};
 
 onUnmounted(() => {
   if (intervalId !== null) {
@@ -453,13 +475,13 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 .stepgame-wrapper {
-  background-image: url("../../../assets/images/promotion/hotpromo/cnystepgame2024/bg-h5.png");
+  background-image: url("../../../assets/images/promotion/hotpromo/cnystepgame2024/h5-bg.png");
   padding: 1px 1px 0px;
   background-size: 100% auto;
   background-position: top center;
   background-repeat: no-repeat;
   background-color: #fedcbd;
-  padding-bottom: 240px;
+  padding-bottom: 105px;
 
   .stepgame-container {
     width: 500px;
@@ -487,7 +509,7 @@ onUnmounted(() => {
     background: linear-gradient(180deg, #fff0dc 0%, #ffa781 100%);
     width: calc(100% - 28px);
     margin: auto;
-    margin-top: 205px;
+    margin-top: 115px;
     padding: 14px 12px 100px;
     border-radius: 20px;
   }
@@ -500,37 +522,44 @@ onUnmounted(() => {
   }
 
   .game-spin-wheel-container {
-    position: absolute;
-    top: calc(100% - 100px);
-    right: 05px;
+    position: fixed;
+    //right: 5px;
+    bottom: -10px;
+    z-index: 10;
+    width: 300px;
+    max-width: 300px;
+    left: 50%;
+    margin-left: -150px;
+    //right: 20%;
+    aspect-ratio: 291/254;
 
     .game-spin-wheel-frame {
       position: relative;
 
-      img {
-        width: 500px;
+      > img {
+        width: 100%;
       }
     }
 
     .game-spin-wheel {
       position: absolute;
-      top: 40px;
+      top: 10px;
       left: 50%;
-      margin-left: -115px;
-      width: 230px;
-      height: 230px;
+      margin-left: -75px;
+      width: 150px;
+      height: 150px;
 
       img {
         display: block;
-        width: 230px;
+        width: 150px;
       }
 
       .spin-wheel-board {
         position: absolute;
-        top: 0;
         left: 0;
-        width: 230px;
-        height: 230px;
+        top: 0px;
+        width: 150px;
+        height: 150px;
         transition: transform 1s;
       }
 
@@ -538,48 +567,50 @@ onUnmounted(() => {
         position: absolute;
         top: 0;
         left: 0;
-        width: 230px;
-        height: 230px;
+        top: 0px;
+        width: 150px;
+        height: 150px;
       }
 
       .spin-wheel-shadow {
         background-image: url("../../../assets/images/promotion/hotpromo/cnystepgame2024/spin-wheel-shadow.png");
         background-size: 100% 100%;
         background-position: center center;
-        height: 300px;
-        width: 300px;
+        height: 200px;
+        width: 200px;
         position: absolute;
-        top: -50px;
-        left: -50px;
+        top: -25px;
+        left: -25px;
       }
     }
   }
 
   .game-btns-container {
-    position: absolute;
+    position: fixed;
     display: flex;
     justify-content: center;
-    bottom: -195px;
-    z-index: 4;
+    bottom: 70px;
+    z-index: 25;
     right: 50%;
-    width: 200px;
-    margin-right: -100px;
+    width: 150px;
+    margin-right: -75px;
 
     .game-btn {
       position: relative;
       background-size: 100% 100%;
       background-position: center center;
       background-repeat: no-repeat;
-      width: 200px;
+      width: 150px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 17px;
+      font-size: 14px;
       color: #ffffff;
       font-weight: 700;
       line-height: 0;
       padding-bottom: 5px;
-      height: 60px;
+      aspect-ratio: 183/54;
+      height: 45px;
       background-color: transparent;
 
       &:hover {
@@ -623,7 +654,7 @@ onUnmounted(() => {
   .game-item-container {
     display: grid;
     grid-template-columns: repeat(7, 65px); /* 15 columns */
-    grid-template-rows: repeat(15, 65px); /* 8 rows */
+    grid-template-rows: repeat(9, 65px); /* 8 rows */
   }
 
   .game-item-player {
@@ -849,6 +880,7 @@ onUnmounted(() => {
       top: 0px;
       left: 15vw;
       width: 70vw;
+      aspect-ratio: 340/111;
       display: block;
     }
   }
@@ -867,16 +899,23 @@ onUnmounted(() => {
     border-radius: 20px;
     width: calc(100% - 30px);
     padding: 50px 10px 30px;
-    max-height: calc(100vh - 240px);
+    //max-height: calc(100vh - 240px);
     min-height: calc(85vh);
     margin: auto;
-    overflow: auto;
 
     ol {
+      margin-top: 0px;
+
       li {
-        position: relative;
+        //position: relative;
         margin-bottom: 10px;
       }
+    }
+
+    .dialog-list {
+      overflow: scroll;
+      width: 100%;
+      margin-top: 10px;
     }
 
     &.won-bonus-body {
@@ -884,13 +923,14 @@ onUnmounted(() => {
       background-repeat: no-repeat;
       background-size: 100% 100%;
       height: 600px;
-      width: calc(100% + 40px);
-      margin: -50px -20px -30px;
+      width: calc(100% - 40px);
+      min-height: auto;
+      margin: 0 auto;
     }
 
     .won-txt {
-      font-size: 40px;
-      padding-top: 70px;
+      font-size: 30px;
+      padding-top: 10px;
       color: #000;
       text-align: center;
       text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);

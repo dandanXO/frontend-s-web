@@ -101,3 +101,7 @@ export function getCurrentStepInit() {
 export function submitGameStep() {
   return eventapi.post(`/game-steps/step`);
 }
+
+export function getStepRecords() {
+  return eventapi.get(`/game-steps/records`);
+}
