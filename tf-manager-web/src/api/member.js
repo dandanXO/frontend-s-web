@@ -37,6 +37,10 @@ export const freezeMember = (id, member) => {
   return https().request(`/member/${id}/freeze?_method=PUT`, Method.POST, member, ContentType.form);
 };
 
+export const unfreezeMember = (id, member) => {
+  return https().request(`/member/${id}/unfreeze?_method=PUT`, Method.POST, member, ContentType.form);
+};
+
 export const normalMember = (id, siteId) => {
   return https().request(`/member/${id}/normal?_method=PUT`, Method.POST, { siteId: siteId }, ContentType.form);
 };

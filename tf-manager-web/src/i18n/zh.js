@@ -2054,6 +2054,12 @@ export default {
     draw: '和',
     loss: '输',
   },
+  freeze: {
+    NORMAL: '普通冻结',
+    TEMPORARY: '暂时冻结',
+    PERMANENT: '永久冻结',
+    UNFREEZE: '解除冻结',
+  },
   error: {
     400: '请求无效',
     401: '用户未授权',
