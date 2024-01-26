@@ -91,14 +91,15 @@
                 class="inner"
                 :class="{
                   cny2024: selectedPromo.promoCode === 'dy2-cny2024-promo',
-                  hongbaoyu: selectedPromo.promoCode === 'hongbaoyu'
+                  hongbaoyu: selectedPromo.promoCode === 'hongbaoyu',
+                  cnystepgame: selectedPromo.promoCode === 'dy2-cny-step-game'
                 }"
               >
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
-                  v-if="selectedPromo.promoType"
+                  v-if="selectedPromo.promoType && selectedPromo.promoCode !== 'dy2-cny-step-game'"
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
@@ -704,6 +705,16 @@ export default defineComponent({
         &.hongbaoyu {
           margin: 0px;
           width: 100%;
+
+          .hot-promo {
+            border-radius: 0px;
+          }
+        }
+
+        &.cnystepgame {
+          margin: 0px;
+          width: 100%;
+          gap: 0px;
 
           .hot-promo {
             border-radius: 0px;
