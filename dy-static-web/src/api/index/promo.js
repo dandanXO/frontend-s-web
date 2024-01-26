@@ -152,6 +152,11 @@ export function submitGameStep() {
   return server.EVENT.post(`/game-steps/step`);
 }
 
-export function getStepRecords() {
-  return server.EVENT.get(`/game-steps/records`);
+export function getStepRecords(current) {
+  return server.EVENT.get(`/game-steps/records`, {
+    params: {
+      size: 10,
+      current: current
+    }
+  });
 }

@@ -102,6 +102,6 @@ export function submitGameStep() {
   return eventapi.post(`/game-steps/step`);
 }
 
-export function getStepRecords() {
-  return eventapi.get(`/game-steps/records`);
+export function getStepRecords(current) {
+  return eventapi.get(`/game-steps/records?size=10&current=${current}`, {});
 }

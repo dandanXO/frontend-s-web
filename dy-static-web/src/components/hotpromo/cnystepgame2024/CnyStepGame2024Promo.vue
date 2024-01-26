@@ -132,6 +132,13 @@
         <el-table-column prop="currentPlace" label="位置" />
         <el-table-column prop="bonus" label="获得奖金" />
       </el-table>
+      <el-divider />
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :total="pagination.total"
+        :current-page="pagination.current"
+        :page-size="pagination.size"
+      />
     </div>
   </el-dialog>
 
@@ -151,7 +158,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onUnmounted, onMounted } from "vue";
+import { ref, computed, onUnmounted, onMounted, reactive } from "vue";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 import { getCurrentStepInit, submitGameStep, getStepRecords } from "@/api/index/promo";
@@ -375,15 +382,39 @@ const handlePlayerStepDirect = (targetStep) => {
 };
 
 const dataSource = ref([]);
+const pagination = reactive({
+  pageSize: 10,
+  total: 0,
+  current: 0,
+  pages: 0,
+  pagingState: ""
+});
+
 const onGameRecordsDialogClicked = () => {
   gameRecordsDialog.value = true;
 
-  getStepRecords().then((res) => {
+  getStepRecordsApi(1);
+};
+
+const getStepRecordsApi = (current) => {
+  getStepRecords(current).then((res) => {
     const { code, data } = res;
     if (code === 0) {
-      if (data && data.records && data.records.length) dataSource.value = data.records;
+      if (data && data.records && data.records.length) {
+        dataSource.value = data.records;
+
+        pagination.pages = data.pages;
+        pagination.total = data.total;
+        pagination.current = data.current;
+      }
     }
   });
+};
+
+const handleCurrentChange = (val) => {
+  pagination.current = val;
+
+  getStepRecordsApi(pagination.current);
 };
 
 onMounted(() => {
@@ -445,6 +476,7 @@ onUnmounted(() => {
 
     .game-spin-wheel-frame {
       position: relative;
+
       img {
         width: 500px;
       }
@@ -461,6 +493,7 @@ onUnmounted(() => {
         display: block;
         width: 230px;
       }
+
       .spin-wheel-board {
         position: absolute;
         top: 0;
@@ -469,6 +502,7 @@ onUnmounted(() => {
         height: 230px;
         transition: transform 1s;
       }
+
       .spin-wheel-pin {
         position: absolute;
         top: 0;
@@ -497,6 +531,7 @@ onUnmounted(() => {
     bottom: -195px;
     z-index: 4;
     right: 150px;
+
     .game-btn {
       position: relative;
       background-size: 100% 100%;
@@ -544,6 +579,7 @@ onUnmounted(() => {
         color: #ffffff;
         z-index: 3;
       }
+
       img {
         display: block;
         width: 200px;
@@ -626,6 +662,7 @@ onUnmounted(() => {
     &:hover {
       filter: brightness(0.8);
     }
+
     img {
       display: block;
       width: 80px;
@@ -689,9 +726,11 @@ onUnmounted(() => {
 .spin-to--1 {
   transform: rotate(-70deg);
 }
+
 .spin-to-0 {
   transform: rotate(-105deg);
 }
+
 .spin-to-1 {
   transform: rotate(-145deg);
 }
@@ -759,6 +798,7 @@ onUnmounted(() => {
   .dialog-body {
     color: #000000;
     font-size: 16px;
+
     ol {
       li {
         position: relative;

@@ -162,8 +162,18 @@
           :rows="stepRecords"
           no-data-label="暂无资料"
           :rows-per-page-options="[0]"
-          :hide-pagination="true"
+          :hide-pagination="false"
         ></q-table>
+
+        <q-pagination
+          @update:model-value="handleCurrentChange"
+          v-model="pagination.current"
+          :max="pagination.max"
+          direction-links
+          flat
+          color="grey"
+          active-color="primary"
+        />
       </div>
     </div>
   </q-dialog>
@@ -197,7 +207,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onUnmounted, onMounted } from "vue";
+import { ref, computed, onUnmounted, onMounted, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { getCurrentStepInit, submitGameStep, getStepRecords } from "../../../api/index/promo";
@@ -217,13 +227,38 @@ const smoothSpinOn = ref(false);
 const spinToNum = ref(0);
 
 const stepRecords = ref([]);
+const pagination = reactive({
+  pageSize: 10,
+  total: 0,
+  current: 0,
+  pages: 0,
+  pagingState: "",
+  max: 0
+});
 const openRecordDialog = () => {
   gameRecordsDialog.value = true;
 
-  getStepRecords().then((res) => {
+  getStepRecordApi(1);
+};
+
+const handleCurrentChange = (val) => {
+  pagination.current = val;
+
+  getStepRecordApi(pagination.current);
+};
+
+const getStepRecordApi = (current) => {
+  getStepRecords(current).then((res) => {
     const { code, data } = res;
     if (code === 0) {
-      if (data && data.records && data.records.length) stepRecords.value = data.records;
+      if (data && data.records && data.records.length) {
+        stepRecords.value = data.records;
+
+        pagination.pages = data.pages;
+        pagination.total = data.total;
+        pagination.current = data.current;
+        pagination.max = Math.ceil(pagination.total / pagination.pageSize);
+      }
     }
   });
 };
