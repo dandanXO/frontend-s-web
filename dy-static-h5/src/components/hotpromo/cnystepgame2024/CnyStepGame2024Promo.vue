@@ -156,7 +156,15 @@
           ></q-btn>
         </div>
       </div>
-      <div class="dialog-body">~ ~ ~</div>
+      <div class="dialog-body">
+        <q-table
+          :columns="columns"
+          :rows="stepRecords"
+          no-data-label="暂无资料"
+          :rows-per-page-options="[0]"
+          :hide-pagination="true"
+        ></q-table>
+      </div>
     </div>
   </q-dialog>
 
@@ -210,9 +218,12 @@ const spinToNum = ref(0);
 
 const stepRecords = ref([]);
 const openRecordDialog = () => {
+  gameRecordsDialog.value = true;
+
   getStepRecords().then((res) => {
-    if (res.code === 0) {
-      gameRecordsDialog.value = true;
+    const { code, data } = res;
+    if (code === 0) {
+      if (data && data.records && data.records.length) stepRecords.value = data.records;
     }
   });
 };
@@ -420,6 +431,29 @@ const handlePlayerStepDirect = (targetStep) => {
     gamePlayerStepSway.value = false;
   }, 500);
 };
+
+const columns = [
+  {
+    label: "日期",
+    field: "createTime",
+    align: "center"
+  },
+  {
+    label: "转动步数",
+    field: "steps",
+    align: "center"
+  },
+  {
+    label: "位置",
+    field: "currentPlace",
+    align: "center"
+  },
+  {
+    label: "获得奖金",
+    field: "bonus",
+    align: "center"
+  }
+];
 
 onMounted(() => {
   loadGamePlayerCurrentStep();
@@ -876,10 +910,10 @@ onUnmounted(() => {
     }
 
     img {
-      position: absolute;
-      top: 0px;
-      left: 15vw;
-      width: 70vw;
+      //   position: absolute;
+      //   top: 0px;
+      //   left: 15vw;
+      //   width: 70vw;
       aspect-ratio: 340/111;
       display: block;
     }

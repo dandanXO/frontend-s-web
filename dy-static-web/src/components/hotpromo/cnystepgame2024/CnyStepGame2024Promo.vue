@@ -90,7 +90,7 @@
     <div class="game-side-btn" @click="gameRulesDialog = true">
       <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/side-btn-01.png" />
     </div>
-    <div class="game-side-btn" @click="gameRecordsDialog = true">
+    <div class="game-side-btn" @click="onGameRecordsDialogClicked()">
       <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/side-btn-02.png" />
     </div>
   </div>
@@ -125,7 +125,14 @@
     <div class="dialog-header">
       <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/game-head-title-03.png" />
     </div>
-    <div class="dialog-body">~ ~ ~</div>
+    <div class="dialog-body step-history-body">
+      <el-table :data="dataSource" stripe style="width: 100%">
+        <el-table-column prop="createTime" label="日期" />
+        <el-table-column prop="steps" label="转动步数" />
+        <el-table-column prop="currentPlace" label="位置" />
+        <el-table-column prop="bonus" label="获得奖金" />
+      </el-table>
+    </div>
   </el-dialog>
 
   <el-dialog v-model="wonBonusDialog" width="1000px" align-center :close-on-click-modal="false" class="game-dialog">
@@ -147,7 +154,7 @@
 import { ref, computed, onUnmounted, onMounted } from "vue";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
-import { getCurrentStepInit, submitGameStep } from "@/api/index/promo";
+import { getCurrentStepInit, submitGameStep, getStepRecords } from "@/api/index/promo";
 
 const store = userStore();
 const router = useRouter();
@@ -365,6 +372,18 @@ const handlePlayerStepDirect = (targetStep) => {
   setTimeout(() => {
     gamePlayerStepSway.value = false;
   }, 500);
+};
+
+const dataSource = ref([]);
+const onGameRecordsDialogClicked = () => {
+  gameRecordsDialog.value = true;
+
+  getStepRecords().then((res) => {
+    const { code, data } = res;
+    if (code === 0) {
+      if (data && data.records && data.records.length) dataSource.value = data.records;
+    }
+  });
 };
 
 onMounted(() => {
@@ -744,6 +763,14 @@ onUnmounted(() => {
       li {
         position: relative;
         margin-bottom: 10px;
+      }
+    }
+
+    &.step-history-body {
+      .el-table {
+        .cell {
+          text-align: center;
+        }
       }
     }
 
