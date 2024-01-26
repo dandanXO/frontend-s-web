@@ -151,3 +151,7 @@ export function getCurrentStepInit() {
 export function submitGameStep() {
   return server.EVENT.post(`/game-steps/step`);
 }
+
+export function getStepRecords() {
+  return server.EVENT.get(`/game-steps/records`);
+}
