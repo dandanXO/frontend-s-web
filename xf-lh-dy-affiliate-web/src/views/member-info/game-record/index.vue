@@ -27,7 +27,9 @@
             />
           </el-col>
           <el-col :xl="3" :lg="6" :md="12">
-            <el-input v-model="request.loginName" size="normal" class="input-small" :placeholder="t('fields.loginName')" />
+            <el-input v-model="request.loginName" size="normal" class="input-small"
+                      :placeholder="t('fields.loginName')"
+            />
           </el-col>
           <el-col :xl="3" :lg="6" :md="12">
             <el-select
@@ -135,13 +137,23 @@
             <td :data-label="t('fields.payout')">$ {{ item.payout }}</td>
             <td :data-label="t('fields.companyProfit')">$ {{ item.companyProfit }}</td>
             <td :data-label="t('fields.status')">
-              <el-tag v-if="item.betStatus === 'SETTLED'" type="success" size="normal">{{ t('betStatus.' + item.betStatus) }}</el-tag>
-              <el-tag v-else-if="item.betStatus === 'CANCEL'" type="danger" size="normal">{{ t('betStatus.' + item.betStatus) }}</el-tag>
-              <el-tag v-else-if="item.betStatus === 'UNSETTLED'" type="warning" size="normal">{{ t('betStatus.' + item.betStatus) }}</el-tag>
+              <el-tag v-if="item.betStatus === 'SETTLED'" type="success" size="normal">{{
+                t('betStatus.' + item.betStatus)
+              }}
+              </el-tag>
+              <el-tag v-else-if="item.betStatus === 'CANCEL'" type="danger" size="normal">
+                {{ t('betStatus.' + item.betStatus) }}
+              </el-tag>
+              <el-tag v-else-if="item.betStatus === 'UNSETTLED'" type="warning" size="normal">
+                {{ t('betStatus.' + item.betStatus) }}
+              </el-tag>
               <el-tag v-else type="info" size="normal">-</el-tag>
             </td>
             <td :data-label="t('fields.operate')">
-              <el-link type="primary" :underline="false" @click="viewDetails(item)">{{ t('fields.viewDetails') }}</el-link>
+              <el-link type="primary" :underline="false" @click="viewDetails(item)">{{
+                t('fields.viewDetails')
+              }}
+              </el-link>
             </td>
           </tr>
         </tbody>
@@ -150,9 +162,15 @@
         <emptyComp />
       </div>
       <div class="table-footer">
-        <span style="margin-right:20px;">{{ t('fields.totalBet') }}: $ <span v-formatter="{data: page.totalBet,type: 'money'}" /></span>
-        <span style="margin-right:20px;">{{ t('fields.totalPayout') }}: $ <span v-formatter="{data: page.totalPayout,type: 'money'}" /></span>
-        <span style="margin-right:20px;">{{ t('fields.totalCompanyProfit') }}: $ <span v-formatter="{data: page.totalCompanyProfit,type: 'money'}" /></span>
+        <span style="margin-right:20px;">{{ t('fields.totalBet') }}: $ <span
+          v-formatter="{data: page.totalBet,type: 'money'}"
+        /></span>
+        <span style="margin-right:20px;">{{ t('fields.totalPayout') }}: $ <span
+          v-formatter="{data: page.totalPayout,type: 'money'}"
+        /></span>
+        <span style="margin-right:20px;">{{ t('fields.totalCompanyProfit') }}: $ <span
+          v-formatter="{data: page.totalPayout-page.totalBet,type: 'money'}"
+        /></span>
       </div>
       <el-pagination
         class="pagination"
@@ -231,9 +249,15 @@
           </el-col>
           <el-col :span="12">
             <el-form-item :label="t('fields.status')" prop="betStatus">
-              <el-tag v-if="details.betStatus === 'SETTLED'" type="success" size="normal">{{ t('betStatus.' + details.betStatus) }}</el-tag>
-              <el-tag v-else-if="details.betStatus === 'CANCEL'" type="danger" size="normal">{{ t('betStatus.' + details.betStatus) }}</el-tag>
-              <el-tag v-else-if="details.betStatus === 'UNSETTLED'" type="warning" size="normal">{{ t('betStatus.' + details.betStatus) }}</el-tag>
+              <el-tag v-if="details.betStatus === 'SETTLED'" type="success" size="normal">
+                {{ t('betStatus.' + details.betStatus) }}
+              </el-tag>
+              <el-tag v-else-if="details.betStatus === 'CANCEL'" type="danger" size="normal">
+                {{ t('betStatus.' + details.betStatus) }}
+              </el-tag>
+              <el-tag v-else-if="details.betStatus === 'UNSETTLED'" type="warning" size="normal">
+                {{ t('betStatus.' + details.betStatus) }}
+              </el-tag>
               <el-tag v-else type="info" size="normal">-</el-tag>
             </el-form-item>
           </el-col>
@@ -507,6 +531,7 @@ onMounted(() => {
   margin: 40px 0 20px;
   display: flex;
 }
+
 .box-card {
   ::v-deep(.el-card__body) {
     padding: 0;
@@ -518,6 +543,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   gap: 10px;
+
   .input-small {
     width: 100%;
     // max-width: 200px;
@@ -526,6 +552,7 @@ onMounted(() => {
       max-width: 300px;
     }
   }
+
   .btn-grp {
     display: flex;
   }
@@ -539,10 +566,11 @@ onMounted(() => {
   float: right;
   font-size: small;
   margin: 15px;
-  display:flex;
+  display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
+
 @media (max-width: 768px) {
   // .inputs-wrap {
   //   flex-direction: column;
