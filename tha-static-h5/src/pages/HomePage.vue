@@ -979,7 +979,7 @@
           <div class="popup-item">
             <span>
               โบนัส
-              <em>15%</em>
+              <em>20%</em>
               สูงสุด
               <em>15,000</em>
               ถอนไม่อั้น
