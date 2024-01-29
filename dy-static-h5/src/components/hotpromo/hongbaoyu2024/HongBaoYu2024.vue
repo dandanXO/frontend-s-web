@@ -1,7 +1,7 @@
 <template>
   <div class="hongbaoyu-container">
     <div class="receive-container" v-if="!promoNotReady && !bonusOpened">
-      <img :src="require(`../../../assets/images/hongbaoyu/hongbao-bg.png`)" />
+      <img :src="require(`../../../assets/images/hongbaoyu/hongbao-bg.png`)" style="display: block; width: 100%" />
       <div class="contents" v-if="!bonusOpened">
         <el-button class="promo-common-btn" size="large" :loading="loadingClaim" @click="getPromotion"></el-button>
       </div>
@@ -11,33 +11,11 @@
       <img class="title" :src="require(`../../../assets/images/hongbaoyu/win-prize-title.png`)" />
 
       <div class="winner-wrapper">
-        <img :src="require(`../../../assets/images/hongbaoyu/record-bg.png`)" />
-
         <div class="contents">
-          <div class="winner">
-            <div>2024-01-05 15:30</div>
-            <div>1801****9833</div>
-            <div>1000USDT*1</div>
-          </div>
-          <div class="winner">
-            <div>2024-01-05 15:30</div>
-            <div>1801****9833</div>
-            <div>1000USDT*1</div>
-          </div>
-          <div class="winner">
-            <div>2024-01-05 15:30</div>
-            <div>1801****9833</div>
-            <div>1000USDT*1</div>
-          </div>
-          <div class="winner">
-            <div>2024-01-05 15:30</div>
-            <div>1801****9833</div>
-            <div>1000USDT*1</div>
-          </div>
-          <div class="winner">
-            <div>2024-01-05 15:30</div>
-            <div>1801****9833</div>
-            <div>1000USDT*1</div>
+          <div class="winner" v-for="(item, index) in visibleItems" :key="index">
+            <div>{{ item.date }}</div>
+            <div>{{ item.name }}</div>
+            <div>{{ item.amount }}</div>
           </div>
         </div>
       </div>
@@ -49,15 +27,15 @@
       <div class="contents">
         <div class="bullet-wrapper">
           <img :src="require(`../../../assets/images/hongbaoyu/coin-bullet.png`)" />
-          <span>所有雷火当日累积存款500元或以上会员均可参与限时红包活动</span>
+          <span>当日累积存款≥100元或以上会员均可参与限时红包活动</span>
         </div>
         <div class="bullet-wrapper">
           <img :src="require(`../../../assets/images/hongbaoyu/coin-bullet.png`)" />
-          <span>红包为18-888不等，奖金只限进行电竟及体育</span>
+          <span>红包金额随机不等，单个红包金额最大为1888元</span>
         </div>
         <div class="bullet-wrapper">
           <img :src="require(`../../../assets/images/hongbaoyu/coin-bullet.png`)" />
-          <span>此奖金只需1倍有效流水即可.</span>
+          <span>此奖金只需3倍有效流水即可</span>
         </div>
       </div>
     </div>
@@ -94,9 +72,8 @@
   </q-dialog>
 </template>
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, onMounted, ref } from "vue";
 import { eventapi } from "boot/axios";
-import { ref } from "vue";
 import { userStore } from "src/stores";
 
 const store = userStore();
@@ -105,18 +82,19 @@ const bonusOpened = ref(false);
 const winAmount = ref(0);
 const isClaimModal = ref(false);
 const loadingClaim = ref(false);
+const promoCode = ref("hongbaoyu");
 
-const props = defineProps({
-  promoCode: {
-    type: String,
-    required: true
-  }
-});
+// const props = defineProps({
+//   promoCode: {
+//     type: String,
+//     required: true
+//   }
+// });
 
 const getPromotion = () => {
   loadingClaim.value = true;
   eventapi
-    .get(`/redPacketVip/claim?promoCode=${props.promoCode}`)
+    .get(`/redPacketVip/claim?promoCode=${promoCode.value}`)
     .then((res) => {
       if (res.code === 0) {
         winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;
@@ -145,6 +123,41 @@ const getPromotionPrize = () => {
   isClaimModal.value = false;
   bonusOpened.value = false;
 };
+
+const promotionListing = ref();
+const visibleItems = ref([]);
+const maxVisibleItems = ref(5);
+const intervalId = ref(null);
+
+const getPromotionListing = () => {
+  eventapi
+    .get(`/redPacketVip/list?promoCode=${promoCode.value}`)
+    .then((res) => {
+      if (res.code === 0) {
+        promotionListing.value = res.data;
+        visibleItems.value = promotionListing.value.slice(0, maxVisibleItems.value);
+        setTimeout(() => {
+          const addItem = () => {
+            if (visibleItems.value.length < promotionListing.value.length) {
+              const nextItemIndex = promotionListing.value.length - visibleItems.value.length - 1;
+              visibleItems.value.unshift(promotionListing.value[nextItemIndex]);
+
+              setTimeout(addItem, 1500);
+            } else {
+              clearInterval(intervalId.value);
+            }
+          };
+          addItem();
+        }, 4000);
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+onMounted(() => {
+  getPromotionListing();
+});
 </script>
 
 <style scoped lang="scss">
@@ -155,15 +168,17 @@ const getPromotionPrize = () => {
   justify-content: center;
   flex-direction: column;
   position: relative;
-
   background: url("../../../assets/images/hongbaoyu/mobile-bg.png");
-  background-size: 100% auto;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
-  height: 1080px;
+  // height: 940px;
+  padding-bottom: 120px;
+  background-color: #d60202;
 
   .receive-container {
     position: relative;
     width: 50%;
+    // margin-top: 100px;
 
     .contents {
       display: flex;
@@ -209,15 +224,20 @@ const getPromotionPrize = () => {
 
     .winner-wrapper {
       position: relative;
-      top: -15%;
-      padding: 0 10px;
+      padding: 20px;
+      background-image: url("../../../assets/images/hongbaoyu/record-bg.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
 
       .contents {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        padding: 15px 30px;
+        // position: absolute;
+        // top: 0;
+        // left: 0;
+        // width: 100%;
+        // padding: 15px 30px;
+        max-height: 120px;
+        overflow-y: hidden;
+        scroll-behavior: smooth;
 
         .winner {
           display: flex;
@@ -226,6 +246,7 @@ const getPromotionPrize = () => {
           border-bottom: 2px solid #fee2b9;
           color: white;
           padding: 2px 10px;
+          gap: 20px;
         }
       }
     }
@@ -238,6 +259,7 @@ const getPromotionPrize = () => {
     align-items: center;
     justify-content: center;
     position: relative;
+    margin-top: 30px;
 
     .title {
       width: 50% !important;

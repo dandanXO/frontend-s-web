@@ -13,18 +13,20 @@
         </div>
 
         <div class="game-spin-wheel-container">
-          <div class="game-spin-wheel-frame">
-            <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/spin-wheel-frame.png" />
-          </div>
-          <div class="game-spin-wheel">
-            <div class="spin-wheel-shadow" :class="smoothSpinOn && 'shadow-spin'"></div>
-            <div class="spin-wheel-board" :class="smoothSpinOn && 'smooth-spin'">
-              <div style="transition: 1s all" :class="`spin-to-${spinToNum}`">
-                <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/spin-wheel-board.png" />
-              </div>
+          <div>
+            <div class="game-spin-wheel-frame">
+              <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/spin-wheel-frame.png" />
             </div>
-            <div class="spin-wheel-pin">
-              <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/spin-wheel-pin.png" />
+            <div class="game-spin-wheel">
+              <div class="spin-wheel-shadow" :class="smoothSpinOn && 'shadow-spin'"></div>
+              <div class="spin-wheel-board" :class="smoothSpinOn && 'smooth-spin'">
+                <div style="transition: 1s all" :class="`spin-to-${spinToNum}`">
+                  <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/spin-wheel-board.png" />
+                </div>
+              </div>
+              <div class="spin-wheel-pin">
+                <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/spin-wheel-pin.png" />
+              </div>
             </div>
           </div>
         </div>
@@ -102,21 +104,23 @@
     </div>
     <div class="dialog-body">
       <ol>
-        <li>本活动全体用户皆可参与，参与前需完善个人资料，绑定手机号码及银行卡；</li>
-        <li>本活动共仅能通关一次，每个阶段每个档位奖励仅能领取一次；</li>
-        <li>本活动转盘每日免费转动3次超出免费次数每存款200元即可活动一次转动转盘机会，每日最高可转动20次转盘；</li>
-        <li>本活动转盘数字定义:抽中正数即往前进相应步数，抽中0保持原关卡不动，抽中负数即往后退相应步数。</li>
+        <li>
+          活动期间，每日可免费获得3次转动转盘机会，超出免费次数则每存款200元即可获得一次转动转盘机会，每日最高可转动20次转盘；
+        </li>
+        <li>本活动仅能通关一次，每个步格奖励仅派发一次彩金；</li>
+        <li>本活动转盘数字定义:抽中正数即往前进相应步数，抽中0保持原关卡不动，抽中负数即往后退相应步数；</li>
         <li>
           本活动获取关卡奖励需到达指定关卡。例：用户从第12关出发，抽中6即往前进6步，到达关卡18，只能领取关卡18的奖励，不能领取关卡8的奖励。
         </li>
         <li>本活动所得彩金将实时派发至用户【中心钱包】，彩金仅需完成1倍流水即可提交出款申请。</li>
+        <li>本活动全体用户皆可参与，参与前需完善个人资料，绑定手机号码及银行卡；</li>
         <li>本活动仅对已结算并产生输赢结果的有效投注进行计算，任何走水、串关、特殊投注、取消的赛事不计算有效投注。</li>
         <li>本活动与其它优惠活动共享。（特殊活动除外）</li>
         <li>同一姓名、手机号、银行卡号、邮箱地址等信息的用户账号，仅可参与一次，若有违规者，将不享受此优惠。</li>
         <li>
           任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单。
         </li>
-        <li>为避免文字理解差异，本活动最终解释权归雷火电竞所有。</li>
+        <li>为避免文字理解差异，本活动最终解释权归东赢电竞所有。</li>
       </ol>
     </div>
   </el-dialog>
@@ -209,7 +213,7 @@ const handleSmoothSpin = (steps, currentPlace) => {
     handlePlayerStep(currentPlace);
     loadGamePlayerCurrentStepSecond();
     isBtnLoading.value = false;
-  }, 4800);
+  }, 3000);
 };
 
 const stepData = ref();
@@ -226,7 +230,7 @@ const loadGamePlayerCurrentStep = (callback) => {
     if (code == 0) {
       stepData.value = data;
       stepCurrentPlace.value = data.currentPlace;
-      spinLeft.value = data.freeSpinAvailable + data.depositSpinAvailable;
+      spinLeft.value = data.availableSpin;
       claimedBonus.value = data.claimedPlaces;
 
       handlePlayerStepDirect(stepCurrentPlace.value);
@@ -243,7 +247,7 @@ const loadGamePlayerCurrentStepSecond = (callback) => {
     if (code == 0) {
       stepData.value = data;
       stepCurrentPlace.value = data.currentPlace;
-      spinLeft.value = data.freeSpinAvailable + data.depositSpinAvailable;
+      spinLeft.value = data.availableSpin;
       claimedBonus.value = data.claimedPlaces;
     }
 
@@ -589,14 +593,14 @@ onUnmounted(() => {
 
   .game-item-container {
     display: grid;
-    grid-template-columns: repeat(15, 75px); /* 15 columns */
-    grid-template-rows: repeat(8, 75px); /* 8 rows */
+    grid-template-columns: repeat(15, 70px); /* 15 columns */
+    grid-template-rows: repeat(8, 70px); /* 8 rows */
   }
 
   .game-item-player {
     z-index: 3;
-    height: 75px;
-    width: 75px;
+    height: 70px;
+    width: 70px;
     position: relative;
     transition: 0.3s all;
 
@@ -609,8 +613,8 @@ onUnmounted(() => {
   }
 
   .game-item-number {
-    height: 75px;
-    width: 75px;
+    height: 70px;
+    width: 70px;
     background: #fff0f0;
     display: flex;
     justify-content: center;
@@ -712,7 +716,7 @@ onUnmounted(() => {
 }
 
 .smooth-spin {
-  animation: smoothSpin 6.5s forwards;
+  animation: smoothSpin 3.8s forwards;
 }
 
 .spin-to--3 {

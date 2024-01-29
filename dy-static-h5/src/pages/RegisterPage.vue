@@ -251,8 +251,8 @@
         class="q-mt-lg"
         label="注册"
         width="100%"
-        color="primary"
-        style="width: 100%; letter-spacing: 2px"
+        color="#ffffff"
+        style="width: 100%; letter-spacing: 2px; background: linear-gradient(180deg, #fd3b2a 0%, #ac260b 100%)"
         size="16px"
         rounded
       />
