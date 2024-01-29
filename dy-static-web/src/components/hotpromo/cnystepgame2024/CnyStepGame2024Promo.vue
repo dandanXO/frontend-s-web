@@ -247,7 +247,7 @@ const loadGamePlayerCurrentStepSecond = (callback) => {
     if (code == 0) {
       stepData.value = data;
       stepCurrentPlace.value = data.currentPlace;
-      spinLeft.value = data.freeSpinAvailable + data.depositSpinAvailable;
+      spinLeft.value = data.availableSpin;
       claimedBonus.value = data.claimedPlaces;
     }
 
