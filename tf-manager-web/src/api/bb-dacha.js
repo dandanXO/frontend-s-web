@@ -13,6 +13,10 @@ export const updateBbDacha = (id, bbDacha) => {
   return https().request(`/bb-dacha/${id}?_method=PUT`, Method.POST, bbDacha, ContentType.form);
 };
 
+export const updateToShow = (id) => {
+  return https().request(`/bb-dacha/${id}/show?_method=PUT`, Method.POST, {}, ContentType.form);
+};
+
 export const endBbDacha = (id, bbDacha) => {
   return https().request(`/bb-dacha/${id}/end?_method=PUT`, Method.POST, bbDacha, ContentType.form);
 };

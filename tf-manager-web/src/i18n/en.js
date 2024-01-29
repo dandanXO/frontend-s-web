@@ -592,7 +592,7 @@ export default {
     customerSupportAddress: 'Customer Support Address',
     dailyDeposit: 'Daily Deposit',
     dailyDepositAmount: 'Daily Deposit Amount',
-    dailyFree: 'Daily Free Spin',
+    dailyMin: 'Daily Minimum Spin',
     dailyWithdraw: 'Daily Withdraw',
     dailyWithdrawAmount: 'Daily Withdraw Amount',
     dailyFailAmount: 'Daily Fail Amount',
