@@ -177,6 +177,18 @@
             <span v-formatter="{data: scope.row.payout, type: 'money'}" />
           </template>
         </el-table-column>
+        <el-table-column prop="platformFee" :label="t('fields.platformFee')" align="center" width="120">
+          <template #default="scope">
+            $
+            <span v-formatter="{data: scope.row.platformFee, type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="paymentFee" :label="t('fields.paymentFee')" align="center" width="120">
+          <template #default="scope">
+            $
+            <span v-formatter="{data: scope.row.paymentFee, type: 'money'}" />
+          </template>
+        </el-table-column>
         <el-table-column prop="ngr" label="NGR" align="center" width="120">
           <template #default="scope">
             $
