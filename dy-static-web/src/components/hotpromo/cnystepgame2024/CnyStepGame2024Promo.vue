@@ -716,7 +716,7 @@ onUnmounted(() => {
 }
 
 .smooth-spin {
-  animation: smoothSpin 3.8s forwards;
+  animation: smoothSpin 3s forwards;
 }
 
 .spin-to--3 {
@@ -762,22 +762,18 @@ onUnmounted(() => {
 @keyframes smoothSpin {
   0% {
     transform: rotate(0deg);
-    animation-timing-function: ease-in; /* Start slow */
+    animation-timing-function: ease-in;
   }
-  40% {
-    transform: rotate(3600deg); /* Speed up */
-    animation-timing-function: cubic-bezier(0.5, 1.1, 0.8, 1); /* Accelerate */
+  60% {
+    transform: rotate(900deg);
+    animation-timing-function: ease-out;
   }
-  80% {
-    transform: rotate(7200deg); /* Very fast */
-    animation-timing-function: cubic-bezier(0.8, 0, 1, 1); /* Keep accelerating */
-  }
-  90% {
-    transform: rotate(8550deg); /* Begin slowing down */
-    animation-timing-function: ease-out; /* Start deceleration */
+  70% {
+    transform: rotate(1035deg);
+    animation-timing-function: ease-out;
   }
   100% {
-    transform: rotate(9000deg); /* Complete stop */
+    transform: rotate(1080deg);
   }
 }
 </style>
