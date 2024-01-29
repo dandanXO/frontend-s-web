@@ -17,6 +17,9 @@
     <InviteFriendPromo
       v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo"
     />
+    <XmasSpinWheelPromo
+      v-if="list.redirectUrl === 'cny-spinwheel' && !isCommonPromo"
+    />
 
     <div
       v-if="list.redirectUrl === 'fucaiiphone' && store.hasToken()"
@@ -224,6 +227,7 @@ import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue"
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
+import XmasSpinWheelPromo from "../components/hotpromo/xmasSpinWheel/XmasSpinWheel.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -235,7 +239,8 @@ export default defineComponent({
     GoldenEggPromo,
     HongBaoYuPromo,
     WelcomeTaskPromo,
-    InviteFriendPromo
+    InviteFriendPromo,
+    XmasSpinWheelPromo
   },
   props: {
     list: {
@@ -292,6 +297,7 @@ export default defineComponent({
       this.list.redirectUrl === "invitefriend" ||
       this.list.redirectUrl === "welcomenewuser" ||
       this.list.redirectUrl === "fucaiiphone" ||
+      this.list.redirectUrl === "cny-spinwheel" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;
