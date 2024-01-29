@@ -1882,6 +1882,7 @@ export default {
     'Add Ads Popout': 'Add Ads Popout',
     'Edit Ads Popout': 'Edit Ads Popout',
     'Red Packet Rain': 'Red Packet Rain',
+    'Red Packet Rain List': 'Red Packet Rain List',
     Lottery: 'Lottery',
     'Lottery Record List': 'Lottery Record List',
     'Lottery Result List': 'Lottery Result List',
