@@ -1,0 +1,746 @@
+<template>
+  <div class="promo-container">
+    <div class="promo">
+      <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
+        <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
+      </q-tabs>
+
+      <q-tab-panels v-model="tab" animated>
+        <q-tab-panel v-for="(tab, i) in tabItems" :key="i" :name="tab.name">
+          <div class="all-promotions" v-if="!isPromoDetail">
+            <div class="promo-main-container">
+              <div class="promo-type-wrapper"></div>
+              <div class="promo-list-wrapper">
+                <div
+                  v-for="(promo, i) in filteredArray"
+                  :key="i"
+                  data-aos="zoom-in"
+                  data-aos-easing="ease-out"
+                  data-aos-duration="1000"
+                >
+                  <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
+                    <a @click="showPromoDetails(promo)">
+                      <div class="pad-title">
+                        <span class="pad-right">查看详情&gt;&gt;</span>
+                      </div>
+                      <div class="promo-info">
+                        <span class="viewdetail">{{ promo.title }}</span>
+                      </div>
+                      <div class="promo-img-wrapper">
+                        <div class="promo-bg">
+                          <img class="promo-content" src="../assets/images/promo/promo-1.png" />
+                          <!--                          :src="imgURL + promo.mobileImgUrl"-->
+                        </div>
+                      </div>
+                      <div class="pad-label label-new">最新活动</div>
+                    </a>
+                  </div>
+
+                  <div class="promo-item" v-if="tab.name === 'all'">
+                    <a @click="showPromoDetails(promo)">
+                      <div>
+                        <div class="promo-ribbon">NEW 最新</div>
+                        <div class="promo-item-date">2023/8/1-9/30</div>
+                        <div class="promo-item-title">{{ promo.title }}</div>
+                        <div class="promo-item-deal">
+                          每日可领取
+                          <span>8888</span>
+                          元
+                        </div>
+                        <div>
+                          <q-btn label="查看详情" dense color="brightbtn" class="promo-item-btn" />
+                        </div>
+
+                        <div class="promo-item-side-img">
+                          <img src="../assets/images/promo/promo-img-side.png" alt="" />
+                        </div>
+                      </div>
+                      <!-- <div class="promo-img-wrapper"> -->
+                      <!-- <div class="promo-bg"> -->
+                      <!-- <img class="promo-content" src="../assets/images/promo/promo-item-bg.png" /> -->
+                      <!-- </div> -->
+                      <!-- </div> -->
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div v-else class="selected-promo">
+            <div class="selected-promo-wrapper">
+              <div class="banner-container">
+                <!-- <div
+                    class="promo-bg"
+                    :style="
+                    'background-image: url(' +
+                    imgURL +
+                    (selectedPromo.mobileBannerUrl ? selectedPromo.mobileBannerUrl : selectedPromo.mobileImgUrl) +
+                    ')'
+                  "
+                ></div> -->
+                <!-- <div class="promo-bg"> -->
+                <img
+                  class="promo-content"
+                  :src="imgURL + selectedPromo.mobileBannerUrl"
+                  style="display: block; width: 100%"
+                />
+                <!-- </div> -->
+              </div>
+              <div class="inner">
+                <div v-if="selectedPromo.hasPromo">
+                  <HotPromotion :list="selectedPromo" />
+                </div>
+                <div
+                  :class="{
+                    welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
+                    sport: selectedPromo.promoType.toLowerCase() === 'sport',
+                    eSport: selectedPromo.promoType.toLowerCase() === 'esport',
+                    fish: selectedPromo.promoType.toLowerCase() === 'fish',
+                    liveCasino: selectedPromo.promoType.toLowerCase() === 'live casino',
+                    slot: selectedPromo.promoType.toLowerCase() === 'slot game'
+                  }"
+                >
+                  <div v-html="selectedPromo.pageContent"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </q-tab-panel>
+      </q-tab-panels>
+    </div>
+  </div>
+
+  <q-dialog class="modal-common-div" width="100%" v-model="isDisplayLogin">
+    <q-card style="width: 100%; padding: 10px 12px 20px" class="bg-white text-black text-center">
+      <div class="headers">
+        <div style="width: 2.4em">&nbsp;</div>
+        <div class="titles">系统提示</div>
+        <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
+      </div>
+      <q-card-section class="q-mb-lg">
+        <div class="contents">请登录后再操作</div>
+      </q-card-section>
+      <router-link to="/login?redirect=/promo">
+        <q-btn class="common-md-btn" label="确认" />
+      </router-link>
+    </q-card>
+  </q-dialog>
+</template>
+
+<script lang="js">
+import {ref, defineComponent, onMounted, reactive, watch} from "vue";
+import {useRoute, useRouter} from "vue-router";
+import {api} from "boot/axios";
+import {useQuasar} from "quasar";
+import {useUI} from "stores/ui";
+import {userStore} from "stores/index";
+// import { loadPromo } from "src/api/index/promo.js";
+// import { loadPromoBanner } from "src/api/index/promo";
+
+import HotPromotion from 'components/HotPromotion'
+
+export default defineComponent({
+  name: "PromoView",
+  components: {
+    HotPromotion
+  },
+  setup() {
+    const store = userStore();
+    const imgURL = process.env.IMAGE_CDN + '/promo/';
+    const banner = ref([]);
+    const promoState = reactive({
+      active: {value: 'ALL', label: 'ALL'},
+      promoList: [],
+    });
+    const promoTypes = ref([
+      {code: "ALL", img: 'all', label: '所有游戏'},
+      {code: "ESPORTS", img: 'esport', label: '电竞'},
+      {code: "SPORTS", img: 'sport', label: '体育'},
+      {code: "POKER", img: 'poker', label: '棋牌'},
+      {code: "LIVE CASINO", img: 'live', label: '真人娱乐'},
+      {code: "FISH", img: 'game', label: '老虎机/捕鱼'},
+    ]);
+    const promoTabActive = ref(promoTypes.value[0].value);
+    const filteredArray = ref([]);
+    const isPromoDetail = ref(false);
+    const selectedPromo = ref({});
+    const route = useRoute();
+    const router = useRouter();
+    const $q = useQuasar();
+    const ui = useUI();
+    const isDisplayLogin = ref(false);
+
+    const tab = ref("all");
+    const tabItems = [
+
+      {name: "all", label: '全部优惠'},
+      {name: "esport", label: '电竞'},
+      {name: "sport", label: '体育'},
+      {name: "slot", label: '老虎机'},
+      {name: "live casino", label: '真人'},
+      {name: "fish", label: '捕鱼'},
+    ];
+
+    watch(() => route.query, () => {
+      if (route.query === null) {
+        isPromoDetail.value = false
+      } else {
+        isPromoDetail.value = route.query.name
+        ui.setScrollPosition("vertical", 0, 200);
+      }
+    });
+    const loadBanner = () => {
+      // loadPromoBanner("PROMO").then((res) => {
+      //   if (res.code === 0) {
+      //       banner.value = res.data[0]
+      //   }
+      // })
+      api
+          .get("/promo/banner?category=PROMO")
+          .then((response) => {
+            if (response.code === 0) {
+              banner.value = response.data[0];
+              // console.log(banner.value)
+            } else {
+              // $q.notify({
+              //   color: "negative",
+              //   position: "top",
+              //   message: ret.message,
+              //   icon: "report_problem"
+              // });
+            }
+            // banners.value = response.data;
+          })
+    }
+    const showPromoDetails = (promo) => {
+      if (!store.token) {
+        isDisplayLogin.value = true
+      } else {
+
+        if (promo.redirectUrl.includes("page-vip")) {
+          router.push({path: '/account/vip'});
+        } else {
+          if (route.query.fromAccount) {
+            router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
+          } else {
+            router.push({path: '/promo', query: {name: promo.redirectUrl}})
+          }
+          isPromoDetail.value = true
+          selectedPromo.value = promo
+        }
+      }
+    }
+    const switchPromoType = (type) => {
+      promoTabActive.value = type.value;
+      if (type.value !== "ALL") {
+        filteredArray.value = promoState.promoList.filter(function (promo) {
+          return promo.promoType.toLowerCase().split(',').includes(type.value.toLowerCase());
+        });
+      } else {
+        filteredArray.value = promoState.promoList
+      }
+    };
+
+    const loadAll = () => {
+      api.get("/promo/page").then((res) => {
+        if (res.code === 0) {
+          promoState.promoList = [];
+          var promoItems = res.data;
+          // promoState.promoList.push(...res.data);
+
+          promoItems.forEach(element => {
+            if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+              // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+            } else {
+              promoState.promoList.push(element);
+
+              if (route.query.name && String(element.redirectUrl) === route.query.name) {
+                showPromoDetails(element)
+              }
+            }
+          });
+
+          switchPromoType(promoState.active)
+        }
+      }).catch((e) => {
+        console.log("error", e);
+      });
+
+    }
+    onMounted(() => {
+      loadBanner();
+      loadAll();
+    });
+
+    return {
+      promoState,
+      promoTypes,
+      promoTabActive,
+      switchPromoType,
+      filteredArray,
+      isPromoDetail,
+      showPromoDetails,
+      selectedPromo,
+      banner,
+      imgURL,
+      store,
+      tab,
+      tabItems,
+      isDisplayLogin
+    }
+  },
+});
+</script>
+<style lang="scss">
+.promo-container {
+  min-height: 100vh;
+  background: $secondary;
+  color: $dark;
+
+  a {
+    color: $primary;
+    font-size: 1rem;
+  }
+
+  .all-promotions {
+    padding-bottom: 20px;
+    @keyframes fadein {
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .promo-bg {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center bottom;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .promo-main-container {
+      width: $box-width;
+      margin-left: auto;
+      margin-right: auto;
+
+      .promo-type-wrapper {
+        display: flex;
+        justify-content: center;
+
+        ::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
+      @keyframes scalein {
+        from {
+          transform: scale(0.5);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+
+      .promo-list-wrapper {
+        display: flex;
+        margin-top: 1rem;
+        flex-direction: column;
+
+        .promo-item {
+          position: relative;
+          transform: scale(1);
+          animation-name: scalein;
+          animation-duration: 1s;
+          transition: 0.4s ease-in;
+          margin-bottom: 1rem;
+          overflow: hidden;
+          cursor: pointer;
+          background-image: url(../assets/images/promo/promo-item-bg.png);
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
+          padding: 32px 24px 16px;
+          position: relative;
+          border-radius: 12px;
+
+          .promo-ribbon {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #ffffff;
+            font-size: 0.75rem;
+            overflow: hidden;
+            padding: 4px 20px 4px 8px;
+            background: linear-gradient(90deg, #464cc2 0.15%, #aea2ef 94.25%);
+
+            &:after {
+              content: "";
+              position: absolute;
+              top: 0;
+              right: 0;
+              width: 0;
+              height: 0;
+              border-style: solid;
+              border-width: 40px 25px 30px 0;
+              border-color: transparent #f6f8fc transparent transparent;
+              overflow: hidden;
+            }
+          }
+
+          .promo-item-date {
+            color: $grey-color;
+            font-size: 0.625rem;
+          }
+
+          .promo-item-title {
+            color: $primary;
+            font-weight: bold;
+            font-size: 1rem;
+            max-width: 180px;
+
+            @media (min-width: 500px) {
+              max-width: calc(100% - 220px);
+            }
+          }
+
+          .promo-item-deal {
+            color: $grey-color;
+            font-weight: bold;
+            font-size: 0.875rem;
+
+            & > span {
+              color: $primary;
+            }
+          }
+
+          .promo-item-btn {
+            padding-left: 16px;
+            padding-right: 16px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            margin-top: 6px;
+          }
+
+          .promo-item-side-img {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            // height: 70%;
+
+            img {
+              display: block;
+              // height: 100%;
+              // width: auto;
+              width: 100%;
+              max-width: calc(100% - 180px);
+              margin-left: auto;
+            }
+          }
+
+          img {
+            width: 100%;
+            height: auto;
+          }
+
+          .promo-img-wrapper {
+            position: relative;
+            overflow: hidden;
+
+            .promo-bg {
+              transition: all 0.5s ease;
+              background-size: cover;
+              background-position: center center;
+              margin: 0;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              gap: 30px;
+
+              &:hover {
+                opacity: 0.9;
+              }
+
+              &:active {
+                filter: brightness(0.85);
+                transform: translate(0px, 1px);
+              }
+
+              .promo-content {
+                width: 100%;
+                //width: unset;
+                height: auto;
+
+                &.isDesktop {
+                  display: block;
+                }
+
+                &.isMobile {
+                  display: none;
+                }
+              }
+            }
+          }
+
+          .promo-info {
+            // position: absolute;
+            // text-align: right;
+            // border-radius: 0 0 10px 10px;
+
+            // left: 0;
+            // bottom: 0;
+            // width: 100%;
+            // background-color: #272c3d;
+            // display: flex;
+            // justify-content: flex-end;
+            // align-items: center;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+
+            .viewdetail {
+              background: #002a35;
+              color: #ffffff;
+              font-size: 12px;
+              position: absolute;
+              width: 100%;
+              z-index: 2;
+              top: 0;
+              height: 30px;
+              overflow: hidden;
+              line-height: 27px;
+              padding: 0 100px 0 10px;
+
+              &:before {
+                background: #043d4f;
+                content: "";
+                display: block;
+                height: 100%;
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 70px;
+              }
+
+              &:after {
+                border-left: 20px solid transparent;
+                border-right: 30px solid transparent;
+                border-top: 30px solid #043d4f;
+                clear: both;
+                content: "";
+                display: block;
+                height: 0;
+                position: absolute;
+                right: 50px;
+                top: 0;
+                transform: rotate(180deg);
+                width: 0;
+              }
+            }
+
+            .detail-arrow {
+              margin-right: 20px;
+              height: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .selected-promo {
+    width: 100%;
+
+    .selected-promo-wrapper {
+      .banner-container {
+        width: 100%;
+
+        .promo-bg {
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center center;
+          overflow: hidden;
+        }
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        margin-top: 15px;
+        margin-bottom: 16px;
+      }
+
+      h3 {
+        font-size: 22px;
+      }
+
+      .inner {
+        max-width: 1400px;
+        width: 90%;
+        margin: 20px auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        font-size: 12px;
+
+        img {
+          margin-bottom: 5px;
+        }
+
+        ol,
+        ul {
+          margin: 0;
+          padding: 15px;
+
+          li {
+            margin-bottom: 20px;
+          }
+        }
+
+        table {
+          width: 100%;
+          border-spacing: 0;
+          border-collapse: collapse;
+
+          th {
+            padding: 5px;
+            text-align: center;
+            background-image: linear-gradient(0deg, #07414c 0, #058096 100%), linear-gradient(#d0d1d3, #d0d1d3);
+          }
+
+          td {
+            padding: 5px;
+            text-align: center;
+            background-color: #202228;
+            border: 1px solid #2e3039;
+          }
+        }
+
+        img {
+          width: 100%;
+          display: block;
+        }
+
+        .hot-promo {
+          background: #272c3d;
+          border-radius: 10px;
+        }
+      }
+    }
+  }
+}
+
+.pad-title {
+  position: absolute;
+  // top: -7px;
+  // right: 5px;
+  // z-index: 3;
+  font-size: 12px;
+  // color: #3e5cc0;
+  color: #ffffff;
+  right: 5px;
+  top: 5px;
+  z-index: 3;
+}
+
+.pad-label.label-new {
+  background: url(../assets/promo/yh_label_new.png) no-repeat;
+  // background-size: 100%;
+  background-size: 78px 45px;
+  font-size: 12px;
+  color: #ffffff;
+  padding: 12px 7px;
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+}
+
+.promo {
+  .q-tabs {
+    background: $secondary;
+    width: 100%;
+    margin: 0 auto;
+    padding-bottom: 8px;
+    box-shadow: 0px -6px 6px 0px #c3d4e6 inset;
+
+    .q-tab {
+      color: $font-1;
+      font-size: 1rem;
+    }
+
+    .q-tab__label {
+      font-size: 1rem;
+      font-weight: normal;
+    }
+
+    .q-tab--active {
+      color: $primary;
+
+      .q-tab__label {
+        color: $primary;
+        font-weight: bold;
+      }
+    }
+
+    .q-tab__content {
+      min-width: 26px;
+    }
+  }
+
+  .q-tab {
+    min-height: 40px;
+  }
+
+  .q-tab__content {
+    width: 100%;
+  }
+
+  .q-tab--active .q-tab__indicator {
+    background-color: $primary;
+    background-size: 20px 10px;
+    width: 80%;
+    margin: 0 auto 3px;
+    height: 3px;
+  }
+
+  .q-tab__label {
+    z-index: 1;
+  }
+
+  .q-tab-panels {
+    background: none;
+    // padding: 10px;
+    padding: 0;
+  }
+
+  .q-tab-panel {
+    padding: 0;
+  }
+
+  .download-item {
+    background: #ffffff;
+    padding: 10px;
+
+    .imgtext {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-start;
+      align-items: flex-start;
+
+      img {
+        width: 40px;
+      }
+    }
+
+    .download {
+      width: 120px;
+      margin-left: auto;
+      display: block;
+    }
+  }
+}
+</style>
