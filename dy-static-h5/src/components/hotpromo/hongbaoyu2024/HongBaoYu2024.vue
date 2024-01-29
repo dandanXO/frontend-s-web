@@ -169,9 +169,10 @@ onMounted(() => {
   flex-direction: column;
   position: relative;
   background: url("../../../assets/images/hongbaoyu/mobile-bg.png");
-  background-size: 100% auto;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
-  height: 940px;
+  // height: 940px;
+  padding-bottom: 120px;
   background-color: #d60202;
 
   .receive-container {
@@ -234,6 +235,9 @@ onMounted(() => {
         // left: 0;
         // width: 100%;
         // padding: 15px 30px;
+        max-height: 120px;
+        overflow-y: hidden;
+        scroll-behavior: smooth;
 
         .winner {
           display: flex;
