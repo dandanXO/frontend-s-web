@@ -597,7 +597,7 @@ export default {
     customerSupportAddress: '客服地址',
     dailyDeposit: '每日存款数量',
     dailyDepositAmount: '每日存款金额',
-    dailyFree: '每日免费转盘次数',
+    dailyMin: '每日最低转盘次数',
     dailyWithdraw: '每日提款数量',
     dailyWithdrawAmount: '每日提款金额',
     dailyFailAmount: '每日失败存款金额',

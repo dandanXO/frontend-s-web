@@ -375,6 +375,21 @@
           <el-tag v-if="scope.row.status === 'CANCEL'" type="danger" size="mini">{{ t('status.gameQuiz.' + scope.row.status) }}</el-tag>
         </template>
       </el-table-column>
+      <el-table-column
+        prop="toShow"
+        :label="t('fields.show')"
+        width="150"
+        v-if="hasPermission(['sys:bb-dacha:update'])"
+      >
+        <template #default="scope">
+          <el-switch
+            v-model="scope.row.toShow"
+            active-color="#409EFF"
+            inactive-color="#F56C6C"
+            @change="changeToShow(scope.row.id)"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="matchTime" :label="t('fields.matchTime')" width="180">
         <template #default="scope">
           <span v-if="scope.row.matchTime === null">-</span>
@@ -603,7 +618,7 @@ import { computed, reactive, ref } from "vue";
 import { required } from "@/utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { getSiteListSimple } from "@/api/site";
-import { getBbDacha, createBbDacha, updateBbDacha, endBbDacha, cancelBbDacha } from "@/api/bb-dacha";
+import { getBbDacha, createBbDacha, updateBbDacha, updateToShow, endBbDacha, cancelBbDacha } from "@/api/bb-dacha";
 import { hasRole, hasPermission } from "@/utils/util";
 import { nextTick, onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
@@ -1015,6 +1030,10 @@ async function cancel(id) {
 function populateChoiceOne() {
   choiceOne.value[0].value = form.homeTeam
   choiceOne.value[1].value = form.awayTeam
+}
+
+async function changeToShow(id) {
+  await updateToShow(id)
 }
 
 onMounted(async () => {

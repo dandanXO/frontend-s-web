@@ -18,9 +18,9 @@
   </el-select>
   <el-form ref="formRef" :model="form" :rules="formRules" :inline="true" size="small" label-width="200px" style="margin-top: 10px;">
     <el-row>
-      <el-form-item :label="t('fields.dailyFree')" prop="dailyFree">
-        <el-input v-if="hasPermission(['sys:game-steps:update'])" v-model="form.dailyFree" style="width: 350px;" />
-        <span v-else>{{ form.dailyFree }}</span>
+      <el-form-item :label="t('fields.dailyMin')" prop="dailyMin">
+        <el-input v-if="hasPermission(['sys:game-steps:update'])" v-model="form.dailyMin" style="width: 350px;" />
+        <span v-else>{{ form.dailyMin }}</span>
       </el-form-item>
     </el-row>
     <el-row>
@@ -95,7 +95,7 @@ const request = reactive({
   siteId: null
 });
 const form = reactive({
-  dailyFree: null,
+  dailyMin: null,
   dailyMax: null,
   depositPerSpin: null,
   steps: null,
