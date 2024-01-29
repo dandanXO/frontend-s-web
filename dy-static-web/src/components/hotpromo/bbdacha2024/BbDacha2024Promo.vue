@@ -9,8 +9,8 @@
     <div
       v-for="(data, dataIndex) in upcomingData"
       :key="`upcoming-${dataIndex}`"
-      :class="`competition-item ${
-        data.votedTeam ? 'competition-item--voted' : data.status === 'ENDED' ? 'competition-item--ended' : ''
+      :class="`competition-item ${data.votedTeam ? 'competition-item--voted' : ''}  ${
+        data.status === 'ENDED' ? 'competition-item--ended' : data.status === 'CANCEL' ? 'competition-item--ended' : ''
       }`"
     >
       <div class="competiton-team team-one">
@@ -39,7 +39,17 @@
         </div>
 
         <div class="details-status">
-          <span>{{ data.status === "ONGOING" ? "进行中" : data.status === "ENDED" ? "已结束" : "" }}</span>
+          <span>
+            {{
+              data.status === "ONGOING"
+                ? "进行中"
+                : data.status === "ENDED"
+                ? "已结束"
+                : data.status === "CANCEL"
+                ? "已取消"
+                : ""
+            }}
+          </span>
         </div>
       </div>
 
@@ -224,6 +234,7 @@ import {
   getBBDachaRecordsCount
 } from "@/api/index/promo";
 import moment from "moment";
+import { ElMessage } from "element-plus";
 
 // tabs
 const activeKey = ref("tabOne");
@@ -245,7 +256,10 @@ const handleVoteClick = (selectedData) => {
 const handleSubmitVote = () => {
   submitBBDacha(submitParam)
     .then((res) => {
-      if (res.code === 0) getData();
+      if (res.code === 0) {
+        getData();
+        ElMessage.success("投票成功！");
+      }
     })
     .catch(() => {})
     .then(() => {
