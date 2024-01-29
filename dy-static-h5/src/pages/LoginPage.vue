@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <div class="top-image-div">
-      <img src="../assets/login/login-top.png" />
+      <img src="../assets/login/login-top-cny.png" />
     </div>
 
     <div class="login-tab-div">
