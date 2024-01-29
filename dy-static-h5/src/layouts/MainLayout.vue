@@ -543,6 +543,10 @@ export default defineComponent({
           prevPage.value = "promo";
           hasPage.value = true;
           pageName.value = "邀请好友";
+        } else if (route.path === "/privilege/hongbaoyu") {
+          prevPage.value = "promo";
+          hasPage.value = true;
+          pageName.value = "红包雨";
         } else if (route.path === "/account/announcement") {
           prevPage.value = "account";
           hasPage.value = true;

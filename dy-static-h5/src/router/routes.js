@@ -41,6 +41,11 @@ const routes = [
     children: [{ path: "", component: () => import("pages/PrivilegeInvite.vue") }]
   },
   {
+    path: "/privilege/hongbaoyu",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/HongBaoYu2024Page.vue") }]
+  },
+  {
     path: "/promotion",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/PromoPage.vue") }],

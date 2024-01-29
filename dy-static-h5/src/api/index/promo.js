@@ -94,6 +94,10 @@ export function submitBBDacha(param) {
   return eventapi.post(`/bb-dacha/submit`, qs.stringify({ quizId, quizTitle, answerOne }));
 }
 
+export function getBBDachaRecordsCount() {
+  return eventapi.get(`/bb-dacha/recordsCount`, {});
+}
+
 export function getCurrentStepInit() {
   return eventapi.get(`/game-steps/initiate`, {});
 }

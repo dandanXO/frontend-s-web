@@ -20,6 +20,9 @@ export function claimBonusItem(item) {
 export function claimDailyRainItem(item) {
   return server.EVENT.get(`/redPacketVip/claim?promoCode=${item}`);
 }
+export function getDailyRainListing(item) {
+  return server.EVENT.get(`/redPacketVip/list?promoCode=${item}`);
+}
 export function welcomeTaskInit() {
   return server.EVENT.post(`/welcomeTask/init`);
 }
@@ -142,6 +145,10 @@ export function getBBDachaAnsweredRecords() {
 export function submitBBDacha(param) {
   const { quizId, quizTitle, answerOne } = param;
   return server.EVENT.post(`/bb-dacha/submit`, { quizId, quizTitle, answerOne });
+}
+
+export function getBBDachaRecordsCount() {
+  return server.EVENT.get(`/bb-dacha/recordsCount`, {});
 }
 
 export function getCurrentStepInit() {

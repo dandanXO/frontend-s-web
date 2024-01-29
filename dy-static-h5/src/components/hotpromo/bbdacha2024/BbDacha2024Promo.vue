@@ -75,7 +75,9 @@
     <q-tab-panels v-model="activeKey">
       <q-tab-panel name="tabOne">
         <div class="table-container">
-          <p class="q-mt-md text-bold">活动期间，每日竞猜正确次数≥2场的会员当日存款可领对应存款反比金额</p>
+          <p class="q-mt-md text-bold" style="text-align: center">
+            活动期间，用户竞猜当日竞猜正确次数≥3场，彩金按当日存款总额派发对应存款反比彩金金额
+          </p>
 
           <table class="promo-table">
             <thead>
@@ -112,7 +114,7 @@
         <div class="rules-container">
           <ol class="rules-content">
             <li>
-              活动期间，BB别墅冬季杯竞猜正确场次≥3次可获当日存款对应反比，彩金与次日24小时内派发，彩金仅需3倍流水即可提款；
+              活动期间，会员每日可免费参与全部竞猜，当日BB别墅冬季杯竞猜正确场次≥3次可获当日总存款对应反比，彩金与次日24小时内派发，彩金仅需3倍流水即可提款；
             </li>
             <li>活动期间，请在指定比赛开赛前竞猜，若超出开赛时间则视为放弃竞猜；</li>
             <li>
@@ -130,7 +132,7 @@
     <q-tab-panels v-model="activeKey">
       <q-tab-panel name="tabTwo">
         <div class="table-container">
-          <p class="q-mt-md text-bold">
+          <p class="q-mt-md text-bold" style="text-align: center">
             活动期间，BB别墅冬季杯赛事结束后累计竞猜正确次数≥10次且投注BB别墅杯累计有效投注≥3000元，即可领取对应彩金。
           </p>
 
@@ -168,7 +170,7 @@
 
         <div class="rules-container">
           <ol class="rules-content">
-            <li>活动期间，BB别墅冬季杯竞猜正确次数≥10次且累计BB别墅冬季杯有效投注≥10,000元即可领取对应奖金；</li>
+            <li>BB别墅冬季杯赛事结束后竞猜正确累计次数≥10次且累计BB别墅冬季杯有效投注≥10,000元即可领取对应奖金；</li>
             <li>活动奖金以最低档位为准，若竞猜正确次数≥15次且投注金额≥10，000元，则彩金按88元派发；</li>
             <li>活动奖金以决赛后次日24小时内派发至会员钱包，彩金仅需3倍流水即可提款；</li>
             <li>
@@ -186,6 +188,11 @@
       <div class="record-header-container">
         <div class="record-header">投票记录</div>
         <q-btn icon="close" flat round dense v-close-popup color="white"></q-btn>
+      </div>
+
+      <div class="promo-records-count">
+        <div>竞猜正确次数: {{ recordsCount.wonTimes }}</div>
+        <div>累计竞猜正确次数: {{ recordsCount.attendTimes }}</div>
       </div>
 
       <table class="promo-table" cellspacing="0" cellpading="0">
@@ -228,7 +235,12 @@
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 import { useQuasar } from "quasar";
-import { getBBDachaUpcoming, getBBDachaAnsweredRecords, submitBBDacha } from "../../../api/index/promo";
+import {
+  getBBDachaUpcoming,
+  getBBDachaAnsweredRecords,
+  submitBBDacha,
+  getBBDachaRecordsCount
+} from "../../../api/index/promo";
 import moment from "moment";
 
 const $q = useQuasar();
@@ -269,9 +281,10 @@ const handleSubmitVote = () => {
 const isLoaded = ref(false);
 const upcomingData = ref([]);
 const answeredRecords = ref([]);
+const recordsCount = ref();
 const getData = () => {
-  Promise.all([getBBDachaUpcoming(), getBBDachaAnsweredRecords()]).then((values) => {
-    const [bbDachaUpcoming, bbDachaAnsweredRecords] = values;
+  Promise.all([getBBDachaUpcoming(), getBBDachaAnsweredRecords(), getBBDachaRecordsCount()]).then((values) => {
+    const [bbDachaUpcoming, bbDachaAnsweredRecords, bbDachaRecordsCount] = values;
     if (bbDachaAnsweredRecords.code === 0) {
       if (
         bbDachaAnsweredRecords.data &&
@@ -305,6 +318,10 @@ const getData = () => {
           });
         }
       }
+    }
+
+    if (bbDachaRecordsCount.code === 0) {
+      recordsCount.value = bbDachaRecordsCount.data;
     }
   });
 };
@@ -531,6 +548,14 @@ table.promo-table {
       color: #ffffff;
       font-weight: 700;
     }
+  }
+
+  .promo-records-count {
+    background: #ffffff;
+    padding: 8px 16px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
   }
 }
 
