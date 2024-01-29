@@ -1,0 +1,610 @@
+<template>
+  <div class="card">
+    <div class="balance-plat-item">
+      <div class="left-box">
+        <div class="balance-wrapper">
+          <span class="currency">主账户:</span> ￥{{ mainWallet }}
+          <div class="balance-refresh" @click="refreshBalance(MAIN)">
+            <el-icon>
+              <Refresh style="color: #000" />
+            </el-icon>
+          </div>
+        </div>
+        <div class="desc-wrapper">
+          <span>IM体育、电竞、沙巴体育、SW电子、PM真人和PM体育无需转账，充值即可游戏。</span>
+        </div>
+      </div>
+      <div class="right-box">
+        <div class="action-wrapper">
+          <el-button type="success" size="small" class="blue-btn transfer-btn outline" @click="transferOutAllModal">
+            一键转出
+          </el-button>
+          <el-button type="success" size="small" class="blue-btn transfer-btn" @click="refreshAllModal">
+            一键刷新
+          </el-button>
+        </div>
+      </div>
+    </div>
+    <div class="transfer-plat-wrapper">
+      <div class="transfer-plat-item card" v-for="p in platforms" :key="p.id">
+        <div class="transfer-balance-box">
+          <div class="platform-details">
+            <div class="plat-name" v-if="p.code === 'FlashTech'">
+              <RiWirelessChargingLine />
+              Sport
+            </div>
+            <div class="plat-name" v-else>
+              <RiWirelessChargingLine />
+              {{ platNames[p.code] || p.name }}
+              <div class="balance-refresh" @click="refreshBalance(p.code)">
+                <el-icon>
+                  <Refresh />
+                </el-icon>
+              </div>
+            </div>
+            <div class="balance-wrapper">
+              <span class="currency">余额:</span>
+              {{ p.amount }}
+            </div>
+          </div>
+        </div>
+        <div class="transfer-action-box">
+          <el-button size="small" class="blue-btn transfer-btn" @click="transferModal(0, p)">
+            转进
+          </el-button>
+          <el-button size="small" class="blue-btn transfer-btn" @click="transferModal(1, p)">
+            转出
+          </el-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <el-dialog v-model="transferModalVisible" @cancel="cancelTransfer" :maskClosable="false" :footer="null"
+    class="transferinout" width="300px" align-center @keydown.enter.prevent>
+    <template #header>
+      <div :style="
+        transferTypeIndex === 0
+          ? 'flex-direction: row'
+          : 'flex-direction: row-reverse; justify-content: flex-end;'
+      " class="el-dialog__title">
+        <el-tag type="danger" effect="dark">主账户</el-tag>
+        <el-icon>
+          <Right />
+        </el-icon>
+        <el-tag type="success" effect="dark">
+          {{ transferInfo.platform }}
+        </el-tag>
+      </div>
+    </template>
+    <el-form class="transfer-info-form" ref="formRef" :hideRequiredMark="true" :model="transferInfo" :rules="rules" :label-col="{ span: 4 }">
+      <el-form-item ref="amount" prop="amount">
+        <el-input class="transfer-info-amount" v-model="transferInfo.amount" placeholder="金额" @keyup.enter="submitTransfer" />
+      </el-form-item>
+      <el-form-item class="txt-center">
+        <el-button class="submit-btn blue-btn" :loading="loadingTransfer" @click="submitTransfer">
+          确定
+        </el-button>
+      </el-form-item>
+    </el-form>
+  </el-dialog>
+
+  <el-dialog v-model="transferAllModalVisible" title="转账金额" :maskClosable="false" :footer="null" width="500px">
+    <div class="transfer-all-list">
+      <div class="transfer-item" v-for="(p, indx) in platforms" :key="indx">
+        <div>
+          {{ p.code }}
+        </div>
+        <div>
+          {{ p.status }}
+        </div>
+      </div>
+    </div>
+  </el-dialog>
+</template>
+
+<script lang="js">
+import { defineComponent, ref, reactive, computed, onMounted } from "vue";
+import { loadBalance } from "@/api/personal/personal";
+import { transfer, withdrawAll, getPlatforms, getLoggedInPlatformList } from "@/api/personal/transfer";
+// import { message } from "ant-design-vue";
+import { ElMessage } from "element-plus";
+import { MAIN } from "@/utils/utils";
+import { userStore } from "@/store";
+import { Refresh, Right } from "@element-plus/icons-vue"
+import { RiWirelessChargingLine } from "vue-remix-icons";
+// import { useI18n } from "vue-i18n";
+
+export default defineComponent({
+  name: "TransferView",
+  components: {
+    // RiSpamLine, RiRestartLine
+    Refresh,
+    Right,
+    RiWirelessChargingLine
+},
+  setup() {
+    const store = userStore();
+    const platforms = reactive([]);
+    const mainWallet = computed(() => {
+      return store.balance;
+    });
+    onMounted(() => {
+      loadPlatform();
+    });
+    // const { t } = useI18n();
+    const transferModalVisible = ref(false);
+    const transferAllModalVisible = ref(false);
+    const transferTypes = ["Transfer In To", "Transfer Out From"];
+    const transferTypeIndex = ref(0);
+    const transferTypeTitle = computed(() => {
+      return transferTypes[transferTypeIndex.value] + " " + transferInfo.platform;
+    });
+    const transferInfo = reactive({
+      platform: "",
+      amount: ""
+    });
+
+    const platNames = {"KYDY": "开元棋牌", "DT": "大唐棋牌", "BBINDY": "BBIN", "SGWin": "双赢彩票", };
+
+    const transferOutAllModal = () => {
+      transferAllModalVisible.value = true
+      platforms.forEach(p => {
+        if (p.amount > 0) {
+          transferInfo.platform = p.code
+          transferInfo.amount = p.amount
+          p.status = '平台余额转出中';
+          withdrawAll(transferInfo).then((res) => {
+            if (res.code === 0) {
+              p.status = '已转出'
+              cancelTransfer();
+              store.getBalance();
+              refreshBalance(p.code);
+            } else {
+              p.status = '转出失败'
+              store.getBalance();
+              refreshBalance(p.code);
+            }
+          })
+        } else {
+          p.status = '0.00'
+        }
+
+      });
+    }
+
+    const refreshAllModal = () => {
+      store.getBalance();
+      platforms.forEach(p => {
+        p.amount = '加载中'
+        refreshBalance(p.code);
+      });
+    }
+    const transferModal = (i, p) => {
+      if (formRef.value) {
+        formRef.value.resetFields();
+      }
+      transferTypeIndex.value = i;
+      transferInfo.platform = p.code;
+      transferInfo.currentAmt = p.amount;
+      transferModalVisible.value = true;
+      transferInfo.amount = "";
+    };
+    const refreshBalance = async(plat) => {
+      const plaform = platforms.find(p => p.code === plat);
+      const delay = ms => new Promise(res => setTimeout(res, ms));
+      if (plaform) {
+        plaform.amount = '加载中...'
+        await delay(10);
+      }
+      setTimeout(()=> {
+        if (plat === MAIN){
+          store.getBalance();
+        } else {
+            loadBalance(plat).then((response) => {
+              console.log(plat, response.data)
+              if (plaform) {
+                plaform.amount = response.data;
+              }
+            }).catch(e => {
+              if (plaform) {
+                plaform.amount = 0;
+              }
+              console.log(e)
+            });
+        }
+      }, 1000);
+    };
+    const loadPlatform = () => {
+      if(store.memberType === 'TEST') {
+        getLoggedInPlatformList().then((response) => {
+          response.data.filter(p => p.walletType === 'TRANSFER').forEach(p => {
+            platforms.push({
+              id: p.id,
+              code: p.code,
+              name: p.name,
+              amount: 0,
+              status: 'Waiting for transfer'
+            });
+          });
+          platforms.forEach(element => {
+            refreshBalance(element.code)
+          });
+        }).catch((error) => {
+            console.log(error.message);
+          // message.error(error.message, 4);
+        });
+      } else {
+        getPlatforms().then((response) => {
+          response.data.filter(p => p.walletType === 'TRANSFER').forEach(p => {
+            platforms.push({
+              id: p.id,
+              code: p.code,
+              name: p.name,
+              amount: 0,
+              status: 'Waiting for transfer'
+            });
+          });
+          platforms.forEach(element => {
+            refreshBalance(element.code)
+          });
+        }).catch((error) => {
+            console.log(error.message);
+          // message.error(error.message, 4);
+        });
+      }
+    };
+    const cancelTransfer = () => {
+      transferInfo.platform = "";
+      transferInfo.amount = "";
+      transferInfo.currentAmt = "";
+      transferModalVisible.value = false;
+      loadingTransfer.value = false;
+    };
+    const loadingTransfer = ref(false)
+    const submitTransfer = () => {
+      loadingTransfer.value = true
+      if (transferTypeIndex.value === 1) {
+        if (transferInfo.amount > transferInfo.currentAmt) {
+          ElMessage.error(transferInfo.platform + ' 平台余额不足');
+          loadingTransfer.value = false
+          return
+        }
+      }
+      formRef.value
+        .validate()
+        .then(() => {
+          transfer(transferTypeIndex.value, transferInfo).then(async(res) => {
+            if (res.code === 0) {
+              ElMessage({
+                message: '成功',
+                type: 'success',
+              })
+              store.getBalance();
+              refreshBalance(transferInfo.platform);
+              cancelTransfer();
+            }
+          }).catch((error) => {
+            console.log(error.message);
+            // message.error(error.message, 4);
+            loadingTransfer.value = false;
+          });
+        }).catch((err) => {
+            console.log(err);
+            loadingTransfer.value = false;
+        });
+      loadingTransfer.value = false
+    };
+    const formRef = ref();
+    const rules = {
+      amount: [
+        {
+          required: true,
+          message: "请输入金额",
+          trigger: "blur"
+        },
+        {
+          pattern: "^([1-9][0-9]*)$",
+          message: "金额应为正数",
+          trigger: "change"
+        },
+      ]
+    };
+    return {
+      platforms,
+      transferModal,
+      transferModalVisible,
+      transferInfo,
+      transferTypeIndex,
+      transferTypeTitle,
+      cancelTransfer,
+      submitTransfer,
+      mainWallet,
+      refreshBalance,
+      formRef,
+      MAIN,
+      rules,
+      transferOutAllModal,
+      transferAllModalVisible,
+      loadingTransfer,
+      refreshAllModal,
+      platNames
+    };
+  }
+});
+</script>
+<style lang="scss">
+body .transferinout .el-dialog__header .el-dialog__title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px 10px;
+  gap: 5px;
+}
+.transfer-all-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 80px;
+  row-gap: 10px;
+  padding: 20px;
+  .transfer-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+.md .ant-modal {
+  width: 100%;
+  max-width: 800px;
+  padding: 10px;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+
+  .ant-modal-content {
+    width: 100%;
+  }
+}
+.sm .ant-modal {
+  width: 100%;
+  max-width: 500px;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+
+  .ant-modal-content {
+    width: 100%;
+  }
+}
+.el-button.outline.blue-btn>span {
+  color: #468CFF;
+}
+
+.el-dialog {
+  border-radius: 12px;
+}
+
+.el-dialog__header {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+  box-shadow: 0px -2px 5px 0px #B1D7FF inset;
+  box-shadow: 0px -1px 4px 0px #5894FF inset;
+  border: 0;
+  color: #fff;
+  padding: 10px;
+}
+
+.transfer-info-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .transfer-info-amount .el-input__wrapper {
+    width: 402px;
+    height: 52px;
+    border-radius: 12px;
+    box-shadow: 0px 0px 8px 0px #A9C9EA inset;
+  }
+  
+  .el-form-item {
+    margin: 0;
+  }
+
+  .submit-btn {
+    box-shadow: 0px -2px 5px 0px #93C7FF inset;
+    box-shadow: 0px -1px 4px 0px #275EC1 inset;
+    width: 100%;
+    border-radius: 12px;
+  }
+}
+</style>
+<style scoped lang="scss">
+.card {
+  background-color: #fff;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  color: #424F72;
+}
+
+.blue-btn {
+  gap: 10px;
+  background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+  box-shadow: 0px -2px 5px 0px #B1D7FF inset;
+  box-shadow: 0px -1px 4px 0px #5894FF inset;
+  color: #fff;
+  padding: 20px 30px;
+  cursor: pointer;
+  border: 0;
+
+  &.outline {
+    background: linear-gradient(180deg, #F8FBFF 0%, #FDFEFF 100%);
+    box-shadow: 0px 2px 4px 0px #BBDCFF inset;
+    box-shadow: 0px -1px 4px 0px #A2BFF4 inset;
+    color: #468CFF;
+  }
+}
+
+.balance-plat-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  background-color: #E7F3FF;
+  padding: 20px;
+  border-radius: 12px;
+
+  .left-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .balance-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .balance-refresh {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        margin-bottom: 2px;
+        margin-left: 5px;
+      }
+    }
+  }
+
+  .right-box {
+    .action-wrapper {
+      display: flex;
+      gap: 10px;
+      .transfer-btn {
+        border-radius: 30px;
+      }
+    }
+  }
+}
+
+.transfer-plat-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 15px;
+
+  .transfer-plat-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid #ECEDF0;
+    width: 238px;
+    height: 128px;
+
+    .transfer-balance-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .transfer-action-box {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 15px;
+
+      .transfer-btn {
+        border-radius: 30px;
+      }
+    }
+
+    .platform-details {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      flex-direction: column;
+
+      .plat-name {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+
+        .remixicon {
+          fill: #000;
+          width: 15px;
+        }
+      }
+
+      .balance-wrapper {
+        .currency {
+          margin-right: 10px;
+        }
+      }
+    }
+
+    .balance-refresh {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2px;
+      cursor: pointer;
+
+      .el-icon {
+        display: block;
+        color: #000;
+
+        svg {
+          width: 15px;
+          height: 15px;
+        }
+      }
+    }
+  }
+}
+
+.confirm-btn {
+  width: 100%;
+  cursor: pointer;
+}
+</style>
+<style scoped lang="scss">
+@media (max-width: 768px) {
+  .transfer-plat-wrapper {
+    .transfer-plat-item {
+      padding: 10px;
+      flex-direction: column;
+      justify-content: stretch;
+
+      .transfer-balance-box {
+        width: 100%;
+      }
+
+      .transfer-action-box {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .transfer-plat-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .transfer-plat-wrapper {
+    .transfer-plat-item {
+      flex-direction: column;
+    }
+  }
+}
+</style>

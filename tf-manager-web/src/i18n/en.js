@@ -185,6 +185,7 @@ export default {
     },
   },
   betStatus: {
+    BET: 'BET',
     UNSETTLED: 'UNSETTLED',
     SETTLED: 'SETTLED',
     CANCEL: 'CANCEL',
@@ -349,6 +350,7 @@ export default {
     accountInfo: 'Account Information',
     accountNumber: 'Account Number',
     accountStatus: 'Account Status',
+    accurate: 'Accurate Search',
     action: 'Action',
     activeMember: 'Active Member',
     activeMemberCount: 'Active Member Count',
@@ -2095,6 +2097,23 @@ export default {
     Mobile: 'Mobile',
     PC: 'PC',
     APPLY_WITHDRAW: 'Apply Withdraw',
+  },
+  loginDevice: {
+    WEB: 'WEB',
+    H5: 'H5',
+    ANDROID: 'ANDROID',
+    IOS: 'IOS',
+  },
+  result: {
+    win: 'WIN',
+    draw: 'DRAW',
+    loss: 'LOSS',
+  },
+  freeze: {
+    NORMAL: 'Normal',
+    TEMPORARY: 'Temporary',
+    PERMANENT: 'Permanent',
+    UNFREEZE: 'Unfreeze',
   },
   error: {
     400: 'Bad Request',

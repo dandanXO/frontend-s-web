@@ -192,6 +192,7 @@ export default {
     },
   },
   betStatus: {
+    BET: '下注',
     UNSETTLED: '未结算',
     SETTLED: '已结算',
     CANCEL: '已取消',
@@ -355,6 +356,7 @@ export default {
     accountInfo: '账号信息',
     accountNumber: '账户号码',
     accountStatus: '账号状态',
+    accurate: '精准查询',
     action: '操作',
     activeMember: '活跃会员',
     activeMemberCount: '活跃会员数',
@@ -2069,6 +2071,23 @@ export default {
     Mobile: 'Mobile',
     PC: 'PC',
     APPLY_WITHDRAW: '提现终审',
+  },
+  loginDevice: {
+    WEB: '网页',
+    H5: 'H5',
+    ANDROID: '安卓',
+    IOS: '苹果',
+  },
+  result: {
+    win: '赢',
+    draw: '和',
+    loss: '输',
+  },
+  freeze: {
+    NORMAL: '普通冻结',
+    TEMPORARY: '暂时冻结',
+    PERMANENT: '永久冻结',
+    UNFREEZE: '解除冻结',
   },
   error: {
     400: '请求无效',
