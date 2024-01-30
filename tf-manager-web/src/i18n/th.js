@@ -228,7 +228,11 @@ export default {
       CANCEL: 'ยกเลิก',
     },
   },
-
+  sitePlatform: {
+    followType: 'พิมพ์',
+    follow: 'ก่อนที่จะติดตาม',
+    new: 'อัพเดตประเภทเกม',
+  },
   fields: {
     account: 'บัญชี',
     accountHolder: 'ผู้ถือบัญชี',
