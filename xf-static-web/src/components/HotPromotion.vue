@@ -21,7 +21,7 @@
     <InviteFriendPromo
       v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo"
     />
-    <XmasSpinWheelPromo
+    <CnySpinWheelPromo
       v-if="list.redirectUrl === 'cny-spinwheel' && !isCommonPromo"
     />
     <div
@@ -196,7 +196,7 @@ import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue"
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
-import XmasSpinWheelPromo from "../components/hotpromo/xmasSpinWheel/XmasSpinWheel.vue";
+import CnySpinWheelPromo from "../components/hotpromo/cnySpinWheel/CnySpinWheel.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -212,7 +212,7 @@ export default defineComponent({
     HongBaoYuPromo,
     InviteFriendPromo,
     WelcomeTaskPromo,
-    XmasSpinWheelPromo
+    CnySpinWheelPromo
     // DailyBonus
   },
   props: {

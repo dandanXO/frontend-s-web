@@ -50,14 +50,8 @@
             <a @click="showPromoDetails(promo)">
               <div class="promo-img-wrapper">
                 <div class="promo-bg">
-                  <img
-                    class="promo-content isDesktop"
-                    :src="imgURL + promo.desktopImgUrl"
-                  />
-                  <img
-                    class="promo-content isMobile"
-                    :src="imgURL + promo.mobileImgUrl"
-                  />
+                  <img class="promo-content isDesktop" :src="imgURL + promo.desktopImgUrl" />
+                  <img class="promo-content isMobile" :src="imgURL + promo.mobileImgUrl" />
                 </div>
               </div>
               <div class="promo-info">
@@ -69,26 +63,24 @@
       </div>
     </div>
     <div v-else class="selected-promo">
-      <div class="selected-promo-wrapper">
+      <div class="selected-promo-wrapper" :class="`bg__${selectedPromo.promoCode}`">
         <div class="banner-container">
-          <div
-            class="promo-bg isDesktop"
-            :style="
-              'background-image: url(' +
-              imgURL +
-              selectedPromo.desktopBannerUrl +
-              ''
-            "
-          ></div>
-          <div
-            class="promo-bg isMobile"
-            :style="
-              'background-image: url(' +
-              imgURL +
-              selectedPromo.mobileImgUrl +
-              ''
-            "
-          ></div>
+          <template v-if="selectedPromo.promoCode === 'cny-spinwheel'">
+            <img
+              src="../assets/images/promotion/hotpromo/cny-spinwheel/banner.png"
+              style="display: block; width: 100%"
+            />
+          </template>
+          <template v-else>
+            <div
+              class="promo-bg isDesktop"
+              :style="'background-image: url(' + imgURL + selectedPromo.desktopBannerUrl + ''"
+            ></div>
+            <div
+              class="promo-bg isMobile"
+              :style="'background-image: url(' + imgURL + selectedPromo.mobileImgUrl + ''"
+            ></div>
+          </template>
         </div>
         <div class="inner">
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
@@ -101,8 +93,7 @@
               sport: selectedPromo.promoType.toLowerCase() === 'sport',
               eSport: selectedPromo.promoType.toLowerCase() === 'esport',
               fish: selectedPromo.promoType.toLowerCase() === 'fish',
-              liveCasino:
-                selectedPromo.promoType.toLowerCase() === 'livecasino',
+              liveCasino: selectedPromo.promoType.toLowerCase() === 'livecasino',
               slot: selectedPromo.promoType.toLowerCase() === 'slot game'
             }"
           >
@@ -360,8 +351,7 @@ if (!store.token) {
       min-width: 80%;
       text-align: center;
       tr:first-child td {
-        background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%),
-          linear-gradient(#2e3039, #2e3039);
+        background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
         color: #ffffff;
         border: 0;
       }
@@ -371,8 +361,7 @@ if (!store.token) {
         padding: 10px;
       }
       th {
-        background-image: linear-gradient(0deg, #0494fc 0, #15bdfc 100%),
-          linear-gradient(#d0d1d3, #d0d1d3);
+        background-image: linear-gradient(0deg, #0494fc 0, #15bdfc 100%), linear-gradient(#d0d1d3, #d0d1d3);
       }
       td {
         // background-color: #202228;
@@ -467,8 +456,7 @@ if (!store.token) {
             &:hover {
               // background: #4b4e66;
               // box-shadow: 0 0 5px #ffffff;
-              background-image: linear-gradient(90deg, #35d8f2 0, #2188c9 100%),
-                linear-gradient(#5243bd, #5243bd);
+              background-image: linear-gradient(90deg, #35d8f2 0, #2188c9 100%), linear-gradient(#5243bd, #5243bd);
               img {
                 filter: grayscale(1) brightness(100);
               }
@@ -552,6 +540,13 @@ if (!store.token) {
   .selected-promo {
     width: 100%;
     .selected-promo-wrapper {
+      &.bg__cny-spinwheel {
+        background-image: url("../assets/images/promotion/hotpromo/cny-spinwheel/cny-spinwheel-bg.jpg");
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        background-position: top center;
+        background-color: #a1211d;
+      }
       .banner-container {
         width: 100%;
         .promo-bg {
