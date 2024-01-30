@@ -9,6 +9,9 @@
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'tigercard'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
+    <HongBaoYu2024Promo
+      v-if="!isCommonPromo && list.redirectUrl === 'cny-hongbaoyu'"
+    />
     <WelcomeTaskPromo
       v-if="
         !isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token
@@ -34,11 +37,11 @@
           >
             <q-tab name="1" label="选择幸运号码" />
             <q-tab name="2" label="记录" />
-<!--            <q-tab-->
-<!--              name="3"-->
-<!--              label="获奖名单-->
-<!--"-->
-<!--            />-->
+            <!--            <q-tab-->
+            <!--              name="3"-->
+            <!--              label="获奖名单-->
+            <!--"-->
+            <!--            />-->
           </q-tabs>
 
           <q-separator />
@@ -58,7 +61,7 @@
                       bg-color="white"
                       label-color="black"
                       color="black"
-                      :input-style="{color: 'black'}"
+                      :input-style="{ color: 'black' }"
                       type="number"
                       :rules="[
                         (val) => (val && val.length === 3) || '号码长度应为3'
@@ -137,58 +140,58 @@
               ></q-table>
             </q-tab-panel>
 
-<!--            <q-tab-panel name="3">-->
-<!--              <q-form>-->
-<!--                <q-input-->
-<!--                  filled-->
-<!--                  v-model="formState.resultTime"-->
-<!--                  label="选择日期"-->
-<!--                  readonly-->
-<!--                  color="white"-->
-<!--                >-->
-<!--                  <template v-slot:append>-->
-<!--                    <q-icon name="event" class="cursor-pointer">-->
-<!--                      <q-popup-proxy-->
-<!--                        cover-->
-<!--                        transition-show="scale"-->
-<!--                        transition-hide="scale"-->
-<!--                      >-->
-<!--                        <q-date-->
-<!--                          v-model="formState.resultTime"-->
-<!--                          mask="YYYY-MM-DD"-->
-<!--                        >-->
-<!--                          <div class="row items-center justify-end">-->
-<!--                            <q-btn-->
-<!--                              v-close-popup-->
-<!--                              label="关闭"-->
-<!--                              color="white"-->
-<!--                              flat-->
-<!--                            />-->
-<!--                          </div>-->
-<!--                        </q-date>-->
-<!--                      </q-popup-proxy>-->
-<!--                    </q-icon>-->
-<!--                  </template>-->
-<!--                </q-input>-->
-<!--                <q-btn-->
-<!--                  @click="filterWinnerLists()"-->
-<!--                  :loading="loading"-->
-<!--                  class="full-width q-mt-md"-->
-<!--                  color="brand"-->
-<!--                  label="搜索"-->
-<!--                />-->
-<!--              </q-form>-->
+            <!--            <q-tab-panel name="3">-->
+            <!--              <q-form>-->
+            <!--                <q-input-->
+            <!--                  filled-->
+            <!--                  v-model="formState.resultTime"-->
+            <!--                  label="选择日期"-->
+            <!--                  readonly-->
+            <!--                  color="white"-->
+            <!--                >-->
+            <!--                  <template v-slot:append>-->
+            <!--                    <q-icon name="event" class="cursor-pointer">-->
+            <!--                      <q-popup-proxy-->
+            <!--                        cover-->
+            <!--                        transition-show="scale"-->
+            <!--                        transition-hide="scale"-->
+            <!--                      >-->
+            <!--                        <q-date-->
+            <!--                          v-model="formState.resultTime"-->
+            <!--                          mask="YYYY-MM-DD"-->
+            <!--                        >-->
+            <!--                          <div class="row items-center justify-end">-->
+            <!--                            <q-btn-->
+            <!--                              v-close-popup-->
+            <!--                              label="关闭"-->
+            <!--                              color="white"-->
+            <!--                              flat-->
+            <!--                            />-->
+            <!--                          </div>-->
+            <!--                        </q-date>-->
+            <!--                      </q-popup-proxy>-->
+            <!--                    </q-icon>-->
+            <!--                  </template>-->
+            <!--                </q-input>-->
+            <!--                <q-btn-->
+            <!--                  @click="filterWinnerLists()"-->
+            <!--                  :loading="loading"-->
+            <!--                  class="full-width q-mt-md"-->
+            <!--                  color="brand"-->
+            <!--                  label="搜索"-->
+            <!--                />-->
+            <!--              </q-form>-->
 
-<!--              <q-table-->
-<!--                class="q-mt-md"-->
-<!--                no-data-label="没有数据"-->
-<!--                loading-label="加载中..."-->
-<!--                rows-per-page-label=" "-->
-<!--                :loading="loading"-->
-<!--                :columns="winnerColumn"-->
-<!--                :rows="winnerDataSource"-->
-<!--              />-->
-<!--            </q-tab-panel>-->
+            <!--              <q-table-->
+            <!--                class="q-mt-md"-->
+            <!--                no-data-label="没有数据"-->
+            <!--                loading-label="加载中..."-->
+            <!--                rows-per-page-label=" "-->
+            <!--                :loading="loading"-->
+            <!--                :columns="winnerColumn"-->
+            <!--                :rows="winnerDataSource"-->
+            <!--              />-->
+            <!--            </q-tab-panel>-->
           </q-tab-panels>
         </q-card-section>
       </div>
@@ -222,6 +225,7 @@ import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
+import HongBaoYu2024Promo from "../components/hotpromo/hongbaoyu/HongBaoYu2024.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 
@@ -234,6 +238,7 @@ export default defineComponent({
     TigerCardPromo,
     GoldenEggPromo,
     HongBaoYuPromo,
+    HongBaoYu2024Promo,
     WelcomeTaskPromo,
     InviteFriendPromo
   },
@@ -289,6 +294,7 @@ export default defineComponent({
       this.list.redirectUrl === "tigercard" ||
       this.list.redirectUrl === "goldenegg" ||
       this.list.redirectUrl === "hongbaoyu" ||
+      this.list.redirectUrl === "cny-hongbaoyu" ||
       this.list.redirectUrl === "invitefriend" ||
       this.list.redirectUrl === "welcomenewuser" ||
       this.list.redirectUrl === "fucaiiphone" ||
