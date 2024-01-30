@@ -511,31 +511,16 @@ const formRules = reactive({
   value: [required(t('message.validateConfigValueRequired'))],
 })
 
-watch(
-  () => configs.value,
-  () => {
-    defaultVip.value = Number(getter('default_vip', false).value)
-    defaultAgentVip.value = Number(getter('default_agent_vip', false).value)
-    defaultFinancial.value = Number(getter('default_financial', false).value)
-    defaultAgentFinancial.value = Number(
-      getter('default_agent_financial', false).value
-    )
-    defaultRisk.value = Number(getter('default_risk', false).value)
-    defaultAgentRisk.value = Number(getter('default_agent_risk', false).value)
-  },
-  { deep: true }
-)
+watch(() => configs.value, { deep: true })
 
 watch(
   () => siteId.value,
   async () => {
-    console.log('1. defaultVip : ', defaultVip)
     configs.value.splice(0, configs.value.length)
     await loadConfigs()
     await loadVip()
     await loadFinancialLevelInfos()
     await loadRiskLevels()
-    console.log('configs.value : ', configs.value)
   }
 )
 
