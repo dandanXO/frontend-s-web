@@ -12,6 +12,9 @@
     <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
     <CnySpinWheelPromo v-if="list.redirectUrl === 'cny-spinwheel' && !isCommonPromo" />
+    <HongBaoYu2024Promo
+      v-if="!isCommonPromo && list.redirectUrl === 'cny-hongbaoyu'"
+    />
 
     <div v-if="list.redirectUrl === 'fucaiiphone' && store.hasToken()" class="promo-4">
       <div class="tabs">
@@ -45,7 +48,9 @@
                       color="black"
                       :input-style="{ color: 'black' }"
                       type="number"
-                      :rules="[(val) => (val && val.length === 3) || '号码长度应为3']"
+                      :rules="[
+                        (val) => (val && val.length === 3) || '号码长度应为3'
+                      ]"
                       label="幸运号码"
                     />
                     <q-btn :loading="btnLoading" @click="submitLuckyNumber()" color="brand" label="发送" />
@@ -185,6 +190,7 @@ import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
+import HongBaoYu2024Promo from "../components/hotpromo/hongbaoyu/HongBaoYu2024.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import CnySpinWheelPromo from "../components/hotpromo/cnySpinWheel/CnySpinWheel.vue";
@@ -198,6 +204,7 @@ export default defineComponent({
     TigerCardPromo,
     GoldenEggPromo,
     HongBaoYuPromo,
+    HongBaoYu2024Promo,
     WelcomeTaskPromo,
     InviteFriendPromo,
     CnySpinWheelPromo
@@ -254,6 +261,7 @@ export default defineComponent({
       this.list.redirectUrl === "tigercard" ||
       this.list.redirectUrl === "goldenegg" ||
       this.list.redirectUrl === "hongbaoyu" ||
+      this.list.redirectUrl === "cny-hongbaoyu" ||
       this.list.redirectUrl === "invitefriend" ||
       this.list.redirectUrl === "welcomenewuser" ||
       this.list.redirectUrl === "fucaiiphone" ||

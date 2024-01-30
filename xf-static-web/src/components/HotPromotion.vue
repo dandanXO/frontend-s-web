@@ -13,6 +13,11 @@
     <HongBaoYuPromo
       v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu' && store.token"
     />
+    <HongBaoYu2024Promo
+      v-if="
+        !isCommonPromo && list.redirectUrl === 'cny-hongbaoyu' && store.token
+      "
+    />
     <WelcomeTaskPromo
       v-if="
         !isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token
@@ -194,6 +199,7 @@ import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
+import HongBaoYu2024Promo from "../components/hotpromo/hongbaoyu/HongBaoYu2024.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import CnySpinWheelPromo from "../components/hotpromo/cnySpinWheel/CnySpinWheel.vue";
@@ -210,6 +216,7 @@ export default defineComponent({
     TigerCardPromo,
     GoldenEggPromo,
     HongBaoYuPromo,
+    HongBaoYu2024Promo,
     InviteFriendPromo,
     WelcomeTaskPromo,
     CnySpinWheelPromo
@@ -455,6 +462,7 @@ export default defineComponent({
       this.list.redirectUrl === "tigercard" ||
       this.list.redirectUrl === "goldenegg" ||
       this.list.redirectUrl === "hongbaoyu" ||
+      this.list.redirectUrl === "cny-hongbaoyu" ||
       this.list.redirectUrl === "invitefriend" ||
       this.list.redirectUrl === "welcomenewuser" ||
       this.list.redirectUrl === "fucaiiphone" ||
