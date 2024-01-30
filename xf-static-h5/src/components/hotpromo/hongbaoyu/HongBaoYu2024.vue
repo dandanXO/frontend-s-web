@@ -476,7 +476,7 @@ onMounted(() => {
 </style>
 
 <style lang="scss">
-.banner-container {
-  display: none !important;
-}
+//.banner-container {
+//  display: none !important;
+//}
 </style>

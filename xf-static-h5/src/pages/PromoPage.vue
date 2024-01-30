@@ -59,25 +59,17 @@
           </div>
           <div v-else class="selected-promo">
             <div class="selected-promo-wrapper" :class="`bg__${selectedPromo.promoCode}`">
-              <div class="banner-container">
-                <!-- <div
-                    class="promo-bg"
-                    :style="
-                    'background-image: url(' +
-                    imgURL +
-                    (selectedPromo.mobileBannerUrl ? selectedPromo.mobileBannerUrl : selectedPromo.mobileImgUrl) +
-                    ')'
-                  "
-                ></div> -->
-                <!-- <div class="promo-bg"> -->
+              <div class="banner-container"
+                v-if="!isSpecialPromo"
+              >
                 <img
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
                   style="display: block; width: 100%"
                 />
-                <!-- </div> -->
               </div>
-              <div class="inner">
+              <div class="inner"
+                :class="selectedPromo.promoCode === 'cny-hongbaoyu' && 'cny2024'">
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
                 </div>
@@ -158,6 +150,7 @@ export default defineComponent({
     const $q = useQuasar();
     const ui = useUI();
     const isDisplayLogin = ref(false);
+    const isSpecialPromo= ref(false);
 
     const tab = ref("all");
     const tabItems = [
@@ -194,7 +187,7 @@ export default defineComponent({
       if (route.query === null) {
         isPromoDetail.value = false
       } else {
-        isPromoDetail.value = route.query.name
+        isPromoDetail.value = route.query.name;
         ui.setScrollPosition("vertical", 0, 200);
       }
     });
@@ -222,6 +215,13 @@ export default defineComponent({
           })
     }
     const showPromoDetails = (promo) => {
+      if (promo.promoCode === "cny-hongbaoyu") {
+        isSpecialPromo.value = true
+      } else {
+        isSpecialPromo.value = false
+      }
+
+
       if (!store.token) {
         isDisplayLogin.value = true
       } else {
@@ -290,6 +290,7 @@ export default defineComponent({
       isPromoDetail,
       showPromoDetails,
       selectedPromo,
+      isSpecialPromo,
       banner,
       imgURL,
       store,
@@ -618,6 +619,11 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
+        &.cny2024 {
+          width: 100%;
+          margin:0 auto;
+        }
 
         img {
           margin-bottom: 5px;
