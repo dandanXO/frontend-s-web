@@ -28,7 +28,6 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 280px; margin-left: 10px;"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
         />
@@ -135,7 +134,11 @@
       <el-table-column prop="siteName" :label="t('fields.site')" width="120" />
       <el-table-column prop="loginName" :label="t('fields.loginName')" width="150" />
       <el-table-column prop="vipName" :label="t('fields.vipLevel')" width="120" />
-      <el-table-column prop="matchTitle" :label="t('fields.matchTitle')" width="280" />
+      <el-table-column prop="matchTitle" :label="t('fields.matchTitle')" width="280">
+        <template #default="scope">
+          <span>{{ scope.row.matchTitle + ' ' + scope.row.teamOne + ' vs ' + scope.row.teamTwo }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="gameType" :label="t('fields.gameType')" width="140">
         <template #default="scope">
           <span>{{ t('gameType.' + scope.row.gameType) }}</span>
@@ -218,7 +221,7 @@
       >
         <template #default="scope">
           <el-button
-            v-if="scope.row.status === 'PENDING_SETTLE'"
+            v-if="scope.row.status === 'PENDING_SETTLE' || scope.row.status === 'PENDING_MATCH' "
             size="small"
             type="success"
             v-permission="['sys:game-match-record:update']"
@@ -228,7 +231,7 @@
             {{ t('fields.settle') }}
           </el-button>
           <el-button
-            v-if="scope.row.status === 'PENDING_SETTLE'"
+            v-if="scope.row.status === 'PENDING_SETTLE' || scope.row.status === 'PENDING_MATCH' "
             size="small"
             type="danger"
             v-permission="['sys:game-match-record:update']"
@@ -280,10 +283,6 @@ function convertDate(date) {
   return moment(date).endOf('day').format('YYYY-MM-DD');
 }
 
-function disabledDate(time) {
-  return time.getTime() > new Date().getTime();
-}
-
 const request = reactive({
   size: 20,
   current: 1,
@@ -317,9 +316,10 @@ const uiControl = reactive({
     { key: 4, displayName: 'CANCEL', value: 'CANCEL' }
   ],
   gameType: [
-    { key: 1, displayName: 'SPORT', value: 'SPORT' },
-    { key: 2, displayName: 'ESPORT', value: 'ESPORT' },
-  ]
+    { key: 1, displayName: 'NBA', value: 'NBA' },
+    { key: 2, displayName: 'SPORT', value: 'SPORT' },
+    { key: 3, displayName: 'ESPORT', value: 'ESPORT' },
+  ],
 });
 const page = reactive({
   pages: 0,

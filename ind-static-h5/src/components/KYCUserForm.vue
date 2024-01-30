@@ -178,7 +178,7 @@ const updateNewUserState = () => {
   width: 100%;
   height: 48px;
   transition: 0.3s all;
-  background-image: url(../assets/images/account/btn-purple-pattern.png);
+  // background-image: url(../assets/images/account/btn-purple-pattern.png);
   color: #ffffff;
   margin: auto;
   &:active {

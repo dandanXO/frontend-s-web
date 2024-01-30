@@ -146,7 +146,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        v-if="hasPermission('sys:feedback:read')"
+        v-if="hasPermission(['sys:feedback:read'])"
         :label="t('fields.operate')"
         align="center"
         min-width="100"
@@ -268,7 +268,6 @@ async function loadSites() {
 }
 
 async function showReadFeedback(feedback) {
-  console.log("hello")
   const { data: ret } = await readFeedback(feedback)
   uiControl.formVisible = true
   nextTick(() => {
@@ -283,9 +282,6 @@ async function showReadFeedback(feedback) {
       form.replyTitle = "RE: " + form.title
       uiControl.formDisabled = false
     }
-    console.log(uiControl.formDisabled)
-    console.log(feedback)
-    console.log(form)
   });
 }
 

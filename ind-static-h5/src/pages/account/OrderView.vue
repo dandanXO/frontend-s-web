@@ -105,7 +105,6 @@ import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { updateDate, convertToGMT8, convertToGMT55 } from "src/boot/utils";
 import SwiperNav from "../../components/SwiperNav.vue";
-import ContentView from "../../components/ContentView.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";

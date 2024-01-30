@@ -265,7 +265,7 @@ const redeem = () => {};
     display: flex;
     position: relative;
     line-height: 1.25;
-    background: url("../assets/images/bonus/bonus-page-daily-wager-reward-banner.png");
+    // background: url("../assets/images/bonus/bonus-page-daily-wager-reward-banner.png");
     min-height: 150px;
     margin-bottom: 20px;
 

@@ -7,6 +7,7 @@
     :pagination="{clickable: true}"
     :mousewheel="true"
     :autoHeight="true"
+    id="login-swiper"
   >
     <SwiperSlide>
       <LoginRegisterPage siteId="6" />
@@ -97,7 +98,7 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style scoped>
 body {
   overflow: hidden;
 }

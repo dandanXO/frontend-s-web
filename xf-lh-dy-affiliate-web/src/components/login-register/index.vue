@@ -1,5 +1,7 @@
 <template>
-  <div class="firstPage">
+  <div class="firstPage"
+       :class="props.siteId !== '5' ? '' : 'ind-firstPage'"
+  >
     <div class="inner">
       <div class="loginPage">
         <div class="left">
@@ -12,15 +14,15 @@
         <div class="right">
           <div class="bg">
             <div class="top">
-              <div class="log">{{ isReg ? '注册' : '登录' }}</div>
-              <div class="topright">
-                <span class="noaccabs">
-                  {{ isReg ? '已经有账号? ' : '没有帐户？' }}
-                </span>
-                <a @click="isReg = !isReg" class="signlog">
-                  {{ isReg ? '请登录' : '立即注册' }}
-                </a>
-              </div>
+              <div class="log">{{ isReg ? $t('common.signup') : $t('common.login') }}</div>
+              <!--              <div class="topright" v-if="props.siteId !== '5'">-->
+              <!--                <span class="noaccabs">-->
+              <!--                  {{ isReg ? '已经有账号? ' : '没有帐户？' }}-->
+              <!--                </span>-->
+              <!--                <a @click="isReg = !isReg" class="signlog">-->
+              <!--                  {{ isReg ? '请登录' : '立即注册' }}-->
+              <!--                </a>-->
+              <!--              </div>-->
             </div>
             <div class="mid">
               <el-form
@@ -35,7 +37,7 @@
                   <el-input
                     ref="userNameRef"
                     v-model="loginForm.userName"
-                    :placeholder="'用户名'"
+                    :placeholder="currentSite.lang === 'EN' ? 'Username' : '用户名'"
                     name="username"
                     type="text"
                     tabindex="1"
@@ -55,7 +57,7 @@
                       ref="passwordRef"
                       v-model="loginForm.password"
                       :type="passwordType"
-                      :placeholder="'密码'"
+                      :placeholder="currentSite.lang === 'EN' ? 'Password' : '密码'"
                       name="password"
                       tabindex="2"
                       autocomplete="no-fill"
@@ -66,14 +68,30 @@
                   </el-form-item>
                 </el-tooltip>
 
-                <el-button
-                  class="common-btn"
-                  type="danger"
-                  style="width:100%;"
-                  @click.prevent="handleLogin"
-                >
-                  立即登录
-                </el-button>
+                <div class="flex-c-center-div">
+                  <el-button
+                    class="common-btn"
+                    type="danger"
+                    style="width:50%;"
+                    @click.prevent="handleLogin"
+                  >
+                    {{ $t('common.loginnow') }}
+                  </el-button>
+                  <el-button
+                    class="common-btn default-btn"
+                    type="primary"
+                    style="width:50%;"
+                    @click="isReg = !isReg"
+                  >
+                    {{ $t('common.register_affi') }}
+                  </el-button>
+                </div>
+
+                <div v-if="props.siteId !== '5' " class="flex-c-center-div">
+                  <div class="contact-div" @click="swipeToContactUs">
+                    {{ $t('common.contact_us') }}</div>
+                </div>
+
               </el-form>
               <el-form
                 v-if="isReg"
@@ -88,7 +106,7 @@
                     <el-input
                       ref="userNameRef"
                       v-model="regForm.userName"
-                      :placeholder="'合营账户'"
+                      :placeholder="currentSite.lang === 'EN' ? 'Affiliate Account' : '合营账户'"
                       name="userName"
                       type="text"
                       tabindex="1"
@@ -107,7 +125,7 @@
                         ref="passwordRef"
                         v-model="regForm.password"
                         :type="passwordType"
-                        :placeholder="'密码'"
+                        :placeholder="currentSite.lang === 'EN' ? 'Password' : '密码'"
                         name="password"
                         tabindex="2"
                         autocomplete="on"
@@ -128,7 +146,7 @@
                         ref="confirmPwdRef"
                         v-model="regForm.confirmPwd"
                         :type="passwordType"
-                        :placeholder="'密码确认'"
+                        :placeholder="currentSite.lang === 'EN' ? 'Confirm Password' : '密码确认'"
                         name="password"
                         tabindex="3"
                         autocomplete="on"
@@ -137,17 +155,46 @@
                       />
                     </el-form-item>
                   </el-tooltip>
-                  <el-button
-                    class="common-btn"
-                    :loading="loading"
-                    type="danger"
-                    style="width:100%;"
-                    @click.prevent="handleRegister"
-                  >
-                    下一步
-                  </el-button>
+                  <el-form-item prop="captchaCode">
+                    <el-input
+                      ref="verificationRef"
+                      v-model="regForm.captchaCode"
+                      :placeholder="$t('common.verificationcode')"
+                      name="captchaCode"
+                      type="text"
+                      tabindex="7"
+                      autocomplete="on"
+                    >
+                      <template #append class="verification">
+                        <img :src="verificationImg" @click="getCode()">
+                      </template>
+                    </el-input>
+                  </el-form-item>
+
+                  <div class="flex-c-center-div">
+                    <el-button
+                      class="common-btn"
+                      :loading="loading"
+                      type="danger"
+                      style="width:50%;"
+                      @click.prevent="handleRegister"
+                    >
+                      {{ $t('common.apply') }}
+                    </el-button>
+                    <el-button
+                      class="common-btn default-btn"
+                      style="width:50%;"
+                      @click="isReg = !isReg"
+                    >
+                      {{ $t('common.back_login') }}
+                    </el-button>
+                  </div>
+                  <div v-if="props.siteId !== '5' " class="flex-c-center-div">
+                    <div class="contact-div" @click="swipeToContactUs">
+                      {{ $t('common.contact_us') }}</div>
+                  </div>
                 </div>
-                <div v-if="step === 2">
+                <!--div v-if="step === 2">
                   <el-form-item prop="realName">
                     <el-input
                       ref="realNameRef"
@@ -181,7 +228,7 @@
                       autocomplete="on"
                     />
                   </el-form-item>
-                  <!-- <el-form-item prop="birthday">
+                  <!- <el-form-item prop="birthday">
                         <el-date-picker
                             v-model="regForm.birthday"
                             type="date"
@@ -191,23 +238,8 @@
                             popper-class="custom-date-picker"
                             :disabled-date="disabledDate"
                         />
-                        </el-form-item> -->
-                  <el-form-item prop="captchaCode">
-                    <el-input
-                      ref="verificationRef"
-                      v-model="regForm.captchaCode"
-                      :placeholder="'验证码'"
-                      name="captchaCode"
-                      type="text"
-                      tabindex="7"
-                      autocomplete="on"
-                    >
-                      <template #append class="verification">
-                        <img :src="verificationImg" @click="getCode()">
-                      </template>
-                    </el-input>
-                  </el-form-item>
-                  <!-- <el-form-item prop="codeAffiliate" v-if="!hasAffiliate">
+                        </el-form-item>
+                        <el-form-item prop="codeAffiliate" v-if="!hasAffiliate">
                         <el-input v-if="hasAffiliate"
                                     ref="codeAffiliateRef"
                                     v-model="regForm.codeAffiliate"
@@ -227,8 +259,8 @@
                             tabindex="8"
                             autocomplete="on"
                         />
-                        </el-form-item> -->
-                  <el-button
+                        </el-form-item>
+                        <el-button
                     class="common-btn"
                     :loading="loading"
                     type="danger"
@@ -237,7 +269,7 @@
                   >
                     申请
                   </el-button>
-                </div>
+                </div> -->
               </el-form>
             </div>
             <div class="bot">&nbsp;</div>
@@ -248,10 +280,9 @@
   </div>
   <el-dialog
     v-model="showDialog"
-    width="95%"
     custom-class="dialog400"
     @close="onCloseDialog"
-    :title="'安全验证, 请依次点击：' + words.join(' , ')"
+    :title="$t('common.verification_title') + words.join(' , ')"
   >
     <div
       id="loadDiv"
@@ -289,7 +320,7 @@
             color: 'rgb(130, 208, 130)',
           }"
         >
-          验证成功
+          {{ $t('common.verify_success') }}
         </span>
       </div>
     </div>
@@ -300,7 +331,7 @@
         style="margin-top: 20px;"
         @click="onGetImage()"
       >
-        刷新
+        {{ $t('common.refresh') }}
       </el-button>
       <el-button
         type="success"
@@ -309,7 +340,7 @@
         @click="userLogin()"
         :disabled="coordinates.length === 0"
       >
-        提交
+        {{ $t('common.submit') }}
       </el-button>
     </div>
   </el-dialog>
@@ -339,8 +370,11 @@ import { UserActionTypes } from '@/store/modules/user/action-types'
 import { ElNotification } from 'element-plus'
 import dyLogo from '@/assets/images/dy/logowhitee.png'
 import xfLogo from '@/assets/images/xf/logowhitee.png'
+import indLogo from '@/assets/images/ind/ind-logo.png'
 import { getVerificationImage } from '@/api/verification'
 import { getVerificationCode } from '@/api/user'
+import { useI18n } from "vue-i18n";
+import { i18nStore } from "@/store/language";
 
 export default defineComponent({
   props: {
@@ -378,7 +412,8 @@ export default defineComponent({
       getVerificationCode()
         .then(res => {
           if (res.code === 0) {
-            verificationImg.value = res.data.img
+            // Data Image
+            verificationImg.value = 'data:image/png;base64,' + res.data.img
             state.regForm.codeId = res.data.id
           }
         })
@@ -399,6 +434,7 @@ export default defineComponent({
     const router = useRouter()
     const route = useRoute()
     const store = useStore()
+    const { t } = useI18n()
     const hasAffiliate = ref(false)
     const step = ref(1)
     const state = reactive({
@@ -413,14 +449,14 @@ export default defineComponent({
         userName: [
           {
             required: true,
-            message: '请输入用户名',
+            message: t('message.requiredLoginName'),
             trigger: 'blur',
           },
         ],
         password: [
           {
             required: true,
-            message: '请输入密码',
+            message: t('message.requiredPassword'),
             trigger: 'blur',
           },
         ],
@@ -445,8 +481,8 @@ export default defineComponent({
           },
           {
             min: 6,
-            max: 13,
-            message: '由6-13位数字或字母组成',
+            max: 12,
+            message: '由6-12位数字或字母组成',
             trigger: 'blur',
           },
         ],
@@ -458,8 +494,8 @@ export default defineComponent({
           },
           {
             min: 6,
-            max: 13,
-            message: '由6-13位数字或字母组成',
+            max: 12,
+            message: '由6-12位数字或字母组成',
             trigger: 'blur',
           },
         ],
@@ -570,8 +606,12 @@ export default defineComponent({
       handleLogin: () => {
         loginFormRef.value.validate(async valid => {
           if (valid) {
-            methods.onGetImage()
-            state.showDialog = true
+            if (state.loginForm.site === 'IND') {
+              methods.userLogin()
+            } else {
+              methods.onGetImage()
+              state.showDialog = true
+            }
           }
         })
       },
@@ -579,11 +619,11 @@ export default defineComponent({
         state.regForm.siteId = 6
         regFormRef.value.validate(async valid => {
           if (valid) {
-            if (step.value === 1) {
-              step.value = 2
-              return
-            } else {
-            }
+            // if (step.value === 1) {
+            //   step.value = 2
+            //   return
+            // } else {
+            // }
             state.loading = true
             try {
               await store.dispatch(
@@ -628,13 +668,7 @@ export default defineComponent({
         state.coordinates.splice(0)
       },
       onSuccess: async () => {
-        state.resultDisplay = 'flex'
-        var image = document.getElementById('imageRef')
-        state.imageOffSetWidth = image.offsetWidth
-        state.imageOffSetHeight = image.offsetHeight
-        state.dialogLoading = false
-        image.style.opacity = '0.1'
-        setTimeout(() => {
+        if (state.loginForm.site === 'IND') {
           router
             .push({
               path: state.redirect || '/',
@@ -643,7 +677,24 @@ export default defineComponent({
             .catch(err => {
               console.warn(err)
             })
-        }, 500)
+        } else {
+          state.resultDisplay = 'flex'
+          var image = document.getElementById('imageRef')
+          state.imageOffSetWidth = image.offsetWidth
+          state.imageOffSetHeight = image.offsetHeight
+          state.dialogLoading = false
+          image.style.opacity = '0.1'
+          setTimeout(() => {
+            router
+              .push({
+                path: state.redirect || '/',
+                query: state.otherQuery,
+              })
+              .catch(err => {
+                console.warn(err)
+              })
+          }, 500)
+        }
       },
       onClickImage: e => {
         if (state.coordinates.length < 5) {
@@ -758,19 +809,38 @@ export default defineComponent({
         }
       }
     )
+
+    const swipeToContactUs = () => {
+      var myElement = document.getElementById('login-swiper');
+      console.log(myElement);
+      myElement.swiper.slideTo(1)
+    }
+
     const currentSite = ref({});
+    const i18nStoreLanguage = i18nStore();
+    const { setLanguage } = i18nStoreLanguage;
     const populateCurrentSiteData = () => {
       if (props.siteId === '6') {
         currentSite.value.firstLiner = '从东赢开始'
         currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
         currentSite.value.logo = dyLogo
         state.loginForm.site = 'DY2'
+        setLanguage('zh');
       }
       if (props.siteId === '1') {
         currentSite.value.firstLiner = '从兴发开始'
         currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
         currentSite.value.logo = xfLogo
         state.loginForm.site = 'XF1'
+        setLanguage('zh');
+      }
+      if (props.siteId === '5') {
+        currentSite.value.firstLiner = 'Starts from 55ACE'
+        currentSite.value.secondLiner = 'Become a legend<br>Or become the eulogist of legend?'
+        currentSite.value.logo = indLogo
+        state.loginForm.site = 'IND';
+        currentSite.value.lang = 'EN'
+        setLanguage('en');
       }
     }
     onMounted(() => {
@@ -813,7 +883,10 @@ export default defineComponent({
       hasAffiliate,
       step,
       isReg,
-      currentSite
+      currentSite,
+      props,
+      t,
+      swipeToContactUs
     }
   },
 })
@@ -841,6 +914,21 @@ a {
   &:hover {
     opacity: 1;
   }
+
+  &.default-btn{
+    background-color: transparent;
+    border: 1px solid #458bff;
+    color: #458bff;
+  }
+
+  &:hover{
+    opacity: 0.9;
+  }
+  &:active{
+    filter: brightness(0.85);
+    transform: translate(0px , 1px);
+  }
+
 }
 :deep(.el-input-group__append) {
   background-color: #ffffff;
@@ -1063,6 +1151,75 @@ a {
       }
     }
   }
+
+  &.ind-firstPage{
+    background: url('../../assets/images/ind/ind-bg.png') no-repeat center;
+
+    .logo {
+      position: absolute;
+      left: 70px;
+      top: 40px;
+      width: 207px;
+    }
+
+    .loginPage .left .first-liner{
+      max-width: 750px;
+      width: 750px;
+    }
+
+    .loginPage .left .second-liner{
+      max-width: 600px;
+      width: 600px;
+    }
+
+    .inner{
+     max-width: 1300px;
+    }
+
+    .common-btn{
+      background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%);
+      color: #fff;
+    }
+
+  }
+
+}
+
+.flex-c-center-div{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 10px;
+  text-align:center;
+
+  .contact-div{
+    margin-top: 10px;
+    width: 50%;
+    padding: 10px 20px 0px;
+    cursor: pointer;
+
+    &:hover{
+      opacity: 0.9;
+    }
+    &:active{
+      filter:brightness(0.85);
+      transform: translate(0px, 1px);
+    }
+  }
+}
+
+@media (max-width: 1100px) {
+  .firstPage {
+    height: auto;
+    .inner {
+      padding-top: 100px;
+    }
+
+    .loginPage {
+      flex-direction: column;
+    }
+  }
 }
 
 @media (max-width: 768px) {
@@ -1109,6 +1266,38 @@ a {
       top: 20px;
       width: 120px;
     }
+
+    &.ind-firstPage{
+      .logo {
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        width: 150px;
+      }
+
+      .loginPage{
+        padding-top: 30px;
+      }
+      .loginPage .left{
+        width: calc(100% - 20px);
+
+      }
+      .loginPage .left .first-liner{
+        max-width: none;
+        width: 100%;
+      }
+
+      .loginPage .left .second-liner{
+        max-width: none;
+        width: 100%;
+      }
+
+      .common-btn{
+        background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%);
+      }
+
+    }
+
   }
   .wrapper {
     .affiliate {

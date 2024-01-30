@@ -89,12 +89,24 @@ const https = (api) => {
   const token = store.state.user.token;
   const currentHost = window.location.host
   const thaiHost = "affiliate-web.monemental.com"
+  const indHost = "ind-affiliate.wbesfdides.com"
   const isAff = api === 'affiliate'
   const isCr = api === 'cashier'
+  let apiUrl = process.env.VUE_APP_RST_API
+  switch (currentHost) {
+    case thaiHost:
+      apiUrl = isAff ? process.env.VUE_APP_TH_RST_API : (isCr ? process.env.VUE_APP_TH_CR_API : process.env.VUE_APP_TH_BASE_API)
+      break
+
+    case indHost:
+      apiUrl = isAff ? process.env.VUE_APP_IND_RST_API : (isCr ? process.env.VUE_APP_IND_CR_API : process.env.VUE_APP_IND_BASE_API)
+      break
+
+    default:
+      apiUrl = isAff ? process.env.VUE_APP_RST_API : (isCr ? process.env.VUE_APP_CR_API : process.env.VUE_APP_BASE_API)
+  }
   const config = {
-    baseURL: currentHost === thaiHost
-      ? (isAff ? process.env.VUE_APP_TH_RST_API : (isCr ? process.env.VUE_APP_TH_CR_API : process.env.VUE_APP_TH_BASE_API))
-      : (isAff ? process.env.VUE_APP_RST_API : (isCr ? process.env.VUE_APP_CR_API : process.env.VUE_APP_BASE_API)),
+    baseURL: apiUrl,
     headers: {
       TOKEN: token,
       Authorization: store.state.user.siteCode

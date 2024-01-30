@@ -22,8 +22,14 @@
         <el-input
           v-model="request.memberName"
           size="small"
-          style="width: 150px;"
+          style="width: 150px;margin-left: 5px"
           :placeholder="t('fields.memberName')"
+        />
+        <el-input
+          v-model="request.telephone"
+          size="small"
+          style="width: 150px;margin-left: 5px"
+          :placeholder="t('fields.telephone')"
         />
         <el-select
           clearable
@@ -101,9 +107,36 @@
         width="250"
       >
         <template #default="scope">
-          <span v-for="f in freezeType.list" :key="f.key">
-            <span v-if="scope.row.freezeType === f.value">{{ f.name }}</span>
-          </span>
+          <el-tag
+            v-if="scope.row.freezeType === 'NORMAL'"
+            type="warning"
+            size="mini"
+          >
+            {{ t('freeze.NORMAL') }}
+          </el-tag>
+          <el-tag
+            v-else-if="scope.row.freezeType === 'TEMPORARY'"
+            type="danger"
+            size="mini"
+          >
+            {{ t('freeze.TEMPORARY') }}
+          </el-tag>
+          <el-tag
+            v-else-if="scope.row.freezeType === 'PERMANENT'"
+            type="danger"
+            size="mini"
+            effect="dark"
+          >
+            {{ t('freeze.PERMANENT') }}
+          </el-tag>
+          <el-tag
+            v-else-if="scope.row.freezeType === 'UNFREEZE'"
+            type="success"
+            size="mini"
+          >
+            {{ t('freeze.UNFREEZE') }}
+          </el-tag>
+          <span v-else>-</span>
         </template>
       </el-table-column>
       <el-table-column prop="reason" :label="t('fields.reason')" width="250" />
@@ -146,7 +179,7 @@ import { getFreezeRecords } from '../../../api/freeze'
 import { useI18n } from 'vue-i18n'
 import { getSiteListSimple } from '../../../api/site'
 import { getShortcuts } from '@/utils/datetime'
-import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { formatInputTimeZone } from '@/utils/format-timeZone'
 
 const { t } = useI18n()
 const page = reactive({
@@ -179,9 +212,10 @@ const siteList = reactive({
 
 const freezeType = reactive({
   list: [
-    { key: 1, name: 'NORMAL', value: 'NORMAL' },
-    { key: 2, name: 'TEMPORARY', value: 'TEMPORARY' },
-    { key: 3, name: 'PERMANENT', value: 'PERMANENT' },
+    { key: 1, name: t('freeze.NORMAL'), value: 'NORMAL' },
+    { key: 2, name: t('freeze.TEMPORARY'), value: 'TEMPORARY' },
+    { key: 3, name: t('freeze.PERMANENT'), value: 'PERMANENT' },
+    { key: 4, name: t('freeze.UNFREEZE'), value: 'UNFREEZE' },
   ],
 })
 
@@ -223,9 +257,17 @@ async function loadFreezeRecords() {
   })
   timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
   if (request.createTime.length === 2) {
-    query.createTime = JSON.parse(JSON.stringify(request.createTime));
-    query.createTime[0] = formatInputTimeZone(query.createTime[0], timeZone, 'start');
-    query.createTime[1] = formatInputTimeZone(query.createTime[1], timeZone, 'end');
+    query.createTime = JSON.parse(JSON.stringify(request.createTime))
+    query.createTime[0] = formatInputTimeZone(
+      query.createTime[0],
+      timeZone,
+      'start'
+    )
+    query.createTime[1] = formatInputTimeZone(
+      query.createTime[1],
+      timeZone,
+      'end'
+    )
     query.createTime = query.createTime.join(',')
   }
   const { data: ret } = await getFreezeRecords(query)

@@ -21,7 +21,6 @@ import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import moment from "moment";
 import { convertToGMT55 } from "src/boot/utils";
-import ContentView from "../../components/ContentView.vue";
 
 const router = useRouter();
 const store = userStore();

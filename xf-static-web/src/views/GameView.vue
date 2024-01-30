@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="casino-container"
-  >
+  <div class="casino-container">
     <div class="recreation-money" id="numBox">LOADING...</div>
     <!-- <router-link to="/promotion"> -->
     <!-- <div
@@ -215,7 +213,12 @@ export default defineComponent({
         getPlatformGames(activePlat.value.id, "SLOT").then((data) => {
           data.forEach(element => {
           element.default = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
-          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
+          if(element.icon.indexOf('/') > -1){
+            element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${element.icon}`;
+          }else{
+            element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
+          }
+
           });
           gameListData.value = data;
           gamePage.total = data.length;

@@ -200,7 +200,6 @@
         <el-col :span="7">
           <el-input-number
             v-model="form.sequence"
-            :min="1"
             controls-position="right"
           />
         </el-col>

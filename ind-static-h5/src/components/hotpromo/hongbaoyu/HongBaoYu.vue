@@ -1,17 +1,9 @@
 <template>
   <div>
     <div class="receive-container">
-      <button v-if="promoNotReady && bonusOpened" class="check-tip">
-        活动未开启
-      </button>
-      <div
-        @click="getPromotion"
-        v-if="!promoNotReady && !bonusOpened"
-        class="receive-btn"
-      >
-        <img
-          src="../../../assets/images/promotion/hotpromo/hongbaoyu/package_light.png"
-        />
+      <button v-if="promoNotReady && bonusOpened" class="check-tip">活动未开启</button>
+      <div @click="getPromotion" v-if="!promoNotReady && !bonusOpened" class="receive-btn">
+        <!-- <img src="../../../assets/images/promotion/hotpromo/hongbaoyu/package_light.png" /> -->
       </div>
       <p v-if="bonusOpened" class="money-account">
         <span>{{ winAmount }}</span>
@@ -65,18 +57,16 @@ const getPromotion = () => {
   position: relative;
   width: 100%;
   height: 140px;
-  background: url(../../../assets/images/promotion/hotpromo/hongbaoyu/hongbaoyu.png)
-    no-repeat center center;
+  // background: url(../../../assets/images/promotion/hotpromo/hongbaoyu/hongbaoyu.png) no-repeat center center;
   background-size: contain;
   .red-packet {
     width: 50%;
     height: 140px;
     margin: 0 auto 20px;
-    background: url(../../../assets/images/promotion/hotpromo/hongbaoyu/package_red.png)
-      no-repeat center center;
+    // background: url(../../../assets/images/promotion/hotpromo/hongbaoyu/package_red.png) no-repeat center center;
     background-size: contain;
     &.open {
-      background-image: url(../../../assets/images/promotion/hotpromo/hongbaoyu/img_repacket_open.png);
+      // background-image: url(../../../assets/images/promotion/hotpromo/hongbaoyu/img_repacket_open.png);
     }
   }
 

@@ -502,7 +502,6 @@
 
 <script setup>
 import SwiperNav from "../components/SwiperNav.vue";
-import ContentView from "../components/ContentView.vue";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import ProfileProgressBanner from "../components/ProfileProgressBanner.vue";
 import { defineComponent, reactive, ref, onMounted, computed, onActivated } from "vue";

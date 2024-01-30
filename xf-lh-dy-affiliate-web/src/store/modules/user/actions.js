@@ -1,7 +1,15 @@
 import { state } from "./state";
 import { UserMutationTypes } from "./mutation-types";
 import { UserActionTypes } from "./action-types";
-import { removeToken, removeId, removeSiteId, removeSiteCode, removeLoginName, removeRealName, removeAffiliateLevel } from "@/utils/cookies";
+import {
+  removeToken,
+  removeId,
+  removeSiteId,
+  removeSiteCode,
+  removeLoginName,
+  removeRealName,
+  removeAffiliateLevel
+} from "@/utils/cookies";
 import { getDevice } from "@/utils/util";
 import { resetRouter } from "@/router";
 import { loginRequest, updatePasswordRequest, userInfoRequest, registerRequest } from "../../../api/user";
@@ -17,7 +25,14 @@ export const actions = {
     let { userName, password, site, key, coordinates } = userInfo;
     userName = userName.trim();
     const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
-    const { data: loginInfo } = await loginRequest({ userName: userName, password, siteCode: site, way: regDevice, key, coordinates });
+    const { data: loginInfo } = await loginRequest({
+      userName: userName,
+      password,
+      siteCode: site,
+      way: regDevice,
+      key,
+      coordinates
+    });
     commit(UserMutationTypes.SET_TOKEN, loginInfo.token);
     commit(UserMutationTypes.SET_ID, loginInfo.id);
     commit(UserMutationTypes.SET_LOGIN_NAME, loginInfo.loginName);
@@ -30,10 +45,37 @@ export const actions = {
     { commit },
     userInfo
   ) {
-    let { userName, password, realName, confirmPwd, telephone, email, siteId, captchaCode, codeId, codeAffiliate, codePersonalAffiliate, birthday } = userInfo;
+    let {
+      userName,
+      password,
+      realName,
+      confirmPwd,
+      telephone,
+      email,
+      siteId,
+      captchaCode,
+      codeId,
+      codeAffiliate,
+      codePersonalAffiliate,
+      birthday
+    } = userInfo;
     userName = userName.trim();
     const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
-    await registerRequest({ loginName: userName, password, realName, confirmPwd: confirmPwd, telephone, email, siteId, captchaCode, codePersonalAffiliate, codeId, codeAffiliate, birthday, regDevice: regDevice });
+    await registerRequest({
+      loginName: userName,
+      password,
+      realName,
+      confirmPwd: confirmPwd,
+      telephone,
+      email,
+      siteId,
+      captchaCode,
+      codePersonalAffiliate,
+      codeId,
+      codeAffiliate,
+      birthday,
+      regDevice: regDevice
+    });
   },
 
   [UserActionTypes.ACTION_RESET_TOKEN](
@@ -104,7 +146,11 @@ export const actions = {
     _ctx,
     updateInfo // seems like it is the only required one
   ) {
-    await updatePasswordRequest(updateInfo.affId, { password: updateInfo.password, oldPassword: updateInfo.oldPassword });
+    await updatePasswordRequest(updateInfo.affId, {
+      siteId: updateInfo.siteId,
+      password: updateInfo.password,
+      oldPassword: updateInfo.oldPassword
+    });
     ElMessage({ message: i18n.global.t('message.success'), type: "success" });
   },
   async [UserActionTypes.ACTION_UPDATE_REAL_NAME](

@@ -1,6 +1,6 @@
-# Jolly88 App (ph-project)
+# XF App (xf-static-h5)
 
-APP
+兴发 H5+APP
 
 ## Install the dependencies
 ```bash
@@ -23,29 +23,15 @@ npm run lint
 ```
 
 
-### Format the files
-```bash
-yarn format
-# or
-npm run format
-```
-
-
-
-### Build the app for production
+### Build the app for H5 production
 ```bash
 quasar build
 ```
 
-### Customize the configuration
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js).
-
-
-
 ### Build The App in Android.
 ```bash
 1. build
-quasar build -m capacitor -T android
+npm run build   [cross-env ENV_FILE=app quasar build -m capacitor -T android]
 
 2. go to folder: src-capacitor
 cd src-capacitor
@@ -55,7 +41,7 @@ npx cap sync
 
 4(a). Build and Run on Android device. (Plug your Android device, Enable Developer Option, Enable USB Debugging.)
 adb devices  ##(Optional.)
-npx cap run android -l
+npx cap run android
 
 4(b). Build on Android Studio/ Build .apk
 npx cap open android

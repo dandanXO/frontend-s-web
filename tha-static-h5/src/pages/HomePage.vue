@@ -143,42 +143,66 @@
         </div>
 
         <template v-for="(lotteryGameItem, index) in lotteryGamesList" :key="`lottery-${index}`">
-          <div
-            v-if="!isShow"
-            class="game-item btn-pointer"
-            @click="selectLotteryPlat(lotteryGameItem)"
-          >
+          <template v-if="lotteryGameItem.code === 'GPI'">
             <div
-              class="platform-img"
-              :style="{
-                backgroundImage: (() => {
-                  try {
-                    return `url(${require(`../assets/home/lottery/${lotteryGameItem.code}.png`)})`;
-                  } catch (e) {
-                    return `url(${comingSoonImg})`;
-                  }
-                })()
-              }"
-            />
-          </div>
-          <div
-            v-if="isShow"
-            class="game-item btn-pointer"
-            @click="playGame(lotteryGameItem.name, 'GPI', lotteryGameItem.code)"
-          >
+              v-if="!isShow"
+              class="game-item btn-pointer"
+              @click="playGame(lotteryGameItem.name, lotteryGameItem.code, 'thailottery')"
+            >
+              <div
+                class="platform-img"
+                :style="{
+                  backgroundImage: (() => {
+                    try {
+                      return `url(${require(`../assets/home/lottery/${lotteryGameItem.code}.png`)})`;
+                    } catch (e) {
+                      return `url(${comingSoonImg})`;
+                    }
+                  })()
+                }"
+              />
+            </div>
+          </template>
+          <template v-else>
             <div
-              class="platform-img"
-              :style="{
-                backgroundImage: (() => {
-                  try {
-                    return `url(${`${gameImgURL}${lotteryGameItem.icon}`})`;
-                  } catch (e) {
-                    return `url(${comingSoonImg})`;
-                  }
-                })()
-              }"
-            />
-          </div>
+              v-if="!isShow"
+              class="game-item btn-pointer"
+              @click="playGame(lotteryGameItem.name, lotteryGameItem.code, '')"
+            >
+              <div
+                class="platform-img"
+                :style="{
+                  backgroundImage: (() => {
+                    try {
+                      return `url(${require(`../assets/home/lottery/${lotteryGameItem.code}.png`)})`;
+                    } catch (e) {
+                      return `url(${comingSoonImg})`;
+                    }
+                  })()
+                }"
+              />
+            </div>
+            <div
+              v-if="isShow"
+              class="game-item btn-pointer lottery-tcg-list"
+              @click="playGame(lotteryGameItem.name, selectedPlat.code, lotteryGameItem.code)"
+            >
+              <div
+                class="platform-img"
+                :style="{
+                  backgroundImage: (() => {
+                    try {
+                      return `url(${`${gameImgURL}${lotteryGameItem.icon}`})`;
+                    } catch (e) {
+                      return `url(${comingSoonImg})`;
+                    }
+                  })()
+                }"
+              />
+
+              <span class="game-name">{{ lotteryGameItem.name }}</span>
+            </div>
+          </template>
         </template>
       </div>
     </Transition>
@@ -924,9 +948,7 @@
         <router-link to="/promo?id=80">
           <div class="popup-item">
             <span>
-              แนะนำเพื่อน รับโบนัสสูงถึง
-              <em>6,888</em>
-              รับเงินคืนสูงสุด
+              แนะนำเพื่อนรับเงินคืนสูงสุด
               <em>20,000</em>
             </span>
           </div>
@@ -957,7 +979,7 @@
           <div class="popup-item">
             <span>
               โบนัส
-              <em>15%</em>
+              <em>20%</em>
               สูงสุด
               <em>15,000</em>
               ถอนไม่อั้น
@@ -1145,12 +1167,13 @@ export default defineComponent({
 
           favGamesList.value.forEach((element) => {
             element.default = require("../assets/images/games/aviator/default.png");
-            if(element.icon.startsWith('3/')){
+            if (element.icon.startsWith("3/")) {
               element.icon = `${process.env.IMAGE_CDN}/game/${element.icon}`;
-            }else{
-              element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${element.platformCode.toLowerCase()}/${element.icon}.png`;
+            } else {
+              element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${element.platformCode.toLowerCase()}/${
+                element.icon
+              }.png`;
             }
-
           });
         }
       });
@@ -1282,12 +1305,12 @@ export default defineComponent({
     const lotteryGames = ref([]);
     const lotteryGamesMore = ref([]);
     const lotteryGamesList = computed(() => {
-      if(isShow.value) {
+      if (isShow.value) {
         return lotteryGamesMore.value;
       }
 
       return lotteryGames.value;
-    })
+    });
     const gameBoardItemData = [
       { name: "slots", imgName: "home-slot.png", label: t("lang.slot_header") },
       { name: "fish", imgName: "home-fish.png", label: t("lang.fish_header") },
@@ -1414,7 +1437,9 @@ export default defineComponent({
       const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
       const code = selectedPlatId.value;
       const gameType = type;
-      const key = store.hasToken() ? `LOGGED_PLATFORM_GAMES_${code}_${gameType}_${regDevice}` : `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+      const key = store.hasToken()
+        ? `LOGGED_PLATFORM_GAMES_${code}_${gameType}_${regDevice}`
+        : `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
 
       var platformGamesApiUrl = store.hasToken() ? "/session/loggedInPlatformGames" : "/platformGames";
 
@@ -1457,10 +1482,12 @@ export default defineComponent({
             });
             let games = [];
             minis.forEach((mini) => {
-              if(mini.icon.startsWith('3/')){
+              if (mini.icon.startsWith("3/")) {
                 mini.icon = `${process.env.IMAGE_CDN}/game/${mini.icon}`;
-              }else{
-                mini.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${mini.code}.png`;
+              } else {
+                mini.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${
+                  mini.code
+                }.png`;
               }
               if (mini.name.indexOf("(铜)") > -1 || mini.name.indexOf("(银)") > -1 || mini.name.indexOf("(金)") > -1) {
                 games.push(mini);
@@ -1489,12 +1516,13 @@ export default defineComponent({
           } else {
             res.forEach((element) => {
               element.default = require("../assets/images/games/aviator/default.png");
-              if(element.icon.startsWith('3/')){
+              if (element.icon.startsWith("3/")) {
                 element.icon = `${process.env.IMAGE_CDN}/game/${element.icon}`;
-              }else{
-                element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${element.icon}.png`;
+              } else {
+                element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${
+                  element.icon
+                }.png`;
               }
-
             });
             gameListData.value = res;
             gamePage.total = res.length;
@@ -1873,6 +1901,7 @@ export default defineComponent({
       switchPlat(plat, "fish");
     };
     const selectLotteryPlat = (plat) => {
+      // debugger;
       selectedPlatId.value = plat.id;
       isShow.value = true;
       switchPlat(plat, "lottery");
@@ -2001,6 +2030,7 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
+
 .home-banner-wrapper {
   position: relative;
 }
@@ -2543,6 +2573,35 @@ export default defineComponent({
   img {
     width: 100%;
     display: block;
+  }
+}
+
+#id-lottery-board {
+  row-gap: 25px;
+}
+
+.lottery-tcg-list {
+  &.game-item {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 15px;
+    padding: 9px;
+    background-image: url("../assets/images/index/thai-tcg-bg.png");
+    background-size: 100% 100%;
+
+    .platform-img {
+      aspect-ratio: 1/1;
+    }
+
+    .game-name {
+      width: 100%;
+      display: block;
+      padding: 10px 0px;
+      white-space: normal;
+      line-height: 14px;
+      height: 30px;
+      text-align: center;
+    }
   }
 }
 

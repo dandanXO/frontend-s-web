@@ -18,7 +18,7 @@
             @update:model-value="updateTransferDropdown"
           />
           <div class="icon">
-            <img src="../../assets/images/finance/withdraw/arrow_right.png" />
+            <!-- <img src="../../assets/images/finance/withdraw/arrow_right.png" /> -->
           </div>
           <q-select
             hide-bottom-space

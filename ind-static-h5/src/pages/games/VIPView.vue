@@ -72,254 +72,288 @@
       </template>
     </Carousel>
 
-    <hr class="separator-line" style="margin-bottom: 20px" />
+    <div v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
+      <hr class="separator-line" style="margin-bottom: 20px" />
 
-    <div class="vip-rewards">
-      <div class="vip-reward-item">
-        <div class="reward-desc">
-          <div class="icon">
-            <img src="../../assets/images/vip/level-upgrade-reward-icon.svg" />
+      <div class="vip-rewards">
+        <div class="vip-reward-item">
+          <div class="reward-desc">
+            <div class="icon">
+              <img src="../../assets/images/vip/level-upgrade-reward-icon.svg" />
+            </div>
+            <div class="title">
+              <span class="bold">Level Upgrade</span>
+              <br />
+              Reward
+            </div>
+            <div class="reward-amt-wrapper">
+              <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>
+            </div>
           </div>
-          <div class="title">
-            <span class="bold">Level Upgrade</span>
-            <br />
-            Reward
-          </div>
-          <div class="reward-amt-wrapper">
-            <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>
+          <div class="unlock-status">
+            <img
+              v-if="currentVipLevelStats.rewardUnlocked"
+              src="../../assets/images/vip/vip-reward-unlocked-icon.png"
+            />
+            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
           </div>
         </div>
-        <div class="unlock-status">
-          <img v-if="currentVipLevelStats.rewardUnlocked" src="../../assets/images/vip/vip-reward-unlocked-icon.png" />
-          <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
+        <div class="vip-reward-item">
+          <div class="reward-desc">
+            <div class="icon">
+              <img src="../../assets/images/vip/monthly-reward-icon.svg" />
+            </div>
+            <div class="title">
+              <span class="bold">Monthly</span>
+              <br />
+              Reward
+            </div>
+            <div class="reward-amt-wrapper">
+              <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
+            </div>
+          </div>
+          <div class="unlock-status">
+            <img
+              v-if="currentVipLevelStats.rewardUnlocked"
+              src="../../assets/images/vip/vip-reward-unlocked-icon.png"
+            />
+            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
+          </div>
+        </div>
+        <div class="vip-reward-item">
+          <div class="reward-desc">
+            <div class="icon">
+              <img src="../../assets/images/vip/daily-withdrawal-limit-icon.svg" />
+            </div>
+            <div class="title">
+              <span class="bold">Daily Withdrawal</span>
+              <br />
+              Limit
+            </div>
+            <div class="reward-amt-wrapper">
+              <div class="reward-amt bold">{{ currentVipLevelStats.dailyWithdrawalLimit }}</div>
+            </div>
+          </div>
+          <div class="unlock-status">
+            <img
+              v-if="currentVipLevelStats.rewardUnlocked"
+              src="../../assets/images/vip/vip-reward-unlocked-icon.png"
+            />
+            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
+          </div>
         </div>
       </div>
-      <div class="vip-reward-item">
-        <div class="reward-desc">
-          <div class="icon">
-            <img src="../../assets/images/vip/monthly-reward-icon.svg" />
-          </div>
-          <div class="title">
-            <span class="bold">Monthly</span>
-            <br />
-            Reward
-          </div>
-          <div class="reward-amt-wrapper">
-            <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
-          </div>
-        </div>
-        <div class="unlock-status">
-          <img v-if="currentVipLevelStats.rewardUnlocked" src="../../assets/images/vip/vip-reward-unlocked-icon.png" />
-          <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
-        </div>
+
+      <hr class="separator-line" style="margin-top: 20px" />
+
+      <div class="header-wrapper">
+        <div class="header">Monthly Cumulative Deposit An Upgrade Vip Level</div>
       </div>
-      <div class="vip-reward-item">
-        <div class="reward-desc">
-          <div class="icon">
-            <img src="../../assets/images/vip/daily-withdrawal-limit-icon.svg" />
-          </div>
-          <div class="title">
-            <span class="bold">Daily Withdrawal</span>
-            <br />
-            Limit
-          </div>
-          <div class="reward-amt-wrapper">
-            <div class="reward-amt bold">{{ currentVipLevelStats.dailyWithdrawalLimit }}</div>
-          </div>
-        </div>
-        <div class="unlock-status">
-          <img v-if="currentVipLevelStats.rewardUnlocked" src="../../assets/images/vip/vip-reward-unlocked-icon.png" />
-          <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
-        </div>
+
+      <q-table flat :hide-pagination="true" :columns="columns" :rows="rows" row-key="name" :rows-per-page-options="[0]">
+        <template v-slot:header="props">
+          <q-tr :props="props" style="display: none">
+            <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
+              <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
+              <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;</div>
+              <!-- unable to adjust table width... -->
+              <template v-else>
+                <div style="white-space: normal; text-align: center">
+                  Monthly Cumulative Deposit An Upgrade Vip Level
+                </div>
+              </template>
+            </q-th>
+          </q-tr>
+
+          <q-tr class="top-header">
+            <q-td>Level</q-td>
+            <q-td>Amount</q-td>
+            <q-td style="width: 60px">Turnover</q-td>
+          </q-tr>
+        </template>
+
+        <template v-slot:body="props">
+          <q-tr :props="props">
+            <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
+              <template v-if="colIndex === 1">
+                <div style="text-align: center">
+                  Deposit ₹
+                  <span class="amt-text">{{ col.value }}</span>
+                </div>
+              </template>
+              <template v-else>{{ col.value }}</template>
+            </q-td>
+          </q-tr>
+        </template>
+
+        <template v-slot:bottom-row>
+          <q-tr style="display: none">
+            <q-td colspan="100%" class="bottom-note text-left">
+              After the recharge on the day reaches the standard, the next day will increase the VIP level and issue
+              corresponding upgrade rewards.
+            </q-td>
+          </q-tr>
+        </template>
+      </q-table>
+
+      <div class="hint-msg">
+        After the recharge on the day reaches the standard, the next day will increase the VIP level and issue
+        corresponding upgrade rewards.
       </div>
-    </div>
 
-    <hr class="separator-line" style="margin-top: 20px" />
+      <q-table
+        flat
+        :hide-pagination="true"
+        :columns="columns3"
+        :rows="rows3"
+        row-key="name"
+        :rows-per-page-options="[0]"
+      >
+        <template v-slot:header="props">
+          <q-tr :props="props" style="display: none">
+            <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
+              <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
+              <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+              <!-- unable to adjust table width... -->
+              <template v-else>
+                <div style="white-space: normal; text-align: center">VIP Promotion Bonus</div>
+              </template>
+            </q-th>
+          </q-tr>
 
-    <div class="header-wrapper">
-      <div class="header">Monthly Cumulative Deposit An Upgrade Vip Level</div>
-    </div>
+          <q-tr class="top-header">
+            <q-td>Level</q-td>
+            <q-td>Amount</q-td>
+            <q-td style="width: 60px">Turnover</q-td>
+          </q-tr>
+        </template>
 
-    <q-table flat :hide-pagination="true" :columns="columns" :rows="rows" row-key="name" :rows-per-page-options="[0]">
-      <template v-slot:header="props">
-        <q-tr :props="props" style="display: none">
-          <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-            <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
-            <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;</div>
-            <!-- unable to adjust table width... -->
-            <template v-else>
-              <div style="white-space: normal; text-align: center">Monthly Cumulative Deposit An Upgrade Vip Level</div>
-            </template>
-          </q-th>
-        </q-tr>
+        <template v-slot:body="props">
+          <q-tr :props="props">
+            <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
+              <template v-if="colIndex === 1">
+                <div style="text-align: center">
+                  ₹
+                  <span class="amt-text">{{ col.value }}</span>
+                </div>
+              </template>
+              <template v-else>{{ col.value }}</template>
+            </q-td>
+          </q-tr>
+        </template>
 
-        <q-tr class="top-header">
-          <q-td>Level</q-td>
-          <q-td>Amount</q-td>
-          <q-td style="width: 60px">Turnover</q-td>
-        </q-tr>
-      </template>
+        <template v-slot:bottom-row>
+          <q-tr style="display: none">
+            <q-td colspan="100%" class="bottom-note text-left">
+              Promotion Bonus: Every time you advance, you can instantly receive a promotion reward.
+            </q-td>
+          </q-tr>
+        </template>
+      </q-table>
 
-      <template v-slot:body="props">
-        <q-tr :props="props">
-          <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-            <template v-if="colIndex === 1">
-              <div style="text-align: center">
-                Deposit ₹
-                <span class="amt-text">{{ col.value }}</span>
-              </div>
-            </template>
-            <template v-else>{{ col.value }}</template>
-          </q-td>
-        </q-tr>
-      </template>
+      <div class="hint-msg">Promotion Bonus: Every time you advance, you can instantly receive a promotion reward.</div>
 
-      <template v-slot:bottom-row>
-        <q-tr style="display: none">
-          <q-td colspan="100%" class="bottom-note text-left">
-            After the recharge on the day reaches the standard, the next day will increase the VIP level and issue
-            corresponding upgrade rewards.
-          </q-td>
-        </q-tr>
-      </template>
-    </q-table>
+      <q-table
+        flat
+        :hide-pagination="true"
+        :columns="columns4"
+        :rows="rows4"
+        row-key="name"
+        :rows-per-page-options="[0]"
+      >
+        <template v-slot:header="props">
+          <q-tr :props="props" style="display: none">
+            <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
+              <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
+              <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+              <!-- unable to adjust table width... -->
+              <template v-else>
+                <div style="text-align: center; padding-right: 60px">VIP Monthly Cash Bonus</div>
+              </template>
+            </q-th>
+          </q-tr>
 
-    <div class="hint-msg">
-      After the recharge on the day reaches the standard, the next day will increase the VIP level and issue
-      corresponding upgrade rewards.
-    </div>
+          <q-tr class="top-header">
+            <q-td>Level</q-td>
+            <q-td style="text-align: right">Amount</q-td>
+          </q-tr>
+        </template>
 
-    <q-table flat :hide-pagination="true" :columns="columns3" :rows="rows3" row-key="name" :rows-per-page-options="[0]">
-      <template v-slot:header="props">
-        <q-tr :props="props" style="display: none">
-          <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-            <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
-            <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-            <!-- unable to adjust table width... -->
-            <template v-else>
-              <div style="white-space: normal; text-align: center">VIP Promotion Bonus</div>
-            </template>
-          </q-th>
-        </q-tr>
+        <template v-slot:body="props">
+          <q-tr :props="props">
+            <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
+              <template v-if="colIndex === 1">
+                <div style="text-align: right">
+                  ₹
+                  <span class="amt-text">{{ col.value }}</span>
+                </div>
+              </template>
+              <template v-else>{{ col.value }}</template>
+            </q-td>
+          </q-tr>
+        </template>
 
-        <q-tr class="top-header">
-          <q-td>Level</q-td>
-          <q-td>Amount</q-td>
-          <q-td style="width: 60px">Turnover</q-td>
-        </q-tr>
-      </template>
+        <template v-slot:bottom-row>
+          <q-tr style="display: none">
+            <q-td colspan="100%" class="bottom-note text-left">
+              Cash Bonus: Based on your VIP level at the end of this month, this reward will be sent to you at 10 a.m.
+              on the 1st of next month.
+            </q-td>
+          </q-tr>
+        </template>
+      </q-table>
 
-      <template v-slot:body="props">
-        <q-tr :props="props">
-          <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-            <template v-if="colIndex === 1">
-              <div style="text-align: center">
+      <div class="hint-msg">
+        Cash Bonus: Based on your VIP level at the end of this month, this reward will be sent to you at 10 a.m. on the
+        1st of next month.
+      </div>
+
+      <q-table
+        flat
+        :hide-pagination="true"
+        :columns="columns2"
+        :rows="rows2"
+        row-key="name"
+        :rows-per-page-options="[0]"
+      >
+        <template v-slot:header="props">
+          <q-tr :props="props" style="display: none">
+            <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
+              <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
+              <div v-else-if="colIndex === 2" style="width: 90px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+              <template v-else>
+                <div style="text-align: center; padding-right: 60px">VIP Daily Withdrawal Limit</div>
+              </template>
+            </q-th>
+          </q-tr>
+
+          <q-tr class="top-header">
+            <q-td>Level</q-td>
+            <q-td style="text-align: right">Amount</q-td>
+          </q-tr>
+        </template>
+
+        <template v-slot:body="props">
+          <q-tr :props="props">
+            <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
+              <template v-if="colIndex === 1">
                 ₹
                 <span class="amt-text">{{ col.value }}</span>
-              </div>
-            </template>
-            <template v-else>{{ col.value }}</template>
-          </q-td>
-        </q-tr>
-      </template>
+              </template>
+              <template v-else>{{ col.value }}</template>
+            </q-td>
+          </q-tr>
+        </template>
 
-      <template v-slot:bottom-row>
-        <q-tr style="display: none">
-          <q-td colspan="100%" class="bottom-note text-left">
-            Promotion Bonus: Every time you advance, you can instantly receive a promotion reward.
-          </q-td>
-        </q-tr>
-      </template>
-    </q-table>
+        <template v-slot:bottom-row>
+          <q-tr style="display: none">
+            <q-td colspan="100%" class="bottom-note text-left">Daily withdrawal limits based on VIP levels.</q-td>
+          </q-tr>
+        </template>
+      </q-table>
 
-    <div class="hint-msg">Promotion Bonus: Every time you advance, you can instantly receive a promotion reward.</div>
-
-    <q-table flat :hide-pagination="true" :columns="columns4" :rows="rows4" row-key="name" :rows-per-page-options="[0]">
-      <template v-slot:header="props">
-        <q-tr :props="props" style="display: none">
-          <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-            <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
-            <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-            <!-- unable to adjust table width... -->
-            <template v-else>
-              <div style="text-align: center; padding-right: 60px">VIP Monthly Cash Bonus</div>
-            </template>
-          </q-th>
-        </q-tr>
-
-        <q-tr class="top-header">
-          <q-td>Level</q-td>
-          <q-td style="text-align: right">Amount</q-td>
-        </q-tr>
-      </template>
-
-      <template v-slot:body="props">
-        <q-tr :props="props">
-          <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-            <template v-if="colIndex === 1">
-              <div style="text-align: right">
-                ₹
-                <span class="amt-text">{{ col.value }}</span>
-              </div>
-            </template>
-            <template v-else>{{ col.value }}</template>
-          </q-td>
-        </q-tr>
-      </template>
-
-      <template v-slot:bottom-row>
-        <q-tr style="display: none">
-          <q-td colspan="100%" class="bottom-note text-left">
-            Cash Bonus: Based on your VIP level at the end of this month, this reward will be sent to you at 10 a.m. on
-            the 1st of next month.
-          </q-td>
-        </q-tr>
-      </template>
-    </q-table>
-
-    <div class="hint-msg">
-      Cash Bonus: Based on your VIP level at the end of this month, this reward will be sent to you at 10 a.m. on the
-      1st of next month.
+      <div class="hint-msg">Daily withdrawal limits based on VIP levels.</div>
     </div>
-
-    <q-table flat :hide-pagination="true" :columns="columns2" :rows="rows2" row-key="name" :rows-per-page-options="[0]">
-      <template v-slot:header="props">
-        <q-tr :props="props" style="display: none">
-          <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-            <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
-            <div v-else-if="colIndex === 2" style="width: 90px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-            <template v-else>
-              <div style="text-align: center; padding-right: 60px">VIP Daily Withdrawal Limit</div>
-            </template>
-          </q-th>
-        </q-tr>
-
-        <q-tr class="top-header">
-          <q-td>Level</q-td>
-          <q-td style="text-align: right">Amount</q-td>
-        </q-tr>
-      </template>
-
-      <template v-slot:body="props">
-        <q-tr :props="props">
-          <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-            <template v-if="colIndex === 1">
-              ₹
-              <span class="amt-text">{{ col.value }}</span>
-            </template>
-            <template v-else>{{ col.value }}</template>
-          </q-td>
-        </q-tr>
-      </template>
-
-      <template v-slot:bottom-row>
-        <q-tr style="display: none">
-          <q-td colspan="100%" class="bottom-note text-left">Daily withdrawal limits based on VIP levels.</q-td>
-        </q-tr>
-      </template>
-    </q-table>
-
-    <div class="hint-msg">Daily withdrawal limits based on VIP levels.</div>
   </div>
 </template>
 
@@ -750,6 +784,15 @@ const rows4 = [
     flow: "x10"
   }
 ];
+
+const swipeLeft = () => {
+  // router.push("/vip");
+};
+
+// Handle swipe right
+const swipeRight = () => {
+  router.push("/promo");
+};
 </script>
 <style lang="scss" scoped>
 .separator-line {

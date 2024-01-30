@@ -99,9 +99,9 @@
         min-width="120"
       >
         <template #default="scope">
-          <el-tag v-if="scope.row.loginStatus === 0" type="danger">FAIL</el-tag>
+          <el-tag v-if="scope.row.loginStatus === 0" type="danger">{{ t('fields.fail') }}</el-tag>
           <el-tag v-if="scope.row.loginStatus === 1" type="success">
-            SUCCESS
+            {{ t('fields.success') }}
           </el-tag>
         </template>
       </el-table-column>
@@ -121,7 +121,15 @@
         prop="device"
         align="center"
         min-width="120"
-      />
+      >
+        <template #default="scope">
+          <span v-if="scope.row.device === 'ANDROID'">{{ t("loginDevice.ANDROID") }}</span>
+          <span v-else-if="scope.row.device === 'WEB'">{{ t("loginDevice.WEB") }}</span>
+          <span v-else-if="scope.row.device === 'IOS'">{{ t("loginDevice.IOS") }}</span>
+          <span v-else-if="scope.row.device === 'H5'">{{ t("loginDevice.H5") }}</span>
+          <span v-else>-</span>
+        </template>
+      </el-table-column>
       <el-table-column
         :label="t('fields.loginUrl')"
         prop="loginUrl"

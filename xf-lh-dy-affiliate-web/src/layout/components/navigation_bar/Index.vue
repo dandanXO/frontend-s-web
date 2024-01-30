@@ -4,6 +4,7 @@
       <img class="logo" src="../../../assets/images/xf/logo.png" v-if="siteId === '1' || siteId === 1"> <!--XF-->
       <img class="logo" src="../../../assets/images/dy/logo.png" v-if="siteId === '6' || siteId === 6"> <!--DY-->
       <img class="logo" src="../../../assets/images/home/logo_w_text.png" v-if="siteId === '7' || siteId === 7"> <!--LH-->
+      <img class="logo" src="../../../assets/images/ind/logo.png" v-if="siteId === '5' || siteId === 5"> <!--LH-->
     </div>
     <div class="right-menu">
       <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage">
@@ -84,6 +85,8 @@ export default {
         await store.dispatch(UserActionTypes.ACTION_LOGOUT);
         if (siteId === "3" || siteId === 3) {
           router.push("/th/login")
+        } else if (siteId === "5" || siteId === 5) {
+          router.push("/ind/login")
         } else {
           location.reload();
         }
@@ -107,6 +110,7 @@ export default {
     }
     const changePassword = async (formObj) => {
       formObj.affId = store.state.user.id;
+      formObj.siteId = store.state.user.siteId;
       await store.dispatch(UserActionTypes.ACTION_UPDATE_LOGIN, formObj);
     };
     return {

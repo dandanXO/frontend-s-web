@@ -132,7 +132,7 @@ export default defineComponent({
   }
 
   .q-tab--active .q-tab__indicator {
-    background: url("../../assets/images/promotion/tab_bg.png") no-repeat center
+    // background: url("../../assets/images/promotion/tab_bg.png") no-repeat center
     center;
     background-size: 20px 10px;
     width: 100%;

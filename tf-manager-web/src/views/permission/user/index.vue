@@ -9,6 +9,21 @@
           :placeholder="t('fields.username')"
         />
         <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+          @change="siteChange"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+        <el-select
           clearable
           v-model="request.enable"
           size="small"
@@ -467,6 +482,7 @@ const request = reactive({
   current: 1,
   name: null,
   enable: null,
+  siteId: null,
 })
 const options = ref([])
 
@@ -520,6 +536,7 @@ let chooseUser = []
 function resetQuery() {
   request.name = null
   request.enable = null
+  request.siteId = null
 }
 
 function handleSelectionChange(val) {
@@ -721,6 +738,10 @@ function roleTxt(roleId) {
       return r.name;
     }
   }
+}
+
+async function siteChange() {
+  await loadRoles(request.siteId)
 }
 
 watch(

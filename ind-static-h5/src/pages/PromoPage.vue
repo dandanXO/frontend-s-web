@@ -15,7 +15,12 @@
     </q-tabs>
   </div>
 
-  <div class="promo-container" style="background: #090b19">
+  <div
+    class="promo-container"
+    style="background: #090b19"
+    v-touch-swipe.left="swipeLeft"
+    v-touch-swipe.right="swipeRight"
+  >
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
         <!-- <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" /> -->
@@ -410,6 +415,14 @@ export default defineComponent({
     //   updateCountdown();
     // });
 
+    const swipeLeft = () => {
+      router.push('/vip')
+    };
+
+    // Handle swipe right
+    const swipeRight = () => {
+    };
+
     return {
       promoState,
       promoTypes,
@@ -434,7 +447,9 @@ export default defineComponent({
       countdownInterval,
       goToVip,
       goToJoinNow,
-      ui
+      ui,
+      swipeLeft,
+      swipeRight,
     }
   },
 });
@@ -940,7 +955,7 @@ export default defineComponent({
   }
 
   .q-tab--active .q-tab__indicator {
-    background: url("../assets/images/promotion/tab_bg.png") no-repeat center center;
+    // background: url("../assets/images/promotion/tab_bg.png") no-repeat center center;
     background-size: 20px 10px;
     width: 100%;
     height: 10px;

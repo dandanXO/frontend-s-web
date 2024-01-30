@@ -13,6 +13,10 @@ export const updateGameQuiz = (id, gameQuiz) => {
   return https().request(`/game-quiz/${id}?_method=PUT`, Method.POST, gameQuiz, ContentType.form);
 };
 
+export const endGameQuiz = (id, gameQuiz) => {
+  return https().request(`/game-quiz/${id}/end?_method=PUT`, Method.POST, gameQuiz, ContentType.form);
+};
+
 export const cancelGameQuiz = (id) => {
   return https().request(`/game-quiz/${id}/cancel?_method=PUT`, Method.POST);
 };
