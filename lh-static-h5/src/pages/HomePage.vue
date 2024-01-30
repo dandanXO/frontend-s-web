@@ -169,7 +169,7 @@
     <div class="game-right-platform">
       <div class="game-lists" v-if="tab === 'esport'" id="esport-lists">
         <template v-for="(item, index) in esport" :key="index">
-          <div class="platform-block">
+          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)">
             <div
               class="platform-img-frame"
               :style="{
@@ -195,7 +195,7 @@
 
       <div class="game-lists" v-if="tab === 'sport'" id="sport-lists">
         <template v-for="(item, index) in sport" :key="index">
-          <div class="platform-block">
+          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)">
             <div
               class="platform-img-frame"
               :style="{
@@ -221,7 +221,7 @@
 
       <div class="game-lists" v-if="tab === 'live'" id="live-lists">
         <template v-for="(item, index) in livecasino" :key="index">
-          <div class="platform-block">
+          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)">
             <div
               class="platform-img-frame"
               :style="{
@@ -247,7 +247,7 @@
 
       <div class="game-lists" v-if="tab === 'poker'" id="poker-lists">
         <template v-for="(item, index) in poker" :key="index">
-          <div class="platform-block">
+          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)">
             <div
               class="platform-img-frame"
               :style="{
@@ -276,7 +276,7 @@
           <img src="../assets/images/home/lottery/lottery-1.png" />
         </div> -->
 
-        <div class="platform-block">
+        <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)">
           <div
             class="platform-img-frame"
             :style="`background-image:url(${require(`../assets/images/home/lottery/platform-item-lottery.png`)})`"

@@ -60,7 +60,7 @@
           </template>
 
           <div @mousetouch="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">
-            <GameMenu ref="el" v-if="selectedMenu === 'slot'" />
+            <GameMenu ref="el" v-if="selectedMenu === 'slot'" @load-modal="openGame" />
             <LiveCasinoMenu ref="el" v-if="selectedMenu === 'live'" @load-modal="openGame" />
             <EsportsMenu ref="el" v-if="selectedMenu === 'esports'" @load-modal="openGame" />
             <SportsMenu ref="el" v-if="selectedMenu === 'sports'" @load-modal="openGame" />
