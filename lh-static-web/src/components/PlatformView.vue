@@ -2,10 +2,14 @@
   <div class="platform-container">
     <div class="platform-container-inner">
       <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
-      <template v-for="(item, index) in platforms" :key="index">
+      <template v-for="(item, index) in platformsListDisplay" :key="index">
         <template v-if="selectedPlat === item.code">
           <div class="platform-item platform-item--img" data-aos="fade-right" data-aos-duration="1000">
-            <img :src="require('../assets/' + platformType + '/' + platformType + '-item-' + item.image + '.png')" />
+            <img
+              :src="
+                require('../assets/' + platformType + '/' + platformType + '-item-' + item.name.toLowerCase() + '.png')
+              "
+            />
           </div>
 
           <div class="platform-item">
@@ -30,7 +34,7 @@
               > -->
               <span
                 class="platform-list-item"
-                v-for="(plat, platIndex) in platforms"
+                v-for="(plat, platIndex) in platformsListDisplay"
                 :key="platIndex"
                 @click="clickPlat(plat)"
                 :class="{ active: selectedPlat === plat.code }"
@@ -38,7 +42,15 @@
                 <div class="list-item-btn">
                   <span>
                     <img
-                      :src="require('../assets/' + platformType + '/' + platformType + '-logo-' + plat.image + '.png')"
+                      :src="
+                        require('../assets/' +
+                          platformType +
+                          '/' +
+                          platformType +
+                          '-logo-' +
+                          plat.name.toLowerCase() +
+                          '.png')
+                      "
                     />
                   </span>
                 </div>
