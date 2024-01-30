@@ -463,6 +463,10 @@ onMounted(() => {
   background-size: 100% 100%;
   box-shadow: none;
 
+  .el-dialog__body {
+    background: none;
+  }
+
   .wrapper {
     display: flex;
     flex-direction: column;
