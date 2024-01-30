@@ -9,6 +9,10 @@ export const createSystemMessageTemplate = (systemMessageTemplate) => {
   return https().request("/system-message-template", Method.POST, systemMessageTemplate, ContentType.json);
 };
 
+export const replyMember = (systemMessageTemplate) => {
+  return https().request("/system-message-template/reply", Method.POST, systemMessageTemplate, ContentType.json);
+};
+
 export const deleteMessageTemplate = async (ids) => {
   await https().request(`/system-message-template?_method=DELETE`, Method.POST, { ids: ids.join(",") }, ContentType.form);
 };
