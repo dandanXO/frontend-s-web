@@ -190,7 +190,7 @@
 
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <el-table
-        height="600"
+        :height="tableHeight"
         size="small"
         :resizable="true"
         :data="page.records"
@@ -322,6 +322,7 @@
           </template>
         </el-table-column>
         <el-table-column
+          v-if="request.siteId !== 5"
           prop="paymentType"
           :label="t('fields.paymentType')"
           align="center"
@@ -358,6 +359,7 @@
           min-width="80"
         />
         <el-table-column
+          v-if="request.siteId !== 5"
           prop="localCurrencyAmount"
           :label="t('fields.localCurrencyAmount')"
           align="center"
@@ -374,6 +376,7 @@
           </template>
         </el-table-column>
         <el-table-column
+          v-if="request.siteId !== 5"
           prop="currencyRate"
           :label="t('fields.currencyRate')"
           align="center"
@@ -407,7 +410,7 @@
       </el-table>
       <el-pagination
         :total="page.total"
-        :page-sizes="[20, 50, 100, 150]"
+        :page-sizes="[10, 20, 50, 100, 150]"
         layout="total,sizes,prev, pager, next"
         style="margin-top: 10px"
         v-model:page-size="request.size"
@@ -659,6 +662,7 @@ const siteId = ref(null)
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const searchForm = ref(null)
+const tableHeight = ref(600)
 const vipList = reactive({
   list: [],
 })
@@ -983,6 +987,11 @@ onMounted(async () => {
     )
     request.siteId = site.value.id
   }
+  if (request.siteId === 5) {
+    request.size = 10
+    tableHeight.value = 675
+  }
+
   if (LOGIN_USER_SITEID.value != null) {
     siteId.value = LOGIN_USER_SITEID.value
     loadPrivilegeInfos(siteId.value)
