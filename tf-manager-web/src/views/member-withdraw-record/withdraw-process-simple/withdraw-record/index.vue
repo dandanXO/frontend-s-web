@@ -110,7 +110,7 @@
 
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <el-table
-        height="600"
+        height="650"
         size="mini"
         :resizable="true"
         :data="page.records"
@@ -293,7 +293,7 @@
       </el-table>
       <el-pagination
         :total="page.total"
-        :page-sizes="[20, 50, 100, 150]"
+        :page-sizes="[10, 20, 50, 100, 150]"
         layout="total,sizes,prev, pager, next"
         style="margin-top: 10px"
         v-model:page-size="request.size"
@@ -753,7 +753,7 @@ const searchRequest = reactive({
 })
 
 const request = reactive({
-  size: 20,
+  size: 10,
   current: 1,
   withdrawDate: [],
   paymentDate: [],

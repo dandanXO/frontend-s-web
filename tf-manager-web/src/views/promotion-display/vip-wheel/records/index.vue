@@ -18,12 +18,12 @@
           />
         </el-select>
         <el-date-picker
-          v-model="request.createTime"
+          v-model="request.recordTime"
           format="DD/MM/YYYY"
           value-format="YYYY-MM-DD"
           size="small"
           type="date"
-          :placeholder="t('fields.createTime')"
+          :placeholder="t('fields.recordTime')"
           style="width: 180px; margin-left: 10px;"
           :editable="false"
           :clearable="false"
@@ -34,7 +34,22 @@
           style="width: 200px; margin-left: 10px;"
           :placeholder="t('fields.loginName')"
         />
-        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadGameStepsRecords">
+        <el-select
+          v-model="request.vipId"
+          size="small"
+          :placeholder="t('fields.vipLevel')"
+          class="filter-item"
+          style="width: 200px; margin-left: 10px;"
+          @focus="loadVips"
+        >
+          <el-option
+            v-for="item in vips.list"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-select>
+        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadVipWheelRecords">
           {{ t('fields.search') }}
         </el-button>
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">
@@ -51,22 +66,32 @@
       highlight-current-row
       :empty-text="t('fields.noData')"
     >
-      <el-table-column prop="loginName" :label="t('fields.loginName')" width="200" />
-      <el-table-column prop="previousPlace" :label="t('fields.previousPlace')" width="180" />
-      <el-table-column prop="steps" :label="t('fields.steps')" width="180" />
-      <el-table-column prop="currentPlace" :label="t('fields.currentPlace')" width="180" />
+      <el-table-column prop="siteName" :label="t('fields.site')" width="250" />
+      <el-table-column prop="loginName" :label="t('fields.loginName')" width="250" />
+      <el-table-column prop="vipName" :label="t('fields.vipLevel')" width="250" />
+      <el-table-column prop="bonus" :label="t('fields.bonus')" width="280">
+        <template #default="scope">
+          $ <span v-formatter="{data: scope.row.bonus,type: 'money'}" />
+        </template>
+      </el-table-column>
+      <el-table-column prop="sureWin" :label="t('fields.sureWin')" width="180">
+        <template #default="scope">
+          <el-tag v-if="scope.row.sureWin" size="mini" type="success">{{ t('fields.yes') }}</el-tag>
+          <el-tag v-else size="mini" type="danger">{{ t('fields.no') }}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column
-        prop="createTime"
-        :label="t('fields.createTime')"
+        prop="recordTime"
+        :label="t('fields.recordTime')"
         align="center"
         min-width="200"
       >
         <template #default="scope">
-          <span v-if="scope.row.createTime === null">-</span>
+          <span v-if="scope.row.recordTime === null">-</span>
           <!-- eslint-disable -->
           <span
-            v-if="scope.row.createTime !== null"
-            v-formatter="{ data: scope.row.createTime, timeZone: timeZone, type: 'date' }"
+            v-if="scope.row.recordTime !== null"
+            v-formatter="{ data: scope.row.recordTime, timeZone: timeZone, formatter: 'YYYY-MM-DD', type: 'date' }"
           />
         </template>
       </el-table-column>
@@ -79,8 +104,8 @@
       v-model:page-size="request.size"
       v-model:page-count="page.pages"
       v-model:current-page="request.current"
-      @current-change="loadGameStepsRecords"
-      @size-change="loadGameStepsRecords"
+      @current-change="loadVipWheelRecords"
+      @size-change="loadVipWheelRecords"
     />
   </div>
 </template>
@@ -93,8 +118,9 @@ import { onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
-import { getGameStepsRecords } from "@/api/game-steps";
+import { getVipWheelRecords } from "@/api/vip-wheel";
 import moment from "moment";
+import { getVipList } from "../../../../api/vip";
 
 const { t } = useI18n();
 const store = useStore();
@@ -110,10 +136,14 @@ const request = reactive({
   current: 1,
   siteId: null,
   loginName: null,
-  createTime: convertDate(new Date())
+  vipId: null,
+  recordTime: convertDate(new Date())
 });
 
 const sites = reactive({
+  list: []
+});
+const vips = reactive({
   list: []
 });
 
@@ -124,7 +154,7 @@ const page = reactive({
   loading: false
 });
 
-async function loadGameStepsRecords() {
+async function loadVipWheelRecords() {
   page.loading = true;
   const requestCopy = { ...request };
   const query = {};
@@ -133,7 +163,7 @@ async function loadGameStepsRecords() {
       query[key] = value;
     }
   });
-  const { data: ret } = await getGameStepsRecords(query);
+  const { data: ret } = await getVipWheelRecords(query);
   page.pages = ret.pages;
   page.records = ret.records;
   page.total = ret.total;
@@ -145,10 +175,16 @@ async function loadSites() {
   sites.list = site;
 }
 
+async function loadVips() {
+  const { data: vip } = await getVipList({ siteId: request.siteId });
+  vips.list = vip;
+}
+
 function resetQuery() {
   request.siteId = site.value.id;
   request.loginName = null;
-  request.createTime = convertDate(new Date());
+  request.vipId = null;
+  request.recordTime = convertDate(new Date());
 }
 
 onMounted(async () => {
@@ -159,6 +195,7 @@ onMounted(async () => {
     site.value = sites.list[0];
   }
   request.siteId = site.value.id;
+  await loadVips();
 });
 
 </script>
