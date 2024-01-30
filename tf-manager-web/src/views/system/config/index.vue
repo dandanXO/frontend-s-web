@@ -529,13 +529,11 @@ watch(
 watch(
   () => siteId.value,
   async () => {
-    console.log('1. defaultVip : ', defaultVip)
     configs.value.splice(0, configs.value.length)
     await loadConfigs()
     await loadVip()
     await loadFinancialLevelInfos()
     await loadRiskLevels()
-    console.log('configs.value : ', configs.value)
   }
 )
 
