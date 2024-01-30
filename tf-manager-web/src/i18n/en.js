@@ -5,8 +5,8 @@ export default {
     changePassword: 'Change Password',
     status: {
       OPEN: 'Open',
-      CLOSE: 'Close'
-    }
+      CLOSE: 'Close',
+    },
   },
   affiliate: {
     commissionModel: {
@@ -126,7 +126,7 @@ export default {
       PATCH: 'PATCH',
       BET_N_PAYOUT: 'BET AND PAYOUT',
       AFFILIATE_TRANSFER: 'AFFILIATE TRANSFER',
-      VIP_REBATE: 'VIP REBATE'
+      VIP_REBATE: 'VIP REBATE',
     },
     subType: {
       DEPOSIT: 'Wallet to Game',
@@ -246,7 +246,7 @@ export default {
     POKER: 'POKER',
     LOTTERY: 'LOTTERY',
     CASUAL: 'CASUAL',
-    NBA: 'NBA'
+    NBA: 'NBA',
   },
   homeBannerType: {
     HOME: 'Home',
@@ -343,6 +343,11 @@ export default {
     ACTIVITY: 'Activity',
     ANNOUNCEMENT: 'Announcement',
     PAYMENT: 'Payment',
+  },
+  sitePlatform: {
+    followType: 'พิมพ์',
+    follow: 'ก่อนที่จะติดตาม',
+    new: 'อัพเดตประเภทเกม',
   },
   fields: {
     account: 'Account',
@@ -1453,7 +1458,8 @@ export default {
     commissionPaySuccess: 'Commission Pay Success',
     confirmToAdjust:
       'Are you sure to make adjustment? Unable to make other adjustment after confirmation.',
-    confirmCancelBbDacha: 'Confirm that you want to cancel this BB Dacha, the operation cannot be undone',
+    confirmCancelBbDacha:
+      'Confirm that you want to cancel this BB Dacha, the operation cannot be undone',
     confirmCancelQuiz:
       'Confirm that you want to cancel this quiz, the operation cannot be undone',
     confirmCopy: 'Do you want to copy from ',
@@ -1528,7 +1534,8 @@ export default {
     replyFeedback: 'Reply Feedback',
     resetSuccess: 'Reset Success',
     resendSuccess: 'Resend Success',
-    selectDateNotMoreThan3Month: 'The date range cannot exceed 3 months. Please choose again',
+    selectDateNotMoreThan3Month:
+      'The date range cannot exceed 3 months. Please choose again',
     selectPreviousLevel: 'Please select previous level',
     selectSiteFirst: 'Please select a site first',
     selectSiteAndGameTypeFirst: 'Please select a site and a game type first',
