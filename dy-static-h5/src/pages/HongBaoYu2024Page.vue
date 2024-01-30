@@ -169,12 +169,13 @@ onMounted(() => {
   flex-direction: column;
   position: relative;
   background: url("../assets/images/hongbaoyu/mobile-bg-ori.png");
-  background-size: 100% auto;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
-  height: 940px;
+  height: 910px;
   background-color: #d60202;
 
   .receive-container {
+    margin-top: 3%;
     position: relative;
     width: 50%;
     // margin-top: 100px;
@@ -209,6 +210,7 @@ onMounted(() => {
   }
 
   .winner-container {
+    margin-top: 0px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -258,7 +260,7 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
     position: relative;
-    margin-top: 30px;
+    margin-top: 10px;
 
     .title {
       width: 50% !important;
