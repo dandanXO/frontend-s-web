@@ -86,32 +86,33 @@
     </div>
   </div>
 
-  <q-dialog v-model="isClaimModal" persistent>
-    <q-card class="win-rebate-model">
-      <div class="close-btn">
-        <q-btn
-          @click="isClaimModal = false"
-          v-close-popup
-          rounded
-          icon="close"
-          color="white"
-          height="40"
-          width="40"
-        ></q-btn>
-      </div>
+  <q-dialog v-model="isClaimModal">
+    <q-card class="bg-transparent no-shadow">
+<!--      <div class="close-btn">-->
+<!--        <q-btn-->
+<!--          @click="isClaimModal = false"-->
+<!--          v-close-popup-->
+<!--          rounded-->
+<!--          icon="close"-->
+<!--          color="white"-->
+<!--          height="40"-->
+<!--          width="40"-->
+<!--        ></q-btn>-->
+<!--      </div>-->
 
       <q-card-section class="row items-center">
         <div class="red-packet-opened">
           <img
             :src="
-              require(`../../../assets/images/promotion/hotpromo/hongbaoyu/2024/hongbao-bg.png`)
+              require(`../../../assets/images/promotion/hotpromo/hongbaoyu/claim-bg.png`)
             "
           />
 
-          <span class="grats">恭喜获得奖金</span>
-          <span class="amount">{{ winAmount }}</span>
-          <div class="get-btn" @click="getPromotionPrize">点击领取</div>
+<!--          <span class="grats">恭喜获得奖金</span>-->
+          <span class="amount">{{ winAmount }} 元</span>
         </div>
+
+        <div class="get-btn" @click="getPromotionPrize">我知道了</div>
       </q-card-section>
     </q-card>
   </q-dialog>
@@ -442,35 +443,37 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     top: 0;
-    margin-top: 65%;
+    margin-top: 41%;
     // left: -15px;
-    color: #fff;
+    color: #E8280C;
     font-size: 1.8em;
     font-weight: bold;
-    padding-right: 15px;
+    padding-left: 10px;
   }
 
-  .get-btn {
-    color: #f23b1d;
-    border-radius: 30px;
-    background: linear-gradient(180deg, #fdf4ee 0%, #fff3c0 100%);
-    position: absolute;
+}
 
-    font-size: 16px;
-    padding: 4px 16px;
-    bottom: 17%;
-    display: flex;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: pointer;
-    width: 100px;
-    left: 0;
-    right: 10px;
 
-    &:hover {
-      filter: brightness(0.9);
-    }
+.get-btn {
+  color: #FFEFC2;
+  border-radius: 30px;
+  background: #FF1300;
+  position: absolute;
+  border: 1px solid #FDE583;
+  font-size: 16px;
+  padding: 6px 26px;
+  bottom: 0%;
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+  width: 140px;
+  left: 0;
+  right: 10px;
+
+  &:hover {
+    filter: brightness(0.9);
   }
 }
 </style>

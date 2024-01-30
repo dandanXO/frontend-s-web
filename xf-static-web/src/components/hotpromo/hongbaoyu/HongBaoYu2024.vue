@@ -1,18 +1,9 @@
 <template>
   <div class="hongbaoyu-container">
     <div class="receive-container" v-if="!promoNotReady && !bonusOpened">
-      <img
-        :src="
-          require(`../../../assets/images/promotion/hotpromo/hongbaoyu/2024/hongbao-bg.png`)
-        "
-      />
+      <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/2024/hongbao-bg.png`)" />
       <div class="contents" v-if="!bonusOpened">
-        <el-button
-          class="promo-common-btn"
-          size="large"
-          :loading="loadingClaim"
-          @click="getPromotion"
-        >
+        <el-button class="promo-common-btn" size="large" :loading="loadingClaim" @click="getPromotion">
           打开红包
         </el-button>
       </div>
@@ -20,21 +11,13 @@
 
     <div class="winner-container">
       <div class="title-wrapper">
-        <img
-          :src="
-            require(`../../../assets/images/promotion/hotpromo/hongbaoyu/2024/title-board.png`)
-          "
-        />
+        <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/2024/title-board.png`)" />
         <span>中奖记录</span>
       </div>
 
       <div class="winner-wrapper">
         <div class="contents">
-          <div
-            class="winner"
-            v-for="(item, index) in visibleItems"
-            :key="index"
-          >
+          <div class="winner" v-for="(item, index) in visibleItems" :key="index">
             <div>{{ item.date }}</div>
             <div>{{ item.name }}</div>
             <div>{{ item.amount }}</div>
@@ -45,37 +28,21 @@
 
     <div class="content-container">
       <div class="title-wrapper">
-        <img
-          :src="
-            require(`../../../assets/images/promotion/hotpromo/hongbaoyu/2024/title-board.png`)
-          "
-        />
+        <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/2024/title-board.png`)" />
         <span>活动内容</span>
       </div>
 
       <div class="contents">
         <div class="bullet-wrapper">
-          <img
-            :src="
-              require(`../../../assets/images/promotion/hotpromo/hongbaoyu/2024/coin-bullet.png`)
-            "
-          />
+          <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/2024/coin-bullet.png`)" />
           <span>1. 当日累积存款≥100元或以上会员均可参与限时红包活动</span>
         </div>
         <div class="bullet-wrapper">
-          <img
-            :src="
-              require(`../../../assets/images/promotion/hotpromo/hongbaoyu/2024/coin-bullet.png`)
-            "
-          />
+          <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/2024/coin-bullet.png`)" />
           <span>2. 红包金额随机不等，单个红包金额最大为1888元</span>
         </div>
         <div class="bullet-wrapper">
-          <img
-            :src="
-              require(`../../../assets/images/promotion/hotpromo/hongbaoyu/2024/coin-bullet.png`)
-            "
-          />
+          <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/2024/coin-bullet.png`)" />
           <span>3. 此奖金只需3倍有效流水即可</span>
         </div>
       </div>
@@ -91,15 +58,11 @@
   >
     <div class="modal-div">
       <div class="red-packet-opened">
-        <img
-          :src="
-            require(`../../../assets/images/promotion/hotpromo/hongbaoyu/2024/hongbao-bg.png`)
-          "
-        />
-        <div class="grats">恭喜中奖！</div>
-        <div class="amount">{{ winAmount }}</div>
+        <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/claim-bg.png`)" />
+        <!--        <div class="grats">恭喜中奖！</div>-->
+        <div class="amount">{{ winAmount }} 元</div>
 
-        <div class="get-btn" @click="getPromotionPrize">点击领取</div>
+        <div class="get-btn" @click="getPromotionPrize">我知道了</div>
       </div>
     </div>
   </el-dialog>
@@ -157,15 +120,11 @@ const getPromotionListing = () => {
     .then((res) => {
       if (res.code === 0) {
         promotionListing.value = res.data;
-        visibleItems.value = promotionListing.value.slice(
-          0,
-          maxVisibleItems.value
-        );
+        visibleItems.value = promotionListing.value.slice(0, maxVisibleItems.value);
         setTimeout(() => {
           const addItem = () => {
             if (visibleItems.value.length < promotionListing.value.length) {
-              const nextItemIndex =
-                promotionListing.value.length - visibleItems.value.length - 1;
+              const nextItemIndex = promotionListing.value.length - visibleItems.value.length - 1;
               visibleItems.value.unshift(promotionListing.value[nextItemIndex]);
 
               setTimeout(addItem, 1500);
@@ -410,7 +369,7 @@ onMounted(() => {
     width: 100%;
     display: flex;
     justify-content: center;
-    top: 330px;
+    top: 200px;
     margin-top: 0px;
     z-index: 22;
     text-align: center;
@@ -430,30 +389,34 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     top: 0;
-    margin-top: 270px;
-    left: 0px;
-    color: #fff;
-    font-size: 50px;
+    margin-top: 206px;
+    left: 10px;
+    // left: -15px;
+    color: #e8280c;
+    font-size: 40px;
     font-weight: bold;
   }
 
   .bonus {
   }
+}
+.get-btn {
+  color: #ffefc2;
+  border-radius: 30px;
+  background: #ff1300;
+  position: absolute;
+  border: 1px solid #fde583;
+  margin-top: 350px;
+  //left: 0%;
+  margin-left: -15px;
+  width: 150px;
+  text-align: center;
+  font-size: 20px;
+  padding: 12px 24px;
+  cursor: pointer;
 
-  .get-btn {
-    color: #f23b1d;
-    border-radius: 30px;
-    background: linear-gradient(180deg, #fdf4ee 0%, #fff3c0 100%);
-    position: absolute;
-    margin-top: 270px;
-    margin-left: -15px;
-    font-size: 20px;
-    padding: 12px 24px;
-    cursor: pointer;
-
-    &:hover {
-      filter: brightness(0.9);
-    }
+  &:hover {
+    filter: brightness(0.9);
   }
 }
 </style>
