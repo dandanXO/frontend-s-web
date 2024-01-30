@@ -1,15 +1,43 @@
 <template>
-  <div>
-    <div class="">
-      <!--      <button v-if="promoNotReady && bonusOpened" class="check-tip">活动未开启</button>-->
-      <div class="receive-container" v-if="!promoNotReady && !bonusOpened">
-        <!--        <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/icon.png`)" />-->
-        <div class="contents" v-if="!bonusOpened">
-          <q-btn class="claim-btn" :loading="loadingClaim" @click="getPromotion">点击领取</q-btn>
+  <div class="hongbaoyu-container">
+    <div class="receive-container" v-if="!promoNotReady && !bonusOpened">
+      <img :src="require(`../../../assets/images/hongbaoyu/hongbao-bg.png`)" style="display: block; width: 100%" />
+      <div class="contents" v-if="!bonusOpened">
+        <el-button class="promo-common-btn" size="large" :loading="loadingClaim" @click="getPromotion"></el-button>
+      </div>
+    </div>
+
+    <div class="winner-container">
+      <img class="title" :src="require(`../../../assets/images/hongbaoyu/win-prize-title.png`)" />
+
+      <div class="winner-wrapper">
+        <div class="contents">
+          <div class="winner" v-for="(item, index) in visibleItems" :key="index">
+            <div>{{ item.date }}</div>
+            <div>{{ item.name }}</div>
+            <div>{{ item.amount }}</div>
+          </div>
         </div>
       </div>
-      <!--      <p v-if="bonusOpened" class="money-account"><span>{{ winAmount }}</span>元</p>-->
-      <!--      <div class="red-packet" :class="bonusOpened ? 'open' : ''"></div>-->
+    </div>
+
+    <div class="content-container">
+      <img class="title" :src="require(`../../../assets/images/hongbaoyu/content-title.png`)" />
+
+      <div class="contents">
+        <div class="bullet-wrapper">
+          <img :src="require(`../../../assets/images/hongbaoyu/coin-bullet.png`)" />
+          <span>当日累积存款≥100元或以上会员均可参与限时红包活动</span>
+        </div>
+        <div class="bullet-wrapper">
+          <img :src="require(`../../../assets/images/hongbaoyu/coin-bullet.png`)" />
+          <span>红包金额随机不等，单个红包金额最大为1888元</span>
+        </div>
+        <div class="bullet-wrapper">
+          <img :src="require(`../../../assets/images/hongbaoyu/coin-bullet.png`)" />
+          <span>此奖金只需3倍有效流水即可</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -29,7 +57,7 @@
 
       <q-card-section class="row items-center">
         <div class="red-packet-opened">
-          <!--          <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/red-packet-opened.png`)" />-->
+          <img :src="require(`../../../assets/images/hongbaoyu/hongbao-bg.png`)" />
 
           <span class="grats">恭喜获得奖金</span>
           <span class="amount">{{ winAmount }}</span>
@@ -44,9 +72,8 @@
   </q-dialog>
 </template>
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, onMounted, ref } from "vue";
 import { eventapi } from "boot/axios";
-import { ref } from "vue";
 import { userStore } from "src/stores";
 
 const store = userStore();
@@ -55,18 +82,19 @@ const bonusOpened = ref(false);
 const winAmount = ref(0);
 const isClaimModal = ref(false);
 const loadingClaim = ref(false);
+const promoCode = ref("hongbaoyu");
 
-const props = defineProps({
-  promoCode: {
-    type: String,
-    required: true
-  }
-});
+// const props = defineProps({
+//   promoCode: {
+//     type: String,
+//     required: true
+//   }
+// });
 
 const getPromotion = () => {
   loadingClaim.value = true;
   eventapi
-    .get(`/redPacketVip/claim?promoCode=${props.promoCode}`)
+    .get(`/redPacketVip/claim?promoCode=${promoCode.value}`)
     .then((res) => {
       if (res.code === 0) {
         winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;
@@ -95,53 +123,163 @@ const getPromotionPrize = () => {
   isClaimModal.value = false;
   bonusOpened.value = false;
 };
+
+const promotionListing = ref();
+const visibleItems = ref([]);
+const maxVisibleItems = ref(5);
+const intervalId = ref(null);
+
+const getPromotionListing = () => {
+  eventapi
+    .get(`/redPacketVip/list?promoCode=${promoCode.value}`)
+    .then((res) => {
+      if (res.code === 0) {
+        promotionListing.value = res.data;
+        visibleItems.value = promotionListing.value.slice(0, maxVisibleItems.value);
+        setTimeout(() => {
+          const addItem = () => {
+            if (visibleItems.value.length < promotionListing.value.length) {
+              const nextItemIndex = promotionListing.value.length - visibleItems.value.length - 1;
+              visibleItems.value.unshift(promotionListing.value[nextItemIndex]);
+
+              setTimeout(addItem, 1500);
+            } else {
+              clearInterval(intervalId.value);
+            }
+          };
+          addItem();
+        }, 4000);
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+onMounted(() => {
+  getPromotionListing();
+});
 </script>
 
 <style scoped lang="scss">
-.receive-container {
-  margin: 0.55rem auto;
+.hongbaoyu-container {
+  margin: 0px auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  position: relative;
+  justify-content: center;
   flex-direction: column;
-  width: 100%;
-  //background: url(../../../assets/images/promotion/hotpromo/hongbaoyu/hongbaoyu.png) no-repeat center center;
+  position: relative;
+  background: url("../../../assets/images/hongbaoyu/mobile-bg.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  // height: 940px;
+  padding-bottom: 120px;
+  background-color: #d60202;
 
-  img {
-    width: 65% !important;
-    margin: 0 auto;
-  }
-
-  .claim-btn {
-    color: #ffffff;
-    background: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000) !important;
-    border: 0;
-  }
-
-  .red-packet {
+  .receive-container {
+    position: relative;
     width: 50%;
-    height: 140px;
-    margin: 0 auto 20px;
-    //background: url(../../../assets/images/promotion/hotpromo/hongbaoyu/package_red.png) no-repeat center center;
-    background-size: contain;
+    // margin-top: 100px;
 
-    &.open {
-      //background-image: url(../../../assets/images/promotion/hotpromo/hongbaoyu/img_repacket_open.png);
+    .contents {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translate(-50%, 0);
+
+      .promo-common-btn {
+        background: transparent;
+        background-image: url("../../../assets/images/hongbaoyu/open-hongbao-btn.png") !important;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        border: unset;
+        aspect-ratio: 392/168;
+        //height: 100px;
+        padding: 0 100px;
+      }
+
+      :deep(.el-button) {
+        span {
+          color: #271500;
+          font-weight: 700;
+        }
+      }
     }
   }
 
-  .receive-btn {
-    width: 140px;
-    left: 0;
-    right: 0;
-    bottom: -20px;
-    margin: 0px auto;
-    cursor: pointer;
+  .winner-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 
-    //img {
-    //  width: 100%;
-    //}
+    .title {
+      width: 50% !important;
+      z-index: 1;
+    }
+
+    .winner-wrapper {
+      position: relative;
+      padding: 20px;
+      background-image: url("../../../assets/images/hongbaoyu/record-bg.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+
+      .contents {
+        // position: absolute;
+        // top: 0;
+        // left: 0;
+        // width: 100%;
+        // padding: 15px 30px;
+        max-height: 120px;
+        overflow-y: hidden;
+        scroll-behavior: smooth;
+
+        .winner {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border-bottom: 2px solid #fee2b9;
+          color: white;
+          padding: 2px 10px;
+          gap: 20px;
+        }
+      }
+    }
+  }
+
+  .content-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-top: 30px;
+
+    .title {
+      width: 50% !important;
+    }
+
+    .contents {
+      .bullet-wrapper {
+        display: flex;
+        align-items: center;
+
+        img {
+          width: 20px;
+        }
+
+        span {
+          color: #fcd6a3;
+          font-weight: 400;
+        }
+      }
+    }
   }
 
   .check-tip,
@@ -169,13 +307,30 @@ const getPromotionPrize = () => {
   .money-account {
     left: 0;
     right: 0;
-    top: 0px;
+    top: 20px;
     margin: auto;
     text-align: center;
-    font-size: 18px;
+    font-size: 1.5rem;
 
     span {
-      font-size: 30px;
+      font-size: 2.5rem;
+    }
+  }
+
+  .receive-btn {
+    text-align: center;
+    line-height: 0.83rem;
+    color: #fff;
+    padding: 0;
+    margin: 0.3rem auto 0;
+    width: 180px;
+    left: 0;
+    right: 0;
+    bottom: -15px;
+    cursor: pointer;
+
+    img {
+      width: 100%;
     }
   }
 }
@@ -185,6 +340,7 @@ const getPromotionPrize = () => {
   img {
     display: block;
     width: 100%;
+    padding-right: 15px;
   }
 
   .grats {
@@ -193,11 +349,11 @@ const getPromotionPrize = () => {
     display: flex;
     justify-content: center;
     top: 0;
-    margin-top: 20%;
+    margin-top: 58%;
     color: #fffbfb;
     text-align: center;
     font-family: PingFang SC;
-    font-size: 24px;
+    font-size: 1.3em;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
@@ -210,10 +366,10 @@ const getPromotionPrize = () => {
     display: flex;
     justify-content: center;
     top: 0;
-    margin-top: 45%;
+    margin-top: 65%;
     // left: -15px;
-    color: #f23b1d;
-    font-size: 36px;
+    color: #fff;
+    font-size: 1.8em;
     font-weight: bold;
     padding-right: 15px;
   }

@@ -43,9 +43,10 @@
         </div>
       </div>
     </div>
+
     <div v-else class="selected-promo">
       <div class="selected-promo-wrapper">
-        <div class="banner-container">
+        <div class="banner-container" v-if="selectedPromo.promoCode !== 'dy2-cny-step-game'">
           <div
             class="promo-bg isDesktop"
             :style="
@@ -65,7 +66,13 @@
             "
           ></div>
         </div>
-        <div class="inner" :class="selectedPromo.promoCode === 'dy2-cny2024-promo' && 'cny2024'">
+        <div
+          class="inner"
+          :class="
+            (selectedPromo.promoCode === 'dy2-cny2024-promo' || selectedPromo.promoCode === 'dy2-cny-step-game') &&
+            'fullwidth'
+          "
+        >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
             <HotPromotion :list="selectedPromo" />
           </div>
@@ -595,9 +602,14 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
 
-        &.cny2024 {
+        &.fullwidth {
           width: 100%;
           max-width: 100%;
+          margin: 0;
+
+          .promo-view-container {
+            display: none;
+          }
         }
 
         .hot-promo {

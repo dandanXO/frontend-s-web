@@ -93,3 +93,19 @@ export function submitBBDacha(param) {
   const { quizId, quizTitle, answerOne } = param;
   return eventapi.post(`/bb-dacha/submit`, qs.stringify({ quizId, quizTitle, answerOne }));
 }
+
+export function getBBDachaRecordsCount() {
+  return eventapi.get(`/bb-dacha/recordsCount`, {});
+}
+
+export function getCurrentStepInit() {
+  return eventapi.get(`/game-steps/initiate`, {});
+}
+
+export function submitGameStep() {
+  return eventapi.post(`/game-steps/step`);
+}
+
+export function getStepRecords(current) {
+  return eventapi.get(`/game-steps/records?size=10&current=${current}`, {});
+}
