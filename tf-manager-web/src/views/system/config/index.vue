@@ -360,12 +360,16 @@
       <el-divider
         style="width: 80%; margin-left: 10%; --el-border-style: dashed;"
         v-if="
-          index !== 0 && item.configGroup !== configs.customList[index - 1].configGroup
+          index !== 0 &&
+            item.configGroup !== configs.customList[index - 1].configGroup
         "
       />
       <el-form-item
-        border-color="#dcdcdc" border-style="dashed" :label="
-          index !== 0 && item.configGroup === configs.customList[index - 1].configGroup
+        border-color="#dcdcdc"
+        border-style="dashed"
+        :label="
+          index !== 0 &&
+            item.configGroup === configs.customList[index - 1].configGroup
             ? ''
             : item.configGroup
         "
@@ -425,7 +429,10 @@
       @submit.prevent
     >
       <el-form-item :label="t('fields.configGroup')" prop="configGroup">
-        <el-input v-model="form.configGroup" :placeholder="t('fields.configGroup')" />
+        <el-input
+          v-model="form.configGroup"
+          :placeholder="t('fields.configGroup')"
+        />
       </el-form-item>
       <el-form-item :label="t('fields.configCode')" prop="code">
         <el-input v-model="form.code" :placeholder="t('fields.configCode')" />
@@ -484,7 +491,7 @@ const configs = reactive({
 })
 
 const uiControl = reactive({
-  dialogTitle: "",
+  dialogTitle: '',
   dialogVisible: false,
 })
 
@@ -514,19 +521,18 @@ watch(
     loadFinancialLevelInfos()
     loadRiskLevels()
     loadConfigs()
+    console.log('defaultVip : ', configs.value)
   }
 )
 
 const defaultVip = computed({
   get: () => Number(getter('default_vip', false).value),
-  // eslint-disable-next-line no-return-assign
   set: newVla =>
     (configs.value.find(item => item.code === 'default_vip').value = newVla),
 })
 
 const defaultAgentVip = computed({
   get: () => Number(getter('default_agent_vip', false).value),
-  // eslint-disable-next-line no-return-assign
   set: newVla =>
     (configs.value.find(
       item => item.code === 'default_agent_vip'
@@ -535,7 +541,6 @@ const defaultAgentVip = computed({
 
 const defaultFinancial = computed({
   get: () => Number(getter('default_financial', false).value),
-  // eslint-disable-next-line no-return-assign
   set: newVla =>
     (configs.value.find(
       item => item.code === 'default_financial'
@@ -544,7 +549,6 @@ const defaultFinancial = computed({
 
 const defaultAgentFinancial = computed({
   get: () => Number(getter('default_agent_financial', false).value),
-  // eslint-disable-next-line no-return-assign
   set: newVla =>
     (configs.value.find(
       item => item.code === 'default_agent_financial'
@@ -553,14 +557,12 @@ const defaultAgentFinancial = computed({
 
 const defaultRisk = computed({
   get: () => Number(getter('default_risk', false).value),
-  // eslint-disable-next-line no-return-assign
   set: newVla =>
     (configs.value.find(item => item.code === 'default_risk').value = newVla),
 })
 
 const defaultAgentRisk = computed({
   get: () => Number(getter('default_agent_risk', false).value),
-  // eslint-disable-next-line no-return-assign
   set: newVla =>
     (configs.value.find(
       item => item.code === 'default_agent_risk'
@@ -591,7 +593,6 @@ const affiliateShortUrlPlatform = computed(() =>
 
 const s3Url = computed({
   get: () => getter('s3_url', false).value,
-  // eslint-disable-next-line no-return-assign
   set: newVla =>
     (configs.value.find(item => item.code === 's3_url').value = newVla),
 })
@@ -702,22 +703,21 @@ async function loadConfigs() {
   )
   configs.customList = configs.customList.sort((a, b) => {
     if (a.configGroup < b.configGroup) {
-      return -1;
+      return -1
     } else if (a.configGroup > b.configGroup) {
-      return 1;
+      return 1
     } else {
       if (a.code < b.code) {
-        return -1;
+        return -1
       } else if (a.code > b.code) {
-        return 1;
+        return 1
       }
     }
-  }
-  )
+  })
 }
 
 function showEdit(customConfig) {
-  showDialog("EDIT");
+  showDialog('EDIT')
   nextTick(() => {
     for (const key in customConfig) {
       if (Object.keys(form).find(k => k === key)) {
@@ -773,13 +773,13 @@ async function updateConfigs() {
 }
 
 function showDialog(type) {
-  if (type === "CREATE") {
+  if (type === 'CREATE') {
     if (configForm.value) {
       form.id = null
       configForm.value.resetFields()
     }
     uiControl.dialogTitle = t('fields.createConfig')
-  } else if (type === "EDIT") {
+  } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editConfig')
   }
   uiControl.dialogVisible = true
