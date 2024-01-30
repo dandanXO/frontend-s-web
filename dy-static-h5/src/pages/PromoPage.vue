@@ -67,7 +67,7 @@
           <div v-else class="selected-promo">
             <div class="loader" v-if="isFetchingPromo" />
             <div class="selected-promo-wrapper">
-              <div class="banner-container">
+              <div class="banner-container" v-if="!isSpecialPromo">
                 <!-- <div
                   class="promo-bg"
                   :style="
@@ -250,7 +250,14 @@ export default defineComponent({
           // banners.value = response.data;
         });
     };
+    const isSpecialPromo= ref(false);
     const showPromoDetails = (promo) => {
+      if(promo.promoCode==='dy2-cny-step-game'){
+        isSpecialPromo.value= true;
+      }else{
+        isSpecialPromo.value= false;
+      }
+
       // extension
       if (extensionState.value) {
         if (promo.redirectUrl.includes("page-vip")) {
@@ -377,7 +384,8 @@ export default defineComponent({
       currentPath,
       extensionState,
       extensionToken,
-      isFetchingPromo
+      isFetchingPromo,
+      isSpecialPromo
     };
   }
 });

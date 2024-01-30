@@ -607,4 +607,19 @@ table.promo-table {
     }
   }
 }
+
+@media (max-width: 375px) {
+  .competition-container .competition-item .competition-details {
+    min-width: 0px;
+  }
+  .competition-container .competition-item .competiton-team {
+    width: 40%;
+  }
+  .competition-container .competition-item .competition-details .details-date {
+    width: auto;
+  }
+  .competition-container .competition-item .competiton-team .team-vote .vote-btn {
+    min-width: 50px;
+  }
+}
 </style>
