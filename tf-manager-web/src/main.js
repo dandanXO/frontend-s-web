@@ -30,6 +30,10 @@ switch (currentHost) {
     baseApi = process.env.VUE_APP_IND_API;
     baseWss = process.env.VUE_APP_IND_SOCKET;
     break;
+  case process.env.VUE_APP_LH_HOST:
+    baseApi = process.env.VUE_APP_LH_API;
+    baseWss = process.env.VUE_APP_LH_SOCKET;
+    break;
   case process.env.VUE_APP_TH_HOST:
     baseApi = process.env.VUE_APP_TH_API;
     baseWss = process.env.VUE_APP_TH_SOCKET;
