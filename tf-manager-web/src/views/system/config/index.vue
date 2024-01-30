@@ -360,12 +360,16 @@
       <el-divider
         style="width: 80%; margin-left: 10%; --el-border-style: dashed;"
         v-if="
-          index !== 0 && item.configGroup !== configs.customList[index - 1].configGroup
+          index !== 0 &&
+            item.configGroup !== configs.customList[index - 1].configGroup
         "
       />
       <el-form-item
-        border-color="#dcdcdc" border-style="dashed" :label="
-          index !== 0 && item.configGroup === configs.customList[index - 1].configGroup
+        border-color="#dcdcdc"
+        border-style="dashed"
+        :label="
+          index !== 0 &&
+            item.configGroup === configs.customList[index - 1].configGroup
             ? ''
             : item.configGroup
         "
@@ -425,7 +429,10 @@
       @submit.prevent
     >
       <el-form-item :label="t('fields.configGroup')" prop="configGroup">
-        <el-input v-model="form.configGroup" :placeholder="t('fields.configGroup')" />
+        <el-input
+          v-model="form.configGroup"
+          :placeholder="t('fields.configGroup')"
+        />
       </el-form-item>
       <el-form-item :label="t('fields.configCode')" prop="code">
         <el-input v-model="form.code" :placeholder="t('fields.configCode')" />
@@ -484,7 +491,7 @@ const configs = reactive({
 })
 
 const uiControl = reactive({
-  dialogTitle: "",
+  dialogTitle: '',
   dialogVisible: false,
 })
 
@@ -510,10 +517,10 @@ watch(
   () => siteId.value,
   async () => {
     configs.value.splice(0, configs.value.length)
-    loadVip()
-    loadFinancialLevelInfos()
-    loadRiskLevels()
-    loadConfigs()
+    await loadConfigs()
+    await loadVip()
+    await loadFinancialLevelInfos()
+    await loadRiskLevels()
   }
 )
 
@@ -702,22 +709,21 @@ async function loadConfigs() {
   )
   configs.customList = configs.customList.sort((a, b) => {
     if (a.configGroup < b.configGroup) {
-      return -1;
+      return -1
     } else if (a.configGroup > b.configGroup) {
-      return 1;
+      return 1
     } else {
       if (a.code < b.code) {
-        return -1;
+        return -1
       } else if (a.code > b.code) {
-        return 1;
+        return 1
       }
     }
-  }
-  )
+  })
 }
 
 function showEdit(customConfig) {
-  showDialog("EDIT");
+  showDialog('EDIT')
   nextTick(() => {
     for (const key in customConfig) {
       if (Object.keys(form).find(k => k === key)) {
@@ -773,13 +779,13 @@ async function updateConfigs() {
 }
 
 function showDialog(type) {
-  if (type === "CREATE") {
+  if (type === 'CREATE') {
     if (configForm.value) {
       form.id = null
       configForm.value.resetFields()
     }
     uiControl.dialogTitle = t('fields.createConfig')
-  } else if (type === "EDIT") {
+  } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editConfig')
   }
   uiControl.dialogVisible = true
