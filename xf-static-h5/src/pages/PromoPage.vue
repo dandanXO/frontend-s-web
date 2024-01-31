@@ -28,7 +28,7 @@
                   data-aos-easing="ease-out"
                   data-aos-duration="1000"
                 >
-                  <div 
+                  <div
                   class="promo-item"
                     v-if="
                       promo.promoType
@@ -472,7 +472,7 @@ export default defineComponent({
         // display: grid;
         // margin-top: 20px;
         // grid-template-columns: 1fr;
-        
+
         display: flex;
         margin-top: 20px;
         flex-direction: column;
@@ -487,7 +487,7 @@ export default defineComponent({
           transition: 0.4s ease-in;
           margin-bottom: 20px;
           overflow: hidden;
-          padding-top: 25px;
+          padding-top: 30px;
 
           img {
           }
@@ -512,13 +512,16 @@ export default defineComponent({
 
               display: flex;
               justify-content: center;
-              align-items: center;
+              //align-items: center;
               gap: 30px;
 
               .promo-content {
                 // width: 100%;
-                width: unset;
-                height: 100%;
+                width: 100%;
+                aspect-ratio: 1004/252;
+                height: auto;
+
+                //height: 100%;
 
                 &.isDesktop {
                   display: block;
@@ -724,7 +727,7 @@ export default defineComponent({
   right: 5px;
   top: 5px;
   z-index: 3;
-  
+
 }
 
 .pad-label.label-new {
@@ -735,7 +738,7 @@ export default defineComponent({
   color: #ffffff;
   padding: 12px 7px;
   position: absolute;
-  bottom: 10px;
+  bottom: 0px;
   left: 0;
   width: 100%;
 }
