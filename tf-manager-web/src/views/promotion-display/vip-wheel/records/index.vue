@@ -55,6 +55,14 @@
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">
           {{ t('fields.reset') }}
         </el-button>
+        <el-button
+          icon="el-icon-download"
+          size="mini"
+          type="primary"
+          v-permission="['sys:vip-wheel-records:export']"
+          @click="exportExcel"
+        >{{ t('fields.exportToExcel') }}
+        </el-button>
       </div>
     </div>
     <el-table
@@ -108,11 +116,30 @@
       @size-change="loadVipWheelRecords"
     />
   </div>
+  <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.progressBarVisible" append-to-body width="500px"
+             :close-on-click-modal="false" :close-on-press-escape="false"
+  >
+    <el-progress :text-inside="true" :stroke-width="26" :percentage="exportPercentage"
+                 :color="uiControl.colors" v-if="exportPercentage !== 100"
+    />
+    <el-result
+      icon="success"
+      :title="t('fields.successfullyExport')"
+      v-if="exportPercentage === 100"
+    />
+    <div class="dialog-footer">
+      <el-button type="primary" :disabled="exportPercentage !== 100"
+                 @click="uiControl.progressBarVisible = false"
+      >{{ t('fields.done') }}
+      </el-button>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup>
 
 import { computed, reactive, ref } from "vue";
+import * as XLSX from 'xlsx';
 import { getSiteListSimple } from "@/api/site";
 import { onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
@@ -126,7 +153,15 @@ const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
+const exportPercentage = ref(0);
 
+const EXPORT_HEADER = [t('fields.site'), t('fields.loginName'), t('fields.vipLevel'), t('fields.bonus'),
+  t('fields.sureWin'), t('fields.recordTime')];
+
+const uiControl = reactive({
+  dialogVisible: false,
+  progressBarVisible: false
+});
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD');
 }
@@ -156,13 +191,7 @@ const page = reactive({
 
 async function loadVipWheelRecords() {
   page.loading = true;
-  const requestCopy = { ...request };
-  const query = {};
-  Object.entries(requestCopy).forEach(([key, value]) => {
-    if (value) {
-      query[key] = value;
-    }
-  });
+  const query = checkQuery();
   const { data: ret } = await getVipWheelRecords(query);
   page.pages = ret.pages;
   page.records = ret.records;
@@ -185,6 +214,72 @@ function resetQuery() {
   request.loginName = null;
   request.vipId = null;
   request.recordTime = convertDate(new Date());
+}
+
+function checkQuery() {
+  const requestCopy = { ...request };
+  const query = {};
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value;
+    }
+  });
+  return query;
+}
+
+function pushRecordToData(records, exportData) {
+  records.forEach(item => {
+    delete item.id;
+    delete item.siteId;
+    delete item.memberId;
+    delete item.vipId;
+  })
+  const data = records.map(record => {
+    if (record.sureWin) {
+      record.sureWin = t('fields.yes')
+    } else {
+      record.sureWin = t('fields.no')
+    }
+    return Object.values(record).map(item => (!item || item === '' ? '-' : item))
+  })
+  exportData.push(...data)
+}
+
+async function exportExcel() {
+  uiControl.progressBarVisible = true;
+  const query = checkQuery();
+  query.current = 1;
+  const { data: ret } = await getVipWheelRecords(query);
+  const exportData = [EXPORT_HEADER];
+  const maxLength = [];
+
+  pushRecordToData(ret.records, exportData);
+  exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
+  query.current = ret.current;
+
+  while (query.current < ret.pages) {
+    query.current += 1;
+    const { data: ret } = await getVipWheelRecords(query);
+    pushRecordToData(ret.records, exportData);
+    exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
+  }
+  const ws = XLSX.utils.aoa_to_sheet(exportData);
+  exportData.map(data => {
+    Object.keys(data).map(key => {
+      const value = data[key];
+
+      maxLength[key] = typeof value === 'number'
+        ? (maxLength[key] >= 10 ? maxLength[key] : 10)
+        : (maxLength[key] >= value.length + 2 ? maxLength[key] : value.length + 2);
+    });
+  });
+  const wsCols = maxLength.map(w => { return { width: w } });
+  ws['!cols'] = wsCols;
+  const wb = XLSX.utils.book_new();
+  wb.SheetNames.push('VIP_Wheel_Records');
+  wb.Sheets.VIP_Wheel_Records = ws;
+  XLSX.writeFile(wb, "vip_wheel_records.xlsx");
+  exportPercentage.value = 100;
 }
 
 onMounted(async () => {
