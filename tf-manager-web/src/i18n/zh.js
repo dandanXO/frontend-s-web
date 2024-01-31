@@ -5,8 +5,8 @@ export default {
     changePassword: '更换密码',
     status: {
       OPEN: '开启',
-      CLOSE: '关闭'
-    }
+      CLOSE: '关闭',
+    },
   },
   affiliate: {
     commissionModel: {
@@ -126,7 +126,7 @@ export default {
       PATCH: '修补',
       BET_N_PAYOUT: '投注并派彩',
       AFFILIATE_TRANSFER: '代理代存',
-      VIP_REBATE: 'VIP返水'
+      VIP_REBATE: 'VIP返水',
     },
     subType: {
       DEPOSIT: '主账号转入平台',
@@ -252,7 +252,7 @@ export default {
     POKER: '棋牌',
     LOTTERY: '彩票',
     CASUAL: '小游戏',
-    NBA: 'NBA'
+    NBA: 'NBA',
   },
   homeBannerType: {
     HOME: '首页',
@@ -349,6 +349,11 @@ export default {
     ACTIVITY: '活动',
     ANNOUNCEMENT: '公告',
     PAYMENT: '充提',
+  },
+  sitePlatform: {
+    followType: '类型',
+    follow: '遵循之前',
+    new: '更新游戏类型',
   },
   fields: {
     account: '账号',
