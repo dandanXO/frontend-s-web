@@ -234,6 +234,20 @@
         </template>
       </el-table-column>
       <el-table-column
+        prop="followType"
+        :label="t('fields.followType')"
+        width="200"
+      >
+        <template #default="scope">
+          <div v-if="scope.row.followType === 'FOLLOW'" type="success">
+            {{ t('sitePlatform.follow') }}
+          </div>
+          <div v-if="scope.row.followType === 'NEW'">
+            {{ t('sitePlatform.new') }}
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column
         prop="createBy"
         :label="t('fields.createBy')"
         width="200"
@@ -456,8 +470,7 @@ function showEdit(sitePlatform) {
   nextTick(() => {
     for (const key in sitePlatform) {
       if (Object.keys(form).find(k => k === key)) {
-        form[key] = sitePlatform[key]
-        if (key === 'gameType') {
+        if (key === 'gameType' && form.followType === 'NEW') {
           // game type 需要进行转换
           form[key] = sitePlatform[key].split(',') // string 转 array
         } else {
