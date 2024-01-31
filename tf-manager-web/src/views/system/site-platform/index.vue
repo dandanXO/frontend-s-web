@@ -488,6 +488,8 @@ function create() {
       var arr = form.gameType
       if (form.followType === 'NEW') {
         form.gameType = arr.toString()
+      } else if (form.followType === 'FOLLOW') {
+        form.gameType = null
       }
       await createSitePlatform(form)
       uiControl.dialogVisible = false
@@ -503,6 +505,8 @@ function edit() {
       var arr = form.gameType
       if (form.followType === 'NEW') {
         form.gameType = arr.toString()
+      } else if (form.followType === 'FOLLOW') {
+        form.gameType = null
       }
       await updateSitePlatform(form)
       uiControl.dialogVisible = false
