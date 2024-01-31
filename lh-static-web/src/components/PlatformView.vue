@@ -77,7 +77,7 @@
     <div class="all-game-container">
       <div class="plat-options-wrapper">
         <div class="plat-options-container">
-          <template v-for="(item, index) in platforms" :key="index">
+          <template v-for="(item, index) in platformsListDisplay" :key="index">
             <!-- <div class="plat-option" @click="switchPlat(item)" :class="{ active: selectedPlat === item.code }"> -->
             <div class="plat-option" @click="clickPlat(item)" :class="{ active: selectedPlat === item.code }">
               <img
@@ -216,11 +216,11 @@ const platformsList = ref([]);
 const platformsListDisplay = ref([]);
 
 const getPlatList = () => {
-  const getFn = store.memberType === "TEST" ? getLoggedInPlatformList : getPlatformListDisplay;
+  const getFn = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
   getFn().then((res) => {
     platformsList.value = res;
     platformsListDisplay.value = platformsList.value.filter((element) =>
-      element.gameType.includes(props.platformGameType)
+      element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase())
     );
     setFilteredPlatforms();
   });
@@ -341,7 +341,7 @@ watch(
   () => route.query.plat,
   () => {
     if (route.path === route.path) {
-      filteredPlatforms.value.forEach((element) => {
+      platformsListDisplay.value.forEach((element) => {
         if (element.code === route.query.plat) {
           clickPlat(element);
           getPlatGameList();

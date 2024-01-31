@@ -3,7 +3,8 @@
     <div class="balance-plat-item">
       <div class="left-box">
         <div class="balance-wrapper">
-          <span class="currency">主账户:</span> ￥{{ mainWallet }}
+          <span class="currency">主账户:</span>
+          ￥{{ mainWallet }}
           <div class="balance-refresh" @click="refreshBalance(MAIN)">
             <el-icon>
               <Refresh style="color: #000" />
@@ -49,24 +50,29 @@
           </div>
         </div>
         <div class="transfer-action-box">
-          <el-button size="small" class="blue-btn transfer-btn" @click="transferModal(0, p)">
-            转进
-          </el-button>
-          <el-button size="small" class="blue-btn transfer-btn" @click="transferModal(1, p)">
-            转出
-          </el-button>
+          <el-button size="small" class="blue-btn transfer-btn" @click="transferModal(0, p)">转进</el-button>
+          <el-button size="small" class="blue-btn transfer-btn" @click="transferModal(1, p)">转出</el-button>
         </div>
       </div>
     </div>
   </div>
-  <el-dialog v-model="transferModalVisible" @cancel="cancelTransfer" :maskClosable="false" :footer="null"
-    class="transferinout" width="300px" align-center @keydown.enter.prevent>
+  <el-dialog
+    v-model="transferModalVisible"
+    @cancel="cancelTransfer"
+    :maskClosable="false"
+    :footer="null"
+    class="transferinout"
+    width="300px"
+    align-center
+    @keydown.enter.prevent
+  >
     <template #header>
-      <div :style="
-        transferTypeIndex === 0
-          ? 'flex-direction: row'
-          : 'flex-direction: row-reverse; justify-content: flex-end;'
-      " class="el-dialog__title">
+      <div
+        :style="
+          transferTypeIndex === 0 ? 'flex-direction: row' : 'flex-direction: row-reverse; justify-content: flex-end;'
+        "
+        class="el-dialog__title"
+      >
         <el-tag type="danger" effect="dark">主账户</el-tag>
         <el-icon>
           <Right />
@@ -76,14 +82,24 @@
         </el-tag>
       </div>
     </template>
-    <el-form class="transfer-info-form" ref="formRef" :hideRequiredMark="true" :model="transferInfo" :rules="rules" :label-col="{ span: 4 }">
+    <el-form
+      class="transfer-info-form"
+      ref="formRef"
+      :hideRequiredMark="true"
+      :model="transferInfo"
+      :rules="rules"
+      :label-col="{ span: 4 }"
+    >
       <el-form-item ref="amount" prop="amount">
-        <el-input class="transfer-info-amount" v-model="transferInfo.amount" placeholder="金额" @keyup.enter="submitTransfer" />
+        <el-input
+          class="transfer-info-amount"
+          v-model="transferInfo.amount"
+          placeholder="金额"
+          @keyup.enter="submitTransfer"
+        />
       </el-form-item>
       <el-form-item class="txt-center">
-        <el-button class="submit-btn blue-btn" :loading="loadingTransfer" @click="submitTransfer">
-          确定
-        </el-button>
+        <el-button class="submit-btn blue-btn" :loading="loadingTransfer" @click="submitTransfer">确定</el-button>
       </el-form-item>
     </el-form>
   </el-dialog>
@@ -215,7 +231,7 @@ export default defineComponent({
       }, 1000);
     };
     const loadPlatform = () => {
-      if(store.memberType === 'TEST') {
+      if(store.token) {
         getLoggedInPlatformList().then((response) => {
           response.data.filter(p => p.walletType === 'TRANSFER').forEach(p => {
             platforms.push({
@@ -381,8 +397,8 @@ body .transferinout .el-dialog__header .el-dialog__title {
     width: 100%;
   }
 }
-.el-button.outline.blue-btn>span {
-  color: #468CFF;
+.el-button.outline.blue-btn > span {
+  color: #468cff;
 }
 
 .el-dialog {
@@ -392,9 +408,9 @@ body .transferinout .el-dialog__header .el-dialog__title {
 .el-dialog__header {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
-  background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
-  box-shadow: 0px -2px 5px 0px #B1D7FF inset;
-  box-shadow: 0px -1px 4px 0px #5894FF inset;
+  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+  box-shadow: 0px -2px 5px 0px #b1d7ff inset;
+  box-shadow: 0px -1px 4px 0px #5894ff inset;
   border: 0;
   color: #fff;
   padding: 10px;
@@ -409,16 +425,16 @@ body .transferinout .el-dialog__header .el-dialog__title {
     width: 402px;
     height: 52px;
     border-radius: 12px;
-    box-shadow: 0px 0px 8px 0px #A9C9EA inset;
+    box-shadow: 0px 0px 8px 0px #a9c9ea inset;
   }
-  
+
   .el-form-item {
     margin: 0;
   }
 
   .submit-btn {
-    box-shadow: 0px -2px 5px 0px #93C7FF inset;
-    box-shadow: 0px -1px 4px 0px #275EC1 inset;
+    box-shadow: 0px -2px 5px 0px #93c7ff inset;
+    box-shadow: 0px -1px 4px 0px #275ec1 inset;
     width: 100%;
     border-radius: 12px;
   }
@@ -432,31 +448,31 @@ body .transferinout .el-dialog__header .el-dialog__title {
   flex-direction: column;
   gap: 20px;
   padding: 20px;
-  color: #424F72;
+  color: #424f72;
 }
 
 .blue-btn {
   gap: 10px;
-  background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
-  box-shadow: 0px -2px 5px 0px #B1D7FF inset;
-  box-shadow: 0px -1px 4px 0px #5894FF inset;
+  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+  box-shadow: 0px -2px 5px 0px #b1d7ff inset;
+  box-shadow: 0px -1px 4px 0px #5894ff inset;
   color: #fff;
   padding: 20px 30px;
   cursor: pointer;
   border: 0;
 
   &.outline {
-    background: linear-gradient(180deg, #F8FBFF 0%, #FDFEFF 100%);
-    box-shadow: 0px 2px 4px 0px #BBDCFF inset;
-    box-shadow: 0px -1px 4px 0px #A2BFF4 inset;
-    color: #468CFF;
+    background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
+    box-shadow: 0px 2px 4px 0px #bbdcff inset;
+    box-shadow: 0px -1px 4px 0px #a2bff4 inset;
+    color: #468cff;
   }
 }
 
 .balance-plat-item {
   display: grid;
   grid-template-columns: 1fr auto;
-  background-color: #E7F3FF;
+  background-color: #e7f3ff;
   padding: 20px;
   border-radius: 12px;
 
@@ -499,7 +515,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
   .transfer-plat-item {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    border: 1px solid #ECEDF0;
+    border: 1px solid #ecedf0;
     width: 238px;
     height: 128px;
 

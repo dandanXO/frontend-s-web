@@ -3,6 +3,7 @@
     :platforms="fishingPlatforms"
     :platformGameType="platformGameType"
     :platformType="platformType"
+    platformName="fishing"
     @load-game="openGame"
   />
 </template>

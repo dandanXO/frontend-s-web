@@ -3,6 +3,7 @@
     :platforms="slotPlatforms"
     :platformGameType="platformGameType"
     :platformType="platformType"
+    platformName="slot"
     @load-game="openGame"
   />
 </template>

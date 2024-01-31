@@ -3,6 +3,7 @@
     :platforms="eSportsPlatforms"
     :platformGameType="platformGameType"
     :platformType="platformType"
+    platformName="esports"
     @load-game="openGame"
   />
 </template>
