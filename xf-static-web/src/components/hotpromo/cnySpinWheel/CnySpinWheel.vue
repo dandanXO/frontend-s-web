@@ -220,7 +220,7 @@ const initSpinWheel = () => {
   initSpinWheelData()
     .then((res) => {
       if (res.code == 0) {
-        remainingDraws.value = 1 || res.data.availableSpin;
+        remainingDraws.value = res.data.availableSpin;
       }
     })
 
