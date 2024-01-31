@@ -69,7 +69,7 @@
                 />
               </div>
               <div class="inner"
-                :class="selectedPromo.promoCode === 'cny-hongbaoyu' && 'cny2024'">
+                :class="isSpecialPromo ? 'special-promo' : ''">
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
                 </div>
@@ -215,7 +215,7 @@ export default defineComponent({
           })
     }
     const showPromoDetails = (promo) => {
-      if (promo.promoCode === "cny-hongbaoyu") {
+      if (promo.promoCode === "cny-hongbaoyu" || promo.promoCode === "cny-spinwheel") {
         isSpecialPromo.value = true
       } else {
         isSpecialPromo.value = false
@@ -620,7 +620,7 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
 
-        &.cny2024 {
+        &.special-promo {
           width: 100%;
           margin:0 auto;
         }

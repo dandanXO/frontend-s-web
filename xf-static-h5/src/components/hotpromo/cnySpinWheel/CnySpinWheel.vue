@@ -1,12 +1,13 @@
 <template>
   <div class="container">
+    <img src="./../../../assets/images/promotion/hotpromo/cny-spinwheel/banner.png" />
     <div class="spin-wheel-container">
       <div :class="`draw-btn click-pointer ${remainingDraws <= 0 ? 'disabled' : ''}`" @click="spinWheel">
         <img src="./../../../assets/images/promotion/hotpromo/cny-spinwheel/click-spin-btn.png" />
       </div>
-      <!-- <div class="wheel-stage">
+      <div class="wheel-stage">
         <img src="./../../../assets/images/promotion/hotpromo/cny-spinwheel/spin-wheel-stage.png" />
-      </div> -->
+      </div>
       <div class="cny-hat">
         <img src="./../../../assets/images/promotion/hotpromo/cny-spinwheel/spin-wheel-cny-hat.png" />
       </div>
@@ -34,6 +35,17 @@
 
     <div class="promo-info-container">
       <div class="promo-info-banner">
+        <div class="promo-info-header">中奖名单</div>
+        <div class="promo-info-content">
+          <div class="winners-list">
+            <div class="winners-list-item" v-for="(item, index) in winnersList" :key="index">
+              <div class="winner-username">恭喜 {{ item.username }}</div>
+              <div class="winner-prize">抽中 {{ item.prize }} 礼金</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="promo-info-banner">
         <div class="promo-info-header">活动说明</div>
         <div class="promo-info-content">
           <div class="event-info-item">
@@ -47,17 +59,6 @@
           <div class="event-info-item">
             <div class="event-info-title">抽奖时间：</div>
             <div class="event-info-desc">以官网通知为准</div>
-          </div>
-        </div>
-      </div>
-      <div class="promo-info-banner">
-        <div class="promo-info-header">中奖名单</div>
-        <div class="promo-info-content">
-          <div class="winners-list">
-            <div class="winners-list-item" v-for="(item, index) in winnersList" :key="index">
-              <div class="winner-username">恭喜 {{ item.username }}</div>
-              <div class="winner-prize">抽中 {{ item.prize }} 礼金</div>
-            </div>
           </div>
         </div>
       </div>
@@ -80,7 +81,6 @@
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
-// import { ElMessage } from "element-plus";
 import { eventapi } from "src/boot/axios";
 
 // spin wheel constants
@@ -88,6 +88,7 @@ const TOTAL_ITEMS = 8;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
+const SPIN_WHEEL_PRIZES = [8, 1888, 18, 188, 88, 588, 58, 888];
 
 // spin wheel element refs
 const spinBoardRef = ref();
@@ -97,58 +98,9 @@ const drawBtnRef = ref();
 const spinButtonDisable = ref(false);
 const degreesToStopAt = ref([]);
 const showPrizePopup = ref(false);
-const prizePopupBonusAmt = ref(10000);
-const remainingDraws = ref(5);
-const winnersList = ref([
-  {
-    username: "abc*********",
-    prize: "五等奖：288元"
-  },
-  {
-    username: "def*********",
-    prize: "五等奖：388元"
-  },
-  {
-    username: "abc*********",
-    prize: "五等奖：288元"
-  },
-  {
-    username: "def*********",
-    prize: "五等奖：388元"
-  },
-  {
-    username: "abc*********",
-    prize: "五等奖：288元"
-  },
-  {
-    username: "def*********",
-    prize: "五等奖：388元"
-  },
-  {
-    username: "abc*********",
-    prize: "五等奖：288元"
-  },
-  {
-    username: "def*********",
-    prize: "五等奖：388元"
-  },
-  {
-    username: "abc*********",
-    prize: "五等奖：288元"
-  },
-  {
-    username: "def*********",
-    prize: "五等奖：388元"
-  },
-  {
-    username: "abc*********",
-    prize: "五等奖：288元"
-  },
-  {
-    username: "def*********",
-    prize: "五等奖：388元"
-  }
-]);
+const prizePopupBonusAmt = ref();
+const remainingDraws = ref();
+const winnersList = ref([]);
 
 let finalDegree = 0;
 let speed = 1;
@@ -175,6 +127,19 @@ const spin = (prizeIndex, stopCallback) => {
   // 5s + api return
   stopSpin(prizeIndex, stopCallback);
 };
+
+const getRecords = () => {
+  eventapi
+    .get("/vipWheel/records")
+    .then((res) => {
+      if (res.code == 0) {
+        winnersList.value = res.data;
+      }
+    })
+    .catch((err) => {
+      console.log('here', err)
+    });
+}
 
 const stopSpin = (prizeIndex, stopCallback) => {
   // call api
@@ -235,56 +200,64 @@ const spinWheel = () => {
   }
 
   if (remainingDraws.value <= 0) {
-    // ElMessage.error("剩余抽奖次数：0");
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: "剩余抽奖次数：0",
+      icon: "report_problem"
+    });
     return;
   }
 
   eventapi
-    .get("/receiveLuckydrawBonus")
-    .then(() => {
-      if (data.code == 0) {
-        spin(data.data.index, () => {
+    .post("/vipWheel/spin")
+    .then((res) => {
+      if (res.code == 0) {
+        const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === res.data.bonus);
+
+        spin(prizeIndex, () => {
           showPrizePopup.value = true;
-          prizePopupBonusAmt.value = data.data.bonus;
-          remainingDraws.value = data.data.remaining;
+          prizePopupBonusAmt.value = res.data.bonus;
+          remainingDraws.value = res.data.availableSpin;
         });
-      } else {
-        error(data);
       }
     })
-    .catch(() => {
-      const data = {
-        data: {
-          index: 3,
-          bonus: 500000,
-          remaining: 5
-        }
-      };
-      spin(data.data.index, () => {
-        showPrizePopup.value = true;
-        prizePopupBonusAmt.value = data.data.bonus;
-        remainingDraws.value = data.data.remaining;
-      });
+    .catch((err) => {
+      console.log(err)
     });
 };
+
+const initSpinWheel = () => {
+  eventapi
+    .get("/vipWheel/init")
+    .then((res) => {
+      if (res.code == 0) {
+        remainingDraws.value = res.data.availableSpin;
+      }
+    })
+
+  getRecords();
+}
 
 onMounted(() => {
   // calc no of spin wheel items and potential stops
   for (var i = 0; i < TOTAL_ITEMS; i++) {
     var the_degree = (FULL_DEGREE / TOTAL_ITEMS) * i * -1;
-    degreesToStopAt.value.push({ degree: the_degree });
+    degreesToStopAt.value.push({ degree: the_degree, prize: SPIN_WHEEL_PRIZES[i] });
   }
 
   spinBoardRef.value = document.getElementById("spin-wheel-bg");
   spinNumRef.value = document.getElementById("spin-wheel-number");
   drawBtnRef.value = document.querySelector(".draw-btn");
+
+  initSpinWheel();
 });
 </script>
 
 <style lang="scss">
 .spin-wheel-container {
   position: relative;
-  margin: 22px 0px 55px;
+  margin: 55px 0px;
   text-align: center;
 }
 
@@ -383,11 +356,11 @@ onMounted(() => {
 }
 
 .wheel-stage {
-  width: 475px;
+  width: 100%;
   height: auto;
   z-index: 20;
   position: absolute;
-  top: calc(50%);
+  bottom: 0px;
   left: 50%;
   transform: translate(-50%, 50%);
 
@@ -417,6 +390,8 @@ onMounted(() => {
 .spin-wheel-board {
   position: relative;
   z-index: 20;
+  background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/tree-branches.png") no-repeat top center;
+  background-size: contain;
 }
 
 ::-webkit-scrollbar {
@@ -510,9 +485,11 @@ onMounted(() => {
   .remaining-draw-text {
     color: #e6d796;
     font-size: 25px;
-    margin: 10px auto;
+    margin: 10px auto 40px;
     text-align: center;
     width: 300px;
+    position: relative;
+    z-index: 23;
   }
 }
 
@@ -523,6 +500,8 @@ onMounted(() => {
   align-items: center;
   gap: 20px;
   padding: 20px 0px 60px;
+  margin-top: -50px;
+  margin-bottom: 70px;
 
   .promo-info-banner {
     background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/promo-info-banner.png");
@@ -535,6 +514,7 @@ onMounted(() => {
     flex-direction: column;
     justify-content: flex-end;
     padding: 20px;
+    z-index: 23;
   }
 
   .promo-info-header {
