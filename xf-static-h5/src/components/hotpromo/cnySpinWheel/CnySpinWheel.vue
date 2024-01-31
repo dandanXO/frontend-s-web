@@ -39,8 +39,8 @@
         <div class="promo-info-content">
           <div class="winners-list">
             <div class="winners-list-item" v-for="(item, index) in winnersList" :key="index">
-              <div class="winner-username">恭喜 {{ item.username }}</div>
-              <div class="winner-prize">抽中 {{ item.prize }} 礼金</div>
+              <div class="winner-username">恭喜 {{ item.loginName }}</div>
+              <div class="winner-prize">抽中 {{ item.bonus }} 礼金</div>
             </div>
           </div>
         </div>
