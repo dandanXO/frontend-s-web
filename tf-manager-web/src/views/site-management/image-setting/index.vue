@@ -266,7 +266,11 @@
       <el-table-column prop="name" :label="t('fields.imageName')" />
       <el-table-column prop="category" :label="t('fields.category')">
         <template #default="scope">
-          {{ uiControl.category.filter((item) => item.name === scope.row.category)[0].display }}
+          {{
+            uiControl.category.filter(
+              item => item.name === scope.row.category
+            )[0].display
+          }}
         </template>
       </el-table-column>
       <el-table-column prop="siteName" :label="t('fields.site')" />
@@ -393,7 +397,15 @@ const uiControl = reactive({
   ],
   promoType: [
     { name: 'DESKTOP_IMAGE', display: t('fields.desktopImage') },
+    {
+      name: 'DESKTOP_BACKGROUND_IMAGE',
+      display: t('fields.desktopBackgroundImage'),
+    },
     { name: 'MOBILE_IMAGE', display: t('fields.mobileImage') },
+    {
+      name: 'MOBILE_BACKGROUND_IMAGE',
+      display: t('fields.mobileBackgroundImage'),
+    },
     { name: 'DESKTOP_BANNER', display: t('fields.desktopBanner') },
     { name: 'MOBILE_BANNER', display: t('fields.mobileBanner') },
     { name: 'TEAM_ICON', display: t('fields.teamIcon') },
@@ -495,7 +507,7 @@ function showEdit(image) {
       }
     })
   })
-  checkGamePlatform("EDIT")
+  checkGamePlatform('EDIT')
 }
 
 async function attachPhoto(event) {
@@ -559,7 +571,11 @@ async function loadSiteImage() {
     e.displayPath = imageDir + categoryDir + e.path
 
     if (e.category === 'GAME') {
-      e.platform = e.path.substring(e.path.indexOf('/') + 1, e.path.lastIndexOf('/')) === '/' ? null : e.path.substring(e.path.indexOf('/') + 1, e.path.lastIndexOf('/'))
+      e.platform =
+        e.path.substring(e.path.indexOf('/') + 1, e.path.lastIndexOf('/')) ===
+        '/'
+          ? null
+          : e.path.substring(e.path.indexOf('/') + 1, e.path.lastIndexOf('/'))
     }
   })
   page.pages = ret.pages
@@ -646,7 +662,7 @@ async function checkGamePlatform(type) {
     formRules.posterType = null
     formRules.platform = null
   }
-  if (type !== "EDIT") {
+  if (type !== 'EDIT') {
     form.platform = null
   }
 }
@@ -690,7 +706,6 @@ onMounted(async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 #preview .el-image {
