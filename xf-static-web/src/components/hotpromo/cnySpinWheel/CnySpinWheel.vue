@@ -424,7 +424,7 @@ onMounted(() => {
 
 .prizePopupContainer {
   width: 480px;
-  height: 620px;
+  height: 500px;
   background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/prize-popup.png");
   background-size: 100% 100%;
   box-shadow: none;
@@ -437,8 +437,8 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    height: 585px;
-    gap: 55px;
+    height: 470px;
+    gap: 0px;
 
     .bold-text {
       font-family: sans-serif;
@@ -446,7 +446,7 @@ onMounted(() => {
       font-weight: 700;
       letter-spacing: 1px;
       text-align: center;
-      color: #ffffff;
+      color: #530102;
     }
 
     .golden-text {
@@ -484,7 +484,7 @@ onMounted(() => {
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #c12c1e;
+        color: #FFFFFF;
         font-size: 30px;
         font-weight: bold;
         cursor: pointer;
