@@ -4,6 +4,7 @@
       <div class="promo-main-container">
         <div class="promo-type-wrapper">
           <div class="type-list">
+            <img src="../assets/promo/menu-title.png" />
             <div
               class="type-item"
               v-for="p in promoTypes"
@@ -12,7 +13,7 @@
               @click="switchPromoType(p.code)"
             >
               <img :src="require('../assets/promo/menu-' + p.img + '.png')" />
-              <span class="label"> {{ p.label }}</span>
+              <span class="label">{{ p.label }}</span>
             </div>
           </div>
         </div>
@@ -27,20 +28,21 @@
           >
             <a @click="showPromoDetails(promo)">
               <div class="promo-img-wrapper">
+                <div class="promo-type">{{ getPromoLabel(promo.labelType) }}</div>
+                <div class="promo-details">
+                  <div class="front-date">{{ "2023/8/1-9/30" }}</div>
+                  <div class="front-title">{{ promo.title }}</div>
+                  <div class="front-sub">{{ "每日可领取8888元奖金" }}</div>
+                  <div class="front-btn">查看详情</div>
+                </div>
                 <div class="promo-bg">
-                  <img
-                    class="promo-content isDesktop"
-                    :src="imgURL + promo.desktopImgUrl"
-                  />
-                  <img
-                    class="promo-content isMobile"
-                    :src="imgURL + promo.mobileImgUrl"
-                  />
+                  <img class="promo-content isDesktop" :src="imgURL + promo.desktopImgUrl" />
+                  <img class="promo-content isMobile" :src="imgURL + promo.mobileImgUrl" />
                 </div>
               </div>
-              <div class="promo-info">
+              <!-- <div class="promo-info">
                 <span class="viewdetail">{{ promo.title }}</span>
-              </div>
+              </div> -->
             </a>
           </div>
         </div>
@@ -79,8 +81,7 @@
               sport: selectedPromo.promoType.toLowerCase() === 'sport',
               eSport: selectedPromo.promoType.toLowerCase() === 'esport',
               fish: selectedPromo.promoType.toLowerCase() === 'fish',
-              liveCasino:
-                selectedPromo.promoType.toLowerCase() === 'livecasino',
+              liveCasino: selectedPromo.promoType.toLowerCase() === 'livecasino',
               slot: selectedPromo.promoType.toLowerCase() === 'slot game'
             }"
           >
@@ -115,9 +116,9 @@ export default defineComponent({
       promoList: [],
     });
     const promoTypes = ref([
-      { code:"ALL", img: 'all', label: '所有优惠' },
-      { code: "ESPORT", img: 'esport', label: '电竞'},
-      { code: "SPORT", img: 'sport', label: '体育'},
+      { code:"ALL", img: 'all', label: '全站优惠' },
+      { code: "ESPORT", img: 'esport', label: '电竞优惠'},
+      { code: "SPORT", img: 'sport', label: '体育优惠'},
       // { code: "POKER", img: 'poker', label: '棋牌'},
       { code: "LIVE CASINO", img: 'live', label: '真人娱乐'},
       { code: "FISH", img: 'game', label: '老虎机/捕鱼'},
@@ -195,6 +196,25 @@ export default defineComponent({
       }).catch((e) => { console.log("error", e); });
       switchPromoType(promoState.active)
     }
+
+    const getPromoLabel = (labelType) => {
+      switch (labelType) {
+        case 0:
+          return "NEW 最新";
+        case 1:
+          return "HOT 热门";
+        case 3:
+          return "RECOMMEND 推荐";
+        case 4:
+          return "DAILY 日常";
+        case 5:
+          return "NEWBIE 新人";
+        case 6:
+          return "TIME 限时";
+        default:
+          return "";
+      }
+    };
     onMounted(() => {
       loadBanner();
       loadAll();
@@ -216,21 +236,21 @@ export default defineComponent({
       showPromoDetails,
       selectedPromo,
       banner,
-      imgURL
+      imgURL,
+      getPromoLabel
     }
   },
 });
 </script>
 <style lang="scss">
 .promo-container {
-  // background: #090b19;
   .all-promotions {
     background: url(../assets/promo/bg-top.jpg) no-repeat center top;
     min-height: 40vh;
     padding: 50px;
     position: relative;
-    padding-top: 370px;
-    background-color: #f0f1f6;
+    padding-top: 580px;
+    background-color: #f3f7fd;
     background-repeat: no-repeat;
   }
   .promo-view-container {
@@ -253,8 +273,7 @@ export default defineComponent({
       min-width: 80%;
       text-align: center;
       tr:first-child td {
-        background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%),
-          linear-gradient(#2e3039, #2e3039);
+        background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
         color: #ffffff;
         border: 0;
       }
@@ -263,18 +282,35 @@ export default defineComponent({
       td {
         padding: 10px;
       }
-      tbody{
-        display:table;
+      tbody {
+        display: table;
         table-layout: fixed;
         width: 100%;
       }
       th {
-        background-image: linear-gradient(0deg, #0494fc 0, #15bdfc 100%),
-          linear-gradient(#d0d1d3, #d0d1d3);
+        // background-image: linear-gradient(0deg, #0494fc 0, #15bdfc 100%), linear-gradient(#d0d1d3, #d0d1d3);
+        background: #e7f3ff;
+        p {
+          margin: 0;
+        }
+        &:first-child {
+          border-radius: 20px 0 0 0;
+        }
+        &:last-child {
+          border-radius: 0 20px 0 0;
+        }
       }
       td {
         // background-color: #202228;
         border: 1px solid #dcdce8;
+        color: #7a8eb9;
+      }
+      tr {
+        &:last-child {
+          td:first-child {
+            border-radius: 20px 0 0 0;
+          }
+        }
       }
     }
   }
@@ -315,12 +351,12 @@ export default defineComponent({
     .promo-main-container {
       width: 100%;
       max-width: $maxwidth;
-      background-color: #ffffff;
       margin: 0 auto;
       padding: 10px 0;
+      display: flex;
+      gap: 30px;
       .promo-type-wrapper {
         display: flex;
-        justify-content: center;
         // border-bottom: 4px solid rgb(255 255 255 / 15%);
         /* width */
         ::-webkit-scrollbar {
@@ -330,15 +366,17 @@ export default defineComponent({
         }
         .type-list {
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
           align-items: center;
-          padding: 20px 0;
+          padding: 20px;
           overflow: auto;
-          width: 90%;
-          border-bottom: 1px solid #9ca5b9;
-          margin-bottom: 20px;
+          width: 280px;
+          border-radius: 20px;
+          flex-direction: column;
+          box-shadow: 0px 4px 22px 0px #00000026;
+          gap: 40px;
+          min-height: 818px;
           .type-item {
-            padding: 5px 10px;
             cursor: pointer;
             // border-radius: 20px;
             // background: #201f29;
@@ -349,23 +387,28 @@ export default defineComponent({
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
-            padding: 12px 30px;
+            gap: 20px;
+            padding: 12px 40px;
             position: relative;
             width: 100%;
+            border-radius: 30px;
+            box-shadow: 0px -1.6610169410705566px 6.085966110229492px 0px #a2bff4 inset;
+
             .label {
               z-index: 0;
-              color: #626a7d;
+              color: #468cff;
+              font-size: 23px;
             }
+
             &:before {
-              content: "";
-              position: absolute;
-              width: 100%;
-              height: 100%;
-              // box-shadow: 0 3px 4px 0 rgb(0 0 0 / 15%);
-              box-shadow: 0px 3px 7px 1px rgba(0, 0, 0, 0.15);
-              transform: skewX(15deg);
-              border-radius: 4px 15px;
+              // content: "";
+              // position: absolute;
+              // width: 100%;
+              // height: 100%;
+              // // box-shadow: 0 3px 4px 0 rgb(0 0 0 / 15%);
+              // box-shadow: 0px 3px 7px 1px rgba(0, 0, 0, 0.15);
+              // transform: skewX(15deg);
+              // border-radius: 4px 15px;
             }
             img {
               max-height: 30px;
@@ -373,6 +416,9 @@ export default defineComponent({
             }
             &.active,
             &:hover {
+              background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+              box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
+
               // background: #4b4e66;
               // box-shadow: 0 0 5px #ffffff;
               // background-image: linear-gradient(90deg,#35d8f2 0,#2188c9 100%),linear-gradient(#5243bd,#5243bd);
@@ -381,12 +427,7 @@ export default defineComponent({
               }
 
               &:before {
-                background-image: linear-gradient(
-                    90deg,
-                    #2d74f6 0,
-                    #7abdfc 100%
-                  ),
-                  linear-gradient(#3077f6, #3077f6);
+                background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#3077f6, #3077f6);
               }
               img {
                 filter: grayscale(1) brightness(100);
@@ -398,23 +439,24 @@ export default defineComponent({
       .promo-list-wrapper {
         width: 90%;
         margin: 0 auto;
-        padding-bottom: 50px;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-gap: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
         .promo-item {
           position: relative;
           overflow: hidden;
           cursor: pointer;
-          background-color: #f2f6ff;
-          box-shadow: 0 3px 9px 0 rgba(112, 122, 143, 0.4);
+          background: url(../assets/promo/front-bg.png) no-repeat center center;
+          background-size: cover;
+          box-shadow: 0px 4px 26px 0px #00000026;
+
+          border-radius: 20px;
           a {
             display: block;
           }
           &:hover {
             .promo-info {
-              background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%),
-                linear-gradient(#3077f6, #3077f6);
+              background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#3077f6, #3077f6);
               background-blend-mode: normal, normal;
               .viewdetail {
                 color: #fefefe;
@@ -428,14 +470,70 @@ export default defineComponent({
           .promo-img-wrapper {
             position: relative;
             overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
             // border-radius: 10px 10px 0 0;
+            .promo-type {
+              position: absolute;
+              left: 0;
+              top: 0;
+              background: linear-gradient(89.92deg, #454bc2 0.06%, #b1a5f0 106.9%);
+              padding: 10px 30px 10px 50px;
+              color: #ffffff;
+              &:after {
+                content: "";
+                border-left: 0 solid transparent;
+                border-right: 20px solid transparent;
+                border-top: 42px solid #a89eed;
+                display: inline-block;
+                position: absolute;
+                left: 100%;
+                top: 0;
+              }
+            }
+            .promo-details {
+              font-family: "Microsoft Yahei UI";
+              margin: 20px 0;
+              padding: 50px 0 10px 0;
+              display: flex;
+              gap: 5px;
+              flex-direction: column;
+              justify-content: flex-start;
+              align-items: flex-start;
+              .front-date {
+                color: #000000;
+                font-size: 12px;
+              }
+              .front-title {
+                color: #4c88f8;
+                font-size: 30px;
+                font-weight: 700;
+              }
+              .front-sub {
+                color: #7a80a1;
+                font-size: 18px;
+                font-weight: 700;
+              }
+              .front-btn {
+                color: #ffffff;
+                padding: 5px 30px;
+                background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+
+                box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
+
+                box-shadow: 0px -1px 3.6640000343322754px 0px #5894ff inset;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 30px;
+              }
+            }
             .promo-bg {
               transition: all 0.5s ease;
               background-size: cover;
               background-position: center center;
-              &:hover {
-                transform: scale(1.2);
-              }
               display: flex;
               justify-content: center;
               align-items: center;
@@ -519,6 +617,8 @@ export default defineComponent({
           width: 95%;
           text-align: left;
           padding: 20px;
+          color: #7a8eb9;
+          font-size: 20px;
           ol {
             li {
               margin: 20px 0;

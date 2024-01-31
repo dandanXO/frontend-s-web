@@ -24,7 +24,7 @@ export function logout() {
 }
 
 export function loadBankList() {
-  return server.REST.options(`/session/withdraw/banks?siteId=9`);
+  return server.REST.options(`/session/withdraw/banks?siteId=7`);
 }
 
 export function registerWBankCard(regForm) {

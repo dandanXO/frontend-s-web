@@ -2,24 +2,26 @@
   <div class="platform-menu-container">
     <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
     <template v-for="(item, index) in platformsListDisplay" :key="index">
-      <div class="platform-menu-item">
-        <div class="platform-menu-title" v-html="item.name" />
-        <div class="platform-menu-caption" v-if="item.caption" v-html="item.caption" />
-        <div class="platform-menu-img">
-          <img
-            :src="
-              require('../../assets/' +
-                props.platformType +
-                '/' +
-                props.platformType +
-                '-item-' +
-                item.name.toLowerCase() +
-                '.png')
-            "
-          />
+      <router-link :to="`${props.platformName}?plat=${item.code}`">
+        <div class="platform-menu-item">
+          <div class="platform-menu-title" v-html="item.name" />
+          <div class="platform-menu-caption" v-if="item.caption" v-html="item.caption" />
+          <div class="platform-menu-img">
+            <img
+              :src="
+                require('../../assets/' +
+                  props.platformType +
+                  '/' +
+                  props.platformType +
+                  '-item-' +
+                  item.name.toLowerCase() +
+                  '.png')
+              "
+            />
+          </div>
+          <div class="platform-menu-btn" @click="gotoGame(item)"><a>进入场馆</a></div>
         </div>
-        <div class="platform-menu-btn" @click="gotoGame(item)"><a>进入场馆</a></div>
-      </div>
+      </router-link>
     </template>
   </div>
 </template>
@@ -30,6 +32,7 @@ import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/
 import { userStore } from "@/store";
 const props = defineProps({
   platforms: Array,
+  platformName: String,
   platformType: String,
   platformGameType: String
 });
@@ -39,12 +42,12 @@ const store = userStore();
 const platformsList = ref([]);
 const platformsListDisplay = ref([]);
 const getPlatformList = () => {
-  const fetchFunction = store.memberType === "TEST" ? getLoggedInPlatformList : getPlatformListDisplay;
+  const fetchFunction = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
 
   fetchFunction().then((res) => {
     platformsList.value = res;
     platformsListDisplay.value = platformsList.value.filter((element) =>
-      element.gameType.includes(props.platformGameType)
+      element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase())
     );
   });
 };

@@ -3,6 +3,7 @@
     :platforms="liveCasinoPlatforms"
     :platformGameType="platformGameType"
     :platformType="platformType"
+    platformName="live-casino"
     @load-game="openGame"
   />
 </template>
