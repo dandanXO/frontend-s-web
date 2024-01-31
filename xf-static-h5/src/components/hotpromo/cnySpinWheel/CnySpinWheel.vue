@@ -2,7 +2,7 @@
   <div class="container">
     <img src="./../../../assets/images/promotion/hotpromo/cny-spinwheel/banner.png" />
     <div class="spin-wheel-container">
-      <div :class="`draw-btn click-pointer ${remainingDraws <= 0 ? 'disabled' : ''}`" @click="spinWheel">
+      <div :class="`draw-btn click-pointer ${remainingDraws <= 0 || spinButtonDisable ? 'disabled' : ''}`" @click="spinWheel">
         <img src="./../../../assets/images/promotion/hotpromo/cny-spinwheel/click-spin-btn.png" />
       </div>
       <div class="wheel-stage">
@@ -109,7 +109,7 @@ var degree;
 
 const spin = (prizeIndex, stopCallback) => {
   spinButtonDisable.value = true;
-  drawBtnRef.value.style.filter = "brightness(0.85)";
+  // drawBtnRef.value.style.filter = "brightness(0.85)";
 
   reset();
 
@@ -178,7 +178,7 @@ const stopSpin = (prizeIndex, stopCallback) => {
         spinButtonDisable.value = false;
 
         setTimeout(() => {
-          drawBtnRef.value.style.filter = "none";
+          // drawBtnRef.value.style.filter = "none";
           stopCallback?.();
         }, 750);
       }, stopTime * 1000);

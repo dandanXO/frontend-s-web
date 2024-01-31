@@ -2,7 +2,7 @@
   <div class="cny-spin-wheel-wrapper">
     <div class="container">
       <div class="spin-wheel-container">
-        <div :class="`draw-btn click-pointer ${remainingDraws <= 0 ? 'disabled' : ''}`" @click="spinWheel">
+        <div :class="`draw-btn click-pointer ${remainingDraws <= 0 || spinButtonDisable ? 'disabled' : ''}`" @click="spinWheel">
           <img src="./../../../assets/images/promotion/hotpromo/cny-spinwheel/click-spin-btn.png" />
         </div>
         <div class="cny-hat">
@@ -78,7 +78,7 @@
 import { ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
-import { receiveLuckydrawBonus } from "@/api/promotion/xmasSpinWheel";
+import { getRecords, getSpinWheelPrize, initSpinWheelData } from "@/api/promotion/cnySpinWheel";
 
 const store = userStore();
 
@@ -87,6 +87,7 @@ const TOTAL_ITEMS = 8;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
+const SPIN_WHEEL_PRIZES = [8, 1888, 18, 188, 88, 588, 58, 888];
 
 // spin wheel element refs
 const spinBoardRef = ref();
@@ -98,56 +99,7 @@ const degreesToStopAt = ref([]);
 const showPrizePopup = ref(false);
 const prizePopupBonusAmt = ref();
 const remainingDraws = ref(5);
-const winnersList = ref([
-  {
-    username: "abc*********",
-    prize: "五等奖：288元"
-  },
-  {
-    username: "def*********",
-    prize: "五等奖：388元"
-  },
-  {
-    username: "abc*********",
-    prize: "五等奖：288元"
-  },
-  {
-    username: "def*********",
-    prize: "五等奖：388元"
-  },
-  {
-    username: "abc*********",
-    prize: "五等奖：288元"
-  },
-  {
-    username: "def*********",
-    prize: "五等奖：388元"
-  },
-  {
-    username: "abc*********",
-    prize: "五等奖：288元"
-  },
-  {
-    username: "def*********",
-    prize: "五等奖：388元"
-  },
-  {
-    username: "abc*********",
-    prize: "五等奖：288元"
-  },
-  {
-    username: "def*********",
-    prize: "五等奖：388元"
-  },
-  {
-    username: "abc*********",
-    prize: "五等奖：288元"
-  },
-  {
-    username: "def*********",
-    prize: "五等奖：388元"
-  }
-]);
+const winnersList = ref([]);
 
 let finalDegree = 0;
 let speed = 1;
@@ -156,7 +108,7 @@ var degree;
 
 const spin = (prizeIndex, stopCallback) => {
   spinButtonDisable.value = true;
-  drawBtnRef.value.style.filter = "brightness(0.85)";
+  // drawBtnRef.value.style.filter = "brightness(0.85)";
 
   reset();
 
@@ -209,7 +161,7 @@ const stopSpin = (prizeIndex, stopCallback) => {
         spinButtonDisable.value = false;
 
         setTimeout(() => {
-          drawBtnRef.value.style.filter = "none";
+          // drawBtnRef.value.style.filter = "none";
           stopCallback?.();
         }, 750);
       }, stopTime * 1000);
@@ -235,33 +187,45 @@ const spinWheel = () => {
     return;
   }
 
-  receiveLuckydrawBonus()
-    .then(() => {
-      if (data.code == 0) {
-        spin(data.data.index, () => {
+  getSpinWheelPrize()
+    .then((res) => {
+      if (res.code == 0) {
+        const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === res.data.bonus);
+
+        spin(prizeIndex, () => {
           showPrizePopup.value = true;
-          prizePopupBonusAmt.value = data.data.bonus;
-          remainingDraws.value = data.data.remaining;
+          prizePopupBonusAmt.value = res.data.bonus;
+          remainingDraws.value = res.data.availableSpin;
         });
-      } else {
-        error(data);
       }
     })
-    .catch(() => {
-      const data = {
-        data: {
-          index: 3,
-          bonus: 500000,
-          remaining: 5
-        }
-      };
-      spin(data.data.index, () => {
-        showPrizePopup.value = true;
-        prizePopupBonusAmt.value = data.data.bonus;
-        remainingDraws.value = data.data.remaining;
-      });
+    .catch((err) => {
+      console.log(err)
     });
 };
+
+const getRecordsList = () => {
+  getRecords()
+    .then((res) => {
+      if (res.code == 0) {
+        winnersList.value = res.data;
+      }
+    })
+    .catch((err) => {
+      console.log('here', err)
+    });
+}
+
+const initSpinWheel = () => {
+  initSpinWheelData()
+    .then((res) => {
+      if (res.code == 0) {
+        remainingDraws.value = 1 || res.data.availableSpin;
+      }
+    })
+
+    getRecordsList();
+}
 
 onMounted(() => {
   // calc no of spin wheel items and potential stops
@@ -273,13 +237,15 @@ onMounted(() => {
   spinBoardRef.value = document.getElementById("spin-wheel-bg");
   spinNumRef.value = document.getElementById("spin-wheel-number");
   drawBtnRef.value = document.querySelector(".draw-btn");
+
+  initSpinWheel();
 });
 </script>
 
 <style lang="scss">
 .cny-spin-wheel-wrapper {
   //   background: salmon;
-  padding-top: 100px;
+  padding-top: 110px;
 
   //   .cny-spin-wheel-banner {
   //     position: absolute;
