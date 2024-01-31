@@ -486,7 +486,9 @@ function create() {
   sitePlatformForm.value.validate(async valid => {
     if (valid) {
       var arr = form.gameType
-      form.gameType = arr.toString()
+      if (form.followType === 'NEW') {
+        form.gameType = arr.toString()
+      }
       await createSitePlatform(form)
       uiControl.dialogVisible = false
       await loadSitePlatform()
@@ -499,7 +501,9 @@ function edit() {
   sitePlatformForm.value.validate(async valid => {
     if (valid) {
       var arr = form.gameType
-      form.gameType = arr.toString()
+      if (form.followType === 'NEW') {
+        form.gameType = arr.toString()
+      }
       await updateSitePlatform(form)
       uiControl.dialogVisible = false
       await loadSitePlatform()
