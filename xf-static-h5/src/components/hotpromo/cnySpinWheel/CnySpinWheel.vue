@@ -423,8 +423,8 @@ onMounted(() => {
     flex-direction: column;
     justify-content: flex-end;
     width: 300px;
-    height: 432px;
-    gap: 45px;
+    height: 345px;
+    gap: 0px;
     background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/prize-popup.png");
     background-size: 100% 100%;
 
@@ -434,7 +434,7 @@ onMounted(() => {
       font-weight: 700;
       letter-spacing: 1px;
       text-align: center;
-      color: #ffffff;
+      color: #530102;
     }
 
     .golden-text {
@@ -472,7 +472,7 @@ onMounted(() => {
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #c12c1e;
+        color: #FFFFFF;
         font-size: 16px;
         font-weight: bold;
         cursor: pointer;
