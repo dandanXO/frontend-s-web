@@ -64,7 +64,7 @@ export const sportsPlatforms = [
   },
   {
     code: "SABA",
-    cnname: "SABA体育",
+    cnname: "沙巴体育",
     image: "saba",
     message: "最专业的盘口趋势分析，及时掌握最全面的热点赛事、体育资讯，多种投注型，让您乐享其中。",
     caption: "专业品牌，尽享满贯",
