@@ -25,7 +25,7 @@
             </div>
 
             <p class="platform-desc">
-              专注于彩票游戏行业多年，拥有经典彩种、玩法。 还有超多独家创新玩法，足够新颖，极易操作的游戏界面， 更是在您游戏过程中增光添彩！
+              {{ item.message }}
             </p>
 
             <div class="platform-list-box">
@@ -72,10 +72,10 @@
               v-if="platformType !== 'slot' && platformType !== 'fishing'"
             >
               <template v-if="item.code==='BBINDY'">
-                <div class="btn-blue" @click="openGame(item.name, item.code, 'bblive_lobby_pc')">{{item.code}} 进入游戏</div>
+                <div class="btn-blue" @click="openGame(item.name, item.code, 'bblive_lobby_pc')">进入游戏</div>
               </template>
               <template v-else>
-                <div class="btn-blue" @click="openGame(item.name, item.code)">{{platformType}} 进入游戏</div>
+                <div class="btn-blue" @click="openGame(item.name, item.code)">进入游戏</div>
               </template>
 
             </div>
