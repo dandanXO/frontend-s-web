@@ -1040,6 +1040,11 @@ export default defineComponent({
               fishObj.title = fishObj.name + " 捕鱼";
               fishObj.icon = "fish";
               fishObj.subtitle = "捕鱼游戏";
+
+              if (fishObj.code === "GPS") {
+                fishObj.gameCode = 7202;
+              }
+
               fishing.value.push(fishObj);
             }
             if (platTypes.indexOf("POKER") > -1) {
