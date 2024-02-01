@@ -61,6 +61,22 @@ export const sportsPlatforms = [
     message: "最专业的盘口趋势分析，及时掌握最全面的热点赛事、体育资讯，多种投注型，让您乐享其中。",
     caption: "专业品牌，尽享满贯",
     gameCode: ""
+  },
+  {
+    code: "SABA",
+    cnname: "SABA体育",
+    image: "saba",
+    message: "最专业的盘口趋势分析，及时掌握最全面的热点赛事、体育资讯，多种投注型，让您乐享其中。",
+    caption: "专业品牌，尽享满贯",
+    gameCode: ""
+  },
+  {
+    code: "PINNACLE",
+    cnname: "平博体育",
+    image: "pinnacle",
+    message: "最专业的盘口趋势分析，及时掌握最全面的热点赛事、体育资讯，多种投注型，让您乐享其中。",
+    caption: "专业品牌，尽享满贯",
+    gameCode: ""
   }
 ];
 
@@ -199,14 +215,14 @@ export const pokerPlatforms = [
     caption: "",
     gameCode: ""
   },
-  // {
-  //   code: "GD",
-  //   cnname: "高登棋牌",
-  //   image: "gd",
-  //   message: "抢庄牛牛龙虎斗，多款棋牌任君选<br> 棋牌彰显胸怀，竞技娱乐烧脑，好友相约竞技，游戏改变生活",
-  //   caption: "",
-  //   gameCode: ""
-  // }
+  {
+    code: "GLFC",
+    cnname: "高登棋牌",
+    image: "gd",
+    message: "抢庄牛牛龙虎斗，多款棋牌任君选<br> 棋牌彰显胸怀，竞技娱乐烧脑，好友相约竞技，游戏改变生活",
+    caption: "",
+    gameCode: ""
+  }
 ];
 
 // lottery

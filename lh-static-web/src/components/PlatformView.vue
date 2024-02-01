@@ -354,7 +354,7 @@ const gameCat = ref("allGame");
 
 onMounted(() => {
   getPlatList();
-  // getPlatGameList();
+  getPlatGameList();
   // activePlat.value = filteredPlatforms.value[0];
 });
 

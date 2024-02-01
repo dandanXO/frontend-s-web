@@ -108,10 +108,10 @@
             filled
             v-model="form.friendLoginName"
             autocomplete="off"
-            placeholder="请输入好友兴發账号"
+            placeholder="请输入好友雷火账号"
             label="账号"
             lazy-rules
-            :rules="[(val) => (val && val.length > 0) || '请输入好友兴發账号']"
+            :rules="[(val) => (val && val.length > 0) || '请输入好友雷火账号']"
           />
           <q-input
             ref="realNameRef"

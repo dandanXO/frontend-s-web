@@ -131,6 +131,10 @@ export const translateRecord = (rec, type = "") => {
     return "开元棋牌"; // KY
   } else if (rec === "DT") {
     return "大唐棋牌"; // DT
+  } else if (rec === "LEG") {
+    return "乐游棋牌"; // KY
+  } else if (rec === "GLFC") {
+    return "高登棋牌"; // DT
   } else if (rec === "TCG") {
     return "TCG彩票"; // TCG
   } else if (rec === "SGWin") {

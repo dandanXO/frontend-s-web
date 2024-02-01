@@ -80,6 +80,17 @@ const routes = [
     ]
   },
   {
+    path: "/fishing",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "fishing",
+        component: () => import("pages/games/AviatorView.vue")
+      }
+    ]
+  },
+  {
     path: "/live-casino",
     component: () => import("layouts/MainLayout.vue"),
     children: [

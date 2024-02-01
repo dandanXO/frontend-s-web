@@ -140,14 +140,6 @@
           <img src="../assets/images/home/games/live-icon.png" />
         </template>
       </div>
-      <div @click="selectTab('poker')" class="game-platform btn-pointer" id="poker-platform">
-        <template v-if="tab === 'poker'">
-          <img src="../assets/images/home/games/poker-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/poker-icon.png" />
-        </template>
-      </div>
       <div @click="selectTab('lottery')" class="game-platform btn-pointer" id="lottery-platform">
         <template v-if="tab === 'lottery'">
           <img src="../assets/images/home/games/lottery-icon-active.png" />
@@ -164,6 +156,17 @@
           <img src="../assets/images/home/games/slot-icon.png" />
         </template>
       </div>
+
+      <div @click="selectTab('poker')" class="game-platform btn-pointer" id="poker-platform">
+        <template v-if="tab === 'poker'">
+          <img src="../assets/images/home/games/poker-icon-active.png" />
+        </template>
+        <template v-else>
+          <img src="../assets/images/home/games/poker-icon.png" />
+        </template>
+      </div>
+
+
       <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
         <template v-if="tab === 'fishing'">
           <img src="../assets/images/home/games/fish-icon-active.png" />
@@ -332,7 +335,7 @@
       </div>
       <div class="game-lists" v-if="tab === 'fishing'" id="fishing-lists">
         <template v-for="(item, index) in fishing" :key="index">
-          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)">
+          <div class="platform-block" @click="router.push({path: '/fishing', query: {platform: item.code}})">
             <div
               class="platform-img-frame"
               :style="{
@@ -839,7 +842,8 @@ export default defineComponent({
             return null;
           }
         })
-        .catch(() => {});
+        .catch(() => {
+        });
       return item.value;
     };
 
@@ -888,7 +892,8 @@ export default defineComponent({
               // }
             }
           })
-          .catch(() => {});
+          .catch(() => {
+          });
       }
     };
 
@@ -920,7 +925,8 @@ export default defineComponent({
           } else {
           }
         })
-        .catch(() => {});
+        .catch(() => {
+        });
     }
 
     const platforms = ref([]);
@@ -957,7 +963,7 @@ export default defineComponent({
               // console.log(espObj);
 
               if (espObj.code === "TFGaming") {
-                espObj.title = "兴發电竞";
+                espObj.title = "雷火电竞";
               }
               if (espObj.code === "IA") {
                 espObj.title = "小艾电竞";
@@ -1014,7 +1020,7 @@ export default defineComponent({
               }
 
               if (liveObj.code === "BBINDY") {
-                liveObj.gameCode = 'bblive_lobby_pc';
+                liveObj.gameCode = "bblive_lobby_pc";
               }
 
               liveObj.icon = "live";
@@ -1028,17 +1034,20 @@ export default defineComponent({
               slotObj.icon = "slot";
               slotObj.subtitle = "电子游戏";
               // console.log(slotObj);
+
               if (slotObj.code === "AG") {
-              } else {
-                let slotItem = {
-                  id: slotObj.id,
-                  code: slotObj.code,
-                  icon: slotObj.name
-                };
-                // console.log(slotItem);
-                ui.slotLists.push(slotItem);
-                slot.value.push(slotObj);
+                slotObj.title = "AG 电子";
               }
+
+              let slotItem = {
+                id: slotObj.id,
+                code: slotObj.code,
+                icon: slotObj.name
+              };
+              // console.log(slotItem);
+              ui.slotLists.push(slotItem);
+              slot.value.push(slotObj);
+
             }
             if (platTypes.indexOf("FISH") > -1 && element.code !== "AGF") {
               var fishObj = Object.assign({}, element);
@@ -1070,8 +1079,12 @@ export default defineComponent({
               }
             }
           });
+
+          console.log("END");
+          console.log(slot.value);
         })
-        .catch((err) => {});
+        .catch((err) => {
+        });
     };
 
     const tab = ref("esport");
@@ -1737,12 +1750,14 @@ export default defineComponent({
         .platform-logo {
           margin-top: auto;
           height: 1.25rem;
+
           img {
             display: block;
             height: 100%;
             width: auto;
           }
         }
+
         .platform-title {
           font-weight: 800;
           font-size: 1.175rem;
