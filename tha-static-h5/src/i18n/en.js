@@ -463,7 +463,7 @@ export default {
     totalBonus: "Total Bonus",
     spinRemaining: "You have {spinCount} spins remaining",
     loginToCont: "Login to Continue",
-    you_got_new_spin_wheel_spin: "Congratulation! You 've earned a Lucky Draw Spin!",
+    you_got_new_spin_wheel_spin: "You have received a free wheel-spinning ticket. Check on the promotion page.",
     go_now: "Go Now",
     step_to_download_android: "Steps to download the app for Android",
     step_to_download_ios: "Steps to download the app for IOS",

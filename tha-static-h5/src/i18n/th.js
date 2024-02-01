@@ -459,7 +459,7 @@ export default {
     totalBonus: "โบนัสที่ได้ทั้งหมด",
     spinRemaining: "คุณมี {spinCount} ตั๋วที่หมุนได้",
     loginToCont: "เข้าสู่ระบบเพื่อดำเนินการต่อ",
-    you_got_new_spin_wheel_spin: "ขอแสดงความยินดีด้วย ! คุณได้รับตั๋วหมุนวงล้อ",
+    you_got_new_spin_wheel_spin: "คุณได้รับตั๋วหมุนวงล้อฟรี " + "*ตรวจสอบที่หน้าโปรโมชั่น*",
     go_now: "หมุนเดี๋ยวนี้",
     step_to_download_android: "ขั้นตอนการดาวน์โหลดแอพ สำหรับแอนดรอยด์",
     step_to_download_ios: "ขั้นตอนการดาวน์โหลดแอพ สำหรับ IOS",
