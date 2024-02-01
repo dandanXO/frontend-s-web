@@ -247,6 +247,7 @@ const total = reactive({
 
 function resetQuery() {
   request.betTime = [defaultStartDate, defaultEndDate];
+  page.pagingState = null
   // request.platform = null;
   // request.result = ["WIN", "LOSS", "DRAW"];
   // request.bet = null;

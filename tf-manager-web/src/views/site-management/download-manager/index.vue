@@ -151,6 +151,7 @@ function resetQuery() {
   request.requestTime = [defaultStartDate, defaultEndDate];
   request.siteId = siteList.list[0].id;
   request.requestBy = null;
+  page.pagingState = null
 }
 
 const page = reactive({
