@@ -213,6 +213,7 @@ import { ref, computed, onUnmounted, onMounted, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { getCurrentStepInit, submitGameStep, getStepRecords } from "../../../api/index/promo";
+import moment from "moment";
 
 const store = userStore();
 const router = useRouter();
@@ -255,6 +256,10 @@ const getStepRecordApi = (current) => {
     if (code === 0) {
       if (data && data.records && data.records.length) {
         stepRecords.value = data.records;
+
+        stepRecords.value.forEach((records) => {
+          records.createTime = moment(records.createTime).format("MM-DD HH:mm:ss");
+        });
 
         pagination.pages = data.pages;
         pagination.total = data.total;
@@ -966,7 +971,7 @@ onUnmounted(() => {
     background: #ffeacf;
     border-radius: 20px;
     width: calc(100% - 30px);
-    padding: 50px 10px 30px;
+    padding: 20px 10px 30px;
     //max-height: calc(100vh - 240px);
     min-height: calc(85vh);
     margin: auto;
@@ -990,10 +995,11 @@ onUnmounted(() => {
       background-image: url("../../../assets/images/promotion/hotpromo/cnystepgame2024/won-bonus.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
-      height: 600px;
+      //height: 600px;
       width: calc(100% - 40px);
       min-height: auto;
       margin: 0 auto;
+      aspect-ratio: 10/12;
     }
 
     .won-txt {
@@ -1008,6 +1014,10 @@ onUnmounted(() => {
         font-size: 150%;
         color: #bc0629;
       }
+    }
+
+    .q-table td {
+      padding: 5px 6px;
     }
   }
 
