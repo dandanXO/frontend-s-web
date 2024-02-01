@@ -1017,6 +1017,7 @@ export default {
     rebateDistributeTime: 'Rebate Distribute Time',
     rebateLevel: 'Rebate Level',
     rebatePercentage: 'Rebate %',
+    redPacketMinDayDeposit: 'Min Day Deposit Amount for Red Packet Rain',
     rule: 'Rule',
     maxRebate: 'Max Rebate',
     maxBalance: 'Maximun Balance',

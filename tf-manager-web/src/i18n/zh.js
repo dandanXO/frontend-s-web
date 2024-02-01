@@ -1023,6 +1023,7 @@ export default {
     rebateDistributeTime: '返水发放时间',
     rebateLevel: '返水等级',
     rebatePercentage: '返水比例 %',
+    redPacketMinDayDeposit: '红包雨当日最小存款',
     rule: '规则',
     maxRebate: '最大返水额',
     maxBalance: '最高余额',
