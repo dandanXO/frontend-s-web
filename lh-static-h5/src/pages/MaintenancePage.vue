@@ -1,7 +1,7 @@
 <template>
   <div class="maintenance-container">
     <div class="maintenance-img">
-      <img :src="require('../assets/images/maintenance/maintenance-img.png')" />
+<!--      <img :src="require('../assets/images/maintenance/maintenance-img.png')" />-->
     </div>
     <div class="maintenance-btn">
       <router-link to="/" class="maintenance-cta">返回主页</router-link>
@@ -15,7 +15,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url("../assets/images/maintenance/maintenance-bg.jpg");
+  //background-image: url("../assets/images/maintenance/maintenance-bg.jpg");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;

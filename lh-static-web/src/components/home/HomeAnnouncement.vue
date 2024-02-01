@@ -62,7 +62,7 @@ const loadAnnouncement = () => {
     if (res.code === 0) {
       const d = res.data.announcements;
       announcementTypes.value = res.data.type;
-      if (res.data.type.length > 0) {
+      if (res.data.type && res.data.type.length > 0) {
         announcementActive.value = res.data.type[0].id;
       }
       announcementList.value = d;
