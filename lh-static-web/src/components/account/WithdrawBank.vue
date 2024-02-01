@@ -865,6 +865,9 @@ body {
     .el-dialog__body {
       padding: 20px;
     }
+    .el-row{
+      width: 100%;
+    }
   }
 }
 .passwordModal .ant-modal {

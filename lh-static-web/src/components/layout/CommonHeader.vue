@@ -590,16 +590,16 @@ export default defineComponent({
     // carousel settings
     navigations: [
       {code: "home", name: "首页", enName: "Home", path: "/home"},
-      {code: "live", name: "真人", enName: "Live", path: "/live-casino", submenu: true},
-      {code: "sports", name: "体育", enName: "Sports", path: "/sports", submenu: true},
       {code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true},
+      {code: "sports", name: "体育", enName: "Sports", path: "/sports", submenu: true},
+      {code: "live", name: "真人", enName: "Live", path: "/live-casino", submenu: true},
+      {code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true},
       {code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true},
       {code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true},
-      {code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true},
       {code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true},
-      {code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: true, hasicon: true},
+      {code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: false, hasicon: true},
       {code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true},
-      {code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true},
+      {code: "App", name: "APP", enName: "App", path: "/app", submenu: false, hasicon: true},
       {code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true},
     ]
   }),

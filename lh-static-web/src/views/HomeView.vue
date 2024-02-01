@@ -25,11 +25,15 @@ const openGame = (gameName, platType, gameCode, scrollingState) => {
   gameMenu.value.open(gameName, platType, gameCode, scrollingState);
 };
 
-onMounted(() => {});
+onMounted(() => {
+});
 </script>
 
 <style scoped lang="scss">
 .home {
   margin: 0 0 2.5rem 0;
+  background-image: url("../assets/home/home-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% auto;
 }
 </style>
