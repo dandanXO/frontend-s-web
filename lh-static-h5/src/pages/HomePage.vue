@@ -307,7 +307,7 @@
 
       <div class="game-lists" v-if="tab === 'slot'" id="slot-lists">
         <template v-for="(item, index) in slot" :key="index">
-          <div class="platform-block" @click="router.push('/slot')">
+          <div class="platform-block" @click="router.push({path: '/slot', query: {platform: item.code}})">
             <div
               class="platform-img-frame"
               :style="{
