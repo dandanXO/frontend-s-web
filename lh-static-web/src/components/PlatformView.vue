@@ -120,7 +120,7 @@
             v-for="game in gamePage.gameList"
             :key="game.id"
           >
-            <a @click="openGame(game.name, game.code)">
+            <a @click="openGame(game.name, selectedPlat, game.code)">
               <div class="slot-img">
                 <el-image :src="game.icon" lazy>
                   <template #placeholder>
@@ -249,8 +249,8 @@ const clickPlat = (plat) => {
   selectedPlat.value = plat.code;
 };
 
-const openGame = (gameName, gameCode) => {
-  platformGame.value.open(gameName, "onlyPlatform", gameCode);
+const openGame = (gameName, platformCode, gameCode) => {
+  platformGame.value.open(gameName, platformCode, gameCode);
 };
 
 const activePlat = ref("");

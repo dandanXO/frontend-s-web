@@ -680,7 +680,7 @@ function charType(num) {
 
 .login-container {
   position: relative;
-  background: url(../assets/images/login/login-bg.png) no-repeat center center;
+  background: url(../assets/images/login/login-bg.jpg) no-repeat center center;
   background-size: cover;
   height: 100%;
   padding: 12px 0px 0px;
