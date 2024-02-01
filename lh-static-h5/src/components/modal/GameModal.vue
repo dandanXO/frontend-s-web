@@ -62,7 +62,19 @@
         <!--          />-->
         <!--        </div>-->
 
-        <iframe
+        <template v-if="transferInfo.platform === 'PG'">
+          <iframe
+            @load="loadGame()"
+            v-show="!logoShow"
+            v-bind:srcdoc="src"
+            id="game-iframe"
+            scrolling="no"
+            frameborder="0"
+            class="game-iframe"
+          ></iframe>
+        </template>
+        <template v-else>
+          <iframe
             @load="loadGame()"
             v-show="!logoShow"
             :src="src"
@@ -70,7 +82,8 @@
             scrolling="no"
             frameborder="0"
             class="game-iframe"
-        ></iframe>
+          ></iframe>
+        </template>
         <!--        <q-drawer-->
         <!--            v-model="drawerVisible"-->
         <!--            :breakpoint="500"-->
@@ -400,8 +413,21 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             })
             .then((response) => {
               $q.loading.hide();
+
+              let srcData = response.data;
+
+              if (platformCode === "PG") {
+                srcData = srcData.replaceAll(/\\\"/g, '"').replaceAll(/\n/g, "");
+                src.value = srcData;
+                visible.value = true;
+              } else if (way == "ANDROID") {
+                var ref = cordova.InAppBrowser.open(srcData, "_blank", "location=no,zoom=no");
+              } else {
+                window.location.href = srcData;
+              }
+
               // newWin.location.href = response.data;
-              window.location.href = response.data;
+              // window.location.href = response.data;
             }).catch((err) => {
           $q.loading.hide();
           $q.notify({
