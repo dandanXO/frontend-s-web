@@ -6,7 +6,7 @@
         <div class="platform-menu-item"
              @click="gotoGame(item)"
         >
-          <div class="platform-menu-title" v-html="item.name" />
+          <div class="platform-menu-title" v-html="item.cnname" />
           <div class="platform-menu-caption" v-if="item.caption" v-html="item.caption" />
           <div class="platform-menu-img">
             <img
@@ -16,7 +16,7 @@
                   '/' +
                   props.platformType +
                   '-item-' +
-                  item.name.toLowerCase() +
+                  item.code.toLowerCase() +
                   '.png')
               "
             />
@@ -51,6 +51,12 @@ const getPlatformList = () => {
     platformsListDisplay.value = platformsList.value.filter((element) =>
       element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase())
     );
+
+    platformsListDisplay.value = props.platforms.map(item1 => {
+      const matchingItem = platformsList.value.find(item2 => item1.code === item2.code);
+      return { ...matchingItem, ...item1,  };
+    });
+
   });
 };
 
@@ -62,9 +68,8 @@ const filteredPlatforms = computed(() => {
 const router= useRouter();
 const gotoGame = (item) => {
   // debugger;
-  // debugger;
   console.log(item);
-  if(item.gameType==='SLOT' || item.gameType === 'FISH'){
+  if(item.gameType==='SLOT' || item.gameType === 'FISH' || item.code==='AG'){
     router.push(`${props.platformName}?plat=${item.code}`);
   }else{
 

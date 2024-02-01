@@ -7,14 +7,14 @@
           <div class="platform-item platform-item--img" data-aos="fade-right" data-aos-duration="1000">
             <img
               :src="
-                require('../assets/' + platformType + '/' + platformType + '-item-' + item.name.toLowerCase() + '.png')
+                require('../assets/' + platformType + '/' + platformType + '-item-' + item.code.toLowerCase() + '.png')
               "
             />
           </div>
 
           <div class="platform-item">
             <div class="platform-title-wrap" data-aos="fade-left" data-aos-delay="100">
-              <div class="platform-title">{{ item.name }}</div>
+              <div class="platform-title">{{ item.cnname ?? item.name}}</div>
               <div class="platform-subtitle">{{ platformName }}</div>
             </div>
 
@@ -23,10 +23,6 @@
             <div class="platform-pattern-row" data-aos="fade-left" data-aos-delay="300" v-if="platformPattern">
               <img :src="require('../assets/' + platformType + '/' + platformType + '-pattern.png')" />
             </div>
-
-            <p class="platform-desc">
-              {{ item.message }}
-            </p>
 
             <div class="platform-list-box">
               <!-- <span
@@ -52,16 +48,15 @@
                           '/' +
                           platformType +
                           '-logo-' +
-                          plat.name.toLowerCase() +
+                          plat.code.toLowerCase() +
                           '.png')
                       "
                     />
                   </span>
                 </div>
-                <div class="list-item-txt">{{ plat.name }}</div>
+                <div class="list-item-txt">{{ plat.alias ?? plat.code }}</div>
               </span>
             </div>
-
 
 
             <div
@@ -71,7 +66,7 @@
               data-aos-duration="500"
               v-if="platformType !== 'slot' && platformType !== 'fishing'"
             >
-              <template v-if="item.code==='BBINDY'">
+              <template v-if="item.code==='BBIN'">
                 <div class="btn-blue" @click="openGame(item.name, item.code, 'bblive_lobby_pc')">进入游戏</div>
               </template>
               <template v-else>
@@ -231,9 +226,21 @@ const getPlatList = () => {
   const getFn = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
   getFn().then((res) => {
     platformsList.value = res;
+
+    console.log(platformsList.value);
+
     platformsListDisplay.value = platformsList.value.filter((element) =>
       element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase())
     );
+
+    platformsListDisplay.value = props.platforms.map(item1 => {
+      const matchingItem = platformsList.value.find(item2 => item1.code === item2.code);
+      return { ...matchingItem, ...item1 };
+    });
+
+    console.log("THIs");
+    console.log(platformsListDisplay.value);
+
     setFilteredPlatforms();
   });
 };
@@ -287,7 +294,8 @@ const switchPlat = (plat) => {
 };
 
 const getPlatGameList = () => {
-  (props.platformGameType === "SLOT") &&
+  console.log("JHERe")
+  if(props.platformGameType === "SLOT" ||props.platformGameType === "FISH") {
     getPlatformList()
       .then((data) => {
         platformsListDisplay.value = data.filter((element) => element.gameType.includes(props.platformGameType));
@@ -304,6 +312,7 @@ const getPlatGameList = () => {
       .catch((err) => {
         console.log(err.message);
       });
+  }
 };
 
 const searchList = () => {
@@ -314,20 +323,21 @@ const searchList = () => {
   }
 };
 const loadGameList = () => {
-  props.platformGameType === "SLOT" &&
-    getPlatformGames(activePlat.value.id, props.platformGameType)
-      .then((data) => {
-        data.forEach((element) => {
-          element.default = require("../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${element.icon}`;
-        });
-        gameListData.value = data;
-        gamePage.total = data.length;
-        changePage(1, gamePage.pageSize);
-      })
-      .catch((err) => {
-        console.log(err.message);
+  if(props.platformGameType === "SLOT" || props.platformGameType === "FISH"){
+  getPlatformGames(activePlat.value.id, props.platformGameType)
+    .then((data) => {
+      data.forEach((element) => {
+        element.default = require("../assets/images/games/aviator/default.png");
+        element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${element.icon}`;
       });
+      gameListData.value = data;
+      gamePage.total = data.length;
+      changePage(1, gamePage.pageSize);
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+  }
 };
 
 const changePage = (page, pageSize) => {
@@ -344,7 +354,7 @@ const gameCat = ref("allGame");
 
 onMounted(() => {
   getPlatList();
-  getPlatGameList();
+  // getPlatGameList();
   // activePlat.value = filteredPlatforms.value[0];
 });
 
