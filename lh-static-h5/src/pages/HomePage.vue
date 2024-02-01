@@ -96,19 +96,19 @@
     </div>
     <div class="menulist">
       <router-link to="/finance/deposit?redirect=/" class="men btn-pointer">
-        <img src="../assets/images/home/deposit-mid.svg" />
+        <img src="../assets/images/home/deposit-mid.png" />
         <div class="">存款</div>
       </router-link>
       <router-link to="/finance/withdraw?redirect=/" class="men btn-pointer">
-        <img src="../assets/images/home/withdraw-mid.svg" />
+        <img src="../assets/images/home/withdraw-mid.png" />
         <div class="">取款</div>
       </router-link>
       <router-link to="/account/transfer?redirect=/" class="men btn-pointer">
-        <img src="../assets/images/home/transfer-mid.svg" />
+        <img src="../assets/images/home/transfer-mid.png" />
         <div class="">转账</div>
       </router-link>
       <router-link to="/vip" class="men btn-pointer">
-        <img src="../assets/images/home/vip-mid.svg" />
+        <img src="../assets/images/home/vip-mid.png" />
         <div class="">VIP</div>
       </router-link>
     </div>
