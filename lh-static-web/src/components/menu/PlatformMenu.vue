@@ -2,8 +2,10 @@
   <div class="platform-menu-container">
     <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
     <template v-for="(item, index) in platformsListDisplay" :key="index">
-      <router-link :to="`${props.platformName}?plat=${item.code}`">
-        <div class="platform-menu-item">
+<!--      <router-link :to="`${props.platformName}?plat=${item.code}`">-->
+        <div class="platform-menu-item"
+             @click="$emit('loadModal', nav.label, 'onlyPlatform', nav.code)"
+        >
           <div class="platform-menu-title" v-html="item.name" />
           <div class="platform-menu-caption" v-if="item.caption" v-html="item.caption" />
           <div class="platform-menu-img">
@@ -21,7 +23,7 @@
           </div>
           <div class="platform-menu-btn" @click="gotoGame(item)"><a>进入场馆</a></div>
         </div>
-      </router-link>
+<!--      </router-link>-->
     </template>
   </div>
 </template>
