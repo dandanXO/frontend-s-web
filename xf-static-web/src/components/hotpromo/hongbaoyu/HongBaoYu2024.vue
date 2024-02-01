@@ -235,6 +235,8 @@ onMounted(() => {
       background-repeat: no-repeat;
       background-size: 100% 100%;
       margin-bottom: 80px;
+      margin-top: -60px;
+      min-height: 250px;
       width: 100%;
       max-width: 700px;
       .contents {

@@ -82,7 +82,7 @@
             ></div>
           </template>
         </div>
-        <div class="inner">
+        <div class="inner" :class="selectedPromo.promoCode === 'cny-hongbaoyu' ? 'hongbao' : ''">
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
             <HotPromotion :list="selectedPromo" />
           </div>
@@ -570,6 +570,11 @@ if (!store.token) {
         display: flex;
         flex-direction: column;
         gap: 20px;
+
+        &.hongbao {
+          margin: 0px;
+        }
+
         .hot-promo {
           // background: #201f29;
           border-radius: 10px;

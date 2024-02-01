@@ -2,7 +2,10 @@
   <div class="cny-spin-wheel-wrapper">
     <div class="container">
       <div class="spin-wheel-container">
-        <div :class="`draw-btn click-pointer ${remainingDraws <= 0 || spinButtonDisable ? 'disabled' : ''}`" @click="spinWheel">
+        <div
+          :class="`draw-btn click-pointer ${remainingDraws <= 0 || spinButtonDisable ? 'disabled' : ''}`"
+          @click="spinWheel"
+        >
           <img src="./../../../assets/images/promotion/hotpromo/cny-spinwheel/click-spin-btn.png" />
         </div>
         <div class="cny-hat">
@@ -97,8 +100,8 @@ const drawBtnRef = ref();
 const spinButtonDisable = ref(false);
 const degreesToStopAt = ref([]);
 const showPrizePopup = ref(false);
-const prizePopupBonusAmt = ref();
-const remainingDraws = ref(5);
+const prizePopupBonusAmt = ref(0);
+const remainingDraws = ref(0);
 const winnersList = ref([]);
 
 let finalDegree = 0;
@@ -200,7 +203,7 @@ const spinWheel = () => {
       }
     })
     .catch((err) => {
-      console.log(err)
+      console.log(err);
     });
 };
 
@@ -212,20 +215,19 @@ const getRecordsList = () => {
       }
     })
     .catch((err) => {
-      console.log('here', err)
+      console.log("here", err);
     });
-}
+};
 
 const initSpinWheel = () => {
-  initSpinWheelData()
-    .then((res) => {
-      if (res.code == 0) {
-        remainingDraws.value = res.data.availableSpin;
-      }
-    })
+  initSpinWheelData().then((res) => {
+    if (res.code == 0) {
+      remainingDraws.value = res.data.availableSpin;
+    }
+  });
 
-    getRecordsList();
-}
+  getRecordsList();
+};
 
 onMounted(() => {
   // calc no of spin wheel items and potential stops
@@ -484,7 +486,7 @@ onMounted(() => {
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #FFFFFF;
+        color: #ffffff;
         font-size: 30px;
         font-weight: bold;
         cursor: pointer;
