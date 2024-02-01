@@ -118,7 +118,7 @@ const hotgameData = ref([
         },
         {
           key: "rg",
-          name: "熊猫体育",
+          name: "RG电竞",
           icon: require("../../assets/home/hotgame/content/esports/provider_rg.png"),
           providerInfo: {}
         }
@@ -567,7 +567,7 @@ $transition_timer: 0.5s;
         display: flex;
 
         .hotgame-banner {
-          width: 1.25rem;
+          width:  65px;
           height: 36.5rem;
           display: flex;
           flex-direction: column;
@@ -654,12 +654,14 @@ $transition_timer: 0.5s;
         width: 0;
         height: 0;
         overflow: hidden;
+        background: #EDF8FE;
         transition: $transition_timer;
 
         &.show {
           width: 38.5rem;
           height: 100%;
-          margin: 0 0 0 0.75rem;
+          margin: 0 0 0 0px;
+          padding-left: 0.75rem;
         }
 
         .left-container {
