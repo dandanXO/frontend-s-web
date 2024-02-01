@@ -164,6 +164,14 @@
           <img src="../assets/images/home/games/slot-icon.png" />
         </template>
       </div>
+      <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
+        <template v-if="tab === 'fishing'">
+          <img src="../assets/images/home/games/fish-icon-active.png" />
+        </template>
+        <template v-else>
+          <img src="../assets/images/home/games/fish-icon.png" />
+        </template>
+      </div>
     </div>
 
     <div class="game-right-platform">
@@ -300,6 +308,31 @@
       <div class="game-lists" v-if="tab === 'slot'" id="slot-lists">
         <template v-for="(item, index) in slot" :key="index">
           <div class="platform-block" @click="router.push('/slot')">
+            <div
+              class="platform-img-frame"
+              :style="{
+                'background-image': getImgPlatformBg(item.icon, item.name)
+              }"
+            >
+              <div class="platform-label"></div>
+              <div class="platform-content">
+                <div class="platform-logo">
+                  <img :src="getImgPlatformLogo(item.icon, item.name)" />
+                </div>
+                <div class="platform-title">{{ item.title }}</div>
+                <div class="platform-subtitle">{{ item.subtitle }}</div>
+                <div class="platform-rebate">
+                  最高返水
+                  <span>8%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+      <div class="game-lists" v-if="tab === 'fishing'" id="fishing-lists">
+        <template v-for="(item, index) in fishing" :key="index">
+          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)">
             <div
               class="platform-img-frame"
               :style="{
