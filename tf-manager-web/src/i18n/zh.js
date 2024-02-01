@@ -1893,6 +1893,7 @@ export default {
     'Add Ads Popout': '新建弹窗',
     'Edit Ads Popout': '编辑弹窗',
     'Red Packet Rain': '红包雨',
+    'Red Packet Rain List': '紅包雨玩家列表',
     Lottery: '彩票',
     'Lottery Record List': '彩票记录',
     'Lottery Result List': '彩票结果',

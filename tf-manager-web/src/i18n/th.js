@@ -1529,6 +1529,7 @@ export default {
     'Ads Popout Page': 'หน้าป๊อปเอาท์โฆษณา',
     'Add Ads Popout': 'เพิ่มโฆษณาป๊อปเอาท์',
     'Edit Ads Popout': 'แก้ไขป๊อปเอาท์โฆษณา',
+    'Red Packet Rain List': 'Red Packet Rain List',
     Lottery: 'หวย',
     'Lottery Record List': 'บันทึกรายการหวย',
     'Lottery Result List': 'บันทึกการผลรางวัลหวย',
