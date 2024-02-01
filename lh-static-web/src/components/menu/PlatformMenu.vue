@@ -61,7 +61,7 @@ const filteredPlatforms = computed(() => {
 
 const router= useRouter();
 const gotoGame = (item) => {
-  debugger;
+  // debugger;
   // debugger;
   console.log(item);
   if(item.gameType==='SLOT' || item.gameType === 'FISH'){
