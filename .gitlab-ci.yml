@@ -128,6 +128,13 @@ deploy-xf-tutorials:
 
 #===============================================================================================
 
+deploy-dy-tutorials:
+  extends: .s3-deploy
+  variables:
+    PROJECT: dy-tutorials
+
+#===============================================================================================
+
 deploy-ind-download:
   extends: .s3-deploy
   variables:
@@ -273,3 +280,31 @@ build-image-xf-lh-dy-affiliate-web:
     PROJECT: xf-lh-dy-affiliate-web
   needs:
     - build-xf-lh-dy-affiliate-web
+
+#===============================================================================================
+
+build-lh-static-web:
+  extends: .build-projects
+  variables:
+    PROJECT: lh-static-web
+
+build-image-lh-static-web:
+  extends: .docker-build
+  variables:
+    PROJECT: lh-static-web
+  needs:
+    - build-lh-static-web
+
+#===============================================================================================
+
+build-lh-static-h5:
+  extends: .build-projects
+  variables:
+    PROJECT: lh-static-h5
+
+build-image-lh-static-h5:
+  extends: .docker-build
+  variables:
+    PROJECT: lh-static-h5
+  needs:
+    - build-lh-static-h5

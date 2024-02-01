@@ -143,42 +143,66 @@
         </div>
 
         <template v-for="(lotteryGameItem, index) in lotteryGamesList" :key="`lottery-${index}`">
-          <div
-            v-if="!isShow"
-            class="game-item btn-pointer"
-            @click="playGame(lotteryGameItem.name, lotteryGameItem.code, lotteryGameItem.gameCode)"
-          >
+          <template v-if="lotteryGameItem.code === 'GPI'">
             <div
-              class="platform-img"
-              :style="{
-                backgroundImage: (() => {
-                  try {
-                    return `url(${require(`../assets/home/lottery/${lotteryGameItem.code}.png`)})`;
-                  } catch (e) {
-                    return `url(${comingSoonImg})`;
-                  }
-                })()
-              }"
-            />
-          </div>
-          <div
-            v-if="isShow"
-            class="game-item btn-pointer"
-            @click="playGame(lotteryGameItem.name, 'GPI', lotteryGameItem.code)"
-          >
+              v-if="!isShow"
+              class="game-item btn-pointer"
+              @click="playGame(lotteryGameItem.name, lotteryGameItem.code, 'thailottery')"
+            >
+              <div
+                class="platform-img"
+                :style="{
+                  backgroundImage: (() => {
+                    try {
+                      return `url(${require(`../assets/home/lottery/${lotteryGameItem.code}.png`)})`;
+                    } catch (e) {
+                      return `url(${comingSoonImg})`;
+                    }
+                  })()
+                }"
+              />
+            </div>
+          </template>
+          <template v-else>
             <div
-              class="platform-img"
-              :style="{
-                backgroundImage: (() => {
-                  try {
-                    return `url(${`${gameImgURL}${lotteryGameItem.icon}`})`;
-                  } catch (e) {
-                    return `url(${comingSoonImg})`;
-                  }
-                })()
-              }"
-            />
-          </div>
+              v-if="!isShow"
+              class="game-item btn-pointer"
+              @click="playGame(lotteryGameItem.name, lotteryGameItem.code, '')"
+            >
+              <div
+                class="platform-img"
+                :style="{
+                  backgroundImage: (() => {
+                    try {
+                      return `url(${require(`../assets/home/lottery/${lotteryGameItem.code}.png`)})`;
+                    } catch (e) {
+                      return `url(${comingSoonImg})`;
+                    }
+                  })()
+                }"
+              />
+            </div>
+            <div
+              v-if="isShow"
+              class="game-item btn-pointer lottery-tcg-list"
+              @click="playGame(lotteryGameItem.name, selectedPlat.code, lotteryGameItem.code)"
+            >
+              <div
+                class="platform-img"
+                :style="{
+                  backgroundImage: (() => {
+                    try {
+                      return `url(${`${gameImgURL}${lotteryGameItem.icon}`})`;
+                    } catch (e) {
+                      return `url(${comingSoonImg})`;
+                    }
+                  })()
+                }"
+              />
+
+              <span class="game-name">{{ lotteryGameItem.name }}</span>
+            </div>
+          </template>
         </template>
       </div>
     </Transition>
@@ -955,7 +979,7 @@
           <div class="popup-item">
             <span>
               โบนัส
-              <em>15%</em>
+              <em>20%</em>
               สูงสุด
               <em>15,000</em>
               ถอนไม่อั้น
@@ -1877,6 +1901,7 @@ export default defineComponent({
       switchPlat(plat, "fish");
     };
     const selectLotteryPlat = (plat) => {
+      // debugger;
       selectedPlatId.value = plat.id;
       isShow.value = true;
       switchPlat(plat, "lottery");
@@ -2005,6 +2030,7 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
+
 .home-banner-wrapper {
   position: relative;
 }
@@ -2547,6 +2573,35 @@ export default defineComponent({
   img {
     width: 100%;
     display: block;
+  }
+}
+
+#id-lottery-board {
+  row-gap: 25px;
+}
+
+.lottery-tcg-list {
+  &.game-item {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 15px;
+    padding: 9px;
+    background-image: url("../assets/images/index/thai-tcg-bg.png");
+    background-size: 100% 100%;
+
+    .platform-img {
+      aspect-ratio: 1/1;
+    }
+
+    .game-name {
+      width: 100%;
+      display: block;
+      padding: 10px 0px;
+      white-space: normal;
+      line-height: 14px;
+      height: 30px;
+      text-align: center;
+    }
   }
 }
 

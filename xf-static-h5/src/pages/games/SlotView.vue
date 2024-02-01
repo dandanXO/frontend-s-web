@@ -214,7 +214,13 @@ export default defineComponent({
       })).then((res) => {
         res.forEach(element => {
           element.default = require("../../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.IMAGE_CDN}/game/${selectedPlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
+          if(element.icon.indexOf('/') > -1){
+            element.icon = `${process.env.IMAGE_CDN}/game/${element.icon}`;
+          }else{
+            element.icon = `${process.env.IMAGE_CDN}/game/${selectedPlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
+          }
+          // element.icon = `${process.env.IMAGE_CDN}/game/${selectedPlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
+
         });
         gameListData.value = res;
         isLoading.value = false;

@@ -8,7 +8,7 @@
           :placeholder="t('fields.site')"
           class="filter-item"
           style="width: 120px"
-          @focus="loadSites"
+          @change="loadPlatformNames"
         >
           <el-option
             v-for="item in siteList.list"
@@ -40,7 +40,6 @@
           :placeholder="t('fields.platform')"
           class="filter-item"
           style="width: 120px; margin-left: 5px"
-          @focus="loadPlatformNames"
         >
           <el-option
             v-for="item in platforms.list"
@@ -282,6 +281,7 @@ function resetQuery() {
   request.type = null;
   request.times = [defaultStartDate, defaultEndDate];
   request.siteId = null;
+  loadPlatformNames()
 }
 
 async function loadTransferRecords() {
@@ -319,7 +319,7 @@ async function loadTransferRecords() {
 }
 
 async function loadPlatformNames() {
-  const { data: ret } = await getPlatformNames();
+  const { data: ret } = await getPlatformNames(request.siteId);
   platforms.list = ret;
 }
 
@@ -373,6 +373,7 @@ onMounted(async() => {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
   }
+  loadPlatformNames();
   await loadTransferRecords();
 });
 

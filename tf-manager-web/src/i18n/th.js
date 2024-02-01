@@ -153,6 +153,7 @@ export default {
     },
   },
   betStatus: {
+    BET: 'เดิมพัน',
     UNSETTLED: 'ยังไม่ได้ชำระ',
     SETTLED: 'ชำระแล้ว',
     CANCEL: 'ยกเลิก',
@@ -227,13 +228,18 @@ export default {
       CANCEL: 'ยกเลิก',
     },
   },
-
+  sitePlatform: {
+    followType: 'พิมพ์',
+    follow: 'ก่อนที่จะติดตาม',
+    new: 'อัพเดตประเภทเกม',
+  },
   fields: {
     account: 'บัญชี',
     accountHolder: 'ผู้ถือบัญชี',
     accountInfo: 'ข้อมูลเกี่ยวกับบัญชี',
     accountNumber: 'หมายเลขบัญชี',
     accountStatus: 'สถานะบัญชี',
+    accurate: 'Accurate Search',
     action: 'การกระทำ',
     activeMember: 'สมาชิกที่ใช้งานอยู่',
     activeMemberCount: 'จำนวนสมาชิกที่ใช้งานอยู่',
@@ -487,6 +493,7 @@ export default {
     describe: 'อธิบาย',
     description: 'คำอธิบาย',
     desktopImage: 'รูปภาพเดสก์ท็อป',
+    desktopBackgroundImage: 'ภาพพื้นหลังเดสก์ท็อป',
     desktopBanner: 'แบนเนอร์เดสก์ท็อป',
     details: 'รายละเอียด',
     device: 'อุปกรณ์',
@@ -696,6 +703,7 @@ export default {
     minWithdrawAmount: 'จำนวนการถอนเงินขั้นต่ำ',
     mobile: 'มือถือ',
     mobileImage: 'รูปภาพบนมือถือ',
+    mobileBackgroundImage: 'ภาพพื้นหลังโทรศัพท์มือถือ',
     mobileBanner: 'แบนเนอร์บนมือถือ',
     mobileMessage: 'ข้อความมือถือ',
     mobileWay: 'มือถือ',
@@ -1521,6 +1529,7 @@ export default {
     'Ads Popout Page': 'หน้าป๊อปเอาท์โฆษณา',
     'Add Ads Popout': 'เพิ่มโฆษณาป๊อปเอาท์',
     'Edit Ads Popout': 'แก้ไขป๊อปเอาท์โฆษณา',
+    'Red Packet Rain List': 'Red Packet Rain List',
     Lottery: 'หวย',
     'Lottery Record List': 'บันทึกรายการหวย',
     'Lottery Result List': 'บันทึกการผลรางวัลหวย',
@@ -1646,6 +1655,23 @@ export default {
     if_not_google_auth_then:
       'หากคุณไม่ได้ผูก Google Authenticator ก็ไม่จำเป็นต้องกรอก',
     google_auth_code: 'กรอกรหัส Google Authenticator 6 หลัก',
+  },
+  loginDevice: {
+    WEB: 'WEB',
+    H5: 'H5',
+    ANDROID: 'ANDROID',
+    IOS: 'IOS',
+  },
+  result: {
+    win: 'WIN',
+    draw: 'DRAW',
+    loss: 'LOSS',
+  },
+  freeze: {
+    NORMAL: 'Normal',
+    TEMPORARY: 'Temporary',
+    PERMANENT: 'Permanent',
+    UNFREEZE: 'Unfreeze',
   },
   error: {
     400: 'คำขอไม่ถูกต้อง',

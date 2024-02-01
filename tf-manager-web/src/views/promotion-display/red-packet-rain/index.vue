@@ -777,10 +777,6 @@ function showEdit(banner) {
         form.siteId = element.id
       }
     })
-    console.log("===========")
-    console.log(banner)
-    console.log(form)
-    console.log("===========")
   })
 }
 

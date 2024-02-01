@@ -1,0 +1,1075 @@
+<template>
+  <div class="vip-container">
+    <div class="banner-container" />
+
+    <Carousel :items-to-show="2.95" :wrap-around="true">
+      <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
+        <div class="carousel__item">
+          <div :class="`vipitem vipitem${vip.vipLevel}`">
+            <div class="vipcontents">
+              <div class="title">VIP {{ vip.vipLevel }}</div>
+              <div class="description">{{ vip.upgrade !== 'Successful deposit' ? `Accumulate Deposit: ${vip.upgrade}` :
+                vip.upgrade }}</div>
+              <!-- vip progress bar start -->
+              <div class="progressBarContainer" v-if="vipLevel">
+                <div class="progressBarOuterBar">
+                  <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vip) + '%' }" />
+                </div>
+                <div class="progressBarDescription">
+                  <span>
+                    {{ `V${vip.vipLevel}` }}
+                  </span>
+                  <span>
+                    {{ `V${+vip.vipLevel + 1}` }}
+                  </span>
+                </div>
+              </div>
+              <!-- vip progress bar end -->
+            </div>
+            <div
+              :class="`vipLevelReachStatus ${getVipLevelProgress(vip) === 100 && !!vipLevel ? 'vipLevelReached' : ''}`">
+              <span>{{ getVipLevelProgress(vip) === 100 && !!vipLevel ? '已达到' : '未达到' }}</span>
+            </div>
+          </div>
+        </div>
+      </Slide>
+      <template #addons>
+        <Navigation />
+      </template>
+    </Carousel>
+
+    <div class="vip-program">
+      <div class="buttons">
+        <div class="common-btn" :class="{ active: showRebate }" @click="onShowRebateClick(true)">
+          升级细则
+        </div>
+        <div class="common-btn" :class="{ active: !showRebate }" @click="onShowRebateClick(false)">
+          VIP特权
+        </div>
+      </div>
+      <div v-if="showRebate">
+        <table>
+          <thead>
+            <tr>
+              <th colspan="2">级别</th>
+              <th>升级要求累积存款</th>
+              <th>等级优惠</th>
+              <th>流水要求</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="2" width="100">青铜</td>
+              <td width="100">青铜Ⅱ</td>
+              <td width="260">一笔存款</td>
+              <td width="384" id="vipPromoInfo2">网站首存优惠</td>
+              <td width="252">无</td>
+            </tr>
+            <tr>
+              <td>青铜Ⅰ</td>
+              <td>3,000</td>
+              <td id="vipPromoInfo3">存款最少20元可申请一次晋级奖金88元</td>
+              <td>电竞/体育10倍 老虎机12倍 真人18倍</td>
+            </tr>
+            <tr>
+              <td rowspan="3">白银</td>
+              <td>白银Ⅲ</td>
+              <td>30,000</td>
+              <td id="vipPromoInfo4">存款最少100元可申请每月一次再存20% 最高奖金1888元 <font color="#B8945D">（仅限白银Ⅲ申请）</font>
+              </td>
+              <td>电竞/体育 15倍 老虎机12倍 真人18倍</td>
+            </tr>
+            <tr>
+              <td>白银Ⅱ</td>
+              <td>80,000</td>
+              <td id="vipPromoInfo5" class="showTips4" style="display:none;">存款最少20元可申请一次晋级奖金188元</td>
+              <td class="showTips4" style="display:none;">电竞/体育 5倍 老虎机12倍 真人15倍</td>
+              <td colspan="2" class="hideTips4">
+                <div class="vip-btn disable">未符合</div>
+              </td>
+            </tr>
+            <tr>
+              <td>白银Ⅰ</td>
+              <td>200,000</td>
+              <td id="vipPromoInfo6" class="showTips5" style="display:none;">存款最少20元可申请一次晋级奖金388元</td>
+              <td class="showTips5" style="display:none;">电竞/体育 5倍 老虎机12倍 真人15倍</td>
+              <td colspan="2" class="hideTips5">
+                <div class="vip-btn disable">未符合</div>
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="3">黄金</td>
+              <td>黄金Ⅲ</td>
+              <td>400,000</td>
+              <td id="vipPromoInfo7" class="showTips6" style="display:none;">存款最少200元可申请一次再存30%最高奖金1888元</td>
+              <td class="showTips6" style="display:none;">电竞/体育 15倍 老虎机12倍 真人18倍</td>
+              <td colspan="2" class="hideTips6">
+                <div class="vip-btn disable">未符合</div>
+              </td>
+            </tr>
+            <tr>
+              <td>黄金Ⅱ</td>
+              <td>600,000</td>
+              <td id="vipPromoInfo8" class="showTips7" style="display:none;">存款最少20元可申请一次晋级奖金888元</td>
+              <td class="showTips7" style="display:none;">电竞/体育 5倍 老虎机12倍 真人18倍</td>
+              <td colspan="2" class="hideTips7">
+                <div class="vip-btn disable">未符合</div>
+              </td>
+            </tr>
+            <tr>
+              <td>黄金Ⅰ</td>
+              <td>1,000,000</td>
+              <td id="vipPromoInfo9" class="showTips8" style="display:none;">存款最少500元可申请每月一次再存35% 最高奖金8888元</td>
+              <td class="showTips8" style="display:none;">电竞/体育 15倍 老虎机12倍 真人18倍</td>
+              <td colspan="2" class="hideTips8">
+                <div class="vip-btn disable">未符合</div>
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="2">铂金</td>
+              <td>铂金Ⅱ</td>
+              <td>2,000,000</td>
+              <td id="vipPromoInfo10" class="showTips9" style="display:none;">存款最少20元可申请一次晋级奖金1888元</td>
+              <td class="showTips9" style="display:none;">电竞/体育 8倍 老虎机12倍 真人18倍</td>
+              <td colspan="2" class="hideTips9">
+                <div class="vip-btn disable">未符合</div>
+              </td>
+            </tr>
+            <tr>
+              <td>铂金Ⅰ</td>
+              <td>4,000,000</td>
+              <td id="vipPromoInfo11" class="showTips10" style="display:none;">存款最少500元可申请一次再存40%最高奖金18888元</td>
+              <td class="showTips10" style="display:none;">电竞/体育 15倍 老虎机12倍 真人18倍</td>
+              <td colspan="2" class="hideTips10">
+                <div class="vip-btn disable">未符合</div>
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="1">钻石</td>
+              <td>钻石</td>
+              <td>8,000,000</td>
+              <td id="vipPromoInfo12" class="showTips11" style="display:none;">存款最少20元可申请一次晋级奖金8888元</td>
+              <td class="showTips11" style="display:none;">电竞/体育10倍 老虎机12倍 真人18倍</td>
+              <td colspan="2" class="hideTips11">
+                <div class="vip-btn disable">未符合</div>
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="1">最强王者</td>
+              <td>王者</td>
+              <td>12,000,000</td>
+              <td id="vipPromoInfo13" class="showTips12" style="display:none;">存款最少20元可申请一次晋级奖金18888元</td>
+              <td class="showTips12" style="display:none;">电竞/体育10倍 老虎机12倍 真人18倍</td>
+              <td colspan="2" class="hideTips12">
+                <div class="vip-btn disable">未符合</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div v-else>
+        <table style="margin-top: 50px;">
+          <tbody>
+            <tr>
+              <th width="137">等级</th>
+              <th width="137">青铜</th>
+              <th width="137">白银</th>
+              <th width="137">黄金</th>
+              <th width="137">铂金</th>
+              <th width="137">钻石</th>
+              <th width="137">最强王者</th>
+              <th width="137">反水限额</th>
+            </tr>
+            <tr>
+              <td>电竞</td>
+              <td>0.4%</td>
+              <td>0.45%</td>
+              <td>0.5%</td>
+              <td>0.55%</td>
+              <td>0.6%</td>
+              <td>0.8%</td>
+              <td rowspan="2">无上限</td>
+            </tr>
+            <tr>
+              <td>体育</td>
+              <td>0.4%</td>
+              <td>0.45%</td>
+              <td>0.5%</td>
+              <td>0.55%</td>
+              <td>0.6%</td>
+              <td>0.8%</td>
+            </tr>
+            <tr>
+              <td>真人</td>
+              <td>0.4%</td>
+              <td>0.45%</td>
+              <td>0.5%</td>
+              <td>0.55%</td>
+              <td>0.6%</td>
+              <td>0.8%</td>
+              <td>88888元</td>
+            </tr>
+            <tr>
+              <td>棋牌</td>
+              <td>0.4%</td>
+              <td>0.45%</td>
+              <td>0.5%</td>
+              <td>0.6%</td>
+              <td>0.8%</td>
+              <td>1.0%</td>
+              <td>8888元</td>
+            </tr>
+            <tr>
+              <td>老虎机</td>
+              <td>0.6%</td>
+              <td>0.8%</td>
+              <td>1.0%</td>
+              <td>1.2%</td>
+              <td>1.6%</td>
+              <td>2.0%</td>
+              <td>无上限</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="left" />
+      <div class="right" />
+    </div>
+
+    <div class="terms-conditions">
+      <div class="section-title">规则与条款</div>
+      <img class="terms-conditions-title-separator" :src="require('../assets/vip/terms-condition-title-separator.png')" />
+      <ol class="terms">
+        <li v-for="(term, i) in currentDisplayTerms" :key="i" class="term">
+          {{ term.text }}
+        </li>
+      </ol>
+    </div>
+  </div>
+</template>
+
+<script>
+import { ref, defineComponent, computed } from "vue";
+import { claimBonusItem } from "@/api/index/promo";
+import { userStore } from "@/store";
+import { Carousel, Slide, Navigation } from "vue3-carousel";
+// import { message } from "ant-design-vue";
+
+export default defineComponent({
+  name: "VIPView",
+  components: {
+    Carousel,
+    Slide,
+    Navigation
+  },
+  setup() {
+    const store = userStore();
+    const amount = ref("$0");
+    const privilegeClaimedModalVisible = ref(false);
+    const vipLevel = computed(() => {
+      return store.vip;
+    });
+    const getVipLevelProgress = (vipInfo) => {
+      const vipLevel = +store.vip.replace('VIP', '');
+      const currentDeposit = +store.getCurrentDeposit()
+      const upgradeStatus = vipInfo.upgrade;
+
+      if (vipLevel > +vipInfo.vipLevel) {
+        return 100;
+      }
+
+      const levelUpDeposit = +upgradeStatus.replaceAll(",", '');
+      return currentDeposit / levelUpDeposit * 100;
+    }
+    const storeToken = computed(() => {
+      return store.token;
+    });
+    const loadingClaim = ref(false);
+    const loadingMClaim = ref(false);
+    const loadingBClaim = ref(false);
+    const dailySlot = (bonusItem, vipType) => {
+      loadingClaim.value = true;
+      if (vipType === "monthly") {
+        loadingMClaim.value = true;
+      } else if (vipType === "birthday") {
+        loadingBClaim.value = true;
+      }
+      claimBonusItem(bonusItem)
+        .then((res) => {
+          if (res.code === 0) {
+            amount.value = "$" + res.data;
+            privilegeClaimedModalVisible.value = true;
+            loadingClaim.value = false;
+            loadingMClaim.value = false;
+            loadingBClaim.value = false;
+            store.getBalance();
+          }
+        })
+        .catch((err) => {
+          console.log(err.message);
+          loadingClaim.value = false;
+          loadingMClaim.value = false;
+          loadingBClaim.value = false;
+        });
+    };
+
+    const terms = [
+      {
+        text: `所有雷火电竞会员存款达到相应VIP等级要求即可享有特定免费奖金、存送奖金或其他奖励，存送奖金只需完成（存款+奖金）*相应流水倍数即可提款。`
+      },
+      {
+        text: `达到相应等级要求的会员可以点击"待领取"，领取免费奖金或存款选择相对应的存送优惠即可。`
+      },
+      {
+        text: `各等级所对应的优惠所要求的流水有所不同，会员需要达到相应流水方可申请提款。`
+      },
+      {
+        text: `此优惠促销只适用于拥有一个独立账户的玩家。住址、电子邮箱地址﹑电话号码﹑支付方式（相同借记卡/信用卡/银行账户号码）IP地址，同一网络环境等将可以作为判定是否独立玩家的条件。对于发现任何有违背、欺骗、或利用规则和条款进行非法获利的会员，雷火电竞保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。`
+      },
+      {
+        text: `在某些未知因素超出可控范围的情况下，雷火电竞保留可单方面执行的决定权，并承诺会在这类紧急问题发生时解释给客户原因并听取客户反馈与客户沟通协商解决。`
+      },
+      {
+        text: `雷火电竞保留对本次活动的修订、终止和最终解释权，超出本网站控制外的技术错误，雷火电竞将不承担任何责任。`
+      },
+      {
+        text: `雷火电竞有权延长，缩短，终止，或者修改此活动！此活动最终解释权归雷火电竞所有。`
+      },
+    ];
+
+    const vipTerms = [
+      {
+        text: `所有雷火电竞会员存款达到相应VIP等级要求即可享有特定免费奖金、存送奖金或其他奖励，存送奖金只需完成（存款+奖金）*相应流水倍数即可提款。`
+      },
+      {
+        text: `达到相应等级要求的会员可以点击"待领取"，领取免费奖金或存款选择相对应的存送优惠即可。`
+      },
+      {
+        text: `各等级所对应的优惠所要求的流水有所不同，会员需要达到相应流水方可申请提款。`
+      },
+      {
+        text: `此优惠促销只适用于拥有一个独立账户的玩家。住址、电子邮箱地址﹑电话号码﹑支付方式（相同借记卡/信用卡/银行账户号码）IP地址，同一网络环境等将可以作为判定是否独立玩家的条件。对于发现任何有违背、欺骗、或利用规则和条款进行非法获利的会员，雷火电竞保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。`
+      },
+      {
+        text: `在某些未知因素超出可控范围的情况下，雷火电竞保留可单方面执行的决定权，并承诺会在这类紧急问题发生时解释给客户原因并听取客户反馈与客户沟通协商解决。`
+      },
+      {
+        text: `雷火电竞保留对本次活动的修订、终止和最终解释权，超出本网站控制外的技术错误，雷火电竞将不承担任何责任。`
+      },
+      {
+        text: `雷火电竞有权延长，缩短，终止，或者修改此活动！此活动最终解释权归雷火电竞所有。`
+      }
+    ];
+
+    const showRebate = ref(true);
+    const currentDisplayTerms = ref(vipTerms);
+    const onShowRebateClick = (flag) => {
+      showRebate.value = flag;
+      if (showRebate.value) currentDisplayTerms.value = terms;
+      else currentDisplayTerms.value = vipTerms;
+    };
+
+    const vipItems = [
+      {
+        vipLevel: "1",
+        upgrade: "1,000",
+        monthly: "",
+        birthday: "",
+        rebates: [
+          {
+            rebateName: "Slots Rebate",
+            rebateValue: "1.00%"
+          },
+          {
+            rebateName: "Fishing Rebate",
+            rebateValue: "0.80%"
+          },
+          {
+            rebateName: "Live Casino Rebate",
+            rebateValue: "0.80%"
+          },
+          // {
+          //   rebateName: "เงินคืนไพ่",
+          //   rebateValue: "0.20%",
+          // },
+          {
+            rebateName: "Poker Rebate",
+            rebateValue: "0.80%"
+          },
+          // {
+          //   rebateName: "เเงินคืนล็อตตารี่",
+          //   rebateValue: "0.30%",
+          // },
+          {
+            rebateName: "Sport/EsportsRebate",
+            rebateValue: "0.65%"
+          },
+          {
+            rebateName: "Lottery Rebate",
+            rebateValue: "0.60%"
+          }
+        ]
+      },
+      {
+        vipLevel: "2",
+        upgrade: "10,000",
+        monthly: "188",
+        birthday: "",
+        rebates: [
+          {
+            rebateName: "Slots Rebate",
+            rebateValue: "1.00%"
+          },
+          {
+            rebateName: "Fishing Rebate",
+            rebateValue: "0.80%"
+          },
+          {
+            rebateName: "Live Casino Rebate",
+            rebateValue: "0.80%"
+          },
+          // {
+          //   rebateName: "เงินคืนไพ่",
+          //   rebateValue: "0.20%",
+          // },
+          {
+            rebateName: "Poker Rebate",
+            rebateValue: "0.80%"
+          },
+          // {
+          //   rebateName: "เเงินคืนล็อตตารี่",
+          //   rebateValue: "0.30%",
+          // },
+
+          {
+            rebateName: "Sport/EsportsRebate",
+            rebateValue: "0.65%"
+          },
+          {
+            rebateName: "Lottery Rebate",
+            rebateValue: "0.60%"
+          }
+        ]
+      },
+      {
+        vipLevel: "3",
+        upgrade: "100,000",
+        monthly: "688",
+        birthday: "888",
+        rebates: [
+          {
+            rebateName: "Slots Rebate",
+            rebateValue: "1.00%"
+          },
+          {
+            rebateName: "Fishing Rebate",
+            rebateValue: "0.80%"
+          },
+          {
+            rebateName: "Live Casino Rebate",
+            rebateValue: "0.80%"
+          },
+          // {
+          //   rebateName: "เงินคืนไพ่",
+          //   rebateValue: "0.30%",
+          // },
+          {
+            rebateName: "Poker Rebate",
+            rebateValue: "0.80%"
+          },
+          // {
+          //   rebateName: "เเงินคืนล็อตตารี่",
+          //   rebateValue: "0.40%",
+          // },
+          {
+            rebateName: "Sport/EsportsRebate",
+            rebateValue: "0.65%"
+          },
+          {
+            rebateName: "Lottery Rebate",
+            rebateValue: "0.60%"
+          }
+        ]
+      },
+      {
+        vipLevel: "4",
+        upgrade: "500,000",
+        monthly: "1,588",
+        birthday: "2,888",
+        rebates: [
+          {
+            rebateName: "Slots Rebate",
+            rebateValue: "1.00%"
+          },
+          {
+            rebateName: "Fishing Rebate",
+            rebateValue: "0.80%"
+          },
+          {
+            rebateName: "Live Casino Rebate",
+            rebateValue: "0.80%"
+          },
+          // {
+          //   rebateName: "เงินคืนไพ่",
+          //   rebateValue: "0.40%",
+          // },
+          {
+            rebateName: "Poker Rebate",
+            rebateValue: "0.80%"
+          },
+          // {
+          //   rebateName: "เเงินคืนล็อตตารี่",
+          //   rebateValue: "0.40%",
+          // },
+          {
+            rebateName: "Sport/EsportsRebate",
+            rebateValue: "0.65%"
+          },
+          {
+            rebateName: "Lottery Rebate",
+            rebateValue: "0.60%"
+          }
+        ]
+      },
+      {
+        vipLevel: "5",
+        upgrade: "1,000,000",
+        monthly: "2,888",
+        birthday: "5,888",
+        rebates: [
+          {
+            rebateName: "Slots Rebate",
+            rebateValue: "1.00%"
+          },
+          {
+            rebateName: "Fishing Rebate",
+            rebateValue: "0.80%"
+          },
+          {
+            rebateName: "Live Casino Rebate",
+            rebateValue: "0.80%"
+          },
+          // {
+          //   rebateName: "เงินคืนไพ่",
+          //   rebateValue: "0.50%",
+          // },
+          {
+            rebateName: "Poker Rebate",
+            rebateValue: "0.80%"
+          },
+          // {
+          //   rebateName: "เเงินคืนล็อตตารี่",
+          //   rebateValue: "0.50%",
+          // },
+          {
+            rebateName: "Sport/EsportsRebate",
+            rebateValue: "0.65%"
+          },
+          {
+            rebateName: "Lottery Rebate",
+            rebateValue: "0.60%"
+          }
+        ]
+      },
+      {
+        vipLevel: "6",
+        upgrade: "3,000,000",
+        monthly: "6,888",
+        birthday: "8,888",
+        rebates: [
+          {
+            rebateName: "Slots Rebate",
+            rebateValue: "1.00%"
+          },
+          {
+            rebateName: "Fishing Rebate",
+            rebateValue: "0.80%"
+          },
+          {
+            rebateName: "Live Casino Rebate",
+            rebateValue: "0.80%"
+          },
+          {
+            rebateName: "Poker Rebate",
+            rebateValue: "0.80%"
+          },
+          // {
+          //   rebateName: "เงินคืนไพ่",
+          //   rebateValue: "0.60%",
+          // },
+          {
+            rebateName: "Sport/EsportsRebate",
+            rebateValue: "0.65%"
+          },
+          // {
+          //   rebateName: "เเงินคืนล็อตตารี่",
+          //   rebateValue: "0.50%",
+          // },
+          {
+            rebateName: "Sport/EsportsRebate",
+            rebateValue: "0.65%"
+          },
+          {
+            rebateName: "Lottery Rebate",
+            rebateValue: "0.60%"
+          }
+        ]
+      },
+      {
+        vipLevel: "7",
+        upgrade: "5,000,000",
+        monthly: "18,888",
+        birthday: "48,888",
+        rebates: [
+          {
+            rebateName: "Slots Rebate",
+            rebateValue: "1.00%"
+          },
+          {
+            rebateName: "Fishing Rebate",
+            rebateValue: "0.80%"
+          },
+          {
+            rebateName: "Live Casino Rebate",
+            rebateValue: "0.80%"
+          },
+          // {
+          //   rebateName: "เงินคืนไพ่",
+          //   rebateValue: "0.80%",
+          // },
+          {
+            rebateName: "Poker Rebate",
+            rebateValue: "0.80%"
+          },
+          {
+            rebateName: "Sport/EsportsRebate",
+            rebateValue: "0.65%"
+          },
+          {
+            rebateName: "Lottery Rebate",
+            rebateValue: "0.60%"
+          },
+          // {
+          //   rebateName: "เเงินคืนล็อตตารี่",
+          //   rebateValue: "0.60%",
+          // },
+          {
+            rebateName: "Sport/EsportsRebate",
+            rebateValue: "0.65%"
+          },
+          {
+            rebateName: "Lottery Rebate",
+            rebateValue: "0.60%"
+          }
+        ]
+      }
+    ];
+
+    return {
+      showRebate,
+      onShowRebateClick,
+      terms,
+      vipItems,
+      vipLevel,
+      getVipLevelProgress,
+      storeToken,
+      dailySlot,
+      loadingClaim,
+      loadingMClaim,
+      loadingBClaim,
+      amount,
+      privilegeClaimedModalVisible,
+      currentDisplayTerms,
+      vipTerms
+    };
+  }
+});
+</script>
+<style scoped lang="scss">
+$border-settings: 1px solid #E5E7EB;
+
+.vip-container {
+  background: #F3F7FD;
+  color: #8d8d8d;
+  min-height: 100vh;
+
+  .banner-container {
+    background: url("../assets/vip/banner.png") no-repeat center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    min-height: 600px;
+  }
+
+  .vipitem {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    position: relative;
+    width: 564px;
+    height: 284px;
+    background: url("../assets/vip/badge/banner-1.png") no-repeat top center;
+    background-size: contain;
+
+    &2 {
+      background: url("../assets/vip/badge/banner-2.png") no-repeat top center;
+      background-size: contain;
+    }
+
+    &3 {
+      background: url("../assets/vip/badge/banner-3.png") no-repeat top center;
+      background-size: contain;
+    }
+
+    &4 {
+      background: url("../assets/vip/badge/banner-4.png") no-repeat top center;
+      background-size: contain;
+    }
+
+    &5 {
+      background: url("../assets/vip/badge/banner-5.png") no-repeat top center;
+      background-size: contain;
+    }
+
+    &6 {
+      background: url("../assets/vip/badge/banner-6.png") no-repeat top center;
+      background-size: contain;
+    }
+
+    &7 {
+      background: url("../assets/vip/badge/banner-7.png") no-repeat top center;
+      background-size: contain;
+    }
+
+    &8 {
+      background: url("../assets/vip/badge/banner-8.png") no-repeat top center;
+      background-size: contain;
+    }
+
+    .vipLevelReachStatus {
+      background: url("../assets/vip/badge/vip-level-banner-status-ribbon-unachieved.png") no-repeat left center;
+      background-size: contain;
+      margin-top: 15px;
+      margin-left: 2px;
+      z-index: 1;
+      text-align: left;
+      height: 30px;
+
+      &.vipLevelReached {
+        background: url("../assets/vip/badge/vip-level-banner-status-ribbon-achieved.png") no-repeat left center;
+        background-size: contain;
+      }
+
+      span {
+        color: #fff;
+        margin-left: 10px;
+      }
+    }
+
+    .vipcontents {
+      height: 100%;
+      border-radius: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-direction: column;
+      padding: 30px 30px;
+
+      .title {
+        color: #333;
+        text-align: center;
+        font-family: Arial Narrow;
+        font-size: 51.319px;
+        font-style: italic;
+        font-weight: 700;
+        line-height: normal;
+      }
+
+      .description {
+        color: #7A80A1;
+        font-size: 17.987px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+
+      .progressBarContainer {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .progressBarOuterBar {
+          border-radius: 16px;
+          background: grey;
+          width: 100%;
+          overflow: hidden;
+        }
+
+        .progressBarInnerBar {
+          color: #fff;
+          border-radius: 16px;
+          background: linear-gradient(90deg, #E5CDA5 0.87%, #B48F57 100%);
+          height: 10px;
+        }
+
+
+        .progressBarDescription {
+          display: flex;
+          justify-content: space-between;
+          color: #333;
+          font-size: 17.987px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+        }
+      }
+
+      .inner-vip {
+        background-color: #303450;
+        width: 100%;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-evenly;
+        font-size: 45px;
+        line-height: 53px;
+        font-family: "Arial";
+      }
+    }
+  }
+
+  .vip-program {
+    margin: 50px auto;
+    max-width: 1300px;
+    width: 95%;
+
+    table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      border: $border-settings;
+
+      th {
+        border-bottom: $border-settings;
+        background-color: #F9FAFB;
+        color: #6B7280;
+      }
+
+      td {
+        color: #111827;
+        border-right: $border-settings;
+
+        &:has(.disable) {
+          background-color: #E7E7E7;
+          background-color: #e7e7e74f;
+        }
+      }
+
+      th,
+      td {
+        padding: 16px 24px 16px 24px;
+        border-bottom: $border-settings;
+      }
+
+
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      border: 1px solid #fce9c5;
+      border-radius: 58.321px;
+      width: fit-content;
+      margin: 0px auto 20px auto;
+
+      .common-btn {
+        display: block;
+        text-align: center;
+        color: #858585;
+        background: #f9fcff;
+        border: 0px;
+        border-radius: 58.321px;
+        padding: 8px 30px;
+        font-size: 18px;
+        font-weight: 700;
+        transition: all 0.3s;
+        filter: brightness(1);
+        margin: 5px;
+
+        &:hover {
+          filter: brightness(0.9);
+        }
+
+        &.active {
+          background: linear-gradient(90deg, #E5CDA5 0.87%, #B48F57 100%);
+          box-shadow: 0px 4px 4px 0px #FFFFFF40 inset;
+          box-shadow: 0px -4px 4px 0px #89520040 inset;
+          color: #fff;
+        }
+      }
+    }
+
+    .separator {
+      margin: 20px 0;
+    }
+  }
+
+  .terms-conditions {
+    padding-bottom: 80px;
+    margin: 0 auto;
+    width: 80%;
+    position: relative;
+
+    .section-title {
+      background: linear-gradient(90deg, #e5cda5 0.87%, #b48f57 100%);
+      background-clip: text;
+      text-align: center;
+      font-size: 48px;
+    }
+
+    .terms-conditions-title-separator {
+      width: 100%;
+      height: 100%;
+    }
+
+    .terms {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 30px;
+
+      .term {
+        max-width: 1300px;
+        width: 100%;
+        margin-top: 39px;
+        list-style-type: decimal;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+
+  .vip-program {
+    display: none;
+  }
+
+  .vip-container {
+    .banner-container {
+      min-height: 300px;
+      background-position: center center;
+    }
+
+    .vipitem {
+      width: 430px;
+      height: 215px;
+      margin: auto;
+
+      .vipLevelReachStatus {
+        margin-top: 12px;
+        margin-left: 3px;
+      }
+
+      .vipcontents {
+        padding-bottom: 10px;
+      }
+    }
+  }
+}
+</style>
+<style lang="scss">
+.carousel {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.carousel__item {
+  // background: url(../assets/vip/vipbg.png)no-repeat center center;
+  background-size: 100%;
+  font-size: 20px;
+  border-radius: 8px;
+}
+
+.carousel__slide {
+  padding: 10px;
+  align-items: flex-start;
+}
+
+.carousel__prev,
+.carousel__next {
+  box-sizing: content-box;
+  background: url(../assets/vip/nextprev.png) no-repeat center center;
+  background-size: contain;
+  top: 45%;
+
+  .carousel__icon {
+    display: none;
+  }
+}
+
+.carousel__prev {
+  top: 46.5%;
+  left: 4%;
+}
+
+.carousel__next {
+  transform: rotate(180deg);
+}
+
+.carousel__slide>.carousel__item {
+  transform: scale(0.2);
+  filter: brightness(0.7);
+  transition: 0.5s;
+}
+
+.carousel__slide--visible>.carousel__item {
+  opacity: 1;
+  filter: brightness(1);
+  transform: rotateY(0);
+}
+
+.carousel__slide--next>.carousel__item {
+  /* transform: scale(1.2) translate(-10px); */
+  transform: scale(0.8) translate(-170px);
+  z-index: -2;
+}
+
+.carousel__slide--prev>.carousel__item {
+  transform: scale(0.8) translate(170px);
+  z-index: -2;
+  /* transform: scale(0.9) translate(10px); */
+}
+
+.carousel__slide--active>.carousel__item {
+  transform: scale(1);
+  z-index: 0;
+}
+
+@media (max-width: 767px) {
+
+  .carousel__prev,
+  .carousel__next {
+    top: 15%;
+  }
+
+  .carousel__next {
+    top: 13.5%;
+    right: 2%;
+  }
+
+  .carousel__slide>.carousel__item {
+    transform: scale(0);
+    filter: brightness(0.7);
+    transition: 0.5s;
+  }
+
+  .carousel__slide--visible>.carousel__item {
+    opacity: 1;
+    filter: brightness(1);
+    transform: rotateY(0);
+  }
+}
+</style>

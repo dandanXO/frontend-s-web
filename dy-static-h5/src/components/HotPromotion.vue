@@ -19,7 +19,7 @@
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-tiger-card'" />
     <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
-    <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" :promo-code="list.promoCode" />
+    <HongBaoYu2024 v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" :promo-code="list.promoCode" />
     <UpcomingMatchPromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" platformType="NBA" />
     <UpcomingMatchPromo
       v-if="
@@ -62,6 +62,9 @@
     <BbDacha2024Promo
       v-if="list.redirectUrl === 'dy2-bb-dacha-2024' && !isCommonPromo && store.token"
     ></BbDacha2024Promo>
+    <CnyStepGame2024Promo
+      v-if="list.redirectUrl === 'dy2-cny-step-game' && !isCommonPromo && store.token"
+    ></CnyStepGame2024Promo>
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -92,6 +95,7 @@ import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue"
 import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
+import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue";
 import UpcomingMatchPromo from "../components/hotpromo/upcomingmatch/upcomingMatchPromo.vue";
 import InsuranceSubmitPromo from "../components/hotpromo/insurancesubmit/insuranceSubmitPromo.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
@@ -104,6 +108,7 @@ import BasketballHot from "../components/hotpromo/basketballHot/BasketballHot.vu
 import LplSummerPromo from "../components/hotpromo/lplsummer/LplSummerPromo.vue";
 import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
 import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
+import CnyStepGame2024Promo from "../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -114,7 +119,7 @@ export default defineComponent({
     TigerCardPromo,
     PrizePoolVotePromo,
     GoldenEggPromo,
-    HongBaoYuPromo,
+    HongBaoYu2024,
     UpcomingMatchPromo,
     InsuranceSubmitPromo,
     InviteFriendPromo,
@@ -126,7 +131,8 @@ export default defineComponent({
     BasketballHot,
     LplSummerPromo,
     Cny2024Promo,
-    BbDacha2024Promo
+    BbDacha2024Promo,
+    CnyStepGame2024Promo
   },
   props: {
     list: {
@@ -198,7 +204,8 @@ export default defineComponent({
       this.list.redirectUrl === "dy-promo-application-A" ||
       this.list.redirectUrl === "dy-promo-application-B" ||
       this.list.redirectUrl === "dy2-cny2024-promo" ||
-      this.list.redirectUrl === "dy2-bb-dacha-2024"
+      this.list.redirectUrl === "dy2-bb-dacha-2024" ||
+      this.list.redirectUrl === "dy2-cny-step-game"
     ) {
       this.isCommonPromo = false;
     } else {

@@ -13,7 +13,7 @@
             <div class="station-notice" v-if="announcementList.length > 0">
               <Vue3Marquee
                 :clone="false"
-                :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 3 : 70"
+                :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 1 : 70"
                 style="width: 720px"
               >
                 <div

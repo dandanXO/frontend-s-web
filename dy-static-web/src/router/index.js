@@ -104,6 +104,11 @@ const routes = [
         component: () => import("../views/PrivilegeInvite.vue")
       },
       {
+        path: "/privilege/hongbaoyu",
+        name: "hongbaoyu",
+        component: () => import("../views/HongBaoYu2024.vue")
+      },
+      {
         path: "/center",
         name: "center",
         component: PersonalLayoutView,

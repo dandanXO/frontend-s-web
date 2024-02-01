@@ -103,9 +103,9 @@
                 v-loading="page.loading"
                 :empty-text="t('fields.noData')"
       >
-        <el-table-column prop="betId" :label="t('fields.betId')" align="center" min-width="280" />
-        <el-table-column prop="transactionId" :label="t('fields.transactionId')" align="center" min-width="280" />
-        <el-table-column prop="platform" :label="t('fields.platform')" align="center" min-width="120" />
+        <el-table-column prop="betId" :label="t('fields.betId')" align="center" min-width="200" />
+        <el-table-column prop="transactionId" :label="t('fields.transactionId')" align="center" min-width="200" />
+        <el-table-column prop="platform" :label="t('fields.platform')" align="center" min-width="100" />
         <el-table-column prop="bet" :label="t('fields.bet')" align="center" min-width="100">
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.bet,type: 'money'}" />
@@ -284,6 +284,7 @@ function resetQuery() {
   request.status = ["UNSETTLED", "SETTLED", "CANCEL"];
   request.bet = null;
   request.gameType = [];
+  page.pagingState = null
 }
 
 const page = reactive({

@@ -144,6 +144,12 @@
             <span v-formatter="{data: scope.row.bonus, type: 'money'}" />
           </template>
         </el-table-column>
+        <el-table-column prop="rebate" :label="t('fields.rebateAmount')" align="center" width="120">
+          <template #default="scope">
+            $
+            <span v-formatter="{data: scope.row.rebate, type: 'money'}" />
+          </template>
+        </el-table-column>
         <el-table-column
           prop="bet"
           :label="t('fields.totalBet')"
@@ -175,6 +181,18 @@
           <template #default="scope">
             $
             <span v-formatter="{data: scope.row.payout, type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="platformFee" :label="t('fields.platformFee')" align="center" width="120">
+          <template #default="scope">
+            $
+            <span v-formatter="{data: scope.row.platformFee, type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="paymentFee" :label="t('fields.paymentFee')" align="center" width="120">
+          <template #default="scope">
+            $
+            <span v-formatter="{data: scope.row.paymentFee, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column prop="ngr" label="NGR" align="center" width="120">
@@ -425,7 +443,7 @@ function disabledDate(time) {
   return (
     time.getTime() <
       moment(new Date())
-        .subtract(2, 'months')
+        .subtract(13, 'months')
         .startOf('month')
         .format('x') || time.getTime() > new Date().getTime()
   )

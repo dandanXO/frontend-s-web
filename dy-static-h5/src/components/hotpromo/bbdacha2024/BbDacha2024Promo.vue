@@ -4,19 +4,33 @@
   </div>
 
   <div class="competition-container">
-    <div class="competition-item">
+    <p v-if="isLoaded && upcomingData.length === 0" class="text-center">目前没有赛事。</p>
+    <div
+      v-for="(data, dataIndex) in upcomingData"
+      :key="`upcoming-${dataIndex}`"
+      :class="`competition-item ${data.votedTeam ? 'competition-item--voted' : ''}
+      ${
+        data.status === 'ENDED' ? 'competition-item--ended' : data.status === 'CANCEL' ? 'competition-item--ended' : ''
+      }`"
+    >
       <div class="competiton-team team-one">
-        <div class="team-logo">
-          <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/game-logo-01.png" />
+        <div :class="`team-logo ${data.votedTeam === data.homeTeam ? 'team-logo--voted' : ''}`">
+          <img :src="imgURL + `promo/` + data.homeTeamIcon" />
         </div>
-        <div class="team-name">EDG电子竞技俱乐部</div>
-        <div class="team-vote">
-          <q-btn class="vote-btn" @click="handleVoteClick">投票</q-btn>
+        <div class="team-name">{{ data.homeTeam }}</div>
+        <div v-if="(data.votedTeam && data.votedTeam === data.homeTeam) || !data.votedTeam" class="team-vote">
+          <button
+            class="vote-btn"
+            @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.homeTeam })"
+            :disable="data.votedTeam && data.votedTeam === data.homeTeam"
+          >
+            {{ data.votedTeam && data.votedTeam === data.homeTeam ? "已投票" : data.votedTeam ? "" : "投票" }}
+          </button>
         </div>
       </div>
 
       <div class="competition-details">
-        <div class="details-date">1月24日 15:30</div>
+        <div class="details-date">{{ data.matchTime }}</div>
 
         <div class="details-match">
           2024BB
@@ -24,84 +38,34 @@
           别墅冬季杯 常规赛
         </div>
 
-        <div class="details-status"><span>进行中</span></div>
+        <div class="details-status">
+          <span>
+            {{
+              data.status === "ONGOING"
+                ? "进行中"
+                : data.status === "ENDED"
+                ? "已结束"
+                : data.status === "CANCEL"
+                ? "已取消"
+                : ""
+            }}
+          </span>
+        </div>
       </div>
 
       <div class="competiton-team team-two">
-        <div class="team-logo">
-          <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/game-logo-02.png" />
+        <div :class="`team-logo ${data.votedTeam === data.awayTeam ? 'team-logo--voted' : ''}`">
+          <img :src="imgURL + `promo/` + data.awayTeamIcon" />
         </div>
-        <div class="team-name">京东电子竞技俱部</div>
-        <div class="team-vote">
-          <q-btn class="vote-btn" @click="handleVoteClick">投票</q-btn>
-        </div>
-      </div>
-    </div>
-
-    <div class="competition-item competition-item--voted">
-      <div class="competiton-team team-one">
-        <div class="team-logo team-logo--voted">
-          <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/game-logo-01.png" />
-        </div>
-        <div class="team-name">EDG电子竞技俱</div>
-        <div class="team-vote">
-          <q-btn class="vote-btn" disable>已投票</q-btn>
-        </div>
-      </div>
-
-      <div class="competition-details">
-        <div class="details-date">1月24日 15:30</div>
-
-        <div class="details-match">
-          2024BB
-          <br />
-          别墅冬季杯 常规赛
-        </div>
-
-        <div class="details-status"><span>进行中</span></div>
-      </div>
-
-      <div class="competiton-team team-two">
-        <div class="team-logo">
-          <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/game-logo-02.png" />
-        </div>
-        <div class="team-name">京东电子竞技部</div>
-        <div class="team-vote">
-          <q-btn class="vote-btn" style="display: none">投票</q-btn>
-        </div>
-      </div>
-    </div>
-
-    <div class="competition-item competition-item--ended">
-      <div class="competiton-team team-one">
-        <div class="team-logo">
-          <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/game-logo-01.png" />
-        </div>
-        <div class="team-name">EDG电子竞技俱</div>
-        <div class="team-vote">
-          <q-btn class="vote-btn">投票</q-btn>
-        </div>
-      </div>
-
-      <div class="competition-details">
-        <div class="details-date">1月24日 15:30</div>
-
-        <div class="details-match">
-          2024BB
-          <br />
-          别墅冬季杯 常规赛
-        </div>
-
-        <div class="details-status"><span>已结束</span></div>
-      </div>
-
-      <div class="competiton-team team-two">
-        <div class="team-logo">
-          <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/game-logo-02.png" />
-        </div>
-        <div class="team-name">京东电子竞技部</div>
-        <div class="team-vote">
-          <q-btn class="vote-btn">投票</q-btn>
+        <div class="team-name">{{ data.awayTeam }}</div>
+        <div v-if="(data.votedTeam && data.votedTeam === data.awayTeam) || !data.votedTeam" class="team-vote">
+          <button
+            class="vote-btn"
+            @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.awayTeam })"
+            :disable="data.votedTeam && data.votedTeam === data.awayTeam"
+          >
+            {{ data.votedTeam && data.votedTeam === data.awayTeam ? "已投票" : data.votedTeam ? "" : "投票" }}
+          </button>
         </div>
       </div>
     </div>
@@ -122,7 +86,9 @@
     <q-tab-panels v-model="activeKey">
       <q-tab-panel name="tabOne">
         <div class="table-container">
-          <p class="q-mt-md text-bold">活动期间，每日竞猜正确次数≥2场的会员当日存款可领对应存款反比金额</p>
+          <p class="q-mt-md text-bold" style="text-align: center">
+            活动期间，用户竞猜当日竞猜正确次数≥3场，彩金按当日存款总额派发对应存款反比彩金金额
+          </p>
 
           <table class="promo-table">
             <thead>
@@ -159,7 +125,7 @@
         <div class="rules-container">
           <ol class="rules-content">
             <li>
-              活动期间，BB别墅冬季杯竞猜正确场次≥3次可获当日存款对应反比，彩金与次日24小时内派发，彩金仅需3倍流水即可提款；
+              活动期间，会员每日可免费参与全部竞猜，当日BB别墅冬季杯竞猜正确场次≥3次可获当日总存款对应反比，彩金与次日24小时内派发，彩金仅需3倍流水即可提款；
             </li>
             <li>活动期间，请在指定比赛开赛前竞猜，若超出开赛时间则视为放弃竞猜；</li>
             <li>
@@ -177,7 +143,7 @@
     <q-tab-panels v-model="activeKey">
       <q-tab-panel name="tabTwo">
         <div class="table-container">
-          <p class="q-mt-md text-bold">
+          <p class="q-mt-md text-bold" style="text-align: center">
             活动期间，BB别墅冬季杯赛事结束后累计竞猜正确次数≥10次且投注BB别墅杯累计有效投注≥3000元，即可领取对应彩金。
           </p>
 
@@ -215,7 +181,7 @@
 
         <div class="rules-container">
           <ol class="rules-content">
-            <li>活动期间，BB别墅冬季杯竞猜正确次数≥10次且累计BB别墅冬季杯有效投注≥10,000元即可领取对应奖金；</li>
+            <li>BB别墅冬季杯赛事结束后竞猜正确累计次数≥10次且累计BB别墅冬季杯有效投注≥10,000元即可领取对应奖金；</li>
             <li>活动奖金以最低档位为准，若竞猜正确次数≥15次且投注金额≥10，000元，则彩金按88元派发；</li>
             <li>活动奖金以决赛后次日24小时内派发至会员钱包，彩金仅需3倍流水即可提款；</li>
             <li>
@@ -235,30 +201,27 @@
         <q-btn icon="close" flat round dense v-close-popup color="white"></q-btn>
       </div>
 
+      <div class="promo-records-count">
+        <div>竞猜正确次数: {{ recordsCount.wonTimes }}</div>
+        <div>累计竞猜正确次数: {{ recordsCount.attendTimes }}</div>
+      </div>
+
       <table class="promo-table" cellspacing="0" cellpading="0">
         <thead>
           <tr>
-            <th>比赛时间</th>
+            <th>投票时间</th>
             <th>参赛队伍</th>
             <th>投票队伍</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>2024.1.10 15:30</td>
-            <td>EDG | RNG</td>
-            <td>RNG</td>
-          </tr>
-          <tr>
-            <td>2024.1.10 15:30</td>
-            <td>EDG | RNG</td>
-            <td>RNG</td>
-          </tr>
-          <tr>
-            <td>2024.1.10 15:30</td>
-            <td>EDG | RNG</td>
-            <td>RNG</td>
-          </tr>
+          <template v-for="(record, index) in answeredRecords" :key="index">
+            <tr>
+              <td>{{ record.createTime }}</td>
+              <td>{{ record.quizTitle }}</td>
+              <td>{{ record.answerOne }}</td>
+            </tr>
+          </template>
         </tbody>
       </table>
     </div>
@@ -267,7 +230,7 @@
   <q-dialog v-model="confirmVoteDialog" persistent>
     <q-card class="confirm-vote-card">
       <q-card-section class="q-mb-md row justify-center">
-        <div class="text-h6">您确定要把票投给 EDG电子竞技俱乐部 吗？</div>
+        <div class="text-h6">您确定要把票投给 {{ submitParam.answerOne }} 吗？</div>
       </q-card-section>
 
       <q-card-actions align="center">
@@ -281,36 +244,101 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
-import { userStore } from "stores/index";
+import { ref, reactive, onMounted } from "vue";
 import { useQuasar } from "quasar";
-import { useRouter } from "vue-router";
+import {
+  getBBDachaUpcoming,
+  getBBDachaAnsweredRecords,
+  submitBBDacha,
+  getBBDachaRecordsCount
+} from "../../../api/index/promo";
+import moment from "moment";
 
 const $q = useQuasar();
-const store = userStore();
-const router = useRouter();
 
 // tabs
 const activeKey = ref("tabOne");
-
+const imgURL = process.env.IMAGE_CDN + "/";
 // dialogs
 const tableRecordDialog = ref(false);
 const confirmVoteDialog = ref(false);
 
-const handleVoteClick = () => {
+let submitParam = reactive({ quizId: "", quizTitle: "", answerOne: "" });
+const handleVoteClick = (selectedData) => {
+  submitParam = selectedData;
   confirmVoteDialog.value = true;
 };
 
 const handleSubmitVote = () => {
-  confirmVoteDialog.value = false;
+  submitBBDacha(submitParam)
+    .then((res) => {
+      if (res.code === 0) {
+        getData();
 
-  $q.notify({
-    color: "positive",
-    position: "top",
-    message: "投票成功！",
-    icon: "check_circle_outline"
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "投票成功！",
+          icon: "check_circle_outline"
+        });
+      }
+    })
+    .catch(() => {})
+    .then(() => {
+      confirmVoteDialog.value = false;
+    });
+};
+
+const isLoaded = ref(false);
+const upcomingData = ref([]);
+const answeredRecords = ref([]);
+const recordsCount = ref();
+const getData = () => {
+  Promise.all([getBBDachaUpcoming(), getBBDachaAnsweredRecords(), getBBDachaRecordsCount()]).then((values) => {
+    const [bbDachaUpcoming, bbDachaAnsweredRecords, bbDachaRecordsCount] = values;
+    if (bbDachaAnsweredRecords.code === 0) {
+      if (
+        bbDachaAnsweredRecords.data &&
+        bbDachaAnsweredRecords.data.records &&
+        bbDachaAnsweredRecords.data.records.length
+      ) {
+        answeredRecords.value = bbDachaAnsweredRecords.data.records;
+      }
+    }
+
+    isLoaded.value = true;
+    if (bbDachaUpcoming.code === 0) {
+      if (bbDachaUpcoming.data && bbDachaUpcoming.data.length) {
+        upcomingData.value = bbDachaUpcoming.data;
+
+        let isFirstTime = {};
+        for (let i = 0, l = answeredRecords.value.length; i < l; i++) {
+          const currRecord = answeredRecords.value[i];
+
+          upcomingData.value.forEach((e) => {
+            const { matchTime, id } = e;
+
+            if (!isFirstTime[id]) {
+              const timeCN = moment(matchTime).locale("zh_cn");
+              e.matchTime = timeCN.format("MMM Do HH:mm");
+
+              isFirstTime[id] = true;
+            }
+
+            if (currRecord.quizId === id) e.votedTeam = currRecord.answerOne;
+          });
+        }
+      }
+    }
+
+    if (bbDachaRecordsCount.code === 0) {
+      recordsCount.value = bbDachaRecordsCount.data;
+    }
   });
 };
+onMounted(() => {
+  getData();
+});
 </script>
 
 <style scoped lang="scss">
@@ -399,9 +427,11 @@ table.promo-table {
           font-size: 13px;
         }
 
-        :deep(.disabled) {
+        :deep(.disabled),
+        [disable] {
           background: #dddddd;
           color: #ffffff;
+          pointer-events: none;
         }
       }
     }
@@ -530,6 +560,14 @@ table.promo-table {
       font-weight: 700;
     }
   }
+
+  .promo-records-count {
+    background: #ffffff;
+    padding: 8px 16px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 // tabs
@@ -567,6 +605,21 @@ table.promo-table {
     li {
       margin-bottom: 10px !important;
     }
+  }
+}
+
+@media (max-width: 375px) {
+  .competition-container .competition-item .competition-details {
+    min-width: 0px;
+  }
+  .competition-container .competition-item .competiton-team {
+    width: 40%;
+  }
+  .competition-container .competition-item .competition-details .details-date {
+    width: auto;
+  }
+  .competition-container .competition-item .competiton-team .team-vote .vote-btn {
+    min-width: 50px;
   }
 }
 </style>

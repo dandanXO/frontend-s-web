@@ -288,14 +288,19 @@
                       :style="{
                         backgroundImage: (() => {
                           try {
-                            return `url(${require(`../assets/images/index/live/item-game-${item.code.toLowerCase()}.png`)})`;
+                            return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
                             return '';
                           }
                         })()
                       }"
                     >
-                      <div v-if="item.name === 'Evo' || item.name === 'WCPT'" class="burning-hot">
+                      <div
+                        v-if="
+                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PT' || item.name === 'WCPT'
+                        "
+                        class="burning-hot"
+                      >
                         <img src="../assets/images/index/hot.png" />
                       </div>
                     </div>
@@ -319,14 +324,19 @@
                       :style="{
                         backgroundImage: (() => {
                           try {
-                            return `url(${require(`../assets/images/index/live/item-game-${item.code.toLowerCase()}.png`)})`;
+                            return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
                             return '';
                           }
                         })()
                       }"
                     >
-                      <div v-if="item.name === 'Evo' || item.name === 'WCPT'" class="burning-hot">
+                      <div
+                        v-if="
+                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PT' || item.name === 'WCPT'
+                        "
+                        class="burning-hot"
+                      >
                         <img src="../assets/images/index/hot.png" />
                       </div>
                     </div>
@@ -526,7 +536,7 @@
                     :style="{
                       backgroundImage: (() => {
                         try {
-                          return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                          return `url(${require(`../assets/images/index/fish/item-game-${item.name.toLowerCase()}.png`)})`;
                         } catch (e) {
                           return '';
                         }
@@ -562,7 +572,7 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`
+                          backgroundImage: `url(${require(`../assets/images/index/fish/item-game-${item.name.toLowerCase()}.png`)})`
                         }"
                       ></div>
                     </div>
@@ -601,7 +611,7 @@
                     <div
                       class="game--bg"
                       :style="{
-                        backgroundImage: `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`
+                        backgroundImage: `url(${require(`../assets/images/index/fish/item-game-${item.name.toLowerCase()}.png`)})`
                       }"
                     ></div>
                   </div>
@@ -673,7 +683,7 @@
                   :style="{
                     backgroundImage: (() => {
                       try {
-                        return `url(${require(`../assets/images/index/sport/item-game-${item.code.toLowerCase()}.png`)})`;
+                        return `url(${require(`../assets/images/index/sport/item-game-${item.name.toLowerCase()}.png`)})`;
                       } catch (e) {
                         return '';
                       }
