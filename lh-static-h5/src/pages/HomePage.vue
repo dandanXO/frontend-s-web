@@ -286,19 +286,21 @@
         <!-- <div class="platform-block">
           <img src="../assets/images/home/lottery/lottery-1.png" />
         </div> -->
-
+        <template v-for="(item, index) in lottery" :key="index">
         <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)">
           <div
             class="platform-img-frame"
-            :style="`background-image:url(${require(`../assets/images/home/lottery/platform-item-lottery.png`)})`"
+            :style="{
+                'background-image': getImgPlatformBg(item.icon, item.name)
+              }"
           >
             <div class="platform-label"></div>
             <div class="platform-content">
               <div class="platform-logo">
-                <img :src="require(`../assets/images/home/lottery/logo-lottery.png`)" />
+                <img :src="getImgPlatformLogo(item.icon, item.name)" />
               </div>
-              <div class="platform-title">彩票</div>
-              <div class="platform-subtitle">Lottery</div>
+              <div class="platform-title">{{ item.title }}</div>
+              <div class="platform-subtitle">{{ item.subtitle }}</div>
               <div class="platform-rebate">
                 最高返水
                 <span>8%</span>
@@ -306,6 +308,8 @@
             </div>
           </div>
         </div>
+        </template>
+
       </div>
 
       <div class="game-lists" v-if="tab === 'slot'" id="slot-lists">
@@ -1003,7 +1007,10 @@ export default defineComponent({
                 spObj.title = "CR体育";
               }
               if (spObj.code === "SABA") {
-                spObj.title = spObj.code + "体育";
+                spObj.title = "沙巴体育";
+              }
+              if (spObj.code === "PINNACLE") {
+                spObj.title = "平博体育";
               }
               spObj.icon = "sport";
               spObj.subtitle = "体育赛事";
@@ -1012,11 +1019,11 @@ export default defineComponent({
             if (platTypes.indexOf("LIVE") > -1) {
               var liveObj = Object.assign({}, element);
               if (liveObj.code === "PMLIVE") {
-                liveObj.title = "DB 真人";
+                liveObj.title = "DB真人";
               } else if (liveObj.code === "EBET") {
-                liveObj.title = "WE 真人";
+                liveObj.title = "WE真人";
               } else {
-                liveObj.title = liveObj.name + " 真人";
+                liveObj.title = translateRecord(liveObj.name);
               }
 
               if (liveObj.code === "BBINDY") {
@@ -1074,14 +1081,12 @@ export default defineComponent({
               lottObj.icon = "lottery";
               lottObj.subtitle = "彩票游戏";
               //HArdCode hid BBIN
-              if (lottObj.code !== "BBINDY") {
-                lottery.value.push(lottObj);
-              }
+              lottery.value.push(lottObj);
             }
           });
 
           console.log("END");
-          console.log(slot.value);
+          console.log(poker.value);
         })
         .catch((err) => {
         });

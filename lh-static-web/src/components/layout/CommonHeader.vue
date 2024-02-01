@@ -1800,6 +1800,7 @@ body {
         // padding: 0px 16px;
         gap: 16px;
         text-align: center;
+        padding: 0px 15px;
 
         &.second-nav {
           margin-left: auto;

@@ -125,8 +125,12 @@ export const translateRecord = (rec, type = "") => {
     return "AG真人"; // AG
   } else if (rec === "BBINDY") {
     return "BBIN真人"; // BBINDY
+  }else if (rec === "PINNACLE") {
+    return "平博体育"; // BBINDY
   } else if (rec === "EBET") {
     return "WE真人"; // EBET
+  }else if (rec === "ALLBET") {
+    return "欧博真人"; // EBET
   } else if (rec === "KY") {
     return "开元棋牌"; // KY
   } else if (rec === "DT") {
