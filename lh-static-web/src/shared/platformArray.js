@@ -226,7 +226,7 @@ export const lotteryPlatforms = [
     image: "tcg",
     message: "专注于彩票游戏行业多年，拥有经典彩种，超多独家创新玩法，让您在购买彩票的同时，享受游戏的快感。",
     caption: "",
-    gameCode: ""
+    gameCode: "bbkeno_lobby_pc"
   },
   {
     code: "TCG",
@@ -242,12 +242,12 @@ export const lotteryPlatforms = [
 // fishing
 export const fishingPlatforms = [
   {
-    code: "AG",
-    name: "AG捕鱼王",
-    image: "ag",
+    code: "GPS",
+    name: "GPS捕鱼王",
+    image: "gps",
     message:
-      "最受欢迎的AG捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
+      "最受欢迎的GPS捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
     caption: "",
-    gameCode: "6"
+    gameCode: "7202"
   }
 ];

@@ -8,15 +8,28 @@
     :afterClose="destroyGame"
   >
     <TFLoading v-if="logoShow"></TFLoading>
-    <iframe
-      @load="loadGame()"
-      v-show="!logoShow"
-      :src="src"
-      id="game-iframe"
-      :scrolling="iframeScroll ? 'yes' : 'no'"
-      frameborder="0"
-      class="game-iframe"
-    ></iframe>
+    <template v-if="transferInfo.platform === 'PG'">
+      <iframe
+        @load="loadGame()"
+        v-show="!logoShow"
+        v-bind:srcdoc="src"
+        id="game-iframe"
+        :scrolling="iframeScroll ? 'yes' : 'no'"
+        frameborder="0"
+        class="game-iframe"
+      ></iframe>
+    </template>
+    <template v-else>
+      <iframe
+        @load="loadGame()"
+        v-show="!logoShow"
+        :src="src"
+        id="game-iframe"
+        :scrolling="iframeScroll ? 'yes' : 'no'"
+        frameborder="0"
+        class="game-iframe"
+      ></iframe>
+    </template>
     <div
       @click="showDrawer()"
       class="drawer-btn"
@@ -160,7 +173,7 @@ const visibleComingSoon = ref(false);
 const src = ref("");
 const logoShow = ref(true);
 const title = ref("");
-const iframeScroll = ref(false)
+const iframeScroll = ref(true)
 
 const transferInfo = ref({
   amount: null,
@@ -226,7 +239,17 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           gameCode: gameCode,
           isMobile: isMobile()
         }).then((res) => {
-          src.value = res.data;
+          let srcData= res.data;
+
+          if (platformCode === "PG") {
+            const scriptEndTag = "</" + "script>";
+            srcData = res.data
+              .replace(/<\/script>/g, scriptEndTag)
+              .replaceAll(/\\\"/g, '"')
+              .replaceAll(/\n/g, "");
+          }
+
+          src.value = srcData;
           visible.value = true;
         });
       }

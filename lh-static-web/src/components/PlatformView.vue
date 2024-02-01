@@ -24,6 +24,10 @@
               <img :src="require('../assets/' + platformType + '/' + platformType + '-pattern.png')" />
             </div>
 
+            <p class="platform-desc">
+              专注于彩票游戏行业多年，拥有经典彩种、玩法。 还有超多独家创新玩法，足够新颖，极易操作的游戏界面， 更是在您游戏过程中增光添彩！
+            </p>
+
             <div class="platform-list-box">
               <!-- <span
                 class="platform-list-item"
@@ -58,14 +62,22 @@
               </span>
             </div>
 
+
+
             <div
               class="platform-play-btn"
               data-aos="fade-in"
               data-aos-delay="300"
               data-aos-duration="500"
-              v-if="platformType !== 'slot' || platformType !== 'fishing'"
+              v-if="platformType !== 'slot' && platformType !== 'fishing'"
             >
-              <div class="btn-blue" @click="openGame(item.name, item.code)">进入游戏</div>
+              <template v-if="item.code==='BBINDY'">
+                <div class="btn-blue" @click="openGame(item.name, item.code, 'bblive_lobby_pc')">{{item.code}} 进入游戏</div>
+              </template>
+              <template v-else>
+                <div class="btn-blue" @click="openGame(item.name, item.code)">{{platformType}} 进入游戏</div>
+              </template>
+
             </div>
           </div>
         </template>
@@ -250,6 +262,7 @@ const clickPlat = (plat) => {
 };
 
 const openGame = (gameName, platformCode, gameCode) => {
+  // debugger;
   platformGame.value.open(gameName, platformCode, gameCode);
 };
 
@@ -274,7 +287,7 @@ const switchPlat = (plat) => {
 };
 
 const getPlatGameList = () => {
-  props.platformGameType === "SLOT" &&
+  (props.platformGameType === "SLOT") &&
     getPlatformList()
       .then((data) => {
         platformsListDisplay.value = data.filter((element) => element.gameType.includes(props.platformGameType));
@@ -306,9 +319,7 @@ const loadGameList = () => {
       .then((data) => {
         data.forEach((element) => {
           element.default = require("../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${
-            element.icon
-          }.png`;
+          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${element.icon}`;
         });
         gameListData.value = data;
         gamePage.total = data.length;
