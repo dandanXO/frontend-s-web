@@ -1012,6 +1012,11 @@ export default defineComponent({
               } else {
                 liveObj.title = liveObj.name + " 真人";
               }
+
+              if (liveObj.code === "BBINDY") {
+                liveObj.gameCode = 'bblive_lobby_pc';
+              }
+
               liveObj.icon = "live";
               liveObj.subtitle = "真人娱乐";
               livecasino.value.push(liveObj);
