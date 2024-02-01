@@ -8,6 +8,7 @@
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
     <EsportSafetyPromo v-if="list.redirectUrl === 'lh-esport-safe' && !isCommonPromo" />
     <PredictionMatchPromo v-if="list.redirectUrl === 'lh-s13-match' && !isCommonPromo" />
+    <DailyLoginPromo v-if="list.redirectUrl === 'monthly-sign' && !isCommonPromo" />
     <div v-if="list.redirectUrl === 'dy1-lottery' && !isCommonPromo && store.token" class="promo-4">
       <div class="tabs">
         <el-tabs v-model="activeKey" type="card">
@@ -163,6 +164,7 @@ import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendP
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import EsportSafetyPromo from "../components/hotpromo/eSportSafety/eSportSafetyPromo.vue";
 import PredictionMatchPromo from "../components/hotpromo/PredictionMatch/PredictionMatchPromo.vue";
+import DailyLoginPromo from "../components/hotpromo/DailyLogin/DailyLoginPromo.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -179,7 +181,8 @@ export default defineComponent({
     InviteFriendPromo,
     EsportSafetyPromo,
     WelcomeTaskPromo,
-    PredictionMatchPromo
+    PredictionMatchPromo,
+    DailyLoginPromo
     // DailyBonus
   },
   props: {
