@@ -5,8 +5,8 @@ export const getPlatforms = (platform) => {
   return https().request("/platform", Method.GET, platform, ContentType.form);
 };
 
-export const getPlatformNames = () => {
-  return https().request("/platform/name", Method.GET);
+export const getPlatformNames = (siteId) => {
+  return https().request("/platform/name?siteId=" + siteId, Method.GET);
 };
 
 export const createPlatform = (platform) => {
