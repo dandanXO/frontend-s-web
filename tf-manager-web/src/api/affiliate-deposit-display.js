@@ -12,3 +12,15 @@ export const createAffiliateDepositDisplay = (affiliateDepositDisplay) => {
 export const updateAffiliateDepositDisplay = (affiliateDepositDisplay) => {
   return https().request(`/affiliate-deposit-display/update?_method=PUT`, Method.POST, affiliateDepositDisplay, ContentType.form);
 };
+
+export const getAffiliateDepositSetting = (siteId) => {
+  return https().request("/affiliate-deposit-display/setting", Method.GET, siteId, ContentType.form);
+};
+
+export const createAffiliateDepositSetting = (affiliateDepositSetting) => {
+  return https().request(`/affiliate-deposit-display/setting`, Method.POST, affiliateDepositSetting, ContentType.form);
+};
+
+export const updateAffiliateDepositSetting = (affiliateDepositSetting) => {
+  return https().request(`/affiliate-deposit-display/setting/update?_method=PUT`, Method.POST, affiliateDepositSetting, ContentType.form);
+};
