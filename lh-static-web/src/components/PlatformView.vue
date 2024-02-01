@@ -262,7 +262,7 @@ const clickPlat = (plat) => {
 };
 
 const openGame = (gameName, platformCode, gameCode) => {
-  debugger;
+  // debugger;
   platformGame.value.open(gameName, platformCode, gameCode);
 };
 

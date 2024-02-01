@@ -17,6 +17,7 @@ const emits = defineEmits(["load-modal"]);
 const platformType = ref("live");
 const platformGameType = ref("LIVE");
 const openGame = (item) => {
-  emits("load-modal", item.gameName, item.code, item.gameCode);
+  console.log(item);
+  emits("load-modal", item.name, item.code, item.gameCode);
 };
 </script>
