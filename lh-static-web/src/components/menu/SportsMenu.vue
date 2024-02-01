@@ -3,6 +3,7 @@
     :platforms="sportsPlatforms"
     :platformGameType="platformGameType"
     :platformType="platformType"
+    platformName="sports"
     @load-game="openGame"
   />
 </template>

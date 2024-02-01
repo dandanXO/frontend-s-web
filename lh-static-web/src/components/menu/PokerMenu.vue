@@ -3,6 +3,7 @@
     :platforms="pokerPlatforms"
     :platformGameType="platformGameType"
     :platformType="platformType"
+    platformName="poker"
     @load-game="openGame"
   />
 </template>

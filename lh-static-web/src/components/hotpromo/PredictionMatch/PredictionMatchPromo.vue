@@ -1,0 +1,128 @@
+<template>
+  <div>
+    <div class="prediction">
+      <div class="prize-pool">
+        <div class="prize-title">奖池</div>
+        <div class="prize-number">{{ "1,000,000" }}</div>
+      </div>
+      <div class="prediction-table">
+        <div v-for="match in matchDetails">
+          <div class="match-item">
+            <div class="match-image">{{ match.image }}</div>
+            <div class="match-title">{{ match.title }}</div>
+            <div class="match-btn">投票</div>
+            <div class="match-current">当前票数: {{ match.currentTickets }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="promo-view-container">
+        <table>
+          <tr>
+            <th>队伍名称</th>
+            <th>投票次数</th>
+            <th>投票时间</th>
+          </tr>
+          <tr>
+            <td>T1</td>
+            <td>2</td>
+            <td>2023.11.08</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>
+<script setup>
+import { ref, onMounted } from "vue";
+
+const matchDetails = ref([]);
+const init = () => {
+  matchDetails.value = [
+    {
+      image: "",
+      title: "T1",
+      currentTickets: 1000
+    },
+    {
+      image: "",
+      title: "BLG",
+      currentTickets: 1000
+    },
+    {
+      image: "",
+      title: "JDG",
+      currentTickets: 1000
+    },
+    {
+      image: "",
+      title: "WBG",
+      currentTickets: 1000
+    }
+  ];
+};
+onMounted(() => {
+  init();
+});
+</script>
+<style lang="scss" scoped>
+.prediction {
+  .prize-pool {
+    width: 80%;
+    height: 400px;
+    background: url("../../../assets/images/promotion/hotpromo/prediction/prizepool.png") no-repeat center center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    position: relative;
+    .prize-title {
+      position: absolute;
+      top: 15px;
+      left: 0;
+      right: 0;
+      margin: auto;
+      color: #ffffff;
+      font-size: 45px;
+      text-align: center;
+    }
+    .prize-number {
+      color: #3f5075;
+      font-size: 80px;
+    }
+  }
+  .prediction-table {
+    background: url("../../../assets/images/promotion/hotpromo/prediction/predictionbg.png") no-repeat center center;
+    background-size: 100% 100%;
+    padding: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 80px;
+
+    .match-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      .match-image {
+        width: 150px;
+        height: 150px;
+        background: url("../../../assets/images/promotion/hotpromo/prediction/imgbg.png") no-repeat center center;
+      }
+      .match-title {
+        color: #4c4c6c;
+        font-weight: 600;
+      }
+      .match-btn {
+        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+        box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
+
+        box-shadow: 0px -1px 3.6640000343322754px 0px #5894ff inset;
+        padding: 10px 40px;
+        color: #ffffff;
+        border-radius: 100px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+</style>

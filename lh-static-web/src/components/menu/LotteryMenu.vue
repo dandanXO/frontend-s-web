@@ -3,6 +3,7 @@
     :platforms="lotteryPlatforms"
     :platformGameType="platformGameType"
     :platformType="platformType"
+    platformName="lottery"
     @load-game="openGame"
   />
 </template>
