@@ -1,6 +1,6 @@
 <template>
   <div class="loading">
-    <img src="../../assets/logo.png" />
+    <img src="../../assets/logo-big.png" />
     <ul>
       <li v-for="v in 5" :key="v"></li>
     </ul>
@@ -105,7 +105,7 @@ $loadingwidth: 300px;
 .loading {
   img {
     width: 100%;
-    max-width: 150px;
+    max-width: 300px;
   }
   .txt {
     display: block;
