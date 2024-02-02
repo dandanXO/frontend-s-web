@@ -273,7 +273,7 @@ export const pokerPlatforms = [
     gameCode: ""
   },
   {
-    code: "GLFC",
+    code: "GFLC",
     cnname: "高登棋牌",
     image: "gd",
     message: "抢庄牛牛龙虎斗，多款棋牌任君选<br> 棋牌彰显胸怀，竞技娱乐烧脑，好友相约竞技，游戏改变生活",

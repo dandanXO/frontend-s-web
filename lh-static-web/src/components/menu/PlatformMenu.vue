@@ -1,7 +1,7 @@
 <template>
   <div class="platform-menu-container">
     <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
-    <template v-for="(item, index) in platformsListDisplay" :key="index">
+    <template v-for="(item, index) in platformsListDisplay.slice(0, 5)" :key="index">
       <!--      <router-link :to="`${props.platformName}?plat=${item.code}`">-->
       <div class="platform-menu-item" @click="gotoGame(item)">
         <div class="platform-menu-title" v-html="item.cnname" />
@@ -65,7 +65,7 @@ const router = useRouter();
 const gotoGame = (item) => {
   // debugger;
   console.log(item);
-  if (item.gameType === "SLOT" || item.gameType === "FISH" || item.code === "AG") {
+  if (item.gameType === "SLOT" || item.code === "AG") {
     router.push(`${props.platformName}?plat=${item.code}`);
   } else {
     console.log(item);
