@@ -32,7 +32,7 @@ export default defineComponent({
 
     onMounted(() => {
       instance = new WangEditor(editor.value);
-      instance.config.lang = "en";
+      instance.config.lang = "zh-CN";
       instance.config.placeholder = t('fields.pleaseInput');
       instance.i18next = i18next;
       instance.txt.eventHooks.changeEvents.push(() => {
