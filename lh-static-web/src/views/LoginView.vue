@@ -78,47 +78,11 @@ import { ref, onMounted, reactive } from "vue";
 import { getVerificationCode } from "@/api/index/login";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "@/store/index";
-import { useRoute, useRouter } from "vue-router";
 import { sendSms } from "@/api/personal/personal";
 import AccountLogin from '@/components/auth/AccountLogin.vue';
+import { ElMessage } from "element-plus";
 
 const captchaRules = {
-    captchaCode: [
-        {
-            required: true,
-            message: "请输入验证码",
-            trigger: "blur"
-        },
-        {
-            min: 4,
-            max: 4,
-            message: "长度为 4",
-            trigger: "blur"
-        }
-    ]
-};
-
-const loginRules = {
-    loginName: [
-        {
-            required: true,
-            message: "请输入用户名",
-            trigger: "blur"
-        },
-        {
-            min: 6,
-            max: 12,
-            message: "长度要在 6-12 之间",
-            trigger: "blur"
-        }
-    ],
-    password: [
-        {
-            required: true,
-            message: "请输入密码",
-            trigger: "blur"
-        }
-    ],
     captchaCode: [
         {
             required: true,
@@ -174,50 +138,23 @@ const passForm = reactive({
 
 const loginCountdown = ref(0)
 const mobileLoginRef = ref([])
-const loginRef = ref([]);
 const store = userStore();
 const loadingBtn = ref(false);
-const router = useRouter();
-const route = useRoute();
 const captchaDialogVisible = ref(false);
 
-const sendOtp = async () => {
-
-    if (captchaForm.type === 'REGISTER') {
-        const smsDetail = {
-            telephone: regForm.telephone,
-            captchaCode: captchaForm.captchaCode,
-            codeId: captchaForm.codeId
+const countdownTimer = (type) => {
+    if (type === 'LOGIN') {
+        if (loginCountdown.value > 0) {
+            setTimeout(() => {
+                loginCountdown.value -= 1
+                countdownTimer('LOGIN')
+            }, 1000)
         }
-        sendSms(smsDetail)
-            .then((response) => {
-                if (response.code == 0) {
-                    // disableSendVerificationButton.value = true
+    }
+}
 
-                    regForm.smsCodeId = response.data.codeId;
-
-                    ElMessage({
-                        type: 'success',
-                        message: '发送手机验证码成功'
-                    });
-
-                    captchaDialogVisible.value = false;
-
-                    regCountdown.value = registerSendOtpDisabledTimeout;
-
-                    const now = new Date();
-
-                    now.setSeconds(now.getSeconds() + registerSendOtpDisabledTimeout);
-
-                    lsStore(registerSendOtpDisabledKey, now.getTime());
-                    lsStore(registerTelephoneKey, regForm.telephone);
-
-                    countdownTimer('REGISTER')
-                } else {
-                    getCode();
-                }
-            })
-    } else if (captchaForm.type === 'LOGIN') {
+const sendOtp = async () => {
+    if (captchaForm.type === 'LOGIN') {
         const smsDetail = {
             telephone: loginForm.phoneNumber,
             captchaCode: captchaForm.captchaCode,
@@ -271,11 +208,9 @@ const phoneLogin = () => {
                     smsCodeId: loginForm.smsCodeId,
                 })
                 .then(() => {
-                    // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
+                    const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
                     if (store.token) {
-                        // router.push(jumpUrl);
-                        loginDialogVisible.value = false;
-                        store.loginPageVisible = false;
+                        router.push(jumpUrl);
 
                         sessionStorage.removeItem("REFERRAL_CODE");
                     } else {
@@ -283,55 +218,11 @@ const phoneLogin = () => {
                         loginForm.code = null
                     }
                 }).catch((error) => {
-                    // message.error(error.message);
                     console.log(error.message);
                 });
         });
     })();
     loadingBtn.value = false
-};
-
-const submitLogin = () => {
-    loadingBtn.value = true
-    const fpPromise = FingerprintJS.load();
-    (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-            delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
-
-        loginRef.value.validate().then(() => {
-            store
-                .memberLogin({
-                    loginName: loginForm.loginName,
-                    password: loginForm.password,
-                    sid: sidParam,
-                    captchaCode: loginForm.captchaCode,
-                    codeId: loginForm.codeId,
-                })
-                .then(() => {
-                    const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
-                    if (store.token) {
-                        router.push(jumpUrl);
-
-                        sessionStorage.removeItem("REFERRAL_CODE");
-                        loginForm.loginName = null
-                        loginForm.password = null
-                        loginForm.captchaCode = null
-                    } else {
-                        getCode();
-                    }
-                }).catch((error) => {
-                    console.log(error.message);
-                    getCode();
-                });
-        });
-        loadingBtn.value = false
-    })();
 };
 
 const getCode = () => {
