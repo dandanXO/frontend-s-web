@@ -253,10 +253,10 @@ onMounted(() => {
 .center {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 30px;
-    margin: auto;
+    margin: 5% auto;
     width: 100%;
     max-width: 500px;
 }
