@@ -34,7 +34,7 @@
           style="width: 200px; margin-left: 10px;"
           :placeholder="t('fields.loginName')"
         />
-        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadBbDachaAnswer">
+        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadGameStepsRecords">
           {{ t('fields.search') }}
         </el-button>
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">
@@ -79,8 +79,8 @@
       v-model:page-size="request.size"
       v-model:page-count="page.pages"
       v-model:current-page="request.current"
-      @current-change="loadBbDachaAnswer"
-      @size-change="loadBbDachaAnswer"
+      @current-change="loadGameStepsRecords"
+      @size-change="loadGameStepsRecords"
     />
   </div>
 </template>
@@ -124,7 +124,7 @@ const page = reactive({
   loading: false
 });
 
-async function loadBbDachaAnswer() {
+async function loadGameStepsRecords() {
   page.loading = true;
   const requestCopy = { ...request };
   const query = {};
