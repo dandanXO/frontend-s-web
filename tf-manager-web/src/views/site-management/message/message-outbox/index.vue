@@ -144,7 +144,7 @@ import { hasRole } from "../../../../utils/util";
 import { deleteMessageOutbox, getMessageOutbox } from "../../../../api/message-outbox";
 import { useI18n } from "vue-i18n";
 import { getSiteIdByName, getSiteListSimple } from "../../../../api/site";
-import { createSystemMessageTemplate } from "../../../../api/system-message-template";
+import { replyMember } from "../../../../api/system-message-template";
 import { useStore } from '../../../../store';
 import { TENANT } from "../../../../store/modules/user/action-types";
 
@@ -296,7 +296,7 @@ function send() {
           item[k] = v;
         }
       });
-      await createSystemMessageTemplate(item)
+      await replyMember(item)
       uiControl.dialogVisible = false
       await loadMessageOutbox()
       ElMessage({ message: t('message.addSuccess'), type: 'success' })

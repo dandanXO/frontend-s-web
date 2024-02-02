@@ -1,0 +1,905 @@
+<template>
+  <q-page>
+    <div class="profile">
+      <div class="left">
+        <div class="avatar">
+          <img src="../assets/images/account/avatar.png" />
+        </div>
+        <div class="pro-details">
+          <span class="nickname-span">{{ store.nickName }}</span>
+
+          <span class="join-span">加入雷火电竞第一天</span>
+
+          <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="vipcard">
+      <q-card-section class="top-section">
+        <!-- <div class="name">{{ header }}</div> -->
+        <q-card-section class="acct-section">
+          <div class="left-sect">
+            <div class="label">
+              <img src="../assets/images/account/account-wallet-icon.png" />
+              <span>中心钱包</span>
+              <div class="refresh-btn" @click="getBalance">
+                <img src="../assets/images/account/account-refresh-btn.png" />
+              </div>
+            </div>
+            <div class="amt">
+              {{ !isLoadingBalance ? "¥" + mainWallet : "加载中..." }}
+            </div>
+          </div>
+          <div class="right-sect">
+            <q-btn label="存款" class="btn-main btn-pointer" style="" @click="openDeposit" />
+
+            <q-btn label="提款" class="btn-main btn-pointer" style="" @click="openWithdraw" />
+
+            <q-btn label="转账" class="btn-main btn-pointer" style="" @click="openTransfer" />
+          </div>
+        </q-card-section>
+        <q-card-section class="acct-btm-section">
+          <div class="vip-info-div">
+            <div class="vip-left">
+              VIP等级：
+              <div class="vip-level">
+                {{ store.vip }}
+              </div>
+            </div>
+
+            <router-link to="/vip">
+              <div class="vip-right btn-pointer">
+                更多VIP特权
+                <img src="../assets/images/account/account-right-small.png" />
+              </div>
+            </router-link>
+          </div>
+
+          <div class="eshare-div">
+            <span v-if="store.evip">
+              专属网址:
+              <a class="share-link" :href="selfTgurl" target="_blank">
+                {{ store.evip }}
+              </a>
+              <img class="copy-btn btn-pointer" src="../assets/images/account/account-copy-icon.png" />
+            </span>
+          </div>
+        </q-card-section>
+
+        <!-- <q-separator /> -->
+
+        <!--        <q-card class="bluecard vip-info-board" @click="goToVip">-->
+        <!--          <div class="vipline q-mt-sm">-->
+        <!--            <div class="circle">-->
+        <!--              <span class="bigV">v</span>-->
+        <!--              <span class="small">{{ vipLevel }}</span>-->
+        <!--            </div>-->
+        <!--            <div class="middle">-->
+        <!--              <div class="row items-center justify-between">-->
+        <!--                <div class="left">成长值</div>-->
+        <!--                <div class="right">{{ store.currentDeposit }}/{{ store.levelUpDeposit }}</div>-->
+        <!--              </div>-->
+
+        <!--              <q-linear-progress :value="vip_progress" rounded class="q-mt-xs" color="white" />-->
+        <!--            </div>-->
+        <!--            <div class="circle">-->
+        <!--              <span class="bigV">v</span>-->
+        <!--              <span class="small">{{ vipLevel + 1 }}</span>-->
+        <!--            </div>-->
+        <!--          </div>-->
+
+        <!--          <div class="vip-get-div row justify-between items-center q-mt-sm">-->
+        <!--            <div class="vip-getpromo-div">-->
+        <!--              <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>-->
+        <!--              <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" />-->
+        <!--              <span>晋级礼包</span>-->
+        <!--            </div>-->
+        <!--            <div class="vip-getpromo-div">-->
+        <!--              <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>-->
+
+        <!--              <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" />-->
+        <!--              <span>生日礼金</span>-->
+        <!--            </div>-->
+        <!--            <div class="vip-getpromo-div">-->
+        <!--              <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>-->
+
+        <!--              <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" />-->
+        <!--              <span>每月活动</span>-->
+        <!--            </div>-->
+        <!--            <div class="vip-getpromo-div">-->
+        <!--              <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>-->
+        <!--              <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" />-->
+        <!--              <span>专属活动</span>-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <!--        </q-card>-->
+      </q-card-section>
+    </div>
+
+    <q-item-section class="acct-nav">
+      <div class="acct-title">
+        <div class="acct-title-1">功能区</div>
+      </div>
+      <div class="acct-menu" id="id-acct-menu">
+        <router-link to="/account/invite">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-share-icon.png" />
+            <div class="acct-nav-label">呼朋唤友</div>
+          </div>
+        </router-link>
+        <router-link v-if="!store.isApp()" to="/account/download">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-download-icon.png" />
+            <div class="acct-nav-label">下载中心</div>
+          </div>
+        </router-link>
+        <router-link to="/affiliate">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-affiliate-icon.png" />
+            <div class="acct-nav-label">代理加盟</div>
+          </div>
+        </router-link>
+        <router-link to="/account/inbox">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-notice-icon.png" />
+            <div class="acct-nav-label">消息提醒</div>
+          </div>
+        </router-link>
+        <!--        <router-link to="/account/announcement">-->
+        <!--          <div class="acct-nav-item">-->
+        <!--            <img src="../assets/images/account/account-notice-icon.png" />-->
+        <!--            <div class="acct-nav-label">消息提醒</div>-->
+        <!--          </div>-->
+        <!--        </router-link>-->
+        <router-link to="/account/promotion">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-promo-icon.png" />
+            <div class="acct-nav-label">自助优惠</div>
+          </div>
+        </router-link>
+
+        <router-link to="/account/assets">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-rich-icon.png" />
+            <div class="acct-nav-label">财富中心</div>
+          </div>
+        </router-link>
+
+        <router-link to="/account/records">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-record-icon.png" />
+            <div class="acct-nav-label">交易信息</div>
+          </div>
+        </router-link>
+        <router-link to="/account/withdraw">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-bank-icon.png" />
+            <div class="acct-nav-label">银行信息</div>
+          </div>
+        </router-link>
+
+        <!--        <router-link to="/account/personal">-->
+        <!--          <div class="acct-nav-item">-->
+        <!--            <img src="../assets/images/account/account-storage-icon.png" />-->
+        <!--            <div class="acct-nav-label">仓库</div>-->
+        <!--          </div>-->
+        <!--        </router-link>-->
+
+        <router-link to="/account/personal">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-personal-icon.png" />
+            <div class="acct-nav-label">账户信息</div>
+          </div>
+        </router-link>
+        <router-link to="/account/changePwd">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-changepwd-icon.png" />
+            <div class="acct-nav-label">修改密码</div>
+          </div>
+        </router-link>
+
+        <router-link to="/account/letters">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/user-feedbakc-icon.png" />
+            <div class="acct-nav-label">意见反馈</div>
+          </div>
+        </router-link>
+      </div>
+    </q-item-section>
+
+    <!--    <q-card class="card-account-banner">-->
+    <!--      <q-card-section>-->
+    <!--        <q-carousel-->
+    <!--          class="account"-->
+    <!--          autoplay-->
+    <!--          navigation-->
+    <!--          v-model="slide"-->
+    <!--          swipeable-->
+    <!--          transition-next="slide-left"-->
+    <!--          transition-prev="slide-right"-->
+    <!--          animated-->
+    <!--          infinite-->
+    <!--        >-->
+    <!--          <template v-slot:navigation-icon="{ active, onClick }">-->
+    <!--            <q-btn-->
+    <!--              padding="3px"-->
+    <!--              v-if="active"-->
+    <!--              size="xs"-->
+    <!--              color="white"-->
+    <!--              @click="onClick"-->
+    <!--              style="border: 1px solid #ffffff; border-radius: 50%; margin: 6px 8px"-->
+    <!--            />-->
+    <!--            <q-btn-->
+    <!--              padding="3px"-->
+    <!--              v-else-->
+    <!--              size="xs"-->
+    <!--              color="transparent"-->
+    <!--              @click="onClick"-->
+    <!--              style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px"-->
+    <!--            />-->
+    <!--          </template>-->
+
+    <!--          <q-carousel-slide-->
+    <!--            v-for="(banner, i) in btm_banners"-->
+    <!--            :key="i"-->
+    <!--            :name="i"-->
+    <!--            class="column no-wrap flex-center"-->
+    <!--            :img-src="imgURL + banner.mobileImageUrl"-->
+    <!--            @click="gotoPromo(banner)"-->
+    <!--          ></q-carousel-slide>-->
+    <!--        </q-carousel>-->
+    <!--      </q-card-section>-->
+    <!--    </q-card>-->
+    <a @click="isLogoutModal = true">
+      <div class="acct-logout btn-pointer">
+        <div class="acct-nav-label">退出登录</div>
+        <img src="../assets/images/account/account-logout-icon.png" />
+      </div>
+    </a>
+  </q-page>
+
+  <q-dialog
+    width="100%"
+    class="modal-common-div"
+    v-model="isLogoutModal"
+    show-cancel-button
+    :showCancelButton="false"
+    :showConfirmButton="false"
+  >
+    <q-card style="width: 100%" class="modalcontent">
+      <div class="headers">
+        <div class="titles">系统提示</div>
+        <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
+      </div>
+      <div class="contents">确认要退出登录吗？</div>
+      <div class="btnsreas">
+        <div class="confirmsbtns common-md-btn" @click="logout">确定</div>
+        <div class="cacnels common-md-white-btn" @click="isLogoutModal = false">取消</div>
+      </div>
+    </q-card>
+  </q-dialog>
+</template>
+
+<script>
+import { defineComponent, ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { userStore } from "stores/index";
+import { useRouter } from "vue-router";
+import { App } from "@capacitor/app";
+// import { RiRefreshLine } from "vue-remix-icons";
+import { api } from "boot/axios";
+
+export default defineComponent({
+  name: "AccountPage",
+  components: {},
+  setup() {
+    const router = useRouter();
+    const store = userStore();
+
+    const isLogoutModal = ref(false);
+
+    const logout = () => {
+      store.memberLogout().then(() => {
+        router.push("/");
+      });
+    };
+
+    const appVersionNo = ref(null);
+    const vipLevel = computed(() => {
+      if (store.vip == "VIP0") {
+        return 0;
+      } else if (store.vip == "VIP1") {
+        return 1;
+      } else if (store.vip == "VIP2") {
+        return 2;
+      } else if (store.vip == "VIP3") {
+        return 3;
+      } else if (store.vip == "VIP4") {
+        return 4;
+      } else if (store.vip == "VIP5") {
+        return 5;
+      } else if (store.vip == "VIP6") {
+        return 6;
+      } else if (store.vip == "VIP7") {
+        return 7;
+      } else if (store.vip == "VIP8") {
+        return 8;
+      } else if (store.vip == "VIP9") {
+        return 9;
+      } else if (store.vip == "VIP10") {
+        return 10;
+      } else if (store.vip == "VIP11") {
+        return 11;
+      } else if (store.vip == "VIP12") {
+        return 12;
+      }
+      return store.vip;
+    });
+    const vip_progress = ref(store.currentDeposit / store.levelUpDeposit);
+    const goToVip = () => {
+      router.push("/account/vip?redirect=account");
+    };
+
+    const timerBalance = ref();
+    const mainWallet = computed(() => {
+      return store.balance.toFixed(2);
+    });
+    const getVersionNo = async () => {
+      if (store.getDeviceType() == "ANDROID") {
+        const info = await App.getInfo();
+        var current_version = info.version + "." + info.build;
+        appVersionNo.value = current_version;
+      } else if (store.getDeviceType() == "IOS") {
+        appVersionNo.value = "iOS v0.6";
+      } else {
+      }
+    };
+    const isLoadingBalance = ref(false);
+
+    const selfTgurl = ref("https://" + store.evip);
+
+    onMounted(() => {
+      getBalance();
+      store.getBalance();
+      // store.getUnreadTotal();
+      getVersionNo();
+      getPromoImage();
+      if (store.isApp()) {
+        var btmSwiper = document.getElementById("id-acct-menu");
+        btmSwiper.classList.add("shorter-menu");
+      }
+    });
+
+    const imgURL = process.env.IMAGE_CDN + "/promo/";
+    const btm_banners = ref([]);
+    const getPromoImage = () => {
+      api
+        .get("/promo/banner?category=CENTERPROMO")
+        .then((res) => {
+          if (res.code === 0) {
+            btm_banners.value = res.data;
+            if (btm_banners.value.length === 1) {
+              btm_banners.value.push(res.data[0]);
+            }
+          }
+        })
+        .catch(() => {});
+    };
+    const gotoPromo = (banner) => {
+      const redirectU = "/promo?name=" + banner.redirectUrl;
+      router.push(`${redirectU}`);
+    };
+
+    onBeforeUnmount(() => {
+      clearInterval(timerBalance.value);
+    });
+    const openDeposit = () => {
+      // to="finance/deposit"
+      localStorage.setItem("isOpenFromAccount", JSON.stringify(true));
+      router.push("finance/deposit");
+    };
+    const openWithdraw = () => {
+      router.push("finance/withdraw");
+    };
+    const openTransfer = () => {
+      router.push("account/transfer");
+    };
+    const getBalance = () => {
+      isLoadingBalance.value = true;
+      store.getBalance().then(() => {
+        isLoadingBalance.value = false;
+      });
+      timerBalance.value = setInterval(function () {
+        if (store.hasToken()) {
+          store.getBalance();
+        }
+      }, 20000);
+    };
+    return {
+      header: "Account",
+      logout,
+      mainWallet,
+      getBalance,
+      vipLevel,
+      store,
+      openDeposit,
+      openWithdraw,
+      openTransfer,
+      appVersionNo,
+      isLoadingBalance,
+      selfTgurl,
+      vip_progress,
+      goToVip,
+      btm_banners,
+      imgURL,
+      gotoPromo,
+      slide: ref(0),
+      isLogoutModal
+    };
+  }
+});
+</script>
+<style scoped lang="scss">
+.profile {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 15px;
+  gap: 10px;
+  width: 100%;
+
+  .left {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    padding-right: 10px;
+    width: 100%;
+  }
+
+  .avatar {
+    width: 60px;
+    max-width: 60px;
+    min-width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 100%;
+    }
+
+    flex: 1;
+  }
+
+  .pro-details {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 6px;
+
+    .nickname-span {
+      color: $dark;
+      font-size: 1.15rem;
+      line-height: 1.15rem;
+      font-weight: 700;
+      word-break: break-all;
+    }
+
+    .join-span {
+      font-size: 0.9rem;
+      line-height: 0.9rem;
+      color: $font-1;
+    }
+  }
+
+  .livechat {
+    background: #0089ed;
+    color: #ffffff;
+    border-radius: 50px;
+    cursor: pointer;
+    padding: 5px 15px;
+    font-size: 16px;
+    width: auto;
+    white-space: nowrap;
+    margin-top: 6px;
+    text-decoration: none;
+  }
+}
+
+.vipcard {
+  margin: 10px auto 16px;
+  border-radius: 15px;
+  width: $box-width;
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
+  background: #f5f5f5;
+
+  .q-card__section--vert {
+    padding: 0;
+  }
+
+  .btn-main {
+    background-image: url("../assets/images/account/account-btn.png");
+    background-size: 100% 100%;
+    color: #fff;
+    width: 60px;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 1rem;
+    aspect-ratio: 122/68;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 30px;
+  }
+
+  .top-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-image: url("../assets/images/account/account-bg.png");
+    background-size: 100% 100%;
+
+    align-items: center;
+    padding: 15px;
+  }
+
+  .acct-section {
+    display: flex;
+    text-align: left;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    width: 100%;
+    color: $grey-color;
+    margin-bottom: 12px;
+
+    > div {
+      flex: 1;
+    }
+
+    .left-sect {
+      flex-wrap: nowrap;
+
+      .label {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding-top: 0px;
+        gap: 8px;
+
+        span {
+          font-size: 1.3rem;
+          line-height: 1.3rem;
+        }
+
+        img {
+          display: block;
+          width: 18px;
+          margin-bottom: 3px;
+        }
+      }
+    }
+
+    .right-sect {
+      display: flex;
+      justify-content: space-between;
+      max-width: 220px;
+      gap: 20px;
+
+      a {
+        font-size: 16px;
+        display: block;
+        //color: #0089ed;
+        color: #fff;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .amt {
+    color: $white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: calc(100% - 25px);
+    margin-left: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    img {
+      height: 1.2rem;
+    }
+  }
+
+  .acct-btm-section {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+
+    .vip-info-div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+
+      .vip-left {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 13px;
+        color: $grey-color;
+        font-size: 1.2rem;
+
+        .vip-level {
+          background-image: url("../assets/images/account/account-vip-tab.png");
+          width: 90px;
+          aspect-ratio: 168/45;
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
+          text-align: center;
+          color: $white;
+          font-size: 1.2rem;
+          font-style: italic;
+          padding-left: 28px;
+          padding-right: 10px;
+        }
+      }
+
+      .vip-right {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+
+        color: $grey-color;
+        font-size: 1.2rem;
+
+        img {
+          width: 10px;
+        }
+      }
+    }
+
+    .eshare-div {
+      margin-right: auto;
+      width: 100%;
+      color: $grey-color;
+      font-size: 1.2rem;
+
+      > span {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 14px;
+      }
+
+      .copy-btn {
+        width: 20px;
+      }
+
+      .share-link {
+        color: $white;
+        text-decoration: none;
+      }
+    }
+  }
+
+  //.bluecard {
+  //  width: 98%;
+  //  margin: 0 0px !important;
+  //  background: url(../assets/images/common/bgheader.png) no-repeat top right;
+  //  padding: 20px 15px;
+  //  background-size: 100% 100%;
+  //  display: flex;
+  //  flex-direction: column;
+  //  gap: 15px;
+  //
+  //  .vipline {
+  //    display: flex;
+  //    justify-content: space-between;
+  //    align-items: flex-start;
+  //    gap: 5px;
+  //
+  //    .middle {
+  //      color: #fff;
+  //      flex: 6;
+  //    }
+  //
+  //    .circle {
+  //      border: 1px solid #ffffff;
+  //      border-radius: 50%;
+  //      width: 40px;
+  //      height: 40px;
+  //      display: flex;
+  //      justify-content: center;
+  //      align-items: center;
+  //      color: #ffffff;
+  //      background: linear-gradient(180deg, #aad6ff, #0075e1);
+  //
+  //      .bigV {
+  //        font-weight: 700;
+  //        font-size: 25px;
+  //        line-height: 13px;
+  //      }
+  //
+  //      .small {
+  //        font-size: 13px;
+  //        line-height: 13px;
+  //      }
+  //    }
+  //  }
+  //}
+}
+
+.acct-nav {
+  width: $box-width;
+  margin: 10px auto;
+  padding: 0px;
+  gap: 0px;
+
+  a {
+    padding: 5px;
+    display: block;
+  }
+
+  .acct-title {
+    display: flex;
+    padding: 8px 4px;
+    margin-top: 4px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    color: $font-2;
+    background-color: $lightblue;
+    position: relative;
+    border-radius: 20px 20px 0px 0px;
+
+    &:before {
+      width: 4px;
+      content: "";
+      display: block;
+
+      background: $primary;
+      height: 60%;
+      position: absolute;
+      top: 20%;
+      bottom: 20%;
+      left: 2px;
+    }
+
+    .acct-title-1 {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: bold;
+      padding-left: 10px;
+      font-size: 1.5rem;
+    }
+  }
+
+  .acct-menu {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: 30px;
+    gap: 20px;
+    row-gap: 20px;
+    height: auto;
+    margin-bottom: 10px;
+    background-color: $white;
+    border-radius: 0px 0px 20px 20px;
+    padding: 10px 0px 20px;
+    box-shadow: 0px -4px 4px 0px #c3d4e6 inset;
+
+    &.shorter-menu {
+      grid-template-rows: repeat(2, 1fr);
+    }
+
+    a {
+      text-decoration: none;
+      height: 80px;
+      display: block;
+
+      .acct-nav-item {
+        font-size: 1rem;
+        gap: 5px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        text-decoration: none;
+        padding: 6px;
+        border-radius: 4px;
+
+        .acct-nav-label {
+          white-space: nowrap;
+          color: $font-1;
+        }
+
+        img {
+          height: 42px;
+          fill: white;
+          padding: 0;
+        }
+
+        &:active {
+          background: rgba(0, 0, 0, 0.2);
+          filter: brightness(0.9);
+        }
+      }
+    }
+  }
+}
+
+.acct-logout {
+  padding: 12px;
+  box-shadow: 0px -2px 8px 0px #c3d4e6 inset;
+  text-align: center;
+  font-size: 1.2rem;
+  background: $white;
+  color: $font-1;
+  border-radius: 20px;
+  line-height: 15px;
+  width: $box-width;
+  letter-spacing: 1px;
+  margin: 14px auto 40px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  img {
+    width: 25px;
+  }
+}
+
+.vip-badge {
+  position: absolute;
+  left: 10px;
+  top: -40px;
+}
+
+.card-account-banner {
+  margin: 10px 10px 0px;
+  border-radius: 10px 10px 0px 0px;
+
+  .account-banner-img {
+    width: 100%;
+    border-radius: 10px 10px 0px 0px;
+  }
+}
+
+#personal_vip_img {
+  height: 14px;
+}
+
+@media (max-width: 430px) {
+  .acct-nav {
+    .acct-menu {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .vipcard .acct-section {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .vipcard .acct-section .right-sect {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 350px) {
+  .acct-nav {
+    .acct-menu {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+</style>

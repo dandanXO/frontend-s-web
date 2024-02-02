@@ -1,0 +1,71 @@
+.platform-menu-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+
+  .platform-menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    transition: 0.3s all;
+    cursor: pointer;
+
+    &:hover {
+      background: linear-gradient(180deg, #73b2ff1e 0%, #3982ff23 100%);
+      .platform-menu-btn a {
+        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+        color: $color-white;
+      }
+    }
+
+    .platform-menu-title {
+      padding-top: 20px;
+      word-break: keep-all;
+      font-size: 2rem;
+      font-weight: 600;
+      color: #62a1ff;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 2px #96def0;
+    }
+
+    .platform-menu-caption {
+      font-size: 20px;
+      color: $accent;
+    }
+
+    .platform-menu-img {
+      height: 200px;
+      margin-top: 20px;
+      img {
+        display: block;
+        height: 100%;
+        width: auto;
+        transform: scale(1.2);
+      }
+    }
+
+    .platform-menu-btn {
+      margin-top: 5px;
+      padding-bottom: 10px;
+      a {
+        display: flex;
+        min-width: 70px;
+        height: 32px;
+        padding: 6px 26px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 2rem;
+        background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
+        box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
+        cursor: pointer;
+        transition: 0.3s all;
+
+        &:hover {
+          background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+          color: $color-white;
+        }
+      }
+    }
+  }
+}

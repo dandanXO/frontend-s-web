@@ -1347,3 +1347,8 @@ a {
   }
 }
 </style>
+<style lang="scss">
+.dialog400 {
+  width: 100%;
+}
+</style>

@@ -218,6 +218,7 @@ const request = reactive({
 
 function resetQuery() {
   request.recordTime = [defaultStartDate, defaultEndDate]
+  page.pagingState = null
 }
 
 const page = reactive({

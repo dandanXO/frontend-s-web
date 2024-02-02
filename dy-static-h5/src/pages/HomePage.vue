@@ -163,7 +163,7 @@
           <div class="notice">
             <img src="../assets/index/home-announce-icon.png" width="18px" />
           </div>
-          <marquee-text :repeat="5" :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 3 : 70">
+          <marquee-text :repeat="5" :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 4 : 70">
             <div v-if="announcementList">
               <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
                 {{ a.content }}
