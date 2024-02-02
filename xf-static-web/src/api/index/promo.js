@@ -1,7 +1,9 @@
 import { server } from "@/utils/request";
 
-export function loadPromo() {
-  return server.REST.get("/promo/page");
+export function loadPromo(isLogin = false) {
+  const platformApiUrl = isLogin ? "/session/loggedInPromoPages" : "/promo/page";
+
+  return server.REST.get(platformApiUrl);
 }
 
 export function loadPromoBanner(category) {
