@@ -8,6 +8,16 @@ import { ElMessageBox } from "element-plus";
 
 const routes = [
     {
+        path: "/login",
+        name: "login",
+        component: () => import(/* webpackChunkName: "Login" */ "../views/LoginView.vue"),
+    },
+    {
+        path: "/register",
+        name: "register",
+        component: () => import(/* webpackChunkName: "Login" */ "../views/RegisterView.vue"),
+    },
+    {
         path: "/",
         name: "home",
         component: LayoutView,
