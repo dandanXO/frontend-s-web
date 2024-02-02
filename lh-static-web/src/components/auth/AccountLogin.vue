@@ -3,14 +3,14 @@
         <div class="light-bg form-field">
             <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
             <el-form-item label="用户名" prop="loginName">
-                <el-input v-model="loginForm.loginName" placeholder="请输入6-11位非汉字字符" />
+                <el-input v-model="loginForm.loginName" placeholder="输入用户名" />
             </el-form-item>
         </div>
 
         <div class="light-bg form-field">
             <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
             <el-form-item label="密码" prop="password">
-                <el-input v-model="loginForm.password" placeholder="请输入6-11位字母/数字组合" type="password" show-password />
+                <el-input v-model="loginForm.password" placeholder="输入密码" type="password" show-password />
             </el-form-item>
         </div>
 
@@ -18,7 +18,7 @@
             <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
             <el-form-item label="验证码" prop="captchaCode">
                 <div style="display:flex;width:100%;">
-                    <el-input v-model="loginForm.captchaCode" label="验证码" placeholder="请输入验证码" @keyup.enter="submitLogin">
+                    <el-input v-model="loginForm.captchaCode" label="验证码" placeholder="验证码" @keyup.enter="submitLogin">
                     </el-input>
                     <img style="width:100&;border-radius:100px;" :src="verificationImg" @click="getCode" />
                 </div>
