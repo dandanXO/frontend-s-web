@@ -692,6 +692,7 @@ export default {
     downlineMember: '直属会员',
     downlineProfit: '下级盈利',
     downloadTemplate: '下载模板',
+    draw: '平局',
     edit: '编辑',
     editAds: '编辑弹窗广告',
     editAdjustmentReason: '编辑平账原因',

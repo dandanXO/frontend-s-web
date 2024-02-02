@@ -687,6 +687,7 @@ export default {
     downlineMember: 'Downline Member',
     downlineProfit: 'Downline Profit',
     downloadTemplate: 'Download Template',
+    draw: 'Draw',
     edit: 'Edit',
     editAds: 'Edit Ads Popout',
     editAdjustmentReason: 'Edit Adjustment Reason',
