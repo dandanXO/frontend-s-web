@@ -423,26 +423,4 @@ onMounted(() => {
 }
 </style>
 
-<style lang="scss">
-.hongbaoyu-modal {
-  .el-dialog__header .el-dialog__headerbtn {
-    display: none !important;
-  }
-}
-
-.banner-container {
-  min-height: 0 !important;
-
-  .promo-bg {
-    &.isDesktop {
-      display: none !important;
-      height: 0px !important;
-    }
-
-    &.isMobile {
-      display: none !important;
-      height: 0px !important;
-    }
-  }
-}
-</style>
+<style lang="scss"></style>
