@@ -592,6 +592,28 @@ export default defineComponent({
         background-repeat: no-repeat;
         background-position: top center;
         background-color: #a1211d;
+
+        .hongbaoyu-modal {
+          .el-dialog__header .el-dialog__headerbtn {
+            display: none !important;
+          }
+        }
+
+        .banner-container {
+          min-height: 0 !important;
+
+          .promo-bg {
+            &.isDesktop {
+              display: none !important;
+              height: 0px !important;
+            }
+
+            &.isMobile {
+              display: none !important;
+              height: 0px !important;
+            }
+          }
+        }
       }
 
       .banner-container {
@@ -756,23 +778,23 @@ export default defineComponent({
       }
     }
 
-    .selected-promo {
-      overflow: hidden;
-
-      .selected-promo-wrapper {
-        .banner-container {
-          .promo-bg {
-            &.isDesktop {
-              display: none;
-            }
-
-            &.isMobile {
-              display: block;
-            }
-          }
-        }
-      }
-    }
+    //.selected-promo {
+    //  overflow: hidden;
+    //
+    //  .selected-promo-wrapper {
+    //    .banner-container {
+    //      .promo-bg {
+    //        &.isDesktop {
+    //          display: none;
+    //        }
+    //
+    //        &.isMobile {
+    //          display: block;
+    //        }
+    //      }
+    //    }
+    //  }
+    //}
   }
 }
 </style>
