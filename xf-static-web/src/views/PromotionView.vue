@@ -229,7 +229,7 @@ export default defineComponent({
       }
     };
     const loadAll = () => {
-      const isLogin = !!store.hasToken();
+      const isLogin = !!store.token;
       loadPromo(isLogin).then((res) => {
         if (res.code === 0) {
           promoState.promoList.push(...res.data);
