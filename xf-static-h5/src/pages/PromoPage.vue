@@ -1,18 +1,10 @@
 <template>
-
-  <q-card-section class="page-title">
-    优惠活动
-  </q-card-section>
+  <q-card-section class="page-title">优惠活动</q-card-section>
 
   <div class="promo-container" style="background: #090b19">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
-        <q-tab
-          v-for="(tab, i) in tabItems"
-          :key="i"
-          :name="tab.name"
-          :label="tab.label"
-        />
+        <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
       </q-tabs>
 
       <q-tab-panels v-model="tab" animated>
@@ -46,10 +38,7 @@
                       </div>
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
-                          <img
-                            class="promo-content"
-                            :src="imgURL + promo.mobileImgUrl"
-                          />
+                          <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
                       <div class="pad-label label-new">最新活动</div>
@@ -66,10 +55,7 @@
                       </div>
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
-                          <img
-                            class="promo-content"
-                            :src="imgURL + promo.mobileImgUrl"
-                          />
+                          <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
                       <div class="pad-label label-new">最新活动</div>
@@ -80,38 +66,28 @@
             </div>
           </div>
           <div v-else class="selected-promo">
-            <div class="selected-promo-wrapper">
-              <div class="banner-container">
-                <!-- <div
-                    class="promo-bg"
-                    :style="
-                    'background-image: url(' +
-                    imgURL +
-                    (selectedPromo.mobileBannerUrl ? selectedPromo.mobileBannerUrl : selectedPromo.mobileImgUrl) +
-                    ')'
-                  "
-                ></div> -->
-                <!-- <div class="promo-bg"> -->
+            <div class="selected-promo-wrapper" :class="`bg__${selectedPromo.promoCode}`">
+              <div class="banner-container"
+                v-if="!isSpecialPromo"
+              >
                 <img
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
                   style="display: block; width: 100%"
                 />
-                <!-- </div> -->
               </div>
-              <div class="inner">
+              <div class="inner"
+                :class="isSpecialPromo ? 'special-promo' : ''">
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
                   :class="{
-                    welcome:
-                      selectedPromo.promoType.toLowerCase() === 'welcome',
+                    welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
                     eSport: selectedPromo.promoType.toLowerCase() === 'esport',
                     fish: selectedPromo.promoType.toLowerCase() === 'fish',
-                    liveCasino:
-                      selectedPromo.promoType.toLowerCase() === 'live casino',
+                    liveCasino: selectedPromo.promoType.toLowerCase() === 'live casino',
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
@@ -126,10 +102,7 @@
   </div>
 
   <q-dialog width="100%" v-model="isDisplayLogin">
-    <q-card
-      style="width: 100%; padding: 20px"
-      class="bg-white text-black text-center"
-    >
+    <q-card style="width: 100%; padding: 20px" class="bg-white text-black text-center">
       <q-card-section class="q-mb-md">
         <strong>系统提示</strong>
         <br />
@@ -185,6 +158,7 @@ export default defineComponent({
     const $q = useQuasar();
     const ui = useUI();
     const isDisplayLogin = ref(false);
+    const isSpecialPromo= ref(false);
 
     const tab = ref("all");
     const tabItems = [
@@ -221,7 +195,7 @@ export default defineComponent({
       if (route.query === null) {
         isPromoDetail.value = false
       } else {
-        isPromoDetail.value = route.query.name
+        isPromoDetail.value = route.query.name;
         ui.setScrollPosition("vertical", 0, 200);
       }
     });
@@ -249,6 +223,13 @@ export default defineComponent({
           })
     }
     const showPromoDetails = (promo) => {
+      if (promo.promoCode === "cny-hongbaoyu" || promo.promoCode === "cny-spinwheel") {
+        isSpecialPromo.value = true
+      } else {
+        isSpecialPromo.value = false
+      }
+
+
       if (!store.token) {
         isDisplayLogin.value = true
       } else {
@@ -317,6 +298,7 @@ export default defineComponent({
       isPromoDetail,
       showPromoDetails,
       selectedPromo,
+      isSpecialPromo,
       banner,
       imgURL,
       store,
@@ -608,6 +590,14 @@ export default defineComponent({
     width: 100%;
 
     .selected-promo-wrapper {
+      &.bg__cny-spinwheel {
+        background-image: url("../assets/images/promotion/hotpromo/cny-spinwheel/cny-spinwheel-bg.jpg");
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        background-position: top center;
+        background-color: #a1211d;
+      }
+
       .banner-container {
         width: 100%;
 
@@ -641,6 +631,11 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
 
+        &.special-promo {
+          width: 100%;
+          margin:0 auto;
+        }
+
         img {
           margin-bottom: 5px;
         }
@@ -663,8 +658,7 @@ export default defineComponent({
           th {
             padding: 5px;
             text-align: center;
-            background-image: linear-gradient(0deg, #07414c 0, #058096 100%),
-              linear-gradient(#d0d1d3, #d0d1d3);
+            background-image: linear-gradient(0deg, #07414c 0, #058096 100%), linear-gradient(#d0d1d3, #d0d1d3);
           }
 
           td {
@@ -768,8 +762,7 @@ export default defineComponent({
   }
 
   .q-tab--active .q-tab__indicator {
-    background: url("../assets/images/promotion/tab_bg.png") no-repeat center
-      center;
+    background: url("../assets/images/promotion/tab_bg.png") no-repeat center center;
     background-size: 20px 10px;
     width: 100%;
     height: 10px;
