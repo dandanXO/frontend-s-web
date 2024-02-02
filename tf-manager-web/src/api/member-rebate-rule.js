@@ -9,6 +9,10 @@ export const createMemberRebateRule = (rule) => {
   return https().request("/member-rebate-rule", Method.POST, rule, ContentType.form);
 };
 
+export const createMemberRebateRules = (rule) => {
+  return https().request("/member-rebate-rule/createAll", Method.POST, rule, ContentType.form);
+};
+
 export const updateMemberRebateRule = (rule) => {
   return https().request(`/member-rebate-rule/${rule.id}?_method=PUT`, Method.POST, rule, ContentType.form);
 };
