@@ -26,7 +26,7 @@
       </div>
 
       <div class="table-container">
-        <div class="table-date">2/9/~2/11</div>
+        <div class="table-date">活动日期</div>
 
         <table border="0">
           <thead>
@@ -134,7 +134,7 @@
       </div>
 
       <div class="table-container">
-        <div class="table-date">2/9/~2/11</div>
+        <!--        <div class="table-date">2/9/~2/11</div>-->
 
         <table border="0">
           <thead>
@@ -148,7 +148,7 @@
             <tr>
               <td>≥100</td>
               <td>28</td>
-              <td rowspan="6">1倍/不限制场馆</td>
+              <td rowspan="6">3倍/不限制场馆</td>
             </tr>
             <tr>
               <td>≥1,000</td>
