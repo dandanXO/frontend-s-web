@@ -297,7 +297,15 @@ function showEdit(memberRebateRule) {
 function create() {
   memberRebateRuleForm.value.validate(async (valid) => {
     if (valid) {
-      await createMemberRebateRule(form);
+      if (form.gameType === 'ALL') {
+        const gameType = gameTypes.list.slice(1);
+        gameType.forEach(async (g) => {
+          form.gameType = g;
+          await createMemberRebateRule(form);
+        })
+      } else {
+        await createMemberRebateRule(form);
+      }
       uiControl.dialogVisible = false;
       await loadMemberRebateRules();
       ElMessage({ message: t('message.addSuccess'), type: "success" });
@@ -359,8 +367,10 @@ async function loadSites() {
 }
 
 async function loadGameTypes() {
+  gameTypes.list = []
   const { data: ret } = await getGameTypes()
-  gameTypes.list = ret
+  gameTypes.list.push('ALL')
+  ret.forEach(r => gameTypes.list.push(r))
 }
 
 onMounted(async() => {
