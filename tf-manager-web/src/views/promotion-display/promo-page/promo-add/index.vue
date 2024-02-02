@@ -469,7 +469,7 @@ const form = reactive({
   sequence: 0,
   promoCode: null,
   pageContent: null,
-  status: true,
+  status: "0",
   createTime: null,
   createBy: null,
   hasPromo: false,
