@@ -17,6 +17,22 @@ export const liveCasinoPlatforms = [
     gameCode: ""
   },
   {
+    code: "BG",
+    cnname: "BG真人",
+    image: "",
+    message: "",
+    caption: "",
+    gameCode: ""
+  },
+  {
+    code: "Evo",
+    cnname: "EVO真人",
+    image: "",
+    message: "",
+    caption: "",
+    gameCode: ""
+  },
+  {
     code: "BBINDY",
     cnname: "BBIN真人",
     image: "bbin",
@@ -194,14 +210,22 @@ export const slotPlatforms = [
     caption: "",
     gameCode: ""
   },
-  // {
-  //   code: "BBIN",
-  //   cnname: "BBIN电子",
-  //   image: "bbin",
-  //   message: "拥有丰富的游戏类型及功能，提供多种玩法与电子游戏试玩，带给玩家惊艳的游戏体验，游戏总数近千款！",
-  //   caption: "",
-  //   gameCode: ""
-  // },
+  {
+    code: "BBINDY",
+    cnname: "BBIN电子",
+    image: "",
+    message: "",
+    caption: "",
+    gameCode: ""
+  },
+  {
+    code: "PINNACLE",
+    cnname: "平博电子",
+    image: "",
+    message: "",
+    caption: "",
+    gameCode: ""
+  }
   // {
   //   code: "CQ",
   //   cnname: "CQ电子",
@@ -260,14 +284,14 @@ export const pokerPlatforms = [
 
 // lottery
 export const lotteryPlatforms = [
-  // {
-  //   code: "BBIN",
-  //   cnname: "BBIN彩票",
-  //   image: "tcg",
-  //   message: "专注于彩票游戏行业多年，拥有经典彩种，超多独家创新玩法，让您在购买彩票的同时，享受游戏的快感。",
-  //   caption: "",
-  //   gameCode: "bbkeno_lobby_pc"
-  // },
+  {
+    code: "BBINDY",
+    cnname: "BBIN彩票",
+    image: "",
+    message: "",
+    caption: "",
+    gameCode: ""
+  },
   {
     code: "TCG",
     cnname: "TCG彩票",
@@ -289,5 +313,14 @@ export const fishingPlatforms = [
       "最受欢迎的GPS捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
     caption: "",
     gameCode: "7202"
+  },
+  {
+    code: "AG",
+    cnname: "AG捕鱼王",
+    image: "",
+    message:
+      "",
+    caption: "",
+    gameCode: ""
   }
 ];
