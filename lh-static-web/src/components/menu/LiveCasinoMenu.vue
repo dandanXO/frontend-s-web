@@ -16,13 +16,11 @@ import { liveCasinoPlatforms } from "@/shared/platformArray";
 const emits = defineEmits(["load-modal"]);
 const platformType = ref("live");
 const platformGameType = ref("LIVE");
-const openGame = (item) => {
-  console.log(item);
-  var gameCode= '';
-  if(item.code=='BBINDY'){
-    gameCode = 'bblive_lobby_pc'
+const openGame = (gameName, code) => {
+  var gameCode = null;
+  if (code == "BBINDY") {
+    gameCode = "bblive_lobby_pc";
   }
-
-  emits("load-modal", item.name, item.code, gameCode);
+  emits("load-modal", gameName, code, gameCode);
 };
 </script>

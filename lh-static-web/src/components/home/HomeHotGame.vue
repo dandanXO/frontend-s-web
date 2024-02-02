@@ -567,7 +567,8 @@ $transition_timer: 0.5s;
         display: flex;
 
         .hotgame-banner {
-          width:  65px;
+          width: 60px;
+          width: 65px;
           height: 36.5rem;
           display: flex;
           flex-direction: column;
@@ -654,7 +655,7 @@ $transition_timer: 0.5s;
         width: 0;
         height: 0;
         overflow: hidden;
-        background: #EDF8FE;
+        background: #edf8fe;
         transition: $transition_timer;
 
         &.show {

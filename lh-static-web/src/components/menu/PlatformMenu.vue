@@ -1,29 +1,27 @@
 <template>
   <div class="platform-menu-container">
     <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
-    <template v-for="(item, index) in platformsListDisplay" :key="index">
-<!--      <router-link :to="`${props.platformName}?plat=${item.code}`">-->
-        <div class="platform-menu-item"
-             @click="gotoGame(item)"
-        >
-          <div class="platform-menu-title" v-html="item.cnname" />
-          <div class="platform-menu-caption" v-if="item.caption" v-html="item.caption" />
-          <div class="platform-menu-img">
-            <img
-              :src="
-                require('../../assets/' +
-                  props.platformType +
-                  '/' +
-                  props.platformType +
-                  '-item-' +
-                  item.code.toLowerCase() +
-                  '.png')
-              "
-            />
-          </div>
-          <div class="platform-menu-btn"><a>进入场馆</a></div>
+    <template v-for="(item, index) in platformsListDisplay.slice(0, 5)" :key="index">
+      <!--      <router-link :to="`${props.platformName}?plat=${item.code}`">-->
+      <div class="platform-menu-item" @click="gotoGame(item)">
+        <div class="platform-menu-title" v-html="item.cnname" />
+        <div class="platform-menu-caption" v-if="item.caption" v-html="item.caption" />
+        <div class="platform-menu-img">
+          <img
+            :src="
+              require('../../assets/' +
+                props.platformType +
+                '/' +
+                props.platformType +
+                '-item-' +
+                item.code.toLowerCase() +
+                '.png')
+            "
+          />
         </div>
-<!--      </router-link>-->
+        <div class="platform-menu-btn"><a>进入场馆</a></div>
+      </div>
+      <!--      </router-link>-->
     </template>
   </div>
 </template>
@@ -52,11 +50,10 @@ const getPlatformList = () => {
       element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase())
     );
 
-    platformsListDisplay.value = platformsListDisplay.value.map(item1 => {
-      const matchingItem = props.platforms.find(item2 => item1.code === item2.code);
-      return { ...matchingItem, ...item1,  };
+    platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
+      const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
+      return { ...matchingItem, ...item1 };
     });
-
   });
 };
 
@@ -64,19 +61,17 @@ const filteredPlatforms = computed(() => {
   return props.platforms.filter((nav) => platformsListDisplay.value.some((platform) => platform.code === nav.code));
 });
 
-
-const router= useRouter();
+const router = useRouter();
 const gotoGame = (item) => {
   // debugger;
   console.log(item);
-  if(item.gameType==='SLOT' || item.gameType === 'FISH' || item.code==='AG'){
+  if (item.gameType === "SLOT" || item.code === "AG") {
     router.push(`${props.platformName}?plat=${item.code}`);
-  }else{
-
-    emits('load-game', item)
+  } else {
+    console.log(item);
+    emits("load-game", item.name, item.code);
     // emits("load-game", item);
   }
-
 };
 onMounted(() => {
   getPlatformList();
