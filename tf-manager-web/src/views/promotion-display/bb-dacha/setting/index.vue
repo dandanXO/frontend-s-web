@@ -240,7 +240,10 @@
                 :key="index"
                 :label="item"
                 size="small"
-              >{{ item }}</el-radio-button>
+              >
+                <span v-if="item === 'DRAW'">{{ t('fields.draw') }}</span>
+                <span v-else>{{ item }}</span>
+              </el-radio-button>
             </el-radio-group>
           </el-form-item>
         </el-row>
@@ -315,7 +318,8 @@
         </el-row>
         <el-row v-else>
           <el-form-item :label="t('fields.answer')" prop="answerOne">
-            <span>{{ viewForm.answerOne }}</span>
+            <span v-if="viewForm.answerOne === 'DRAW'">{{ t('fields.draw') }}</span>
+            <span v-else>{{ viewForm.answerOne }}</span>
           </el-form-item>
         </el-row>
         <el-row>
@@ -986,6 +990,7 @@ function resetQuery() {
 function addChoice() {
   choiceOne.value.push({ value: '' })
   choiceOne.value.push({ value: '' })
+  choiceOne.value.push({ value: 'DRAW' })
 }
 
 function constructChoice() {
