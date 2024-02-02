@@ -510,6 +510,13 @@
                 $ <span v-formatter="{data: memberDetail.withdrawableBalance,type: 'money'}" />
               </div>
             </div>
+          </el-descriptions-item>
+          <el-descriptions-item :label="t('fields.thirtyDaysdw')">
+            <div style="display: inline-block;" v-loading="loading.total">
+              <div class="balance">
+                $ <span v-formatter="{data: memberDetail.companyProfit,type: 'money'}" />
+              </div>
+            </div>
             <el-button class="refresh-btn" icon="el-icon-refresh" size="mini" @click="refreshAllBalance" />
           </el-descriptions-item>
         </el-descriptions>
@@ -980,6 +987,7 @@ export default defineComponent({
       regTime: "",
       balance: 0,
       withdrawableBalance: 0,
+      companyProfit: 0,
       totalDeposit: 0,
       totalWithdraw: 0,
       lastLoginTime: "",
@@ -1458,6 +1466,7 @@ export default defineComponent({
       const { data: balance } = await refreshBalance(props.mbrId, site.id);
       memberDetail.balance = balance.balance;
       memberDetail.withdrawableBalance = balance.withdrawableBalance;
+      memberDetail.companyProfit = balance.companyProfit;
       memberDetail.totalDeposit = balance.totalDeposit;
       memberDetail.totalWithdraw = balance.totalWithdraw;
       memberDetail.totalBonus = balance.totalBonus;

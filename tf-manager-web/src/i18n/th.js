@@ -946,6 +946,7 @@ export default {
     teamNameEn: 'ชื่อทีม ภาษาอังกฤษ',
     teamNameLocal: 'ชื่อทีมท้องถิ่น',
     telephone: 'โทรศัพท์',
+    thirtyDaysdw: 'Thirty Days deposit - withdraw',
     thirdParty: 'บุคคลที่สาม',
     thirdPartyName: 'ชื่อบุคคลที่สาม',
     thirdPartyTotalBet: 'การเดิมพันทั้งหมดในเกมของบุคคลที่สาม',

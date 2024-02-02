@@ -1207,6 +1207,7 @@ export default {
     teamTwo: 'Team Two',
     teamTwoIcon: 'Team Two Icon',
     telephone: 'Telephone',
+    thirtyDaysdw: 'Thirty Days deposit - withdraw',
     thirdParty: 'Third Party',
     thirdPartyName: 'Third Party Name',
     thirdPartyTotalBet: 'Third Party Total Bet',
