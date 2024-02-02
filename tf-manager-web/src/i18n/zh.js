@@ -244,6 +244,7 @@ export default {
     gameWinLossTotal: '总输/赢金额',
   },
   gameType: {
+    ALL: '全部',
     SLOT: '电子',
     LIVE: '真人',
     FISH: '捕鱼',

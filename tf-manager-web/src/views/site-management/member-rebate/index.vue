@@ -97,13 +97,12 @@
             :placeholder="t('fields.pleaseChoose')"
             style="width: 350px"
             filterable
-            @focus="loadGameTypes"
           >
             <el-option
-              v-for="item in gameTypes.list"
-              :key="item"
-              :label="item"
-              :value="item"
+              v-for="item in uiControl.gameTypes"
+              :key="item.key"
+              :label="t('gameType.' + item.displayName)"
+              :value="item.value"
             />
           </el-select>
           <el-input v-if="uiControl.dialogType === 'EDIT'" v-model="form.gameType" class="filter-item" style="width: 350px" disabled />
@@ -180,7 +179,6 @@ import { required } from "../../../utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { createMemberRebateRule, updateMemberRebateRule, getMemberRebateRule, deleteMemberRebateRule, createMemberRebateRules } from "../../../api/member-rebate-rule";
 import { getSiteListSimple } from "../../../api/site";
-import { getGameTypes } from '../../../api/game'
 import { useStore } from '../../../store';
 import { TENANT } from "../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
@@ -195,13 +193,18 @@ const uiControl = reactive({
   dialogTitle: "",
   dialogType: "CREATE",
   editBtn: true,
-  removeBtn: true
+  removeBtn: true,
+  gameTypes: [
+    { key: 0, displayName: 'ALL', value: 'ALL' },
+    { key: 1, displayName: 'SLOT', value: 'SLOT' },
+    { key: 2, displayName: 'LIVE', value: 'LIVE' },
+    { key: 3, displayName: 'SPORT', value: 'SPORT' },
+    { key: 4, displayName: 'ESPORT', value: 'ESPORT' },
+    { key: 5, displayName: 'POKER', value: 'POKER' }
+  ]
 });
 const siteList = reactive({
   list: [],
-});
-const gameTypes = reactive({
-  list: []
 });
 const page = reactive({
   pages: 0,
@@ -219,7 +222,8 @@ const form = reactive({
   loginName: null,
   gameType: null,
   rebatePercentage: null,
-  maxRebate: null
+  maxRebate: null,
+  gameTypes: null
 });
 
 const formRules = reactive({
@@ -298,7 +302,8 @@ function create() {
   memberRebateRuleForm.value.validate(async (valid) => {
     if (valid) {
       if (form.gameType === 'ALL') {
-        form.gameTypes = gameTypes.list.slice(1);
+        form.gameTypes = []
+        uiControl.gameTypes.slice(1).forEach(g => form.gameTypes.push(g.value))
         await createMemberRebateRules(form);
       } else {
         await createMemberRebateRule(form);
@@ -363,13 +368,6 @@ async function loadSites() {
   siteList.list = site;
 }
 
-async function loadGameTypes() {
-  gameTypes.list = []
-  const { data: ret } = await getGameTypes()
-  gameTypes.list.push('ALL')
-  ret.forEach(r => gameTypes.list.push(r))
-}
-
 onMounted(async() => {
   await loadSites();
   if (LOGIN_USER_TYPE.value === TENANT.value) {
@@ -379,7 +377,6 @@ onMounted(async() => {
     request.siteId = siteList.list[0].id;
   }
   await loadMemberRebateRules();
-  await loadGameTypes();
 });
 
 </script>
