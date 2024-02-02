@@ -1213,6 +1213,7 @@ export default {
     teamTwo: '团队二',
     teamTwoIcon: '团队二图标',
     telephone: '电话号码',
+    thirtyDaysdw: '30天存-提',
     thirdParty: '第三方',
     thirdPartyName: '第三方名称',
     thirdPartyTotalBet: '第三方游戏总投注',
