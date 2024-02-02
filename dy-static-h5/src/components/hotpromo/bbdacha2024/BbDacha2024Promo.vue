@@ -210,8 +210,9 @@
       </div>
 
       <div class="promo-records-count">
-        <div>竞猜正确次数: {{ recordsCount.wonTimes }}</div>
-        <div>累计竞猜正确次数: {{ recordsCount.attendTimes }}</div>
+        <div>总竞猜次数: {{ recordsCount.attendTimes }}</div>
+        <div>总竞猜正确次数: {{ recordsCount.wonTimes }}</div>
+        <div>今日正确次数: {{ recordsCount.todayWonTimes }}</div>
       </div>
 
       <table class="promo-table" cellspacing="0" cellpading="0">
