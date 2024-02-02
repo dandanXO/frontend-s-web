@@ -284,8 +284,7 @@ const closeDialog = () => {
   }
 }
 const open = (gameName, platformCode, gameCode, gameType) => {
-  //
-  // AppFullscreen.request()
+  transferInfo.value.platform = platformCode;
 
   localStorage.removeItem("isOpenFromAccount");
   localStorage.removeItem("isBacked");

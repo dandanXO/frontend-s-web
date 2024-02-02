@@ -1762,9 +1762,9 @@ body {
       margin: 0 auto;
       width: 100%;
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-between;
       align-items: center;
-      gap: 30px;
+      gap: 15px;
 
       &.logged-in-nav {
         max-width: 1420px;
@@ -1800,6 +1800,7 @@ body {
         // padding: 0px 16px;
         gap: 16px;
         text-align: center;
+        padding: 0px 15px;
 
         &.second-nav {
           margin-left: auto;
@@ -1830,7 +1831,7 @@ body {
           span:first-child {
             color: #000000;
             font-size: 1rem;
-            height: 40px;
+            height: 30px;
             display: flex;
             justify-content: center;
             align-items: center;

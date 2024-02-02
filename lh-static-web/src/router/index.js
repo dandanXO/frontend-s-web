@@ -130,6 +130,15 @@ const routes = [
 
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
+    scrollBehavior(to, from, savedPosition) {
+        // console.log(to);
+        // console.log(savedPosition);
+        if (savedPosition && savedPosition.top) {
+            return { left: 0, top: savedPosition.top };
+        } else if (to.path !== "/game") {
+            return { left: 0, top: 0 };
+        }
+    },
     routes
 });
 

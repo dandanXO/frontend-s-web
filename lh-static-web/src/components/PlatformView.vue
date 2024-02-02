@@ -14,6 +14,7 @@
 
           <div class="platform-item">
             <div class="platform-title-wrap" data-aos="fade-left" data-aos-delay="100">
+<!--              <pre>{{item}}</pre>-->
               <div class="platform-title">{{ item.cnname ?? item.name}}</div>
               <div class="platform-subtitle">{{ platformName }}</div>
             </div>
@@ -227,14 +228,17 @@ const getPlatList = () => {
   getFn().then((res) => {
     platformsList.value = res;
 
-    console.log(platformsList.value);
+    // console.log(platformsList.value);
 
     platformsListDisplay.value = platformsList.value.filter((element) =>
       element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase())
     );
 
-    platformsListDisplay.value = props.platforms.map(item1 => {
-      const matchingItem = platformsList.value.find(item2 => item1.code === item2.code);
+    console.log("Platform");
+    console.log(platformsListDisplay.value);
+
+    platformsListDisplay.value = platformsListDisplay.value.map(item1 => {
+      const matchingItem = props.platforms.find(item2 => item1.code === item2.code);
       return { ...matchingItem, ...item1 };
     });
 
@@ -249,6 +253,15 @@ const setFilteredPlatforms = () => {
   filteredPlatforms.value = props.platforms.filter((displayPlatform) =>
     platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
   );
+
+  filteredPlatforms.value = filteredPlatforms.value.map(item1 => {
+    const matchingItem = props.platforms.find(item2 => item1.code === item2.code);
+    return { ...matchingItem, ...item1 };
+  });
+
+  console.log("Filter plat")
+  console.log(filteredPlatforms.value);
+  console.log(platformsListDisplay.value)
 
   filteredPlatforms.value.forEach((element) => {
     if (element.code === route.query.plat) {
@@ -294,11 +307,15 @@ const switchPlat = (plat) => {
 };
 
 const getPlatGameList = () => {
-  console.log("JHERe")
   if(props.platformGameType === "SLOT" ||props.platformGameType === "FISH") {
     getPlatformList()
       .then((data) => {
         platformsListDisplay.value = data.filter((element) => element.gameType.includes(props.platformGameType));
+        platformsListDisplay.value = platformsListDisplay.value.map(item1 => {
+          const matchingItem = props.platforms.find(item2 => item1.code === item2.code);
+          return { ...matchingItem, ...item1 };
+        });
+
         if (!route.query.plat) {
           switchPlat(platformsListDisplay.value[0]);
         } else {

@@ -702,6 +702,11 @@ grid-template-rows: 50px;
       color: #ffffff;
       border: 0;
     }
+
+    .el-select__wrapper{
+      width: 350px;
+    }
+
   }
 }
 </style>

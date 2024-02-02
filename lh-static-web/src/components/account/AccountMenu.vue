@@ -83,12 +83,12 @@ const menuItems = ref([
   // { route: "/center/withdraw", label: "快速提款", icon: "transitrecord" },
   // { route: "/center/transfer", label: "快速转账", icon: "transitrecord" },
   { route: "/center/transit-record", label: "交易记录", icon: "transitrecord" },
-  { route: "/center/bet-record", label: "投注记录", icon: "betrecord" },
+  // { route: "/center/transit-record?type=6", label: "投注记录", icon: "betrecord" },
   { route: "/center/personal", label: "个人资料", icon: "personal" },
   // { route: "/center/withdrawbank", label: "银行卡管理", icon: "transitrecord" },
   { route: "/center/mailbox", label: "消息中心", icon: "inbox" },
-  { route: "/center/vip", label: "VIP特权", icon: "vip" },
-  { route: "/center/promo", label: "优惠领取", icon: "promo" },
+  { route: "/vip", label: "VIP特权", icon: "vip" },
+  // { route: "/center/promo", label: "优惠领取", icon: "promo" },
   { route: "/center/feedback", label: "会员建议", icon: "feedback" }
   // { route: "/center/share", label: "分享好友", icon: "transitrecord" }
 ]);

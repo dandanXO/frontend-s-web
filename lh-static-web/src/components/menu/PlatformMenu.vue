@@ -52,8 +52,8 @@ const getPlatformList = () => {
       element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase())
     );
 
-    platformsListDisplay.value = props.platforms.map(item1 => {
-      const matchingItem = platformsList.value.find(item2 => item1.code === item2.code);
+    platformsListDisplay.value = platformsListDisplay.value.map(item1 => {
+      const matchingItem = props.platforms.find(item2 => item1.code === item2.code);
       return { ...matchingItem, ...item1,  };
     });
 

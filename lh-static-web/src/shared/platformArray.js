@@ -17,6 +17,14 @@ export const liveCasinoPlatforms = [
     gameCode: ""
   },
   {
+    code: "BBINDY",
+    cnname: "BBIN真人",
+    image: "bbin",
+    message: "全球首创6张牌先发、VIP包桌、咪牌百家乐、智控模式百家乐及竞咪互动百家乐等游戏，多终端兼容，让您享受不停。",
+    caption: "",
+    gameCode: ""
+  },
+  {
     code: "BBIN",
     cnname: "BBIN真人",
     image: "bbin",
@@ -37,6 +45,14 @@ export const liveCasinoPlatforms = [
     code: "EBET",
     cnname: "EBET真人",
     image: "ebet",
+    message: "全球首创6张牌先发、VIP包桌、咪牌百家乐、智控模式百家乐及竞咪互动百家乐等游戏，多终端兼容，让您享受不停。",
+    caption: "",
+    gameCode: ""
+  },
+  {
+    code: "WE",
+    cnname: "WE真人",
+    image: "we",
     message: "全球首创6张牌先发、VIP包桌、咪牌百家乐、智控模式百家乐及竞咪互动百家乐等游戏，多终端兼容，让您享受不停。",
     caption: "",
     gameCode: ""
@@ -64,7 +80,7 @@ export const sportsPlatforms = [
   },
   {
     code: "SABA",
-    cnname: "SABA体育",
+    cnname: "沙巴体育",
     image: "saba",
     message: "最专业的盘口趋势分析，及时掌握最全面的热点赛事、体育资讯，多种投注型，让您乐享其中。",
     caption: "专业品牌，尽享满贯",
@@ -100,6 +116,14 @@ export const eSportsPlatforms = [
     gameCode: ""
   },
   {
+    code: "IMES",
+    cnname: "IM电竞",
+    image: "im",
+    message: "一款关于电竞游戏直播平台，这里提供了丰富的赛事信息，覆盖了众多热门游戏，游戏爱好者的首选投注平台。",
+    caption: "亚洲先驱 实时滚球",
+    gameCode: ""
+  },
+  {
     code: "RG",
     cnname: "RG电竞",
     image: "rg",
@@ -115,7 +139,16 @@ export const eSportsPlatforms = [
       "最新颖的电子竞技玩法,走在前沿的电子竞技赛事盘口，英雄联盟、刀塔、反恐、星际等多样竞技赛事,享受电子竞技的快感。",
     caption: "亚洲先驱 实时滚球",
     gameCode: ""
-  }
+  },
+  // {
+  //   code: "AI",
+  //   cnname: "小艾电竞",
+  //   image: "ai",
+  //   message:
+  //     "最新颖的电子竞技玩法,走在前沿的电子竞技赛事盘口，英雄联盟、刀塔、反恐、星际等多样竞技赛事,享受电子竞技的快感。",
+  //   caption: "亚洲先驱 实时滚球",
+  //   gameCode: ""
+  // }
 ];
 
 export const slotPlatforms = [

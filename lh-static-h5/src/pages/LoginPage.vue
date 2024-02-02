@@ -619,6 +619,7 @@ export default defineComponent({
     .veri-img {
       height: 80%;
       padding-right: 6px;
+      width: 125px;
     }
 
     .login-via-phone-div {
