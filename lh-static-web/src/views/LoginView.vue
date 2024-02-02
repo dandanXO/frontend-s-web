@@ -10,9 +10,8 @@
                         <AccountLogin />
                     </el-tab-pane>
                     <el-tab-pane label="手机登录">
-                        <el-form ref="mobileLoginRef" :rules="mobileLoginRules" :model="loginForm" label-width="70">
-
-
+                        <el-form ref="mobileLoginRef" :rules="mobileLoginRules" :model="loginForm" label-width="70"
+                            size="large">
                             <div class="light-bg form-field">
                                 <img class="form-field-icon" src="@/assets/home/auth/phone-username-icon.png" />
                                 <el-form-item tabindex="1" label="手机号" prop="phoneNumber">
@@ -30,7 +29,7 @@
                                         </el-col>
                                         <el-col :span="12">
                                             <el-button v-if="loginCountdown === 0" @click="openCaptchaForm('LOGIN')"
-                                                size="small" color="#3bafda">
+                                                size="small" color="#3bafda" style="width:100%;">
                                                 发送验证码
                                             </el-button>
                                             <el-button v-else disabled size="small" class="common-btn">
@@ -41,7 +40,7 @@
                                 </el-form-item>
                             </div>
 
-                            <el-button :loading="loadingBtn" size="large" class="blue-bg submit-btn" @click="phoneLogin">
+                            <el-button :loading="loadingBtn" size="large" class="blue-bg primary-btn" @click="phoneLogin">
                                 登录
                             </el-button>
                         </el-form>
@@ -50,20 +49,19 @@
 
                 <el-dialog v-model="captchaDialogVisible" title="验证码" width="50%" align-center style="max-width: 500px"
                     :close-on-click-modal="false" @keydown.enter.prevent>
-                    <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="70">
+                    <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="70" size="large">
                         <div class="light-bg form-field">
                             <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
                             <el-form-item tabindex="3" label="验证码" prop="captchaCode">
-                                <div style="display:flex">
+                                <div style="display:flex;width:100%;">
                                     <el-input v-model="captchaForm.captchaCode" label="验证码" placeholder="验证码"
                                         @keyup.enter="sendOtp" />
-                                    <img style="width:100px" :src="verificationImg" @click="getCode" />
+                                    <img style="width:100&;border-radius:100px;" :src="verificationImg" @click="getCode" />
                                 </div>
                             </el-form-item>
                         </div>
 
-                        <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px"
-                            @click="sendOtp">
+                        <el-button size="large" class="blue-bg primary-btn" @click="sendOtp">
                             发送
                         </el-button>
                     </el-form>
@@ -303,7 +301,7 @@ onMounted(() => {
     border-radius: 30px;
 }
 
-.submit-btn {
+.primary-btn {
     margin-top: 20px;
     width: 100%;
 }
@@ -364,6 +362,12 @@ onMounted(() => {
             font-size: 14px;
             border-radius: 30px;
         }
+    }
+
+    .el-dialog__header {
+        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+        box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
+        color: #fff;
     }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <el-form ref="loginRef" :rules="loginRules" :model="loginForm" label-width="70">
+    <el-form ref="loginRef" :rules="loginRules" :model="loginForm" label-width="70" size="large">
         <div class="light-bg form-field">
             <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
             <el-form-item label="用户名" prop="loginName">
@@ -17,16 +17,16 @@
         <div class="light-bg form-field">
             <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
             <el-form-item label="验证码" prop="captchaCode">
-                <div style="display:flex">
+                <div style="display:flex;width:100%;">
                     <el-input v-model="loginForm.captchaCode" label="验证码" placeholder="请输入验证码" @keyup.enter="submitLogin">
                     </el-input>
-                    <img style="width:100px" :src="verificationImg" @click="getCode" />
+                    <img style="width:100&;border-radius:100px;" :src="verificationImg" @click="getCode" />
                 </div>
             </el-form-item>
         </div>
 
 
-        <el-button :loading="loadingBtn" size="large" class="blue-bg submit-btn" @click="submitLogin">
+        <el-button :loading="loadingBtn" size="large" class="blue-bg primary-btn" @click="submitLogin">
             登录
         </el-button>
     </el-form>
@@ -176,7 +176,7 @@ onMounted(() => {
     border-radius: 30px;
 }
 
-.submit-btn {
+.primary-btn {
     margin-top: 20px;
     width: 100%;
 }

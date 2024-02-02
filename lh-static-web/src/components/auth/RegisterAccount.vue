@@ -1,5 +1,5 @@
 <template>
-    <el-form ref="registerRef" :rules="regRules" :model="regForm" label-width="70">
+    <el-form ref="registerRef" :rules="regRules" :model="regForm" label-width="70" size="large">
         <div class="light-bg form-field">
             <img class="form-field-icon" src="@/assets/home/auth/name-icon.png" />
             <el-form-item label="姓名" prop="realName">
@@ -66,10 +66,9 @@
             <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
             <el-form-item label="验证码" prop="captchaCode">
                 <el-space fill style="width:100%;">
-                    <div style="display:flex;">
+                    <div style="display:flex;width:100%;">
                         <el-input v-model="regForm.captchaCode" label="验证码" placeholder="验证码" />
-
-                        <img style="width:100px" :src="verificationImg" @click="getCode" />
+                        <img style="width:100&;border-radius:100px;" :src="verificationImg" @click="getCode" />
                     </div>
                 </el-space>
             </el-form-item>
@@ -77,10 +76,10 @@
 
     </el-form>
     <!-- <div>
-        <el-button class="blue-bg submit-btn" size="large" @click="resetRegForm(registerRef)">重新填写</el-button>
+        <el-button class="blue-bg primary-btn" size="large" @click="resetRegForm(registerRef)">重新填写</el-button>
     </div> -->
     <div>
-        <el-button class="blue-bg submit-btn" size="large" @click="submitRegisterForm(registerRef)">注册</el-button>
+        <el-button class="blue-bg primary-btn" size="large" @click="submitRegisterForm(registerRef)">注册</el-button>
     </div>
 
     <div style="text-align: center;margin-top: 20px;">已有账号？<router-link to="/login">去登录</router-link></div>
@@ -398,7 +397,7 @@ onMounted(() => {
     border-radius: 30px;
 }
 
-.submit-btn {
+.primary-btn {
     margin-top: 20px;
     width: 100%;
 }
