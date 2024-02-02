@@ -259,7 +259,9 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      api.get("/promo/page").then((res) => {
+      const platformApiUrl = (store.hasToken()) ? "/session/loggedInPromoPages" : "/promo/page";
+
+      api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
           promoState.promoList = [];
           var promoItems = res.data;
@@ -270,7 +272,6 @@ export default defineComponent({
               // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
             } else {
               promoState.promoList.push(element);
-
               if (route.query.name && String(element.redirectUrl) === route.query.name) {
                 showPromoDetails(element)
               }
