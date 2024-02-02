@@ -178,7 +178,7 @@ import { computed, nextTick, onMounted, reactive, ref } from "vue";
 import { hasRole, hasPermission } from "../../../utils/util";
 import { required } from "../../../utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { createMemberRebateRule, updateMemberRebateRule, getMemberRebateRule, deleteMemberRebateRule } from "../../../api/member-rebate-rule";
+import { createMemberRebateRule, updateMemberRebateRule, getMemberRebateRule, deleteMemberRebateRule, createMemberRebateRules } from "../../../api/member-rebate-rule";
 import { getSiteListSimple } from "../../../api/site";
 import { getGameTypes } from '../../../api/game'
 import { useStore } from '../../../store';
@@ -298,11 +298,8 @@ function create() {
   memberRebateRuleForm.value.validate(async (valid) => {
     if (valid) {
       if (form.gameType === 'ALL') {
-        const gameType = gameTypes.list.slice(1);
-        gameType.forEach(async (g) => {
-          form.gameType = g;
-          await createMemberRebateRule(form);
-        })
+        form.gameTypes = gameTypes.list.slice(1);
+        await createMemberRebateRules(form);
       } else {
         await createMemberRebateRule(form);
       }
