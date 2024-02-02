@@ -346,10 +346,10 @@ const submitRegisterForm = async (elForm) => {
 }
 
 const regForm = reactive({
-    realName: "测试",
-    loginName: "test100865",
-    password: "test100865",
-    confirmPwd: "test100865",
+    realName: "",
+    loginName: "",
+    password: "",
+    confirmPwd: "",
     telephone: cachedTelephone ?? '',
     email: "",
     captchaCode: "",
