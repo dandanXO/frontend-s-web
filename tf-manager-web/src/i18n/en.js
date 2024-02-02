@@ -238,6 +238,7 @@ export default {
     gameWinLossTotal: 'Total Win/Loss Amount',
   },
   gameType: {
+    ALL: 'ALL',
     SLOT: 'SLOT',
     LIVE: 'LIVE',
     FISH: 'FISH',
