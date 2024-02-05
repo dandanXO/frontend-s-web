@@ -33,7 +33,7 @@
 
     <AcctBal :isTransfer="autoTransfer" :platforms="platforms" :updateAutoTransfer="updateAutoTransferState" />
 
-    <div class="transfer-tab-section q-pa-md q-mx-sm q-my-md">
+    <div class="transfer-tab-section q-pa-md q-mx-sm q-my-md" v-if="!autoTransfer">
       <q-form ref="transferFormRef">
         <div class="transferfromto q-mb-md">
           <q-select
