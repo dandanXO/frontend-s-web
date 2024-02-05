@@ -120,7 +120,7 @@
 <script setup>
 import { onMounted, defineProps, reactive } from 'vue';
 import moment from 'moment';
-import { getMemberBank, getMemberBankLog } from '../../../../../api/member';
+import { getMemberBank, getMemberBankLog } from '../../../../../api/affiliate';
 import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
