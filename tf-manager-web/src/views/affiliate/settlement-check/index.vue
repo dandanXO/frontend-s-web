@@ -172,7 +172,7 @@
             v-if="hasPermission(['sys:member:detail'])"
           >
             <span style="display: inline-block">
-              {{ t('fields.month') }}: <span v-formatter="{data: scope.row.recordTime, timeZone: timeZone, type: 'date'}" />
+              {{ t('fields.month') }}: <span v-formatter="{data: scope.row.recordTime, timeZone: timeZone, formatter: 'YYYY-MM-DD', type: 'date'}" />
             </span>
           </template>
         </el-table-column>
@@ -285,7 +285,7 @@
             <span v-if="scope.row.recordTime === null">-</span>
             <span
               v-if="scope.row.recordTime !== null"
-              v-formatter="{data: scope.row.recordTime, timeZone: timeZone, type: 'date'}"
+              v-formatter="{data: scope.row.recordTime, timeZone: timeZone, formatter: 'YYYY-MM-DD', type: 'date'}"
             />
           </template>
         </el-table-column>
