@@ -454,6 +454,7 @@ export default {
     are_you_sure_want_delete: "Are you sure you want to delete ",
     delete: "Delete",
     please_enter_card_num: "Please enter card number.",
+    card_num_invalid: "Invalid Card Number",
     please_enter_bank_acc: "Please enter bank account.",
     estimate_arrival: "Estimate Withdraw: ",
 

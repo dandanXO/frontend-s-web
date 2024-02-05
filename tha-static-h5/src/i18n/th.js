@@ -454,6 +454,7 @@ export default {
     delete: "ลบ",
     please_enter_card_num: "กรุณาใส่เลขบัตร",
     please_enter_bank_acc: "กรุณาใส่บัญชีธนาคาร",
+    card_num_invalid: "หมายเลขบัตรไม่ถูกต้อง",
     prize: "รางวัล",
     date: "วันที่",
     youWon: "คุณชนะ",
