@@ -966,56 +966,6 @@ const tableColumns = {
     }
   ],
   betRecord: [
-    // {
-    //   title: "รหัสเดิมพัน",
-    //   dataIndex: "betId"
-    // },
-    // {
-    //   title: "รหัสธุรกรรม",
-    //   dataIndex: "transactionId"
-    // },
-    // {
-    //   title: "แพลตฟอร์ม",
-    //   dataIndex: "platform"
-    // },
-    // {
-    //   title: "เดิมพัน",
-    //   dataIndex: "bet"
-    // },
-    // {
-    //   title: "การจ่ายเงิน",
-    //   dataIndex: "payout"
-    // },
-    // {
-    //   title: "วงเงินก่อนหน้า",
-    //   dataIndex: "beforeBalance"
-    // },
-    // {
-    //   title: "วงเงินหลังจาก",
-    //   dataIndex: "afterBalance"
-    // },
-    // {
-    //   title: "สถานะการเดิมพัน",
-    //   dataIndex: "betStatus"
-    // },
-    // {
-    //   title: "ประเภทของเกม",
-    //   dataIndex: "gameType"
-    // },
-    // {
-    //   title: "เวลาเดิมพัน",
-    //   dataIndex: "betTime",
-    //   slots: {customRender: "betTime"}
-    // },
-    // {
-    //   title: "เวลาชำระเงิน",
-    //   dataIndex: "settleTime",
-    //   slots: {customRender: "settleTime"}
-    // },
-    // {
-    //   title: "ผลลัพท์",
-    //   dataIndex: "result"
-    // },
     {
       title: " 下注 ID",
       dataIndex: "betId"
@@ -1118,7 +1068,7 @@ export default defineComponent({
       // recordActive.value = key.props.name
       loading.value = true;
       if (recordActive.value === 'gameBetRecord') {
-        getPlatList();
+        getPlatList(recordActive.value);
       } else if (recordActive.value === 'reminderRecord') {
         financeFeedbackList(searchForm[recordActive.value]).then((response) => {
           if (response.code === 0) {
@@ -1205,7 +1155,13 @@ export default defineComponent({
       getTime();
     });
     const platformsList = ref([])
-    const getPlatList = () => {
+    const getPlatList = (v) => {
+      const startMonth = new Date(searchForm[v].startDate).getMonth()
+      const endMonth = new Date(searchForm[v].endDate).getMonth()
+      if (startMonth !== endMonth) {
+        ElMessage.error('开始与结束月份必须一致');
+      }
+
       getPlatformList().then((ret) => {
         platformsList.value = ret
       })
@@ -1315,8 +1271,9 @@ export default defineComponent({
       })
     }
 
+    const imgURL = process.env.VUE_APP_IMAGE_CDN
     const getImageLink = (linkId) => {
-      reminderForm.photos = `https://xinfa-files.s3.ap-southeast-1.amazonaws.com/order/2/${linkId}`
+      reminderForm.photos = imgURL + '/order/' + store.siteId + '/' + linkId
     }
 
     const getTurnoverType = (turnoverType) => {

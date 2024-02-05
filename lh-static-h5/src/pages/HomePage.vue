@@ -1024,7 +1024,7 @@ export default defineComponent({
               } else if (liveObj.code === "EBET") {
                 liveObj.title = "WE真人";
               } else {
-                liveObj.title = translateRecord(liveObj.name);
+                liveObj.title = translateRecord(liveObj.name) + "真人";
               }
 
               if (liveObj.code === "BBINDY") {
@@ -1074,6 +1074,12 @@ export default defineComponent({
               pokerObj.title = translateRecord(pokerObj.name);
               pokerObj.icon = "poker";
               pokerObj.subtitle = "棋牌娱乐";
+
+              if (pokerObj.code === "GFLC") {
+                pokerObj.gameCode = "lobby";
+              }
+
+
               poker.value.push(pokerObj);
             }
             if (platTypes.indexOf("LOTTERY") > -1) {

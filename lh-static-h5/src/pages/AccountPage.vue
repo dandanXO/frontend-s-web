@@ -121,22 +121,50 @@
         <div class="acct-title-1">功能区</div>
       </div>
       <div class="acct-menu" id="id-acct-menu">
+
+        <router-link to="/account/records">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-record-icon.png" />
+            <div class="acct-nav-label">交易记录</div>
+          </div>
+        </router-link>
+
         <router-link to="/account/invite">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-share-icon.png" />
             <div class="acct-nav-label">呼朋唤友</div>
           </div>
         </router-link>
+
+        <router-link  to="/promo?redirect=account">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-promo-icon.png" />
+            <div class="acct-nav-label">优惠领取</div>
+          </div>
+        </router-link>
+
+        <router-link to="/account/personal">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-personal-icon.png" />
+            <div class="acct-nav-label">账户信息</div>
+          </div>
+        </router-link>
+        <router-link to="/account/changePwd">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-changepwd-icon.png" />
+            <div class="acct-nav-label">修改密码</div>
+          </div>
+        </router-link>
+        <router-link to="/account/withdraw">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-bank-icon.png" />
+            <div class="acct-nav-label">银行信息</div>
+          </div>
+        </router-link>
         <router-link v-if="!store.isApp()" to="/account/download">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-download-icon.png" />
             <div class="acct-nav-label">下载中心</div>
-          </div>
-        </router-link>
-        <router-link to="/affiliate">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-affiliate-icon.png" />
-            <div class="acct-nav-label">代理加盟</div>
           </div>
         </router-link>
         <router-link to="/account/inbox">
@@ -151,32 +179,13 @@
         <!--            <div class="acct-nav-label">消息提醒</div>-->
         <!--          </div>-->
         <!--        </router-link>-->
-        <router-link to="/account/promotion">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-promo-icon.png" />
-            <div class="acct-nav-label">自助优惠</div>
-          </div>
-        </router-link>
 
-        <router-link to="/account/assets">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-rich-icon.png" />
-            <div class="acct-nav-label">财富中心</div>
-          </div>
-        </router-link>
-
-        <router-link to="/account/records">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-record-icon.png" />
-            <div class="acct-nav-label">交易信息</div>
-          </div>
-        </router-link>
-        <router-link to="/account/withdraw">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-bank-icon.png" />
-            <div class="acct-nav-label">银行信息</div>
-          </div>
-        </router-link>
+<!--        <router-link to="/account/assets">-->
+<!--          <div class="acct-nav-item">-->
+<!--            <img src="../assets/images/account/account-rich-icon.png" />-->
+<!--            <div class="acct-nav-label">财富中心</div>-->
+<!--          </div>-->
+<!--        </router-link>-->
 
         <!--        <router-link to="/account/personal">-->
         <!--          <div class="acct-nav-item">-->
@@ -185,23 +194,18 @@
         <!--          </div>-->
         <!--        </router-link>-->
 
-        <router-link to="/account/personal">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-personal-icon.png" />
-            <div class="acct-nav-label">账户信息</div>
-          </div>
-        </router-link>
-        <router-link to="/account/changePwd">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-changepwd-icon.png" />
-            <div class="acct-nav-label">修改密码</div>
-          </div>
-        </router-link>
 
         <router-link to="/account/letters">
           <div class="acct-nav-item">
             <img src="../assets/images/account/user-feedbakc-icon.png" />
             <div class="acct-nav-label">意见反馈</div>
+          </div>
+        </router-link>
+
+        <router-link to="/affiliate">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-affiliate-icon.png" />
+            <div class="acct-nav-label">代理加盟</div>
           </div>
         </router-link>
       </div>

@@ -38,7 +38,7 @@ export const liveCasinoPlatforms = [
     image: "bbin",
     message: "全球首创6张牌先发、VIP包桌、咪牌百家乐、智控模式百家乐及竞咪互动百家乐等游戏，多终端兼容，让您享受不停。",
     caption: "",
-    gameCode: ""
+    gameCode: "bblive_lobby_pc"
   },
   {
     code: "BBIN",
@@ -278,7 +278,7 @@ export const pokerPlatforms = [
     image: "gd",
     message: "抢庄牛牛龙虎斗，多款棋牌任君选<br> 棋牌彰显胸怀，竞技娱乐烧脑，好友相约竞技，游戏改变生活",
     caption: "",
-    gameCode: ""
+    gameCode: "lobby"
   }
 ];
 
@@ -312,7 +312,7 @@ export const fishingPlatforms = [
     message:
       "最受欢迎的GPS捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
     caption: "",
-    gameCode: "7202"
+    gameCode: 7202
   },
   {
     code: "AG",

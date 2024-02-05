@@ -25,9 +25,25 @@
   </q-dialog>
 
   <div class="table-record">
-    <div class="select-btn">
-      <q-btn class="common-large-btn" label="点击选择平台" @click="showSelection" />
+    <div class="flex-div">
+      <span>选择平台：</span>
+      <q-select
+        allowClear
+        rounded
+        outlined
+        dense
+        color="primary"
+        style="width: 320px; margin: 10px auto 8px; color: #000"
+        v-model="platform"
+        :options="platformsList"
+        placeholder="选择平台"
+        @update:model-value="searchRecord"
+      ></q-select>
     </div>
+
+<!--    <div class="select-btn">-->
+<!--      <q-btn class="common-large-btn" label="点击选择平台" @click="showSelection" />-->
+<!--    </div>-->
 
     <RecordComponent
       ref="recordRef"
@@ -50,6 +66,7 @@ import moment from "moment/moment";
 import RecordComponent from "../../components/RecordComponent.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/swiper-bundle.css";
+import * as _ from "lodash"
 
 const store = userStore();
 
@@ -75,7 +92,6 @@ const onSlideClick = (i) => {
   swiperInstance.value.slideTo(centeredIndex);
 };
 
-const platformsList = ref([]);
 const getLabelClass = (i) => {
   const difference = Math.abs(selectedPlatformIndex.value - i);
   if (!difference) return "active-text";
@@ -86,7 +102,6 @@ const getLabelClass = (i) => {
 const visible = ref(true);
 const tableData = ref([]);
 
-const recordRef = ref();
 const searchRecord = () => {
   recordRef.value.clearTable();
 
@@ -101,15 +116,37 @@ var apiUrl = "/session/member/gameBetRecord";
 
 var endDate = moment().format("YYYY-MM-DD");
 var startDate = moment().add(-7, "days").format("YYYY-MM-DD");
+var current = ref(1);
+var maxPage = ref(0);
+
+const platformsList = ref([]);
+const platform = ref("");
+const recordRef = ref();
 
 const loadNewData = () => {
-  startDate = moment(startDate).add(-7, "days").format("YYYY-MM-DD");
-  endDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
+  if(maxPage.value > current.value){
+    current.value++;
+  }else {
+    current.value= 1;
+    endDate = moment(startDate).add(-1, "days").format("YYYY-MM-DD");
+    console.log(endDate);
 
-  if (startDate <= moment().add(-30, "days").format("YYYY-MM-DD")) {
-    console.log("mor than 3 months");
-    isEnded.value = true;
-    return;
+    startDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
+    console.log(startDate);
+
+    const startMonth = moment(startDate).format("MM");
+    const endMonth = moment(endDate).format("MM");
+    if (startMonth !== endMonth) {
+      // If startDate and endDate are in the same month, take the latest month's data
+      const latestMonthEnd = moment(endDate).endOf("month").format("YYYY-MM-DD");
+      startDate = moment(latestMonthEnd).startOf("month").format("YYYY-MM-DD");
+    }
+
+    if (endDate <= moment().add(-29, "days").format("YYYY-MM-DD")) {
+      console.log("mor than 3 months");
+      isEnded.value = true;
+      return;
+    }
   }
   loadDepositTable(false);
 };
@@ -117,43 +154,93 @@ const loadNewData = () => {
 const loadDepositTable = (isNew = true) => {
   if (isNew) {
     visible.value = true;
-    tableData.value = [];
-    isEnded.value = false;
   }
+
+  var platformName = platform.value ? platform.value.value : "";
+
+
   console.log(startDate);
   console.log(endDate);
 
-  const platform = platformsList.value[selectedPlatformIndex.value];
-  const platformName = platform ? platform.value : "";
   let paramData = {
-    startDate: startDate,
-    endDate: endDate,
-    platform: platformName,
-    memberId: store.id
+    "startDate": startDate,
+    "endDate": endDate,
+    "platform": platformName,
+    "memberId": store.id,
+    "size": 20,
+    "current": current.value
   };
 
-  api
-    .get(apiUrl, {
+  api.get(apiUrl, {
       params: paramData
-    })
-    .then((res) => {
-      if (res.code === 0) {
-        if (res.data.records.length > 0) {
-          tableData.value.push(...res.data.records);
-        }
-      }
-    })
-    .finally(() => {
-      if (isNew) {
-        visible.value = false;
-      }
-    });
+    }
+  ).then((res) => {
+    maxPage.value = res.data.pages;
+    tableData.value.push(...res.data.records);
+    // console.log("TableData");
+    // console.log(tableData.value);
+  }).finally(() => {
+    if (isNew) {
+      visible.value = false;
+    }
+  });
 };
+
+const getGameName = (gameName) => {
+  if (!gameName) {
+    return ''
+  }
+
+  switch (gameName) {
+    case 'IMES':
+      return 'IM电竞';
+    case 'TCG':
+      return 'TCG彩票';
+    case 'MGP':
+      return 'MG电子';
+    case 'CQ9':
+      return 'CQ电子';
+    case 'SABA':
+      return '沙巴体育';
+    case 'TFGaming':
+      return '雷火电竞 ';
+    case 'SW':
+      return 'SW电子';
+    case 'GPS':
+      return 'GPS捕鱼';
+    case 'IA':
+      return '小艾电竞 ';
+    case 'DT':
+      return '大唐棋牌';
+    case 'IM':
+      return 'IM体育';
+    case 'BBIN':
+      return 'BBIN真人';
+    case 'KY':
+      return '开元棋牌';
+    case 'PT':
+      return 'PT电子';
+    case 'PG':
+      return 'PG电子';
+    case 'AG':
+      return 'AG真人, XIN电子';
+    case 'ALLBET':
+      return 'ALLBET真人';
+    case 'GFLC':
+      return "高登棋牌";
+    case "LEG":
+      return "乐游棋牌";
+
+    default:
+      return gameName;
+  }
+}
+
 
 const loadPlatformLists = () => {
   cached
-    .get("PLATFORMS", () =>
-      api.get("/platform").then((response) => {
+    .get("LOGGEDPLATFORMS", () =>
+      api.get("/session/loggedInPlatform").then((response) => {
         return response;
       })
     )
@@ -161,7 +248,7 @@ const loadPlatformLists = () => {
       console.log(data);
       _.each(data, function (item, index) {
         var option = {
-          label: item.name,
+          label: getGameName(item.name),
           value: item.code
         };
         platformsList.value.push(option);
@@ -197,8 +284,16 @@ const tableHeaders = [
 ];
 
 onMounted(async () => {
-  loadPlatformLists();
-  loadDepositTable();
+  await loadPlatformLists();
+
+  const startMonth = moment(startDate).format("MM");
+  const endMonth = moment(endDate).format("MM");
+  if (startMonth !== endMonth) {
+    // If startDate and endDate are in the same month, take the latest month's data
+    const latestMonthEnd = moment(endDate).endOf("month").format("YYYY-MM-DD");
+    startDate = moment(latestMonthEnd).startOf("month").format("YYYY-MM-DD");
+  }
+  await loadDepositTable();
 });
 </script>
 
@@ -290,6 +385,17 @@ onMounted(async () => {
         }
       }
     }
+  }
+}
+
+.flex-div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  span {
+    font-size: 14px;
+    padding-left: 5px;
   }
 }
 </style>

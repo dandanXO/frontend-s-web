@@ -1204,7 +1204,6 @@ export default defineComponent({
 
     const modalGame = ref(null)
     const openGame = (gameName, code, gameCode) => {
-      // debugger;
       modalGame.value.open(gameName, code, gameCode);
     }
 

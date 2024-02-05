@@ -59,23 +59,14 @@
               </span>
             </div>
 
-
+<!--            data-aos="fade-in"-->
+<!--            data-aos-delay="300"-->
+<!--            data-aos-duration="500"-->
             <div
               class="platform-play-btn"
-              data-aos="fade-in"
-              data-aos-delay="300"
-              data-aos-duration="500"
               v-if="platformType !== 'slot' "
             >
-              <template v-if="item.code==='BBIN' || item.code==='BBINDY'">
-                <div class="btn-blue" @click="openGame(item.name, item.code, 'bblive_lobby_pc')">进入游戏</div>
-              </template>
-              <template v-else-if="item.code==='GPS'">
-                <div class="btn-blue" @click="openGame(item.name, item.code, 7202)">进入游戏</div>
-              </template>
-              <template v-else>
-                <div class="btn-blue" @click="openGame(item.name, item.code)">进入游戏</div>
-              </template>
+                <div class="btn-blue" @click="openGame(item.name, item.code,  item.gameCode)">进入游戏</div>
 
             </div>
           </div>
