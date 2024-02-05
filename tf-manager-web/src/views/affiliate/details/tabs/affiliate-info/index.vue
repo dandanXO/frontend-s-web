@@ -1210,8 +1210,8 @@ import { useRoute } from 'vue-router'
 import { hasPermission } from '../../../../../utils/util'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { required, size } from '../../../../../utils/validate'
+import { getAffiliateInfo } from '../../../../../api/affiliate'
 import {
-  getAffiliateInfo,
   getMemberBalance,
   getMemberEmail,
   getMemberRealName,

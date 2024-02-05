@@ -109,17 +109,17 @@
             <tbody>
               <tr>
                 <td>≥3</td>
-                <td>0.05%</td>
+                <td>0.5%</td>
                 <td>58</td>
               </tr>
               <tr>
                 <td>≥5</td>
-                <td>0.08%</td>
+                <td>0.8%</td>
                 <td>128</td>
               </tr>
               <tr>
                 <td>≥6</td>
-                <td>0.10%</td>
+                <td>1.0%</td>
                 <td>388</td>
               </tr>
             </tbody>
@@ -210,8 +210,9 @@
       </div>
 
       <div class="promo-records-count">
-        <div>竞猜正确次数: {{ recordsCount.wonTimes }}</div>
-        <div>累计竞猜正确次数: {{ recordsCount.attendTimes }}</div>
+        <div>总竞猜次数: {{ recordsCount.attendTimes }}</div>
+        <div>总竞猜正确次数: {{ recordsCount.wonTimes }}</div>
+        <div>今日正确次数: {{ recordsCount.todayWonTimes }}</div>
       </div>
 
       <table class="promo-table" cellspacing="0" cellpading="0">

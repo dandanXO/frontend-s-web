@@ -339,7 +339,7 @@
       </div>
       <div class="game-lists" v-if="tab === 'fishing'" id="fishing-lists">
         <template v-for="(item, index) in fishing" :key="index">
-          <div class="platform-block" @click="router.push({path: '/fishing', query: {platform: item.code}})">
+          <div class="platform-block" @click="playGame(item.gameName, item.code, 7202)">
             <div
               class="platform-img-frame"
               :style="{
@@ -968,6 +968,7 @@ export default defineComponent({
 
               if (espObj.code === "TFGaming") {
                 espObj.title = "雷火电竞";
+                espObj.sequence= -1;
               }
               if (espObj.code === "IA") {
                 espObj.title = "小艾电竞";
@@ -984,12 +985,12 @@ export default defineComponent({
 
               //Add 1 More Casual minigame.
               // if (platTypes.indexOf("CASUAL") > -1) {
-              var casualObj = Object.assign({}, element);
-              casualObj.gameCode = "casual";
-              casualObj.title = casualObj.name + " 小游戏";
-              casualObj.icon = "casual";
-              casualObj.subtitle = "小游戏";
-              casuals.value.push(casualObj);
+              // var casualObj = Object.assign({}, element);
+              // casualObj.gameCode = "casual";
+              // casualObj.title = casualObj.name + " 小游戏";
+              // casualObj.icon = "casual";
+              // casualObj.subtitle = "小游戏";
+              // casuals.value.push(casualObj);
               // }
             }
             if (platTypes.indexOf("SPORT") > -1) {
@@ -1085,8 +1086,7 @@ export default defineComponent({
             }
           });
 
-          console.log("END");
-          console.log(poker.value);
+          esport.value = esport.value.sort((a,b) => { return a.sequence - b.sequence })
         })
         .catch((err) => {
         });

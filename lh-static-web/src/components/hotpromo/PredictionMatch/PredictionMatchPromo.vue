@@ -42,6 +42,7 @@
 </template>
 <script setup>
 import { ref, onMounted, reactive } from "vue";
+import { getTeamVotes, postVote } from "@/api/index/promo";
 
 const validateVotes = (rule, value, callback) => {
   if (!value) {
@@ -60,37 +61,56 @@ const form = reactive({
 const formRef = ref();
 const matchTitle = ref("");
 const init = () => {
+  // getTeamVotes().then((res) => {
+  //   if (res.code === 0) {
+  //     matchDetails.value = res.data;
+  //   }
+  // });
   matchDetails.value = [
     {
+      teamId: 1,
       image: "",
       title: "T1",
       currentTickets: 1000
     },
     {
+      teamId: 2,
       image: "",
       title: "BLG",
       currentTickets: 1000
     },
     {
+      teamId: 3,
       image: "",
       title: "JDG",
       currentTickets: 1000
     },
     {
+      teamId: 4,
       image: "",
       title: "WBG",
       currentTickets: 1000
     }
   ];
 };
+const selectedTeam = ref({});
 const vote = (match) => {
+  selectedTeam.value = match;
   matchTitle.value = match.title;
   isPredictModal.value = true;
 };
 const submitVotes = () => {
   formRef.value.validate((valid) => {
     if (valid) {
-      isPredictModal.value = false;
+      var obj = {
+        teamId: selectedTeam.value.teamId,
+        voteCount: form.noOfVotes
+      };
+      postVote(obj).then((res) => {
+        if (res.code === 0) {
+          isPredictModal.value = false;
+        }
+      });
     }
   });
 };
@@ -106,6 +126,9 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 .prediction {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
   .prize-pool {
     width: 80%;
     height: 400px;

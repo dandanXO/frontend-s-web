@@ -223,7 +223,7 @@ export default defineComponent({
           })
     }
     const showPromoDetails = (promo) => {
-      if (promo.promoCode === "cny-hongbaoyu" || promo.promoCode === "cny-spinwheel") {
+      if (promo.promoCode === "cny-hongbaoyu" || promo.promoCode === "cny-spinwheel" || promo.promoCode === "XingFa-red-packet-rain") {
         isSpecialPromo.value = true
       } else {
         isSpecialPromo.value = false

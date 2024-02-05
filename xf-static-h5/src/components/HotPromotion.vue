@@ -19,6 +19,7 @@
     />
     <CnySpinWheelPromo v-if="list.redirectUrl === 'cny-spinwheel' && !isCommonPromo" />
     <HongBaoYu2024Promo
+      :promo-code="list.promoCode"
       v-if="!isCommonPromo && list.redirectUrl === 'cny-hongbaoyu'"
     />
 

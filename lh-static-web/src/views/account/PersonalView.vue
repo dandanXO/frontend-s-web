@@ -406,7 +406,7 @@
         <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: '请输入验证码' }]">
           <el-space>
             <el-input
-              @keypress.enter="verifyPhoneVerificationCode"
+              @keypress.enter.prevent="verifyPhoneVerificationCode"
               v-model="updatePhoneVerified.captchaCode"
               :maxlength="4"
               placeholder="验证码"

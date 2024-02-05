@@ -73,8 +73,14 @@
         </div>
 
         <div v-if="!store.token" class="right-contents">
-          <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">登录</a>
-          <a class="header-btn btn-color-white" @click="registerDialogVisible = true">注册</a>
+          <router-link to="/login" class="action-btn">
+            <a class="header-btn btn-color-blue">登录</a>
+          </router-link>
+          <router-link to="/register" class="action-btn">
+            <a class="header-btn btn-color-white">注册</a>
+          </router-link>
+          <!-- <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">登录</a>
+          <a class="header-btn btn-color-white" @click="registerDialogVisible = true">注册</a> -->
         </div>
 
         <div v-if="store.token" class="profile-actions">

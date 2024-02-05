@@ -1,12 +1,5 @@
 <template>
-  <el-dialog
-    v-model="visible"
-    width="100%"
-    class="full-modal"
-    :title="title"
-    destroyOnClose
-    :afterClose="destroyGame"
-  >
+  <el-dialog v-model="visible" width="100%" class="full-modal" :title="title" destroyOnClose :afterClose="destroyGame">
     <TFLoading v-if="logoShow"></TFLoading>
     <template v-if="transferInfo.platform === 'PG'">
       <iframe
@@ -30,19 +23,9 @@
         class="game-iframe"
       ></iframe>
     </template>
-    <div
-      @click="showDrawer()"
-      class="drawer-btn"
-      :class="{ active: isMobileDrawerActive }"
-    >
-      Quick Actions
-    </div>
+    <div @click="showDrawer()" class="drawer-btn" :class="{ active: isMobileDrawerActive }">Quick Actions</div>
 
-    <div
-      :class="{ active: isMobileDrawerActive }"
-      class="additional-buttons desktopview"
-      v-if="!drawerVisible"
-    >
+    <div :class="{ active: isMobileDrawerActive }" class="additional-buttons desktopview" v-if="!drawerVisible">
       <!-- <div class="numbers">
         <div class="amt-numbers">โอนด่วน</div>
         <div
@@ -173,7 +156,7 @@ const visibleComingSoon = ref(false);
 const src = ref("");
 const logoShow = ref(true);
 const title = ref("");
-const iframeScroll = ref(true)
+const iframeScroll = ref(true);
 
 const transferInfo = ref({
   amount: null,
@@ -212,7 +195,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     if (store.token) {
       console.log(gameCode);
       console.log(platformCode);
-      if(gameCode === 'bbkeno_lobby_pc') {
+      if (gameCode === "bbkeno_lobby_pc") {
         iframeScroll.value = true;
       }
 
@@ -223,7 +206,11 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           src.value = res.data;
           visible.value = true;
         });
-      } else if (platformCode === "SGWin" || platformCode === "TCG" || (platformCode === "BBINDY" && gameCode === "bbkeno_lobby_pc" )) {
+      } else if (
+        platformCode === "SGWin" ||
+        platformCode === "TCG" ||
+        (platformCode === "BBINDY" && gameCode === "bbkeno_lobby_pc")
+      ) {
         launchSessionGame(platformCode, {
           gameCode: gameCode,
           isMobile: isMobile()
@@ -239,7 +226,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           gameCode: gameCode,
           isMobile: isMobile()
         }).then((res) => {
-          let srcData= res.data;
+          let srcData = res.data;
 
           if (platformCode === "PG") {
             const scriptEndTag = "</" + "script>";
@@ -357,15 +344,11 @@ defineExpose({
       top: -95%;
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
         radial-gradient(circle, transparent 20%, #db7e42 20%, transparent 30%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
         radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%);
-      background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%,
-        15% 15%, 10% 10%, 18% 18%;
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
+      background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%;
     }
 
     &:after {
@@ -373,12 +356,9 @@ defineExpose({
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
         radial-gradient(circle, #db7e42 20%, transparent 20%),
         radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%);
-      background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%,
-        20% 20%;
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
+      background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
     }
 
     &.animate {
@@ -401,31 +381,25 @@ defineExpose({
 
     @keyframes topBubbles {
       0% {
-        background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%,
-          40% 90%, 55% 90%, 70% 90%;
+        background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%, 40% 90%, 55% 90%, 70% 90%;
       }
       50% {
-        background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%,
-          50% 50%, 65% 20%, 90% 30%;
+        background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%, 50% 50%, 65% 20%, 90% 30%;
       }
       100% {
-        background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%,
-          50% 40%, 65% 10%, 90% 20%;
+        background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%, 50% 40%, 65% 10%, 90% 20%;
         background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
       }
     }
     @keyframes bottomBubbles {
       0% {
-        background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%,
-          70% -10%, 70% 0%;
+        background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%, 70% -10%, 70% 0%;
       }
       50% {
-        background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%,
-          95% 60%, 105% 0%;
+        background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%, 105% 0%;
       }
       100% {
-        background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%,
-          95% 70%, 110% 10%;
+        background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%, 110% 10%;
         background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
       }
     }
@@ -462,7 +436,6 @@ defineExpose({
     word-break: break-all;
     white-space: normal;
     width: 25px;
-
   }
 }
 

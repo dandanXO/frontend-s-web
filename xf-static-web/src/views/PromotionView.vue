@@ -64,7 +64,7 @@
     </div>
     <div v-else class="selected-promo">
       <div class="selected-promo-wrapper" :class="`bg__${selectedPromo.promoCode}`">
-        <div class="banner-container">
+        <div class="banner-container" v-if="selectedPromo.promoCode !== 'XingFa-red-packet-rain'">
           <template v-if="selectedPromo.promoCode === 'cny-spinwheel'">
             <img
               src="../assets/images/promotion/hotpromo/cny-spinwheel/banner.png"
@@ -82,7 +82,14 @@
             ></div>
           </template>
         </div>
-        <div class="inner" :class="selectedPromo.promoCode === 'cny-hongbaoyu' ? 'hongbao' : ''">
+        <div
+          class="inner"
+          :class="
+            selectedPromo.promoCode === 'cny-hongbaoyu' || selectedPromo.promoCode === 'XingFa-red-packet-rain'
+              ? 'hongbao'
+              : ''
+          "
+        >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
             <HotPromotion :list="selectedPromo" />
           </div>
@@ -592,6 +599,28 @@ export default defineComponent({
         background-repeat: no-repeat;
         background-position: top center;
         background-color: #a1211d;
+
+        .hongbaoyu-modal {
+          .el-dialog__header .el-dialog__headerbtn {
+            display: none !important;
+          }
+        }
+
+        .banner-container {
+          min-height: 0 !important;
+
+          .promo-bg {
+            &.isDesktop {
+              display: none !important;
+              height: 0px !important;
+            }
+
+            &.isMobile {
+              display: none !important;
+              height: 0px !important;
+            }
+          }
+        }
       }
 
       .banner-container {
@@ -624,6 +653,8 @@ export default defineComponent({
 
         &.hongbao {
           margin: 0px;
+          width: 100%;
+          max-width: none;
         }
 
         .hot-promo {
@@ -756,23 +787,23 @@ export default defineComponent({
       }
     }
 
-    .selected-promo {
-      overflow: hidden;
-
-      .selected-promo-wrapper {
-        .banner-container {
-          .promo-bg {
-            &.isDesktop {
-              display: none;
-            }
-
-            &.isMobile {
-              display: block;
-            }
-          }
-        }
-      }
-    }
+    //.selected-promo {
+    //  overflow: hidden;
+    //
+    //  .selected-promo-wrapper {
+    //    .banner-container {
+    //      .promo-bg {
+    //        &.isDesktop {
+    //          display: none;
+    //        }
+    //
+    //        &.isMobile {
+    //          display: block;
+    //        }
+    //      }
+    //    }
+    //  }
+    //}
   }
 }
 </style>

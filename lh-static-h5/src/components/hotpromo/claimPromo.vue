@@ -1,9 +1,9 @@
 <template>
   <div class="common-promo">
-    <img :src="require(`../../assets/images/promo/hotpromo/common/icon.png`)" />
+    <img :src="require(`../../assets/images/promo/hotpromo/${promoId}/icon.png`)" />
     <div class="contents">
       <!--      存款成功后，每日充值奖金将自动创建到会员的主钱包中。-->
-      <q-btn class="claim-btn" :loading="loadingClaim" @click="$emit('daily-slot')">领取</q-btn>
+      <q-btn color="brightbtn" :loading="loadingClaim" @click="$emit('daily-slot')">领取</q-btn>
       <div v-if="promoId === 19" class="orange">
         <!--      *返利红利需要1倍流水后才能提现，30天内未使用将退回。-->
       </div>
