@@ -62,8 +62,8 @@
           </div>
         </div>
         <div class="transfer-action-box">
-          <el-button size="small" class="blue-btn transfer-btn" @click="transferModal(0, p)">转进</el-button>
-          <el-button size="small" class="blue-btn transfer-btn" @click="transferModal(1, p)">转出</el-button>
+          <el-button v-if="!autoTransfer" size="small" class="blue-btn transfer-btn" @click="transferModal(0, p)">转进</el-button>
+          <el-button v-if="!autoTransfer" size="small" class="blue-btn transfer-btn" @click="transferModal(1, p)">转出</el-button>
         </div>
       </div>
     </div>
