@@ -331,7 +331,7 @@ import moment from 'moment'
 import {
   getMemberWithdrawRecord,
   getMemberWithdrawRecordTotalAmount,
-} from '../../../../../api/member'
+} from '../../../../../api/affiliate'
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"

@@ -91,7 +91,7 @@
 <script>
 import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import moment from 'moment';
-import { getMemberLoginRecord } from "../../../../../api/member";
+import { getMemberLoginRecord } from "../../../../../api/affiliate";
 import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
