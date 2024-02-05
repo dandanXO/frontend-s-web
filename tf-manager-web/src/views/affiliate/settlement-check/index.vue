@@ -489,6 +489,10 @@ function convertDate(date) {
   return moment(date).format('YYYY-MM');
 }
 
+function convertDateTime(date) {
+  return moment(date).format('YYYY-MM-DD HH:mm:ss');
+}
+
 const uiControl1 = reactive({
   dialogVisible: false,
   progressBarVisible: false,
@@ -621,6 +625,7 @@ function showView(row) {
     '  的' +
     t('fields.commissionReport')
   uiControl1.dialogVisible = true
+  row.recordTime = convertDateTime(row.recordTime)
   loadCommisionReport(row)
 }
 
