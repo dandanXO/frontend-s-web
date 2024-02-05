@@ -17,7 +17,7 @@
       <div class="content">
         <div class="huka-wrap">
           <div class="huka-title">
-            <img src="../../../assets/images/promotion/hotpromo/tigercard/my-huka.png" alt="" />
+            <img src="../../../assets/images/promotion/hotpromo/dragoncard/my-huka.png" alt="" />
           </div>
           <div class="huka-container">
             <div class="huka-list">
@@ -28,13 +28,13 @@
                 class="huka"
                 @click="selectHuka(huka)"
               >
-                <img :src="require(`../../../assets/images/promotion/hotpromo/tigercard/${huka.image}.png`)" alt="" />
+                <img :src="require(`../../../assets/images/promotion/hotpromo/dragoncard/${huka.image}.png`)" alt="" />
                 <div class="huka-own-count">{{ cardInfo.cardDetail[huka.code] }}</div>
               </div>
             </div>
             <div class="huka-gold">
               <div class="goldhu" style="position: relative">
-                <img src="../../../assets/images/promotion/hotpromo/tigercard/bonus.png" alt="" />
+                <img src="../../../assets/images/promotion/hotpromo/dragoncard/bonus.png" alt="" />
                 <div class="huka-own-count" style="right: 4px; top: 8px">{{ cardInfo.cardDetail.goldhu }}</div>
               </div>
             </div>
@@ -46,7 +46,7 @@
         </div>
         <div class="huka-ranking-wrap">
           <div class="huka-ranking-title">
-            <img src="../../../assets/images/promotion/hotpromo/tigercard/huka-ranking.png" alt="" />
+            <img src="../../../assets/images/promotion/hotpromo/dragoncard/huka-ranking.png" alt="" />
           </div>
 
           <el-table :data="rankingRecord()" :loading="rankingPage.loading">
@@ -95,7 +95,7 @@
         <div v-if="cardWon === huka.code" class="wincontents">
           <div class="message">恭喜您获得一张: {{ huka.label }}</div>
           <div class="amount">
-            <img :src="require(`../../../assets/images/promotion/hotpromo/tigercard/${huka.image}.png`)" />
+            <img :src="require(`../../../assets/images/promotion/hotpromo/dragoncard/${huka.image}.png`)" />
           </div>
         </div>
       </span>
