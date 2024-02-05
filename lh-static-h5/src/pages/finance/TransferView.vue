@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <AcctBal :isTransfer="true" :platforms="platforms" />
+    <AcctBal :isTransfer="autoTransfer" :platforms="platforms" :updateAutoTransfer="updateAutoTransferState" />
 
     <div class="transfer-tab-section q-pa-md q-mx-sm q-my-md">
       <q-form ref="transferFormRef">
@@ -329,9 +329,24 @@ const getPlatBalances = (plat) => {
     });
 };
 const amounts = [100, 500, 1000, 2000, 5000];
+
+const autoTransfer = ref(false);
+const getAutoTransferState = () => {
+  api.get("/session/getAutoTransferState", {}).then((res) => {
+    autoTransfer.value = res.data;
+  });
+};
+
+const updateAutoTransferState = (value) => {
+  api.put(`/session/updateAutoTransferState/${value}`, {}).then((res) => {
+    autoTransfer.value = res.data;
+  });
+};
+
 onMounted(() => {
   store.getBalance();
   getPlatList();
+  getAutoTransferState();
 });
 </script>
 <style scoped lang="scss">
