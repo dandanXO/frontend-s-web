@@ -109,9 +109,13 @@
             <img src="../../assets/images/home/profile-pic.png" />
           </router-link>
           <div class="profile-details">
-            <div class="details-name">
-              {{ store.nickName }}
-              <span><img src="../../assets/images/home/vip-01.png" /></span>
+            <div class="name-and-vip-wrapper">
+              <div class="details-name">
+                {{ store.nickName }}
+              </div>
+              <div class="account-vip-label">
+                {{ vip }}
+              </div>
             </div>
             <a @click="refreshBalance" class="details-balance">
               <span>总资产:</span>
@@ -550,7 +554,7 @@
 <script lang="js">
 
 import "vue3-carousel/dist/carousel.css";
-import {defineComponent, onMounted, ref, reactive, watch} from "vue";
+import {defineComponent, onMounted, ref, reactive, watch, computed} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {userStore} from "@/store/index";
 import {getVerificationCode, register, findAccount} from "@/api/index/login";
@@ -646,6 +650,18 @@ export default defineComponent({
     const scroll = ref(0);
     const selectedMenu = ref(false);
     const {height} = useElementSize(el);
+
+    const vipLevel = computed(() => {
+      if (store.vip.toUpperCase() === "NORMAL") {
+        return 1;
+      }
+      return store.vip;
+    });
+
+    const vip = computed(() => {
+      return vipLevel.value;
+    });
+
     const showSubMenu = (nav) => {
       if (nav.submenu === true) {
         selectedMenu.value = nav.code
@@ -1206,11 +1222,16 @@ export default defineComponent({
         store.getMemberInfo();
       }
 
-      if (store.loginPageVisible) {
-        loginDialogVisible.value = true
-      } else {
-        loginDialogVisible.value = false
+      if(store.loginPageVisible) {
+        router.push('/login');
+        return;
       }
+
+      // if (store.loginPageVisible) {
+      //   loginDialogVisible.value = true
+      // } else {
+      //   loginDialogVisible.value = false
+      // }
 
       // console.log(route);
       // alert(route.name)
@@ -1529,7 +1550,8 @@ export default defineComponent({
       regCountdown,
       loginCountdown,
       route,
-      getUnreadMail
+      getUnreadMail,
+      vip
     }
   }
 });
@@ -1601,9 +1623,30 @@ body {
     display: flex;
     flex-direction: column;
     width: 160px;
+
+    .name-and-vip-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
     .details-name {
       color: $font-1;
       font-weight: bold;
+    }
+
+    .account-vip-label {
+      background-image: url(../../assets/images/account/vip-label.png);
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: 63px 17px;
+      width: 100%;
+      height: 17px;
+      font-size: 0.675rem;
+      color: $color-white;
+      padding-left: 21px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .details-balance {

@@ -23,6 +23,18 @@
           <el-button type="success" size="small" class="blue-btn transfer-btn" @click="refreshAllModal">
             一键刷新
           </el-button>
+          <div class="balance-transfer-button">
+              <span>自动平台转账:</span>
+              <el-switch
+                v-model="autoTransfer"
+                class="ml-2"
+                inline-prompt
+                style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+                active-text="已开启"
+                inactive-text="已关闭"
+                @change="updateAutoTransfer($event)"
+              />
+            </div>
         </div>
       </div>
     </div>
@@ -121,7 +133,7 @@
 <script lang="js">
 import { defineComponent, ref, reactive, computed, onMounted } from "vue";
 import { loadBalance } from "@/api/personal/personal";
-import { transfer, withdrawAll, getPlatforms, getLoggedInPlatformList } from "@/api/personal/transfer";
+import { transfer, withdrawAll, getPlatforms, getLoggedInPlatformList, updateAutoTransferState, getAutoTransferState } from "@/api/personal/transfer";
 // import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
 import { MAIN } from "@/utils/utils";
@@ -141,11 +153,13 @@ export default defineComponent({
   setup() {
     const store = userStore();
     const platforms = reactive([]);
+    const autoTransfer = ref(false);
     const mainWallet = computed(() => {
       return store.balance;
     });
     onMounted(() => {
       loadPlatform();
+      getAutoTransfer();
     });
     // const { t } = useI18n();
     const transferModalVisible = ref(false);
@@ -230,6 +244,23 @@ export default defineComponent({
         }
       }, 1000);
     };
+
+    const updateAutoTransfer = async(state) => {
+      updateAutoTransferState(state).then(res => {
+        autoTransfer.value = res.data;
+      }).catch(e => {
+        console.log(e)
+      });
+    };
+
+    const getAutoTransfer = () => {
+      getAutoTransferState().then(res => {
+        autoTransfer.value = res.data;
+      }).catch(e => {
+          console.log(e)
+      });
+    };
+    
     const loadPlatform = () => {
       if(store.token) {
         getLoggedInPlatformList().then((response) => {
@@ -343,7 +374,9 @@ export default defineComponent({
       transferAllModalVisible,
       loadingTransfer,
       refreshAllModal,
-      platNames
+      platNames,
+      autoTransfer,
+      updateAutoTransfer
     };
   }
 });
@@ -475,6 +508,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
   background-color: #e7f3ff;
   padding: 20px;
   border-radius: 12px;
+  align-items: center;
 
   .left-box {
     display: flex;
