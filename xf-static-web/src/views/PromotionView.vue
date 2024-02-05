@@ -64,7 +64,7 @@
     </div>
     <div v-else class="selected-promo">
       <div class="selected-promo-wrapper" :class="`bg__${selectedPromo.promoCode}`">
-        <div class="banner-container" v-if="selectedPromo.promoCode !== 'XingFa-red-packet-rain'">
+        <div class="banner-container" v-if="selectedPromo.redirectUrl !== 'cny-hongbaoyu'">
           <template v-if="selectedPromo.promoCode === 'cny-spinwheel'">
             <img
               src="../assets/images/promotion/hotpromo/cny-spinwheel/banner.png"
@@ -85,7 +85,7 @@
         <div
           class="inner"
           :class="
-            selectedPromo.promoCode === 'cny-hongbaoyu' || selectedPromo.promoCode === 'XingFa-red-packet-rain'
+            selectedPromo.promoCode === 'cny-hongbaoyu' || selectedPromo.redirectUrl === 'cny-hongbaoyu'
               ? 'hongbao'
               : ''
           "
