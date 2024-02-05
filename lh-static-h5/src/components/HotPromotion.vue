@@ -16,7 +16,7 @@
           list.redirectUrl === 'lh1-refer-bonus')
       "
     />
-    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-tiger-card'" />
+    <DragonCardPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-dragon-card'" />
     <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
     <HongBaoYu2024 v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" :promo-code="list.promoCode" />
@@ -51,7 +51,13 @@
     <LotteryPromo v-if="list.redirectUrl === 'lh1-lottery' && !isCommonPromo && store.token" />
 
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
-    <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz' && !isCommonPromo"></EsportQuiz>
+    <EsportQuiz v-if="list.redirectUrl === 'lh1-quiz' && !isCommonPromo" />
+
+    <DailyLoginPromo v-if="list.redirectUrl === 'lh1-monthly-sign' && !isCommonPromo" />
+
+    <LoginRewardPromo v-if="list.redirectUrl === 'lh1-login-reward' && !isCommonPromo" />
+
+    <FootballFightPromo v-if="list.redirectUrl === 'lh1-football-fight' && !isCommonPromo" />
 
     <GiftPromo v-if="list.redirectUrl === 'lh1-gift' && !isCommonPromo && store.token"></GiftPromo>
 
@@ -104,7 +110,7 @@ import { useQuasar } from "quasar";
 import * as _ from "lodash";
 import moment from "moment";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
-import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
+import DragonCardPromo from "../components/hotpromo/dragoncard/dragonCardPromo.vue";
 // import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
@@ -114,8 +120,11 @@ import InsuranceSubmitPromo from "../components/hotpromo/insurancesubmit/insuran
 import FeedbackAwardPromo from "../components/hotpromo/feedbackaward/feedbackAwardPromo.vue";
 import PrivilegeInvitePromo from "../components/hotpromo/privilegeinvite/privilegeInvitePromo.vue";
 // import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
-// import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
+import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
+import DailyLoginPromo from "../components/hotpromo/dailylogin/dailyLoginPromo.vue";
+import LoginRewardPromo from "../components/hotpromo/loginreward/loginRewardPromo.vue";
+import FootballFightPromo from "../components/hotpromo/footballfight/footballFightPromo.vue";
 // import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 // import PrivilegeInvite from "../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue";
 // import AsiaCup2024Promo from "../components/hotpromo/asiacup2024/AsiaCup2024Promo.vue";
@@ -131,7 +140,7 @@ export default defineComponent({
   // setup: (props, { emit }) => {},
   components: {
     ClaimPromo,
-    TigerCardPromo,
+    DragonCardPromo,
     // PrizePoolVotePromo,
     GoldenEggPromo,
     // HongBaoYu2024,
@@ -140,8 +149,11 @@ export default defineComponent({
     FeedbackAwardPromo,
     PrivilegeInvitePromo,
     // InviteFriendPromo,
-    // EsportQuiz,
-    LotteryPromo
+    EsportQuiz,
+    LotteryPromo,
+    DailyLoginPromo,
+    LoginRewardPromo,
+    FootballFightPromo
     // GiftPromo,
     // PrivilegeInvite,
     // AsiaCup2024Promo,
@@ -207,7 +219,7 @@ export default defineComponent({
       this.list.redirectUrl === "invitefriend" ||
       this.list.redirectUrl === "welcomenewuser" ||
       this.list.redirectUrl === "lh1-lottery" ||
-      this.list.redirectUrl === "Dongying-quiz" ||
+      this.list.redirectUrl === "lh1-quiz" ||
       this.list.redirectUrl === "nba-game" ||
       this.list.redirectUrl === "lh1-esport-safety" ||
       this.list.redirectUrl === "lh1-sport-safety" ||
@@ -228,7 +240,14 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-invite-2" ||
       this.list.redirectUrl === "lh1-invite-3" ||
       this.list.redirectUrl === "lh1-football" ||
-      this.list.redirectUrl === "lh1-s13-vote"
+      this.list.redirectUrl === "lh1-s13-vote" ||
+      this.list.redirectUrl === "lh1-monthly-sign" ||
+      this.list.redirectUrl === "lh1-sports-continuous-win" ||
+      this.list.redirectUrl === "lh1-gift8" ||
+      this.list.redirectUrl === "lh1-upgrade-hongbao" ||
+      this.list.redirectUrl === "lh1-login-reward" ||
+      this.list.redirectUrl === "lh1-football-fight" ||
+      this.list.redirectUrl === "lh1-dragon-card"
     ) {
       this.isCommonPromo = false;
     } else {
