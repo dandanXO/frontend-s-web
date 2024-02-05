@@ -27,6 +27,7 @@ export default {
     please_select_bank: "Please Select A Bank",
     next_page: "Next Step",
     username_between_6_12: "Username should contain 6-12 characters",
+    first_digit_must_be_0: "First digit must be 0",
 
     // vip
     level: "Level",

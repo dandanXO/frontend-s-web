@@ -27,6 +27,7 @@ export default {
     please_select_bank: "โปรดเลือกธนาคาร",
     next_page: "หน้าต่อไป",
     username_between_6_12: "ชื่อที่ใช้ลงทะเบียน ควรมีพยัญชนะ 6-12 ตัว",
+    first_digit_must_be_0: "ตัวเลขแรกต้องเป็น 0",
 
     // vip
     level: "ระดับ",
