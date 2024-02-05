@@ -235,13 +235,13 @@
             <div
               class="platform-img-frame"
               :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
+                'background-image': getImgPlatformBg(item.icon, item.name)
               }"
             >
               <div class="platform-label"></div>
               <div class="platform-content">
                 <div class="platform-logo">
-                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
+                  <img :src="getImgPlatformLogo(item.icon, item.name)" />
                 </div>
                 <div class="platform-title">{{ item.title }}</div>
                 <div class="platform-subtitle">{{ item.subtitle }}</div>
@@ -1015,19 +1015,19 @@ export default defineComponent({
             if (platTypes.indexOf("LIVE") > -1) {
               var liveObj = Object.assign({}, element);
 
-              if (liveObj.alias) {
-                liveObj.title = translateRecord(liveObj.alias) + " 真人";
-              } else {
-                liveObj.title = translateRecord(liveObj.name) + " 真人";
-              }
-
-              // if (liveObj.code === "PMLIVE") {
-              //   liveObj.title = "DB真人";
-              // } else if (liveObj.code === "EBET") {
-              //   liveObj.title = "WE真人";
+              // if (liveObj.alias) {
+              //   liveObj.title = translateRecord(liveObj.alias) + " 真人";
               // } else {
-              //   liveObj.title = translateRecord(liveObj.name) + "真人";
+              //   liveObj.title = translateRecord(liveObj.name) + " 真人";
               // }
+
+              if (liveObj.code === "PMLIVE") {
+                liveObj.title = "DB真人";
+              } else if (liveObj.code === "EBET") {
+                liveObj.title = "WE真人";
+              } else {
+                liveObj.title = translateRecord(liveObj.name) + "真人";
+              }
 
               if (liveObj.code === "BBINDY") {
                 liveObj.gameCode = "bblive_lobby_pc";

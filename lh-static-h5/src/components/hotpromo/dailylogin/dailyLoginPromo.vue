@@ -7,7 +7,7 @@
       </div>
       <div class="months">
         <div
-          @click="mth.isCheckedIn = true"
+          @click="checkInOfTheDay(mth)"
           v-for="(mth, index) in dateDetails"
           :key="index"
           class="mth"
@@ -54,63 +54,16 @@
       </div>
     </div>
   </div>
+
+  <pre>{{ checkInDetails }}</pre>
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
+import { eventapi } from "boot/axios";
 
 const dateDetails = ref([]);
 const init = () => {
   dateDetails.value = [
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: true
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: true
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: true
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: true
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: true
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: true
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: true
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: true
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: true
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: true
-    },
     {
       number: 7,
       checkInActive: true,
@@ -210,11 +163,74 @@ const init = () => {
       number: 7,
       checkInActive: false,
       isCheckedIn: false
+    },
+    {
+      number: 7,
+      checkInActive: false,
+      isCheckedIn: false
+    },
+    {
+      number: 7,
+      checkInActive: false,
+      isCheckedIn: false
+    },
+    {
+      number: 7,
+      checkInActive: false,
+      isCheckedIn: false
+    },
+    {
+      number: 7,
+      checkInActive: false,
+      isCheckedIn: false
+    },
+    {
+      number: 7,
+      checkInActive: false,
+      isCheckedIn: false
+    },
+    {
+      number: 7,
+      checkInActive: false,
+      isCheckedIn: false
+    },
+    {
+      number: 7,
+      checkInActive: false,
+      isCheckedIn: false
+    },
+    {
+      number: 7,
+      checkInActive: false,
+      isCheckedIn: false
+    },
+    {
+      number: 7,
+      checkInActive: false,
+      isCheckedIn: false
+    },
+    {
+      number: 7,
+      checkInActive: false,
+      isCheckedIn: false
     }
   ];
 };
+
+const checkInDetails = ref();
+const loadDailyCheckIn = () => {
+  eventapi.get("/sign-in/info").then((res) => {
+    if (res.code === 0) {
+      checkInDetails.value = res.data;
+    }
+  });
+};
+
+const checkInOfTheDay = () => {};
+
 onMounted(() => {
   init();
+  loadDailyCheckIn();
 });
 </script>
 <style lang="scss" scoped>
@@ -274,14 +290,15 @@ onMounted(() => {
     }
   }
   .months {
-    background: #ffffff;
+    // background: #ffffff;
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     padding: 0px 5px 20px;
     border-radius: 12px;
     overflow: hidden;
-    background: radial-gradient(#ffffff 0%, #ffffff 100%);
+    background: radial-gradient(#ffffff 0%, #fbfcffee 100%);
+
     .mth {
       padding: 4px;
 
@@ -305,9 +322,11 @@ onMounted(() => {
       align-items: center;
       flex-direction: column;
       color: #4c4c6c;
-      height: 80px;
+      height: 90px;
+      margin-bottom: -20px;
       .day {
-        font-size: 12px;
+        font-size: 14px;
+        font-weight: 700;
 
         .times {
           font-size: 9px;
