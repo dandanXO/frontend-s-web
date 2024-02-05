@@ -87,7 +87,7 @@ export const sportsPlatforms = [
     gameCode: ""
   },
   {
-    code: "PM",
+    code: "熊猫",
     cnname: "熊猫体育",
     image: "db",
     message: "最专业的盘口趋势分析，及时掌握最全面的热点赛事、体育资讯，多种投注型，让您乐享其中。",
@@ -155,7 +155,7 @@ export const eSportsPlatforms = [
       "最新颖的电子竞技玩法,走在前沿的电子竞技赛事盘口，英雄联盟、刀塔、反恐、星际等多样竞技赛事,享受电子竞技的快感。",
     caption: "亚洲先驱 实时滚球",
     gameCode: ""
-  },
+  }
   // {
   //   code: "AI",
   //   cnname: "小艾电竞",
@@ -204,7 +204,7 @@ export const slotPlatforms = [
   // }
   {
     code: "AG",
-    cnname: "AG电子",
+    cnname: "XIN电子",
     image: "ag",
     message: "坚持创新、打造精品,最缤纷的电子游艺画面，最刺激的游戏体验，各类老虎机应有尽有，彩池大奖由您触发!",
     caption: "",
@@ -307,7 +307,7 @@ export const lotteryPlatforms = [
 export const fishingPlatforms = [
   {
     code: "GPS",
-    cnname: "GPS捕鱼王",
+    cnname: "GPS决战中途岛",
     image: "gps",
     message:
       "最受欢迎的GPS捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
@@ -318,8 +318,7 @@ export const fishingPlatforms = [
     code: "AG",
     cnname: "AG捕鱼王",
     image: "",
-    message:
-      "",
+    message: "",
     caption: "",
     gameCode: ""
   }
