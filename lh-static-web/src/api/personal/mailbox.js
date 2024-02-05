@@ -14,7 +14,8 @@ export function mailInbox(mailQuery) {
       type: mailQuery.type,
       current: mailQuery.current,
       size: mailQuery.size,
-      orderBy: mailQuery.orderBy
+      orderBy: mailQuery.orderBy,
+      messageType: mailQuery.messageType
     }
   });
 }
