@@ -1,38 +1,17 @@
 <template>
   <div class="hot-promo">
-    <ClaimPromo
-      v-if="isCommonPromo"
-      :promo-id="list.id"
-      :loading-claim="loadingClaim"
-      @daily-slot="handleSlot()"
-    />
+    <ClaimPromo v-if="isCommonPromo" :promo-id="list.id" :loading-claim="loadingClaim" @daily-slot="handleSlot()" />
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'tigercard'" />
-    <GoldenEggPromo
-      v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token"
-    />
-    <HongBaoYuPromo
-      v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu' && store.token"
-    />
+    <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token" />
+    <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu' && store.token" />
     <HongBaoYu2024Promo
-      v-if="
-        !isCommonPromo && list.redirectUrl === 'cny-hongbaoyu' && store.token
-      "
+      :promo-code="list.promoCode"
+      v-if="!isCommonPromo && list.redirectUrl === 'cny-hongbaoyu' && store.token"
     />
-    <WelcomeTaskPromo
-      v-if="
-        !isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token
-      "
-    />
-    <InviteFriendPromo
-      v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo"
-    />
-    <CnySpinWheelPromo
-      v-if="list.redirectUrl === 'cny-spinwheel' && !isCommonPromo"
-    />
-    <div
-      v-if="list.redirectUrl === 'fucaiiphone' && !isCommonPromo && store.token"
-      class="promo-4"
-    >
+    <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
+    <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
+    <CnySpinWheelPromo v-if="list.redirectUrl === 'cny-spinwheel' && !isCommonPromo" />
+    <div v-if="list.redirectUrl === 'fucaiiphone' && !isCommonPromo && store.token" class="promo-4">
       <div class="tabs">
         <el-tabs v-model="activeKey" type="card">
           <el-tab-pane key="1" label="选择幸运号码">
@@ -46,13 +25,7 @@
                       <el-input v-model="luckyNumber" placeholder="幸运号码" />
                     </el-col>
                     <el-col span="12">
-                      <el-button
-                        class="common-btn"
-                        :loading="btnLoading"
-                        @click="chooseLuckyNumber()"
-                      >
-                        提交
-                      </el-button>
+                      <el-button class="common-btn" :loading="btnLoading" @click="chooseLuckyNumber()">提交</el-button>
                     </el-col>
                   </el-row>
                 </el-form>
@@ -168,12 +141,7 @@
       </div>
     </div>
 
-    <el-dialog
-      class="award-modal"
-      :modal="false"
-      v-model="privilegeClaimedModalVisible"
-      align-center
-    >
+    <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
           <div class="inner-contents">
@@ -189,12 +157,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import {
-  claimBonusItem,
-  submitLuckyNumber,
-  luckyNumberList,
-  winnerList
-} from "@/api/index/promo";
+import { claimBonusItem, submitLuckyNumber, luckyNumberList, winnerList } from "@/api/index/promo";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";

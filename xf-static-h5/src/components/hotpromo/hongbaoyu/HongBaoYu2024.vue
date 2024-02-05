@@ -121,14 +121,19 @@
 import { onMounted, ref } from "vue";
 import { eventapi } from "boot/axios";
 import { userStore } from "src/stores";
-
+const props = defineProps({
+  promoCode: {
+    type: String,
+    required: true
+  }
+});
 const store = userStore();
 const promoNotReady = ref(false);
 const bonusOpened = ref(false);
 const winAmount = ref(0);
 const isClaimModal = ref(false);
 const loadingClaim = ref(false);
-const promoCode = ref("hongbaoyu");
+const promoCode = ref(props.promoCode);
 
 const getPromotion = () => {
   loadingClaim.value = true;
