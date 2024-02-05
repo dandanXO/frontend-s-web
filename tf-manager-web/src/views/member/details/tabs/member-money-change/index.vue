@@ -170,7 +170,7 @@
       <el-pagination
         :total="page.total"
         :page-sizes="[20, 50, 100, 150]"
-        layout="total,sizes,prev, next"
+        layout="sizes,prev, next"
         style="margin-top: 10px"
         v-model:page-size="request.size"
         v-model:page-count="page.pages"
