@@ -69,11 +69,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineProps } from "vue";
 import { claimDailyRainItem, getDailyRainListing } from "@/api/index/promo";
 import { userStore } from "@/store";
 
-const promoCode = ref("hongbaoyu");
+const props = defineProps({
+  promoCode: {
+    type: String,
+    required: true
+  }
+});
+console.log(props);
+
+const promoCode = ref(props.promoCode);
 
 const store = userStore();
 const privilegeClaimedModalVisible = ref(false);
