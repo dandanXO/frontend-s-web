@@ -121,7 +121,7 @@ export default defineComponent({
   position: fixed;
   bottom: 60px;
   width: 240px;
-  z-index: 99999;
+  z-index: 2000;
   display: flex;
   flex-direction: row;
   background: #e4eefe;

@@ -1040,7 +1040,11 @@ export default defineComponent({
             if (platTypes.indexOf("SLOT") > -1) {
               // console.log(element)
               var slotObj = Object.assign({}, element);
-              if (slotObj.alias) {
+
+              if (slotObj.code === "AG") {
+                slotObj.title = "XIN 电子";
+              }
+              else if (slotObj.alias) {
                 slotObj.title = translateRecord(slotObj.alias) + " 电子";
               } else {
                 slotObj.title = translateRecord(slotObj.name) + " 电子";
@@ -1050,9 +1054,6 @@ export default defineComponent({
               slotObj.subtitle = "电子游戏";
               // console.log(slotObj);
 
-              // if (slotObj.code === "AG") {
-              //   slotObj.title = "AG 电子";
-              // }
 
               let slotItem = {
                 id: slotObj.id,

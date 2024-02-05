@@ -121,7 +121,9 @@ export const translateRecord = (rec, type = "") => {
     return "金额调整"; // ADJUST
   }else if (rec === "MGP") {
     return "MG"; // AG
-  } else if (rec === "AG") {
+  } else if (rec === "AG" && type==='slot') {
+    return "XIN"; // AG
+  }else if (rec === "AG") {
     return "AG"; // AG
   } else if (rec === "BBINDY") {
     return "BBIN真人"; // BBINDY

@@ -87,7 +87,7 @@ export const sportsPlatforms = [
     gameCode: ""
   },
   {
-    code: "熊猫",
+    code: "PM",
     cnname: "熊猫体育",
     image: "db",
     message: "最专业的盘口趋势分析，及时掌握最全面的热点赛事、体育资讯，多种投注型，让您乐享其中。",
@@ -204,6 +204,7 @@ export const slotPlatforms = [
   // }
   {
     code: "AG",
+    name: "XIN",
     cnname: "XIN电子",
     image: "ag",
     message: "坚持创新、打造精品,最缤纷的电子游艺画面，最刺激的游戏体验，各类老虎机应有尽有，彩池大奖由您触发!",

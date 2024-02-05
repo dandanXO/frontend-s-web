@@ -55,7 +55,7 @@
                     />
                   </span>
                 </div>
-                <div class="list-item-txt">{{ plat.alias ?? plat.name }}</div>
+                <div class="list-item-txt">{{ plat.alias ?? plat.cnname }}</div>
               </span>
             </div>
 
