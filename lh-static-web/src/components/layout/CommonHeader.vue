@@ -1240,7 +1240,9 @@ export default defineComponent({
 
     watch(() => store.loginPageVisible, () => {
       if (store.loginPageVisible) {
-        loginDialogVisible.value = true
+        // loginDialogVisible.value = true
+        router.push('/login');
+        return;
       } else {
         loginDialogVisible.value = false
       }
@@ -1249,7 +1251,9 @@ export default defineComponent({
     });
     watch(() => store.regPageVisible, () => {
       if (store.regPageVisible) {
-        registerDialogVisible.value = true
+        // registerDialogVisible.value = true
+        router.push('/register');
+        return;
       } else {
         registerDialogVisible.value = false
       }
