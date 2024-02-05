@@ -152,7 +152,7 @@ export default defineComponent({
           hasDrawer.value = true;
           pageName.value = "游戏大厅";
           if (route.query.platform) {
-            var platformName = route.query.platform == "BBINDY" ? "BBIN" : translateRecord(route.query.platform);
+            var platformName = route.query.platform == "BBINDY" ? "BBIN" : translateRecord(route.query.platform, "slot");
             pageName.value = `${platformName}游戏大厅`;
           }
         } else if (route.path === "/fishing") {

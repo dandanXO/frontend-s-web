@@ -38,7 +38,7 @@ export const liveCasinoPlatforms = [
     image: "bbin",
     message: "全球首创6张牌先发、VIP包桌、咪牌百家乐、智控模式百家乐及竞咪互动百家乐等游戏，多终端兼容，让您享受不停。",
     caption: "",
-    gameCode: ""
+    gameCode: "bblive_lobby_pc"
   },
   {
     code: "BBIN",
@@ -155,7 +155,7 @@ export const eSportsPlatforms = [
       "最新颖的电子竞技玩法,走在前沿的电子竞技赛事盘口，英雄联盟、刀塔、反恐、星际等多样竞技赛事,享受电子竞技的快感。",
     caption: "亚洲先驱 实时滚球",
     gameCode: ""
-  },
+  }
   // {
   //   code: "AI",
   //   cnname: "小艾电竞",
@@ -204,7 +204,8 @@ export const slotPlatforms = [
   // }
   {
     code: "AG",
-    cnname: "AG电子",
+    name: "XIN",
+    cnname: "XIN电子",
     image: "ag",
     message: "坚持创新、打造精品,最缤纷的电子游艺画面，最刺激的游戏体验，各类老虎机应有尽有，彩池大奖由您触发!",
     caption: "",
@@ -278,7 +279,7 @@ export const pokerPlatforms = [
     image: "gd",
     message: "抢庄牛牛龙虎斗，多款棋牌任君选<br> 棋牌彰显胸怀，竞技娱乐烧脑，好友相约竞技，游戏改变生活",
     caption: "",
-    gameCode: ""
+    gameCode: "lobby"
   }
 ];
 
@@ -307,19 +308,18 @@ export const lotteryPlatforms = [
 export const fishingPlatforms = [
   {
     code: "GPS",
-    cnname: "GPS捕鱼王",
+    cnname: "GPS决战中途岛",
     image: "gps",
     message:
       "最受欢迎的GPS捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
     caption: "",
-    gameCode: "7202"
+    gameCode: 7202
   },
   {
     code: "AG",
     cnname: "AG捕鱼王",
     image: "",
-    message:
-      "",
+    message: "",
     caption: "",
     gameCode: ""
   }

@@ -33,7 +33,8 @@
             @click="openPopup(announcementList)"
           />
           <div class="station-notice">
-            <Vue3Marquee :clone="false" :duration="130">
+            <Vue3Marquee :clone="false"
+                         :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 1 + 10 : 70">
               <div
                 v-for="(word, index) in announcementList"
                 :key="index"
@@ -90,6 +91,16 @@ const openPopup = (noticeType) => {
   }
 };
 
+const calculateMaxContentLength = () => {
+  let maxLength = 0;
+  for (const announcement of announcementList.value) {
+    if (announcement.content.length > maxLength) {
+      maxLength = announcement.content.length;
+    }
+  }
+  return maxLength;
+};
+
 onMounted(() => {
   loadAnnouncement();
 });
@@ -126,7 +137,7 @@ onMounted(() => {
         overflow: hidden;
 
         .announcement-img {
-          width: 30px;
+          width: 36px;
           transform: scaleX(-1);
         }
 
@@ -134,11 +145,13 @@ onMounted(() => {
           display: flex;
           justify-content: center;
           align-items: center;
+          width: 100%;
 
           .station-notice-item {
             color: #7a80a1;
-            font-weight: 400;
             margin-right: 50px;
+            font-size: 15px;
+            line-height: 15px;
           }
         }
       }

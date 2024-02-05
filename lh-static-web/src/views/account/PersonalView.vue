@@ -247,7 +247,7 @@
         <div class="account-tip-text">
           <div class="link">
             如果您需要修改个人资料，请您联系我们的
-            <a @click.stop.prevent="store.openLiveChat()">在线客服</a>
+            <a @click="store.openLiveChat()">在线客服</a>
           </div>
         </div>
       </el-form>

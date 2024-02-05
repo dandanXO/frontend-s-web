@@ -69,7 +69,7 @@ const gotoGame = (item) => {
     router.push(`${props.platformName}?plat=${item.code}`);
   } else {
     console.log(item);
-    emits("load-game", item.name, item.code);
+    emits("load-game", item.name, item.code, item.gameCode);
     // emits("load-game", item);
   }
 };

@@ -56,7 +56,7 @@
                                 <div style="display:flex;width:100%;">
                                     <el-input v-model="captchaForm.captchaCode" label="验证码" placeholder="验证码"
                                         @keyup.enter="sendOtp" />
-                                    <img style="width:100&;border-radius:100px;" :src="verificationImg" @click="getCode" />
+                                    <img style="width:150px;border-radius:100px;" :src="verificationImg" @click="getCode" />
                                 </div>
                             </el-form-item>
                         </div>
