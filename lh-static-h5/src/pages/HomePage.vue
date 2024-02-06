@@ -90,7 +90,7 @@
   <div class="details-bar">
     <div class="message" @click="refreshBalance">
       <span class="main-balance">
-        {{ store.token ? (!isLoadingBalance ? "¥" + mainWallet.toFixed(2) : "加载中...") : "早上好~" }}
+        {{ store.token ? (!isLoadingBalance ? "¥" + mainWallet.toFixed(2) : "加载中...") : "未登录" }}
       </span>
       <span>中心钱包</span>
     </div>
@@ -1043,8 +1043,7 @@ export default defineComponent({
 
               if (slotObj.code === "AG") {
                 slotObj.title = "XIN 电子";
-              }
-              else if (slotObj.alias) {
+              } else if (slotObj.alias) {
                 slotObj.title = translateRecord(slotObj.alias) + " 电子";
               } else {
                 slotObj.title = translateRecord(slotObj.name) + " 电子";
@@ -1053,7 +1052,6 @@ export default defineComponent({
               slotObj.icon = "slot";
               slotObj.subtitle = "电子游戏";
               // console.log(slotObj);
-
 
               let slotItem = {
                 id: slotObj.id,
@@ -1800,6 +1798,7 @@ export default defineComponent({
           display: flex;
           flex-direction: column;
           align-items: center;
+          justify-content: center;
         }
 
         // .platform-item-bg {
@@ -1812,7 +1811,7 @@ export default defineComponent({
         // }
 
         .platform-logo {
-          margin-top: auto;
+          // margin-top: auto;
           height: 1.25rem;
 
           img {
@@ -1847,7 +1846,7 @@ export default defineComponent({
           border: 1px solid #fff;
           background: linear-gradient(180deg, #fafbff 0%, #e6edfe 100%);
           box-shadow: 0px 4px 4px 0px rgba(154, 176, 255, 0.1);
-          display: flex;
+          display: none;
           align-items: center;
 
           span {

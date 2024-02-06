@@ -767,15 +767,16 @@ $transition_timer: 0.5s;
           width: 55%;
 
           .title-wrapper {
-            filter: drop-shadow(3px 0 #5799e3);
-            font-family: FZHanZhenGuangBiaoS-GB;
-            font-weight: 600;
-            background: linear-gradient(180deg, #c2e9fb 0%, #a1c4fc 100%);
-            background-clip: text;
+            font-family: "YiHei";
+            font-style: normal;
+            font-weight: 400;
+            background: linear-gradient(180deg, #C2E9FB 0%, #A1C4FC 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            -webkit-text-stroke-width: 0.5px;
-            -webkit-text-stroke-color: white;
+            background-clip: text;
+            text-fill-color: transparent;
+            filter: drop-shadow(2px 1px #5799E3);
+
             line-height: normal;
 
             .title {

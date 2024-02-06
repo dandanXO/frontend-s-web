@@ -79,6 +79,7 @@ import { userStore } from "@/store/index";
 import { sendSms } from "@/api/personal/personal";
 import AccountLogin from '@/components/auth/AccountLogin.vue';
 import { ElMessage } from "element-plus";
+import { useRoute, useRouter } from "vue-router";
 
 const captchaRules = {
     captchaCode: [
@@ -134,6 +135,8 @@ const passForm = reactive({
     email: '',
 })
 
+const router = useRouter();
+const route = useRoute();
 const loginCountdown = ref(0)
 const mobileLoginRef = ref([])
 const store = userStore();

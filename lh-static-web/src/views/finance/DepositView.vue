@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="deposit-container">
     <div class="menu-title-container">
       <span class="menu-title">充值中心</span>
       <span class="additional-title">支持虚拟币USDT小额存提，24小时安全、便捷、秒存秒提!</span>
@@ -30,14 +30,23 @@ export default defineComponent({
   align-items: center;
   color: #ff0000;
 }
-// .account-content.deposit {
-//   min-height: 740px;
-//   display: flex;
-//   justify-content: center;
-// }
-// @media (max-width: 768px) {
-//   .account-content.deposit {
-//     min-height: 90vh;
-//   }
-// }
+
+.menu-title-container{
+  .menu-title{
+    font-size: 18px;
+    color: #424F72;
+  }
+
+  .additional-title{
+    padding-left: 16px;
+  }
+}
+
+.deposit-container{
+  background-color: #fff;
+  box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
+  border-radius: 15px;
+  padding: 20px 40px;
+}
+
 </style>
