@@ -208,7 +208,7 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
 }
 
 .Mhrnjf .nm4vBd, .Mhrnjf .Q3MhI {
-    border-radius: 20%
+    /*border-radius: 20%*/
 }
 
 .T75of {
@@ -217,8 +217,8 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
 
 .nm4vBd, .Q3MhI {
     border-width: 0;
-    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);
-    border-radius: 4px
+    /*box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);*/
+    /*border-radius: 4px*/
 }
 
 .nm4vBd .VfPpkd-BFbNVe-bF1uUb, .Q3MhI .VfPpkd-BFbNVe-bF1uUb {
