@@ -135,7 +135,7 @@ export default defineComponent({
       flex-direction: column;
       align-items: center;
       color: #ffffff;
-      gap: 20px;
+      gap: 15px;
       .sharing-container {
         box-shadow: 0px 0px 20px 1px #10101c;
         width: 100%;

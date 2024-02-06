@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/valid-v-slot -->
 <template>
-  <div>
+  <div class="transaction-container">
     <div class="menu-title-container">
       <span class="menu-title">交易记录</span>
     </div>
@@ -1684,6 +1684,14 @@ export default defineComponent({
       gap: 20px;
     }
   }
+}
+
+.transaction-container{
+
+  background-color: #fff;
+  box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
+  border-radius: 15px;
+  padding: 20px 40px;
 }
 </style>
 <style scoped lang="scss">

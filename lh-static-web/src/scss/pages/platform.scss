@@ -2,7 +2,7 @@
   max-width: $maxwidth;
   margin-left: auto;
   margin-right: auto;
-  padding: 3% 0;
+  padding: 10px 0 10px;
 
   .platform-desc{
     color: #3063AB;
@@ -11,7 +11,7 @@
 
   .platform-container-inner {
     display: grid;
-    grid-template-columns: 60% 40%;
+    grid-template-columns: 55% 45%;
 
     .platform-item {
       display: flex;
