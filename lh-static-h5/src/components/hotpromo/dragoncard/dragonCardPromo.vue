@@ -212,7 +212,7 @@ const pageNumChange = (i) => {
 };
 
 const pageInit = () => {
-  eventapi.post("/tigerCard/init", qs.stringify({ promoCode: "dy2-tiger-card" })).then((res) => {
+  eventapi.post("/tigerCard/init", qs.stringify({ promoCode: "lh1-dragon-card" })).then((res) => {
     if (res.code === 0) {
       cardInfo.cardDetail = res.data;
     }
@@ -231,7 +231,7 @@ const pageLoadingText = ref("");
 const getNewTigerCard = () => {
   isPageLoading.value = true;
   pageLoadingText.value = "正领取龙卡";
-  eventapi.post("/tigerCard/getMemberCard", qs.stringify({ promoCode: "dy2-tiger-card" })).then((res) => {
+  eventapi.post("/tigerCard/getMemberCard", qs.stringify({ promoCode: "lh1-dragon-card" })).then((res) => {
     if (res.code === 0) {
       cardInfo.cardDetail[res.data.cardType] = cardInfo.cardDetail[res.data.cardType] + 1;
       isCardModal.value = true;
@@ -259,7 +259,7 @@ const getNewTigerCard = () => {
 const compoundCard = () => {
   isPageLoading.value = true;
   pageLoadingText.value = "正合成大奖卡";
-  eventapi.post("/tigerCard/synthesisCard", qs.stringify({ promoCode: "dy2-tiger-card" })).then((res) => {
+  eventapi.post("/tigerCard/synthesisCard", qs.stringify({ promoCode: "lh1-dragon-card" })).then((res) => {
     if (res.code === 0) {
       pageInit();
       ElMessage.success({
@@ -371,7 +371,7 @@ const submitRegisterForm = async () => {
     // form has error
   } else {
     isSubmitting.value = true;
-    form.promoCode = "dy2-tiger-card";
+    form.promoCode = "lh1-dragon-card";
     eventapi.post("/tigerCard/giveCardToFriend", qs.stringify(form)).then((res) => {
       if (res.code === 0) {
         $q.notify({

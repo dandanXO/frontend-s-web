@@ -1,12 +1,12 @@
 <template>
   <div class="table-record">
     <RecordComponent
-        recordType="moneyChange"
-        :loading="visible"
-        :list="tableData"
-        :headers="tableHeaders"
-        @loadnewdata="loadNewData"
-        :isEnded="isEnded"
+      recordType="moneyChange"
+      :loading="visible"
+      :list="tableData"
+      :headers="tableHeaders"
+      @loadnewdata="loadNewData"
+      :isEnded="isEnded"
     />
   </div>
 </template>
@@ -83,6 +83,16 @@ export default defineComponent({
       ).then((res) => {
         console.log(res);
 
+        // Check if records array is empty and stop processing if true
+        if (res.records.length === 0) {
+          console.log("No records found. Ending function execution.");
+          current.value = maxPage.value;
+          if (isNew) {
+            visible.value = false;
+          }
+          return; // Exit the function early
+        }
+
         maxPage.value = res.pages;
         pagingState.value= res.pagingState;
 
@@ -149,12 +159,12 @@ export default defineComponent({
   gap: 10px;
 
   .q-card {
-    background: rgb(33, 37, 52);
-    color: rgb(186, 206, 241);
+    color: rgb(0, 0, 0) !important;
+    background: rgb(255, 255, 255) !important;
   }
 
   .label {
-    color: #fff;
+    color: #000;
   }
 
   .q-btn {

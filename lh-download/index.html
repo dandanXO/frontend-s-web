@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>雷火App下载</title>
+
+    <link rel="stylesheet" type="text/css" href="css/download_index.css">
+    <link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
+    <script type="text/javascript" src="https://vns6s.fannyberrebi.com/xws-website.txt"></script>
+    <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="js/swiper-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/clipboard.min.js"></script>
+    <script type="text/javascript" src="js/download.js"></script>
+
+    <style type="text/css">
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0%;
+        }
+    </style>
+</head>
+<body>
+<div class="download" style="display: block;">
+
+    <div class="download_bg">
+        <img src="img/download_logo.png" style="width: 73%;margin-top: 20px;" />
+        <div class="host_address" id="web_show">leihuo6.com</div>
+        <img class="customer_icon" id="dy_customer" src="img/download_customer.png" />
+        <!--<img src="img/download_pic.png" style="width: 90%;margin-top: 10px;"/> -->
+        <img src="img/download_text.png" style="width: 90%;margin-top: 15px;" />
+        <img src="img/download_icons.png" style="width: 80%;margin-top: 25px;" />
+        <div class="games_title_container"></div>
+        <div class="download_btn" style="margin-top: 15px;" id="btn_fast"><a id="download_fast">雷火快捷APP（推荐使用,免安装）</a></div>
+        <div class="download_btn" id="btn_1"><a id="download_1">雷火全站APP（线路一）</a></div>
+        <div class="download_btn" id="btn_2"><a id="download_2">雷火全站APP（线路二）</a></div>
+        <div class="download_btn" id="btn_3"><a id="download_3">福建—江苏地区专用线路</a></div>
+        <div class="download_btn" id="btn_h5"><a id="download_h5">手机网页版</a></div>
+        <div class="download_des">下载安装过程中请勿切换网络，推荐使用手机自带浏览器打开本页面下滑查看安装教程。</div>
+        <div class="download_install_des">下滑查看安装教程</div>
+    </div>
+
+    <div class="swiper_parent">
+        <div class="swiper-container swiper-container-horizontal swiper-container-android">
+            <div class="swiper-wrapper" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">
+
+            </div>
+            <div class="swiper-pagination swiper-pagination-bullets"><span
+                    class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span
+                    class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span
+                    class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span></div>
+        </div>
+    </div>
+
+</div>
+
+<div class="weixin_tip" style="display: none;">
+    <img id="tips" src="img/wxtips_android.png" alt="" style="width:100%;height:auto;">
+</div>
+
+<script>
+    var type = "ALL_AND";
+    var gamesTitleList = ["体育", "真人", "电竞", "棋牌", "电子", "彩票"];
+    var andList = [
+        {imgurl: 'img/android/01.png'},
+        {imgurl: 'img/android/02.png'},
+        {imgurl: 'img/android/03.png'},
+        {imgurl: 'img/android/04.png'},
+        {imgurl: 'img/android/05.png'}
+    ];
+    var iosList = [
+        {imgurl: 'img/ios/01.png'},
+        {imgurl: 'img/ios/02.png'},
+        {imgurl: 'img/ios/03.png'},
+        {imgurl: 'img/ios/04.png'},
+        {imgurl: 'img/ios/05.png'},
+        {imgurl: 'img/ios/06.png'}
+    ];
+    var mySwiper = new Swiper('.swiper-container', {
+        effect: 'slide',
+        pagination: '.swiper-pagination',
+        initialSlide: 0,
+        observer: true,
+        observeParents: true
+    });
+
+    function is_weixin() {
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    var isWeixin = is_weixin();
+
+    function showAndroid() {
+        for (var i = 0; i < andList.length; i++) {
+            $(".swiper-wrapper").append('<div class="swiper-slide"><img src="' + andList[i].imgurl + '" alt=""/></div>')
+        }
+        ;
+
+        var searchParams = window.location.search;
+
+        $('#download_1').attr('href', getAndroidPath());
+        $('#download_h5').attr('href', getH5Path() + searchParams);
+
+        $('#btn_fast').attr('hidden', true);
+
+        var path2 = getAndroidPath2();
+        if (path2.length > 0) {
+            $('#download_2').attr('href', path2);
+        } else {
+            $('#btn_2').attr('hidden', true);
+        }
+        $('#btn_3').attr('hidden', true);
+    }
+
+    function showIOS() {
+
+        type = "ALL_IOS";
+        for (var i = 0; i < iosList.length; i++) {
+            $(".swiper-wrapper").append('<div class="swiper-slide"><img src="' + iosList[i].imgurl + '" alt=""/></div>')
+        }
+        ;
+        var searchParams = window.location.search;
+
+
+        var fastPath = getIosFastPath();
+        if (fastPath.length > 0) {
+            $('#download_fast').attr('href', getIosFastPath() + searchParams);
+        } else {
+            $('#btn_fast').attr('hidden', true);
+        }
+        $('#download_1').attr('href', getIosPath1());
+        var path2 = getIosPath2();
+        if (path2.length > 0) {
+            $('#download_2').attr('href', path2);
+        } else {
+            $('#btn_2').attr('hidden', true);
+        }
+        var path3 = getIosPath3();
+        if (path3.length > 0) {
+            $('#download_3').attr('href', path3);
+        } else {
+            $('#btn_3').attr('hidden', true);
+        }
+        $('#download_h5').attr('href', getH5Path() + searchParams);
+    }
+
+    function returnService(dd) {//客服
+        if (dd.code == 0) {
+            var data = JSON.parse(dd.data);
+            window.location.href = data.liveurl;
+        }
+
+    }
+
+    $(function () {
+        $("#web_show").text(getShowWeb());
+        for (var i = 0; i < gamesTitleList.length; i++) {
+            $(".games_title_container").append('<div class="games_title_item">' + gamesTitleList[i] + '</div>')
+        }
+
+        $('#dy_customer').click(() => {
+            getCustomerService(returnService);
+        })
+
+        if (isWeixin) {
+            $(".weixin_tip").show();
+            if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                $("#tips").attr("src", "img/wxtips_ios.png");
+            } else if (/(Android)/i.test(navigator.userAgent)) {
+                $("#tips").attr("src", "img/wxtips_android.png");
+            }
+        } else {
+            $(".download").show();
+
+            //获取上面部分的高度
+            var downloadViewHeight = $(".download_bg").height();
+            //获取屏幕高度
+            var windowH = window.innerHeight;
+
+            if (downloadViewHeight < windowH) {
+                $(".download_bg").css("height", "100vh");
+            } else {
+                $(".download_bg").css("height", "auto");
+            }
+
+            if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                showIOS();
+            } else if (/(Android)/i.test(navigator.userAgent)) {
+                showAndroid();
+            } else {
+                showAndroid();
+            }
+            ;
+
+            var host = window.location.host;
+            var vv = {agentCode: getQueryString("agentCode"), regFrom: getQueryString("url"), downloadUrl: host};
+
+            //TODO:前面三个按钮添加复制文本
+            $('#download_1').attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
+            $('#download_2').attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
+            $('#download_3').attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
+
+            new ClipboardJS('#download_1');
+            new ClipboardJS('#download_2');
+            new ClipboardJS('#download_3');
+
+            $("#download_1").click(function () {
+                postDownloadExtra(type, host);
+            });
+            $("#download_2").click(function () {
+                postDownloadExtra(type, host);
+            });
+            $("#download_3").click(function () {
+                postDownloadExtra(type, host);
+            });
+        }
+
+
+    });
+</script>
+
+
+</body>
+</html>

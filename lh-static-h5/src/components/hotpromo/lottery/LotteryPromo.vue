@@ -82,7 +82,7 @@
             <q-form :model="query" :layout="'inline'">
               <q-row class="firstrow">
                 <div class="date">
-                  <q-input filled v-model="query.recordTime" mask="date" :placeholder="todayDate">
+                  <q-input filled v-model="query.recordTime" mask="date">
                     <template v-slot:append>
                       <q-icon name="event" class="cursor-pointer">
                         <q-popup-proxy cover transition-show="scale" transition-hide="scale">

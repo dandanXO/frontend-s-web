@@ -308,21 +308,21 @@ const submitRegisterForm = async (elForm) => {
 .tigercard-container {
   .el-table {
     &__empty-text p {
-      color: #ffd97f;
+      color: #6d9ef9;
     }
     max-width: 650px;
     margin: 0 auto;
 
-    background: #1d212e;
+    background: #6d9ef9;
     border-radius: 10px;
     border: 0;
     th {
       text-align: center;
       line-height: 32px;
       &.el-table__cell {
-        color: #ffd683;
+        color: #ffffff;
         border-bottom: 1px solid #ffd97f;
-        background-color: #1d212e;
+        background-color: #6d9ef9;
         &.is-leaf {
           border-bottom: 1px solid #ffd97f;
         }
@@ -330,7 +330,7 @@ const submitRegisterForm = async (elForm) => {
     }
     td {
       &.el-table__cell {
-        color: #ffd683;
+        color: #6d9ef9;
         text-align: center;
         border: 0;
       }
@@ -343,7 +343,7 @@ const submitRegisterForm = async (elForm) => {
       pointer-events: none;
     }
     .el-pager li {
-      color: #ffd97f;
+      color: #6d9ef9;
       min-width: unset;
       &.btn-quicknext {
         svg {
@@ -357,11 +357,11 @@ const submitRegisterForm = async (elForm) => {
           display: inline-block;
           margin-left: 8px;
         }
-        color: #ffd87f;
+        color: #6d9ef9;
       }
     }
     button:hover {
-      color: #ffd87f;
+      color: #6d9ef9;
     }
   }
 }
@@ -462,7 +462,6 @@ body {
 .huka-wrap {
   display: inline-block;
   padding: 1.5rem;
-  background-color: #1d212e;
 }
 
 .huka-wrap .huka-title {
@@ -490,8 +489,8 @@ body {
 .huka-list {
   display: flex;
   flex-direction: row;
-  background: #11141c;
-  border: 1px solid #3b435c;
+  background: #ffffff;
+  border: 1px solid #ffae00;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
