@@ -83,24 +83,74 @@ export default defineComponent({
       ).then((res) => {
         console.log(res);
 
-        maxPage.value = res.pages;
-        pagingState.value= res.pagingState;
+        // Check if records array is empty and stop processing if true
+        if (res.records.length === 0) {
+          console.log("No records found. Ending function execution.");
+          if (isNew) {
+            visible.value = false;
+          }
+          return; // Exit the function early
+        }
 
+        maxPage.value = res.pages;
+        pagingState.value = res.pagingState;
 
         if (isNew) {
           visible.value = false;
         }
 
         tableData.value.push(...res.records);
-        // console.log("TableData");
-        // console.log(tableData.value);
       }).catch((err) => {
         if (isNew) {
           visible.value = false;
         }
+        console.error(err); // Log or handle the error appropriately
       });
     };
 
+
+    // const loadDepositTable = (isNew = true) => {
+    //   if (isNew) {
+    //     visible.value = true;
+    //   }
+    //   console.log(startDate + endDate);
+
+    //   let paramData = {
+    //     "startDate": startDate,
+    //     "endDate": endDate,
+    //     "size": 10,
+    //     "current": current.value
+    //   };
+    //   if(pagingState.value && current.value !== 1){
+    //     paramData["pagingState"]= pagingState.value;
+    //   }
+    //   var apiKey = apiUrl + "_" + startDate + "_" + endDate + "_" + current.value;
+    //   console.log(apiKey);
+
+    //   cached.get(apiKey, () => api.get(apiUrl, {
+    //         params: paramData
+    //       }),
+    //       {expired_value: 30}
+    //   ).then((res) => {
+    //     console.log(res);
+
+    //     maxPage.value = res.pages;
+    //     pagingState.value= res.pagingState;
+
+
+    //     if (isNew) {
+    //       visible.value = false;
+    //     }
+
+    //     tableData.value.push(...res.records);
+    //     // console.log("TableData");
+    //     // console.log(tableData.value);
+    //   }).catch((err) => {
+    //     if (isNew) {
+    //       visible.value = false;
+    //     }
+    //   });
+    // };
 
     const tableHeaders = ([
       {
