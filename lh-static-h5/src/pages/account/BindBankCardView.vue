@@ -92,7 +92,36 @@
           emit-value
           map-options
           :rules="[(val) => val || '请选择']"
-        ></q-select>
+        >
+          <template v-slot:selected-item="scope">
+            <q-item-section avatar>
+              <img
+                v-if="scope.opt.bankIcon"
+                style="width: 30px; margin-top: 10px; margin-bottom: 10px"
+                :src="imgURL + '/payment/' + scope.opt.bankIcon"
+              />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
+                {{ scope.opt.name }}
+              </q-item-label>
+            </q-item-section>
+          </template>
+          <template v-slot:option="scope">
+            <q-item v-bind="scope.itemProps">
+              <q-item-section avatar>
+                <img
+                  v-if="scope.opt.bankIcon"
+                  style="width: 30px; margin-top: 10px; margin-bottom: 10px"
+                  :src="imgURL + '/payment/' + scope.opt.bankIcon"
+                />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>{{ scope.opt.name }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </template>
+        </q-select>
 
         <q-label>
           银行卡号
@@ -197,7 +226,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted } from "vue";
+import { reactive, ref, onActivated } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
@@ -208,6 +237,7 @@ const $q = useQuasar();
 const store = userStore();
 const router = useRouter();
 
+const imgURL = process.env.IMAGE_CDN;
 const bankCardRef = ref();
 const cardNumberRef = ref();
 const cardAddressRef = ref();
@@ -370,6 +400,8 @@ const submitBankCard = () => {
             message: "已添加银行卡",
             icon: "check_circle_outline"
           });
+
+          router.push('/account/withdraw')
         }
       })
       .catch((error) => {
@@ -378,7 +410,7 @@ const submitBankCard = () => {
   }
 };
 
-onMounted(() => {
+onActivated(() => {
   loadBankCards();
 });
 </script>

@@ -41,9 +41,9 @@
       ></q-select>
     </div>
 
-<!--    <div class="select-btn">-->
-<!--      <q-btn class="common-large-btn" label="点击选择平台" @click="showSelection" />-->
-<!--    </div>-->
+    <!--    <div class="select-btn">-->
+    <!--      <q-btn class="common-large-btn" label="点击选择平台" @click="showSelection" />-->
+    <!--    </div>-->
 
     <RecordComponent
       ref="recordRef"
@@ -66,7 +66,7 @@ import moment from "moment/moment";
 import RecordComponent from "../../components/RecordComponent.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/swiper-bundle.css";
-import * as _ from "lodash"
+import * as _ from "lodash";
 
 const store = userStore();
 
@@ -124,10 +124,10 @@ const platform = ref("");
 const recordRef = ref();
 
 const loadNewData = () => {
-  if(maxPage.value > current.value){
+  if (maxPage.value > current.value) {
     current.value++;
-  }else {
-    current.value= 1;
+  } else {
+    current.value = 1;
     endDate = moment(startDate).add(-1, "days").format("YYYY-MM-DD");
     console.log(endDate);
 
@@ -158,75 +158,76 @@ const loadDepositTable = (isNew = true) => {
 
   var platformName = platform.value ? platform.value.value : "";
 
-
   console.log(startDate);
   console.log(endDate);
 
   let paramData = {
-    "startDate": startDate,
-    "endDate": endDate,
-    "platform": platformName,
-    "memberId": store.id,
-    "size": 20,
-    "current": current.value
+    startDate: startDate,
+    endDate: endDate,
+    platform: platformName,
+    memberId: store.id,
+    size: 20,
+    current: current.value
   };
 
-  api.get(apiUrl, {
+  api
+    .get(apiUrl, {
       params: paramData
-    }
-  ).then((res) => {
-    maxPage.value = res.data.pages;
-    tableData.value.push(...res.data.records);
-    // console.log("TableData");
-    // console.log(tableData.value);
-  }).finally(() => {
-    if (isNew) {
-      visible.value = false;
-    }
-  });
+    })
+    .then((res) => {
+      maxPage.value = res.data.pages;
+      tableData.value.push(...res.data.records);
+      // console.log("TableData");
+      // console.log(tableData.value);
+    })
+    .finally(() => {
+      if (isNew) {
+        visible.value = false;
+      }
+    });
 };
 
 const getGameName = (gameName) => {
   if (!gameName) {
-    return ''
+    return "";
   }
 
   switch (gameName) {
-    case 'IMES':
-      return 'IM电竞';
-    case 'TCG':
-      return 'TCG彩票';
-    case 'MGP':
-      return 'MG电子';
-    case 'CQ9':
-      return 'CQ电子';
-    case 'SABA':
-      return '沙巴体育';
-    case 'TFGaming':
-      return '雷火电竞 ';
-    case 'SW':
-      return 'SW电子';
-    case 'GPS':
-      return 'GPS捕鱼';
-    case 'IA':
-      return '小艾电竞 ';
-    case 'DT':
-      return '大唐棋牌';
-    case 'IM':
-      return 'IM体育';
-    case 'BBIN':
-      return 'BBIN真人';
-    case 'KY':
-      return '开元棋牌';
-    case 'PT':
-      return 'PT电子';
-    case 'PG':
-      return 'PG电子';
-    case 'AG':
-      return 'AG真人, XIN电子';
-    case 'ALLBET':
-      return 'ALLBET真人';
-    case 'GFLC':
+    case "IMES":
+      return "IM电竞";
+    case "TCG":
+      return "TCG彩票";
+    case "MGP":
+      return "MG电子";
+    case "CQ9":
+      return "CQ电子";
+    case "SABA":
+      return "沙巴体育";
+    case "TFGaming":
+      return "雷火电竞 ";
+    case "SW":
+      return "SW电子";
+    case "GPS":
+      return "GPS捕鱼";
+    case "IA":
+      return "小艾电竞 ";
+    case "DT":
+      return "大唐棋牌";
+    case "IM":
+      return "IM体育";
+    case "BBIN":
+      return "BBIN真人";
+    case "KY":
+      return "开元棋牌";
+    case "PT":
+      return "PT电子";
+    case "PG":
+      return "PG电子";
+    case "AG":
+      return "AG真人, XIN电子";
+    case "ALLBET":
+      return "ALLBET真人";
+    case "GFLC":
       return "高登棋牌";
     case "LEG":
       return "乐游棋牌";
@@ -234,8 +235,7 @@ const getGameName = (gameName) => {
     default:
       return gameName;
   }
-}
-
+};
 
 const loadPlatformLists = () => {
   cached
@@ -318,12 +318,12 @@ onMounted(async () => {
   }
 
   .q-card {
-    background: rgb(33, 37, 52);
-    color: rgb(186, 206, 241);
+    color: rgb(0, 0, 0) !important;
+    background: rgb(255, 255, 255) !important;
   }
 
   .label {
-    color: #fff;
+    color: #000;
   }
 
   .q-btn {

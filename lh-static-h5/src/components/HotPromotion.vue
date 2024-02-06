@@ -59,6 +59,8 @@
 
     <FootballFightPromo v-if="list.redirectUrl === 'lh1-football-fight' && !isCommonPromo" />
 
+    <UpgradeHongbaoPromo v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo" />
+
     <GiftPromo v-if="list.redirectUrl === 'lh1-gift' && !isCommonPromo && store.token"></GiftPromo>
 
     <AsiaCup2024Promo
@@ -125,6 +127,7 @@ import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import DailyLoginPromo from "../components/hotpromo/dailylogin/dailyLoginPromo.vue";
 import LoginRewardPromo from "../components/hotpromo/loginreward/loginRewardPromo.vue";
 import FootballFightPromo from "../components/hotpromo/footballfight/footballFightPromo.vue";
+// import UpgradeHongbaoPromo from "../components/hotpromo/upgradehongbao/upgradeHongbaoPromo.vue";
 // import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 // import PrivilegeInvite from "../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue";
 // import AsiaCup2024Promo from "../components/hotpromo/asiacup2024/AsiaCup2024Promo.vue";
@@ -153,7 +156,8 @@ export default defineComponent({
     LotteryPromo,
     DailyLoginPromo,
     LoginRewardPromo,
-    FootballFightPromo
+    FootballFightPromo,
+    // UpgradeHongbaoPromo
     // GiftPromo,
     // PrivilegeInvite,
     // AsiaCup2024Promo,
@@ -239,7 +243,6 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-invite" ||
       this.list.redirectUrl === "lh1-invite-2" ||
       this.list.redirectUrl === "lh1-invite-3" ||
-      this.list.redirectUrl === "lh1-football" ||
       this.list.redirectUrl === "lh1-s13-vote" ||
       this.list.redirectUrl === "lh1-monthly-sign" ||
       this.list.redirectUrl === "lh1-sports-continuous-win" ||
@@ -247,7 +250,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-upgrade-hongbao" ||
       this.list.redirectUrl === "lh1-login-reward" ||
       this.list.redirectUrl === "lh1-football-fight" ||
-      this.list.redirectUrl === "lh1-dragon-card"
+      this.list.redirectUrl === "lh1-dragon-card" ||
+      this.list.redirectUrl === "lh1-upgrade-hongbao"
     ) {
       this.isCommonPromo = false;
     } else {
