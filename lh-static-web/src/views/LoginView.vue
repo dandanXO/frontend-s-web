@@ -168,7 +168,7 @@ const sendOtp = async () => {
                     });
                     captchaDialogVisible.value = false;
                     getCode();
-                    loginCountdown.value = 30;
+                    loginCountdown.value = 60;
                     countdownTimer('LOGIN')
                 } else {
                     getCode();
