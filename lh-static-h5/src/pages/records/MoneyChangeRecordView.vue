@@ -83,6 +83,16 @@ export default defineComponent({
       ).then((res) => {
         console.log(res);
 
+        // Check if records array is empty and stop processing if true
+        if (res.records.length === 0) {
+          console.log("No records found. Ending function execution.");
+          current.value = maxPage.value;
+          if (isNew) {
+            visible.value = false;
+          }
+          return; // Exit the function early
+        }
+
         maxPage.value = res.pages;
         pagingState.value= res.pagingState;
 
