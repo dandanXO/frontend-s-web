@@ -125,10 +125,12 @@
             </el-table>
             <el-divider />
             <el-pagination
+              :current-page="searchForm[recordActive].current"
               @current-change="recordPage"
               :total="pagination.total"
-              :current-page="searchForm[recordActive].current"
+              layout="prev, next"
               :page-size="searchForm[recordActive].size"
+              hide-on-single-page
             />
           </div>
         </el-tab-pane>
