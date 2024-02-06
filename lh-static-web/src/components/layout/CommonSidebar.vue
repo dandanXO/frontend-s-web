@@ -1,6 +1,7 @@
 <template>
   <div
     class="sticky-sidebar"
+    @mouseleave="customerHovered = false"
   >
     <div class="additional-info-items" v-if="customerHovered">
       <div
@@ -22,24 +23,23 @@
       </div>
     </div>
     <div class="sticky-sidebar-items">
-      <router-link to="/promotion" class="sticky-sidebar-item">
+      <router-link to="/promotion" class="sticky-sidebar-item"  @mouseover="customerHovered = false">
         <img src="../../assets/images/home/sticky-sidebar-hot-promo-icon.png" />
         <div>热门活动</div>
       </router-link>
       <div class="sticky-sidebar-item"
         @mouseover="customerHovered = true"
-        @mouseleave="customerHovered = false"
       >
         <img src="../../assets/images/home/sticky-sidebar-cs-icon.png" />
         <div>客服中心</div>
       </div>
-      <div>
+      <div @mouseover="customerHovered = false">
         <a :href="downloadUrl" target="_blank" class="sticky-sidebar-item">
           <img src="../../assets/images/home/sticky-sidebar-app-dl-icon.png" />
           <div>APP下载</div>
         </a>
       </div>
-      <div class="sticky-sidebar-item" @click="scrollToTop">
+      <div  @mouseover="customerHovered = false" class="sticky-sidebar-item" @click="scrollToTop">
         <img src="../../assets/images/home/sticky-sidebar-back-top-icon.png" />
         <div>返回顶部</div>
       </div>
