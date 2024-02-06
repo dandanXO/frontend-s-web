@@ -1105,19 +1105,19 @@ body {
       // padding: 40px 0 0;
     }
 
-    &:before {
-      position: absolute;
-      top: 0;
-      left: -85%;
-      z-index: 0;
-      display: block;
-      content: "";
-      width: 50%;
-      height: 100%;
-      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%);
-      border-radius: 10px;
-      transform: skewX(320deg);
-    }
+    // &:before {
+    //   position: absolute;
+    //   top: 0;
+    //   left: -85%;
+    //   z-index: 0;
+    //   display: block;
+    //   content: "";
+    //   width: 50%;
+    //   height: 100%;
+    //   background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%);
+    //   border-radius: 10px;
+    //   transform: skewX(320deg);
+    // }
 
     @-webkit-keyframes shine {
       100% {
