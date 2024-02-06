@@ -81,7 +81,8 @@ const submitForm = () => {
             }
         })
     }).catch((err) => {
-        console.log(err)
+        console.log(err);
+        getCode();
     }).finally(() => {
         loadingBtn.value = false
     });
