@@ -38,7 +38,7 @@ export function submitLuckyNumber(item) {
     `/privi/lotteryNumber`,
     qs.stringify({
       number: item,
-      promoCode: "dy2-lottery"
+      promoCode: "lh1-lottery"
     })
   );
 }
