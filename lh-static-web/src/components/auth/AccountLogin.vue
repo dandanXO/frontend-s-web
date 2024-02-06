@@ -25,6 +25,10 @@
             </el-form-item>
         </div>
 
+        <div class="agreement-and-forget-pass">
+            <div>登录即代表同意并遵守《xx协议》</div><div><router-link to="/forgotPwd">忘记密码？</router-link></div>
+        </div>
+
 
         <el-button :loading="loadingBtn" size="large" class="blue-bg primary-btn" @click="submitLogin">
             登录
@@ -170,6 +174,15 @@ onMounted(() => {
 
     .form-field-icon {
         margin: auto;
+    }
+}
+
+.agreement-and-forget-pass {
+    display: flex;
+    justify-content: space-between;
+
+    .highlight {
+        color: #5E8AEE;
     }
 }
 
