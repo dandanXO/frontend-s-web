@@ -17,13 +17,13 @@
               <div class="trans-tip">（游戏前，请将余额转到相应场馆）</div>
             </a>
           </div>
-
+          <!-- 
           <div class="balance-details">
             <div>雷火币：</div>
             <div class="balance-txt">
               <span>0.00</span>
             </div>
-          </div>
+          </div> -->
 
           <div class="balance-details">
             <div>专属网址：</div>
