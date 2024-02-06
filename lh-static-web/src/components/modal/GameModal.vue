@@ -209,6 +209,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
       } else if (
         platformCode === "SGWin" ||
         platformCode === "TCG" ||
+        platformCode === 'PT' ||
         (platformCode === "BBINDY" && gameCode === "bbkeno_lobby_pc")
       ) {
         launchSessionGame(platformCode, {

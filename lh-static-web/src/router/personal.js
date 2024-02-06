@@ -8,15 +8,15 @@ export default [
         /* webpackChunkName: "personal" */ "../views/account/PersonalView.vue"
       ),
   },
-  {
-    path: "withdrawbank",
-    name: "withdrawbank",
-    meta: { requiresAuth: true },
-    component: () =>
-      import(
-        /* webpackChunkName: "personal" */ "../views/account/WithdrawBankView.vue"
-      ),
-  },
+  // {
+  //   path: "withdrawbank",
+  //   name: "withdrawbank",
+  //   meta: { requiresAuth: true },
+  //   component: () =>
+  //     import(
+  //       /* webpackChunkName: "personal" */ "../views/account/WithdrawBankView.vue"
+  //     ),
+  // },
   {
     path: "mailbox",
     name: "mailbox",

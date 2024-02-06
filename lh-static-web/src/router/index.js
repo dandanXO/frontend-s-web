@@ -136,6 +136,11 @@ const routes = [
             },
         ]
     },
+    {
+        path: "/:catchAll(.*)*",
+        redirect: "/",
+        component: () => {}
+    }
 ]
 
 const router = createRouter({

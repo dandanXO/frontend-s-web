@@ -63,7 +63,7 @@
             <!--            data-aos-delay="300"-->
             <!--            data-aos-duration="500"-->
             <div class="platform-play-btn" v-if="platformType !== 'slot'">
-              <div class="btn-blue" @click="openGame(item.name, item.code, item.gameCode)">进入游戏</div>
+              <div class="btn-blue" @click="openGame(item, item.code, item.gameCode)">进入游戏</div>
             </div>
           </div>
         </template>
@@ -118,7 +118,7 @@
             v-for="game in gamePage.gameList"
             :key="game.id"
           >
-            <a @click="openGame(game.name, selectedPlat, game.code)">
+            <a @click="openGame(game, selectedPlat, game.code)">
               <div class="slot-img">
                 <el-image :src="game.icon" lazy>
                   <template #placeholder>
@@ -271,9 +271,9 @@ const clickPlat = (plat) => {
   selectedPlat.value = plat.code;
 };
 
-const openGame = (gameName, platformCode, gameCode) => {
-  // debugger;
-  platformGame.value.open(gameName, platformCode, gameCode);
+const openGame = (item, platformCode, gameCode) => {
+  const platName= item.alias ?? item.cnname ?? item.name;
+  platformGame.value.open(platName, platformCode, gameCode);
 };
 
 const activePlat = ref("");
@@ -353,9 +353,6 @@ const changePage = (page, pageSize) => {
   gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
 };
 
-// const openGame = (gameName, gameCode) => {
-//   slotsGame.value.open(gameName, activePlat.value.code, gameCode);
-// };
 
 const gameCat = ref("allGame");
 

@@ -64,12 +64,12 @@ const filteredPlatforms = computed(() => {
 const router = useRouter();
 const gotoGame = (item) => {
   // debugger;
-  console.log(item);
-  if (item.gameType === "SLOT" || item.code === "AG") {
+  // console.log(item);
+  if (item.gameType === "SLOT" ) {
     router.push(`${props.platformName}?plat=${item.code}`);
   } else {
-    console.log(item);
-    emits("load-game", item.name, item.code, item.gameCode);
+    const platName= item.alias ?? item.cnname ?? item.name;
+    emits("load-game", platName, item.code, item.gameCode);
     // emits("load-game", item);
   }
 };
