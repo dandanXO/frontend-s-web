@@ -105,8 +105,8 @@
         </div>
 
         
-            <div class="profile-info">
-              <el-dropdown trigger="click" v-if="store.token" class="profile-info-dropdown">
+            <div class="profile-info" v-if="store.token">
+              <el-dropdown trigger="click" class="profile-info-dropdown">
                 <span class="el-dropdown-link">
                   <div class="profile-img-wrapper">
                     <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
