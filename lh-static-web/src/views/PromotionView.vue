@@ -273,13 +273,13 @@ export default defineComponent({
 <style lang="scss">
 .promo-container {
   .all-promotions {
-    background: url(../assets/promo/bg-top.jpg) no-repeat center top;
-    min-height: 40vh;
+    background: url(../assets/promo/bg-top2.jpg) no-repeat center top;
+    width: 100%;
+    background-size: 100% auto;
     padding: 50px;
     position: relative;
-    padding-top: 580px;
+    padding-top: max(300px, 22vw);
     background-color: #f3f7fd;
-    background-repeat: no-repeat;
   }
   .promo-view-container {
     line-height: 30px;

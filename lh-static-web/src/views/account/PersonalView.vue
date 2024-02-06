@@ -226,7 +226,7 @@
                 <button
                   :loading="loadingPwBtn"
                   class="standard-button btn-color-white"
-                  type="submit"
+                  type="button"
                   @click="submitUpdatePwd"
                 >
                   重新填写
@@ -235,7 +235,7 @@
                 <button
                   :loading="loadingPwBtn"
                   class="standard-button btn-color-blue"
-                  type="submit"
+                  type="button"
                   @click="submitUpdatePwd"
                 >
                   确认修改

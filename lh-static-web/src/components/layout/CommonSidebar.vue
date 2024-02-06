@@ -33,13 +33,13 @@
           <div class="content-line"></div>
           <div class="customer-email">
             <RiMailFill />
-            <span style="margin-left: 5px">cs@dyvip99.com</span>
+            <span style="margin-left: 5px">cs@e8007.com</span>
           </div>
           <div class="content-line"></div>
           <div class="customer-num">
             <RiPhoneFill />
             <span style="margin-left: 5px"
-              ><span class="customer_phone">852-81932110</span></span
+              ><span class="customer_phone">+85281701071</span></span
             >
           </div>
         </div>
@@ -121,7 +121,7 @@ export default defineComponent({
   position: fixed;
   bottom: 60px;
   width: 240px;
-  z-index: 2000;
+  z-index: 300;
   display: flex;
   flex-direction: row;
   background: #e4eefe;
