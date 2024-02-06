@@ -11,10 +11,20 @@
             <el-form layout="inline" :model="searchForm.deposit">
               <div class="left">
                 <el-form-item label="开始">
-                  <el-date-picker v-model="searchForm.deposit.startDate" valueFormat="YYYY-MM-DD" placeholder="" />
+                  <el-date-picker
+                    :clearable="false"
+                    v-model="searchForm.deposit.startDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
+                  />
                 </el-form-item>
                 <el-form-item label="结束">
-                  <el-date-picker v-model="searchForm.deposit.endDate" valueFormat="YYYY-MM-DD" placeholder="" />
+                  <el-date-picker
+                    :clearable="false"
+                    v-model="searchForm.deposit.endDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
+                  />
                 </el-form-item>
                 <el-form-item class="search">
                   <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
@@ -74,10 +84,20 @@
             <el-form layout="inline" :model="searchForm.turnover">
               <div class="left">
                 <el-form-item label="开始">
-                  <el-date-picker v-model="searchForm.turnover.startDate" valueFormat="YYYY-MM-DD" placeholder="" />
+                  <el-date-picker
+                    :clearable="false"
+                    v-model="searchForm.turnover.startDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
+                  />
                 </el-form-item>
                 <el-form-item label="结束">
-                  <el-date-picker v-model="searchForm.turnover.endDate" valueFormat="YYYY-MM-DD" placeholder="" />
+                  <el-date-picker
+                    :clearable="false"
+                    v-model="searchForm.turnover.endDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
+                  />
                 </el-form-item>
                 <el-form-item>
                   <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
@@ -137,10 +157,20 @@
             <el-form layout="inline" :model="searchForm.withdraw">
               <div class="left">
                 <el-form-item label="开始">
-                  <el-date-picker v-model="searchForm.withdraw.startDate" valueFormat="YYYY-MM-DD" placeholder="" />
+                  <el-date-picker
+                    :clearable="false"
+                    v-model="searchForm.withdraw.startDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
+                  />
                 </el-form-item>
                 <el-form-item label="结束">
-                  <el-date-picker v-model="searchForm.withdraw.endDate" valueFormat="YYYY-MM-DD" placeholder="" />
+                  <el-date-picker
+                    :clearable="false"
+                    v-model="searchForm.withdraw.endDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
+                  />
                 </el-form-item>
                 <el-form-item>
                   <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
@@ -223,10 +253,20 @@
             <el-form layout="inline" :model="searchForm.transfer">
               <div class="left">
                 <el-form-item label="开始">
-                  <el-date-picker v-model="searchForm.transfer.startDate" valueFormat="YYYY-MM-DD" placeholder="" />
+                  <el-date-picker
+                    :clearable="false"
+                    v-model="searchForm.transfer.startDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
+                  />
                 </el-form-item>
                 <el-form-item label="结束">
-                  <el-date-picker v-model="searchForm.transfer.endDate" valueFormat="YYYY-MM-DD" placeholder="" />
+                  <el-date-picker
+                    :clearable="false"
+                    v-model="searchForm.transfer.endDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
+                  />
                 </el-form-item>
                 <el-form-item>
                   <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
@@ -283,10 +323,20 @@
             <el-form layout="inline" :model="searchForm.rebates">
               <div class="left">
                 <el-form-item label="开始">
-                  <el-date-picker v-model="searchForm.rebates.startDate" valueFormat="YYYY-MM-DD" placeholder="" />
+                  <el-date-picker
+                    :clearable="false"
+                    v-model="searchForm.rebates.startDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
+                  />
                 </el-form-item>
                 <el-form-item label="结束">
-                  <el-date-picker v-model="searchForm.rebates.endDate" valueFormat="YYYY-MM-DD" placeholder="" />
+                  <el-date-picker
+                    :clearable="false"
+                    v-model="searchForm.rebates.endDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
+                  />
                 </el-form-item>
                 <el-form-item>
                   <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
@@ -364,7 +414,12 @@
                   />
                 </el-form-item>
                 <el-form-item label="结束">
-                  <el-date-picker v-model="searchForm.gameBetRecord.endDate" valueFormat="YYYY-MM-DD" placeholder="" />
+                  <el-date-picker
+                    :clearable="false"
+                    v-model="searchForm.gameBetRecord.endDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
+                  />
                 </el-form-item>
                 <el-form-item>
                   <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
@@ -448,7 +503,12 @@
                   />
                 </el-form-item>
                 <el-form-item label="结束">
-                  <el-date-picker v-model="searchForm.reminderRecord.endDate" valueFormat="YYYY-MM-DD" placeholder="" />
+                  <el-date-picker
+                    :clearable="false"
+                    v-model="searchForm.reminderRecord.endDate"
+                    valueFormat="YYYY-MM-DD"
+                    placeholder=""
+                  />
                 </el-form-item>
                 <el-form-item>
                   <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>

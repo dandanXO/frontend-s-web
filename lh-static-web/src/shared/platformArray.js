@@ -19,7 +19,7 @@ export const liveCasinoPlatforms = [
   {
     code: "BG",
     cnname: "BG真人",
-    image: "",
+    image: "bg",
     message: "",
     caption: "",
     gameCode: ""
@@ -27,7 +27,7 @@ export const liveCasinoPlatforms = [
   {
     code: "Evo",
     cnname: "EVO真人",
-    image: "",
+    image: "evo",
     message: "",
     caption: "",
     gameCode: ""
@@ -172,7 +172,7 @@ export const slotPlatforms = [
     code: "PG",
     cnname: "PG电子",
     image: "pg",
-    message: "经典多元化,公平安全游戏环境,畅想数千款电子游戏,天天高额大奖。",
+    message: "经典多元化,公平安全游戏环境,畅想数千款电子游戏,天天高额大奖。 ",
     caption: "",
     gameCode: ""
   },
@@ -180,8 +180,7 @@ export const slotPlatforms = [
     code: "SW",
     cnname: "SW电子",
     image: "sw",
-    message:
-      "倾力打造的刺激火爆的体育娱乐游戏，每天为您提供千场精彩体育赛事，多种娱乐方式 选择，让您拥有完美游戏体验。",
+    message: "经典多元化,公平安全游戏环境,畅想数千款电子游戏,天天高额大奖。 ",
     caption: "",
     gameCode: ""
   },
@@ -189,7 +188,7 @@ export const slotPlatforms = [
     code: "PT",
     cnname: "PT电子",
     image: "pt",
-    message: "精选全球千种游戏任您畅玩，为玩家提供极致的游戏体验。触手可及的千万累计奖池，等您—触即发!",
+    message: "精选全球千种游戏任您畅玩，为玩家提供极致的游戏体验。触手可及的千万累计奖池，等您—触即发! ",
     caption: "",
     gameCode: ""
   },
@@ -207,26 +206,26 @@ export const slotPlatforms = [
     name: "XIN",
     cnname: "XIN电子",
     image: "ag",
-    message: "坚持创新、打造精品,最缤纷的电子游艺画面，最刺激的游戏体验，各类老虎机应有尽有，彩池大奖由您触发!",
+    message: "坚持创新、打造精品,最缤纷的电子游艺画面，最刺激的游戏体验，各类老虎机应有尽有，彩池大奖由您触发! ",
     caption: "",
     gameCode: ""
   },
   {
     code: "BBINDY",
     cnname: "BBIN电子",
-    image: "",
-    message: "",
-    caption: "",
-    gameCode: ""
-  },
-  {
-    code: "PINNACLE",
-    cnname: "平博电子",
-    image: "",
-    message: "",
+    image: "bbin",
+    message: "拥有丰富的游戏类型及功能，提供多种玩法与电子游戏试玩，带给玩家惊艳的游戏体验，游戏总数近千款！ ",
     caption: "",
     gameCode: ""
   }
+  // {
+  //   code: "PINNACLE",
+  //   cnname: "平博电子",
+  //   image: "",
+  //   message: "",
+  //   caption: "",
+  //   gameCode: ""
+  // }
   // {
   //   code: "CQ",
   //   cnname: "CQ电子",
@@ -288,8 +287,8 @@ export const lotteryPlatforms = [
   {
     code: "BBINDY",
     cnname: "BBIN彩票",
-    image: "",
-    message: "",
+    image: "bbin",
+    message: "专注于彩票游戏行业多年，拥有经典彩种，超多独家创新玩法，让您在购买彩票的同时，享受游戏的快感。",
     caption: "",
     gameCode: ""
   },
@@ -310,8 +309,7 @@ export const fishingPlatforms = [
     code: "GPS",
     cnname: "GPS决战中途岛",
     image: "gps",
-    message:
-      "最受欢迎的GPS捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
+    message: "炫彩3D精致画面，身临其境海天—色;超高爆率燃爆全屏，招财鱼潮—炮千金;多人同台趣味比拼，休闲集结快乐出击 ",
     caption: "",
     gameCode: 7202
   },

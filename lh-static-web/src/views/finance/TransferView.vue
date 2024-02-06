@@ -12,7 +12,7 @@
           </div>
         </div>
         <div class="desc-wrapper">
-          <span>IM体育、电竞、沙巴体育、SW电子、PM真人和PM体育无需转账，充值即可游戏。</span>
+          <span>除了以下平台需要转帐，其他平台都无需转账即可游戏。</span>
         </div>
       </div>
       <div class="right-box">
@@ -24,17 +24,17 @@
             一键刷新
           </el-button>
           <div class="balance-transfer-button">
-              <span>自动平台转账:</span>
-              <el-switch
-                v-model="autoTransfer"
-                class="ml-2"
-                inline-prompt
-                style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
-                active-text="已开启"
-                inactive-text="已关闭"
-                @change="updateAutoTransfer($event)"
-              />
-            </div>
+            <span>自动平台转账:</span>
+            <el-switch
+              v-model="autoTransfer"
+              class="ml-2"
+              inline-prompt
+              style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+              active-text="已开启"
+              inactive-text="已关闭"
+              @change="updateAutoTransfer($event)"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -62,8 +62,12 @@
           </div>
         </div>
         <div class="transfer-action-box">
-          <el-button v-if="!autoTransfer" size="small" class="blue-btn transfer-btn" @click="transferModal(0, p)">转进</el-button>
-          <el-button v-if="!autoTransfer" size="small" class="blue-btn transfer-btn" @click="transferModal(1, p)">转出</el-button>
+          <el-button v-if="!autoTransfer" size="small" class="blue-btn transfer-btn" @click="transferModal(0, p)">
+            转进
+          </el-button>
+          <el-button v-if="!autoTransfer" size="small" class="blue-btn transfer-btn" @click="transferModal(1, p)">
+            转出
+          </el-button>
         </div>
       </div>
     </div>
@@ -260,7 +264,7 @@ export default defineComponent({
           console.log(e)
       });
     };
-    
+
     const loadPlatform = () => {
       if(store.token) {
         getLoggedInPlatformList().then((response) => {

@@ -8,8 +8,9 @@
           <div :class="`vipitem vipitem${vip.vipLevel}`">
             <div class="vipcontents">
               <div class="title">VIP {{ vip.vipLevel }}</div>
-              <div class="description">{{ vip.upgrade !== 'Successful deposit' ? `Accumulate Deposit: ${vip.upgrade}` :
-                vip.upgrade }}</div>
+              <div class="description">
+                {{ vip.upgrade !== "Successful deposit" ? `Accumulate Deposit: ${vip.upgrade}` : vip.upgrade }}
+              </div>
               <!-- vip progress bar start -->
               <div class="progressBarContainer" v-if="vipLevel">
                 <div class="progressBarOuterBar">
@@ -27,8 +28,9 @@
               <!-- vip progress bar end -->
             </div>
             <div
-              :class="`vipLevelReachStatus ${getVipLevelProgress(vip) === 100 && !!vipLevel ? 'vipLevelReached' : ''}`">
-              <span>{{ getVipLevelProgress(vip) === 100 && !!vipLevel ? '已达到' : '未达到' }}</span>
+              :class="`vipLevelReachStatus ${getVipLevelProgress(vip) === 100 && !!vipLevel ? 'vipLevelReached' : ''}`"
+            >
+              <span>{{ getVipLevelProgress(vip) === 100 && !!vipLevel ? "已达到" : "未达到" }}</span>
             </div>
           </div>
         </div>
@@ -40,12 +42,8 @@
 
     <div class="vip-program">
       <div class="buttons">
-        <div class="common-btn" :class="{ active: showRebate }" @click="onShowRebateClick(true)">
-          升级细则
-        </div>
-        <div class="common-btn" :class="{ active: !showRebate }" @click="onShowRebateClick(false)">
-          VIP特权
-        </div>
+        <div class="common-btn" :class="{ active: showRebate }" @click="onShowRebateClick(true)">升级细则</div>
+        <div class="common-btn" :class="{ active: !showRebate }" @click="onShowRebateClick(false)">VIP特权</div>
       </div>
       <div v-if="showRebate">
         <table>
@@ -75,15 +73,17 @@
               <td rowspan="3">白银</td>
               <td>白银Ⅲ</td>
               <td>30,000</td>
-              <td id="vipPromoInfo4">存款最少100元可申请每月一次再存20% 最高奖金1888元 <font color="#B8945D">（仅限白银Ⅲ申请）</font>
+              <td id="vipPromoInfo4">
+                存款最少100元可申请每月一次再存20% 最高奖金1888元
+                <font color="#B8945D">（仅限白银Ⅲ申请）</font>
               </td>
               <td>电竞/体育 15倍 老虎机12倍 真人18倍</td>
             </tr>
             <tr>
               <td>白银Ⅱ</td>
               <td>80,000</td>
-              <td id="vipPromoInfo5" class="showTips4" style="display:none;">存款最少20元可申请一次晋级奖金188元</td>
-              <td class="showTips4" style="display:none;">电竞/体育 5倍 老虎机12倍 真人15倍</td>
+              <td id="vipPromoInfo5" class="showTips4" style="display: none">存款最少20元可申请一次晋级奖金188元</td>
+              <td class="showTips4" style="display: none">电竞/体育 5倍 老虎机12倍 真人15倍</td>
               <td colspan="2" class="hideTips4">
                 <div class="vip-btn disable">未符合</div>
               </td>
@@ -91,8 +91,8 @@
             <tr>
               <td>白银Ⅰ</td>
               <td>200,000</td>
-              <td id="vipPromoInfo6" class="showTips5" style="display:none;">存款最少20元可申请一次晋级奖金388元</td>
-              <td class="showTips5" style="display:none;">电竞/体育 5倍 老虎机12倍 真人15倍</td>
+              <td id="vipPromoInfo6" class="showTips5" style="display: none">存款最少20元可申请一次晋级奖金388元</td>
+              <td class="showTips5" style="display: none">电竞/体育 5倍 老虎机12倍 真人15倍</td>
               <td colspan="2" class="hideTips5">
                 <div class="vip-btn disable">未符合</div>
               </td>
@@ -101,8 +101,10 @@
               <td rowspan="3">黄金</td>
               <td>黄金Ⅲ</td>
               <td>400,000</td>
-              <td id="vipPromoInfo7" class="showTips6" style="display:none;">存款最少200元可申请一次再存30%最高奖金1888元</td>
-              <td class="showTips6" style="display:none;">电竞/体育 15倍 老虎机12倍 真人18倍</td>
+              <td id="vipPromoInfo7" class="showTips6" style="display: none">
+                存款最少200元可申请一次再存30%最高奖金1888元
+              </td>
+              <td class="showTips6" style="display: none">电竞/体育 15倍 老虎机12倍 真人18倍</td>
               <td colspan="2" class="hideTips6">
                 <div class="vip-btn disable">未符合</div>
               </td>
@@ -110,8 +112,8 @@
             <tr>
               <td>黄金Ⅱ</td>
               <td>600,000</td>
-              <td id="vipPromoInfo8" class="showTips7" style="display:none;">存款最少20元可申请一次晋级奖金888元</td>
-              <td class="showTips7" style="display:none;">电竞/体育 5倍 老虎机12倍 真人18倍</td>
+              <td id="vipPromoInfo8" class="showTips7" style="display: none">存款最少20元可申请一次晋级奖金888元</td>
+              <td class="showTips7" style="display: none">电竞/体育 5倍 老虎机12倍 真人18倍</td>
               <td colspan="2" class="hideTips7">
                 <div class="vip-btn disable">未符合</div>
               </td>
@@ -119,8 +121,10 @@
             <tr>
               <td>黄金Ⅰ</td>
               <td>1,000,000</td>
-              <td id="vipPromoInfo9" class="showTips8" style="display:none;">存款最少500元可申请每月一次再存35% 最高奖金8888元</td>
-              <td class="showTips8" style="display:none;">电竞/体育 15倍 老虎机12倍 真人18倍</td>
+              <td id="vipPromoInfo9" class="showTips8" style="display: none">
+                存款最少500元可申请每月一次再存35% 最高奖金8888元
+              </td>
+              <td class="showTips8" style="display: none">电竞/体育 15倍 老虎机12倍 真人18倍</td>
               <td colspan="2" class="hideTips8">
                 <div class="vip-btn disable">未符合</div>
               </td>
@@ -129,8 +133,8 @@
               <td rowspan="2">铂金</td>
               <td>铂金Ⅱ</td>
               <td>2,000,000</td>
-              <td id="vipPromoInfo10" class="showTips9" style="display:none;">存款最少20元可申请一次晋级奖金1888元</td>
-              <td class="showTips9" style="display:none;">电竞/体育 8倍 老虎机12倍 真人18倍</td>
+              <td id="vipPromoInfo10" class="showTips9" style="display: none">存款最少20元可申请一次晋级奖金1888元</td>
+              <td class="showTips9" style="display: none">电竞/体育 8倍 老虎机12倍 真人18倍</td>
               <td colspan="2" class="hideTips9">
                 <div class="vip-btn disable">未符合</div>
               </td>
@@ -138,8 +142,10 @@
             <tr>
               <td>铂金Ⅰ</td>
               <td>4,000,000</td>
-              <td id="vipPromoInfo11" class="showTips10" style="display:none;">存款最少500元可申请一次再存40%最高奖金18888元</td>
-              <td class="showTips10" style="display:none;">电竞/体育 15倍 老虎机12倍 真人18倍</td>
+              <td id="vipPromoInfo11" class="showTips10" style="display: none">
+                存款最少500元可申请一次再存40%最高奖金18888元
+              </td>
+              <td class="showTips10" style="display: none">电竞/体育 15倍 老虎机12倍 真人18倍</td>
               <td colspan="2" class="hideTips10">
                 <div class="vip-btn disable">未符合</div>
               </td>
@@ -148,8 +154,8 @@
               <td rowspan="1">钻石</td>
               <td>钻石</td>
               <td>8,000,000</td>
-              <td id="vipPromoInfo12" class="showTips11" style="display:none;">存款最少20元可申请一次晋级奖金8888元</td>
-              <td class="showTips11" style="display:none;">电竞/体育10倍 老虎机12倍 真人18倍</td>
+              <td id="vipPromoInfo12" class="showTips11" style="display: none">存款最少20元可申请一次晋级奖金8888元</td>
+              <td class="showTips11" style="display: none">电竞/体育10倍 老虎机12倍 真人18倍</td>
               <td colspan="2" class="hideTips11">
                 <div class="vip-btn disable">未符合</div>
               </td>
@@ -158,8 +164,10 @@
               <td rowspan="1">最强王者</td>
               <td>王者</td>
               <td>12,000,000</td>
-              <td id="vipPromoInfo13" class="showTips12" style="display:none;">存款最少20元可申请一次晋级奖金18888元</td>
-              <td class="showTips12" style="display:none;">电竞/体育10倍 老虎机12倍 真人18倍</td>
+              <td id="vipPromoInfo13" class="showTips12" style="display: none">
+                存款最少20元可申请一次晋级奖金18888元
+              </td>
+              <td class="showTips12" style="display: none">电竞/体育10倍 老虎机12倍 真人18倍</td>
               <td colspan="2" class="hideTips12">
                 <div class="vip-btn disable">未符合</div>
               </td>
@@ -168,7 +176,7 @@
         </table>
       </div>
       <div v-else>
-        <table style="margin-top: 50px;">
+        <table style="margin-top: 50px">
           <tbody>
             <tr>
               <th width="137">等级</th>
@@ -238,7 +246,10 @@
 
     <div class="terms-conditions">
       <div class="section-title">规则与条款</div>
-      <img class="terms-conditions-title-separator" :src="require('../assets/vip/terms-condition-title-separator.png')" />
+      <img
+        class="terms-conditions-title-separator"
+        :src="require('../assets/vip/terms-condition-title-separator.png')"
+      />
       <ol class="terms">
         <li v-for="(term, i) in currentDisplayTerms" :key="i" class="term">
           {{ term.text }}
@@ -270,17 +281,17 @@ export default defineComponent({
       return store.vip;
     });
     const getVipLevelProgress = (vipInfo) => {
-      const vipLevel = +store.vip.replace('VIP', '');
-      const currentDeposit = +store.getCurrentDeposit()
+      const vipLevel = +store.vip.replace("VIP", "");
+      const currentDeposit = +store.getCurrentDeposit();
       const upgradeStatus = vipInfo.upgrade;
 
       if (vipLevel > +vipInfo.vipLevel) {
         return 100;
       }
 
-      const levelUpDeposit = +upgradeStatus.replaceAll(",", '');
-      return currentDeposit / levelUpDeposit * 100;
-    }
+      const levelUpDeposit = +upgradeStatus.replaceAll(",", "");
+      return (currentDeposit / levelUpDeposit) * 100;
+    };
     const storeToken = computed(() => {
       return store.token;
     });
@@ -334,7 +345,7 @@ export default defineComponent({
       },
       {
         text: `雷火电竞有权延长，缩短，终止，或者修改此活动！此活动最终解释权归雷火电竞所有。`
-      },
+      }
     ];
 
     const vipTerms = [
@@ -662,6 +673,246 @@ export default defineComponent({
             rebateValue: "0.60%"
           }
         ]
+      },
+      {
+        vipLevel: "8",
+        upgrade: "5,000,000",
+        monthly: "18,888",
+        birthday: "48,888",
+        rebates: [
+          {
+            rebateName: "Slots Rebate",
+            rebateValue: "1.00%"
+          },
+          {
+            rebateName: "Fishing Rebate",
+            rebateValue: "0.80%"
+          },
+          {
+            rebateName: "Live Casino Rebate",
+            rebateValue: "0.80%"
+          },
+          // {
+          //   rebateName: "เงินคืนไพ่",
+          //   rebateValue: "0.80%",
+          // },
+          {
+            rebateName: "Poker Rebate",
+            rebateValue: "0.80%"
+          },
+          {
+            rebateName: "Sport/EsportsRebate",
+            rebateValue: "0.65%"
+          },
+          {
+            rebateName: "Lottery Rebate",
+            rebateValue: "0.60%"
+          },
+          // {
+          //   rebateName: "เเงินคืนล็อตตารี่",
+          //   rebateValue: "0.60%",
+          // },
+          {
+            rebateName: "Sport/EsportsRebate",
+            rebateValue: "0.65%"
+          },
+          {
+            rebateName: "Lottery Rebate",
+            rebateValue: "0.60%"
+          }
+        ]
+      },
+      {
+        vipLevel: "9",
+        upgrade: "5,000,000",
+        monthly: "18,888",
+        birthday: "48,888",
+        rebates: [
+          {
+            rebateName: "Slots Rebate",
+            rebateValue: "1.00%"
+          },
+          {
+            rebateName: "Fishing Rebate",
+            rebateValue: "0.80%"
+          },
+          {
+            rebateName: "Live Casino Rebate",
+            rebateValue: "0.80%"
+          },
+          // {
+          //   rebateName: "เงินคืนไพ่",
+          //   rebateValue: "0.80%",
+          // },
+          {
+            rebateName: "Poker Rebate",
+            rebateValue: "0.80%"
+          },
+          {
+            rebateName: "Sport/EsportsRebate",
+            rebateValue: "0.65%"
+          },
+          {
+            rebateName: "Lottery Rebate",
+            rebateValue: "0.60%"
+          },
+          // {
+          //   rebateName: "เเงินคืนล็อตตารี่",
+          //   rebateValue: "0.60%",
+          // },
+          {
+            rebateName: "Sport/EsportsRebate",
+            rebateValue: "0.65%"
+          },
+          {
+            rebateName: "Lottery Rebate",
+            rebateValue: "0.60%"
+          }
+        ]
+      },
+      {
+        vipLevel: "10",
+        upgrade: "5,000,000",
+        monthly: "18,888",
+        birthday: "48,888",
+        rebates: [
+          {
+            rebateName: "Slots Rebate",
+            rebateValue: "1.00%"
+          },
+          {
+            rebateName: "Fishing Rebate",
+            rebateValue: "0.80%"
+          },
+          {
+            rebateName: "Live Casino Rebate",
+            rebateValue: "0.80%"
+          },
+          // {
+          //   rebateName: "เงินคืนไพ่",
+          //   rebateValue: "0.80%",
+          // },
+          {
+            rebateName: "Poker Rebate",
+            rebateValue: "0.80%"
+          },
+          {
+            rebateName: "Sport/EsportsRebate",
+            rebateValue: "0.65%"
+          },
+          {
+            rebateName: "Lottery Rebate",
+            rebateValue: "0.60%"
+          },
+          // {
+          //   rebateName: "เเงินคืนล็อตตารี่",
+          //   rebateValue: "0.60%",
+          // },
+          {
+            rebateName: "Sport/EsportsRebate",
+            rebateValue: "0.65%"
+          },
+          {
+            rebateName: "Lottery Rebate",
+            rebateValue: "0.60%"
+          }
+        ]
+      },
+      {
+        vipLevel: "11",
+        upgrade: "5,000,000",
+        monthly: "18,888",
+        birthday: "48,888",
+        rebates: [
+          {
+            rebateName: "Slots Rebate",
+            rebateValue: "1.00%"
+          },
+          {
+            rebateName: "Fishing Rebate",
+            rebateValue: "0.80%"
+          },
+          {
+            rebateName: "Live Casino Rebate",
+            rebateValue: "0.80%"
+          },
+          // {
+          //   rebateName: "เงินคืนไพ่",
+          //   rebateValue: "0.80%",
+          // },
+          {
+            rebateName: "Poker Rebate",
+            rebateValue: "0.80%"
+          },
+          {
+            rebateName: "Sport/EsportsRebate",
+            rebateValue: "0.65%"
+          },
+          {
+            rebateName: "Lottery Rebate",
+            rebateValue: "0.60%"
+          },
+          // {
+          //   rebateName: "เเงินคืนล็อตตารี่",
+          //   rebateValue: "0.60%",
+          // },
+          {
+            rebateName: "Sport/EsportsRebate",
+            rebateValue: "0.65%"
+          },
+          {
+            rebateName: "Lottery Rebate",
+            rebateValue: "0.60%"
+          }
+        ]
+      },
+      {
+        vipLevel: "12",
+        upgrade: "5,000,000",
+        monthly: "18,888",
+        birthday: "48,888",
+        rebates: [
+          {
+            rebateName: "Slots Rebate",
+            rebateValue: "1.00%"
+          },
+          {
+            rebateName: "Fishing Rebate",
+            rebateValue: "0.80%"
+          },
+          {
+            rebateName: "Live Casino Rebate",
+            rebateValue: "0.80%"
+          },
+          // {
+          //   rebateName: "เงินคืนไพ่",
+          //   rebateValue: "0.80%",
+          // },
+          {
+            rebateName: "Poker Rebate",
+            rebateValue: "0.80%"
+          },
+          {
+            rebateName: "Sport/EsportsRebate",
+            rebateValue: "0.65%"
+          },
+          {
+            rebateName: "Lottery Rebate",
+            rebateValue: "0.60%"
+          },
+          // {
+          //   rebateName: "เเงินคืนล็อตตารี่",
+          //   rebateValue: "0.60%",
+          // },
+          {
+            rebateName: "Sport/EsportsRebate",
+            rebateValue: "0.65%"
+          },
+          {
+            rebateName: "Lottery Rebate",
+            rebateValue: "0.60%"
+          }
+        ]
       }
     ];
 
@@ -686,10 +937,10 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="scss">
-$border-settings: 1px solid #E5E7EB;
+$border-settings: 1px solid #e5e7eb;
 
 .vip-container {
-  background: #F3F7FD;
+  background: #f3f7fd;
   color: #8d8d8d;
   min-height: 100vh;
 
@@ -786,7 +1037,7 @@ $border-settings: 1px solid #E5E7EB;
       }
 
       .description {
-        color: #7A80A1;
+        color: #7a80a1;
         font-size: 17.987px;
         font-style: normal;
         font-weight: 400;
@@ -809,10 +1060,9 @@ $border-settings: 1px solid #E5E7EB;
         .progressBarInnerBar {
           color: #fff;
           border-radius: 16px;
-          background: linear-gradient(90deg, #E5CDA5 0.87%, #B48F57 100%);
+          background: linear-gradient(90deg, #e5cda5 0.87%, #b48f57 100%);
           height: 10px;
         }
-
 
         .progressBarDescription {
           display: flex;
@@ -851,8 +1101,8 @@ $border-settings: 1px solid #E5E7EB;
 
       th {
         border-bottom: $border-settings;
-        background-color: #F9FAFB;
-        color: #6B7280;
+        background-color: #f9fafb;
+        color: #6b7280;
       }
 
       td {
@@ -860,7 +1110,7 @@ $border-settings: 1px solid #E5E7EB;
         border-right: $border-settings;
 
         &:has(.disable) {
-          background-color: #E7E7E7;
+          background-color: #e7e7e7;
           background-color: #e7e7e74f;
         }
       }
@@ -870,8 +1120,6 @@ $border-settings: 1px solid #E5E7EB;
         padding: 16px 24px 16px 24px;
         border-bottom: $border-settings;
       }
-
-
     }
 
     .buttons {
@@ -902,8 +1150,8 @@ $border-settings: 1px solid #E5E7EB;
         }
 
         &.active {
-          background: linear-gradient(90deg, #E5CDA5 0.87%, #B48F57 100%);
-          box-shadow: 0px 4px 4px 0px #FFFFFF40 inset;
+          background: linear-gradient(90deg, #e5cda5 0.87%, #b48f57 100%);
+          box-shadow: 0px 4px 4px 0px #ffffff40 inset;
           box-shadow: 0px -4px 4px 0px #89520040 inset;
           color: #fff;
         }
@@ -952,7 +1200,6 @@ $border-settings: 1px solid #E5E7EB;
 }
 
 @media (max-width: 767px) {
-
   .vip-program {
     display: none;
   }
@@ -1019,37 +1266,36 @@ $border-settings: 1px solid #E5E7EB;
   transform: rotate(180deg);
 }
 
-.carousel__slide>.carousel__item {
+.carousel__slide > .carousel__item {
   transform: scale(0.2);
   filter: brightness(0.7);
   transition: 0.5s;
 }
 
-.carousel__slide--visible>.carousel__item {
+.carousel__slide--visible > .carousel__item {
   opacity: 1;
   filter: brightness(1);
   transform: rotateY(0);
 }
 
-.carousel__slide--next>.carousel__item {
+.carousel__slide--next > .carousel__item {
   /* transform: scale(1.2) translate(-10px); */
   transform: scale(0.8) translate(-170px);
   z-index: -2;
 }
 
-.carousel__slide--prev>.carousel__item {
+.carousel__slide--prev > .carousel__item {
   transform: scale(0.8) translate(170px);
   z-index: -2;
   /* transform: scale(0.9) translate(10px); */
 }
 
-.carousel__slide--active>.carousel__item {
+.carousel__slide--active > .carousel__item {
   transform: scale(1);
   z-index: 0;
 }
 
 @media (max-width: 767px) {
-
   .carousel__prev,
   .carousel__next {
     top: 15%;
@@ -1060,13 +1306,13 @@ $border-settings: 1px solid #E5E7EB;
     right: 2%;
   }
 
-  .carousel__slide>.carousel__item {
+  .carousel__slide > .carousel__item {
     transform: scale(0);
     filter: brightness(0.7);
     transition: 0.5s;
   }
 
-  .carousel__slide--visible>.carousel__item {
+  .carousel__slide--visible > .carousel__item {
     opacity: 1;
     filter: brightness(1);
     transform: rotateY(0);
