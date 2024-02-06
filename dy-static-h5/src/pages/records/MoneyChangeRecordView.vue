@@ -86,6 +86,7 @@ export default defineComponent({
         // Check if records array is empty and stop processing if true
         if (res.records.length === 0) {
           console.log("No records found. Ending function execution.");
+          current.value = maxPage.value;
           if (isNew) {
             visible.value = false;
           }
