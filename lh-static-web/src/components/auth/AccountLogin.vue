@@ -79,7 +79,8 @@ const loginRules = {
 
 const loginForm = reactive({
     loginName: '',
-    password: ''
+    password: '',
+    captchaCode: ''
 })
 
 const loginRef = ref([]);
@@ -126,12 +127,16 @@ const submitLogin = () => {
                     console.log(error.message);
                     getCode();
                 });
+        }).catch(() => {
+            
         });
         loadingBtn.value = false
     })();
 };
 
 const getCode = () => {
+    loginForm.captchaCode = '';
+
     getVerificationCode().then((res) => {
         if (res.code === 0) {
             verificationImg.value = "data:image/png;base64," + res.data.img;
