@@ -25,161 +25,34 @@
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
+import { checkInInfo } from "@/api/index/promo";
 
 const dateDetails = ref([]);
 const init = () => {
-  dateDetails.value = [
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: true
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
+  loadDailyCheckIn();
+};
+
+const checkInDetails = ref();
+const loadDailyCheckIn = () => {
+  checkInInfo().then((res) => {
+    if (res.code === 0) {
+      checkInDetails.value = res.data;
+      generateMonthMaxDaysArray(checkInDetails.value.monthMaxDays);
     }
-  ];
+  });
+};
+const generateMonthMaxDaysArray = (monthMaxDays) => {
+  // Clear the array to ensure it's empty before generating
+  dateDetails.value = [];
+
+  // Generate the array of objects based on monthMaxDays
+  for (let i = 0; i < monthMaxDays; i++) {
+    dateDetails.value.push({
+      number: 7,
+      checkInActive: true,
+      isCheckedIn: false
+    });
+  }
 };
 onMounted(() => {
   init();

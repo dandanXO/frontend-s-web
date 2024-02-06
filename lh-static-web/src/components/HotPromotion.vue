@@ -2,6 +2,7 @@
   <div class="hot-promo">
     <ClaimPromo v-if="isCommonPromo" :promo-id="list.id" :loading-claim="loadingClaim" @daily-slot="handleSlot()" />
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-tiger-card'" />
+    <DragonCardPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-dragon-card'" />
     <!-- <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-s13-vote'" /> -->
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-goldenegg' && store.token" />
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-hongbaoyu' && store.token" />
@@ -12,7 +13,7 @@
     <PredictionMatchPromo v-if="list.redirectUrl === 'lh1-s13-vote' && !isCommonPromo" />
     <DailyLoginPromo v-if="list.redirectUrl === 'lh1-monthly-sign' && !isCommonPromo" />
     <NbaGamePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-nba-game'" />
-    <EsportQuiz v-if="list.redirectUrl === 'lh1-monthly-sign' && !isCommonPromo" />
+    <EsportQuiz v-if="list.redirectUrl === 'lh1-quiz' && !isCommonPromo" />
     <LotteryPromo v-if="list.redirectUrl === 'lh1-lottery' && !isCommonPromo && store.token" />
     <GiftPromo v-if="list.redirectUrl === 'lh1-gift' && !isCommonPromo && store.token" />
     <Gift8Promo v-if="list.redirectUrl === 'lh1-gift8' && !isCommonPromo && store.token" />
@@ -59,6 +60,7 @@ import { defineComponent } from "vue";
 import { claimBonusItem, submitLuckyNumber, luckyNumberList, winnerList } from "@/api/index/promo";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
+import DragonCardPromo from "../components/hotpromo/dragoncard/dragonCardPromo.vue";
 import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
@@ -115,7 +117,8 @@ export default defineComponent({
     Cny2024Promo,
     BbDacha2024Promo,
     CnyStepGame2024Promo,
-    UpgradeHongBao
+    UpgradeHongBao,
+    DragonCardPromo
     // DailyBonus
   },
   props: {
@@ -356,6 +359,7 @@ export default defineComponent({
     // List for non common promo
     if (
       this.list.redirectUrl === "lh1-tiger-card" ||
+      this.list.redirectUrl === "lh1-dragon-card" ||
       this.list.redirectUrl === "lh1-goldenegg" ||
       this.list.redirectUrl === "lh1-hongbaoyu" ||
       this.list.redirectUrl === "lh1-invite" ||
@@ -476,6 +480,9 @@ export default defineComponent({
     gap: 30px;
     text-align: center;
     padding: 20px;
+    flex-direction: column;
+    width: 500px;
+    margin: 0 auto;
 
     .extrel-img {
       position: absolute;

@@ -24,8 +24,8 @@
         <div :class="`hotgame-content-wrapper ${hotgame.isShow ? 'show' : ''}`">
           <div class="left-container">
             <div class="title-wrapper">
-              <div class="title">{{ hotgame.content[hotgame.currentProvider].title }}</div>
-              <div class="subtitle">{{ hotgame.content[hotgame.currentProvider].subtitle }}</div>
+              <div class="title">{{ hotgame.title }}</div>
+              <div class="subtitle">{{ hotgame.subtitle }}</div>
             </div>
             <div>
               <div class="desc">专注于彩票游戏行业多年，拥有经典彩种、玩法。</div>
@@ -90,6 +90,16 @@ import HomeTitle from "@/atoms/HomeTitle.vue";
 import { getPlatformList, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 import GameModal from "@/components/modal/GameModal";
+
+import {
+  eSportsPlatforms,
+  fishingPlatforms,
+  slotPlatforms,
+  liveCasinoPlatforms,
+  lotteryPlatforms,
+  pokerPlatforms,
+  sportsPlatforms
+} from "@/shared/platformArray";
 
 const store = userStore();
 const router = useRouter();
@@ -590,20 +600,31 @@ const setHotGame = () => {
   } else {
     getPlatformList().then((res) => {
       platformsListDisplay.value = res;
-
       checkPlatforms();
     });
   }
 };
 const checkPlatforms = () => {
   platformsListDisplay.value.forEach((plat) => {
-    const gameTypeArray = plat.gameType.split(",");
-    const containingItem = hotgameData.value.find((item) =>
-      gameTypeArray.some((type) => item.type.toLowerCase() === type.toLowerCase())
-    );
-    if (containingItem) {
-      containingItem.content.providerList.push(plat);
-    }
+    const gameTypeArray = plat.gameType.split(",").map((type) => type.trim());
+    hotgameData.value.forEach((item) => {
+      const containingItem = gameTypeArray.some((type) => item.type.toLowerCase() === type.toLowerCase());
+
+      if (containingItem) {
+        if (item.type === "slot" && plat.code === "AG") {
+          plat.name = "XIN";
+        }
+        item.content.providerList.push(plat);
+      }
+
+      if (plat.gameType === "ESPORT") {
+        const newObject = {
+          title: plat.cnname,
+          subtitle: plat.message
+        };
+        item.content[plat.code] = newObject;
+      }
+    });
   });
   hotgameData.value.forEach((hot) => {
     hot.currentPlat = hot.content.providerList[0];

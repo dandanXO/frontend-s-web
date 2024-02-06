@@ -164,3 +164,7 @@ export function getStepRecords(current) {
     }
   });
 }
+
+export function checkInInfo() {
+  return server.EVENT.get(`/sign-in/info`, {});
+}
