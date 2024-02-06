@@ -30,9 +30,9 @@
               <div class="promo-img-wrapper">
                 <div class="promo-type">{{ getPromoLabel(promo.labelType) }}</div>
                 <div class="promo-details">
-                  <div class="front-date">{{ "2023/8/1-9/30" }}</div>
+                  <div class="front-date">{{ JSON.parse(promo.param).date }}</div>
                   <div class="front-title">{{ promo.title }}</div>
-                  <div class="front-sub">{{ "每日可领取8888元奖金" }}</div>
+                  <div class="front-sub">{{ JSON.parse(promo.param).sub }}</div>
                   <div class="front-btn">查看详情</div>
                 </div>
                 <div class="promo-bg">
@@ -51,7 +51,14 @@
     <div v-else class="selected-promo">
       <div class="selected-promo-wrapper">
         <div class="banner-container">
-          <div
+          <div class="promo-bg isDesktop">
+            <img
+              :src="
+                imgURL + (selectedPromo.desktopBannerUrl ? selectedPromo.desktopBannerUrl : selectedPromo.desktopImgUrl)
+              "
+            />
+          </div>
+          <!-- <div
             class="promo-bg isDesktop"
             :style="
               'background-image: url(' +
@@ -59,7 +66,7 @@
               (selectedPromo.desktopBannerUrl ? selectedPromo.desktopBannerUrl : selectedPromo.desktopImgUrl) +
               ''
             "
-          ></div>
+          ></div> -->
           <div
             class="promo-bg isMobile"
             :style="
@@ -70,7 +77,14 @@
             "
           ></div>
         </div>
-        <div class="inner">
+        <div
+          class="inner"
+          :style="
+            selectedPromo.desktopImgBackgroundUrl
+              ? `background-image: url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
+              : 'background-image: url(../assets/promo/web-bg.jpg)'
+          "
+        >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
             <HotPromotion :list="selectedPromo" />
           </div>
@@ -163,7 +177,11 @@ export default defineComponent({
         if (promo.redirectUrl.includes("page-vip")) {
           router.push("/vip");
         } else {
-          router.push({name: 'promotion', query: {name: promo.redirectUrl}})
+          if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3' || route.query.name === 'lh1-football-fight-2' || route.query.name === 'lh1-football-fight-3') {
+            router.push({name: 'promotion', query: {name: route.query.name}})
+          } else {
+            router.push({name: 'promotion', query: {name: promo.redirectUrl}})
+          }
           isPromoDetail.value = true
           selectedPromo.value = promo
         }
@@ -187,6 +205,16 @@ export default defineComponent({
             if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
               promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
             } else {
+              if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3') {
+                if (element.redirectUrl === 'lh1-invite') {
+                  showPromoDetails(element)
+                }
+              }
+              if (route.query.name === 'lh1-football-fight-2' || route.query.name === 'lh1-football-fight-3') {
+                if (element.redirectUrl === 'lh1-football-fight') {
+                  showPromoDetails(element)
+                }
+              }
               if (element.redirectUrl === route.query.name) {
                 showPromoDetails(element)
               }
@@ -325,7 +353,7 @@ export default defineComponent({
   // min-height: 70vh;
   // color: #ffffff;
   .banner-container {
-    min-height: 500px;
+    // min-height: 500px;
   }
   .all-promotions {
     @keyframes fadein {
@@ -340,7 +368,9 @@ export default defineComponent({
       background-position: center center;
       &.isDesktop {
         display: block;
-        height: 500px;
+        img {
+          width: 100%;
+        }
       }
       &.isMobile {
         display: none;
@@ -587,12 +617,14 @@ export default defineComponent({
       .banner-container {
         width: 100%;
         .promo-bg {
-          background-size: cover;
+          background-size: 100%;
           background-repeat: no-repeat;
           background-position: center center;
           &.isDesktop {
             display: block;
-            height: 500px;
+            img {
+              width: 100%;
+            }
           }
           &.isMobile {
             display: none;
@@ -601,12 +633,14 @@ export default defineComponent({
         }
       }
       .inner {
-        max-width: 1400px;
-        width: 95%;
-        margin: 20px auto;
+        width: 100%;
+        padding: 20px;
         display: flex;
         flex-direction: column;
+        background-size: 100%;
+        background-position: top center;
         gap: 20px;
+        background-repeat: no-repeat;
         .hot-promo {
           // background: #201f29;
           border-radius: 10px;

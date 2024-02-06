@@ -105,7 +105,8 @@
         </el-row>
         <el-row>
           <el-form-item :label="t('fields.answer')" prop="quizTitle">
-            <span>{{ form.answerOne }}</span>
+            <span v-if="form.answerOne === 'DRAW'">{{ t('fields.draw') }}</span>
+            <span v-else>{{ form.answerOne }}</span>
           </el-form-item>
         </el-row>
         <el-row>
@@ -148,6 +149,7 @@
       <el-table-column prop="answerOne" :label="t('fields.answer')" width="200">
         <template #default="scope">
           <span v-if="scope.row.answerOne === null">-</span>
+          <span v-else-if="scope.row.answerOne === 'DRAW'">{{ t('fields.draw') }}</span>
           <span v-else>{{ scope.row.answerOne }}</span>
         </template>
       </el-table-column>

@@ -24,7 +24,7 @@
           <div
             class="promo"
           >
-            <img v-if="item.promotionIcon" :src="`${imgURL}label/${item.promotionIcon}`">
+            <img v-if="item.promotionIcon" :src="`${imgURL}${item.promotionIcon}`">
           </div>
           <div class="payment-method-wrapper">
             <div
@@ -316,6 +316,8 @@ $node-color: #4873f1;
           max-width: 2.3rem;
           // max-width: 1.5rem;
           margin-bottom: 0;
+          width: 42px;
+          max-width: 42px;
         }
       }
       .promo {
@@ -324,6 +326,7 @@ $node-color: #4873f1;
           box-shadow: none;
           padding: 0;
           border: 0;
+
         }
       }
     }
@@ -466,6 +469,8 @@ $node-color: #4873f1;
        padding: 0;
        border: 0; 
        background-color: transparent;
+        max-width: 42px;
+        width:  42px;
       }
       // top: -5px;
       // right: 0;

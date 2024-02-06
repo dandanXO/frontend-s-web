@@ -3,7 +3,6 @@
     <HomeBanner></HomeBanner>
     <HomeAnnouncement></HomeAnnouncement>
     <HomeDownload></HomeDownload>
-    <HomeHotMatch></HomeHotMatch>
     <HomeHotGame></HomeHotGame>
     <HomeService></HomeService>
   </div>
@@ -16,7 +15,7 @@ import { ref, onMounted } from "vue";
 import HomeBanner from "@/components/home/HomeBanner.vue";
 import HomeAnnouncement from "@/components/home/HomeAnnouncement.vue";
 import HomeDownload from "@/components/home/HomeDownload.vue";
-import HomeHotMatch from "@/components/home/HomeHotMatch.vue";
+// import HomeHotMatch from "@/components/home/HomeHotMatch.vue";
 import HomeHotGame from "@/components/home/HomeHotGame.vue";
 import HomeService from "@/components/home/HomeService.vue";
 
@@ -31,5 +30,8 @@ onMounted(() => {});
 <style scoped lang="scss">
 .home {
   margin: 0 0 2.5rem 0;
+  background-image: url("../assets/home/home-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% auto;
 }
 </style>

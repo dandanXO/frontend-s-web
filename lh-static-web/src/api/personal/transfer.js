@@ -16,3 +16,11 @@ export function getPlatforms() {
 export function getLoggedInPlatformList() {
   return server.REST.get("/session/loggedInPlatform")
 }
+
+export function updateAutoTransferState(state) {
+  return server.REST.put("/session/updateAutoTransferState/"+state);
+};
+
+export function getAutoTransferState() {
+  return server.REST.get("/session/getAutoTransferState");
+};

@@ -740,6 +740,7 @@ import {getPlatformList} from "@/api/platform/platform";
 import {userStore} from "@/store";
 import FileUpload from "@/components/FileUpload.vue"
 import EmptyData from "@/components/emptyData.vue"
+import { useRoute } from "vue-router";
 
 const loadingBtn = ref(false);
 const store = userStore()
@@ -965,56 +966,6 @@ const tableColumns = {
     }
   ],
   betRecord: [
-    // {
-    //   title: "รหัสเดิมพัน",
-    //   dataIndex: "betId"
-    // },
-    // {
-    //   title: "รหัสธุรกรรม",
-    //   dataIndex: "transactionId"
-    // },
-    // {
-    //   title: "แพลตฟอร์ม",
-    //   dataIndex: "platform"
-    // },
-    // {
-    //   title: "เดิมพัน",
-    //   dataIndex: "bet"
-    // },
-    // {
-    //   title: "การจ่ายเงิน",
-    //   dataIndex: "payout"
-    // },
-    // {
-    //   title: "วงเงินก่อนหน้า",
-    //   dataIndex: "beforeBalance"
-    // },
-    // {
-    //   title: "วงเงินหลังจาก",
-    //   dataIndex: "afterBalance"
-    // },
-    // {
-    //   title: "สถานะการเดิมพัน",
-    //   dataIndex: "betStatus"
-    // },
-    // {
-    //   title: "ประเภทของเกม",
-    //   dataIndex: "gameType"
-    // },
-    // {
-    //   title: "เวลาเดิมพัน",
-    //   dataIndex: "betTime",
-    //   slots: {customRender: "betTime"}
-    // },
-    // {
-    //   title: "เวลาชำระเงิน",
-    //   dataIndex: "settleTime",
-    //   slots: {customRender: "settleTime"}
-    // },
-    // {
-    //   title: "ผลลัพท์",
-    //   dataIndex: "result"
-    // },
     {
       title: " 下注 ID",
       dataIndex: "betId"
@@ -1117,7 +1068,7 @@ export default defineComponent({
       // recordActive.value = key.props.name
       loading.value = true;
       if (recordActive.value === 'gameBetRecord') {
-        getPlatList();
+        getPlatList(recordActive.value);
       } else if (recordActive.value === 'reminderRecord') {
         financeFeedbackList(searchForm[recordActive.value]).then((response) => {
           if (response.code === 0) {
@@ -1188,16 +1139,29 @@ export default defineComponent({
         if (v in searchForm) {
           searchForm[v].startDate = chgDate(7);
           searchForm[v].endDate = chgDate(0);
+          if(v === "gameBetRecord") {
+            // 结束时间如果不跟开始时间一个月，则从当月1号开始
+            if(moment(searchForm[v].startDate).format("YYYY-MM") !== moment(searchForm[v].endDate).format("YYYY-MM")) {
+              searchForm[v].startDate = moment(searchForm[v].endDate).format("YYYY-MM") + "-01";
+            }
+          }
         }
       });
       searchRecord();
     };
 
+    const route= useRoute();
     onMounted(() => {
       getTime();
     });
     const platformsList = ref([])
-    const getPlatList = () => {
+    const getPlatList = (v) => {
+      const startMonth = new Date(searchForm[v].startDate).getMonth()
+      const endMonth = new Date(searchForm[v].endDate).getMonth()
+      if (startMonth !== endMonth) {
+        ElMessage.error('开始与结束月份必须一致');
+      }
+
       getPlatformList().then((ret) => {
         platformsList.value = ret
       })
@@ -1307,8 +1271,9 @@ export default defineComponent({
       })
     }
 
+    const imgURL = process.env.VUE_APP_IMAGE_CDN
     const getImageLink = (linkId) => {
-      reminderForm.photos = `https://xinfa-files.s3.ap-southeast-1.amazonaws.com/order/2/${linkId}`
+      reminderForm.photos = imgURL + '/order/' + store.siteId + '/' + linkId
     }
 
     const getTurnoverType = (turnoverType) => {

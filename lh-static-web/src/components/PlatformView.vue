@@ -7,14 +7,15 @@
           <div class="platform-item platform-item--img" data-aos="fade-right" data-aos-duration="1000">
             <img
               :src="
-                require('../assets/' + platformType + '/' + platformType + '-item-' + item.name.toLowerCase() + '.png')
+                require('../assets/' + platformType + '/' + platformType + '-item-' + item.code.toLowerCase() + '.png')
               "
             />
           </div>
 
           <div class="platform-item">
             <div class="platform-title-wrap" data-aos="fade-left" data-aos-delay="100">
-              <div class="platform-title">{{ item.name }}</div>
+              <!--              <pre>{{item}}</pre>-->
+              <div class="platform-title">{{ item.cnname ?? item.name }}</div>
               <div class="platform-subtitle">{{ platformName }}</div>
             </div>
 
@@ -48,24 +49,21 @@
                           '/' +
                           platformType +
                           '-logo-' +
-                          plat.name.toLowerCase() +
+                          plat.code.toLowerCase() +
                           '.png')
                       "
                     />
                   </span>
                 </div>
-                <div class="list-item-txt">{{ plat.name }}</div>
+                <div class="list-item-txt">{{ plat.alias ?? plat.cnname }}</div>
               </span>
             </div>
 
-            <div
-              class="platform-play-btn"
-              data-aos="fade-in"
-              data-aos-delay="300"
-              data-aos-duration="500"
-              v-if="platformType !== 'slot' || platformType !== 'fishing'"
-            >
-              <div class="btn-blue" @click="openGame(item.name, item.code)">进入游戏</div>
+            <!--            data-aos="fade-in"-->
+            <!--            data-aos-delay="300"-->
+            <!--            data-aos-duration="500"-->
+            <div class="platform-play-btn" v-if="platformType !== 'slot'">
+              <div class="btn-blue" @click="openGame(item.name, item.code, item.gameCode)">进入游戏</div>
             </div>
           </div>
         </template>
@@ -120,7 +118,7 @@
             v-for="game in gamePage.gameList"
             :key="game.id"
           >
-            <a @click="openGame(game.name, game.code)">
+            <a @click="openGame(game.name, selectedPlat, game.code)">
               <div class="slot-img">
                 <el-image :src="game.icon" lazy>
                   <template #placeholder>
@@ -219,9 +217,24 @@ const getPlatList = () => {
   const getFn = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
   getFn().then((res) => {
     platformsList.value = res;
+
+    // console.log(platformsList.value);
+
     platformsListDisplay.value = platformsList.value.filter((element) =>
       element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase())
     );
+
+    console.log("Platform");
+    console.log(platformsListDisplay.value);
+
+    platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
+      const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
+      return { ...matchingItem, ...item1 };
+    });
+
+    console.log("THIs");
+    console.log(platformsListDisplay.value);
+
     setFilteredPlatforms();
   });
 };
@@ -230,6 +243,15 @@ const setFilteredPlatforms = () => {
   filteredPlatforms.value = props.platforms.filter((displayPlatform) =>
     platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
   );
+
+  filteredPlatforms.value = filteredPlatforms.value.map((item1) => {
+    const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
+    return { ...matchingItem, ...item1 };
+  });
+
+  console.log("Filter plat");
+  console.log(filteredPlatforms.value);
+  console.log(platformsListDisplay.value);
 
   filteredPlatforms.value.forEach((element) => {
     if (element.code === route.query.plat) {
@@ -249,8 +271,9 @@ const clickPlat = (plat) => {
   selectedPlat.value = plat.code;
 };
 
-const openGame = (gameName, gameCode) => {
-  platformGame.value.open(gameName, "onlyPlatform", gameCode);
+const openGame = (gameName, platformCode, gameCode) => {
+  // debugger;
+  platformGame.value.open(gameName, platformCode, gameCode);
 };
 
 const activePlat = ref("");
@@ -274,10 +297,15 @@ const switchPlat = (plat) => {
 };
 
 const getPlatGameList = () => {
-  props.platformGameType === "SLOT" &&
+  if (props.platformGameType === "SLOT") {
     getPlatformList()
       .then((data) => {
         platformsListDisplay.value = data.filter((element) => element.gameType.includes(props.platformGameType));
+        platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
+          const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
+          return { ...matchingItem, ...item1 };
+        });
+
         if (!route.query.plat) {
           switchPlat(platformsListDisplay.value[0]);
         } else {
@@ -291,6 +319,7 @@ const getPlatGameList = () => {
       .catch((err) => {
         console.log(err.message);
       });
+  }
 };
 
 const searchList = () => {
@@ -301,14 +330,12 @@ const searchList = () => {
   }
 };
 const loadGameList = () => {
-  props.platformGameType === "SLOT" &&
+  if (props.platformGameType === "SLOT" || props.platformGameType === "FISH") {
     getPlatformGames(activePlat.value.id, props.platformGameType)
       .then((data) => {
         data.forEach((element) => {
           element.default = require("../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${
-            element.icon
-          }.png`;
+          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${element.icon}`;
         });
         gameListData.value = data;
         gamePage.total = data.length;
@@ -317,6 +344,7 @@ const loadGameList = () => {
       .catch((err) => {
         console.log(err.message);
       });
+  }
 };
 
 const changePage = (page, pageSize) => {

@@ -8,14 +8,6 @@
         <div class="brush"><RiStarFill /><i class="remixicon-star-s-fill" style="font-size: 22px;"></i>一键收藏网站</div>
       </div> -->
         <div class="top-ft-rgt">
-          <span class="s1">支付方式：</span>
-          <span class="footPayIcon visa" title="VISA"></span>
-          <span class="footPayIcon masterCard" title="MasterCard"></span>
-          <span class="footPayIcon chineseBank" title="中国银联"></span>
-          <span class="footPayIcon fastBank" title="本地银行转账"></span>
-          <span class="footPayIcon alipayf" title="支付宝"></span>
-        </div>
-        <div class="top-ft-rgt">
           <span class="s1">博彩责任：</span>
           <span class="footPayIcon gameCore" title="GameCore"></span>
           <span class="footPayIcon eighteenadd" title="18+"></span>
@@ -23,8 +15,6 @@
           <span class="recBrowser bchrome" title="Chrome"></span>
           <span class="recBrowser bfirefox" title="Firefox"></span>
         </div>
-      </div>
-      <div class="top-footer-inner">
         <div class="top-ft-rgt">
           <span class="s1">合作伙伴:</span>
           <span class="hzhb-icon ag" title="ag"></span>
@@ -35,10 +25,18 @@
           <span class="hzhb-icon bbin" title="bbin"></span>
           <span class="hzhb-icon xj" title="xj"></span>
         </div>
+        <div class="top-ft-rgt">
+          <span class="s1">支付方式：</span>
+          <span class="footPayIcon visa" title="VISA"></span>
+          <span class="footPayIcon masterCard" title="MasterCard"></span>
+          <span class="footPayIcon chineseBank" title="中国银联"></span>
+          <span class="footPayIcon fastBank" title="本地银行转账"></span>
+          <span class="footPayIcon alipayf" title="支付宝"></span>
+        </div>
       </div>
     </div>
     <div class="bottom-footer">
-      <div class="sitemap">
+      <div class="sitemap" style="display:none;">
         <ul class="index_bottom_des">
           <li>关于雷火</li>
           <li><router-link to="/promotion">优惠活动</router-link></li>
@@ -72,8 +70,7 @@
           </li>
           <li>
             <a
-              href="http://download.microsoft.com/download/A/C/9/AC924EA1-9F39-4DFD-99DF-2C1DEB922174/EIE11/WOL/EIE11_EN-US_WOL_WIN764.EXE"
-            >
+              href="http://download.microsoft.com/download/A/C/9/AC924EA1-9F39-4DFD-99DF-2C1DEB922174/EIE11/WOL/EIE11_EN-US_WOL_WIN764.EXE">
               IE9浏览器
             </a>
           </li>
@@ -84,7 +81,14 @@
       </div>
       <div class="bottom-footer-inner">
         <ul>
-          <li><router-link to="/about?id=aboutus">关于雷火</router-link></li>
+          <li>
+            <router-link to="/about?id=aboutus">
+              <div style="display:flex;align-items:center;gap:5px;">
+                <img src="@/assets/footer/footer-lh-logo.png" />
+                <div>关于雷火</div>
+              </div>
+            </router-link>
+          </li>
           <li><router-link to="/about?id=info">资料收集</router-link></li>
           <li><router-link to="/about?id=law">法律依据</router-link></li>
           <li><router-link to="/about?id=aboutus">关于我们</router-link></li>
@@ -93,7 +97,7 @@
           <li><a href="https://partner.e88726.com/">加盟代理</a></li>
           <li><router-link to="/about?id=blame">博彩责任</router-link></li>
         </ul>
-        <div class="tagline">雷火是全球领先的合法博彩公司，拥有菲律宾政府PAGCOR 所颁发的离岸博彩许可证，并受其监管</div>
+        <!-- <div class="tagline">雷火是全球领先的合法博彩公司，拥有菲律宾政府PAGCOR 所颁发的离岸博彩许可证，并受其监管</div> -->
       </div>
     </div>
   </footer>

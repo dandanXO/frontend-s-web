@@ -99,7 +99,7 @@
           <!-- eslint-disable -->
           <span
             v-if="scope.row.recordTime !== null"
-            v-formatter="{ data: scope.row.recordTime, timeZone: timeZone, formatter: 'YYYY-MM-DD', type: 'date' }"
+            v-formatter="{ data: scope.row.recordTime, timeZone: timeZone, formatter: 'YYYY-MM-DD HH:mm:ss', type: 'date' }"
           />
         </template>
       </el-table-column>

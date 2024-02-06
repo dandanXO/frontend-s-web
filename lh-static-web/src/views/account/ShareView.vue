@@ -104,7 +104,7 @@ export default defineComponent({
     const getReferral = () => {
       getReferralLink().then((res) => {
         if(res.code === 0) {
-          referralLink.value = `https://www.dy9367.com/refer/${res.data}`;
+          referralLink.value = 'https://' + location.hostname + `/refer/${res.data}`;
         }
       }).catch((err) => {
         console.log(err)
@@ -215,6 +215,14 @@ export default defineComponent({
       margin-bottom: 10px;
     }
   }
+
+
+}
+
+
+.copy-btn{
+  background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+  border-radius: 30px;
 }
 </style>
 <style scoped lang="scss">

@@ -44,17 +44,22 @@ defineProps(["title", "subtitle"]);
 
       .title-text {
         word-break: keep-all;
-        filter: drop-shadow(0px 2px #c4effa);
+        //filter: drop-shadow(0px 1px #c4effa);
         font-family: FZHanZhenGuangBiaoS-GB;
         font-size: 2.82869rem;
         font-weight: 600;
         letter-spacing: 0.14144rem;
         background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+        box-shadow: 0px -2px 4.579999923706055px 0px #93C7FF inset;
+
+        box-shadow: 0px -1px 3.6640000343322754px 0px #75A6FF8A inset;
+
+        box-shadow: 0px 2px 0px 0px #C4EFFA;
+
         background-clip: text;
         -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        -webkit-text-stroke-width: 0.5px;
-        -webkit-text-stroke-color: white;
+        -webkit-text-fill-color: #3981ff;
+        -webkit-text-stroke-width:0px;
         margin: 0 2.5rem;
       }
     }

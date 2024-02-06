@@ -27,6 +27,7 @@ export const userStore = defineStore("userStore", {
       regPageVisible: false,
       currentDeposit: "0.0000",
       levelUpDeposit: "0",
+      siteId: 7
     };
   },
   actions: {
@@ -113,7 +114,7 @@ export const userStore = defineStore("userStore", {
           console.log(res.data);
           window.open(
             // `https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=WEB&lang=zh-CN&token=${this.token}`,
-            `${res.data}${this.token}`,
+            `${res.data}&token=${this.token}`,
             "Chat Server",
             "resizable=yes, width=" +
               800 +

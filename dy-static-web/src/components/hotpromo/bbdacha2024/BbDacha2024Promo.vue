@@ -22,7 +22,7 @@
           <button
             class="vote-btn"
             @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.homeTeam })"
-            :disable="data.votedTeam && data.votedTeam === data.homeTeam"
+            :disabled="data.votedTeam && data.votedTeam === data.homeTeam"
           >
             {{ data.votedTeam && data.votedTeam === data.homeTeam ? "已投票" : data.votedTeam ? "" : "投票" }}
           </button>
@@ -32,10 +32,18 @@
       <div class="competition-details">
         <div class="details-date">{{ data.matchTime }}</div>
 
-        <div class="details-match">
-          2024BB
-          <br />
-          别墅冬季杯 常规赛
+        <div class="details-match" v-html="data.quizTitle"></div>
+
+        <div class="competition-mid">
+          <div v-if="(data.votedTeam && data.votedTeam === 'draw') || !data.votedTeam" class="team-vote">
+            <button
+              class="vote-btn"
+              @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: 'draw' })"
+              :disabled="data.votedTeam && data.votedTeam === 'draw'"
+            >
+              {{ data.votedTeam && data.votedTeam === "draw" ? "已投平局" : data.votedTeam ? "" : "平局" }}
+            </button>
+          </div>
         </div>
 
         <div class="details-status">
@@ -62,7 +70,7 @@
           <button
             class="vote-btn"
             @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.awayTeam })"
-            :disable="data.votedTeam && data.votedTeam === data.awayTeam"
+            :disabled="data.votedTeam && data.votedTeam === data.awayTeam"
           >
             {{ data.votedTeam && data.votedTeam === data.awayTeam ? "已投票" : data.votedTeam ? "" : "投票" }}
           </button>
@@ -98,17 +106,17 @@
           <tbody>
             <tr>
               <td>≥3</td>
-              <td>0.05%</td>
+              <td>0.5%</td>
               <td>58</td>
             </tr>
             <tr>
               <td>≥5</td>
-              <td>0.08%</td>
+              <td>0.8%</td>
               <td>128</td>
             </tr>
             <tr>
               <td>≥6</td>
-              <td>0.10%</td>
+              <td>1.0%</td>
               <td>388</td>
             </tr>
           </tbody>
@@ -191,8 +199,10 @@
   <el-dialog v-model="tableRecordDialog" width="800px" align-center :close-on-click-modal="false" title="投票记录">
     <div class="record-dialog-container">
       <div class="promo-records-count">
-        <div>竞猜正确次数: {{ recordsCount.wonTimes }}</div>
-        <div>累计竞猜正确次数: {{ recordsCount.attendTimes }}</div>
+        <div>总竞猜次数: {{ recordsCount.attendTimes }}</div>
+
+        <div>总竞猜正确次数: {{ recordsCount.wonTimes }}</div>
+        <div>今日正确次数: {{ recordsCount.todayWonTimes }}</div>
       </div>
 
       <table class="promo-table record-table">
@@ -217,7 +227,8 @@
   </el-dialog>
 
   <el-dialog v-model="confirmVoteDialog" width="500px" align-center persistent title="投票">
-    <div class="dialog-header">您确定要把票投给 {{ submitParam.answerOne }} 吗？</div>
+    <div class="dialog-header" v-if="submitParam.answerOne === 'draw'">您确定要投"平局"吗？</div>
+    <div class="dialog-header" v-else>您确定要把票投给 {{ submitParam.answerOne }} 吗？</div>
     <div class="dialog-footer">
       <el-button color="grey" @click="confirmVoteDialog = false">取消</el-button>
       <el-button type="primary" @click="handleSubmitVote()">确定</el-button>
@@ -272,7 +283,8 @@ const upcomingData = ref([]);
 const answeredRecords = ref([]);
 const recordsCount = reactive({
   wonTimes: 0,
-  attendTimes: 0
+  attendTimes: 0,
+  todayWonTimes: 0
 });
 const getData = () => {
   Promise.all([getBBDachaUpcoming(), getBBDachaAnsweredRecords(), getBBDachaRecordsCount()]).then((values) => {
@@ -316,6 +328,7 @@ const getData = () => {
     if (bbDachaRecordsCount.code === 0) {
       recordsCount.wonTimes = bbDachaRecordsCount.data.wonTimes;
       recordsCount.attendTimes = bbDachaRecordsCount.data.attendTimes;
+      recordsCount.todayWonTimes = bbDachaRecordsCount.data.todayWonTimes;
     }
   });
 };
@@ -410,6 +423,7 @@ table.promo-table.record-table {
       display: flex;
       flex-direction: column;
       position: relative;
+      min-height: 220px;
 
       .team-logo {
         width: 100px;
@@ -484,7 +498,7 @@ table.promo-table.record-table {
     .competition-details {
       flex-shrink: 1;
       position: relative;
-      padding-top: 12px;
+      padding-top: 35px;
       //   min-width: 160px;
       .details-date {
         background: #4f94ff1a;
@@ -502,8 +516,8 @@ table.promo-table.record-table {
         color: #7a8eb9;
         font-size: 22px;
         text-align: center;
-        margin-top: 24px;
-        padding-bottom: 40px;
+        margin-top: 8px;
+        padding-bottom: 0px;
         font-weight: 500;
       }
 
@@ -516,11 +530,11 @@ table.promo-table.record-table {
         padding-top: 14px;
         line-height: 1;
         padding-bottom: 12px;
-        border-top-right-radius: 20px;
-        border-top-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
         font-weight: 700;
         font-size: 20px;
-        bottom: -24px;
+        top: -24px;
         left: 50%;
         transform: translate(-50%, 0);
 
@@ -636,5 +650,37 @@ table.promo-table.record-table {
 .dialog-footer {
   display: flex;
   justify-content: center;
+}
+
+.competition-mid {
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+  position: absolute;
+  bottom: 0px;
+  height: 58px;
+}
+
+.competition-mid .vote-btn {
+  border-radius: 80px;
+  min-width: 180px;
+  /* box-shadow: 0px -2px 8px 0px #bbdcff inset; */
+  height: 58px;
+  line-height: 26px;
+  border: none;
+  color: #7a80a1;
+  box-shadow: 0px -2px 8px 0px #bbdcff inset;
+  font-size: 22px;
+  padding: 16px 20px;
+  transition: 0.3s all;
+  background: #ffffff;
+}
+
+.competition-mid .vote-btn:hover {
+  filter: brightness(0.8);
+}
+.competition-mid .vote-btn.disable {
+  background: #dddddd;
+  color: #ffffff;
 }
 </style>

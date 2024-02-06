@@ -80,6 +80,17 @@ const routes = [
     ]
   },
   {
+    path: "/fishing",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "fishing",
+        component: () => import("pages/games/AviatorView.vue")
+      }
+    ]
+  },
+  {
     path: "/live-casino",
     component: () => import("layouts/MainLayout.vue"),
     children: [
@@ -333,28 +344,6 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: "/account/records/change",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/records/ChangeRecordView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/account/records/betrecord",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/records/BetRecordView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
-  {
     path: "/account/records/recommend",
     component: () => import("layouts/MainLayout.vue"),
     children: [
@@ -372,17 +361,6 @@ const routes = [
       {
         path: "",
         component: () => import("pages/records/HelpRecordView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/account/records/bill",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/records/BillRecordView.vue")
       }
     ],
     meta: { requiresAuth: true }

@@ -5,6 +5,10 @@ export const getTeamVotesSettings = (query) => {
   return https().request("/team-votes", Method.GET, query, ContentType.form);
 };
 
+export const getTeamVotesAwardsSettings = (siteId) => {
+  return https().request("/team-votes/award", Method.GET, { siteId: siteId }, ContentType.form);
+};
+
 export const createTeamVotes = (query) => {
   return https().request("/team-votes", Method.POST, query, ContentType.form);
 };
@@ -15,6 +19,10 @@ export const deleteTeamVotes = (id) => {
 
 export const updateVotes = (vote) => {
   return https().request(`/team-votes/${vote.id}/update-votes?virtualVotes=${vote.totalVotesVirtual}`, Method.PUT, {}, ContentType.form);
+};
+
+export const updateAwards = (vote) => {
+  return https().request('/team-votes/update-awards?_method=PUT', Method.POST, vote, ContentType.form);
 };
 
 export const getTeamVotesRecord = (query) => {

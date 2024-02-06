@@ -1,142 +1,45 @@
 <template>
   <div class="hot-promo">
     <ClaimPromo v-if="isCommonPromo" :promo-id="list.id" :loading-claim="loadingClaim" @daily-slot="handleSlot()" />
-    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy1-tiger-card'" />
-    <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token" />
-    <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu' && store.token" />
-    <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
-    <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
-    <EsportSafetyPromo v-if="list.redirectUrl === 'lh-esport-safe' && !isCommonPromo" />
-    <PredictionMatchPromo v-if="list.redirectUrl === 'lh-s13-match' && !isCommonPromo" />
-    <div v-if="list.redirectUrl === 'dy1-lottery' && !isCommonPromo && store.token" class="promo-4">
-      <div class="tabs">
-        <el-tabs v-model="activeKey" type="card">
-          <el-tab-pane key="1" label="选择幸运号码">
-            <div class="tab1">
-              <!--              <img src="../assets/images/promotion/hotpromo/30/icon.png"/>-->
-              <div class="contents">
-                {{ selectedHotPromo.contents.tab1 }}
-                <el-form>
-                  <el-row gutter="10">
-                    <el-col span="12">
-                      <el-input v-model="luckyNumber" placeholder="幸运号码" />
-                    </el-col>
-                    <el-col span="12">
-                      <el-button class="common-btn" :loading="btnLoading" @click="chooseLuckyNumber()">提交</el-button>
-                    </el-col>
-                  </el-row>
-                </el-form>
-              </div>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane key="2" label="记录">
-            <div class="tab2">
-              <el-form :model="query" :layout="'inline'">
-                <el-row gutter="20" class="firstrow">
-                  <el-col span="6">
-                    <el-date-picker
-                      key="1"
-                      placeholder="选择日期"
-                      v-model="query.recordTime"
-                      value-format="YYYY-MM-DD"
-                      format="YYYY-MM-DD"
-                    />
-                  </el-col>
-                  <el-col span="6">
-                    <el-form-item label="只显示自己">
-                      <el-switch v-model="query.onlyMe" />
-                    </el-form-item>
-                  </el-col>
-                  <el-col span="6">
-                    <el-form-item>
-                      <div class="common-btn" @click="retrieveList">搜索</div>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-              </el-form>
-              <div class="table">
-                <!-- <el-table
-                    :columns="columns"
-                    row-key="loginName"
-                    :datel-source="dataSource"
-                    :locale="{ emptyText: '数据为空' }"
-                >
-                  <template #recordTime="{ text }">
-                    <span>{{ humanDatetime(text) }}</span>
-                  </template>
-                </el-table> -->
-                <el-table :data="dataSource">
-                  <template #empty>
-                    <p>没有数据</p>
-                  </template>
-                  <el-table-column prop="number" label="号码" />
-                  <el-table-column prop="loginName" label="登录名" />
-                  <el-table-column prop="winStatus" label="获奖状态" />
-                  <el-table-column prop="recordTime" label="时间" />
-                </el-table>
-                <!-- <el-pagination
-                  small
-                  hide-on-single-page
-                  layout="prev, pager, next"
-                  @current-change="pageNumChange"
-                  :total="rankingPage.records.length"
-                  :current-page="rankingPage.current"
-                  :page-size="rankingPage.pageSize"
-                /> -->
-              </div>
-            </div>
-          </el-tab-pane>
-          <!--          <el-tab-pane key="3" label="获奖名单">-->
-          <!--            <div class="tab3">-->
-          <!--              <el-form :model="winnersQuery" :layout="'inline'">-->
-          <!--                <el-row gutter="20" class="firstrow">-->
-          <!--                  <el-col span="6">-->
-          <!--                  <el-date-picker-->
-          <!--                      placeholder="选择日期"-->
-          <!--                      v-model="winnersQuery.resultTime"-->
-          <!--                      value-format="YYYY-MM-DD"-->
-          <!--                      format="YYYY-MM-DD"-->
-          <!--                      @change="retrieveWinnerList"-->
-          <!--                  /></el-col>-->
-          <!--                  <el-col span="6">-->
-          <!--                  <el-form-item-->
-          <!--                  >-->
-          <!--                    <div class="common-btn" @click="retrieveWinnerList">-->
-          <!--                      搜索-->
-          <!--                    </div>-->
-          <!--                  </el-form-item-->
-          <!--                  >-->
-          <!--                  </el-col>-->
-          <!--                  </el-row>-->
-          <!--              </el-form>-->
-          <!--              <div class="table">-->
-          <!--                &lt;!&ndash; <el-table-->
-          <!--                    :columns="winnerColumns"-->
-          <!--                    row-key="loginName"-->
-          <!--                    :datel-source="winnerDataSource"-->
-          <!--                    :locale="{ emptyText: emptyText }"-->
-          <!--                >-->
-          <!--                  <template #resultTime="{ text }">-->
-          <!--                    <span>{{ humanDatetime(text) }}</span>-->
-          <!--                  </template>-->
-          <!--                </el-table> &ndash;&gt;-->
-          <!--                <el-table-->
-          <!--                  :data="winnerDataSource"-->
-          <!--                >-->
-          <!--                <template #empty>-->
-          <!--                  <p>没有数据</p>-->
-          <!--                </template>-->
-          <!--                  <el-table-column prop="number" label="号码" />-->
-          <!--                  <el-table-column prop="loginName" label="登录名" />-->
-          <!--                  <el-table-column prop="winStatus" label="获奖状态" />-->
-          <!--                  <el-table-column prop="resultTime" label="公告日期" />-->
-          <!--                </el-table>-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </el-tab-pane>-->
-        </el-tabs>
-      </div>
+    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-tiger-card'" />
+    <DragonCardPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-dragon-card'" />
+    <!-- <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-s13-vote'" /> -->
+    <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-goldenegg' && store.token" />
+    <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-hongbaoyu' && store.token" />
+    <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-welcomenewuser' && store.token" />
+    <InviteFriendPromo v-if="list.redirectUrl === 'lh1-invitefriend' && !isCommonPromo" />
+    <EsportSafetyPromo v-if="list.redirectUrl === 'lh1-esport-safety' && !isCommonPromo" />
+    <SportSafetyPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-sport-safety'" />
+    <PredictionMatchPromo v-if="list.redirectUrl === 'lh1-s13-vote' && !isCommonPromo" />
+    <DailyLoginPromo v-if="list.redirectUrl === 'lh1-monthly-sign' && !isCommonPromo" />
+    <NbaGamePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-nba-game'" />
+    <EsportQuiz v-if="list.redirectUrl === 'lh1-quiz' && !isCommonPromo" />
+    <LotteryPromo v-if="list.redirectUrl === 'lh1-lottery' && !isCommonPromo && store.token" />
+    <GiftPromo v-if="list.redirectUrl === 'lh1-gift' && !isCommonPromo && store.token" />
+    <Gift8Promo v-if="list.redirectUrl === 'lh1-gift8' && !isCommonPromo && store.token" />
+    <UpgradeHongBao v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo && store.token" />
+
+    <AsianCup2024 v-if="list.redirectUrl === 'lh1-promo-application-A' && !isCommonPromo && store.token" />
+    <BasketballHot v-if="list.redirectUrl === 'lh1-promo-basketball' && !isCommonPromo && store.token" />
+    <LPLSummer v-if="list.redirectUrl === 'lh1-promo-application-B' && !isCommonPromo && store.token" />
+    <Cny2024Promo v-if="list.redirectUrl === 'lh1-cny2024-promo' && !isCommonPromo && store.token" />
+    <div style="text-align: center" v-if="list.redirectUrl === 'lh1-feedback-award' && !isCommonPromo && store.token">
+      <img
+        style="max-width: 1200px; width: 100%; margin: 10px auto"
+        src="../assets/images/promotion/hotpromo/lhfeedback/feedback.png"
+      />
     </div>
+    <BbDacha2024Promo
+      v-if="list.redirectUrl === 'lh1-bb-dacha-2024' && !isCommonPromo && store.token"
+    ></BbDacha2024Promo>
+    <!-- <VIPUpgradePromo v-if="list.redirectUrl === 'lh1-vip-upgrade-bonus' && !isCommonPromo && store.token" />
+    <ReferBonusPromo v-if="list.redirectUrl === 'lh1-refer-bonus' && !isCommonPromo && store.token" /> -->
+    <PrivilegeInvite v-if="list.redirectUrl === 'lh1-invite' && !isCommonPromo && store.token" />
+    <FootballFight v-if="list.redirectUrl === 'lh1-football-fight' && !isCommonPromo && store.token" />
+
+    <CnyStepGame2024Promo
+      v-if="list.redirectUrl === 'lh1-cny-step-game' && !isCommonPromo && store.token"
+    ></CnyStepGame2024Promo>
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -157,12 +60,30 @@ import { defineComponent } from "vue";
 import { claimBonusItem, submitLuckyNumber, luckyNumberList, winnerList } from "@/api/index/promo";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
+import DragonCardPromo from "../components/hotpromo/dragoncard/dragonCardPromo.vue";
+import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import EsportSafetyPromo from "../components/hotpromo/eSportSafety/eSportSafetyPromo.vue";
+import SportSafetyPromo from "../components/hotpromo/sportSafety/sportSafetyPromo.vue";
 import PredictionMatchPromo from "../components/hotpromo/PredictionMatch/PredictionMatchPromo.vue";
+import DailyLoginPromo from "../components/hotpromo/DailyLogin/DailyLoginPromo.vue";
+import NbaGamePromo from "../components/hotpromo/nbagame/nbaGamePromo.vue";
+import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
+import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
+import PrivilegeInvite from "../components/hotpromo/privilegeInvite/PrivilegeInvite.vue";
+import FootballFight from "../components/hotpromo/footballfight/FootballFight.vue";
+import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
+import Gift8Promo from "../components/hotpromo/gift8/Gift8Promo.vue";
+import UpgradeHongBao from "../components/hotpromo/upgradeHongBao/UpgradeHongBao.vue";
+import AsianCup2024 from "../components/hotpromo/asian-cup-2024/AsianCup2024.vue";
+import BasketballHot from "../components/hotpromo/basketball-hot/BasketballHot.vue";
+import LPLSummer from "../components/hotpromo/lpl-summer/LPLSummer.vue";
+import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
+import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
+import CnyStepGame2024Promo from "../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -174,12 +95,30 @@ export default defineComponent({
   components: {
     ClaimPromo,
     TigerCardPromo,
+    PrizePoolVotePromo,
     GoldenEggPromo,
     HongBaoYuPromo,
     InviteFriendPromo,
-    EsportSafetyPromo,
     WelcomeTaskPromo,
-    PredictionMatchPromo
+    EsportSafetyPromo,
+    SportSafetyPromo,
+    PredictionMatchPromo,
+    DailyLoginPromo,
+    NbaGamePromo,
+    EsportQuiz,
+    LotteryPromo,
+    PrivilegeInvite,
+    FootballFight,
+    GiftPromo,
+    Gift8Promo,
+    AsianCup2024,
+    BasketballHot,
+    LPLSummer,
+    Cny2024Promo,
+    BbDacha2024Promo,
+    CnyStepGame2024Promo,
+    UpgradeHongBao,
+    DragonCardPromo
     // DailyBonus
   },
   props: {
@@ -419,15 +358,33 @@ export default defineComponent({
 
     // List for non common promo
     if (
-      this.list.redirectUrl === "dy1-tiger-card" ||
-      this.list.redirectUrl === "goldenegg" ||
-      this.list.redirectUrl === "hongbaoyu" ||
-      this.list.redirectUrl === "invitefriend" ||
-      this.list.redirectUrl === "welcomenewuser" ||
-      this.list.redirectUrl === "dy1-lottery" ||
-      this.list.redirectUrl === "lh-esport-safe" ||
-      this.list.redirectUrl === "lh-s13-match" ||
-      this.list.id === 40
+      this.list.redirectUrl === "lh1-tiger-card" ||
+      this.list.redirectUrl === "lh1-dragon-card" ||
+      this.list.redirectUrl === "lh1-goldenegg" ||
+      this.list.redirectUrl === "lh1-hongbaoyu" ||
+      this.list.redirectUrl === "lh1-invite" ||
+      this.list.redirectUrl === "lh1-football-fight" ||
+      this.list.redirectUrl === "lh1-welcomenewuser" ||
+      this.list.redirectUrl === "lh1-lottery" ||
+      this.list.redirectUrl === "lh1-esport-safety" ||
+      this.list.redirectUrl === "lh1-sport-safety" ||
+      this.list.redirectUrl === "lh1-s13-vote" ||
+      this.list.redirectUrl === "lh1-monthly-sign" ||
+      this.list.redirectUrl === "lh1-nba-game" ||
+      this.list.redirectUrl === "lh1-quiz" ||
+      this.list.redirectUrl === "lh1-gift" ||
+      this.list.redirectUrl === "lh1-gift8" ||
+      this.list.redirectUrl === "lh1-promo-application-A" ||
+      this.list.redirectUrl === "lh1-promo-basketball" ||
+      this.list.redirectUrl === "lh1-promo-application-B" ||
+      this.list.redirectUrl === "lh1-refer" ||
+      this.list.redirectUrl === "lh1-vip-upgrade-bonus" ||
+      this.list.redirectUrl === "lh1-refer-bonus" ||
+      this.list.redirectUrl === "lh1-cny2024-promo" ||
+      this.list.redirectUrl === "lh1-bb-dacha-2024" ||
+      this.list.redirectUrl === "lh1-cny-step-game" ||
+      this.list.redirectUrl === "lh1-feedback-award" ||
+      this.list.redirectUrl === "lh1-upgrade-hongbao"
     ) {
       this.isCommonPromo = false;
     } else {
@@ -523,6 +480,9 @@ export default defineComponent({
     gap: 30px;
     text-align: center;
     padding: 20px;
+    flex-direction: column;
+    width: 500px;
+    margin: 0 auto;
 
     .extrel-img {
       position: absolute;

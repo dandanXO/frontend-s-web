@@ -1,14 +1,15 @@
 <template>
   <div class="loading">
-    <img src="../../assets/logo-coming.png" />
+    <img src="../../assets/logo.png" />
     <!-- <ul>
       <li v-for="v in 5" :key="v"></li>
     </ul> -->
-    <!-- <span class="txt">เร็วๆนี้...</span> -->
+     <span class="txt">即将到来...</span>
   </div>
 </template>
 
-<script setup id="TFLoading"></script>
+<script setup id="TFLoading">
+</script>
 
 <style scoped lang="scss">
 .logo {

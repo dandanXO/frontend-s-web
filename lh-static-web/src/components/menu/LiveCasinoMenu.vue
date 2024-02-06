@@ -16,7 +16,7 @@ import { liveCasinoPlatforms } from "@/shared/platformArray";
 const emits = defineEmits(["load-modal"]);
 const platformType = ref("live");
 const platformGameType = ref("LIVE");
-const openGame = (item) => {
-  emits("load-modal", item.gameName, item.code, item.gameCode);
+const openGame = (gameName, code, gameCode) => {
+  emits("load-modal", gameName, code, gameCode);
 };
 </script>

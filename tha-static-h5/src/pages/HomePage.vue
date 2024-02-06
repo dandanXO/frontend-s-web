@@ -1013,7 +1013,7 @@
           <br />
         </div>
       </q-card-section>
-      <q-btn @click="gotoPromoSpinWheel" :label="$t('lang.go_now')" color="brand" />
+      <q-btn @click="gotoPromoSpinWheel" :label="$t('lang.close_btn')" color="brand" />
     </q-card>
   </q-dialog>
 </template>
@@ -1857,7 +1857,7 @@ export default defineComponent({
 
     const gotoPromoSpinWheel = () => {
       isSpinWheelPromo.value = false;
-      router.push(`/promo?id=81`);
+      // router.push(`/promo?id=81`);
     };
 
     onUnmounted(() => {

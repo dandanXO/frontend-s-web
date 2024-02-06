@@ -247,40 +247,40 @@
         <div class="account-tip-text">
           <div class="link">
             如果您需要修改个人资料，请您联系我们的
-            <a @click.stop.prevent="store.openLiveChat()">在线客服</a>
+            <a @click="store.openLiveChat()">在线客服</a>
           </div>
         </div>
       </el-form>
     </div>
 
-    <el-dialog
-      v-model="updatePwdModalVisible"
-      :footer="null"
-      width="500px"
-      title="修改密码"
-      align-center
-      :close-on-click-modal="false"
-      :close-on-press-escape="false"
-    >
-      <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">
-        <el-form-item ref="oldPassword" name="oldPassword" prop="oldPassword">
-          <el-input type="password" v-model="updatePwdInfo.oldPassword" :placeholder="'旧密码'" />
-        </el-form-item>
-        <el-form-item ref="password" name="password" prop="password">
-          <el-input type="password" v-model="updatePwdInfo.password" :placeholder="'新密码'" />
-        </el-form-item>
-        <el-form-item class="txt-center">
-          <el-button
-            :loading="loadingPwBtn"
-            class="txt-center submit-btn common-btn"
-            type="submit"
-            @click="submitUpdatePwd"
-          >
-            提交
-          </el-button>
-        </el-form-item>
-      </el-form>
-    </el-dialog>
+<!--    <el-dialog-->
+<!--      v-model="updatePwdModalVisible"-->
+<!--      :footer="null"-->
+<!--      width="500px"-->
+<!--      title="修改密码"-->
+<!--      align-center-->
+<!--      :close-on-click-modal="false"-->
+<!--      :close-on-press-escape="false"-->
+<!--    >-->
+<!--      <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">-->
+<!--        <el-form-item ref="oldPassword" name="oldPassword" prop="oldPassword">-->
+<!--          <el-input type="password" v-model="updatePwdInfo.oldPassword" :placeholder="'旧密码'" />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item ref="password" name="password" prop="password">-->
+<!--          <el-input type="password" v-model="updatePwdInfo.password" :placeholder="'新密码'" />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item class="txt-center">-->
+<!--          <el-button-->
+<!--            :loading="loadingPwBtn"-->
+<!--            class="txt-center submit-btn common-btn"-->
+<!--            type="submit"-->
+<!--            @click="submitUpdatePwd"-->
+<!--          >-->
+<!--            提交-->
+<!--          </el-button>-->
+<!--        </el-form-item>-->
+<!--      </el-form>-->
+<!--    </el-dialog>-->
 
     <el-dialog
       wrap-class-name="securityModal"
@@ -406,7 +406,7 @@
         <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: '请输入验证码' }]">
           <el-space>
             <el-input
-              @keypress.enter="verifyPhoneVerificationCode"
+              @keypress.enter.prevent="verifyPhoneVerificationCode"
               v-model="updatePhoneVerified.captchaCode"
               :maxlength="4"
               placeholder="验证码"
@@ -828,6 +828,7 @@ export default defineComponent({
       updatePwdModalVisible.value = true;
     };
     const submitUpdatePwd = () => {
+      debugger;
       loadingPwBtn.value = true
       updatePwdFormRef.value
         .validate()
@@ -839,7 +840,6 @@ export default defineComponent({
                 message: '成功',
                 type: 'success',
               })
-              updatePwdModalVisible.value = false;
             } else {
               // message.error(response.message);
             }

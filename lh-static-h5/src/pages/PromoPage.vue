@@ -1,6 +1,14 @@
 <template>
   <div class="promo-container">
-    <div class="promo">
+    <div
+      class="promo"
+      :style="
+        'background-image: url(' +
+        imgURL +
+        (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
+        ')'
+      "
+    >
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
         <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
       </q-tabs>
@@ -20,39 +28,51 @@
                 >
                   <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
-                      <div class="pad-title">
-                        <span class="pad-right">查看详情&gt;&gt;</span>
-                      </div>
-                      <div class="promo-info">
-                        <span class="viewdetail">{{ promo.title }}</span>
-                      </div>
-                      <div class="promo-img-wrapper">
-                        <div class="promo-bg">
-                          <img class="promo-content" src="../assets/images/promo/promo-1.png" />
-                          <!--                          :src="imgURL + promo.mobileImgUrl"-->
+                      <div>
+                        <div class="promo-ribbon">{{ getPromoLabel(promo.labelType) }}</div>
+                        <div
+                          class="promo-item-date"
+                          v-if="parsedParam(promo.param).date"
+                          v-html="parsedParam(promo.param).date"
+                        />
+                        <div class="promo-item-title">{{ promo.title }}</div>
+                        <div
+                          class="promo-item-deal"
+                          v-if="parsedParam(promo.param).sub"
+                          v-html="parsedParam(promo.param).sub"
+                        />
+                        <div>
+                          <q-btn label="查看详情" dense color="brightbtn" class="promo-item-btn" />
+                        </div>
+
+                        <div class="promo-item-side-img">
+                          <img :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
-                      <div class="pad-label label-new">最新活动</div>
                     </a>
                   </div>
 
                   <div class="promo-item" v-if="tab.name === 'all'">
                     <a @click="showPromoDetails(promo)">
                       <div>
-                        <div class="promo-ribbon">NEW 最新</div>
-                        <div class="promo-item-date">2023/8/1-9/30</div>
+                        <div class="promo-ribbon">{{ getPromoLabel(promo.labelType) }}</div>
+                        <div
+                          class="promo-item-date"
+                          v-if="parsedParam(promo.param).date"
+                          v-html="parsedParam(promo.param).date"
+                        />
                         <div class="promo-item-title">{{ promo.title }}</div>
-                        <div class="promo-item-deal">
-                          每日可领取
-                          <span>8888</span>
-                          元
-                        </div>
+                        <div
+                          class="promo-item-deal"
+                          v-if="parsedParam(promo.param).sub"
+                          v-html="parsedParam(promo.param).sub"
+                        />
                         <div>
                           <q-btn label="查看详情" dense color="brightbtn" class="promo-item-btn" />
                         </div>
 
                         <div class="promo-item-side-img">
-                          <img src="../assets/images/promo/promo-img-side.png" alt="" />
+                          <img :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
                       <!-- <div class="promo-img-wrapper"> -->
@@ -78,6 +98,7 @@
                     ')'
                   "
                 ></div> -->
+
                 <!-- <div class="promo-bg"> -->
                 <img
                   class="promo-content"
@@ -128,7 +149,7 @@
 </template>
 
 <script lang="js">
-import {ref, defineComponent, onMounted, reactive, watch} from "vue";
+import {ref, defineComponent, onMounted, reactive, watch, computed} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
@@ -170,6 +191,8 @@ export default defineComponent({
     const ui = useUI();
     const isDisplayLogin = ref(false);
 
+    // const routeQuery  = computed(() => route.query || {});
+
     const tab = ref("all");
     const tabItems = [
 
@@ -189,6 +212,7 @@ export default defineComponent({
         ui.setScrollPosition("vertical", 0, 200);
       }
     });
+
     const loadBanner = () => {
       // loadPromoBanner("PROMO").then((res) => {
       //   if (res.code === 0) {
@@ -218,7 +242,7 @@ export default defineComponent({
       } else {
 
         if (promo.redirectUrl.includes("page-vip")) {
-          router.push({path: '/account/vip'});
+          router.push({path: '/vip'});
         } else {
           if (route.query.fromAccount) {
             router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
@@ -242,7 +266,9 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      api.get("/promo/page").then((res) => {
+      const platformApiUrl = store.token ? "/session/loggedInPromoPages" : "/promo/page";
+
+      api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
           promoState.promoList = [];
           var promoItems = res.data;
@@ -254,11 +280,17 @@ export default defineComponent({
             } else {
               promoState.promoList.push(element);
 
+              if ((route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3') && String(element.redirectUrl) === 'lh1-invite') {
+                showPromoDetails(element)
+              }
+
               if (route.query.name && String(element.redirectUrl) === route.query.name) {
                 showPromoDetails(element)
               }
             }
           });
+
+          console.log("route.query.name",route.query.name)
 
           switchPromoType(promoState.active)
         }
@@ -267,6 +299,31 @@ export default defineComponent({
       });
 
     }
+
+    const parsedParam = (paramData) => {
+      const newData = JSON.parse(paramData);
+      return newData;
+    };
+
+    const getPromoLabel = (labelType) => {
+      switch (labelType) {
+        case 0:
+          return "NEW 最新";
+        case 1:
+          return "HOT 热门";
+        case 3:
+          return "RECOMMEND 推荐";
+        case 4:
+          return "DAILY 日常";
+        case 5:
+          return "NEWBIE 新人";
+        case 6:
+          return "TIME 限时";
+        default:
+          return "";
+      }
+    };
+
     onMounted(() => {
       loadBanner();
       loadAll();
@@ -286,16 +343,26 @@ export default defineComponent({
       store,
       tab,
       tabItems,
-      isDisplayLogin
+      isDisplayLogin,
+      parsedParam,
+      getPromoLabel,
+      // routeQuery
     }
   },
 });
 </script>
+
 <style lang="scss">
 .promo-container {
   min-height: 100vh;
   background: $secondary;
   color: $dark;
+
+  .promo {
+    background-position: bottom center;
+    background-size: cover;
+    background-attachment: fixed;
+  }
 
   a {
     color: $primary;
@@ -425,7 +492,7 @@ export default defineComponent({
 
           .promo-item-side-img {
             position: absolute;
-            right: 20px;
+            right: 0px;
             top: 50%;
             transform: translateY(-50%);
             // height: 70%;
@@ -608,14 +675,14 @@ export default defineComponent({
           th {
             padding: 5px;
             text-align: center;
-            background-image: linear-gradient(0deg, #07414c 0, #058096 100%), linear-gradient(#d0d1d3, #d0d1d3);
+            background-color: #e7f3ff;
           }
 
           td {
             padding: 5px;
             text-align: center;
-            background-color: #202228;
-            border: 1px solid #2e3039;
+            background-color: #ffffff;
+            border: 1px solid #ecedf0;
           }
         }
 
@@ -624,10 +691,10 @@ export default defineComponent({
           display: block;
         }
 
-        .hot-promo {
-          background: #272c3d;
-          border-radius: 10px;
-        }
+        // .hot-promo {
+        //   background: #272c3d;
+        //   border-radius: 10px;
+        // }
       }
     }
   }
@@ -665,7 +732,7 @@ export default defineComponent({
     width: 100%;
     margin: 0 auto;
     padding-bottom: 8px;
-    box-shadow: 0px -6px 6px 0px #c3d4e6 inset;
+    // box-shadow: 0px -6px 6px 0px #c3d4e6 inset;
 
     .q-tab {
       color: $font-1;
@@ -679,6 +746,7 @@ export default defineComponent({
 
     .q-tab--active {
       color: $primary;
+      opacity: 1;
 
       .q-tab__label {
         color: $primary;
@@ -699,13 +767,13 @@ export default defineComponent({
     width: 100%;
   }
 
-  .q-tab--active .q-tab__indicator {
-    background-color: $primary;
-    background-size: 20px 10px;
-    width: 80%;
-    margin: 0 auto 3px;
-    height: 3px;
-  }
+  // .q-tab--active .q-tab__indicator {
+  //   background-color: $primary;
+  //   background-size: 20px 10px;
+  //   width: 80%;
+  //   margin: 0 auto 3px;
+  //   height: 3px;
+  // }
 
   .q-tab__label {
     z-index: 1;

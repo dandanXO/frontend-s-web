@@ -36,6 +36,16 @@
         >
           {{ t('fields.add') }}
         </el-button>
+        <el-button
+          icon="el-icon-edit"
+          size="mini"
+          type="warning"
+          v-permission="['sys:team-votes:update']"
+          :disabled="uiControl.awardBtn"
+          @click="showDialog('UPDATE_AWARD')"
+        >
+          {{ t('fields.updateAwards') }}
+        </el-button>
       </div>
     </div>
     <el-dialog
@@ -45,6 +55,7 @@
       width="600px"
     >
       <el-form
+        v-if="uiControl.dialogType === 'CREATE'"
         ref="votesForm"
         :model="form"
         :rules="formRules"
@@ -76,40 +87,59 @@
         </el-form-item>
 
         <el-form-item :label="t('fields.countryImage')" prop="countryImgUrl">
-          <el-row :gutter="24">
-            <el-col :span="18">
-              <el-input
-                :readonly="true"
-                v-model="form.countryImgUrl"
-                autocomplete="off"
+          <el-row :gutter="5" style="width: 350px">
+            <el-col v-if="form.homeTeamIcon" :span="18">
+              <el-image
+                v-if="form.countryImgUrl"
+                :src="promoDir + form.countryImgUrl"
+                fit="contain"
+                class="preview"
+                :preview-src-list="[promoDir + form.countryImgUrl]"
               />
             </el-col>
             <el-col :span="6">
-              <!-- eslint-disable -->
-              <input
-                id="uploadFile"
-                type="file"
-                ref="input1"
-                style="display: none"
-                accept="image/*"
-                @change="attachPhoto($event)"
-              />
               <el-button
-                style="display: block"
-                icon="el-icon-upload"
+                icon="el-icon-search"
                 size="mini"
                 type="success"
-                @click="$refs.input1.click()"
+                @click="browseImage()"
               >
-                {{ t('fields.upload') }}
+                {{ t('fields.browse') }}
               </el-button>
             </el-col>
           </el-row>
-          <!-- <el-input v-model="ruleForm.countryImgUrl" autocomplete="off" /> -->
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
+        </div>
+      </el-form>
+      <el-form
+        v-else
+        ref="awardsFormRef"
+        :model="awardsForm"
+        :rules="awardsFormRules"
+        :inline="true"
+        size="small"
+        label-width="150px"
+      >
+        <el-form-item :label="t('fields.awards')" prop="totalVoteReal">
+          <el-input-number
+            type="number"
+            v-model.number="awardsForm.totalVoteReal"
+            :min="1"
+            style="width: 350px"
+            @keypress="restrictInput($event)"
+            controls-position="right"
+          />
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="updateTeamAwards">
+            {{ t('fields.confirm') }}
+          </el-button>
         </div>
       </el-form>
     </el-dialog>
@@ -157,6 +187,112 @@
       :current-page="request.current"
     />
   </div>
+  <el-dialog
+    :title="uiControl.imageSelectionTitle"
+    v-model="uiControl.imageSelectionVisible"
+    append-to-body
+    width="50%"
+    :close-on-press-escape="false"
+  >
+    <div class="search">
+      <el-input
+        v-model="imageRequest.name"
+        size="small"
+        style="width: 200px"
+        :placeholder="t('fields.imageName')"
+      />
+      <el-select
+        v-model="imageRequest.siteId"
+        size="small"
+        :placeholder="t('fields.site')"
+        class="filter-item"
+        style="width: 120px; margin-left: 5px"
+      >
+        <el-option
+          v-for="item in siteList.list"
+          :key="item.id"
+          :label="item.siteName"
+          :value="item.id"
+        />
+      </el-select>
+      <el-button
+        style="margin-left: 20px"
+        icon="el-icon-search"
+        size="mini"
+        type="success"
+        ref="searchImage"
+        @click="loadSiteImage"
+      >
+        {{ t('fields.search') }}
+      </el-button>
+      <el-button
+        icon="el-icon-refresh"
+        size="mini"
+        type="warning"
+        @click="resetImageQuery()"
+      >
+        {{ t('fields.reset') }}
+      </el-button>
+    </div>
+    <div class="grid-container">
+      <div
+        v-for="item in imageList.list"
+        :key="item"
+        class="grid-item"
+        :class="item.id === selectedImage.id ? 'selected' : ''"
+      >
+        <el-image
+          :src="promoDir + item.path"
+          fit="contain"
+          style="aspect-ratio: 1/1"
+          @click="selectImage(item)"
+        />
+      </div>
+    </div>
+    <el-pagination
+      class="pagination"
+      @current-change="changeImagePage"
+      layout="prev, pager, next"
+      :page-size="imageRequest.size"
+      :page-count="imageList.pages"
+      :current-page="imageRequest.current"
+    />
+    <div class="image-info" v-if="selectedImage.id !== 0">
+      <el-row>
+        <el-col :span="4">
+          <h3>{{ t('fields.selectedImage') }}</h3>
+        </el-col>
+        <el-col :span="20">
+          <el-image
+            :src="promoDir + selectedImage.path"
+            fit="contain"
+            class="smallPreview"
+            :preview-src-list="[promoDir + selectedImage.path]"
+          />
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">{{ t('fields.imageSite') }} :</el-col>
+        <el-col :span="20">{{ selectedImage.siteName }}</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">{{ t('fields.imageName') }} :</el-col>
+        <el-col :span="20">{{ selectedImage.name }}</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">{{ t('fields.imageRemark') }} :</el-col>
+        <el-col :span="20">{{ selectedImage.remark }}</el-col>
+      </el-row>
+      <div class="dialog-footer">
+        <el-button @click="uiControl.imageSelectionVisible = false">
+          {{ t('fields.cancel') }}
+        </el-button>
+        <el-button type="primary" @click="submitImage">
+          {{ t('fields.confirm') }}
+        </el-button>
+      </div>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -164,28 +300,33 @@ import {
   getTeamVotesSettings,
   createTeamVotes,
   updateVotes,
-  deleteTeamVotes
+  deleteTeamVotes,
+  updateAwards,
+  getTeamVotesAwardsSettings
 } from '../../../../api/team-votes'
 import { ElMessage, ElMessageBox } from "element-plus";
 import { computed, onMounted, reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { hasPermission } from '../../../../utils/util'
-import { uploadImage } from '../../../../api/image'
 import { required } from "../../../../utils/validate";
 import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 import { getSiteListSimple } from '../../../../api/site';
 import { TENANT } from '../../../../store/modules/user/action-types';
+import { getSiteImage } from '../../../../api/site-image';
 
 const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
+const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
 const site = ref(null);
 const votesForm = ref(null)
+const awardsFormRef = ref(null)
 const totalVirtualVote = ref()
 const siteList = reactive({
   list: [],
 })
+const awards = ref(null)
 const route = useRoute()
 
 const uiControl = reactive({
@@ -194,29 +335,10 @@ const uiControl = reactive({
   dialogType: 'CREATE',
   editBtn: true,
   removeBtn: true,
+  awardBtn: true,
+  imageSelectionTitle: '',
+  imageSelectionVisible: false
 })
-
-async function attachPhoto(event) {
-  const files = event.target.files[0]
-  const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
-  const dirTeamVotes = 'promo/teamvotes/' + form.siteId
-
-  if (!allowFileType.find(ftype => ftype.includes(files.type))) {
-    ElMessage({ message: t('message.invalidFileType'), type: 'error' })
-  } else {
-    var formData = new FormData()
-    formData.append('files', files)
-    formData.append('dir', dirTeamVotes)
-    formData.append('overwrite', false)
-    const data = await uploadImage(formData)
-    if (data.code === 0) {
-      const path = data.data;
-      form.countryImgUrl = path.substr(0, path.indexOf("."));
-    } else {
-      ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
-    }
-  }
-};
 
 async function loadTeamVotesSettings() {
   const { data: ret } = await getTeamVotesSettings(request)
@@ -225,6 +347,15 @@ async function loadTeamVotesSettings() {
   ret.records.forEach(reco => {
     reco.totalVotesRealVirtual = getTotalAndVirtual(reco)
   });
+  const { data: awardSettings } = await getTeamVotesAwardsSettings(request.siteId)
+  awards.value = awardSettings;
+  console.log(awards.value)
+  if (awards.value) {
+    console.log('award button enable')
+    uiControl.awardBtn = false
+  } else {
+    uiControl.awardBtn = true
+  }
 };
 
 const request = reactive({
@@ -235,11 +366,43 @@ const request = reactive({
   siteId: null
 })
 
+const imageRequest = reactive({
+  size: 10,
+  current: 1,
+  name: null,
+  siteId: null,
+  category: 'PROMO',
+  promoType: 'TEAM_ICON',
+})
+
+const imageList = reactive({
+  list: [],
+  pages: 0,
+})
+
+const selectedImage = reactive({
+  id: 0,
+  name: '',
+  siteName: '',
+  remark: '',
+  path: '',
+})
+
+function resetImageQuery() {
+  imageRequest.name = null
+  imageRequest.siteId = site.value ? site.value.id : null
+}
+
 const form = reactive({
   siteId: null,
   teamNameEn: "",
   teamNameLocal: "",
   countryImgUrl: null,
+})
+
+const awardsForm = reactive({
+  siteId: null,
+  totalVoteReal: null
 })
 
 const formRules = reactive({
@@ -249,6 +412,10 @@ const formRules = reactive({
   countryImgUrl: [required(t('message.validateCountryImageRequired'))],
 });
 
+const awardsFormRules = reactive({
+  totalVoteReal: [required(t('message.validateAwardsRequired'))]
+})
+
 const page = reactive({
   pages: 0,
   records: [],
@@ -257,6 +424,13 @@ const page = reactive({
 function changePage(page) {
   request.current = page
   loadTeamVotesSettings()
+}
+
+function restrictInput(event) {
+  var charCode = event.which ? event.which : event.keyCode
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault()
+  }
 }
 
 function getTotalAndVirtual(row) {
@@ -323,6 +497,14 @@ function showDialog(type) {
     }
     form.siteId = request.siteId
     uiControl.dialogTitle = t('fields.createVote')
+  } else if (type === 'UPDATE_AWARD') {
+    console.log(awards.value)
+    if (awards.value) {
+      awardsForm.totalVoteReal = awards.value.totalVotesReal
+    } else {
+      awardsForm.totalVoteReal = 1
+    }
+    uiControl.dialogTitle = t('fields.updateAwards')
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
@@ -331,6 +513,51 @@ function showDialog(type) {
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
+}
+
+async function changeImagePage(page) {
+  imageRequest.current = page
+  const { data: ret } = await getSiteImage(imageRequest)
+  imageList.list = ret.records
+  imageList.pages = ret.pages
+}
+
+function selectImage(item) {
+  selectedImage.id = item.id
+  selectedImage.name = item.name
+  selectedImage.siteName = item.siteName
+  selectedImage.path = item.path
+  selectedImage.remark = item.remark
+}
+
+async function browseImage() {
+  await loadSiteImage()
+  uiControl.imageSelectionTitle = t('fields.countryImage')
+  uiControl.imageSelectionVisible = true
+}
+
+async function loadSiteImage() {
+  selectedImage.id = 0
+  const { data: ret } = await getSiteImage(imageRequest)
+  imageList.list = ret.records
+  imageList.pages = ret.pages
+}
+
+function submitImage() {
+  form.countryImgUrl = selectedImage.path
+  uiControl.imageSelectionVisible = false
+}
+
+async function updateTeamAwards() {
+  awardsFormRef.value.validate(async valid => {
+    if (valid) {
+      awardsForm.siteId = request.siteId
+      await updateAwards(awardsForm)
+      uiControl.dialogVisible = false
+      await loadTeamVotesSettings()
+      ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+    }
+  })
 }
 
 onMounted(async () => {

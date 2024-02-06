@@ -680,7 +680,7 @@ function charType(num) {
 
 .login-container {
   position: relative;
-  background: url(../assets/images/login/login-bg.png) no-repeat center center;
+  background: url(../assets/images/login/login-bg.jpg) no-repeat center center;
   background-size: cover;
   height: 100%;
   padding: 12px 0px 0px;
@@ -712,6 +712,7 @@ function charType(num) {
     .veri-img {
       height: 80%;
       padding-right: 6px;
+      width: 125px;
     }
 
     .login-via-phone-div {

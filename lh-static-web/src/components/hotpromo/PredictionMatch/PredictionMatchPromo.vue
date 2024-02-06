@@ -10,7 +10,7 @@
           <div class="match-item">
             <div class="match-image">{{ match.image }}</div>
             <div class="match-title">{{ match.title }}</div>
-            <div class="match-btn">投票</div>
+            <div class="match-btn" @click="vote(match)">投票</div>
             <div class="match-current">当前票数: {{ match.currentTickets }}</div>
           </div>
         </div>
@@ -30,35 +30,95 @@
         </table>
       </div>
     </div>
+    <el-dialog @open="reset" width="400" v-model="isPredictModal" :title="matchTitle" align-center>
+      <el-form ref="formRef" :model="form" label-width="120px" :rules="rules">
+        <el-form-item label="票数" prop="noOfVotes">
+          <el-input v-model="form.noOfVotes" />
+        </el-form-item>
+        <el-button class="common-btn" @click="submitVotes">确定</el-button>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, reactive } from "vue";
+import { getTeamVotes, postVote } from "@/api/index/promo";
 
+const validateVotes = (rule, value, callback) => {
+  if (!value) {
+    callback(new Error("请输入投票"));
+  } else if (value < 1) {
+    callback(new Error("投票次数要大于0"));
+  } else {
+    callback();
+  }
+};
 const matchDetails = ref([]);
+const isPredictModal = ref(false);
+const form = reactive({
+  noOfVotes: 0
+});
+const formRef = ref();
+const matchTitle = ref("");
 const init = () => {
+  // getTeamVotes().then((res) => {
+  //   if (res.code === 0) {
+  //     matchDetails.value = res.data;
+  //   }
+  // });
   matchDetails.value = [
     {
+      teamId: 1,
       image: "",
       title: "T1",
       currentTickets: 1000
     },
     {
+      teamId: 2,
       image: "",
       title: "BLG",
       currentTickets: 1000
     },
     {
+      teamId: 3,
       image: "",
       title: "JDG",
       currentTickets: 1000
     },
     {
+      teamId: 4,
       image: "",
       title: "WBG",
       currentTickets: 1000
     }
   ];
+};
+const selectedTeam = ref({});
+const vote = (match) => {
+  selectedTeam.value = match;
+  matchTitle.value = match.title;
+  isPredictModal.value = true;
+};
+const submitVotes = () => {
+  formRef.value.validate((valid) => {
+    if (valid) {
+      var obj = {
+        teamId: selectedTeam.value.teamId,
+        voteCount: form.noOfVotes
+      };
+      postVote(obj).then((res) => {
+        if (res.code === 0) {
+          isPredictModal.value = false;
+        }
+      });
+    }
+  });
+};
+const rules = reactive({
+  noOfVotes: [{ validator: validateVotes, trigger: blur }]
+});
+const reset = () => {
+  formRef.value.resetFields();
 };
 onMounted(() => {
   init();
@@ -66,6 +126,9 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 .prediction {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
   .prize-pool {
     width: 80%;
     height: 400px;

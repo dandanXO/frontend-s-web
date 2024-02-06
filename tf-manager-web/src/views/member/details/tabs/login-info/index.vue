@@ -23,6 +23,7 @@
     >
       {{ t('fields.search') }}
     </el-button>
+    <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
   </div>
   <el-card class="box-card" shadow="never" style="margin-top: 20px">
     <el-table
@@ -249,6 +250,12 @@ export default defineComponent({
       })
       memberData.loading = false
     }
+
+    function resetQuery() {
+      formData.loginTime = [defaultStartDate, defaultEndDate];
+      memberData.pagingState = null
+    }
+
     onMounted(async () => {
       loadData()
     })
@@ -263,6 +270,7 @@ export default defineComponent({
       t,
       ...toRefs(formData),
       ...toRefs(memberData),
+      resetQuery,
     }
   },
 })

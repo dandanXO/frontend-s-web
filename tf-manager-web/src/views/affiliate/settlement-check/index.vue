@@ -172,7 +172,7 @@
             v-if="hasPermission(['sys:member:detail'])"
           >
             <span style="display: inline-block">
-              {{ t('fields.month') }}: <span v-formatter="{data: scope.row.recordTime, timeZone: timeZone, type: 'date'}" />
+              {{ t('fields.month') }}: <span v-formatter="{data: scope.row.recordTime, timeZone: timeZone, formatter: 'YYYY-MM-DD', type: 'date'}" />
             </span>
           </template>
         </el-table-column>
@@ -285,7 +285,7 @@
             <span v-if="scope.row.recordTime === null">-</span>
             <span
               v-if="scope.row.recordTime !== null"
-              v-formatter="{data: scope.row.recordTime, timeZone: timeZone, type: 'date'}"
+              v-formatter="{data: scope.row.recordTime, timeZone: timeZone, formatter: 'YYYY-MM-DD', type: 'date'}"
             />
           </template>
         </el-table-column>
@@ -489,6 +489,10 @@ function convertDate(date) {
   return moment(date).format('YYYY-MM');
 }
 
+function convertDateTime(date) {
+  return moment(date).format('YYYY-MM-DD HH:mm:ss');
+}
+
 const uiControl1 = reactive({
   dialogVisible: false,
   progressBarVisible: false,
@@ -621,6 +625,7 @@ function showView(row) {
     '  的' +
     t('fields.commissionReport')
   uiControl1.dialogVisible = true
+  row.recordTime = convertDateTime(row.recordTime)
   loadCommisionReport(row)
 }
 

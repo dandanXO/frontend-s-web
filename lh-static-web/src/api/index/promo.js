@@ -31,7 +31,7 @@ export function welcomeTaskClaimBonus(item) {
 export function submitLuckyNumber(item) {
   return server.EVENT.post(`/privi/lotteryNumber`, {
     number: item,
-    promoCode: "dy1-lottery"
+    promoCode: "lh1-lottery"
   });
 }
 
@@ -53,7 +53,7 @@ export function winnerList(queryItems) {
   });
 }
 
-export function getSJBList() {
+export function getTeamVotes() {
   return server.EVENT.get(`/privi/team-votes/init`, {});
 }
 export function postVote(item) {
@@ -71,4 +71,100 @@ export function getInviteFriendList(item) {
       current: item.current
     }
   });
+}
+
+export function getSportMatchQuizInfo() {
+  return server.EVENT.get(`/quiz/upcoming`, {});
+}
+
+export function getMemberSportMatchRecord(record) {
+  return server.EVENT.get(`/quiz/answeredRecords`, {
+    params: {
+      size: record.size,
+      current: record.current
+    }
+  });
+}
+
+export function getRecordsCount() {
+  return server.EVENT.get(`/quiz/recordsCount`, {});
+}
+
+export function submitMemberSportMatchQuiz(param) {
+  const { quizId, quizTitle, answerOne, answerTwo, answerThree } = param;
+  return server.EVENT.post(`/quiz/submit`, {
+    quizId,
+    quizTitle,
+    answerOne,
+    answerTwo,
+    answerThree
+  });
+}
+
+export function getGiftList() {
+  return server.EVENT.get(`/gift/list`, {});
+}
+
+export function getGiftBet() {
+  return server.EVENT.get(`/gift/monthBet`, {});
+}
+
+export function redeemGift(param) {
+  const { giftId, recipient, recipientTelephone, address } = param;
+  return server.EVENT.post(
+    `/gift/redeem?giftId=${giftId}&recipient=${recipient}&recipientTelephone=${recipientTelephone}&address=${address}`,
+    {}
+  );
+}
+
+export function getGiftRecord() {
+  return server.EVENT.get(`/gift/record`, {});
+}
+
+export function promoApply(param) {
+  const { promoCode, promoTitle } = param;
+  return server.EVENT.post(`/promo-application/apply`, { promoCode, promoTitle });
+}
+
+export function promoApplyWithGameType(param) {
+  const { promoCode, promoTitle, gameType } = param;
+  return server.EVENT.post(`/promo-application/apply`, { promoCode, promoTitle, gameType });
+}
+
+export function getBBDachaUpcoming() {
+  return server.EVENT.get(`/bb-dacha/upcoming`, {});
+}
+
+export function getBBDachaAnsweredRecords() {
+  return server.EVENT.get(`/bb-dacha/answeredRecords`, {});
+}
+
+export function submitBBDacha(param) {
+  const { quizId, quizTitle, answerOne } = param;
+  return server.EVENT.post(`/bb-dacha/submit`, { quizId, quizTitle, answerOne });
+}
+
+export function getBBDachaRecordsCount() {
+  return server.EVENT.get(`/bb-dacha/recordsCount`, {});
+}
+
+export function getCurrentStepInit() {
+  return server.EVENT.get(`/game-steps/initiate`, {});
+}
+
+export function submitGameStep() {
+  return server.EVENT.post(`/game-steps/step`);
+}
+
+export function getStepRecords(current) {
+  return server.EVENT.get(`/game-steps/records`, {
+    params: {
+      size: 10,
+      current: current
+    }
+  });
+}
+
+export function checkInInfo() {
+  return server.EVENT.get(`/sign-in/info`, {});
 }

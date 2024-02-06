@@ -73,8 +73,14 @@
         </div>
 
         <div v-if="!store.token" class="right-contents">
-          <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">登录</a>
-          <a class="header-btn btn-color-white" @click="registerDialogVisible = true">注册</a>
+          <router-link to="/login" class="action-btn">
+            <a class="header-btn btn-color-blue">登录</a>
+          </router-link>
+          <router-link to="/register" class="action-btn">
+            <a class="header-btn btn-color-white">注册</a>
+          </router-link>
+          <!-- <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">登录</a>
+          <a class="header-btn btn-color-white" @click="registerDialogVisible = true">注册</a> -->
         </div>
 
         <div v-if="store.token" class="profile-actions">
@@ -103,9 +109,13 @@
             <img src="../../assets/images/home/profile-pic.png" />
           </router-link>
           <div class="profile-details">
-            <div class="details-name">
-              {{ store.nickName }}
-              <span><img src="../../assets/images/home/vip-01.png" /></span>
+            <div class="name-and-vip-wrapper">
+              <div class="details-name">
+                {{ store.nickName }}
+              </div>
+              <div class="account-vip-label">
+                {{ vip }}
+              </div>
             </div>
             <a @click="refreshBalance" class="details-balance">
               <span>总资产:</span>
@@ -544,7 +554,7 @@
 <script lang="js">
 
 import "vue3-carousel/dist/carousel.css";
-import {defineComponent, onMounted, ref, reactive, watch} from "vue";
+import {defineComponent, onMounted, ref, reactive, watch, computed} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {userStore} from "@/store/index";
 import {getVerificationCode, register, findAccount} from "@/api/index/login";
@@ -590,16 +600,16 @@ export default defineComponent({
     // carousel settings
     navigations: [
       {code: "home", name: "首页", enName: "Home", path: "/home"},
-      {code: "live", name: "真人", enName: "Live", path: "/live-casino", submenu: true},
-      {code: "sports", name: "体育", enName: "Sports", path: "/sports", submenu: true},
       {code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true},
+      {code: "sports", name: "体育", enName: "Sports", path: "/sports", submenu: true},
+      {code: "live", name: "真人", enName: "Live", path: "/live-casino", submenu: true},
+      {code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true},
       {code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true},
       {code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true},
-      {code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true},
       {code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true},
-      {code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: true, hasicon: true},
+      {code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: false, hasicon: true},
       {code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true},
-      {code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true},
+      {code: "App", name: "APP", enName: "App", path: "/app", submenu: false, hasicon: true},
       {code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true},
     ]
   }),
@@ -640,6 +650,18 @@ export default defineComponent({
     const scroll = ref(0);
     const selectedMenu = ref(false);
     const {height} = useElementSize(el);
+
+    const vipLevel = computed(() => {
+      if (store.vip.toUpperCase() === "NORMAL") {
+        return 1;
+      }
+      return store.vip;
+    });
+
+    const vip = computed(() => {
+      return vipLevel.value;
+    });
+
     const showSubMenu = (nav) => {
       if (nav.submenu === true) {
         selectedMenu.value = nav.code
@@ -1199,11 +1221,16 @@ export default defineComponent({
         store.getMemberInfo();
       }
 
-      if (store.loginPageVisible) {
-        loginDialogVisible.value = true
-      } else {
-        loginDialogVisible.value = false
+      if(store.loginPageVisible) {
+        router.push('/login');
+        return;
       }
+
+      // if (store.loginPageVisible) {
+      //   loginDialogVisible.value = true
+      // } else {
+      //   loginDialogVisible.value = false
+      // }
 
       // console.log(route);
       // alert(route.name)
@@ -1213,7 +1240,9 @@ export default defineComponent({
 
     watch(() => store.loginPageVisible, () => {
       if (store.loginPageVisible) {
-        loginDialogVisible.value = true
+        // loginDialogVisible.value = true
+        router.push('/login');
+        return;
       } else {
         loginDialogVisible.value = false
       }
@@ -1222,7 +1251,9 @@ export default defineComponent({
     });
     watch(() => store.regPageVisible, () => {
       if (store.regPageVisible) {
-        registerDialogVisible.value = true
+        // registerDialogVisible.value = true
+        router.push('/register');
+        return;
       } else {
         registerDialogVisible.value = false
       }
@@ -1522,7 +1553,8 @@ export default defineComponent({
       regCountdown,
       loginCountdown,
       route,
-      getUnreadMail
+      getUnreadMail,
+      vip
     }
   }
 });
@@ -1594,9 +1626,30 @@ body {
     display: flex;
     flex-direction: column;
     width: 160px;
+
+    .name-and-vip-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
     .details-name {
       color: $font-1;
       font-weight: bold;
+    }
+
+    .account-vip-label {
+      background-image: url(../../assets/images/account/vip-label.png);
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: 63px 17px;
+      width: 100%;
+      height: 17px;
+      font-size: 0.675rem;
+      color: $color-white;
+      padding-left: 21px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .details-balance {
@@ -1761,9 +1814,9 @@ body {
       margin: 0 auto;
       width: 100%;
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-between;
       align-items: center;
-      gap: 30px;
+      gap: 15px;
 
       &.logged-in-nav {
         max-width: 1420px;
@@ -1799,6 +1852,7 @@ body {
         // padding: 0px 16px;
         gap: 16px;
         text-align: center;
+        padding: 0px 15px;
 
         &.second-nav {
           margin-left: auto;
@@ -1829,7 +1883,7 @@ body {
           span:first-child {
             color: #000000;
             font-size: 1rem;
-            height: 40px;
+            height: 30px;
             display: flex;
             justify-content: center;
             align-items: center;

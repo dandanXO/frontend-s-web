@@ -16,7 +16,7 @@ import { eSportsPlatforms } from "@/shared/platformArray";
 const emits = defineEmits(["load-modal"]);
 const platformType = ref("esports");
 const platformGameType = ref("ESPORT");
-const openGame = (item) => {
-  emits("load-modal", item.gameName, item.code);
+const openGame = (gameName, code, gameCode) => {
+  emits("load-modal", gameName, code, gameCode);
 };
 </script>
