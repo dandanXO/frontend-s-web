@@ -104,33 +104,80 @@
           </router-link>
         </div>
 
-        <div v-if="store.token" class="profile-info">
-          <router-link to="/center/personal" class="profile-img">
-            <img src="../../assets/images/home/profile-pic.png" />
-          </router-link>
-          <div class="profile-details">
-            <div class="name-and-vip-wrapper">
-              <div class="details-name">
-                {{ store.nickName }}
-              </div>
-              <div class="account-vip-label">
-                {{ vip }}
+        
+            <div class="profile-info">
+              <el-dropdown trigger="click" v-if="store.token" class="profile-info-dropdown">
+                <span class="el-dropdown-link">
+                  <div class="profile-img-wrapper">
+                    <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
+                    <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
+                  </div>
+                </span>
+                <template #dropdown>
+                  <el-dropdown-menu class="profile-info-dropdown-content">
+                    <el-dropdown-item>
+                      <router-link to="/center/personal" style="color: #a8b5c3;margin: auto;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                          <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
+                          <span>个人信息</span>
+                        </div>
+                      </router-link>
+                    </el-dropdown-item>
+                    <el-dropdown-item >
+                      <router-link to="/center/deposit" style="color: #a8b5c3;margin: auto;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                          <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
+                          <span>充值中心</span>
+                        </div>
+                      </router-link>
+                    </el-dropdown-item>
+                    <el-dropdown-item >
+                      <router-link to="/center/transfer" style="color: #a8b5c3;margin: auto;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                          <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
+                          <span>快速转账</span>
+                        </div>
+                      </router-link>
+                    </el-dropdown-item>
+                    <el-dropdown-item >
+                      <router-link to="/promotion" style="color: #a8b5c3;margin: auto;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                        <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
+                        <span>优惠领取</span>
+                      </div>
+                      </router-link>
+                    </el-dropdown-item>
+                    <el-dropdown-item  @click="onLogout">
+                      <button class="standard-button btn-color-white" style="color:#468CFF">
+                        退出登录
+                      </button>
+                    </el-dropdown-item>
+                  </el-dropdown-menu>
+                </template>
+              </el-dropdown>
+              <div class="profile-details">
+                <div class="name-and-vip-wrapper">
+                  <div class="details-name">
+                    {{ store.nickName }}
+                  </div>
+                  <div class="account-vip-label">
+                    {{ vip }}
+                  </div>
+                </div>
+                <a @click="refreshBalance" class="details-balance">
+                  <span>总资产:</span>
+                  <span class="amount">
+                    <span v-if="isLoadingBalance">加载中...</span>
+                    <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ store.balance }}</span>
+                  </span>
+                  <el-icon>
+                    <RiRefreshLine color="#468CFF" />
+                  </el-icon>
+                </a>
               </div>
             </div>
-            <a @click="refreshBalance" class="details-balance">
-              <span>总资产:</span>
-              <span class="amount">
-                <span v-if="isLoadingBalance">加载中...</span>
-                <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ store.balance }}</span>
-              </span>
-              <el-icon>
-                <RiRefreshLine color="#468CFF" />
-              </el-icon>
-            </a>
-          </div>
-        </div>
 
-        <div v-if="store.token" class="profile-actions">
+        <!-- <div v-if="store.token" class="profile-actions">
           <router-link to="/center/mailbox" class="action-btn-full">
             <div class="icon-full">
               <img src="../../assets/images/home/nav-icon-mail.png" />
@@ -144,7 +191,7 @@
             </div>
             退出
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -1390,24 +1437,6 @@ export default defineComponent({
       })();
       loadingBtn.value = false
     };
-
-    const handleCommand = (command) => {
-      if (command === 'a') {
-        router.push('/center/personal');
-      }
-      if (command === 'b') {
-        router.push('/center/deposit');
-      }
-      if (command === 'c') {
-        router.push('/center/transfer');
-      }
-      if (command === 'd') {
-        router.push('/promotion');
-      }
-      if (command === 'e') {
-        onLogout()
-      }
-    }
     // const submitRegisterForm = () => {
     //   registerRef.value
     //     .validate()
@@ -1531,7 +1560,6 @@ export default defineComponent({
       store,
       isLoadingBalance,
       refreshBalance,
-      handleCommand,
       passForm,
       captchaForm,
       passRef,
@@ -1574,29 +1602,29 @@ body {
     box-shadow: none;
   }
 
-  .el-dropdown {
-    cursor: pointer;
-  }
+  // .el-dropdown {
+  //   cursor: pointer;
+  // }
 
-  .el-popper__arrow::before {
-    display: none;
-  }
+  // .el-popper__arrow::before {
+  //   display: none;
+  // }
 
-  .el-dropdown-menu {
-    background: #3d4145;
-    border: 0;
-  }
+  // .el-dropdown-menu {
+  //   background: #3d4145;
+  //   border: 0;
+  // }
 
-  .el-dropdown-menu__item {
-    min-width: 130px;
-    color: #a8b5c3;
-    gap: 8px;
-  }
+  // .el-dropdown-menu__item {
+  //   min-width: 130px;
+  //   color: #a8b5c3;
+  //   gap: 8px;
+  // }
 
-  .el-dropdown-menu__item:not(.is-disabled):focus {
-    background: #3a4550;
-    color: #e1e9ee;
-  }
+  // .el-dropdown-menu__item:not(.is-disabled):focus {
+  //   background: #3a4550;
+  //   color: #e1e9ee;
+  // }
 }
 </style>
 <style scoped lang="scss">
@@ -1613,12 +1641,22 @@ body {
 .profile-info {
   display: flex;
   align-items: center;
-  .profile-img {
+  .profile-img-wrapper {
+    cursor: pointer;
     width: 65px;
     margin-right: 0.75rem;
-    img {
+    position: relative;
+    .profile-img {
       display: block;
       width: 100%;
+    }
+
+    .dropdown-icon {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 12px;
+      height: 12px;
     }
   }
 
