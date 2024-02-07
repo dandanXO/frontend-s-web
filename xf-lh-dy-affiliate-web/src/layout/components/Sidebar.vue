@@ -366,6 +366,14 @@ const getNavigationData = () => {
           //   icon: 'form',
           // },
           {
+            path: '',
+            title: t('fields.personalInfo'),
+            label: 'personalInfo',
+            active: false,
+            isMainNav: true,
+            icon: 'user',
+          },
+          {
             path: '/announcement',
             title: t('fields.systemAnnouncement'),
             label: 'systemAnnouncement',
