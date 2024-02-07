@@ -9,9 +9,7 @@ export function loadPrivileges(paymentId) {
 }
 
 export function verifyAmount(paymentId, amount) {
-  return server.CASHIER.get(
-    `/session/payment/${paymentId}/amount/${amount}/verify`
-  );
+  return server.CASHIER.get(`/session/payment/${paymentId}/amount/${amount}/verify`);
 }
 
 export function postDeposit(deposit) {

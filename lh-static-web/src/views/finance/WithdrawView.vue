@@ -436,6 +436,7 @@ export default defineComponent({
   padding: 20px;
   color: #424f72;
   height: 100%;
+  box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
 }
 .account-container {
   .account-content-wrapper {

@@ -10,21 +10,17 @@
         class="node-item payment-method-item"
         :id="level + '_' + i"
         @click="clickItem(item)"
-        :class="[
-          item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : ''
-        ]"
-        :style="item.group && item.children.length === 0 ? 'display:none': ''"
+        :class="[item.children ? 'node-group' : '', selectItem === item ? 'active' : '']"
+        :style="item.group && item.children.length === 0 ? 'display:none' : ''"
         :key="i"
         v-for="(item, i) in list"
       >
         <div class="node-text">
           <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
           <div>{{ item.nodeName }}</div>
-          <div
-            class="promo"
-          >
-            <img v-if="item.promotionIcon" :src="`${imgURL}${item.promotionIcon}`">
+          <div class="recommended"></div>
+          <div class="promo">
+            <img v-if="item.promotionIcon" :src="`${imgURL}${item.promotionIcon}`" />
           </div>
           <div class="payment-method-wrapper">
             <div
@@ -50,16 +46,12 @@
       </div>
       <!-- </div> -->
       <!--      <el-button icon="el-icon-refresh" size="mini" v-if="level === 1" type="primary" @click="addNode()">submit</el-button>-->
-      
     </div>
     <div :key="i + nodeKey" v-for="(item, i) in list">
       <node
         @click="clickItem(item)"
         :name="item.nodeName"
-        :class="[
-          item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : ''
-        ]"
+        :class="[item.children ? 'node-group' : '', selectItem === item ? 'active' : '']"
         v-if="selectItem === item"
         :level="parseInt(level) + 1"
         :list="item.children"
@@ -136,9 +128,7 @@ export default defineComponent({
         item.hasActive = true;
         this.selectItem = item;
         if (item.group) {
-          let activeChild = item.children.find(
-            (child) => child.hasActive === true
-          );
+          let activeChild = item.children.find((child) => child.hasActive === true);
           if (activeChild) {
             this.$emit("clicked", activeChild);
           } else {
@@ -184,8 +174,7 @@ $node-color: #4873f1;
   top: 8px;
   width: 6px;
   height: 6px;
-  background-image: linear-gradient(0deg, #04a509 0%, $group-color 100%),
-    linear-gradient(#ffffff, #ffffff);
+  background-image: linear-gradient(0deg, #04a509 0%, $group-color 100%), linear-gradient(#ffffff, #ffffff);
 }
 .title::before {
   top: 8px;
@@ -235,14 +224,12 @@ $node-color: #4873f1;
         display: block;
         content: "";
         position: absolute;
-        bottom: 38px;
-        right: 23px;
-        background-color: #4873f1;
-        height: 15px;
-        width: 15px;
+        bottom: 0;
+        right: 0;
+        height: 28px;
+        width: 28px;
         z-index: 3;
-        border-radius: 3px;
-        background-image: url("../../assets/svg/CheckBox.svg");
+        background-image: url("../../assets/svg/checkmark.svg");
         background-size: 100%;
         background-position: center center;
       }
@@ -256,7 +243,8 @@ $node-color: #4873f1;
     // }
 
     img {
-      max-width: 50px;
+      // max-width: 50px;
+      max-width: 73px;
       margin-bottom: 10px;
     }
   }
@@ -313,11 +301,8 @@ $node-color: #4873f1;
         img {
           background-color: #f7f7f7;
           box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
-          max-width: 2.3rem;
           // max-width: 1.5rem;
           margin-bottom: 0;
-          width: 42px;
-          max-width: 42px;
         }
       }
       .promo {
@@ -326,16 +311,15 @@ $node-color: #4873f1;
           box-shadow: none;
           padding: 0;
           border: 0;
-
         }
       }
     }
   }
   .node-content {
-    gap: 0;
+    gap: 15px;
     .payment-method-item {
       text-align: center;
-      padding: 10px 8px;
+      padding: 10px 20px 15px;
       cursor: pointer;
       // background: #2b2b4b;
       // box-shadow: 6px 6px #161b23;
@@ -345,7 +329,8 @@ $node-color: #4873f1;
       &.active {
         // background-color: #1c1c32;
         // border-radius: 6px;
-        // border: solid 1px #1c1c32;
+        border: solid 2px #468cff;
+        box-shadow: unset;
         // box-shadow: none;
         // filter: drop-shadow(0px 0px 3px #ffffff);
       }
@@ -354,6 +339,11 @@ $node-color: #4873f1;
       display: flex;
       justify-content: center;
       min-width: 6rem;
+      background-color: #f7f8fb;
+      border-radius: 15px;
+      box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+      margin-bottom: 30px;
+      border: 2px solid;
       .payment-method-wrapper {
         display: none;
       }
@@ -362,25 +352,20 @@ $node-color: #4873f1;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 5px;
+      // gap: 5px;
       flex-direction: column;
       & > div {
         font-size: 12px;
-        color: #000000;
+        color: #424f72;
+        font-weight: 700;
       }
 
       .node-txt-img {
-        background-color: #f7f7f7;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
-        width: 4rem;
-        height: 4rem;
-        margin-bottom: 5px;
-        border: 2px solid #dddddd;
-        // padding: 5px 15px;
-        border-radius: 3px;
+        width: 6rem;
+        height: 3rem;
 
         img {
           max-width: 2.3rem;
@@ -460,17 +445,19 @@ $node-color: #4873f1;
     position: relative;
     .promo {
       position: absolute;
-      right: 0;
-      top: 0;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
+      left: 0;
+      right: 0;
+      top: 90%;
+      z-index: 4;
       img {
-       padding: 0;
-       border: 0; 
-       background-color: transparent;
-        max-width: 42px;
-        width:  42px;
+        padding: 0;
+        border: 0;
+        background-color: transparent;
+        // max-width: 42px;
+        // width: 42px;
       }
       // top: -5px;
       // right: 0;
