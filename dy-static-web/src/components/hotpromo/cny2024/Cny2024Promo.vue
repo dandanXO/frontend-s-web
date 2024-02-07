@@ -50,6 +50,8 @@
             </tr>
           </tbody>
         </table>
+
+        <p class="hint-p">例：红包活动当天会员A 充值≥100，那么当天18:00/20:00皆可领取红包奖金！</p>
       </div>
 
       <div class="rules-container">
@@ -437,6 +439,10 @@ const goToHongbaoyu = async () => {
   width: 80px;
 }
 
+.hint-p {
+  color: #b97a7a;
+  font-weight: 600;
+}
 .cny-hint {
   display: flex;
   justify-content: space-between;
