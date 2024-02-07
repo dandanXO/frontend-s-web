@@ -20,7 +20,7 @@
                   <span>
                     {{ `V${vip.vipLevel}` }}
                   </span>
-                  <span>
+                  <span v-if="vip.vipLevel < 12">
                     {{ `V${+vip.vipLevel + 1}` }}
                   </span>
                 </div>
@@ -383,7 +383,7 @@ export default defineComponent({
     const vipItems = [
       {
         vipLevel: "1",
-        upgrade: "1,000",
+        upgrade: "1",
         monthly: "",
         birthday: "",
         rebates: [
@@ -423,7 +423,7 @@ export default defineComponent({
       },
       {
         vipLevel: "2",
-        upgrade: "10,000",
+        upgrade: "3,000",
         monthly: "188",
         birthday: "",
         rebates: [
@@ -464,7 +464,7 @@ export default defineComponent({
       },
       {
         vipLevel: "3",
-        upgrade: "100,000",
+        upgrade: "30,000",
         monthly: "688",
         birthday: "888",
         rebates: [
@@ -504,7 +504,7 @@ export default defineComponent({
       },
       {
         vipLevel: "4",
-        upgrade: "500,000",
+        upgrade: "80,000",
         monthly: "1,588",
         birthday: "2,888",
         rebates: [
@@ -544,7 +544,7 @@ export default defineComponent({
       },
       {
         vipLevel: "5",
-        upgrade: "1,000,000",
+        upgrade: "200,000",
         monthly: "2,888",
         birthday: "5,888",
         rebates: [
@@ -584,7 +584,7 @@ export default defineComponent({
       },
       {
         vipLevel: "6",
-        upgrade: "3,000,000",
+        upgrade: "400,000",
         monthly: "6,888",
         birthday: "8,888",
         rebates: [
@@ -628,7 +628,7 @@ export default defineComponent({
       },
       {
         vipLevel: "7",
-        upgrade: "5,000,000",
+        upgrade: "600,000",
         monthly: "18,888",
         birthday: "48,888",
         rebates: [
@@ -676,7 +676,7 @@ export default defineComponent({
       },
       {
         vipLevel: "8",
-        upgrade: "5,000,000",
+        upgrade: "1,000,000",
         monthly: "18,888",
         birthday: "48,888",
         rebates: [
@@ -724,7 +724,7 @@ export default defineComponent({
       },
       {
         vipLevel: "9",
-        upgrade: "5,000,000",
+        upgrade: "2,000,000",
         monthly: "18,888",
         birthday: "48,888",
         rebates: [
@@ -772,7 +772,7 @@ export default defineComponent({
       },
       {
         vipLevel: "10",
-        upgrade: "5,000,000",
+        upgrade: "4,000,000",
         monthly: "18,888",
         birthday: "48,888",
         rebates: [
@@ -820,7 +820,7 @@ export default defineComponent({
       },
       {
         vipLevel: "11",
-        upgrade: "5,000,000",
+        upgrade: "8,000,000",
         monthly: "18,888",
         birthday: "48,888",
         rebates: [
@@ -868,7 +868,7 @@ export default defineComponent({
       },
       {
         vipLevel: "12",
-        upgrade: "5,000,000",
+        upgrade: "12,000,000",
         monthly: "18,888",
         birthday: "48,888",
         rebates: [
