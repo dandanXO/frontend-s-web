@@ -378,8 +378,8 @@ export default defineComponent({
       background-repeat: no-repeat;
       background-position: center bottom;
       overflow: hidden;
-      height: 40vw;
-      max-height: 130px;
+      //height: 40vw;
+      //max-height: 130px;
       margin: 10px;
 
       img {
@@ -502,7 +502,7 @@ export default defineComponent({
               .promo-content {
                 // width: 100%;
                 width: 100%;
-                aspect-ratio: 1004/252;
+                //aspect-ratio: 1004/252;
                 height: auto;
 
                 //height: 100%;
