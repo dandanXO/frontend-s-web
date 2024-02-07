@@ -408,6 +408,7 @@
                 </el-form-item>
                 <el-form-item label="开始">
                   <el-date-picker
+                    :clearable="false"
                     v-model="searchForm.gameBetRecord.startDate"
                     valueFormat="YYYY-MM-DD"
                     placeholder=""
@@ -497,6 +498,7 @@
               <div class="left">
                 <el-form-item label="开始">
                   <el-date-picker
+                    :clearable="false"
                     v-model="searchForm.reminderRecord.startDate"
                     valueFormat="YYYY-MM-DD"
                     placeholder=""

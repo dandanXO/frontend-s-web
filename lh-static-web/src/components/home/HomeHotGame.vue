@@ -774,7 +774,7 @@ $transition_timer: 0.5s;
             }
 
             .subtitle {
-              width: 0.5rem;
+              width: 0.2rem;
               word-break: break-all;
               text-align: center;
               font-family: PingFang SC;
