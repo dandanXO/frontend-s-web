@@ -3,7 +3,7 @@
     <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
     <template v-for="(item, index) in platformsListDisplay.slice(0, 5)" :key="index">
       <!--      <router-link :to="`${props.platformName}?plat=${item.code}`">-->
-      <div class="platform-menu-item" @click="gotoGame(item)">
+      <div class="platform-menu-item" @click="gotoGame(item, platformType)">
         <div class="platform-menu-title" v-html="item.cnname" />
         <div class="platform-menu-caption" v-if="item.caption" v-html="item.caption" />
         <div class="platform-menu-img">
@@ -31,6 +31,7 @@ import { ref, computed, onMounted, defineProps, defineEmits } from "vue";
 import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
+
 const props = defineProps({
   platforms: Array,
   platformName: String,
@@ -62,13 +63,13 @@ const filteredPlatforms = computed(() => {
 });
 
 const router = useRouter();
-const gotoGame = (item) => {
+const gotoGame = (item, platformType) => {
   // debugger;
-  // console.log(item);
-  if (item.gameType === "SLOT" ) {
+  // console.log(platformType);
+  if (platformType === "slot") {
     router.push(`${props.platformName}?plat=${item.code}`);
   } else {
-    const platName= item.alias ?? item.cnname ?? item.name;
+    const platName = item.alias ?? item.cnname ?? item.name;
     emits("load-game", platName, item.code, item.gameCode);
     // emits("load-game", item);
   }

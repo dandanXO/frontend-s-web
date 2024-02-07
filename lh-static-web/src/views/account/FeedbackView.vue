@@ -2,26 +2,26 @@
   <div class="account-box account-contents">
     <div class="account-content mail mail-content">
       <el-tabs v-model="mailboxState.active" @tab-click="mailTabChange" type="card">
-        <el-tab-pane key="inbox" name="inbox" :label="'消息中心'">
-          <template v-if="mailboxState.mailboxList.inbox.list.length > 0">
-            <el-collapse v-model="activeNames" @change="handleChange">
-              <el-collapse-item v-for="item in mailboxState.mailboxList.inbox.list" :key="item.id">
-                <template #title>标题：{{ item.title }}</template>
-                <div>
-                  <div>正文：{{ item.content }}</div>
-                </div>
-              </el-collapse-item>
-            </el-collapse>
-            <div class="mail-pagination-wrapper">
-              <el-pagination
-                @current-change="changePage"
-                :total="mailboxState.mailboxList.inbox.total"
-                :current-page="mailboxState.mailboxList.inbox.pageNum"
-                :page-size="mailboxState.mailboxList.inbox.pageSize"
-              />
-            </div>
-          </template>
-        </el-tab-pane>
+<!--        <el-tab-pane key="inbox" name="inbox" :label="'消息中心'">-->
+<!--          <template v-if="mailboxState.mailboxList.inbox.list.length > 0">-->
+<!--            <el-collapse v-model="activeNames" @change="handleChange">-->
+<!--              <el-collapse-item v-for="item in mailboxState.mailboxList.inbox.list" :key="item.id">-->
+<!--                <template #title>标题：{{ item.title }}</template>-->
+<!--                <div>-->
+<!--                  <div>正文：{{ item.content }}</div>-->
+<!--                </div>-->
+<!--              </el-collapse-item>-->
+<!--            </el-collapse>-->
+<!--            <div class="mail-pagination-wrapper">-->
+<!--              <el-pagination-->
+<!--                @current-change="changePage"-->
+<!--                :total="mailboxState.mailboxList.inbox.total"-->
+<!--                :current-page="mailboxState.mailboxList.inbox.pageNum"-->
+<!--                :page-size="mailboxState.mailboxList.inbox.pageSize"-->
+<!--              />-->
+<!--            </div>-->
+<!--          </template>-->
+<!--        </el-tab-pane>-->
         <el-tab-pane key="write" name="write" :label="'意见反馈'">
           <el-form
             ref="formRef"

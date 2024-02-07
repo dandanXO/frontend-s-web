@@ -1207,8 +1207,8 @@ export default defineComponent({
 
     const closeTopBox = () => {
       isH5.value = false;
-      var btmSwiper = document.getElementById("btm-second-swiper");
-      btmSwiper.classList.add("longer-swiper");
+      // var btmSwiper = document.getElementById("btm-second-swiper");
+      // btmSwiper.classList.add("longer-swiper");
     };
 
     const downloadUrl = ref("");

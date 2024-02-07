@@ -66,7 +66,7 @@
                   "
                 />
                 <div :class="`game-provider-text ${hotgame.currentPlat === provider ? 'active' : ''}`">
-                  {{ provider.alias ? provider.alias : provider.name }}
+                  {{ provider.alias ?? provider.name }}
                 </div>
                 <!-- <img :src="provider.icon" /> -->
                 <!-- <img
@@ -111,6 +111,7 @@ import HomeTitle from "@/atoms/HomeTitle.vue";
 import { getPlatformList, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 import GameModal from "@/components/modal/GameModal";
+import * as _ from "lodash";
 
 import {
   eSportsPlatforms,
@@ -600,7 +601,7 @@ const onBannerClick = (index) => {
 
 const onEnterGameClick = (plat, platType) => {
   if (platType === "slot") {
-    router.push(plat.path);
+    router.push({ path: plat.path, query: { plat: plat.currentPlat.code } });
   } else {
     const currentPlat = plat.currentPlat;
     if (currentPlat.code === "BBINDY") {
@@ -608,7 +609,12 @@ const onEnterGameClick = (plat, platType) => {
     } else if (currentPlat.code === "GPS") {
       currentPlat.gameCode = 7202;
     }
-    platformGame.value.open(currentPlat.name, currentPlat.code, currentPlat.gameCode);
+
+    const platItem = plat.content[currentPlat.code.toLowerCase()];
+    // console.log(platItem);
+
+    const platformName = currentPlat.alias ?? (platItem && platItem.title) ? platItem.title : currentPlat.name;
+    platformGame.value.open(platformName, currentPlat.code, currentPlat.gameCode);
   }
 };
 const platformsListDisplay = ref([]);
@@ -633,10 +639,11 @@ const checkPlatforms = () => {
       const containingItem = gameTypeArray.some((type) => item.type.toLowerCase() === type.toLowerCase());
 
       if (containingItem) {
-        if (item.type === "slot" && plat.code === "AG") {
-          plat.name = "XIN";
+        const additem = _.clone(plat);
+        if (item.type === "slot" && additem.code === "AG") {
+          additem.name = "XIN";
         }
-        item.content.providerList.push(plat);
+        item.content.providerList.push(additem);
       }
 
       if (gameTypeArray.some((type) => type.toLowerCase() === "esport") && item.type === "esport") {
@@ -933,6 +940,7 @@ $transition_timer: 0.5s;
             right: 4rem;
             height: 27rem;
           }
+
           // esports
           .character-esports-lh {
             position: relative;
