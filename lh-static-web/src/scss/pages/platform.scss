@@ -3,9 +3,13 @@
   margin-left: auto;
   margin-right: auto;
   padding: 10px 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 188px);
 
-  .platform-desc{
-    color: #3063AB;
+  .platform-desc {
+    color: #3063ab;
     font-size: 14px;
   }
 
@@ -31,7 +35,6 @@
       }
 
       .platform-title-wrap {
-
         /* IM体育 */
         font-family: "YiHei";
         font-style: normal;
@@ -40,12 +43,12 @@
         line-height: 1.1;
         text-align: left;
 
-        background: linear-gradient(180deg, #C2E9FB 0%, #A1C4FC 100%);
+        background: linear-gradient(180deg, #c2e9fb 0%, #a1c4fc 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
         text-fill-color: transparent;
-        filter: drop-shadow(2px 1px #5799E3);
+        filter: drop-shadow(2px 1px #5799e3);
         position: relative;
 
         .platform-title {
@@ -438,7 +441,7 @@
             aspect-ratio: 1/1;
             overflow: hidden;
 
-            .el-image{
+            .el-image {
               height: 100%;
             }
 
