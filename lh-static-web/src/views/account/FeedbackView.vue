@@ -25,23 +25,32 @@
         <el-tab-pane key="write" name="write" :label="'意见反馈'">
           <el-form
             ref="formRef"
-            hideRequiredMark="true"
             :model="mailboxState.mailboxList.write"
             :rules="rules"
             :colon="false"
             :label-col="{ span: 2 }"
             label-width="100"
+            hideRequiredMark="true"
           >
             <div class="mail-input-item">
               <div class="input-title-container">
                 <div class="input-title">标题</div>
                 <div class="mail-btn-group">
-                  <button class="standard-button btn-color-blue">快捷输入</button>
+                  <el-dropdown trigger="click">
+                    <el-button class="standard-button btn-color-blue" style="border-radius: 2rem; padding: 20px 26px;">
+                      快捷输入 <el-icon style="margin-left: 5px;"><CaretBottom /></el-icon>
+                    </el-button>
+                    <template #dropdown>
+                      <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item v-for="(option, i) in options" :key="i" @click="onItemClick(option)">{{ option }}</el-dropdown-item>
+                      </el-dropdown-menu>
+                    </template>
+                  </el-dropdown>
                 </div>
               </div>
 
               <div class="input-fill">
-                <el-input v-model="mailboxState.mailboxList.write.title" />
+                <el-input ref="titleRef" v-model="mailDetailList.title" placeholder="请输入标题" maxlength="255" show-word-limit />
               </div>
             </div>
             <div class="mail-input-item">
@@ -49,6 +58,7 @@
               <div class="input-fill">
                 <el-input
                   v-model="mailboxState.mailboxList.write.content"
+                  placeholder="请输入您的信息内容"
                   type="textarea"
                   :autosize="{ minRows: 4 }"
                   show-word-limit
@@ -84,6 +94,16 @@ import { ref, reactive, onMounted } from "vue";
 import { mailInbox, mailOutbox, wirteMail } from "@/api/personal/mailbox";
 // import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
+import { CaretBottom } from '@element-plus/icons-vue'
+
+const options = ["存款问题", "转账问题", "提款问题", "其他"];
+const mailDetailList = ref({
+  title: "",
+  content: ""
+});
+const onItemClick = (item) => {
+  mailDetailList.value.title = item;
+};
 
 const loadingBtn = ref(false);
 const mailboxData = ref([]);
@@ -229,7 +249,7 @@ const onSubmit = (e) => {
 
 onMounted(() => {
   loadPersonalMailbox();
-  // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
+  // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);s
 });
 </script>
 
