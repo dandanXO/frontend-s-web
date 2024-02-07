@@ -395,7 +395,7 @@
                 <el-form-item label="平台">
                   <el-select
                     clearable
-                    style="width: 300px"
+                    style="width: 200px"
                     v-model="searchForm.gameBetRecord.platform"
                     placeholder="平台"
                     @change="searchRecord"
