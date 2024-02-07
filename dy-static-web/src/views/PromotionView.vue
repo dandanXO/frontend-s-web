@@ -258,11 +258,15 @@ export default defineComponent({
   }
   // background: #090b19;
   .all-promotions {
-    background: url(../assets/promo/bg-top.jpg) no-repeat center top;
+    //background: url(../assets/promo/bg-top.jpg) no-repeat center top;
+    background-image: url("../assets/promo/dy-banner.jpg");
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: contain;
     min-height: 40vh;
     padding: 50px;
     position: relative;
-    padding-top: 370px;
+    padding-top: 480px;
     background-color: #f0f1f6;
     background-repeat: no-repeat;
   }
