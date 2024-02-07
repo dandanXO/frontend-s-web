@@ -318,7 +318,7 @@ const submitRegisterForm = async (elForm) => {
                             sessionStorage.removeItem("REFERRAL_CODE");
 
                             if (store.token) {
-                                router.push("/home");
+                                router.push("/welcome");
                             }
                         } else {
                             getCode();
