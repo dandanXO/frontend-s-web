@@ -499,9 +499,9 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   gap: 20px;
-  padding: 20px 0px 60px;
+  padding: 20px 0px 0px;
   margin-top: -50px;
-  margin-bottom: 70px;
+  margin-bottom: 0px;
 
   .promo-info-banner {
     background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/promo-info-banner.png");
