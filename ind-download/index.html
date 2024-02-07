@@ -36,6 +36,8 @@ async function getApiUrl() {
         "1C2861": "18dlzagt",
         "50015B": "184e6g1p",
         "3EC114": "18udrhih",
+        "70379D": "19i9rsji",
+        "7C3D98": "199sudqb"
     }
     adjustUrlCode = affiliateLists[affidValue];
     apiUrl = `https://tljwn.plan2wtion.com/app/india/download/affiliate/${affidValue}`;
@@ -100,6 +102,7 @@ function downloadApk(code, pp, fbvar, fbpid) {
     console.log(apiUrl)
     var date = Date.now();
     var url = `https://app.adjust.com/${adjustUrlCode}?campaign=${campaignname}%20%28${campaignid}%29&adgroup=${adsetname}%20%28${adsetid}%29&creative=${adname}%20%28${adid}%29&fbclid=${fbclid}&redirect=${apiUrl}?v=` + date;
+    // alert(url)
     const link = document.createElement("a");
     link.style.display = "none";
     link.href = url;
