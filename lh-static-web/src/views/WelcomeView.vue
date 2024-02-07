@@ -8,7 +8,7 @@
                 <div class="welcome-slide card-bg">
                     <div class="slide-title">完美兼容安全设备</div>
                     <img class="banner" src="../assets/home/auth/welcome-4-types-icon.png" />
-                    <div>雷火用引领市场的卓越技术，自主研发了全套 终端应用，让您畅享Web、H5、更有iOS、A ndroid原生App,流畅游戏，让您尽在掌握！贴 心服务，7x24在线客服全年伴您左右。</div>
+                    <div>雷火用引领市场的卓越技术，自主研发了全套 终端应用，让您畅享Web、H5、更有iOS、Android原生App,流畅游戏，让您尽在掌握！贴 心服务，7x24在线客服全年伴您左右。</div>
                     <img class="supported-platforms-img" src="../assets/home/auth/welcome-supported-platforms.png" />
                     <div class="qr-codes">
                         <template v-for="(det, idx) in platforms" :key="idx">
