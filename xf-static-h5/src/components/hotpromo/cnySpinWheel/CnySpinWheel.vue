@@ -58,7 +58,7 @@
           </div>
           <div class="event-info-item">
             <div class="event-info-title">抽奖时间：</div>
-            <div class="event-info-desc">以官网通知为准</div>
+            <div class="event-info-desc">2024年02月07日起</div>
           </div>
         </div>
       </div>
