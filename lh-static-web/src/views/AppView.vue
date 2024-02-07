@@ -50,7 +50,7 @@
 </template>
 <script>
 import { defineComponent, onMounted, ref } from "vue";
-import VueQRCodeComponent from 'vue-qrcode-component';
+import VueQRCodeComponent from "vue-qrcode-component";
 import GameModal from "@/components/modal/GameModal";
 import { getAppDownloadUrlFromServer } from "@/api/index/site";
 import aos from "aos";
@@ -74,18 +74,18 @@ export default defineComponent({
       {
         code: "QZ",
         name: "全站APP下载",
-        link: "https://m.e8386.com",
+        link: "https://m.e8386.com"
       },
       {
         code: "DJ",
         name: "雷火电竞APP下载",
-        link: "https://m.e8386.com",
+        link: "https://m.e8386.com"
       },
       {
         code: "TY",
         name: "雷火体育APP下载",
-        link: "https://m.e8386.com",
-      },
+        link: "https://m.e8386.com"
+      }
     ]);
     const selectedPlat = ref();
     const clickPlat = (plat) => {
@@ -97,8 +97,8 @@ export default defineComponent({
     };
 
     const closePlatformQRCode = () => {
-      selectedPlat.value = '';
-    }
+      selectedPlat.value = "";
+    };
 
     const downloadUrl = ref("");
 
@@ -133,17 +133,16 @@ export default defineComponent({
 <style scoped lang="scss">
 @keyframes fadeInUp {
   from {
-    transform: translate3d(0, 40px, 0)
+    transform: translate3d(0, 40px, 0);
   }
 
   to {
     transform: translate3d(0, 0, 0);
-    opacity: 1
+    opacity: 1;
   }
 }
 
 .app-container {
-  min-height: 720px;
   background-image: url(../assets/app/download_bg.png);
   background-repeat: no-repeat;
   background-position: top center;
@@ -154,6 +153,10 @@ export default defineComponent({
   letter-spacing: 0;
   font-size: 14px;
   z-index: 0;
+  min-height: calc(100vh - 188px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .app-container-inner {
     z-index: 1;
@@ -187,14 +190,14 @@ export default defineComponent({
             display: flex;
             gap: 20px;
             align-items: flex-end;
-            color: #424F72;
+            color: #424f72;
             font-size: 26px;
           }
 
           .title {
             font-size: 125px;
             font-weight: 700;
-            color: #4C88F8;
+            color: #4c88f8;
             letter-spacing: 2.85px;
             line-height: 130px;
           }
@@ -202,7 +205,7 @@ export default defineComponent({
           .subtitle {
             font-size: 70px;
             font-weight: 700;
-            color: #4C88F8;
+            color: #4c88f8;
             line-height: 80px;
             letter-spacing: 1.65px;
           }
@@ -251,16 +254,16 @@ export default defineComponent({
           line-height: 30px;
           padding: 10px 20px;
           border-radius: 100px;
-          background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
-          box-shadow: 0px -2px 4.579999923706055px 0px #B1D7FF inset;
+          background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+          box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
           cursor: pointer;
           z-index: 1;
 
           &.outline {
-            background: linear-gradient(180deg, #F8FBFF 0%, #FDFEFF 100%);
-            box-shadow: 0px 2px 4.579999923706055px 0px #BBDCFF inset;
-            box-shadow: 0px -1px 3.6640000343322754px 0px #A2BFF4 inset;
-            color: #468CFF;
+            background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
+            box-shadow: 0px 2px 4.579999923706055px 0px #bbdcff inset;
+            box-shadow: 0px -1px 3.6640000343322754px 0px #a2bff4 inset;
+            color: #468cff;
           }
         }
 
@@ -296,8 +299,7 @@ export default defineComponent({
             top: 10px;
             right: 12px;
             cursor: pointer;
-            color: #0000004D;
-
+            color: #0000004d;
           }
 
           .qr-code-wrapper {

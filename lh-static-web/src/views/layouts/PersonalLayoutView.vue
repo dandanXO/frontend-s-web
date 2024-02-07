@@ -77,6 +77,10 @@ export default defineComponent({
   font-size: 14px;
   padding: 20px;
   background: #f4f8f9;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: calc(100vh - 188px);
   // background: salmon;
   .account-container-wrap {
     width: 100%;

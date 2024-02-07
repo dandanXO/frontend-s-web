@@ -31,6 +31,9 @@ export const userStore = defineStore("userStore", {
     };
   },
   actions: {
+    hasToken() {
+      return !!sessionStorage.getItem("TOKEN");
+    },
     memberLogin(loginInfo) {
       return login(loginInfo)
         .then((ret) => {

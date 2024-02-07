@@ -13,7 +13,7 @@
                 <div style="display:flex;width:100%;">
                     <el-input v-model="forgotPwdForm.captchaCode" label="验证码" placeholder="验证码" @keyup.enter="submitForm">
                     </el-input>
-                    <img style="width:100&;border-radius:100px;" :src="verificationImg" @click="getCode" />
+                    <img style="width:90px;" :src="verificationImg" @click="getCode" />
                 </div>
             </el-form-item>
         </div>

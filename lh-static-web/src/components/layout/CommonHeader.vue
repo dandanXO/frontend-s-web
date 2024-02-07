@@ -106,7 +106,7 @@
 
         
             <div class="profile-info" v-if="store.token">
-              <el-dropdown trigger="click" class="profile-info-dropdown">
+              <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand">
                 <span class="el-dropdown-link">
                   <div class="profile-img-wrapper">
                     <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
@@ -115,39 +115,31 @@
                 </span>
                 <template #dropdown>
                   <el-dropdown-menu class="profile-info-dropdown-content">
-                    <el-dropdown-item>
-                      <router-link to="/center/personal" style="color: #a8b5c3;margin: auto;">
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                          <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
-                          <span>个人信息</span>
-                        </div>
-                      </router-link>
+                    <el-dropdown-item command="personal">
+                      <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                        <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
+                        <span>个人信息</span>
+                      </div>
                     </el-dropdown-item>
-                    <el-dropdown-item >
-                      <router-link to="/center/deposit" style="color: #a8b5c3;margin: auto;">
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                          <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
-                          <span>充值中心</span>
-                        </div>
-                      </router-link>
+                    <el-dropdown-item command="deposit">
+                      <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                        <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
+                        <span>充值中心</span>
+                      </div>
                     </el-dropdown-item>
-                    <el-dropdown-item >
-                      <router-link to="/center/transfer" style="color: #a8b5c3;margin: auto;">
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                          <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
-                          <span>快速转账</span>
-                        </div>
-                      </router-link>
+                    <el-dropdown-item command="transfer">
+                      <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                        <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
+                        <span>快速转账</span>
+                      </div>
                     </el-dropdown-item>
-                    <el-dropdown-item >
-                      <router-link to="/promotion" style="color: #a8b5c3;margin: auto;">
-                        <div style="display: flex; align-items: center; gap: 10px;">
+                    <el-dropdown-item command="promotion">
+                      <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
                         <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
                         <span>优惠领取</span>
-                      </div>
-                      </router-link>
+                    </div>
                     </el-dropdown-item>
-                    <el-dropdown-item  @click="onLogout">
+                    <el-dropdown-item command="logout">
                       <button class="standard-button btn-color-white" style="color:#468CFF">
                         退出登录
                       </button>
@@ -708,6 +700,24 @@ export default defineComponent({
     const vip = computed(() => {
       return vipLevel.value;
     });
+
+    const handleCommand = (command) => {
+      if (command === "personal") {
+        router.push("/center/personal");
+      }
+      if (command === "deposit") {
+        router.push("/center/deposit");
+      }
+      if (command === "transfer") {
+        router.push("/center/transfer");
+      }
+      if (command === "promotion") {
+        router.push("/promotion");
+      }
+      if (command === "logout") {
+        onLogout();
+      }
+    };
 
     const showSubMenu = (nav) => {
       if (nav.submenu === true) {
@@ -1582,7 +1592,8 @@ export default defineComponent({
       loginCountdown,
       route,
       getUnreadMail,
-      vip
+      vip,
+      handleCommand
     }
   }
 });

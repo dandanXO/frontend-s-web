@@ -503,20 +503,20 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isStationNotice">
-    <q-card style="width: 100%" class="bg-primary text-white">
+    <q-card style="width: 100%" class="bg-primary text-black">
       <q-card-section class="q-mb-md">
         <q-tabs
           v-model="activeKey"
           dense
-          class="text-grey"
-          active-color="bright"
+          class="text-white"
+          active-color="white"
           indicator-color="white"
           align="justify"
         >
           <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
         </q-tabs>
 
-        <q-separator />
+        <!-- <q-separator /> -->
 
         <q-tab-panels v-model="activeKey" animated>
           <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
@@ -529,8 +529,8 @@
                     icon="volume_up"
                     :label="ann.title"
                   >
-                    <q-card>
-                      <q-card-section>
+                    <q-card >
+                      <q-card-section style="background: transparent">
                         {{ ann.content }}
                       </q-card-section>
                     </q-card>
@@ -1207,8 +1207,8 @@ export default defineComponent({
 
     const closeTopBox = () => {
       isH5.value = false;
-      var btmSwiper = document.getElementById("btm-second-swiper");
-      btmSwiper.classList.add("longer-swiper");
+      // var btmSwiper = document.getElementById("btm-second-swiper");
+      // btmSwiper.classList.add("longer-swiper");
     };
 
     const downloadUrl = ref("");

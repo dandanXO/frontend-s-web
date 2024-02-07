@@ -113,13 +113,13 @@
                 </div>
               </div>
 
-              <div class="tbl-row">
+              <!-- <div class="tbl-row">
                 <div class="basic-info-cell title">QQ：</div>
                 <div v-if="personalState.memberInfo.email" class="basic-info-cell content">
                   {{ personalState.memberInfo.email }}
                 </div>
                 <div v-else class="basic-info-cell content">
-                  <!-- <div class="datewsend" v-if="isEdit">
+                  <!- <div class="datewsend" v-if="isEdit">
                     <el-form-item
                       name="email"
                       prop="email"
@@ -133,7 +133,7 @@
                         placeholder="邮箱"
                       />
                     </el-form-item>
-                  </div> -->
+                  </div> ->
                   <button
                     class="standard-button btn-color-blue sm-btn"
                     v-if="!personalState.memberInfo.emailVerified"
@@ -143,7 +143,7 @@
                     验证
                   </button>
                 </div>
-              </div>
+              </div> -->
 
               <div class="tbl-row">
                 <div class="basic-info-cell title">邮箱：</div>
@@ -253,34 +253,34 @@
       </el-form>
     </div>
 
-<!--    <el-dialog-->
-<!--      v-model="updatePwdModalVisible"-->
-<!--      :footer="null"-->
-<!--      width="500px"-->
-<!--      title="修改密码"-->
-<!--      align-center-->
-<!--      :close-on-click-modal="false"-->
-<!--      :close-on-press-escape="false"-->
-<!--    >-->
-<!--      <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">-->
-<!--        <el-form-item ref="oldPassword" name="oldPassword" prop="oldPassword">-->
-<!--          <el-input type="password" v-model="updatePwdInfo.oldPassword" :placeholder="'旧密码'" />-->
-<!--        </el-form-item>-->
-<!--        <el-form-item ref="password" name="password" prop="password">-->
-<!--          <el-input type="password" v-model="updatePwdInfo.password" :placeholder="'新密码'" />-->
-<!--        </el-form-item>-->
-<!--        <el-form-item class="txt-center">-->
-<!--          <el-button-->
-<!--            :loading="loadingPwBtn"-->
-<!--            class="txt-center submit-btn common-btn"-->
-<!--            type="submit"-->
-<!--            @click="submitUpdatePwd"-->
-<!--          >-->
-<!--            提交-->
-<!--          </el-button>-->
-<!--        </el-form-item>-->
-<!--      </el-form>-->
-<!--    </el-dialog>-->
+    <!--    <el-dialog-->
+    <!--      v-model="updatePwdModalVisible"-->
+    <!--      :footer="null"-->
+    <!--      width="500px"-->
+    <!--      title="修改密码"-->
+    <!--      align-center-->
+    <!--      :close-on-click-modal="false"-->
+    <!--      :close-on-press-escape="false"-->
+    <!--    >-->
+    <!--      <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">-->
+    <!--        <el-form-item ref="oldPassword" name="oldPassword" prop="oldPassword">-->
+    <!--          <el-input type="password" v-model="updatePwdInfo.oldPassword" :placeholder="'旧密码'" />-->
+    <!--        </el-form-item>-->
+    <!--        <el-form-item ref="password" name="password" prop="password">-->
+    <!--          <el-input type="password" v-model="updatePwdInfo.password" :placeholder="'新密码'" />-->
+    <!--        </el-form-item>-->
+    <!--        <el-form-item class="txt-center">-->
+    <!--          <el-button-->
+    <!--            :loading="loadingPwBtn"-->
+    <!--            class="txt-center submit-btn common-btn"-->
+    <!--            type="submit"-->
+    <!--            @click="submitUpdatePwd"-->
+    <!--          >-->
+    <!--            提交-->
+    <!--          </el-button>-->
+    <!--        </el-form-item>-->
+    <!--      </el-form>-->
+    <!--    </el-dialog>-->
 
     <el-dialog
       wrap-class-name="securityModal"
