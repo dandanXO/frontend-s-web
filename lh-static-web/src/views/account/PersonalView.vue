@@ -212,14 +212,14 @@
             </div>
 
             <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">
-              <el-form-item ref="oldPassword" label="旧密码" name="oldPassword" prop="oldPassword">
+              <el-form-item ref="refOldPassword" label="旧密码" name="oldPassword" prop="oldPassword">
                 <el-input type="password" v-model="updatePwdInfo.oldPassword" :placeholder="'请输入旧密码'" />
               </el-form-item>
 
-              <el-form-item ref="password" label="新密码" name="password" prop="password">
+              <el-form-item ref="refPassword" label="新密码" name="password" prop="password">
                 <el-input type="password" v-model="updatePwdInfo.password" :placeholder="'请输入新密码'" />
               </el-form-item>
-              <el-form-item ref="confirmPassword" label="确认密码" name="confirmPassword" prop="confirmPassword">
+              <el-form-item ref="refConfirmPassword" label="确认密码" name="confirmPassword" prop="confirmPassword">
                 <el-input type="password" v-model="updatePwdInfo.confirmPassword" :placeholder="'请再次输入新密码'" />
               </el-form-item>
               <div class="txt-center btn-container">
@@ -227,7 +227,7 @@
                   :loading="loadingPwBtn"
                   class="standard-button btn-color-white"
                   type="button"
-                  @click="submitUpdatePwd"
+                  @click="clearPwd"
                 >
                   重新填写
                 </button>
@@ -820,15 +820,25 @@ export default defineComponent({
     const updatePwdFormRef = ref();
     const updatePwdInfo = reactive({
       oldPassword: "",
-      password: ""
+      password: "",
+      confirmPassword: ""
     });
     const updatePwdModal = () => {
       updatePwdInfo.oldPassword = "";
       updatePwdInfo.password = "";
       updatePwdModalVisible.value = true;
     };
+
+    const refOldPassword= ref();
+    const refPassword= ref();
+    const clearPwd = () =>{
+      updatePwdInfo.oldPassword = "";
+      updatePwdInfo.password= "";
+      updatePwdInfo.confirmPassword= "";
+    }
+
     const submitUpdatePwd = () => {
-      debugger;
+      // debugger;
       loadingPwBtn.value = true
       updatePwdFormRef.value
         .validate()
@@ -930,7 +940,10 @@ export default defineComponent({
       updatePwdModalVisible,
       updatePwdRules,
       submitUpdatePwd,
+      clearPwd,
       loadInfo,
+      refOldPassword,
+      refPassword,
       isEdit,
       updateFormDetails,
       updateState,

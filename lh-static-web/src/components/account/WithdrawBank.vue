@@ -76,7 +76,7 @@
               />
             </el-form-item>
             <el-form-item>
-              <button class="standard-button btn-color-blue" @click="searchRecord()">搜索</button>
+              <button class="standard-button btn-color-blue" type="button" @click="searchRecord()">搜索</button>
             </el-form-item>
           </div>
         </el-form>
@@ -391,8 +391,18 @@ export default defineComponent({
     });
     const dataSource = ref();
     const searchRecord = () => {
+      if(!searchForm.startDate || !searchForm.endDate){
+        ElMessage({
+          message: "请选择日期",
+          type: "error"
+        });
+        return;
+      }
+
+      // debugger;
       tblLoading.value = true;
       loadUnbindRecord(searchForm).then((response) => {
+        tblLoading.value = false;
         if (response.code === 0) {
           dataSource.value = response.data.records;
           pagination.value.currentPage = response.data.current;
@@ -403,9 +413,9 @@ export default defineComponent({
         }
       }).catch((e) => {
         console.log(e.message);
-        // message.error(e.message, 4);
+        tblLoading.value = false;
       });
-      tblLoading.value = false;
+
     };
 
 

@@ -2,7 +2,7 @@
   <div class="hot-promo">
     <ClaimPromo v-if="isCommonPromo" :promo-id="list.id" :loading-claim="loadingClaim" @daily-slot="handleSlot()" />
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-tiger-card'" />
-    <DragonCardPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-dragon-card'" />
+    <DragonCardPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-dragon-card'" :promo-code="list.promoCode" />
     <!-- <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-s13-vote'" /> -->
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-goldenegg' && store.token" />
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-hongbaoyu' && store.token" />

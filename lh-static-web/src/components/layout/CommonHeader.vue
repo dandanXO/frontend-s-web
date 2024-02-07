@@ -3,7 +3,7 @@
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
-          <img src="../../assets/logo.png" />
+          <img class="logo" src="../../assets/logo.png" />
         </router-link>
 
         <div class="navigations">
@@ -1885,7 +1885,8 @@ body {
       }
 
       .logo {
-        width: 102px;
+        height: 55px;
+        //width: 102px;
 
         img {
           width: 100%;
