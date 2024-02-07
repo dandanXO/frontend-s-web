@@ -7,9 +7,13 @@
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
             <div class="vipcontents">
-              <div class="title">VIP {{ vip.vipLevel }}</div>
+              <div class="title">
+                VIP{{ vip.vipLevel }}
+                <span class="type">{{ vip.vipTitle }}</span>
+              </div>
               <div class="description">
-                {{ vip.upgrade !== "Successful deposit" ? `Accumulate Deposit: ${vip.upgrade}` : vip.upgrade }}
+                累计存款:
+                <span style="color: #424f72">{{ vip.upgrade }}</span>
               </div>
               <!-- vip progress bar start -->
               <div class="progressBarContainer" v-if="vipLevel">
@@ -33,6 +37,21 @@
               <span>{{ getVipLevelProgress(vip) === 100 && !!vipLevel ? "已达到" : "未达到" }}</span>
             </div>
           </div>
+          <router-link
+            to="/center/deposit"
+            class="vipLevelButton"
+            v-if="vip.depositPromoAvailable && !vip.unavailable && !vip.claimed"
+          >
+            前往存款
+          </router-link>
+          <div
+            @click="claimVIPLevelItem(vip)"
+            class="vipLevelButton"
+            v-if="vip.promoAvailable && !vip.unavailable && !vip.claimed"
+          >
+            领取VIP等级奖励
+          </div>
+          <div class="vipLevelButton claimed" v-if="vip.claimed && !vip.unavailable">已领取</div>
         </div>
       </Slide>
       <template #addons>
@@ -260,8 +279,8 @@
 </template>
 
 <script>
-import { ref, defineComponent, computed } from "vue";
-import { claimBonusItem } from "@/api/index/promo";
+import { ref, reactive, defineComponent, computed, onMounted } from "vue";
+import { claimBonusItem, canRedeem, claim } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 // import { message } from "ant-design-vue";
@@ -380,541 +399,162 @@ export default defineComponent({
       else currentDisplayTerms.value = vipTerms;
     };
 
-    const vipItems = [
+    const vipItems = reactive([
       {
         vipLevel: "1",
-        upgrade: "1",
-        monthly: "",
-        birthday: "",
-        rebates: [
-          {
-            rebateName: "Slots Rebate",
-            rebateValue: "1.00%"
-          },
-          {
-            rebateName: "Fishing Rebate",
-            rebateValue: "0.80%"
-          },
-          {
-            rebateName: "Live Casino Rebate",
-            rebateValue: "0.80%"
-          },
-          // {
-          //   rebateName: "เงินคืนไพ่",
-          //   rebateValue: "0.20%",
-          // },
-          {
-            rebateName: "Poker Rebate",
-            rebateValue: "0.80%"
-          },
-          // {
-          //   rebateName: "เเงินคืนล็อตตารี่",
-          //   rebateValue: "0.30%",
-          // },
-          {
-            rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%"
-          },
-          {
-            rebateName: "Lottery Rebate",
-            rebateValue: "0.60%"
-          }
-        ]
+        upgrade: "一笔存款",
+        vipTitle: "青铜2",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
       },
       {
         vipLevel: "2",
         upgrade: "3,000",
-        monthly: "188",
-        birthday: "",
-        rebates: [
-          {
-            rebateName: "Slots Rebate",
-            rebateValue: "1.00%"
-          },
-          {
-            rebateName: "Fishing Rebate",
-            rebateValue: "0.80%"
-          },
-          {
-            rebateName: "Live Casino Rebate",
-            rebateValue: "0.80%"
-          },
-          // {
-          //   rebateName: "เงินคืนไพ่",
-          //   rebateValue: "0.20%",
-          // },
-          {
-            rebateName: "Poker Rebate",
-            rebateValue: "0.80%"
-          },
-          // {
-          //   rebateName: "เเงินคืนล็อตตารี่",
-          //   rebateValue: "0.30%",
-          // },
-
-          {
-            rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%"
-          },
-          {
-            rebateName: "Lottery Rebate",
-            rebateValue: "0.60%"
-          }
-        ]
+        vipTitle: "青铜1",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
       },
       {
         vipLevel: "3",
         upgrade: "30,000",
-        monthly: "688",
-        birthday: "888",
-        rebates: [
-          {
-            rebateName: "Slots Rebate",
-            rebateValue: "1.00%"
-          },
-          {
-            rebateName: "Fishing Rebate",
-            rebateValue: "0.80%"
-          },
-          {
-            rebateName: "Live Casino Rebate",
-            rebateValue: "0.80%"
-          },
-          // {
-          //   rebateName: "เงินคืนไพ่",
-          //   rebateValue: "0.30%",
-          // },
-          {
-            rebateName: "Poker Rebate",
-            rebateValue: "0.80%"
-          },
-          // {
-          //   rebateName: "เเงินคืนล็อตตารี่",
-          //   rebateValue: "0.40%",
-          // },
-          {
-            rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%"
-          },
-          {
-            rebateName: "Lottery Rebate",
-            rebateValue: "0.60%"
-          }
-        ]
+        vipTitle: "白银3",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
       },
       {
         vipLevel: "4",
         upgrade: "80,000",
-        monthly: "1,588",
-        birthday: "2,888",
-        rebates: [
-          {
-            rebateName: "Slots Rebate",
-            rebateValue: "1.00%"
-          },
-          {
-            rebateName: "Fishing Rebate",
-            rebateValue: "0.80%"
-          },
-          {
-            rebateName: "Live Casino Rebate",
-            rebateValue: "0.80%"
-          },
-          // {
-          //   rebateName: "เงินคืนไพ่",
-          //   rebateValue: "0.40%",
-          // },
-          {
-            rebateName: "Poker Rebate",
-            rebateValue: "0.80%"
-          },
-          // {
-          //   rebateName: "เเงินคืนล็อตตารี่",
-          //   rebateValue: "0.40%",
-          // },
-          {
-            rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%"
-          },
-          {
-            rebateName: "Lottery Rebate",
-            rebateValue: "0.60%"
-          }
-        ]
+        vipTitle: "白银2",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
       },
       {
         vipLevel: "5",
         upgrade: "200,000",
-        monthly: "2,888",
-        birthday: "5,888",
-        rebates: [
-          {
-            rebateName: "Slots Rebate",
-            rebateValue: "1.00%"
-          },
-          {
-            rebateName: "Fishing Rebate",
-            rebateValue: "0.80%"
-          },
-          {
-            rebateName: "Live Casino Rebate",
-            rebateValue: "0.80%"
-          },
-          // {
-          //   rebateName: "เงินคืนไพ่",
-          //   rebateValue: "0.50%",
-          // },
-          {
-            rebateName: "Poker Rebate",
-            rebateValue: "0.80%"
-          },
-          // {
-          //   rebateName: "เเงินคืนล็อตตารี่",
-          //   rebateValue: "0.50%",
-          // },
-          {
-            rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%"
-          },
-          {
-            rebateName: "Lottery Rebate",
-            rebateValue: "0.60%"
-          }
-        ]
+        vipTitle: "白银1",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
       },
       {
         vipLevel: "6",
         upgrade: "400,000",
-        monthly: "6,888",
-        birthday: "8,888",
-        rebates: [
-          {
-            rebateName: "Slots Rebate",
-            rebateValue: "1.00%"
-          },
-          {
-            rebateName: "Fishing Rebate",
-            rebateValue: "0.80%"
-          },
-          {
-            rebateName: "Live Casino Rebate",
-            rebateValue: "0.80%"
-          },
-          {
-            rebateName: "Poker Rebate",
-            rebateValue: "0.80%"
-          },
-          // {
-          //   rebateName: "เงินคืนไพ่",
-          //   rebateValue: "0.60%",
-          // },
-          {
-            rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%"
-          },
-          // {
-          //   rebateName: "เเงินคืนล็อตตารี่",
-          //   rebateValue: "0.50%",
-          // },
-          {
-            rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%"
-          },
-          {
-            rebateName: "Lottery Rebate",
-            rebateValue: "0.60%"
-          }
-        ]
+        vipTitle: "黄金3",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
       },
       {
         vipLevel: "7",
         upgrade: "600,000",
-        monthly: "18,888",
-        birthday: "48,888",
-        rebates: [
-          {
-            rebateName: "Slots Rebate",
-            rebateValue: "1.00%"
-          },
-          {
-            rebateName: "Fishing Rebate",
-            rebateValue: "0.80%"
-          },
-          {
-            rebateName: "Live Casino Rebate",
-            rebateValue: "0.80%"
-          },
-          // {
-          //   rebateName: "เงินคืนไพ่",
-          //   rebateValue: "0.80%",
-          // },
-          {
-            rebateName: "Poker Rebate",
-            rebateValue: "0.80%"
-          },
-          {
-            rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%"
-          },
-          {
-            rebateName: "Lottery Rebate",
-            rebateValue: "0.60%"
-          },
-          // {
-          //   rebateName: "เเงินคืนล็อตตารี่",
-          //   rebateValue: "0.60%",
-          // },
-          {
-            rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%"
-          },
-          {
-            rebateName: "Lottery Rebate",
-            rebateValue: "0.60%"
-          }
-        ]
+        vipTitle: "黄金2",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
       },
       {
         vipLevel: "8",
         upgrade: "1,000,000",
-        monthly: "18,888",
-        birthday: "48,888",
-        rebates: [
-          {
-            rebateName: "Slots Rebate",
-            rebateValue: "1.00%"
-          },
-          {
-            rebateName: "Fishing Rebate",
-            rebateValue: "0.80%"
-          },
-          {
-            rebateName: "Live Casino Rebate",
-            rebateValue: "0.80%"
-          },
-          // {
-          //   rebateName: "เงินคืนไพ่",
-          //   rebateValue: "0.80%",
-          // },
-          {
-            rebateName: "Poker Rebate",
-            rebateValue: "0.80%"
-          },
-          {
-            rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%"
-          },
-          {
-            rebateName: "Lottery Rebate",
-            rebateValue: "0.60%"
-          },
-          // {
-          //   rebateName: "เเงินคืนล็อตตารี่",
-          //   rebateValue: "0.60%",
-          // },
-          {
-            rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%"
-          },
-          {
-            rebateName: "Lottery Rebate",
-            rebateValue: "0.60%"
-          }
-        ]
+        vipTitle: "黄金1",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
       },
       {
         vipLevel: "9",
         upgrade: "2,000,000",
-        monthly: "18,888",
-        birthday: "48,888",
-        rebates: [
-          {
-            rebateName: "Slots Rebate",
-            rebateValue: "1.00%"
-          },
-          {
-            rebateName: "Fishing Rebate",
-            rebateValue: "0.80%"
-          },
-          {
-            rebateName: "Live Casino Rebate",
-            rebateValue: "0.80%"
-          },
-          // {
-          //   rebateName: "เงินคืนไพ่",
-          //   rebateValue: "0.80%",
-          // },
-          {
-            rebateName: "Poker Rebate",
-            rebateValue: "0.80%"
-          },
-          {
-            rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%"
-          },
-          {
-            rebateName: "Lottery Rebate",
-            rebateValue: "0.60%"
-          },
-          // {
-          //   rebateName: "เเงินคืนล็อตตารี่",
-          //   rebateValue: "0.60%",
-          // },
-          {
-            rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%"
-          },
-          {
-            rebateName: "Lottery Rebate",
-            rebateValue: "0.60%"
-          }
-        ]
+        vipTitle: "铂金2",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
       },
       {
         vipLevel: "10",
         upgrade: "4,000,000",
-        monthly: "18,888",
-        birthday: "48,888",
-        rebates: [
-          {
-            rebateName: "Slots Rebate",
-            rebateValue: "1.00%"
-          },
-          {
-            rebateName: "Fishing Rebate",
-            rebateValue: "0.80%"
-          },
-          {
-            rebateName: "Live Casino Rebate",
-            rebateValue: "0.80%"
-          },
-          // {
-          //   rebateName: "เงินคืนไพ่",
-          //   rebateValue: "0.80%",
-          // },
-          {
-            rebateName: "Poker Rebate",
-            rebateValue: "0.80%"
-          },
-          {
-            rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%"
-          },
-          {
-            rebateName: "Lottery Rebate",
-            rebateValue: "0.60%"
-          },
-          // {
-          //   rebateName: "เเงินคืนล็อตตารี่",
-          //   rebateValue: "0.60%",
-          // },
-          {
-            rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%"
-          },
-          {
-            rebateName: "Lottery Rebate",
-            rebateValue: "0.60%"
-          }
-        ]
+        vipTitle: "铂金1",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
       },
       {
         vipLevel: "11",
         upgrade: "8,000,000",
-        monthly: "18,888",
-        birthday: "48,888",
-        rebates: [
-          {
-            rebateName: "Slots Rebate",
-            rebateValue: "1.00%"
-          },
-          {
-            rebateName: "Fishing Rebate",
-            rebateValue: "0.80%"
-          },
-          {
-            rebateName: "Live Casino Rebate",
-            rebateValue: "0.80%"
-          },
-          // {
-          //   rebateName: "เงินคืนไพ่",
-          //   rebateValue: "0.80%",
-          // },
-          {
-            rebateName: "Poker Rebate",
-            rebateValue: "0.80%"
-          },
-          {
-            rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%"
-          },
-          {
-            rebateName: "Lottery Rebate",
-            rebateValue: "0.60%"
-          },
-          // {
-          //   rebateName: "เเงินคืนล็อตตารี่",
-          //   rebateValue: "0.60%",
-          // },
-          {
-            rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%"
-          },
-          {
-            rebateName: "Lottery Rebate",
-            rebateValue: "0.60%"
-          }
-        ]
+        vipTitle: "钻石",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
       },
       {
         vipLevel: "12",
         upgrade: "12,000,000",
-        monthly: "18,888",
-        birthday: "48,888",
-        rebates: [
-          {
-            rebateName: "Slots Rebate",
-            rebateValue: "1.00%"
-          },
-          {
-            rebateName: "Fishing Rebate",
-            rebateValue: "0.80%"
-          },
-          {
-            rebateName: "Live Casino Rebate",
-            rebateValue: "0.80%"
-          },
-          // {
-          //   rebateName: "เงินคืนไพ่",
-          //   rebateValue: "0.80%",
-          // },
-          {
-            rebateName: "Poker Rebate",
-            rebateValue: "0.80%"
-          },
-          {
-            rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%"
-          },
-          {
-            rebateName: "Lottery Rebate",
-            rebateValue: "0.60%"
-          },
-          // {
-          //   rebateName: "เเงินคืนล็อตตารี่",
-          //   rebateValue: "0.60%",
-          // },
-          {
-            rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%"
-          },
-          {
-            rebateName: "Lottery Rebate",
-            rebateValue: "0.60%"
-          }
-        ]
+        vipTitle: "王者",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
       }
-    ];
+    ]);
+    const initVIPTable = () => {
+      canRedeem().then((res) => {
+        if (res.code === 0) {
+          // Your arrays of elements
+          const depositPromoAvailableElements = res.data.depositPromoAvailable;
+          const promoAvailableElements = res.data.promoAvailable;
+          const unavailableElements = res.data.unavailable;
+          const claimedElements = res.data.claimed;
+
+          // Function to update properties based on the provided elements
+          function updatePropertiesBasedOnElements(elements, property) {
+            elements.forEach((element) => {
+              const index = element - 1;
+              if (index >= 0 && index < vipItems.length) {
+                vipItems[index][property] = true;
+              }
+            });
+          }
+
+          // Call the function to update properties based on depositPromoAvailable elements
+          updatePropertiesBasedOnElements(depositPromoAvailableElements, "depositPromoAvailable");
+
+          // Call the function to update properties based on promoAvailable elements
+          updatePropertiesBasedOnElements(promoAvailableElements, "promoAvailable");
+
+          // Call the function to update properties based on unavailable elements
+          updatePropertiesBasedOnElements(unavailableElements, "unavailable");
+
+          // Call the function to update properties based on unavailable elements
+          updatePropertiesBasedOnElements(claimedElements, "claimed");
+
+          // Now, vipItems array has the updated properties based on the provided elements
+          console.log(vipItems);
+        }
+      });
+    };
+    const claimVIPLevelItem = (vip) => {
+      claim(vip.vipLevel).then((res) => {
+        if (res.code === 0) {
+          initVIPTable();
+        }
+      });
+    };
+    onMounted(() => {
+      initVIPTable();
+    });
 
     return {
       showRebate,
@@ -931,7 +571,8 @@ export default defineComponent({
       amount,
       privilegeClaimedModalVisible,
       currentDisplayTerms,
-      vipTerms
+      vipTerms,
+      claimVIPLevelItem
     };
   }
 });
@@ -939,6 +580,32 @@ export default defineComponent({
 <style scoped lang="scss">
 $border-settings: 1px solid #e5e7eb;
 
+.carousel__slide {
+  .vipLevelButton {
+    display: none;
+  }
+}
+.carousel__slide--active {
+  .vipLevelButton {
+    background: url("../assets/vip/button.png") no-repeat center center;
+    background-size: contain;
+    padding: 15px;
+    color: #000000;
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    padding-bottom: 23px;
+    cursor: pointer;
+    &.claimed {
+      background: #d7d7d7;
+      border-radius: 40px;
+      color: #959595;
+      padding: 15px;
+      width: 50%;
+      margin: 20px auto;
+    }
+  }
+}
 .vip-container {
   background: #f3f7fd;
   color: #8d8d8d;
@@ -1004,7 +671,7 @@ $border-settings: 1px solid #e5e7eb;
       margin-left: 2px;
       z-index: 1;
       text-align: left;
-      height: 30px;
+      height: 47px;
 
       &.vipLevelReached {
         background: url("../assets/vip/badge/vip-level-banner-status-ribbon-achieved.png") no-repeat left center;
@@ -1013,10 +680,13 @@ $border-settings: 1px solid #e5e7eb;
 
       span {
         color: #fff;
-        margin-left: 10px;
+        margin-left: 30px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 100%;
       }
     }
-
     .vipcontents {
       height: 100%;
       border-radius: 20px;
@@ -1034,6 +704,13 @@ $border-settings: 1px solid #e5e7eb;
         font-style: italic;
         font-weight: 700;
         line-height: normal;
+        .type {
+          color: #7a80a1;
+          font-weight: 400;
+          font-size: 30.84px;
+          display: inline-block;
+          font-style: normal;
+        }
       }
 
       .description {

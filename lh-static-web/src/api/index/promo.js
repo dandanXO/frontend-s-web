@@ -172,3 +172,10 @@ export function checkInInfo() {
 export function signIn() {
   return server.EVENT.put(`/sign-in/claim`);
 }
+
+export function canRedeem() {
+  return server.EVENT.get("/vip-upgrade/lh/canRedeem");
+}
+export function claim(level) {
+  return server.EVENT.post("/vip-upgrade/lh/claim", { vipLevel: level });
+}
