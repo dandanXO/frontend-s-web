@@ -1,5 +1,13 @@
 <template>
   <div class="card">
+    <div class="deposit-ad">
+      体育用户首存68%红利
+      <br />
+      新用户首存即送！最高可得680元！
+      <router-link to="/center/deposit">
+        <el-button size="small" class="blue-btn deposit-btn outline">立即参与</el-button>
+      </router-link>
+    </div>
     <div class="balance-plat-item">
       <div class="left-box">
         <div class="balance-wrapper">
@@ -486,6 +494,31 @@ body .transferinout .el-dialog__header .el-dialog__title {
   gap: 20px;
   padding: 20px;
   color: #424f72;
+  height: 100%;
+  box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
+}
+.deposit-ad {
+  background: url(../../assets/images/account/depositad.png) no-repeat center center;
+  background-size: cover;
+  display: flex;
+  padding: 12px 30px;
+  border-radius: 12px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 5px;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: "Microsoft Yahei";
+  .deposit-btn {
+    color: #548cf9;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 20px;
+    padding: 20px;
+    font-weight: bold;
+  }
 }
 
 .blue-btn {

@@ -1,31 +1,29 @@
-@font-face{
+@font-face {
   font-family: "FZHanZhenGuangBiaoS-GB";
   src: url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.eot");
-  src: url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.eot?#iefix")format("embedded-opentype"),
-  url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.woff")format("woff"),
-  url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.woff2")format("woff2"),
-  url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.ttf")format("truetype");
-  font-weight:normal;
-  font-style:normal;
-  font-display:swap;
+  src: url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.eot?#iefix") format("embedded-opentype"),
+    url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.woff") format("woff"),
+    url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.woff2") format("woff2"),
+    url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
-
-@font-face{
+@font-face {
   font-family: "YiHei";
   src: url("@/assets/fonts/YiHei.ttf");
-  font-weight:normal;
-  font-style:normal;
-  font-display:swap;
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
-
-@font-face{
+@font-face {
   font-family: "PingFang SC";
   src: url("@/assets/fonts/PingFangSC.ttf");
-  font-weight:normal;
-  font-style:normal;
-  font-display:swap;
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 body {
@@ -81,10 +79,9 @@ body {
     border-radius: 100%;
   }
 
-  .el-carousel__indicators{
-    position:absolute;
-    bottom:0px;
-
+  .el-carousel__indicators {
+    position: absolute;
+    bottom: 0px;
   }
 
   .el-carousel__indicators--outside {
@@ -197,6 +194,15 @@ body {
         }
       }
     }
+  }
+}
+body {
+  .el-dialog {
+    border-radius: 12px;
+  }
+  .el-dialog__header {
+    border-radius: 12px 12px 0 0;
+    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
   }
 }
 .full-modal {
@@ -364,7 +370,7 @@ body {
   --vip-carousel-button-width: 108px;
 }
 
-.home .el-carousel__container{
+.home .el-carousel__container {
   height: auto;
   aspect-ratio: 1920/568;
 }
