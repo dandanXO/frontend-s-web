@@ -70,9 +70,12 @@
       <div class="wrapper">
         <div class="popup-header bold-text golden-text">恭喜!</div>
         <div class="content">
-          <div class="bold-text">您获得</div>
-          <div class="bold-text golden-text">{{ prizePopupBonusAmt }}</div>
-          <div class="bold-text">元</div>
+          <div class="flex-center row">
+            <div class="bold-text">您获得&nbsp;</div>
+            <div class="bold-text win-text">{{ prizePopupBonusAmt }}</div>
+            <div class="bold-text">&nbsp;元</div>
+          </div>
+
           <div class="action-btn" @click="showPrizePopup = false">立即领取</div>
         </div>
       </div>
@@ -446,6 +449,15 @@ onMounted(() => {
       -webkit-text-fill-color: transparent;
     }
 
+    .win-text{
+      font-size: 28px;
+      letter-spacing: 2px;
+       background: linear-gradient(360deg, #FFC700 9.54%, #FFF500 86.08%);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(1px 1px #00000050);
+    }
+
     .popup-header {
       letter-spacing: normal;
       font-size: 25px;
@@ -483,8 +495,8 @@ onMounted(() => {
 
 .remaining-draw-wrapper {
   .remaining-draw-text {
-    color: #e6d796;
-    font-size: 25px;
+    color: #fff;
+    font-size: 20px;
     margin: 10px auto 40px;
     text-align: center;
     width: 300px;
