@@ -50,7 +50,7 @@
               </div>
 
               <div class="input-fill">
-                <el-input ref="titleRef" v-model="mailDetailList.title" placeholder="请输入标题" maxlength="255" show-word-limit />
+                <el-input ref="titleRef" v-model="mailboxState.mailboxList.write.title" placeholder="请输入标题" maxlength="255" show-word-limit />
               </div>
             </div>
             <div class="mail-input-item">
@@ -97,12 +97,8 @@ import { ElMessage } from "element-plus";
 import { CaretBottom } from '@element-plus/icons-vue'
 
 const options = ["存款问题", "转账问题", "提款问题", "其他"];
-const mailDetailList = ref({
-  title: "",
-  content: ""
-});
 const onItemClick = (item) => {
-  mailDetailList.value.title = item;
+  mailboxState.mailboxList.write.title = item;
 };
 
 const loadingBtn = ref(false);
