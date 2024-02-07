@@ -1,26 +1,34 @@
 <template>
   <el-dialog
-    class="notice-modal"
-    width="100%"
-    style="max-width: 800px"
     v-model="isStationNotice"
     :maskClosable="false"
     :footer="null"
-    title="公告"
+    style="border-radius: 8px; width: 1181px;"
+    class="notice-modal"
   >
-    <el-tabs type="card" class="announcementTabs" v-model="announcementActive" @tab-click="announcementTabChange">
-      <el-tab-pane v-for="(tab, ind) in announcementTypes" :key="tab.id" :tab="ind" :label="tab.name">
-        <el-collapse accordion v-model="typeActive">
+    <div class="notice-header">
+      公告列表
+      <div @click="isStationNotice = false">
+        <img src="../../assets//home/announcement/close-btn.png"/>
+      </div>
+    </div>
+
+    <div>
+      <el-tabs type="card" class="announcement-tabs" v-model="announcementActive" @tab-click="announcementTabChange">
+      <el-tab-pane v-for="(tab, ind) in announcementTypes" :key="tab.id" :tab="ind" :label="tab.name" :name="tab.name">
           <template v-for="(ann, idx) in announcementList" :key="idx">
             <template v-if="ann.typeId === tab.id">
-              <el-collapse-item :name="idx" :title="ann.title">
-                {{ ann.content }}
-              </el-collapse-item>
+                <div class="announcement-content">
+                  {{ ann.content }}
+                </div>
             </template>
           </template>
-        </el-collapse>
       </el-tab-pane>
     </el-tabs>
+  </div>
+
+  
+    
   </el-dialog>
 
   <div class="top-bar-wrapper">
@@ -33,7 +41,8 @@
             @click="openPopup(announcementList)"
           />
           <div class="station-notice">
-            <Vue3Marquee :clone="false" :duration="130">
+            <Vue3Marquee :clone="false"
+                         :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 1 + 10 : 70">
               <div
                 v-for="(word, index) in announcementList"
                 :key="index"
@@ -54,7 +63,7 @@ import { ref, onMounted } from "vue";
 import { getAnnouncement } from "@/api/personal/personal";
 import { Vue3Marquee } from "vue3-marquee";
 
-const announcementActive = ref("1");
+const announcementActive = ref("");
 const announcementList = ref([]);
 const announcementTypes = ref([]);
 const loadAnnouncement = () => {
@@ -63,7 +72,7 @@ const loadAnnouncement = () => {
       const d = res.data.announcements;
       announcementTypes.value = res.data.type;
       if (res.data.type && res.data.type.length > 0) {
-        announcementActive.value = res.data.type[0].id;
+        announcementActive.value = res.data.type[0].name
       }
       announcementList.value = d;
       // announcementList.value = d.announcements
@@ -84,18 +93,58 @@ const isStationNotice = ref(false);
 const noticeTitle = ref("");
 const openPopup = (noticeType) => {
   if (noticeType) {
-    announcementActive.value = "3";
+    // announcementActive.value = "3";
     noticeTitle.value = noticeType.title;
     isStationNotice.value = true;
   }
 };
 
+const calculateMaxContentLength = () => {
+  let maxLength = 0;
+  for (const announcement of announcementList.value) {
+    if (announcement.content.length > maxLength) {
+      maxLength = announcement.content.length;
+    }
+  }
+  return maxLength;
+};
+
 onMounted(() => {
   loadAnnouncement();
 });
+
+
 </script>
 
 <style scoped lang="scss">
+.notice-header {
+  color: #468CFF;
+  font-family: "Inter Bold";
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 30px;
+  letter-spacing: 0em;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.announcement-tabs {
+  width: 684px;
+}
+.announcement-content {
+  color: #7A80A1;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: 0em;
+  text-align: left;
+  max-width: 1181px;
+  height: 627px;
+  margin-top: 20px;
+}
+  
 .top-bar-wrapper {
   padding: 5px;
   color: #696d70;
@@ -126,7 +175,7 @@ onMounted(() => {
         overflow: hidden;
 
         .announcement-img {
-          width: 30px;
+          width: 36px;
           transform: scaleX(-1);
         }
 
@@ -134,11 +183,13 @@ onMounted(() => {
           display: flex;
           justify-content: center;
           align-items: center;
+          width: 100%;
 
           .station-notice-item {
             color: #7a80a1;
-            font-weight: 400;
             margin-right: 50px;
+            font-size: 15px;
+            line-height: 15px;
           }
         }
       }

@@ -38,28 +38,28 @@ defineProps(["title", "subtitle"]);
 
       .title-bg {
         position: absolute;
-        z-index: -1;
+        z-index: 1;
         width: 5rem;
       }
 
       .title-text {
         word-break: keep-all;
-        //filter: drop-shadow(0px 1px #c4effa);
-        font-family: FZHanZhenGuangBiaoS-GB;
         font-size: 2.82869rem;
         font-weight: 600;
         letter-spacing: 0.14144rem;
-        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-        box-shadow: 0px -2px 4.579999923706055px 0px #93C7FF inset;
 
-        box-shadow: 0px -1px 3.6640000343322754px 0px #75A6FF8A inset;
+        //background: linear-gradient(180deg, #C2E9FB 0%, #A1C4FC 100%);
+        background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%),
+        linear-gradient(0deg, #FFFFFF, #FFFFFF);
 
-        box-shadow: 0px 2px 0px 0px #C4EFFA;
-
-        background-clip: text;
         -webkit-background-clip: text;
-        -webkit-text-fill-color: #3981ff;
-        -webkit-text-stroke-width:0px;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+        filter: drop-shadow(2px 1px #C4EFFA);
+        position:relative;
+        z-index:2;
+
         margin: 0 2.5rem;
       }
     }

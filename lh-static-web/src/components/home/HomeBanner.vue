@@ -10,7 +10,6 @@
 
   <el-carousel
     class="banner-slider"
-    height="35vw"
     indicator-position="outside"
     arrow="never"
     :autoplay="false"
@@ -125,12 +124,13 @@ onMounted(() => {
   .banner-container {
     .promo-bg {
       background-image: url(../../assets/images/mock/home_banner.png);
-      background-size: cover;
+      background-size: contain;
       background-repeat: no-repeat;
-      background-position: center center;
+      background-position: top center;
 
       &.isDesktop {
         display: block;
+        width: 100%;
         height: 100%;
       }
 

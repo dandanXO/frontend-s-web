@@ -280,6 +280,7 @@ const regRules = {
 };
 
 const getCode = () => {
+    regForm.captchaCode = '';
     getVerificationCode().then((res) => {
         if (res.code === 0) {
             verificationImg.value = "data:image/png;base64," + res.data.img;

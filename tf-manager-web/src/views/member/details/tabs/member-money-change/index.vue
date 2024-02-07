@@ -168,9 +168,8 @@
         </el-table-column>
       </el-table>
       <el-pagination
-        :total="page.total"
         :page-sizes="[20, 50, 100, 150]"
-        layout="total,sizes,prev, next"
+        layout="sizes,prev, next"
         style="margin-top: 10px"
         v-model:page-size="request.size"
         v-model:page-count="page.pages"
@@ -224,7 +223,6 @@ function resetQuery() {
 const page = reactive({
   pages: 0,
   records: [],
-  total: 0,
   loading: false,
   pagingState: '',
 })
@@ -280,7 +278,6 @@ async function loadMemberMoneyChange(frombutton) {
   const { data: ret } = await getMemberMoneyChangeList(props.mbrId, query)
   page.pages = ret.pages
   page.records = ret.records
-  page.total = ret.total
   page.pagingState = ret.pagingState
   page.loading = false
 }

@@ -25,7 +25,16 @@
       </div>
     </div>
     <!--    <div v-if="isTransfer" class="text-brand q-pa-sm">除了以下平台需要转账，其它游戏平台都无需转账即可游戏</div>-->
-    <q-separator />
+    <div class="balance-transfer-button">
+      <q-toggle
+        v-model="isTransferRef"
+        :label="`自动平台转账: ${isTransfer ? '已开启' : '已关闭'}`"
+        left-label
+        @update:model-value="updateAutoTransfer($event)"
+        color="positive"
+      ></q-toggle>
+    </div>
+    <q-separator style="margin-bottom: 10px" />
     <div class="transfer-plat-wrapper" :style="isExpanded ? `height: ${transferBox}px` : 'height: 80px;'">
       <div class="transfer-plat-inner">
         <div class="transfer-plat-item" v-for="p in props.platforms" :key="p.id" @click="refreshBalance(p.code)">
@@ -78,9 +87,11 @@
 <script setup>
 const props = defineProps({
   isTransfer: Boolean,
-  platforms: Array
+  platforms: Array,
+  updateAutoTransfer: Function,
+  getAutoTransferValue: Function
 });
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, watch } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -221,6 +232,15 @@ const refreshBalance = (plat) => {
       });
   }
 };
+
+const isTransferRef = ref(props.isTransfer);
+watch(
+  () => props.isTransfer,
+  (value) => {
+    isTransferRef.value = value;
+  }
+);
+
 onMounted(() => {
   if (isRefreshingBalance.value) {
     setTimer();
@@ -362,6 +382,18 @@ onMounted(() => {
     cursor: pointer;
     color: $font-1;
     font-size: 1rem;
+  }
+}
+
+.balance-transfer-button {
+  display: flex;
+  justify-content: flex-end;
+
+  .q-toggle__inner--truthy {
+    color: #13ce66;
+  }
+  .q-toggle__inner {
+    color: #ff4949;
   }
 }
 </style>

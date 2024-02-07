@@ -56,7 +56,7 @@
                                 <div style="display:flex;width:100%;">
                                     <el-input v-model="captchaForm.captchaCode" label="验证码" placeholder="验证码"
                                         @keyup.enter="sendOtp" />
-                                    <img style="width:100&;border-radius:100px;" :src="verificationImg" @click="getCode" />
+                                    <img style="width:150px;border-radius:100px;" :src="verificationImg" @click="getCode" />
                                 </div>
                             </el-form-item>
                         </div>
@@ -79,6 +79,7 @@ import { userStore } from "@/store/index";
 import { sendSms } from "@/api/personal/personal";
 import AccountLogin from '@/components/auth/AccountLogin.vue';
 import { ElMessage } from "element-plus";
+import { useRoute, useRouter } from "vue-router";
 
 const captchaRules = {
     captchaCode: [
@@ -134,6 +135,8 @@ const passForm = reactive({
     email: '',
 })
 
+const router = useRouter();
+const route = useRoute();
 const loginCountdown = ref(0)
 const mobileLoginRef = ref([])
 const store = userStore();
@@ -168,7 +171,7 @@ const sendOtp = async () => {
                     });
                     captchaDialogVisible.value = false;
                     getCode();
-                    loginCountdown.value = 30;
+                    loginCountdown.value = 60;
                     countdownTimer('LOGIN')
                 } else {
                     getCode();

@@ -2,7 +2,7 @@
   max-width: $maxwidth;
   margin-left: auto;
   margin-right: auto;
-  padding: 3% 0;
+  padding: 10px 0 10px;
 
   .platform-desc{
     color: #3063AB;
@@ -11,7 +11,7 @@
 
   .platform-container-inner {
     display: grid;
-    grid-template-columns: 60% 40%;
+    grid-template-columns: 55% 45%;
 
     .platform-item {
       display: flex;
@@ -26,25 +26,31 @@
         img {
           display: block;
           width: 100%;
-          transform: scale(1.1);
+          transform: scale(1);
         }
       }
 
       .platform-title-wrap {
-        filter: drop-shadow(3px 0 #5799e3);
-        font-family: FZHanZhenGuangBiaoS-GB;
 
-        background: linear-gradient(180deg, #c2e9fb 0%, #a1c4fc 100%);
-        background-clip: text;
+        /* IM体育 */
+        font-family: "YiHei";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 80px;
+        line-height: 1.1;
+        text-align: left;
+
+        background: linear-gradient(180deg, #C2E9FB 0%, #A1C4FC 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        -webkit-text-stroke-width: 0.5px;
-        -webkit-text-stroke-color: white;
-        line-height: 1.1;
+        background-clip: text;
+        text-fill-color: transparent;
+        filter: drop-shadow(2px 1px #5799E3);
+        position: relative;
 
         .platform-title {
-          font-size: 4.5rem;
-          font-weight: 600;
+          font-size: 5rem;
+          font-weight: 400;
           word-break: keep-all;
         }
 
@@ -429,7 +435,12 @@
           .slot-img {
             width: 100%;
             height: auto;
+            aspect-ratio: 1/1;
             overflow: hidden;
+
+            .el-image{
+              height: 100%;
+            }
 
             img {
               transition: all 0.5s ease;

@@ -20,9 +20,13 @@
                 <div style="display:flex;width:100%;">
                     <el-input v-model="loginForm.captchaCode" label="验证码" placeholder="验证码" @keyup.enter="submitLogin">
                     </el-input>
-                    <img style="width:100&;border-radius:100px;" :src="verificationImg" @click="getCode" />
+                    <img style="width:90px;" :src="verificationImg" @click="getCode" />
                 </div>
             </el-form-item>
+        </div>
+
+        <div class="agreement-and-forget-pass">
+            <div>登录即代表同意并遵守《用户协议》</div><div><router-link to="/forgotPwd">忘记密码？</router-link></div>
         </div>
 
 
@@ -79,7 +83,8 @@ const loginRules = {
 
 const loginForm = reactive({
     loginName: '',
-    password: ''
+    password: '',
+    captchaCode: ''
 })
 
 const loginRef = ref([]);
@@ -126,12 +131,16 @@ const submitLogin = () => {
                     console.log(error.message);
                     getCode();
                 });
+        }).catch(() => {
+            
         });
         loadingBtn.value = false
     })();
 };
 
 const getCode = () => {
+    loginForm.captchaCode = '';
+
     getVerificationCode().then((res) => {
         if (res.code === 0) {
             verificationImg.value = "data:image/png;base64," + res.data.img;
@@ -165,6 +174,15 @@ onMounted(() => {
 
     .form-field-icon {
         margin: auto;
+    }
+}
+
+.agreement-and-forget-pass {
+    display: flex;
+    justify-content: space-between;
+
+    .highlight {
+        color: #5E8AEE;
     }
 }
 

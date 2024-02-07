@@ -104,7 +104,7 @@ export default defineComponent({
     const getReferral = () => {
       getReferralLink().then((res) => {
         if(res.code === 0) {
-          referralLink.value = `https://www.dy9367.com/refer/${res.data}`;
+          referralLink.value = 'https://' + location.hostname + `/refer/${res.data}`;
         }
       }).catch((err) => {
         console.log(err)
@@ -135,7 +135,7 @@ export default defineComponent({
       flex-direction: column;
       align-items: center;
       color: #ffffff;
-      gap: 20px;
+      gap: 15px;
       .sharing-container {
         box-shadow: 0px 0px 20px 1px #10101c;
         width: 100%;
@@ -215,6 +215,14 @@ export default defineComponent({
       margin-bottom: 10px;
     }
   }
+
+
+}
+
+
+.copy-btn{
+  background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+  border-radius: 30px;
 }
 </style>
 <style scoped lang="scss">

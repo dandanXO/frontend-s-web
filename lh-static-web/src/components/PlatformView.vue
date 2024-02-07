@@ -14,8 +14,8 @@
 
           <div class="platform-item">
             <div class="platform-title-wrap" data-aos="fade-left" data-aos-delay="100">
-<!--              <pre>{{item}}</pre>-->
-              <div class="platform-title">{{ item.cnname ?? item.name}}</div>
+              <!--              <pre>{{item}}</pre>-->
+              <div class="platform-title">{{ item.cnname ?? item.name }}</div>
               <div class="platform-subtitle">{{ platformName }}</div>
             </div>
 
@@ -55,28 +55,15 @@
                     />
                   </span>
                 </div>
-                <div class="list-item-txt">{{ plat.alias ?? plat.code }}</div>
+                <div class="list-item-txt">{{ plat.alias ?? plat.cnname }}</div>
               </span>
             </div>
 
-
-            <div
-              class="platform-play-btn"
-              data-aos="fade-in"
-              data-aos-delay="300"
-              data-aos-duration="500"
-              v-if="platformType !== 'slot' "
-            >
-              <template v-if="item.code==='BBIN' || item.code==='BBINDY'">
-                <div class="btn-blue" @click="openGame(item.name, item.code, 'bblive_lobby_pc')">进入游戏</div>
-              </template>
-              <template v-else-if="item.code==='GPS'">
-                <div class="btn-blue" @click="openGame(item.name, item.code, 7202)">进入游戏</div>
-              </template>
-              <template v-else>
-                <div class="btn-blue" @click="openGame(item.name, item.code)">进入游戏</div>
-              </template>
-
+            <!--            data-aos="fade-in"-->
+            <!--            data-aos-delay="300"-->
+            <!--            data-aos-duration="500"-->
+            <div class="platform-play-btn" v-if="platformType !== 'slot'">
+              <div class="btn-blue" @click="openGame(item, item.code, item.gameCode)">进入游戏</div>
             </div>
           </div>
         </template>
@@ -131,7 +118,7 @@
             v-for="game in gamePage.gameList"
             :key="game.id"
           >
-            <a @click="openGame(game.name, selectedPlat, game.code)">
+            <a @click="openGame(game, selectedPlat, game.code)">
               <div class="slot-img">
                 <el-image :src="game.icon" lazy>
                   <template #placeholder>
@@ -240,8 +227,8 @@ const getPlatList = () => {
     console.log("Platform");
     console.log(platformsListDisplay.value);
 
-    platformsListDisplay.value = platformsListDisplay.value.map(item1 => {
-      const matchingItem = props.platforms.find(item2 => item1.code === item2.code);
+    platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
+      const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
       return { ...matchingItem, ...item1 };
     });
 
@@ -257,14 +244,14 @@ const setFilteredPlatforms = () => {
     platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
   );
 
-  filteredPlatforms.value = filteredPlatforms.value.map(item1 => {
-    const matchingItem = props.platforms.find(item2 => item1.code === item2.code);
+  filteredPlatforms.value = filteredPlatforms.value.map((item1) => {
+    const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
     return { ...matchingItem, ...item1 };
   });
 
-  console.log("Filter plat")
+  console.log("Filter plat");
   console.log(filteredPlatforms.value);
-  console.log(platformsListDisplay.value)
+  console.log(platformsListDisplay.value);
 
   filteredPlatforms.value.forEach((element) => {
     if (element.code === route.query.plat) {
@@ -284,9 +271,9 @@ const clickPlat = (plat) => {
   selectedPlat.value = plat.code;
 };
 
-const openGame = (gameName, platformCode, gameCode) => {
-  // debugger;
-  platformGame.value.open(gameName, platformCode, gameCode);
+const openGame = (item, platformCode, gameCode) => {
+  const platName= item.alias ?? item.cnname ?? item.name;
+  platformGame.value.open(platName, platformCode, gameCode);
 };
 
 const activePlat = ref("");
@@ -310,12 +297,12 @@ const switchPlat = (plat) => {
 };
 
 const getPlatGameList = () => {
-  if(props.platformGameType === "SLOT") {
+  if (props.platformGameType === "SLOT") {
     getPlatformList()
       .then((data) => {
         platformsListDisplay.value = data.filter((element) => element.gameType.includes(props.platformGameType));
-        platformsListDisplay.value = platformsListDisplay.value.map(item1 => {
-          const matchingItem = props.platforms.find(item2 => item1.code === item2.code);
+        platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
+          const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
           return { ...matchingItem, ...item1 };
         });
 
@@ -343,20 +330,20 @@ const searchList = () => {
   }
 };
 const loadGameList = () => {
-  if(props.platformGameType === "SLOT" || props.platformGameType === "FISH"){
-  getPlatformGames(activePlat.value.id, props.platformGameType)
-    .then((data) => {
-      data.forEach((element) => {
-        element.default = require("../assets/images/games/aviator/default.png");
-        element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${element.icon}`;
+  if (props.platformGameType === "SLOT" || props.platformGameType === "FISH") {
+    getPlatformGames(activePlat.value.id, props.platformGameType)
+      .then((data) => {
+        data.forEach((element) => {
+          element.default = require("../assets/images/games/aviator/default.png");
+          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${element.icon}`;
+        });
+        gameListData.value = data;
+        gamePage.total = data.length;
+        changePage(1, gamePage.pageSize);
+      })
+      .catch((err) => {
+        console.log(err.message);
       });
-      gameListData.value = data;
-      gamePage.total = data.length;
-      changePage(1, gamePage.pageSize);
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
   }
 };
 
@@ -366,9 +353,6 @@ const changePage = (page, pageSize) => {
   gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
 };
 
-// const openGame = (gameName, gameCode) => {
-//   slotsGame.value.open(gameName, activePlat.value.code, gameCode);
-// };
 
 const gameCat = ref("allGame");
 

@@ -7,11 +7,14 @@
       </div>
       <div class="months">
         <div
-          @click="mth.isCheckedIn = true"
+          @click="mth.checkInActive ? checkIn(mth) : null"
           v-for="(mth, index) in dateDetails"
           :key="index"
           class="mth"
-          :class="{ 'check-in': mth.checkInActive, 'checked-in': mth.isCheckedIn }"
+          :class="{
+            'check-in': mth.checkInActive,
+            'checked-in': mth.isCheckedIn
+          }"
         >
           <div class="day">
             {{ index + 1 }}
@@ -25,161 +28,56 @@
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
+import { checkInInfo, signIn } from "@/api/index/promo";
 
 const dateDetails = ref([]);
 const init = () => {
-  dateDetails.value = [
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: true
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: true,
-      isCheckedIn: false
+  loadDailyCheckIn();
+};
+
+const checkInDetails = ref();
+const loadDailyCheckIn = () => {
+  checkInInfo().then((res) => {
+    if (res.code === 0) {
+      checkInDetails.value = res.data;
+      generateMonthMaxDaysArray(checkInDetails.value);
     }
-  ];
+  });
+};
+const generateMonthMaxDaysArray = (details) => {
+  // Clear the array to ensure it's empty before generating
+  dateDetails.value = [];
+
+  // Generate the array of objects based on monthMaxDays
+  for (let i = 0; i < details.monthMaxDays; i++) {
+    dateDetails.value.push({
+      number: 7,
+      checkInActive: false,
+      isCheckedIn: false
+    });
+  }
+  // Get checked in days
+  dateDetails.value.forEach((date, dateIndex) => {
+    if (dateIndex < details.monthCount) {
+      date.isCheckedIn = true;
+    }
+    if (details.dayCount === 0) {
+      const indexToSetActive = details.monthCount;
+      // Check if the index is found
+      if (indexToSetActive !== -1) {
+        // Set checkInActive to true for the specific index
+        dateDetails.value[indexToSetActive].checkInActive = true;
+      }
+    }
+  });
+};
+const checkIn = (mth) => {
+  signIn().then((res) => {
+    if (res.code === 0) {
+      mth.isCheckedIn = true;
+      generateMonthMaxDaysArray(res.data);
+    }
+  });
 };
 onMounted(() => {
   init();
@@ -204,13 +102,12 @@ onMounted(() => {
     font-size: 40px;
   }
   .months {
-    background: #ffffff;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     column-gap: 40px;
     padding: 40px;
-    background: radial-gradient(#73b2ff 0%, #3981ff 100%);
+    background: #ffffffcc;
     .mth {
       &.check-in {
         cursor: pointer;
@@ -221,6 +118,15 @@ onMounted(() => {
         background: url(../../../assets/images/promotion/hotpromo/dailylogin/signed.png) no-repeat center center;
         .number {
           color: #434343;
+        }
+      }
+      &.non-active {
+        background: none;
+        .number {
+          color: #6e6e6e;
+        }
+        .day {
+          color: #6e6e6e;
         }
       }
       width: calc((100% - (40px * 6)) / 7);

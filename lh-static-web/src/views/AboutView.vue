@@ -67,9 +67,12 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .about-container {
+  display: flex;
   width: 90%;
   margin: 0 auto;
   padding: 10px 0;
+  height: 100%;
+  min-height: 1240px;
 
   .icon-selected-img {
     position: absolute;
@@ -82,7 +85,6 @@ onMounted(() => {
   }
 
   .tab-label {
-    color: #424f72;
     font-family: PingFang SC;
     font-size: 1.125rem;
     font-weight: 600;
@@ -95,6 +97,8 @@ onMounted(() => {
     border-radius: 0.9375rem;
     background: #fff;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    min-height: 1240px;
 
     .title {
       color: #424f72;
@@ -108,23 +112,27 @@ onMounted(() => {
       border: 1px solid rgba(0, 0, 0, 0.2);
       margin: 15px 0;
     }
+  }
 
-    .content {
-    }
+  :deep(.el-tabs__content) {
+    
   }
 
   :deep(.el-tabs__item) {
-    margin: 0 10px;
+    margin: 8px 10px;
     padding: 0 50px;
     border-radius: 0.375rem;
     display: flex;
     align-items: center;
     justify-content: left;
     gap: 10px;
+    color: #A4AABB;
   }
 
   :deep(.el-tabs__item.is-active) {
     background: #e7f3ff;
+    height: 50px;
+    color: #424F72;
   }
 }
 </style>

@@ -242,7 +242,7 @@ export default defineComponent({
       } else {
 
         if (promo.redirectUrl.includes("page-vip")) {
-          router.push({path: '/account/vip'});
+          router.push('/vip?from=promo');
         } else {
           if (route.query.fromAccount) {
             router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})

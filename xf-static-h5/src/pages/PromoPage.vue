@@ -1,5 +1,6 @@
 <template>
-  <q-card-section class="page-title">优惠活动</q-card-section>
+  <q-card-section v-if="!isPromoDetail"
+    class="page-title">优惠活动</q-card-section>
 
   <div class="promo-container" style="background: #090b19">
     <div class="promo">
@@ -223,7 +224,7 @@ export default defineComponent({
           })
     }
     const showPromoDetails = (promo) => {
-      if (promo.promoCode === "cny-hongbaoyu" || promo.promoCode === "cny-spinwheel" || promo.promoCode === "XingFa-red-packet-rain") {
+      if (promo.promoCode === "cny-hongbaoyu" || promo.promoCode === "cny-spinwheel" || promo.redirectUrl === "cny-hongbaoyu") {
         isSpecialPromo.value = true
       } else {
         isSpecialPromo.value = false

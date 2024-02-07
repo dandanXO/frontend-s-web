@@ -304,7 +304,7 @@ export default defineComponent({
           }
         )
           .then(() => {
-            router.push('/center/withdrawbank')
+            router.push('/center/personal')
           })
           .catch(() => {
           })
@@ -322,7 +322,7 @@ export default defineComponent({
           }
         )
           .then(() => {
-            router.push('/center/withdrawbank')
+            router.push('/center/personal')
           })
           .catch(() => {
           })
@@ -340,7 +340,7 @@ export default defineComponent({
           }
         )
           .then(() => {
-            router.push('/center/withdrawbank')
+            router.push('/center/personal')
           })
           .catch(() => {
           })

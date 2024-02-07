@@ -45,27 +45,27 @@
             <div class="rebate-header">流水要求</div>
 
             <div class="rebate-list bg-dark">≥100</div>
-            <div class="rebate-list bg-dark">8元</div>
+            <div class="rebate-list bg-dark">28</div>
             <div class="rebate-list bg-dark"></div>
 
             <div class="rebate-list">≥1,000</div>
-            <div class="rebate-list">38元</div>
+            <div class="rebate-list">108</div>
             <div class="rebate-list"></div>
 
             <div class="rebate-list bg-dark">≥5,000</div>
-            <div class="rebate-list bg-dark">58元</div>
-            <div class="rebate-list bg-dark">1倍/不限场馆</div>
+            <div class="rebate-list bg-dark">158</div>
+            <div class="rebate-list bg-dark">3倍/不限制场馆</div>
 
             <div class="rebate-list">≥10,000</div>
-            <div class="rebate-list">88元</div>
+            <div class="rebate-list">388</div>
             <div class="rebate-list"></div>
 
             <div class="rebate-list bg-dark">≥30,000</div>
-            <div class="rebate-list bg-dark">388元</div>
+            <div class="rebate-list bg-dark">1588</div>
             <div class="rebate-list bg-dark"></div>
 
             <div class="rebate-list">≥50,000</div>
-            <div class="rebate-list">888元</div>
+            <div class="rebate-list">1888</div>
             <div class="rebate-list"></div>
           </div>
 

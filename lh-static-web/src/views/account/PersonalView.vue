@@ -226,7 +226,7 @@
                 <button
                   :loading="loadingPwBtn"
                   class="standard-button btn-color-white"
-                  type="submit"
+                  type="button"
                   @click="submitUpdatePwd"
                 >
                   重新填写
@@ -235,7 +235,7 @@
                 <button
                   :loading="loadingPwBtn"
                   class="standard-button btn-color-blue"
-                  type="submit"
+                  type="button"
                   @click="submitUpdatePwd"
                 >
                   确认修改
@@ -247,7 +247,7 @@
         <div class="account-tip-text">
           <div class="link">
             如果您需要修改个人资料，请您联系我们的
-            <a @click.stop.prevent="store.openLiveChat()">在线客服</a>
+            <a @click="store.openLiveChat()">在线客服</a>
           </div>
         </div>
       </el-form>

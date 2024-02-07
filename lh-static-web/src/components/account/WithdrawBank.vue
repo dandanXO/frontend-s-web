@@ -226,12 +226,12 @@
 </template>
 
 <script lang="js">
-import {defineComponent, reactive, ref, onMounted} from "vue";
-import {getVerificationCode} from "@/api/index/login";
+import { defineComponent, reactive, ref, onMounted } from "vue";
+import { getVerificationCode } from "@/api/index/login";
 // import { Modal, message } from "ant-design-vue";
-import {ElMessage, ElMessageBox} from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 // import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
-import {RiLink, RiLinkUnlink} from "vue-remix-icons";
+import { RiLink, RiLinkUnlink } from "vue-remix-icons";
 import {
   loadBanks,
   loadBankCards,
@@ -241,10 +241,10 @@ import {
   loadMemberInfo,
   loadMemberTelephone
 } from "@/api/personal/personal";
-import {userStore} from "@/store";
-import {useRouter} from "vue-router";
-import {sendSessionSms} from "@/api/personal/personal";
-import {InfoFilled} from "@element-plus/icons-vue";
+import { userStore } from "@/store";
+import { useRouter } from "vue-router";
+import { sendSessionSms } from "@/api/personal/personal";
+import { InfoFilled } from "@element-plus/icons-vue";
 // import moment from "moment";
 
 export default defineComponent({
@@ -255,19 +255,19 @@ export default defineComponent({
   },
   setup() {
     let validateEmptyCardNo = async (r, v) => {
-      if (selectedBankType.value === 'Bank') {
-        if (v === '') {
-          return Promise.reject('请输入银卡号');
+      if (selectedBankType.value === "Bank") {
+        if (v === "") {
+          return Promise.reject("请输入银卡号");
         } else if (/^\d+$/.test(v) === false) {
-          return Promise.reject('银行卡号只能包含数字');
+          return Promise.reject("银行卡号只能包含数字");
         } else {
           return Promise.resolve();
         }
-      } else if (selectedBankType.value === 'Crypto') {
-        if (v === '') {
-          return Promise.reject('请输入虚拟钱包账号');
+      } else if (selectedBankType.value === "Crypto") {
+        if (v === "") {
+          return Promise.reject("请输入虚拟钱包账号");
         } else if (/^[A-Za-z0-9]*$/.test(v) === false) {
-          return Promise.reject('虚拟钱包账号只能包含数字及英文字母');
+          return Promise.reject("虚拟钱包账号只能包含数字及英文字母");
         } else {
           return Promise.resolve();
         }
@@ -277,61 +277,61 @@ export default defineComponent({
     let validateBankLength = async (r, v) => {
       var min = 6;
       var max = 12;
-      if (selectedBankType.value === 'Bank') {
-        var selectedBankCode = null
+      if (selectedBankType.value === "Bank") {
+        var selectedBankCode = null;
         banksList.value.forEach(bank => {
           if (bank.id === bankCardInfo.bankId) {
-            selectedBankCode = bank.code
+            selectedBankCode = bank.code;
           }
         });
-        if (selectedBankCode === 'alipay') {
+        if (selectedBankCode === "alipay") {
           min = 11;
           max = 20;
         } else {
           if (!/^\d+$/.test(v)) {
-            return Promise.reject('请输入数字');
+            return Promise.reject("请输入数字");
           }
           min = 16;
           max = 19;
         }
 
-      } else if (selectedBankType.value === 'Crypto') {
+      } else if (selectedBankType.value === "Crypto") {
         min = 34;
         max = 36;
-      } else if (selectedBankType.value === 'e-Wallet') {
+      } else if (selectedBankType.value === "e-Wallet") {
         min = 34;
         max = 34;
-        var selectedCode = null
+        var selectedCode = null;
         banksList.value.forEach(bank => {
           if (bank.id === bankCardInfo.bankId) {
-            selectedCode = bank.code
+            selectedCode = bank.code;
           }
         });
-        if (selectedCode === 'KDPAY') {
+        if (selectedCode === "KDPAY") {
           min = 34;
           max = 34;
-        } else if(selectedCode === 'EBPAY') {
+        } else if (selectedCode === "EBPAY") {
           min = 34;
           max = 34;
-        } else if(selectedCode === 'OKPAY') {
+        } else if (selectedCode === "OKPAY") {
           min = 16;
           max = 16;
         }
       }
-      if (v === '') {
-        return Promise.reject('请输入卡号');
+      if (v === "") {
+        return Promise.reject("请输入卡号");
       } else if (v.length < min || v.length > max) {
         if (min === max) {
-          return Promise.reject('长度应为 ' + min);
+          return Promise.reject("长度应为 " + min);
         } else {
-          return Promise.reject('长度应为 ' + min + '-' + max);
+          return Promise.reject("长度应为 " + min + "-" + max);
         }
       } else {
         return Promise.resolve();
       }
     };
     const tblLoading = ref(false);
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/payment/';
+    const imgURL = process.env.VUE_APP_IMAGE_CDN + "/payment/";
     const isCardActive = ref();
     const isUSDT = ref(false);
     const isEWALLET = ref(false);
@@ -342,12 +342,12 @@ export default defineComponent({
       endDate: "",
       size: 10
     });
-    const router = useRouter()
+    const router = useRouter();
     const columns = [
       {
         title: "银行",
         dataIndex: "bankName",
-        key: "bankName",
+        key: "bankName"
       },
       {
         title: "银行卡号",
@@ -371,7 +371,7 @@ export default defineComponent({
       }
     ];
     const maskCardNumber = (cardNumber) => {
-      const maskedDigits = cardNumber.slice(0, -4).replace(/[a-zA-Z0-9]/g, '*');
+      const maskedDigits = cardNumber.slice(0, -4).replace(/[a-zA-Z0-9]/g, "*");
       const lastFourDigits = cardNumber.slice(-4);
       return maskedDigits + lastFourDigits;
     };
@@ -380,11 +380,11 @@ export default defineComponent({
       totalPage: 1,
       pageSize: 5,
       pageCount: 1
-    }])
-    const bankTypes = [{value: 'Bank', text: '银行卡'}, {value: 'Crypto', text: '数字货币'}, {
-      value: 'e-Wallet',
-      text: '电子钱包'
-    }]
+    }]);
+    const bankTypes = [{ value: "Bank", text: "银行卡" }, { value: "Crypto", text: "数字货币" }, {
+      value: "e-Wallet",
+      text: "电子钱包"
+    }];
     const personalState = reactive({
       memberInfo: {},
       bankCardList: []
@@ -394,10 +394,10 @@ export default defineComponent({
       tblLoading.value = true;
       loadUnbindRecord(searchForm).then((response) => {
         if (response.code === 0) {
-          dataSource.value = response.data.records
-          pagination.value.currentPage = response.data.current
-          pagination.value.totalPage = response.data.total
-          pagination.value.pageCount = response.data.pages
+          dataSource.value = response.data.records;
+          pagination.value.currentPage = response.data.current;
+          pagination.value.totalPage = response.data.total;
+          pagination.value.pageCount = response.data.pages;
         } else {
           // message.error(response.message, 4)
         }
@@ -428,7 +428,7 @@ export default defineComponent({
     };
 
     const withdrawState = reactive({
-      bankCardList: [],
+      bankCardList: []
     });
 
     const loadInfo = () => {
@@ -436,7 +436,7 @@ export default defineComponent({
         if (response.code === 0) {
           personalState.memberInfo = response.data;
           bankCardInfo.telephone = personalState.memberInfo.telephone;
-          console.log(bankCardInfo.telephone)
+          console.log(bankCardInfo.telephone);
           if (personalState.memberInfo.birthday) {
             personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
           }
@@ -450,28 +450,28 @@ export default defineComponent({
         }
       }).catch((error) => {
         console.log("error", error);
-      })
-    }
+      });
+    };
 
     const checkBankCards = () => {
       ElMessageBox.alert(
-          '请先绑定银行卡', "系统提示",
-          {
-            showClose: false,
-            showCancelButton: false,
-            confirmButtonText: '确认',
-            draggable: false,
-            buttonSize: 'small',
-            closeOnClickModal: false,
-            center: true,
-          }
+        "请先绑定银行卡", "系统提示",
+        {
+          showClose: false,
+          showCancelButton: false,
+          confirmButtonText: "确认",
+          draggable: false,
+          buttonSize: "small",
+          closeOnClickModal: false,
+          center: true
+        }
       )
-          .then(() => {
-            router.push('/center/withdrawbank')
-          })
-          .catch(() => {
-          })
-    }
+        .then(() => {
+          router.push("/center/personal");
+        })
+        .catch(() => {
+        });
+    };
 
     onMounted(() => {
       getTime();
@@ -480,11 +480,11 @@ export default defineComponent({
     });
 
     const handleCurrentChange = (val) => {
-      pagination.value.currentPage = val
-      searchForm.current = val
+      pagination.value.currentPage = val;
+      searchForm.current = val;
 
       searchRecord();
-    }
+    };
     const showCard = (item, index) => {
       // if (index === isCardActive.value) {
       //   isCardActive.value = null;
@@ -492,8 +492,8 @@ export default defineComponent({
       // } else {
       //   isCardActive.value = index
       // }
-      isCardActive.value = index
-    }
+      isCardActive.value = index;
+    };
     const loadCards = () => {
       personalState.bankCardList = [];
       loadBankCards().then((response) => {
@@ -503,7 +503,7 @@ export default defineComponent({
       }).catch((error) => {
         console.log("error", error);
       });
-    }
+    };
 
     //add bank card
     const bankCardModalState = reactive({
@@ -515,18 +515,21 @@ export default defineComponent({
       bankId: undefined,
       cardNumber: "",
       cardAccount: "",
-      cardAddress: "",
+      cardAddress: ""
       // telephone: "",
       // smsCode: "",
       // smsCodeId: ""
     });
-    const bankName = ref()
-    const banksList = ref([])
+    const bankName = ref();
+    const banksList = ref([]);
     const bankCardModal = () => {
       store.getMemberInfo().then(() => {
         if (!store.realName || store.realName == "") {
-          ElMessage.error('真实姓名不可为空');
-          router.push("/center/personal");
+          ElMessage.error("真实姓名不可为空");
+          return;
+        } else if (!store.phone || store.phone == "") {
+          ElMessage.error("绑定银行卡前，请先验证手机号。");
+          return;
         } else {
           bankCardInfo.bankId = undefined;
           bankCardInfo.cardNumber = "";
@@ -538,7 +541,7 @@ export default defineComponent({
           if (bankCardModalState.banks.length === 0) {
             loadBanks().then((res) => {
               if (res.code === 0) {
-                bankCardModalState.banks.push(...res.data)
+                bankCardModalState.banks.push(...res.data);
                 selectBankType();
               }
             }).catch((e) => {
@@ -546,65 +549,65 @@ export default defineComponent({
             });
           }
         }
-      })
+      });
     };
-    const selectedBankType = ref("Bank")
+    const selectedBankType = ref("Bank");
     const selectBankType = () => {
-      banksList.value = []
-      bankCardInfo.bankId = null
+      banksList.value = [];
+      bankCardInfo.bankId = null;
       bankCardModalState.banks.forEach(element => {
         if (selectedBankType.value === "Bank") {
           isUSDT.value = false;
           isEWALLET.value = false;
-          if (element.bankType === 'BANK') {
+          if (element.bankType === "BANK") {
             banksList.value.push(element);
           }
         }
         if (selectedBankType.value === "Crypto") {
           isUSDT.value = true;
           isEWALLET.value = false;
-          if (element.bankType === 'CRYPTO') {
+          if (element.bankType === "CRYPTO") {
             banksList.value.push(element);
           }
         }
         if (selectedBankType.value === "e-Wallet") {
           isEWALLET.value = true;
           isUSDT.value = false;
-          if (element.bankType === 'EWALLET') {
+          if (element.bankType === "EWALLET") {
             banksList.value.push(element);
           }
         }
       });
-      if (bankCardInfo.cardNumber != '') {
-        bankCardFormRef.value.validateField('cardNumber');
+      if (bankCardInfo.cardNumber != "") {
+        bankCardFormRef.value.validateField("cardNumber");
       }
-    }
+    };
 
-    const phoneCaptchaDialogVisible = ref(false)
-    const isSendOtp = ref(false)
+    const phoneCaptchaDialogVisible = ref(false);
+    const isSendOtp = ref(false);
 
     const sendOtp = async () => {
       const smsDetail = {
         // telephone: bankCardInfo.telephone,
         captchaCode: captchaForm.captchaCode,
         codeId: captchaForm.codeId
-      }
+      };
       sendSessionSms(smsDetail)
-          .then((response) => {
-            if (response.code == 0) {
-              isSendOtp.value = true;
-              captchaForm.smsCodeId = response.data.codeId;
-              bankCardInfo.smsCodeId = response.data.codeId;
+        .then((response) => {
+          if (response.code == 0) {
+            isSendOtp.value = true;
+            captchaForm.smsCodeId = response.data.codeId;
+            bankCardInfo.smsCodeId = response.data.codeId;
 
-              ElMessage({
-                type: 'success',
-                message: `发送手机验证码成功`
-              });
-              captchaDialogVisible.value = false;
-            } else {
-              getCode();
-            }
-          })
+            ElMessage({
+              type: "success",
+              message: `发送手机验证码成功`
+            });
+            captchaDialogVisible.value = false;
+          } else {
+            getCode();
+          }
+        });
     };
 
     const verificationImg = ref("");
@@ -618,9 +621,9 @@ export default defineComponent({
           // openCaptchaForm();
           phoneCaptchaDialogVisible.value = true;
         }).catch((error) => {
-          console.log("error", error)
-        })
-    }
+        console.log("error", error);
+      });
+    };
 
     const getCode = () => {
       getVerificationCode().then((res) => {
@@ -628,16 +631,16 @@ export default defineComponent({
           verificationImg.value = "data:image/png;base64," + res.data.img;
           captchaForm.codeId = res.data.id;
         }
-      })
+      });
     };
 
     const captchaForm = reactive({
       captchaCode: "",
       codeId: "",
-      smsCodeId: "",
+      smsCodeId: ""
     });
 
-    const captchaDialogVisible = ref(false)
+    const captchaDialogVisible = ref(false);
 
     const openCaptchaForm = () => {
       // bankCardFormRef.value.validateField('telephone').then((resp) => {
@@ -654,26 +657,26 @@ export default defineComponent({
     };
 
     const submitBankCard = () => {
-      console.log(bankCardInfo)
+      console.log(bankCardInfo);
       bankCardFormRef.value
-          .validate()
-          .then(() => {
-            addBankCard(bankCardInfo).then((response) => {
-              if (response.code === 0) {
-                ElMessage({
-                  message: '成功',
-                  type: 'success',
-                })
-                bankCardModalState.visible = false;
-                loadCards();
-              } else {
-                // message.error(response.message);
-              }
-            }).catch((error) => {
-              console.log(error.message);
-              // message.error(error.message, 4);
-            });
+        .validate()
+        .then(() => {
+          addBankCard(bankCardInfo).then((response) => {
+            if (response.code === 0) {
+              ElMessage({
+                message: "成功",
+                type: "success"
+              });
+              bankCardModalState.visible = false;
+              loadCards();
+            } else {
+              // message.error(response.message);
+            }
           }).catch((error) => {
+            console.log(error.message);
+            // message.error(error.message, 4);
+          });
+        }).catch((error) => {
         console.log("error", error);
       });
     };
@@ -683,13 +686,13 @@ export default defineComponent({
         {
           required: true,
           validator: validateEmptyCardNo,
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           required: true,
           validator: validateBankLength,
-          trigger: "blur",
-        },
+          trigger: "blur"
+        }
 
       ],
       cardAddress: [
@@ -698,7 +701,7 @@ export default defineComponent({
           message: "请输入开户行地址",
           trigger: "blur"
         }
-      ],
+      ]
       // telephone: [
       //   {
       //     required: true,
@@ -724,93 +727,93 @@ export default defineComponent({
       captchaCode: [
         {
           required: true,
-          validator: '请输入验证码',
-          trigger: "blur",
-        },
+          validator: "请输入验证码",
+          trigger: "blur"
+        }
       ]
     };
     const unbindBankCard = (card) => {
 
       ElMessageBox.prompt(
-          `请输入解绑${getOptionLabel(card.bankName)}的${card.bankType === 'CRYPTO' || card.bankType === 'EWALLET' ? '钱包地址' : '卡号'}`,
-          '确认解绑',
-          {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            cancelButtonClass: 'cancel-btn',
-            type: 'warning',
-            inputErrorMessage: '请输入正确的卡号', // Error message to display if input is invalid
-          }
+        `请输入解绑${getOptionLabel(card.bankName)}的${card.bankType === "CRYPTO" || card.bankType === "EWALLET" ? "钱包地址" : "卡号"}`,
+        "确认解绑",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          cancelButtonClass: "cancel-btn",
+          type: "warning",
+          inputErrorMessage: "请输入正确的卡号" // Error message to display if input is invalid
+        }
       )
-          .then((inputValue) => {
-            if (inputValue.value === card.cardNumber) {
-              deleteBankCard(card.id).then((res) => {
-                if (res.code === 0) {
-                  ElMessage({
-                    type: 'success',
-                    message: '解绑完成',
-                  });
-                  // loadCards();
-                  searchRecord();
-                  for (let i = 0; i < personalState.bankCardList.length; i++) {
-                    if (personalState.bankCardList[i].id === card.id) {
-                      personalState.bankCardList.splice(i, 1);
-                    }
+        .then((inputValue) => {
+          if (inputValue.value === card.cardNumber) {
+            deleteBankCard(card.id).then((res) => {
+              if (res.code === 0) {
+                ElMessage({
+                  type: "success",
+                  message: "解绑完成"
+                });
+                // loadCards();
+                searchRecord();
+                for (let i = 0; i < personalState.bankCardList.length; i++) {
+                  if (personalState.bankCardList[i].id === card.id) {
+                    personalState.bankCardList.splice(i, 1);
                   }
                 }
-              }).catch((e) => {
-                console.log('error', e);
-              });
-            } else {
-              ElMessage({
-                type: 'error',
-                message: '卡号不匹配，请重新输入',
-              });
-            }
-          })
-          .catch(() => {
-            ElMessage({
-              type: 'info',
-              message: '删除取消',
+              }
+            }).catch((e) => {
+              console.log("error", e);
             });
+          } else {
+            ElMessage({
+              type: "error",
+              message: "卡号不匹配，请重新输入"
+            });
+          }
+        })
+        .catch(() => {
+          ElMessage({
+            type: "info",
+            message: "删除取消"
           });
+        });
     };
 
     const getOptionLabel = (bankOption) => {
-      if (bankOption === 'USDTTRC') {
-        return 'USDTTRC20'
+      if (bankOption === "USDTTRC") {
+        return "USDTTRC20";
       } else {
-        return bankOption
+        return bankOption;
       }
-    }
+    };
 
     const chooseCard = () => {
       isALIPAY.value = false;
       if (isUSDT.value) {
-        return '虚拟币'
+        return "虚拟币";
       } else if (isEWALLET.value) {
-        return '电子钱包'
+        return "电子钱包";
       } else {
         banksList.value.forEach(bank => {
-            if (bank.id === bankCardInfo.bankId) {
-              if(bank.code === 'alipay'){
-                isALIPAY.value = true;
-              }
+          if (bank.id === bankCardInfo.bankId) {
+            if (bank.code === "alipay") {
+              isALIPAY.value = true;
             }
-          });
-        return '银行'
+          }
+        });
+        return "银行";
       }
-    }
+    };
 
     const numAddress = () => {
       if (isUSDT.value) {
-        return '钱包地址'
+        return "钱包地址";
       } else if (isEWALLET.value) {
-        return '电子钱包'
+        return "电子钱包";
       } else {
-        return '银行卡号'
+        return "银行卡号";
       }
-    }
+    };
     return {
       searchForm,
       columns,
@@ -865,11 +868,13 @@ body {
     .el-dialog__body {
       padding: 20px;
     }
-    .el-row{
+
+    .el-row {
       width: 100%;
     }
   }
 }
+
 .passwordModal .ant-modal {
   max-width: 520px;
   width: 100%;
@@ -884,6 +889,7 @@ body {
     width: 100%;
   }
 }
+
 .bankModal .ant-modal {
   max-width: 520px;
   width: 100%;
@@ -898,6 +904,7 @@ body {
     width: 100%;
   }
 }
+
 .securityModal .ant-modal {
   width: 100%;
   max-width: 600px;
@@ -912,6 +919,7 @@ body {
     width: 100%;
   }
 }
+
 .ant-modal.ant-modal-confirm {
   width: 100%;
   max-width: 600px;
@@ -921,9 +929,11 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 .ant-space-item:nth-child(1) {
   flex: 2;
 }
+
 .ant-space-item:nth-child(2) {
   flex: 4;
 }
@@ -935,20 +945,25 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
+
   .ant-input {
     width: 100%;
     flex-basis: 50%;
   }
 }
+
 :deep(.ant-form-item .ant-select) {
   width: 100%;
 }
+
 :deep(.ant-form-item.select .ant-form-item-control-input) {
   width: 100%;
 }
+
 :deep(.ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input) {
   height: 40px;
 }
+
 :deep(.ant-select:not(.ant-select-customize-input) .ant-select-selector) {
   height: 40px;
   padding: 5px 20px;
@@ -959,14 +974,17 @@ body {
 
 .common-btn {
   cursor: pointer;
+
   &.search-btn {
     margin-top: 0;
     padding: 3px 5px;
     font-size: 14px;
   }
+
   &.verification-btn {
     padding: 5px;
   }
+
   &.submit-btn {
     padding: 5px;
   }
@@ -976,6 +994,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+
   .bank-card-item {
     width: calc(50% - 10px);
     max-width: 315px;
@@ -1006,10 +1025,12 @@ body {
         .card-bank-name {
           font-weight: 600;
           font-size: 1rem;
+
           &.txt-blue {
             color: $font-blue;
           }
         }
+
         .card-bank-type {
           font-size: 14px;
           color: $font-0;
@@ -1037,6 +1058,7 @@ body {
       .unlink-btn {
         display: block;
       }
+
       .txt-center {
         position: relative;
         padding-top: 0;
@@ -1058,12 +1080,14 @@ body {
       justify-content: center;
       width: 100%;
     }
+
     &.add-bank-card {
       cursor: pointer;
       align-items: center;
       padding: 0;
       filter: none;
     }
+
     .unlink-btn {
       cursor: pointer;
       position: absolute;
@@ -1071,26 +1095,29 @@ body {
       top: 10px;
       right: 10px;
     }
+
     svg {
       fill: $font-2;
       width: 20px;
     }
+
     .card-num-box {
       // padding: 40px 0 0;
     }
-    &:before {
-      position: absolute;
-      top: 0;
-      left: -85%;
-      z-index: 0;
-      display: block;
-      content: "";
-      width: 50%;
-      height: 100%;
-      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%);
-      border-radius: 10px;
-      transform: skewX(320deg);
-    }
+
+    // &:before {
+    //   position: absolute;
+    //   top: 0;
+    //   left: -85%;
+    //   z-index: 0;
+    //   display: block;
+    //   content: "";
+    //   width: 50%;
+    //   height: 100%;
+    //   background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%);
+    //   border-radius: 10px;
+    //   transform: skewX(320deg);
+    // }
 
     @-webkit-keyframes shine {
       100% {
@@ -1104,8 +1131,10 @@ body {
     }
   }
 }
+
 .basic-info {
   position: relative;
+
   .buttons {
     position: absolute;
     top: 20px;
@@ -1114,6 +1143,7 @@ body {
     flex-direction: column;
     gap: 10px;
   }
+
   .account-btn {
     cursor: pointer;
     padding: 5px 20px;
@@ -1121,21 +1151,25 @@ body {
     min-width: 180px;
   }
 }
+
 .basic-info-table {
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 70%;
+
   .tbl-row {
     display: flex;
     justify-content: flex-start;
     padding: 0 20px 15px 0px;
   }
+
   .basic-info-cell {
     padding-bottom: 0.5rem;
 
     &.title {
       width: 150px;
     }
+
     // &.content {
     //   // width: 170px;
     //   width: calc(100% - 100px);
@@ -1144,9 +1178,11 @@ body {
     // }
   }
 }
+
 .unbind-record-wrapper {
   margin-top: 20px;
 }
+
 .left {
   display: flex;
   justify-content: flex-start;
@@ -1154,9 +1190,11 @@ body {
   gap: 20px;
   margin: 20px 0;
 }
+
 .searchbar .ant-form {
   display: flex;
   justify-content: space-between;
+
   .ant-form-item {
     margin-right: 0;
   }

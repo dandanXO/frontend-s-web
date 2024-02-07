@@ -90,7 +90,7 @@
   <div class="details-bar">
     <div class="message" @click="refreshBalance">
       <span class="main-balance">
-        {{ store.token ? (!isLoadingBalance ? "¥" + mainWallet.toFixed(2) : "加载中...") : "早上好~" }}
+        {{ store.token ? (!isLoadingBalance ? "¥" + mainWallet.toFixed(2) : "加载中...") : "未登录" }}
       </span>
       <span>中心钱包</span>
     </div>
@@ -166,7 +166,6 @@
         </template>
       </div>
 
-
       <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
         <template v-if="tab === 'fishing'">
           <img src="../assets/images/home/games/fish-icon-active.png" />
@@ -184,13 +183,13 @@
             <div
               class="platform-img-frame"
               :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name)
+                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
               }"
             >
               <div class="platform-label"></div>
               <div class="platform-content">
                 <div class="platform-logo">
-                  <img :src="getImgPlatformLogo(item.icon, item.name)" />
+                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
                 </div>
                 <div class="platform-title">{{ item.title }}</div>
                 <div class="platform-subtitle">{{ item.subtitle }}</div>
@@ -210,13 +209,13 @@
             <div
               class="platform-img-frame"
               :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name)
+                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
               }"
             >
               <div class="platform-label"></div>
               <div class="platform-content">
                 <div class="platform-logo">
-                  <img :src="getImgPlatformLogo(item.icon, item.name)" />
+                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
                 </div>
                 <div class="platform-title">{{ item.title }}</div>
                 <div class="platform-subtitle">{{ item.subtitle }}</div>
@@ -262,13 +261,13 @@
             <div
               class="platform-img-frame"
               :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name)
+                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
               }"
             >
               <div class="platform-label"></div>
               <div class="platform-content">
                 <div class="platform-logo">
-                  <img :src="getImgPlatformLogo(item.icon, item.name)" />
+                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
                 </div>
                 <div class="platform-title">{{ item.title }}</div>
                 <div class="platform-subtitle">{{ item.subtitle }}</div>
@@ -287,44 +286,43 @@
           <img src="../assets/images/home/lottery/lottery-1.png" />
         </div> -->
         <template v-for="(item, index) in lottery" :key="index">
-        <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)">
-          <div
-            class="platform-img-frame"
-            :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name)
-              }"
-          >
-            <div class="platform-label"></div>
-            <div class="platform-content">
-              <div class="platform-logo">
-                <img :src="getImgPlatformLogo(item.icon, item.name)" />
-              </div>
-              <div class="platform-title">{{ item.title }}</div>
-              <div class="platform-subtitle">{{ item.subtitle }}</div>
-              <div class="platform-rebate">
-                最高返水
-                <span>8%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        </template>
-
-      </div>
-
-      <div class="game-lists" v-if="tab === 'slot'" id="slot-lists">
-        <template v-for="(item, index) in slot" :key="index">
-          <div class="platform-block" @click="router.push({path: '/slot', query: {platform: item.code}})">
+          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)">
             <div
               class="platform-img-frame"
               :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name)
+                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
               }"
             >
               <div class="platform-label"></div>
               <div class="platform-content">
                 <div class="platform-logo">
-                  <img :src="getImgPlatformLogo(item.icon, item.name)" />
+                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
+                </div>
+                <div class="platform-title">{{ item.title }}</div>
+                <div class="platform-subtitle">{{ item.subtitle }}</div>
+                <div class="platform-rebate">
+                  最高返水
+                  <span>8%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <div class="game-lists" v-if="tab === 'slot'" id="slot-lists">
+        <template v-for="(item, index) in slot" :key="index">
+          <div class="platform-block" @click="router.push({ path: '/slot', query: { platform: item.code } })">
+            <div
+              class="platform-img-frame"
+              :style="{
+                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
+              }"
+            >
+              <div class="platform-label"></div>
+              <div class="platform-content">
+                <div class="platform-logo">
+                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
                 </div>
                 <div class="platform-title">{{ item.title }}</div>
                 <div class="platform-subtitle">{{ item.subtitle }}</div>
@@ -343,13 +341,13 @@
             <div
               class="platform-img-frame"
               :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name)
+                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
               }"
             >
               <div class="platform-label"></div>
               <div class="platform-content">
                 <div class="platform-logo">
-                  <img :src="getImgPlatformLogo(item.icon, item.name)" />
+                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
                 </div>
                 <div class="platform-title">{{ item.title }}</div>
                 <div class="platform-subtitle">{{ item.subtitle }}</div>
@@ -846,8 +844,7 @@ export default defineComponent({
             return null;
           }
         })
-        .catch(() => {
-        });
+        .catch(() => {});
       return item.value;
     };
 
@@ -896,8 +893,7 @@ export default defineComponent({
               // }
             }
           })
-          .catch(() => {
-          });
+          .catch(() => {});
       }
     };
 
@@ -929,8 +925,7 @@ export default defineComponent({
           } else {
           }
         })
-        .catch(() => {
-        });
+        .catch(() => {});
     }
 
     const platforms = ref([]);
@@ -968,7 +963,7 @@ export default defineComponent({
 
               if (espObj.code === "TFGaming") {
                 espObj.title = "雷火电竞";
-                espObj.sequence= -1;
+                espObj.sequence = -1;
               }
               if (espObj.code === "IA") {
                 espObj.title = "小艾电竞";
@@ -1019,12 +1014,19 @@ export default defineComponent({
             }
             if (platTypes.indexOf("LIVE") > -1) {
               var liveObj = Object.assign({}, element);
+
+              // if (liveObj.alias) {
+              //   liveObj.title = translateRecord(liveObj.alias) + " 真人";
+              // } else {
+              //   liveObj.title = translateRecord(liveObj.name) + " 真人";
+              // }
+
               if (liveObj.code === "PMLIVE") {
                 liveObj.title = "DB真人";
               } else if (liveObj.code === "EBET") {
                 liveObj.title = "WE真人";
               } else {
-                liveObj.title = translateRecord(liveObj.name);
+                liveObj.title = translateRecord(liveObj.name) + "真人";
               }
 
               if (liveObj.code === "BBINDY") {
@@ -1038,14 +1040,18 @@ export default defineComponent({
             if (platTypes.indexOf("SLOT") > -1) {
               // console.log(element)
               var slotObj = Object.assign({}, element);
-              slotObj.title = translateRecord(slotObj.name) + " 电子";
+
+              if (slotObj.code === "AG") {
+                slotObj.title = "XIN 电子";
+              } else if (slotObj.alias) {
+                slotObj.title = translateRecord(slotObj.alias) + " 电子";
+              } else {
+                slotObj.title = translateRecord(slotObj.name) + " 电子";
+              }
+
               slotObj.icon = "slot";
               slotObj.subtitle = "电子游戏";
               // console.log(slotObj);
-
-              if (slotObj.code === "AG") {
-                slotObj.title = "AG 电子";
-              }
 
               let slotItem = {
                 id: slotObj.id,
@@ -1055,7 +1061,6 @@ export default defineComponent({
               // console.log(slotItem);
               ui.slotLists.push(slotItem);
               slot.value.push(slotObj);
-
             }
             if (platTypes.indexOf("FISH") > -1 && element.code !== "AGF") {
               var fishObj = Object.assign({}, element);
@@ -1074,6 +1079,11 @@ export default defineComponent({
               pokerObj.title = translateRecord(pokerObj.name);
               pokerObj.icon = "poker";
               pokerObj.subtitle = "棋牌娱乐";
+
+              if (pokerObj.code === "GFLC") {
+                pokerObj.gameCode = "lobby";
+              }
+
               poker.value.push(pokerObj);
             }
             if (platTypes.indexOf("LOTTERY") > -1) {
@@ -1086,10 +1096,11 @@ export default defineComponent({
             }
           });
 
-          esport.value = esport.value.sort((a,b) => { return a.sequence - b.sequence })
+          esport.value = esport.value.sort((a, b) => {
+            return a.sequence - b.sequence;
+          });
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     };
 
     const tab = ref("esport");
@@ -1214,17 +1225,63 @@ export default defineComponent({
         });
     };
 
-    const getImgPlatformLogo = (platform, code) => {
+    // const getImgPlatformLogo = (platform, code) => {
+    //   try {
+    //     return `${require(`../assets/images/home/${platform}/logo-${code.toLowerCase()}.png`)}`;
+    //   } catch (e) {
+    //     return `${require(`../assets/images/home/logo-empty.png`)}`;
+    //   }
+    // };
+
+    // const getImgPlatformBg = (platform, code) => {
+    //   try {
+    //     return `url(${require(`../assets/images/home/${platform}/platform-item-${code.toLowerCase()}.png`)})`;
+    //   } catch (e) {
+    //     return `url(${require(`../assets/images/home/${platform}/platform-item-empty.png`)})`;
+    //   }
+    // };
+
+    // const getImgPlatformLogo = (platform, code, alias) => {
+    //   try {
+    //     const effectiveCode = alias || code.toLowerCase();
+    //     return `${require(`../assets/images/home/${platform}/logo-${effectiveCode.toLowerCase()}.png`)}`;
+    //   } catch (e) {
+    //     return `${require(`../assets/images/home/logo-empty.png`)}`;
+    //   }
+    // };
+
+    // const getImgPlatformBg = (platform, code, alias) => {
+    //   try {
+    //     const effectiveCode = alias || code.toLowerCase();
+    //     return `url(${require(`../assets/images/home/${platform}/platform-item-${effectiveCode.toLowerCase()}.png`)})`;
+    //   } catch (e) {
+    //     return `url(${require(`../assets/images/home/${platform}/platform-item-empty.png`)})`;
+    //   }
+    // };
+
+    const getImgPlatformLogo = (platform, code, alias) => {
       try {
-        return `${require(`../assets/images/home/${platform}/logo-${code.toLowerCase()}.png`)}`;
+        let effectiveCode;
+        if (code.toLowerCase() === "pm" || code.toLowerCase() === "db") {
+          effectiveCode = code.toLowerCase();
+        } else {
+          effectiveCode = alias || code.toLowerCase();
+        }
+        return `${require(`../assets/images/home/${platform}/logo-${effectiveCode.toLowerCase()}.png`)}`;
       } catch (e) {
         return `${require(`../assets/images/home/logo-empty.png`)}`;
       }
     };
 
-    const getImgPlatformBg = (platform, code) => {
+    const getImgPlatformBg = (platform, code, alias) => {
       try {
-        return `url(${require(`../assets/images/home/${platform}/platform-item-${code.toLowerCase()}.png`)})`;
+        let effectiveCode;
+        if (code.toLowerCase() === "pm" || code.toLowerCase() === "db") {
+          effectiveCode = code.toLowerCase();
+        } else {
+          effectiveCode = alias || code.toLowerCase();
+        }
+        return `url(${require(`../assets/images/home/${platform}/platform-item-${effectiveCode.toLowerCase()}.png`)})`;
       } catch (e) {
         return `url(${require(`../assets/images/home/${platform}/platform-item-empty.png`)})`;
       }
@@ -1741,6 +1798,7 @@ export default defineComponent({
           display: flex;
           flex-direction: column;
           align-items: center;
+          justify-content: center;
         }
 
         // .platform-item-bg {
@@ -1753,7 +1811,7 @@ export default defineComponent({
         // }
 
         .platform-logo {
-          margin-top: auto;
+          // margin-top: auto;
           height: 1.25rem;
 
           img {
@@ -1788,7 +1846,7 @@ export default defineComponent({
           border: 1px solid #fff;
           background: linear-gradient(180deg, #fafbff 0%, #e6edfe 100%);
           box-shadow: 0px 4px 4px 0px rgba(154, 176, 255, 0.1);
-          display: flex;
+          display: none;
           align-items: center;
 
           span {

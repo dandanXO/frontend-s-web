@@ -24,8 +24,8 @@
         <div :class="`hotgame-content-wrapper ${hotgame.isShow ? 'show' : ''}`">
           <div class="left-container">
             <div class="title-wrapper">
-              <div class="title">{{ hotgame.content[hotgame.currentProvider].title }}</div>
-              <div class="subtitle">{{ hotgame.content[hotgame.currentProvider].subtitle }}</div>
+              <div class="title">{{ hotgame.title }}</div>
+              <div class="subtitle">{{ hotgame.subtitle }}</div>
             </div>
             <div>
               <div class="desc">专注于彩票游戏行业多年，拥有经典彩种、玩法。</div>
@@ -43,18 +43,30 @@
                 v-for="(provider, providerIndex) in hotgame.content.providerList"
                 :key="`${provider}-${providerIndex}`"
                 class="game-provider"
-                @click="setCurrentProvider(hotgame, provider.key)"
+                @click="setCurrentProvider(hotgame, provider)"
               >
                 <img
+                  :class="`game-provider-img ${hotgame.currentPlat === provider ? 'active' : ''}`"
+                  :src="
+                    require(`../../assets/${hotgame.section}/${
+                      hotgame.section
+                    }-logo-${provider.code.toLowerCase()}.png`)
+                  "
+                />
+                <div :class="`game-provider-text ${hotgame.currentPlat === provider ? 'active' : ''}`">
+                  {{ provider.alias ? provider.alias : provider.name }}
+                </div>
+                <!-- <img :src="provider.icon" /> -->
+                <!-- <img
                   :class="`game-provider-img ${hotgame.currentProvider === provider.key ? 'active' : ''}`"
                   :src="provider.icon"
                 />
                 <div :class="`game-provider-text ${hotgame.currentProvider === provider.key ? 'active' : ''}`">
                   {{ provider.name }}
-                </div>
+                </div> -->
               </div>
             </div>
-            <el-button size="small" class="common-btn game-start-btn" @click="onEnterGameClick(hotgame.path)">
+            <el-button size="small" class="common-btn game-start-btn" @click="onEnterGameClick(hotgame, hotgame.type)">
               进入游戏
             </el-button>
           </div>
@@ -68,14 +80,30 @@
       </div>
     </div>
   </div>
+  <GameModal ref="platformGame"></GameModal>
 </template>
 
 <script setup>
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import HomeTitle from "@/atoms/HomeTitle.vue";
+import { getPlatformList, getLoggedInPlatformList } from "@/api/platform/platform";
+import { userStore } from "@/store";
+import GameModal from "@/components/modal/GameModal";
 
+import {
+  eSportsPlatforms,
+  fishingPlatforms,
+  slotPlatforms,
+  liveCasinoPlatforms,
+  lotteryPlatforms,
+  pokerPlatforms,
+  sportsPlatforms
+} from "@/shared/platformArray";
+
+const store = userStore();
 const router = useRouter();
+const platformGame = ref();
 
 const hotgameData = ref([
   {
@@ -88,6 +116,8 @@ const hotgameData = ref([
     isShow: false,
     path: "/eSports",
     currentProvider: "lh",
+    section: "esports",
+    type: "esport",
     content: {
       isShowSportsIcon: [
         require("../../assets/home/hotgame/content/esports/icon_cs.png"),
@@ -98,30 +128,30 @@ const hotgameData = ref([
         require("../../assets/home/hotgame/content/esports/icon_sc2.png")
       ],
       providerList: [
-        {
-          key: "lh",
-          name: "雷火电竞",
-          icon: require("../../assets/home/hotgame/content/esports/provider_lh.png"),
-          providerInfo: {}
-        },
-        {
-          key: "im",
-          name: "IM电竞",
-          icon: require("../../assets/home/hotgame/content/esports/provider_im.png"),
-          providerInfo: {}
-        },
-        {
-          key: "ia",
-          name: "IA电竞",
-          icon: require("../../assets/home/hotgame/content/esports/provider_ia.png"),
-          providerInfo: {}
-        },
-        {
-          key: "rg",
-          name: "RG电竞",
-          icon: require("../../assets/home/hotgame/content/esports/provider_rg.png"),
-          providerInfo: {}
-        }
+        // {
+        //   key: "lh",
+        //   name: "雷火电竞",
+        //   icon: require("../../assets/home/hotgame/content/esports/provider_lh.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "im",
+        //   name: "IM电竞",
+        //   icon: require("../../assets/home/hotgame/content/esports/provider_im.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "ia",
+        //   name: "IA电竞",
+        //   icon: require("../../assets/home/hotgame/content/esports/provider_ia.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "rg",
+        //   name: "RG电竞",
+        //   icon: require("../../assets/home/hotgame/content/esports/provider_rg.png"),
+        //   providerInfo: {}
+        // }
       ],
       lh: {
         title: "雷火电竞",
@@ -155,6 +185,8 @@ const hotgameData = ref([
     isShow: false,
     path: "/sports",
     currentProvider: "im",
+    section: "sports",
+    type: "sport",
     content: {
       isShowSportsIcon: [
         require("../../assets/home/hotgame/content/sports/icon_basketball.png"),
@@ -169,36 +201,36 @@ const hotgameData = ref([
         require("../../assets/home/hotgame/content/sports/icon_hockey.png")
       ],
       providerList: [
-        {
-          key: "im",
-          name: "IM体育",
-          icon: require("../../assets/home/hotgame/content/sports/provider_im.png"),
-          providerInfo: {}
-        },
-        {
-          key: "saba",
-          name: "沙巴体育",
-          icon: require("../../assets/home/hotgame/content/sports/provider_saba.png"),
-          providerInfo: {}
-        },
-        {
-          key: "pinnacle",
-          name: "平博体育",
-          icon: require("../../assets/home/hotgame/content/sports/provider_pinnacle.png"),
-          providerInfo: {}
-        },
-        {
-          key: "panda",
-          name: "熊猫体育",
-          icon: require("../../assets/home/hotgame/content/sports/provider_panda.png"),
-          providerInfo: {}
-        },
-        {
-          key: "cr",
-          name: "CR体育",
-          icon: require("../../assets/home/hotgame/content/sports/provider_cr.png"),
-          providerInfo: {}
-        }
+        // {
+        //   key: "im",
+        //   name: "IM体育",
+        //   icon: require("../../assets/home/hotgame/content/sports/provider_im.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "saba",
+        //   name: "沙巴体育",
+        //   icon: require("../../assets/home/hotgame/content/sports/provider_saba.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "pinnacle",
+        //   name: "平博体育",
+        //   icon: require("../../assets/home/hotgame/content/sports/provider_pinnacle.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "panda",
+        //   name: "熊猫体育",
+        //   icon: require("../../assets/home/hotgame/content/sports/provider_panda.png"),
+        //   providerInfo: {}
+        // }
+        // {
+        //   key: "cr",
+        //   name: "CR体育",
+        //   icon: require("../../assets/home/hotgame/content/sports/provider_cr.png"),
+        //   providerInfo: {}
+        // }
       ],
       im: {
         title: "IM体育",
@@ -237,50 +269,52 @@ const hotgameData = ref([
     isShow: false,
     path: "/live-casino",
     currentProvider: "ag",
+    section: "live",
+    type: "live",
     content: {
       providerList: [
-        {
-          key: "ag",
-          name: "AG真人",
-          icon: require("../../assets/home/hotgame/content/casino/provider_ag.png"),
-          providerInfo: {}
-        },
-        {
-          key: "db",
-          name: "DB真人",
-          icon: require("../../assets/home/hotgame/content/casino/provider_db.png"),
-          providerInfo: {}
-        },
-        {
-          key: "bg",
-          name: "BG真人",
-          icon: require("../../assets/home/hotgame/content/casino/provider_bg.png"),
-          providerInfo: {}
-        },
-        {
-          key: "we",
-          name: "WE真人",
-          icon: require("../../assets/home/hotgame/content/casino/provider_we.png"),
-          providerInfo: {}
-        },
-        {
-          key: "ob",
-          name: "欧博真人",
-          icon: require("../../assets/home/hotgame/content/casino/provider_ob.png"),
-          providerInfo: {}
-        },
-        {
-          key: "bbin",
-          name: "BBIN真人",
-          icon: require("../../assets/home/hotgame/content/casino/provider_bbin.png"),
-          providerInfo: {}
-        },
-        {
-          key: "evo",
-          name: "EVO真人",
-          icon: require("../../assets/home/hotgame/content/casino/provider_evo.png"),
-          providerInfo: {}
-        }
+        // {
+        //   key: "ag",
+        //   name: "AG真人",
+        //   icon: require("../../assets/home/hotgame/content/casino/provider_ag.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "db",
+        //   name: "DB真人",
+        //   icon: require("../../assets/home/hotgame/content/casino/provider_db.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "bg",
+        //   name: "BG真人",
+        //   icon: require("../../assets/home/hotgame/content/casino/provider_bg.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "we",
+        //   name: "WE真人",
+        //   icon: require("../../assets/home/hotgame/content/casino/provider_we.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "ob",
+        //   name: "欧博真人",
+        //   icon: require("../../assets/home/hotgame/content/casino/provider_ob.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "bbin",
+        //   name: "BBIN真人",
+        //   icon: require("../../assets/home/hotgame/content/casino/provider_bbin.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "evo",
+        //   name: "EVO真人",
+        //   icon: require("../../assets/home/hotgame/content/casino/provider_evo.png"),
+        //   providerInfo: {}
+        // }
       ],
       ag: {
         title: "AG真人",
@@ -329,32 +363,34 @@ const hotgameData = ref([
     isShow: false,
     path: "/poker",
     currentProvider: "dat",
+    section: "poker",
+    type: "poker",
     content: {
       providerList: [
-        {
-          key: "dat",
-          name: "大唐棋牌",
-          icon: require("../../assets/home/hotgame/content/board/provider_dat.png"),
-          providerInfo: {}
-        },
-        {
-          key: "gd",
-          name: "高登棋牌",
-          icon: require("../../assets/home/hotgame/content/board/provider_gd.png"),
-          providerInfo: {}
-        },
-        {
-          key: "ky",
-          name: "开元棋牌",
-          icon: require("../../assets/home/hotgame/content/board/provider_ky.png"),
-          providerInfo: {}
-        },
-        {
-          key: "leyou",
-          name: "乐游棋牌",
-          icon: require("../../assets/home/hotgame/content/board/provider_leyou.png"),
-          providerInfo: {}
-        }
+        // {
+        //   key: "dat",
+        //   name: "大唐棋牌",
+        //   icon: require("../../assets/home/hotgame/content/board/provider_dat.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "gd",
+        //   name: "高登棋牌",
+        //   icon: require("../../assets/home/hotgame/content/board/provider_gd.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "ky",
+        //   name: "开元棋牌",
+        //   icon: require("../../assets/home/hotgame/content/board/provider_ky.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "leyou",
+        //   name: "乐游棋牌",
+        //   icon: require("../../assets/home/hotgame/content/board/provider_leyou.png"),
+        //   providerInfo: {}
+        // }
       ],
       dat: {
         title: "大唐棋牌",
@@ -389,6 +425,8 @@ const hotgameData = ref([
     isShow: false,
     path: "/lottery",
     currentProvider: "lh",
+    section: "lottery",
+    type: "lottery",
     content: {
       isShowSportsIcon: [
         require("../../assets/home/hotgame/content/sports/icon_basketball.png"),
@@ -403,12 +441,12 @@ const hotgameData = ref([
         require("../../assets/home/hotgame/content/sports/icon_hockey.png")
       ],
       providerList: [
-        {
-          key: "lh",
-          name: "雷火彩票",
-          icon: require("../../assets/home/hotgame/content/lottery/provider_lh.png"),
-          providerInfo: {}
-        }
+        // {
+        //   key: "lh",
+        //   name: "雷火彩票",
+        //   icon: require("../../assets/home/hotgame/content/lottery/provider_lh.png"),
+        //   providerInfo: {}
+        // }
       ],
       lh: {
         title: "雷火彩票",
@@ -427,32 +465,34 @@ const hotgameData = ref([
     isShow: false,
     path: "/slot",
     currentProvider: "pg",
+    section: "slot",
+    type: "slot",
     content: {
       providerList: [
-        {
-          key: "pg",
-          name: "PG电子",
-          icon: require("../../assets/home/hotgame/content/slots/provider_pg.png"),
-          providerInfo: {}
-        },
-        {
-          key: "sw",
-          name: "SW电子",
-          icon: require("../../assets/home/hotgame/content/slots/provider_sw.png"),
-          providerInfo: {}
-        },
-        {
-          key: "pt",
-          name: "PT电子",
-          icon: require("../../assets/home/hotgame/content/slots/provider_pt.png"),
-          providerInfo: {}
-        },
-        {
-          key: "evo",
-          name: "EVO电子",
-          icon: require("../../assets/home/hotgame/content/slots/provider_evo.png"),
-          providerInfo: {}
-        }
+        // {
+        //   key: "pg",
+        //   name: "PG电子",
+        //   icon: require("../../assets/home/hotgame/content/slots/provider_pg.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "sw",
+        //   name: "SW电子",
+        //   icon: require("../../assets/home/hotgame/content/slots/provider_sw.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "pt",
+        //   name: "PT电子",
+        //   icon: require("../../assets/home/hotgame/content/slots/provider_pt.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "evo",
+        //   name: "EVO电子",
+        //   icon: require("../../assets/home/hotgame/content/slots/provider_evo.png"),
+        //   providerInfo: {}
+        // }
       ],
       pg: {
         title: "PG电子",
@@ -486,20 +526,22 @@ const hotgameData = ref([
     isShow: false,
     path: "/fishing",
     currentProvider: "ag",
+    section: "fishing",
+    type: "fish",
     content: {
       providerList: [
-        {
-          key: "ag",
-          name: "AG捕鱼",
-          icon: require("../../assets/home/hotgame/content/fishing/provider_ag.png"),
-          providerInfo: {}
-        },
-        {
-          key: "mw",
-          name: "决战中途岛",
-          icon: require("../../assets/home/hotgame/content/fishing/provider_mw.png"),
-          providerInfo: {}
-        }
+        // {
+        //   key: "ag",
+        //   name: "AG捕鱼",
+        //   icon: require("../../assets/home/hotgame/content/fishing/provider_ag.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "mw",
+        //   name: "决战中途岛",
+        //   icon: require("../../assets/home/hotgame/content/fishing/provider_mw.png"),
+        //   providerInfo: {}
+        // }
       ],
       ag: {
         title: "AG捕鱼",
@@ -516,7 +558,7 @@ const hotgameData = ref([
 ]);
 
 const setCurrentProvider = (element, value) => {
-  element.currentProvider = value;
+  element.currentPlat = value;
 };
 
 let currentBannerIndex = ref(0);
@@ -534,12 +576,64 @@ const onBannerClick = (index) => {
   currentBannerIndex = index;
 };
 
-const onEnterGameClick = (path) => {
-  router.push(path);
+const onEnterGameClick = (plat, platType) => {
+  if (platType === "slot") {
+    router.push(plat.path);
+  } else {
+    const currentPlat = plat.currentPlat;
+    if (currentPlat.code === "BBINDY") {
+      currentPlat.gameCode = "bblive_lobby_pc";
+    } else if (currentPlat.code === "GPS") {
+      currentPlat.gameCode = 7202;
+    }
+    platformGame.value.open(currentPlat.name, currentPlat.code, currentPlat.gameCode);
+  }
+};
+const platformsListDisplay = ref([]);
+
+const setHotGame = () => {
+  if (store.token) {
+    getLoggedInPlatformList().then((res) => {
+      platformsListDisplay.value = res;
+      checkPlatforms();
+    });
+  } else {
+    getPlatformList().then((res) => {
+      platformsListDisplay.value = res;
+      checkPlatforms();
+    });
+  }
+};
+const checkPlatforms = () => {
+  platformsListDisplay.value.forEach((plat) => {
+    const gameTypeArray = plat.gameType.split(",").map((type) => type.trim());
+    hotgameData.value.forEach((item) => {
+      const containingItem = gameTypeArray.some((type) => item.type.toLowerCase() === type.toLowerCase());
+
+      if (containingItem) {
+        if (item.type === "slot" && plat.code === "AG") {
+          plat.name = "XIN";
+        }
+        item.content.providerList.push(plat);
+      }
+
+      if (plat.gameType === "ESPORT") {
+        const newObject = {
+          title: plat.cnname,
+          subtitle: plat.message
+        };
+        item.content[plat.code] = newObject;
+      }
+    });
+  });
+  hotgameData.value.forEach((hot) => {
+    hot.currentPlat = hot.content.providerList[0];
+  });
 };
 
 onMounted(() => {
   setBannerPosition(currentBannerIndex.value);
+  setHotGame();
 });
 </script>
 
@@ -673,15 +767,16 @@ $transition_timer: 0.5s;
           width: 55%;
 
           .title-wrapper {
-            filter: drop-shadow(3px 0 #5799e3);
-            font-family: FZHanZhenGuangBiaoS-GB;
-            font-weight: 600;
-            background: linear-gradient(180deg, #c2e9fb 0%, #a1c4fc 100%);
-            background-clip: text;
+            font-family: "YiHei";
+            font-style: normal;
+            font-weight: 400;
+            background: linear-gradient(180deg, #C2E9FB 0%, #A1C4FC 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            -webkit-text-stroke-width: 0.5px;
-            -webkit-text-stroke-color: white;
+            background-clip: text;
+            text-fill-color: transparent;
+            filter: drop-shadow(2px 1px #5799E3);
+
             line-height: normal;
 
             .title {

@@ -176,12 +176,14 @@ export default defineComponent({
       } else {
         if (promo.redirectUrl.includes("page-vip")) {
           router.push("/vip");
+        } else if (promo.redirectUrl.includes("lh1-invite")) {
+          router.push("/privilege/invite");
         } else {
-          if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3' || route.query.name === 'lh1-football-fight-2' || route.query.name === 'lh1-football-fight-3') {
-            router.push({name: 'promotion', query: {name: route.query.name}})
-          } else {
-            router.push({name: 'promotion', query: {name: promo.redirectUrl}})
-          }
+          // if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3' || route.query.name === 'lh1-football-fight-2' || route.query.name === 'lh1-football-fight-3') {
+          //   router.push({name: 'promotion', query: {name: route.query.name}})
+          // } else {
+          //   router.push({name: 'promotion', query: {name: promo.redirectUrl}})
+          // }
           isPromoDetail.value = true
           selectedPromo.value = promo
         }
@@ -273,13 +275,13 @@ export default defineComponent({
 <style lang="scss">
 .promo-container {
   .all-promotions {
-    background: url(../assets/promo/bg-top.jpg) no-repeat center top;
-    min-height: 40vh;
+    background: url(../assets/promo/bg-top2.jpg) no-repeat center top;
+    width: 100%;
+    background-size: 100% auto;
     padding: 50px;
     position: relative;
-    padding-top: 580px;
+    padding-top: max(300px, 22vw);
     background-color: #f3f7fd;
-    background-repeat: no-repeat;
   }
   .promo-view-container {
     line-height: 30px;
