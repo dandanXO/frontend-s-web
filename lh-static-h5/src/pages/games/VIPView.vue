@@ -73,9 +73,9 @@
           <div class="common-text">{{ claimDesc.turnover }}</div>
         </div>
 
-        <div class="claim-btn-container" @click="claim()">
+        <div class="claim-btn-container" :class="vipRedeemData > 0 ? '' : 'disabled'" @click="claim()">
           <img class="claim-btn" src="../../assets/images/vip/claim-btn.png" alt="" />
-          <span class="common-text">待领取</span>
+          <span class="common-text">{{ vipRedeemData > 0 ? "立即领取" : "待领取" }}</span>
         </div>
       </q-card-section>
     </q-card>
@@ -84,7 +84,7 @@
       <!-- cannot flip cuz the border design will be upside down -->
       <q-tabs v-model="tab" dense align="center" narrow-indicator active-class="active-tab" class="vip-detail-tab">
         <q-tab name="rules" :ripple="false">
-          <div class="vip-rules-btn-container" @click="claim()">
+          <div class="vip-rules-btn-container">
             <img
               class="vip-rules-btn"
               :src="require(`../../assets/images/vip/left-vip-${tab === 'rules' ? 'active' : 'inactive'}-btn.png`)"
@@ -94,7 +94,7 @@
           </div>
         </q-tab>
         <q-tab name="privileges" :ripple="false">
-          <div class="vip-privileges-btn-container" @click="claim()">
+          <div class="vip-privileges-btn-container">
             <img
               class="vip-privileges-btn"
               :src="
@@ -199,7 +199,14 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { eventapi } from "src/boot/axios";
+import { useQuasar } from "quasar";
+import { userStore } from "stores/index";
+
+var qs = require("qs");
+const $q = useQuasar();
+const store = userStore();
 
 const tab = ref("rules");
 
@@ -264,8 +271,6 @@ for (let i = 0, l = vipItems.value.length; i < l; i++) {
     }
   }
 }
-
-const claim = () => {};
 
 const columns = [
   {
@@ -408,6 +413,60 @@ const rows2 = [
     limit: "无上限"
   }
 ];
+
+const vipRedeemData = ref();
+
+const checkVipRedeem = () => {
+  eventapi.get("/vip-upgrade/lh/canRedeem").then((res) => {
+    if (res.code === 0) {
+      vipRedeemData.value = res.data;
+    } else {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: res.message,
+        icon: "report_problem"
+      });
+    }
+  });
+};
+
+const vipNumber = ref(null);
+const extractNumber = (str) => {
+  const match = str.match(/\d+/);
+  vipNumber.value = match ? parseInt(match[0], 10) : null;
+};
+
+const claim = async () => {
+  extractNumber(store.vip);
+
+  try {
+    const res = await eventapi.post("/vip-upgrade/lh/claim", qs.stringify({ vipLevel: vipNumber.value }));
+    if (res.code === 0) {
+      $q.notify({
+        color: "positive",
+        position: "top",
+        message: "领取成功",
+        icon: "report_problem"
+      });
+
+      checkVipRedeem();
+    } else {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: res.message,
+        icon: "report_problem"
+      });
+    }
+  } catch (error) {
+    console.error("Error in VIP claim:", error);
+  }
+};
+
+onMounted(() => {
+  checkVipRedeem();
+});
 </script>
 
 <style lang="scss">
@@ -540,6 +599,11 @@ const rows2 = [
       align-items: center;
       justify-content: center;
       border-radius: 1.145rem;
+
+      .disabled {
+        opacity: 0.6;
+        filter: grayscale(0.6);
+      }
 
       .claim-btn {
         width: 15rem;
