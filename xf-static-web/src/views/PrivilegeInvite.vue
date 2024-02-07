@@ -45,32 +45,32 @@
             <div class="rebate-header">流水要求</div>
 
             <div class="rebate-list bg-dark">≥100</div>
-            <div class="rebate-list bg-dark">8元</div>
+            <div class="rebate-list bg-dark">28元</div>
             <div class="rebate-list bg-dark"></div>
 
             <div class="rebate-list">≥1,000</div>
-            <div class="rebate-list">38元</div>
+            <div class="rebate-list">108元</div>
             <div class="rebate-list"></div>
 
             <div class="rebate-list bg-dark">≥5,000</div>
-            <div class="rebate-list bg-dark">58元</div>
-            <div class="rebate-list bg-dark">1倍/不限场馆</div>
+            <div class="rebate-list bg-dark">158元</div>
+            <div class="rebate-list bg-dark">3倍/不限场馆</div>
 
             <div class="rebate-list">≥10,000</div>
-            <div class="rebate-list">88元</div>
+            <div class="rebate-list">388元</div>
             <div class="rebate-list"></div>
 
             <div class="rebate-list bg-dark">≥30,000</div>
-            <div class="rebate-list bg-dark">388元</div>
+            <div class="rebate-list bg-dark">1588元</div>
             <div class="rebate-list bg-dark"></div>
 
             <div class="rebate-list">≥50,000</div>
-            <div class="rebate-list">888元</div>
+            <div class="rebate-list">1888元</div>
             <div class="rebate-list"></div>
           </div>
 
           <p class="example-text">
-            例如：会员A邀请一位好友首存100元，则可获取8元奖金；若想获取下一档位38元，则需好友再次存1000元；
+            例如：会员A邀请一位好友首存100元，则可获取28元奖金；若想获取下一档位108元，则需好友再次存1000元；
             奖金将会在次日凌晨00:00至下午16:00之间自动派发至您的主账户，
             如果下周您邀请的好友依旧符合存款金额，那么您在下周会再次获得对应奖金。
           </p>
