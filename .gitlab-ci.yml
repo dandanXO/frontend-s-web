@@ -107,6 +107,13 @@ deploy-tha-download:
 
 #===============================================================================================
 
+deploy-tha-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: tha-download-new
+
+#===============================================================================================
+
 deploy-dy-download:
   extends: .s3-deploy
   variables:
