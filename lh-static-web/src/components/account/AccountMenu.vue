@@ -2,7 +2,7 @@
   <div class="account-menu-container">
     <div class="account-info-wrapper">
       <div class="account-info-bg">
-        <img class="account-avatar" src="../../assets/images/account/avatar.png" />
+        <img class="account-avatar" src="../../assets/images/home/profile-pic.png" />
         <div class="account-name">欢迎您 {{ loginName }}</div>
         <span class="account-vip-label">{{ vip }}</span>
         <div @click="refreshBalance" class="account-details-balance">

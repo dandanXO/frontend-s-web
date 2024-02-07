@@ -394,15 +394,15 @@
               <div class="left">
                 <el-form-item label="平台">
                   <el-select
-                    allowClear
+                    clearable
                     style="width: 300px"
                     v-model="searchForm.gameBetRecord.platform"
                     placeholder="平台"
                     @change="searchRecord"
                   >
                     <el-option key="" value="">-</el-option>
-                    <el-option v-for="p in platformsList" :key="p.name" :value="getPlatform(p.name)">
-                      {{ getPlatform(p.name) }}
+                    <el-option v-for="p in platformsList" :key="p.code" :value="p.code">
+                      {{ getPlatform(p.code) }}
                     </el-option>
                   </el-select>
                 </el-form-item>
@@ -977,6 +977,8 @@ export default defineComponent({
   name: "TransitRecordView",
   setup() {
     const searchRecord = (tab) => {
+      console.log(tab)
+      console.log(recordActive.value)
       if (tab && tab.props && tab.props.name) {
         recordActive.value = tab.props.name;
       }
