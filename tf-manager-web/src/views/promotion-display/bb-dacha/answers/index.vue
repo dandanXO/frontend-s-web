@@ -65,12 +65,12 @@
           {{ t('fields.reset') }}
         </el-button>
         <el-button
-          icon="el-icon-download"
           size="mini"
           type="primary"
           v-permission="['sys:bb-dacha-answer:export']"
-          @click="exportExcel"
-        >{{ t('fields.exportToExcel') }}
+          @click="requestExportExcel"
+        >
+          {{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
     </div>
@@ -179,30 +179,27 @@
       @size-change="loadBbDachaAnswer"
     />
   </div>
-  <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.progressBarVisible" append-to-body width="500px"
-             :close-on-click-modal="false" :close-on-press-escape="false"
+  <el-dialog
+    :title="t('fields.exportToExcel')"
+    v-model="uiControl.messageVisible"
+    append-to-body
+    width="500px"
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
   >
-    <el-progress :text-inside="true" :stroke-width="26" :percentage="exportPercentage"
-                 :color="uiControl.colors" v-if="exportPercentage !== 100"
-    />
-    <el-result
-      icon="success"
-      :title="t('fields.successfullyExport')"
-      v-if="exportPercentage === 100"
-    />
-    <div class="dialog-footer">
-      <el-button type="primary" :disabled="exportPercentage !== 100"
-                 @click="uiControl.progressBarVisible = false"
-      >{{ t('fields.done') }}
-      </el-button>
-    </div>
+    <span>{{ t('message.requestExportToExcelDone1') }}</span>
+    <router-link :to="`/site-management/download-manager`">
+      <el-link type="primary">
+        {{ t('menu.DownloadManager') }}
+      </el-link>
+    </router-link>
+    <span>{{ t('message.requestExportToExcelDone2') }}</span>
   </el-dialog>
 </template>
 
 <script setup>
 
 import { computed, reactive, ref } from "vue";
-import * as XLSX from 'xlsx';
 import { required } from "@/utils/validate";
 import { ElMessage } from "element-plus";
 import { getSiteListSimple } from "@/api/site";
@@ -211,7 +208,7 @@ import { nextTick, onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
-import { getBbDachaAnswers, updateBbDachaAnswer } from "@/api/bb-dacha";
+import { getBbDachaAnswers, updateBbDachaAnswer, getBbDachaAnswersForExport } from "@/api/bb-dacha";
 import { getShortcuts } from "@/utils/datetime";
 import moment from "moment";
 
@@ -219,10 +216,6 @@ const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
-const exportPercentage = ref(0);
-
-const EXPORT_HEADER = [t('fields.loginName'), t('fields.title'), t('fields.answer'), t('fields.status'),
-  t('fields.matchTime'), t('fields.createTime'), t('fields.createBy'), t('fields.updateTime'), t('fields.updateBy')];
 
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
@@ -264,7 +257,8 @@ const uiControl = reactive({
     { key: 3, displayName: 'WIN', value: 'WIN' },
     { key: 4, displayName: 'LOSE', value: 'LOSE' }
   ],
-  progressBarVisible: false
+  progressBarVisible: false,
+  messageVisible: false
 });
 const page = reactive({
   pages: 0,
@@ -364,57 +358,14 @@ function checkQuery() {
   return query;
 }
 
-function pushRecordToData(records, exportData) {
-  records.forEach(item => {
-    delete item.id;
-    delete item.siteId;
-    delete item.memberId;
-    delete item.quizId;
-    delete item.answerTwo;
-    delete item.answerThree;
-  })
-  const data = records.map(record => {
-    record.status = t('status.gameQuizAnswer.' + record.status);
-    return Object.values(record).map(item => (!item || item === '' ? '-' : item))
-  })
-  exportData.push(...data)
-}
-
-async function exportExcel() {
-  uiControl.progressBarVisible = true;
-  const query = checkQuery();
-  query.current = 1;
-  const { data: ret } = await getBbDachaAnswers(query);
-  const exportData = [EXPORT_HEADER];
-  const maxLength = [];
-
-  pushRecordToData(ret.records, exportData);
-  exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
-  query.current = ret.current;
-
-  while (query.current < ret.pages) {
-    query.current += 1;
-    const { data: ret } = await getBbDachaAnswers(query);
-    pushRecordToData(ret.records, exportData);
-    exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
+async function requestExportExcel() {
+  const query = checkQuery()
+  query.requestBy = store.state.user.name
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+  const { data: ret } = await getBbDachaAnswersForExport(query)
+  if (ret) {
+    uiControl.messageVisible = true
   }
-  const ws = XLSX.utils.aoa_to_sheet(exportData);
-  exportData.map(data => {
-    Object.keys(data).map(key => {
-      const value = data[key];
-
-      maxLength[key] = typeof value === 'number'
-        ? (maxLength[key] >= 10 ? maxLength[key] : 10)
-        : (maxLength[key] >= value.length + 2 ? maxLength[key] : value.length + 2);
-    });
-  });
-  const wsCols = maxLength.map(w => { return { width: w } });
-  ws['!cols'] = wsCols;
-  const wb = XLSX.utils.book_new();
-  wb.SheetNames.push('BB_Dacha_Records');
-  wb.Sheets.BB_Dacha_Records = ws;
-  XLSX.writeFile(wb, "bb_dacha_records.xlsx");
-  exportPercentage.value = 100;
 }
 
 onMounted(async () => {
