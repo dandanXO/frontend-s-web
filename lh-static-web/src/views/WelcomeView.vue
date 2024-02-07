@@ -30,9 +30,9 @@
                     <div class="grey-card-bg">
                         <div class="list">您的首次存款，将激活以下优惠：</div>
                         <div class="list"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>电竞/体育/真人/棋牌 <span class="highlighted">首存即送68% 最高奖金680元！</span></div>
-                        <div class="list"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>完成新手任务 领取228雷火币！</div>
-                        <div class="list"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>每日全场返水 最高可返2.0% 无上限！</div>
-                        <div class="list"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>电竞/体育 每日保险投注 让您稳赚不赔！</div>
+                        <div class="list"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>完成新手任务 <span class="highlighted">领取228雷火币！</span></div>
+                        <div class="list"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>每日全场返水 <span class="highlighted">最高可返2.0% 无上限！</span></div>
+                        <div class="list"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>电竞/体育 <span class="highlighted">每日保险投注 让您稳赚不赔！</span></div>
                     </div>
                     <router-link to="/center/deposit" class="blue-bg deposit-btn">立即存款</router-link>
                 </div>
