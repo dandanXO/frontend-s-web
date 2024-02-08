@@ -17,11 +17,11 @@
           </template>
           <template v-if="mailboxState.mailboxList.inbox.list.length > 0">
             <div class="mail-action-container">
-              <div class="mail-action">
+              <div class="mail-action"  @click="deleteAllMsg(item.type)">
                 <div><img src="../../assets/images/account/icon-maildelete.png" /></div>
                 全部删除
               </div>
-              <div class="mail-action">
+              <div class="mail-action" @click="readAllMsg(item.type)" >
                 <div><img src="../../assets/images/account/icon-mailopen.png" /></div>
                 全部已读
               </div>
@@ -55,7 +55,7 @@
 
 <script setup>
 import { ref, reactive, onMounted } from "vue";
-import { mailInbox, mailOutbox, wirteMail } from "@/api/personal/mailbox";
+import { mailInbox, mailOutbox, wirteMail, readAllMail, deleteAllMail } from "@/api/personal/mailbox";
 // import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
 
@@ -191,6 +191,40 @@ const loadPersonalMailbox = () => {
         // message.error(error.message, 4)
       });
   }
+};
+
+const readAllMsg = (m) => {
+  readAllMail(m)
+    .then((res) => {
+      if (res.code === 0) {
+        ElMessage({
+          message: "已全读部消息",
+          type: "success"
+        });
+
+        loadPersonalMailbox();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+const deleteAllMsg = (m) => {
+  deleteAllMail(m)
+    .then((res) => {
+      if (res.code === 0) {
+        ElMessage({
+          message: "已删除全部消息",
+          type: "success"
+        });
+
+        loadPersonalMailbox();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 const changePage = (key) => {
