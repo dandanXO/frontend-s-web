@@ -1,6 +1,6 @@
 # XF App (xf-static-h5)
 
-兴发 H5+APP
+兴發 H5+APP
 
 ## Install the dependencies
 ```bash
