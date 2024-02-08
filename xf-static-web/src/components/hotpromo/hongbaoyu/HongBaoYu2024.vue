@@ -53,6 +53,7 @@
     class="award-modal hongbaoyu-modal"
     :close-on-click-modal="false"
     :modal="false"
+    custom-class="hongbaoyu-dialog"
     v-model="privilegeClaimedModalVisible"
     align-center
   >
@@ -79,7 +80,6 @@ const props = defineProps({
     required: true
   }
 });
-console.log(props);
 
 const promoCode = ref(props.promoCode);
 
@@ -418,7 +418,7 @@ onMounted(() => {
   border: 1px solid #fde583;
   margin-top: 350px;
   //left: 0%;
-  margin-left: -15px;
+  margin-left: -40px;
   width: 150px;
   text-align: center;
   font-size: 20px;
@@ -428,6 +428,12 @@ onMounted(() => {
   &:hover {
     filter: brightness(0.9);
   }
+}
+::v-global(.hongbaoyu-dialog .el-dialog__body) {
+  box-shadow: unset;
+}
+::v-global(.hongbaoyu-dialog .el-dialog__header) {
+  border-bottom: 0 !important;
 }
 </style>
 
