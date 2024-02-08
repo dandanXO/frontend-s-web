@@ -467,7 +467,7 @@ body {
 }
 
 .acc-pool {
-  background: url(https://eqwp2f.sdwukong.com/resource/es/img/bg_acc_pool.fbe0afb3.png) top no-repeat;
+  background: url(../../../assets/images/promotion/hotpromo/dragoncard/bg_acc_pool.png) top no-repeat;
   width: 930px;
   height: 262px;
   margin: 0 auto;

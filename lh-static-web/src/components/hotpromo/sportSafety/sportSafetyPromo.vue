@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div style="padding-top: 250px;"></div>
+    <div class="slider" style="position: relative;">
+    
     <swiper
       :slides-per-view="matchDetails.length > 1 ? 2 : 1"
       :spaceBetween="20"
@@ -47,7 +50,7 @@
       :disabled="isNaN(sportInsuranceFormData.gameMatchId)"
     >
       点击申请
-    </button>
+    </button></div>
 
     <el-dialog
       v-model="isSportInsuranceModalVisible"
