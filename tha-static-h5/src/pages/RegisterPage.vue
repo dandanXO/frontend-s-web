@@ -94,29 +94,48 @@
           </template>
         </q-input>
 
-        <q-input ref="telRef" filled v-model="regForm.telephone" :label="$t('lang.phone_number')" lazy-rules :rules="[
-          (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
-          (val) =>
-            (val && val.length > 7) ||
-            $t('lang.please_enter_valid_phone'),
-          isValidPhone
-        ]" color="white" clearable>
+        <q-input
+          ref="telRef"
+          filled
+          v-model="regForm.telephone"
+          :label="$t('lang.phone_number')"
+          lazy-rules
+          :rules="[
+            (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
+            (val) => (val && val.length > 7) || $t('lang.please_enter_valid_phone'),
+            isValidPhone
+          ]"
+          color="white"
+          clearable
+        >
           <template v-slot:prepend>
             <q-icon name="smartphone" />
           </template>
         </q-input>
 
         <div class="telephone-otp-row">
-          <q-input ref="telOtpCodeRef" v-model="regForm.smsCode" :placeholder="$t('lang.one_time_otp')"
-            :label="$t('lang.one_time_otp')" stack-label clearable autocomplete="off" filled  lazy-rules
-            :rules="[(val) => (val && val.length > 0) || $t('lang.otp_cannot_be_empty')]">
+          <q-input
+            ref="telOtpCodeRef"
+            v-model="regForm.smsCode"
+            :placeholder="$t('lang.one_time_otp')"
+            :label="$t('lang.one_time_otp')"
+            stack-label
+            clearable
+            autocomplete="off"
+            filled
+            lazy-rules
+            :rules="[(val) => (val && val.length > 0) || $t('lang.otp_cannot_be_empty')]"
+          >
             <template v-slot:prepend>
               <q-icon name="security" />
             </template>
           </q-input>
 
-          <q-btn class="common-large-btn third-btn" :label="$t('lang.request_otp_code')"
-            @click="openTelephoneVerificationModal" />
+          <q-btn
+            class="common-large-btn third-btn"
+            :label="$t('lang.request_otp_code')"
+            @click="openTelephoneVerificationModal"
+          />
         </div>
 
         <!--        <q-input-->
@@ -172,7 +191,7 @@
           </template>
         </q-input> -->
 
-<!--        <q-input
+        <!--        <q-input
           ref="verificationRef"
           filled
           class="verification-input"
@@ -229,9 +248,17 @@
           {{ $t("lang.check_your_captcha_code") }}
         </div>
         <q-form class="q-gutter-sm">
-          <q-input class="verification-input" ref="telephoneVerifyCaptchaCodeRef" filled type="text" maxlength="4"
-            v-model="verifyTelephoneForm.telephoneVerifyCaptchaCode" :label="$t('lang.captcha_code')"
-            :rules="[(val) => (val && val.length > 3) || $t('lang.enter_captcha_code')]" color="white">
+          <q-input
+            class="verification-input"
+            ref="telephoneVerifyCaptchaCodeRef"
+            filled
+            type="text"
+            maxlength="4"
+            v-model="verifyTelephoneForm.telephoneVerifyCaptchaCode"
+            :label="$t('lang.captcha_code')"
+            :rules="[(val) => (val && val.length > 3) || $t('lang.enter_captcha_code')]"
+            color="white"
+          >
             <template v-slot:append>
               <img :src="telephoneVerificationCaptchaImg" @click="getTelephoneVerificationImgCode()" />
             </template>
@@ -240,8 +267,12 @@
             </template>
           </q-input>
           <div class="row justify-center items-center gap-8" style="margin-top: 25px">
-            <q-btn :disabled="isOtpSending" :style="isOtpSending ? 'opacity: .6' : ''" class="common-btn verification-btn third-btn"
-              @click.prevent="getOtpCode">
+            <q-btn
+              :disabled="isOtpSending"
+              :style="isOtpSending ? 'opacity: .6' : ''"
+              class="common-btn verification-btn third-btn"
+              @click.prevent="getOtpCode"
+            >
               {{ isOtpSending ? $t("lang.verifying") : $t("lang.confirm_button") }}
             </q-btn>
           </div>
@@ -318,7 +349,7 @@ export default defineComponent({
     const verifyTelephoneForm = reactive({
       telephone: "",
       telephoneVerifyCaptchaCode: "",
-      telephoneVerificationCaptchaCodeId: "",
+      telephoneVerificationCaptchaCodeId: ""
     });
 
     /*const getCode = () => {
@@ -349,14 +380,13 @@ export default defineComponent({
     const openTelephoneVerificationModal = () => {
       telRef.value.validate();
 
-      if(telRef.value.hasError) {
+      if (telRef.value.hasError) {
         return;
       }
 
       getTelephoneVerificationImgCode();
-      isTelephoneVerificationModalVisible.value = true
-    }
-
+      isTelephoneVerificationModalVisible.value = true;
+    };
 
     const getTelephoneVerificationImgCode = () => {
       api
@@ -382,36 +412,39 @@ export default defineComponent({
     const getOtpCode = () => {
       const isTelephoneVerifyCaptchaCodeValid = telephoneVerifyCaptchaCodeRef.value.validate();
 
-      if(!isTelephoneVerifyCaptchaCodeValid) {
+      if (!isTelephoneVerifyCaptchaCodeValid) {
         return;
       }
 
       isOtpSending.value = true;
-      regForm.smsCode = '';
-      regForm.smsCodeId = '';
+      regForm.smsCode = "";
+      regForm.smsCodeId = "";
       const telephoneDetails = {
         telephone: regForm.telephone,
         codeId: verifyTelephoneForm.telephoneVerificationCaptchaCodeId,
         captchaCode: verifyTelephoneForm.telephoneVerifyCaptchaCode
-      }
-      api.post("/otp/sendSms", qs.stringify(telephoneDetails)).then((res) => {
-        const ret = res.data
-        if (ret.code === 0) {
-          regForm.smsCodeId = ret.data.codeId;
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: t('lang.otp_code_has_been_sent_to_your_mobile_phone'),
-            icon: "check_circle_outline"
-          });
-          isTelephoneVerificationModalVisible.value = false;
-        }
+      };
+      api
+        .post("/otp/sendSms", qs.stringify(telephoneDetails))
+        .then((res) => {
+          const ret = res.data;
+          if (ret.code === 0) {
+            regForm.smsCodeId = ret.data.codeId;
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: t("lang.otp_code_has_been_sent_to_your_mobile_phone"),
+              icon: "check_circle_outline"
+            });
+            isTelephoneVerificationModalVisible.value = false;
+          }
 
-        isOtpSending.value = false
-      }).catch((e) => {
-        isOtpSending.value = false
-      });
-    }
+          isOtpSending.value = false;
+        })
+        .catch((e) => {
+          isOtpSending.value = false;
+        });
+    };
 
     const loginNameRef = ref();
     const pwdRef = ref();
@@ -437,7 +470,7 @@ export default defineComponent({
     };
 
     const isValidPhone = () => {
-      const phonePattern = /^\d+$/;
+      const phonePattern = /^0\d*$/;
       return phonePattern.test(regForm.telephone) || t("lang.invalid_phone_num");
     };
     const router = useRouter();

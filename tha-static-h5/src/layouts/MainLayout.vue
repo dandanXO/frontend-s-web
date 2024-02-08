@@ -340,20 +340,20 @@ export default defineComponent({
     };
     const footers = reactive({
       home: {
-        icon: require("../assets/images/menu/home-icon.png"),
-        active: require("../assets/images/menu/home-icon-active.png")
+        icon: require("../assets/images/menu-cny/home-icon.png"),
+        active: require("../assets/images/menu-cny/home-icon-active.png")
       },
       deposit: {
-        icon: require("../assets/images/menu/deposit-icon.png"),
-        active: require("../assets/images/menu/deposit-icon-active.png")
+        icon: require("../assets/images/menu-cny/deposit-icon-active.png"),
+        active: require("../assets/images/menu-cny/deposit-icon-active.png")
       },
       withdraw: {
-        icon: require("../assets/images/menu/withdraw-icon.png"),
-        active: require("../assets/images/menu/withdraw-icon-active.png")
+        icon: require("../assets/images/menu-cny/withdraw-icon.png"),
+        active: require("../assets/images/menu-cny/withdraw-icon-active.png")
       },
       cs: {
-        icon: require("../assets/images/menu/cs-icon.png"),
-        active: require("../assets/images/menu/cs-icon-active.png")
+        icon: require("../assets/images/menu-cny/cs-icon.png"),
+        active: require("../assets/images/menu-cny/cs-icon-active.png")
       },
       notice: {
         icon: require("../assets/images/menu/notice-icon.png"),
@@ -364,8 +364,8 @@ export default defineComponent({
         active: require("../assets/images/menu/affiliate-icon-active.png")
       },
       app: {
-        icon: require("../assets/images/menu/download-icon.png"),
-        active: require("../assets/images/menu/download-active-icon.png")
+        icon: require("../assets/images/menu-cny/download-icon.png"),
+        active: require("../assets/images/menu-cny/download-active-icon.png")
       }
     });
 
@@ -511,7 +511,8 @@ svg path {
   opacity: 1;
 
   .footer-icon {
-    width: 35px;
+    margin-bottom: -10px;
+    width: 68px;
   }
 
   .footer-icon-wrapper {
