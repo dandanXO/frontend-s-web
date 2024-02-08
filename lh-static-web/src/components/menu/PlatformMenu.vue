@@ -1,7 +1,7 @@
 <template>
   <div class="platform-menu-container">
     <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
-    <template v-for="(item, index) in platformsListDisplay.slice(0, 5)" :key="index">
+    <template v-for="(item, index) in platformsListDisplay.slice(0, numberToShow)" :key="index">
       <!--      <router-link :to="`${props.platformName}?plat=${item.code}`">-->
       <div class="platform-menu-item" @click="gotoGame(item, platformType)">
         <div class="platform-menu-title" v-html="item.cnname" />
@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, defineProps, defineEmits } from "vue";
+import { ref, computed, onMounted,onBeforeUnmount, defineProps, defineEmits } from "vue";
 import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
@@ -41,6 +41,7 @@ const props = defineProps({
 const emits = defineEmits(["load-game"]);
 const store = userStore();
 const platformsList = ref([]);
+const numberToShow = ref(5);
 const platformsListDisplay = ref([]);
 const getPlatformList = () => {
   const fetchFunction = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
@@ -74,8 +75,27 @@ const gotoGame = (item, platformType) => {
     // emits("load-game", item);
   }
 };
+const checkWindowSize = () => {
+  console.log('resize');
+      // Access and modify the ref here
+      if (window.innerWidth < 1700) {
+        numberToShow.value = 5
+      }
+      if (window.innerWidth > 1700) {
+        numberToShow.value = 6
+      }
+      if (window.innerWidth > 1900) {
+        numberToShow.value = 7
+      }
+      if (window.innerWidth > 2000) {
+        numberToShow.value = 10
+      }
+};
+
+
 onMounted(() => {
   getPlatformList();
+  checkWindowSize();
 });
 </script>
 
