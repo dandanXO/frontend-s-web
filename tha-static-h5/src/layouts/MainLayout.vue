@@ -353,7 +353,7 @@ export default defineComponent({
       },
       cs: {
         icon: require("../assets/images/menu-cny/cs-icon.png"),
-        active: require("../assets/images/menu/cs-icon-active.png")
+        active: require("../assets/images/menu-cny/cs-icon-active.png")
       },
       notice: {
         icon: require("../assets/images/menu/notice-icon.png"),

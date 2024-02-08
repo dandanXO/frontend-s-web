@@ -14,7 +14,7 @@ body {
 #q-app {
   background: $dark-page;
   //background: url("../assets/images/common/bg-img.jpg") no-repeat top center;
-  background: url("../assets/images/common/cny-h5bg.png") no-repeat top center;
+  background: url("../assets/images/common/cny-h5bg.jpg") no-repeat top center;
   background-size: cover;
 }
 
@@ -652,7 +652,7 @@ input:internal-autofill-selected {
 @media (min-width: 991px) {
   #q-app {
     //background: url("../assets/images/common/bg-web.png") no-repeat top center;
-    background: url("../assets/images/common/cny-bg.png") no-repeat top center;
+    background: url("../assets/images/common/cny-bg.jpg") no-repeat top center;
     background-size: cover;
   }
 }
