@@ -137,6 +137,7 @@ const visible = ref(true);
 const tableData = ref([]);
 
 const searchRecord = () => {
+  isEnded.value = false;
   recordRef.value.clearTable();
   loadDepositTable(true);
 };
@@ -187,7 +188,7 @@ const loadNewData = () => {
   loadDepositTable(false);
 };
 
-const loadDepositTable = (isNew = true) => {
+const loadDepositTable = (isNew) => {
   if (isNew) {
     visible.value = true;
   }
@@ -209,8 +210,6 @@ const loadDepositTable = (isNew = true) => {
     .then((res) => {
       maxPage.value = res.data.pages;
       tableData.value.push(...res.data.records);
-      // console.log("TableData");
-      // console.log(tableData.value);
     })
     .finally(() => {
       if (isNew) {
@@ -292,7 +291,6 @@ const loadPlatformLists = () => {
       })
     )
     .then((data) => {
-      console.log(data);
       _.each(data, function (item, index) {
         var option = {
           label: getGameName(item.name),
@@ -340,7 +338,7 @@ onMounted(async () => {
     const latestMonthEnd = moment(endDate).endOf("month").format("YYYY-MM-DD");
     startDate = moment(latestMonthEnd).startOf("month").format("YYYY-MM-DD");
   }
-  await loadDepositTable();
+  await loadDepositTable(true);
 });
 </script>
 
