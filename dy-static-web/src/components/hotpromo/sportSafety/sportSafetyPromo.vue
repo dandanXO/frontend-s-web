@@ -1,53 +1,55 @@
 <template>
   <div>
-    <swiper
-      :slides-per-view="matchDetails.length > 1 ? 2 : 1"
-      :spaceBetween="20"
-      :loop="false"
-      @swiper="onSwiper"
-      @slideChange="onSlideChange"
-      class="swiper-wrapper"
-    >
-      <template v-for="(item, index) in matchDetails" :key="item.id">
-        <swiper-slide>
-          <div class="bet-info-box">
-            <div class="bet-info-date">{{ formatDate(item.matchTime).date }}</div>
-            <div class="bet-info-details">
-              <div class="info-team info-team-one">
-                <div class="info-team-logo">
-                  <img :src="`${iconImageBasePath}/${item.teamOneIcon}`" />
+    <template v-if="matchDetails.length > 0">
+      <swiper
+        :slides-per-view="matchDetails.length > 1 ? 2 : 1"
+        :spaceBetween="20"
+        :loop="false"
+        @swiper="onSwiper"
+        @slideChange="onSlideChange"
+        class="swiper-wrapper"
+      >
+        <template v-for="(item, index) in matchDetails" :key="item.id">
+          <swiper-slide>
+            <div class="bet-info-box">
+              <div class="bet-info-date">{{ formatDate(item.matchTime).date }}</div>
+              <div class="bet-info-details">
+                <div class="info-team info-team-one">
+                  <div class="info-team-logo">
+                    <img :src="`${iconImageBasePath}/${item.teamOneIcon}`" />
+                  </div>
+                  <div class="info-team-name" v-html="item.teamOne" />
                 </div>
-                <div class="info-team-name" v-html="item.teamOne" />
-              </div>
 
-              <div class="bet-info-vs">
-                <span>{{ item.matchTitle }}</span>
-                <br />
-                VS
-                <br />
-                {{ formatDate(item.matchTime).time }}
-              </div>
-
-              <div class="info-team info-team-two">
-                <div class="info-team-logo">
-                  <img :src="`${iconImageBasePath}/${item.teamTwoIcon}`" />
+                <div class="bet-info-vs">
+                  <span>{{ item.matchTitle }}</span>
+                  <br />
+                  VS
+                  <br />
+                  {{ formatDate(item.matchTime).time }}
                 </div>
-                <div class="info-team-name" v-html="item.teamTwo" />
+
+                <div class="info-team info-team-two">
+                  <div class="info-team-logo">
+                    <img :src="`${iconImageBasePath}/${item.teamTwoIcon}`" />
+                  </div>
+                  <div class="info-team-name" v-html="item.teamTwo" />
+                </div>
               </div>
             </div>
-          </div>
-        </swiper-slide>
-      </template>
-    </swiper>
-    <div class="swiper-button-prev" @click="prevSlide"></div>
-    <div class="swiper-button-next" @click="nextSlide"></div>
-    <button
-      class="common-btn apply-btn"
-      @click="applySportInsurance()"
-      :disabled="isNaN(sportInsuranceFormData.gameMatchId)"
-    >
-      点击申请
-    </button>
+          </swiper-slide>
+        </template>
+      </swiper>
+      <div class="swiper-button-prev" @click="prevSlide"></div>
+      <div class="swiper-button-next" @click="nextSlide"></div>
+      <button
+        class="common-btn apply-btn"
+        @click="applySportInsurance()"
+        :disabled="isNaN(sportInsuranceFormData.gameMatchId)"
+      >
+        点击申请
+      </button>
+    </template>
 
     <el-dialog
       v-model="isSportInsuranceModalVisible"

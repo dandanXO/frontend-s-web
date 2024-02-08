@@ -21,21 +21,29 @@
                 <template v-if="mailboxState.mailboxList.inbox.list.length > 0">
                   <div class="quick-btn">
                     <el-button type="primary" @click="readAllMsg(mailboxMessageType)">
-                      <el-icon><MessageBox /></el-icon>
+                      <el-icon>
+                        <MessageBox />
+                      </el-icon>
                       全部已读
                     </el-button>
                     <el-button color="grey" @click="deleteAllMsg(mailboxMessageType)">
-                      <el-icon><Delete /></el-icon>
+                      <el-icon>
+                        <Delete />
+                      </el-icon>
                       全部删除
                     </el-button>
                     <div style="margin-left: auto">
                       <el-button v-if="isShowSelect" type="primary" @click="readMultipleMsg()">
-                        <el-icon><MessageBox /></el-icon>
+                        <el-icon>
+                          <MessageBox />
+                        </el-icon>
                         读取
                       </el-button>
 
                       <el-button v-if="isShowSelect" color="grey" @click="deleteMultipleMsg()">
-                        <el-icon><Delete /></el-icon>
+                        <el-icon>
+                          <Delete />
+                        </el-icon>
                         删除
                       </el-button>
 
@@ -65,9 +73,13 @@
                       <div :class="`mailbox-content-wrapper ${m.isOpen ? 'open' : ''}`">
                         <div class="mailbox-content" v-html="m.content || '加载中...'"></div>
                         <div class="mailbox-date">
-                          <el-icon><Calendar /></el-icon>
+                          <el-icon>
+                            <Calendar />
+                          </el-icon>
                           <div>{{ new Date(m.sendTime).toLocaleString("zh-CN") }}</div>
-                          <el-icon class="delete-btn"><Delete @click="deleteMsg(m.id, mi)" /></el-icon>
+                          <el-icon class="delete-btn">
+                            <Delete @click="deleteMsg(m.id, mi)" />
+                          </el-icon>
                         </div>
                       </div>
                     </template>
@@ -111,7 +123,9 @@
     </div>
 
     <div class="msg-date">
-      <el-icon><Calendar /></el-icon>
+      <el-icon>
+        <Calendar />
+      </el-icon>
       <div>{{ mailboxState.mailboxList.inbox.list.sendTime }}</div>
     </div>
 
@@ -132,11 +146,14 @@ import {
   readAllMail,
   deleteMail,
   deleteMultipleMail,
-  deleteAllMail
+  deleteAllMail,
+  getUnreadMailTotal
 } from "@/api/personal/mailbox";
 // import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
 import { Calendar, Delete, MessageBox, ArrowDown, Check } from "@element-plus/icons-vue";
+import moment from "moment";
+import { userStore } from "@/store";
 
 const loadingBtn = ref(false);
 const mailboxData = ref([]);
@@ -291,6 +308,7 @@ const mailTabChange = (nk) => {
   }
 };
 
+const store = userStore();
 const msgModalVisible = ref(false);
 const msgTitleTxt = ref();
 const msgContentTxt = ref();
@@ -325,7 +343,25 @@ const openMsg = (m) => {
   // }
 };
 
+const checkMailboxUnread = () => {
+  getUnreadMailTotal()
+    .then((res) => {
+      const { code, data } = res;
+      if (code === 0) {
+        store.unreadTotal = data;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 const readAllMsg = (m) => {
+  const readType = m === null ? "ALL" : m;
+  mailboxNotifyState[readType].forEach((mail) => {
+    mail.readTime = moment().format("YYYY-MM-DD");
+  });
+
   readAllMail(m)
     .then((res) => {
       if (res.code === 0) {
@@ -334,6 +370,7 @@ const readAllMsg = (m) => {
           type: "success"
         });
 
+        checkMailboxUnread();
         clearMailInboxCache();
         loadPersonalMailbox();
       }
@@ -367,6 +404,9 @@ const deleteMsg = (id, spliceIndex, callback) => {
 };
 
 const deleteAllMsg = (m) => {
+  const readType = m === null ? "ALL" : m;
+  mailboxNotifyState[readType] = [];
+
   deleteAllMail(m)
     .then((res) => {
       if (res.code === 0) {
@@ -375,6 +415,7 @@ const deleteAllMsg = (m) => {
           type: "success"
         });
 
+        checkMailboxUnread();
         clearMailInboxCache();
         loadPersonalMailbox();
       }
@@ -466,23 +507,29 @@ onMounted(() => {
       min-height: 740px;
       margin-bottom: 0;
       padding: 0;
+
       .ant-form.ant-form-horizontal .ant-form-item .ant-form-item-control-input-content .ant-input {
         background: #16151c;
       }
+
       :deep(.ant-form-horizontal .ant-form-item-label) {
         text-align: left;
       }
+
       :deep(.ant-tabs-tabpane) {
         padding: 20px;
       }
     }
+
     .pagination-wrapper {
       text-align: center;
       padding-top: 20px;
     }
+
     :deep(.ant-tabs-nav .ant-tabs-tab) {
       font-size: 16px;
     }
+
     :deep(.ant-tabs-nav .ant-tabs-tabpane) {
       padding: 20px 30px;
     }
@@ -500,6 +547,7 @@ onMounted(() => {
         margin: 0 5px 0 0;
       }
     }
+
     .mailbox-list {
       min-height: 450px;
       font-size: 14px;
@@ -598,9 +646,11 @@ onMounted(() => {
         }
       }
     }
+
     .mail-txtarea {
       height: 180px;
     }
+
     .write-btn {
       width: 300px;
       height: 50px;
@@ -612,22 +662,27 @@ onMounted(() => {
     }
   }
 }
+
 .msg-content {
   display: flex;
   gap: 20px;
 }
+
 .msg-button {
   display: flex;
   justify-content: center;
   margin-top: 20px;
 }
+
 .content-title {
   min-width: 40px;
   font-size: 16px;
 }
+
 .content-txt {
   font-size: 16px;
 }
+
 .msg-date {
   margin-top: 20px;
   font-size: 12px;
