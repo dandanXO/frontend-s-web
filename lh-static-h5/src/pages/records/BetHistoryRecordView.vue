@@ -23,12 +23,11 @@
       </Swiper>
     </div>
   </q-dialog>
-
   <div class="table-record">
     <div class="flex-div">
       <span>选择平台：</span>
       <q-select
-        allowClear
+        clearable
         rounded
         outlined
         dense
@@ -37,10 +36,45 @@
         v-model="platform"
         :options="platformsList"
         placeholder="选择平台"
+        @clear="platform = ''"
         @update:model-value="searchRecord"
       ></q-select>
-    </div>
 
+      <div v-if="platform.length === 0" class="payout-total">
+        <div>总投注: {{ totalBetRecord.totalBet }}</div>
+        <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
+      </div>
+    </div>
+    <div class="flex-div">
+      <span>开始日期：</span>
+      <q-input rounded outlined dense v-model="startDate">
+        <template v-slot:append>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+              <q-date v-model="startDate" mask="YYYY-MM-DD" @update:model-value="searchRecord">
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Close" color="white" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
+      <span>结束日期：</span>
+      <q-input rounded outlined dense v-model="endDate">
+        <template v-slot:append>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+              <q-date v-model="endDate" mask="YYYY-MM-DD" @update:model-value="searchRecord">
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Close" color="white" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
+    </div>
     <!--    <div class="select-btn">-->
     <!--      <q-btn class="common-large-btn" label="点击选择平台" @click="showSelection" />-->
     <!--    </div>-->
@@ -58,7 +92,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, reactive } from "vue";
 import { api } from "boot/axios";
 import { cached } from "boot/cache";
 import { userStore } from "src/stores";
@@ -104,49 +138,51 @@ const tableData = ref([]);
 
 const searchRecord = () => {
   recordRef.value.clearTable();
-
-  endDate = moment().format("YYYY-MM-DD");
-  startDate = moment().add(-7, "days").format("YYYY-MM-DD");
   loadDepositTable(true);
 };
 
 const isEnded = ref(false);
 
 var apiUrl = "/session/member/gameBetRecord";
+var getRecordTotalApiUrl = "/session/member/gameBetRecordTotal";
 
-var endDate = moment().format("YYYY-MM-DD");
-var startDate = moment().add(-7, "days").format("YYYY-MM-DD");
+var endDate = reactive(moment().format("YYYY-MM-DD"));
+var startDate = reactive(moment().add(-7, "days").format("YYYY-MM-DD"));
 var current = ref(1);
 var maxPage = ref(0);
-
 const platformsList = ref([]);
 const platform = ref("");
 const recordRef = ref();
-
+const totalBetRecord = reactive({
+  totalBet: 0,
+  totalPayout: 0
+});
 const loadNewData = () => {
   if (maxPage.value > current.value) {
     current.value++;
   } else {
     current.value = 1;
-    endDate = moment(startDate).add(-1, "days").format("YYYY-MM-DD");
-    console.log(endDate);
+    // endDate = moment(startDate).add(-1, "days").format("YYYY-MM-DD");
+    // console.log(endDate);
 
-    startDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
-    console.log(startDate);
+    // startDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
+    // console.log(startDate);
 
-    const startMonth = moment(startDate).format("MM");
-    const endMonth = moment(endDate).format("MM");
-    if (startMonth !== endMonth) {
-      // If startDate and endDate are in the same month, take the latest month's data
-      const latestMonthEnd = moment(endDate).endOf("month").format("YYYY-MM-DD");
-      startDate = moment(latestMonthEnd).startOf("month").format("YYYY-MM-DD");
-    }
+    // const startMonth = moment(startDate).format("MM");
+    // const endMonth = moment(endDate).format("MM");
+    // if (startMonth !== endMonth) {
+    //   // If startDate and endDate are in the same month, take the latest month's data
+    //   const latestMonthEnd = moment(endDate).endOf("month").format("YYYY-MM-DD");
+    //   startDate = moment(latestMonthEnd).startOf("month").format("YYYY-MM-DD");
+    // }
 
-    if (endDate <= moment().add(-29, "days").format("YYYY-MM-DD")) {
-      console.log("mor than 3 months");
-      isEnded.value = true;
-      return;
-    }
+    // if (endDate <= moment().add(-29, "days").format("YYYY-MM-DD")) {
+    //   console.log("mor than 3 months");
+    //   isEnded.value = true;
+    //   return;
+    // }
+    isEnded.value = true;
+    return;
   }
   loadDepositTable(false);
 };
@@ -157,16 +193,12 @@ const loadDepositTable = (isNew = true) => {
   }
 
   var platformName = platform.value ? platform.value.value : "";
-
-  console.log(startDate);
-  console.log(endDate);
-
   let paramData = {
     startDate: startDate,
     endDate: endDate,
     platform: platformName,
     memberId: store.id,
-    size: 20,
+    size: 10,
     current: current.value
   };
 
@@ -184,6 +216,21 @@ const loadDepositTable = (isNew = true) => {
       if (isNew) {
         visible.value = false;
       }
+    });
+
+  const obj = {
+    memberId: store.id,
+    platform: platformName,
+    startDate: startDate,
+    endDate: endDate
+  };
+  api
+    .get(getRecordTotalApiUrl, {
+      params: obj
+    })
+    .then((res) => {
+      totalBetRecord.totalBet = res.data.totalBet;
+      totalBetRecord.totalPayout = res.data.totalPayout;
     });
 };
 
@@ -298,6 +345,8 @@ onMounted(async () => {
 </script>
 
 <style lang="scss">
+.payout-total {
+}
 .table-record {
   width: 100%;
   gap: 10px;
@@ -397,5 +446,8 @@ onMounted(async () => {
     font-size: 14px;
     padding-left: 5px;
   }
+}
+.payout-total {
+  width: 140px;
 }
 </style>
