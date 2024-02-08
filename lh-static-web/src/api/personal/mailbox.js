@@ -50,3 +50,15 @@ export function deleteAllMail(mailQuery) {
     type: mailQuery !== null ? mailQuery : undefined
   });
 }
+
+export function readMultipleMail(mailQuery) {
+  return server.REST.post("/session/inbox/readMultiple", {
+    ids: mailQuery
+  });
+}
+
+export function deleteMultipleMail(mailQuery) {
+  return server.REST.post("/session/inbox/deleteMultiple", {
+    ids: mailQuery
+  });
+}

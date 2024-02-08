@@ -17,18 +17,41 @@
           </template>
           <template v-if="mailboxState.mailboxList.inbox.list.length > 0">
             <div class="mail-action-container">
-              <div class="mail-action"  @click="deleteAllMsg(item.type)">
-                <div><img src="../../assets/images/account/icon-maildelete.png" /></div>
-                全部删除
+              <div class="left">
+                <div v-if="isShowSelect" class="mail-action" @click="deleteMultipleMsg()">
+                  <div><img src="../../assets/images/account/icon-maildelete.png" /></div>
+                  删除
+                </div>
+                <div v-if="isShowSelect" class="mail-action" @click="readMultipleMsg()">
+                  <div><img src="../../assets/images/account/icon-mailopen.png" /></div>
+                  读取
+                </div>
               </div>
-              <div class="mail-action" @click="readAllMsg(item.type)" >
-                <div><img src="../../assets/images/account/icon-mailopen.png" /></div>
-                全部已读
+              <div class="right">
+                <div class="mail-action"  @click="deleteAllMsg(item.type)">
+                  <div><img src="../../assets/images/account/icon-maildelete.png" /></div>
+                  全部删除
+                </div>
+                <div class="mail-action" @click="readAllMsg(item.type)" >
+                  <div><img src="../../assets/images/account/icon-mailopen.png" /></div>
+                  全部已读
+                </div>
+
+                <el-switch
+                  v-model="isShowSelect"
+                  inline-prompt
+                  active-text="选择多个"
+                  inactive-text="选择多个"
+                />
               </div>
             </div>
             <el-collapse v-model="activeNames" @change="handleChange">
               <el-collapse-item v-for="item in mailboxState.mailboxList.inbox.list" :key="item.id">
-                <template #title>标题：{{ item.title }}</template>
+                <template #title>
+                  <div v-if="isShowSelect" class="mailbox-checkbox" @click.stop="">
+                    <el-checkbox v-model="selectedIds[item.id]" size="large" />
+                  </div>
+                  标题：{{ item.title }}</template>
                 <div>
                   <div>正文：{{ item.content }}</div>
                 </div>
@@ -55,13 +78,15 @@
 
 <script setup>
 import { ref, reactive, onMounted } from "vue";
-import { mailInbox, mailOutbox, wirteMail, readAllMail, deleteAllMail } from "@/api/personal/mailbox";
+import { mailInbox, mailOutbox, wirteMail, readAllMail, deleteAllMail, readMultipleMail, deleteMultipleMail } from "@/api/personal/mailbox";
 // import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
 
 const loadingBtn = ref(false);
 const mailboxData = ref([]);
 const mailboxNotifyData = ref([]);
+const isShowSelect = ref(false);
+const selectedIds = ref({});
 // const mailboxMessageType = ref(["NOTIFICATION", "ACTIVITY", "ANNOUNCEMENT", "PAYMENT"]);
 const mailboxMessageTypeData = ref([
   { num: 1, type: "NOTIFICATION", name: "通知" },
@@ -210,6 +235,64 @@ const readAllMsg = (m) => {
     });
 };
 
+const readMultipleMsg = () => {
+  const selectedMessages = mailboxState.mailboxList.inbox.list.filter((m) => selectedIds.value[m.id]);
+  const selectedIdsArray = selectedMessages.map((msg) => msg.id);
+  const formattedIds = selectedIdsArray.join(",");
+
+  readMultipleMail(formattedIds)
+    .then((res) => {
+      if (res.code === 0) {
+        ElMessage({
+          message: "读取已选择的消息",
+          type: "success"
+        });
+
+        loadPersonalMailbox();
+
+        isShowSelect.value = false;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+const deleteMultipleMsg = () => {
+  const selectedMessages = mailboxState.mailboxList.inbox.list.filter((m) => selectedIds.value[m.id]);
+  const selectedIdsArray = selectedMessages.map((msg) => msg.id);
+  const formattedIds = selectedIdsArray.join(",");
+
+  deleteMultipleMail(formattedIds)
+    .then((res) => {
+      if (res.code === 0) {
+        ElMessage({
+          message: "删除已选择的消息",
+          type: "success"
+        });
+
+        isShowSelect.value = false;
+
+        selectedMessages.forEach((msg) => {
+          const index = mailboxState.mailboxList.inbox.list.findIndex((item) => item.id === msg.id);
+
+          if (index !== -1) {
+            mailboxState.mailboxList.inbox.list.splice(index, 1);
+          }
+        });
+
+        Object.keys(selectedIds.value).forEach((key) => {
+          selectedIds.value[key] = false;
+        });
+
+        loadPersonalMailbox();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 const deleteAllMsg = (m) => {
   deleteAllMail(m)
     .then((res) => {
@@ -311,6 +394,12 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .mail-content {
+  .mailbox-checkbox {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+
   :deep(.el-collapse-item__header) {
     background: #f7f8fb;
     color: $font-1;
@@ -334,25 +423,34 @@ onMounted(() => {
 
   .mail-action-container {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     gap: 20px;
     margin-bottom: 20px;
     margin-top: 10px;
-    .mail-action {
+    
+    .left, .right {
       display: flex;
       align-items: center;
-      gap: 6px;
-      line-height: 1;
-      color: $font-1;
-      cursor: pointer;
+      gap: 15px; 
+    }
 
-      &:hover {
-        filter: brightness(0.8);
-      }
+    .left, .right {
+      .mail-action {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        line-height: 1;
+        color: $font-1;
+        cursor: pointer;
 
-      img {
-        display: block;
-        width: 17px;
+        &:hover {
+          filter: brightness(0.8);
+        }
+
+        img {
+          display: block;
+          width: 17px;
+        }
       }
     }
   }
