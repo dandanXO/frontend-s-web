@@ -9,7 +9,8 @@ export const useUI = defineStore("ui-store", {
       orientation: "landscape",
       pageName: "优惠详细信息",
       slotLists: [],
-      siteId: 6
+      siteId: 6,
+      matchInsuranceLists: []
     };
   },
   actions: {
