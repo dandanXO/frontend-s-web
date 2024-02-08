@@ -174,7 +174,7 @@
 </template>
 
 <script lang="js">
-import {defineComponent, reactive, ref, onMounted, computed} from "vue";
+import {defineComponent, reactive, ref, onActivated, computed} from "vue";
 import moment from "moment";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
@@ -233,7 +233,7 @@ export default defineComponent({
       memberInfo: {}
     });
 
-    onMounted(() => {
+    onActivated(() => {
       loadInfo();
       getCode();
     });

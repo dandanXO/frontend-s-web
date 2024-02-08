@@ -1,52 +1,54 @@
 <template>
   <div>
-    <swiper
-      :slides-per-view="1"
-      :spaceBetween="20"
-      :loop="true"
-      @swiper="onSwiper"
-      @slideChange="onSlideChange"
-      class="swiper-wrapper"
-    >
-      <template v-for="(item, index) in nbaDetails" :key="item.id">
-        <swiper-slide>
-          <div class="bet-info-box">
-            <div class="bet-info-date">{{ formatDate(item.matchTime).date }}</div>
-            <div class="bet-info-details">
-              <div class="info-team info-team-one">
-                <div class="info-team-logo">
-                  <img :src="`${iconImageBasePath}/${item.teamOneIcon}`" />
+    <template v-if="nbaDetails.length > 0">
+      <swiper
+        :slides-per-view="1"
+        :spaceBetween="20"
+        :loop="true"
+        @swiper="onSwiper"
+        @slideChange="onSlideChange"
+        class="swiper-wrapper"
+      >
+        <template v-for="(item, index) in nbaDetails" :key="item.id">
+          <swiper-slide>
+            <div class="bet-info-box">
+              <div class="bet-info-date">{{ formatDate(item.matchTime).date }}</div>
+              <div class="bet-info-details">
+                <div class="info-team info-team-one">
+                  <div class="info-team-logo">
+                    <img :src="`${iconImageBasePath}/${item.teamOneIcon}`" />
+                  </div>
+                  <div class="info-team-name" v-html="item.teamOne" />
                 </div>
-                <div class="info-team-name" v-html="item.teamOne" />
-              </div>
 
-              <div class="bet-info-vs">
-                VS
-                <br />
-                {{ formatDate(item.matchTime).time }}
-              </div>
-
-              <div class="info-team info-team-two">
-                <div class="info-team-logo">
-                  <img :src="`${iconImageBasePath}/${item.teamTwoIcon}`" />
+                <div class="bet-info-vs">
+                  VS
+                  <br />
+                  {{ formatDate(item.matchTime).time }}
                 </div>
-                <div class="info-team-name" v-html="item.teamTwo" />
+
+                <div class="info-team info-team-two">
+                  <div class="info-team-logo">
+                    <img :src="`${iconImageBasePath}/${item.teamTwoIcon}`" />
+                  </div>
+                  <div class="info-team-name" v-html="item.teamTwo" />
+                </div>
               </div>
             </div>
-          </div>
-        </swiper-slide>
-      </template>
-    </swiper>
-    <!-- <div class="swiper-button-prev" @click="prevSlide"></div> -->
-    <!-- <div class="swiper-button-next" @click="nextSlide"></div> -->
-    <button
-      class="common-btn apply-btn"
-      @click="applyNBAInsurance()"
-      :disabled="isNaN(nbaInsuranceFormData.gameMatchId)"
-      style="display: none"
-    >
-      点击申请
-    </button>
+          </swiper-slide>
+        </template>
+      </swiper>
+      <!-- <div class="swiper-button-prev" @click="prevSlide"></div> -->
+      <!-- <div class="swiper-button-next" @click="nextSlide"></div> -->
+      <button
+        class="common-btn apply-btn"
+        @click="applyNBAInsurance()"
+        :disabled="isNaN(nbaInsuranceFormData.gameMatchId)"
+        style="display: none"
+      >
+        点击申请
+      </button>
+    </template>
 
     <el-dialog
       v-model="isNBAInsuranceModalVisible"
@@ -121,6 +123,7 @@ import "swiper/css/navigation";
 
 import { loadNbaDetails, submitNBAInsuranceForm } from "@/api/promotion/nbaGame";
 import { userStore } from "@/store";
+
 const store = userStore();
 
 const nbaDetails = ref([]);
@@ -265,6 +268,7 @@ onMounted(() => {
   left: 100px;
   margin-top: -30px;
 }
+
 :deep(.swiper-button-next) {
   right: 100px;
   margin-top: -30px;

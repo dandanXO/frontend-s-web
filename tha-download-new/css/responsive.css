@@ -1,0 +1,61 @@
+@media (max-width: 460px) {
+
+
+    .game-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px 8px;
+    }
+
+    .game-list .game-item:nth-child(3):after {
+        height: 0px;
+    }
+
+    .game-list .game-item {
+        width: 100px;
+    }
+
+    .item-container .info-left {
+        width: 120px;
+        height: 120px;
+    }
+
+    .item-container .info-right {
+        width: calc(100% - 120px);
+        padding: 4px 5px 5px 0px;
+    }
+
+    .info-right h2 {
+        margin-top: 0px;
+    }
+
+
+}
+
+@media (max-width: 355px) {
+    .game-list .game-item:nth-child(3):after {
+        height: 50px;
+    }
+
+    .game-list .game-item:nth-child(2):after, .game-list .game-item:nth-child(4):after {
+        height: 0px;
+    }
+
+    .item-container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .item-container .info-left {
+        width: 200px;
+        height: 200px;
+    }
+
+    .item-container .info-right {
+        width: 100%;
+        padding: 5px 5px 10px 5px;
+    }
+
+
+}

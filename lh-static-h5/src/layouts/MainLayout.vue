@@ -152,7 +152,8 @@ export default defineComponent({
           hasDrawer.value = true;
           pageName.value = "游戏大厅";
           if (route.query.platform) {
-            var platformName = route.query.platform == "BBINDY" ? "BBIN" : translateRecord(route.query.platform, "slot");
+            var platformName =
+              route.query.platform == "BBINDY" ? "BBIN" : translateRecord(route.query.platform, "slot");
             pageName.value = `${platformName}游戏大厅`;
           }
         } else if (route.path === "/fishing") {
@@ -161,13 +162,17 @@ export default defineComponent({
           hasDrawer.value = true;
           pageName.value = "游戏大厅";
           if (route.query.platform) {
-            var platformName = translateRecord(route.query.platform)
+            var platformName = translateRecord(route.query.platform);
             pageName.value = `${platformName}游戏大厅`;
           }
-        }  else if (route.path === "/vip") {
-          prevPage.value = "/";
+        } else if (route.path === "/vip") {
           hasPage.value = true;
           pageName.value = "VIP";
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "";
+          }
         } else if (route.path === "/forgot-account") {
           prevPage.value = "login";
           hasPage.value = true;
@@ -251,9 +256,13 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = "雷火下载";
         } else if (route.path === "/account/invite") {
-          prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "呼朋唤友";
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "account";
+          }
         } else if (route.path === "/account/announcement") {
           prevPage.value = "account";
           hasPage.value = true;

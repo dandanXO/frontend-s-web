@@ -42,7 +42,8 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <img src="../assets/images/menu/announce-icon.png" />
+          <!--          <img src="../assets/images/menu/announce-icon.png" />-->
+          <img src="../assets/images/menu-cny/announce-cny-icon.png" />
         </div>
         <marquee-text :repeat="announcementList.length" :duration="announcementList.length * 20">
           <div v-if="announcementList">
@@ -63,7 +64,7 @@
           :class="currentSelectedMenu == e.name ? 'active-board' : ''"
           @click="switchMenu(e.name, i)"
         >
-          <img class="active-flag" :src="require(`../assets/home/game-board-item-bg-active-flag.png`)" />
+          <!--          <img class="active-flag" :src="require(`../assets/home/game-board-item-bg-active-flag.png`)" />-->
           <img :src="require(`../assets/images/index/${e.imgName}`)" />
           <span>{{ e.label }}</span>
         </div>
@@ -932,7 +933,8 @@
         v-close-popup
       />
 
-      <img src="../assets/images/common/home-popup-img.png" />
+      <!--      <img src="../assets/images/common/home-popup-img.png" />-->
+      <img src="../assets/images/common/promo-home-cnyt.png" />
 
       <div class="popup-list">
         <router-link to="/promo?id=81">
@@ -2041,6 +2043,10 @@ export default defineComponent({
   align-items: center;
   gap: 10px;
   margin: 10px 10px 5px;
+  background: linear-gradient(0deg, rgba(156, 17, 3, 0.8), rgba(156, 17, 3, 0.8)),
+    linear-gradient(0deg, #eb5849, #eb5849);
+  border: 1px solid #eb5849;
+  border-radius: 10px;
 
   @media (min-width: 769px) {
     margin: 10px;
@@ -2061,7 +2067,7 @@ export default defineComponent({
       padding-top: 3px;
 
       img {
-        width: 21px;
+        width: 26px;
         height: auto;
       }
     }
@@ -2146,25 +2152,27 @@ export default defineComponent({
 .grid {
   display: flex;
   margin: 0px auto 0px;
-  align-items: flex-start;
+  //align-items: flex-start;
+  align-items: center;
   column-gap: 8px;
   row-gap: 14px;
   width: calc(100% - 20px);
   // background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
-  padding: 35px 12px 16px;
+  padding: 5px 12px 5px;
   border-radius: 12px;
   overflow-x: auto;
 
   @media (min-width: 769px) {
-    margin: 10px auto;
+    margin: 0px auto;
   }
 
   .game-board-item {
     border-radius: 8px;
-    width: auto;
     gap: 12px;
     height: 100%;
-    margin: auto;
+    margin: 0 auto;
+    width: 135px;
+    aspect-ratio: 136/61;
     display: flex;
     align-items: center;
     text-align: center;
@@ -2180,17 +2188,23 @@ export default defineComponent({
 
     &.active-board {
       // background: $linear-bg-4;
-      background: url("../assets/home/game-board-item-bg-active.png") no-repeat center center;
+      //background: url("../assets/home/game-board-item-bg-active.png") no-repeat center center;
+      background: url("../assets/images/menu-cny/game-selected.png") no-repeat center center;
       background-size: 100% 100%;
+      aspect-ratio: 140/135;
+      padding-top: 25px;
+      margin-bottom: 20px;
 
-      .active-flag {
-        display: block;
-        position: absolute;
-        top: -32px;
-        left: 20px;
-        width: 31px;
-        height: 33px;
-      }
+      //.active-flag {
+      //  display: block;
+      //  position: absolute;
+      //  top: -32px;
+      //  left: 0px;
+      //  right: 0px;
+      //  bottom: 0px;
+      //  width: 100px;
+      //  height: 100px;
+      //}
     }
 
     &:hover {
@@ -3049,11 +3063,13 @@ export default defineComponent({
     z-index: 15;
 
     width: 125px;
-    height: 352px;
-    background: url(../assets/home/xmas-line-btn.png);
+    aspect-ratio: 95/159;
+    background: url("../assets/home/line-board.png");
+    //background: url(../assets/home/xmas-line-btn.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    padding: 10px 0;
+    //padding: 10px 0;
+    padding: 15px 0px 10px;
     border-radius: 10px 0px 0px 10px;
 
     color: $white;
@@ -3064,6 +3080,7 @@ export default defineComponent({
     justify-content: flex-end;
 
     .line-title {
+      padding-top: 3px;
       font-size: 12px;
     }
 

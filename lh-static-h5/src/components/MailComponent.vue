@@ -6,23 +6,22 @@
 
     <q-tab-panels v-model="mailboxMessageTab" animated>
       <q-tab-panel :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
-        <q-btn class="common-md-btn" size="md" @click="readAllMessage(item.type)">全部已读</q-btn>
-        <q-btn class="common-md-btn" size="md"  @click="deleteAllMessage(item.type)">全部删除</q-btn>
         <q-inner-loading :showing="loading">
           <q-spinner-gears size="50px" color="brand" />
           <div class="label">加载中</div>
         </q-inner-loading>
 
         <div v-if="!loading">
+          <div class="action-buttons">
+            <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md" @click="readMails(item.type)">全部已读</q-btn>
+            <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md"  @click="deleteMails(item.type)">全部删除</q-btn>
+            <q-toggle v-if="truncatedListByType.length" v-model="allowSelectMultiple" :label="'选择多个'" left-label />
+            <q-btn v-if="hasMailSelected" class="common-md-white-btn" size="md"  @click="readMails(item.type)">已读</q-btn>
+            <q-btn v-if="hasMailSelected" class="common-md-white-btn" size="md"  @click="deleteMails(item.type)">删除</q-btn>
+          </div>
           <q-infinite-scroll @load="onLoad" :offset="150">
             <q-card
-              v-for="(det, n) in truncatedList.filter((listItem) => {
-                if(mailboxMessageTab === 'ALL') {
-                  return true;
-                }
-
-                return listItem.type === mailboxMessageTab
-              })"
+              v-for="(det, n) in truncatedListByType"
               :key="n"
               class="mail-inbox-list"
               :class="{ active: isSelectedMail === det.id }"
@@ -31,15 +30,24 @@
             >
               <div class="title-div">
                 <div>
+                  <q-checkbox
+                    v-if="allowSelectMultiple"
+                    rounded
+                    :model-value="selectedMailIds[det.id] ?? false"
+                    @update:model-value="(newValue) => (selectedMailIds[det.id] = newValue ?? false)"
+                    size="sm"
+                    style="font-size: 14px"
+                    color="#0089ED"
+                  />
                   标题：
                   {{ det.title }}
                 </div>
 
                 <div class="right-title">
+                  <!-- <q-chip size="sm" label="已读" v-if="det.readTime" /> -->
                   <RiArrowUpSLine v-if="isSelectedMail === det.id" />
                   <RiArrowDownSLine v-if="isSelectedMail !== det.id" />
                 </div>
-                <!--            <q-chip color="brand" size="sm" label="已读" v-if="det.isRead && det.isRead !== 0" />-->
               </div>
               <div class="mailcontents" v-if="isSelectedMail === det.id">
                 {{ det.content }}
@@ -65,7 +73,7 @@
       </q-tab-panel>
     </q-tab-panels>
     
-    <q-dialog width="100%" v-model="isDeleteAllModal">
+    <q-dialog width="100%" v-model="isDeleteMailModal">
       <q-card style="width: 100%; padding: 20px" class="text-black">
         <q-card-section class="q-mb-md text-center" style="flex-direction: column">
           <strong>温馨提示</strong>
@@ -74,19 +82,20 @@
           确认删除信息？
         </q-card-section>
         <q-card-actions align="right">
-          <q-btn class="common-md-btn"  size="md" @click="confirmDeleteAll(type)" label="确认" />
-          <q-btn class="common-md-white-btn"  size="md" @click="isDeleteAllModal = false" label="取消" />
+          <q-btn class="common-md-btn"  size="md" @click="confirmDeleteMails(type)" label="确认" />
+          <q-btn class="common-md-white-btn"  size="md" @click="isDeleteMailModal = false" label="取消" />
         </q-card-actions>
       </q-card>
     </q-dialog>
   </q-page>
 </template>
 <script>
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, computed } from "vue";
 import moment from "moment";
 import { RiArrowDownSLine, RiArrowUpSLine } from "vue-remix-icons";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
+import qs from "qs";
 
 export default defineComponent({
   components: {
@@ -124,9 +133,21 @@ export default defineComponent({
     ]);
     const mailboxMessageTab = ref(mailboxMessageTypeData.value[0].type);
     const $q = useQuasar();
-    const isDeleteAllModal = ref(false);
+    const isDeleteMailModal = ref(false);
     const truncatedList = ref([]);
+    const truncatedListByType = computed(() => {
+      return truncatedList.value.filter((listItem) => {
+        if(mailboxMessageTab.value === 'ALL') {
+          return true;
+        }
+
+        return listItem.type === mailboxMessageTab.value
+      })
+    })
     const comList = ref({});
+    const allowSelectMultiple = ref(false);
+    const selectedMailIds = ref({});
+    const hasMailSelected = computed(() => Object.values(selectedMailIds.value).includes(true));
     const onLoad = (index, done) => {
       comList.value = props.list;
       setTimeout(() => {
@@ -148,9 +169,32 @@ export default defineComponent({
       }
     };
 
-    const readAllMessage = (type) => {
-      api
-        .post("/session/inbox/readAll", {
+    const readMails = (type) => {
+      if(hasMailSelected.value) {
+        const messagesIdArr = Object.keys(selectedMailIds.value);
+        const formattedIds = messagesIdArr.join(",");
+        api
+          .post(
+            "/session/inbox/readMultiple",
+            qs.stringify({
+              ids: formattedIds
+            })
+          )
+          .then((res) => {
+            if (res.code === 0) {
+              $q.notify({
+                message: "读取已选择的消息",
+                type: "positive",
+                position: "top",
+                icon: "check_circle_outline"
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        api.post("/session/inbox/readAll", {
           type: type
         })
         .then((res) => {
@@ -167,19 +211,43 @@ export default defineComponent({
         .catch((error) => {
           console.log(error);
         });
+      }
     };
 
-    const deleteAllMessage = (type) => {
-      isDeleteAllModal.value = true;
+    const deleteMails = (type) => {
+      isDeleteMailModal.value = true;
     };
 
-    const confirmDeleteAll = (type) => {
-      api
-        .post("/session/inbox/deleteAll", {
+    const confirmDeleteMails = (type) => {
+      if(hasMailSelected.value) {
+        const mailIdArr = Object.keys(selectedMailIds.value);
+        const formattedIds = mailIdArr.join(",");
+        api
+          .post(
+            "/session/inbox/deleteMultiple",
+            qs.stringify({
+              ids: formattedIds
+            })
+          )
+          .then((res) => {
+            if (res.code === 0) {
+              $q.notify({
+                message: "删除已选择的消息",
+                type: "positive",
+                position: "top",
+                icon: "check_circle_outline"
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        api.post("/session/inbox/deleteAll", {
           type: type
         })
         .then((res) => {
-          isDeleteAllModal.value = false;
+          isDeleteMailModal.value = false;
           if (res.code === 0) {
             $q.notify({
               message: "已删除全部消息",
@@ -191,9 +259,10 @@ export default defineComponent({
           }
         })
         .catch((error) => {
-          isDeleteAllModal.value = false;
+          isDeleteMailModal.value = false;
           console.log(error);
         });
+      }
     };
 
     onMounted(() => {
@@ -210,10 +279,14 @@ export default defineComponent({
       isSelectedMail,
       mailboxMessageTypeData,
       mailboxMessageTab,
-      readAllMessage,
-      deleteAllMessage,
-      confirmDeleteAll,
-      isDeleteAllModal
+      readMails,
+      deleteMails,
+      confirmDeleteMails,
+      isDeleteMailModal,
+      allowSelectMultiple,
+      selectedMailIds,
+      hasMailSelected,
+      truncatedListByType
     };
   }
 });
@@ -248,6 +321,10 @@ export default defineComponent({
     color: $font-1;
   }
 
+  .right-title {
+    display: flex;
+  }
+
   .mailcontents {
     padding: 12px 12px 16px;
     background: #e0f0ff;
@@ -261,5 +338,13 @@ export default defineComponent({
 
 .buttons {
   text-align: right;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+  margin: 0px 10px;
+  flex-wrap: wrap;
 }
 </style>

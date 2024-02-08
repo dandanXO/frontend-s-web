@@ -203,11 +203,27 @@
       </q-card>
     </q-dialog>
   </q-page>
+
+  <q-dialog class="modal-common-div" width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
+    <q-card style="width: 100%; padding: 1rem 0.5rem" class="">
+      <q-card-section class="contents">
+        <strong class="black-titles">温馨提示</strong>
+        <br />
+        <br />
+        为保证资金安全，存款前需先验证手机号
+      </q-card-section>
+      <q-card-actions align="right">
+        <router-link to="/account/personal">
+          <q-btn class="common-md-btn" label="前往验证" color="brightbtn" />
+        </router-link>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script lang="js">
 /* eslint-disable */
-import {defineComponent, reactive, ref, onMounted, computed} from "vue";
+import {defineComponent, reactive, ref, onActivated, computed} from "vue";
 import {userStore} from "stores/index";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
@@ -218,6 +234,7 @@ export default defineComponent({
   components: {AcctBal},
   setup() {
     const store = userStore();
+    const isNewUser = ref(false);
     const $q = useQuasar();
     const imgURL = process.env.IMAGE_CDN;
     const amountRef = ref();
@@ -238,8 +255,17 @@ export default defineComponent({
     });
     const withdrawalMethods = ref([]);
     const selectedWithdrawalMethod = ref([]);
-    onMounted(() => {
-      getWithdrawalMethods();
+
+    const checkNewUser = () => {
+      if (store.phone == "") {
+        isNewUser.value = true;
+      } else {
+        getWithdrawalMethods()
+      }
+    };
+
+    onActivated(() => {
+      checkNewUser();
       store.getBalance();
       // loadPlatform()
     });
@@ -462,7 +488,9 @@ export default defineComponent({
       chooseLabel,
       chooseCard,
       openEWalletTutorial,
-      tutorialLabel
+      tutorialLabel,
+      isNewUser,
+      checkNewUser
     };
   }
 });

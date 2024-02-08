@@ -34,7 +34,7 @@
             height="28"
           />
           <p>
-            兴发用户打开：个人中心--点击“呼朋唤友”复制推广链接，通过QQ、微信、论坛、贴吧、微博等方式分享，成功邀请好友即
+            兴發用户打开：个人中心--点击“呼朋唤友”复制推广链接，通过QQ、微信、论坛、贴吧、微博等方式分享，成功邀请好友即
             可获得现金奖励！
           </p>
           <p class="check-record-btn" @click="toggleCheckRecordModal(true)">查看我的推广记录</p>
@@ -45,32 +45,32 @@
             <div class="rebate-header">流水要求</div>
 
             <div class="rebate-list bg-dark">≥100</div>
-            <div class="rebate-list bg-dark">8元</div>
+            <div class="rebate-list bg-dark">28元</div>
             <div class="rebate-list bg-dark"></div>
 
             <div class="rebate-list">≥1,000</div>
-            <div class="rebate-list">38元</div>
+            <div class="rebate-list">108元</div>
             <div class="rebate-list"></div>
 
             <div class="rebate-list bg-dark">≥5,000</div>
-            <div class="rebate-list bg-dark">58元</div>
-            <div class="rebate-list bg-dark">1倍/不限场馆</div>
+            <div class="rebate-list bg-dark">158元</div>
+            <div class="rebate-list bg-dark">3倍/不限场馆</div>
 
             <div class="rebate-list">≥10,000</div>
-            <div class="rebate-list">88元</div>
+            <div class="rebate-list">388元</div>
             <div class="rebate-list"></div>
 
             <div class="rebate-list bg-dark">≥30,000</div>
-            <div class="rebate-list bg-dark">388元</div>
+            <div class="rebate-list bg-dark">1588元</div>
             <div class="rebate-list bg-dark"></div>
 
             <div class="rebate-list">≥50,000</div>
-            <div class="rebate-list">888元</div>
+            <div class="rebate-list">1888元</div>
             <div class="rebate-list"></div>
           </div>
 
           <p class="example-text">
-            例如：会员A邀请一位好友首存100元，则可获取8元奖金；若想获取下一档位38元，则需好友再次存1000元；
+            例如：会员A邀请一位好友首存100元，则可获取28元奖金；若想获取下一档位108元，则需好友再次存1000元；
             奖金将会在次日凌晨00:00至下午16:00之间自动派发至您的主账户，
             如果下周您邀请的好友依旧符合存款金额，那么您在下周会再次获得对应奖金。
           </p>
@@ -106,7 +106,7 @@
               7.邀请人与受邀请人必须为不同身份的真实玩家，每每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一
               个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。
             </p>
-            <p>8.为避免文字理解差异，兴发电竞保留此活动最终解释权。</p>
+            <p>8.为避免文字理解差异，兴發保留此活动最终解释权。</p>
           </div>
         </div>
       </div>
@@ -217,7 +217,7 @@
             <p>
               5.普通会员账号变更成代理账号时，该活动将无法参加；已经参加活动的账号变成代理账号，会即刻终止发放奖金。
             </p>
-            <p>6.为避免文字理解差异，兴发电竞保留此活动最终解释权。</p>
+            <p>6.为避免文字理解差异，本站保留此活动最终解释权。</p>
           </div>
         </div>
       </div>
@@ -283,7 +283,7 @@
               6.邀请人与受邀请人必须为不同身份的真实玩家，每每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一
               个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。
             </p>
-            <p>7.为避免文字理解差异，东赢电竞保留此活动最终解释权。</p>
+            <p>7.为避免文字理解差异，本站保留此活动最终解释权。</p>
           </div>
         </div>
       </div>

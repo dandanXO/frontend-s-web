@@ -91,7 +91,8 @@
 $loadingwidth: 300px;
 .loading {
   img {
-    width: 100%;
+    height: 50px;
+    width: auto;
   }
   .txt {
     display: block;

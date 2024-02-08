@@ -16,3 +16,7 @@ export const getGameStepsRecords = (gameSteps) => {
 export const getSiteWithPromo = () => {
   return https().request("/game-steps/sites", Method.GET);
 }
+
+export const getGameStepsRecordsForExport = (gameSteps) => {
+  return https().request("/game-steps/export", Method.GET, gameSteps, ContentType.form);
+};

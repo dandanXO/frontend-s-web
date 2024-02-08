@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="row justify-center q-mt-md">
+    <div v-if="isGotItem" class="row justify-center q-mt-md">
       <q-btn color="primary" @click="handleOpenDialog" label="点击申请" />
     </div>
 
@@ -87,12 +87,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive, defineProps } from "vue";
+import { ref, onMounted, reactive, defineProps, computed } from "vue";
 import { userStore } from "stores/index";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { cached } from "boot/cache";
+import { useUI } from "stores/ui";
 
 var qs = require("qs");
 const $q = useQuasar();
@@ -153,6 +154,14 @@ const insuranceTransactionId = ref();
 const platformDetails = ref([]);
 const platformOptions = ref([]);
 
+const ui = useUI();
+const isGotItem = computed(() => {
+  if (ui.matchInsuranceLists.length > 0) {
+    return true;
+  }
+  return false;
+});
+
 // const getPlatformList = () => {
 //   platformOptions.value = [];
 //   eventapi
@@ -211,7 +220,7 @@ const getPlatformDetails = () => {
             matchTitle: match.matchTitle,
             teamOne: match.teamOne,
             teamTwo: match.teamTwo,
-            label: `${match.matchTitle} - (${match.teamOne} vs ${match.teamTwo})`,
+            label: `${match.matchTitle} - (${match.teamOne} vs ${match.teamTwo})`
           };
           gameOptions.value.push(obj);
         });

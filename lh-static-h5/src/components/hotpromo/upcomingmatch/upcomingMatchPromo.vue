@@ -80,23 +80,23 @@ const getupcomingMatchDetails = () => {
     .get(`/game-match/upcoming/${props.platformType}`)
     .then((res) => {
       if (res.code === 0) {
-        // upcomingMatchDetails.value = res.data;
+        upcomingMatchDetails.value = res.data;
 
         // res.data
-        upcomingMatchDetails.value = [
-          {
-            id: 20,
-            siteId: 6,
-            matchTitle: "LPL 春季赛",
-            teamOne: "IG",
-            teamOneIcon: "6/75c10428-1252-4e7e-8e63-d5fa4e6e2a7a.png",
-            teamTwo: "TT",
-            teamTwoIcon: "6/c463593a-225a-4f9e-9d74-6bf948ac42f5.png",
-            gameType: "ESPORT",
-            status: "ACTIVE",
-            matchTime: "2024-02-03 17:00:00"
-          }
-        ];
+        // upcomingMatchDetails.value = [
+        //   {
+        //     id: 20,
+        //     siteId: 6,
+        //     matchTitle: "LPL 春季赛",
+        //     teamOne: "IG",
+        //     teamOneIcon: "6/75c10428-1252-4e7e-8e63-d5fa4e6e2a7a.png",
+        //     teamTwo: "TT",
+        //     teamTwoIcon: "6/c463593a-225a-4f9e-9d74-6bf948ac42f5.png",
+        //     gameType: "ESPORT",
+        //     status: "ACTIVE",
+        //     matchTime: "2024-02-03 17:00:00"
+        //   }
+        // ];
       }
     })
     .catch((err) => {

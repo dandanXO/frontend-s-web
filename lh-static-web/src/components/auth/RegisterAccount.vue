@@ -4,14 +4,14 @@
             <img class="form-field-icon" src="@/assets/home/auth/name-icon.png" />
             <el-form-item label="姓名" prop="realName">
                 <el-input class="wTip" v-model="regForm.realName" placeholder="输入姓名" :rules="[
-                    { required: true, message: '请输入姓名' },
+                    { required: true, message: '姓名必须与提款银行卡账号姓名一致' },
                     {
                         pattern: '^([\u4e00-\u9fa5]*)$',
                         message: '请输入中文字符',
                         trigger: 'change'
                     }
-                ]">
-                    <template #append>范围在2-12位之间, 由中文字符组成</template>
+                ]" clearable>
+                    <template #append></template>
                 </el-input>
             </el-form-item>
         </div>
@@ -19,8 +19,8 @@
         <div class="light-bg form-field">
             <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
             <el-form-item label="用户名" prop="loginName">
-                <el-input class="wTip" v-model="regForm.loginName" placeholder="输入用户名">
-                    <template #append>范围在6-12位之间, 由字母和数字组成</template>
+                <el-input class="wTip" v-model="regForm.loginName" placeholder="请输入6-11位非汉字字符" clearable>
+                    <template #append></template>
                 </el-input>
             </el-form-item>
         </div>
@@ -28,8 +28,8 @@
         <div class="light-bg form-field">
             <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
             <el-form-item label="密码" prop="password">
-                <el-input class="wTip" v-model="regForm.password" placeholder="输入密码" type="password" show-password>
-                    <template #append>密码范围在6-12位之间, 由字母和数字组成</template>
+                <el-input class="wTip" v-model="regForm.password" placeholder="请输入6-11位字母/数字组合" type="password" show-password clearable>
+                    <template #append></template>
                 </el-input>
             </el-form-item>
         </div>
@@ -37,8 +37,8 @@
         <div class="light-bg form-field">
             <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
             <el-form-item label="确认密码" prop="confirmPwd">
-                <el-input class="half wTip" v-model="regForm.confirmPwd" placeholder="输入确认密码" type="password" show-password>
-                    <template #append>密码范围在6-12位之间, 由字母和数字组成</template>
+                <el-input class="half wTip" v-model="regForm.confirmPwd" placeholder="请确认密码" type="password" show-password clearable>
+                    <template #append></template>
                 </el-input>
             </el-form-item>
         </div>
@@ -47,9 +47,9 @@
             <img class="form-field-icon" src="@/assets/home/auth/referral-icon.png" />
             <el-form-item label="推荐码" prop="codeAffiliate">
                 <el-input v-if="!hasAffiliate" class="half" v-model="regForm.codeAffiliate"
-                    placeholder="若不是合营下会员无需填写输入推荐码" />
-                <el-input v-else class="half" v-model="regForm.codeAffiliate" placeholder="若不是合营下会员无需填写" readonly
-                    disabled />
+                    placeholder="如果没有 无需填写" clearable />
+                <el-input v-else class="half" v-model="regForm.codeAffiliate" placeholder="如果没有 无需填写" readonly
+                    disabled clearable />
             </el-form-item>
         </div>
 
@@ -57,8 +57,8 @@
             <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
             <el-form-item label="验证码" prop="captchaCode">
                 <div style="display:flex;width:100%;">
-                    <el-input v-model="regForm.captchaCode" label="验证码" placeholder="验证码" />
-                    <img style="width:100&;border-radius:100px;" :src="verificationImg" @click="getCode" />
+                    <el-input v-model="regForm.captchaCode" label="验证码" placeholder="请输入验证码" clearable />
+                    <img style="width:90px;" :src="verificationImg" @click="getCode" />
                 </div>
             </el-form-item>
         </div>
@@ -280,6 +280,7 @@ const regRules = {
 };
 
 const getCode = () => {
+    regForm.captchaCode = '';
     getVerificationCode().then((res) => {
         if (res.code === 0) {
             verificationImg.value = "data:image/png;base64," + res.data.img;
@@ -317,7 +318,7 @@ const submitRegisterForm = async (elForm) => {
                             sessionStorage.removeItem("REFERRAL_CODE");
 
                             if (store.token) {
-                                router.push("/home");
+                                router.push("/welcome");
                             }
                         } else {
                             getCode();

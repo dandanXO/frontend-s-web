@@ -23,14 +23,14 @@
                                 <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
                                 <el-form-item tabindex="2" label="验证码" prop="code">
                                     <el-row :gutter="10" style="justify-content: center; align-items: center">
-                                        <el-col :span="12">
-                                            <el-input v-model="loginForm.code" label="验证码" placeholder="验证码"
+                                        <el-col :span="14">
+                                            <el-input v-model="loginForm.code" label="验证码" placeholder="请输入手机验证码"
                                                 @keyup.enter="phoneLogin" />
                                         </el-col>
-                                        <el-col :span="12">
+                                        <el-col :span="10">
                                             <el-button v-if="loginCountdown === 0" @click="openCaptchaForm('LOGIN')"
-                                                size="small" color="#3bafda" style="width:100%;">
-                                                发送验证码
+                                                size="small" color="#3bafda" style="width:100%;min-height:30px; font-size:12px;" class="blue-bg">
+                                                获取验证码
                                             </el-button>
                                             <el-button v-else disabled size="small" class="common-btn">
                                                 已发送（倒数{{ loginCountdown }}秒）
@@ -56,7 +56,7 @@
                                 <div style="display:flex;width:100%;">
                                     <el-input v-model="captchaForm.captchaCode" label="验证码" placeholder="验证码"
                                         @keyup.enter="sendOtp" />
-                                    <img style="width:150px;border-radius:100px;" :src="verificationImg" @click="getCode" />
+                                    <img style="width:150px;" :src="verificationImg" @click="getCode" />
                                 </div>
                             </el-form-item>
                         </div>
@@ -79,6 +79,7 @@ import { userStore } from "@/store/index";
 import { sendSms } from "@/api/personal/personal";
 import AccountLogin from '@/components/auth/AccountLogin.vue';
 import { ElMessage } from "element-plus";
+import { useRoute, useRouter } from "vue-router";
 
 const captchaRules = {
     captchaCode: [
@@ -134,6 +135,8 @@ const passForm = reactive({
     email: '',
 })
 
+const router = useRouter();
+const route = useRoute();
 const loginCountdown = ref(0)
 const mobileLoginRef = ref([])
 const store = userStore();
@@ -168,7 +171,7 @@ const sendOtp = async () => {
                     });
                     captchaDialogVisible.value = false;
                     getCode();
-                    loginCountdown.value = 30;
+                    loginCountdown.value = 60;
                     countdownTimer('LOGIN')
                 } else {
                     getCode();

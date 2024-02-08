@@ -172,6 +172,8 @@ onMounted(getAppDownloadUrl);
   .q-tab {
     aspect-ratio: 440/96;
     font-size: 1.2rem;
+    flex: 1;
+    width: calc(50% - 6px);
   }
 
   .q-tab__content {

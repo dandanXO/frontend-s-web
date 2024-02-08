@@ -373,7 +373,7 @@
           <span class="role-list-decimal">4</span>
           每月红包
           <br />
-          每月1号会员即可登录账户领取每月红包。（每月红包彩金3倍流水即可提款）
+          每月1号会员即可登录账户领取每月红包（每月红包彩金3倍流水即可提款）。上个月需累积2000元存款方可领取每月红包奖金。
         </li>
         <li style="">
           <span class="role-list-decimal" style="top: 10px">5</span>

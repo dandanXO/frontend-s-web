@@ -1,6 +1,6 @@
 <template>
   <div class="top-container">
-    雷火宗旨 – 提供给顾客最佳水位和最优秀的服务；
+    <b>雷火宗旨</b> – 提供给顾客最佳水位和最优秀的服务；
     <ul>
       <li>我们的优势：雷火网站，盘口赔率即时开出, 您不需等待交易买卖。</li>
       <li>资金流动更具快捷性，让您随时随地自由分配您的资金以便投注更大金额，与此同时，享受最佳水位！</li>
@@ -8,7 +8,7 @@
   </div>
   <div class="bot-container">
     <div class="content">
-      <img src="../../assets/about/aboutus/group.png" />
+      <img src="../../assets/about/aboutus/group.png" style="width: 33.87px; height: 34px;"/>
       <div class="title">更多产品</div>
       <div class="desc">“ 雷火是业界公认的滚球专家，每月平均提供约10,000场现场滚球赛事。”</div>
       <div class="info">
@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="content">
-      <img src="../../assets/about/aboutus/diversity.png" />
+      <img src="../../assets/about/aboutus/diversity.png" style="width: 33.87px; height: 34px;" />
       <div class="title">多样产品</div>
       <div class="desc">“ 雷火是业界公认的滚球专家，每月平均提供约10,000场现场滚球赛事。”</div>
       <div class="info">
@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="content">
-      <img src="../../assets/about/aboutus/building.png" />
+      <img src="../../assets/about/aboutus/building.png" style="width: 34px; height: 34px;"/>
       <div class="title">公司资料</div>
       <div class="desc">“ 雷火是业界公认的滚球专家，每月平均提供约10,000场现场滚球赛事。”</div>
       <div class="info">
@@ -51,11 +51,12 @@
 
 <style scoped lang="scss">
 .top-container {
-  color: #424f72;
   font-family: Microsoft YaHei;
-  font-size: 1.125rem;
-  font-weight: 700;
-  line-height: 2.5rem;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 40px;
+  letter-spacing: 0em;
+  text-align: left;
 
   ul {
     margin-block-start: 0;
@@ -77,34 +78,37 @@
     align-items: center;
     text-align: center;
     padding: 20px 10px;
+    height: 1000px;
 
     .title {
       color: #4c88f8;
-      text-align: center;
       font-family: Microsoft YaHei;
-      font-size: 1rem;
+      font-size: 14px;
       font-weight: 700;
-      line-height: 193.482%;
-      letter-spacing: 0.1rem;
+      line-height: 27px;
+      letter-spacing: 0.05em;
+      text-align: center;
+
     }
 
     .desc {
       color: #4c88f8;
-      text-align: center;
       font-family: Microsoft YaHei;
-      font-size: 0.875rem;
+      font-size: 14px;
       font-weight: 700;
-      line-height: 193.482%;
-      letter-spacing: 0.04375rem;
+      line-height: 27px;
+      letter-spacing: 0.05em;
+      text-align: center;
     }
 
     .info {
       color: #7a80a1;
-      text-align: center;
       font-family: Microsoft YaHei;
-      font-size: 0.875rem;
+      font-size: 14px;
       font-weight: 400;
-      line-height: 223.482%;
+      line-height: 31px;
+      letter-spacing: 0em;
+      text-align: center;
     }
   }
 }

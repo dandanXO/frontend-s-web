@@ -1,13 +1,29 @@
-@font-face{
+@font-face {
   font-family: "FZHanZhenGuangBiaoS-GB";
   src: url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.eot");
-  src: url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.eot?#iefix")format("embedded-opentype"),
-  url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.woff")format("woff"),
-  url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.woff2")format("woff2"),
-  url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.ttf")format("truetype");
-  font-weight:normal;
-  font-style:normal;
-  font-display:swap;
+  src: url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.eot?#iefix") format("embedded-opentype"),
+    url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.woff") format("woff"),
+    url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.woff2") format("woff2"),
+    url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "YiHei";
+  src: url("@/assets/fonts/YiHei.ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PingFang SC";
+  src: url("@/assets/fonts/PingFangSC.ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 body {
@@ -62,6 +78,12 @@ body {
     display: inline-block;
     border-radius: 100%;
   }
+
+  .el-carousel__indicators {
+    position: absolute;
+    bottom: 0px;
+  }
+
   .el-carousel__indicators--outside {
     button {
       background-color: #686c6f;
@@ -174,6 +196,15 @@ body {
     }
   }
 }
+body {
+  .el-dialog {
+    border-radius: 12px;
+  }
+  .el-dialog__header {
+    border-radius: 12px 12px 0 0;
+    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+  }
+}
 .full-modal {
   &.el-dialog {
     margin-top: 0;
@@ -234,41 +265,48 @@ body {
   height: unset;
   padding: 12px 40px;
   font-size: 0.75rem;
-  border-radius: 2px;
+  border-radius: 50px;
   color: $color-white;
-  background: #00b4fd;
-  display: inline-block;
+  gap: 10px;
+  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+  box-shadow: 0px -2px 5px 0px #b1d7ff inset;
+  box-shadow: 0px -1px 4px 0px #5894ff inset;
+  color: #fff;
   cursor: pointer;
-  text-align: center;
-  min-width: 62px;
   border: 0;
-  --el-button-size: 20px;
-  border-radius: var(--el-border-radius-base);
-  &--small {
-    padding: 3px;
-    padding: 5px 11px;
-    font-size: 0.75rem;
+
+  &.outline {
+    background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
+    box-shadow: 0px 2px 4px 0px #bbdcff inset;
+    box-shadow: 0px -1px 4px 0px #a2bff4 inset;
+    color: #468cff;
   }
-  &--large {
-    --el-button-size: 40px;
-    height: var(--el-button-size);
-    padding: 12px 40px;
-    font-size: var(--el-font-size-base);
-    border-radius: var(--el-border-radius-base);
-    letter-spacing: 3px;
-    background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000) !important;
-    min-width: 200px;
-  }
+  // &--small {
+  //   padding: 3px;
+  //   padding: 5px 11px;
+  //   font-size: 0.75rem;
+  // }
+  // &--large {
+  //   --el-button-size: 40px;
+  //   height: var(--el-button-size);
+  //   padding: 12px 40px;
+  //   font-size: var(--el-font-size-base);
+  //   border-radius: var(--el-border-radius-base);
+  //   letter-spacing: 3px;
+  //   background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000) !important;
+  //   min-width: 200px;
+  // }
   &.grey {
-    background: #4e8cfb;
+    background-color: #4e8cfb;
   }
   &.light {
-    background: #4e5efb;
+    background-color: #4e5efb;
   }
   &:hover,
   &:focus {
     color: #ffffff;
-    background: #5281e9;
+    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+    box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
   }
 }
 .common-btn {
@@ -337,6 +375,11 @@ body {
 :root {
   --vip-carousel-label-width: 70px;
   --vip-carousel-button-width: 108px;
+}
+
+.home .el-carousel__container {
+  height: auto;
+  aspect-ratio: 1920/568;
 }
 
 button {
