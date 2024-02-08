@@ -17,13 +17,13 @@
               <div class="trans-tip">（游戏前，请将余额转到相应场馆）</div>
             </a>
           </div>
-
+          <!-- 
           <div class="balance-details">
             <div>雷火币：</div>
             <div class="balance-txt">
               <span>0.00</span>
             </div>
-          </div>
+          </div> -->
 
           <div class="balance-details">
             <div>专属网址：</div>
@@ -77,6 +77,10 @@ export default defineComponent({
   font-size: 14px;
   padding: 20px;
   background: #f4f8f9;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: calc(100vh - 188px);
   // background: salmon;
   .account-container-wrap {
     width: 100%;
@@ -94,14 +98,14 @@ export default defineComponent({
     }
     .account-menu-wrapper {
       width: 280px;
-      padding-bottom: 30px;
+      padding-bottom: 0px;
     }
     .account-content-wrapper {
       text-align: left;
       width: calc(100% - 280px);
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 14px;
       .account-balance {
         font-size: 14px;
         height: 80px;
@@ -144,12 +148,15 @@ export default defineComponent({
         background-color: #fff;
         box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
         border-radius: 15px;
+        height: 100%;
       }
     }
     .account-menu-container {
       background-color: #fff;
       box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
       border-radius: 15px;
+      height: 100%;
+
       .account-info-wrapper {
         text-align: center;
         width: 100%;
@@ -188,7 +195,7 @@ export default defineComponent({
         }
         .account-menu-list {
           margin: 0;
-          padding: 20px 0;
+          padding: 20px 0 40px;
           .account-menu-item {
             display: flex;
             justify-content: flex-start;

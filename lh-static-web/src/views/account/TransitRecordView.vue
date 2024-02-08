@@ -1,8 +1,8 @@
 <!-- eslint-disable vue/valid-v-slot -->
 <template>
-  <div>
-    <div className="menu-title-container">
-      <span className="menu-title">交易记录</span>
+  <div class="transaction-container">
+    <div class="menu-title-container">
+      <span class="menu-title">交易记录</span>
     </div>
     <div class="account-content transit">
       <el-tabs v-model="recordActive" @tab-click="searchRecord" type="card">
@@ -12,6 +12,7 @@
               <div class="left">
                 <el-form-item label="开始">
                   <el-date-picker
+                    :clearable="false"
                     v-model="searchForm.deposit.startDate"
                     valueFormat="YYYY-MM-DD"
                     placeholder=""
@@ -19,19 +20,14 @@
                 </el-form-item>
                 <el-form-item label="结束">
                   <el-date-picker
+                    :clearable="false"
                     v-model="searchForm.deposit.endDate"
                     valueFormat="YYYY-MM-DD"
                     placeholder=""
                   />
                 </el-form-item>
                 <el-form-item class="search">
-                  <el-button
-                    type="success"
-                    class="common-btn"
-                    @click="searchRecord"
-                  >
-                    搜索
-                  </el-button>
+                  <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -48,10 +44,7 @@
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
-                <template
-                  v-if="tbl.dataIndex === 'depositDate'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'depositDate'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{ scope.row.depositDate }}</span>
                   </div>
@@ -62,10 +55,7 @@
                     {{ getDepositStatus(scope.row.status) }}
                   </div>
                 </template>
-                <template
-                  v-if="tbl.dataIndex === 'paymentType'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'paymentType'" #default="scope">
                   <div style="display: flex; align-items: center">
                     {{ getDepositType(scope.row.paymentType) }}
                   </div>
@@ -74,13 +64,7 @@
                 <template v-if="tbl.dataIndex === 'operation'" #default="scope">
                   <template v-if="scope.row.status === 'PENDING'">
                     <div style="display: flex; align-items: center">
-                      <el-button
-                        size="small"
-                        class="common-btn"
-                        @click="openReminder(scope.row)"
-                      >
-                        催单
-                      </el-button>
+                      <el-button size="small" class="common-btn" @click="openReminder(scope.row)">催单</el-button>
                     </div>
                   </template>
                 </template>
@@ -101,6 +85,7 @@
               <div class="left">
                 <el-form-item label="开始">
                   <el-date-picker
+                    :clearable="false"
                     v-model="searchForm.turnover.startDate"
                     valueFormat="YYYY-MM-DD"
                     placeholder=""
@@ -108,19 +93,14 @@
                 </el-form-item>
                 <el-form-item label="结束">
                   <el-date-picker
+                    :clearable="false"
                     v-model="searchForm.turnover.endDate"
                     valueFormat="YYYY-MM-DD"
                     placeholder=""
                   />
                 </el-form-item>
                 <el-form-item>
-                  <el-button
-                    type="success"
-                    class="common-btn"
-                    @click="searchRecord"
-                  >
-                    搜索
-                  </el-button>
+                  <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -156,23 +136,20 @@
                   </div>
                 </template>
 
-                <template
-                  v-if="tbl.dataIndex === 'recordTime'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{ scope.row.recordTime }}</span>
                   </div>
                 </template>
               </el-table-column>
             </el-table>
-            <el-divider />
+            <!-- <el-divider />
             <el-pagination
               @current-change="recordPage"
               :total="pagination.total"
               :current-page="searchForm[recordActive].current"
               :page-size="searchForm[recordActive].size"
-            />
+            /> -->
           </div>
         </el-tab-pane>
         <el-tab-pane name="withdraw" label="提款记录">
@@ -181,6 +158,7 @@
               <div class="left">
                 <el-form-item label="开始">
                   <el-date-picker
+                    :clearable="false"
                     v-model="searchForm.withdraw.startDate"
                     valueFormat="YYYY-MM-DD"
                     placeholder=""
@@ -188,19 +166,14 @@
                 </el-form-item>
                 <el-form-item label="结束">
                   <el-date-picker
+                    :clearable="false"
                     v-model="searchForm.withdraw.endDate"
                     valueFormat="YYYY-MM-DD"
                     placeholder=""
                   />
                 </el-form-item>
                 <el-form-item>
-                  <el-button
-                    type="success"
-                    class="common-btn"
-                    @click="searchRecord"
-                  >
-                    搜索
-                  </el-button>
+                  <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -230,10 +203,7 @@
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
-                <template
-                  v-if="tbl.dataIndex === 'recordTime'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{ scope.row.recordTime }}</span>
                   </div>
@@ -248,13 +218,7 @@
                 <template v-if="tbl.dataIndex === 'operation'" #default="scope">
                   <template v-if="scope.row.status === 'STEP_1'">
                     <div style="display: flex; align-items: center">
-                      <el-button
-                        size="small"
-                        class="common-btn"
-                        @click="openReminder(scope.row)"
-                      >
-                        催单
-                      </el-button>
+                      <el-button size="small" class="common-btn" @click="openReminder(scope.row)">催单</el-button>
                     </div>
                   </template>
 
@@ -266,11 +230,7 @@
                     "
                   >
                     <div style="display: flex; align-items: center">
-                      <el-button
-                        size="small"
-                        class="common-btn"
-                        @click="openWithdrawConfirm(scope.row)"
-                      >
+                      <el-button size="small" class="common-btn" @click="openWithdrawConfirm(scope.row)">
                         确认到账
                       </el-button>
                     </div>
@@ -294,6 +254,7 @@
               <div class="left">
                 <el-form-item label="开始">
                   <el-date-picker
+                    :clearable="false"
                     v-model="searchForm.transfer.startDate"
                     valueFormat="YYYY-MM-DD"
                     placeholder=""
@@ -301,19 +262,14 @@
                 </el-form-item>
                 <el-form-item label="结束">
                   <el-date-picker
+                    :clearable="false"
                     v-model="searchForm.transfer.endDate"
                     valueFormat="YYYY-MM-DD"
                     placeholder=""
                   />
                 </el-form-item>
                 <el-form-item>
-                  <el-button
-                    type="success"
-                    class="common-btn"
-                    @click="searchRecord"
-                  >
-                    搜索
-                  </el-button>
+                  <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -330,10 +286,7 @@
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
-                <template
-                  v-if="tbl.dataIndex === 'recordTime'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{ scope.row.recordTime }}</span>
                   </div>
@@ -371,6 +324,7 @@
               <div class="left">
                 <el-form-item label="开始">
                   <el-date-picker
+                    :clearable="false"
                     v-model="searchForm.rebates.startDate"
                     valueFormat="YYYY-MM-DD"
                     placeholder=""
@@ -378,19 +332,14 @@
                 </el-form-item>
                 <el-form-item label="结束">
                   <el-date-picker
+                    :clearable="false"
                     v-model="searchForm.rebates.endDate"
                     valueFormat="YYYY-MM-DD"
                     placeholder=""
                   />
                 </el-form-item>
                 <el-form-item>
-                  <el-button
-                    type="success"
-                    class="common-btn"
-                    @click="searchRecord"
-                  >
-                    搜索
-                  </el-button>
+                  <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -407,10 +356,7 @@
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
-                <template
-                  v-if="tbl.dataIndex === 'recordTime'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{ scope.row.recordTime }}</span>
                   </div>
@@ -439,10 +385,7 @@
           </div>
         </el-tab-pane>
         <el-tab-pane name="gameBetRecord" label="投注记录">
-          <div
-            v-if="searchForm.gameBetRecord.platform.length === 0"
-            class="payout-total"
-          >
+          <div v-if="searchForm.gameBetRecord.platform.length === 0" class="payout-total">
             <div>总投注: {{ totalBetRecord.totalBet }}</div>
             <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
           </div>
@@ -451,24 +394,21 @@
               <div class="left">
                 <el-form-item label="平台">
                   <el-select
-                    allowClear
-                    style="width: 300px"
+                    clearable
+                    style="width: 200px"
                     v-model="searchForm.gameBetRecord.platform"
                     placeholder="平台"
                     @change="searchRecord"
                   >
                     <el-option key="" value="">-</el-option>
-                    <el-option
-                      v-for="p in platformsList"
-                      :key="p.name"
-                      :value="p.name"
-                    >
-                      {{ p.name }}
+                    <el-option v-for="p in platformsList" :key="p.code" :value="p.code">
+                      {{ getPlatform(p.code) }}
                     </el-option>
                   </el-select>
                 </el-form-item>
                 <el-form-item label="开始">
                   <el-date-picker
+                    :clearable="false"
                     v-model="searchForm.gameBetRecord.startDate"
                     valueFormat="YYYY-MM-DD"
                     placeholder=""
@@ -476,19 +416,14 @@
                 </el-form-item>
                 <el-form-item label="结束">
                   <el-date-picker
+                    :clearable="false"
                     v-model="searchForm.gameBetRecord.endDate"
                     valueFormat="YYYY-MM-DD"
                     placeholder=""
                   />
                 </el-form-item>
                 <el-form-item>
-                  <el-button
-                    type="success"
-                    class="common-btn"
-                    @click="searchRecord"
-                  >
-                    搜索
-                  </el-button>
+                  <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -515,10 +450,7 @@
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
-                <template
-                  v-if="tbl.dataIndex === 'recordTime'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{ scope.row.recordTime }}</span>
                   </div>
@@ -566,6 +498,7 @@
               <div class="left">
                 <el-form-item label="开始">
                   <el-date-picker
+                    :clearable="false"
                     v-model="searchForm.reminderRecord.startDate"
                     valueFormat="YYYY-MM-DD"
                     placeholder=""
@@ -573,19 +506,14 @@
                 </el-form-item>
                 <el-form-item label="结束">
                   <el-date-picker
+                    :clearable="false"
                     v-model="searchForm.reminderRecord.endDate"
                     valueFormat="YYYY-MM-DD"
                     placeholder=""
                   />
                 </el-form-item>
                 <el-form-item>
-                  <el-button
-                    type="success"
-                    class="common-btn"
-                    @click="searchRecord"
-                  >
-                    搜索
-                  </el-button>
+                  <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -602,10 +530,7 @@
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
-                <template
-                  v-if="tbl.dataIndex === 'recordTime'"
-                  #default="scope"
-                >
+                <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{ scope.row.recordTime }}</span>
                   </div>
@@ -676,20 +601,10 @@
             autocomplete="off"
             label-width="110"
             label-suffix=":"
-            style="
-              width: 100%;
-              max-width: 400px;
-              margin: 0px auto 0px;
-              padding-top: 50px;
-              padding-bottom: 50px;
-            "
+            style="width: 100%; max-width: 400px; margin: 0px auto 0px; padding-top: 50px; padding-bottom: 50px"
           >
             <el-form-item tabindex="1" label="单号" prop="serialNumber">
-              <el-input
-                v-model="reminderForm.orderNo"
-                placeholder="单号"
-                disabled
-              />
+              <el-input v-model="reminderForm.orderNo" placeholder="单号" disabled />
             </el-form-item>
 
             <el-form-item label="选择图片" prop="photos">
@@ -724,8 +639,8 @@
 </template>
 
 <script lang="js">
-import {defineComponent, onMounted, reactive, ref} from "vue";
-import {ElMessage, ElMessageBox} from "element-plus";
+import { defineComponent, onMounted, reactive, ref } from "vue";
+import { ElMessage, ElMessageBox } from "element-plus";
 import {
   loadRecords,
   gameBetRecordTotal,
@@ -736,21 +651,21 @@ import {
 } from "@/api/personal/personal";
 import moment from "moment";
 // import { message } from "ant-design-vue";
-import {getPlatformList} from "@/api/platform/platform";
-import {userStore} from "@/store";
-import FileUpload from "@/components/FileUpload.vue"
-import EmptyData from "@/components/emptyData.vue"
+import { getPlatformList } from "@/api/platform/platform";
+import { userStore } from "@/store";
+import FileUpload from "@/components/FileUpload.vue";
+import EmptyData from "@/components/emptyData.vue";
 import { useRoute } from "vue-router";
 
 const loadingBtn = ref(false);
-const store = userStore()
+const store = userStore();
 const uploadFileRef = ref();
 const recordActive = ref("deposit");
 const reminderForm = reactive({});
 const totalBetRecord = reactive({
   totalBet: 0,
   totalPayout: 0
-})
+});
 const searchForm = reactive({
   turnover: {
     startDate: "",
@@ -804,7 +719,7 @@ const searchForm = reactive({
     endDate: "",
     current: 1,
     size: 10
-  },
+  }
 });
 const dataState = reactive({
   deposit: [],
@@ -841,12 +756,12 @@ const tableColumns = {
     {
       title: "存款日期",
       dataIndex: "depositDate",
-      slots: {customRender: "depositDate"}
+      slots: { customRender: "depositDate" }
     },
     {
       title: "操作",
       dataIndex: "operation",
-      slots: {customRender: "operation"}
+      slots: { customRender: "operation" }
     }
   ],
   withdraw: [
@@ -862,12 +777,12 @@ const tableColumns = {
     {
       title: "提款日期",
       dataIndex: "withdrawDate",
-      slots: {customRender: "withdrawDate"}
+      slots: { customRender: "withdrawDate" }
     },
     {
       title: "操作",
       dataIndex: "operation",
-      slots: {customRender: "operation"}
+      slots: { customRender: "operation" }
     }
   ],
   transfer: [
@@ -876,7 +791,7 @@ const tableColumns = {
       title: "转账类型",
       dataIndex: "type",
       key: "type",
-      slots: {customRender: "type"}
+      slots: { customRender: "type" }
     },
     {
       title: "游戏平台",
@@ -892,13 +807,13 @@ const tableColumns = {
       title: "状态",
       dataIndex: "status",
       key: "status",
-      slots: {customRender: "status"}
+      slots: { customRender: "status" }
     },
     {
       title: "时间",
       dataIndex: "transferDate",
       key: "transferDate",
-      slots: {customRender: "transferDate"}
+      slots: { customRender: "transferDate" }
     }
   ],
   rebates: [
@@ -914,7 +829,7 @@ const tableColumns = {
     {
       title: "记录时间",
       dataIndex: "recordTime",
-      slots: {customRender: "recordTime"}
+      slots: { customRender: "recordTime" }
     }
   ],
   turnover: [
@@ -930,12 +845,12 @@ const tableColumns = {
     {
       title: "平台",
       dataIndex: "subType",
-      slots: {customRender: "subType"}
+      slots: { customRender: "subType" }
     },
     {
       title: "时间",
       dataIndex: "recordTime",
-      slots: {customRender: "recordTime"}
+      slots: { customRender: "recordTime" }
     }
   ],
   gameBetRecord: [
@@ -1019,7 +934,7 @@ const tableColumns = {
     {
       title: "体育投注结果",
       dataIndex: "sportBetResult"
-    },
+    }
   ],
   reminderRecord: [
     {
@@ -1033,14 +948,14 @@ const tableColumns = {
     {
       title: "反馈时间",
       dataIndex: "feedbackTime",
-      slots: {customRender: "feedbackTime"}
+      slots: { customRender: "feedbackTime" }
     },
     {
       title: "类型",
       dataIndex: "type",
-      slots: {customRender: "type"}
-    },
-  ],
+      slots: { customRender: "type" }
+    }
+  ]
 };
 const loading = ref(false);
 const pagination = reactive({
@@ -1057,19 +972,21 @@ const betPagination = reactive({
 export default defineComponent({
   components: {
     EmptyData,
-    FileUpload,
+    FileUpload
   },
   name: "TransitRecordView",
   setup() {
     const searchRecord = (tab) => {
+      console.log(tab)
+      console.log(recordActive.value)
       if (tab && tab.props && tab.props.name) {
-        recordActive.value = tab.props.name
+        recordActive.value = tab.props.name;
       }
       // recordActive.value = key.props.name
       loading.value = true;
-      if (recordActive.value === 'gameBetRecord') {
+      if (recordActive.value === "gameBetRecord") {
         getPlatList(recordActive.value);
-      } else if (recordActive.value === 'reminderRecord') {
+      } else if (recordActive.value === "reminderRecord") {
         financeFeedbackList(searchForm[recordActive.value]).then((response) => {
           if (response.code === 0) {
             pagination.total = response.data.total;
@@ -1078,11 +995,11 @@ export default defineComponent({
             dataSource.splice(0);
             dataSource.push(...response.data.records);
           }
-        })
+        });
         return;
       }
 
-      if (recordActive.value === 'turnover' || recordActive.value === 'gameBetRecord') {
+      if (recordActive.value === "turnover" || recordActive.value === "gameBetRecord") {
         if (searchForm[recordActive.value].current === 1) {
           searchForm[recordActive.value].pagingState = null;
         } else {
@@ -1092,7 +1009,7 @@ export default defineComponent({
       loadRecords(recordActive.value, searchForm[recordActive.value]).then((response) => {
         if (response.code === 0) {
           pagination.total = response.data.total;
-          if (recordActive.value === 'turnover' || recordActive.value === 'gameBetRecord') {
+          if (recordActive.value === "turnover" || recordActive.value === "gameBetRecord") {
             pagination.pagingState = response.data.pagingState;
           }
           const dataSource = dataState[recordActive.value];
@@ -1113,14 +1030,14 @@ export default defineComponent({
       searchRecord();
     };
     const recordBetPage = (pagination) => {
-      searchForm.betRecord.current = pagination.current
+      searchForm.betRecord.current = pagination.current;
       if (pagination.current === 1) {
         searchForm.betRecord.pagingState = null;
       } else {
         searchForm.betRecord.pagingState = betPagination.pagingState;
       }
       betDetails(selectedBetRecord);
-    }
+    };
 
     const chgDate = (val) => {
       var gapDate = new Date().getTime() - val * 24 * 60 * 60 * 1000;
@@ -1135,13 +1052,13 @@ export default defineComponent({
     };
 
     const getTime = () => {
-      ["deposit", "rebates", "transfer", "turnover", "withdraw", "gameBetRecord", "reminderRecord"].forEach(function (v) {
+      ["deposit", "rebates", "transfer", "turnover", "withdraw", "gameBetRecord", "reminderRecord"].forEach(function(v) {
         if (v in searchForm) {
           searchForm[v].startDate = chgDate(7);
           searchForm[v].endDate = chgDate(0);
-          if(v === "gameBetRecord") {
+          if (v === "gameBetRecord") {
             // 结束时间如果不跟开始时间一个月，则从当月1号开始
-            if(moment(searchForm[v].startDate).format("YYYY-MM") !== moment(searchForm[v].endDate).format("YYYY-MM")) {
+            if (moment(searchForm[v].startDate).format("YYYY-MM") !== moment(searchForm[v].endDate).format("YYYY-MM")) {
               searchForm[v].startDate = moment(searchForm[v].endDate).format("YYYY-MM") + "-01";
             }
           }
@@ -1150,94 +1067,95 @@ export default defineComponent({
       searchRecord();
     };
 
-    const route= useRoute();
+    const route = useRoute();
     onMounted(() => {
       getTime();
     });
-    const platformsList = ref([])
+    const platformsList = ref([]);
     const getPlatList = (v) => {
-      const startMonth = new Date(searchForm[v].startDate).getMonth()
-      const endMonth = new Date(searchForm[v].endDate).getMonth()
+      const startMonth = new Date(searchForm[v].startDate).getMonth();
+      const endMonth = new Date(searchForm[v].endDate).getMonth();
       if (startMonth !== endMonth) {
-        ElMessage.error('开始与结束月份必须一致');
+        ElMessage.error("开始与结束月份必须一致");
       }
 
       getPlatformList().then((ret) => {
-        platformsList.value = ret
-      })
+        platformsList.value = ret;
+      });
 
       const obj = {
         memberId: searchForm.gameBetRecord.memberId,
         platform: searchForm.gameBetRecord.platform,
         startDate: searchForm.gameBetRecord.startDate,
-        endDate: searchForm.gameBetRecord.endDate,
-      }
+        endDate: searchForm.gameBetRecord.endDate
+      };
       gameBetRecordTotal(obj).then((ret) => {
         if (ret.code === 0) {
-          totalBetRecord.totalBet = ret.data.totalBet
-          totalBetRecord.totalPayout = ret.data.totalPayout
+          totalBetRecord.totalBet = ret.data.totalBet;
+          totalBetRecord.totalPayout = ret.data.totalPayout;
         }
-      })
+      });
 
     };
-    const selectedBetRecord = ref({})
-    const betRecordDialog = ref(false)
-    const reminderDialog = ref(false)
+
+    const selectedBetRecord = ref({});
+    const betRecordDialog = ref(false);
+    const reminderDialog = ref(false);
     const clearItems = (done) => {
       uploadFileRef.value.clear();
-      done()
-    }
+      done();
+    };
     const openReminder = (record) => {
       getVerifyingFeedbackCount().then((res) => {
         if (res.code === 0) {
           if (res.data < 3) {
-            reminderDialog.value = true
-            reminderForm.orderNo = record.serialNumber
-            reminderForm.photos = null
-            reminderForm.memberRemark = ""
-            if (recordActive.value === 'deposit') {
-              reminderForm.type = 1
-              reminderForm.recordTime = moment(record.depositDate).format('YYYY-MM-DD HH:mm:ss')
-            } else if (recordActive.value === 'withdraw') {
-              reminderForm.type = 2
-              reminderForm.recordTime = moment(record.withdrawDate).format('YYYY-MM-DD HH:mm:ss')
+            reminderDialog.value = true;
+            reminderForm.orderNo = record.serialNumber;
+            reminderForm.photos = null;
+            reminderForm.memberRemark = "";
+            if (recordActive.value === "deposit") {
+              reminderForm.type = 1;
+              reminderForm.recordTime = moment(record.depositDate).format("YYYY-MM-DD HH:mm:ss");
+            } else if (recordActive.value === "withdraw") {
+              reminderForm.type = 2;
+              reminderForm.recordTime = moment(record.withdrawDate).format("YYYY-MM-DD HH:mm:ss");
             }
           } else {
-            ElMessage.error('无法提交新催单，目前尚有未处理的催单。')
+            ElMessage.error("无法提交新催单，目前尚有未处理的催单。");
           }
         }
-      })
-    }
+      });
+    };
     const openWithdrawConfirm = (record) => {
       const obj = {
         id: record.id,
         withdrawDate: record.withdrawDate
-      }
+      };
       confirmationOfWithdrawalReceived(obj).then((res) => {
         if (res.code === 0) {
 
-          ElMessageBox.alert('已经确认到账', {
-                // if you want to disable its autofocus
-                // autofocus: false,
-                title: '系统提示',
-                center: true,
-                confirmButtonText: '确认',
-                showClose: false,
-                buttonSize: 'large'
-            }).then(() => {
-              getTime()
-            })
+          ElMessageBox.alert("已经确认到账", {
+            // if you want to disable its autofocus
+            // autofocus: false,
+            title: "系统提示",
+            center: true,
+            confirmButtonText: "确认",
+            showClose: false,
+            buttonSize: "large"
+          }).then(() => {
+            getTime();
+          });
         }
-      })
-    }
+      });
+    };
     const submitReminder = () => {
       loadingBtn.value = true;
       if (!reminderForm.photos) {
         ElMessage.warning(
-            `请上传图片提交`
+          `请上传图片提交`
         );
       } else {
-        console.log(reminderForm)
+        console.log(reminderForm);
         saveFinanceFeedback(reminderForm).then((res) => {
           if (res.code === 0) {
             ElMessage.success(`催单上传成功。`);
@@ -1245,288 +1163,336 @@ export default defineComponent({
             formRef.value.resetFields();
             uploadFileRef.value.clear();
           }
-        })
+        });
       }
       loadingBtn.value = false;
-    }
+    };
     const betDetails = (record) => {
-      dataState.betRecord = []
-      selectedBetRecord.value = record
+      dataState.betRecord = [];
+      selectedBetRecord.value = record;
       const obj = {
         platform: record.platform,
-        betTime: moment(record.betTime).format('YYYY-MM-DD'),
+        betTime: moment(record.betTime).format("YYYY-MM-DD"),
         memberId: searchForm.betRecord.memberId,
         current: searchForm.betRecord.current,
         size: searchForm.betRecord.size,
         pagingState: searchForm.betRecord.pagingState
-      }
+      };
       loadRecords("betRecord", obj).then((response) => {
         if (response.code === 0) {
           betPagination.total = response.data.total;
-          betRecordDialog.value = true
+          betRecordDialog.value = true;
           betPagination.pagingState = response.data.pagingState;
           // dataState.betRecord = response.data.records
-          dataState.betRecord.push(...response.data.records)
+          dataState.betRecord.push(...response.data.records);
         }
-      })
-    }
+      });
+    };
 
-    const imgURL = process.env.VUE_APP_IMAGE_CDN
+    const imgURL = process.env.VUE_APP_IMAGE_CDN;
     const getImageLink = (linkId) => {
-      reminderForm.photos = imgURL + '/order/' + store.siteId + '/' + linkId
-    }
+      reminderForm.photos = imgURL + "/order/" + store.siteId + "/" + linkId;
+    };
 
     const getTurnoverType = (turnoverType) => {
       if (!turnoverType) {
-        return ''
+        return "";
       }
-      if (turnoverType === 'WITHDRAW_FAIL') {
-        return '提款失败' // Fail Withdrawal
-      } else if (turnoverType === 'WITHDRAW') {
-        return '提款' // Withdraw
-      }  else if (turnoverType === 'PROMO') {
-        return '优惠' // 优惠
-      }  else if (turnoverType === 'DEPOSIT') {
-        return '存款' // 存款
-      }  else if (turnoverType === 'TRANSFER') {
-        return '转账' // 转账
-      }  else if (turnoverType === 'ADJUST') {
-        return '账变' // 账变
+      if (turnoverType === "WITHDRAW_FAIL") {
+        return "提款失败"; // Fail Withdrawal
+      } else if (turnoverType === "WITHDRAW") {
+        return "提款"; // Withdraw
+      } else if (turnoverType === "PROMO") {
+        return "优惠"; // 优惠
+      } else if (turnoverType === "DEPOSIT") {
+        return "存款"; // 存款
+      } else if (turnoverType === "TRANSFER") {
+        return "转账"; // 转账
+      } else if (turnoverType === "ADJUST") {
+        return "账变"; // 账变
       } else {
-        return turnoverType
+        return turnoverType;
       }
-    }
+    };
     const getTransferType = (transferType) => {
       if (!transferType) {
-        return ''
+        return "";
       }
-      if (transferType === 'APPLY') {
-        return '申请中' //Applying
-      } else if (transferType === 'FAIL') {
-        return '失败' // Failed
-      } else if (transferType === 'SUCCESS') {
-        return '成功' // Success
-      } else if (transferType === 'STEP_1' || transferType === 'PENDING') {
-        return '审核中' //Under review
-      } else if (transferType === 'STEP_2') {
-        return '待支付' // To be paid
-      } else if (transferType === 'STEP_3') {
-        return '支付中' // Payment on going
-      } else if (transferType === 'STEP_4') {
-        return '自动支付' // Automatic Payment
-      } else if (transferType === 'STEP_5') {
-        return '暂不处理' // Suspend
-      } else if (transferType === 'AUTOPAY') {
-        return '自动支付' // Automatic Payment
-      } else if (transferType === 'WAITING_CALLBACK') {
-        return '自动支付中' // Waiting Callback
-      } else if (transferType === 'PENDING') {
-        return '支付中' // Pending
-      } else if (transferType === 'SUCCESS') {
-        return '成功' // Success
-      } else if (transferType === 'SUPPLEMENT_SUCCESS') {
-        return '成功' // Supplement Success
-      } else if (transferType === 'CLOSED') {
-        return '关闭' // Closed
-      } else if (transferType === 'WITHDRAW_FAIL') {
-        return '提款失败' // Fail Withdrawal
-      } else if (transferType === 'WITHDRAW') {
-        return '提款' // Withdraw
-      }  else if (transferType === 'PROMO') {
-        return '优惠' // 优惠
-      }  else if (transferType === 'DEPOSIT') {
-        return '存款' // 存款
-      }  else if (transferType === 'TRANSFER') {
-        return '转账' // 转账
-      }  else if (transferType === 'ADJUST') {
-        return '账变' // 账变
+      if (transferType === "APPLY") {
+        return "申请中"; //Applying
+      } else if (transferType === "FAIL") {
+        return "失败"; // Failed
+      } else if (transferType === "SUCCESS") {
+        return "成功"; // Success
+      } else if (transferType === "STEP_1" || transferType === "PENDING") {
+        return "审核中"; //Under review
+      } else if (transferType === "STEP_2") {
+        return "待支付"; // To be paid
+      } else if (transferType === "STEP_3") {
+        return "支付中"; // Payment on going
+      } else if (transferType === "STEP_4") {
+        return "自动支付"; // Automatic Payment
+      } else if (transferType === "STEP_5") {
+        return "暂不处理"; // Suspend
+      } else if (transferType === "AUTOPAY") {
+        return "自动支付"; // Automatic Payment
+      } else if (transferType === "WAITING_CALLBACK") {
+        return "自动支付中"; // Waiting Callback
+      } else if (transferType === "PENDING") {
+        return "支付中"; // Pending
+      } else if (transferType === "SUCCESS") {
+        return "成功"; // Success
+      } else if (transferType === "SUPPLEMENT_SUCCESS") {
+        return "成功"; // Supplement Success
+      } else if (transferType === "CLOSED") {
+        return "关闭"; // Closed
+      } else if (transferType === "WITHDRAW_FAIL") {
+        return "提款失败"; // Fail Withdrawal
+      } else if (transferType === "WITHDRAW") {
+        return "提款"; // Withdraw
+      } else if (transferType === "PROMO") {
+        return "优惠"; // 优惠
+      } else if (transferType === "DEPOSIT") {
+        return "存款"; // 存款
+      } else if (transferType === "TRANSFER") {
+        return "转账"; // 转账
+      } else if (transferType === "ADJUST") {
+        return "账变"; // 账变
       } else {
-        return transferType
+        return transferType;
       }
-    }
+    };
 
     const getTransferChangeType = (transferChangeType) => {
       if (!transferChangeType) {
-        return ''
+        return "";
       }
-       if (transferChangeType === 'WITHDRAW') {
-        return '转出' // Withdraw
-      }  else if (transferChangeType === 'DEPOSIT') {
-        return '转入' // DEPOSIT
+      if (transferChangeType === "WITHDRAW") {
+        return "转出"; // Withdraw
+      } else if (transferChangeType === "DEPOSIT") {
+        return "转入"; // DEPOSIT
       } else {
-        return transferChangeType
+        return transferChangeType;
       }
-    }
+    };
 
     const getPlatform = (platformName) => {
       if (!platformName) {
-        return ''
+        return "";
       }
-      if (platformName === 'AG') {
-        return 'AG真人' // AG
-      } else if (platformName === 'BBINDY') {
-        return 'BBIN真人' // BBINDY
-      }  else if (platformName === 'KY') {
-        return '开元棋牌' // KY
-      }  else if (platformName === 'KYDY') {
-        return '开元棋牌' // KYDY
-      }  else if (platformName === 'DT') {
-        return '大唐棋牌' // DT
-      }  else if (platformName === 'TCG') {
-        return 'TCG彩票' // TCG
-      }  else if (platformName === 'SGWin') {
-        return '双赢彩票' // SGWin
-      } else if (platformName === 'PTDY') {
-        return 'PT电子' // SGWin
-      } else if (platformName === 'PGDY') {
-        return 'PG电子' // SGWin
+      if (platformName === "AG") {
+        return "AG真人"; // AG
+      } else if (platformName === "BBINDY") {
+        return "BBIN真人"; // BBINDY
+      } else if (platformName === "KY") {
+        return "开元棋牌"; // KY
+      } else if (platformName === "KYDY") {
+        return "开元棋牌"; // KYDY
+      } else if (platformName === "DT") {
+        return "大唐棋牌"; // DT
+      } else if (platformName === "TCG") {
+        return "TCG彩票"; // TCG
+      } else if (platformName === "BBINDY") {
+        return "BBIN真人"; // BBINDY
+      } else if (platformName === "PINNACLE") {
+        return "平博体育"; // BBINDY
+      } else if (platformName === "EBET") {
+        return "WE真人"; // EBET
+      } else if (platformName === "ALLBET") {
+        return "欧博真人"; // EBET
+      } else if (platformName === "KY") {
+        return "开元棋牌"; // KY
+      } else if (platformName === "DT") {
+        return "大唐棋牌"; // DT
+      } else if (platformName === "LEG") {
+        return "乐游棋牌"; // KY
+      } else if (platformName === "GLFC") {
+        return "高登棋牌"; // DT
+      } else if (platformName === "GFLC") {
+        return "高登棋牌"; // DT
+      } else if (platformName === "TCG") {
+        return "TCG彩票"; // TCG
+      } else if (platformName === "PT") {
+        return "PT电子"; // PTDY
+      } else if (platformName === "PG") {
+        return "PG电子"; // PGDY
+      } else if (platformName === "SW") {
+        return "SW电子"; // PGDY
+      } else if (platformName === "SABA") {
+        return "沙巴体育"; // PGDY
+      } else if (platformName === "BG") {
+        return "BG真人"; // PGDY
+      } else if (platformName === "Evo") {
+        return "Evo真人"; // PGDY
+      } else if (platformName === "BBINDY") {
+        return "BBIN真人"; // PGDY
+      } else if (platformName === "BBIN") {
+        return "BBIN真人"; // PGDY
+      } else if (platformName === "WE") {
+        return "WE真人"; // PGDY
+      } else if (platformName === "PMLIVE") {
+        return "DB真人"; // PGDY
+      } else if (platformName === "PM") {
+        return "熊猫体育"; // PGDY
+      } else if (platformName === "RG") {
+        return "RG电竞";
+      } else if (platformName === "IM") {
+        return "IM体育";
+      } else if (platformName === "IA") {
+        return "IA电竞";
+      } else if (platformName === "TFGaming") {
+        return "雷火电竞";
+      } else if (platformName === "IMES") {
+        return "IM电竞";
+      } else if (platformName === "GPS") {
+        return "GPS决战中途岛";
       } else {
-        return platformName
+        return platformName;
       }
-    }
+    };
 
     const getSubType = (subType) => {
       if (!subType) {
-        return ''
+        return "";
       }
-      if (subType === 'DEPOSIT') {
-        return '转进' // 转进
-      } else if (subType === 'WITHDRAW') {
-        return '转出' // 转出
+      if (subType === "DEPOSIT") {
+        return "转进"; // 转进
+      } else if (subType === "WITHDRAW") {
+        return "转出"; // 转出
       } else {
-        return subType
+        return subType;
       }
-    }
+    };
 
     const getWithdrawStatus = (withdrawStatus) => {
-      if (withdrawStatus === 'APPLY') {
-        return '申请中' //Applying
-      } else if (withdrawStatus === 'FAIL') {
-        return '失败' // Failed
-      } else if (withdrawStatus === 'SUCCESS') {
-        return '成功' // Success
-      } else if (withdrawStatus === 'STEP_1' || withdrawStatus === 'PENDING') {
-        return '审核中' //Under review
-      } else if (withdrawStatus === 'STEP_2') {
-        return '待支付' // To be paid
-      } else if (withdrawStatus === 'STEP_3') {
-        return '支付中' // Payment on going
-      } else if (withdrawStatus === 'STEP_4') {
-        return '自动支付' // Automatic Payment
-      } else if (withdrawStatus === 'STEP_5') {
-        return '暂不处理' // Suspend
-      } else if (withdrawStatus === 'AUTOPAY') {
-        return '自动支付' // Automatic Payment
-      } else if (withdrawStatus === 'WAITING_CALLBACK') {
-        return '自动支付中' // Waiting Callback
+      if (withdrawStatus === "APPLY") {
+        return "申请中"; //Applying
+      } else if (withdrawStatus === "FAIL") {
+        return "失败"; // Failed
+      } else if (withdrawStatus === "SUCCESS") {
+        return "成功"; // Success
+      } else if (withdrawStatus === "STEP_1" || withdrawStatus === "PENDING") {
+        return "审核中"; //Under review
+      } else if (withdrawStatus === "STEP_2") {
+        return "待支付"; // To be paid
+      } else if (withdrawStatus === "STEP_3") {
+        return "支付中"; // Payment on going
+      } else if (withdrawStatus === "STEP_4") {
+        return "自动支付"; // Automatic Payment
+      } else if (withdrawStatus === "STEP_5") {
+        return "暂不处理"; // Suspend
+      } else if (withdrawStatus === "AUTOPAY") {
+        return "自动支付"; // Automatic Payment
+      } else if (withdrawStatus === "WAITING_CALLBACK") {
+        return "自动支付中"; // Waiting Callback
       } else {
-        return withdrawStatus
+        return withdrawStatus;
       }
     };
     const getDepositStatus = (depositStatus) => {
       if (!depositStatus) {
-        return ''
+        return "";
       }
-      if (depositStatus === 'PENDING') {
-        return '支付中' // Pending
-      } else if (depositStatus === 'SUCCESS') {
-        return '成功' // Success
-      } else if (depositStatus === 'SUPPLEMENT_SUCCESS') {
-        return '成功' // Supplement Success
-      } else if (depositStatus === 'CLOSED') {
-        return '关闭' // Closed
+      if (depositStatus === "PENDING") {
+        return "支付中"; // Pending
+      } else if (depositStatus === "SUCCESS") {
+        return "成功"; // Success
+      } else if (depositStatus === "SUPPLEMENT_SUCCESS") {
+        return "成功"; // Supplement Success
+      } else if (depositStatus === "CLOSED") {
+        return "关闭"; // Closed
       } else {
-        return depositStatus
+        return depositStatus;
       }
-    }
+    };
     const getDepositType = (depositType) => {
       if (!depositType) {
-        return ''
+        return "";
       }
-      if (depositType === 'BANK') {
-        return 'VIP转卡' // VIP转卡
-      } else if (depositType === 'USDTERC') {
-        return 'USDT ERC' // USDT ERC
-      } else if (depositType === 'USDTTRC') {
-        return 'USDT TRC' // USDT TRC
-      } else if (depositType === 'OFFLINE') {
-        return '线下转卡' // 线下转卡
-      } else if (depositType === 'UNION') {
-        return '银联快捷' // 银联快捷
-      } else if (depositType === 'QUICKPAYMENT') {
-        return '小额转卡' // 小额转卡
-      } else if (depositType === 'SPECIALPAY') {
-        return '网银转账' // 网银转账
-      } else if (depositType === 'ALIPAY') {
-        return '支付宝转卡' // 支付宝转卡
-      } else if (depositType === 'ALIPAYCODE') {
-        return '支付宝' // 支付宝
-      } else if (depositType === 'WECHATCODE') {
-        return '微信支付' // 微信支付
-      } else if (depositType === 'QQCODE') {
-        return 'QQ支付' // QQ支付
-      } else if (depositType === 'KDPAY') {
-        return 'K豆' // K豆
-      } else if (depositType === 'DDPAY') {
-        return '钉钉' // 钉钉
-      } else if (depositType === 'HBPAY') {
-        return '和包' // 和包
-      }  else if (depositType === 'SZPAY') {
-        return '数字人民币' // 数字人民币
-      }  else if (depositType === 'CARDPAY') {
-        return '点卡支付' // 点卡支付
-      }  else if (depositType === 'ONLINECODE') {
-        return '云闪付' // 云闪付
-      }  else if (depositType === 'DYPAY') {
-        return '抖音' // 抖音
-      }   else if (depositType === 'AUTOPAY') {
-        return '自动支付' // 自动支付
+      if (depositType === "BANK") {
+        return "VIP转卡"; // VIP转卡
+      } else if (depositType === "USDTERC") {
+        return "USDT ERC"; // USDT ERC
+      } else if (depositType === "USDTTRC") {
+        return "USDT TRC"; // USDT TRC
+      } else if (depositType === "OFFLINE") {
+        return "线下转卡"; // 线下转卡
+      } else if (depositType === "UNION") {
+        return "银联快捷"; // 银联快捷
+      } else if (depositType === "QUICKPAYMENT") {
+        return "小额转卡"; // 小额转卡
+      } else if (depositType === "SPECIALPAY") {
+        return "网银转账"; // 网银转账
+      } else if (depositType === "ALIPAY") {
+        return "支付宝转卡"; // 支付宝转卡
+      } else if (depositType === "ALIPAYCODE") {
+        return "支付宝"; // 支付宝
+      } else if (depositType === "WECHATCODE") {
+        return "微信支付"; // 微信支付
+      } else if (depositType === "QQCODE") {
+        return "QQ支付"; // QQ支付
+      } else if (depositType === "KDPAY") {
+        return "K豆"; // K豆
+      } else if (depositType === "DDPAY") {
+        return "钉钉"; // 钉钉
+      } else if (depositType === "HBPAY") {
+        return "和包"; // 和包
+      } else if (depositType === "SZPAY") {
+        return "数字人民币"; // 数字人民币
+      } else if (depositType === "CARDPAY") {
+        return "点卡支付"; // 点卡支付
+      } else if (depositType === "ONLINECODE") {
+        return "云闪付"; // 云闪付
+      } else if (depositType === "DYPAY") {
+        return "抖音"; // 抖音
+      } else if (depositType === "AUTOPAY") {
+        return "自动支付"; // 自动支付
       } else {
-        return depositType
+        return depositType;
       }
-    }
+    };
     const getGameType = (gameType) => {
       if (!gameType) {
-        return ''
+        return "";
       }
-      if (gameType === 'SLOT') {
-        return '电子' // Slot
-      } else if (gameType === 'LIVE') {
-        return '真人' // Live
-      } else if (gameType === 'FISH') {
-        return '捕鱼' // Fish
-      } else if (gameType === 'SPORT') {
-        return '体育' // Sport
-      } else if (gameType === 'ESPORT') {
-        return '电竞' // E-Sport
-      } else if (gameType === 'POKER') {
-        return '棋牌' // Poker
-      } else if (gameType === 'LOTTERY') {
-        return '彩票' // Lottery
+      if (gameType === "SLOT") {
+        return "电子"; // Slot
+      } else if (gameType === "LIVE") {
+        return "真人"; // Live
+      } else if (gameType === "FISH") {
+        return "捕鱼"; // Fish
+      } else if (gameType === "SPORT") {
+        return "体育"; // Sport
+      } else if (gameType === "ESPORT") {
+        return "电竞"; // E-Sport
+      } else if (gameType === "POKER") {
+        return "棋牌"; // Poker
+      } else if (gameType === "LOTTERY") {
+        return "彩票"; // Lottery
       } else {
-        return gameType
+        return gameType;
       }
-    }
+    };
 
     const getBetStatus = (betStatus) => {
       if (!betStatus) {
-        return ''
+        return "";
       }
-      if (betStatus === 'BET') {
-        return '投注' // Bet
-      } else if (betStatus === 'SETTLE') {
-        return '结算' // Settle
-      } else if (betStatus === 'BET_N_SETTLE') {
-        return '投注并结算' // Bet & Settled
-      } else if (betStatus === 'CANCEL') {
-        return '取消' // Cancel
-      } else if (betStatus === 'PATCH') {
-        return '修补' // Patch
+      if (betStatus === "BET") {
+        return "投注"; // Bet
+      } else if (betStatus === "SETTLE") {
+        return "结算"; // Settle
+      } else if (betStatus === "BET_N_SETTLE") {
+        return "投注并结算"; // Bet & Settled
+      } else if (betStatus === "CANCEL") {
+        return "取消"; // Cancel
+      } else if (betStatus === "PATCH") {
+        return "修补"; // Patch
       } else {
-        return betStatus
+        return betStatus;
       }
-    }
-    const formRef = ref(null)
+    };
+    const formRef = ref(null);
 
     return {
       recordActive,
@@ -1543,9 +1509,9 @@ export default defineComponent({
       chgDate,
       checkType(ts) {
         if (ts === 1) {
-          return 'Deposit'
+          return "Deposit";
         } else {
-          return 'Withdraw'
+          return "Withdraw";
         }
       },
       getPlatList,
@@ -1638,6 +1604,13 @@ export default defineComponent({
       gap: 20px;
     }
   }
+}
+
+.transaction-container {
+  background-color: #fff;
+  box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
+  border-radius: 15px;
+  padding: 20px 40px;
 }
 </style>
 <style scoped lang="scss">

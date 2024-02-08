@@ -85,16 +85,29 @@
       </el-form-item>
       <el-form-item :label="t('fields.param')" prop="params">
         <!-- <el-input v-model="scheduleForm.params" style="width: 350px;" /> -->
-        <div v-for="(item, index) in param" :key="index">
-          <el-input style="width: 170px; margin-top: 5px;" v-model="item.key" :disabled="disableKey(item.key)" /> : <el-input style="width: 170px " v-model="item.value" />
-          <el-button v-if="index === param.length - 1" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
-                     @click="addParam()" plain
-          >{{ t('fields.add') }}
-          </el-button>
-          <el-button v-else-if="!disableKey(item.key)" icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
-                     @click="delParam(index)" plain
-          >{{ t('fields.delete') }}
-          </el-button>
+        <el-switch
+          v-model="uiControl.showParamFormat"
+          class="mb-2"
+          inactive-text="Key Value"
+          active-text="Json"
+          inactive-value="key-value"
+          active-value="json"
+        />
+        <div v-if="uiControl.showParamFormat === 'key-value'">
+          <div v-for="(item, index) in param" :key="index">
+            <el-input style="width: 170px; margin-top: 5px;" v-model="item.key" :disabled="disableKey(item.key)" /> : <el-input style="width: 170px " v-model="item.value" />
+            <el-button v-if="index === param.length - 1" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
+                       @click="addParam()" plain
+            >{{ t('fields.add') }}
+            </el-button>
+            <el-button v-else-if="!disableKey(item.key)" icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
+                       @click="delParam(index)" plain
+            >{{ t('fields.delete') }}
+            </el-button>
+          </div>
+        </div>
+        <div v-else>
+          <el-input v-model="scheduleForm.jsonParams" style="width: 350px" autosize="true" type="textarea" />
         </div>
       </el-form-item>
       <el-form-item :label="t('fields.cronExpression')" prop="cronExpression">
@@ -156,7 +169,8 @@ const uiControl = reactive({
   stopAfterFailure: [
     { key: true, value: "YES" },
     { key: false, value: "NO" },
-  ]
+  ],
+  showParamFormat: "key-value",
 });
 const request = reactive({
   size: 30,
@@ -173,6 +187,7 @@ const scheduleForm = reactive({
   jobName: null,
   beanName: null,
   params: null,
+  jsonParams: null,
   cronExpression: null,
   state: 2,
   stopAfterFailure: true,
@@ -218,6 +233,7 @@ async function loadJobs() {
 }
 
 function showDialog(type) {
+  uiControl.showParamFormat = "key-value";
   if (type === "CREATE") {
     if (jobForm.value) {
       jobForm.value.resetFields();
@@ -254,6 +270,7 @@ function showEdit(job) {
         param.value.push(json);
       })
       addParam();
+      scheduleForm.jsonParams = JSON.stringify(JSON.parse(scheduleForm.params), undefined, 2);
     }
   });
 }
@@ -261,8 +278,14 @@ function showEdit(job) {
 function create() {
   jobForm.value.validate(async (valid) => {
     if (valid) {
-      scheduleForm.params = constructParam();
-      await createJob(scheduleForm);
+      if (uiControl.showParamFormat === 'key-value') {
+        scheduleForm.params = constructParam();
+      } else {
+        scheduleForm.params = JSON.stringify(JSON.parse(scheduleForm.jsonParams));
+      }
+      const scheduleFormCopy = { ...scheduleForm }
+      delete scheduleFormCopy.jsonParams;
+      await createJob(scheduleFormCopy);
       uiControl.dialogVisible = false;
       await loadJobs();
       ElMessage({ message: t('message.addSuccess'), type: "success" });
@@ -273,8 +296,14 @@ function create() {
 function edit() {
   jobForm.value.validate(async (valid) => {
     if (valid) {
-      scheduleForm.params = constructParam();
-      await updateJob(scheduleForm);
+      if (uiControl.showParamFormat === 'key-value') {
+        scheduleForm.params = constructParam();
+      } else {
+        scheduleForm.params = JSON.stringify(JSON.parse(scheduleForm.jsonParams));
+      }
+      const scheduleFormCopy = { ...scheduleForm }
+      delete scheduleFormCopy.jsonParams;
+      await updateJob(scheduleFormCopy);
       uiControl.dialogVisible = false;
       await loadJobs();
       ElMessage({ message: t('message.editSuccess'), type: "success" });

@@ -162,8 +162,8 @@ onMounted(() => {});
 
 <style scoped lang="scss">
 .service-section {
-  width: 80%;
-  max-width: 1040px;
+  width: 100%;
+  max-width: 1300px;
   margin: 0 auto;
 
   .service-container {
@@ -203,10 +203,8 @@ onMounted(() => {});
             .type {
               color: #333;
               text-align: center;
-              font-family: PingFang SC;
+              font-family: "PingFang SC";
               font-size: 0.71319rem;
-              font-weight: 400;
-              line-height: normal;
             }
 
             .auto-counter {

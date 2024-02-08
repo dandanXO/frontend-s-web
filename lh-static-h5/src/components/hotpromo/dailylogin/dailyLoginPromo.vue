@@ -7,11 +7,11 @@
       </div>
       <div class="months">
         <div
-          @click="checkInOfTheDay(mth)"
+          @click="checkInOfTheDay()"
           v-for="(mth, index) in dateDetails"
           :key="index"
           class="mth"
-          :class="{ 'check-in': mth.checkInActive, 'checked-in': mth.isCheckedIn }"
+          :class="{ 'check-in': mth.checkInActive, 'checked-in': mth.isCheckedIn, 'today-checked-in': todayCheckedIn }"
         >
           <div class="day">
             {{ index + 1 }}
@@ -39,12 +39,7 @@
         <div>本月签到明细</div>
       </div>
       <div class="months">
-        <div
-          v-for="(mth, index) in dateDetails"
-          :key="index"
-          class="mth"
-          :class="{ 'check-in': mth.checkInActive, 'checked-in': mth.isCheckedIn }"
-        >
+        <div v-for="(mth, index) in dateDetails" :key="index" class="mth">
           <div class="day">
             1
             <span class="times">次</span>
@@ -54,182 +49,61 @@
       </div>
     </div>
   </div>
-
-  <pre>{{ checkInDetails }}</pre>
 </template>
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, reactive } from "vue";
 import { eventapi } from "boot/axios";
+import { useQuasar } from "quasar";
+
+const $q = useQuasar();
 
 const dateDetails = ref([]);
-const init = () => {
-  dateDetails.value = [
-    {
+const todayCheckedIn = ref(false);
+
+const init = (maxDays, dayCount, monthCount) => {
+  dateDetails.value = [];
+  if (dayCount > 0) todayCheckedIn.value = true;
+  const totalItems = maxDays;
+  for (let i = 0; i < totalItems; i++) {
+    dateDetails.value.push({
       number: 7,
-      checkInActive: true,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    },
-    {
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    }
-  ];
+      checkInActive: i < monthCount + (1 - dayCount),
+      isCheckedIn: i < monthCount
+    });
+  }
 };
 
-const checkInDetails = ref();
+const checkInDetails = reactive({
+  monthMaxDays: 29,
+  dayCount: 0,
+  monthCount: 0
+});
 const loadDailyCheckIn = () => {
   eventapi.get("/sign-in/info").then((res) => {
     if (res.code === 0) {
-      checkInDetails.value = res.data;
+      checkInDetails.monthMaxDays = res.data.monthMaxDays;
+      checkInDetails.dayCount = res.data.dayCount;
+      checkInDetails.monthCount = res.data.monthCount;
+      init(checkInDetails.monthMaxDays, checkInDetails.dayCount, checkInDetails.monthCount);
     }
   });
 };
 
-const checkInOfTheDay = () => {};
+const checkInOfTheDay = () => {
+  eventapi.put("/sign-in/claim").then((res) => {
+    if (res.code === 0) {
+      $q.notify({
+        type: "positive",
+        position: "top",
+        message: `签到成功`,
+        icon: "check_circle_outline"
+      });
+      loadDailyCheckIn();
+    }
+  });
+};
 
 onMounted(() => {
-  init();
   loadDailyCheckIn();
 });
 </script>
@@ -257,11 +131,17 @@ onMounted(() => {
 
     .mth {
       background: transparent !important;
-
+      margin: 0 !important;
+      padding: 15px 0 !important;
+      height: auto !important;
       .number {
         color: #1c1c25 !important;
         font-size: 14px !important;
         font-weight: bold;
+      }
+
+      .day {
+        opacity: 0.5;
       }
     }
 
@@ -277,6 +157,7 @@ onMounted(() => {
   }
 
   .dailylogin-title {
+    height: 52px;
     color: #ffffff;
     font-size: 16px;
     display: flex;
@@ -290,7 +171,6 @@ onMounted(() => {
     }
   }
   .months {
-    // background: #ffffff;
     width: 100%;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -306,6 +186,11 @@ onMounted(() => {
         cursor: pointer;
         background: url(../../../assets/images/promo/hotpromo/dailylogin/sign.png) no-repeat center center;
         background-size: 100% 100%;
+
+        &.today-checked-in {
+          filter: grayscale(0.7);
+          opacity: 0.6;
+        }
       }
       &.checked-in {
         cursor: pointer;
@@ -317,6 +202,7 @@ onMounted(() => {
           color: #434343;
         }
       }
+
       display: flex;
       justify-content: center;
       align-items: center;

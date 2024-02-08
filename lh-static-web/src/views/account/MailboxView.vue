@@ -1,92 +1,52 @@
 <template>
   <div class="account-box account-contents">
+    <div class="menu-title-container">
+      <div class="menu-title">消息中心</div>
+    </div>
+
     <div class="account-content mail mail-content">
-      <el-tabs v-model="mailboxState.active" @tab-click="mailTabChange" type="card">
-        <el-tab-pane key="inbox" name="inbox" :label="'消息中心'">
-          <el-tabs v-model="mailboxMessageTab" @tab-click="changeMailboxType" type="card">
-            <el-tab-pane :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
-              <template #label>
-                <div class="mail-category-label">
-                  <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" />
-                  <span>
+      <el-tabs v-model="mailboxMessageTab" @tab-click="changeMailboxType" type="card">
+        <el-tab-pane :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
+          <template #label>
+            <div class="mail-category-label">
+              <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" />
+              <span>
                     {{ item.name }}
                   </span>
-                </div>
-              </template>
-              <template v-if="mailboxState.mailboxList.inbox.list.length > 0">
-                <div class="mail-action-container">
-                  <div class="mail-action">
-                    <div><img src="../../assets/images/account/icon-maildelete.png" /></div>
-                    全部删除
-                  </div>
-                  <div class="mail-action">
-                    <div><img src="../../assets/images/account/icon-mailopen.png" /></div>
-                    全部已读
-                  </div>
-                </div>
-                <el-collapse v-model="activeNames" @change="handleChange">
-                  <el-collapse-item v-for="item in mailboxState.mailboxList.inbox.list" :key="item.id">
-                    <template #title>标题：{{ item.title }}</template>
-                    <div>
-                      <div>正文：{{ item.content }}</div>
-                    </div>
-                  </el-collapse-item>
-                </el-collapse>
-                <div class="mail-pagination-wrapper">
-                  <el-pagination
-                    @current-change="changePage"
-                    :total="mailboxState.mailboxList.inbox.total"
-                    :current-page="mailboxState.mailboxList.inbox.pageNum"
-                    :page-size="mailboxState.mailboxList.inbox.pageSize"
-                  />
-                </div>
-              </template>
-
-              <template v-else>
-                <div style="display: flex; justify-content: center; align-items: center; height: 300px">暂无记录</div>
-              </template>
-            </el-tab-pane>
-          </el-tabs>
-        </el-tab-pane>
-        <el-tab-pane key="write" name="write" :label="'意见反馈'">
-          <el-form
-            ref="formRef"
-            hideRequiredMark="true"
-            :model="mailboxState.mailboxList.write"
-            :rules="rules"
-            :colon="false"
-            :label-col="{ span: 2 }"
-            label-width="100"
-          >
-            <div class="mail-input-item">
-              <div class="input-title-container">
-                <div class="input-title">标题</div>
-                <div class="mail-btn-group">
-                  <button class="standard-button btn-color-blue">快捷输入</button>
-                </div>
+            </div>
+          </template>
+          <template v-if="mailboxState.mailboxList.inbox.list.length > 0">
+            <div class="mail-action-container">
+              <div class="mail-action">
+                <div><img src="../../assets/images/account/icon-maildelete.png" /></div>
+                全部删除
               </div>
-
-              <div class="input-fill">
-                <el-input v-model="mailboxState.mailboxList.write.title" />
+              <div class="mail-action">
+                <div><img src="../../assets/images/account/icon-mailopen.png" /></div>
+                全部已读
               </div>
             </div>
-            <div class="mail-input-item">
-              <div class="input-title">内容</div>
-              <div class="input-fill">
-                <el-input
-                  v-model="mailboxState.mailboxList.write.content"
-                  type="textarea"
-                  :autosize="{ minRows: 4 }"
-                  show-word-limit
-                  maxlength="500"
-                />
-              </div>
+            <el-collapse v-model="activeNames" @change="handleChange">
+              <el-collapse-item v-for="item in mailboxState.mailboxList.inbox.list" :key="item.id">
+                <template #title>标题：{{ item.title }}</template>
+                <div>
+                  <div>正文：{{ item.content }}</div>
+                </div>
+              </el-collapse-item>
+            </el-collapse>
+            <div class="mail-pagination-wrapper">
+              <el-pagination
+                @current-change="changePage"
+                :total="mailboxState.mailboxList.inbox.total"
+                :current-page="mailboxState.mailboxList.inbox.pageNum"
+                :page-size="mailboxState.mailboxList.inbox.pageSize"
+              />
             </div>
+          </template>
 
-            <div class="mail-btn-group">
-              <button class="standard-button btn-color-blue" type="submit" @click="onSubmit">提交</button>
-            </div>
-          </el-form>
+          <template v-else>
+            <div style="display: flex; justify-content: center; align-items: center; height: 300px">暂无记录</div>
+          </template>
         </el-tab-pane>
       </el-tabs>
     </div>

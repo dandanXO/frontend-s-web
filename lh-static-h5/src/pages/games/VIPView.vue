@@ -65,7 +65,7 @@
 
       <q-card-section class="level-promo-body">
         <div class="promo">
-          <div class="common-text">{{ `VIP${claimDesc.vip}优惠` }}</div>
+          <div class="common-text">{{ `VIP${claimDesc.vip + 1}优惠` }}</div>
           <div class="common-text">{{ claimDesc.benefit }}</div>
         </div>
         <div class="turnover">
@@ -73,9 +73,25 @@
           <div class="common-text">{{ claimDesc.turnover }}</div>
         </div>
 
-        <div class="claim-btn-container" @click="claim()">
+        <div
+          class="claim-btn-container"
+          @click="claim()"
+          v-if="claimDesc.availableBtn"
+          :class="claimDesc.claimedBtn ? 'status-claimed' : ''"
+        >
           <img class="claim-btn" src="../../assets/images/vip/claim-btn.png" alt="" />
-          <span class="common-text">待领取</span>
+          <span class="common-text">
+            {{ claimDesc.claimedBtn ? "已领取" : "立即领取" }}
+          </span>
+        </div>
+        <!-- depositPromoBtn -->
+        <div
+          class="claim-btn-container"
+          @click="router.push('/finance/deposit?from=vip')"
+          v-if="claimDesc.depositPromoBtn"
+        >
+          <img class="claim-btn" src="../../assets/images/vip/claim-btn.png" alt="" />
+          <span class="common-text">前往存款</span>
         </div>
       </q-card-section>
     </q-card>
@@ -84,7 +100,7 @@
       <!-- cannot flip cuz the border design will be upside down -->
       <q-tabs v-model="tab" dense align="center" narrow-indicator active-class="active-tab" class="vip-detail-tab">
         <q-tab name="rules" :ripple="false">
-          <div class="vip-rules-btn-container" @click="claim()">
+          <div class="vip-rules-btn-container">
             <img
               class="vip-rules-btn"
               :src="require(`../../assets/images/vip/left-vip-${tab === 'rules' ? 'active' : 'inactive'}-btn.png`)"
@@ -94,7 +110,7 @@
           </div>
         </q-tab>
         <q-tab name="privileges" :ripple="false">
-          <div class="vip-privileges-btn-container" @click="claim()">
+          <div class="vip-privileges-btn-container">
             <img
               class="vip-privileges-btn"
               :src="
@@ -199,23 +215,24 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onActivated, computed, watch } from "vue";
+import { eventapi } from "src/boot/axios";
+import { useQuasar } from "quasar";
+import { userStore } from "stores/index";
+import { useRouter } from "vue-router";
+
+var qs = require("qs");
+const $q = useQuasar();
+const store = userStore();
+const router = useRouter();
 
 const tab = ref("rules");
 
 const slide = ref(0);
 const vipItems = ref([
   { level: "1", title: "青铜2", amount: "一笔存款" },
-  {
-    level: "1",
-    title: "青铜1",
-    amount: "3,000"
-  },
-  {
-    level: "2",
-    title: "白银3",
-    amount: "30,000"
-  },
+  { level: "1", title: "青铜1", amount: "3,000" },
+  { level: "2", title: "白银3", amount: "30,000" },
   { level: "2", title: "白银2", amount: "80,000" },
   { level: "3", title: "白银1", amount: "200,000" },
   { level: "3", title: "黄金3", amount: "400,000" },
@@ -228,22 +245,89 @@ const vipItems = ref([
 ]);
 
 const vipClaimItems = [
-  { benefit: "网站首存优惠", turnover: "无" },
-  { benefit: "存款最少20元可申请一次晋级奖金88元", turnover: "电竞/体育10倍 老虎机12倍 真人18倍" },
-  { benefit: "存款最少100元可申请一次再存20% 最高奖金1888元", turnover: "电竞/体育15倍 老虎机12倍 真人18倍" },
-  { benefit: "未符合", turnover: "未符合" },
-  { benefit: "未符合", turnover: "未符合" },
-  { benefit: "未符合", turnover: "未符合" },
-  { benefit: "未符合", turnover: "未符合" },
-  { benefit: "未符合", turnover: "未符合" },
-  { benefit: "未符合", turnover: "未符合" },
-  { benefit: "未符合", turnover: "未符合" },
-  { benefit: "未符合", turnover: "未符合" },
-  { benefit: "未符合", turnover: "未符合" }
+  { benefit: "网站首存优惠", turnover: "无", availableBtn: false, claimedBtn: false, depositPromoBtn: false },
+  {
+    benefit: "存款最少20元可申请一次晋级奖金88元",
+    turnover: "电竞/体育10倍 老虎机12倍 真人18倍",
+    availableBtn: false,
+    claimedBtn: false,
+    depositPromoBtn: false
+  },
+  {
+    benefit: "存款最少100元可申请一次再存20% 最高奖金1888元",
+    turnover: "电竞/体育15倍 老虎机12倍 真人18倍",
+    availableBtn: false,
+    claimedBtn: false,
+    depositPromoBtn: false
+  },
+  {
+    benefit: "存款最少20元可申请一次晋级奖金188元",
+    turnover: "电竞/体育 5倍  老虎机12倍 真人15倍",
+    availableBtn: false,
+    claimedBtn: false,
+    depositPromoBtn: false
+  },
+  {
+    benefit: "存款最少20元可申请一次晋级奖金388元",
+    turnover: "电竞/体育 5倍  老虎机12倍 真人15倍",
+    availableBtn: false,
+    claimedBtn: false,
+    depositPromoBtn: false
+  },
+  {
+    benefit: "存款最少200元可申请一次再存30%最高奖金1888元",
+    turnover: "电竞/体育 15倍  老虎机12倍 真人18倍",
+    availableBtn: false,
+    claimedBtn: false,
+    depositPromoBtn: false
+  },
+  {
+    benefit: "存款最少20元可申请一次晋级奖金888元",
+    turnover: "电竞/体育 5倍  老虎机12倍 真人18倍",
+    availableBtn: false,
+    claimedBtn: false,
+    depositPromoBtn: false
+  },
+  {
+    benefit: "存款最少500元可申请每月一次再存35% 最高奖金8888元",
+    turnover: "电竞/体育 15倍  老虎机12倍 真人18倍",
+    availableBtn: false,
+    claimedBtn: false,
+    depositPromoBtn: false
+  },
+  {
+    benefit: "存款最少20元可申请一次晋级奖金1888元",
+    turnover: "电竞/体育 8倍  老虎机12倍 真人18倍",
+    availableBtn: false,
+    claimedBtn: false,
+    depositPromoBtn: false
+  },
+  {
+    benefit: "存款最少500元可申请一次再存40%最高奖金18888元",
+    turnover: "电竞/体育 15倍  老虎机12倍 真人18倍",
+    availableBtn: false,
+    claimedBtn: false,
+    depositPromoBtn: false
+  },
+  {
+    benefit: "存款最少20元可申请一次晋级奖金8888元",
+    turnover: "电竞/体育10倍  老虎机12倍 真人18倍",
+    availableBtn: false,
+    claimedBtn: false,
+    depositPromoBtn: false
+  },
+  {
+    benefit: "存款最少20元可申请一次晋级奖金18888元",
+    turnover: "电竞/体育10倍  老虎机12倍 真人18倍",
+    availableBtn: false,
+    claimedBtn: false,
+    depositPromoBtn: false
+  }
 ];
 
 const claimDesc = ref();
-const currentAmount = 100000;
+const currentAmount = ref(0);
+
 for (let i = 0, l = vipItems.value.length; i < l; i++) {
   const vipItem = vipItems.value[i];
   let _amount = vipItem.amount.replaceAll(",", "");
@@ -252,7 +336,7 @@ for (let i = 0, l = vipItems.value.length; i < l; i++) {
   if (i === 0) {
     vipItem.progressBarVal = maxReversedVal;
   } else {
-    const progressBarVal = currentAmount / _amount;
+    const progressBarVal = currentAmount.value / _amount;
     if (progressBarVal >= 1) {
       vipItem.progressBarVal = maxReversedVal;
     } else {
@@ -265,7 +349,56 @@ for (let i = 0, l = vipItems.value.length; i < l; i++) {
   }
 }
 
-const claim = () => {};
+const vipRedeemData = ref();
+
+const checkVipRedeem = () => {
+  eventapi.get("/vip-upgrade/lh/canRedeem").then((res) => {
+    if (res.code === 0) {
+      vipRedeemData.value = res.data;
+
+      vipItems.value.forEach((vipItem, index) => {
+        let _amount = parseInt(vipItem.amount.replaceAll(",", ""), 10);
+        vipItem.progressBarVal = index === 0 ? 0 : Math.max(0, 1 - currentAmount.value / _amount);
+
+        if (!claimDesc.value && index !== 0 && currentAmount.value / _amount < 1) {
+          vipClaimItems[index].vip = index;
+          claimDesc.value = vipClaimItems[index];
+        }
+
+        // if (vipRedeemData.value.unavailable.includes(index + 1)) {
+        //   vipClaimItems[index].availableBtn = true;
+        // }
+
+        if (vipRedeemData.value.claimed.includes(index + 1)) {
+          vipClaimItems[index].claimedBtn = true;
+          vipClaimItems[index].availableBtn = true;
+        }
+
+        if (vipRedeemData.value.promoAvailable.includes(index + 1)) {
+          vipClaimItems[index].availableBtn = true;
+        }
+
+        if (vipRedeemData.value.depositPromoAvailable.includes(index + 1)) {
+          vipClaimItems[index].depositPromoBtn = true;
+        }
+      });
+    } else {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: res.message,
+        icon: "report_problem"
+      });
+    }
+  });
+};
+
+watch(slide, (newValue) => {
+  if (vipClaimItems[newValue]) {
+    vipClaimItems[newValue].vip = newValue;
+    claimDesc.value = vipClaimItems[newValue];
+  }
+});
 
 const columns = [
   {
@@ -408,6 +541,51 @@ const rows2 = [
     limit: "无上限"
   }
 ];
+
+const vipNumber = ref(null);
+const extractNumber = (str) => {
+  const match = str.match(/\d+/);
+  vipNumber.value = match ? parseInt(match[0], 10) : null;
+};
+
+const claim = async () => {
+  extractNumber(store.vip);
+
+  try {
+    // const res = await eventapi.post("/vip-upgrade/lh/claim", qs.stringify({ vipLevel: vipNumber.value }));
+    const res = await eventapi.post("/vip-upgrade/lh/claim", qs.stringify({ vipLevel: slide.value + 1 }));
+    if (res.code === 0) {
+      $q.notify({
+        color: "positive",
+        position: "top",
+        message: "领取成功",
+        icon: "check_circle_outline"
+      });
+
+      checkVipRedeem();
+    } else {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: res.message,
+        icon: "report_problem"
+      });
+    }
+  } catch (error) {
+    console.error("Error in VIP claim:", error);
+  }
+};
+
+onActivated(() => {
+  currentAmount.value = store.balance;
+  extractNumber(store.vip);
+  slide.value = vipNumber.value;
+
+  vipClaimItems[slide.value].vip = slide.value;
+  claimDesc.value = vipClaimItems[slide.value];
+
+  checkVipRedeem();
+});
 </script>
 
 <style lang="scss">
@@ -541,6 +719,16 @@ const rows2 = [
       justify-content: center;
       border-radius: 1.145rem;
 
+      &.status-claimed {
+        opacity: 0.6;
+        filter: grayscale(0.6);
+      }
+
+      .disabled {
+        opacity: 0.6;
+        filter: grayscale(0.6);
+      }
+
       .claim-btn {
         width: 15rem;
         height: 2.5rem;
@@ -669,6 +857,10 @@ const rows2 = [
     font-size: 1rem;
     font-weight: 400;
     color: $font-1;
+
+    &:first-child {
+      min-width: 60px;
+    }
   }
 
   .vip-card-common-text {

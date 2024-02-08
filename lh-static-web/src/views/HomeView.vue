@@ -1,10 +1,14 @@
 <template>
   <div class="home">
     <HomeBanner></HomeBanner>
-    <HomeAnnouncement></HomeAnnouncement>
-    <HomeDownload></HomeDownload>
-    <HomeHotGame></HomeHotGame>
-    <HomeService></HomeService>
+    <div class="home-mid-section">
+
+
+      <HomeAnnouncement></HomeAnnouncement>
+      <HomeDownload></HomeDownload>
+      <HomeHotGame></HomeHotGame>
+      <HomeService></HomeService>
+    </div>
   </div>
   <GameModal ref="gameMenu" />
 </template>
@@ -24,14 +28,21 @@ const openGame = (gameName, platType, gameCode, scrollingState) => {
   gameMenu.value.open(gameName, platType, gameCode, scrollingState);
 };
 
-onMounted(() => {});
+onMounted(() => {
+});
 </script>
 
 <style scoped lang="scss">
 .home {
   margin: 0 0 2.5rem 0;
+
+}
+
+.home-mid-section{
   background-image: url("../assets/home/home-bg.jpg");
   background-repeat: no-repeat;
   background-size: 100% auto;
+  background-position: top center;
+  padding-top: 20px;
 }
 </style>

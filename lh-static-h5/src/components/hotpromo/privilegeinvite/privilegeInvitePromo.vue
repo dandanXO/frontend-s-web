@@ -22,7 +22,7 @@
           </div>
 
           <div class="blue-content-para">
-            <p class="txt-center">2023年11月10日起</p>
+            <p class="txt-center">2022年11月17日00:00起</p>
           </div>
 
           <div class="title-img">
@@ -31,12 +31,14 @@
 
           <div class="blue-content-para">
             <p>
-              雷火用户打开:个人中心--点击“呼朋唤友"复制推广链接，通过QQ、微信、论坛、贴吧、微博等方式分享，成功邀请好友即
-              可获得现金奖励!
+              雷火用户打开：个人中心--点击“呼朋唤友”复制推广链接，通过QQ、微信、论坛、贴吧、微博等方式分享，成功邀请好友即
+              可获得现金奖励！
             </p>
             <p class="txt-center q-mt-sm">
-              <a href="#">查看我的推广记录</a>
+              <a @click="toggleCheckRecordModal(true)">查看我的推广记录</a>
             </p>
+
+            <button class="share-btn" @click="shareInvite">立刻分享</button>
 
             <div class="blue-content-table-container">
               <table border="0">
@@ -49,18 +51,18 @@
                   <td>≥1,00</td>
                   <td>28</td>
                   <td rowspan="6">
-                    1倍
+                    3倍/
                     <br />
-                    不限场馆
+                    不限制场馆
                   </td>
                 </tr>
                 <tr>
                   <td>≥1,000</td>
-                  <td>128</td>
+                  <td>108</td>
                 </tr>
                 <tr>
                   <td>≥5,000</td>
-                  <td>188</td>
+                  <td>158</td>
                 </tr>
                 <tr>
                   <td>≥10,000</td>
@@ -78,7 +80,7 @@
             </div>
 
             <p class="red q-mt-lg">
-              会员A邀请一位好友首存100元，则可获取28元奖金;若想获取下一档位128元，则需好友再次存1000元;
+              例如：会员A邀请一位好友首存100元，则可获取8元奖金；若想获取下一档位38元，则需好友再次存1000元；
               奖金将会在次日凌晨00:00至下午16:00之间自动派发至您的主账户，
               如果下周您邀请的好友依旧符合存款金额，那么您在下周会再次获得对应奖金。
             </p>
@@ -94,28 +96,26 @@
             </div>
             <ol>
               <li>
-                每个通过您推广链接进行注册，并完成相应首存的用户，您将获得对应的邀请奖金;每个受邀请人完成对应存款金额，在单周内
-                邀请人能最高可获得4208元
+                每个通过您推广链接进行注册，并完成相应首存的用户，您将获得对应的邀请奖金；每个受邀请人完成对应存款金额，在单周内邀请人能最高可获得1472元。
               </li>
               <li>
-                您每邀请一位新会员，从注册的日期开始算起，可享受4次推荐奖金，每个自然周一 00:00
-                刷新1次，期间每个对应的档位奖金都 可以领取一次;逾期将会视为自动放弃。
+                您每邀请一位新会员，从注册的日期开始算起，可享受4次推荐奖金，每个自然周一
+                00:00刷新1次，期间每个对应的档位奖金都 可以领取一次；逾期将会视为自动放弃。
               </li>
               <li>
-                例如:会员A邀请一位好友首存100元，则可获取28元奖金;若想获取下一档位128元，则需好友再次存1000元;奖金将会自动派
-                发至主钱包。
+                例如：会员A邀请一位好友首存100元，则可获取8元奖金；若想获取下一档位38元，则需好友再次存1000元；奖金将会自动派发至主钱包。
               </li>
-              <li>邀请人等级不得低于青铜 I (vip2)</li>
-              <li>普通会员账号变更成代理账号时，该活动将无法参加;已经参加活动的账号变成代理账号，会即刻终止发放奖金</li>
+              <li>邀请人等级不得低于vip2。</li>
               <li>
-                任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投
-                注额内。
+                普通会员账号变更成代理账号时，该活动将无法参加；已经参加活动的账号变成代理账号，会即刻终止发放奖金
               </li>
               <li>
-                邀请人与受邀请人必须为不同身份的真实玩家，每每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一
-                个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。
+                任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内。
               </li>
-              <li>为避免文字理解差异，雷火电竞保留此活动最终解释权。</li>
+              <li>
+                邀请人与受邀请人必须为不同身份的真实玩家，每每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。
+              </li>
+              <li>为避免文字理解差异，东赢电竞保留此活动最终解释权。</li>
             </ol>
           </div>
         </div>
@@ -127,7 +127,7 @@
           </div>
 
           <div class="blue-content-para">
-            <p class="txt-center">2023年11月10日起</p>
+            <p class="txt-center">2022年11月17日00:00起</p>
           </div>
 
           <div class="title-img">
@@ -137,49 +137,60 @@
           <div class="blue-content-para">
             <p>
               活动期间，通过您的推广链接进行注册，并达到周累计存款要求，您和受邀请人均可获得该累计存款金额 1%
-              的新人奖励，最高单周可获得 88888 元哦!
+              的新人奖励，最高单周可获得 88888 元哦！
             </p>
             <p class="txt-center q-mt-sm">
-              <a href="#">查看我的推广记录</a>
+              <a @click="toggleCheckRecordModal(true)">查看我的推广记录</a>
             </p>
+
+            <button class="share-btn" @click="shareInvite">立刻分享</button>
 
             <div class="blue-content-table-container">
               <table border="0">
                 <tr>
-                  <td>邀请人等级</td>
-                  <td>好友累积存款</td>
+                  <td>邀请人等级要求</td>
+                  <td>好友周累计存款</td>
                   <td>邀请人比例</td>
-                  <td>受邀人比例</td>
+                  <td>受邀请人比例</td>
+                  <td>好友周累计存款</td>
+                  <td>流水要求</td>
                 </tr>
                 <tr>
-                  <td>青铜 I</td>
-                  <td>≥5,000</td>
+                  <td>VIP2</td>
+                  <td>≥5,000元</td>
                   <td rowspan="6">1%</td>
                   <td rowspan="6">1%</td>
+                  <td>88元</td>
+                  <td rowspan="6">1倍/不限场馆</td>
                 </tr>
                 <tr>
-                  <td>白银I-白银 I</td>
-                  <td>≥10,000</td>
+                  <td>VIP3-VIP4</td>
+                  <td>≥10,000元</td>
+                  <td>188元</td>
                 </tr>
                 <tr>
-                  <td>黄金IIl-黄金 I</td>
-                  <td>≥50,000</td>
+                  <td>VIP5-VIP6</td>
+                  <td>≥50,000元</td>
+                  <td>388元</td>
                 </tr>
                 <tr>
-                  <td>黄金 I-铂金 II</td>
-                  <td>≥100,000</td>
+                  <td>VIP7-VIP8</td>
+                  <td>≥100,000元</td>
+                  <td>888元</td>
                 </tr>
                 <tr>
-                  <td>铂金 I-砖石</td>
-                  <td>≥500,000</td>
+                  <td>VIP9</td>
+                  <td>≥500,000元</td>
+                  <td>8888元</td>
                 </tr>
                 <tr>
-                  <td>王者</td>
-                  <td>≥1,000,000</td>
+                  <td>VIP10</td>
+                  <td>≥1,000,000元</td>
+                  <td>88888元</td>
                 </tr>
               </table>
 
-              <table border="0" class="q-mt-md">
+              <!-- <table border="0" class="q-mt-md">
                 <tr>
                   <td>好友累计存款</td>
                   <td>流水要求</td>
@@ -203,13 +214,12 @@
                 <tr>
                   <td>88888</td>
                 </tr>
-              </table>
+              </table> -->
             </div>
 
             <p class="red q-mt-lg">
-              会员A邀请一位好友首存100元，则可获取28元奖金;若想获取下一档位128元，则需好友再次存1000元;
-              奖金将会在次日凌晨00:00至下午16:00之间自动派发至您的主账户，
-              如果下周您邀请的好友依旧符合存款金额，那么您在下周会再次获得对应奖金
+              例如：邀请人等级为VIP2，被邀请人周累计存款达到10000元，x1%=100元，
+              按照等级对应奖金上限，则各派发88元，奖金将会在次日凌晨00:00至下午16:00之间自动派发至您的主账户
             </p>
           </div>
 
@@ -223,25 +233,23 @@
             </div>
             <ol>
               <li>
-                每个通过您的推广链接进行注册，并达到周累计存款25000元的用户，您和受邀请人均可获得该累计存款金额 1%
-                的新人奖励。周累计存款统计时间为自然周 (每周一00:00至周日23:59)
+                每个通过您的推广链接进行注册，并达到周累计存款≥5000元的用户，您和受邀请人均可获得该累计存款金额
+                1%的新人奖励。 周累计存款统计时间为自然周（每周一00:00至周日23:59）。
               </li>
               <li>
-                您每邀请一位新会员，从注册的日期开始算起，可享4次邀请周累存送，符合获取条件奖金的会员，将会在每个自然周一00:00:00
-                - 23:59:59内系统自动派发奖金至主钱包，并更新剩余获取奖金次数;逾期将会视为自动放弃。
+                您每邀请一位新会员，从注册的日期开始算起，可享4次邀请周累存送，符合获取条件奖金的会员，将会在每个自然周一00:00:00-
+                23:59:59内系统自动派发奖金至主钱包，并更新剩余获取奖金次数；逾期将会视为自动放弃。
               </li>
               <li>
-                任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投
-                注额内。
+                任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内。
               </li>
               <li>
-                邀请人与受邀请人必须为不同身份的真实玩家，每每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一
-                个账号享受优惠。如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。
+                邀请人与受邀请人必须为不同身份的真实玩家，每每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。
               </li>
               <li>
-                普通会员账号变更成代理账号时，该活动将无法参加;已经参加活动的账号变成代理账号，会即刻终止发放奖金。
+                普通会员账号变更成代理账号时，该活动将无法参加；已经参加活动的账号变成代理账号，会即刻终止发放奖金。
               </li>
-              <li>为避免文字理解差异，雷火电竞保留此活动最终解释权。</li>
+              <li>为避免文字理解差异，东赢电竞保留此活动最终解释权。</li>
             </ol>
           </div>
         </div>
@@ -253,7 +261,7 @@
           </div>
 
           <div class="blue-content-para">
-            <p class="txt-center">2023年11月10日起</p>
+            <p class="txt-center">2022年11月17日00:00起</p>
           </div>
 
           <div class="title-img">
@@ -261,9 +269,9 @@
           </div>
 
           <div class="blue-content-para">
-            <p>活动期间，邀请人可获得每个好友从其注册时间开始计算15天的有效投注额0.4%的返利，无上限.</p>
+            <p>活动期间，邀请人可获得每个好友从其注册时间开始计算15天的有效投注额0.4%的返利，无上限。</p>
             <p class="txt-center q-mt-sm">
-              <a href="#">查看我的推广记录</a>
+              <a @click="toggleCheckRecordModal(true)">查看我的推广记录</a>
             </p>
 
             <div class="blue-content-records">
@@ -282,37 +290,35 @@
                 <div class="record-data">0.00</div>
               </div>
             </div>
+
+            <button class="share-btn" @click="shareInvite">立刻分享</button>
           </div>
 
-          <div class="row justify-center">
+          <!-- <div class="row justify-center">
             <q-btn color="brightbtn" @blur="blurCode" label="点击申请" />
-          </div>
+          </div> -->
 
           <div class="blue-content-rules">
             <div class="rules-img">
               <img src="../../../assets/images/promo/hotpromo/privilegeinvite/title-rules.png" />
             </div>
             <ol>
+              <li>活动有效投注额返利期限为15天，即：从您好友注册时间开始算起。</li>
+              <li>有效投注仅计算：体育场馆和电竞场馆的有效投注额。（IM体育以美东时间计算为准）</li>
               <li>
-                每个通过您的推广链接进行注册，并达到周累计存款25000元的用户，您和受邀请人均可获得该累计存款金额 1%
-                的新人奖励。周累计存款统计时间为自然周 (每周一00:00至周日23:59)
+                每日有效投注返利结算发放时间为：奖金将会在次日凌晨00:00至下午16:00之间自动派发至您的主账户（发放前一日的有效投注返利）;奖金最低派发为1元，等于1元不
+                派发，奖金只需1倍有效流水提款。
               </li>
               <li>
-                您每邀请一位新会员，从注册的日期开始算起，可享4次邀请周累存送，符合获取条件奖金的会员，将会在每个自然周一00:00:00
-                - 23:59:59内系统自动派发奖金至主钱包，并更新剩余获取奖金次数;逾期将会视为自动放弃。
+                普通会员账号变更成代理账号时，该活动将无法参加；已经参加活动的账号变成代理账号，会即刻终止发放奖金
               </li>
               <li>
-                任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投
-                注额内。
+                任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内。
               </li>
               <li>
-                邀请人与受邀请人必须为不同身份的真实玩家，每每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一
-                个账号享受优惠。如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。
+                邀请人与受邀请人必须为不同身份的真实玩家，每每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。
               </li>
-              <li>
-                普通会员账号变更成代理账号时，该活动将无法参加;已经参加活动的账号变成代理账号，会即刻终止发放奖金。
-              </li>
-              <li>为避免文字理解差异，雷火电竞保留此活动最终解释权。</li>
+              <li>为避免文字理解差异，东赢电竞保留此活动最终解释权。</li>
             </ol>
           </div>
         </div>
@@ -351,7 +357,6 @@
                   <option value="Bet">返利无上限</option>
                 </select>
               </div>
-              <div class="input-row">&nbsp;</div>
 
               <div class="input-row">
                 <label>选择日期</label>
@@ -371,10 +376,17 @@
                 <div class="rebate-header">首存金额</div>
                 <div class="rebate-header">今日已获返利</div>
               </div>
-              <div class="no-item-table">
+              <div class="no-item-table" v-if="tableRecords.length === 0">
                 <p>暂无数据</p>
               </div>
-              <div class="listing-footer">
+              <div class="record-table" v-else>
+                <template v-for="(list, i) of tableRecords" :key="i">
+                  <div>{{ list.loginName }}</div>
+                  <div>{{ list.depositOrBet }}</div>
+                  <div>{{ list.bonusAmount }}</div>
+                </template>
+              </div>
+              <!-- <div class="listing-footer">
                 <div class="footer-div">
                   <span class="pointer-s prev-page">&nbsp;&lt;&nbsp;&nbsp;</span>
                   <div class="footer-page">
@@ -382,7 +394,7 @@
                   </div>
                   <span class="pointer-s next-page">&nbsp;&nbsp;&gt;&nbsp;</span>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </q-card>
@@ -396,7 +408,7 @@ import moment from "moment";
 import Swal from "sweetalert2";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
-// import { getRecommendPrivilegeRecord, getRebateInfo } from "../../../api/privilegeInvite/privilegeInvite";
+import { getRecommendPrivilegeRecord, getRebateInfo } from "../../../api/privilegeInvite/privilegeInvite";
 import { userStore } from "stores/index";
 import { api, eventapi } from "boot/axios";
 import { isAndroid } from "boot/utils";
@@ -461,17 +473,18 @@ export default defineComponent({
     };
 
     const toggleCheckRecordModal = (toggleStatus) => {
-      if (toggleStatus === true) {
-        Swal.fire({
-          title: "请登录后再操作",
-          text: "系统提示",
-          confirmButtonText: "确认"
-        });
-      }
+      // if (toggleStatus === true) {
+      //   Swal.fire({
+      //     title: "请登录后再操作",
+      //     text: "系统提示",
+      //     confirmButtonText: "确认"
+      //   });
+      // }
 
       isCheckRecordModalVisible.value = toggleStatus;
     };
 
+    var tableRecords = ref([]);
     const getRecords = () => {
       const params = {
         recordType: checkRecordFormData.recordType,
@@ -480,13 +493,14 @@ export default defineComponent({
         recommendedName: checkRecordFormData.user,
         token: store.token
       };
-      // getRecommendPrivilegeRecord(params).then((data) => {
-      //     console.log('here', data)
-      // })
+      tableRecords.value = [];
+      getRecommendPrivilegeRecord(params).then((data) => {
+        tableRecords.value = data.data;
+      });
     };
 
     const shareInvite = () => {
-      router.push("/account/invite");
+      router.push("/account/invite?from=promo?name=lh1-invite");
     };
 
     const qrRef = ref();
@@ -551,7 +565,7 @@ export default defineComponent({
 
     const retrieve = () => {
       eventapi
-        .put("/bonus/claim/" + "dy2-vip-upgrade-bonus")
+        .put("/bonus/claim/" + "lh1-vip-upgrade-bonus")
         .then((res) => {
           if (res.code === 0) {
             $q.notify({
@@ -589,7 +603,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      // getRebateInfo().then(({ data }) => (rebateInfo.value = data));
+      getRebateInfo().then(({ data }) => (rebateInfo.value = data));
       getReferral();
       checkActiveKey();
       getInviteCount();
@@ -617,7 +631,8 @@ export default defineComponent({
       getInviteCount,
       registerMembers,
       bonusAmount,
-      goToInvitePageOld
+      goToInvitePageOld,
+      tableRecords
     };
   }
 });
@@ -1010,17 +1025,20 @@ $gold: #efcf68;
   }
 
   .share-btn {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 800;
-    line-height: 36px;
+    line-height: 1;
     letter-spacing: 1px;
-    color: #11131f;
-    width: 220px;
-    height: 50px;
-    background-color: $gold;
+    color: #ffffff;
+    width: 160px;
+    height: 40px;
+    background-color: #0079fb;
     border-radius: 25px;
     border: 0px;
-    margin: 20px auto 15px;
+    margin: 20px auto 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .rebate-table {
@@ -1103,8 +1121,10 @@ $gold: #efcf68;
   }
 
   .record-selection {
-    display: grid;
-    grid-template-columns: auto auto auto;
+    display: flex;
+    flex-wrap: wrap;
+    // display: grid;
+    // grid-template-columns: auto auto auto;
 
     label {
       display: inline-block;
@@ -1128,6 +1148,7 @@ $gold: #efcf68;
 
     .input-row {
       margin-bottom: 16px;
+      width: 50%;
     }
 
     .input-user {

@@ -19,7 +19,7 @@ export const liveCasinoPlatforms = [
   {
     code: "BG",
     cnname: "BG真人",
-    image: "",
+    image: "bg",
     message: "",
     caption: "",
     gameCode: ""
@@ -27,7 +27,7 @@ export const liveCasinoPlatforms = [
   {
     code: "Evo",
     cnname: "EVO真人",
-    image: "",
+    image: "evo",
     message: "",
     caption: "",
     gameCode: ""
@@ -82,7 +82,7 @@ export const sportsPlatforms = [
     cnname: "IM体育",
     image: "im",
     message:
-      "专注于彩票游戏行业多年，拥有经典彩种、玩法。还有超多独家创新玩法，足够新颖，极易操作的游戏界面，更是在您游戏过程中增光添彩！",
+      "盘口趋势、热点赛事、体育资讯及时掌握，多种投注类型，让您乐享其中 创新功能提前兑现，无需等待即可提前结算，止损机制让您百无禁忌",
     caption: "创新玩法，极致体验",
     gameCode: ""
   },
@@ -90,7 +90,7 @@ export const sportsPlatforms = [
     code: "PM",
     cnname: "熊猫体育",
     image: "db",
-    message: "最专业的盘口趋势分析，及时掌握最全面的热点赛事、体育资讯，多种投注型，让您乐享其中。",
+    message: "最专业的盘口趋势分析，及时掌握最全面的热点赛事、 体育资讯，多种投注型，让您乐享其中。",
     caption: "专业品牌，尽享满贯",
     gameCode: ""
   },
@@ -98,7 +98,8 @@ export const sportsPlatforms = [
     code: "SABA",
     cnname: "沙巴体育",
     image: "saba",
-    message: "最专业的盘口趋势分析，及时掌握最全面的热点赛事、体育资讯，多种投注型，让您乐享其中。",
+    message:
+      "覆盖世界各地大小赛事，提供让球、大小、半全场、 波胆、单双、总入球、连串过关等多元竞猜， 沙巴体育不会让您错过任何自己最喜爱的体育赛事",
     caption: "专业品牌，尽享满贯",
     gameCode: ""
   },
@@ -106,10 +107,19 @@ export const sportsPlatforms = [
     code: "PINNACLE",
     cnname: "平博体育",
     image: "pinnacle",
-    message: "最专业的盘口趋势分析，及时掌握最全面的热点赛事、体育资讯，多种投注型，让您乐享其中。",
+    message: "25年专业体育品牌，行业标杆，提供最优质赔率水位，业界超高限额，畅享独一无二投注体验",
     caption: "专业品牌，尽享满贯",
     gameCode: ""
   }
+
+  // {
+  //   code: "CR",
+  //   cnname: "CR",
+  //   image: "cr",
+  //   message: "奇幻赛事、特别投注 ，各种趣味玩法，最全赛事覆盖助你花式收米赢到人生巅峰",
+  //   caption: "专业品牌，尽享满贯",
+  //   gameCode: ""
+  // }
 ];
 
 // esports
@@ -172,7 +182,7 @@ export const slotPlatforms = [
     code: "PG",
     cnname: "PG电子",
     image: "pg",
-    message: "经典多元化,公平安全游戏环境,畅想数千款电子游戏,天天高额大奖。",
+    message: "经典多元化,公平安全游戏环境,畅想数千款电子游戏,天天高额大奖。 ",
     caption: "",
     gameCode: ""
   },
@@ -180,8 +190,7 @@ export const slotPlatforms = [
     code: "SW",
     cnname: "SW电子",
     image: "sw",
-    message:
-      "倾力打造的刺激火爆的体育娱乐游戏，每天为您提供千场精彩体育赛事，多种娱乐方式 选择，让您拥有完美游戏体验。",
+    message: "经典多元化,公平安全游戏环境,畅想数千款电子游戏,天天高额大奖。 ",
     caption: "",
     gameCode: ""
   },
@@ -189,7 +198,7 @@ export const slotPlatforms = [
     code: "PT",
     cnname: "PT电子",
     image: "pt",
-    message: "精选全球千种游戏任您畅玩，为玩家提供极致的游戏体验。触手可及的千万累计奖池，等您—触即发!",
+    message: "精选全球千种游戏任您畅玩，为玩家提供极致的游戏体验。触手可及的千万累计奖池，等您—触即发! ",
     caption: "",
     gameCode: ""
   },
@@ -207,26 +216,26 @@ export const slotPlatforms = [
     name: "XIN",
     cnname: "XIN电子",
     image: "ag",
-    message: "坚持创新、打造精品,最缤纷的电子游艺画面，最刺激的游戏体验，各类老虎机应有尽有，彩池大奖由您触发!",
+    message: "坚持创新、打造精品,最缤纷的电子游艺画面，最刺激的游戏体验，各类老虎机应有尽有，彩池大奖由您触发! ",
     caption: "",
     gameCode: ""
   },
   {
     code: "BBINDY",
     cnname: "BBIN电子",
-    image: "",
-    message: "",
-    caption: "",
-    gameCode: ""
-  },
-  {
-    code: "PINNACLE",
-    cnname: "平博电子",
-    image: "",
-    message: "",
+    image: "bbin",
+    message: "拥有丰富的游戏类型及功能，提供多种玩法与电子游戏试玩，带给玩家惊艳的游戏体验，游戏总数近千款！ ",
     caption: "",
     gameCode: ""
   }
+  // {
+  //   code: "PINNACLE",
+  //   cnname: "平博电子",
+  //   image: "",
+  //   message: "",
+  //   caption: "",
+  //   gameCode: ""
+  // }
   // {
   //   code: "CQ",
   //   cnname: "CQ电子",
@@ -288,8 +297,8 @@ export const lotteryPlatforms = [
   {
     code: "BBINDY",
     cnname: "BBIN彩票",
-    image: "",
-    message: "",
+    image: "bbin",
+    message: "专注于彩票游戏行业多年，拥有经典彩种，超多独家创新玩法，让您在购买彩票的同时，享受游戏的快感。",
     caption: "",
     gameCode: ""
   },
@@ -310,8 +319,7 @@ export const fishingPlatforms = [
     code: "GPS",
     cnname: "GPS决战中途岛",
     image: "gps",
-    message:
-      "最受欢迎的GPS捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
+    message: "炫彩3D精致画面，身临其境海天—色;超高爆率燃爆全屏，招财鱼潮—炮千金;多人同台趣味比拼，休闲集结快乐出击 ",
     caption: "",
     gameCode: 7202
   },

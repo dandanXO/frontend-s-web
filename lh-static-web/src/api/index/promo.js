@@ -166,5 +166,16 @@ export function getStepRecords(current) {
 }
 
 export function checkInInfo() {
-  return server.EVENT.get(`/sign-in/info`, {});
+  return server.EVENT.get(`/sign-in/info`);
+}
+
+export function signIn() {
+  return server.EVENT.put(`/sign-in/claim`);
+}
+
+export function canRedeem() {
+  return server.EVENT.get("/vip-upgrade/lh/canRedeem");
+}
+export function claim(level) {
+  return server.EVENT.post("/vip-upgrade/lh/claim", { vipLevel: level });
 }

@@ -54,11 +54,11 @@
           </div>
           <div class="event-info-item">
             <div class="event-info-title">抽奖次数：</div>
-            <div class="event-info-desc">每日存款每达到2000元 可获得1次抽奖机会</div>
+            <div class="event-info-desc">每日存款每达到500元 可获得1次抽奖机会</div>
           </div>
           <div class="event-info-item">
             <div class="event-info-title">抽奖时间：</div>
-            <div class="event-info-desc">以官网通知为准</div>
+            <div class="event-info-desc">2024年02月07日起</div>
           </div>
         </div>
       </div>
@@ -70,9 +70,12 @@
       <div class="wrapper">
         <div class="popup-header bold-text golden-text">恭喜!</div>
         <div class="content">
-          <div class="bold-text">您获得</div>
-          <div class="bold-text golden-text">{{ prizePopupBonusAmt }}</div>
-          <div class="bold-text">元</div>
+          <div class="flex-center row">
+            <div class="bold-text">您获得&nbsp;</div>
+            <div class="bold-text win-text">{{ prizePopupBonusAmt }}</div>
+            <div class="bold-text">&nbsp;元</div>
+          </div>
+
           <div class="action-btn" @click="showPrizePopup = false">立即领取</div>
         </div>
       </div>
@@ -446,6 +449,15 @@ onMounted(() => {
       -webkit-text-fill-color: transparent;
     }
 
+    .win-text{
+      font-size: 28px;
+      letter-spacing: 2px;
+       background: linear-gradient(360deg, #FFC700 9.54%, #FFF500 86.08%);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(1px 1px #00000050);
+    }
+
     .popup-header {
       letter-spacing: normal;
       font-size: 25px;
@@ -483,8 +495,8 @@ onMounted(() => {
 
 .remaining-draw-wrapper {
   .remaining-draw-text {
-    color: #e6d796;
-    font-size: 25px;
+    color: #fff;
+    font-size: 20px;
     margin: 10px auto 40px;
     text-align: center;
     width: 300px;
@@ -499,9 +511,9 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   gap: 20px;
-  padding: 20px 0px 60px;
+  padding: 20px 0px 0px;
   margin-top: -50px;
-  margin-bottom: 70px;
+  margin-bottom: 0px;
 
   .promo-info-banner {
     background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/promo-info-banner.png");

@@ -24,11 +24,23 @@
         <div :class="`hotgame-content-wrapper ${hotgame.isShow ? 'show' : ''}`">
           <div class="left-container">
             <div class="title-wrapper">
-              <div class="title">{{ hotgame.title }}</div>
-              <div class="subtitle">{{ hotgame.subtitle }}</div>
+              <div class="title">
+                {{
+                  hotgame.content &&
+                  hotgame.content[hotgame.currentProvider.toLowerCase()] &&
+                  hotgame.content[hotgame.currentProvider.toLowerCase()].title
+                }}
+              </div>
+              <!-- <div class="subtitle">{{ hotgame.content[hotgame.currentProvider.toLowerCase()] }}</div> -->
             </div>
             <div>
-              <div class="desc">专注于彩票游戏行业多年，拥有经典彩种、玩法。</div>
+              <div class="desc">
+                {{
+                  hotgame.content &&
+                  hotgame.content[hotgame.currentProvider.toLowerCase()] &&
+                  hotgame.content[hotgame.currentProvider.toLowerCase()].subtitle
+                }}
+              </div>
               <div class="desc">还有超多独家创新玩法，足够新颖，极易操作的游戏界面， 更是在您游戏过程中增光添彩！</div>
             </div>
             <div v-if="hotgame.content.isShowSportsIcon" :class="`game-icon-wrapper ${hotgame.subtitle.toLowerCase()}`">
@@ -54,7 +66,7 @@
                   "
                 />
                 <div :class="`game-provider-text ${hotgame.currentPlat === provider ? 'active' : ''}`">
-                  {{ provider.alias ? provider.alias : provider.name }}
+                  {{ provider.alias ?? provider.name }}
                 </div>
                 <!-- <img :src="provider.icon" /> -->
                 <!-- <img
@@ -72,8 +84,17 @@
           </div>
           <div class="right-container">
             <img
+              v-if="
+                hotgame.content &&
+                hotgame.content[hotgame.currentProvider] &&
+                hotgame.content[hotgame.currentProvider].charImgPath
+              "
               :class="`character-${hotgame.subtitle.toLowerCase()}-${hotgame.currentProvider}`"
-              :src="hotgame.content[hotgame.currentProvider].charImgPath"
+              :src="
+                require(`../../assets/home/hotgame/content/${hotgame.section}/${
+                  hotgame.content[hotgame.currentProvider].charImgPath
+                }/character.png`)
+              "
             />
           </div>
         </div>
@@ -90,6 +111,7 @@ import HomeTitle from "@/atoms/HomeTitle.vue";
 import { getPlatformList, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 import GameModal from "@/components/modal/GameModal";
+import * as _ from "lodash";
 
 import {
   eSportsPlatforms,
@@ -152,27 +174,27 @@ const hotgameData = ref([
         //   icon: require("../../assets/home/hotgame/content/esports/provider_rg.png"),
         //   providerInfo: {}
         // }
-      ],
-      lh: {
-        title: "雷火电竞",
-        subtitle: "ESPORTS",
-        charImgPath: require("../../assets/home/hotgame/content/esports/lh/character.png")
-      },
-      im: {
-        title: "IM电竞",
-        subtitle: "ESPORTS",
-        charImgPath: require("../../assets/home/hotgame/content/esports/im/character.png")
-      },
-      ia: {
-        title: "IA电竞",
-        subtitle: "ESPORTS",
-        charImgPath: require("../../assets/home/hotgame/content/esports/ia/character.png")
-      },
-      rg: {
-        title: "RG电竞",
-        subtitle: "ESPORTS",
-        charImgPath: require("../../assets/home/hotgame/content/esports/rg/character.png")
-      }
+      ]
+      // lh: {
+      //   title: "雷火电竞",
+      //   subtitle: "ESPORTS",
+      //   charImgPath: require("../../assets/home/hotgame/content/esports/lh/character.png")
+      // },
+      // im: {
+      //   title: "IM电竞",
+      //   subtitle: "ESPORTS",
+      //   charImgPath: require("../../assets/home/hotgame/content/esports/im/character.png")
+      // },
+      // ia: {
+      //   title: "IA电竞",
+      //   subtitle: "ESPORTS",
+      //   charImgPath: require("../../assets/home/hotgame/content/esports/ia/character.png")
+      // },
+      // rg: {
+      //   title: "RG电竞",
+      //   subtitle: "ESPORTS",
+      //   charImgPath: require("../../assets/home/hotgame/content/esports/rg/character.png")
+      // }
     }
   },
   {
@@ -231,32 +253,32 @@ const hotgameData = ref([
         //   icon: require("../../assets/home/hotgame/content/sports/provider_cr.png"),
         //   providerInfo: {}
         // }
-      ],
-      im: {
-        title: "IM体育",
-        subtitle: "SPORTS",
-        charImgPath: require("../../assets/home/hotgame/content/sports/im/character.png")
-      },
-      saba: {
-        title: "沙巴体育",
-        subtitle: "SPORTS",
-        charImgPath: require("../../assets/home/hotgame/content/sports/saba/character.png")
-      },
-      pinnacle: {
-        title: "平博体育",
-        subtitle: "SPORTS",
-        charImgPath: require("../../assets/home/hotgame/content/sports/pinnacle/character.png")
-      },
-      panda: {
-        title: "熊猫体育",
-        subtitle: "SPORTS",
-        charImgPath: require("../../assets/home/hotgame/content/sports/panda/character.png")
-      },
-      cr: {
-        title: "CR体育",
-        subtitle: "SPORTS",
-        charImgPath: require("../../assets/home/hotgame/content/sports/cr/character.png")
-      }
+      ]
+      // im: {
+      //   title: "IM体育",
+      //   subtitle: "SPORTS",
+      //   charImgPath: require("../../assets/home/hotgame/content/sports/im/character.png")
+      // },
+      // saba: {
+      //   title: "沙巴体育",
+      //   subtitle: "SPORTS",
+      //   charImgPath: require("../../assets/home/hotgame/content/sports/saba/character.png")
+      // },
+      // pinnacle: {
+      //   title: "平博体育",
+      //   subtitle: "SPORTS",
+      //   charImgPath: require("../../assets/home/hotgame/content/sports/pinnacle/character.png")
+      // },
+      // panda: {
+      //   title: "熊猫体育",
+      //   subtitle: "SPORTS",
+      //   charImgPath: require("../../assets/home/hotgame/content/sports/panda/character.png")
+      // },
+      // cr: {
+      //   title: "CR体育",
+      //   subtitle: "SPORTS",
+      //   charImgPath: require("../../assets/home/hotgame/content/sports/cr/character.png")
+      // }
     }
   },
   {
@@ -315,42 +337,42 @@ const hotgameData = ref([
         //   icon: require("../../assets/home/hotgame/content/casino/provider_evo.png"),
         //   providerInfo: {}
         // }
-      ],
-      ag: {
-        title: "AG真人",
-        subtitle: "CASINO",
-        charImgPath: require("../../assets/home/hotgame/content/casino/ag/character.png")
-      },
-      db: {
-        title: "DB真人",
-        subtitle: "CASINO",
-        charImgPath: require("../../assets/home/hotgame/content/casino/db/character.png")
-      },
-      bg: {
-        title: "BG真人",
-        subtitle: "CASINO",
-        charImgPath: require("../../assets/home/hotgame/content/casino/bg/character.png")
-      },
-      we: {
-        title: "WE真人",
-        subtitle: "CASINO",
-        charImgPath: require("../../assets/home/hotgame/content/casino/we/character.png")
-      },
-      ob: {
-        title: "欧博真人",
-        subtitle: "CASINO",
-        charImgPath: require("../../assets/home/hotgame/content/casino/ob/character.png")
-      },
-      bbin: {
-        title: "BBIN真人",
-        subtitle: "CASINO",
-        charImgPath: require("../../assets/home/hotgame/content/casino/bbin/character.png")
-      },
-      evo: {
-        title: "EVO真人",
-        subtitle: "CASINO",
-        charImgPath: require("../../assets/home/hotgame/content/casino/evo/character.png")
-      }
+      ]
+      // ag: {
+      //   title: "AG真人",
+      //   subtitle: "CASINO",
+      //   charImgPath: require("../../assets/home/hotgame/content/casino/ag/character.png")
+      // },
+      // db: {
+      //   title: "DB真人",
+      //   subtitle: "CASINO",
+      //   charImgPath: require("../../assets/home/hotgame/content/casino/db/character.png")
+      // },
+      // bg: {
+      //   title: "BG真人",
+      //   subtitle: "CASINO",
+      //   charImgPath: require("../../assets/home/hotgame/content/casino/bg/character.png")
+      // },
+      // we: {
+      //   title: "WE真人",
+      //   subtitle: "CASINO",
+      //   charImgPath: require("../../assets/home/hotgame/content/casino/we/character.png")
+      // },
+      // ob: {
+      //   title: "欧博真人",
+      //   subtitle: "CASINO",
+      //   charImgPath: require("../../assets/home/hotgame/content/casino/ob/character.png")
+      // },
+      // bbin: {
+      //   title: "BBIN真人",
+      //   subtitle: "CASINO",
+      //   charImgPath: require("../../assets/home/hotgame/content/casino/bbin/character.png")
+      // },
+      // evo: {
+      //   title: "EVO真人",
+      //   subtitle: "CASINO",
+      //   charImgPath: require("../../assets/home/hotgame/content/casino/evo/character.png")
+      // }
     }
   },
   {
@@ -391,27 +413,27 @@ const hotgameData = ref([
         //   icon: require("../../assets/home/hotgame/content/board/provider_leyou.png"),
         //   providerInfo: {}
         // }
-      ],
-      dat: {
-        title: "大唐棋牌",
-        subtitle: "BOARD",
-        charImgPath: require("../../assets/home/hotgame/content/board/dat/character.png")
-      },
-      gd: {
-        title: "高登棋牌",
-        subtitle: "BOARD",
-        charImgPath: require("../../assets/home/hotgame/content/board/gd/character.png")
-      },
-      ky: {
-        title: "开元棋牌",
-        subtitle: "BOARD",
-        charImgPath: require("../../assets/home/hotgame/content/board/ky/character.png")
-      },
-      leyou: {
-        title: "乐游棋牌",
-        subtitle: "BOARD",
-        charImgPath: require("../../assets/home/hotgame/content/board/leyou/character.png")
-      }
+      ]
+      // dat: {
+      //   title: "大唐棋牌",
+      //   subtitle: "BOARD",
+      //   charImgPath: require("../../assets/home/hotgame/content/board/dat/character.png")
+      // },
+      // gd: {
+      //   title: "高登棋牌",
+      //   subtitle: "BOARD",
+      //   charImgPath: require("../../assets/home/hotgame/content/board/gd/character.png")
+      // },
+      // ky: {
+      //   title: "开元棋牌",
+      //   subtitle: "BOARD",
+      //   charImgPath: require("../../assets/home/hotgame/content/board/ky/character.png")
+      // },
+      // leyou: {
+      //   title: "乐游棋牌",
+      //   subtitle: "BOARD",
+      //   charImgPath: require("../../assets/home/hotgame/content/board/leyou/character.png")
+      // }
     }
   },
   {
@@ -447,12 +469,12 @@ const hotgameData = ref([
         //   icon: require("../../assets/home/hotgame/content/lottery/provider_lh.png"),
         //   providerInfo: {}
         // }
-      ],
-      lh: {
-        title: "雷火彩票",
-        subtitle: "LOTTERY",
-        charImgPath: require("../../assets/home/hotgame/content/lottery/lh/character.png")
-      }
+      ]
+      // lh: {
+      //   title: "雷火彩票",
+      //   subtitle: "LOTTERY",
+      //   charImgPath: require("../../assets/home/hotgame/content/lottery/lh/character.png")
+      // }
     }
   },
   {
@@ -472,48 +494,48 @@ const hotgameData = ref([
         // {
         //   key: "pg",
         //   name: "PG电子",
-        //   icon: require("../../assets/home/hotgame/content/slots/provider_pg.png"),
+        //   icon: require("../../assets/home/hotgame/content/slot/provider_pg.png"),
         //   providerInfo: {}
         // },
         // {
         //   key: "sw",
         //   name: "SW电子",
-        //   icon: require("../../assets/home/hotgame/content/slots/provider_sw.png"),
+        //   icon: require("../../assets/home/hotgame/content/slot/provider_sw.png"),
         //   providerInfo: {}
         // },
         // {
         //   key: "pt",
         //   name: "PT电子",
-        //   icon: require("../../assets/home/hotgame/content/slots/provider_pt.png"),
+        //   icon: require("../../assets/home/hotgame/content/slot/provider_pt.png"),
         //   providerInfo: {}
         // },
         // {
         //   key: "evo",
         //   name: "EVO电子",
-        //   icon: require("../../assets/home/hotgame/content/slots/provider_evo.png"),
+        //   icon: require("../../assets/home/hotgame/content/slot/provider_evo.png"),
         //   providerInfo: {}
         // }
-      ],
-      pg: {
-        title: "PG电子",
-        subtitle: "SLOT",
-        charImgPath: require("../../assets/home/hotgame/content/slots/pg/character.png")
-      },
-      sw: {
-        title: "SW电子",
-        subtitle: "SLOT",
-        charImgPath: require("../../assets/home/hotgame/content/slots/sw/character.png")
-      },
-      pt: {
-        title: "PT电子",
-        subtitle: "SLOT",
-        charImgPath: require("../../assets/home/hotgame/content/slots/pt/character.png")
-      },
-      evo: {
-        title: "EVO电子",
-        subtitle: "SLOT",
-        charImgPath: require("../../assets/home/hotgame/content/slots/evo/character.png")
-      }
+      ]
+      // pg: {
+      //   title: "PG电子",
+      //   subtitle: "SLOT",
+      //   charImgPath: require("../../assets/home/hotgame/content/slot/pg/character.png")
+      // },
+      // sw: {
+      //   title: "SW电子",
+      //   subtitle: "SLOT",
+      //   charImgPath: require("../../assets/home/hotgame/content/slot/sw/character.png")
+      // },
+      // pt: {
+      //   title: "PT电子",
+      //   subtitle: "SLOT",
+      //   charImgPath: require("../../assets/home/hotgame/content/slot/pt/character.png")
+      // },
+      // evo: {
+      //   title: "EVO电子",
+      //   subtitle: "SLOT",
+      //   charImgPath: require("../../assets/home/hotgame/content/slot/evo/character.png")
+      // }
     }
   },
   {
@@ -542,23 +564,24 @@ const hotgameData = ref([
         //   icon: require("../../assets/home/hotgame/content/fishing/provider_mw.png"),
         //   providerInfo: {}
         // }
-      ],
-      ag: {
-        title: "AG捕鱼",
-        subtitle: "FISHING",
-        charImgPath: require("../../assets/home/hotgame/content/fishing/ag/character.png")
-      },
-      mw: {
-        title: "决战中途岛",
-        subtitle: "FISHING",
-        charImgPath: require("../../assets/home/hotgame/content/fishing/mw/character.png")
-      }
+      ]
+      // ag: {
+      //   title: "AG捕鱼",
+      //   subtitle: "FISHING",
+      //   charImgPath: require("../../assets/home/hotgame/content/fishing/ag/character.png")
+      // },
+      // mw: {
+      //   title: "决战中途岛",
+      //   subtitle: "FISHING",
+      //   charImgPath: require("../../assets/home/hotgame/content/fishing/mw/character.png")
+      // }
     }
   }
 ]);
 
 const setCurrentProvider = (element, value) => {
   element.currentPlat = value;
+  element.currentProvider = value.code.toLowerCase();
 };
 
 let currentBannerIndex = ref(0);
@@ -578,7 +601,7 @@ const onBannerClick = (index) => {
 
 const onEnterGameClick = (plat, platType) => {
   if (platType === "slot") {
-    router.push(plat.path);
+    router.push({ path: plat.path, query: { plat: plat.currentPlat.code } });
   } else {
     const currentPlat = plat.currentPlat;
     if (currentPlat.code === "BBINDY") {
@@ -586,7 +609,12 @@ const onEnterGameClick = (plat, platType) => {
     } else if (currentPlat.code === "GPS") {
       currentPlat.gameCode = 7202;
     }
-    platformGame.value.open(currentPlat.name, currentPlat.code, currentPlat.gameCode);
+
+    const platItem = plat.content[currentPlat.code.toLowerCase()];
+    // console.log(platItem);
+
+    const platformName = currentPlat.alias ?? (platItem && platItem.title) ? platItem.title : currentPlat.name;
+    platformGame.value.open(platformName, currentPlat.code, currentPlat.gameCode);
   }
 };
 const platformsListDisplay = ref([]);
@@ -611,26 +639,52 @@ const checkPlatforms = () => {
       const containingItem = gameTypeArray.some((type) => item.type.toLowerCase() === type.toLowerCase());
 
       if (containingItem) {
-        if (item.type === "slot" && plat.code === "AG") {
-          plat.name = "XIN";
+        const additem = _.clone(plat);
+        if (item.type === "slot" && additem.code === "AG") {
+          additem.name = "XIN";
         }
-        item.content.providerList.push(plat);
+        item.content.providerList.push(additem);
       }
 
-      if (plat.gameType === "ESPORT") {
-        const newObject = {
-          title: plat.cnname,
-          subtitle: plat.message
-        };
-        item.content[plat.code] = newObject;
+      if (gameTypeArray.some((type) => type.toLowerCase() === "esport") && item.type === "esport") {
+        updatePlatforms(eSportsPlatforms, item, "");
+      }
+      if (gameTypeArray.some((type) => type.toLowerCase() === "sport") && item.type === "sport") {
+        updatePlatforms(sportsPlatforms, item, "");
+      }
+      if (gameTypeArray.some((type) => type.toLowerCase() === "live") && item.type === "live") {
+        updatePlatforms(liveCasinoPlatforms, item, "");
+      }
+      if (gameTypeArray.some((type) => type.toLowerCase() === "poker") && item.type === "poker") {
+        updatePlatforms(pokerPlatforms, item, "");
+      }
+      if (gameTypeArray.some((type) => type.toLowerCase() === "lottery") && item.type === "lottery") {
+        updatePlatforms(lotteryPlatforms, item, "");
+      }
+      if (gameTypeArray.some((type) => type.toLowerCase() === "slot") && item.type === "slot") {
+        updatePlatforms(slotPlatforms, item, "");
+      }
+      if (gameTypeArray.some((type) => type.toLowerCase() === "fish") && item.type === "fish") {
+        updatePlatforms(fishingPlatforms, item, "");
       }
     });
   });
   hotgameData.value.forEach((hot) => {
     hot.currentPlat = hot.content.providerList[0];
+    hot.currentProvider = hot.currentPlat.code.toLowerCase();
+  });
+  console.log(hotgameData.value);
+};
+const updatePlatforms = (platforms, item, keyModifier) => {
+  platforms.forEach((p) => {
+    const newObject = {
+      title: p.cnname,
+      subtitle: p.message,
+      charImgPath: p.image
+    };
+    item.content[p.code.toLowerCase() + keyModifier] = newObject;
   });
 };
-
 onMounted(() => {
   setBannerPosition(currentBannerIndex.value);
   setHotGame();
@@ -720,7 +774,7 @@ $transition_timer: 0.5s;
             }
 
             .subtitle {
-              width: 0.5rem;
+              width: 0.2rem;
               word-break: break-all;
               text-align: center;
               font-family: PingFang SC;
@@ -767,19 +821,21 @@ $transition_timer: 0.5s;
           width: 55%;
 
           .title-wrapper {
-            filter: drop-shadow(3px 0 #5799e3);
-            font-family: FZHanZhenGuangBiaoS-GB;
-            font-weight: 600;
+            font-family: "YiHei";
+            font-style: normal;
+            font-weight: 400;
             background: linear-gradient(180deg, #c2e9fb 0%, #a1c4fc 100%);
-            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            -webkit-text-stroke-width: 0.5px;
-            -webkit-text-stroke-color: white;
+            background-clip: text;
+            text-fill-color: transparent;
+            filter: drop-shadow(2px 1px #5799e3);
+
             line-height: normal;
 
             .title {
-              font-size: 4.24106rem;
+              // font-size: 4.24106rem;
+              font-size: 2.7106rem;
               word-break: keep-all;
             }
 
@@ -816,6 +872,7 @@ $transition_timer: 0.5s;
             flex-wrap: wrap;
             gap: 12.5px;
             width: 20rem;
+            z-index: 2;
 
             .game-provider {
               display: flex;
@@ -883,6 +940,7 @@ $transition_timer: 0.5s;
             right: 4rem;
             height: 27rem;
           }
+
           // esports
           .character-esports-lh {
             position: relative;

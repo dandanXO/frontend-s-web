@@ -10,7 +10,7 @@
         已有{{ cardInfo.cardDetail.setting.cardCount }}人集齐,{{ cardInfo.cardDetail.setting.openStr }}开奖
       </div>
       <div class="text-center">
-        <div class="huka-btn huka-take-btn waves-effect" @click="getNewTigerCard">领取虎卡</div>
+        <div class="huka-btn huka-take-btn waves-effect" @click="getNewTigerCard">领取龙卡</div>
       </div>
       <div v-if="cardInfo.cardDetail.leftCount > 0" class="redeem-tips">
         剩下 {{ cardInfo.cardDetail.leftCount }} 次机会领取
@@ -46,7 +46,7 @@
             </div>
           </div>
           <div class="huka-footer">
-            <div class="huka-btn waves-effect give-btn" @click="isGiftModal = true">赠送虎卡</div>
+            <div class="huka-btn waves-effect give-btn" @click="isGiftModal = true">赠送龙卡</div>
             <div class="huka-btn waves-effect combo-btn" @click="compoundCard">合成大奖卡</div>
           </div>
         </div>
@@ -100,7 +100,7 @@
       </table>
     </div>
 
-    <q-dialog align-center v-model="isGiftModal" title="赠送虎卡" width="500">
+    <q-dialog align-center v-model="isGiftModal" title="赠送龙卡" width="500">
       <q-card class="q-pa-md" style="width: 100%">
         <q-form @submit="submitRegisterForm" @reset="resetRegForm" class="q-gutter-md">
           <q-select
@@ -108,7 +108,7 @@
             color=""
             ref="typeRef"
             class="q-mt-md"
-            label="请选择虎卡"
+            label="请选择龙卡"
             filled
             :options="hukaList"
             option-value="code"
@@ -116,7 +116,7 @@
             v-model="form.type"
             emit-value
             map-options
-            :rules="[(val) => !!val || '请选择虎卡']"
+            :rules="[(val) => !!val || '请选择龙卡']"
           />
           <q-input
             ref="friendLoginNameRef"
@@ -212,7 +212,7 @@ const pageNumChange = (i) => {
 };
 
 const pageInit = () => {
-  eventapi.post("/tigerCard/init", qs.stringify({ promoCode: "dy2-tiger-card" })).then((res) => {
+  eventapi.post("/tigerCard/init", qs.stringify({ promoCode: "lh1-dragon-card" })).then((res) => {
     if (res.code === 0) {
       cardInfo.cardDetail = res.data;
     }
@@ -230,8 +230,8 @@ const isPageLoading = ref(false);
 const pageLoadingText = ref("");
 const getNewTigerCard = () => {
   isPageLoading.value = true;
-  pageLoadingText.value = "正领取虎卡";
-  eventapi.post("/tigerCard/getMemberCard", qs.stringify({ promoCode: "dy2-tiger-card" })).then((res) => {
+  pageLoadingText.value = "正领取龙卡";
+  eventapi.post("/tigerCard/getMemberCard", qs.stringify({ promoCode: "lh1-dragon-card" })).then((res) => {
     if (res.code === 0) {
       cardInfo.cardDetail[res.data.cardType] = cardInfo.cardDetail[res.data.cardType] + 1;
       isCardModal.value = true;
@@ -240,7 +240,7 @@ const getNewTigerCard = () => {
       $q.notify({
         color: "positive",
         position: "top",
-        message: "已领取虎卡",
+        message: "已领取龙卡",
         icon: "check_circle_outline"
       });
       pageInit();
@@ -259,7 +259,7 @@ const getNewTigerCard = () => {
 const compoundCard = () => {
   isPageLoading.value = true;
   pageLoadingText.value = "正合成大奖卡";
-  eventapi.post("/tigerCard/synthesisCard", qs.stringify({ promoCode: "dy2-tiger-card" })).then((res) => {
+  eventapi.post("/tigerCard/synthesisCard", qs.stringify({ promoCode: "lh1-dragon-card" })).then((res) => {
     if (res.code === 0) {
       pageInit();
       ElMessage.success({
@@ -277,31 +277,31 @@ const hukaList = ref([
     code: "hongyunhu",
     image: "hyh",
     count: 0,
-    label: "鸿运虎"
+    label: "鸿运龙"
   },
   {
     code: "jilihu",
     image: "jlh",
     count: 0,
-    label: "吉利虎"
+    label: "吉利龙"
   },
   {
     code: "pinganhu",
     image: "pah",
     count: 0,
-    label: "平安虎"
+    label: "平安龙"
   },
   {
     code: "ruyihu",
     image: "ryh",
     count: 0,
-    label: "如意虎"
+    label: "如意龙"
   },
   {
     code: "xinyunhu",
     image: "xyh",
     count: 0,
-    label: "幸运虎"
+    label: "幸运龙"
   }
 ]);
 const isSelected = ref("xinyunhu");
@@ -342,7 +342,7 @@ const sendRules = {
   type: [
     {
       required: true,
-      message: "请选择虎卡",
+      message: "请选择龙卡",
       trigger: "change"
     }
   ]
@@ -371,7 +371,7 @@ const submitRegisterForm = async () => {
     // form has error
   } else {
     isSubmitting.value = true;
-    form.promoCode = "dy2-tiger-card";
+    form.promoCode = "lh1-dragon-card";
     eventapi.post("/tigerCard/giveCardToFriend", qs.stringify(form)).then((res) => {
       if (res.code === 0) {
         $q.notify({
