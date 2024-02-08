@@ -98,7 +98,7 @@
             <div class="questions-gift">
                 <img src="../../assets/feedback/gift.png"/>
             </div>
-            <div class="questions-content">
+            <div class="questions-content" id="questionContainer">
               <div v-for="(item, i) in quesTitleOptions" :key="i" class="question-title-container">
                   <template v-if="recordsPagination.current === item.page">
                     <div class="questions-title" >
@@ -133,7 +133,33 @@
                   <button id="finalBtn" class="standard-button btn-color-blue" @click="onFinalBtnClick()" style="display: none;">完成</button>
                 </div>
               </div>
-            </div>  
+            </div> 
+            
+            <div class="questions-content" id="QRContainer" style="display: none">
+              <div class="thumbs-up-div"><img src="../../assets/feedback/thumbs-up.png" /></div>
+              <div class="header-title-div">
+                <span class="span1">恭喜您完成本月的调查问卷</span> 
+                <span class="span2">下月问卷将于次月1号重新开启</span>
+              </div>
+              <div class="header-title-div" style="margin-top: 25px">
+                <span class="span3">此次问卷提供<span class="span1" style="color: #468CFF">18-188元</span>建议金</span> 
+              </div>
+              <div class="qr-code-div">
+                <img src="../../assets/feedback/QR-code.png"/>
+              </div>
+              <div class="url-div">
+                <el-input 
+                  class="url-input-fill" 
+                  v-model="urlInput"
+                  :readonly="true"
+                  type="url"
+                  />
+                <div>
+                  <button class="standard-button btn-color-blue copy-button">复制</button>
+                </div>
+              </div>
+            </div>
+
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -163,8 +189,6 @@ const quesTitleOptions = ref([]);
 let quesTitlePage = 1;
 let ansOptions = [];
 let optionModal = ref(null);
-// console.log("SHOW PAGE:: ", recordsPagination.current);
-console.log("SHOW PAGE P:: ", recordsPagination.pages);
 
 const getQuesTitleOptions = () => {
   quesTitleOptions.value = [{
@@ -246,11 +270,8 @@ const getQuesTitleOptions = () => {
     ansOptions = quesTitleOptions.value[1].questions;
   }
   quesTitlePage = recordsPagination.current;
-  console.log("ANS OP::: ", ansOptions);
-  console.log("PAGE:: ", recordsPagination.current);
  
 }
-console.log("PAGE OUSI:: ", recordsPagination.current);
 
 const removeArray = () => {
   ansOptions.splice(0);
@@ -283,7 +304,6 @@ const onPrevBtnClick = () => {
     nextBtn.style.display = "block";
     finalBtn.style.display = "none";
   }
-  console.log("PAGE PP:: ", recordsPagination.current);
 }
 
 const onNextBtnClick = () => {
@@ -302,12 +322,16 @@ const onNextBtnClick = () => {
     prevBtn.style.display = "block";
     finalBtn.style.display = "block";
   }
-  console.log("PAGE NN:: ", recordsPagination.current);
 }
 
 const onFinalBtnClick = () => {
-  
+  const questionDiv = document.getElementById("questionContainer");
+  const QRDiv = document.getElementById("QRContainer");
+  questionDiv.style.display = "none";
+  QRDiv.style.display = "block";
 }
+
+const urlInput = ref("Http://LHe63851/s?eric123");
 
 const options = ["存款问题", "转账问题", "提款问题", "其他"];
 
@@ -619,8 +643,6 @@ onMounted(() => {
       font-size: 1rem;
       margin-bottom: 36px;
     }
-    .questions-btn {
-    }
 
     .answer-container {
       display: flex; 
@@ -661,7 +683,119 @@ onMounted(() => {
     }
   }
   
-}
+  .thumbs-up-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    img {
+      width: 121px;
+      height: 121px;
+    }
+  }
+
+  .header-title-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #424F72;
+    margin-top: 10px;
+    gap: 5px;
+  }
+  .span1 {
+    font-family: PingFang SC;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 30px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+  .span2 {
+    font-family: PingFang SC;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 30px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+  .span3 {
+    font-family: PingFang SC;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 30px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+
+  .qr-code-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #424F72;
+    margin-top: 30px;
+    gap: 5px;
+
+    img {
+      width: 188px;
+      height: 233px;
+    }
+  }
+
+  .url-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #3F8CFF;
+    margin-top: 30px;
+    gap: 5px;
+    width: 100%;
+  }
+
+  .url-input-fill {
+    width: 389px;
+      :deep(.el-form-item__label) {
+        width: 80px;
+      }
+
+      :deep(.el-input__inner) {
+        color: #3F8CFF;
+      }
+
+      :deep(.el-input__wrapper) {
+        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+        border-radius: 10px;
+        background: #f7f8fb;
+        height: 42px;
+      }
+
+      :deep(.el-textarea__inner) {
+        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+        border-radius: 10px;
+        background: #f7f8fb;
+      }
+    }
+  }
+
+  .copy-button {
+    position: absolute;
+    bottom: 60px;
+    margin: -15px 0 0 -100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+
+    font-family: PingFang SC;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: center;
+
+  }
+
 
 .mail-content {
   :deep(.el-collapse-item__header) {
