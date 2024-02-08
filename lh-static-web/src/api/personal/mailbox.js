@@ -36,7 +36,7 @@ export function wirteMail(mail) {
 }
 
 export function getUnreadTotal() {
-  return server.REST.get("/session/getUnreadTotal");
+  return server.REST.get("/session/inbox/getUnreadTotal");
 }
 
 export function readAllMail(mailQuery) {

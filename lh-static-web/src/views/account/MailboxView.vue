@@ -78,16 +78,27 @@
 
 <script setup>
 import { ref, reactive, onMounted } from "vue";
-import { mailInbox, mailOutbox, wirteMail, readAllMail, deleteAllMail, readMultipleMail, deleteMultipleMail } from "@/api/personal/mailbox";
-// import { message } from "ant-design-vue";
+import {
+  mailInbox,
+  mailOutbox,
+  wirteMail,
+  readAllMail,
+  deleteAllMail,
+  readMultipleMail,
+  deleteMultipleMail,
+  getUnreadTotal
+} from "@/api/personal/mailbox";
+import moment from "moment"
 import { ElMessage } from "element-plus";
+import { userStore } from "@/store";
 
 const loadingBtn = ref(false);
 const mailboxData = ref([]);
 const mailboxNotifyData = ref([]);
 const isShowSelect = ref(false);
 const selectedIds = ref({});
-// const mailboxMessageType = ref(["NOTIFICATION", "ACTIVITY", "ANNOUNCEMENT", "PAYMENT"]);
+const store= userStore();
+
 const mailboxMessageTypeData = ref([
   { num: 1, type: "NOTIFICATION", name: "通知" },
   { num: 2, type: "ACTIVITY", name: "活动" },
@@ -219,6 +230,11 @@ const loadPersonalMailbox = () => {
 };
 
 const readAllMsg = (m) => {
+  const readType = m === null ? "ALL" : m;
+  mailboxNotifyState[readType].forEach((mail) => {
+    mail.readTime = moment().format("YYYY-MM-DD");
+  });
+
   readAllMail(m)
     .then((res) => {
       if (res.code === 0) {
@@ -227,6 +243,7 @@ const readAllMsg = (m) => {
           type: "success"
         });
 
+        checkMailboxUnread();
         loadPersonalMailbox();
       }
     })
@@ -248,6 +265,7 @@ const readMultipleMsg = () => {
           type: "success"
         });
 
+        checkMailboxUnread();
         loadPersonalMailbox();
 
         isShowSelect.value = false;
@@ -257,6 +275,20 @@ const readMultipleMsg = () => {
       console.log(error);
     });
 };
+
+const checkMailboxUnread = () => {
+  getUnreadTotal()
+    .then((res) => {
+      const { code, data } = res;
+      if (code === 0) {
+        store.unreadTotal = data;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 
 const deleteMultipleMsg = () => {
   const selectedMessages = mailboxState.mailboxList.inbox.list.filter((m) => selectedIds.value[m.id]);
@@ -285,6 +317,7 @@ const deleteMultipleMsg = () => {
           selectedIds.value[key] = false;
         });
 
+        checkMailboxUnread();
         loadPersonalMailbox();
       }
     })
@@ -294,6 +327,9 @@ const deleteMultipleMsg = () => {
 };
 
 const deleteAllMsg = (m) => {
+  const readType = m === null ? "ALL" : m;
+  mailboxNotifyState[readType] = [];
+
   deleteAllMail(m)
     .then((res) => {
       if (res.code === 0) {
@@ -302,6 +338,7 @@ const deleteAllMsg = (m) => {
           type: "success"
         });
 
+        checkMailboxUnread();
         loadPersonalMailbox();
       }
     })

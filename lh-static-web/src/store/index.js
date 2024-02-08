@@ -27,7 +27,8 @@ export const userStore = defineStore("userStore", {
       regPageVisible: false,
       currentDeposit: "0.0000",
       levelUpDeposit: "0",
-      siteId: 7
+      siteId: 7,
+      unreadTotal: 0
     };
   },
   actions: {
