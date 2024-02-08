@@ -258,7 +258,7 @@ export default defineComponent({
   }
   // background: #090b19;
   .all-promotions {
-    background-image: url(../assets/images/promotion/dy-banner.png);
+    background-image: url("../assets/images/promotion/dy-banner.png");
     //background-image: url("../assets/promo/dy-banner.jpg");
     background-repeat: no-repeat;
     background-position: top center;
