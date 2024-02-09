@@ -4,7 +4,7 @@ export const liveCasinoPlatforms = [
     code: "AG",
     cnname: "AG真人",
     image: "ag",
-    message: "全球首创6张牌先发、VIP包桌、咪牌百家乐、智控模式百家乐及竞咪互动百家乐等游戏，多终端兼容，让您享受不停。",
+    message: "真实赌场环境，美艳荷官与您互动，咪牌百家乐，体验包桌尊贵服务，给您亲临现场般的游戏体验。",
     caption: "",
     gameCode: ""
   },
@@ -12,7 +12,7 @@ export const liveCasinoPlatforms = [
     code: "PMLIVE",
     cnname: "DB真人",
     image: "db",
-    message: "全球首创6张牌先发、VIP包桌、咪牌百家乐、智控模式百家乐及竞咪互动百家乐等游戏，多终端兼容，让您享受不停。",
+    message: "互动娱乐在线直播平台，让玩家游戏的同时，观赏美女主播表演、参与互动游戏。设有多个真人荷官桌台，包括：百家乐、竞咪、龙虎、骰宝、轮盘等多款游戏。",
     caption: "",
     gameCode: ""
   },
@@ -20,7 +20,7 @@ export const liveCasinoPlatforms = [
     code: "BG",
     cnname: "BG真人",
     image: "bg",
-    message: "",
+    message: "最美荷官在线互动，带您玩转百家乐、骰宝、轮盘、牛牛、炸金花等多款真人视讯游戏, 国际标准、公平公正，极致享受。",
     caption: "",
     gameCode: ""
   },
@@ -28,7 +28,7 @@ export const liveCasinoPlatforms = [
     code: "Evo",
     cnname: "EVO真人",
     image: "evo",
-    message: "",
+    message: "真实赌场环境，美艳荷官与您互动，顶级娱乐百家乐、骰宝、牛牛、轮盘...等多项经典游戏。",
     caption: "",
     gameCode: ""
   },
@@ -36,7 +36,7 @@ export const liveCasinoPlatforms = [
     code: "BBINDY",
     cnname: "BBIN真人",
     image: "bbin",
-    message: "全球首创6张牌先发、VIP包桌、咪牌百家乐、智控模式百家乐及竞咪互动百家乐等游戏，多终端兼容，让您享受不停。",
+    message: "顶级娱乐百家乐、骰宝、牛牛、轮盘...等多项经典游戏，实时下注的刺激开牌反馈，多位真人荷官全年无休的紧密互动，让您感受贵宾般的尊爵待遇。",
     caption: "",
     gameCode: "bblive_lobby_pc"
   },
@@ -53,7 +53,7 @@ export const liveCasinoPlatforms = [
     cnname: "欧博真人",
     image: "allbet",
     message:
-      "玩放易博尽享金满人生，EBET自2012年成立以来即致力创造富游戏性与创意兼具的移动娱乐平台，不仅提供专业的技术支持和稳定的顶级设备，并支持多项平台和荣获多项国际许可认证，提供玩家最值得信任的娱乐环境。",
+      "更加符合亚洲人审美的美女荷官，还有中国美女直播陪玩，互动，聊天。玩法多样竞咪互动百家乐、六张牌先发、自主切牌、荷官一对一玩牌等多款火爆新款游戏。",
     caption: "",
     gameCode: ""
   },
@@ -69,7 +69,7 @@ export const liveCasinoPlatforms = [
     code: "WE",
     cnname: "WE真人",
     image: "we",
-    message: "全球首创6张牌先发、VIP包桌、咪牌百家乐、智控模式百家乐及竞咪互动百家乐等游戏，多终端兼容，让您享受不停。",
+    message: "百家乐、骰宝、轮盘、牛牛、炸金花等多款真人视讯游戏，多位真人荷官全年无休的紧密互动，最美荷官在线互动。",
     caption: "",
     gameCode: ""
   }
@@ -262,7 +262,7 @@ export const pokerPlatforms = [
     code: "DT",
     cnname: "大唐棋牌",
     image: "dt",
-    message: "抢庄牛牛龙虎斗，多款棋牌任君选<br> 棋牌彰显胸怀，竞技娱乐烧脑，好友相约竞技，游戏改变生活",
+    message: "万人在线，公平公正，3D立体画面，炫酷特效，完美的棋牌体验，从天而降的彩金，等您来赢",
     caption: "",
     gameCode: ""
   },
@@ -270,7 +270,7 @@ export const pokerPlatforms = [
     code: "KY",
     cnname: "开元棋牌",
     image: "ky",
-    message: "双赢棋牌提供市面上热门游戏种类，选择全面多元，应有尽有<br> 玩家能不断游戏不感无趣！",
+    message: "提供市面上热门游戏种类，选择全面多元，应有尽有玩家能不断游戏不感无趣！抢庄牛牛、龙虎斗，多款棋牌任君选，好友相约竞技，游戏改变生活",
     caption: "",
     gameCode: "ky_lobby"
   },
@@ -278,7 +278,7 @@ export const pokerPlatforms = [
     code: "LEG",
     cnname: "乐游棋牌",
     image: "ly",
-    message: "抢庄牛牛龙虎斗，多款棋牌任君选<br> 棋牌彰显胸怀，竞技娱乐烧脑，好友相约竞技，游戏改变生活",
+    message: "欧洲最高级别安全认证，热门棋牌品类丰富，聆听悦耳音乐，感受非同凡响极致体验，让游戏改变生活",
     caption: "",
     gameCode: ""
   },
@@ -286,7 +286,7 @@ export const pokerPlatforms = [
     code: "GFLC",
     cnname: "高登棋牌",
     image: "gd",
-    message: "抢庄牛牛龙虎斗，多款棋牌任君选<br> 棋牌彰显胸怀，竞技娱乐烧脑，好友相约竞技，游戏改变生活",
+    message: "上万人实时对战竞技，炸金花、斗地主、万人牛牛等多项爆款游戏，简单又丰富的玩法，精致的游戏体验，满足你的大胆野心，随时准备一战成名",
     caption: "",
     gameCode: "lobby"
   }

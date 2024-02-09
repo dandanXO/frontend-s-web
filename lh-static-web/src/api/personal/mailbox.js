@@ -36,5 +36,29 @@ export function wirteMail(mail) {
 }
 
 export function getUnreadTotal() {
-  return server.REST.get("/session/getUnreadTotal");
+  return server.REST.get("/session/inbox/getUnreadTotal");
+}
+
+export function readAllMail(mailQuery) {
+  return server.REST.post("/session/inbox/readAll", {
+    type: mailQuery !== null ? mailQuery : undefined
+  });
+}
+
+export function deleteAllMail(mailQuery) {
+  return server.REST.post("/session/inbox/deleteAll", {
+    type: mailQuery !== null ? mailQuery : undefined
+  });
+}
+
+export function readMultipleMail(mailQuery) {
+  return server.REST.post("/session/inbox/readMultiple", {
+    ids: mailQuery
+  });
+}
+
+export function deleteMultipleMail(mailQuery) {
+  return server.REST.post("/session/inbox/deleteMultiple", {
+    ids: mailQuery
+  });
 }

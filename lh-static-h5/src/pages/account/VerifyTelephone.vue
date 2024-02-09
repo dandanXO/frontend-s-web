@@ -16,17 +16,16 @@
           :readonly="showVerifyBtn ? false : true"
           style="width: 100%"
         ></q-input>
-        <template v-if="showVerifyBtn">
-          <div class="q-ml-md">
-            <q-btn
-              size="md"
-              color="brightbtn"
-              label="发送验证码"
-              @click="openVerificationDialog()"
-              style="white-space: nowrap"
-            />
-          </div>
-        </template>
+        <div class="q-ml-md">
+          <q-btn
+            size="md"
+            color="brightbtn"
+            :label="showVerifyBtn && otpCountdownCount <= 0 ? `发送验证码` : `已发送（倒数${otpCountdownCount}秒)`"
+            @click="openVerificationDialog()"
+            style="white-space: nowrap"
+            :disable="!showVerifyBtn && otpCountdownCount > 0"
+          />
+        </div>
       </div>
 
       <q-input
@@ -241,6 +240,20 @@ export default defineComponent({
       return result;
     }
 
+    const otpCountdownCount = ref(0);
+    let otpCountdownSchedule;
+    const countdownOtp = () => {
+      otpCountdownCount.value = 60;
+      otpCountdownSchedule = setInterval(() => {
+        if (otpCountdownCount.value <= 0) {
+          showVerifyBtn.value = true;
+          clearInterval(otpCountdownSchedule);
+          return;
+        }
+        otpCountdownCount.value--;
+      }, 1000);
+    };
+
     const openVerificationDialog = () => {
       getCode()
       showCaptchaDialog.value = true
@@ -274,6 +287,7 @@ export default defineComponent({
               showVerificationTokenInput.value = true
               phoneCodeId.value = res.data.codeId;
               console.log(res.data.codeId)
+              countdownOtp();
             } else {
               color = 'negative';
               getCode();
@@ -333,7 +347,8 @@ export default defineComponent({
       openVerificationDialog,
       onCaptchaSubmit,
       showVerifyBtn,
-      phoneCodeId
+      phoneCodeId,
+      otpCountdownCount
     };
   }
 });

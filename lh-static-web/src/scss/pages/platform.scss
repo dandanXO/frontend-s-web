@@ -15,7 +15,9 @@
 
   .platform-container-inner {
     display: grid;
-    grid-template-columns: 55% 45%;
+    padding-right: 20px;
+    gap: 20px;
+    grid-template-columns: 50% 50%;
 
     .platform-item {
       display: flex;

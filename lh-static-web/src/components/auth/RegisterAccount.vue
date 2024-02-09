@@ -88,6 +88,7 @@ const registerTelephoneKey = `registerTelephoneKey`
 let cachedTelephone = lsGet(registerTelephoneKey);
 const router = useRouter();
 const route = useRoute();
+const hasAffiliate = ref(false);
 
 const resetRegForm = (formEl) => {
     if (!formEl) return
@@ -288,6 +289,23 @@ const getCode = () => {
         }
     })
 };
+
+const getAffiliateCode = () => {
+    const affCode = sessionStorage.getItem("AFFILIATE_CODE");
+    if (affCode) {
+    hasAffiliate.value = true;
+    regForm.codeAffiliate = affCode;
+    }
+};
+
+const getReferalCode = () => {
+    const referCode = sessionStorage.getItem("REFERRAL_CODE");
+
+    if (referCode && route.query && route.query.refer) {
+        regForm.referrer = referCode;
+    }
+};
+
 const verificationImg = ref("");
 
 const submitRegisterForm = async (elForm) => {
@@ -316,6 +334,7 @@ const submitRegisterForm = async (elForm) => {
                             store.autoLogin(response.data);
 
                             sessionStorage.removeItem("REFERRAL_CODE");
+                            sessionStorage.removeItem("AFFILIATE_CODE")
 
                             if (store.token) {
                                 router.push("/welcome");
@@ -354,6 +373,8 @@ const registerRef = ref([])
 
 onMounted(() => {
     getCode();
+    getAffiliateCode();
+    getReferalCode();
 });
 </script>
 
