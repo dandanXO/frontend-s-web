@@ -338,7 +338,7 @@ $node-color: #33bcd4;
 
       & > div {
         font-size: 12px;
-        color: #fff;
+        color: #000;
       }
 
       .node-txt-img {
