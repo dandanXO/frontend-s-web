@@ -90,7 +90,7 @@ const https = (api) => {
   const currentHost = window.location.host
   const thaiHost = "affiliate-web.monemental.com"
   const dy2Host = "dy2-affiliate.mndofithly.com"
-  const dy2Host2 = "dy618.com"
+  const dy2Host2 = "www.dy618.com"
   const isAff = api === 'affiliate'
   const isCr = api === 'cashier'
   let apiUrl = process.env.VUE_APP_RST_API
