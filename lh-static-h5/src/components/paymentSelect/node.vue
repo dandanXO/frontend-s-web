@@ -296,7 +296,7 @@ $node-color: #33bcd4;
         align-items: center;
         & > div {
           font-size: 12px;
-          color: #ffffff;
+          color: #000;
         }
         img {
           //width: 15px;
