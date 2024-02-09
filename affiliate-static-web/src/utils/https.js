@@ -90,6 +90,7 @@ const https = (api) => {
   const currentHost = window.location.host
   const thaiHost = "affiliate-web.monemental.com"
   const dy2Host = "dy2-affiliate.mndofithly.com"
+  const dy2Host2 = "dy618.com"
   const isAff = api === 'affiliate'
   const isCr = api === 'cashier'
   let apiUrl = process.env.VUE_APP_RST_API
@@ -98,6 +99,7 @@ const https = (api) => {
       apiUrl = isAff ? process.env.VUE_APP_TH_RST_API : (isCr ? process.env.VUE_APP_TH_CR_API : process.env.VUE_APP_TH_BASE_API)
       break
 
+    case dy2Host2:
     case dy2Host:
       apiUrl = isAff ? process.env.VUE_APP_DY_RST_API : (isCr ? process.env.VUE_APP_DY_CR_API : process.env.VUE_APP_DY_BASE_API)
       break
