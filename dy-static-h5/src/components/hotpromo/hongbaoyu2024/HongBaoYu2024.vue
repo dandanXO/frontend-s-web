@@ -3,7 +3,7 @@
     <div class="receive-container" v-if="!promoNotReady && !bonusOpened">
       <img :src="require(`../../../assets/images/hongbaoyu/hongbao-bg.png`)" style="display: block; width: 100%" />
       <div class="contents" v-if="!bonusOpened">
-        <el-button class="promo-common-btn" size="large" :loading="loadingClaim" @click="getPromotion"></el-button>
+        <q-btn class="promo-common-btn" size="large" :loading="loadingClaim" @click="getPromotion"></q-btn>
       </div>
     </div>
 
