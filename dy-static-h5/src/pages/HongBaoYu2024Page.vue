@@ -3,7 +3,13 @@
     <div class="receive-container" v-if="!promoNotReady && !bonusOpened">
       <img :src="require(`../assets/images/hongbaoyu/hongbao-bg.png`)" style="display: block; width: 100%" />
       <div class="contents" v-if="!bonusOpened">
-        <el-button class="promo-common-btn" size="large" :loading="loadingClaim" @click="getPromotion"></el-button>
+        <q-btn
+          class="promo-common-btn"
+          size="large"
+          ripple="false"
+          :loading="loadingClaim"
+          @click="getPromotion"
+        ></q-btn>
       </div>
     </div>
 
@@ -197,7 +203,13 @@ onMounted(() => {
         border: unset;
         aspect-ratio: 392/168;
         //height: 100px;
+        box-shadow: none;
+        transition: none;
         padding: 0 100px;
+
+        &:before {
+          box-shadow: none;
+        }
       }
 
       :deep(.el-button) {

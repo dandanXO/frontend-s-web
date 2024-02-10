@@ -202,7 +202,7 @@ export default defineComponent({
             gap: 15px;
             align-items: center;
             text-decoration: none;
-            padding: 10px 50px 15px 10px;
+            padding: 10px 20px 15px 10px;
             padding-left: 30px;
             font-size: 1.125rem;
             color: $font-0;

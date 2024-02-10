@@ -43,6 +43,8 @@
           <router-link v-for="item in menuItems" :key="item.route" :to="item.route" class="account-menu-item">
             <img class="account-avatar" :src="require(`../../assets/images/account/menu-icon-${item.icon}.png`)" />
             {{ item.label }}
+
+            <div v-if="item.icon==='inbox' && store.unreadTotal > 0" class="unread-total"><span>{{store.unreadTotal}}</span></div>
           </router-link>
         </div>
       </div>
@@ -167,6 +169,17 @@ const menuItems = ref([
         }
       }
     }
+  }
+
+  .unread-total{
+    width: 45px;
+    height: 25px;
+    border-radius: 25px;
+    text-align: center;
+    color:#fff;
+    background: red;
+    font-size: 16px;
+    line-height: 25px;
   }
 }
 </style>

@@ -1273,9 +1273,11 @@ export default defineComponent({
       getCode();
       getReferalCode();
 
-      if (token) {
+      if (store.token) {
         store.getBalance();
         store.getMemberInfo();
+
+        getUnreadMail()
       }
 
       if(store.loginPageVisible) {
@@ -1291,7 +1293,7 @@ export default defineComponent({
 
       // console.log(route);
       // alert(route.name)
-      // getUnreadMail()
+
 
     });
 
@@ -1525,7 +1527,7 @@ export default defineComponent({
     const getUnreadMail = () => {
       getUnreadTotal().then((response) => {
         if (response.code === 0) {
-          // console.log("00000?")
+          store.unreadTotal= response.data;
         }
       }).catch((error) => {
         // console.log("error===", error)

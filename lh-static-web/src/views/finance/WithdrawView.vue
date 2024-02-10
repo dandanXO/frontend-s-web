@@ -5,7 +5,7 @@
     </div>
 
     <div class="menu-title-container">
-      <span class="menu-title">提款流程：</span>
+      <span class="">提款流程：</span>
       <div class="account-content withdrawal">
         <div class="flex-box">
           <div class="step-item active">申请中</div>
@@ -739,5 +739,16 @@ export default defineComponent({
   margin-left: 150px;
   margin-bottom: 30px;
   color: #ff7f10;
+}
+
+.menu-title-container{
+  .menu-title{
+    font-size: 18px;
+    color: #424F72;
+  }
+
+  .additional-title{
+    padding-left: 16px;
+  }
 }
 </style>

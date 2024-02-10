@@ -253,12 +253,16 @@ const setFilteredPlatforms = () => {
   console.log(filteredPlatforms.value);
   console.log(platformsListDisplay.value);
 
-  filteredPlatforms.value.forEach((element) => {
-    if (element.code === route.query.plat) {
-      clickPlat(element);
-    }
-  });
-  setSelectedPlat();
+  if (!route.query.plat) {
+    setSelectedPlat();
+  } else {
+    filteredPlatforms.value.forEach((element) => {
+      if (element.code === route.query.plat) {
+        clickPlat(element);
+      }
+    });
+  }
+
 };
 
 const selectedPlat = ref(null);
@@ -272,7 +276,7 @@ const clickPlat = (plat) => {
 };
 
 const openGame = (item, platformCode, gameCode) => {
-  const platName= item.alias ?? item.cnname ?? item.name;
+  const platName = item.alias ?? item.cnname ?? item.name;
   platformGame.value.open(platName, platformCode, gameCode);
 };
 
@@ -294,6 +298,7 @@ const switchPlat = (plat) => {
   // selectedPlat.value = plat.code;
   gamePage.currentPage = 1;
   loadGameList();
+  clickPlat(plat);
 };
 
 const getPlatGameList = () => {
@@ -330,7 +335,7 @@ const searchList = () => {
   }
 };
 const loadGameList = () => {
-  if (props.platformGameType === "SLOT" || props.platformGameType === "FISH") {
+  if (props.platformGameType === "SLOT") {
     getPlatformGames(activePlat.value.id, props.platformGameType)
       .then((data) => {
         data.forEach((element) => {
@@ -359,7 +364,7 @@ const gameCat = ref("allGame");
 onMounted(() => {
   getPlatList();
   getPlatGameList();
-  // activePlat.value = filteredPlatforms.value[0];
+
 });
 
 watch(
