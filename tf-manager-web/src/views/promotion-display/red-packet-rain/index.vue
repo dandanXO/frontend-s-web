@@ -331,6 +331,15 @@
             @keypress="restrictInput($event)"
           />
         </el-form-item>
+        <el-form-item :label="t('fields.redPacketMinTotalDeposit')" prop="redPacketMinTotalDeposit" style="width: 600px;">
+          $
+          <el-input-number
+            v-model="form.redPacketMinTotalDeposit"
+            style="width: 135px"
+            :controls="false"
+            @keypress="restrictInput($event)"
+          />
+        </el-form-item>
         <el-form-item :label="t('fields.lastDigitMinDayDeposit')" prop="lastDigitMinDayDeposit" style="width: 600px;">
           $
           <el-input-number
@@ -686,6 +695,7 @@ const form = reactive({
   vipRules: [],
   lastDigitMinDayDeposit: 0,
   redPacketMinDayDeposit: 0,
+  redPacketMinTotalDeposit: 0,
   lastDigitRules: [],
   status: null,
 })
