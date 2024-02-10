@@ -1059,6 +1059,7 @@ export default {
     rebateLevel: 'Rebate Level',
     rebatePercentage: 'Rebate %',
     redPacketMinDayDeposit: 'Min Day Deposit Amount for Red Packet Rain',
+    redPacketMinTotalDeposit: 'Min Total Deposit Amount for Red Packet Rain',
     rule: 'Rule',
     maxRebate: 'Max Rebate',
     maxBalance: 'Maximun Balance',

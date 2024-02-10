@@ -31,7 +31,7 @@
       <div class="contents">
         <div class="bullet-wrapper">
           <img :src="require(`../assets/images/hongbaoyu/coin-bullet.png`)" />
-          <span>当日累积存款≥100元或以上会员均可参与限时红包活动</span>
+          <span>历史存款≥1000或以上会员均可参与限时红包活动</span>
         </div>
         <div class="bullet-wrapper">
           <img :src="require(`../assets/images/hongbaoyu/coin-bullet.png`)" />
