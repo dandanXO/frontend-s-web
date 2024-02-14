@@ -5,9 +5,9 @@
     </div>
 
     <div class="menu-title-container">
-      <span class="">提款流程：</span>
       <div class="account-content withdrawal">
         <div class="flex-box">
+      <span class="">提款流程：</span>
           <div class="step-item active">申请中</div>
           <RiArrowRightSLine />
           <div class="step-item">审核中</div>
@@ -433,7 +433,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 20px;
+  padding: 20px 40px;
   color: #424f72;
   height: 100%;
   box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
@@ -446,9 +446,9 @@ export default defineComponent({
     .withdrawal {
       margin: 10px 0;
       .flex-box {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
+        display: flex;    justify-content: flex-start;
+    gap: 10px;
+    align-items: center;
         svg {
           width: 20px;
           fill: #6c757d;
@@ -456,6 +456,7 @@ export default defineComponent({
       }
       .withdraw-tip {
         color: #ff7f10;
+        margin-top: 15px;
       }
       ul {
         margin: 20px auto;

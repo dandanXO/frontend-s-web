@@ -108,11 +108,10 @@ export default defineComponent({
       gap: 14px;
       .account-balance {
         font-size: 14px;
-        height: 80px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0 40px;
+    padding: 20px 40px;
         background-color: #fff;
         box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
         border-radius: 15px;
