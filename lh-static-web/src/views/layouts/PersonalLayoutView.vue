@@ -27,7 +27,7 @@
 
           <div class="balance-details">
             <div>专属网址：</div>
-            <a :href="`https://${evips.web}`">{{ evips.web }}</a>
+            <a :href="`${evips.web}`">{{ evips.web }}</a>
           </div>
         </div>
         <!-- <div class="account-box account-contents"> -->
