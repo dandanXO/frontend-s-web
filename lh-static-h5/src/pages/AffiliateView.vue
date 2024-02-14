@@ -30,14 +30,14 @@
       <img class="ambassador-img" src="../assets/images/affiliate/ambassador.png" alt="" />
       <div class="btn-wrapper">
         <q-btn
-          :to="'/register?agent=' + (affCode ? affCode : '')"
+          :href="'https://partner.e88726.com/register.jsp?agent=' + (affCode ? affCode : '')"
           label="加入我们"
           size="md"
           class="join-btn"
         >
           <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
-        <q-btn to="/login" label="登录" size="md" class="login-btn">
+        <q-btn href="https://partner.e88726.com/autoLogin.jsp" label="登录" size="md" class="login-btn">
           <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
 
