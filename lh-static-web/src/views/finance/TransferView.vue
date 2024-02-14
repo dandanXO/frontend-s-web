@@ -489,8 +489,8 @@ body .transferinout .el-dialog__header .el-dialog__title {
 .card {
   background-color: #fff;
   border-radius: 12px;
-  // display: flex;
-  // flex-direction: column;
+  display: flex;
+  flex-direction: column;
   gap: 20px;
   padding: 20px 40px;
   color: #424f72;

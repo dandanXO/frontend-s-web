@@ -510,6 +510,8 @@ export default defineComponent({
       }
     ]);
     const initVIPTable = () => {
+      if (store.token) {
+        
       canRedeem().then((res) => {
         if (res.code === 0) {
           // Your arrays of elements
@@ -544,6 +546,7 @@ export default defineComponent({
           console.log(vipItems);
         }
       });
+      }
     };
     const claimVIPLevelItem = (vip) => {
       claim(vip.vipLevel).then((res) => {
