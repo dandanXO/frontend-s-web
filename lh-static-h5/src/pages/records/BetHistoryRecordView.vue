@@ -92,7 +92,7 @@
 </template>
 
 <script setup>
-import { onActivated, ref, reactive } from "vue";
+import { onMounted, ref, reactive } from "vue";
 import { api } from "boot/axios";
 import { cached } from "boot/cache";
 import { userStore } from "src/stores";
@@ -328,7 +328,7 @@ const tableHeaders = [
   }
 ];
 
-onActivated(async () => {
+onMounted(async () => {
   await loadPlatformLists();
 
   const startMonth = moment(startDate).format("MM");
@@ -344,6 +344,8 @@ onActivated(async () => {
 
 <style lang="scss">
 .payout-total {
+  margin-left: 24px;
+  margin-right: 12px;
 }
 .table-record {
   width: 100%;
@@ -443,6 +445,11 @@ onActivated(async () => {
   span {
     font-size: 14px;
     padding-left: 5px;
+    min-width: 80px;
+
+    &:nth-child(3) {
+      margin-left: 10px;
+    }
   }
 }
 .payout-total {

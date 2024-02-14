@@ -47,10 +47,10 @@
           <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
           <span>+添加电子钱包</span>
         </div>
-        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/alipay')">
+        <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/alipay')">
           <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
           <span>+添加支付宝</span>
-        </div>
+        </div> -->
       </div>
 
       <div v-if="bankCardList[BANK_CARD].length" class="bank-detail-item q-my-sm" @click="onShowCardClick(BANK_CARD)">
@@ -173,7 +173,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted } from "vue";
+import { reactive, ref, onActivated } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, copyToClipboard } from "quasar";
 import { useRouter } from "vue-router";
@@ -268,6 +268,11 @@ const loadCards = () => {
     .get("/session/bankCard")
     .then((res) => {
       if (res.code === 0) {
+        // Empty each array in bankCardList
+        Object.keys(bankCardList).forEach((key) => {
+          bankCardList[key] = [];
+        });
+
         for (let i = 0, l = res.data.length; i < l; i++) {
           const data = res.data[i];
           const { bankType, bankCode } = data;
@@ -286,7 +291,7 @@ const loadCards = () => {
     });
 };
 
-onMounted(() => {
+onActivated(() => {
   loadCards();
 });
 </script>

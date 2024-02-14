@@ -145,6 +145,7 @@
             <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>
           </div>
           <div v-else-if="isEWALLET">
+            <div class="q-mt-md text-neontb">*特别说明：提款钱包和游戏账号的姓名务必一致</div>
             <div class="q-mt-md q-mb-md text-center">
               <q-btn
                 style="border: 1px solid #33bcd4; color: #33bcd4"

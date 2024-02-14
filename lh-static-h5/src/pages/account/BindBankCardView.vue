@@ -467,7 +467,7 @@ onActivated(() => {
 
 .q-dialog__inner {
   .q-field__control {
-    background: $primary;
+    // background: $primary;
     color: #ffffff;
   }
 }
