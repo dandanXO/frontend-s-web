@@ -190,7 +190,7 @@ const onTypeToggleBtnClick = (index) => {
   selectedTypeToggleIndex.value = index;
 };
 
-const categoryToggleList = ref(["TRC20", "ERC20", "TRC20", "ERC20", "TRC20", "ERC20", "TRC20", "ERC20"]);
+const categoryToggleList = ref(["TRC20"]);
 const selectedCategoryToggleIndex = ref(0);
 const onCategoryToggleBtnClick = (index) => {
   selectedCategoryToggleIndex.value = index;

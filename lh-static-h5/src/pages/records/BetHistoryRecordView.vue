@@ -92,7 +92,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive } from "vue";
+import { onActivated, ref, reactive } from "vue";
 import { api } from "boot/axios";
 import { cached } from "boot/cache";
 import { userStore } from "src/stores";
@@ -328,7 +328,7 @@ const tableHeaders = [
   }
 ];
 
-onMounted(async () => {
+onActivated(async () => {
   await loadPlatformLists();
 
   const startMonth = moment(startDate).format("MM");

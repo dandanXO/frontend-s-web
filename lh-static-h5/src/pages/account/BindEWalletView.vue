@@ -99,7 +99,7 @@
             v-for="(bank, bankIndex) in bankList"
             :key="`${bank}-${bankIndex}`"
             :class="`${selectedTypeToggleIndex === bankIndex ? 'common-sm-btn' : 'common-sm-white-btn'} content`"
-            @click="onTypeToggleBtnClick(bankIndex)"
+            @click="onTypeToggleBtnClick(bankIndex, bank.name)"
           >
             <img :src="imgURL + bank.bankIcon" alt="" />
             <div>{{ bank.name }}</div>
@@ -111,7 +111,7 @@
           <em>*</em>
         </q-label>
         <div class="category-toggle">
-          <q-btn
+          <!-- <q-btn
             v-for="(category, categoryIndex) in categoryToggleList"
             :key="`${category}-${categoryIndex}`"
             :class="`${
@@ -120,7 +120,8 @@
             @click="onCategoryToggleBtnClick(categoryIndex)"
           >
             <div>{{ category }}</div>
-          </q-btn>
+          </q-btn> -->
+          <q-btn class="common-sm-btn">{{ selectedTypeToggleName }}</q-btn>
         </div>
 
         <!-- since onMount API forced update name & phone, hence no validation needed. -->
@@ -186,8 +187,10 @@ import { userStore } from "stores/index";
 
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);
-const onTypeToggleBtnClick = (index) => {
+const selectedTypeToggleName = ref("KDOU");
+const onTypeToggleBtnClick = (index, name) => {
   selectedTypeToggleIndex.value = index;
+  selectedTypeToggleName.value = name;
 };
 
 const categoryToggleList = ref(["EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20"]);
