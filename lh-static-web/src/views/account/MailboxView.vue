@@ -28,11 +28,11 @@
                 </div>
               </div>
               <div class="right">
-                <div class="mail-action"  @click="deleteAllMsg(item.type)">
+                <div class="mail-action" @click="deleteAllMsg(item.type)">
                   <div><img src="../../assets/images/account/icon-maildelete.png" /></div>
                   全部删除
                 </div>
-                <div class="mail-action" @click="readAllMsg(item.type)" >
+                <div class="mail-action" @click="readAllMsg(item.type)">
                   <div><img src="../../assets/images/account/icon-mailopen.png" /></div>
                   全部已读
                 </div>
@@ -46,12 +46,13 @@
               </div>
             </div>
             <el-collapse v-model="activeNames" @change="handleChange">
-              <el-collapse-item v-for="item in mailboxState.mailboxList.inbox.list" :key="item.id">
+              <el-collapse-item v-for="item in mailboxState.mailboxList.inbox.list" :key="item.id" @click="openMsg(item)">
                 <template #title>
                   <div v-if="isShowSelect" class="mailbox-checkbox" @click.stop="">
                     <el-checkbox v-model="selectedIds[item.id]" size="large" />
                   </div>
-                  标题：{{ item.title }}</template>
+                  标题：{{ item.title }}
+                </template>
                 <div>
                   <div>正文：{{ item.content }}</div>
                 </div>
@@ -86,9 +87,10 @@ import {
   deleteAllMail,
   readMultipleMail,
   deleteMultipleMail,
-  getUnreadTotal
+  getUnreadTotal,
+  readMail
 } from "@/api/personal/mailbox";
-import moment from "moment"
+import moment from "moment";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 
@@ -97,7 +99,7 @@ const mailboxData = ref([]);
 const mailboxNotifyData = ref([]);
 const isShowSelect = ref(false);
 const selectedIds = ref({});
-const store= userStore();
+const store = userStore();
 
 const mailboxMessageTypeData = ref([
   { num: 1, type: "NOTIFICATION", name: "通知" },
@@ -257,6 +259,14 @@ const readMultipleMsg = () => {
   const selectedIdsArray = selectedMessages.map((msg) => msg.id);
   const formattedIds = selectedIdsArray.join(",");
 
+  console.log(mailboxMessageTab.value);
+  mailboxNotifyState[mailboxMessageTab.value].forEach((mail) => {
+    if(formattedIds.indexOf(mail.id) > -1){
+      mail.readTime = moment().format("YYYY-MM-DD");
+    }
+  });
+
+
   readMultipleMail(formattedIds)
     .then((res) => {
       if (res.code === 0) {
@@ -274,6 +284,21 @@ const readMultipleMsg = () => {
     .catch((error) => {
       console.log(error);
     });
+};
+
+const openMsg = (mail) => {
+  const { id, readTime } = mail;
+  
+  if(!readTime) {
+    readMail({ id }).then((res) => {
+      if(res.code === 0) {
+        // success read message
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
 };
 
 const checkMailboxUnread = () => {
@@ -294,6 +319,19 @@ const deleteMultipleMsg = () => {
   const selectedMessages = mailboxState.mailboxList.inbox.list.filter((m) => selectedIds.value[m.id]);
   const selectedIdsArray = selectedMessages.map((msg) => msg.id);
   const formattedIds = selectedIdsArray.join(",");
+
+  selectedIdsArray.forEach((delnum) => {
+    let index = mailboxNotifyState[mailboxMessageTab.value].filter(obj => obj.id == delnum);
+    if (index !== -1) {
+      mailboxNotifyState[mailboxMessageTab.value].splice(index, 1);
+    }
+
+    let index2 = mailboxNotifyState["ALL"].filter(obj => obj.id == delnum);
+    if (index2 !== -1) {
+      mailboxNotifyState["ALL"].splice(index2, 1);
+    }
+  })
+
 
   deleteMultipleMail(formattedIds)
     .then((res) => {
@@ -447,11 +485,13 @@ onMounted(() => {
     color: $font-1;
     font-size: 1rem;
   }
+
   :deep(.el-collapse-item__content) {
     padding: 0 16px 16px;
     color: $font-1;
     font-size: 0.875rem;
   }
+
   :deep(.el-collapse-item__wrap),
   :deep(.el-collapse-item__header),
   :deep(.el-collapse) {
@@ -464,11 +504,11 @@ onMounted(() => {
     gap: 20px;
     margin-bottom: 20px;
     margin-top: 10px;
-    
+
     .left, .right {
       display: flex;
       align-items: center;
-      gap: 15px; 
+      gap: 15px;
     }
 
     .left, .right {
@@ -508,6 +548,7 @@ onMounted(() => {
       font-size: 1rem;
       color: #424f72;
     }
+
     .input-fill {
       :deep(.el-form-item__label) {
         width: 80px;

@@ -7,7 +7,7 @@
       </div>
       <div class="months">
         <div
-          @click="checkInOfTheDay()"
+          @click="mth.checkInActive ? checkInOfTheDay(mth) : null"
           v-for="(mth, index) in dateDetails"
           :key="index"
           class="mth"
@@ -89,7 +89,11 @@ const loadDailyCheckIn = () => {
   });
 };
 
-const checkInOfTheDay = () => {
+const checkInOfTheDay = (mth) => {
+  // console.log(mth);
+  if(mth.isCheckedIn){
+    return;
+  }
   eventapi.put("/sign-in/claim").then((res) => {
     if (res.code === 0) {
       $q.notify({
@@ -184,7 +188,9 @@ onMounted(() => {
 
       &.check-in {
         cursor: pointer;
-        background: url(../../../assets/images/promo/hotpromo/dailylogin/sign.png) no-repeat center center;
+        background-image: url(../../../assets/images/promo/hotpromo/dailylogin/sign.png) ;
+        background-repeat: no-repeat;
+        background-position: center center;
         background-size: 100% 100%;
 
         &.today-checked-in {
@@ -194,8 +200,10 @@ onMounted(() => {
       }
       &.checked-in {
         cursor: pointer;
-        // background: url(../../../assets/images/promo/hotpromo/dailylogin/signed.png) no-repeat center center;
-        background: transparent;
+         background-image: url(../../../assets/images/promo/hotpromo/dailylogin/signed.png);
+        background-repeat: no-repeat;
+        background-position: center center;
+        //background: transparent;
         opacity: 0.6;
         background-size: 100% 100%;
         .number {
@@ -210,6 +218,7 @@ onMounted(() => {
       color: #4c4c6c;
       height: 90px;
       margin-bottom: -20px;
+      padding-bottom: 18px;
       .day {
         font-size: 14px;
         font-weight: 700;

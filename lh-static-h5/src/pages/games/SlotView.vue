@@ -5,23 +5,23 @@
     </div>
     <div class="pageitem">
       <div class="topbar">
-        <div class="bookmarks">
-          <div class="plat-item is-active">
-            <span>热门游戏</span>
-          </div>
-          <div class="plat-item">
-            <span>老虎机</span>
-          </div>
-          <div class="plat-item">
-            <span>累计奖池老虎机</span>
-          </div>
-          <div class="plat-item">
-            <span>纸牌游戏</span>
-          </div>
-          <div class="plat-item">
-            <span>桌面游戏</span>
-          </div>
-        </div>
+<!--        <div class="bookmarks">-->
+<!--          <div class="plat-item is-active">-->
+<!--            <span>热门游戏</span>-->
+<!--          </div>-->
+<!--          <div class="plat-item">-->
+<!--            <span>老虎机</span>-->
+<!--          </div>-->
+<!--          <div class="plat-item">-->
+<!--            <span>累计奖池老虎机</span>-->
+<!--          </div>-->
+<!--          <div class="plat-item">-->
+<!--            <span>纸牌游戏</span>-->
+<!--          </div>-->
+<!--          <div class="plat-item">-->
+<!--            <span>桌面游戏</span>-->
+<!--          </div>-->
+<!--        </div>-->
         <div class="search">
           <q-form @submit="searchList">
             <q-input

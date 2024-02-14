@@ -401,7 +401,7 @@ const submitBankCard = () => {
             icon: "check_circle_outline"
           });
 
-          router.push('/account/withdraw')
+          router.push("/account/withdraw");
         }
       })
       .catch((error) => {
@@ -462,6 +462,13 @@ onActivated(() => {
       font-weight: 400;
       margin: 1rem 0;
     }
+  }
+}
+
+.q-dialog__inner {
+  .q-field__control {
+    // background: $primary;
+    color: #ffffff;
   }
 }
 </style>

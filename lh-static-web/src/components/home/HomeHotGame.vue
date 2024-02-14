@@ -728,8 +728,8 @@ $transition_timer: 0.5s;
         .hotgame-banner {
           width: 60px;
           width: 65px;
-          // height: 36.5rem;
-          height: 28.5rem;
+          height: 36.5rem;
+          // height: 28.5rem;
           display: flex;
           flex-direction: column;
           align-items: center;
