@@ -6,9 +6,13 @@
       <div class="sports-container-inner">
         <template v-for="(det, idx) in filteredPlatforms" :key="idx">
           <template v-if="selectedPlat === det.code">
-            <div class="sports-right" data-aos="fade-right" data-aos-duration="4000">
+            <div class="sports-right" v-if="det.image === 'im'" data-aos="fade-right" data-aos-duration="4000">
+              <img :src="require('../assets/sports/sport_left_' + det.image + '.png')" />
+            </div>
+            <div class="sports-right" v-else data-aos="fade-right" data-aos-duration="4000">
               <img :src="require('../assets/sports/sport_left_' + det.image + '.webp')" />
             </div>
+
             <div class="sports-left">
               <div class="platform-list-box">
                 <span
