@@ -24,7 +24,7 @@
                   <span>
                     {{ `V${vip.vipLevel - 1}` }}
                   </span>
-                  <span v-if="vip.vipLevel < 12">
+                  <span>
                     {{ `V${+vip.vipLevel}` }}
                   </span>
                 </div>
