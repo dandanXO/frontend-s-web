@@ -195,7 +195,7 @@
         </div>
       </div>
       <div>
-        <a :href="'https://agt.wrxjpo3vh.com/dy/register?agent=' +
+        <a :href="'https://partner.e88726.com/register.jsp?agent=' +
           (affCode ? affCode : '')
           " class="agent-reg-btn">立即申请代理</a>
       </div>

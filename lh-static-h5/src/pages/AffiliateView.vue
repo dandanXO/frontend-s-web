@@ -175,7 +175,7 @@
 
     <div class="contact-us">
       <div class="register-btn-wrapper">
-        <q-btn href="/register.jsp" label="立即申请代理" size="lg" class="register-btn">
+        <q-btn :href="'https://partner.e88726.com/register.jsp?agent=' + (affCode ? affCode : '')" label="立即申请代理" size="lg" class="register-btn">
           <img class="mask-img" src="../assets/images/affiliate/register-btn-icon.png" alt="" />
           <img class="mask-img2" src="../assets/images/affiliate/register-btn-icon2.png" alt="" />
         </q-btn>
