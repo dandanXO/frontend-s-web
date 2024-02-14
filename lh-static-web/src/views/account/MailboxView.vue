@@ -46,7 +46,7 @@
               </div>
             </div>
             <el-collapse v-model="activeNames" @change="handleChange">
-              <el-collapse-item v-for="item in mailboxState.mailboxList.inbox.list" :key="item.id">
+              <el-collapse-item v-for="item in mailboxState.mailboxList.inbox.list" :key="item.id" @click="openMsg(item)">
                 <template #title>
                   <div v-if="isShowSelect" class="mailbox-checkbox" @click.stop="">
                     <el-checkbox v-model="selectedIds[item.id]" size="large" />
@@ -87,7 +87,8 @@ import {
   deleteAllMail,
   readMultipleMail,
   deleteMultipleMail,
-  getUnreadTotal
+  getUnreadTotal,
+  readMail
 } from "@/api/personal/mailbox";
 import moment from "moment";
 import { ElMessage } from "element-plus";
@@ -283,6 +284,21 @@ const readMultipleMsg = () => {
     .catch((error) => {
       console.log(error);
     });
+};
+
+const openMsg = (mail) => {
+  const { id, readTime } = mail;
+  
+  if(!readTime) {
+    readMail({ id }).then((res) => {
+      if(res.code === 0) {
+        // success read message
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
 };
 
 const checkMailboxUnread = () => {
