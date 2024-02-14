@@ -22,7 +22,11 @@
               <template v-for="(m, mi) in mailboxState.mailboxList.sent.list" :key="m.id">
                 <div :class="`mailbox-item`" @click="openMsg(m)">
                   <div class="mailbox-preview">
-                    <div :class="`mailbox-title ${m.readTime ? 'read' : 'unread'}`">{{ m.title }}</div>
+                    <div :class="`mailbox-title ${m.readTime ? 'read' : 'unread'}`">
+                      <el-tag type="info" v-if="m.readTime">已读</el-tag>
+                      <el-tag type="danger" v-else>未读</el-tag>
+                      {{ m.title }}
+                    </div>
                     <ArrowDown :class="`mailbox-accordion ${m.isOpen ? 'open' : ''}`"></ArrowDown>
                   </div>
                 </div>
