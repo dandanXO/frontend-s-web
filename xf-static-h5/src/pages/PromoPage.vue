@@ -378,8 +378,8 @@ export default defineComponent({
       background-repeat: no-repeat;
       background-position: center bottom;
       overflow: hidden;
-      height: 40vw;
-      max-height: 130px;
+      //height: 40vw;
+      //max-height: 130px;
       margin: 10px;
 
       img {
@@ -502,7 +502,7 @@ export default defineComponent({
               .promo-content {
                 // width: 100%;
                 width: 100%;
-                aspect-ratio: 1004/252;
+                //aspect-ratio: 1004/252;
                 height: auto;
 
                 //height: 100%;
@@ -594,10 +594,16 @@ export default defineComponent({
     .selected-promo-wrapper {
       &.bg__cny-spinwheel {
         background-image: url("../assets/images/promotion/hotpromo/cny-spinwheel/cny-spinwheel-bg.jpg");
-        background-size: 100% auto;
+        background-size: 100% 100%;
         background-repeat: no-repeat;
         background-position: top center;
         background-color: #a1211d;
+
+        .welcome{
+          width: calc(100% - 30px);
+          margin:0 auto;
+          padding-bottom: 60px;
+        }
       }
 
       .banner-container {

@@ -288,86 +288,90 @@
         </div>
       </div>
 
-      <el-dialog
-        v-model="isCheckRecordModalVisible"
-        title=""
-        width="100%"
-        align-center
-        style="max-width: 800px"
-        @close="toggleCheckRecordModal(false)"
-      >
-        <div class="record-modal-container">
-          <button type="button" class="close close-btn" @click="toggleCheckRecordModal(false)">
-            <span aria-hidden="true">×</span>
-          </button>
 
-          <div class="record-title">
-            <img src="../assets/images/privilege-invite/record-title.png" />
-          </div>
-          <div class="record-selection">
-            <div class="input-row">
-              <label>返利类型</label>
-              <select class="record-select-input record-type" v-model="checkRecordFormData.recordType">
-                <option value="INVITER">邀请返利</option>
-                <option value="INVITEES">受邀返利</option>
-              </select>
-            </div>
-            <div class="input-row">
-              <label>活动类型</label>
-              <select class="record-select-input privilege-type" v-model="checkRecordFormData.privilegeType">
-                <option value="WeekFirstDeposit">邀请首存送</option>
-                <option value="WeekTotal">邀请周存送</option>
-                <option value="Bet">返利无上限</option>
-              </select>
-            </div>
-            <div class="input-row">&nbsp;</div>
+    </div>
 
-            <div class="input-row">
-              <label>选择日期</label>
-              <input class="input-datetime" valueFormat="dd/mm/yyyy" type="date" v-model="checkRecordFormData.date" />
-            </div>
-            <div class="input-row" id="input-user-row">
-              <label>用户名</label>
-              <input class="input-user" placeholder="请输入" type="text" v-model="checkRecordFormData.user" />
-            </div>
-            <div class="input-row">
-              <button class="search-btn" @click="getRecords">查询</button>
-            </div>
+
+    <el-dialog
+      v-model="isCheckRecordModalVisible"
+      title=""
+      width="100%"
+      align-center
+      style="max-width: 800px; filter: hue-rotate(530deg);"
+      @close="toggleCheckRecordModal(false)"
+    >
+      <div class="record-modal-container">
+        <button type="button" class="close close-btn" @click="toggleCheckRecordModal(false)">
+          <span aria-hidden="true">×</span>
+        </button>
+
+        <div class="record-title">
+          <img src="../assets/images/privilege-invite/record-title.png" />
+        </div>
+        <div class="record-selection">
+          <div class="input-row">
+            <label>返利类型</label>
+            <select class="record-select-input record-type" v-model="checkRecordFormData.recordType">
+              <option value="INVITER">邀请返利</option>
+              <option value="INVITEES">受邀返利</option>
+            </select>
           </div>
-          <div class="record-content">
-            <div class="record-table" id="recordBody">
-              <div class="rebate-header">用户名</div>
-              <div class="rebate-header">首存金额</div>
-              <div class="rebate-header">今日已获返利</div>
-            </div>
-            <div class="no-item-table" v-if="tableRecords.length === 0">
-              <p>暂无数据</p>
-            </div>
-            <div class="record-table" v-else>
-              <template v-for="list of tableRecords">
-                <div>{{ list.loginName }}</div>
-                <div>{{ list.depositOrBet }}</div>
-                <div>{{ list.bonusAmount }}</div>
-              </template>
-            </div>
-            <!--            <div class="listing-footer">-->
-            <!--              <div class="footer-div">-->
-            <!--                <span class="pointer-s prev-page">&nbsp;&lt;&nbsp;&nbsp;</span>-->
-            <!--                <div class="footer-page">-->
-            <!--                  <span id="record_page">1/1</span>-->
-            <!--                </div>-->
-            <!--                <span class="pointer-s next-page">&nbsp;&nbsp;&gt;&nbsp;</span>-->
-            <!--              </div>-->
-            <!--            </div>-->
+          <div class="input-row">
+            <label>活动类型</label>
+            <select class="record-select-input privilege-type" v-model="checkRecordFormData.privilegeType">
+              <option value="WeekFirstDeposit">邀请首存送</option>
+              <option value="WeekTotal">邀请周存送</option>
+              <option value="Bet">返利无上限</option>
+            </select>
+          </div>
+          <div class="input-row">&nbsp;</div>
+
+          <div class="input-row">
+            <label>选择日期</label>
+            <input class="input-datetime" valueFormat="dd/mm/yyyy" type="date" v-model="checkRecordFormData.date" />
+          </div>
+          <div class="input-row" id="input-user-row">
+            <label>用户名</label>
+            <input class="input-user" placeholder="请输入" type="text" v-model="checkRecordFormData.user" />
+          </div>
+          <div class="input-row">
+            <button class="search-btn" @click="getRecords">查询</button>
           </div>
         </div>
-      </el-dialog>
-    </div>
+        <div class="record-content">
+          <div class="record-table" id="recordBody">
+            <div class="rebate-header">用户名</div>
+            <div class="rebate-header">首存金额</div>
+            <div class="rebate-header">今日已获返利</div>
+          </div>
+          <div class="no-item-table" v-if="tableRecords.length === 0">
+            <p>暂无数据</p>
+          </div>
+          <div class="record-table" v-else>
+            <template v-for="list of tableRecords">
+              <div>{{ list.loginName }}</div>
+              <div>{{ list.depositOrBet }}</div>
+              <div>{{ list.bonusAmount }}</div>
+            </template>
+          </div>
+          <!--            <div class="listing-footer">-->
+          <!--              <div class="footer-div">-->
+          <!--                <span class="pointer-s prev-page">&nbsp;&lt;&nbsp;&nbsp;</span>-->
+          <!--                <div class="footer-page">-->
+          <!--                  <span id="record_page">1/1</span>-->
+          <!--                </div>-->
+          <!--                <span class="pointer-s next-page">&nbsp;&nbsp;&gt;&nbsp;</span>-->
+          <!--              </div>-->
+          <!--            </div>-->
+        </div>
+      </div>
+    </el-dialog>
   </div>
+
 </template>
 <script>
 import { defineComponent, ref, reactive, onMounted } from "vue";
-import { ElMessageBox } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import moment from "moment";
 import { useRoute, useRouter } from "vue-router";
 
@@ -426,6 +430,9 @@ export default defineComponent({
       getRecommendPrivilegeRecord(params).then((data) => {
         console.log("here", data);
         tableRecords.value = data.data;
+        if(!tableRecords.value || tableRecords.value.length ===0){
+          ElMessage.error("推广纪录为空。");
+        }
       });
     };
 

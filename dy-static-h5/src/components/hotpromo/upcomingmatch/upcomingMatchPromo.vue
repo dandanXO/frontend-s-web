@@ -48,11 +48,13 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 import { eventapi } from "src/boot/axios";
+import { useUI } from "stores/ui";
 
 const props = defineProps({
   platformType: String
 });
 
+const ui = useUI();
 const upcomingMatchDetails = ref([]);
 const imgURL = process.env.IMAGE_CDN + "/promo/";
 
@@ -62,6 +64,7 @@ const getupcomingMatchDetails = () => {
     .then((res) => {
       if (res.code === 0) {
         upcomingMatchDetails.value = res.data;
+        ui.matchInsuranceLists = upcomingMatchDetails.value;
       }
     })
     .catch((err) => {

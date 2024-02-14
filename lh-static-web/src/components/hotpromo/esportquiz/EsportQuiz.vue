@@ -637,6 +637,7 @@ const submittedFormStatus = ref(false);
               background-image: linear-gradient(255deg, #0094ff 0%, #18c5ff 100%), linear-gradient(#0084a4, #0084a4);
               background-blend-mode: normal, normal;
               border-radius: 4px;
+    margin: auto;
               &.submitted-ans {
                 filter: brightness(0.8);
                 cursor: not-allowed;

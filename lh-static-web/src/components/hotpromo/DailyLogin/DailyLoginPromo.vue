@@ -29,6 +29,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { checkInInfo, signIn } from "@/api/index/promo";
+import { ElMessage } from "element-plus";
 
 const dateDetails = ref([]);
 const init = () => {
@@ -46,16 +47,19 @@ const loadDailyCheckIn = () => {
 };
 const generateMonthMaxDaysArray = (details) => {
   // Clear the array to ensure it's empty before generating
-  dateDetails.value = [];
+    dateDetails.value = [];
 
-  // Generate the array of objects based on monthMaxDays
-  for (let i = 0; i < details.monthMaxDays; i++) {
-    dateDetails.value.push({
-      number: 7,
-      checkInActive: false,
-      isCheckedIn: false
-    });
-  }
+    // Generate the array of objects based on monthMaxDays
+    for (let i = 0; i < details.monthMaxDays; i++) {
+      dateDetails.value.push({
+        number: 7,
+        checkInActive: false,
+        isCheckedIn: false
+      });
+    }
+    getCheckInDays(details);
+};
+const getCheckInDays = (details) => {
   // Get checked in days
   dateDetails.value.forEach((date, dateIndex) => {
     if (dateIndex < details.monthCount) {
@@ -70,12 +74,16 @@ const generateMonthMaxDaysArray = (details) => {
       }
     }
   });
-};
+}
 const checkIn = (mth) => {
   signIn().then((res) => {
     if (res.code === 0) {
       mth.isCheckedIn = true;
-      generateMonthMaxDaysArray(res.data);
+      ElMessage({
+        type: "success",
+        message: "领取成功"
+      });
+      getCheckInDays(res.data)
     }
   });
 };

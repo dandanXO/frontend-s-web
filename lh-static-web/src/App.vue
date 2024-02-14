@@ -3,12 +3,16 @@
 </template>
 
 <script>
-import { defineComponent, onMounted } from "vue";
+import { defineComponent, onMounted, onUnmounted, ref } from "vue";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { memberAccessLog } from "@/api/index/login";
+import axios from "axios";
 
 export default defineComponent({
   setup() {
+    const onlineStatTimeout = ref();
+    const onlineStatInterval = ref();
+
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
       const fpPromise = FingerprintJS.load();
@@ -32,9 +36,41 @@ export default defineComponent({
         });
       })();
     };
+
+    const getOnlineStatApi = async () => {
+      const fpPromise = FingerprintJS.load();
+
+      const fp = await fpPromise;
+      const result = await fp.get();
+      const excludes = { value: ["timezone", "timeZoneOffset"] };
+      const allComponents = { ...result.components };
+      excludes.value.forEach((element) => {
+        delete allComponents[element];
+      });
+      const sidParam = FingerprintJS.hashComponents(allComponents);
+
+      if (sidParam) {
+        const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
+          params: {
+            way: "web",
+            sid: sidParam,
+            siteCode: "lh1"
+          }
+        });
+      }
+    };
+
     onMounted(() => {
       checkSID();
+
+      setTimeout(getOnlineStatApi, 2000);
+      setInterval(getOnlineStatApi, 60000);
     });
+
+    onUnmounted(() => {
+      clearTimeout(onlineStatTimeout);
+      clearInterval(onlineStatInterval);
+    })
   },
 });
 </script>

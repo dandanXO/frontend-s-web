@@ -1,5 +1,13 @@
 <template>
   <div class="card">
+    <div class="deposit-ad">
+      体育用户首存68%红利
+      <br />
+      新用户首存即送！最高可得680元！
+      <router-link to="/center/deposit">
+        <el-button size="small" class="blue-btn join-btn outline">立即参与</el-button>
+      </router-link>
+    </div>
     <div class="balance-plat-item">
       <div class="left-box">
         <div class="balance-wrapper">
@@ -12,7 +20,7 @@
           </div>
         </div>
         <div class="desc-wrapper">
-          <span>IM体育、电竞、沙巴体育、SW电子、PM真人和PM体育无需转账，充值即可游戏。</span>
+          <span>除了以下平台需要转帐，其他平台都无需转账即可游戏。</span>
         </div>
       </div>
       <div class="right-box">
@@ -24,17 +32,17 @@
             一键刷新
           </el-button>
           <div class="balance-transfer-button">
-              <span>自动平台转账:</span>
-              <el-switch
-                v-model="autoTransfer"
-                class="ml-2"
-                inline-prompt
-                style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
-                active-text="已开启"
-                inactive-text="已关闭"
-                @change="updateAutoTransfer($event)"
-              />
-            </div>
+            <span>自动平台转账:</span>
+            <el-switch
+              v-model="autoTransfer"
+              class="ml-2"
+              inline-prompt
+              style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+              active-text="已开启"
+              inactive-text="已关闭"
+              @change="updateAutoTransfer($event)"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -62,8 +70,12 @@
           </div>
         </div>
         <div class="transfer-action-box">
-          <el-button v-if="!autoTransfer" size="small" class="blue-btn transfer-btn" @click="transferModal(0, p)">转进</el-button>
-          <el-button v-if="!autoTransfer" size="small" class="blue-btn transfer-btn" @click="transferModal(1, p)">转出</el-button>
+          <el-button v-if="!autoTransfer" size="small" class="blue-btn transfer-btn" @click="transferModal(0, p)">
+            转进
+          </el-button>
+          <el-button v-if="!autoTransfer" size="small" class="blue-btn transfer-btn" @click="transferModal(1, p)">
+            转出
+          </el-button>
         </div>
       </div>
     </div>
@@ -260,7 +272,7 @@ export default defineComponent({
           console.log(e)
       });
     };
-    
+
     const loadPlatform = () => {
       if(store.token) {
         getLoggedInPlatformList().then((response) => {
@@ -480,8 +492,37 @@ body .transferinout .el-dialog__header .el-dialog__title {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 20px;
+  padding: 20px 40px;
   color: #424f72;
+  height: 100%;
+  box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
+}
+.deposit-ad {
+  background: url(../../assets/images/account/depositad.png) no-repeat center center;
+  background-size: cover;
+  display: flex;
+  padding: 12px 30px;
+  border-radius: 12px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 5px;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: "Microsoft Yahei";
+  .deposit-btn, .join-btn {
+    color: #548cf9;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    height: unset;
+    padding: 15px 30px;
+  }
+  .join-btn {
+    padding: 10px 20px;
+  }
 }
 
 .blue-btn {
@@ -490,9 +531,10 @@ body .transferinout .el-dialog__header .el-dialog__title {
   box-shadow: 0px -2px 5px 0px #b1d7ff inset;
   box-shadow: 0px -1px 4px 0px #5894ff inset;
   color: #fff;
-  padding: 20px 30px;
+  padding: 15px 30px;
   cursor: pointer;
   border: 0;
+  height: unset;
 
   &.outline {
     background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
@@ -550,8 +592,8 @@ body .transferinout .el-dialog__header .el-dialog__title {
     display: grid;
     grid-template-columns: 1fr 1fr;
     border: 1px solid #ecedf0;
-    width: 238px;
-    height: 128px;
+    // width: 238px;
+    // height: 128px;
 
     .transfer-balance-box {
       display: flex;

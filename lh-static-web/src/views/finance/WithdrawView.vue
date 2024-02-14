@@ -1,13 +1,13 @@
 <template>
-  <div>
+  <div class="card">
     <div class="menu-title-container">
       <span class="menu-title">快速提款</span>
     </div>
 
     <div class="menu-title-container">
-      <span class="menu-title">提款流程：</span>
       <div class="account-content withdrawal">
         <div class="flex-box">
+      <span class="">提款流程：</span>
           <div class="step-item active">申请中</div>
           <RiArrowRightSLine />
           <div class="step-item">审核中</div>
@@ -44,19 +44,10 @@
           </div>
         </el-form-item>
 
-        <el-form-item
-          class="helptxt"
-          prop="amount"
-          label="提款金额"
-          name="amount"
-        >
-          <el-row :gutter="10" style="align-items: center;">
+        <el-form-item class="helptxt" prop="amount" label="提款金额" name="amount">
+          <el-row :gutter="10" style="align-items: center">
             <el-col :span="12">
-              <el-input
-                class="form-input"
-                v-model="withdrawInfo.amount"
-                placeholder="提款金额"
-              >
+              <el-input class="form-input" v-model="withdrawInfo.amount" placeholder="提款金额">
                 <template #append>{{ store.currency.label }}</template>
               </el-input>
             </el-col>
@@ -97,14 +88,10 @@
             </div>
           </el-col>
         </el-row>
-        <el-form-item
-          v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
-          class="helptxt"
-          label="实时汇率"
-        >
-          <span style="color: #17cd27"
-            >1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }} {{ store.currency.label }}</span
-          >
+        <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="实时汇率">
+          <span style="color: #17cd27">
+            1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }} {{ store.currency.label }}
+          </span>
         </el-form-item>
         <el-form-item
           class="select"
@@ -119,9 +106,7 @@
           ]"
         >
           <el-select
-            @click="
-              withdrawState.bankCardList.length === 0 ? checkBankCards() : ''
-            "
+            @click="withdrawState.bankCardList.length === 0 ? checkBankCards() : ''"
             v-model="withdrawInfo.cardId"
             :placeholder="`选择${cardLabel()}`"
             style="width: 300px"
@@ -136,39 +121,26 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item
-          v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
-          class="helptxt"
-          label="预计到账"
-        >
-          <span style="color: #17cd27"
-            >{{
-              (selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin) ? '0.00' : (
-                (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate) - 1
-              ).toFixed(2)
+        <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="预计到账">
+          <span style="color: #17cd27">
+            {{
+              selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
+                ? "0.00"
+                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2)
             }}
             USDT
           </span>
         </el-form-item>
-        <div  v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="" style="color: #17cd27;">
+        <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="" style="color: #17cd27">
           *特别说明：三方自动收取提币 1.00 USDT 手续费！
         </div>
 
         <!-- K豆教程视频 -->
         <div style="margin-left: 150px" v-else-if="isEWALLET">
-          <el-button
-            class="common-btn"
-            @click="openEWalletTutorial(selectedWithdrawalMethod.code)"
-          >
-            <span v-if="selectedWithdrawalMethod.code === 'KDPAY'">
-              K豆教程视频
-            </span>
-            <span v-else-if="selectedWithdrawalMethod.code === 'EBPAY'">
-              EB教程视频
-            </span>
-            <span v-else-if="selectedWithdrawalMethod.code === 'OKPAY'">
-              OK教程视频
-            </span>
+          <el-button class="common-btn" @click="openEWalletTutorial(selectedWithdrawalMethod.code)">
+            <span v-if="selectedWithdrawalMethod.code === 'KDPAY'">K豆教程视频</span>
+            <span v-else-if="selectedWithdrawalMethod.code === 'EBPAY'">EB教程视频</span>
+            <span v-else-if="selectedWithdrawalMethod.code === 'OKPAY'">OK教程视频</span>
           </el-button>
         </div>
 
@@ -179,12 +151,7 @@
         ></div> -->
 
         <div class="flex-box flex-justify-center">
-          <el-button
-            :loading="loadingBtn"
-            size="large"
-            class="common-btn withdraw-btn"
-            @click="submitWithraw"
-          >
+          <el-button :loading="loadingBtn" size="large" class="common-btn withdraw-btn" @click="submitWithraw">
             确定
           </el-button>
         </div>
@@ -355,7 +322,7 @@ export default defineComponent({
               if (element.bankType === 'BANK') {
                   if (element.bankCode !== 'alipay' && element.bankType.includes(selectedWithdrawalMethod.value.code)) {
                     withdrawState.bankCardList.push(element)
-                  } 
+                  }
                   if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
                     withdrawState.bankCardList.push(element)
                   }
@@ -460,17 +427,25 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+.card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px 40px;
+  color: #424f72;
+  height: 100%;
+  box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
+}
 .account-container {
   .account-content-wrapper {
     .withdrawalmethod {
       overflow: auto;
     }
     .withdrawal {
-        margin: 10px 0;
+      margin: 10px 0;
       .flex-box {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
+        display: flex;    justify-content: flex-start;
+    gap: 10px;
+    align-items: center;
         svg {
           width: 20px;
           fill: #6c757d;
@@ -478,6 +453,7 @@ export default defineComponent({
       }
       .withdraw-tip {
         color: #ff7f10;
+        margin-top: 15px;
       }
       ul {
         margin: 20px auto;
@@ -493,16 +469,16 @@ export default defineComponent({
       width: 130px;
       // height: 50px;
       line-height: 45px;
-    background-image: linear-gradient(267deg,#78abfa 0,#4877ec 100%),linear-gradient(#5b80e7,#5b80e7);
+      background-image: linear-gradient(267deg, #78abfa 0, #4877ec 100%), linear-gradient(#5b80e7, #5b80e7);
       text-align: center;
       position: relative;
       // border: 2px solid #74aef8;
       border-left: 0;
       // padding-left: 20px;
       font-size: 14px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       // &::before,
       // &::after {
       //   content: "";
@@ -527,8 +503,8 @@ export default defineComponent({
         color: #ffffff;
         // background: #ffffff;
         // background-image: linear-gradient(90deg,#0ca9bc 0,#0a5e89 100%),linear-gradient(#45fdfb,#45fdfb);
-        
-    background-image: linear-gradient(267deg,#78abfa 0,#4877ec 100%),linear-gradient(#5b80e7,#5b80e7);
+
+        background-image: linear-gradient(267deg, #78abfa 0, #4877ec 100%), linear-gradient(#5b80e7, #5b80e7);
         border: 0;
         padding-left: 0px;
         &::after {
@@ -545,40 +521,54 @@ export default defineComponent({
       }
     }
     .withdraw-type-item {
-      // width: 120px;
-      // padding: 20px 30px;
-      // margin-right: 10px;
-      // border-radius: 6px;
-      // border: solid 1px #484460;
-      // position: relative;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
       cursor: pointer;
-      margin-right: 5px;
+    justify-content: center;
+    min-width: 6rem;
+    background-color: #f7f8fb;
+    border-radius: 15px;
+    box-shadow: inset 0 0 8px 0 #a9c9ea;
+    margin-bottom: 30px;
+    border: 2px solid transparent;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: 10px;
       img {
-    //     width: 40px;
-    // padding: 8px 20px;
-    // background: #ffffff;
-    // border: 1px solid #ced4da;
-    
-        background-color: #f7f7f7;
-        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
-        max-width: 1.5rem;
-        margin-bottom: 0;
-        border: 2px solid #dddddd;
-        padding: 5px 15px;
-        border-radius: 3px;
+        //     width: 40px;
+        // padding: 8px 20px;
+        // background: #ffffff;
+        // border: 1px solid #ced4da;
+    max-width: 2.3rem;
+    width: 100%;
+    height: auto;
+    margin-bottom: 0;
+    border: 0;
+    padding: 0;
       }
       &.active {
+    border: 2px solid #468cff;
+    box-shadow: unset;
         // border-bottom: 4px solid #1bcef1;
         // border: 1px solid #ffd800;
         // color: #ffd800;
         img {
           // border: 1px solid #4978ec;
           // background: #bad2ff;
-    border-color: #4873f1;
+          // border-color: #4873f1;
+        }
+        &:before {
+          display: block;
+          content: "";
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          height: 28px;
+          width: 28px;
+          z-index: 3;
+          background-image: url("../../assets/svg/checkmark.svg");
+          background-size: 100%;
+          background-position: center center;
         }
       }
       .type-name {
@@ -630,6 +620,9 @@ export default defineComponent({
 }
 .withdraw-form {
   padding: 20px 0;
+  :deep(.el-form-item__content) {
+    gap: 15px;
+  }
 }
 </style>
 <style scoped lang="scss">
@@ -742,20 +735,35 @@ export default defineComponent({
     color: #ffffff;
   }
 }
-:deep(.ant-form-item-has-error
-    .ant-input-affix-wrapper:hover, .ant-form-item-has-error
-    .ant-input-affix-wrapper:focus) {
+:deep(
+    .ant-form-item-has-error .ant-input-affix-wrapper:hover,
+    .ant-form-item-has-error .ant-input-affix-wrapper:focus
+  ) {
   background: #15141b;
 }
-:deep(.ant-form-item-has-error .ant-input, .ant-form-item-has-error
-    .ant-input-affix-wrapper, .ant-form-item-has-error
-    .ant-input:hover, .ant-form-item-has-error .ant-input-affix-wrapper:hover) {
+:deep(
+    .ant-form-item-has-error .ant-input,
+    .ant-form-item-has-error .ant-input-affix-wrapper,
+    .ant-form-item-has-error .ant-input:hover,
+    .ant-form-item-has-error .ant-input-affix-wrapper:hover
+  ) {
   background: #15141b;
 }
 
 .selected-tip {
-    margin-left: 150px;
-    margin-bottom: 30px;
-    color: #ff7f10;
+  margin-left: 150px;
+  margin-bottom: 30px;
+  color: #ff7f10;
+}
+
+.menu-title-container{
+  .menu-title{
+    font-size: 18px;
+    color: #424F72;
   }
+
+  .additional-title{
+    padding-left: 16px;
+  }
+}
 </style>

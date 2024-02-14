@@ -50,12 +50,14 @@
             </tr>
           </tbody>
         </table>
+
+        <p class="hint-p">红包活动历史存款≥1000，那么当天18:00/20:00皆可领取红包奖金！</p>
       </div>
 
       <div class="rules-container">
         <div class="rules-title">活动规则</div>
         <ol class="rules-content">
-          <li>活动需每日充值≥100元且通过活动页面参与，未点击则视为放弃参与活动；</li>
+          <li>活动需历史充值≥1000元且通过活动页面免费参与，未点击则视为放弃参与活动；</li>
           <li>红包金额随机不等，单个红包金额最大为1888元，红包奖金完成3倍水即可提现；</li>
           <li>每轮抢红包有效时间为1个小时（抢完为止）每轮开启1个小时后，红包雨自动关闭，等待下一轮抢红包时间；</li>
           <li>领取方式：点击活动页面【点击参与按钮】即可进入抢红包页面。</li>
@@ -437,6 +439,10 @@ const goToHongbaoyu = async () => {
   width: 80px;
 }
 
+.hint-p {
+  color: #b97a7a;
+  font-weight: 600;
+}
 .cny-hint {
   display: flex;
   justify-content: space-between;

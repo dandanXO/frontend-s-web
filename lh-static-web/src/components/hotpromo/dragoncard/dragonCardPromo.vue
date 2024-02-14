@@ -103,7 +103,7 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref, reactive } from "vue";
+import { onMounted, ref, reactive, defineProps } from "vue";
 import {
   tigerCardInit,
   getLeaderboard,
@@ -115,6 +115,9 @@ import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 
+const props = defineProps(["promoCode"]);
+// alert(props.promoCode);
+
 const cardInfo = reactive({
   cardDetail: {
     setting: {}
@@ -123,7 +126,7 @@ const cardInfo = reactive({
 
 const rankingPage = reactive({
   current: 1,
-  pageSize: 2,
+  pageSize: 5,
   records: [],
   loading: false
 });
@@ -140,7 +143,7 @@ const pageNumChange = (i) => {
 };
 
 const pageInit = () => {
-  tigerCardInit({ promoCode: "dy1-tiger-card" }).then((res) => {
+  tigerCardInit({ promoCode: props.promoCode }).then((res) => {
     if (res.code === 0) {
       cardInfo.cardDetail = res.data;
     }
@@ -159,7 +162,7 @@ const pageLoadingText = ref("");
 const getNewTigerCard = () => {
   isPageLoading.value = true;
   pageLoadingText.value = "正领取龙卡";
-  getMemberCard({ promoCode: "dy1-tiger-card" }).then((res) => {
+  getMemberCard({ promoCode: props.promoCode }).then((res) => {
     if (res.code === 0) {
       cardInfo.cardDetail[res.data.cardType] = cardInfo.cardDetail[res.data.cardType] + 1;
       isCardModal.value = true;
@@ -178,7 +181,7 @@ const getNewTigerCard = () => {
 const compoundCard = () => {
   isPageLoading.value = true;
   pageLoadingText.value = "正合成大奖卡";
-  synthesisCard({ promoCode: "dy1-tiger-card" }).then((res) => {
+  synthesisCard({ promoCode: props.promoCode }).then((res) => {
     if (res.code === 0) {
       pageInit();
       ElMessage.success({
@@ -283,7 +286,7 @@ const submitRegisterForm = async (elForm) => {
   await elForm.validate((valid) => {
     if (valid) {
       isSubmitting.value = true;
-      form.promoCode = "dy1-tiger-card";
+      form.promoCode = props.promoCode;
       giveCardToFriend(form).then((res) => {
         if (res.code === 0) {
           ElMessage.error({
@@ -302,32 +305,39 @@ const submitRegisterForm = async (elForm) => {
 .el-loading-spinner .path {
   stroke: #b46e00;
 }
+
 .el-loading-spinner .el-loading-text {
   color: #b46e00;
 }
+
 .tigercard-container {
   .el-table {
     &__empty-text p {
       color: #6d9ef9;
     }
+
     max-width: 650px;
     margin: 0 auto;
 
     background: #6d9ef9;
     border-radius: 10px;
     border: 0;
+
     th {
       text-align: center;
       line-height: 32px;
+
       &.el-table__cell {
         color: #ffffff;
         border-bottom: 1px solid #ffd97f;
         background-color: #6d9ef9;
+
         &.is-leaf {
           border-bottom: 1px solid #ffd97f;
         }
       }
     }
+
     td {
       &.el-table__cell {
         color: #6d9ef9;
@@ -336,20 +346,25 @@ const submitRegisterForm = async (elForm) => {
       }
     }
   }
+
   .el-pagination {
     margin: 10px auto;
     justify-content: center;
+
     .el-pager {
       pointer-events: none;
     }
+
     .el-pager li {
       color: #6d9ef9;
       min-width: unset;
+
       &.btn-quicknext {
         svg {
           display: none;
         }
       }
+
       &.is-active,
       &:hover {
         &:after {
@@ -357,9 +372,11 @@ const submitRegisterForm = async (elForm) => {
           display: inline-block;
           margin-left: 8px;
         }
+
         color: #6d9ef9;
       }
     }
+
     button:hover {
       color: #6d9ef9;
     }
@@ -373,13 +390,16 @@ body {
     background: none;
     background-size: contain;
     box-shadow: none;
+
     .el-dialog__header {
       display: none;
     }
+
     .el-dialog__body {
       background: none;
       box-shadow: none;
       height: 100%;
+
       .wincontents {
         display: flex;
         justify-content: flex-end;
@@ -387,6 +407,7 @@ body {
         height: 100%;
         flex-direction: column;
         gap: 10px;
+
         .message {
           padding: 10px;
           font-size: 40px;
@@ -396,15 +417,18 @@ body {
           -webkit-text-fill-color: transparent;
           font-weight: bold;
         }
+
         .amount {
           color: #ffae00;
           font-size: 50px;
           font-weight: bold;
           padding-bottom: 10px;
+
           span {
             font-size: 30px;
           }
         }
+
         .el-button {
           margin-bottom: 20px;
           padding: 25px 0;
@@ -415,6 +439,7 @@ body {
           background-image: linear-gradient(358deg, #bea229, transparent);
           box-shadow: 0px 5px 1px #895d00;
           font-weight: bold;
+
           span {
             color: #3a0001;
           }
@@ -430,6 +455,7 @@ body {
   width: 100%;
   max-width: $maxwidth;
 }
+
 .banner {
   background: #000 url(https://eqwp2f.sdwukong.com/resource/es/img/banner.b26099dc.png) top no-repeat;
   max-width: 1920px;
@@ -441,7 +467,7 @@ body {
 }
 
 .acc-pool {
-  background: url(https://eqwp2f.sdwukong.com/resource/es/img/bg_acc_pool.fbe0afb3.png) top no-repeat;
+  background: url(../../../assets/images/promotion/hotpromo/dragoncard/bg_acc_pool.png) top no-repeat;
   width: 930px;
   height: 262px;
   margin: 0 auto;

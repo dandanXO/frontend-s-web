@@ -34,6 +34,11 @@ const routes = [
         component: HomeView
       },
       {
+        path: "/welcome",
+        name: "welcome",
+        component: () => import(/* webpackChunkName: "Welcome" */ "../views/WelcomeView.vue")
+      },
+      {
         path: "/slot",
         name: "slot",
         component: () => import(/* webpackChunkName: "Game" */ "../views/SlotView.vue")
@@ -167,11 +172,11 @@ router.beforeEach((to, from, next) => {
   const store = userStore();
   if (to.name === "agentCode") {
     sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
-    next(`/home`);
+    next(`/register`);
   }
   if (to.name === "referCode") {
     sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
-    next(`/home?refer=1`);
+    next(`/register?refer=1`);
   }
 
   if (store.token) {

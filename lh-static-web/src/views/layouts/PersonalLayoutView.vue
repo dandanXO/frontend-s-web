@@ -27,7 +27,7 @@
 
           <div class="balance-details">
             <div>专属网址：</div>
-            <a :href="`https://${evips.web}`">{{ evips.web }}</a>
+            <a :href="`${evips.web}`">{{ evips.web }}</a>
           </div>
         </div>
         <!-- <div class="account-box account-contents"> -->
@@ -77,6 +77,10 @@ export default defineComponent({
   font-size: 14px;
   padding: 20px;
   background: #f4f8f9;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: calc(100vh - 188px);
   // background: salmon;
   .account-container-wrap {
     width: 100%;
@@ -104,11 +108,10 @@ export default defineComponent({
       gap: 14px;
       .account-balance {
         font-size: 14px;
-        height: 80px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0 40px;
+    padding: 20px 40px;
         background-color: #fff;
         box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
         border-radius: 15px;
@@ -198,7 +201,7 @@ export default defineComponent({
             gap: 15px;
             align-items: center;
             text-decoration: none;
-            padding: 10px 50px 15px 10px;
+            padding: 10px 20px 15px 10px;
             padding-left: 30px;
             font-size: 1.125rem;
             color: $font-0;

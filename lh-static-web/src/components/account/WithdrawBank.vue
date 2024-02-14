@@ -23,7 +23,7 @@
 
             <div class="card-name">
               <div class="card-bank-name">{{ bc.bankName === "USDTTRC" ? "USDTTRC20" : bc.bankName }}</div>
-              <div class="card-bank-type">银行卡</div>
+              <div class="card-bank-type">{{ checkType(bc.bankType) }}</div>
             </div>
           </div>
 
@@ -76,7 +76,7 @@
               />
             </el-form-item>
             <el-form-item>
-              <button class="standard-button btn-color-blue" @click="searchRecord()">搜索</button>
+              <button class="standard-button btn-color-blue" type="button" @click="searchRecord()">搜索</button>
             </el-form-item>
           </div>
         </el-form>
@@ -330,6 +330,15 @@ export default defineComponent({
         return Promise.resolve();
       }
     };
+    const checkType = (type) => {
+      if (type === 'BANK') {
+        return '银行卡'
+      } else if (type === 'CRYPTO') {
+        return '数字货币'
+      } else if (type === 'EWALLET') {
+        return '电子钱包'
+      }
+    }
     const tblLoading = ref(false);
     const imgURL = process.env.VUE_APP_IMAGE_CDN + "/payment/";
     const isCardActive = ref();
@@ -391,8 +400,18 @@ export default defineComponent({
     });
     const dataSource = ref();
     const searchRecord = () => {
+      if(!searchForm.startDate || !searchForm.endDate){
+        ElMessage({
+          message: "请选择日期",
+          type: "error"
+        });
+        return;
+      }
+
+      // debugger;
       tblLoading.value = true;
       loadUnbindRecord(searchForm).then((response) => {
+        tblLoading.value = false;
         if (response.code === 0) {
           dataSource.value = response.data.records;
           pagination.value.currentPage = response.data.current;
@@ -403,9 +422,9 @@ export default defineComponent({
         }
       }).catch((e) => {
         console.log(e.message);
-        // message.error(e.message, 4);
+        tblLoading.value = false;
       });
-      tblLoading.value = false;
+
     };
 
 
@@ -856,7 +875,8 @@ export default defineComponent({
       withdrawState,
       checkBankCards,
       chooseCard,
-      numAddress
+      numAddress,
+      checkType
     };
   }
 });

@@ -113,13 +113,13 @@
                 </div>
               </div>
 
-              <div class="tbl-row">
+              <!-- <div class="tbl-row">
                 <div class="basic-info-cell title">QQ：</div>
                 <div v-if="personalState.memberInfo.email" class="basic-info-cell content">
                   {{ personalState.memberInfo.email }}
                 </div>
                 <div v-else class="basic-info-cell content">
-                  <!-- <div class="datewsend" v-if="isEdit">
+                  <!- <div class="datewsend" v-if="isEdit">
                     <el-form-item
                       name="email"
                       prop="email"
@@ -133,7 +133,7 @@
                         placeholder="邮箱"
                       />
                     </el-form-item>
-                  </div> -->
+                  </div> ->
                   <button
                     class="standard-button btn-color-blue sm-btn"
                     v-if="!personalState.memberInfo.emailVerified"
@@ -143,7 +143,7 @@
                     验证
                   </button>
                 </div>
-              </div>
+              </div> -->
 
               <div class="tbl-row">
                 <div class="basic-info-cell title">邮箱：</div>
@@ -212,14 +212,14 @@
             </div>
 
             <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">
-              <el-form-item ref="oldPassword" label="旧密码" name="oldPassword" prop="oldPassword">
+              <el-form-item ref="refOldPassword" label="旧密码" name="oldPassword" prop="oldPassword">
                 <el-input type="password" v-model="updatePwdInfo.oldPassword" :placeholder="'请输入旧密码'" />
               </el-form-item>
 
-              <el-form-item ref="password" label="新密码" name="password" prop="password">
+              <el-form-item ref="refPassword" label="新密码" name="password" prop="password">
                 <el-input type="password" v-model="updatePwdInfo.password" :placeholder="'请输入新密码'" />
               </el-form-item>
-              <el-form-item ref="confirmPassword" label="确认密码" name="confirmPassword" prop="confirmPassword">
+              <el-form-item ref="refConfirmPassword" label="确认密码" name="confirmPassword" prop="confirmPassword">
                 <el-input type="password" v-model="updatePwdInfo.confirmPassword" :placeholder="'请再次输入新密码'" />
               </el-form-item>
               <div class="txt-center btn-container">
@@ -227,7 +227,7 @@
                   :loading="loadingPwBtn"
                   class="standard-button btn-color-white"
                   type="button"
-                  @click="submitUpdatePwd"
+                  @click="clearPwd"
                 >
                   重新填写
                 </button>
@@ -253,34 +253,34 @@
       </el-form>
     </div>
 
-<!--    <el-dialog-->
-<!--      v-model="updatePwdModalVisible"-->
-<!--      :footer="null"-->
-<!--      width="500px"-->
-<!--      title="修改密码"-->
-<!--      align-center-->
-<!--      :close-on-click-modal="false"-->
-<!--      :close-on-press-escape="false"-->
-<!--    >-->
-<!--      <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">-->
-<!--        <el-form-item ref="oldPassword" name="oldPassword" prop="oldPassword">-->
-<!--          <el-input type="password" v-model="updatePwdInfo.oldPassword" :placeholder="'旧密码'" />-->
-<!--        </el-form-item>-->
-<!--        <el-form-item ref="password" name="password" prop="password">-->
-<!--          <el-input type="password" v-model="updatePwdInfo.password" :placeholder="'新密码'" />-->
-<!--        </el-form-item>-->
-<!--        <el-form-item class="txt-center">-->
-<!--          <el-button-->
-<!--            :loading="loadingPwBtn"-->
-<!--            class="txt-center submit-btn common-btn"-->
-<!--            type="submit"-->
-<!--            @click="submitUpdatePwd"-->
-<!--          >-->
-<!--            提交-->
-<!--          </el-button>-->
-<!--        </el-form-item>-->
-<!--      </el-form>-->
-<!--    </el-dialog>-->
+    <!--    <el-dialog-->
+    <!--      v-model="updatePwdModalVisible"-->
+    <!--      :footer="null"-->
+    <!--      width="500px"-->
+    <!--      title="修改密码"-->
+    <!--      align-center-->
+    <!--      :close-on-click-modal="false"-->
+    <!--      :close-on-press-escape="false"-->
+    <!--    >-->
+    <!--      <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">-->
+    <!--        <el-form-item ref="oldPassword" name="oldPassword" prop="oldPassword">-->
+    <!--          <el-input type="password" v-model="updatePwdInfo.oldPassword" :placeholder="'旧密码'" />-->
+    <!--        </el-form-item>-->
+    <!--        <el-form-item ref="password" name="password" prop="password">-->
+    <!--          <el-input type="password" v-model="updatePwdInfo.password" :placeholder="'新密码'" />-->
+    <!--        </el-form-item>-->
+    <!--        <el-form-item class="txt-center">-->
+    <!--          <el-button-->
+    <!--            :loading="loadingPwBtn"-->
+    <!--            class="txt-center submit-btn common-btn"-->
+    <!--            type="submit"-->
+    <!--            @click="submitUpdatePwd"-->
+    <!--          >-->
+    <!--            提交-->
+    <!--          </el-button>-->
+    <!--        </el-form-item>-->
+    <!--      </el-form>-->
+    <!--    </el-dialog>-->
 
     <el-dialog
       wrap-class-name="securityModal"
@@ -820,15 +820,25 @@ export default defineComponent({
     const updatePwdFormRef = ref();
     const updatePwdInfo = reactive({
       oldPassword: "",
-      password: ""
+      password: "",
+      confirmPassword: ""
     });
     const updatePwdModal = () => {
       updatePwdInfo.oldPassword = "";
       updatePwdInfo.password = "";
       updatePwdModalVisible.value = true;
     };
+
+    const refOldPassword= ref();
+    const refPassword= ref();
+    const clearPwd = () =>{
+      updatePwdInfo.oldPassword = "";
+      updatePwdInfo.password= "";
+      updatePwdInfo.confirmPassword= "";
+    }
+
     const submitUpdatePwd = () => {
-      debugger;
+      // debugger;
       loadingPwBtn.value = true
       updatePwdFormRef.value
         .validate()
@@ -930,7 +940,10 @@ export default defineComponent({
       updatePwdModalVisible,
       updatePwdRules,
       submitUpdatePwd,
+      clearPwd,
       loadInfo,
+      refOldPassword,
+      refPassword,
       isEdit,
       updateFormDetails,
       updateState,

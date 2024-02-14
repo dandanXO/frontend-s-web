@@ -58,7 +58,7 @@
           <div class="eshare-div">
             <span v-if="store.evip">
               专属网址:
-              <a class="share-link" :href="selfTgurl" target="_blank">
+              <a class="share-link" :href="store.evip" target="_blank">
                 {{ store.evip }}
               </a>
               <img class="copy-btn btn-pointer" src="../assets/images/account/account-copy-icon.png" />

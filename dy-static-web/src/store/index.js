@@ -25,6 +25,7 @@ export const userStore = defineStore("userStore", {
       currency: { value: "￥", label: "RMB" },
       loginPageVisible: false,
       regPageVisible: false,
+      unreadTotal: 0,
       siteId: 6
     };
   },
