@@ -17,8 +17,8 @@
               <div class="subtitle">{{ hotgame.subtitle }}</div>
             </div>
             <div class="character-wrapper">
-              
-              <img v-if="
+              <img :class="`character-${hotgame.subtitle.toLowerCase()}`" :src="hotgame.charImgPath" />
+              <!-- <img v-if="
                 hotgame.content &&
                 hotgame.content[hotgame.currentProvider] &&
                 hotgame.content[hotgame.currentProvider].charImgPath
@@ -28,7 +28,7 @@
                 require(`../../assets/home/hotgame/content/${hotgame.section}/${
                   hotgame.content[hotgame.currentProvider].charImgPath
                 }/character.png`)
-              " />
+              " /> -->
             </div>
           </div>
         </div>
@@ -802,13 +802,13 @@ $transition_timer: 0.5s;
             .character-board,
             .character-fishing {
               position: relative;
-              // bottom: 1rem;
+              bottom: 1rem;
             }
-            img {
-    height: 60%;
-    opacity: 0.6;
-    margin-right: 65px;
-            }
+    //         img {
+    // height: 60%;
+    // opacity: 0.6;
+    // margin-right: 65px;
+    //         }
           }
         }
       }
