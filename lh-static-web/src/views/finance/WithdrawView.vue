@@ -5,9 +5,9 @@
     </div>
 
     <div class="menu-title-container">
-      <span class="">提款流程：</span>
       <div class="account-content withdrawal">
         <div class="flex-box">
+      <span class="">提款流程：</span>
           <div class="step-item active">申请中</div>
           <RiArrowRightSLine />
           <div class="step-item">审核中</div>
@@ -430,10 +430,7 @@ export default defineComponent({
 .card {
   background-color: #fff;
   border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 20px;
+  padding: 20px 40px;
   color: #424f72;
   height: 100%;
   box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
@@ -446,9 +443,9 @@ export default defineComponent({
     .withdrawal {
       margin: 10px 0;
       .flex-box {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
+        display: flex;    justify-content: flex-start;
+    gap: 10px;
+    align-items: center;
         svg {
           width: 20px;
           fill: #6c757d;
@@ -456,6 +453,7 @@ export default defineComponent({
       }
       .withdraw-tip {
         color: #ff7f10;
+        margin-top: 15px;
       }
       ul {
         margin: 20px auto;
@@ -523,40 +521,54 @@ export default defineComponent({
       }
     }
     .withdraw-type-item {
-      // width: 120px;
-      // padding: 20px 30px;
-      // margin-right: 10px;
-      // border-radius: 6px;
-      // border: solid 1px #484460;
-      // position: relative;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
       cursor: pointer;
-      margin-right: 5px;
+    justify-content: center;
+    min-width: 6rem;
+    background-color: #f7f8fb;
+    border-radius: 15px;
+    box-shadow: inset 0 0 8px 0 #a9c9ea;
+    margin-bottom: 30px;
+    border: 2px solid transparent;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: 10px;
       img {
         //     width: 40px;
         // padding: 8px 20px;
         // background: #ffffff;
         // border: 1px solid #ced4da;
-
-        background-color: #f7f7f7;
-        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
-        max-width: 1.5rem;
-        margin-bottom: 0;
-        border: 2px solid #dddddd;
-        padding: 5px 15px;
-        border-radius: 3px;
+    max-width: 2.3rem;
+    width: 100%;
+    height: auto;
+    margin-bottom: 0;
+    border: 0;
+    padding: 0;
       }
       &.active {
+    border: 2px solid #468cff;
+    box-shadow: unset;
         // border-bottom: 4px solid #1bcef1;
         // border: 1px solid #ffd800;
         // color: #ffd800;
         img {
           // border: 1px solid #4978ec;
           // background: #bad2ff;
-          border-color: #4873f1;
+          // border-color: #4873f1;
+        }
+        &:before {
+          display: block;
+          content: "";
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          height: 28px;
+          width: 28px;
+          z-index: 3;
+          background-image: url("../../assets/svg/checkmark.svg");
+          background-size: 100%;
+          background-position: center center;
         }
       }
       .type-name {
@@ -608,6 +620,9 @@ export default defineComponent({
 }
 .withdraw-form {
   padding: 20px 0;
+  :deep(.el-form-item__content) {
+    gap: 15px;
+  }
 }
 </style>
 <style scoped lang="scss">

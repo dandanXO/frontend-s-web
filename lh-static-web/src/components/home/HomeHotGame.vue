@@ -18,6 +18,17 @@
             </div>
             <div class="character-wrapper">
               <img :class="`character-${hotgame.subtitle.toLowerCase()}`" :src="hotgame.charImgPath" />
+              <!-- <img v-if="
+                hotgame.content &&
+                hotgame.content[hotgame.currentProvider] &&
+                hotgame.content[hotgame.currentProvider].charImgPath
+              "
+              :class="`character-${hotgame.subtitle.toLowerCase()}`"
+              :src="
+                require(`../../assets/home/hotgame/content/${hotgame.section}/${
+                  hotgame.content[hotgame.currentProvider].charImgPath
+                }/character.png`)
+              " /> -->
             </div>
           </div>
         </div>
@@ -717,7 +728,8 @@ $transition_timer: 0.5s;
         .hotgame-banner {
           width: 60px;
           width: 65px;
-          height: 36.5rem;
+          // height: 36.5rem;
+          height: 28.5rem;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -792,6 +804,11 @@ $transition_timer: 0.5s;
               position: relative;
               bottom: 1rem;
             }
+    //         img {
+    // height: 60%;
+    // opacity: 0.6;
+    // margin-right: 65px;
+    //         }
           }
         }
       }
@@ -939,6 +956,9 @@ $transition_timer: 0.5s;
             position: relative;
             right: 4rem;
             height: 27rem;
+            &.character-fishing-gps {
+              right: 9rem;
+            }
           }
 
           // esports

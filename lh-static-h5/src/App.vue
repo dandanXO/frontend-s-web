@@ -3,13 +3,14 @@
 </template>
 
 <script>
-import { defineComponent, onMounted } from "vue";
-import { useQuasar } from "quasar";
+import { defineComponent, onMounted, onUnmounted, ref } from "vue";
+import { Platform, useQuasar } from "quasar";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
 import CsClient from "csweb-client";
 // import CsClient from "boot/client";
 import { userStore } from "src/stores";
+import axios from "axios";
 
 export default defineComponent({
   name: "App",
@@ -18,6 +19,9 @@ export default defineComponent({
     const store = userStore();
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(false);
+    const onlineStatTimeout = ref();
+    const onlineStatInterval = ref();
+
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
       const fpPromise = FingerprintJS.load();
@@ -98,11 +102,44 @@ export default defineComponent({
         }
       });
     };
+
+    const getOnlineStatApi = async () => {
+      const fpPromise = FingerprintJS.load();
+
+      const fp = await fpPromise;
+      const result = await fp.get();
+      const excludes = { value: ["timezone", "timeZoneOffset"] };
+      const allComponents = { ...result.components };
+      excludes.value.forEach((element) => {
+        delete allComponents[element];
+      });
+      const sidParam = FingerprintJS.hashComponents(allComponents);
+      const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
+
+      if (sidParam) {
+        const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
+          params: {
+            way: way,
+            sid: sidParam,
+            siteCode: "lh1"
+          }
+        });
+      }
+    };
+
     onMounted(() => {
       checkSID();
       // initCsWeb();
       getCSA();
+
+      onlineStatTimeout.value = setTimeout(getOnlineStatApi, 2000);
+      onlineStatInterval.value = setInterval(getOnlineStatApi, 60000);
     });
+
+    onUnmounted(() => {
+      clearTimeout(onlineStatTimeout);
+      clearInterval(onlineStatInterval);
+    })
   }
 });
 </script>

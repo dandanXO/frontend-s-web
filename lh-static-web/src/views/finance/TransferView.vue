@@ -492,7 +492,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 20px;
+  padding: 20px 40px;
   color: #424f72;
   height: 100%;
   box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
@@ -531,9 +531,10 @@ body .transferinout .el-dialog__header .el-dialog__title {
   box-shadow: 0px -2px 5px 0px #b1d7ff inset;
   box-shadow: 0px -1px 4px 0px #5894ff inset;
   color: #fff;
-  padding: 20px 30px;
+  padding: 15px 30px;
   cursor: pointer;
   border: 0;
+  height: unset;
 
   &.outline {
     background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
