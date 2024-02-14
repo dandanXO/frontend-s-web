@@ -2,7 +2,7 @@
   <div class="vip-container">
     <div class="banner-container" />
 
-    <Carousel :items-to-show="2.95" :wrap-around="true">
+    <Carousel v-model="currentSlide" :items-to-show="2.95" :wrap-around="true">
       <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
@@ -22,10 +22,10 @@
                 </div>
                 <div class="progressBarDescription">
                   <span>
-                    {{ `V${vip.vipLevel}` }}
+                    {{ `V${vip.vipLevel - 1}` }}
                   </span>
                   <span v-if="vip.vipLevel < 12">
-                    {{ `V${+vip.vipLevel + 1}` }}
+                    {{ `V${+vip.vipLevel}` }}
                   </span>
                 </div>
               </div>
@@ -101,95 +101,95 @@
             <tr>
               <td>白银Ⅱ</td>
               <td>80,000</td>
-              <td id="vipPromoInfo5" class="showTips4" style="display: none">存款最少20元可申请一次晋级奖金188元</td>
-              <td class="showTips4" style="display: none">电竞/体育 5倍 老虎机12倍 真人15倍</td>
-              <td colspan="2" class="hideTips4">
+              <td id="vipPromoInfo5" class="showTips4">存款最少20元可申请一次晋级奖金188元</td>
+              <td class="showTips4">电竞/体育 5倍 老虎机12倍 真人18倍</td>
+              <!-- <td colspan="2" class="hideTips4">
                 <div class="vip-btn disable">未符合</div>
-              </td>
+              </td> -->
             </tr>
             <tr>
               <td>白银Ⅰ</td>
               <td>200,000</td>
-              <td id="vipPromoInfo6" class="showTips5" style="display: none">存款最少20元可申请一次晋级奖金388元</td>
-              <td class="showTips5" style="display: none">电竞/体育 5倍 老虎机12倍 真人15倍</td>
-              <td colspan="2" class="hideTips5">
+              <td id="vipPromoInfo6" class="showTips5">存款最少20元可申请一次晋级奖金388元</td>
+              <td class="showTips5">电竞/体育 5倍 老虎机12倍 真人18倍</td>
+              <!-- <td colspan="2" class="hideTips5">
                 <div class="vip-btn disable">未符合</div>
-              </td>
+              </td> -->
             </tr>
             <tr>
               <td rowspan="3">黄金</td>
               <td>黄金Ⅲ</td>
               <td>400,000</td>
-              <td id="vipPromoInfo7" class="showTips6" style="display: none">
+              <td id="vipPromoInfo7" class="showTips6">
                 存款最少200元可申请一次再存30%最高奖金1888元
               </td>
-              <td class="showTips6" style="display: none">电竞/体育 15倍 老虎机12倍 真人18倍</td>
-              <td colspan="2" class="hideTips6">
+              <td class="showTips6">电竞/体育 15倍 老虎机12倍 真人18倍</td>
+              <!-- <td colspan="2" class="hideTips6">
                 <div class="vip-btn disable">未符合</div>
-              </td>
+              </td> -->
             </tr>
             <tr>
               <td>黄金Ⅱ</td>
               <td>600,000</td>
-              <td id="vipPromoInfo8" class="showTips7" style="display: none">存款最少20元可申请一次晋级奖金888元</td>
-              <td class="showTips7" style="display: none">电竞/体育 5倍 老虎机12倍 真人18倍</td>
-              <td colspan="2" class="hideTips7">
+              <td id="vipPromoInfo8" class="showTips7">存款最少20元可申请一次晋级奖金888元</td>
+              <td class="showTips7">电竞/体育 5倍 老虎机12倍 真人18倍</td>
+              <!-- <td colspan="2" class="hideTips7">
                 <div class="vip-btn disable">未符合</div>
-              </td>
+              </td> -->
             </tr>
             <tr>
               <td>黄金Ⅰ</td>
               <td>1,000,000</td>
-              <td id="vipPromoInfo9" class="showTips8" style="display: none">
+              <td id="vipPromoInfo9" class="showTips8">
                 存款最少500元可申请每月一次再存35% 最高奖金8888元
               </td>
-              <td class="showTips8" style="display: none">电竞/体育 15倍 老虎机12倍 真人18倍</td>
-              <td colspan="2" class="hideTips8">
+              <td class="showTips8">电竞/体育 15倍 老虎机12倍 真人18倍</td>
+              <!-- <td colspan="2" class="hideTips8">
                 <div class="vip-btn disable">未符合</div>
-              </td>
+              </td> -->
             </tr>
             <tr>
               <td rowspan="2">铂金</td>
               <td>铂金Ⅱ</td>
               <td>2,000,000</td>
-              <td id="vipPromoInfo10" class="showTips9" style="display: none">存款最少20元可申请一次晋级奖金1888元</td>
-              <td class="showTips9" style="display: none">电竞/体育 8倍 老虎机12倍 真人18倍</td>
-              <td colspan="2" class="hideTips9">
+              <td id="vipPromoInfo10" class="showTips9">存款最少20元可申请一次晋级奖金1888元</td>
+              <td class="showTips9">电竞/体育 8倍 老虎机12倍 真人18倍</td>
+              <!-- <td colspan="2" class="hideTips9">
                 <div class="vip-btn disable">未符合</div>
-              </td>
+              </td> -->
             </tr>
             <tr>
               <td>铂金Ⅰ</td>
               <td>4,000,000</td>
-              <td id="vipPromoInfo11" class="showTips10" style="display: none">
+              <td id="vipPromoInfo11" class="showTips10">
                 存款最少500元可申请一次再存40%最高奖金18888元
               </td>
-              <td class="showTips10" style="display: none">电竞/体育 15倍 老虎机12倍 真人18倍</td>
-              <td colspan="2" class="hideTips10">
+              <td class="showTips10">电竞/体育 15倍 老虎机12倍 真人18倍</td>
+              <!-- <td colspan="2" class="hideTips10">
                 <div class="vip-btn disable">未符合</div>
-              </td>
+              </td> -->
             </tr>
             <tr>
               <td rowspan="1">钻石</td>
               <td>钻石</td>
               <td>8,000,000</td>
-              <td id="vipPromoInfo12" class="showTips11" style="display: none">存款最少20元可申请一次晋级奖金8888元</td>
-              <td class="showTips11" style="display: none">电竞/体育10倍 老虎机12倍 真人18倍</td>
-              <td colspan="2" class="hideTips11">
+              <td id="vipPromoInfo12" class="showTips11">存款最少20元可申请一次晋级奖金8888元</td>
+              <td class="showTips11">电竞/体育10倍 老虎机12倍 真人18倍</td>
+              <!-- <td colspan="2" class="hideTips11">
                 <div class="vip-btn disable">未符合</div>
-              </td>
+              </td> -->
             </tr>
             <tr>
               <td rowspan="1">最强王者</td>
               <td>王者</td>
               <td>12,000,000</td>
-              <td id="vipPromoInfo13" class="showTips12" style="display: none">
+              <td id="vipPromoInfo13" class="showTips12">
                 存款最少20元可申请一次晋级奖金18888元
               </td>
-              <td class="showTips12" style="display: none">电竞/体育10倍 老虎机12倍 真人18倍</td>
-              <td colspan="2" class="hideTips12">
+              <td class="showTips12">电竞/体育10倍 老虎机12倍 真人18倍</td>
+              <!-- <td colspan="2" class="hideTips12">
                 <div class="vip-btn disable">未符合</div>
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>
@@ -304,12 +304,27 @@ export default defineComponent({
       const currentDeposit = +store.getCurrentDeposit();
       const upgradeStatus = vipInfo.upgrade;
 
-      if (vipLevel > +vipInfo.vipLevel) {
-        return 100;
+      // if (vipLevel >= +vipInfo.vipLevel) {
+      //   return 100;
+      // }
+      var levelUpDeposit = +upgradeStatus.replaceAll(",", "");
+      if (!levelUpDeposit) {
+        levelUpDeposit = 0
       }
-
-      const levelUpDeposit = +upgradeStatus.replaceAll(",", "");
-      return (currentDeposit / levelUpDeposit) * 100;
+      if (vipLevel === 0) {
+        return 0
+      }
+      if (vipLevel + 1 === +vipInfo.vipLevel) {
+        return (currentDeposit / levelUpDeposit) * 100;
+      }
+      if (currentDeposit > levelUpDeposit + 1) {
+        return 100
+      } else {
+        return 0
+      }
+      
+      // const levelUpDeposit = +upgradeStatus.replaceAll(",", "");
+      // return (currentDeposit / levelUpDeposit) * 100;
     };
     const storeToken = computed(() => {
       return store.token;
@@ -555,8 +570,17 @@ export default defineComponent({
         }
       });
     };
+    const currentSlide = ref(0)
+    const slideTo = () => {
+      const vipLevel = +store.vip.replace("VIP", "");
+      if (vipLevel === 0) {
+        return
+      }
+      currentSlide.value = vipLevel - 1
+    };
     onMounted(() => {
       initVIPTable();
+      slideTo();
     });
 
     return {
@@ -575,7 +599,9 @@ export default defineComponent({
       privilegeClaimedModalVisible,
       currentDisplayTerms,
       vipTerms,
-      claimVIPLevelItem
+      claimVIPLevelItem,
+      currentSlide,
+      slideTo
     };
   }
 });

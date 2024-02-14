@@ -137,6 +137,7 @@
 
         <!-- K豆教程视频 -->
         <div style="margin-left: 150px" v-else-if="isEWALLET">
+          <span class="tip-text">*特别说明：提款钱包和游戏账号的姓名务必一致</span>
           <el-button class="common-btn" @click="openEWalletTutorial(selectedWithdrawalMethod.code)">
             <span v-if="selectedWithdrawalMethod.code === 'KDPAY'">K豆教程视频</span>
             <span v-else-if="selectedWithdrawalMethod.code === 'EBPAY'">EB教程视频</span>
@@ -753,6 +754,12 @@ export default defineComponent({
 .selected-tip {
   margin-left: 150px;
   margin-bottom: 30px;
+  color: #ff7f10;
+}
+.tip-text {
+  margin-bottom: 10px;
+  display: block;
+  width: 100%;
   color: #ff7f10;
 }
 
