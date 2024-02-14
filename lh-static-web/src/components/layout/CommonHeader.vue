@@ -158,7 +158,7 @@
                 </div>
                 <a @click="refreshBalance" class="details-balance">
                   <div class="flex-wrap">
-                    <span>总资产:</span>
+                    <span class="assets-text">总资产:</span>
                     <span class="amount">
                       <span v-if="isLoadingBalance">加载中...</span>
                       <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ store.balance }}</span>
@@ -1710,6 +1710,9 @@ body {
       display: flex;
       align-items: center;
 
+      .assets-text {
+        white-space: nowrap;
+      }
       .amount {
         margin-right: 0.5rem;
       }
