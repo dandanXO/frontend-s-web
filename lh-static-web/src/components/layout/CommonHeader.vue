@@ -1715,6 +1715,7 @@ body {
       }
       .amount {
         margin-right: 0.5rem;
+        white-space: nowrap;
       }
     }
   }
