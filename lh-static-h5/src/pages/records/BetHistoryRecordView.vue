@@ -25,7 +25,7 @@
   </q-dialog>
   <div class="table-record">
     <div class="flex-div">
-      <span>选择平台：</span>
+      <span class="select-stage">选择平台：</span>
       <q-select
         clearable
         rounded
@@ -40,13 +40,13 @@
         @update:model-value="searchRecord"
       ></q-select>
 
-      <div v-if="platform.length === 0" class="payout-total">
+      <div class="payout-total">
         <div>总投注: {{ totalBetRecord.totalBet }}</div>
         <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
       </div>
     </div>
     <div class="flex-div">
-      <span>开始日期：</span>
+      <span>开始：</span>
       <q-input rounded outlined dense v-model="startDate">
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
@@ -60,7 +60,7 @@
           </q-icon>
         </template>
       </q-input>
-      <span>结束日期：</span>
+      <span>结束：</span>
       <q-input rounded outlined dense v-model="endDate">
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
@@ -137,6 +137,7 @@ const visible = ref(true);
 const tableData = ref([]);
 
 const searchRecord = () => {
+  tableData.value = [];
   isEnded.value = false;
   recordRef.value.clearTable();
   loadDepositTable(true);
@@ -445,10 +446,14 @@ onMounted(async () => {
   span {
     font-size: 14px;
     padding-left: 5px;
-    min-width: 80px;
+    min-width: 50px;
 
     &:nth-child(3) {
       margin-left: 10px;
+    }
+
+    &.select-stage {
+      min-width: 80px;
     }
   }
 }
