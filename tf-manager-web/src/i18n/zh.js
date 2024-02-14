@@ -899,6 +899,7 @@ export default {
     memberId: '会员ID',
     memberInfo: '会员信息',
     memberList: '会员列表',
+    memberMessage: '发件箱',
     memberName: '会员名',
     memberPlatformAction: '操作（手动注册/删除）',
     memberPlatformUpdate: '同步密码',

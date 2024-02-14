@@ -894,6 +894,7 @@ export default {
     memberId: 'Member ID',
     memberInfo: 'Member Info',
     memberList: 'Member List',
+    memberMessage: 'Member Message',
     memberName: 'Member Name',
     memberPlatformAction: 'Action（Manual Register/Delete）',
     memberPlatformUpdate: 'Sync Password',

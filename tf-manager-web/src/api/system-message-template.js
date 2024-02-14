@@ -5,6 +5,10 @@ export const getSystemMessageTemplate = (systemMessageTemplate) => {
   return https().request("/system-message-template", Method.GET, systemMessageTemplate, ContentType.form);
 };
 
+export const getMemberMessage = (memberMessage) => {
+  return https().request("/system-message-template/member-message", Method.GET, memberMessage, ContentType.form);
+};
+
 export const createSystemMessageTemplate = (systemMessageTemplate) => {
   return https().request("/system-message-template", Method.POST, systemMessageTemplate, ContentType.json);
 };
