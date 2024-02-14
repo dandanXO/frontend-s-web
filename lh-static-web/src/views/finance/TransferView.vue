@@ -5,7 +5,7 @@
       <br />
       新用户首存即送！最高可得680元！
       <router-link to="/center/deposit">
-        <el-button size="small" class="blue-btn deposit-btn outline">立即参与</el-button>
+        <el-button size="small" class="blue-btn join-btn outline">立即参与</el-button>
       </router-link>
     </div>
     <div class="balance-plat-item">
@@ -511,13 +511,17 @@ body .transferinout .el-dialog__header .el-dialog__title {
   font-size: 20px;
   font-weight: 700;
   font-family: "Microsoft Yahei";
-  .deposit-btn {
+  .deposit-btn, .join-btn {
     color: #548cf9;
     padding: 10px;
     border-radius: 20px;
     font-size: 20px;
-    padding: 20px;
     font-weight: bold;
+    height: unset;
+    padding: 15px 30px;
+  }
+  .join-btn {
+    padding: 10px 20px;
   }
 }
 
@@ -587,8 +591,8 @@ body .transferinout .el-dialog__header .el-dialog__title {
     display: grid;
     grid-template-columns: 1fr 1fr;
     border: 1px solid #ecedf0;
-    width: 238px;
-    height: 128px;
+    // width: 238px;
+    // height: 128px;
 
     .transfer-balance-box {
       display: flex;
