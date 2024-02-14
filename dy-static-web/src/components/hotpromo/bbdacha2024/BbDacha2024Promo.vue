@@ -93,7 +93,7 @@
 
     <div class="tab-panel" v-if="activeKey === 'tabOne'">
       <div class="table-container">
-        <p class="top-liner">活动期间，每日竞猜正确达到对应场次的会员当日存款可领对应存款反比金额</p>
+        <p class="top-liner">活动期间，每日竞猜正确次数1~2场的会员当日存款可领对应存款反比金额</p>
 
         <table class="promo-table">
           <thead>
@@ -105,15 +105,15 @@
           </thead>
           <tbody>
             <tr>
-              <td>≥2</td>
+              <td>1~2</td>
               <td>0.8%</td>
               <td>128</td>
             </tr>
-            <tr>
-              <td>≥3</td>
-              <td>1.0%</td>
-              <td>388</td>
-            </tr>
+            <!--            <tr>-->
+            <!--              <td>≥3</td>-->
+            <!--              <td>1.0%</td>-->
+            <!--              <td>388</td>-->
+            <!--            </tr>-->
           </tbody>
         </table>
       </div>
@@ -125,7 +125,7 @@
       <div class="rules-container">
         <ol class="rules-content">
           <li>
-            活动期间，会员每日可免费参与全部竞猜，当日BB别墅冬季杯竞猜正确场次≥3次可获当日总存款对应反比，彩金与次日24小时内派发，彩金仅需3倍流水即可提款；
+            活动期间，BB别墅冬季杯竞猜正确场次1~2次可获当日存款对应反比，彩金与次日24小时内派发，彩金仅需3倍流水即可提款；
           </li>
           <li>活动期间，请在指定比赛开赛前竞猜，若超出开赛时间则视为放弃竞猜；</li>
           <li>
