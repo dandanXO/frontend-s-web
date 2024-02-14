@@ -10,8 +10,12 @@
         <img src="../assets/images/affiliate/official-partner.png" width="256">
       </div>
       <div class="buttons">
-        <a :href="'https://agt.wrxjpo3vh.com/dy/register?agent=' + (affCode ? affCode : '')">加入我们</a>
-        <a class="outline" href="https://agt.wrxjpo3vh.com/dy/login">登录</a>
+        <router-link :to="'/register?agent=' + (affCode ? affCode : '')">
+          加入我们
+        </router-link>
+        <router-link to="/login" class="outline">
+          登录
+        </router-link>
         <a class="outline" @click.stop.prevent="
           openWindow(
             `https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=${regDevice}&lang=zh-CN&token=${store.token}`,
