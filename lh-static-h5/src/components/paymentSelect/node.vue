@@ -160,6 +160,7 @@ export default defineComponent({
   }
 });
 </script>
+
 <style lang="scss" scoped>
 $group-color: #76c034;
 // $node-color: #dd4645;

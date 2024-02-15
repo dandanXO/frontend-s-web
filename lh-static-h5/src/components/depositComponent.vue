@@ -97,7 +97,7 @@
         </div>
 
         <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="兑换率">
-          <span style="color: #fff">
+          <span class="text-positive">
             1.00 USDT ≈ {{ activeMethod.currencyRate }}
             {{ store.currency.value }}
           </span>
@@ -236,7 +236,7 @@ const checkNewUser = () => {
 const isLoading = ref(true);
 const btnLoading = ref(false);
 const payTypeClass = ref();
-const payMethods = reactive([]);
+const payMethods = ref([]);
 const paymentNode = ref([]);
 const activeMethod = ref({});
 const bankCardList = ref([]);
@@ -311,7 +311,7 @@ const checkAmount = reactive({
 const $q = useQuasar();
 const calculatedMinDeposit = ref("");
 
-function initPay() {
+const initPay = () => {
   $q.loading.show({
     message: "加载数据中... 请稍等..."
   });
@@ -324,10 +324,10 @@ function initPay() {
       d.payments.forEach((element) => {
         element.promoValue = "";
         element.promoStyle = "right: -5px; top: 0px; padding: 20px;";
-        payMethods.push(element);
+        payMethods.value.push(element);
       });
-      if (payMethods[0].extra && payMethods[0].extra.banks) {
-        bankCardList.value = payMethods[0].extra.banks;
+      if (payMethods.value[0].extra && payMethods.value[0].extra.banks) {
+        bankCardList.value = payMethods.value[0].extra.banks;
       }
     }
 
@@ -347,7 +347,7 @@ function initPay() {
     }
     localStorage.removeItem("isBacked");
   });
-}
+};
 
 async function loadPrivilege(val) {
   privilegeList.value = [];

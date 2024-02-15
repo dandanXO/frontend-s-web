@@ -91,7 +91,7 @@ const loadDailyCheckIn = () => {
 
 const checkInOfTheDay = (mth) => {
   // console.log(mth);
-  if(mth.isCheckedIn){
+  if (mth.isCheckedIn) {
     return;
   }
   eventapi.put("/sign-in/claim").then((res) => {
@@ -103,6 +103,9 @@ const checkInOfTheDay = (mth) => {
         icon: "check_circle_outline"
       });
       loadDailyCheckIn();
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     }
   });
 };
@@ -188,10 +191,11 @@ onMounted(() => {
 
       &.check-in {
         cursor: pointer;
-        background-image: url(../../../assets/images/promo/hotpromo/dailylogin/sign.png) ;
+        background-image: url(../../../assets/images/promo/hotpromo/dailylogin/sign.png);
         background-repeat: no-repeat;
         background-position: center center;
         background-size: 100% 100%;
+        z-index: 2;
 
         &.today-checked-in {
           filter: grayscale(0.7);
@@ -200,7 +204,7 @@ onMounted(() => {
       }
       &.checked-in {
         cursor: pointer;
-         background-image: url(../../../assets/images/promo/hotpromo/dailylogin/signed.png);
+        background-image: url(../../../assets/images/promo/hotpromo/dailylogin/signed.png);
         background-repeat: no-repeat;
         background-position: center center;
         //background: transparent;

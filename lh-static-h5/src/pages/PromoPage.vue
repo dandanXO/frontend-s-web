@@ -199,9 +199,9 @@ export default defineComponent({
       {name: "all", label: '全部优惠'},
       {name: "esport", label: '电竞'},
       {name: "sport", label: '体育'},
-      {name: "slot", label: '老虎机'},
+      // {name: "slot", label: '老虎机'},
       {name: "live casino", label: '真人'},
-      {name: "fish", label: '捕鱼'},
+      {name: "fish", label: '老虎机/捕鱼'},
     ];
 
     watch(() => route.query, () => {

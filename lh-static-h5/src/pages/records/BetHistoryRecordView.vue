@@ -458,6 +458,6 @@ onMounted(async () => {
   }
 }
 .payout-total {
-  width: 140px;
+  width: 240px;
 }
 </style>
