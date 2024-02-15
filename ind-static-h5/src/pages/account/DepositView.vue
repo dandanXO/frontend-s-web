@@ -871,8 +871,8 @@ onMounted(() => {
 
   .selected-svg {
     position: absolute;
-    right: 3px;
-    bottom: 3px;
+    right: 1px;
+    bottom: 1px;
     display: none;
 
     svg {
