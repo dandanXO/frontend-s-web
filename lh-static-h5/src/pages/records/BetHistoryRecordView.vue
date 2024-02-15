@@ -25,7 +25,7 @@
   </q-dialog>
   <div class="table-record">
     <div class="flex-div">
-      <span>选择平台：</span>
+      <span class="select-stage">选择平台：</span>
       <q-select
         clearable
         rounded
@@ -36,17 +36,18 @@
         v-model="platform"
         :options="platformsList"
         placeholder="选择平台"
+        map-options
         @clear="platform = ''"
         @update:model-value="searchRecord"
       ></q-select>
 
-      <div v-if="platform.length === 0" class="payout-total">
+      <div class="payout-total">
         <div>总投注: {{ totalBetRecord.totalBet }}</div>
         <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
       </div>
     </div>
     <div class="flex-div">
-      <span>开始日期：</span>
+      <span>开始：</span>
       <q-input rounded outlined dense v-model="startDate">
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
@@ -60,7 +61,7 @@
           </q-icon>
         </template>
       </q-input>
-      <span>结束日期：</span>
+      <span>结束：</span>
       <q-input rounded outlined dense v-model="endDate">
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
@@ -92,7 +93,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive } from "vue";
+import { onMounted, ref, reactive, onActivated } from "vue";
 import { api } from "boot/axios";
 import { cached } from "boot/cache";
 import { userStore } from "src/stores";
@@ -137,6 +138,7 @@ const visible = ref(true);
 const tableData = ref([]);
 
 const searchRecord = () => {
+  tableData.value = [];
   isEnded.value = false;
   recordRef.value.clearTable();
   loadDepositTable(true);
@@ -193,7 +195,7 @@ const loadDepositTable = (isNew) => {
     visible.value = true;
   }
 
-  var platformName = platform.value ? platform.value.value : "";
+  var platformName = platform.value ? (platform.value.value === "BBINDY" ? "BBIN" : platform.value.value) : "";
   let paramData = {
     startDate: startDate,
     endDate: endDate,
@@ -284,6 +286,7 @@ const getGameName = (gameName) => {
 };
 
 const loadPlatformLists = () => {
+  platformsList.value = [];
   cached
     .get("LOGGEDPLATFORMS", () =>
       api.get("/session/loggedInPlatform").then((response) => {
@@ -291,7 +294,12 @@ const loadPlatformLists = () => {
       })
     )
     .then((data) => {
-      _.each(data, function (item, index) {
+      platformsList.value.push({
+        label: "全部平台",
+        value: ""
+      });
+
+      _.each(data, function(item, index) {
         var option = {
           label: getGameName(item.name),
           value: item.code
@@ -328,7 +336,7 @@ const tableHeaders = [
   }
 ];
 
-onMounted(async () => {
+onActivated(async () => {
   await loadPlatformLists();
 
   const startMonth = moment(startDate).format("MM");
@@ -344,7 +352,10 @@ onMounted(async () => {
 
 <style lang="scss">
 .payout-total {
+  margin-left: 24px;
+  margin-right: 12px;
 }
+
 .table-record {
   width: 100%;
   gap: 10px;
@@ -443,9 +454,19 @@ onMounted(async () => {
   span {
     font-size: 14px;
     padding-left: 5px;
+    min-width: 50px;
+
+    &:nth-child(3) {
+      margin-left: 10px;
+    }
+
+    &.select-stage {
+      min-width: 80px;
+    }
   }
 }
+
 .payout-total {
-  width: 140px;
+  width: 240px;
 }
 </style>

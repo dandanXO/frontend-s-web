@@ -238,7 +238,7 @@ svg {
   background-color: transparent;
   background-image: url("../assets/images/common/common-large-btn.png");
   background-size: 100% 100%;
-  aspect-ratio: 1000/114;
+  // aspect-ratio: 1000/114;
   font-size: 1.2rem;
   color: $white;
   border-radius: 10px;
@@ -256,7 +256,7 @@ svg {
 .common-large-white-btn {
   background-color: $white;
   box-shadow: $shadow-bg;
-  aspect-ratio: 1000/114;
+  // aspect-ratio: 1000/114;
   font-size: 1.2rem;
   color: $font-1;
   border-radius: 10px;
@@ -571,4 +571,9 @@ svg {
   // background: linear-gradient(180deg, #52ACFF, #3559DA);
   background-color: #4c9dec;
   color: #ffffff;
+}
+
+// bottom navigation
+.q-footer .q-layout__shadow:after {
+  display: none;
 }

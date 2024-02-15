@@ -10,7 +10,7 @@
             <a @click="refreshBalance" class="balance-container">
               <div>账户余额：</div>
               <div class="balance-txt">
-                <span v-if="isLoadingBalance">Loading...</span>
+                <span v-if="isLoadingBalance"> 加载中...</span>
                 <span v-if="!isLoadingBalance">￥{{ store.balance }}</span>
               </div>
               <el-icon><Refresh /></el-icon>
@@ -27,7 +27,7 @@
 
           <div class="balance-details">
             <div>专属网址：</div>
-            <a :href="`https://${evips.web}`">{{ evips.web }}</a>
+            <a :href="`${evips.web}`">{{ evips.web }}</a>
           </div>
         </div>
         <!-- <div class="account-box account-contents"> -->
@@ -108,11 +108,10 @@ export default defineComponent({
       gap: 14px;
       .account-balance {
         font-size: 14px;
-        height: 80px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0 40px;
+    padding: 20px 40px;
         background-color: #fff;
         box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
         border-radius: 15px;

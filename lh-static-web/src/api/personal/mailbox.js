@@ -62,3 +62,9 @@ export function deleteMultipleMail(mailQuery) {
     ids: mailQuery
   });
 }
+
+export function readMail(mailQuery) {
+  return server.REST.post("/session/inbox/read", {
+    id: mailQuery.id
+  });
+}

@@ -57,7 +57,7 @@
             <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
             <el-form-item label="验证码" prop="captchaCode">
                 <div style="display:flex;width:100%;">
-                    <el-input v-model="regForm.captchaCode" label="验证码" placeholder="请输入验证码" clearable />
+                    <el-input @keyup.enter="submitRegisterForm(registerRef)" v-model="regForm.captchaCode" label="验证码" placeholder="请输入验证码" clearable />
                     <img style="width:90px;" :src="verificationImg" @click="getCode" />
                 </div>
             </el-form-item>

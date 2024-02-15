@@ -19,7 +19,7 @@
     <div class="header-left">
       <img alt="logo" src="../assets/images/home/home-logo.png" />
     </div>
-    <div class="header-right">
+    <div class="header-right" @click="router.push('/liveChat')">
       <img class="btn-pointer" src="../assets/images/home/home-chat-icon.png" />
     </div>
   </div>
@@ -90,9 +90,9 @@
   <div class="details-bar">
     <div class="message" @click="refreshBalance">
       <span class="main-balance">
-        {{ store.token ? (!isLoadingBalance ? "¥" + mainWallet.toFixed(2) : "加载中...") : "未登录" }}
+        {{ store.token ? (!isLoadingBalance ? "¥" + mainWallet.toFixed(2) : "加载中...") : "您还未登录" }}
       </span>
-      <span>中心钱包</span>
+      <span>{{ store.token ? "中心钱包" : "登录/注册后查看" }}</span>
     </div>
     <div class="menulist">
       <router-link to="/finance/deposit?redirect=/" class="men btn-pointer">
@@ -529,7 +529,7 @@
                     icon="volume_up"
                     :label="ann.title"
                   >
-                    <q-card >
+                    <q-card>
                       <q-card-section style="background: transparent">
                         {{ ann.content }}
                       </q-card-section>

@@ -141,7 +141,11 @@
             </div>
             <div class="q-mt-md text-neontb">*特别说明：三方自动收取提币 1.00 USDT 手续费！</div>
           </div>
+<!--          <div v-else-if="!isEWALLET && !isUSDT">-->
+<!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
+<!--          </div>-->
           <div v-else-if="isEWALLET">
+            <div class="q-mt-md text-neontb">*特别说明：提款钱包和游戏账号的姓名务必一致</div>
             <div class="q-mt-md q-mb-md text-center">
               <q-btn
                 style="border: 1px solid #33bcd4; color: #33bcd4"
@@ -170,7 +174,7 @@
             </a-select>
           </a-form-item> -->
           <div class="flex-box flex-justify-center">
-            <q-btn style="width: 100%" class="q-mt-md fit common-large-btn" @click="submitWithdraw" label="立即提款" />
+            <q-btn class="q-mt-md common-large-btn quick-withdraw-btn" @click="submitWithdraw" label="立即提款" />
           </div>
           <div class="q-py-md">
             <div
@@ -452,8 +456,8 @@ export default defineComponent({
     }
     const openEWalletTutorial = (code) => {
       const urlMap = {
-        'KDPAY': 'http://jiaocheng.kdpay123.com',
-        'EBPAY': 'https://www.ebpay009.com/xszn',
+        'KDPAY': 'http://jiaocheng.kdpay123.com/',
+        'EBPAY': 'https://www.ebpay24.com/',
         'OKPAY': 'https://me-qr.com/l/okpay'
       };
 
@@ -613,5 +617,9 @@ export default defineComponent({
 }
 .selected-tip {
   color: $warning;
+}
+
+.quick-withdraw-btn {
+  width: 100%;
 }
 </style>

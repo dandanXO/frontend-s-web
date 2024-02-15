@@ -157,11 +157,13 @@
                   </div>
                 </div>
                 <a @click="refreshBalance" class="details-balance">
-                  <span>总资产:</span>
-                  <span class="amount">
-                    <span v-if="isLoadingBalance">加载中...</span>
-                    <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ store.balance }}</span>
-                  </span>
+                  <div class="flex-wrap" style="display:flex;align-items: center;flex-wrap: nowrap;">
+                    <span class="assets-text">总资产:</span>
+                    <span class="amount">
+                      <span v-if="isLoadingBalance">加载中...</span>
+                      <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ store.balance }}</span>
+                    </span>
+                  </div>
                   <el-icon>
                     <RiRefreshLine color="#468CFF" />
                   </el-icon>
@@ -1677,6 +1679,7 @@ body {
     display: flex;
     flex-direction: column;
     width: 160px;
+    font-size: 14px;
 
     .name-and-vip-wrapper {
       display: flex;
@@ -1707,8 +1710,12 @@ body {
       display: flex;
       align-items: center;
 
+      .assets-text {
+        white-space: nowrap;
+      }
       .amount {
         margin-right: 0.5rem;
+        white-space: nowrap;
       }
     }
   }

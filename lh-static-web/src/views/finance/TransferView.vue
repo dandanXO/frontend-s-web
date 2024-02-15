@@ -5,14 +5,15 @@
       <br />
       新用户首存即送！最高可得680元！
       <router-link to="/center/deposit">
-        <el-button size="small" class="blue-btn deposit-btn outline">立即参与</el-button>
+        <el-button size="small" class="blue-btn join-btn outline">立即参与</el-button>
       </router-link>
     </div>
     <div class="balance-plat-item">
       <div class="left-box">
         <div class="balance-wrapper">
           <span class="currency">主账户:</span>
-          ￥{{ mainWallet }}
+          <span v-if="balanceLoading">加载中...</span>
+          <span v-else>￥{{ mainWallet }}</span>
           <div class="balance-refresh" @click="refreshBalance(MAIN)">
             <el-icon>
               <Refresh style="color: #000" />
@@ -231,7 +232,11 @@ export default defineComponent({
       transferModalVisible.value = true;
       transferInfo.amount = "";
     };
+    const balanceLoading = ref(false);
     const refreshBalance = async(plat) => {
+      if (plat === MAIN) {
+        balanceLoading.value = true;
+      }
       const plaform = platforms.find(p => p.code === plat);
       const delay = ms => new Promise(res => setTimeout(res, ms));
       if (plaform) {
@@ -241,6 +246,7 @@ export default defineComponent({
       setTimeout(()=> {
         if (plat === MAIN){
           store.getBalance();
+          balanceLoading.value = false;
         } else {
             loadBalance(plat).then((response) => {
               console.log(plat, response.data)
@@ -275,6 +281,7 @@ export default defineComponent({
 
     const loadPlatform = () => {
       if(store.token) {
+          refreshBalance('MAIN')
         getLoggedInPlatformList().then((response) => {
           response.data.filter(p => p.walletType === 'TRANSFER').forEach(p => {
             platforms.push({
@@ -388,7 +395,8 @@ export default defineComponent({
       refreshAllModal,
       platNames,
       autoTransfer,
-      updateAutoTransfer
+      updateAutoTransfer,
+      balanceLoading
     };
   }
 });
@@ -492,7 +500,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 20px;
+  padding: 20px 40px;
   color: #424f72;
   height: 100%;
   box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
@@ -511,13 +519,17 @@ body .transferinout .el-dialog__header .el-dialog__title {
   font-size: 20px;
   font-weight: 700;
   font-family: "Microsoft Yahei";
-  .deposit-btn {
+  .deposit-btn, .join-btn {
     color: #548cf9;
     padding: 10px;
     border-radius: 20px;
     font-size: 20px;
-    padding: 20px;
     font-weight: bold;
+    height: unset;
+    padding: 15px 30px;
+  }
+  .join-btn {
+    padding: 10px 20px;
   }
 }
 
@@ -527,9 +539,10 @@ body .transferinout .el-dialog__header .el-dialog__title {
   box-shadow: 0px -2px 5px 0px #b1d7ff inset;
   box-shadow: 0px -1px 4px 0px #5894ff inset;
   color: #fff;
-  padding: 20px 30px;
+  padding: 15px 30px;
   cursor: pointer;
   border: 0;
+  height: unset;
 
   &.outline {
     background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
@@ -571,6 +584,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
     .action-wrapper {
       display: flex;
       gap: 10px;
+      align-items: center;
       .transfer-btn {
         border-radius: 30px;
       }
@@ -587,8 +601,8 @@ body .transferinout .el-dialog__header .el-dialog__title {
     display: grid;
     grid-template-columns: 1fr 1fr;
     border: 1px solid #ecedf0;
-    width: 238px;
-    height: 128px;
+    // width: 238px;
+    // height: 128px;
 
     .transfer-balance-box {
       display: flex;

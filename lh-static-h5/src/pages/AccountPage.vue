@@ -8,12 +8,14 @@
         <div class="pro-details">
           <span class="nickname-span">{{ store.nickName }}</span>
 
-          <span class="join-span">加入雷火电竞第一天</span>
-
+          <!-- <span class="join-span">加入雷火电竞第一天</span> -->
           <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
         </div>
       </div>
     </div>
+
+    <!-- <pre>{{store}}</pre> -->
+
     <div class="vipcard">
       <q-card-section class="top-section">
         <!-- <div class="name">{{ header }}</div> -->

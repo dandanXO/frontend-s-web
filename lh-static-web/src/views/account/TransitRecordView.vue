@@ -385,7 +385,7 @@
           </div>
         </el-tab-pane>
         <el-tab-pane name="gameBetRecord" label="投注记录">
-          <div v-if="searchForm.gameBetRecord.platform.length === 0" class="payout-total">
+          <div class="payout-total">
             <div>总投注: {{ totalBetRecord.totalBet }}</div>
             <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
           </div>
@@ -650,7 +650,6 @@ import {
   confirmationOfWithdrawalReceived
 } from "@/api/personal/personal";
 import moment from "moment";
-// import { message } from "ant-design-vue";
 import { getPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 import FileUpload from "@/components/FileUpload.vue";
@@ -977,8 +976,17 @@ export default defineComponent({
   name: "TransitRecordView",
   setup() {
     const searchRecord = (tab) => {
-      console.log(tab)
-      console.log(recordActive.value)
+      // console.log(tab)
+      console.log(searchForm[recordActive.value])
+      if(!searchForm[recordActive.value]["startDate"] || !searchForm[recordActive.value]["endDate"]){
+        ElMessage({
+          message: "请输入开始与结束日期。",
+          type: "error"
+        });
+        return;
+      }
+
+
       if (tab && tab.props && tab.props.name) {
         recordActive.value = tab.props.name;
       }
@@ -1005,6 +1013,9 @@ export default defineComponent({
         } else {
           searchForm[recordActive.value].pagingState = pagination.pagingState;
         }
+      }
+      if(recordActive.value === "gameBetRecord" && searchForm[recordActive.value].platform==='BBINDY'){
+        searchForm[recordActive.value].platform = "BBIN"
       }
       loadRecords(recordActive.value, searchForm[recordActive.value]).then((response) => {
         if (response.code === 0) {

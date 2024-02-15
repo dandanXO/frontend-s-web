@@ -23,7 +23,7 @@
 
             <div class="card-name">
               <div class="card-bank-name">{{ bc.bankName === "USDTTRC" ? "USDTTRC20" : bc.bankName }}</div>
-              <div class="card-bank-type">银行卡</div>
+              <div class="card-bank-type">{{ checkType(bc.bankType) }}</div>
             </div>
           </div>
 
@@ -330,6 +330,15 @@ export default defineComponent({
         return Promise.resolve();
       }
     };
+    const checkType = (type) => {
+      if (type === 'BANK') {
+        return '银行卡'
+      } else if (type === 'CRYPTO') {
+        return '数字货币'
+      } else if (type === 'EWALLET') {
+        return '电子钱包'
+      }
+    }
     const tblLoading = ref(false);
     const imgURL = process.env.VUE_APP_IMAGE_CDN + "/payment/";
     const isCardActive = ref();
@@ -866,7 +875,8 @@ export default defineComponent({
       withdrawState,
       checkBankCards,
       chooseCard,
-      numAddress
+      numAddress,
+      checkType
     };
   }
 });
@@ -1218,5 +1228,11 @@ body {
 
 .account-content {
   padding-bottom: 30px;
+}
+</style>
+
+<style lang="scss">
+.el-overlay {
+  z-index: 2500 !important;
 }
 </style>

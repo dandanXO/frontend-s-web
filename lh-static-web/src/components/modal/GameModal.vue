@@ -41,6 +41,8 @@
       <div>
         <span class="bottom-button" @click="showDrawer">存款</span>
       </div>
+        
+        <span class="copy-button" @click="copyTo" @blur="changeText">{{copyText}}</span>
     </div>
     <el-drawer
       :append-to-body="true"
@@ -138,6 +140,29 @@ const showDrawer = () => {
   quickTransferTab.value = false;
   drawerVisible.value = true;
 };
+const copyText = ref('复制网址');
+let intervalId = null;
+const copyTo = () => {
+  // copyToClipboard(src.value);
+  // copyText.value = '已复制';
+  // setInterval({copyText.value = '已复制'}, 1000)
+  // copyText.value = '复制网址';
+  
+  navigator.clipboard.writeText(src.value);
+  copyText.value = '已复制';
+
+  // Clear previous interval if any
+  if (intervalId) {
+    clearInterval(intervalId);
+  }
+
+  // Set a new interval to change the text back after 5 seconds
+  intervalId = setInterval(() => {
+    copyText.value = '复制网址';
+    clearInterval(intervalId);
+    intervalId = null;
+  }, 2000); // 5000 milliseconds = 5 seconds
+}
 
 const onClose = () => {
   drawerVisible.value = false;
@@ -267,6 +292,9 @@ defineExpose({
 });
 </script>
 <style lang="scss">
+.el-overlay {
+  z-index: 2500 !important;
+}
 .sm .ant-modal {
   width: 100%;
   max-width: 400px;
@@ -413,16 +441,20 @@ defineExpose({
 
 .additional-buttons {
   position: absolute;
-  right: -60px;
-  width: 60px;
+  top: 8px;
+  right: 50px;
+    gap: 10px;
+  // right: -60px;
+  // width: 60px;
+  // display: flex;
+  // height: 100%;
+  // flex-direction: column;
+  // justify-content: space-between;
+  // top: 0;
+  // background: #d48eff;
   display: flex;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-between;
-  top: 0;
-  background: #d48eff;
-
-  .bottom-button {
+  .bottom-button,
+  .copy-button  {
     display: block;
     font-size: 13px;
     text-align: center;
@@ -430,13 +462,12 @@ defineExpose({
     box-shadow: 0 0 10px 0 #464646;
     color: #fff;
     padding: 5px;
-    width: 32px;
-    margin-top: 45px;
-    margin-left: 10px;
+    // margin-top: 45px;
+    // margin-left: 10px;
     border-radius: 10px;
     word-break: break-all;
     white-space: normal;
-    width: 25px;
+    // width: 55px;
   }
 }
 
