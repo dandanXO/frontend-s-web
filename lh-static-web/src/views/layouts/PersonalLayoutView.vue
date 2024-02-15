@@ -10,7 +10,7 @@
             <a @click="refreshBalance" class="balance-container">
               <div>账户余额：</div>
               <div class="balance-txt">
-                <span v-if="isLoadingBalance">Loading...</span>
+                <span v-if="isLoadingBalance"> 加载中...</span>
                 <span v-if="!isLoadingBalance">￥{{ store.balance }}</span>
               </div>
               <el-icon><Refresh /></el-icon>
