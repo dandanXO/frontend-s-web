@@ -98,7 +98,7 @@ const captchaRules = {
 };
 
 const mobileLoginRules = {
-    telephone: [
+    phoneNumber: [
         {
             required: true,
             message: "请输入手机号码",
