@@ -57,7 +57,13 @@
               {{ list.platformName }}
             </div>
           </template>
-          <span>{{ list.bet }} / {{ list.payout }}</span>
+          <span
+            v-formatter="{data: list.bet, type: 'money'}"
+          />
+          /
+          <span
+            v-formatter="{data: list.payout, type: 'money'}"
+          />
         </el-descriptions-item>
         <!-- Add an additional empty el-descriptions-item when there are exactly three records -->
         <el-descriptions-item
@@ -92,7 +98,9 @@
               {{ t('fields.thirdPartyTotalBet') }}
             </div>
           </template>
-          <span>{{ platform.totalBet }}</span>
+          <span
+            v-formatter="{data: platform.totalBet, type: 'money'}"
+          />
         </el-descriptions-item>
         <el-descriptions-item
           label-align="left"
@@ -116,7 +124,9 @@
               {{ t('fields.thirdPartyTotalWin') }}
             </div>
           </template>
-          <span>{{ platform.totalWin }}</span>
+          <span
+            v-formatter="{data: platform.totalWin, type: 'money'}"
+          />
         </el-descriptions-item>
         <el-descriptions-item
           label-align="left"
