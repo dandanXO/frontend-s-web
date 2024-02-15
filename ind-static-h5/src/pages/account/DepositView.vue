@@ -4,13 +4,7 @@
       <div class="lil-title">Select Amount</div>
       <div class="deposit-option-container">
         <template v-for="(item, index) in payMethods" :key="item + index">
-          <q-btn
-            flat
-            class="deposit-option-btn q-mt-sm"
-            :label="item.nodeName"
-            :class="{ active: activeNodeName === item.nodeName }"
-            @click="handleDepositNodeClick(item)"
-          />
+          <img class="deposit-option-btn q-mt-sm" :src="`${imgURL}/payment/${item.paymentIcon}`" @click="handleDepositNodeClick(item)" :class="{ active: activeMethod.paymentId === item.paymentId }" />
         </template>
       </div>
     </div>
@@ -18,6 +12,7 @@
     <div class="deposit-item-container q-mt-md">
       <template v-for="(item, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
+          <q-badge v-if="activeMethod.privilegeId" color="orange" floating rounded>{{ item.hotLabel }}</q-badge>
           <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
           <div :class="['deposit-svg', item.isActive && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -195,6 +190,8 @@ import { convertToCommaAmount } from "src/boot/utils";
 import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
 
+const imgURL = process.env.IMAGE_CDN;
+
 var qs = require("qs");
 const store = userStore();
 const router = useRouter();
@@ -268,10 +265,10 @@ const verifyDepositAmount = ref([
   (val) => !!val || "Please enter the amount",
   (val) =>
     val > calculatedMinDeposit.value - 1 ||
-    "Deposit should be between " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
-  (val) =>
-    val < activeMethod.value.depositMax + 1 ||
-    "Deposit should be between " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
+    "Deposit should be more than " + calculatedMinDeposit.value,
+  // (val) =>
+  //   val < activeMethod.value.depositMax + 1 ||
+  //   "Deposit should be between " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
 ]);
 
 const form = reactive({
@@ -305,24 +302,8 @@ const handleDepositItemClick = (index) => {
   });
 };
 
-const activeNodeName = ref(null);
-const activeCode = ref(null);
 const handleDepositNodeClick = (item) => {
-  activeNodeName.value = item.nodeName;
-  activeCode.value = item.code;
-};
-
-const isUpi1Active = ref(true);
-const isUpi2Active = ref(false);
-
-const handleDepositUpiClick = (option) => {
-  if (option === 1) {
-    isUpi1Active.value = true;
-    isUpi2Active.value = false;
-  } else if (option === 2) {
-    isUpi1Active.value = false;
-    isUpi2Active.value = true;
-  }
+  activeMethod.value = item;
 };
 
 const isLoadingInitPay = ref(true);
@@ -335,7 +316,7 @@ function initPay() {
   payMethods.value = [];
   console.log('SDFSDFDSCLEAR?')
 
-  cashier.get("/session/deposit/index/").then((res) => {
+  cashier.get("/session/ind/deposit/index/").then((res) => {
     $q.loading.hide();
     isLoadingInitPay.value = false;
 
@@ -348,11 +329,6 @@ function initPay() {
       });
       if (payMethods.value[0].extra && payMethods.value[0].extra.banks) {
         bankCardList.value = payMethods.value[0].extra.banks;
-      }
-
-      if (payMethods.value.length > 0) {
-        activeNodeName.value = payMethods.value[0].nodeName;
-        activeCode.value = payMethods.value[0].code;
       }
     }
 
@@ -371,31 +347,6 @@ function initPay() {
       }
     }
     localStorage.removeItem("isBacked");
-  });
-}
-
-async function loadPrivilege(val) {
-  privilegeList.value = [];
-  hasPrivilege.value = false;
-  await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
-    if (res.code === 0) {
-      privilegeList.value = res.data.privileges;
-      hasPrivilege.value = true;
-      unselectedPrivileges.value = [];
-      freePrivilege.value = null;
-      privilegeList.value.map((p) => {
-        if (p.payTypes.indexOf(val.payType) >= 0) {
-          if (p.triggerType == "FREE") {
-            freePrivilege.value = p;
-          } else {
-            unselectedPrivileges.value.push(p);
-          }
-        }
-      });
-    } else {
-      hasPrivilege.value = false;
-      privilegeList.value = [];
-    }
   });
 }
 
@@ -445,11 +396,8 @@ async function onSelect(value) {
 }
 
 function checkMinDepositAmt() {
-  if (!selectedPrivilege.value) {
-    calculatedMinDeposit.value = activeMethod.value.depositMin;
-  } else {
-    calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, selectedPrivilege.value.depositMin);
-  }
+  // api won't return min and max values from now on, currently min set to 100
+  calculatedMinDeposit.value = 100;
 }
 
 function checkPrivilege(v) {
@@ -507,6 +455,11 @@ async function confirmDeposit() {
             }
           }
           form.paymentId = activeMethod.value.paymentId;
+
+          if(activeMethod.value.privilegeId) {
+            form.privilegeId = activeMethod.value.privilegeId;
+          }
+          
           const copy = { ...form };
           const data = {};
           Object.entries(copy).forEach(([key, value]) => {
@@ -515,7 +468,6 @@ async function confirmDeposit() {
             }
           });
           data.bankCardId = 0;
-          data.code = activeCode.value;
 
           pDepo(data);
         }
@@ -529,7 +481,7 @@ async function pDepo(deposit) {
     localAmount: deposit.localAmount,
     paymentId: deposit.paymentId,
     bankId: deposit.bankId,
-    code: deposit.code
+    privilegeId: deposit.privilegeId
   };
 
   if (deposit.privilegeId) {
@@ -867,9 +819,9 @@ onMounted(() => {
     background: #1d2635;
     min-width: 80px;
     border: 3px solid transparent;
-    height: 38px;
+    // height: 38px;
     border-radius: 0.375rem;
-    aspect-ratio: 77/38;
+    // aspect-ratio: 77/38;
 
     &.active {
       background: #5c46e7;
