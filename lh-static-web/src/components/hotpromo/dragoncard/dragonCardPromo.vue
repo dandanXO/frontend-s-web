@@ -457,7 +457,6 @@ body {
 }
 
 .banner {
-  background: #000 url(https://eqwp2f.sdwukong.com/resource/es/img/banner.b26099dc.png) top no-repeat;
   max-width: 1920px;
   height: 500px;
 }
@@ -533,7 +532,7 @@ body {
 }
 
 .huka-btn {
-  background: transparent url(https://eqwp2f.sdwukong.com/resource/es/img/btn_bg.906067a0.png) 50% no-repeat;
+  background: transparent url(../../../assets/images/promotion/hotpromo/dragoncard/btn_bg.png) 50% no-repeat;
   background-size: cover;
   width: 217px;
   height: 55px;

@@ -12,7 +12,8 @@
       <div class="left-box">
         <div class="balance-wrapper">
           <span class="currency">主账户:</span>
-          ￥{{ mainWallet }}
+          <span v-if="balanceLoading">加载中...</span>
+          <span v-else>￥{{ mainWallet }}</span>
           <div class="balance-refresh" @click="refreshBalance(MAIN)">
             <el-icon>
               <Refresh style="color: #000" />
@@ -231,7 +232,11 @@ export default defineComponent({
       transferModalVisible.value = true;
       transferInfo.amount = "";
     };
+    const balanceLoading = ref(false);
     const refreshBalance = async(plat) => {
+      if (plat === MAIN) {
+        balanceLoading.value = true;
+      }
       const plaform = platforms.find(p => p.code === plat);
       const delay = ms => new Promise(res => setTimeout(res, ms));
       if (plaform) {
@@ -241,6 +246,7 @@ export default defineComponent({
       setTimeout(()=> {
         if (plat === MAIN){
           store.getBalance();
+          balanceLoading.value = false;
         } else {
             loadBalance(plat).then((response) => {
               console.log(plat, response.data)
@@ -275,6 +281,7 @@ export default defineComponent({
 
     const loadPlatform = () => {
       if(store.token) {
+          refreshBalance('MAIN')
         getLoggedInPlatformList().then((response) => {
           response.data.filter(p => p.walletType === 'TRANSFER').forEach(p => {
             platforms.push({
@@ -388,7 +395,8 @@ export default defineComponent({
       refreshAllModal,
       platNames,
       autoTransfer,
-      updateAutoTransfer
+      updateAutoTransfer,
+      balanceLoading
     };
   }
 });
