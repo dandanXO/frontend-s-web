@@ -199,6 +199,15 @@ body {
 body {
   .el-dialog {
     border-radius: 12px;
+    padding: 0px;
+
+
+    .el-dialog__body{
+      padding: 16px;
+    }
+    .el-dialog__footer{
+      padding-bottom: 15px;
+    }
   }
   .el-dialog__header {
     border-radius: 12px 12px 0 0;
@@ -215,12 +224,18 @@ body {
   }
   .el-dialog__body {
     margin: 0;
-    padding: 0;
+    padding: 0 !important;
     height: 95vh;
     display: flex;
     justify-content: center;
     align-items: center;
   }
+}
+.hot-promo .el-overlay{
+  z-index: 2000 !important; /* Adjust this value as needed */
+}
+.account-box .el-overlay {
+  z-index: 2000 !important; /* Adjust this value as needed */
 }
 .el-message-box__header {
   font-weight: bold;
@@ -228,20 +243,7 @@ body {
 }
 .el-button {
   height: unset;
-  // padding: 12px 40px;
-  // font-size: 0.75rem;
-  // border-radius: 2px;
-  // color: $color-white;
-  // // background-image: linear-gradient(90deg,#0ca9bc 0,#0a5e89 100%);
-  // background: #4e5efb;
-  // display: inline-block;
-  // cursor: pointer;
-  // text-align: center;
-  // min-width: 62px;
-  // --el-button-size: 20px;
-  // height: var(--el-button-size);
-  // font-size: var(--el-font-size-base);
-  // border-radius: var(--el-border-radius-base);
+
   &--small {
     padding: 5px 11px;
     border: 0;

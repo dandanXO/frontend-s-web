@@ -268,6 +268,12 @@ const rows = [
     commission: "45%"
   },
   {
+    name: "钻石",
+    profit: "60W-100W",
+    activeMember: "50",
+    commission: "50%"
+  },
+  {
     name: "皇冠",
     profit: ">100W",
     activeMember: "80",

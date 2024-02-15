@@ -7,9 +7,15 @@
             <div class="card-bg">
 
                 <el-tabs>
+                    <!-- <el-tab-pane label="手机找回密码">
+                        <PhoneFindPwd />
+                    </el-tab-pane> -->
                     <el-tab-pane label="邮箱找回账号">
-                        <ForgotPwd />
+                        <EmailFindPwd />
                     </el-tab-pane>
+                    <!-- <el-tab-pane label="邮箱找回账户">
+                        <EmailFindAcc />
+                    </el-tab-pane> -->
                 </el-tabs>
             </div>
         </div>
@@ -17,7 +23,9 @@
 </template>
   
 <script setup>
-import ForgotPwd from "@/components/auth/ForgotPwd.vue";
+import EmailFindPwd from "@/components/auth/EmailFindPwd.vue";
+import PhoneFindPwd from "@/components/auth/PhoneFindPwd.vue";
+import EmailFindAcc from "@/components/auth/EmailFindAcc.vue";
 
 </script>
 
@@ -40,7 +48,7 @@ import ForgotPwd from "@/components/auth/ForgotPwd.vue";
         border-radius: 30px;
         box-shadow: 0px -1.7px 6.09px 0px #a2bff4 inset;
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         padding: 5px;
         width: 100%;
     }
@@ -54,7 +62,7 @@ import ForgotPwd from "@/components/auth/ForgotPwd.vue";
         width: 150px;
         padding: 0;
         width: 100%;
-        min-width: 200px;
+        min-width: 100px;
 
         &.is-active {
             background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);

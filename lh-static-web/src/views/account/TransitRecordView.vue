@@ -650,7 +650,6 @@ import {
   confirmationOfWithdrawalReceived
 } from "@/api/personal/personal";
 import moment from "moment";
-// import { message } from "ant-design-vue";
 import { getPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 import FileUpload from "@/components/FileUpload.vue";
@@ -977,8 +976,17 @@ export default defineComponent({
   name: "TransitRecordView",
   setup() {
     const searchRecord = (tab) => {
-      console.log(tab)
-      console.log(recordActive.value)
+      // console.log(tab)
+      console.log(searchForm[recordActive.value])
+      if(!searchForm[recordActive.value]["startDate"] || !searchForm[recordActive.value]["endDate"]){
+        ElMessage({
+          message: "请输入开始与结束日期。",
+          type: "error"
+        });
+        return;
+      }
+
+
       if (tab && tab.props && tab.props.name) {
         recordActive.value = tab.props.name;
       }
