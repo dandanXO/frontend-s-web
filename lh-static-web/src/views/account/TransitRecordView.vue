@@ -1014,6 +1014,9 @@ export default defineComponent({
           searchForm[recordActive.value].pagingState = pagination.pagingState;
         }
       }
+      if(recordActive.value === "gameBetRecord" && searchForm[recordActive.value].platform==='BBINDY'){
+        searchForm[recordActive.value].platform = "BBIN"
+      }
       loadRecords(recordActive.value, searchForm[recordActive.value]).then((response) => {
         if (response.code === 0) {
           pagination.total = response.data.total;
