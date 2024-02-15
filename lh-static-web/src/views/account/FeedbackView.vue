@@ -100,37 +100,38 @@
             </div>
             <div class="questions-content" id="questionContainer">
               <div v-for="(item, i) in quesTitleOptions" :key="i" class="question-title-container">
-                  <template v-if="recordsPagination.current === item.page">
-                    <div class="questions-title" >
-                    {{ item.title }}
-                  </div>
+                  <template v-if="recordsPagination.current === item.sequence">
+                    <div class="questions-title">
+                      {{ item.question }}
+                    </div>
+                    <div class="answer-container">
+                      <el-radio-group v-model="optionModal" >
+                        <el-radio v-for="(ans, index) in item.choices" :key="index" :label="index" @click="getSelected(item, ans.choice)">
+                          {{ ans.choice }}
+                          <div v-if="optionModal === index && ans.needSpecify">
+                            <el-input 
+                              class="answer-input-fill"
+                              v-model="answerInputModal"
+                              placeholder="请输入获取渠道"
+                              type="textarea"
+                              :autosize="{ minRows: 4 }"
+                            />
+                          </div>
+                        </el-radio>
+                      </el-radio-group>
+                    </div>
                   </template>
-              </div>
-              <div class="answer-container">
-                  <div v-for="(ans, index) in ansOptions" :key="index" class="list-item">
-                    <span>{{ ans.id }}. {{ ans.content }}</span>
-                    <el-radio v-model="optionModal" :label="index" id="check-option" @click="getSelected(index)"></el-radio>
-                  </div>
-                  <div style="display: none" id="answer-input-div">
-                    <el-input 
-                      class="answer-input-fill"
-                      v-model="answerInputModal"
-                      placeholder="请输入获取渠道"
-                      type="textarea"
-                      :autosize="{ minRows: 4 }"
-                    />
-                  </div>
               </div>
 
               <div :class="`content-btn ${recordsPagination.current === 1 ? 'active' : ''}` " style="display: flex; justify-content: space-between; gap: 10px;">
                 <div>
-                  <button id="prevBtn" class="standard-button btn-color-blue" @click="onPrevBtnClick()" style="display: none;">上一题</button>
+                  <button id="prevBtn" class="standard-button btn-color-blue" @click="btnClick('prev')" style="display: none;">上一题</button>
                 </div>
                 <div>
-                  <button id="nextBtn" class="standard-button btn-color-blue" @click="onNextBtnClick()">下一题</button>
+                  <button id="nextBtn" class="standard-button btn-color-blue" @click="btnClick('next')">下一题</button>
                 </div>
                 <div>
-                  <button id="finalBtn" class="standard-button btn-color-blue" @click="onFinalBtnClick()" style="display: none;">完成</button>
+                  <button id="finalBtn" class="standard-button btn-color-blue" @click="btnClick('final')" style="display: none;">完成</button>
                 </div>
               </div>
             </div> 
@@ -171,6 +172,7 @@
 import { ref, reactive, onMounted } from "vue";
 import { mailInbox, mailOutbox, wirteMail } from "@/api/personal/mailbox";
 // import { message } from "ant-design-vue";
+import { getQuestionnaireList, submitQuestionnaire } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 import { CaretBottom } from '@element-plus/icons-vue'
 
@@ -186,150 +188,243 @@ function onBtnStartAnswerClick() {
 }
 
 const quesTitleOptions = ref([]);
-let quesTitlePage = 1;
-let ansOptions = [];
-let optionModal = ref(null);
+let optionModal = ref('1');
 
 const getQuesTitleOptions = () => {
-  quesTitleOptions.value = [{
-    page: 1,
-    title: "1/30 您是如何知道我们网站的？(单选)",
-    questions: [
-      {
-        id: 1,
-        content: "百度等搜索引擎"
-      },
-      {
-        id: 2,
-        content: "网络站点广告"
-      },
-      {
-        id: 3,
-        content: "社交媒体"
-      },
-      {
-        id: 4,
-        content: "朋友推荐"
-      },
-      {
-        id: 5,
-        content: "电话致电"
-      },
-      {
-        id: 6,
-        content: "短袖邀请"
-      },
-      {
-        id: 7,
-        content: "其他渠道"
-      },
-    ]
-  },
-  {
-    page: 2,
-    title: "2/30 您是如何觉得XXXXXXXXXX",
-    questions: [
-    {
-        id: 1,
-        content: "百度等搜索引擎"
-      },
-      {
-        id: 2,
-        content: "网络站点广告"
-      },
-      {
-        id: 3,
-        content: "社交媒体"
-      }
-    ]
-  },
-  {
-    page: 3,
-    title: "30/30 您是如何XXXXXXXXX",
-    questions: [
-      {
-        id: 1,
-        content: "百度等搜索引擎"
-      },
-      {
-        id: 2,
-        content: "网络站点广告"
-      },
-      {
-        id: 3,
-        content: "社交媒体"
-      },
-    ]
-  }]
+  // quesTitleOptions.value = [{
+  //   page: 1,
+  //   title: "1/30 您是如何知道我们网站的？(单选)",
+  //   questions: [
+  //     {
+  //       id: 1,
+  //       content: "百度等搜索引擎"
+  //     },
+  //     {
+  //       id: 2,
+  //       content: "网络站点广告"
+  //     },
+  //     {
+  //       id: 3,
+  //       content: "社交媒体"
+  //     },
+  //     {
+  //       id: 4,
+  //       content: "朋友推荐"
+  //     },
+  //     {
+  //       id: 5,
+  //       content: "电话致电"
+  //     },
+  //     {
+  //       id: 6,
+  //       content: "短袖邀请"
+  //     },
+  //     {
+  //       id: 7,
+  //       content: "其他渠道"
+  //     },
+  //   ]
+  // },
+  // {
+  //   page: 2,
+  //   title: "2/30 您是如何觉得XXXXXXXXXX",
+  //   questions: [
+  //   {
+  //       id: 1,
+  //       content: "百度等搜索引擎"
+  //     },
+  //     {
+  //       id: 2,
+  //       content: "网络站点广告"
+  //     },
+  //     {
+  //       id: 3,
+  //       content: "社交媒体"
+  //     }
+  //   ]
+  // },
+  // {
+  //   page: 3,
+  //   title: "30/30 您是如何XXXXXXXXX",
+  //   questions: [
+  //     {
+  //       id: 1,
+  //       content: "百度等搜索引擎"
+  //     },
+  //     {
+  //       id: 2,
+  //       content: "网络站点广告"
+  //     },
+  //     {
+  //       id: 3,
+  //       content: "社交媒体"
+  //     },
+  //   ]
+  // }]
+  getQuestionnaireList().then((res) => {
+    res = {
+      "code": 0,
+      "data": [
+          {
+              "sequence": 1,
+              "question": "您是如何知道我们网站的？(单选)",
+              "choices": [
+                  {
+                      "choice": "百度等搜索引擎",
+                      "needSpecify": false
+                  },
+                  {
+                      "choice": "网络站点广告",
+                      "needSpecify": false
+                  },
+                  {
+                      "choice": "其他",
+                      "needSpecify": true
+                  }
+              ]
+          },
+          {
+              "sequence": 2,
+              "question": "您是如何觉得XXXXXXXXXX",
+              "choices": [
+                  {
+                      "choice": "XXXXXXXXXXX",
+                      "needSpecify": false
+                  },
+                  {
+                      "choice": "XXXXXXXXXXX",
+                      "needSpecify": false
+                  }
+              ]
+          },
+          {
+              "sequence": 3,
+              "question": "您是如何觉得XXXXXXXXXX",
+              "choices": [
+                  {
+                      "choice": "生命真重要",
+                      "needSpecify": false
+                  },
+                  {
+                      "choice": "生命真的是美丽的",
+                      "needSpecify": false
+                  }
+              ]
+          },
+      ]
+    }
+    if (res.code === 0) {
+      quesTitleOptions.value = res.data
+      recordsPagination.pages = res.data.length
+    }
 
-  if(recordsPagination.current === 1) {
-    removeArray();
-    ansOptions = quesTitleOptions.value[0].questions;
-  } else {
-    removeArray();
-    ansOptions = quesTitleOptions.value[1].questions;
+  })
+}
+
+// const removeArray = () => {
+//   ansOptions.splice(0);
+// }
+
+const answerInputModal = ref('');
+const choices = reactive([]);
+const getSelected = (item, ans) => {
+  const input = answerInputModal.value
+  var obj = {
+    question: item.question,
+    choice: ans
   }
-  quesTitlePage = recordsPagination.current;
- 
-}
-
-const removeArray = () => {
-  ansOptions.splice(0);
-}
-
-
-const getSelected = (value) => {
+  choices[item.sequence - 1] = obj
+  console.log(choices)
   // value = optionModal;
-  const inputDiv = document.getElementById("answer-input-div")
+  // const inputDiv = document.getElementById("answer-input-div")
   
-  if(value === 6) {
-    inputDiv.style.display = "block";
-  } else {
-    inputDiv.style.display = "hide"
-  }   
+  // if(value === 6) {
+  //   inputDiv.style.display = "block";
+  // } else {
+  //   inputDiv.style.display = "hide"
+  // }
 }
 
-const onPrevBtnClick = () => {
-  const btn = document.getElementById("prevBtn");
+const btnClick = (btnType) => {
+  optionModal.value = null
+  const prevBtn = document.getElementById("prevBtn");
   const nextBtn = document.getElementById("nextBtn");
   const finalBtn = document.getElementById("finalBtn");
-  getQuesTitleOptions();
-
-  if (recordsPagination.current > 1) {
-    getQuesTitleOptions();
-    recordsPagination.current = recordsPagination.current - 1;
-    btn.style.display = "block";
-  } else if (recordsPagination.current === 1) {
-    btn.style.display = "none";
+  if (btnType === 'prev') {
+      recordsPagination.current = recordsPagination.current - 1;
+  } else if (btnType === 'next') {
+    recordsPagination.current = recordsPagination.current + 1;
+  } else if (btnType === 'final') {
+    const questionDiv = document.getElementById("questionContainer");
+    const QRDiv = document.getElementById("QRContainer");
+    // When Submit API is COMPLETE
+    // submitQuestionnaire(choices).then((res) => {
+    //   if (res.code === 0) {
+    //     questionDiv.style.display = "none";
+    //     QRDiv.style.display = "block";
+    //   }
+    // })
+    
+    questionDiv.style.display = "none";
+    QRDiv.style.display = "block";
+    
+  }
+  console.log('current: ' + recordsPagination.current)
+  console.log('length: ' + recordsPagination.pages)
+  if (recordsPagination.current < recordsPagination.pages) {
+    prevBtn.style.display = "block";
+    nextBtn.style.display = "block";
+    finalBtn.style.display = "none";
+    if (recordsPagination.current === 1) {
+      prevBtn.style.display = "none";
+      finalBtn.style.display = "none";
+      nextBtn.style.display = "block";
+    }
+  }
+  if (recordsPagination.current > recordsPagination.pages) {
+    prevBtn.style.display = "block";
     nextBtn.style.display = "block";
     finalBtn.style.display = "none";
   }
-}
-
-const onNextBtnClick = () => {
-  const btn = document.getElementById("nextBtn");
-  const prevBtn = document.getElementById("prevBtn");
-  const finalBtn = document.getElementById("finalBtn");
-
-  if (recordsPagination.pages > recordsPagination.current) {
-    recordsPagination.current = recordsPagination.current + 1;
-    getQuesTitleOptions();
+  if (recordsPagination.current === recordsPagination.pages) {
     prevBtn.style.display = "block";
-    btn.style.display = "block";
-    finalBtn.style.display = "none";
-  } else if ((recordsPagination.pages === recordsPagination.current)) {
-    btn.style.display = "none";
-    prevBtn.style.display = "block";
+    nextBtn.style.display = "none";
     finalBtn.style.display = "block";
   }
+  // if (recordsPagination.current < recordsPagination.pages) {
+  //   prevBtn.style.display = "block";
+  // }
+  // if (recordsPagination.current === recordsPagination.pages) {
+  //   prevBtn.style.display = "block";
+  //   nextBtn.style.display = "none";
+  //   finalBtn.style.display = "block";
+  // } 
 }
 
-const onFinalBtnClick = () => {
-  const questionDiv = document.getElementById("questionContainer");
-  const QRDiv = document.getElementById("QRContainer");
-  questionDiv.style.display = "none";
-  QRDiv.style.display = "block";
-}
+// const onNextBtnClick = () => {
+//   const btn = document.getElementById("nextBtn");
+//   const prevBtn = document.getElementById("prevBtn");
+//   const finalBtn = document.getElementById("finalBtn");
+
+//   recordsPagination.current = recordsPagination.current + 1;
+//   updatePage();
+//   if (recordsPagination.pages > recordsPagination.current) {
+//     prevBtn.style.display = "block";
+//     btn.style.display = "block";
+//     finalBtn.style.display = "none";
+//   } else if ((recordsPagination.pages === recordsPagination.current)) {
+//     btn.style.display = "none";
+//     prevBtn.style.display = "block";
+//     finalBtn.style.display = "block";
+//   }
+// }
+
+// const onFinalBtnClick = () => {
+//   const questionDiv = document.getElementById("questionContainer");
+//   const QRDiv = document.getElementById("QRContainer");
+//   questionDiv.style.display = "none";
+//   QRDiv.style.display = "block";
+// }
 
 const urlInput = ref("Http://LHe63851/s?eric123");
 
@@ -484,7 +579,6 @@ const onSubmit = (e) => {
 onMounted(() => {
   loadPersonalMailbox();
   getQuesTitleOptions();
-  getSelected(optionModal);
   
   // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
 });
@@ -622,6 +716,7 @@ onMounted(() => {
       display: flex;
       justify-content: flex-start;
       width: 100%;
+      flex-direction: column;
     }
 
     .questions-title {
@@ -649,6 +744,23 @@ onMounted(() => {
       width: 100%;
       flex-direction: column;
       padding: 10px 25px;
+      :deep(.el-radio-group) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+      :deep(.el-radio) {
+        height: unset;
+        justify-content: flex-start;
+        align-items: flex-start;
+        width: 100%;
+      }      
+      :deep(.el-radio__label) {
+        width: 100%;
+      }
+      :deep(.el-radio__input) {
+        margin-top: 4px;
+      }
     }
 
     .list-item {
@@ -658,11 +770,6 @@ onMounted(() => {
       padding: 5px 10px;
       width: 100%;
     }
-
-    :deep(.el-radio__label) {
-      color: #fff
-    }
-
     .answer-input-fill {
       :deep(.el-form-item__label) {
         width: 80px;

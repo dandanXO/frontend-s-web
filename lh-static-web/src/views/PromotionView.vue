@@ -416,7 +416,7 @@ export default defineComponent({
             // background: #201f29;
             // box-shadow: 0 0 10px -3px #000000;
             // white-space: nowrap;
-            margin: 0 10px;
+            // margin: 0 10px;
             font-size: 14px;
             display: flex;
             justify-content: center;
