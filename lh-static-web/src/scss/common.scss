@@ -205,6 +205,9 @@ body {
     .el-dialog__body{
       padding: 16px;
     }
+    .el-dialog__footer{
+      padding-bottom: 15px;
+    }
   }
   .el-dialog__header {
     border-radius: 12px 12px 0 0;
@@ -227,6 +230,9 @@ body {
     justify-content: center;
     align-items: center;
   }
+}
+.hot-promo .el-overlay{
+  z-index: 2000 !important; /* Adjust this value as needed */
 }
 .account-box .el-overlay {
   z-index: 2000 !important; /* Adjust this value as needed */
