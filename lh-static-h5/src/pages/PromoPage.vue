@@ -178,9 +178,12 @@ export default defineComponent({
       {code: "ESPORTS", img: 'esport', label: '电竞'},
       {code: "SPORTS", img: 'sport', label: '体育'},
       {code: "POKER", img: 'poker', label: '棋牌'},
-      {code: "LIVE CASINO", img: 'live', label: '真人娱乐'},
-      {code: "FISH", img: 'game', label: '老虎机/捕鱼'},
+      {name: "SLOT", label: '老虎机'},
+      // {name: "slot", label: '老虎机'},
+      {name: "LIVE CASINO", label: '真人'},
+      {name: "FISH", label: '捕鱼'},
     ]);
+
     const promoTabActive = ref(promoTypes.value[0].value);
     const filteredArray = ref([]);
     const isPromoDetail = ref(false);
@@ -200,8 +203,10 @@ export default defineComponent({
       {name: "esport", label: '电竞'},
       {name: "sport", label: '体育'},
       // {name: "slot", label: '老虎机'},
+      {name: "slot", label: '老虎机'},
+      // {name: "slot", label: '老虎机'},
       {name: "live casino", label: '真人'},
-      {name: "fish", label: '老虎机/捕鱼'},
+      {name: "fish", label: '捕鱼'},
     ];
 
     watch(() => route.query, () => {
