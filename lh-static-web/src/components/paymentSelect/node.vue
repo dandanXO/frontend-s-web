@@ -296,7 +296,7 @@ $node-color: #4873f1;
         gap: 5px;
         & > div {
           font-size: 12px;
-          color: #000000;
+          color: #424f72;
         }
         img {
           background-color: #f7f7f7;

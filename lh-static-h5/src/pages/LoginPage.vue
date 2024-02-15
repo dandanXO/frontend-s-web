@@ -145,18 +145,18 @@
         </div>
 
         <div class="row items-center justify-between q-mt-md">
-          <!--          <div class="mui-row" :class="isCheckRmb ? 'checked' : ''">-->
-          <!--            <q-checkbox-->
-          <!--              rounded-->
-          <!--              v-model="isCheckRmb"-->
-          <!--              label="记住密码"-->
-          <!--              size="md"-->
-          <!--              style="font-size: 14px; color: #dcdcdc"-->
-          <!--              checked-icon="task_alt"-->
-          <!--              unchecked-icon="highlight_off"-->
-          <!--              color="light-blue-4"-->
-          <!--            />-->
-          <!--          </div>-->
+          <div :class="isCheckRmb ? 'checked' : ''">
+            <q-checkbox
+              rounded
+              v-model="isCheckRmb"
+              label="记住密码"
+              size="md"
+              checked-icon="task_alt"
+              unchecked-icon="highlight_off"
+              color="light-blue-4"
+            />
+          </div>
+
           <div class="login-via-phone-div">
             <span @click="loginType = !loginType">
               {{ loginType ? "用户名登录" : "手机号登录" }}
@@ -631,6 +631,8 @@ export default defineComponent({
   .bottom-btn-list {
     margin: 10px auto;
     width: $box-width;
+    // padding: 0 16px;
+    box-sizing: border-box;
   }
 
   .bottom-btn {
@@ -651,5 +653,9 @@ export default defineComponent({
       width: 100%;
     }
   }
+}
+
+.checked {
+  color: #0089ed;
 }
 </style>

@@ -576,6 +576,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
     .action-wrapper {
       display: flex;
       gap: 10px;
+      align-items: center;
       .transfer-btn {
         border-radius: 30px;
       }

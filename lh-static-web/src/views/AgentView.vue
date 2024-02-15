@@ -10,8 +10,8 @@
         <img src="../assets/images/affiliate/official-partner.png" width="256">
       </div>
       <div class="buttons">
-        <a :href="'https://agt.wrxjpo3vh.com/dy/register?agent=' + (affCode ? affCode : '')">加入我们</a>
-        <a class="outline" href="https://agt.wrxjpo3vh.com/dy/login">登录</a>
+        <a :href="'https://partner.e88726.com/register.jsp?agent=' + (affCode ? affCode : '')">加入我们</a>
+        <a class="outline" href="https://partner.e88726.com/autoLogin.jsp">登录</a>
         <a class="outline" @click.stop.prevent="
           openWindow(
             `https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=${regDevice}&lang=zh-CN&token=${store.token}`,
@@ -195,7 +195,7 @@
         </div>
       </div>
       <div>
-        <a :href="'https://agt.wrxjpo3vh.com/dy/register?agent=' +
+        <a :href="'https://partner.e88726.com/register.jsp?agent=' +
           (affCode ? affCode : '')
           " class="agent-reg-btn">立即申请代理</a>
       </div>

@@ -134,8 +134,9 @@ export default defineComponent({
       { code: "ESPORT", img: 'esport', label: '电竞优惠'},
       { code: "SPORT", img: 'sport', label: '体育优惠'},
       // { code: "POKER", img: 'poker', label: '棋牌'},
+      { code: "SLOT GAME", img: 'game', label: '老虎机'},
       { code: "LIVE CASINO", img: 'live', label: '真人娱乐'},
-      { code: "FISH", img: 'game', label: '老虎机/捕鱼'},
+      { code: "FISH", img: 'game', label: '捕鱼'},
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);

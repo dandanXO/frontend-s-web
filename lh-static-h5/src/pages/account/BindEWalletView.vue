@@ -99,7 +99,7 @@
             v-for="(bank, bankIndex) in bankList"
             :key="`${bank}-${bankIndex}`"
             :class="`${selectedTypeToggleIndex === bankIndex ? 'common-sm-btn' : 'common-sm-white-btn'} content`"
-            @click="onTypeToggleBtnClick(bankIndex)"
+            @click="onTypeToggleBtnClick(bankIndex, bank.name)"
           >
             <img :src="imgURL + bank.bankIcon" alt="" />
             <div>{{ bank.name }}</div>
@@ -111,7 +111,7 @@
           <em>*</em>
         </q-label>
         <div class="category-toggle">
-          <q-btn
+          <!-- <q-btn
             v-for="(category, categoryIndex) in categoryToggleList"
             :key="`${category}-${categoryIndex}`"
             :class="`${
@@ -120,7 +120,8 @@
             @click="onCategoryToggleBtnClick(categoryIndex)"
           >
             <div>{{ category }}</div>
-          </q-btn>
+          </q-btn> -->
+          <q-btn class="common-sm-btn">{{ selectedTypeToggleName }}</q-btn>
         </div>
 
         <!-- since onMount API forced update name & phone, hence no validation needed. -->
@@ -186,8 +187,11 @@ import { userStore } from "stores/index";
 
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);
-const onTypeToggleBtnClick = (index) => {
+const selectedTypeToggleName = ref("KDOU");
+const onTypeToggleBtnClick = (index, name) => {
   selectedTypeToggleIndex.value = index;
+  selectedTypeToggleName.value = name;
+  bankCardInfo.bankId = bankList.value[index].id;
 };
 
 const categoryToggleList = ref(["EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20"]);
@@ -330,6 +334,8 @@ const loadBankCards = () => {
               const { bankType } = data;
               if (bankType === "EWALLET") bankList.value.push(data);
             }
+
+            bankCardInfo.bankId = bankList.value[0].id;
           }
         })
         .catch((e) => {
@@ -338,23 +344,33 @@ const loadBankCards = () => {
     }
   });
 };
-
 const submitBankCard = () => {
-  bankCardRef.value.validate();
-  cardNumberRef.value.validate();
+  if (bankCardRef.value) {
+    bankCardRef.value.validate();
+  }
+  if (cardNumberRef.value) {
+    cardNumberRef.value.validate();
+  }
 
-  if (!phoneVerificationRef.value) {
+  if (!isOtpSent.value) {
     $q.notify({
       color: "negative",
       position: "top",
       message: "请点击获取验证码，并输入您的注册手机验证",
       icon: "report_problem"
     });
-  } else {
+  } else if (phoneVerificationRef.value) {
     phoneVerificationRef.value.validate();
   }
 
-  if (!(bankCardRef.value.hasError || cardNumberRef.value.hasError || phoneVerificationRef.value.hasError)) {
+  if (
+    !(
+      (bankCardRef.value && bankCardRef.value.hasError) ||
+      (cardNumberRef.value && cardNumberRef.value.hasError) ||
+      (phoneVerificationRef.value && phoneVerificationRef.value.hasError)
+    )
+  ) {
+    // API call
     api
       .post("/session/bankCard", qs.stringify(bankCardInfo))
       .then((response) => {
@@ -365,6 +381,7 @@ const submitBankCard = () => {
             message: "已添加银行卡",
             icon: "check_circle_outline"
           });
+          router.push("/account/withdraw");
         }
       })
       .catch((error) => {

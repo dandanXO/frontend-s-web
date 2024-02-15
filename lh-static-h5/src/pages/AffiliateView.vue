@@ -30,14 +30,14 @@
       <img class="ambassador-img" src="../assets/images/affiliate/ambassador.png" alt="" />
       <div class="btn-wrapper">
         <q-btn
-          :href="'https://affiliate-web.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : '')"
+          :href="'https://partner.e88726.com/register.jsp?agent=' + (affCode ? affCode : '')"
           label="加入我们"
           size="md"
           class="join-btn"
         >
           <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
-        <q-btn href="https://affiliate-web.gwd4jptunz.com/xf/login" label="登录" size="md" class="login-btn">
+        <q-btn href="https://partner.e88726.com/autoLogin.jsp" label="登录" size="md" class="login-btn">
           <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
 
@@ -175,7 +175,7 @@
 
     <div class="contact-us">
       <div class="register-btn-wrapper">
-        <q-btn href="/register.jsp" label="立即申请代理" size="lg" class="register-btn">
+        <q-btn :href="'https://partner.e88726.com/register.jsp?agent=' + (affCode ? affCode : '')" label="立即申请代理" size="lg" class="register-btn">
           <img class="mask-img" src="../assets/images/affiliate/register-btn-icon.png" alt="" />
           <img class="mask-img2" src="../assets/images/affiliate/register-btn-icon2.png" alt="" />
         </q-btn>
@@ -266,6 +266,12 @@ const rows = [
     profit: "30W-60W",
     activeMember: "25",
     commission: "45%"
+  },
+  {
+    name: "钻石",
+    profit: "60W-100W",
+    activeMember: "50",
+    commission: "50%"
   },
   {
     name: "皇冠",

@@ -1,6 +1,6 @@
 <template>
   <q-scroll-area>
-    <q-dialog v-model="visible" class="gameDialog" full-height full-width>
+    <q-dialog v-model="visible" v-if="visible" class="gameDialog" full-height full-width>
       <!--      <q-page-sticky id="sticky-item" position="bottom-right" style="z-index:999999;" :offset="fabPos"-->
       <!--                     v-touch-pan.prevent.mouse="moveFab"-->
       <!--      >-->

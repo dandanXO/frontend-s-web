@@ -133,7 +133,6 @@
               </el-button>
             </el-col>
           </el-row>
-          <!-- <el-input v-model.number="ruleForm.icon" autocomplete="off" /> -->
         </el-form-item>
         <el-form-item :label="$t('fields.icon') + 2" prop="icon2">
           <el-row :gutter="24">
@@ -179,7 +178,6 @@
               </el-button>
             </el-col>
           </el-row>
-          <!-- <el-input v-model.number="ruleForm.icon" autocomplete="off" /> -->
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
@@ -440,11 +438,11 @@
             style="margin: 10px; width: 200px;"
           >
             <el-card class="box-card" :body-style="{padding: '14px'}">
-              <img
+              <el-image
                 v-if="item.icon === 'OFFLINE1' || item.icon === 'test'"
                 :src="paymethodicon + '/000/fff.png&text=payment'"
-              >
-              <img :src="paymentDir + item.icon">
+              />
+              <el-image :src="paymentDir + item.icon" fit="contain" class="preview" />
             </el-card>
           </el-col>
         </div>
@@ -482,7 +480,7 @@
             #default="scope"
             v-if="hasPermission(['sys:affiliate:detail'])"
           >
-            <router-link :to="`details/${scope.row.affiliateId}?site=${scope.row.siteId}`">
+            <router-link :to="`/affiliate/details/${scope.row.affiliateId}?site=${scope.row.siteId}`">
               <el-link type="primary">{{ scope.row.loginName }}</el-link>
             </router-link>
           </template>
@@ -497,7 +495,6 @@
         <el-table-column prop="paymentName2" :label="t('fields.paymentChannel') + 2" />
         <el-table-column prop="paymentName3" :label="t('fields.paymentChannel') + 3" />
         <el-table-column prop="paymentName4" :label="t('fields.riskPaymentChannel')" />
-        <el-table-column :label="t('fields.privilegeName')" prop="privilegeName" />
         <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:affiliate-deposit-display:update'])">
           <template #default="scope">
             <el-button

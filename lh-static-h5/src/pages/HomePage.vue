@@ -19,7 +19,7 @@
     <div class="header-left">
       <img alt="logo" src="../assets/images/home/home-logo.png" />
     </div>
-    <div class="header-right">
+    <div class="header-right" @click="router.push('/liveChat')">
       <img class="btn-pointer" src="../assets/images/home/home-chat-icon.png" />
     </div>
   </div>
@@ -529,7 +529,7 @@
                     icon="volume_up"
                     :label="ann.title"
                   >
-                    <q-card >
+                    <q-card>
                       <q-card-section style="background: transparent">
                         {{ ann.content }}
                       </q-card-section>

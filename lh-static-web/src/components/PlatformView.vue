@@ -92,17 +92,19 @@
 
       <div class="plat-games-container">
         <div class="grid-items flex-box flex-align-center search-container web-only-box">
-          <el-tabs v-model="gameCat" @tab-click="handleClick" class="game-cat-tabs">
-            <el-tab-pane label="全部游戏" name="allGame"></el-tab-pane>
-            <el-tab-pane label="热门游戏" name="hotGame"></el-tab-pane>
-            <el-tab-pane label="最新游戏" name="newGame"></el-tab-pane>
-          </el-tabs>
+<!--          <el-tabs v-model="gameCat" @tab-click="handleClick" class="game-cat-tabs">-->
+<!--            <el-tab-pane label="全部游戏" name="allGame"></el-tab-pane>-->
+<!--            <el-tab-pane label="热门游戏" name="hotGame"></el-tab-pane>-->
+<!--            <el-tab-pane label="最新游戏" name="newGame"></el-tab-pane>-->
+<!--          </el-tabs>-->
 
           <el-input
             class="search-input"
             v-model="gamePage.searchKey"
             @keypress.enter="searchList()"
             placeholder="输入查找游戏名"
+            clearable
+            @clear="searchList()"
           >
             <template #suffix>
               <el-icon :width="15" @click="searchList()">
@@ -138,12 +140,12 @@
                 </div>
 
                 <div class="slot-fav">
-                  <el-icon>
-                    <RiHeartLine />
-                  </el-icon>
-                  <el-icon>
-                    <RiHeartFill />
-                  </el-icon>
+<!--                  <el-icon>-->
+<!--                    <RiHeartLine />-->
+<!--                  </el-icon>-->
+<!--                  <el-icon>-->
+<!--                    <RiHeartFill />-->
+<!--                  </el-icon>-->
                 </div>
               </div>
 
@@ -328,11 +330,11 @@ const getPlatGameList = () => {
 };
 
 const searchList = () => {
-  if (gamePage.searchKey) {
+  // if (gamePage.searchKey) {
     gamePage.gameList = gameListData.value.filter((game) => {
       return game.name.toLowerCase().includes(gamePage.searchKey.toLowerCase());
     });
-  }
+  // }
 };
 const loadGameList = () => {
   if (props.platformGameType === "SLOT") {

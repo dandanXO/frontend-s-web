@@ -37,7 +37,7 @@
         <div class="station-notice-box">
           <img
             class="announcement-img"
-            src="../../assets/home/announcement/announcement.png"
+            src="../../assets/home/announcement/announcement-img.png"
             @click="openPopup(announcementList)"
           />
           <div class="station-notice">
@@ -176,7 +176,6 @@ onMounted(() => {
 
         .announcement-img {
           width: 36px;
-          transform: scaleX(-1);
         }
 
         .station-notice {
