@@ -292,7 +292,8 @@ const openMsg = (mail) => {
   if(!readTime) {
     readMail({ id }).then((res) => {
       if(res.code === 0) {
-        // success read message
+        checkMailboxUnread();
+
       }
     })
     .catch((error) => {

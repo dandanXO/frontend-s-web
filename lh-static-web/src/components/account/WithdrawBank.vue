@@ -1230,3 +1230,9 @@ body {
   padding-bottom: 30px;
 }
 </style>
+
+<style lang="scss">
+.el-overlay {
+  z-index: 2500 !important;
+}
+</style>
