@@ -1,15 +1,30 @@
 <template>
   <div class="deposit-wrapper">
     <div class="deposit-options">
-      <div class="lil-title">Select Amount</div>
+      <div class="lil-title">Payment Channel</div>
       <div class="deposit-option-container">
-        <template v-for="(item, index) in payMethods" :key="item + index">
-          <img class="deposit-option-btn q-mt-sm" :src="`${imgURL}/payment/${item.paymentIcon}`" @click="handleDepositNodeClick(item)" :class="{ active: activeMethod.paymentId === item.paymentId }" />
-        </template>
+        <div class="deposit-option-btn-wrapper" v-for="(item, index) in payMethods" :key="index">
+          <!-- paymentIcon is the only unique identifier, paymentId and privilegeId may be the same for 2 different payment methods -->
+          <img class="deposit-option-btn q-mt-sm" 
+          :src="`${imgURL}/payment/${item.paymentIcon}`" 
+          @click="handleDepositNodeClick(item)" 
+          :class="{ active: activeMethod.paymentIcon === item.paymentIcon }" 
+          style="width:100%"
+          />
+          <div :class="['selected-svg', activeMethod.paymentIcon === item.paymentIcon && 'active']">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path
+                d="M8.12492 11.118L14.0828 5L15 5.94102L8.12492 13L4 8.76474L4.9165 7.82373L8.12492 11.118Z"
+                fill="white"
+              />
+            </svg>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="deposit-item-container q-mt-md">
+    <div class="lil-title q-mt-lg">Select Amount</div>
+    <div class="deposit-item-container q-mt-sm">
       <template v-for="(item, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
           <q-badge v-if="activeMethod.privilegeId" color="orange" floating rounded>+{{ item.hotLabel }}</q-badge>
@@ -140,6 +155,11 @@
         <q-spinner v-if="isLoadingInitPay || btnLoading" color="white" size="2em" :thickness="2"></q-spinner>
         <template v-else>Submit</template>
       </div>
+    </div>
+
+    <div class="q-mt-lg" style="color:#576373" v-if="activeMethod.privilegeId">
+      <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
+      <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
     </div>
 
     <div class="node-wrapper" style="display: none">
@@ -814,10 +834,14 @@ onMounted(() => {
     display: flex;
     gap: 12px;
   }
+
+  .deposit-option-btn-wrapper {
+    position: relative;
+  }
+
   .deposit-option-btn {
     color: #cccccc;
     background: #1d2635;
-    min-width: 80px;
     border: 3px solid transparent;
     // height: 38px;
     border-radius: 0.375rem;
@@ -842,6 +866,22 @@ onMounted(() => {
         height: 30px;
         background-size: 100%;
       }
+    }
+  }
+
+  .selected-svg {
+    position: absolute;
+    right: 3px;
+    bottom: 3px;
+    display: none;
+
+    svg {
+      background: #5c46e7;
+      border-radius: 3px;
+    }
+
+    &.active {
+      display: block;
     }
   }
 }
