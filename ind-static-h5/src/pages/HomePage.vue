@@ -1475,6 +1475,7 @@ const gotoPromo = (banner) => {
   const urlPattern = /^\/url\/(.*)/;
   const platformPattern = /^\/platform\/(.*)/;
   const gamePattern = /^\/game\/(.*)/;
+  const openPattern = /^\/open\/(.*)/;
 
   if (banner.redirectUrl.match(urlPattern)) {
     const extractedUrl = banner.redirectUrl.match(urlPattern)[1];
@@ -1501,6 +1502,10 @@ const gotoPromo = (banner) => {
       default:
         return null;
     }
+  } else if (banner.redirectUrl.match(openPattern)) {
+    const extractedUrl = banner.redirectUrl.match(openPattern)[1];
+    const [gameName, platformCode, gameCode, gameStatus, gameType, gameId] = extractedUrl.split('/');
+    playGame(gameName, platformCode, gameCode, gameStatus, gameType, gameId);
   }
 };
 
