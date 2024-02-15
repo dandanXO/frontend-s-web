@@ -288,6 +288,14 @@ const readMultipleMsg = () => {
 
 const openMsg = (mail) => {
   const { id, readTime } = mail;
+
+  // console.log(mail);
+  mailboxNotifyState[mailboxMessageTab.value].forEach((mail) => {
+    if(mail.id === id){
+      mail.readTime = moment().format("YYYY-MM-DD");
+    }
+  });
+  // console.log(mailboxNotifyState[mailboxMessageTab.value]);
   
   if(!readTime) {
     readMail({ id }).then((res) => {
