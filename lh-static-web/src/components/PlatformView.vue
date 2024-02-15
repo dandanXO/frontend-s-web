@@ -103,6 +103,8 @@
             v-model="gamePage.searchKey"
             @keypress.enter="searchList()"
             placeholder="输入查找游戏名"
+            clearable
+            @clear="searchList()"
           >
             <template #suffix>
               <el-icon :width="15" @click="searchList()">
@@ -328,11 +330,11 @@ const getPlatGameList = () => {
 };
 
 const searchList = () => {
-  if (gamePage.searchKey) {
+  // if (gamePage.searchKey) {
     gamePage.gameList = gameListData.value.filter((game) => {
       return game.name.toLowerCase().includes(gamePage.searchKey.toLowerCase());
     });
-  }
+  // }
 };
 const loadGameList = () => {
   if (props.platformGameType === "SLOT") {
