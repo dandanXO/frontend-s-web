@@ -130,9 +130,9 @@
                   </div>
                 </template>
 
-                <template v-if="tbl.dataIndex === 'subType'" #default="scope">
+                <template v-if="tbl.dataIndex === 'platformCode'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    {{ getSubType(scope.row.subType) }}
+                    {{ getPlatform(scope.row.platformCode) }}
                   </div>
                 </template>
 
@@ -843,8 +843,7 @@ const tableColumns = {
     },
     {
       title: "平台",
-      dataIndex: "subType",
-      slots: { customRender: "subType" }
+      dataIndex: "platformCode"
     },
     {
       title: "时间",
