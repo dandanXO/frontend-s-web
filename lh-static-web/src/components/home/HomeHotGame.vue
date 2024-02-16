@@ -35,13 +35,15 @@
         <div :class="`hotgame-content-wrapper ${hotgame.isShow ? 'show' : ''}`">
           <div class="left-container">
             <div class="title-wrapper">
-              <div class="title">
-                {{
-                  hotgame.content &&
-                  hotgame.content[hotgame.currentProvider.toLowerCase()] &&
-                  hotgame.content[hotgame.currentProvider.toLowerCase()].title
-                }}
-              </div>
+              <Transition :key="transitionDesc" name="fade" enter>
+                <div class="title" v-if="hotgame.currentProvider">
+                  {{
+                    hotgame.content &&
+                    hotgame.content[hotgame.currentProvider.toLowerCase()] &&
+                    hotgame.content[hotgame.currentProvider.toLowerCase()].title
+                  }}
+                </div>
+              </Transition>
               <!-- <div class="subtitle">{{ hotgame.content[hotgame.currentProvider.toLowerCase()] }}</div> -->
             </div>
             <div>
@@ -90,23 +92,25 @@
               </div>
             </div>
             <el-button size="small" class="common-btn game-start-btn" @click="onEnterGameClick(hotgame, hotgame.type)">
-              进入游戏
+              {{ hotgame.type !== "slot" ? `进入游戏` : `进入场馆` }}
             </el-button>
           </div>
           <div class="right-container">
-            <img
-              v-if="
+            <Transition :key="transitionKey" appear>
+              <img
+                v-if="
                 hotgame.content &&
                 hotgame.content[hotgame.currentProvider] &&
                 hotgame.content[hotgame.currentProvider].charImgPath
               "
-              :class="`character-${hotgame.subtitle.toLowerCase()}-${hotgame.currentProvider}`"
-              :src="
+                :class="`character-${hotgame.subtitle.toLowerCase()}-${hotgame.currentProvider}`"
+                :src="
                 require(`../../assets/home/hotgame/content/${hotgame.section}/${
                   hotgame.content[hotgame.currentProvider].charImgPath
                 }/character.png`)
               "
-            />
+              />
+            </Transition>
           </div>
         </div>
       </div>
@@ -116,7 +120,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, Transition } from "vue";
 import { useRouter } from "vue-router";
 import HomeTitle from "@/atoms/HomeTitle.vue";
 import { getPlatformList, getLoggedInPlatformList } from "@/api/platform/platform";
@@ -388,67 +392,6 @@ const hotgameData = ref([
   },
   {
     number: "04",
-    icon: require("../../assets/home/hotgame/banner/board/icon.png"),
-    iconActive: require("../../assets/home/hotgame/banner/board/icon-active.png"),
-    title: "棋牌游戏",
-    subtitle: "BOARD",
-    charImgPath: require("../../assets/home/hotgame/banner/board/character.png"),
-    isShow: false,
-    path: "/poker",
-    currentProvider: "dat",
-    section: "poker",
-    type: "poker",
-    content: {
-      providerList: [
-        // {
-        //   key: "dat",
-        //   name: "大唐棋牌",
-        //   icon: require("../../assets/home/hotgame/content/board/provider_dat.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "gd",
-        //   name: "高登棋牌",
-        //   icon: require("../../assets/home/hotgame/content/board/provider_gd.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "ky",
-        //   name: "开元棋牌",
-        //   icon: require("../../assets/home/hotgame/content/board/provider_ky.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "leyou",
-        //   name: "乐游棋牌",
-        //   icon: require("../../assets/home/hotgame/content/board/provider_leyou.png"),
-        //   providerInfo: {}
-        // }
-      ]
-      // dat: {
-      //   title: "大唐棋牌",
-      //   subtitle: "BOARD",
-      //   charImgPath: require("../../assets/home/hotgame/content/board/dat/character.png")
-      // },
-      // gd: {
-      //   title: "高登棋牌",
-      //   subtitle: "BOARD",
-      //   charImgPath: require("../../assets/home/hotgame/content/board/gd/character.png")
-      // },
-      // ky: {
-      //   title: "开元棋牌",
-      //   subtitle: "BOARD",
-      //   charImgPath: require("../../assets/home/hotgame/content/board/ky/character.png")
-      // },
-      // leyou: {
-      //   title: "乐游棋牌",
-      //   subtitle: "BOARD",
-      //   charImgPath: require("../../assets/home/hotgame/content/board/leyou/character.png")
-      // }
-    }
-  },
-  {
-    number: "05",
     icon: require("../../assets/home/hotgame/banner/lottery/icon.png"),
     iconActive: require("../../assets/home/hotgame/banner/lottery/icon-active.png"),
     title: "彩票投注",
@@ -489,7 +432,7 @@ const hotgameData = ref([
     }
   },
   {
-    number: "06",
+    number: "05",
     icon: require("../../assets/home/hotgame/banner/slots/icon.png"),
     iconActive: require("../../assets/home/hotgame/banner/slots/icon-active.png"),
     title: "电子游艺",
@@ -550,6 +493,67 @@ const hotgameData = ref([
     }
   },
   {
+    number: "06",
+    icon: require("../../assets/home/hotgame/banner/board/icon.png"),
+    iconActive: require("../../assets/home/hotgame/banner/board/icon-active.png"),
+    title: "棋牌游戏",
+    subtitle: "BOARD",
+    charImgPath: require("../../assets/home/hotgame/banner/board/character.png"),
+    isShow: false,
+    path: "/poker",
+    currentProvider: "dat",
+    section: "poker",
+    type: "poker",
+    content: {
+      providerList: [
+        // {
+        //   key: "dat",
+        //   name: "大唐棋牌",
+        //   icon: require("../../assets/home/hotgame/content/board/provider_dat.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "gd",
+        //   name: "高登棋牌",
+        //   icon: require("../../assets/home/hotgame/content/board/provider_gd.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "ky",
+        //   name: "开元棋牌",
+        //   icon: require("../../assets/home/hotgame/content/board/provider_ky.png"),
+        //   providerInfo: {}
+        // },
+        // {
+        //   key: "leyou",
+        //   name: "乐游棋牌",
+        //   icon: require("../../assets/home/hotgame/content/board/provider_leyou.png"),
+        //   providerInfo: {}
+        // }
+      ]
+      // dat: {
+      //   title: "大唐棋牌",
+      //   subtitle: "BOARD",
+      //   charImgPath: require("../../assets/home/hotgame/content/board/dat/character.png")
+      // },
+      // gd: {
+      //   title: "高登棋牌",
+      //   subtitle: "BOARD",
+      //   charImgPath: require("../../assets/home/hotgame/content/board/gd/character.png")
+      // },
+      // ky: {
+      //   title: "开元棋牌",
+      //   subtitle: "BOARD",
+      //   charImgPath: require("../../assets/home/hotgame/content/board/ky/character.png")
+      // },
+      // leyou: {
+      //   title: "乐游棋牌",
+      //   subtitle: "BOARD",
+      //   charImgPath: require("../../assets/home/hotgame/content/board/leyou/character.png")
+      // }
+    }
+  },
+  {
     number: "07",
     icon: require("../../assets/home/hotgame/banner/fishing/icon.png"),
     iconActive: require("../../assets/home/hotgame/banner/fishing/icon-active.png"),
@@ -590,9 +594,14 @@ const hotgameData = ref([
   }
 ]);
 
+const transitionKey = ref(0);
+const transitionDesc = ref(0);
 const setCurrentProvider = (element, value) => {
   element.currentPlat = value;
   element.currentProvider = value.code.toLowerCase();
+
+  transitionKey.value++;
+  transitionDesc.value++;
 };
 
 let currentBannerIndex = ref(0);
@@ -702,7 +711,7 @@ onMounted(() => {
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 $transition_timer: 0.5s;
 
 .hotgame-section {
@@ -804,11 +813,12 @@ $transition_timer: 0.5s;
               position: relative;
               bottom: 1rem;
             }
-    //         img {
-    // height: 60%;
-    // opacity: 0.6;
-    // margin-right: 65px;
-    //         }
+
+            //         img {
+            // height: 60%;
+            // opacity: 0.6;
+            // margin-right: 65px;
+            //         }
           }
         }
       }
@@ -923,7 +933,7 @@ $transition_timer: 0.5s;
                 font-size: 0.73363rem;
                 font-weight: 400;
                 line-height: 1.46719rem;
-                text-wrap: nowrap;
+                white-space: nowrap;
 
                 &.active {
                   color: #3063ab;
@@ -956,6 +966,7 @@ $transition_timer: 0.5s;
             position: relative;
             right: 4rem;
             height: 27rem;
+
             &.character-fishing-gps {
               right: 9rem;
             }
@@ -1119,4 +1130,39 @@ $transition_timer: 0.5s;
     }
   }
 }
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 1s ease, transform 0.5s ease-in-out;
+  transform: translateY(0px);
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+  transform: translateY(60px);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: opacity 2s ease, transform 1s ease-in-out;
+  transform: translateY(0px);
+}
+
+.fade-slide-enter-from,
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(100px);
+}
 </style>
+
