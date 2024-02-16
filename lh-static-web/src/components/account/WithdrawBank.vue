@@ -18,7 +18,7 @@
         >
           <div class="card-details">
             <div class="card-bank-icon">
-              <img src="../../assets/images/account/bank-icon-01.png" />
+              <img :src="imgURL + bc.bankIcon" />
             </div>
 
             <div class="card-name">
