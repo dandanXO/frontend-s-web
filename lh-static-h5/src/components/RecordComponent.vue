@@ -4,6 +4,7 @@
       <q-spinner-gears size="50px" color="brightbtn" />
       <div class="label" style="color: #fff">加载中</div>
     </q-inner-loading>
+
     <div v-if="!loading">
       <q-infinite-scroll @load="onLoad" :offset="250">
         <q-card v-for="(det, n) in truncatedList" :key="n" class="q-pa-sm">
@@ -14,7 +15,7 @@
             <template v-for="obj in Object.keys(det)" :key="obj">
               <div v-if="obj === head.key" class="desc">
                 <div v-if="obj === 'type'">
-                  {{ translateRecord(det[obj], "") }}
+                  {{ translateRecord(det[obj], recordType) }}
                 </div>
                 <div v-else-if="obj === 'status'">
                   {{ checkRecord(det[obj]) }}

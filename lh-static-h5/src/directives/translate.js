@@ -7,7 +7,9 @@ export const translateRecord = (rec, type = "") => {
     }
     return "提款"; // Withdraw
   } else if (rec === "DEPOSIT") {
-    if (type === "transfer" || type === "moneyChange") {
+    if (type === "transfer") {
+      return "转进";
+    }else if(type === "moneyChange"){
       return "转账";
     }
     return "存款"; // 存款
@@ -119,19 +121,19 @@ export const translateRecord = (rec, type = "") => {
     return "转账"; // TRANSFER
   } else if (rec === "ADJUST") {
     return "金额调整"; // ADJUST
-  }else if (rec === "MGP") {
+  } else if (rec === "MGP") {
     return "MG"; // AG
-  } else if (rec === "AG" && type==='slot') {
+  } else if (rec === "AG" && type === "slot") {
     return "XIN"; // AG
-  }else if (rec === "AG") {
+  } else if (rec === "AG") {
     return "AG"; // AG
   } else if (rec === "BBINDY") {
     return "BBIN真人"; // BBINDY
-  }else if (rec === "PINNACLE") {
+  } else if (rec === "PINNACLE") {
     return "平博体育"; // BBINDY
   } else if (rec === "EBET") {
     return "WE真人"; // EBET
-  }else if (rec === "ALLBET") {
+  } else if (rec === "ALLBET") {
     return "欧博"; // EBET
   } else if (rec === "KY") {
     return "开元棋牌"; // KY
@@ -141,9 +143,9 @@ export const translateRecord = (rec, type = "") => {
     return "乐游棋牌"; // KY
   } else if (rec === "GLFC") {
     return "高登棋牌"; // DT
-  }else if (rec === "GFLC") {
+  } else if (rec === "GFLC") {
     return "高登棋牌"; // DT
-  }  else if (rec === "TCG") {
+  } else if (rec === "TCG") {
     return "TCG彩票"; // TCG
   } else if (rec === "SGWin") {
     return "双赢彩票"; // SGWin
