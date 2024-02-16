@@ -531,6 +531,17 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/account/feedback",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/account/FeedbackView.vue")
+      }
+    ],
+    meta: { requiresAuth: true }
+  },
+  {
     path: "/finance/deposit",
     component: () => import("layouts/MainLayout.vue"),
     children: [

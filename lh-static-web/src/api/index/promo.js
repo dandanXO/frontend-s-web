@@ -188,12 +188,13 @@ export function getQuestionnaireList() {
 //   return server.EVENT.post("/questionnaire/submit", choices);
 // }
 
-export function submitQuestionnaire(formData) {
+export const submitQuestionnaire = (formData) => {
   const requestOptions = {
     method: 'POST',
     body: JSON.stringify(formData),
     headers: {
-        token: `${userStore().token}`
+        token: `${userStore().token}`,
+        'Content-Type': 'application/json'
     },
   };
     var evtUrl = process.env.VUE_APP_EVT_API.split(",")[0];

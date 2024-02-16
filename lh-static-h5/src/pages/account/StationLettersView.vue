@@ -38,6 +38,11 @@ export default defineComponent({
         icon: "outbox",
         name: "我的反馈"
       },
+      {
+        code: "feedback",
+        icon: "feedback",
+        name: "有奖问答"
+      },
 
     ]);
 

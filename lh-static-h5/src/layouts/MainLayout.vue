@@ -283,6 +283,10 @@ export default defineComponent({
           prevPage.value = "account/letters";
           hasPage.value = true;
           pageName.value = "意见反馈";
+        } else if (route.path === "/account/feedback") {
+          prevPage.value = "account/letters";
+          hasPage.value = true;
+          pageName.value = "有奖问答";
         } else if (route.path === "/account/withdraw") {
           prevPage.value = "account";
           hasPage.value = true;
