@@ -234,7 +234,7 @@ const submitForm = () => {
 
             sendForgetPasswordEmail(params).then((res) => {
                 if(res.code === 0) {
-                    ElMessage.success("验证码已经发送到手机");
+                    ElMessage.success("验证码已经发送到邮箱");
                     forgotPwdPostVerifyForm.codeId = res.data.codeId;
                     captchaVerifyRef.value.closeDialog();
                     captchaVerifyRef.value.initCountdownTimer();
