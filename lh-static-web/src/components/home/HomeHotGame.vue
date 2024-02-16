@@ -952,7 +952,15 @@ $transition_timer: 0.5s;
             font-family: Microsoft YaHei;
             font-size: 1.15281rem;
             font-weight: 400;
-            line-height: normal;
+            line-height: 2.5rem;
+
+            &:hover {
+              filter: brightness(1.2);
+            }
+            &:active {
+              filter: brightness(1.1);
+              transform: translate(0px ,1px);
+            }
           }
         }
 
