@@ -103,7 +103,7 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref, reactive, defineProps } from "vue";
+import { onMounted, ref, reactive } from "vue";
 import {
   tigerCardInit,
   getLeaderboard,

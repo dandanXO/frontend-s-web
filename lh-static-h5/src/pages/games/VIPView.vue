@@ -1,4 +1,5 @@
 <template>
+  <!-- <pre>vv{{vipItems}}</pre> -->
   <div class="vip-container">
     <q-carousel
       v-model="slide"
@@ -48,6 +49,7 @@
               ></q-linear-progress>
               <div class="start-end">
                 <div class="vip-card-common-text">V{{ vipIndex }}</div>
+                <div class="vip-card-current-num">{{ vip.progressBarVal === 0 ? "" : parseFloat(store.currentDeposit).toLocaleString() }}</div>
                 <div class="vip-card-common-text">V{{ vipIndex + 1 }}</div>
               </div>
             </div>
@@ -867,6 +869,11 @@ onActivated(() => {
     font-size: 3vw;
     font-weight: 400;
     color: $font-1;
+  }
+
+  .vip-card-current-num{
+    margin-top: 8px;
+    font-size: 11px;
   }
 }
 

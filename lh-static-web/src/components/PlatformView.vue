@@ -184,7 +184,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, defineProps, reactive } from "vue";
+import { ref, onMounted, watch, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import {
   getPlatformListDisplay,

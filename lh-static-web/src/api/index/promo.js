@@ -179,3 +179,13 @@ export function canRedeem() {
 export function claim(level) {
   return server.EVENT.post("/vip-upgrade/lh/claim", { vipLevel: level });
 }
+
+export function getQuestionnaireList() {
+  return server.EVENT.get("/questionnaire/list");
+}
+
+export function submitQuestionnaire(choices) {
+  return server.EVENT.post("/questionnaire/submit", {choices: choices});
+}
+
+

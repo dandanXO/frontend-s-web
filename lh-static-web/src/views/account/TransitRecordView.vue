@@ -124,15 +124,15 @@
                   </div>
                 </template>
 
-                <template v-if="tbl.dataIndex === 'type'" #default="scope">
-                  <div style="display: flex; align-items: center">
-                    {{ getTurnoverType(scope.row.type) }}
-                  </div>
-                </template>
-
                 <template v-if="tbl.dataIndex === 'subType'" #default="scope">
                   <div style="display: flex; align-items: center">
                     {{ getSubType(scope.row.subType) }}
+                  </div>
+                </template>
+
+                <template v-if="tbl.dataIndex === 'platformCode'" #default="scope">
+                  <div style="display: flex; align-items: center">
+                    {{ getPlatform(scope.row.platformCode) }}
                   </div>
                 </template>
 
@@ -835,7 +835,7 @@ const tableColumns = {
     ...commonColumns,
     {
       title: "账变类型",
-      dataIndex: "type"
+      dataIndex: "subType"
     },
     {
       title: "金额",
@@ -843,8 +843,7 @@ const tableColumns = {
     },
     {
       title: "平台",
-      dataIndex: "subType",
-      slots: { customRender: "subType" }
+      dataIndex: "platformCode"
     },
     {
       title: "时间",

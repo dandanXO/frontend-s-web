@@ -30,6 +30,7 @@
                 </div>
               </div>
               <!-- vip progress bar end -->
+              <div style="color: #cfb282; font-size: 18px;position: absolute; bottom: 25px; left: 0; right: 0;" v-if="vipLevel + 1 === Number(vip.vipLevel)">{{ Number(currentDepositAmt).toLocaleString('en-US', { style: 'currency', currency: 'CNY' }).replace('CN', '') }}</div>
             </div>
             <div
               :class="`vipLevelReachStatus ${getVipLevelProgress(vip) === 100 && !!vipLevel ? 'vipLevelReached' : ''}`"
@@ -297,7 +298,10 @@ export default defineComponent({
     const amount = ref("$0");
     const privilegeClaimedModalVisible = ref(false);
     const vipLevel = computed(() => {
-      return store.vip;
+      return +store.vip.replace("VIP", "");
+    });
+    const currentDepositAmt = computed(() => {
+      return store.getCurrentDeposit();
     });
     const getVipLevelProgress = (vipInfo) => {
       const vipLevel = +store.vip.replace("VIP", "");
@@ -601,7 +605,8 @@ export default defineComponent({
       vipTerms,
       claimVIPLevelItem,
       currentSlide,
-      slideTo
+      slideTo,
+      currentDepositAmt
     };
   }
 });

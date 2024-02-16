@@ -76,9 +76,11 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import HomeTitle from "@/atoms/HomeTitle.vue";
 import HomeContentTitle from "@/atoms/HomeContentTitle.vue";
+
+const activeKey= ref("1");
 
 onMounted(() => {});
 </script>
