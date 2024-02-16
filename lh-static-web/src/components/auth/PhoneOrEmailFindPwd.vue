@@ -7,7 +7,7 @@
             </el-form-item>
         </div>
 
-        <CaptchaVerify :form="forgotPwdForm" :onClickConfirm="submitForm" ref="captchaVerifyRef" />        
+        <CaptchaVerify :form="forgotPwdForm" :onClickConfirm="submitForm" ref="captchaVerifyRef" :type="props.type"/>        
 
         <el-button :loading="loadingBtn" size="large" class="blue-bg primary-btn" @click="submitForm" v-if="!forgotPwdPostVerifyForm.codeId">
             提交
@@ -54,9 +54,11 @@
   
 <script setup>
 import { ref, onMounted, reactive } from "vue";
-import { sendForgetPasswordPhone, verifyForgetPasswordPhone } from "@/api/index/forgotPwd";
+import { sendForgetPasswordPhone, verifyForgetPasswordPhone, sendForgetPasswordEmail, verifyForgetPasswordEmail } from "@/api/index/forgotPwd";
 import CaptchaVerify from "./CaptchaVerify.vue";
 import { ElMessage } from "element-plus";
+
+const props = defineProps(['type']);
 
 const forgotPwdFormRules = {
     loginName: [
@@ -78,6 +80,23 @@ const forgotPwdFormRules = {
             message: "请输入手机号码",
             trigger: "blur"
         }
+    ],
+    email: [
+        {
+            required: true,
+            message: "请输入您的邮箱",
+            trigger: "blur",
+        },
+        {
+            type: "email",
+            message: "电子邮件地址无效",
+            trigger: "blur",
+        },
+        {
+            max: 50,
+            message: "长度应小于 50",
+            trigger: "blur",
+        },
     ],
     captchaCode: [
         {
@@ -185,23 +204,46 @@ const submitForm = () => {
     loadingBtn.value = true
 
     forgotPwdFormRef.value.validate().then(() => {
-        const params = {
-            phone: forgotPwdForm.phone,
-            loginName: forgotPwdForm.loginName,
-            captchaCode: forgotPwdForm.captchaCode,
-            codeId: forgotPwdForm.codeId
-        }
-        sendForgetPasswordPhone(params).then((res) => {
-            if(res.code === 0) {
-                ElMessage.success("验证码已经发送到手机");
-                forgotPwdPostVerifyForm.codeId = res.data.codeId;
-                captchaVerifyRef.value.closeDialog();
-                captchaVerifyRef.value.initCountdownTimer();
+        if(props.type === 'phone') {
+            const params = {
+                phone: forgotPwdForm.phone,
+                loginName: forgotPwdForm.loginName,
+                captchaCode: forgotPwdForm.captchaCode,
+                codeId: forgotPwdForm.codeId
             }
-        }).catch((error) => {
-            console.log(error)
-            captchaVerifyRef.value.getCode();
-        })
+
+            sendForgetPasswordPhone(params).then((res) => {
+                if(res.code === 0) {
+                    ElMessage.success("验证码已经发送到手机");
+                    forgotPwdPostVerifyForm.codeId = res.data.codeId;
+                    captchaVerifyRef.value.closeDialog();
+                    captchaVerifyRef.value.initCountdownTimer();
+                }
+            }).catch((error) => {
+                console.log(error)
+                captchaVerifyRef.value.getCode();
+            })
+        } else {
+            const params = {
+                email: forgotPwdForm.email,
+                loginName: forgotPwdForm.loginName,
+                captchaCode: forgotPwdForm.captchaCode,
+                codeId: forgotPwdForm.codeId
+            }
+
+            sendForgetPasswordEmail(params).then((res) => {
+                if(res.code === 0) {
+                    ElMessage.success("验证码已经发送到手机");
+                    forgotPwdPostVerifyForm.codeId = res.data.codeId;
+                    captchaVerifyRef.value.closeDialog();
+                    captchaVerifyRef.value.initCountdownTimer();
+                }
+            }).catch((error) => {
+                console.log(error)
+                captchaVerifyRef.value.getCode();
+            })
+        }
+        
     }).catch((err) => {
         console.log(err);
         captchaVerifyRef.value.getCode();
@@ -214,29 +256,43 @@ const submitPostVerifyForm = () => {
     loadingBtn.value = true
 
     forgotPwdPostVerifyFormRef.value.validate().then(() => {
-        const params = {
-            phone: forgotPwdForm.phone,
-            code: forgotPwdPostVerifyForm.code,
-            codeId: forgotPwdPostVerifyForm.codeId,
-            newPassword: forgotPwdPostVerifyForm.confirmPwd
-        }
-
-        verifyForgetPasswordPhone(params).then((res) => {
-            if(res.code === 0) {
-                ElMessage.success("成功");
+        if(props.type === 'phone') {
+            const params = {
+                phone: forgotPwdForm.phone,
+                code: forgotPwdPostVerifyForm.code,
+                codeId: forgotPwdPostVerifyForm.codeId,
+                newPassword: forgotPwdPostVerifyForm.confirmPwd
             }
-        }).catch((error) => {
-            console.log(error)
-        })
+
+            verifyForgetPasswordPhone(params).then((res) => {
+                if(res.code === 0) {
+                    ElMessage.success("成功");
+                }
+            }).catch((error) => {
+                console.log(error)
+            })
+        } else {
+            const params = {
+                email: forgotPwdForm.email,
+                code: forgotPwdPostVerifyForm.code,
+                codeId: forgotPwdPostVerifyForm.codeId,
+                newPassword: forgotPwdPostVerifyForm.confirmPwd
+            }
+
+            verifyForgetPasswordEmail(params).then((res) => {
+                if(res.code === 0) {
+                    ElMessage.success("成功");
+                }
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
     }).catch((err) => {
         console.log(err);
     }).finally(() => {
         loadingBtn.value = false
     });
 };
-
-onMounted(() => {
-});
 </script>
 
 <style scoped lang="scss">
