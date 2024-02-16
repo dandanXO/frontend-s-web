@@ -124,9 +124,9 @@
                   </div>
                 </template>
 
-                <template v-if="tbl.dataIndex === 'type'" #default="scope">
+                <template v-if="tbl.dataIndex === 'subType'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    {{ getTurnoverType(scope.row.type) }}
+                    {{ getSubType(scope.row.subType) }}
                   </div>
                 </template>
 
@@ -835,7 +835,7 @@ const tableColumns = {
     ...commonColumns,
     {
       title: "账变类型",
-      dataIndex: "type"
+      dataIndex: "subType"
     },
     {
       title: "金额",
