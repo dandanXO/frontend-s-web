@@ -384,6 +384,7 @@ const deleteAllMsg = (m) => {
     mailboxNotifyState.ALL = [];
   } else {
     mailboxNotifyState[readType] = [];
+    mailboxNotifyState['ALL'] = mailboxNotifyState['ALL'].filter((item) => item.type !== m);
   }
   
   // if { type: "ALL" }, not needed to be passed as params
