@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted,onBeforeUnmount, defineProps, defineEmits } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
