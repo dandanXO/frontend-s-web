@@ -220,7 +220,7 @@
 import { ElMessage } from 'element-plus';
 import { computed, onMounted, reactive, ref } from 'vue';
 import moment from 'moment';
-import { cancelDeposit, getDepositRecord, getTotalDepositAmount, supplementDeposit, editDeposit } from '../../../api/member-deposit-record';
+import { cancelDeposit, getDepositRecord, supplementDeposit, editDeposit } from '../../../api/member-deposit-record';
 import { required } from '../../../utils/validate';
 import { hasPermission } from '../../../utils/util';
 import { useI18n } from "vue-i18n";
@@ -352,8 +352,7 @@ async function loadRecord() {
   page.records = ret.records;
   page.total = ret.total;
   if (page.records.length !== 0) {
-    const { data: amount } = await getTotalDepositAmount(query);
-    page.totalAmount = amount;
+    page.totalAmount = ret.sums.depositAmount;
   } else {
     page.totalAmount = 0;
   }

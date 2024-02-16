@@ -639,7 +639,6 @@ import { getVipList } from '../../../api/vip'
 import { getFinancialLevels } from '../../../api/financial-level'
 import {
   getDepositRecord,
-  getTotalDepositAmount,
   getExportDepositRecord,
 } from '../../../api/member-deposit-record'
 import { getSystemPaymentListForDeposit } from '../../../api/system-payment'
@@ -933,8 +932,7 @@ async function loadRecord() {
   page.records = ret.records
   page.total = ret.total
   if (page.records.length !== 0) {
-    const { data: amount } = await getTotalDepositAmount(query)
-    page.totalAmount = amount
+    page.totalAmount = ret.sums.depositAmount;
   } else {
     page.totalAmount = 0
   }
