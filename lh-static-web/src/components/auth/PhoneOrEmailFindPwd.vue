@@ -184,6 +184,7 @@ const forgotPwdPostVerifyFormRules = {
 const forgotPwdForm = reactive({
     loginName: '',
     phone: '',
+    email: '',
     captchaCode: ''
 })
 
