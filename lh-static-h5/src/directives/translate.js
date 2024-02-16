@@ -121,6 +121,8 @@ export const translateRecord = (rec, type = "") => {
     return "转账"; // TRANSFER
   } else if (rec === "ADJUST") {
     return "金额调整"; // ADJUST
+  }else if (rec === "GPS") {
+    return "GPS决战中途岛"; // ADJUST
   } else if (rec === "MGP") {
     return "MG"; // AG
   } else if (rec === "AG" && type === "slot") {

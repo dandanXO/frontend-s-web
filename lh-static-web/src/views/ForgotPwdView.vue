@@ -7,15 +7,15 @@
             <div class="card-bg">
 
                 <el-tabs>
-                    <!-- <el-tab-pane label="手机找回密码">
+                    <el-tab-pane label="手机找回密码">
                         <PhoneFindPwd />
-                    </el-tab-pane> -->
+                    </el-tab-pane>
                     <el-tab-pane label="邮箱找回账号">
                         <EmailFindPwd />
                     </el-tab-pane>
-                    <!-- <el-tab-pane label="邮箱找回账户">
+                    <el-tab-pane label="邮箱找回账户">
                         <EmailFindAcc />
-                    </el-tab-pane> -->
+                    </el-tab-pane>
                 </el-tabs>
             </div>
         </div>

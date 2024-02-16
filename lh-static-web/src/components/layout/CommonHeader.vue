@@ -598,7 +598,8 @@ import "vue3-carousel/dist/carousel.css";
 import { defineComponent, onMounted, ref, reactive, watch, computed, watchEffect } from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {userStore} from "@/store/index";
-import {getVerificationCode, register, findAccount} from "@/api/index/login";
+import {getVerificationCode, register} from "@/api/index/login";
+import { findAccount } from "@/api/index/forgotPwd";
 import {sendSms} from "@/api/personal/personal";
 import {ElMessage} from "element-plus";
 import {

@@ -188,7 +188,7 @@ function onBtnStartAnswerClick() {
 }
 
 const quesTitleOptions = ref([]);
-let optionModal = ref('1');
+let optionModal = ref(null);
 
 const getQuesTitleOptions = () => {
   // quesTitleOptions.value = [{
@@ -262,57 +262,57 @@ const getQuesTitleOptions = () => {
   //   ]
   // }]
   getQuestionnaireList().then((res) => {
-    res = {
-      "code": 0,
-      "data": [
-          {
-              "sequence": 1,
-              "question": "您是如何知道我们网站的？(单选)",
-              "choices": [
-                  {
-                      "choice": "百度等搜索引擎",
-                      "needSpecify": false
-                  },
-                  {
-                      "choice": "网络站点广告",
-                      "needSpecify": false
-                  },
-                  {
-                      "choice": "其他",
-                      "needSpecify": true
-                  }
-              ]
-          },
-          {
-              "sequence": 2,
-              "question": "您是如何觉得XXXXXXXXXX",
-              "choices": [
-                  {
-                      "choice": "XXXXXXXXXXX",
-                      "needSpecify": false
-                  },
-                  {
-                      "choice": "XXXXXXXXXXX",
-                      "needSpecify": false
-                  }
-              ]
-          },
-          {
-              "sequence": 3,
-              "question": "您是如何觉得XXXXXXXXXX",
-              "choices": [
-                  {
-                      "choice": "生命真重要",
-                      "needSpecify": false
-                  },
-                  {
-                      "choice": "生命真的是美丽的",
-                      "needSpecify": false
-                  }
-              ]
-          },
-      ]
-    }
+    // res = {
+    //   "code": 0,
+    //   "data": [
+    //       {
+    //           "sequence": 1,
+    //           "question": "您是如何知道我们网站的？(单选)",
+    //           "choices": [
+    //               {
+    //                   "choice": "百度等搜索引擎",
+    //                   "needSpecify": false
+    //               },
+    //               {
+    //                   "choice": "网络站点广告",
+    //                   "needSpecify": false
+    //               },
+    //               {
+    //                   "choice": "其他",
+    //                   "needSpecify": true
+    //               }
+    //           ]
+    //       },
+    //       {
+    //           "sequence": 2,
+    //           "question": "您是如何觉得XXXXXXXXXX",
+    //           "choices": [
+    //               {
+    //                   "choice": "XXXXXXXXXXX",
+    //                   "needSpecify": false
+    //               },
+    //               {
+    //                   "choice": "XXXXXXXXXXX",
+    //                   "needSpecify": false
+    //               }
+    //           ]
+    //       },
+    //       {
+    //           "sequence": 3,
+    //           "question": "您是如何觉得XXXXXXXXXX",
+    //           "choices": [
+    //               {
+    //                   "choice": "生命真重要",
+    //                   "needSpecify": false
+    //               },
+    //               {
+    //                   "choice": "生命真的是美丽的",
+    //                   "needSpecify": false
+    //               }
+    //           ]
+    //       },
+    //   ]
+    // }
     if (res.code === 0) {
       quesTitleOptions.value = res.data
       recordsPagination.pages = res.data.length
@@ -327,6 +327,7 @@ const getQuesTitleOptions = () => {
 
 const answerInputModal = ref('');
 const choices = reactive([]);
+const cacheChoices = reactive([]);
 const getSelected = (item, ans) => {
   const input = answerInputModal.value
   var obj = {
@@ -334,7 +335,12 @@ const getSelected = (item, ans) => {
     choice: ans
   }
   choices[item.sequence - 1] = obj
-  console.log(choices)
+  var cacheObj = {
+    sequence: item.sequence,
+    question: item.question,
+    choice: ans
+  }
+  cacheChoices[item.sequence - 1] = cacheObj
   // value = optionModal;
   // const inputDiv = document.getElementById("answer-input-div")
   
@@ -344,8 +350,10 @@ const getSelected = (item, ans) => {
   //   inputDiv.style.display = "hide"
   // }
 }
-
 const btnClick = (btnType) => {
+  if (optionModal.value === null) {
+    return ElMessage.error('请回答')
+  }
   optionModal.value = null
   const prevBtn = document.getElementById("prevBtn");
   const nextBtn = document.getElementById("nextBtn");
@@ -358,15 +366,15 @@ const btnClick = (btnType) => {
     const questionDiv = document.getElementById("questionContainer");
     const QRDiv = document.getElementById("QRContainer");
     // When Submit API is COMPLETE
-    // submitQuestionnaire(choices).then((res) => {
-    //   if (res.code === 0) {
-    //     questionDiv.style.display = "none";
-    //     QRDiv.style.display = "block";
-    //   }
-    // })
+    submitQuestionnaire(choices).then((res) => {
+      if (res.code === 0) {
+        questionDiv.style.display = "none";
+        QRDiv.style.display = "block";
+      }
+    })
     
-    questionDiv.style.display = "none";
-    QRDiv.style.display = "block";
+    // questionDiv.style.display = "none";
+    //  QRDiv.style.display = "block";
     
   }
   console.log('current: ' + recordsPagination.current)
@@ -391,6 +399,12 @@ const btnClick = (btnType) => {
     nextBtn.style.display = "none";
     finalBtn.style.display = "block";
   }
+  cacheChoices.forEach((c) => {
+    if (c.sequence === recordsPagination.current) {
+      console.log(quesTitleOptions.value[Number(c.sequence) - 1].choices)
+      
+    }
+  })
   // if (recordsPagination.current < recordsPagination.pages) {
   //   prevBtn.style.display = "block";
   // }

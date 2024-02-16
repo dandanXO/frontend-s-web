@@ -184,8 +184,25 @@ export function getQuestionnaireList() {
   return server.EVENT.get("/questionnaire/list");
 }
 
-export function submitQuestionnaire(choices) {
-  return server.EVENT.post("/questionnaire/submit", {choices: choices});
-}
+// export function submitQuestionnaire(choices) {
+//   return server.EVENT.post("/questionnaire/submit", choices);
+// }
 
+export function submitQuestionnaire(formData) {
+  const requestOptions = {
+    method: 'POST',
+    body: JSON.stringify(formData),
+    headers: {
+        token: `${userStore().token}`
+    },
+  };
+    var evtUrl = process.env.VUE_APP_EVT_API.split(",")[0];
 
+  return fetch(evtUrl + '/questionnaire/submit', requestOptions)
+    .then(response => {
+      return response.json()
+    })
+    .catch(error => {
+      return Promise.reject(error);
+    });
+};
