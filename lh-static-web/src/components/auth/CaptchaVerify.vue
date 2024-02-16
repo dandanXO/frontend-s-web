@@ -1,0 +1,151 @@
+<template>
+    <div class="light-bg form-field">
+        <img class="form-field-icon" src="@/assets/home/auth/phone-username-icon.png" />
+        <el-form-item tabindex="2" label="手机号" prop="code">
+            <el-row :gutter="10" style="justify-content: center; align-items: center">
+                <el-col :span="14">
+                    <el-input v-model="props.form.phone" label="手机号" placeholder="请输入手机号" />
+                </el-col>
+                <el-col :span="10">
+                    <el-button v-if="loginCountdown === 0" @click="openCaptchaForm"
+                        size="small" color="#3bafda" style="width:100%;min-height:30px; font-size:12px;" class="blue-bg">
+                        获取验证码
+                    </el-button>
+                    <el-button v-else disabled size="small" class="common-btn" style="width:100%;min-height:30px; font-size:12px;">
+                        已发送（倒数{{ loginCountdown }}秒）
+                    </el-button>
+                </el-col>
+            </el-row>
+        </el-form-item>
+    </div>
+
+    <el-dialog v-model="captchaDialogVisible" title="验证码" width="50%" align-center style="max-width: 500px"
+        :close-on-click-modal="false" @keydown.enter.prevent>
+        <div class="light-bg form-field">
+            <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
+            <el-form-item tabindex="3" label="验证码" prop="captchaCode">
+                <div style="display:flex;width:100%;">
+                    <el-input v-model="props.form.captchaCode" label="验证码" placeholder="验证码"
+                        @keyup.enter="props.onClickConfirm" />
+                    <img style="width:150px;" :src="verificationImg" @click="getCode" />
+                </div>
+            </el-form-item>
+        </div>
+
+        <el-button size="large" class="blue-bg primary-btn" @click="props.onClickConfirm">
+            发送
+        </el-button>
+    </el-dialog>
+</template>
+  
+<script setup>
+import { ref, defineExpose } from 'vue';
+import { getVerificationCode } from "@/api/index/login";
+
+const props = defineProps(['form', 'onClickConfirm']);
+
+const loginCountdown = ref(0);
+const captchaDialogVisible = ref(false);
+const verificationImg = ref("");
+
+const closeDialog = () => {
+    captchaDialogVisible.value = false;
+}
+
+const getCode = () => {
+    props.form.captchaCode = '';
+
+    getVerificationCode().then((res) => {
+        if (res.code === 0) {
+            verificationImg.value = "data:image/png;base64," + res.data.img;
+            props.form.codeId = res.data.id;
+        }
+    })
+};
+
+const initCountdownTimer = () => {
+    loginCountdown.value = 60;
+    countdownTimer();
+}
+
+const countdownTimer = () => {
+    if (loginCountdown.value > 0) {
+        setTimeout(() => {
+            loginCountdown.value -= 1
+            countdownTimer()
+        }, 1000)
+    }
+}
+
+const openCaptchaForm = () => {
+    props.form.captchaCode = "";
+    captchaDialogVisible.value = true;
+    getCode();
+};
+
+defineExpose({
+    closeDialog,
+    initCountdownTimer,
+    getCode
+});
+</script>
+
+<style scoped lang="scss">
+.light-bg {
+    font-size: 14px;
+    border-radius: 30px;
+    box-shadow: 0px -1.7px 6.09px 0px #a2bff4 inset;
+}
+
+.form-field {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    padding: 8px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    width: 100%;
+
+    .form-field-icon {
+        margin: auto;
+    }
+}
+
+.blue-bg {
+    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+    box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 30px;
+}
+
+.primary-btn {
+    margin-top: 20px;
+    width: 100%;
+}
+</style>
+
+<style lang="scss">
+.form-field {
+    margin: 15px 0px;
+
+    .el-form-item {
+        margin-bottom: 0px;
+    }
+
+    .el-form-item__label {
+        justify-content: flex-start;
+    }
+
+    .el-input__wrapper {
+        box-shadow: none;
+        background: none;
+    }
+
+    .el-form-item.is-error {
+        margin-bottom: 15px;
+    }
+}
+</style>
+  
