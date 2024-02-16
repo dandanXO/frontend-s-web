@@ -24,8 +24,10 @@
                     <div class="answer-container">
                       <q-form>
                         <span  v-for="(ans, index) in item.choices" :key="index">
-                        <q-radio name="optionModal"  v-model="optionModal" :val="ans" :label="ans.choice" />
-                        <el-input 
+                        <q-radio name="optionModal" v-model="optionModal" :val="index" :label="ans.choice" />
+                        
+                        <div v-if="optionModal === index && ans.needSpecify">
+                        <q-input 
                               class="answer-input-fill"
                               v-model="answerInputModal"
                               placeholder="请输入获取渠道"
@@ -33,6 +35,7 @@
                               :autosize="{ minRows: 4 }"
                               @input="getSelected(item, ans.choice)"
                             />
+                            </div>
                           </span>
                       </q-form>
                       <!-- <el-radio-group v-model="optionModal" >
@@ -100,12 +103,15 @@
 
 <script setup>
 import { ref, reactive, onMounted } from "vue";
+import {userStore} from "src/stores";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
+import {getRndInteger} from "boot/utils";
 
 var qs = require("qs");
 const $q = useQuasar();
 
+const store = userStore();
 const recordsPagination = reactive({ size: 0, current: 0, total: 0, pages: 0 });
 const uiIsShowStatus = reactive({
   startAnswerBox: true,
@@ -199,7 +205,7 @@ const getSelected = (item, ans) => {
   }
   cacheChoices[item.sequence - 1] = cacheObj
 }
-const btnClick = (btnType) => {
+const btnClick = async (btnType) => {
   if (optionModal.value === null && (btnType === 'next' || btnType === 'final')) {
     return $q.notify({
         color: "negative",
@@ -252,12 +258,36 @@ const btnClick = (btnType) => {
     const questionDiv = document.getElementById("questionContainer");
     const QRDiv = document.getElementById("QRContainer");
     // When Submit API is COMPLETE
-    eventapi.post("/questionnaire/submit", qs.stringify(choices)).then((res) => {
-      if (res.code === 0) {
-        questionDiv.style.display = "none";
-        QRDiv.style.display = "block";
-      }
-    }); 
+    
+    var evtArray = Object.values(process.env.EVT_API);
+    var evtApi = evtArray[getRndInteger(0, evtArray.length)];
+    try {
+          const response = await fetch(
+              `${evtApi}/questionnaire/submit`,
+              {
+                method: "POST",
+                body: qs.stringify(choices),
+                headers: {
+                  token: `${store.token}`,
+                  'Content-Type': 'application/json'
+                }
+              }
+          );
+          const data = await response.json();
+          if (data.code === 0) {
+            questionDiv.style.display = "none";
+            QRDiv.style.display = "block";
+          } else {
+            $q.notify({
+              type: "negative",
+              position: "top",
+              message: `提交失败。请稍后再试。`,
+              icon: "report_problem"
+            });
+          }
+        } catch (error) {
+          console.error(error);
+        }
   }
 }
 
@@ -303,8 +333,8 @@ onMounted(() => {
 <style scoped lang="scss">
 .quiz-container {
   //   background: salmon;
-  margin-top: 40px;
-  margin-bottom: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
   max-width: 600px;
@@ -321,9 +351,9 @@ onMounted(() => {
     font-size: 2rem;
     font-weight: 600;
     background: linear-gradient(180deg, #2095ff 20%, rgba(217, 217, 217, 0) 100%);
-    border-top-left-radius: 40px;
-    border-top-right-radius: 40px;
-    padding: 12px 12px 40px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding: 12px 12px 20px;
     margin-bottom: -24px;
   }
 
@@ -338,9 +368,9 @@ onMounted(() => {
   }
 
   .quiz-content {
-    // border-top-left-radius: 40px;
-    // border-top-right-radius: 40px;
-    padding: 40px 12px 12px;
+    // border-top-left-radius: 20px;
+    // border-top-right-radius: 20px;
+    padding: 20px 12px 12px;
     border-radius: 20px;
     border: 3px solid #fff;
     background: #FCFDFE;
@@ -371,7 +401,7 @@ onMounted(() => {
   }
 }
 .questions-content {
-    padding: 40px 12px 12px;
+    padding: 20px 12px 12px;
     border-radius: 20px;
     border: 3px solid #fff;
     background: #FCFDFE;
@@ -384,8 +414,8 @@ onMounted(() => {
 }
 .questions-container {
   //   background: salmon;
-  margin-top: 40px;
-  margin-bottom: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
   max-width: 600px;
@@ -402,9 +432,9 @@ onMounted(() => {
     font-size: 2rem;
     font-weight: 600;
     background: linear-gradient(180deg, #2095ff 20%, rgba(217, 217, 217, 0) 100%);
-    border-top-left-radius: 40px;
-    border-top-right-radius: 40px;
-    padding: 12px 12px 40px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding: 12px 12px 20px;
     margin-bottom: -24px;
   }
 
@@ -429,10 +459,10 @@ onMounted(() => {
   }
 
   .questions-content {
-    // border-top-left-radius: 40px;
-    // border-top-right-radius: 40px;
-    padding: 40px 12px 12px;
-    border-radius: 40px;
+    // border-top-left-radius: 20px;
+    // border-top-right-radius: 20px;
+    padding: 20px 12px 12px;
+    border-radius: 20px;
     border: 3px solid #fff;
     background: radial-gradient(177.6% 177.6% at 50% 50%, #fff 0%, rgba(255, 255, 255, 0) 100%);
     display: flex;
