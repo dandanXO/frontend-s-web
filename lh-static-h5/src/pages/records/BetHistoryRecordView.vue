@@ -36,6 +36,7 @@
         v-model="platform"
         :options="platformsList"
         placeholder="选择平台"
+        map-options
         @clear="platform = ''"
         @update:model-value="searchRecord"
       ></q-select>
@@ -92,7 +93,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive } from "vue";
+import { onMounted, ref, reactive, onActivated } from "vue";
 import { api } from "boot/axios";
 import { cached } from "boot/cache";
 import { userStore } from "src/stores";
@@ -194,7 +195,7 @@ const loadDepositTable = (isNew) => {
     visible.value = true;
   }
 
-  var platformName = platform.value ? platform.value.value : "";
+  var platformName = platform.value ? (platform.value.value === "BBINDY" ? "BBIN" : platform.value.value) : "";
   let paramData = {
     startDate: startDate,
     endDate: endDate,
@@ -285,6 +286,7 @@ const getGameName = (gameName) => {
 };
 
 const loadPlatformLists = () => {
+  platformsList.value = [];
   cached
     .get("LOGGEDPLATFORMS", () =>
       api.get("/session/loggedInPlatform").then((response) => {
@@ -292,7 +294,12 @@ const loadPlatformLists = () => {
       })
     )
     .then((data) => {
-      _.each(data, function (item, index) {
+      platformsList.value.push({
+        label: "全部平台",
+        value: ""
+      });
+
+      _.each(data, function(item, index) {
         var option = {
           label: getGameName(item.name),
           value: item.code
@@ -329,7 +336,7 @@ const tableHeaders = [
   }
 ];
 
-onMounted(async () => {
+onActivated(async () => {
   await loadPlatformLists();
 
   const startMonth = moment(startDate).format("MM");
@@ -348,6 +355,7 @@ onMounted(async () => {
   margin-left: 24px;
   margin-right: 12px;
 }
+
 .table-record {
   width: 100%;
   gap: 10px;
@@ -457,6 +465,7 @@ onMounted(async () => {
     }
   }
 }
+
 .payout-total {
   width: 240px;
 }
