@@ -65,7 +65,7 @@
             >
               <q-btn @click="openWithdrawConfirmDialog(det)" outline label="确认到账" size="sm" color="bright" />
             </template>
-            <q-btn outline label="复制" @click="copyText(det.orderNo)" size="sm" color="bright" />
+            <q-btn outline label="复制" @click="copyText(det.serialNumber)" size="sm" color="bright" />
           </div>
         </q-card>
         <template v-slot:loading>
