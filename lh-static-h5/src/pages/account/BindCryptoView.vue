@@ -102,7 +102,7 @@
             @click="onTypeToggleBtnClick(bankIndex)"
           >
             <img :src="imgURL + bank.bankIcon" alt="" />
-            <div>{{ bank.name }}</div>
+            <div>{{ bank.name === 'USDTTRC' ? 'USDT' : bank.name }}</div>
           </q-btn>
         </div>
 

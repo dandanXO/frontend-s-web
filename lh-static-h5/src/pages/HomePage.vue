@@ -1044,7 +1044,7 @@ export default defineComponent({
             }
             if (platTypes.indexOf("FISH") > -1 && element.code !== "AGF") {
               var fishObj = Object.assign({}, element);
-              fishObj.title = fishObj.name + " 捕鱼";
+              fishObj.title = translateRecord(fishObj.name);
               fishObj.icon = "fish";
               fishObj.subtitle = "捕鱼游戏";
 
