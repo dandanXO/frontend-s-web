@@ -485,6 +485,7 @@ const onSubmit = (e) => {
 onMounted(() => {
   loadPersonalMailbox();
   loadNotifyMailbox();
+  checkMailboxUnread();
   // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
 });
 </script>
