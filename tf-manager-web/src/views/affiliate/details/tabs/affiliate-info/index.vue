@@ -134,7 +134,7 @@
             {{ t('fields.disable') }}
           </el-button>
         </el-descriptions-item>
-        <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context" v-permission="['sys:member:detail']">
+        <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context" v-permission="['sys:affiliate:detail']">
           <template #label>
             <div>
               <svg-icon icon-class="lock" style="height: 16px;width: 16px;" />
@@ -151,12 +151,12 @@
             -
           </el-tag>
           <el-button v-if="memberDetail.status === 'NORMAL'" type="info" size="mini" style="float: right;"
-                     v-permission="['sys:member:update:state']" @click="showDialog('FREEZE_MEMBER')"
+                     v-permission="['sys:affiliate:update:state']" @click="showDialog('FREEZE_MEMBER')"
           >
             {{ t('fields.freeze') }}
           </el-button>
           <el-button v-if="memberDetail.status === 'FROZEN'" type="info" size="mini" style="float: right;"
-                     v-permission="['sys:member:update:state']" @click="showDialog('UNFREEZE_MEMBER')"
+                     v-permission="['sys:affiliate:update:state']" @click="showDialog('UNFREEZE_MEMBER')"
           >
             {{ t('fields.open') }}
           </el-button>
