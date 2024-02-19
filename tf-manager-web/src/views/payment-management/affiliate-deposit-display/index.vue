@@ -179,7 +179,7 @@
           </el-row>
         </el-form-item>
         <div class="dialog-footer">
-          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
+          <el-button @click="uiControl.dialogSettingVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submitSetting">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
