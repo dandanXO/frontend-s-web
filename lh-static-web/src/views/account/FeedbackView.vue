@@ -73,7 +73,7 @@
           </el-form>
         </el-tab-pane>
         <el-tab-pane key="quiz" name="quiz" :label="'有奖问答'">
-          <div :class="`quiz-container ${uiIsShowStatus.startAnswerBox ? '' : 'hide'}`">
+          <div v-if="!isAnswered" class="quiz-container">
             <div class="quiz-header">
               有奖问答
             </div>
@@ -88,7 +88,7 @@
               </div>
             </div>
           </div>
-          <div :class="`questions-container ${uiIsShowStatus.questionBox ? 'show' : ''}`">
+          <div v-if="isAnswered" class="questions-container">
             <!-- <div class="questions-back-btn">
                 <img src="../../assets/feedback/back-btn.png"/>
             </div> -->
@@ -98,7 +98,7 @@
             <div class="questions-gift">
                 <img src="../../assets/feedback/gift.png"/>
             </div>
-            <div class="questions-content" id="questionContainer">
+            <div class="questions-content" v-if="!isAnswered">
               <div v-for="(item, i) in quesTitleOptions" :key="i" class="question-title-container">
                   <template v-if="recordsPagination.current === item.sequence">
                     <div class="questions-title">
@@ -137,7 +137,7 @@
               </div>
             </div> 
             
-            <div class="questions-content" id="QRContainer" style="display: none">
+            <div class="questions-content" v-if="isAnswered">
               <div class="thumbs-up-div"><img src="../../assets/feedback/thumbs-up.png" /></div>
               <div class="header-title-div">
                 <span class="span1">恭喜您完成本月的调查问卷</span> 
@@ -173,10 +173,12 @@
 import { ref, reactive, onMounted } from "vue";
 import { mailInbox, mailOutbox, wirteMail } from "@/api/personal/mailbox";
 // import { message } from "ant-design-vue";
-import { getQuestionnaireList, submitQuestionnaire } from "@/api/index/promo";
+import { getQuestionnaireList, submitQuestionnaire, getQuestionnaireAns } from "@/api/index/promo";
+import { userStore } from "@/store"
 import { ElMessage } from "element-plus";
 import { CaretBottom } from '@element-plus/icons-vue'
 
+const store = userStore();
 const recordsPagination = reactive({ size: 3, current: 1, total: 3, pages: 3 });
 const uiIsShowStatus = reactive({
   startAnswerBox: true,
@@ -251,7 +253,7 @@ const getQuesTitleOptions = () => {
 
   })
 }
-
+const isAnswered = ref(false)
 const answerInputModal = ref('');
 const choices = reactive([]);
 const cacheChoices = reactive([]);
@@ -315,13 +317,14 @@ const btnClick = (btnType) => {
   })
   
   if (btnType === 'final') {
-    const questionDiv = document.getElementById("questionContainer");
-    const QRDiv = document.getElementById("QRContainer");
+    // const questionDiv = document.getElementById("questionContainer");
+    // const QRDiv = document.getElementById("QRContainer");
     // When Submit API is COMPLETE
     submitQuestionnaire(choices).then((res) => {
       if (res.code === 0) {
-        questionDiv.style.display = "none";
-        QRDiv.style.display = "block";
+        // questionDiv.style.display = "none";
+        // QRDiv.style.display = "block";
+        isAnswered.value = true;
       }
     })
   }
@@ -476,10 +479,23 @@ const onSubmit = (e) => {
     });
   loadingBtn.value = false;
 };
+const testAns = () => {
+  getQuestionnaireAns().then((res) => {
+    if (res.code === 0) {
+      if (res.data && res.data.length === 0) {
+        loadPersonalMailbox();
+        getQuesTitleOptions();
+      } else {
+        isAnswered.value = true;
+      }
+    }
+  })
+}
 
 onMounted(() => {
-  loadPersonalMailbox();
-  getQuesTitleOptions();
+  if (store.token) {
+    testAns();
+  }
   
   // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
 });
@@ -562,10 +578,6 @@ onMounted(() => {
   margin-left: auto;
   margin-right: auto;
   max-width: 600px;
-  display: none;
-  &.show {
-    display: block;
-  }
 
   .questions-header {
     display: flex;

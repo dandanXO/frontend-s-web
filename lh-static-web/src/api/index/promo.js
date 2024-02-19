@@ -184,9 +184,9 @@ export function getQuestionnaireList() {
   return server.EVENT.get("/questionnaire/list");
 }
 
-// export function submitQuestionnaire(choices) {
-//   return server.EVENT.post("/questionnaire/submit", choices);
-// }
+export function getQuestionnaireAns() {
+  return server.EVENT.get("/questionnaire/answers");
+}
 
 export const submitQuestionnaire = (formData) => {
   const requestOptions = {
