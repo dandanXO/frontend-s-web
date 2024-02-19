@@ -37,7 +37,7 @@
               <li>当月的佣金分佣发放时间为下个月的五号到十号会结算完毕.</li>
               <li>佣金有系统直接发放到代理账户，无需流水，绑定银行卡后即可申请提款。</li>
               <li>代理佣金计算方式：<br>
-                <span class="highlight">[（投注输赢额-优惠100%）-（存款+提款）*1%-平台费*8%]*佣金比例</span>
+                <span class="highlight">[（投注输赢额-优惠100%）-（存款+提款）*1.6%-平台费*8%]*佣金比例</span>
               </li>
               <li>代理推广每月至少需要新注册活跃会员达到3名，如无达到将视为无推广雷火平台，佣金减半，如果三个月累计新注册活跃会员未达到十位将会停用代理账户等待代理重新联系网站开启。</li>
             </ul>
@@ -108,8 +108,8 @@
                   </div>
                   <div class="agent-demo-table">
                     <div class="agent-demo-table-tr">
-                      <div class="txt-left">扣除存提手续费1%</div>
-                      <div class="txt-right">-10</div>
+                      <div class="txt-left">扣除存提手续费1.6%</div>
+                      <div class="txt-right">-16</div>
                     </div>
                   </div>
                   <div class="agent-demo-table">
@@ -123,7 +123,7 @@
                   <div class="agent-demo-table">
                     <div class="agent-demo-table-tr">
                       <div class="txt-left">盈利</div>
-                      <div class="txt-right">902</div>
+                      <div class="txt-right">896</div>
                     </div>
                   </div>
                   <div class="agent-demo-table">
@@ -136,7 +136,7 @@
                 <div class="agent-demo-table">
                   <div class="agent-demo-table-tr">
                     <div class="txt-left">代理佣金</div>
-                  <div class="txt-right">315.7</div>
+                  <div class="txt-right">313.6</div>
                 </div>
               </div>
             </div>
@@ -158,8 +158,8 @@
                 </div>
                 <div class="agent-demo-table">
                   <div class="agent-demo-table-tr">
-                    <div class="txt-left">扣除存提手续费1%</div>
-                    <div class="txt-right">-1400</div>
+                    <div class="txt-left">扣除存提手续费1.6%</div>
+                    <div class="txt-right">-2240</div>
                   </div>
                 </div>
                 <div class="agent-demo-table">
@@ -173,7 +173,7 @@
                 <div class="agent-demo-table">
                   <div class="agent-demo-table-tr">
                     <div class="txt-left">盈利</div>
-                    <div class="txt-right">108840</div>
+                    <div class="txt-right">108000</div>
                   </div>
                 </div>
                 <div class="agent-demo-table">
@@ -186,12 +186,12 @@
               <div class="agent-demo-table">
                 <div class="agent-demo-table-tr">
                   <div class="txt-left">代理佣金</div>
-                  <div class="txt-right">43536</div>
+                  <div class="txt-right">43200</div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="agent-stress-tip agent-margintop-normal">备注：存提手续费=存款加上提款总额的1%</div>
+          <div class="agent-stress-tip agent-margintop-normal">备注：存提手续费=存款加上提款总额的1.6%</div>
         </div>
       </div>
       <div>

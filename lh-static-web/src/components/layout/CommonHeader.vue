@@ -595,10 +595,11 @@
 <script lang="js">
 
 import "vue3-carousel/dist/carousel.css";
-import {defineComponent, onMounted, ref, reactive, watch, computed} from "vue";
+import { defineComponent, onMounted, ref, reactive, watch, computed, watchEffect } from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {userStore} from "@/store/index";
-import {getVerificationCode, register, findAccount} from "@/api/index/login";
+import {getVerificationCode, register} from "@/api/index/login";
+import { findAccount } from "@/api/index/forgotPwd";
 import {sendSms} from "@/api/personal/personal";
 import {ElMessage} from "element-plus";
 import {
@@ -1299,7 +1300,7 @@ export default defineComponent({
 
     });
 
-    watch(() => store.loginPageVisible, () => {
+    watchEffect(() => store.loginPageVisible, () => {
       if (store.loginPageVisible) {
         // loginDialogVisible.value = true
         router.push('/login');
@@ -1310,7 +1311,7 @@ export default defineComponent({
       // Optionally you can set immediate: true config for the watcher to run on init
       // }, { immediate: true });
     });
-    watch(() => store.regPageVisible, () => {
+    watchEffect(() => store.regPageVisible, () => {
       if (store.regPageVisible) {
         // registerDialogVisible.value = true
         router.push('/register');
@@ -1481,8 +1482,8 @@ export default defineComponent({
       return 8;
     }
 
-    watch(
-        () => regForm.password,
+    // watch(
+    //     () => regForm.password,
         // () => {
         //   pwdStrength.value = "";
 
@@ -1521,7 +1522,7 @@ export default defineComponent({
 
         //   // console.log(pwdStrength.value);
         // },
-    );
+    // );
     const todayDate = () => {
       return 'GTM+8 ' + moment().utcOffset('+08:00').format('M/D/YYYY, h:mm:ss A ') + moment(new Date()).locale('zh-cn').format('dddd');
     }

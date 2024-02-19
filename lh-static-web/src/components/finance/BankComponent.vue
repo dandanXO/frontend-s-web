@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref, defineEmits, defineExpose } from "vue";
+import { ref } from "vue";
 import { postDeposit } from "@/api/personal/deposit";
 import { doIt } from "@/utils/action";
 // import { message } from "ant-design-vue";

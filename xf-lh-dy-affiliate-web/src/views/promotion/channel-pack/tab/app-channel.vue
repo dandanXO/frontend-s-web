@@ -178,7 +178,7 @@ function onAppTypeChange(val) {
 async function submitCreatePack() {
   requestForm.value.validate(async valid => {
     if (valid) {
-      if (form.name === null) {
+      if (form.name === null || form.name === '') {
         form.name = form.appType.replace("_", " ") + ' ' + affInfo.affiliateCode
       }
       await createChannelPack(form)

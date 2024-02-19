@@ -33,7 +33,7 @@
                 separator=","
                 :autoinit="true"
               />
-              <div class="unit">个</div>
+              <div class="unit">家</div>
             </div>
           </div>
           <div class="title">合作支付平台</div>
@@ -69,7 +69,7 @@
                 separator=","
                 :autoinit="true"
               />
-              <div class="unit">个</div>
+              <div class="unit">家</div>
             </div>
           </div>
           <div class="title">合作游戏平台</div>

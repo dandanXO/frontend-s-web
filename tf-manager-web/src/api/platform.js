@@ -32,3 +32,7 @@ export const getPlatformsBySite = (siteId) => {
 export const getPlatformsBySiteAndGameType = (siteId, gameType) => {
   return https().request("/platform/siteAndGameType", Method.GET, { siteId: siteId, gameType: gameType }, ContentType.form);
 };
+
+export const getSimplePlatformsBySite = (siteId) => {
+  return https().request("/platform/sitePlatforms/simpleByType", Method.GET, { siteId: siteId }, ContentType.form);
+};

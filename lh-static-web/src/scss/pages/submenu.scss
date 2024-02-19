@@ -19,6 +19,11 @@
       }
     }
 
+    &:active{
+      filter: brightness(0.96);
+      transform: translate(0px , 1px);
+    }
+
     .platform-menu-title {
       padding-top: 20px;
       word-break: keep-all;

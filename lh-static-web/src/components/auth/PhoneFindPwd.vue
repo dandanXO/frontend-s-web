@@ -1,37 +1,78 @@
 <template>
-    <el-form ref="forgotPwdFormRef" :rules="loginRules" :model="forgotPwdForm" label-width="90" size="large">
+    <el-form ref="forgotPwdFormRef" :rules="forgotPwdFormRules" :model="forgotPwdForm" label-width="90" size="large">
         <div class="light-bg form-field">
-            <img class="form-field-icon" src="@/assets/home/auth/phone-username-icon.png" />
-            <el-form-item label="手机号" prop="phoneNumber">
-                <el-input v-model="forgotPwdForm.phoneNumber" placeholder="输入手机号" />
+            <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
+            <el-form-item label="用户名" prop="loginName">
+                <el-input v-model="forgotPwdForm.loginName" placeholder="请输入6-11位非汉字字符" clearable />
             </el-form-item>
         </div>
 
-        <div class="light-bg form-field">
-            <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
-            <el-form-item label="验证码" prop="captchaCode">
-                <div style="display:flex;width:100%;">
-                    <el-input v-model="forgotPwdForm.captchaCode" label="验证码" placeholder="验证码" @keyup.enter="submitForm">
-                    </el-input>
-                    <img style="width:90px;" :src="verificationImg" @click="getCode" />
-                </div>
-            </el-form-item>
-        </div>
+        <CaptchaVerify :form="forgotPwdForm" :onClickConfirm="submitForm" ref="captchaVerifyRef" />        
 
-        <el-button :loading="loadingBtn" size="large" class="blue-bg primary-btn" @click="submitForm">
+        <el-button :loading="loadingBtn" size="large" class="blue-bg primary-btn" @click="submitForm" v-if="!forgotPwdPostVerifyForm.codeId">
             提交
         </el-button>
     </el-form>
+
+    <el-form ref="forgotPwdPostVerifyFormRef" :rules="forgotPwdPostVerifyFormRules" :model="forgotPwdPostVerifyForm" label-width="90" size="large" v-if="forgotPwdPostVerifyForm.codeId">
+            <div class="light-bg form-field">
+                <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
+                <el-form-item label="验证码" prop="code">
+                    <div style="display:flex;width:100%;">
+                        <el-input v-model="forgotPwdPostVerifyForm.code" label="验证码" placeholder="验证码">
+                        </el-input>
+                    </div>
+                </el-form-item>
+            </div>
+
+            <div class="light-bg form-field">
+                <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
+                <el-form-item label="密码" prop="password">
+                    <el-input class="wTip" v-model="forgotPwdPostVerifyForm.password" placeholder="请输入6-11位字母/数字组合" type="password" show-password clearable>
+                        <template #append></template>
+                    </el-input>
+                </el-form-item>
+            </div>
+
+            <div class="light-bg form-field">
+                <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
+                <el-form-item label="确认密码" prop="confirmPwd">
+                    <el-input class="half wTip" v-model="forgotPwdPostVerifyForm.confirmPwd" placeholder="请确认密码" type="password" show-password clearable>
+                        <template #append></template>
+                    </el-input>
+                </el-form-item>
+            </div>   
+
+            <el-button :loading="loadingBtn" size="large" class="blue-bg primary-btn" @click="submitPostVerifyForm">
+            提交
+        </el-button>
+    </el-form>
+
 
     <div style="text-align: center;margin-top: 20px;"><router-link to="/login">返回登入页面</router-link></div>
 </template>
   
 <script setup>
 import { ref, onMounted, reactive } from "vue";
-import { getVerificationCode } from "@/api/index/login";
+import { sendForgetPasswordPhone, verifyForgetPasswordPhone } from "@/api/index/forgotPwd";
+import CaptchaVerify from "./CaptchaVerify.vue";
+import { ElMessage } from "element-plus";
 
-const loginRules = {
-    phoneNumber: [
+const forgotPwdFormRules = {
+    loginName: [
+        {
+            required: true,
+            message: "请输入用户名",
+            trigger: "blur"
+        },
+        {
+            min: 6,
+            max: 12,
+            message: "长度要在 6-12 之间",
+            trigger: "blur"
+        }
+    ],
+    phone: [
         {
             required: true,
             message: "请输入手机号码",
@@ -53,43 +94,148 @@ const loginRules = {
     ]
 };
 
+function charType(num) {
+    if (num >= 48 && num <= 57) {
+        return 1;
+    }
+    if (num >= 97 && num <= 122) {
+        return 2;
+    }
+    if (num >= 65 && num <= 90) {
+        return 4;
+    }
+    return 8;
+}
+
+let validatePassStrength = (r, v) => {
+    var strength = "";
+    var pwd = v;
+    var result = 0;
+    for (var i = 0, len = pwd.length; i < len; ++i) {
+        result |= charType(pwd.charCodeAt(i));
+    }
+
+    var level = 0;
+    for (i = 0; i <= 4; i++) {
+        if (result & 1) {
+            level++;
+        }
+        result = result >>> 1;
+    }
+
+    if (pwd.length >= 6) {
+    } else {
+        return Promise.resolve();
+    }
+};
+
+let validatePass2 = async (r, v) => {
+    if (v === "") {
+        return Promise.reject("请重新输入密码");
+    } else if (v !== forgotPwdPostVerifyForm.password) {
+        return Promise.reject("密码不同");
+    } else {
+        return Promise.resolve();
+    }
+};
+
+let validatePass = async (r, v) => {
+    if (v === "") {
+        return Promise.reject('请输入密码');
+    } else {
+        return validatePassStrength(r, v);
+    }
+};
+
+const forgotPwdPostVerifyFormRules = {
+    password: [
+        {
+            validator: validatePass,
+            trigger: "change",
+        },
+    ],
+    confirmPwd: [
+        {
+            validator: validatePass2,
+            trigger: "change",
+        },
+    ],
+}
+
 const forgotPwdForm = reactive({
-    phoneNumber: '',
+    loginName: '',
+    phone: '',
     captchaCode: ''
 })
 
-const forgotPwdFormRef = ref([]);
+const forgotPwdPostVerifyForm = reactive({
+    codeId: '',
+    code: '',
+    password: '',
+    confirmPwd: ''
+})
+
+const captchaVerifyRef = ref();
+
+const forgotPwdFormRef = ref();
+const forgotPwdPostVerifyFormRef = ref();
 const loadingBtn = ref(false);
 
 const submitForm = () => {
     loadingBtn.value = true
-    
+
     forgotPwdFormRef.value.validate().then(() => {
-        // call api
+        const params = {
+            phone: forgotPwdForm.phone,
+            loginName: forgotPwdForm.loginName,
+            captchaCode: forgotPwdForm.captchaCode,
+            codeId: forgotPwdForm.codeId
+        }
+        sendForgetPasswordPhone(params).then((res) => {
+            if(res.code === 0) {
+                ElMessage.success("验证码已经发送到手机");
+                forgotPwdPostVerifyForm.codeId = res.data.codeId;
+                captchaVerifyRef.value.closeDialog();
+                captchaVerifyRef.value.initCountdownTimer();
+            }
+        }).catch((error) => {
+            console.log(error)
+            captchaVerifyRef.value.getCode();
+        })
     }).catch((err) => {
         console.log(err);
-        getCode();
+        captchaVerifyRef.value.getCode();
     }).finally(() => {
         loadingBtn.value = false
     });
-        
-
 };
 
-const getCode = () => {
-    forgotPwdForm.captchaCode = '';
+const submitPostVerifyForm = () => {
+    loadingBtn.value = true
 
-    getVerificationCode().then((res) => {
-        if (res.code === 0) {
-            verificationImg.value = "data:image/png;base64," + res.data.img;
-            forgotPwdForm.codeId = res.data.id;
+    forgotPwdPostVerifyFormRef.value.validate().then(() => {
+        const params = {
+            phone: forgotPwdForm.phone,
+            code: forgotPwdPostVerifyForm.code,
+            codeId: forgotPwdPostVerifyForm.codeId,
+            newPassword: forgotPwdPostVerifyForm.confirmPwd
         }
-    })
+
+        verifyForgetPasswordPhone(params).then((res) => {
+            if(res.code === 0) {
+                ElMessage.success("成功");
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
+    }).catch((err) => {
+        console.log(err);
+    }).finally(() => {
+        loadingBtn.value = false
+    });
 };
-const verificationImg = ref("");
 
 onMounted(() => {
-    getCode();
 });
 </script>
 

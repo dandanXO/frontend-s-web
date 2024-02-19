@@ -28,7 +28,9 @@
   
 <script setup>
 import { ref, onMounted, reactive } from "vue";
-import { getVerificationCode, findAccount } from "@/api/index/login";
+import { getVerificationCode } from "@/api/index/login";
+import { findAccount } from "@/api/index/forgotPwd";
+import { ElMessage } from "element-plus";
 
 const loginRules = {
     email: [

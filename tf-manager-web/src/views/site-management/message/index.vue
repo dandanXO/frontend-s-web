@@ -17,6 +17,7 @@
 import { defineComponent, ref } from "vue";
 import SystemMessage from "./system-message-template/index.vue";
 import MessageOutbox from "./message-outbox/index.vue";
+import MemberMessage from "./member-message/index.vue";
 import { useI18n } from "vue-i18n";
 
 export default defineComponent({
@@ -28,7 +29,8 @@ export default defineComponent({
     const activeName = ref('message')
     const tabs = [
       { key: 1, displayName: t('fields.composeMessage'), name: "message", componentName: SystemMessage },
-      { key: 2, displayName: t('fields.inbox'), name: "message-inbox", componentName: MessageOutbox },
+      { key: 2, displayName: t('fields.memberMessage'), name: "member-message", componentName: MemberMessage },
+      { key: 3, displayName: t('fields.inbox'), name: "message-inbox", componentName: MessageOutbox },
     ]
     const handleClick = (tab, event) => {
       console.log(tab, event)

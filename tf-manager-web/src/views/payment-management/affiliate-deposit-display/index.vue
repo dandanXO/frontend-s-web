@@ -58,7 +58,7 @@
         size="small"
         label-width="150px"
       >
-        <el-form-item :label="t('fields.privilegeName') + 1" prop="privilegeId1">
+        <el-form-item :label="t('fields.privilegeName') + 1" prop="privilegeId1" v-if="checkSetting(1)">
           <el-select
             filterable
             clearable
@@ -76,7 +76,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.privilegeName') + 2" prop="privilegeId2">
+        <el-form-item :label="t('fields.privilegeName') + 2" prop="privilegeId2" v-if="checkSetting(2)">
           <el-select
             filterable
             clearable
@@ -94,7 +94,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.privilegeName') + 3" prop="privilegeId3">
+        <el-form-item :label="t('fields.privilegeName') + 3" prop="privilegeId3" v-if="checkSetting(3)">
           <el-select
             filterable
             clearable
@@ -112,7 +112,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('fields.icon') + 1" prop="icon1">
+        <el-form-item :label="$t('fields.icon') + 1" prop="icon1" v-if="checkSetting(1)">
           <el-row :gutter="24">
             <el-col v-if="settingForm.icon1" :span="18" style="width: 250px">
               <el-image
@@ -133,9 +133,8 @@
               </el-button>
             </el-col>
           </el-row>
-          <!-- <el-input v-model.number="ruleForm.icon" autocomplete="off" /> -->
         </el-form-item>
-        <el-form-item :label="$t('fields.icon') + 2" prop="icon2">
+        <el-form-item :label="$t('fields.icon') + 2" prop="icon2" v-if="checkSetting(2)">
           <el-row :gutter="24">
             <el-col v-if="settingForm.icon2" :span="18" style="width: 250px">
               <el-image
@@ -156,9 +155,8 @@
               </el-button>
             </el-col>
           </el-row>
-          <!-- <el-input v-model.number="ruleForm.icon" autocomplete="off" /> -->
         </el-form-item>
-        <el-form-item :label="$t('fields.icon') + 3" prop="icon3">
+        <el-form-item :label="$t('fields.icon') + 3" prop="icon3" v-if="checkSetting(3)">
           <el-row :gutter="24">
             <el-col v-if="settingForm.icon3" :span="18" style="width: 250px">
               <el-image
@@ -179,7 +177,6 @@
               </el-button>
             </el-col>
           </el-row>
-          <!-- <el-input v-model.number="ruleForm.icon" autocomplete="off" /> -->
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
@@ -417,7 +414,7 @@
           size="mini"
           type="primary"
           v-permission="['sys:affiliate-deposit-display:update']"
-          @click="showSettingEdit()"
+          @click="showSettingEdit('ALL')"
         >
           {{ t('fields.update') }}
         </el-button>
@@ -437,14 +434,14 @@
           <el-col
             v-for="item in list.setting"
             :key="item.id"
-            style="margin: 10px; width: 200px;"
+            style="margin: 10px; width: 230px;"
           >
-            <el-card class="box-card" :body-style="{padding: '14px'}">
-              <img
+            <el-card class="box-card" :body-style="{padding: '14px'}" @click="showSettingEdit(item.id)">
+              <el-image
                 v-if="item.icon === 'OFFLINE1' || item.icon === 'test'"
                 :src="paymethodicon + '/000/fff.png&text=payment'"
-              >
-              <img :src="paymentDir + item.icon">
+              />
+              <el-image :src="paymentDir + item.icon" fit="contain" class="preview" />
             </el-card>
           </el-col>
         </div>
@@ -482,7 +479,7 @@
             #default="scope"
             v-if="hasPermission(['sys:affiliate:detail'])"
           >
-            <router-link :to="`details/${scope.row.affiliateId}?site=${scope.row.siteId}`">
+            <router-link :to="`/affiliate/details/${scope.row.affiliateId}?site=${scope.row.siteId}`">
               <el-link type="primary">{{ scope.row.loginName }}</el-link>
             </router-link>
           </template>
@@ -497,7 +494,6 @@
         <el-table-column prop="paymentName2" :label="t('fields.paymentChannel') + 2" />
         <el-table-column prop="paymentName3" :label="t('fields.paymentChannel') + 3" />
         <el-table-column prop="paymentName4" :label="t('fields.riskPaymentChannel')" />
-        <el-table-column :label="t('fields.privilegeName')" prop="privilegeName" />
         <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:affiliate-deposit-display:update'])">
           <template #default="scope">
             <el-button
@@ -556,6 +552,7 @@ const uiControl = reactive({
   imageDialogVisible: false,
   imageDialogTitle: '',
   imageDialogType: '',
+  dialogSetting: '',
 })
 const request = reactive({
   size: 30,
@@ -710,7 +707,16 @@ function showEdit(data) {
   })
 }
 
-function showSettingEdit() {
+function checkSetting(setting) {
+  if (uiControl.dialogSetting === 'ALL') {
+    return true
+  }
+  if (setting === uiControl.dialogSetting) {
+    return true
+  }
+}
+
+function showSettingEdit(mode) {
   showSettingDialog('EDIT')
   nextTick(() => {
     for (const key in setting.value) {
@@ -722,6 +728,9 @@ function showSettingEdit() {
       }
     }
   })
+  if (mode) {
+    uiControl.dialogSetting = mode
+  }
 }
 
 function showDialog(type) {

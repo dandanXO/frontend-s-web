@@ -375,9 +375,22 @@ const deleteMultipleMsg = () => {
 
 const deleteAllMsg = (m) => {
   const readType = m === null ? "ALL" : m;
-  mailboxNotifyState[readType] = [];
+  
+  if(m === 'ALL') {
+    mailboxNotifyState.NOTIFICATION = [];
+    mailboxNotifyState.ACTIVITY = [];
+    mailboxNotifyState.ANNOUNCEMENT = [];
+    mailboxNotifyState.PAYMENT = [];
+    mailboxNotifyState.ALL = [];
+  } else {
+    mailboxNotifyState[readType] = [];
+    mailboxNotifyState['ALL'] = mailboxNotifyState['ALL'].filter((item) => item.type !== m);
+  }
+  
+  // if { type: "ALL" }, not needed to be passed as params
+  const params = m === "ALL" ? undefined : m;
 
-  deleteAllMail(m)
+  deleteAllMail(params)
     .then((res) => {
       if (res.code === 0) {
         ElMessage({
@@ -472,6 +485,7 @@ const onSubmit = (e) => {
 onMounted(() => {
   loadPersonalMailbox();
   loadNotifyMailbox();
+  checkMailboxUnread();
   // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
 });
 </script>

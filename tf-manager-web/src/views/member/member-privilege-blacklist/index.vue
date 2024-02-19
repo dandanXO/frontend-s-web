@@ -165,22 +165,7 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.loginName')" prop="memberId">
-          <el-select
-            v-model="form.memberId"
-            :placeholder="t('fields.loginName')"
-            style="width: 350px;"
-            filterable
-            default-first-option
-            @focus="loadLoginNamesBySiteId"
-            :disabled="!form.siteId"
-          >
-            <el-option
-              v-for="item in memberNameList.list"
-              :key="item.id"
-              :label="item.loginName"
-              :value="item.id"
-            />
-          </el-select>
+          <el-input style="width: 350px" v-model="form.loginName" />
         </el-form-item>
         <el-form-item :label="t('fields.privilege')" prop="privilegeId">
           <el-select
@@ -306,7 +291,7 @@ import { createBatchBlacklist, createBlacklist, deleteBlacklist, getBlacklist } 
 import { getActivePrivilegeInfo, getActivePrivilegeInfoBySiteId, getPrivilegeExcelMapping } from "../../../api/privilege-info";
 import { useStore } from "../../../store";
 import { getSiteListSimple } from "../../../api/site";
-import { findIdByLoginName, getMemberListBySiteId } from "../../../api/member";
+import { findIdByLoginName } from "../../../api/member";
 import { TENANT } from "../../../store/modules/user/action-types";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { useI18n } from "vue-i18n";
@@ -344,9 +329,6 @@ const dialogWidth = ref("580px");
 
 let timeZone = null;
 const siteList = reactive({
-  list: []
-});
-const memberNameList = reactive({
   list: []
 });
 const privilegeInfoList = reactive({
@@ -454,15 +436,7 @@ async function loadPrivilegeInfos(siteId) {
 async function loadFormSelect() {
   form.memberId = null;
   form.privilegeId = null;
-  await loadLoginNamesBySiteId();
   await loadPrivilegeNamesBySiteId();
-}
-
-async function loadLoginNamesBySiteId() {
-  if (form.siteId) {
-    const { data: ret } = await getMemberListBySiteId(form.siteId);
-    memberNameList.list = ret;
-  }
 }
 
 async function loadPrivilegeNamesBySiteId() {

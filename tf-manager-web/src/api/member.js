@@ -33,6 +33,10 @@ export const updatePassword = (id, password, site) => {
   return https().request(`/member/${id}/password?_method=PUT`, Method.POST, { password: password, site: site }, ContentType.form);
 };
 
+export const getMemberStatus = (id, site) => {
+  return https().request(`/member/status/${id}/${site}`, Method.GET, {}, ContentType.form);
+};
+
 export const freezeMember = (id, member) => {
   return https().request(`/member/${id}/freeze?_method=PUT`, Method.POST, member, ContentType.form);
 };

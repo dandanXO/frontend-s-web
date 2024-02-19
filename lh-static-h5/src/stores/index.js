@@ -35,7 +35,9 @@ export const userStore = defineStore("userStore", {
             personalAddress: '',
             unreadInboxMail: 0,
             phoneVerified: false,
-            emailVerified: false
+            emailVerified: false,
+            currentDeposit: "",
+            levelUpDeposit: ""
         };
     },
     actions: {
@@ -184,7 +186,9 @@ export const userStore = defineStore("userStore", {
                     this.memberType = response.data.memberType;
                     this.vip = response.data.vip;
                     this.profilePicture = response.data.pictureUrl;
-                    this.displayName = response.data.displayName
+                    this.displayName = response.data.displayName;
+                    this.currentDeposit = response.data.currentDeposit;
+                    this.levelUpDeposit = response.data.levelUpDeposit;
                     // this.personalAddress = response.data.personalAddress
                     this.phoneVerified = response.data.phoneVerified;
                     this.emailVerified = response.data.emailVerified;

@@ -59,10 +59,9 @@
       :key="i"
       :name="i"
       class="column no-wrap flex-center"
-      :img-src="banner.mobileImageUrl"
+      :img-src="imgURL + banner.mobileImageUrl"
       @click="gotoPromo(banner)"
     ></q-carousel-slide>
-    <!--    :img-src="imgURL + banner.mobileImageUrl"-->
   </q-carousel>
 
   <div class="mid-announcement-section">
@@ -898,25 +897,6 @@ export default defineComponent({
     };
 
     function loadData() {
-      //TODO:: HARDCODED.
-      banners.value = [
-        {
-          category: "HOME",
-          desktopImageUrl: "home-banner1.png",
-          mobileImageUrl: require("../assets/images/home/home-banner1.png"),
-          promoPageId: null,
-          redirectUrl: "XingFa-red-packet-rain"
-        },
-        {
-          category: "HOME",
-          desktopImageUrl: "home-banner2.png",
-          mobileImageUrl: require("../assets/images/home/home-banner2.png"),
-          promoPageId: null,
-          redirectUrl: "XingFa-red-packet-rain"
-        }
-      ];
-
-      return;
       api
         .get("/promo/banner?category=HOME")
         .then((res) => {
@@ -1064,7 +1044,7 @@ export default defineComponent({
             }
             if (platTypes.indexOf("FISH") > -1 && element.code !== "AGF") {
               var fishObj = Object.assign({}, element);
-              fishObj.title = fishObj.name + " 捕鱼";
+              fishObj.title = translateRecord(fishObj.name);
               fishObj.icon = "fish";
               fishObj.subtitle = "捕鱼游戏";
 
