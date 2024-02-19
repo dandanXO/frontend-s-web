@@ -1920,6 +1920,7 @@ export default {
     BW1: 'BW1',
     BW2: 'BW2',
     BW3: 'BW3',
+    BW4: 'BW4',
     'To be affiliate paid': 'To be affiliate paid',
     'Affiliate Payment on going': 'Affiliate Payment on going',
     'Crypto Affiliate Payment on going': 'Crypto Affiliate Payment on going',
