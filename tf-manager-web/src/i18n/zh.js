@@ -398,6 +398,7 @@ export default {
     addGift: '新增奖品',
     addIpLabel: '新增 IP 标签',
     additionalTicketDetail: '加票信息',
+    additionalKey: '其他信息',
     addJob: '新增任务',
     addLimit: '新增限制',
     addLotteryResult: '新增彩票结果',

@@ -392,6 +392,7 @@ export default {
     addGift: 'Add Gift',
     addIpLabel: 'Add IP Label',
     additionalTicketDetail: 'Additional Ticket Detail',
+    additionalKey: 'Additional Key',
     addJob: 'Add Job',
     addLimit: 'add Limit',
     addLotteryResult: 'Add Lottery Result',

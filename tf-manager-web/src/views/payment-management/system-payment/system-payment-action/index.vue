@@ -117,6 +117,17 @@
         </el-form-item>
       </el-row>
       <el-row>
+        <el-form-item :label="t('fields.additionalKey')" prop="additionalKey">
+          <el-input
+            v-model="form.additionalKey"
+            :rows="2"
+            type="textarea"
+            :placeholder="t('fields.pleaseInput')"
+            class="form-input"
+          />
+        </el-form-item>
+      </el-row>
+      <el-row>
         <el-form-item :label="t('fields.className')" prop="className">
           <el-input v-model="form.className" class="form-input" />
         </el-form-item>
@@ -295,6 +306,7 @@ const form = reactive({
   createTime: null,
   updateBy: null,
   updateTime: null,
+  additionalKey: null,
 });
 
 const uiControl = reactive({
