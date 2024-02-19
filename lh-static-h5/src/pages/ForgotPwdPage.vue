@@ -143,7 +143,7 @@
           >
             <template v-slot:prepend>
               <div style="width: 24px; display: flex; align-items: center">
-                <img src="../assets/images/login/phone-icon.png" width="18" />
+                <img src="../assets/images/login/mail-icon.png" width="27" />
               </div>
             </template>
           </q-input>
@@ -480,6 +480,8 @@ export default defineComponent({
     const fgtpwdTab = ref("tabSms");
 
     const goToTab = (tabVal) => {
+      getCode();
+
       passwordFormPhone.codeId = "";
       passwordFormPhone.loginName = "";
       passwordFormPhone.phone = "";
@@ -629,6 +631,7 @@ function charType(num) {
     //border: 1px solid #fff;
     border-radius: 5px;
     background: #434343;
+    color:#fff;
     width: 33%;
     text-align: center;
   }
@@ -639,7 +642,7 @@ function charType(num) {
 
   span.normal-pwd {
     background: var(--q-warning);
-    color: var(--q-primary);
+    color: #000;
   }
 
   span.strong-pwd {
