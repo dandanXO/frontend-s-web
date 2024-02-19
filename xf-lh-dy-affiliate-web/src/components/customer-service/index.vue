@@ -16,7 +16,7 @@
             <div class="type">{{ c.type }}</div>
             <div class="link">{{ c.link }}</div>
             <div class="buttons">
-              <el-button v-for="(btn, btnkey) in c.btns" :key="btnkey" :type="btnkey === 1 ? 'primary' : 'plain'">{{ btn.text }}</el-button>
+              <el-button @click="copyMessage(i, btn.text, btnkey)" v-for="(btn, btnkey) in c.btns" :key="btnkey" :type="btnkey === 1 ? 'primary' : 'plain'">{{ btn.text }}</el-button>
             </div>
           </div>
         </div>
@@ -32,7 +32,7 @@ const contactlist = ref([
   {
     icon: 'cmail',
     type: '合营部电邮',
-    link: 'affiliate@dyvip99.com',
+    link: 'mailto:affiliate@dyvip99.com',
     btns: [{
       text: '咨询',
       action: ''
@@ -48,33 +48,33 @@ const contactlist = ref([
     },
     {
       text: '下载',
-      action: ''
+      action: 'https://im.qq.com/index/'
     }]
   },
   {
     icon: 'cskype',
     type: '合营部Skype',
-    link: 'Live:cid.b2a14236...',
+    link: 'live:.cid.1b8d9a018a52a8f5',
     btns: [{
       text: '复制',
       action: ''
     },
     {
       text: '下载',
-      action: ''
+      action: 'https://www.skype.com/zh-Hans/get-skype/'
     }]
   },
   {
-    icon: 'cflygram',
-    type: '合营Flygram',
-    link: 'dybet5',
+    icon: 'ctelegram',
+    type: 'Telegram',
+    link: '@leihuo123',
     btns: [{
       text: '复制',
       action: ''
     },
     {
       text: '下载',
-      action: ''
+      action: 'https://telegram.org/'
     }]
   },
   {
@@ -87,10 +87,44 @@ const contactlist = ref([
     },
     {
       text: '下载',
-      action: ''
+      action: 'https://www.batchat.com/'
     }]
   }
 ])
+const copyMessage = (position, text, btnPosition) => {
+  console.log(position);
+  console.log(text);
+  console.log(contactlist.value)
+  if (text === '咨询') {
+    const mailtoLink = contactlist.value[position].link
+    window.open(mailtoLink, '_blank');
+  }
+  if (text === '复制') {
+    let copyText = null;
+    copyText = contactlist.value[position].link;
+    // Create a temporary textarea element
+    const tempTextarea = document.createElement("textarea");
+    tempTextarea.value = copyText;
+    document.body.appendChild(tempTextarea);
+
+    // Select the text and copy it
+    tempTextarea.select();
+    document.execCommand("copy");
+
+    // Remove the temporary textarea element
+    document.body.removeChild(tempTextarea);
+    // const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+    contactlist.value[position].btns[btnPosition].text = '已复制'
+    // copybtntxt[position].value = "已复制";
+    setTimeout(() => {
+      contactlist.value[position].btns[btnPosition].text = '复制';
+    }, 2000);
+  }
+  if (text === '下载') {
+    const downloadLink = contactlist.value[position].btns[btnPosition].action
+    window.open(downloadLink, '_blank');
+  }
+};
 </script>
 <style lang="scss">
 .customer-service {
@@ -165,7 +199,10 @@ const contactlist = ref([
             width: 100%;
             max-width: 200px;
             .type, .link {
-                margin: 10px;
+                margin: 10px auto;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                width: 100%;
             }
             .buttons {
                 margin-top: 20px;
