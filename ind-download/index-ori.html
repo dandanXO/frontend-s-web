@@ -4,14 +4,14 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="shortcut icon" href="//www.gstatic.com/android/market_images/web/favicon_v3.ico">
+    <link id="favicon" rel="shortcut icon" href="//www.gstatic.com/android/market_images/web/favicon_v3.ico">
     <link rel="stylesheet" href="./style/css/cssmini.css">
     <meta property="og:title" content="55Ace – Apps on Google Play">
     <title id="main-title">55Ace – Apps on Google Play</title>
     <meta property="og:image" content="./style/images/logo.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@GooglePlay">
-    <meta name="twitter:title" content="55Ace – Apps on Google Play">
+    <meta id="twitter-title" name="twitter:title" content="55Ace – Apps on Google Play">
     <meta name="twitter:description" content="FACIL E DIVERTIDO, COMECE EM BREVE">
     <meta http-equiv="Content-Type" content="text/html" ;="" charset="utf-8">
 </head>
@@ -21,7 +21,7 @@
                                alt="download"> <img id="downloadbtn" src="" class="dowmload-button3" alt="download">
 </div>
 <div>
-    <header class="S3WLMd" role="banner">
+    <header class="S3WLMd hide-when-19" role="banner">
         <nav class="oPjgQb"><a class="f0UV3d">
             <svg class="kOqhQd" aria-hidden="true" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
                 <path fill="none" d="M0,0h40v40H0V0z"></path>
@@ -49,7 +49,7 @@
     </header>
     <div></div>
 </div>
-<div class="SSPGKf Czez9d">
+<div class="SSPGKf Czez9d" id="id-header-top">
     <div class="dzkqwc">
         <div class="wkMJlb YWi3ub">
             <div>
@@ -67,7 +67,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="JU1wdd">
+                    <div class="JU1wdd" id="id-starrate">
                         <div class="l8YSdd">
                             <div class="w7Iutd">
                                 <div class="wVqUob">
@@ -113,7 +113,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="OBVQ7">
+                <div class="OBVQ7" id="share-withlist-div">
                     <div>
                         <div>
                             <div class="OahvPe">
@@ -565,7 +565,7 @@
     <footer class="yhtbu">
         <div class="srvBL"></div>
         <div class="Hc0nne">
-            <section><span class="GMGZAc">Google Play</span><a href="" class="AU8vyc"><p class="CmHxkb">Play Pass</p>
+            <section><span class="GMGZAc hide-when-19">Google Play</span><a href="" class="AU8vyc"><p class="CmHxkb">Play Pass</p>
             </a><a href="" class="AU8vyc"><p class="CmHxkb">Play Points</p></a><a href="" class="AU8vyc"><p
                     class="CmHxkb">Gift cards</p></a><a href="" class="AU8vyc"><p class="CmHxkb">Redeem</p></a><a
                     href="" class="AU8vyc"><p class="CmHxkb">Refund policy</p></a></section>
@@ -578,11 +578,11 @@
             <div class="KvNvKe"><a href="https://policies.google.com/privacy" target="_blank" class="AU8vyc"><p
                     class="QOTGFf">Privacy</p></a></div>
             <div class="KvNvKe"><a href="https://support.google.com/googleplay/?p=about_play" target="_blank"
-                                   class="AU8vyc"><p class="QOTGFf">About Google Play</p></a></div>
+                                   class="AU8vyc"><p class="QOTGFf hide-when-19">About Google Play</p></a></div>
             <div class="KvNvKe"><a href="https://developer.android.com/index.html" target="_blank" class="AU8vyc"><p
                     class="QOTGFf">Developers</p></a></div>
             <div class="KvNvKe"><a href="https://store.google.com/?playredirect=true" target="_blank" class="AU8vyc"><p
-                    class="QOTGFf">Google Store</p></a></div>
+                    class="QOTGFf hide-when-19">Google Store</p></a></div>
             <div class="KvNvKe">All prices include GST.</div>
             <div class="KvNvKe avtIH">
                 <div class="AJ34ce"><img src="style/images/india.png" class="GrpFfc" aria-hidden="true">
@@ -609,6 +609,7 @@ affidValue = affidValue ?? 'D2E144';
 var apiUrl = '';
 var adjustUrlCode = '';
 getApiUrl();
+updateStyleByUrl();
 
 async function getApiUrl() {
     var button;
@@ -631,7 +632,12 @@ async function getApiUrl() {
         "50015B": "184e6g1p",
         "3EC114": "18udrhih",
         "70379D": "19i9rsji",
-        "7C3D98": "199sudqb"
+        "7C3D98": "199sudqb",
+        "E4F4E4": "19mh2469",
+        "6B3CA4": "19ukar64",
+        "E7342E": "1995m6ch",
+        "86C42B": "19dyujqy",
+        "654BAC": "19d24ju9"
     }
     adjustUrlCode = affiliateLists[affidValue];
     apiUrl = `https://tljwn.plan2wtion.com/app/india/download/affiliate/${affidValue}`;
@@ -659,6 +665,39 @@ async function getApiUrl() {
     // } catch (error) {
     //     console.log(error)
     // }
+}
+
+function updateStyleByUrl() {
+    var hostUrl = window.location.hostname;
+    if (hostUrl === 'indwin719' || hostUrl === 'indwin720') {
+        var favicon = document.getElementById('favicon');
+        favicon.href = 'style/images/favicon.ico';
+
+        var maintitle = document.getElementById('main-title');
+        maintitle.innerText = '55Ace';
+
+        var twittertitle = document.getElementById('twitter-title');
+        twittertitle.innerText = '55Ace';
+
+        var wishlistdiv= document.getElementById("share-withlist-div");
+        wishlistdiv.style.display= 'none';
+
+        var starratediv= document.getElementById("id-starrate");
+        starratediv.style.height= '36px';
+
+
+        var hidewhen19s= document.getElementsByClassName('hide-when-19');
+        for (var i = 0; i < hidewhen19s.length; i++) {
+            hidewhen19s[i].style.display = 'none';
+        }
+
+        var headertop= document.getElementById("id-header-top");
+        headertop.style.marginTop= '5px';
+
+
+
+
+    }
 }
 
 
