@@ -81,7 +81,14 @@
       style="width: 100%;"
     >
       <el-table-column prop="loginName" :label="t('fields.username')" />
-      <el-table-column prop="siteName" :label="t('fields.siteName')" />
+      <el-table-column prop="siteName" :label="t('fields.siteName')">
+        <template #default="scope">
+          <span v-if="scope.row.siteName === null">-</span>
+          <span v-if="scope.row.siteName !== null">
+            {{ scope.row.siteName }}
+          </span>
+        </template>
+      </el-table-column>
       <el-table-column prop="loginTime" :label="t('fields.loginTime')" />
       <el-table-column prop="loginIp" :label="t('fields.loginIp')" />
     </el-table>
@@ -153,6 +160,8 @@ function resetQuery() {
     convertDateToStart(new Date()),
     convertDateToEnd(new Date()),
   ]
+  request.siteId = null
+  loadUserLoginLog()
 }
 
 async function loadSites() {
