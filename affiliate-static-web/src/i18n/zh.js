@@ -342,7 +342,8 @@ export default {
     understand: "理解",
     DepositCompleted: "已存款",
     depositNotification1: "您将被重定向到您的银行页面以完成存款。",
-    depositNotification2: "如果成功，您将在此页面上收到通知。"
+    depositNotification2: "如果成功，您将在此页面上收到通知。",
+    packRequestInQueue: '渠道打包请求正在等待中',
   },
   menu: {
     undefined: "",

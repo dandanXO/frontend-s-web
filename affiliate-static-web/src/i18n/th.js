@@ -342,7 +342,8 @@ export default {
     understand: "เข้าใจ",
     DepositCompleted: "การฝากเงินเสร็จสมบูรณ์",
     depositNotification1: "คุณจะถูกเปลี่ยนเส้นทางไปยังหน้าเว็บของธนาคารเพื่อทำธุรกรรมฝากเงิน",
-    depositNotification2: "หากฝากเงินสำเร็จคุณจะได้รับการแจ้งเตือนที่นี่"
+    depositNotification2: "หากฝากเงินสำเร็จคุณจะได้รับการแจ้งเตือนที่นี่",
+    packRequestInQueue: 'คำขอบรรจุภัณฑ์ช่องอยู่ระหว่างการพิจารณา',
   },
   menu: {
     undefined: "",

@@ -341,7 +341,8 @@ export default {
     understand: "understand",
     DepositCompleted: "Completed",
     depositNotification1: "You will be redirected to your bank's page to complete the deposit.",
-    depositNotification2: "If successful, you will receive a notification on this page."
+    depositNotification2: "If successful, you will receive a notification on this page.",
+    packRequestInQueue: 'Your channel pack request is in queue',
   },
   menu: {
     undefined: "",
