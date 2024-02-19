@@ -328,10 +328,10 @@ export default defineComponent({
           margin: 0;
         }
         &:first-child {
-          border-radius: 20px 0 0 0;
+          border-top-left-radius: 20px;
         }
         &:last-child {
-          border-radius: 0 20px 0 0;
+          border-top-right-radius: 20px;
         }
       }
       td {
