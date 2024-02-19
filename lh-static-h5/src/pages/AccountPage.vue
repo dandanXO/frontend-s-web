@@ -449,7 +449,7 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 15px;
+  padding: 8px 15px 4px;
   gap: 10px;
   width: 100%;
 
@@ -463,7 +463,7 @@ export default defineComponent({
   }
 
   .avatar {
-    width: 60px;
+    width: 50px;
     max-width: 60px;
     min-width: 60px;
     display: flex;
@@ -514,7 +514,7 @@ export default defineComponent({
 }
 
 .vipcard {
-  margin: 10px auto 16px;
+  margin: 5px auto;
   border-radius: 15px;
   width: $box-width;
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
@@ -547,7 +547,7 @@ export default defineComponent({
     background-size: 100% 100%;
 
     align-items: center;
-    padding: 15px;
+    padding: 10px 14px;
   }
 
   .acct-section {
@@ -557,7 +557,7 @@ export default defineComponent({
     align-items: flex-start;
     width: 100%;
     color: $grey-color;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 
     > div {
       flex: 1;
@@ -742,7 +742,7 @@ export default defineComponent({
 
 .acct-nav {
   width: $box-width;
-  margin: 10px auto;
+  margin: 0px auto;
   padding: 0px;
   gap: 0px;
 
@@ -753,7 +753,7 @@ export default defineComponent({
 
   .acct-title {
     display: flex;
-    padding: 8px 4px;
+    padding: 3px 4px;
     margin-top: 4px;
     justify-content: space-between;
     align-items: center;
@@ -790,14 +790,14 @@ export default defineComponent({
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    grid-gap: 30px;
-    gap: 20px;
-    row-gap: 20px;
+    grid-gap: 10px;
+    gap: 10px;
+    row-gap: 10px;
     height: auto;
     margin-bottom: 10px;
     background-color: $white;
     border-radius: 0px 0px 20px 20px;
-    padding: 10px 0px 20px;
+    padding: 0px 0px 8px;
     box-shadow: 0px -4px 4px 0px #c3d4e6 inset;
 
     &.shorter-menu {
@@ -852,7 +852,7 @@ export default defineComponent({
   line-height: 15px;
   width: $box-width;
   letter-spacing: 1px;
-  margin: 14px auto 40px;
+  margin: 6px auto 30px;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -899,13 +899,29 @@ export default defineComponent({
     width: 100%;
     text-align: center;
   }
+
+  .vipcard .btn-main{
+    min-height: 24px;
+    width: 60px;
+  }
+
+  .profile .avatar {
+    max-width: 50px;
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+  }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 380px) {
   .acct-nav {
     .acct-menu {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
     }
+  }
+  .acct-nav .acct-menu a .acct-nav-item img{
+    height: 32px;
   }
 }
 </style>
