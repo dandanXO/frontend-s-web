@@ -80,10 +80,10 @@
       </div>
     </div>
 
-    <div class="hot-match-div">
-      <img src="../assets/images/home/hot-icon.png" />
-      <span>热门赛事</span>
-    </div>
+<!--    <div class="hot-match-div">-->
+<!--      <img src="../assets/images/home/hot-icon.png" />-->
+<!--      <span>热门赛事</span>-->
+<!--    </div>-->
   </div>
 
   <div class="details-bar">
@@ -1179,6 +1179,8 @@ export default defineComponent({
         store.getBalance().then((res) => {
           isLoadingBalance.value = false;
         });
+      }else{
+        router.push("/login")
       }
     };
 
