@@ -470,7 +470,7 @@ export default defineComponent({
     };
 
     const isValidPhone = () => {
-      const phonePattern = /^0\d*$/;
+      const phonePattern = /^0[1-9][0-9]*$/;
       return phonePattern.test(regForm.telephone) || t("lang.invalid_phone_num");
     };
     const router = useRouter();
