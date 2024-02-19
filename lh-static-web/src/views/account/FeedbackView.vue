@@ -147,17 +147,18 @@
                 <span class="span3">此次问卷提供<span class="span1" style="color: #468CFF">18-188元</span>建议金</span> 
               </div>
               <div class="qr-code-div">
-                <img src="../../assets/feedback/QR-code.png"/>
+                <VueQRCodeComponent :size="188" :text="referralLink" />
+                <img src="../../assets/feedback/share.png"/>
               </div>
               <div class="url-div">
                 <el-input 
                   class="url-input-fill" 
-                  v-model="urlInput"
+                  v-model="referralLink"
                   :readonly="true"
                   type="url"
                   />
                 <div>
-                  <button class="standard-button btn-color-blue copy-button">复制</button>
+                  <button class="standard-button btn-color-blue copy-button" @click="copyMessage()">{{copybtntxt}}</button>
                 </div>
               </div>
             </div>
@@ -177,6 +178,7 @@ import { getQuestionnaireList, submitQuestionnaire, getQuestionnaireAns } from "
 import { userStore } from "@/store"
 import { ElMessage } from "element-plus";
 import { CaretBottom } from '@element-plus/icons-vue'
+import VueQRCodeComponent from 'vue-qrcode-component'
 
 const store = userStore();
 const recordsPagination = reactive({ size: 3, current: 1, total: 3, pages: 3 });
@@ -189,10 +191,37 @@ function onBtnStartAnswerClick() {
   uiIsShowStatus.questionBox = true;
   recordsPagination.current = 1;
 }
-
 const quesTitleOptions = ref([]);
 let optionModal = ref(null);
 
+
+const referralLink = ref();
+const getReferral = () => {
+  referralLink.value = 'https://' + location.hostname + `/center/feedback`;
+}
+const copybtntxt = ref('复制');
+const copyMessage = (position) => {
+  let copyText = null;
+    copyText = referralLink.value
+  // Create a temporary textarea element
+  const tempTextarea = document.createElement('textarea');
+  tempTextarea.value = copyText;
+  document.body.appendChild(tempTextarea);
+
+  // Select the text and copy it
+  tempTextarea.select();
+  document.execCommand('copy');
+
+  // Remove the temporary textarea element
+  document.body.removeChild(tempTextarea);
+  copybtntxt.value = '已复制';
+  setTimeout(() => {
+    copybtntxt.value = '复制';
+  }, 2000);
+  // copyText.select()
+  // document.execCommand("copy")
+  // copybtntxt0.value = 'คัดลอกแล้ว'
+};
 const getQuesTitleOptions = () => {
   getQuestionnaireList().then((res) => {
     // res = {
@@ -330,7 +359,7 @@ const btnClick = (btnType) => {
   }
 }
 
-const urlInput = ref("Http://LHe63851/s?eric123");
+// const urlInput = ref("Http://LHe63851/s?eric123");
 
 const options = ["存款问题", "转账问题", "提款问题", "其他"];
 
@@ -495,6 +524,7 @@ const testAns = () => {
 onMounted(() => {
   if (store.token) {
     testAns();
+    getReferral();
   }
   
   // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
@@ -757,10 +787,10 @@ onMounted(() => {
     margin-top: 30px;
     gap: 5px;
 
-    img {
-      width: 188px;
-      height: 233px;
-    }
+    // img {
+    //   width: 188px;
+    //   height: 233px;
+    // }
   }
 
   .url-div {
@@ -771,6 +801,7 @@ onMounted(() => {
     margin-top: 30px;
     gap: 5px;
     width: 100%;
+    position: relative;
   }
 
   .url-input-fill {
@@ -800,8 +831,8 @@ onMounted(() => {
 
   .copy-button {
     position: absolute;
-    bottom: 60px;
-    margin: -15px 0 0 -100px;
+    bottom: 5px;
+    right: 110px;
     display: flex;
     justify-content: center;
     align-items: center;

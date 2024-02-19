@@ -2,7 +2,7 @@
   <div class="account-box account-contents">
     <div class="account-content mail mail-content">
         <div class="q-ma-md" key="quiz" name="quiz" :label="'有奖问答'">
-          <div :class="`quiz-container ${uiIsShowStatus.startAnswerBox ? '' : 'hide'}`">
+          <div v-if="!isAnswered" class="quiz-container">
             <div class="quiz-content">
               <div class="content-title">让我们聆听您的心声</div>
               <div class="content-desc">雷火有奖问卷调查，您的意见和建议对我们非常重要</div>
@@ -11,11 +11,11 @@
               </div>
             </div>
           </div>
-          <div :class="`questions-container ${uiIsShowStatus.questionBox ? 'show' : ''}`">
+          <div v-if="isAnswered" class="questions-container">
             <!-- <div class="questions-back-btn">
                 <img src="../../assets/feedback/back-btn.png"/>
             </div> -->
-            <div class="questions-content" id="questionContainer">
+            <div class="questions-content" v-if="!isAnswered">
               <div v-for="(item, i) in quesTitleOptions" :key="i" class="question-title-container">
                   <template v-if="recordsPagination.current === item.sequence">
                     <div class="questions-title">
@@ -23,8 +23,8 @@
                     </div>
                     <div class="answer-container">
                       <q-form>
-                        <span  v-for="(ans, index) in item.choices" :key="index">
-                        <q-radio name="optionModal" v-model="optionModal" :val="index" :label="ans.choice" />
+                        <span v-for="(ans, index) in item.choices" :key="index">
+                        <q-radio @click="getSelected(item,ans.choice)" name="optionModal" v-model="optionModal" :val="index" :label="ans.choice" />
                         
                         <div v-if="optionModal === index && ans.needSpecify">
                         <q-input 
@@ -33,7 +33,7 @@
                               placeholder="请输入获取渠道"
                               type="textarea"
                               :autosize="{ minRows: 4 }"
-                              @input="getSelected(item, ans.choice)"
+                              @change="getSelected(item, ans.choice)"
                             />
                             </div>
                           </span>
@@ -70,7 +70,7 @@
               </div>
             </div> 
             
-            <div class="questions-content" id="QRContainer" style="display: none">
+            <div  class="questions-content" v-if="isAnswered">
               <div class="thumbs-up-div"><img src="../../assets/feedback/thumbs-up.png" /></div>
               <div class="header-title-div">
                 <span class="span1">恭喜您完成本月的调查问卷</span> 
@@ -80,17 +80,18 @@
                 <span class="span3">此次问卷提供<span class="span1" style="color: #468CFF">18-188元</span>建议金</span> 
               </div>
               <div class="qr-code-div">
-                <img src="../../assets/feedback/QR-code.png"/>
+                <VueQRCodeComponent :size="188" :text="referralLink" />
+                <img src="../../assets/feedback/share.png"/>
               </div>
               <div class="url-div">
                 <q-input 
                   class="url-input-fill" 
-                  v-model="urlInput"
+                  v-model="referralLink"
                   :readonly="true"
                   type="url"
                   />
                 <div>
-                  <q-btn color="brightbtn">复制</q-btn>
+                  <q-btn color="brightbtn"  @click="copyMessage()">{{copybtntxt}}</q-btn>
                 </div>
               </div>
             </div>
@@ -107,6 +108,7 @@ import {userStore} from "src/stores";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import {getRndInteger} from "boot/utils";
+import VueQRCodeComponent from 'vue-qrcode-component'
 
 var qs = require("qs");
 const $q = useQuasar();
@@ -126,6 +128,33 @@ function onBtnStartAnswerClick() {
 const quesTitleOptions = ref([]);
 let optionModal = ref(null);
 
+const referralLink = ref();
+const getReferral = () => {
+  referralLink.value = 'https://' + location.hostname + `/account/feedback`;
+}
+const copybtntxt = ref('复制');
+const copyMessage = (position) => {
+  let copyText = null;
+    copyText = referralLink.value
+  // Create a temporary textarea element
+  const tempTextarea = document.createElement('textarea');
+  tempTextarea.value = copyText;
+  document.body.appendChild(tempTextarea);
+
+  // Select the text and copy it
+  tempTextarea.select();
+  document.execCommand('copy');
+
+  // Remove the temporary textarea element
+  document.body.removeChild(tempTextarea);
+  copybtntxt.value = '已复制';
+  setTimeout(() => {
+    copybtntxt.value = '复制';
+  }, 2000);
+  // copyText.select()
+  // document.execCommand("copy")
+  // copybtntxt0.value = 'คัดลอกแล้ว'
+};
 const getQuesTitleOptions = () => {
   eventapi.get("/questionnaire/list").then((res) => {
     // res = {
@@ -281,7 +310,7 @@ const btnClick = async (btnType) => {
             $q.notify({
               type: "negative",
               position: "top",
-              message: `提交失败。请稍后再试。`,
+              message: data.message,
               icon: "report_problem"
             });
           }
@@ -293,39 +322,23 @@ const btnClick = async (btnType) => {
 
 const urlInput = ref("Http://LHe63851/s?eric123");
 
-const options = ["存款问题", "转账问题", "提款问题", "其他"];
-
-const onItemClick = (item) => {
-  mailboxState.mailboxList.write.title = item;
-};
-
-const loadingBtn = ref(false);
-const mailboxData = ref([]);
-const mailboxState = reactive({
-  active: "quiz",
-  mailboxList: {
-    inbox: {
-      list: [],
-      pageNum: 1,
-      pageSize: 4,
-      total: 0
-    },
-    sent: {
-      list: [],
-      pageNum: 1,
-      pageSize: 4,
-      total: 0
-    },
-    write: {
-      title: "",
-      content: ""
-    },
-    quiz: {}
-  }
-});
+const isAnswered = ref(false);
+const testAns = () => {
+  eventapi.get("/questionnaire/answers").then((res) => {
+    if (res.code === 0) {
+      if (res.data && res.data.length === 0) {
+        getQuesTitleOptions();
+      } else {
+        isAnswered.value = true;
+      }
+    }
+  })
+}
 onMounted(() => {
-  getQuesTitleOptions();
-  
+  if (store.hasToken()) {
+    testAns()
+    getReferral();
+  }
   // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
 });
 </script>
@@ -419,10 +432,6 @@ onMounted(() => {
   margin-left: auto;
   margin-right: auto;
   max-width: 600px;
-  display: none;
-  &.show {
-    display: block;
-  }
 
   .questions-header {
     display: flex;
@@ -502,6 +511,16 @@ onMounted(() => {
       width: 100%;
       flex-direction: column;
       padding: 10px 25px;
+      span {
+        width: 100%;
+        display: block;
+      }
+      :deep(.row.inline) {
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+      }
       :deep(.el-radio-group) {
         flex-direction: column;
         align-items: flex-start;
@@ -601,11 +620,6 @@ onMounted(() => {
     color: #424F72;
     margin-top: 30px;
     gap: 5px;
-
-    img {
-      width: 188px;
-      height: 233px;
-    }
   }
 
   .url-div {
