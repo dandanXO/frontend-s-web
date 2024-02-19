@@ -5,6 +5,7 @@
         class="q-mt-md"
         label="银行"
         color="white"
+        ref="refSelectBank"
         v-model="selectedBankId"
         :options="bankList"
         option-value="id"
@@ -35,6 +36,7 @@ const verifyBank = ref([
   (val) => (props.bankList && !!val) || "请输入银行"
 ]);
 
+const refSelectBank= ref();
 const selectedBankId = ref();
 
 function selectBank() {
@@ -43,6 +45,7 @@ function selectBank() {
 }
 
 async function validateBank(value) {
+  refSelectBank.value.validate();
   if (value !== null && value !== "") {
     return true;
   } else {

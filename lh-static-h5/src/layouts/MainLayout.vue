@@ -48,7 +48,7 @@
 
     <q-page-container>
       <router-view v-slot="{ Component }">
-        <KeepAlive :max="8">
+        <KeepAlive :max="8" :exclude="excludeAliveComponents">
           <component :is="Component" />
         </KeepAlive>
       </router-view>
@@ -467,7 +467,18 @@ export default defineComponent({
       prevPage,
       hasDrawer,
       platformsList,
-      changePlatform
+      changePlatform,
+      excludeAliveComponents: [
+        "DepositRecordView",
+        "WithdrawRecordView",
+        "TransferRecordView",
+        "FeedbackRecordView",
+        "PromoRecordView",
+        "BetHistoryRecordView",
+        "MoneyChangeRecordView",
+        "WithdrawView",
+        "DepositView"
+      ]
     };
   }
 });
