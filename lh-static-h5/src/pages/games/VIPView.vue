@@ -579,14 +579,16 @@ const claim = async () => {
 };
 
 onActivated(() => {
-  currentAmount.value = store.balance;
-  extractNumber(store.vip);
-  slide.value = vipNumber.value;
+  store.getMemberInfo().then(() => {
+    currentAmount.value = store.balance;
+    extractNumber(store.vip);
+    slide.value = vipNumber.value;
 
-  vipClaimItems[slide.value].vip = slide.value;
-  claimDesc.value = vipClaimItems[slide.value];
+    vipClaimItems[slide.value].vip = slide.value;
+    claimDesc.value = vipClaimItems[slide.value];
 
-  checkVipRedeem();
+    checkVipRedeem();
+  });
 });
 </script>
 

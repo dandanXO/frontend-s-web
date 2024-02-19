@@ -119,15 +119,7 @@ body {
       padding-top: 4px;
     }
   }
-  // .el-icon {
-  //     height: 2.5em;
-  //     width: 1.5em;
-  //     line-height: 1.5em;
-  //     svg {
-  //     height: 2em;
-  //     width: 2em;
-  //   }
-  // }
+
   .el-tabs__item.is-active,
   .el-tabs__item:hover {
     border-color: #e9ecef #e9ecef #dee2e6;
@@ -194,6 +186,13 @@ body {
         }
       }
     }
+  }
+}
+
+.dialog-insurance-box{
+
+  .el-dialog__title {
+    text-align:center;
   }
 }
 body {

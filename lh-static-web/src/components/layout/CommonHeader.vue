@@ -106,35 +106,35 @@
 
         
             <div class="profile-info" v-if="store.token">
-              <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand">
+              <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand" @visible-change="(isOpen) => isProfileDropDownOpen = isOpen">
                 <span class="el-dropdown-link">
                   <div class="profile-img-wrapper">
                     <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
-                    <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
+                    <img class="dropdown-icon" :style="isProfileDropDownOpen ? 'transform:rotate(180deg)' : ''" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
                   </div>
                 </span>
                 <template #dropdown>
                   <el-dropdown-menu class="profile-info-dropdown-content">
                     <el-dropdown-item command="personal">
-                      <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                      <div style="display: flex; align-items: center; gap: 10px;color: #222;margin: auto;">
                         <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
                         <span>个人信息</span>
                       </div>
                     </el-dropdown-item>
                     <el-dropdown-item command="deposit">
-                      <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                      <div style="display: flex; align-items: center; gap: 10px;color: #222;margin: auto;">
                         <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
                         <span>充值中心</span>
                       </div>
                     </el-dropdown-item>
                     <el-dropdown-item command="transfer">
-                      <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                      <div style="display: flex; align-items: center; gap: 10px;color: #222;margin: auto;">
                         <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
                         <span>快速转账</span>
                       </div>
                     </el-dropdown-item>
                     <el-dropdown-item command="promotion">
-                      <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                      <div style="display: flex; align-items: center; gap: 10px;color: #222;margin: auto;">
                         <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
                         <span>优惠领取</span>
                     </div>
@@ -692,6 +692,7 @@ export default defineComponent({
     const scroll = ref(0);
     const selectedMenu = ref(false);
     const {height} = useElementSize(el);
+    const isProfileDropDownOpen = ref(false);
 
     const vipLevel = computed(() => {
       if (store.vip.toUpperCase() === "NORMAL") {
@@ -1598,7 +1599,8 @@ export default defineComponent({
       route,
       getUnreadMail,
       vip,
-      handleCommand
+      handleCommand,
+      isProfileDropDownOpen
     }
   }
 });

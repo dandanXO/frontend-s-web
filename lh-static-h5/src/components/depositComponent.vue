@@ -459,7 +459,11 @@ const depositAmtRef = ref("");
 async function confirmDeposit() {
   btnLoading.value = true;
   depositAmtRef.value.validate();
-  if (depositAmtRef.value.hasError) {
+  if (selectedPayType.value && bankCardList.value.length > 0) {
+    await payTypeClass.value.validateBank(form.bankId);
+  }
+
+  if (depositAmtRef.value.hasError || (selectedPayType.value && bankCardList.value.length > 0 && !form.bankId)) {
     btnLoading.value = false;
   } else {
     await cashier

@@ -227,7 +227,7 @@
 
 <script lang="js">
 /* eslint-disable */
-import {defineComponent, reactive, ref, onActivated, computed} from "vue";
+import { defineComponent, reactive, ref, onActivated, computed, onMounted } from "vue";
 import {userStore} from "stores/index";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
@@ -268,7 +268,7 @@ export default defineComponent({
       }
     };
 
-    onActivated(() => {
+    onMounted(() => {
       checkNewUser();
       store.getBalance();
       // loadPlatform()
