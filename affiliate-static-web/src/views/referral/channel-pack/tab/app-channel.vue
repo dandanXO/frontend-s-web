@@ -36,14 +36,6 @@
       >
         {{ $t('fields.normal') }}
       </el-button>
-      <el-button
-        size="normal"
-        style="min-width: 100px; padding-left: 10px;"
-        :class="form.apkType !== 'NORMAL' ? 'tick' : ''"
-        @click="onApkTypeChange(2)"
-      >
-        {{ $t('fields.newKey') }}
-      </el-button>
     </el-form-item>
     <el-form-item :label="t('fields.appVersion')">
       <div v-loading="versionLoading" style="width:fit-content">

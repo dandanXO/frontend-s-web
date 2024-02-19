@@ -246,7 +246,26 @@ export default {
     withdrawPassword: "รหัสผ่านการถอน",
     withdrawPayoutBonus: 'การถอน/จ่ายเงิน/โบนัส/ปรับ',
     withdrawalAmount: "จำนวนการถอน",
-    yesterday: "เมื่อวาน"
+    yesterday: "เมื่อวาน",
+    packType: "โครงการแพ็คเกจ",
+    selectSystem: 'เลือกระบบ',
+    appVersion: 'หมายเลขเวอร์ชันปัจจุบัน',
+    appName: 'ชื่อแอปพลิเคชัน',
+    appIcon: 'ไอคอนแอปพลิเคชัน',
+    packNow: 'แพ็คตอนนี้',
+    packDate: 'เวลาบรรจุ',
+    osType: 'ประเภทของระบบ',
+    buildStatus: 'สถานะการสร้าง',
+    apkType: 'APK พิมพ์',
+    normal: 'ปกติ',
+    newKey: 'แอนติไวรัส',
+    detail: 'รายละเอียด',
+    packSize: 'ขนาดบรรจุภัณฑ์',
+    packDownloadUrl: 'ลิงค์แพ็คเกจช่อง',
+    unchanged: 'ไม่มีการดัดแปลง',
+    packHistory: 'แพ็คบันทึก',
+    sequence: 'หมายเลขซีเรียล',
+    all: 'ทั้งหมด'
   },
   message: {
     addSuccess: "เพิ่มสำเร็จ",
@@ -323,7 +342,8 @@ export default {
     understand: "เข้าใจ",
     DepositCompleted: "การฝากเงินเสร็จสมบูรณ์",
     depositNotification1: "คุณจะถูกเปลี่ยนเส้นทางไปยังหน้าเว็บของธนาคารเพื่อทำธุรกรรมฝากเงิน",
-    depositNotification2: "หากฝากเงินสำเร็จคุณจะได้รับการแจ้งเตือนที่นี่"
+    depositNotification2: "หากฝากเงินสำเร็จคุณจะได้รับการแจ้งเตือนที่นี่",
+    packRequestInQueue: 'คำขอบรรจุภัณฑ์ช่องอยู่ระหว่างการพิจารณา',
   },
   menu: {
     undefined: "",
@@ -345,7 +365,24 @@ export default {
     "Referral Link": "ลิงก์การแนะนำ",
     "Affiliate Domain": "โดเมนของตัวแทน",
     "Personal Center": "ศูนย์ส่วนบุคคล",
-    "Settlement Center": "ศูนย์การตัดยอดค่าคอมมิชชัน"
+    "Settlement Center": "ศูนย์การตัดยอดค่าคอมมิชชัน",
+    "Channel Pack": "บรรจุภัณฑ์ช่อง",
+  },
+  packStatus: {
+    IN_QUEUE: 'ซึ่งรอคอย',
+    IN_PROGRESS: 'กำลังดำเนินการ',
+    SUCCESS: 'ความสำเร็จ',
+    FAIL: 'ล้มเหลว',
+    CANCEL: 'ยกเลิก',
+  },
+  appType: {
+    ALL_SITE: 'เว็บไซต์เต็มรูปแบบ',
+    SPORT: 'พลศึกษา',
+    ESPORT: 'การเล่นเกม',
+  },
+  osType: {
+    ANDROID: 'หุ่นยนต์',
+    IOS: 'IOS',
   },
   error: {
     400: "คำขอไม่ถูกต้อง",
