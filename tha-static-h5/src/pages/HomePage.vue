@@ -933,8 +933,7 @@
         v-close-popup
       />
 
-      <!--      <img src="../assets/images/common/home-popup-img.png" />-->
-      <img src="../assets/images/common/promo-home-cnyt.png" />
+      <img src="../assets/images/common/home-popup-img.png" />
 
       <div class="popup-list">
         <router-link to="/promo?id=81">
@@ -2978,25 +2977,20 @@ export default defineComponent({
     }
 
     .popup-item {
-      display: flex;
-      align-items: center;
-      justify-content: center;
       width: 92%;
-      margin: 0 auto;
-      // border: 2px solid #d483ff;
-      // background: rgba(52, 41, 97, 0.9);
+      margin: 0 auto 14px;
+      border: 2px solid #d483ff;
+      background: rgba(52, 41, 97, 0.9);
       border-radius: 11px;
       //margin-bottom: 14px;
-      line-height: 20px;
-      font-size: 16px;
+      line-height: 30px;
+      font-size: 22px;
       text-align: center;
       padding: 8px;
-      // box-shadow: 0px 3px 2px 0px #ddb2ff42 inset;
-      // box-shadow: 0px 0px 5px 3px #8000ffd9;
+      box-shadow: 0px 3px 2px 0px #ddb2ff42 inset;
+      box-shadow: 0px 0px 5px 3px #8000ffd9;
       cursor: pointer;
       text-shadow: 1px 2px 2px #000000;
-      background: url("../assets/images/common/home-popup-item-bg.png") no-repeat center center;
-      background-size: 100% 100%;
 
       &:hover {
         opacity: 0.9;
@@ -3008,14 +3002,9 @@ export default defineComponent({
 
       em {
         color: #ecff17;
-        font-size: 16px;
+        font-size: 26px;
         font-weight: 600;
         font-style: normal;
-      }
-
-      span {
-        padding: 10px;
-        margin: 0px 35px;
       }
     }
   }
