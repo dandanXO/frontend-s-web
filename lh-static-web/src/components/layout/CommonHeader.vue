@@ -106,11 +106,11 @@
 
         
             <div class="profile-info" v-if="store.token">
-              <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand">
+              <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand" @visible-change="(isOpen) => isProfileDropDownOpen = isOpen">
                 <span class="el-dropdown-link">
                   <div class="profile-img-wrapper">
                     <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
-                    <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
+                    <img class="dropdown-icon" :style="isProfileDropDownOpen ? 'transform:rotate(180deg)' : ''" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
                   </div>
                 </span>
                 <template #dropdown>
@@ -692,6 +692,7 @@ export default defineComponent({
     const scroll = ref(0);
     const selectedMenu = ref(false);
     const {height} = useElementSize(el);
+    const isProfileDropDownOpen = ref(false);
 
     const vipLevel = computed(() => {
       if (store.vip.toUpperCase() === "NORMAL") {
@@ -1598,7 +1599,8 @@ export default defineComponent({
       route,
       getUnreadMail,
       vip,
-      handleCommand
+      handleCommand,
+      isProfileDropDownOpen
     }
   }
 });
