@@ -2027,6 +2027,7 @@ export default {
     'Affiliate APK Build': '代理构建APK',
     'Channel Summary': '渠道报表',
     'Adjustment Reason': '平账原因',
+    'User Login Log': '用户登录日志',
   },
   google: {
     google_auth_menu: '谷歌验证',

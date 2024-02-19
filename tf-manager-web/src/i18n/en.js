@@ -2054,6 +2054,7 @@ export default {
     'Affiliate APK Build': 'Affiliate APK Build',
     'Channel Summary': 'Channel Summary',
     'Adjustment Reason': 'Adjustment Reason',
+    'User Login Log': 'User Login Log',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

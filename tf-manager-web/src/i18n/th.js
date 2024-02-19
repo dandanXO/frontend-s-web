@@ -1611,6 +1611,7 @@ export default {
     'SMS Setting': 'ตั้งค่า SMS',
     DownloadManager: 'ตัวจัดการการดาวน์โหลด',
     GoogleAuth: 'Google อัตโนมัติ',
+    'User Login Log': 'บันทึกการเข้าสู่ระบบของผู้ใช้',
   },
   google: {
     google_auth_menu: 'ตัวรับรองความถูกต้องของกูเกิ้ล',
