@@ -464,6 +464,7 @@ function confirmDeposit() {
       loadingBtn.value = false;
     });
   });
+  loadingBtn.value = false;
 }
 
 function doDeposit(data) {
@@ -831,7 +832,7 @@ onMounted(() => {
 
 .submit-message {
   width: calc(100% - 40px);
-  max-width: 500px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 20px;
   height: auto;
