@@ -97,7 +97,15 @@ export const userStore = defineStore("userStore", {
       }
     },
     memberLogout() {
-      return logout().then(() => (this.token = null));
+      return logout().then(() => {
+        this.token = null;
+
+        for (var key in sessionStorage) {
+          if (key.startsWith("MAILINBOX")) {
+            sessionStorage.removeItem(key);
+          }
+        }
+      });
     },
     openLiveChat(line) {
       const left = (screen.width - 350) * 2;
