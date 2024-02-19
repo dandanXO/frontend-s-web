@@ -730,7 +730,8 @@ export default defineComponent({
         "FeedbackRecordView",
         "PromoRecordView",
         "BetHistoryRecordView",
-        "MoneyChangeRecordView"
+        "MoneyChangeRecordView",
+        "WithdrawView"
       ]
     };
   }
