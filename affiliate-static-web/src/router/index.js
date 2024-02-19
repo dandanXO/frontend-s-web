@@ -268,6 +268,19 @@ export const constantRoutes = [
         },
         alwaysShow: true,
         redirect: null,
+      },
+      {
+        name: "Channel Pack",
+        path: "/channel-pack",
+        component: () => import('@/views/referral/channel-pack/index.vue'),
+        meta:
+        {
+          title: "Channel Pack",
+          icon: "folder",
+          hidden: false
+        },
+        alwaysShow: true,
+        redirect: null,
       }
     ]
   },

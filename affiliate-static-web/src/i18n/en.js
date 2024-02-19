@@ -245,7 +245,26 @@ export default {
     withdrawPassword: "Withdraw Password",
     withdrawPayoutBonus: 'Withdraw Payout Bonus Adjust',
     withdrawalAmount: "Withdrawal Amount",
-    yesterday: "Yesterday"
+    yesterday: "Yesterday",
+    packType: "Pack Type",
+    selectSystem: 'Select System',
+    appVersion: 'App Version',
+    appName: 'App Name',
+    appIcon: 'App Icon',
+    packNow: 'Pack Now',
+    packDate: 'Pack Date',
+    osType: 'System Type',
+    buildStatus: 'Build Status',
+    apkType: 'APK Type',
+    normal: 'Normal',
+    newKey: 'Antivirus',
+    detail: 'Detail',
+    packSize: 'Pack Size',
+    packDownloadUrl: 'Download Url',
+    unchanged: 'Unchanged',
+    packHistory: 'Pack History',
+    sequence: 'S/N',
+    all: 'All'
   },
   message: {
     adjustSuccess: 'Adjust Success',
@@ -344,7 +363,24 @@ export default {
     "Referral Link": "Referral Link",
     "Affiliate Domain": "Affiliate Domain",
     "Personal Center": "Personal Center",
-    "Settlement Center": "Settlement Center"
+    "Settlement Center": "Settlement Center",
+    "Channel Pack": "Channel Pack",
+  },
+  packStatus: {
+    IN_QUEUE: 'In Queue',
+    IN_PROGRESS: 'In Progress',
+    SUCCESS: 'Success',
+    FAIL: 'Fail',
+    CANCEL: 'Cancel',
+  },
+  appType: {
+    ALL_SITE: 'ALL SITE',
+    SPORT: 'SPORT',
+    ESPORT: 'ESPORT',
+  },
+  osType: {
+    ANDROID: 'ANDROID',
+    IOS: 'IOS',
   },
   error: {
     400: "Bad Request",

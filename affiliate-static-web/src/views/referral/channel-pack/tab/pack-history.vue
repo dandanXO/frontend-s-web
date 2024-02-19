@@ -66,7 +66,9 @@
       </thead>
       <tbody v-if="page.records.length > 0">
         <tr v-for="(item, index) in page.records" :key="item.id">
-          <td :data-label="t('fields.sequence')">{{ (request.current - 1) * 10 + index + 1 }}</td>
+          <td :data-label="t('fields.sequence')">
+            {{ (request.current - 1) * 10 + index + 1 }}
+          </td>
           <td :data-label="t('fields.packType')">
             {{ $t(`appType.${item.appType}`) }}
           </td>
@@ -88,7 +90,9 @@
           <td :data-label="t('fields.download')">{{ item.downloadCount }}</td>
           <td :data-label="t('fields.packDate')">
             <span v-if="item.finishTime === null">-</span>
-            <span v-else>{{ moment(item.finishTime).format('YYYY/MM/DD HH:mm:ss') }}</span>
+            <span v-else>
+              {{ moment(item.finishTime).format('YYYY/MM/DD HH:mm:ss') }}
+            </span>
           </td>
           <td :data-label="t('fields.operate')">
             <el-button
@@ -124,10 +128,16 @@
       :current-page="request.current"
     />
   </div>
-  <el-dialog :title="t('fields.detail')" v-model="showDialog" width="90%" style="margin: 0 auto;" modal-class="dialog900">
+  <el-dialog
+    :title="t('fields.detail')"
+    v-model="showDialog"
+    width="90%"
+    style="margin: 0 auto;"
+    modal-class="dialog900"
+  >
     <div class="scrollable-container">
       <div class="info-container">
-        <el-form label-suffix=" : " label-width="110px">
+        <el-form label-suffix=" : " label-width="160px">
           <div class="info-row-container">
             <el-form-item :label="t('fields.packType')">
               {{ $t(`appType.${channelPackInfo.appType}`) }}
@@ -150,9 +160,7 @@
             </el-form-item>
             <el-form-item :label="t('fields.packSize')">
               <span v-if="channelPackInfo.fileSize === ''">-</span>
-              <span v-else>
-                {{ channelPackInfo.fileSize }} MB
-              </span>
+              <span v-else>{{ channelPackInfo.fileSize }} MB</span>
             </el-form-item>
           </div>
           <div class="info-row-container">
@@ -234,10 +242,7 @@
                 </el-dropdown> -->
 
                 <!-- <el-dropdown trigger="click"> -->
-                <el-button
-                  type="primary"
-                  @click="download()"
-                >
+                <el-button type="primary" @click="download()">
                   <span>{{ $t('fields.download') }}</span>
                   <!-- <el-icon class="el-icon--right">
                       <arrow-down-bold />
@@ -616,7 +621,7 @@ onMounted(() => {
   height: 100px;
 }
 
-.preview img{
+.preview img {
   width: 100px;
   height: 100px;
 }
@@ -658,7 +663,7 @@ onMounted(() => {
       flex-wrap: wrap;
       line-height: 40px;
       &__label {
-        color: #7D8592;
+        color: #7d8592;
       }
       &__content {
         flex: unset;
@@ -687,15 +692,29 @@ onMounted(() => {
 }
 </style>
 <style lang="scss">
-  .dialog900 .el-dialog {
-    max-width: 900px;
-    .el-form-item {
-      &__label {
-        color: #7D8592;
-      }
-      &__content {
-        flex: unset;
-      }
+.dialog900 .el-dialog {
+  max-width: 900px;
+  .el-form-item {
+    &__label {
+      color: #7d8592;
+    }
+    &__content {
+      flex: unset;
     }
   }
+}
+.custom-table {
+  width: 100%;
+  border: 0;
+  th {
+    background: #F4F9FD;
+    text-align: left;
+  }
+  th, td {
+    padding: 12px;
+  }
+  tr:nth-child(even) {
+    background: #F4F9FD;
+  }
+}
 </style>
