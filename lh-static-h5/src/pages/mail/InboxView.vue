@@ -1,6 +1,6 @@
 <template>
   <div class="table-record">
-    <MailComponent :loading="visible" :list="mailData" @readMsg="readMsg" />
+    <MailComponent :loading="visible" :list="mailData" @readMsg="readMsg" type="index" />
   </div>
 </template>
 <script lang="js">

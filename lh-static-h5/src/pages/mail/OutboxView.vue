@@ -1,6 +1,6 @@
 <template>
     <div class="table-record">
-        <MailComponent :loading="visible" :list="mailData" />
+        <MailComponent :loading="visible" :list="mailData" type="outbox" />
     </div>
 </template>
 <script setup>

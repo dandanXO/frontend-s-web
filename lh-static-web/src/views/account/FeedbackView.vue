@@ -2,26 +2,7 @@
   <div class="account-box account-contents">
     <div class="account-content mail mail-content">
       <el-tabs v-model="mailboxState.active" @tab-click="mailTabChange" type="card">
-<!--        <el-tab-pane key="inbox" name="inbox" :label="'消息中心'">-->
-<!--          <template v-if="mailboxState.mailboxList.inbox.list.length > 0">-->
-<!--            <el-collapse v-model="activeNames" @change="handleChange">-->
-<!--              <el-collapse-item v-for="item in mailboxState.mailboxList.inbox.list" :key="item.id">-->
-<!--                <template #title>标题：{{ item.title }}</template>-->
-<!--                <div>-->
-<!--                  <div>正文：{{ item.content }}</div>-->
-<!--                </div>-->
-<!--              </el-collapse-item>-->
-<!--            </el-collapse>-->
-<!--            <div class="mail-pagination-wrapper">-->
-<!--              <el-pagination-->
-<!--                @current-change="changePage"-->
-<!--                :total="mailboxState.mailboxList.inbox.total"-->
-<!--                :current-page="mailboxState.mailboxList.inbox.pageNum"-->
-<!--                :page-size="mailboxState.mailboxList.inbox.pageSize"-->
-<!--              />-->
-<!--            </div>-->
-<!--          </template>-->
-<!--        </el-tab-pane>-->
+
         <el-tab-pane key="write" name="write" :label="'意见反馈'">
           <el-form
             ref="formRef"
@@ -72,8 +53,30 @@
             </div>
           </el-form>
         </el-tab-pane>
+
+        <el-tab-pane key="sent" name="sent" :label="'我的反馈'">
+          <template v-if="mailboxState.mailboxList.sent.list.length > 0">
+            <el-collapse v-model="activeNames" @change="handleChange">
+              <el-collapse-item v-for="item in mailboxState.mailboxList.sent.list" :key="item.id">
+                <template #title>标题：{{ item.title }}</template>
+                <div>
+                  <div>正文：{{ item.content }}</div>
+                </div>
+              </el-collapse-item>
+            </el-collapse>
+            <div class="mail-pagination-wrapper">
+              <el-pagination
+                @current-change="changePage"
+                :total="mailboxState.mailboxList.sent.total"
+                :current-page="mailboxState.mailboxList.sent.pageNum"
+                :page-size="mailboxState.mailboxList.sent.pageSize"
+              />
+            </div>
+          </template>
+        </el-tab-pane>
+
         <el-tab-pane key="quiz" name="quiz" :label="'有奖问答'">
-          <div v-if="!isAnswered" class="quiz-container">
+          <div v-if="!uiIsShowStatus.questionBox" class="quiz-container">
             <div class="quiz-header">
               有奖问答
             </div>
@@ -88,7 +91,7 @@
               </div>
             </div>
           </div>
-          <div v-if="isAnswered" class="questions-container">
+          <div v-if="uiIsShowStatus.questionBox" class="questions-container">
             <!-- <div class="questions-back-btn">
                 <img src="../../assets/feedback/back-btn.png"/>
             </div> -->
@@ -147,17 +150,18 @@
                 <span class="span3">此次问卷提供<span class="span1" style="color: #468CFF">18-188元</span>建议金</span> 
               </div>
               <div class="qr-code-div">
-                <img src="../../assets/feedback/QR-code.png"/>
+                <VueQRCodeComponent :size="188" :text="referralLink" />
+                <img src="../../assets/feedback/share.png"/>
               </div>
               <div class="url-div">
                 <el-input 
                   class="url-input-fill" 
-                  v-model="urlInput"
+                  v-model="referralLink"
                   :readonly="true"
                   type="url"
                   />
                 <div>
-                  <button class="standard-button btn-color-blue copy-button">复制</button>
+                  <button class="standard-button btn-color-blue copy-button" @click="copyMessage()">{{copybtntxt}}</button>
                 </div>
               </div>
             </div>
@@ -177,6 +181,7 @@ import { getQuestionnaireList, submitQuestionnaire, getQuestionnaireAns } from "
 import { userStore } from "@/store"
 import { ElMessage } from "element-plus";
 import { CaretBottom } from '@element-plus/icons-vue'
+import VueQRCodeComponent from 'vue-qrcode-component'
 
 const store = userStore();
 const recordsPagination = reactive({ size: 3, current: 1, total: 3, pages: 3 });
@@ -185,14 +190,47 @@ const uiIsShowStatus = reactive({
   questionBox: false
 });
 function onBtnStartAnswerClick() {
+  // debugger;
   uiIsShowStatus.startAnswerBox = false;
   uiIsShowStatus.questionBox = true;
   recordsPagination.current = 1;
 }
-
 const quesTitleOptions = ref([]);
 let optionModal = ref(null);
 
+
+const referralLink = ref();
+const getReferral = () => {
+  referralLink.value = 'https://' + location.hostname + `/center/feedback`;
+}
+const copybtntxt = ref('复制');
+
+const activeNames= ref();
+const handleChange = () => {
+
+}
+const copyMessage = (position) => {
+  let copyText = null;
+    copyText = referralLink.value
+  // Create a temporary textarea element
+  const tempTextarea = document.createElement('textarea');
+  tempTextarea.value = copyText;
+  document.body.appendChild(tempTextarea);
+
+  // Select the text and copy it
+  tempTextarea.select();
+  document.execCommand('copy');
+
+  // Remove the temporary textarea element
+  document.body.removeChild(tempTextarea);
+  copybtntxt.value = '已复制';
+  setTimeout(() => {
+    copybtntxt.value = '复制';
+  }, 2000);
+  // copyText.select()
+  // document.execCommand("copy")
+  // copybtntxt0.value = 'คัดลอกแล้ว'
+};
 const getQuesTitleOptions = () => {
   getQuestionnaireList().then((res) => {
     // res = {
@@ -330,7 +368,7 @@ const btnClick = (btnType) => {
   }
 }
 
-const urlInput = ref("Http://LHe63851/s?eric123");
+// const urlInput = ref("Http://LHe63851/s?eric123");
 
 const options = ["存款问题", "转账问题", "提款问题", "其他"];
 
@@ -346,13 +384,13 @@ const mailboxState = reactive({
     inbox: {
       list: [],
       pageNum: 1,
-      pageSize: 4,
+      pageSize: 5,
       total: 0
     },
     sent: {
       list: [],
       pageNum: 1,
-      pageSize: 4,
+      pageSize: 5,
       total: 0
     },
     write: {
@@ -387,15 +425,16 @@ const loadPersonalMailbox = () => {
   } else {
     mailboxData.value = {
       type: null,
-      current: mailboxState.mailboxList[mailboxState.active].pageNum,
-      size: mailboxState.mailboxList[mailboxState.active].pageSize,
+      current: mailboxState.mailboxList["sent"].pageNum,
+      size: mailboxState.mailboxList["sent"].pageSize,
       orderBy: "createTime"
     };
+    mailboxState.mailboxList["sent"].list = [];
     mailOutbox(mailboxData.value)
       .then((response) => {
         if (response.code === 0) {
-          mailboxState.mailboxList[mailboxState.active].list.push(...response.data.records);
-          mailboxState.mailboxList[mailboxState.active].total = response.data.total;
+          mailboxState.mailboxList["sent"].list.push(...response.data.records);
+          mailboxState.mailboxList["sent"].total = response.data.total;
         }
       })
       .catch((error) => {
@@ -457,7 +496,7 @@ const onSubmit = (e) => {
         .then((response) => {
           if (response.code === 0) {
             ElMessage({
-              message: "成功",
+              message: "提交成功",
               type: "success"
             });
             loadPersonalMailbox();
@@ -486,6 +525,7 @@ const testAns = () => {
         loadPersonalMailbox();
         getQuesTitleOptions();
       } else {
+        uiIsShowStatus.questionBox= true;
         isAnswered.value = true;
       }
     }
@@ -495,6 +535,7 @@ const testAns = () => {
 onMounted(() => {
   if (store.token) {
     testAns();
+    getReferral();
   }
   
   // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
@@ -757,10 +798,10 @@ onMounted(() => {
     margin-top: 30px;
     gap: 5px;
 
-    img {
-      width: 188px;
-      height: 233px;
-    }
+    // img {
+    //   width: 188px;
+    //   height: 233px;
+    // }
   }
 
   .url-div {
@@ -771,6 +812,7 @@ onMounted(() => {
     margin-top: 30px;
     gap: 5px;
     width: 100%;
+    position: relative;
   }
 
   .url-input-fill {
@@ -800,8 +842,8 @@ onMounted(() => {
 
   .copy-button {
     position: absolute;
-    bottom: 60px;
-    margin: -15px 0 0 -100px;
+    bottom: 5px;
+    right: 110px;
     display: flex;
     justify-content: center;
     align-items: center;

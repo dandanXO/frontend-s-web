@@ -141,13 +141,13 @@ const mailboxState = reactive({
     inbox: {
       list: [],
       pageNum: 1,
-      pageSize: 4,
+      pageSize: 5,
       total: 0
     },
     sent: {
       list: [],
       pageNum: 1,
-      pageSize: 4,
+      pageSize: 5,
       total: 0
     },
     write: {

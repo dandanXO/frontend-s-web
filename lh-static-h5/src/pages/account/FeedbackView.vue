@@ -1,112 +1,122 @@
 <template>
   <div class="account-box account-contents">
     <div class="account-content mail mail-content">
-        <div class="q-ma-md" key="quiz" name="quiz" :label="'有奖问答'">
-          <div :class="`quiz-container ${uiIsShowStatus.startAnswerBox ? '' : 'hide'}`">
-            <div class="quiz-content">
-              <div class="content-title">让我们聆听您的心声</div>
-              <div class="content-desc">雷火有奖问卷调查，您的意见和建议对我们非常重要</div>
-              <div class="content-btn">
-                <q-btn color="brightbtn" @click="onBtnStartAnswerClick()">开始答题</q-btn>
-              </div>
+      <div class="q-ma-md" key="quiz" name="quiz" :label="'有奖问答'">
+        <div v-if="!uiIsShowStatus.questionBox" class="quiz-container">
+          <div class="quiz-content">
+            <div class="content-title">让我们聆听您的心声</div>
+            <div class="content-desc">雷火有奖问卷调查，您的意见和建议对我们非常重要</div>
+            <div class="content-btn">
+              <q-btn color="brightbtn" @click="onBtnStartAnswerClick()">开始答题</q-btn>
             </div>
-          </div>
-          <div :class="`questions-container ${uiIsShowStatus.questionBox ? 'show' : ''}`">
-            <!-- <div class="questions-back-btn">
-                <img src="../../assets/feedback/back-btn.png"/>
-            </div> -->
-            <div class="questions-content" id="questionContainer">
-              <div v-for="(item, i) in quesTitleOptions" :key="i" class="question-title-container">
-                  <template v-if="recordsPagination.current === item.sequence">
-                    <div class="questions-title">
-                      {{ item.question }}
-                    </div>
-                    <div class="answer-container">
-                      <q-form>
-                        <span  v-for="(ans, index) in item.choices" :key="index">
-                        <q-radio name="optionModal" v-model="optionModal" :val="index" :label="ans.choice" />
-                        
-                        <div v-if="optionModal === index && ans.needSpecify">
-                        <q-input 
-                              class="answer-input-fill"
-                              v-model="answerInputModal"
-                              placeholder="请输入获取渠道"
-                              type="textarea"
-                              :autosize="{ minRows: 4 }"
-                              @input="getSelected(item, ans.choice)"
-                            />
-                            </div>
-                          </span>
-                      </q-form>
-                      <!-- <el-radio-group v-model="optionModal" >
-                        <el-radio v-for="(ans, index) in item.choices" :key="index" :label="index" @click="getSelected(item, ans.choice)">
-                          {{ ans.choice }}
-                          <div v-if="optionModal === index && ans.needSpecify">
-                            <el-input 
-                              class="answer-input-fill"
-                              v-model="answerInputModal"
-                              placeholder="请输入获取渠道"
-                              type="textarea"
-                              :autosize="{ minRows: 4 }"
-                              @input="getSelected(item, ans.choice)"
-                            />
-                          </div>
-                        </el-radio>
-                      </el-radio-group> -->
-                    </div>
-                  </template>
-              </div>
-
-              <div :class="`content-btn ${recordsPagination.current === 1 ? 'active' : ''}` " style="display: flex; justify-content: space-between; gap: 10px;">
-                <div>
-                  <q-btn color="brightbtn" id="prevBtn" class="standard-button btn-color-blue" @click="btnClick('prev')" style="display: none;">上一题</q-btn>
-                </div>
-                <div>
-                  <q-btn color="brightbtn" id="nextBtn" class="standard-button btn-color-blue" @click="btnClick('next')">下一题</q-btn>
-                </div>
-                <div>
-                  <q-btn color="brightbtn" id="finalBtn" class="standard-button btn-color-blue" @click="btnClick('final')" style="display: none;">完成</q-btn>
-                </div>
-              </div>
-            </div> 
-            
-            <div class="questions-content" id="QRContainer" style="display: none">
-              <div class="thumbs-up-div"><img src="../../assets/feedback/thumbs-up.png" /></div>
-              <div class="header-title-div">
-                <span class="span1">恭喜您完成本月的调查问卷</span> 
-                <span class="span2">下月问卷将于次月1号重新开启</span>
-              </div>
-              <div class="header-title-div" style="margin-top: 25px">
-                <span class="span3">此次问卷提供<span class="span1" style="color: #468CFF">18-188元</span>建议金</span> 
-              </div>
-              <div class="qr-code-div">
-                <img src="../../assets/feedback/QR-code.png"/>
-              </div>
-              <div class="url-div">
-                <q-input 
-                  class="url-input-fill" 
-                  v-model="urlInput"
-                  :readonly="true"
-                  type="url"
-                  />
-                <div>
-                  <q-btn color="brightbtn">复制</q-btn>
-                </div>
-              </div>
-            </div>
-
           </div>
         </div>
+        <div v-if="uiIsShowStatus.questionBox" class="questions-container">
+          <!-- <div class="questions-back-btn">
+              <img src="../../assets/feedback/back-btn.png"/>
+          </div> -->
+          <div class="questions-content" v-if="!isAnswered">
+            <div v-for="(item, i) in quesTitleOptions" :key="i" class="question-title-container">
+              <template v-if="recordsPagination.current === item.sequence">
+                <div class="questions-title">
+                  {{ item.question }}
+                </div>
+                <div class="answer-container">
+                  <q-form>
+                        <span v-for="(ans, index) in item.choices" :key="index">
+                        <q-radio @click="getSelected(item,ans.choice)" name="optionModal" v-model="optionModal"
+                                 :val="index" :label="ans.choice" />
+
+                        <div v-if="optionModal === index && ans.needSpecify">
+                        <q-input
+                          class="answer-input-fill"
+                          v-model="answerInputModal"
+                          placeholder="请输入获取渠道"
+                          type="textarea"
+                          :autosize="{ minRows: 4 }"
+                          @change="getSelected(item, ans.choice)"
+                        />
+                            </div>
+                          </span>
+                  </q-form>
+                  <!-- <el-radio-group v-model="optionModal" >
+                    <el-radio v-for="(ans, index) in item.choices" :key="index" :label="index" @click="getSelected(item, ans.choice)">
+                      {{ ans.choice }}
+                      <div v-if="optionModal === index && ans.needSpecify">
+                        <el-input
+                          class="answer-input-fill"
+                          v-model="answerInputModal"
+                          placeholder="请输入获取渠道"
+                          type="textarea"
+                          :autosize="{ minRows: 4 }"
+                          @input="getSelected(item, ans.choice)"
+                        />
+                      </div>
+                    </el-radio>
+                  </el-radio-group> -->
+                </div>
+              </template>
+            </div>
+
+            <div :class="`content-btn ${recordsPagination.current === 1 ? 'active' : ''}` "
+                 style="display: flex; justify-content: space-between; gap: 10px;">
+              <div>
+                <q-btn color="brightbtn" id="prevBtn" class="standard-button btn-color-blue" @click="btnClick('prev')"
+                       style="display: none;">上一题
+                </q-btn>
+              </div>
+              <div>
+                <q-btn color="brightbtn" id="nextBtn" class="standard-button btn-color-blue" @click="btnClick('next')">
+                  下一题
+                </q-btn>
+              </div>
+              <div>
+                <q-btn color="brightbtn" id="finalBtn" class="standard-button btn-color-blue" @click="btnClick('final')"
+                       style="display: none;">完成
+                </q-btn>
+              </div>
+            </div>
+          </div>
+
+          <div class="questions-content" v-if="isAnswered">
+            <div class="thumbs-up-div"><img src="../../assets/feedback/thumbs-up.png" /></div>
+            <div class="header-title-div">
+              <span class="span1">恭喜您完成本月的调查问卷</span>
+              <span class="span2">下月问卷将于次月1号重新开启</span>
+            </div>
+            <div class="header-title-div" style="margin-top: 25px">
+              <span class="span3">此次问卷提供<span class="span1" style="color: #468CFF">18-188元</span>建议金</span>
+            </div>
+            <div class="qr-code-div">
+              <VueQRCodeComponent :size="188" :text="referralLink" />
+              <img src="../../assets/feedback/share.png" />
+            </div>
+            <div class="url-div">
+              <q-input
+                class="url-input-fill"
+                v-model="referralLink"
+                :readonly="true"
+                type="url"
+              />
+              <div>
+                <q-btn color="brightbtn" style="width: 100px;" @click="copyMessage()">{{ copybtntxt }}</q-btn>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive, onMounted } from "vue";
-import {userStore} from "src/stores";
+import { userStore } from "src/stores";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
-import {getRndInteger} from "boot/utils";
+import { getRndInteger } from "boot/utils";
+import VueQRCodeComponent from "vue-qrcode-component";
 
 var qs = require("qs");
 const $q = useQuasar();
@@ -117,6 +127,7 @@ const uiIsShowStatus = reactive({
   startAnswerBox: true,
   questionBox: false
 });
+
 function onBtnStartAnswerClick() {
   uiIsShowStatus.startAnswerBox = false;
   uiIsShowStatus.questionBox = true;
@@ -126,6 +137,33 @@ function onBtnStartAnswerClick() {
 const quesTitleOptions = ref([]);
 let optionModal = ref(null);
 
+const referralLink = ref();
+const getReferral = () => {
+  referralLink.value = "https://" + location.hostname + `/account/feedback`;
+};
+const copybtntxt = ref("复制");
+const copyMessage = (position) => {
+  let copyText = null;
+  copyText = referralLink.value;
+  // Create a temporary textarea element
+  const tempTextarea = document.createElement("textarea");
+  tempTextarea.value = copyText;
+  document.body.appendChild(tempTextarea);
+
+  // Select the text and copy it
+  tempTextarea.select();
+  document.execCommand("copy");
+
+  // Remove the temporary textarea element
+  document.body.removeChild(tempTextarea);
+  copybtntxt.value = "已复制";
+  setTimeout(() => {
+    copybtntxt.value = "复制";
+  }, 2000);
+  // copyText.select()
+  // document.execCommand("copy")
+  // copybtntxt0.value = 'คัดลอกแล้ว'
+};
 const getQuesTitleOptions = () => {
   eventapi.get("/questionnaire/list").then((res) => {
     // res = {
@@ -180,49 +218,49 @@ const getQuesTitleOptions = () => {
     //   ]
     // }
     if (res.code === 0) {
-      quesTitleOptions.value = res.data
-      recordsPagination.pages = res.data.length
+      quesTitleOptions.value = res.data;
+      recordsPagination.pages = res.data.length;
     }
 
-  })
-}
+  });
+};
 
-const answerInputModal = ref('');
+const answerInputModal = ref("");
 const choices = reactive([]);
 const cacheChoices = reactive([]);
 const getSelected = (item, ans) => {
-  const input = answerInputModal.value
+  const input = answerInputModal.value;
   var obj = {
     question: item.question,
     choice: input ? input : ans
-  }
-  choices[item.sequence - 1] = obj
+  };
+  choices[item.sequence - 1] = obj;
   var cacheObj = {
     sequence: item.sequence,
     question: item.question,
     choice: ans,
     input: input
-  }
-  cacheChoices[item.sequence - 1] = cacheObj
-}
+  };
+  cacheChoices[item.sequence - 1] = cacheObj;
+};
 const btnClick = async (btnType) => {
-  if (optionModal.value === null && (btnType === 'next' || btnType === 'final')) {
+  if (optionModal.value === null && (btnType === "next" || btnType === "final")) {
     return $q.notify({
-        color: "negative",
-        position: "top",
-        message: "请选择一个选项",
-        icon: "report_problem"
-      });
+      color: "negative",
+      position: "top",
+      message: "请选择一个选项",
+      icon: "report_problem"
+    });
   }
-  optionModal.value = null
-  answerInputModal.value = null
+  optionModal.value = null;
+  answerInputModal.value = null;
   const prevBtn = document.getElementById("prevBtn");
   const nextBtn = document.getElementById("nextBtn");
   const finalBtn = document.getElementById("finalBtn");
-  if (btnType === 'prev') {
-      recordsPagination.current = recordsPagination.current - 1;
+  if (btnType === "prev") {
+    recordsPagination.current = recordsPagination.current - 1;
   }
-  if (btnType === 'next') {
+  if (btnType === "next") {
     recordsPagination.current = recordsPagination.current + 1;
   }
   if (recordsPagination.current < recordsPagination.pages) {
@@ -247,85 +285,77 @@ const btnClick = async (btnType) => {
   }
   cacheChoices.forEach((c) => {
     if (c.sequence === recordsPagination.current) {
-      const choicesArray = quesTitleOptions.value[Number(c.sequence) - 1].choices
+      const choicesArray = quesTitleOptions.value[Number(c.sequence) - 1].choices;
       const chosenChoice = choicesArray.findIndex(choice => choice.choice === c.choice);
-      optionModal.value = chosenChoice
-      answerInputModal.value = c.input ? c.input : ''
+      optionModal.value = chosenChoice;
+      answerInputModal.value = c.input ? c.input : "";
     }
-  })
-  
-  if (btnType === 'final') {
-    const questionDiv = document.getElementById("questionContainer");
-    const QRDiv = document.getElementById("QRContainer");
+  });
+
+  if (btnType === "final") {
+    // const questionDiv = document.getElementById("questionContainer");
+    // const QRDiv = document.getElementById("QRContainer");
     // When Submit API is COMPLETE
-    
+
     var evtArray = Object.values(process.env.EVT_API);
     var evtApi = evtArray[getRndInteger(0, evtArray.length)];
     try {
-          const response = await fetch(
-              `${evtApi}/questionnaire/submit`,
-              {
-                method: "POST",
-                body: qs.stringify(choices),
-                headers: {
-                  token: `${store.token}`,
-                  'Content-Type': 'application/json'
-                }
-              }
-          );
-          const data = await response.json();
-          if (data.code === 0) {
-            questionDiv.style.display = "none";
-            QRDiv.style.display = "block";
-          } else {
-            $q.notify({
-              type: "negative",
-              position: "top",
-              message: `提交失败。请稍后再试。`,
-              icon: "report_problem"
-            });
+      const response = await fetch(
+        `${evtApi}/questionnaire/submit`,
+        {
+          method: "POST",
+          body: JSON.stringify(choices),
+          headers: {
+            token: `${store.token}`,
+            "Content-Type": "application/json"
           }
-        } catch (error) {
-          console.error(error);
         }
+      );
+      const data = await response.json();
+      if (data.code === 0) {
+        // questionDiv.style.display = "none";
+        // QRDiv.style.display = "block";
+        isAnswered.value = true;
+        $q.notify({
+          type: "positive",
+          position: "top",
+          message: "提交成功",
+          icon: "report_problem"
+        });
+      } else {
+        $q.notify({
+          type: "negative",
+          position: "top",
+          message: data.message,
+          icon: "report_problem"
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
-}
+};
 
 const urlInput = ref("Http://LHe63851/s?eric123");
 
-const options = ["存款问题", "转账问题", "提款问题", "其他"];
-
-const onItemClick = (item) => {
-  mailboxState.mailboxList.write.title = item;
+const isAnswered = ref(false);
+const testAns = () => {
+  eventapi.get("/questionnaire/answers").then((res) => {
+    if (res.code === 0) {
+      if (res.data && res.data.length === 0) {
+        getQuesTitleOptions();
+      } else {
+        uiIsShowStatus.questionBox = true;
+        isAnswered.value = true;
+      }
+    }
+  });
 };
-
-const loadingBtn = ref(false);
-const mailboxData = ref([]);
-const mailboxState = reactive({
-  active: "quiz",
-  mailboxList: {
-    inbox: {
-      list: [],
-      pageNum: 1,
-      pageSize: 4,
-      total: 0
-    },
-    sent: {
-      list: [],
-      pageNum: 1,
-      pageSize: 4,
-      total: 0
-    },
-    write: {
-      title: "",
-      content: ""
-    },
-    quiz: {}
-  }
-});
 onMounted(() => {
-  getQuesTitleOptions();
-  
+  if (store.hasToken()) {
+    testAns();
+    getReferral();
+  }
   // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
 });
 </script>
@@ -391,27 +421,31 @@ onMounted(() => {
       //     background-image: url("../../assets/images/account/icon-quiz-head-img.png");
       //   }
     }
+
     .content-desc {
       color: $font-2;
       font-size: 1rem;
       margin-bottom: 36px;
     }
+
     .content-btn {
     }
   }
 }
+
 .questions-content {
-    padding: 20px 12px 12px;
-    border-radius: 20px;
-    border: 3px solid #fff;
-    background: #FCFDFE;
-    box-shadow: 0px 4px 0px 0px #A7C2DD;
-    background: radial-gradient(177.6% 177.6% at 50% 50%, #fff 0%, rgba(255, 255, 255, 0) 100%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  padding: 20px 12px 12px;
+  border-radius: 20px;
+  border: 3px solid #fff;
+  background: #FCFDFE;
+  box-shadow: 0px 4px 0px 0px #A7C2DD;
+  background: radial-gradient(177.6% 177.6% at 50% 50%, #fff 0%, rgba(255, 255, 255, 0) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
+
 .questions-container {
   //   background: salmon;
   margin-top: 20px;
@@ -419,10 +453,6 @@ onMounted(() => {
   margin-left: auto;
   margin-right: auto;
   max-width: 600px;
-  display: none;
-  &.show {
-    display: block;
-  }
 
   .questions-header {
     display: flex;
@@ -491,6 +521,7 @@ onMounted(() => {
       width: 100%;
       margin-left: 20px;
     }
+
     .questions-desc {
       color: $font-2;
       font-size: 1rem;
@@ -498,24 +529,40 @@ onMounted(() => {
     }
 
     .answer-container {
-      display: flex; 
+      display: flex;
       width: 100%;
       flex-direction: column;
       padding: 10px 25px;
+
+      span {
+        width: 100%;
+        display: block;
+      }
+
+      :deep(.row.inline) {
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+      }
+
       :deep(.el-radio-group) {
         flex-direction: column;
         align-items: flex-start;
         gap: 20px;
       }
+
       :deep(.el-radio) {
         height: unset;
         justify-content: flex-start;
         align-items: flex-start;
         width: 100%;
-      }      
+      }
+
       :deep(.el-radio__label) {
         width: 100%;
       }
+
       :deep(.el-radio__input) {
         margin-top: 4px;
       }
@@ -528,6 +575,7 @@ onMounted(() => {
       padding: 5px 10px;
       width: 100%;
     }
+
     .answer-input-fill {
       :deep(.el-form-item__label) {
         width: 80px;
@@ -547,12 +595,12 @@ onMounted(() => {
       }
     }
   }
-  
+
   .thumbs-up-div {
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
     img {
       width: 121px;
       height: 121px;
@@ -568,6 +616,7 @@ onMounted(() => {
     margin-top: 10px;
     gap: 5px;
   }
+
   .span1 {
     font-family: PingFang SC;
     font-size: 30px;
@@ -576,6 +625,7 @@ onMounted(() => {
     letter-spacing: 0em;
     text-align: center;
   }
+
   .span2 {
     font-family: PingFang SC;
     font-size: 16px;
@@ -584,6 +634,7 @@ onMounted(() => {
     letter-spacing: 0em;
     text-align: center;
   }
+
   .span3 {
     font-family: PingFang SC;
     font-size: 20px;
@@ -601,11 +652,6 @@ onMounted(() => {
     color: #424F72;
     margin-top: 30px;
     gap: 5px;
-
-    img {
-      width: 188px;
-      height: 233px;
-    }
   }
 
   .url-div {
@@ -620,46 +666,47 @@ onMounted(() => {
 
   .url-input-fill {
     width: 389px;
-      :deep(.el-form-item__label) {
-        width: 80px;
-      }
 
-      :deep(.el-input__inner) {
-        color: #3F8CFF;
-      }
+    :deep(.el-form-item__label) {
+      width: 80px;
+    }
 
-      :deep(.el-input__wrapper) {
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
-        border-radius: 10px;
-        background: #f7f8fb;
-        height: 42px;
-      }
+    :deep(.el-input__inner) {
+      color: #3F8CFF;
+    }
 
-      :deep(.el-textarea__inner) {
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
-        border-radius: 10px;
-        background: #f7f8fb;
-      }
+    :deep(.el-input__wrapper) {
+      box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+      border-radius: 10px;
+      background: #f7f8fb;
+      height: 42px;
+    }
+
+    :deep(.el-textarea__inner) {
+      box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+      border-radius: 10px;
+      background: #f7f8fb;
     }
   }
+}
 
-  .copy-button {
-    position: absolute;
-    bottom: 60px;
-    margin: -15px 0 0 -100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 30px;
+.copy-button {
+  position: absolute;
+  bottom: 60px;
+  margin: -15px 0 0 -100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
 
-    font-family: PingFang SC;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-    letter-spacing: 0em;
-    text-align: center;
+  font-family: PingFang SC;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: center;
 
-  }
+}
 
 
 .mail-content {
@@ -673,11 +720,13 @@ onMounted(() => {
     color: $font-1;
     font-size: 1rem;
   }
+
   :deep(.el-collapse-item__content) {
     padding: 0 16px 16px;
     color: $font-1;
     font-size: 0.875rem;
   }
+
   :deep(.el-collapse-item__wrap),
   :deep(.el-collapse-item__header),
   :deep(.el-collapse) {
@@ -690,6 +739,7 @@ onMounted(() => {
     gap: 20px;
     margin-bottom: 20px;
     margin-top: 10px;
+
     .mail-action {
       display: flex;
       align-items: center;
@@ -725,6 +775,7 @@ onMounted(() => {
       font-size: 1rem;
       color: #424f72;
     }
+
     .input-fill {
       :deep(.el-form-item__label) {
         width: 80px;

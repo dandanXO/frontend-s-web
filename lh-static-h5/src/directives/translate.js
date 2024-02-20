@@ -21,6 +21,8 @@ export const translateRecord = (rec, type = "") => {
     return "失败"; // Failed
   } else if (rec === "SUCCESS") {
     return "成功"; // Success
+  } else if (rec === "SENDING") {
+    return "发送中"; // Sending
   } else if (rec === "STEP_1") {
     return "审核中"; //Under review
   } else if (rec === "STEP_2") {

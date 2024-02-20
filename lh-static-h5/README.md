@@ -1,19 +1,17 @@
 # 雷火 H5/App (lh-static-h5)
 
-APP
+- Node Version >= 16.17.0
+- H5 + Android APP
 
 ## Install the dependencies
 ```bash
-yarn
-# or
 npm install
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
+### Start the app in development mode.
 ```bash
 quasar dev
 ```
-
 
 ### Lint the files
 ```bash
@@ -21,15 +19,6 @@ yarn lint
 # or
 npm run lint
 ```
-
-
-### Format the files
-```bash
-yarn format
-# or
-npm run format
-```
-
 
 
 ### Build the app for production
@@ -65,17 +54,16 @@ npx cap open android
 ### Change Android Version Name
 
 1. open src-capacitor/android/app/build.gradle
-2. Edit Version No:
+2. Edit Version No:  (+1 to versionCode.)
   -     versionCode 7
-        versionName "1.0"
-3. Rebuild Apk.
+3. Build Apk.
 
 
-### Build Release Version .apk
+### Build 'Release' Version .apk
 1. Open Android Studio.
 2. Select Build -> Generate Signed Bundle/Apk -> Select APK.
 3. Select keystore file .jks
-4. Input Alias & Both Passwords
+4. Input Alias & Both Passwords (You may find the passwords/Alias from some file Or ask other to get.)
 5. Build release .apk.
 
 
