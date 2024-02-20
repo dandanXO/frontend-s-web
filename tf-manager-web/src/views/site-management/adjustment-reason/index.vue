@@ -104,6 +104,7 @@
         </el-form-item>
         <el-form-item v-if="list.detailItems.length > 0" :label="t('fields.details')" prop="reasonItemId">
           <el-select
+            filterable
             v-model="form.reasonItemId"
             size="small"
             :placeholder="t('fields.details')"
