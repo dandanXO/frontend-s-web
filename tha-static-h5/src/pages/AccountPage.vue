@@ -372,11 +372,11 @@ export default defineComponent({
     }
 
     &.active-class {
-      background: $linear-bg-new;
+      background: $linear-bg-2;
     }
 
     &.logout-btn:active {
-      background: $linear-bg-new;
+      background: $linear-bg-2;
     }
   }
 }
