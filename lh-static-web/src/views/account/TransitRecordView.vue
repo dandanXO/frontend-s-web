@@ -1248,10 +1248,8 @@ export default defineComponent({
         return "自动支付"; // Automatic Payment
       } else if (transferType === "WAITING_CALLBACK") {
         return "自动支付中"; // Waiting Callback
-      } else if (transferType === "PENDING") {
-        return "支付中"; // Pending
-      } else if (transferType === "SUCCESS") {
-        return "成功"; // Success
+      } else if (transferType === "SENDING") {
+        return "发送中"; // Sending
       } else if (transferType === "SUPPLEMENT_SUCCESS") {
         return "成功"; // Supplement Success
       } else if (transferType === "CLOSED") {
