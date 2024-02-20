@@ -34,11 +34,32 @@ const props = defineProps({
     required: true
   },
 });
+const mailLink = () => {
+  if (props.siteId === '7') {
+    return 'mailto:affiliate@e8007.com'
+  } else {
+    return 'mailto:affiliate@dyvip99.com'
+  }
+}
+const qqLink = () => {
+  if (props.siteId === '7') {
+    return '1903687863'
+  } else {
+    return '100983290'
+  }
+}
+const telegramLink = () => {
+  if (props.siteId === '7') {
+    return '@LH18668'
+  } else {
+    return 'leihuo123'
+  }
+}
 const contactlist = ref([
   {
     icon: 'cmail',
     type: '合营部电邮',
-    link: 'mailto:affiliate@e8007.com',
+    link: mailLink(),
     btns: [{
       text: '咨询',
       action: ''
@@ -47,7 +68,7 @@ const contactlist = ref([
   {
     icon: 'cqq',
     type: '合营QQ',
-    link: '1903687863',
+    link: qqLink(),
     btns: [{
       text: '复制',
       action: ''
@@ -73,7 +94,7 @@ const contactlist = ref([
   {
     icon: 'ctelegram',
     type: 'Telegram',
-    link: '@LH18668',
+    link: telegramLink(),
     btns: [{
       text: '复制',
       action: ''
