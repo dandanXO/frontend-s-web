@@ -27,7 +27,10 @@
 
   <div class="spinwheel-container">
     <div class="spin-count-board">
-      <img class="spin-count-board-img" src="../../../assets/images/promotion/spinwheel/spin_count_board.png" />
+      <img
+        class="spin-count-board-img"
+        src="../../../assets/images/promotion/spinwheel/spin_count_board.png"
+      />
       <span>
         {{
           $t("lang.spinRemaining", {
@@ -109,8 +112,6 @@
     <div class="infoboard">
       <img class="infoboard-img" src="../../../assets/images/promotion/spinwheel/infoboard.png" />
     </div>
-
-    <img class="panda-img" src="../../../assets/images/promotion/spinwheel/panda.png" />
   </div>
 </template>
 
@@ -509,7 +510,7 @@ onMounted(() => {
 
     span {
       position: absolute;
-      bottom: 15%;
+      bottom: 10%;
       color: #fff;
       text-align: center;
       font-family: FZHanZhenGuangBiaoS-GB;
@@ -570,12 +571,12 @@ onMounted(() => {
 
       span {
         position: relative;
-        top: 1%;
-        left: 13%;
+        top: 4%;
+        left: 11.5%;
         color: #fbff1e;
         text-align: center;
         font-family: FZHanZhenGuangBiaoS-GB;
-        font-size: 2vw;
+        font-size: 2.5vw;
         font-weight: 600;
         line-height: 100%; /* 2.11175rem */
       }
@@ -648,13 +649,6 @@ onMounted(() => {
       margin: 0 auto;
     }
   }
-
-  .panda-img {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 125px;
-  }
 }
 
 @media (min-width: 768px) {
@@ -674,10 +668,6 @@ onMounted(() => {
         font-size: 30px !important;
       }
     }
-  }
-
-  .panda-img {
-    display: none;
   }
 
   .spinwheel-container {
@@ -716,9 +706,9 @@ onMounted(() => {
 
       .prize-lock-day {
         span {
-          top: 1%;
-          left: 8%;
-          font-size: 0.75rem;
+          top: 4%;
+          left: 7%;
+          font-size: 1.15rem;
         }
       }
     }
@@ -749,11 +739,6 @@ onMounted(() => {
 @media (min-width: 980px) {
   .spinwheel-container .spin-count-board span {
     font-size: 1.3rem;
-  }
-  .spinwheel-container .inner-wheel .prize-lock-day span {
-    top: 1%;
-    left: 8%;
-    font-size: 0.9rem;
   }
 }
 
