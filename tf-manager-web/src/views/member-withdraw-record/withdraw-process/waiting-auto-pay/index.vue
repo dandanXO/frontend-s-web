@@ -461,7 +461,6 @@ import { getFinancialLevels } from '../../../../api/financial-level'
 import { getBankInfoListSimple } from '../../../../api/bank-info'
 import {
   getMemberWithdrawRecordWaitingAutopay,
-  getTotalWithdrawAmountByStatus,
   fromWaitingAutoPayToApply,
   fromAutopayToFail,
 
@@ -649,8 +648,7 @@ async function loadRecord() {
   page.total = ret.total
   if (page.records.length !== 0) {
     query.status = 'WAITING_AUTO_PAY'
-    const { data: autoPayAmount } = await getTotalWithdrawAmountByStatus(query)
-    page.totalAmount = autoPayAmount
+    page.totalAmount = ret.sums.withdrawAmount
   } else {
     page.totalAmount = 0
   }

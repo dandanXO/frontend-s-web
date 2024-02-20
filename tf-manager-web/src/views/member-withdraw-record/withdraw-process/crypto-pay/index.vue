@@ -612,7 +612,6 @@ import {
   fromPayToBeforePaid,
   fromPayToSuccess,
   fromPayToFail,
-  getTotalWithdrawAmountByStatus,
   getWithdrawPlatformList,
   fromPayToAutopay,
 } from '../../../../api/member-withdraw-record'
@@ -836,8 +835,7 @@ async function loadRecord() {
   page.total = ret.total
   if (page.records.length !== 0) {
     query.status = 'STEP_3'
-    const { data: amount } = await getTotalWithdrawAmountByStatus(query)
-    page.totalAmount = amount
+    page.totalAmount = ret.sums.withdrawAmount
   } else {
     page.totalAmount = 0
   }
