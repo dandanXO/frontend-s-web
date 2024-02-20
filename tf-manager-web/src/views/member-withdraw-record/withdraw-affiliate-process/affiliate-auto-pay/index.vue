@@ -476,7 +476,6 @@ import { getFinancialLevels } from '../../../../api/financial-level'
 import { getBankInfoListSimple } from '../../../../api/bank-info'
 import {
   getAffiliateWithdrawRecordAutopay,
-  getTotalWithdrawAmountByStatus,
   fromAffiliateAutopayToPay,
   fromAffiliateAutopayToFail,
   fromAffiliateAutopayToSuccess,
@@ -662,8 +661,7 @@ async function loadRecord() {
   page.total = ret.total
   if (page.records.length !== 0) {
     query.status = 'AUTOPAY, SENDING, WAITING_CALLBACK'
-    const { data: autoPayAmount } = await getTotalWithdrawAmountByStatus(query)
-    page.totalAmount = autoPayAmount
+    page.totalAmount = ret.sums.withdrawAmount
   } else {
     page.totalAmount = 0
   }

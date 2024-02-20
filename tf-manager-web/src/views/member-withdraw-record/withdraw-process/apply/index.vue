@@ -397,7 +397,6 @@ import {
   getMemberWithdrawRecordApply,
   fromApplyToChecking,
   fromApplyToPending,
-  getTotalWithdrawAmountByStatus,
 } from '../../../../api/member-withdraw-record'
 import { ElMessage } from 'element-plus'
 import { hasPermission } from '../../../../utils/util'
@@ -563,8 +562,7 @@ async function loadRecord() {
   page.total = ret.total
   if (page.records.length !== 0) {
     query.status = 'APPLY'
-    const { data: amount } = await getTotalWithdrawAmountByStatus(query)
-    page.totalAmount = amount
+    page.totalAmount = ret.sums.withdrawAmount
   } else {
     page.totalAmount = 0
   }

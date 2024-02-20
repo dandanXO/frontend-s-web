@@ -462,7 +462,6 @@ import {
   fromAffiliateApplyToChecking,
   fromAffiliateCheckingToBeforePaid,
   fromAffiliateCheckingToFail,
-  getTotalWithdrawAmountByStatus,
 } from '../../../../api/member-withdraw-record'
 import { ElMessage } from 'element-plus'
 import { required } from '../../../../utils/validate'
@@ -647,8 +646,7 @@ async function loadRecord() {
   page.total = ret.total
   if (page.records.length !== 0) {
     query.status = 'STEP_1'
-    const { data: amount } = await getTotalWithdrawAmountByStatus(query)
-    page.totalAmount = amount
+    page.totalAmount = ret.sums.withdrawAmount
   } else {
     page.totalAmount = 0
   }
