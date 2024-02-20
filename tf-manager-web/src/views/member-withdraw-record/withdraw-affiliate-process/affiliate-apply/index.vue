@@ -415,7 +415,7 @@ import { hasPermission } from '../../../../utils/util'
 import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
-import {getSiteListSimple} from "@/api/site";
+import { getSiteListSimple } from "@/api/site";
 const store = useStore();
 const { t } = useI18n();
 const searchForm = ref(null)
