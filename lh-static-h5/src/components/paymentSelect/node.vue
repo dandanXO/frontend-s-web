@@ -17,7 +17,7 @@
       >
         <div class="node-text">
           <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
-          <div class="overflow">{{ item.nodeName }}</div>
+          <div class="overflow txt-title">{{ item.nodeName }}</div>
           <div class="promo">
             <img v-if="item.promotionIcon" :src="`${imgURL}${item.promotionIcon}`" />
           </div>
@@ -340,6 +340,11 @@ $node-color: #33bcd4;
       & > div {
         font-size: 12px;
         color: #000;
+      }
+
+      .txt-title {
+        // font-size: 11px !important;
+        white-space: nowrap;
       }
 
       .node-txt-img {
