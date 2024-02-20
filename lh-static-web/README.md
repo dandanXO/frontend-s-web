@@ -1,4 +1,7 @@
-# dy
+# LH 雷火 Vue3.0
+
+- LH Web page.
+- Node Version >= 16.17.0
 
 ## Project setup
 ```
@@ -13,21 +16,6 @@ npm run serve
 ### Compiles and minifies for production
 ```
 npm run build
-```
-
-### Preview Production View
-```
-First Time:
-npm i -g serve
-```
-
-```
-serve -s dist
-```
-
-### Lints and fixes files
-```
-npm run lint
 ```
 
 ### Customize configuration
