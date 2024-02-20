@@ -2146,13 +2146,12 @@ export default defineComponent({
 .grid {
   display: flex;
   margin: 0px auto 0px;
-  //align-items: flex-start;
-  align-items: center;
+  align-items: flex-start;
   column-gap: 8px;
   row-gap: 14px;
   width: calc(100% - 20px);
-  // background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
-  padding: 5px 12px 5px;
+  background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
+  padding: 6px 12px 6px;
   border-radius: 12px;
   overflow-x: auto;
 
