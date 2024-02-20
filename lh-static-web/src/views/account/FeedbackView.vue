@@ -2,26 +2,7 @@
   <div class="account-box account-contents">
     <div class="account-content mail mail-content">
       <el-tabs v-model="mailboxState.active" @tab-click="mailTabChange" type="card">
-<!--        <el-tab-pane key="inbox" name="inbox" :label="'消息中心'">-->
-<!--          <template v-if="mailboxState.mailboxList.inbox.list.length > 0">-->
-<!--            <el-collapse v-model="activeNames" @change="handleChange">-->
-<!--              <el-collapse-item v-for="item in mailboxState.mailboxList.inbox.list" :key="item.id">-->
-<!--                <template #title>标题：{{ item.title }}</template>-->
-<!--                <div>-->
-<!--                  <div>正文：{{ item.content }}</div>-->
-<!--                </div>-->
-<!--              </el-collapse-item>-->
-<!--            </el-collapse>-->
-<!--            <div class="mail-pagination-wrapper">-->
-<!--              <el-pagination-->
-<!--                @current-change="changePage"-->
-<!--                :total="mailboxState.mailboxList.inbox.total"-->
-<!--                :current-page="mailboxState.mailboxList.inbox.pageNum"-->
-<!--                :page-size="mailboxState.mailboxList.inbox.pageSize"-->
-<!--              />-->
-<!--            </div>-->
-<!--          </template>-->
-<!--        </el-tab-pane>-->
+
         <el-tab-pane key="write" name="write" :label="'意见反馈'">
           <el-form
             ref="formRef"
@@ -72,8 +53,30 @@
             </div>
           </el-form>
         </el-tab-pane>
+
+        <el-tab-pane key="sent" name="sent" :label="'我的反馈'">
+          <template v-if="mailboxState.mailboxList.sent.list.length > 0">
+            <el-collapse v-model="activeNames" @change="handleChange">
+              <el-collapse-item v-for="item in mailboxState.mailboxList.sent.list" :key="item.id">
+                <template #title>标题：{{ item.title }}</template>
+                <div>
+                  <div>正文：{{ item.content }}</div>
+                </div>
+              </el-collapse-item>
+            </el-collapse>
+            <div class="mail-pagination-wrapper">
+              <el-pagination
+                @current-change="changePage"
+                :total="mailboxState.mailboxList.sent.total"
+                :current-page="mailboxState.mailboxList.sent.pageNum"
+                :page-size="mailboxState.mailboxList.sent.pageSize"
+              />
+            </div>
+          </template>
+        </el-tab-pane>
+
         <el-tab-pane key="quiz" name="quiz" :label="'有奖问答'">
-          <div v-if="!isAnswered" class="quiz-container">
+          <div v-if="!uiIsShowStatus.questionBox" class="quiz-container">
             <div class="quiz-header">
               有奖问答
             </div>
@@ -88,7 +91,7 @@
               </div>
             </div>
           </div>
-          <div v-if="isAnswered" class="questions-container">
+          <div v-if="uiIsShowStatus.questionBox" class="questions-container">
             <!-- <div class="questions-back-btn">
                 <img src="../../assets/feedback/back-btn.png"/>
             </div> -->
@@ -187,6 +190,7 @@ const uiIsShowStatus = reactive({
   questionBox: false
 });
 function onBtnStartAnswerClick() {
+  // debugger;
   uiIsShowStatus.startAnswerBox = false;
   uiIsShowStatus.questionBox = true;
   recordsPagination.current = 1;
@@ -200,6 +204,11 @@ const getReferral = () => {
   referralLink.value = 'https://' + location.hostname + `/center/feedback`;
 }
 const copybtntxt = ref('复制');
+
+const activeNames= ref();
+const handleChange = () => {
+
+}
 const copyMessage = (position) => {
   let copyText = null;
     copyText = referralLink.value
@@ -375,13 +384,13 @@ const mailboxState = reactive({
     inbox: {
       list: [],
       pageNum: 1,
-      pageSize: 4,
+      pageSize: 5,
       total: 0
     },
     sent: {
       list: [],
       pageNum: 1,
-      pageSize: 4,
+      pageSize: 5,
       total: 0
     },
     write: {
@@ -416,15 +425,16 @@ const loadPersonalMailbox = () => {
   } else {
     mailboxData.value = {
       type: null,
-      current: mailboxState.mailboxList[mailboxState.active].pageNum,
-      size: mailboxState.mailboxList[mailboxState.active].pageSize,
+      current: mailboxState.mailboxList["sent"].pageNum,
+      size: mailboxState.mailboxList["sent"].pageSize,
       orderBy: "createTime"
     };
+    mailboxState.mailboxList["sent"].list = [];
     mailOutbox(mailboxData.value)
       .then((response) => {
         if (response.code === 0) {
-          mailboxState.mailboxList[mailboxState.active].list.push(...response.data.records);
-          mailboxState.mailboxList[mailboxState.active].total = response.data.total;
+          mailboxState.mailboxList["sent"].list.push(...response.data.records);
+          mailboxState.mailboxList["sent"].total = response.data.total;
         }
       })
       .catch((error) => {
@@ -486,7 +496,7 @@ const onSubmit = (e) => {
         .then((response) => {
           if (response.code === 0) {
             ElMessage({
-              message: "成功",
+              message: "提交成功",
               type: "success"
             });
             loadPersonalMailbox();
@@ -515,6 +525,7 @@ const testAns = () => {
         loadPersonalMailbox();
         getQuesTitleOptions();
       } else {
+        uiIsShowStatus.questionBox= true;
         isAnswered.value = true;
       }
     }

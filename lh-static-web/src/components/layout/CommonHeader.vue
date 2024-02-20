@@ -1121,7 +1121,8 @@ export default defineComponent({
 
     const onLogout = () => {
       store.memberLogout().then(() => {
-        location.reload();
+        router.push("/home");
+        // location.reload();
       });
     };
     const registerRef = ref([])
