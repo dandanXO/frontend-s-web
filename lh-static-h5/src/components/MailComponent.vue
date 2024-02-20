@@ -1,12 +1,16 @@
 <template>
   <q-page>
-    <template v-if="props.type!=='outbox'">
-      <q-tabs active-color="dark" indicator-color="bright" align="justify" v-model="mailboxMessageTab" @update:model-value="changeMailboxType">
-        <q-tab :key="index" :name="item.type" :label="item.name" v-for="(item, index) in mailboxMessageTypeData"/>
+    <template v-if="props.type !== 'outbox'">
+      <q-tabs
+        active-color="dark"
+        indicator-color="bright"
+        align="justify"
+        v-model="mailboxMessageTab"
+        @update:model-value="changeMailboxType"
+      >
+        <q-tab :key="index" :name="item.type" :label="item.name" v-for="(item, index) in mailboxMessageTypeData" />
       </q-tabs>
     </template>
-
-
 
     <q-tab-panels v-model="mailboxMessageTab" animated>
       <q-tab-panel :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
@@ -16,12 +20,20 @@
         </q-inner-loading>
 
         <div v-if="!loading">
-          <div class="action-buttons" v-if="props.type!=='outbox'">
-            <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md" @click="readMails(item.type)">全部已读</q-btn>
-            <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md"  @click="deleteMails(item.type)">全部删除</q-btn>
+          <div class="action-buttons" v-if="props.type !== 'outbox'">
+            <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md" @click="readMails(item.type)">
+              全部已读
+            </q-btn>
+            <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md" @click="deleteMails(item.type)">
+              全部删除
+            </q-btn>
             <q-toggle v-if="truncatedListByType.length" v-model="allowSelectMultiple" :label="'选择多个'" left-label />
-            <q-btn v-if="hasMailSelected" class="common-md-white-btn" size="md"  @click="readMails(item.type)">已读</q-btn>
-            <q-btn v-if="hasMailSelected" class="common-md-white-btn" size="md"  @click="deleteMails(item.type)">删除</q-btn>
+            <q-btn v-if="hasMailSelected" class="common-md-white-btn" size="md" @click="readMails(item.type)">
+              已读
+            </q-btn>
+            <q-btn v-if="hasMailSelected" class="common-md-white-btn" size="md" @click="deleteMails(item.type)">
+              删除
+            </q-btn>
           </div>
           <q-infinite-scroll @load="onLoad" :offset="150">
             <q-card
@@ -85,9 +97,9 @@
           <br />
           确认删除信息？
         </q-card-section>
-        <q-card-actions align="right">
-          <q-btn class="common-md-btn"  size="md" @click="confirmDeleteMails(type)" label="确认" />
-          <q-btn class="common-md-white-btn"  size="md" @click="isDeleteMailModal = false" label="取消" />
+        <q-card-actions align="center">
+          <q-btn class="common-md-btn" size="md" @click="confirmDeleteMails(type)" label="确认" />
+          <q-btn class="common-md-white-btn" size="md" @click="isDeleteMailModal = false" label="取消" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -126,7 +138,7 @@ export default defineComponent({
       }
     },
     type: {
-      type:String,
+      type: String,
       default: function () {
         return "";
       }
@@ -142,21 +154,21 @@ export default defineComponent({
       { num: 5, type: "ALL", name: "全部" }
     ]);
     const mailboxMessageTab = ref(mailboxMessageTypeData.value[0].type);
-    if(props.type === 'outbox'){
-      mailboxMessageTab.value= mailboxMessageTypeData.value[4].type;
+    if (props.type === "outbox") {
+      mailboxMessageTab.value = mailboxMessageTypeData.value[4].type;
     }
     const $q = useQuasar();
     const isDeleteMailModal = ref(false);
     const truncatedList = ref([]);
     const truncatedListByType = computed(() => {
       return truncatedList.value.filter((listItem) => {
-        if(mailboxMessageTab.value === 'ALL') {
+        if (mailboxMessageTab.value === "ALL") {
           return true;
         }
 
-        return listItem.type === mailboxMessageTab.value
-      })
-    })
+        return listItem.type === mailboxMessageTab.value;
+      });
+    });
     const comList = ref({});
     const allowSelectMultiple = ref(false);
     const selectedMailIds = ref({});
@@ -183,7 +195,7 @@ export default defineComponent({
     };
 
     const readMails = (type) => {
-      if(hasMailSelected.value) {
+      if (hasMailSelected.value) {
         const messagesIdArr = Object.keys(selectedMailIds.value);
         const formattedIds = messagesIdArr.join(",");
         api
@@ -207,23 +219,24 @@ export default defineComponent({
             console.log(error);
           });
       } else {
-        api.post("/session/inbox/readAll", {
-          type: type
-        })
-        .then((res) => {
-          if (res.code === 0) {
-            $q.notify({
-              message: "全部消息已读",
-              type: "positive",
-              position: "top",
-              icon: "check_circle_outline"
-            });
-            onLoad()
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        api
+          .post("/session/inbox/readAll", {
+            type: type
+          })
+          .then((res) => {
+            if (res.code === 0) {
+              $q.notify({
+                message: "全部消息已读",
+                type: "positive",
+                position: "top",
+                icon: "check_circle_outline"
+              });
+              onLoad();
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     };
 
@@ -232,7 +245,7 @@ export default defineComponent({
     };
 
     const confirmDeleteMails = (type) => {
-      if(hasMailSelected.value) {
+      if (hasMailSelected.value) {
         const mailIdArr = Object.keys(selectedMailIds.value);
         const formattedIds = mailIdArr.join(",");
         api
@@ -244,37 +257,43 @@ export default defineComponent({
           )
           .then((res) => {
             if (res.code === 0) {
+              isDeleteMailModal.value = false;
+              // Remove items from truncatedListByType if their IDs match with selectedMailIds and are marked as true
+              truncatedList.value = truncatedList.value.filter((mail) => !selectedMailIds.value[mail.id]);
+
               $q.notify({
                 message: "删除已选择的消息",
                 type: "positive",
                 position: "top",
                 icon: "check_circle_outline"
               });
+              onLoad();
             }
           })
           .catch((error) => {
             console.log(error);
           });
       } else {
-        api.post("/session/inbox/deleteAll", {
-          type: type
-        })
-        .then((res) => {
-          isDeleteMailModal.value = false;
-          if (res.code === 0) {
-            $q.notify({
-              message: "已删除全部消息",
-              type: "positive",
-              position: "top",
-              icon: "check_circle_outline"
-            });
-            onLoad();
-          }
-        })
-        .catch((error) => {
-          isDeleteMailModal.value = false;
-          console.log(error);
-        });
+        api
+          .post("/session/inbox/deleteAll", {
+            type: type
+          })
+          .then((res) => {
+            isDeleteMailModal.value = false;
+            if (res.code === 0) {
+              $q.notify({
+                message: "已删除全部消息",
+                type: "positive",
+                position: "top",
+                icon: "check_circle_outline"
+              });
+              onLoad();
+            }
+          })
+          .catch((error) => {
+            isDeleteMailModal.value = false;
+            console.log(error);
+          });
       }
     };
 
