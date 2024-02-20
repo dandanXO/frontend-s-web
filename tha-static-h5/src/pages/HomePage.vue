@@ -862,7 +862,7 @@
     :offset="[0, 0]"
   >
     <div v-if="showSticky" class="home-sticky">
-      <!-- <img class="sticky-bear" src="../assets/home/line-bear.png" /> -->
+      <img class="sticky-bear" src="../assets/home/line-bear.png" />
       <q-btn name="close" height="20" width="20" size="xs" @click="closeLineSticky" class="sticky-close-btn">
         <q-icon name="close"></q-icon>
       </q-btn>
@@ -3051,37 +3051,30 @@ export default defineComponent({
     right: 0px;
     z-index: 15;
 
-    width: 125px;
-    aspect-ratio: 95/159;
-    background: url("../assets/home/line-board.png");
-    //background: url(../assets/home/xmas-line-btn.png);
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    //padding: 10px 0;
-    padding: 15px 0px 10px;
+    width: 152px;
+    height: 192px;
+    background: $primary;
     border-radius: 10px 0px 0px 10px;
 
     color: $white;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0px;
-    justify-content: flex-end;
+    gap: 3px;
+    justify-content: center;
 
     .line-title {
-      padding-top: 3px;
-      font-size: 12px;
+      font-size: 18px;
     }
 
     .line-img {
-      width: 80px;
+      width: 100px;
       height: auto;
       margin: 0 auto;
-      background: #fff;
     }
 
     .line-bottom {
-      font-size: 12px;
+      font-size: 16px;
     }
   }
 }
