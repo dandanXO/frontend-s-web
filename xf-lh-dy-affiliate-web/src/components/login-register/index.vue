@@ -1,6 +1,6 @@
 <template>
   <div class="firstPage"
-       :class="props.siteId !== '5' ? '' : 'ind-firstPage'"
+       :class="[props.siteId !== '5' ? '' : 'ind-firstPage', props.siteId !== '7' ? '' : 'lh']"
   >
     <div class="inner">
       <div class="loginPage">
@@ -1062,6 +1062,9 @@ a {
   background: url('../../assets/images/login/firstbg.svg') no-repeat center
     center;
   background-size: cover;
+  &.lh {
+    background: url('../../assets/images/login/lh-bg.jpg') no-repeat center center;
+  }
   .inner {
     max-width: 1200px;
     width: 100%;

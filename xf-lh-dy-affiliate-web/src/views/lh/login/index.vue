@@ -12,7 +12,7 @@
       <LoginRegisterPage siteId="7" />
     </SwiperSlide>
     <SwiperSlide>
-      <CustomerServicePage />
+      <CustomerServicePage siteId="7" />
     </SwiperSlide>
     <SwiperSlide>
       <SupportPage />
@@ -24,7 +24,7 @@
   </Swiper>
   <div v-if="isMobileView">
     <LoginRegisterPage siteId="7" />
-    <CustomerServicePage />
+    <CustomerServicePage siteId="7" />
     <SupportPage />
   </div>
 </template>
