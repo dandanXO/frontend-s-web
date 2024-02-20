@@ -387,6 +387,7 @@ import { hasPermission } from '../../../../utils/util'
 import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
+import { getSiteListSimple } from "@/api/site";
 const store = useStore();
 const { t } = useI18n();
 const searchForm = ref(null)
@@ -431,6 +432,10 @@ const request = reactive({
   minWithdrawAmount: null,
   maxWithdrawAmount: null,
   vipId: null,
+  siteId: null
+})
+const siteList = reactive({
+  list: [],
 })
 
 function disabledDate(time) {
@@ -452,6 +457,7 @@ function resetQuery() {
   request.minWithdrawAmount = null
   request.maxWithdrawAmount = null
   request.vipId = vipList.list[0].id
+  request.siteId = siteList.list[0].id
   uiControl.dialogVisible = false
 }
 
@@ -545,6 +551,11 @@ async function loadRecord() {
   page.loading = false
 }
 
+async function loadSites() {
+  const { data: site } = await getSiteListSimple()
+  siteList.list = site
+}
+
 async function toApply(memberWithdrawRecord) {
   if (memberWithdrawRecord) {
     await fromAffiliatePendingToApply([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate }])
@@ -563,7 +574,9 @@ async function showDialog(type) {
   uiControl.dialogVisible = true
 }
 
-onMounted(() => {
+onMounted(async() => {
+  await loadSites()
+  request.siteId = siteList.list[0].id
   loadVips()
   loadFinancialLevels()
   loadBanks()

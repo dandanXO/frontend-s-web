@@ -18,6 +18,22 @@
           :clearable="false"
           :default-time="defaultTime"
         />
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px;margin-left:10px"
+          default-first-option
+          @focus="loadSites"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-input
           v-model="request.serialNumber"
           style="width: 300px; margin-left: 10px"
@@ -399,6 +415,7 @@ import { hasPermission } from '../../../../utils/util'
 import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
+import { getSiteListSimple } from "@/api/site";
 const store = useStore();
 const { t } = useI18n();
 const searchForm = ref(null)
@@ -409,6 +426,9 @@ const financialList = reactive({
   list: [],
 })
 const bankList = reactive({
+  list: [],
+})
+const siteList = reactive({
   list: [],
 })
 
@@ -444,6 +464,7 @@ const request = reactive({
   minWithdrawAmount: null,
   maxWithdrawAmount: null,
   vipId: null,
+  siteId: null
 })
 
 function disabledDate(time) {
@@ -465,6 +486,7 @@ function resetQuery() {
   request.minWithdrawAmount = null
   request.maxWithdrawAmount = null
   request.vipId = vipList.list[0].id
+  request.siteId = siteList.list[0].id
   uiControl.dialogVisible = false
 }
 
@@ -487,6 +509,11 @@ const page = reactive({
   loading: false,
   totalAmount: 0,
 })
+
+async function loadSites() {
+  const { data: site } = await getSiteListSimple()
+  siteList.list = site
+}
 
 async function loadVips() {
   const { data: vip } = await getVipList()
@@ -589,7 +616,9 @@ async function showDialog(type) {
   uiControl.dialogVisible = true
 }
 
-onMounted(() => {
+onMounted(async() => {
+  await loadSites()
+  request.siteId = siteList.list[0].id
   loadVips()
   loadFinancialLevels()
   loadBanks()
