@@ -371,6 +371,7 @@ import { ElNotification } from 'element-plus'
 import dyLogo from '@/assets/images/dy/logowhitee.png'
 import xfLogo from '@/assets/images/xf/logowhitee.png'
 import indLogo from '@/assets/images/ind/ind-logo.png'
+import lhLogo from '@/assets/images/lh/logo.png'
 import { getVerificationImage } from '@/api/verification'
 import { getVerificationCode } from '@/api/user'
 import { useI18n } from "vue-i18n";
@@ -845,7 +846,7 @@ export default defineComponent({
       if (props.siteId === '7') {
         currentSite.value.firstLiner = '从雷火开始'
         currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
-        currentSite.value.logo = xfLogo
+        currentSite.value.logo = lhLogo
         state.loginForm.site = 'LH1'
         setLanguage('zh');
       }
@@ -882,6 +883,7 @@ export default defineComponent({
       regFormRef,
       dyLogo,
       xfLogo,
+      lhLogo,
       verificationImg,
       disabledDate,
       ...toRefs(state),
