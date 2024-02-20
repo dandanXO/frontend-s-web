@@ -12,7 +12,7 @@
       <div class="services">
         <div class="contact-boxes">
           <div class="contact-box" v-for="(c, i) in contactlist" :key="i">
-            <div class="contacticon"><img :src="require(`../../assets/images/${c.icon}.svg`)"></div>
+            <div class="contacticon"><img style="max-width: 75px;" :src="require(`../../assets/images/${c.icon}.svg`)"></div>
             <div class="type">{{ c.type }}</div>
             <div class="link">{{ c.link }}</div>
             <div class="buttons">
@@ -20,14 +20,20 @@
             </div>
           </div>
         </div>
-        <div class="girl"><img src="../../assets/images/login/cus-girl.png"></div>
+        <div class="girl"><img v-if="props.siteId === '7'" src="../../assets/images/login/cus-guy.png"><img v-else src="../../assets/images/login/cus-girl.png"></div>
       </div>
     </div>
   </div>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { defineProps, ref } from 'vue'
 
+const props = defineProps({
+  siteId: {
+    type: [String, Number], // Specify the allowed types for the prop
+    required: true
+  },
+});
 const contactlist = ref([
   {
     icon: 'cmail',
@@ -80,14 +86,14 @@ const contactlist = ref([
   {
     icon: 'cpaopao',
     type: '泡泡',
-    link: '12830840',
+    link: 'LH10086',
     btns: [{
       text: '复制',
       action: ''
     },
     {
       text: '下载',
-      action: 'https://www.batchat.com/'
+      action: 'https://paopaoim.com/index.html'
     }]
   }
 ])
@@ -175,6 +181,9 @@ const copyMessage = (position, text, btnPosition) => {
         margin: 50px auto;
         .girl {
             flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             img {
                 width: 100%;
             }
