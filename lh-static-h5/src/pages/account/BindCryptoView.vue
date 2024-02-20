@@ -79,7 +79,7 @@
         </q-label>
         <q-input
           ref="cardNumberRef"
-          type="number"
+          type="text"
           standout
           v-model="bankCardInfo.cardNumber"
           class="q-pb-xs"
@@ -87,7 +87,7 @@
           label="请输入虚拟币账户"
           lazy-rules
           clearable
-          :rules="[(val) => (val && val.length > 0) || '请输入虚拟币账户', validateBankLength]"
+          :rules="[(val) => (val && val.length > 0) || '请输入虚拟币账户', validateBankLength, validateCryptoNumber]"
         ></q-input>
 
         <q-label>
@@ -102,7 +102,7 @@
             @click="onTypeToggleBtnClick(bankIndex)"
           >
             <img :src="imgURL + bank.bankIcon" alt="" />
-            <div>{{ bank.name }}</div>
+            <div>{{ bank.name === 'USDTTRC' ? 'USDT' : bank.name }}</div>
           </q-btn>
         </div>
 
@@ -221,6 +221,12 @@ const bankCardInfo = reactive({
 const validateBankLength = (val) => {
   return (val.length > 33 && val.length < 37) || "长度应为34到36个字符";
 };
+
+const validateCryptoNumber = (val) => {
+  var regex = /^[a-zA-Z0-9]+$/;
+
+  return (regex.test(val)) || "请输入有效的虚拟账户号码";
+}
 
 // NOTE: no chance to validate, e.g. member telephone = 44****77
 // const isValidCnPhone = () => {

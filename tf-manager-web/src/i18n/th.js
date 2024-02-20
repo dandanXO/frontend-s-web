@@ -1497,6 +1497,7 @@ export default {
     BW1: 'BW1',
     BW2: 'BW2',
     BW3: 'BW3',
+    BW4: 'BW4',
     'To be affiliate paid': 'เพื่อเป็นพันธมิตรจ่าย',
     'Affiliate Payment on going': 'กำลังดำเนินการจ่ายเงินพันธมิตร',
     'Crypto Affiliate Payment on going': 'กำลังจ่ายคลิปโตพันธมิตร',
@@ -1610,6 +1611,7 @@ export default {
     'SMS Setting': 'ตั้งค่า SMS',
     DownloadManager: 'ตัวจัดการการดาวน์โหลด',
     GoogleAuth: 'Google อัตโนมัติ',
+    'User Login Log': 'บันทึกการเข้าสู่ระบบของผู้ใช้',
   },
   google: {
     google_auth_menu: 'ตัวรับรองความถูกต้องของกูเกิ้ล',

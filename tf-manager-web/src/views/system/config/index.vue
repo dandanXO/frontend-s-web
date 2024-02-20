@@ -522,6 +522,7 @@ watch(
     )
     defaultRisk.value = Number(getter('default_risk', false).value)
     defaultAgentRisk.value = Number(getter('default_agent_risk', false).value)
+    s3Url.value = getter('s3_url', false).value
   },
   { deep: true }
 )

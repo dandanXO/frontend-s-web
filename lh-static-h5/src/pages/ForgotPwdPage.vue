@@ -1,69 +1,196 @@
 <template>
   <q-page class="">
-    <div class="forgetpass-board q-gutter-y-md">
-      <div class="text-blue-grey">请提供您的用户名以及邮箱地址，我们会立即将新密码发送至您的注册邮箱。</div>
-      <q-form v-if="!isEmailSent" class="q-gutter-y-md rounded-borders">
-        <q-input
-          ref="loginNameRef"
-          filled
-          hide-bottom-space
-          v-model="passwordForm.loginName"
-          label="用户名"
-          clearable
-          lazy-rules
-          :rules="[(val) => (val && val.length > 0) || '请输入用户名']"
-        >
-          <template v-slot:prepend>
-            <q-icon name="person_outline" />
-          </template>
-        </q-input>
-        <q-input
-          ref="emailRef"
-          type="email"
-          filled
-          hide-bottom-space
-          v-model="passwordForm.email"
-          label="电子邮件"
-          clearable
-          lazy-rules
-          :rules="[(val) => (val && val.length > 0) || '请输入电子邮件', isValidEmail]"
-        >
-          <template v-slot:prepend>
-            <q-icon name="mail_outline" />
-          </template>
-        </q-input>
-        <q-input
-          ref="ftCaptchaRef"
-          filled
-          hide-bottom-space
-          type="text"
-          v-model="passwordForm.captchaCode"
-          label="验证码"
-          lazy-rules
-          :rules="[(val) => (val && val.length > 3) || '请输入验证码']"
-        >
-          <template v-slot:append>
-            <img :src="verificationImg" @click="getCode()" />
-          </template>
-          <template v-slot:prepend>
-            <q-icon name="security" />
-          </template>
-        </q-input>
-
-        <div class="row justify-between items-center">
-          <q-btn
-            @click.prevent="onSubmitForgotPwd"
-            class="common-large-btn"
-            label="提交"
-            width="100%"
-            color="brightbtn"
-            style="width: 100%"
-          />
+    <template v-if="!isEmailSent">
+      <div class="fgtpwd-tabs-div">
+        <div class="fgtpwd-item" @click="goToTab('tabSms')" :class="fgtpwdTab === 'tabSms' ? 'is-active' : ''">
+          <span>短信找回</span>
         </div>
+
+        <div class="fgtpwd-item" @click="goToTab('tabEmail')" :class="fgtpwdTab === 'tabEmail' ? 'is-active' : ''">
+          <span>邮箱找回</span>
+        </div>
+      </div>
+
+      <div class="text-orange q-px-md" v-if="fgtpwdTab === 'tabSms'">
+        请提供您的用户名以及手机号码，我们会立即将新的密码发送到您的邮箱。
+      </div>
+
+      <div class="text-orange q-px-md" v-if="fgtpwdTab === 'tabEmail'">
+        请提供您的用户名以及邮箱地址，我们会立即将新密码发送至您的注册邮箱。
+      </div>
+    </template>
+
+    <div class="forgetpass-board q-gutter-y-md">
+      <q-form v-if="!isEmailSent" class="q-mt-xs">
+        <template v-if="fgtpwdTab === 'tabSms'">
+          <q-label>
+            用户名:
+            <em>*</em>
+          </q-label>
+          <q-input
+            rounded
+            standout
+            clearable
+            v-model="passwordFormPhone.loginName"
+            placeholder="请输入用户名"
+            :rules="[(val) => (val && val.length > 0) || '请输入用户名']"
+            color="white"
+            label-color="secondary"
+            autocomplete="username"
+          >
+            <template v-slot:prepend>
+              <img src="../assets/images/login/user-icon.png" width="24" />
+            </template>
+          </q-input>
+
+          <q-label>
+            手机号码:
+            <em>*</em>
+          </q-label>
+          <q-input
+            rounded
+            standout
+            clearable
+            v-model="passwordFormPhone.phone"
+            placeholder="请输入手机号码"
+            :rules="[(val) => (val && val.length > 0) || '请输入手机号码']"
+            color="white"
+            label-color="secondary"
+            autocomplete="username"
+          >
+            <template v-slot:prepend>
+              <div style="width: 24px; display: flex; align-items: center">
+                <img src="../assets/images/login/phone-icon.png" width="18" />
+              </div>
+            </template>
+          </q-input>
+
+          <q-label>
+            验证码:
+            <em>*</em>
+          </q-label>
+          <q-input
+            ref="ftCaptchaRef"
+            rounded
+            standout
+            clearable
+            type="text"
+            maxlength="4"
+            v-model="passwordFormPhone.captchaCode"
+            placeholder="请输入验证码"
+            :rules="[
+              (val) => (val && val.length > 0) || '请输入验证码',
+              (val) => (val && val.length > 3 && val.length < 5) || '验证码长度为4个'
+            ]"
+            color="white"
+            label-color="brand"
+          >
+            <template v-slot:append>
+              <img class="veri-img" :src="verificationImg" @click="getCode" />
+            </template>
+            <template v-slot:prepend>
+              <img src="../assets/images/login/veri-icon.png" width="24" />
+            </template>
+          </q-input>
+
+          <div class="row justify-between items-center">
+            <q-btn
+              @click.prevent="onSubmitForgotPwd('phone')"
+              class="common-large-btn"
+              label="提交"
+              width="100%"
+              color="brightbtn"
+              style="width: 100%"
+            />
+          </div>
+        </template>
+
+        <template v-if="fgtpwdTab === 'tabEmail'">
+          <q-label>
+            用户名:
+            <em>*</em>
+          </q-label>
+          <q-input
+            rounded
+            standout
+            clearable
+            v-model="passwordFormEmail.loginName"
+            placeholder="请输入用户名"
+            :rules="[(val) => (val && val.length > 0) || '请输入用户名']"
+            color="white"
+            label-color="secondary"
+            autocomplete="username"
+          >
+            <template v-slot:prepend>
+              <img src="../assets/images/login/user-icon.png" width="24" />
+            </template>
+          </q-input>
+
+          <q-label>
+            邮箱:
+            <em>*</em>
+          </q-label>
+          <q-input
+            rounded
+            standout
+            clearable
+            v-model="passwordFormEmail.email"
+            placeholder="请输入邮箱"
+            :rules="[(val) => (val && val.length > 0) || '请输入邮箱', isValidEmail]"
+            color="white"
+            label-color="secondary"
+            autocomplete="username"
+          >
+            <template v-slot:prepend>
+              <div style="width: 24px; display: flex; align-items: center">
+                <img src="../assets/images/login/mail-icon.png" width="27" />
+              </div>
+            </template>
+          </q-input>
+
+          <q-label>
+            验证码:
+            <em>*</em>
+          </q-label>
+          <q-input
+            ref="ftCaptchaRef"
+            rounded
+            standout
+            clearable
+            type="text"
+            maxlength="4"
+            v-model="passwordFormEmail.captchaCode"
+            placeholder="请输入验证码"
+            :rules="[
+              (val) => (val && val.length > 0) || '请输入验证码',
+              (val) => (val && val.length > 3 && val.length < 5) || '验证码长度为4个'
+            ]"
+            color="white"
+            label-color="brand"
+          >
+            <template v-slot:append>
+              <img class="veri-img" :src="verificationImg" @click="getCode" />
+            </template>
+            <template v-slot:prepend>
+              <img src="../assets/images/login/veri-icon.png" width="24" />
+            </template>
+          </q-input>
+
+          <div class="row justify-between items-center">
+            <q-btn
+              @click.prevent="onSubmitForgotPwd('email')"
+              class="common-large-btn"
+              label="提交"
+              width="100%"
+              color="brightbtn"
+              style="width: 100%"
+            />
+          </div>
+        </template>
       </q-form>
 
+      <div  v-if="isEmailSent" class="text-blue q-px-md">OTP已发送到您的电子邮件中, 请输入OTP和新密码。</div>
       <q-form v-if="isEmailSent" class="q-gutter-y-md rounded-borders">
-        <p>OTP已发送到您的电子邮件中, 请输入OTP和新密码。</p>
         <q-input
           ref="codeRef"
           filled
@@ -159,7 +286,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, watch } from "vue";
+import { defineComponent, ref, reactive, onActivated, watch } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
@@ -168,30 +295,43 @@ import { SessionStorage } from "quasar";
 export default defineComponent({
   name: "LoginPage",
   setup() {
-    onMounted(() => {
+    onActivated(() => {
       getCode();
+
+      isEmailSent.value = false;
     });
     const verificationImg = ref("");
-    const passwordForm = reactive({
+    const passwordFormPhone = reactive({
+      codeId: "",
+      loginName: "",
+      phone: "",
+      captchaCode: ""
+    });
+    const passwordFormEmail = reactive({
+      codeId: "",
       loginName: "",
       email: "",
       captchaCode: ""
     });
     const verificationForm = reactive({
-      email: "",
+      email: null,
+      phone: null,
       code: "",
       codeId: SessionStorage.getItem("emailCodeId"),
       newPassword: ""
     });
-    const activeTab = ref("phone");
+
     const getCode = () => {
       api
         .get("/member/verificationCode")
         .then((response) => {
           if (response.code === 0) {
             verificationImg.value = "data:image/png;base64," + response.data.img;
-            passwordForm.codeId = response.data.id;
-            passwordForm.captchaCode = "";
+            passwordFormEmail.codeId = response.data.id;
+            passwordFormEmail.captchaCode = "";
+
+            passwordFormPhone.codeId = response.data.id;
+            passwordFormPhone.captchaCode = "";
             ftCaptchaRef.value.resetValidation();
           }
         })
@@ -215,47 +355,60 @@ export default defineComponent({
     const isValidEmail = () => {
       const emailPattern =
         /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
-      return emailPattern.test(passwordForm.email) || "请输入有效电子邮件";
+      return emailPattern.test(passwordFormEmail.email) || "请输入有效电子邮件";
     };
     var qs = require("qs");
     const route = useRoute();
     const router = useRouter();
     const isEmailSent = ref(false);
     const isEmailSending = ref(false);
-    const onSubmitForgotPwd = () => {
-      loginNameRef.value.validate();
-      emailRef.value.validate();
-      ftCaptchaRef.value.validate();
-      $q.loading.show({
-        message: "发送验证码中..."
-      });
-      if (loginNameRef.value.hasError || emailRef.value.hasError || ftCaptchaRef.value.hasError) {
-        $q.loading.hide();
-      } else {
+    const onSubmitForgotPwd = (method) => {
+      if (method === "email") {
+        $q.loading.show({
+          message: "发送验证码中..."
+        });
         api
-          .post("/otp/sendForgetPasswordEmail", qs.stringify(passwordForm))
+          .post("/otp/sendForgetPasswordEmail", qs.stringify(passwordFormEmail))
           .then((response) => {
             if (response.code === 0) {
               isEmailSent.value = true;
               SessionStorage.set("emailCodeId", response.data.codeId);
-            } else {
-              // $q.notify({
-              //   color: "negative",
-              //   position: "top",
-              //   message: res.message,
-              //   icon: "report_problem"
-              // });
             }
             $q.loading.hide();
+
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: "请输入新密码",
+              icon: "check_circle_outline"
+            });
           })
           .catch((error) => {
             $q.loading.hide();
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: error.message,
-            //   icon: "report_problem"
-            // });
+          });
+        getCode();
+      } else if (method === "phone") {
+        $q.loading.show({
+          message: "发送验证码中..."
+        });
+        api
+          .post("/otp/sendForgetPasswordPhone", qs.stringify(passwordFormPhone))
+          .then((response) => {
+            if (response.code === 0) {
+              isEmailSent.value = true;
+              SessionStorage.set("phoneCodeId", response.data.codeId);
+            }
+            $q.loading.hide();
+
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: "请输入新密码",
+              icon: "check_circle_outline"
+            });
+          })
+          .catch((error) => {
+            $q.loading.hide();
           });
         getCode();
       }
@@ -270,35 +423,76 @@ export default defineComponent({
       if (codeRef.value.hasError || newPwdRef.value.hasError || captchaRef.value.hasError) {
         $q.loading.hide();
       } else {
-        verificationForm.codeId = SessionStorage.getItem("emailCodeId");
-        verificationForm.email = passwordForm.email;
-        api
-          .post("/otp/verifyForgetPasswordEmail", qs.stringify(verificationForm))
-          .then((response) => {
-            if (response.code === 0) {
-              $q.notify({
-                color: "positive",
-                position: "top",
-                message: "密码修改成功",
-                icon: "report_problem"
-              });
+        if (fgtpwdTab.value == "tabEmail") {
+          verificationForm.codeId = SessionStorage.getItem("emailCodeId");
+          verificationForm.email = passwordFormEmail.email;
 
-              router.push("/login");
-            } else {
-            }
-            $q.loading.hide();
-          })
-          .catch((error) => {
-            $q.loading.hide();
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: error.message,
-            //   icon: "report_problem"
-            // });
-          });
-        getCode();
+          api
+            .post("/otp/verifyForgetPasswordEmail", qs.stringify(verificationForm))
+            .then((response) => {
+              if (response.code === 0) {
+                $q.notify({
+                  color: "positive",
+                  position: "top",
+                  message: "密码修改成功",
+                  icon: "check_circle_outline"
+                });
+
+                router.push("/login");
+              } else {
+              }
+              $q.loading.hide();
+            })
+            .catch((error) => {
+              $q.loading.hide();
+            });
+          getCode();
+        }
+
+        if (fgtpwdTab.value == "tabSms") {
+          verificationForm.codeId = SessionStorage.getItem("phoneCodeId");
+          verificationForm.phone = passwordFormPhone.phone;
+
+          api
+            .post("/otp/verifyForgetPasswordPhone", qs.stringify(verificationForm))
+            .then((response) => {
+              if (response.code === 0) {
+                $q.notify({
+                  color: "positive",
+                  position: "top",
+                  message: "密码修改成功",
+                  icon: "check_circle_outline"
+                });
+
+                router.push("/login");
+              } else {
+              }
+              $q.loading.hide();
+            })
+            .catch((error) => {
+              $q.loading.hide();
+            });
+          getCode();
+        }
       }
+    };
+
+    const fgtpwdTab = ref("tabSms");
+
+    const goToTab = (tabVal) => {
+      getCode();
+
+      passwordFormPhone.codeId = "";
+      passwordFormPhone.loginName = "";
+      passwordFormPhone.phone = "";
+      passwordFormPhone.captchaCode = "";
+
+      passwordFormEmail.codeId = "";
+      passwordFormEmail.loginName = "";
+      passwordFormEmail.email = "";
+      passwordFormEmail.captchaCode = "";
+
+      fgtpwdTab.value = tabVal;
     };
 
     watch(
@@ -339,10 +533,10 @@ export default defineComponent({
     );
     return {
       header: "Forgot Account & Password",
-      passwordForm,
+      passwordFormPhone,
+      passwordFormEmail,
       verificationForm,
       verificationImg,
-      activeTab,
       getCode,
       isValidEmail,
       isEmailSent,
@@ -355,7 +549,9 @@ export default defineComponent({
       newPwdRef,
       captchaRef,
       isPwd: ref(true),
-      pwdStrength
+      pwdStrength,
+      fgtpwdTab,
+      goToTab
     };
   }
 });
@@ -407,6 +603,18 @@ function charType(num) {
   border-radius: 10px;
   box-shadow: $shadow-bg;
   padding: 16px 12px 25px;
+
+  .q-field--standout.q-field--rounded .q-field__control {
+    border-radius: 12px;
+  }
+
+  q-label {
+    padding-top: 3px;
+    padding-left: 8px;
+    padding-bottom: 3px;
+    color: #424f72;
+    font-size: 1rem;
+  }
 }
 
 .password-str-div {
@@ -423,6 +631,7 @@ function charType(num) {
     //border: 1px solid #fff;
     border-radius: 5px;
     background: #434343;
+    color:#fff;
     width: 33%;
     text-align: center;
   }
@@ -433,13 +642,95 @@ function charType(num) {
 
   span.normal-pwd {
     background: var(--q-warning);
-    color: var(--q-primary);
+    color: #000;
   }
 
   span.strong-pwd {
     //background: linear-gradient(to right, #de4545, #db7e42) !important;
     background: var(--q-positive);
     font-weight: 600;
+  }
+}
+
+.login-form-container {
+  width: $box-width;
+  margin: 0 auto;
+  background: $white;
+  border-radius: 10px;
+  box-shadow: 0px -8px 8px 0px #c3d4e6 inset;
+  padding: 15px 12px 20px;
+
+  q-label {
+    padding-top: 3px;
+    padding-left: 8px;
+    padding-bottom: 3px;
+    color: $font-2;
+    font-size: 1rem;
+
+    em {
+      color: $negative;
+    }
+  }
+
+  .q-input {
+    margin-bottom: 4px;
+  }
+
+  .veri-img {
+    height: 80%;
+    padding-right: 6px;
+    width: 125px;
+  }
+
+  .login-via-phone-div {
+    color: $primary;
+    font-size: 1rem;
+  }
+}
+
+.fgtpwd-tabs-div {
+  cursor: pointer;
+  gap: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: $box-width;
+  padding: 1rem 0.9rem 1rem;
+  margin: 10px auto;
+  background: $white;
+  box-shadow: $shadow-bg;
+  border-radius: 10px;
+
+  .fgtpwd-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("../assets/images/download/inactive-tab-bg.png");
+    background-size: 100% 100%;
+    background-color: $secondary;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+
+    span {
+      color: $font-1;
+      font-size: 1rem;
+    }
+
+    &:active {
+      filter: brightness(0.9);
+      transform: translate(0px, 1px);
+    }
+
+    &.is-active {
+      background-image: url("../assets/images/download/active-tab-bg.png");
+      background-size: 100% 100%;
+      background-color: $primary;
+
+      span {
+        color: #ffffff;
+        font-weight: bold;
+      }
+    }
   }
 }
 </style>

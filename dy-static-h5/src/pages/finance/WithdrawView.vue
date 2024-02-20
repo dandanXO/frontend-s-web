@@ -247,7 +247,8 @@ export default defineComponent({
     });
     const withdrawalMethods = ref([]);
     const selectedWithdrawalMethod = ref([]);
-    onActivated(() => {
+    onMounted(() => {
+      isLoaded.value= false;
       getWithdrawalMethods();
       store.getBalance();
       // loadPlatform()

@@ -3,7 +3,18 @@
     <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
     <template v-for="(item, index) in platformsListDisplay.slice(0, numberToShow)" :key="index">
       <!--      <router-link :to="`${props.platformName}?plat=${item.code}`">-->
-      <div class="platform-menu-item" @click="gotoGame(item, platformType)">
+      <div class="platform-menu-item" @click="gotoGame(item, platformType)"
+           :class="item.underMaintenance === true ? 'maintenance' : ''">
+
+        <div class="maintenance-box" v-if="item.underMaintenance === true">
+          <p>维护中</p>
+          <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
+            维护时间:<br/> {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }}<br/>-
+            {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
+          </p>
+          <p class="small-size">请先前往其他场馆娱乐</p>
+        </div>
+
         <div class="platform-menu-title" v-html="item.cnname" />
         <div class="platform-menu-caption" v-if="item.caption" v-html="item.caption" />
         <div class="platform-menu-img">
@@ -27,10 +38,11 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted,onBeforeUnmount, defineProps, defineEmits } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
+import moment from "moment"
 
 const props = defineProps({
   platforms: Array,

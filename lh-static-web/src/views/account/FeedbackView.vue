@@ -2,26 +2,7 @@
   <div class="account-box account-contents">
     <div class="account-content mail mail-content">
       <el-tabs v-model="mailboxState.active" @tab-click="mailTabChange" type="card">
-<!--        <el-tab-pane key="inbox" name="inbox" :label="'消息中心'">-->
-<!--          <template v-if="mailboxState.mailboxList.inbox.list.length > 0">-->
-<!--            <el-collapse v-model="activeNames" @change="handleChange">-->
-<!--              <el-collapse-item v-for="item in mailboxState.mailboxList.inbox.list" :key="item.id">-->
-<!--                <template #title>标题：{{ item.title }}</template>-->
-<!--                <div>-->
-<!--                  <div>正文：{{ item.content }}</div>-->
-<!--                </div>-->
-<!--              </el-collapse-item>-->
-<!--            </el-collapse>-->
-<!--            <div class="mail-pagination-wrapper">-->
-<!--              <el-pagination-->
-<!--                @current-change="changePage"-->
-<!--                :total="mailboxState.mailboxList.inbox.total"-->
-<!--                :current-page="mailboxState.mailboxList.inbox.pageNum"-->
-<!--                :page-size="mailboxState.mailboxList.inbox.pageSize"-->
-<!--              />-->
-<!--            </div>-->
-<!--          </template>-->
-<!--        </el-tab-pane>-->
+
         <el-tab-pane key="write" name="write" :label="'意见反馈'">
           <el-form
             ref="formRef"
@@ -72,8 +53,30 @@
             </div>
           </el-form>
         </el-tab-pane>
+
+        <el-tab-pane key="sent" name="sent" :label="'我的反馈'">
+          <template v-if="mailboxState.mailboxList.sent.list.length > 0">
+            <el-collapse v-model="activeNames" @change="handleChange">
+              <el-collapse-item v-for="item in mailboxState.mailboxList.sent.list" :key="item.id">
+                <template #title>标题：{{ item.title }}</template>
+                <div>
+                  <div>正文：{{ item.content }}</div>
+                </div>
+              </el-collapse-item>
+            </el-collapse>
+            <div class="mail-pagination-wrapper">
+              <el-pagination
+                @current-change="changePage"
+                :total="mailboxState.mailboxList.sent.total"
+                :current-page="mailboxState.mailboxList.sent.pageNum"
+                :page-size="mailboxState.mailboxList.sent.pageSize"
+              />
+            </div>
+          </template>
+        </el-tab-pane>
+
         <el-tab-pane key="quiz" name="quiz" :label="'有奖问答'">
-          <div :class="`quiz-container ${uiIsShowStatus.startAnswerBox ? '' : 'hide'}`">
+          <div v-if="!uiIsShowStatus.questionBox" class="quiz-container">
             <div class="quiz-header">
               有奖问答
             </div>
@@ -88,7 +91,7 @@
               </div>
             </div>
           </div>
-          <div :class="`questions-container ${uiIsShowStatus.questionBox ? 'show' : ''}`">
+          <div v-if="uiIsShowStatus.questionBox" class="questions-container">
             <!-- <div class="questions-back-btn">
                 <img src="../../assets/feedback/back-btn.png"/>
             </div> -->
@@ -98,44 +101,46 @@
             <div class="questions-gift">
                 <img src="../../assets/feedback/gift.png"/>
             </div>
-            <div class="questions-content" id="questionContainer">
+            <div class="questions-content" v-if="!isAnswered">
               <div v-for="(item, i) in quesTitleOptions" :key="i" class="question-title-container">
-                  <template v-if="recordsPagination.current === item.page">
-                    <div class="questions-title" >
-                    {{ item.title }}
-                  </div>
+                  <template v-if="recordsPagination.current === item.sequence">
+                    <div class="questions-title">
+                      {{ item.question }}
+                    </div>
+                    <div class="answer-container">
+                      <el-radio-group v-model="optionModal" >
+                        <el-radio v-for="(ans, index) in item.choices" :key="index" :label="index" @click="getSelected(item, ans.choice)">
+                          {{ ans.choice }}
+                          <div v-if="optionModal === index && ans.needSpecify">
+                            <el-input 
+                              class="answer-input-fill"
+                              v-model="answerInputModal"
+                              placeholder="请输入获取渠道"
+                              type="textarea"
+                              :autosize="{ minRows: 4 }"
+                              @input="getSelected(item, ans.choice)"
+                            />
+                          </div>
+                        </el-radio>
+                      </el-radio-group>
+                    </div>
                   </template>
-              </div>
-              <div class="answer-container">
-                  <div v-for="(ans, index) in ansOptions" :key="index" class="list-item">
-                    <span>{{ ans.id }}. {{ ans.content }}</span>
-                    <el-radio v-model="optionModal" :label="index" id="check-option" @click="getSelected(index)"></el-radio>
-                  </div>
-                  <div style="display: none" id="answer-input-div">
-                    <el-input 
-                      class="answer-input-fill"
-                      v-model="answerInputModal"
-                      placeholder="请输入获取渠道"
-                      type="textarea"
-                      :autosize="{ minRows: 4 }"
-                    />
-                  </div>
               </div>
 
               <div :class="`content-btn ${recordsPagination.current === 1 ? 'active' : ''}` " style="display: flex; justify-content: space-between; gap: 10px;">
                 <div>
-                  <button id="prevBtn" class="standard-button btn-color-blue" @click="onPrevBtnClick()" style="display: none;">上一题</button>
+                  <button id="prevBtn" class="standard-button btn-color-blue" @click="btnClick('prev')" style="display: none;">上一题</button>
                 </div>
                 <div>
-                  <button id="nextBtn" class="standard-button btn-color-blue" @click="onNextBtnClick()">下一题</button>
+                  <button id="nextBtn" class="standard-button btn-color-blue" @click="btnClick('next')">下一题</button>
                 </div>
                 <div>
-                  <button id="finalBtn" class="standard-button btn-color-blue" @click="onFinalBtnClick()" style="display: none;">完成</button>
+                  <button id="finalBtn" class="standard-button btn-color-blue" @click="btnClick('final')" style="display: none;">完成</button>
                 </div>
               </div>
             </div> 
             
-            <div class="questions-content" id="QRContainer" style="display: none">
+            <div class="questions-content" v-if="isAnswered">
               <div class="thumbs-up-div"><img src="../../assets/feedback/thumbs-up.png" /></div>
               <div class="header-title-div">
                 <span class="span1">恭喜您完成本月的调查问卷</span> 
@@ -145,17 +150,18 @@
                 <span class="span3">此次问卷提供<span class="span1" style="color: #468CFF">18-188元</span>建议金</span> 
               </div>
               <div class="qr-code-div">
-                <img src="../../assets/feedback/QR-code.png"/>
+                <VueQRCodeComponent :size="188" :text="referralLink" />
+                <img src="../../assets/feedback/share.png"/>
               </div>
               <div class="url-div">
                 <el-input 
                   class="url-input-fill" 
-                  v-model="urlInput"
+                  v-model="referralLink"
                   :readonly="true"
                   type="url"
                   />
                 <div>
-                  <button class="standard-button btn-color-blue copy-button">复制</button>
+                  <button class="standard-button btn-color-blue copy-button" @click="copyMessage()">{{copybtntxt}}</button>
                 </div>
               </div>
             </div>
@@ -171,167 +177,198 @@
 import { ref, reactive, onMounted } from "vue";
 import { mailInbox, mailOutbox, wirteMail } from "@/api/personal/mailbox";
 // import { message } from "ant-design-vue";
+import { getQuestionnaireList, submitQuestionnaire, getQuestionnaireAns } from "@/api/index/promo";
+import { userStore } from "@/store"
 import { ElMessage } from "element-plus";
 import { CaretBottom } from '@element-plus/icons-vue'
+import VueQRCodeComponent from 'vue-qrcode-component'
 
+const store = userStore();
 const recordsPagination = reactive({ size: 3, current: 1, total: 3, pages: 3 });
 const uiIsShowStatus = reactive({
   startAnswerBox: true,
   questionBox: false
 });
 function onBtnStartAnswerClick() {
+  // debugger;
   uiIsShowStatus.startAnswerBox = false;
   uiIsShowStatus.questionBox = true;
   recordsPagination.current = 1;
 }
-
 const quesTitleOptions = ref([]);
-let quesTitlePage = 1;
-let ansOptions = [];
 let optionModal = ref(null);
 
+
+const referralLink = ref();
+const getReferral = () => {
+  referralLink.value = 'https://' + location.hostname + `/center/feedback`;
+}
+const copybtntxt = ref('复制');
+
+const activeNames= ref();
+const handleChange = () => {
+
+}
+const copyMessage = (position) => {
+  let copyText = null;
+    copyText = referralLink.value
+  // Create a temporary textarea element
+  const tempTextarea = document.createElement('textarea');
+  tempTextarea.value = copyText;
+  document.body.appendChild(tempTextarea);
+
+  // Select the text and copy it
+  tempTextarea.select();
+  document.execCommand('copy');
+
+  // Remove the temporary textarea element
+  document.body.removeChild(tempTextarea);
+  copybtntxt.value = '已复制';
+  setTimeout(() => {
+    copybtntxt.value = '复制';
+  }, 2000);
+  // copyText.select()
+  // document.execCommand("copy")
+  // copybtntxt0.value = 'คัดลอกแล้ว'
+};
 const getQuesTitleOptions = () => {
-  quesTitleOptions.value = [{
-    page: 1,
-    title: "1/30 您是如何知道我们网站的？(单选)",
-    questions: [
-      {
-        id: 1,
-        content: "百度等搜索引擎"
-      },
-      {
-        id: 2,
-        content: "网络站点广告"
-      },
-      {
-        id: 3,
-        content: "社交媒体"
-      },
-      {
-        id: 4,
-        content: "朋友推荐"
-      },
-      {
-        id: 5,
-        content: "电话致电"
-      },
-      {
-        id: 6,
-        content: "短袖邀请"
-      },
-      {
-        id: 7,
-        content: "其他渠道"
-      },
-    ]
-  },
-  {
-    page: 2,
-    title: "2/30 您是如何觉得XXXXXXXXXX",
-    questions: [
-    {
-        id: 1,
-        content: "百度等搜索引擎"
-      },
-      {
-        id: 2,
-        content: "网络站点广告"
-      },
-      {
-        id: 3,
-        content: "社交媒体"
-      }
-    ]
-  },
-  {
-    page: 3,
-    title: "30/30 您是如何XXXXXXXXX",
-    questions: [
-      {
-        id: 1,
-        content: "百度等搜索引擎"
-      },
-      {
-        id: 2,
-        content: "网络站点广告"
-      },
-      {
-        id: 3,
-        content: "社交媒体"
-      },
-    ]
-  }]
+  getQuestionnaireList().then((res) => {
+    // res = {
+    //   "code": 0,
+    //   "data": [
+    //       {
+    //           "sequence": 1,
+    //           "question": "您是如何知道我们网站的？(单选)",
+    //           "choices": [
+    //               {
+    //                   "choice": "百度等搜索引擎",
+    //                   "needSpecify": false
+    //               },
+    //               {
+    //                   "choice": "网络站点广告",
+    //                   "needSpecify": false
+    //               },
+    //               {
+    //                   "choice": "其他",
+    //                   "needSpecify": true
+    //               }
+    //           ]
+    //       },
+    //       {
+    //           "sequence": 2,
+    //           "question": "您是如何觉得XXXXXXXXXX",
+    //           "choices": [
+    //               {
+    //                   "choice": "XXXXXXXXXXX",
+    //                   "needSpecify": false
+    //               },
+    //               {
+    //                   "choice": "XXXXXXXXXXX",
+    //                   "needSpecify": false
+    //               }
+    //           ]
+    //       },
+    //       {
+    //           "sequence": 3,
+    //           "question": "您是如何觉得XXXXXXXXXX",
+    //           "choices": [
+    //               {
+    //                   "choice": "生命真重要",
+    //                   "needSpecify": false
+    //               },
+    //               {
+    //                   "choice": "生命真的是美丽的",
+    //                   "needSpecify": false
+    //               }
+    //           ]
+    //       },
+    //   ]
+    // }
+    if (res.code === 0) {
+      quesTitleOptions.value = res.data
+      recordsPagination.pages = res.data.length
+    }
 
-  if(recordsPagination.current === 1) {
-    removeArray();
-    ansOptions = quesTitleOptions.value[0].questions;
-  } else {
-    removeArray();
-    ansOptions = quesTitleOptions.value[1].questions;
+  })
+}
+const isAnswered = ref(false)
+const answerInputModal = ref('');
+const choices = reactive([]);
+const cacheChoices = reactive([]);
+const getSelected = (item, ans) => {
+  const input = answerInputModal.value
+  var obj = {
+    question: item.question,
+    choice: input ? input : ans
   }
-  quesTitlePage = recordsPagination.current;
- 
+  choices[item.sequence - 1] = obj
+  var cacheObj = {
+    sequence: item.sequence,
+    question: item.question,
+    choice: ans,
+    input: input
+  }
+  cacheChoices[item.sequence - 1] = cacheObj
 }
-
-const removeArray = () => {
-  ansOptions.splice(0);
-}
-
-
-const getSelected = (value) => {
-  // value = optionModal;
-  const inputDiv = document.getElementById("answer-input-div")
-  
-  if(value === 6) {
-    inputDiv.style.display = "block";
-  } else {
-    inputDiv.style.display = "hide"
-  }   
-}
-
-const onPrevBtnClick = () => {
-  const btn = document.getElementById("prevBtn");
+const btnClick = (btnType) => {
+  if (optionModal.value === null && (btnType === 'next' || btnType === 'final')) {
+    return ElMessage.error('请选择一个选项')
+  }
+  optionModal.value = null
+  answerInputModal.value = null
+  const prevBtn = document.getElementById("prevBtn");
   const nextBtn = document.getElementById("nextBtn");
   const finalBtn = document.getElementById("finalBtn");
-  getQuesTitleOptions();
-
-  if (recordsPagination.current > 1) {
-    getQuesTitleOptions();
-    recordsPagination.current = recordsPagination.current - 1;
-    btn.style.display = "block";
-  } else if (recordsPagination.current === 1) {
-    btn.style.display = "none";
+  if (btnType === 'prev') {
+      recordsPagination.current = recordsPagination.current - 1;
+  }
+  if (btnType === 'next') {
+    recordsPagination.current = recordsPagination.current + 1;
+  }
+  if (recordsPagination.current < recordsPagination.pages) {
+    prevBtn.style.display = "block";
+    nextBtn.style.display = "block";
+    finalBtn.style.display = "none";
+    if (recordsPagination.current === 1) {
+      prevBtn.style.display = "none";
+      finalBtn.style.display = "none";
+      nextBtn.style.display = "block";
+    }
+  }
+  if (recordsPagination.current > recordsPagination.pages) {
+    prevBtn.style.display = "block";
     nextBtn.style.display = "block";
     finalBtn.style.display = "none";
   }
-}
-
-const onNextBtnClick = () => {
-  const btn = document.getElementById("nextBtn");
-  const prevBtn = document.getElementById("prevBtn");
-  const finalBtn = document.getElementById("finalBtn");
-
-  if (recordsPagination.pages > recordsPagination.current) {
-    recordsPagination.current = recordsPagination.current + 1;
-    getQuesTitleOptions();
+  if (recordsPagination.current === recordsPagination.pages) {
     prevBtn.style.display = "block";
-    btn.style.display = "block";
-    finalBtn.style.display = "none";
-  } else if ((recordsPagination.pages === recordsPagination.current)) {
-    btn.style.display = "none";
-    prevBtn.style.display = "block";
+    nextBtn.style.display = "none";
     finalBtn.style.display = "block";
+  }
+  cacheChoices.forEach((c) => {
+    if (c.sequence === recordsPagination.current) {
+      const choicesArray = quesTitleOptions.value[Number(c.sequence) - 1].choices
+      const chosenChoice = choicesArray.findIndex(choice => choice.choice === c.choice);
+      optionModal.value = chosenChoice
+      answerInputModal.value = c.input ? c.input : ''
+    }
+  })
+  
+  if (btnType === 'final') {
+    // const questionDiv = document.getElementById("questionContainer");
+    // const QRDiv = document.getElementById("QRContainer");
+    // When Submit API is COMPLETE
+    submitQuestionnaire(choices).then((res) => {
+      if (res.code === 0) {
+        // questionDiv.style.display = "none";
+        // QRDiv.style.display = "block";
+        isAnswered.value = true;
+      }
+    })
   }
 }
 
-const onFinalBtnClick = () => {
-  const questionDiv = document.getElementById("questionContainer");
-  const QRDiv = document.getElementById("QRContainer");
-  questionDiv.style.display = "none";
-  QRDiv.style.display = "block";
-}
-
-const urlInput = ref("Http://LHe63851/s?eric123");
+// const urlInput = ref("Http://LHe63851/s?eric123");
 
 const options = ["存款问题", "转账问题", "提款问题", "其他"];
 
@@ -347,13 +384,13 @@ const mailboxState = reactive({
     inbox: {
       list: [],
       pageNum: 1,
-      pageSize: 4,
+      pageSize: 5,
       total: 0
     },
     sent: {
       list: [],
       pageNum: 1,
-      pageSize: 4,
+      pageSize: 5,
       total: 0
     },
     write: {
@@ -388,15 +425,16 @@ const loadPersonalMailbox = () => {
   } else {
     mailboxData.value = {
       type: null,
-      current: mailboxState.mailboxList[mailboxState.active].pageNum,
-      size: mailboxState.mailboxList[mailboxState.active].pageSize,
+      current: mailboxState.mailboxList["sent"].pageNum,
+      size: mailboxState.mailboxList["sent"].pageSize,
       orderBy: "createTime"
     };
+    mailboxState.mailboxList["sent"].list = [];
     mailOutbox(mailboxData.value)
       .then((response) => {
         if (response.code === 0) {
-          mailboxState.mailboxList[mailboxState.active].list.push(...response.data.records);
-          mailboxState.mailboxList[mailboxState.active].total = response.data.total;
+          mailboxState.mailboxList["sent"].list.push(...response.data.records);
+          mailboxState.mailboxList["sent"].total = response.data.total;
         }
       })
       .catch((error) => {
@@ -458,7 +496,7 @@ const onSubmit = (e) => {
         .then((response) => {
           if (response.code === 0) {
             ElMessage({
-              message: "成功",
+              message: "提交成功",
               type: "success"
             });
             loadPersonalMailbox();
@@ -480,11 +518,25 @@ const onSubmit = (e) => {
     });
   loadingBtn.value = false;
 };
+const testAns = () => {
+  getQuestionnaireAns().then((res) => {
+    if (res.code === 0) {
+      if (res.data && res.data.length === 0) {
+        loadPersonalMailbox();
+        getQuesTitleOptions();
+      } else {
+        uiIsShowStatus.questionBox= true;
+        isAnswered.value = true;
+      }
+    }
+  })
+}
 
 onMounted(() => {
-  loadPersonalMailbox();
-  getQuesTitleOptions();
-  getSelected(optionModal);
+  if (store.token) {
+    testAns();
+    getReferral();
+  }
   
   // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
 });
@@ -567,10 +619,6 @@ onMounted(() => {
   margin-left: auto;
   margin-right: auto;
   max-width: 600px;
-  display: none;
-  &.show {
-    display: block;
-  }
 
   .questions-header {
     display: flex;
@@ -622,6 +670,7 @@ onMounted(() => {
       display: flex;
       justify-content: flex-start;
       width: 100%;
+      flex-direction: column;
     }
 
     .questions-title {
@@ -649,6 +698,23 @@ onMounted(() => {
       width: 100%;
       flex-direction: column;
       padding: 10px 25px;
+      :deep(.el-radio-group) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+      :deep(.el-radio) {
+        height: unset;
+        justify-content: flex-start;
+        align-items: flex-start;
+        width: 100%;
+      }      
+      :deep(.el-radio__label) {
+        width: 100%;
+      }
+      :deep(.el-radio__input) {
+        margin-top: 4px;
+      }
     }
 
     .list-item {
@@ -658,11 +724,6 @@ onMounted(() => {
       padding: 5px 10px;
       width: 100%;
     }
-
-    :deep(.el-radio__label) {
-      color: #fff
-    }
-
     .answer-input-fill {
       :deep(.el-form-item__label) {
         width: 80px;
@@ -737,10 +798,10 @@ onMounted(() => {
     margin-top: 30px;
     gap: 5px;
 
-    img {
-      width: 188px;
-      height: 233px;
-    }
+    // img {
+    //   width: 188px;
+    //   height: 233px;
+    // }
   }
 
   .url-div {
@@ -751,6 +812,7 @@ onMounted(() => {
     margin-top: 30px;
     gap: 5px;
     width: 100%;
+    position: relative;
   }
 
   .url-input-fill {
@@ -780,8 +842,8 @@ onMounted(() => {
 
   .copy-button {
     position: absolute;
-    bottom: 60px;
-    margin: -15px 0 0 -100px;
+    bottom: 5px;
+    right: 110px;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -4,7 +4,18 @@
       <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
       <template v-for="(item, index) in platformsListDisplay" :key="index">
         <template v-if="selectedPlat === item.code">
-          <div class="platform-item platform-item--img" data-aos="fade-right" data-aos-duration="1000">
+          <div class="platform-item platform-item--img" data-aos="fade-right" data-aos-duration="1000"
+               :class="item.underMaintenance === true ? 'maintenance' : ''">
+
+            <div class="maintenance-box" v-if="item.underMaintenance === true">
+              <p>维护中</p>
+              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
+                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
+                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
+              </p>
+              <p class="small-size">请先前往其他场馆娱乐</p>
+            </div>
+
             <img
               :src="
                 require('../assets/' + platformType + '/' + platformType + '-item-' + item.code.toLowerCase() + '.png')
@@ -12,7 +23,8 @@
             />
           </div>
 
-          <div class="platform-item">
+          <div class="platform-item"
+               :class="item.underMaintenance === true ? 'maintenance' : ''">
             <div class="platform-title-wrap" data-aos="fade-left" data-aos-delay="100">
               <!--              <pre>{{item}}</pre>-->
               <div class="platform-title">{{ item.cnname ?? item.name }}</div>
@@ -184,7 +196,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, defineProps, reactive } from "vue";
+import { ref, onMounted, watch, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import {
   getPlatformListDisplay,
@@ -196,6 +208,7 @@ import { userStore } from "@/store";
 import { Search } from "@element-plus/icons-vue";
 import { RiHeartLine, RiHeartFill } from "vue-remix-icons";
 import GameModal from "@/components/modal/GameModal";
+import moment from "moment/moment";
 
 const platformGame = ref(null);
 const route = useRoute();
@@ -234,8 +247,8 @@ const getPlatList = () => {
       return { ...matchingItem, ...item1 };
     });
 
-    console.log("THIs");
-    console.log(platformsListDisplay.value);
+    // console.log("THIs");
+    // console.log(platformsListDisplay.value);
 
     setFilteredPlatforms();
   });
@@ -251,9 +264,9 @@ const setFilteredPlatforms = () => {
     return { ...matchingItem, ...item1 };
   });
 
-  console.log("Filter plat");
-  console.log(filteredPlatforms.value);
-  console.log(platformsListDisplay.value);
+  // console.log("Filter plat");
+  // console.log(filteredPlatforms.value);
+  // console.log(platformsListDisplay.value);
 
   if (!route.query.plat) {
     setSelectedPlat();

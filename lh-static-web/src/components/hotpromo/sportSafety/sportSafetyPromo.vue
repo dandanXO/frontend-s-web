@@ -54,9 +54,10 @@
 
     <el-dialog
       v-model="isSportInsuranceModalVisible"
-      title="电竞保险"
+      title="体育保险"
       width="100%"
       align-center
+      class="dialog-insurance-box"
       style="max-width: 500px"
       @close="toggleSportInsuranceModal(false)"
     >
@@ -87,8 +88,8 @@
             </el-select>
           </el-form-item> -->
 
-          <el-form-item prop="gameMatchId" name="gameMatchId" label="游戏比赛: ">
-            <el-select v-model="sportInsuranceFormData.gameMatchId" placeholder="游戏比赛" clearable>
+          <el-form-item prop="gameMatchId" name="gameMatchId" label="选择赛事: ">
+            <el-select v-model="sportInsuranceFormData.gameMatchId" placeholder="选择赛事" clearable>
               <el-option
                 v-for="item in matchDetails"
                 :key="item.value"

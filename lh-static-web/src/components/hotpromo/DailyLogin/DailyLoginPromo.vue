@@ -52,7 +52,7 @@ const generateMonthMaxDaysArray = (details) => {
     // Generate the array of objects based on monthMaxDays
     for (let i = 0; i < details.monthMaxDays; i++) {
       dateDetails.value.push({
-        number: 7,
+        number: details?.signBonus?.[i],
         checkInActive: false,
         isCheckedIn: false
       });

@@ -7,15 +7,15 @@
             <div class="card-bg">
 
                 <el-tabs>
-                    <!-- <el-tab-pane label="手机找回密码">
-                        <PhoneFindPwd />
-                    </el-tab-pane> -->
+                    <el-tab-pane label="手机找回密码">
+                        <PhoneOrEmailFindPwd type="phone" />
+                    </el-tab-pane>
+                    <el-tab-pane label="邮箱找回密码">
+                        <PhoneOrEmailFindPwd type="email" />
+                    </el-tab-pane>
                     <el-tab-pane label="邮箱找回账号">
                         <EmailFindPwd />
                     </el-tab-pane>
-                    <!-- <el-tab-pane label="邮箱找回账户">
-                        <EmailFindAcc />
-                    </el-tab-pane> -->
                 </el-tabs>
             </div>
         </div>
@@ -24,8 +24,8 @@
   
 <script setup>
 import EmailFindPwd from "@/components/auth/EmailFindPwd.vue";
-import PhoneFindPwd from "@/components/auth/PhoneFindPwd.vue";
-import EmailFindAcc from "@/components/auth/EmailFindAcc.vue";
+import PhoneOrEmailFindPwd from "@/components/auth/PhoneOrEmailFindPwd.vue";
+
 
 </script>
 

@@ -18,7 +18,7 @@
         >
           <div class="card-details">
             <div class="card-bank-icon">
-              <img src="../../assets/images/account/bank-icon-01.png" />
+              <img :src="imgURL + bc.bankIcon" />
             </div>
 
             <div class="card-name">
@@ -164,26 +164,30 @@
             :rules="[{ required: true, message: '请输入开户行地址', trigger: 'blur' }]"
           />
         </el-form-item>
-        <el-form-item>
-          <el-space>
-            <el-input
-              class="half"
-              v-model="bankCardInfo.telephone"
-              placeholder="输入电话号码"
-              readonly
-              :value="personalState.memberInfo.telephone"
-            />
-            <el-button class="common-btn" @click="openCaptchaForm()">获取验证码</el-button>
-          </el-space>
-        </el-form-item>
+<!--        <el-form-item>-->
+<!--          <el-space>-->
+<!--            <el-input-->
+<!--              class="half"-->
+<!--              v-model="bankCardInfo.telephone"-->
+<!--              placeholder="输入电话号码"-->
+<!--              readonly-->
+<!--              :value="personalState.memberInfo.telephone"-->
+<!--            />-->
+<!--            <el-button class="common-btn" @click="openCaptchaForm()">获取验证码</el-button>-->
+<!--          </el-space>-->
+<!--        </el-form-item>-->
 
-        <el-form-item name="smsCode" prop="smsCode" v-if="isSendOtp">
+        <el-form-item name="smsCode" prop="smsCode" >
+          <el-space>
           <el-input
             class="half"
+            :readonly="!isSendOtp"
             v-model="bankCardInfo.smsCode"
-            placeholder="输入电话验证码"
+            placeholder="输入短信验证码"
             @keyup.enter="submitBankCard"
           />
+            <el-button class="common-btn" @click="openCaptchaForm()">获取验证码</el-button>
+          </el-space>
         </el-form-item>
 
         <el-form-item class="txt-center" v-if="isSendOtp">
@@ -192,7 +196,7 @@
       </el-form>
     </el-dialog>
     <el-dialog v-model="phoneCaptchaDialogVisible" title="验证码" width="50%" align-center style="max-width: 500px">
-      <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px" @click="sendOtp">
+      <el-button size="large" color="#3bafda" class="common-btn" style="width:100%;" @click="sendOtp">
         提交
       </el-button>
     </el-dialog>
@@ -534,10 +538,10 @@ export default defineComponent({
       bankId: undefined,
       cardNumber: "",
       cardAccount: "",
-      cardAddress: ""
+      cardAddress: "",
       // telephone: "",
-      // smsCode: "",
-      // smsCodeId: ""
+      smsCode: "",
+      smsCodeId: ""
     });
     const bankName = ref();
     const banksList = ref([]);
@@ -555,7 +559,8 @@ export default defineComponent({
           bankCardInfo.cardAccount = store.realName;
           bankCardInfo.cardAddress = "";
           // bankCardInfo.telephone = "";
-          // bankCardInfo.smsCode = "";
+          bankCardInfo.smsCode = "";
+          bankCardInfo.smsCodeId = "";
           bankCardModalState.visible = true;
           if (bankCardModalState.banks.length === 0) {
             loadBanks().then((res) => {

@@ -106,35 +106,35 @@
 
         
             <div class="profile-info" v-if="store.token">
-              <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand">
+              <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand" @visible-change="(isOpen) => isProfileDropDownOpen = isOpen">
                 <span class="el-dropdown-link">
                   <div class="profile-img-wrapper">
                     <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
-                    <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
+                    <img class="dropdown-icon" :style="isProfileDropDownOpen ? 'transform:rotate(180deg)' : ''" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
                   </div>
                 </span>
                 <template #dropdown>
                   <el-dropdown-menu class="profile-info-dropdown-content">
                     <el-dropdown-item command="personal">
-                      <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                      <div style="display: flex; align-items: center; gap: 10px;color: #222;margin: auto;">
                         <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
                         <span>个人信息</span>
                       </div>
                     </el-dropdown-item>
                     <el-dropdown-item command="deposit">
-                      <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                      <div style="display: flex; align-items: center; gap: 10px;color: #222;margin: auto;">
                         <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
                         <span>充值中心</span>
                       </div>
                     </el-dropdown-item>
                     <el-dropdown-item command="transfer">
-                      <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                      <div style="display: flex; align-items: center; gap: 10px;color: #222;margin: auto;">
                         <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
                         <span>快速转账</span>
                       </div>
                     </el-dropdown-item>
                     <el-dropdown-item command="promotion">
-                      <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                      <div style="display: flex; align-items: center; gap: 10px;color: #222;margin: auto;">
                         <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
                         <span>优惠领取</span>
                     </div>
@@ -595,10 +595,11 @@
 <script lang="js">
 
 import "vue3-carousel/dist/carousel.css";
-import {defineComponent, onMounted, ref, reactive, watch, computed} from "vue";
+import { defineComponent, onMounted, ref, reactive, watch, computed, watchEffect } from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {userStore} from "@/store/index";
-import {getVerificationCode, register, findAccount} from "@/api/index/login";
+import {getVerificationCode, register} from "@/api/index/login";
+import { findAccount } from "@/api/index/forgotPwd";
 import {sendSms} from "@/api/personal/personal";
 import {ElMessage} from "element-plus";
 import {
@@ -691,6 +692,7 @@ export default defineComponent({
     const scroll = ref(0);
     const selectedMenu = ref(false);
     const {height} = useElementSize(el);
+    const isProfileDropDownOpen = ref(false);
 
     const vipLevel = computed(() => {
       if (store.vip.toUpperCase() === "NORMAL") {
@@ -1119,7 +1121,8 @@ export default defineComponent({
 
     const onLogout = () => {
       store.memberLogout().then(() => {
-        location.reload();
+        router.push("/home");
+        // location.reload();
       });
     };
     const registerRef = ref([])
@@ -1299,7 +1302,7 @@ export default defineComponent({
 
     });
 
-    watch(() => store.loginPageVisible, () => {
+    watchEffect(() => store.loginPageVisible, () => {
       if (store.loginPageVisible) {
         // loginDialogVisible.value = true
         router.push('/login');
@@ -1310,7 +1313,7 @@ export default defineComponent({
       // Optionally you can set immediate: true config for the watcher to run on init
       // }, { immediate: true });
     });
-    watch(() => store.regPageVisible, () => {
+    watchEffect(() => store.regPageVisible, () => {
       if (store.regPageVisible) {
         // registerDialogVisible.value = true
         router.push('/register');
@@ -1481,8 +1484,8 @@ export default defineComponent({
       return 8;
     }
 
-    watch(
-        () => regForm.password,
+    // watch(
+    //     () => regForm.password,
         // () => {
         //   pwdStrength.value = "";
 
@@ -1521,7 +1524,7 @@ export default defineComponent({
 
         //   // console.log(pwdStrength.value);
         // },
-    );
+    // );
     const todayDate = () => {
       return 'GTM+8 ' + moment().utcOffset('+08:00').format('M/D/YYYY, h:mm:ss A ') + moment(new Date()).locale('zh-cn').format('dddd');
     }
@@ -1597,7 +1600,8 @@ export default defineComponent({
       route,
       getUnreadMail,
       vip,
-      handleCommand
+      handleCommand,
+      isProfileDropDownOpen
     }
   }
 });

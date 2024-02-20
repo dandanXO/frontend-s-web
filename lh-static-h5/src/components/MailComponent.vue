@@ -1,8 +1,12 @@
 <template>
-  <q-page>    
-    <q-tabs active-color="dark" indicator-color="bright" align="justify" v-model="mailboxMessageTab" @update:model-value="changeMailboxType">
-      <q-tab :key="index" :name="item.type" :label="item.name" v-for="(item, index) in mailboxMessageTypeData"/>
-    </q-tabs>
+  <q-page>
+    <template v-if="props.type!=='outbox'">
+      <q-tabs active-color="dark" indicator-color="bright" align="justify" v-model="mailboxMessageTab" @update:model-value="changeMailboxType">
+        <q-tab :key="index" :name="item.type" :label="item.name" v-for="(item, index) in mailboxMessageTypeData"/>
+      </q-tabs>
+    </template>
+
+
 
     <q-tab-panels v-model="mailboxMessageTab" animated>
       <q-tab-panel :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
@@ -12,7 +16,7 @@
         </q-inner-loading>
 
         <div v-if="!loading">
-          <div class="action-buttons">
+          <div class="action-buttons" v-if="props.type!=='outbox'">
             <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md" @click="readMails(item.type)">全部已读</q-btn>
             <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md"  @click="deleteMails(item.type)">全部删除</q-btn>
             <q-toggle v-if="truncatedListByType.length" v-model="allowSelectMultiple" :label="'选择多个'" left-label />
@@ -72,7 +76,7 @@
         </div>
       </q-tab-panel>
     </q-tab-panels>
-    
+
     <q-dialog width="100%" v-model="isDeleteMailModal">
       <q-card style="width: 100%; padding: 20px" class="text-black">
         <q-card-section class="q-mb-md text-center" style="flex-direction: column">
@@ -120,6 +124,12 @@ export default defineComponent({
       default: function () {
         return "";
       }
+    },
+    type: {
+      type:String,
+      default: function () {
+        return "";
+      }
     }
   },
   emits: ["readMsg"],
@@ -132,6 +142,9 @@ export default defineComponent({
       { num: 5, type: "ALL", name: "全部" }
     ]);
     const mailboxMessageTab = ref(mailboxMessageTypeData.value[0].type);
+    if(props.type === 'outbox'){
+      mailboxMessageTab.value= mailboxMessageTypeData.value[4].type;
+    }
     const $q = useQuasar();
     const isDeleteMailModal = ref(false);
     const truncatedList = ref([]);
@@ -286,7 +299,8 @@ export default defineComponent({
       allowSelectMultiple,
       selectedMailIds,
       hasMailSelected,
-      truncatedListByType
+      truncatedListByType,
+      props
     };
   }
 });

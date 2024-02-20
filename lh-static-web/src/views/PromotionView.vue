@@ -3,20 +3,22 @@
     <div class="all-promotions" v-if="!isPromoDetail">
       <div class="promo-main-container">
         <div class="promo-type-wrapper">
-          <div class="type-list">
-            <img src="../assets/promo/menu-title.png" />
-            <div
-              class="type-item"
-              v-for="p in promoTypes"
-              :class="{ active: p.code === promoTabActive }"
-              :key="p.code"
-              @click="switchPromoType(p.code)"
-            >
-              <img :src="require('../assets/promo/menu-' + p.img + '.png')" />
-              <span style="width: 100px;" class="label">{{ p.label }}</span>
-            </div>
+            <el-affix :offset="80">
+              <div class="type-list">
+                  <img src="../assets/promo/menu-title.png" />
+                  <div
+                    class="type-item"
+                    v-for="p in promoTypes"
+                    :class="{ active: p.code === promoTabActive }"
+                    :key="p.code"
+                    @click="switchPromoType(p.code)"
+                  >
+                    <img :src="require('../assets/promo/menu-' + p.img + '.png')" />
+                    <span style="width: 100px;" class="label">{{ p.label }}</span>
+                  </div>
+              </div>
+            </el-affix>
           </div>
-        </div>
         <div class="promo-list-wrapper">
           <div
             class="promo-item"
@@ -326,10 +328,10 @@ export default defineComponent({
           margin: 0;
         }
         &:first-child {
-          border-radius: 20px 0 0 0;
+          border-top-left-radius: 20px;
         }
         &:last-child {
-          border-radius: 0 20px 0 0;
+          border-top-right-radius: 20px;
         }
       }
       td {
@@ -391,6 +393,8 @@ export default defineComponent({
       gap: 30px;
       .promo-type-wrapper {
         display: flex;
+        box-shadow: 0px 4px 22px 0px #00000026;
+        border-radius: 20px;
         // border-bottom: 4px solid rgb(255 255 255 / 15%);
         /* width */
         ::-webkit-scrollbar {
@@ -405,10 +409,8 @@ export default defineComponent({
           padding: 20px;
           overflow: auto;
           width: 280px;
-          border-radius: 20px;
           flex-direction: column;
-          box-shadow: 0px 4px 22px 0px #00000026;
-          gap: 40px;
+          gap: 35px;
           min-height: 818px;
           .type-item {
             cursor: pointer;
@@ -416,7 +418,7 @@ export default defineComponent({
             // background: #201f29;
             // box-shadow: 0 0 10px -3px #000000;
             // white-space: nowrap;
-            margin: 0 10px;
+            // margin: 0 10px;
             font-size: 14px;
             display: flex;
             justify-content: center;

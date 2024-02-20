@@ -48,7 +48,7 @@
 
     <q-page-container>
       <router-view v-slot="{ Component }">
-        <KeepAlive :max="8">
+        <KeepAlive :max="8" :exclude="excludeAliveComponents">
           <component :is="Component" />
         </KeepAlive>
       </router-view>
@@ -283,6 +283,10 @@ export default defineComponent({
           prevPage.value = "account/letters";
           hasPage.value = true;
           pageName.value = "意见反馈";
+        } else if (route.path === "/account/feedback") {
+          prevPage.value = "account/letters";
+          hasPage.value = true;
+          pageName.value = "有奖问答";
         } else if (route.path === "/account/withdraw") {
           prevPage.value = "account";
           hasPage.value = true;
@@ -463,7 +467,18 @@ export default defineComponent({
       prevPage,
       hasDrawer,
       platformsList,
-      changePlatform
+      changePlatform,
+      excludeAliveComponents: [
+        "DepositRecordView",
+        "WithdrawRecordView",
+        "TransferRecordView",
+        "FeedbackRecordView",
+        "PromoRecordView",
+        "BetHistoryRecordView",
+        "MoneyChangeRecordView",
+        "WithdrawView",
+        "DepositView"
+      ]
     };
   }
 });

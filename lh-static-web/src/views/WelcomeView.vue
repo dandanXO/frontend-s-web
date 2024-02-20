@@ -8,7 +8,7 @@
                 <div class="welcome-slide card-bg">
                     <div class="slide-title">完美兼容安全设备</div>
                     <img class="banner" src="../assets/home/auth/welcome-4-types-icon.png" />
-                    <div>雷火用引领市场的卓越技术，自主研发了全套 终端应用，让您畅享Web、H5、更有iOS、Android原生App,流畅游戏，让您尽在掌握！贴 心服务，7x24在线客服全年伴您左右。</div>
+                    <div>雷火用引领市场的卓越技术，自主研发了全套 终端应用，让您畅享Web、H5、更有iOS、Android原生App,流畅游戏，让您尽在掌握！贴心服务，7x24在线客服全年伴您左右。</div>
                     <img class="supported-platforms-img" src="../assets/home/auth/welcome-supported-platforms.png" />
                     <div class="qr-codes">
                         <template v-for="(det, idx) in platforms" :key="idx">
@@ -29,10 +29,12 @@
                     <img class="banner" src="../assets/home/auth/welcome-84-percent-icon.png" />
                     <div class="grey-card-bg">
                         <div class="list">您的首次存款，将激活以下优惠：</div>
-                        <div class="list"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>电竞/体育/真人/棋牌 <span class="highlighted">首存即送68% 最高奖金680元！</span></div>
-                        <div class="list"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>完成新手任务 <span class="highlighted">领取228雷火币！</span></div>
-                        <div class="list"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>每日全场返水 <span class="highlighted">最高可返2.0% 无上限！</span></div>
-                        <div class="list"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>电竞/体育 <span class="highlighted">每日保险投注 让您稳赚不赔！</span></div>
+                        <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>「电竞/体育/真人/棋牌」 <span class="highlighted">首存即送68% 最高奖金680元！</span></div>
+                        <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>「完成新手任务」 <span class="highlighted">领取228雷火币！</span></div>
+                        <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>「每日全场返水」 <span class="highlighted">最高可返2.0% 无上限！</span></div>
+                        <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>「电竞/体育」 <span class="highlighted">每日保险投注 让您稳赚不赔！</span></div>
+
+                        
                     </div>
                     <router-link to="/center/deposit" class="blue-bg deposit-btn">立即存款</router-link>
                 </div>
@@ -68,6 +70,10 @@ const platforms = ref([
 </script>
 
 <style lang="scss" scoped>
+
+.white-space-nowrap{
+    white-space: nowrap;
+}
 
 .supported-platforms-img {
     width: 100%;

@@ -59,10 +59,9 @@
       :key="i"
       :name="i"
       class="column no-wrap flex-center"
-      :img-src="banner.mobileImageUrl"
+      :img-src="imgURL + banner.mobileImageUrl"
       @click="gotoPromo(banner)"
     ></q-carousel-slide>
-    <!--    :img-src="imgURL + banner.mobileImageUrl"-->
   </q-carousel>
 
   <div class="mid-announcement-section">
@@ -81,10 +80,10 @@
       </div>
     </div>
 
-    <div class="hot-match-div">
-      <img src="../assets/images/home/hot-icon.png" />
-      <span>热门赛事</span>
-    </div>
+<!--    <div class="hot-match-div">-->
+<!--      <img src="../assets/images/home/hot-icon.png" />-->
+<!--      <span>热门赛事</span>-->
+<!--    </div>-->
   </div>
 
   <div class="details-bar">
@@ -179,7 +178,18 @@
     <div class="game-right-platform">
       <div class="game-lists" v-if="tab === 'esport'" id="esport-lists">
         <template v-for="(item, index) in esport" :key="index">
-          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)">
+          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)"
+               :class="item.underMaintenance === true ? 'maintenance' : ''">
+            <div class="maintenance-box" v-if="item.underMaintenance === true">
+              <p>维护中</p>
+              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
+                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
+                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
+              </p>
+              <p class="small-size">请先前往其他场馆娱乐</p>
+            </div>
+
+
             <div
               class="platform-img-frame"
               :style="{
@@ -205,7 +215,17 @@
 
       <div class="game-lists" v-if="tab === 'sport'" id="sport-lists">
         <template v-for="(item, index) in sport" :key="index">
-          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)">
+          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)"
+               :class="item.underMaintenance === true ? 'maintenance' : ''">
+            <div class="maintenance-box" v-if="item.underMaintenance === true">
+              <p>维护中</p>
+              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
+                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
+                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
+              </p>
+              <p class="small-size">请先前往其他场馆娱乐</p>
+            </div>
+
             <div
               class="platform-img-frame"
               :style="{
@@ -231,7 +251,17 @@
 
       <div class="game-lists" v-if="tab === 'live'" id="live-lists">
         <template v-for="(item, index) in livecasino" :key="index">
-          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)">
+          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)"
+               :class="item.underMaintenance === true ? 'maintenance' : ''">
+            <div class="maintenance-box" v-if="item.underMaintenance === true">
+              <p>维护中</p>
+              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
+                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
+                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
+              </p>
+              <p class="small-size">请先前往其他场馆娱乐</p>
+            </div>
+
             <div
               class="platform-img-frame"
               :style="{
@@ -257,7 +287,17 @@
 
       <div class="game-lists" v-if="tab === 'poker'" id="poker-lists">
         <template v-for="(item, index) in poker" :key="index">
-          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)">
+          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)"
+               :class="item.underMaintenance === true ? 'maintenance' : ''">
+            <div class="maintenance-box" v-if="item.underMaintenance === true">
+              <p>维护中</p>
+              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
+                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
+                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
+              </p>
+              <p class="small-size">请先前往其他场馆娱乐</p>
+            </div>
+
             <div
               class="platform-img-frame"
               :style="{
@@ -282,11 +322,18 @@
       </div>
 
       <div class="game-lists" v-if="tab === 'lottery'" id="lottery-lists">
-        <!-- <div class="platform-block">
-          <img src="../assets/images/home/lottery/lottery-1.png" />
-        </div> -->
         <template v-for="(item, index) in lottery" :key="index">
-          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)">
+          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)"
+               :class="item.underMaintenance === true ? 'maintenance' : ''">
+            <div class="maintenance-box" v-if="item.underMaintenance === true">
+              <p>维护中</p>
+              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
+                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
+                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
+              </p>
+              <p class="small-size">请先前往其他场馆娱乐</p>
+            </div>
+
             <div
               class="platform-img-frame"
               :style="{
@@ -312,7 +359,17 @@
 
       <div class="game-lists" v-if="tab === 'slot'" id="slot-lists">
         <template v-for="(item, index) in slot" :key="index">
-          <div class="platform-block" @click="router.push({ path: '/slot', query: { platform: item.code } })">
+          <div class="platform-block" @click="router.push({ path: '/slot', query: { platform: item.code } })"
+               :class="item.underMaintenance === true ? 'maintenance' : ''">
+            <div class="maintenance-box" v-if="item.underMaintenance === true">
+              <p>维护中</p>
+              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
+                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
+                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
+              </p>
+              <p class="small-size">请先前往其他场馆娱乐</p>
+            </div>
+
             <div
               class="platform-img-frame"
               :style="{
@@ -337,7 +394,17 @@
       </div>
       <div class="game-lists" v-if="tab === 'fishing'" id="fishing-lists">
         <template v-for="(item, index) in fishing" :key="index">
-          <div class="platform-block" @click="playGame(item.gameName, item.code, 7202)">
+          <div class="platform-block" @click="playGame(item.gameName, item.code, 7202)"
+               :class="item.underMaintenance === true ? 'maintenance' : ''">
+            <div class="maintenance-box" v-if="item.underMaintenance === true">
+              <p>维护中</p>
+              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
+                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
+                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
+              </p>
+              <p class="small-size">请先前往其他场馆娱乐</p>
+            </div>
+
             <div
               class="platform-img-frame"
               :style="{
@@ -581,13 +648,13 @@ import { Scrollbar } from "swiper";
 import SwiperCore, { Keyboard, Mousewheel, HashNavigation, A11y } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Thumbs, Controller } from "swiper";
+import moment from "moment"
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/scrollbar";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
-import PlatformBlock from "components/platform/PlatformBlock.vue";
 import { translateRecord } from "src/directives/translate";
 
 export default defineComponent({
@@ -898,25 +965,6 @@ export default defineComponent({
     };
 
     function loadData() {
-      //TODO:: HARDCODED.
-      banners.value = [
-        {
-          category: "HOME",
-          desktopImageUrl: "home-banner1.png",
-          mobileImageUrl: require("../assets/images/home/home-banner1.png"),
-          promoPageId: null,
-          redirectUrl: "XingFa-red-packet-rain"
-        },
-        {
-          category: "HOME",
-          desktopImageUrl: "home-banner2.png",
-          mobileImageUrl: require("../assets/images/home/home-banner2.png"),
-          promoPageId: null,
-          redirectUrl: "XingFa-red-packet-rain"
-        }
-      ];
-
-      return;
       api
         .get("/promo/banner?category=HOME")
         .then((res) => {
@@ -1064,7 +1112,7 @@ export default defineComponent({
             }
             if (platTypes.indexOf("FISH") > -1 && element.code !== "AGF") {
               var fishObj = Object.assign({}, element);
-              fishObj.title = fishObj.name + " 捕鱼";
+              fishObj.title = translateRecord(fishObj.name);
               fishObj.icon = "fish";
               fishObj.subtitle = "捕鱼游戏";
 
@@ -1131,6 +1179,8 @@ export default defineComponent({
         store.getBalance().then((res) => {
           isLoadingBalance.value = false;
         });
+      }else{
+        router.push("/login")
       }
     };
 
@@ -1371,7 +1421,8 @@ export default defineComponent({
       isImpt,
       isImportantAnnoucementModal,
       getImgPlatformLogo,
-      getImgPlatformBg
+      getImgPlatformBg,
+      moment
     };
   }
 });
@@ -1760,6 +1811,59 @@ export default defineComponent({
     .platform-block {
       cursor: pointer;
       width: 100%;
+      position:relative;
+
+      &.maintenance{
+        filter: grayscale(0.8);
+      }
+
+      &.maintenance:after {
+        content: "";
+        position: absolute;
+        background: rgba(2, 9, 73, 0.4);
+        top: 0%;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 12px;
+        color: #ffffff;
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .maintenance-box {
+        position: absolute;
+        top: 3%;
+        bottom: 3%;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        color: #ffffff;
+        font-size: 1.1em;
+        font-weight: bold;
+        width: 90%;
+        left: 5%;
+        right: 5%;
+        height: 94%;
+        z-index: 33;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 5px;
+
+        p {
+          font-size: 1.1em;
+          margin-top: 0px;
+          margin-bottom: 0px;
+        }
+
+        .small-size {
+          font-size: 0.85em;
+        }
+      }
+
 
       &:hover {
         opacity: 0.9;

@@ -336,7 +336,7 @@ const tableHeaders = [
   }
 ];
 
-onActivated(async () => {
+onMounted(async () => {
   await loadPlatformLists();
 
   const startMonth = moment(startDate).format("MM");

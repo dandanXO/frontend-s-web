@@ -30,6 +30,16 @@
                 </div>
               </div>
               <!-- vip progress bar end -->
+              <div
+                style="color: #cfb282; font-size: 18px; position: absolute; bottom: 25px; left: 0; right: 0"
+                v-if="vipLevel + 1 === Number(vip.vipLevel)"
+              >
+                {{
+                  Number(currentDepositAmt)
+                    .toLocaleString("en-US", { style: "currency", currency: "CNY" })
+                    .replace("CN", "")
+                }}
+              </div>
             </div>
             <div
               :class="`vipLevelReachStatus ${getVipLevelProgress(vip) === 100 && !!vipLevel ? 'vipLevelReached' : ''}`"
@@ -120,9 +130,7 @@
               <td rowspan="3">黄金</td>
               <td>黄金Ⅲ</td>
               <td>400,000</td>
-              <td id="vipPromoInfo7" class="showTips6">
-                存款最少200元可申请一次再存30%最高奖金1888元
-              </td>
+              <td id="vipPromoInfo7" class="showTips6">存款最少200元可申请一次再存30%最高奖金1888元</td>
               <td class="showTips6">电竞/体育 15倍 老虎机12倍 真人18倍</td>
               <!-- <td colspan="2" class="hideTips6">
                 <div class="vip-btn disable">未符合</div>
@@ -140,9 +148,7 @@
             <tr>
               <td>黄金Ⅰ</td>
               <td>1,000,000</td>
-              <td id="vipPromoInfo9" class="showTips8">
-                存款最少500元可申请每月一次再存35% 最高奖金8888元
-              </td>
+              <td id="vipPromoInfo9" class="showTips8">存款最少500元可申请每月一次再存35% 最高奖金8888元</td>
               <td class="showTips8">电竞/体育 15倍 老虎机12倍 真人18倍</td>
               <!-- <td colspan="2" class="hideTips8">
                 <div class="vip-btn disable">未符合</div>
@@ -161,9 +167,7 @@
             <tr>
               <td>铂金Ⅰ</td>
               <td>4,000,000</td>
-              <td id="vipPromoInfo11" class="showTips10">
-                存款最少500元可申请一次再存40%最高奖金18888元
-              </td>
+              <td id="vipPromoInfo11" class="showTips10">存款最少500元可申请一次再存40%最高奖金18888元</td>
               <td class="showTips10">电竞/体育 15倍 老虎机12倍 真人18倍</td>
               <!-- <td colspan="2" class="hideTips10">
                 <div class="vip-btn disable">未符合</div>
@@ -183,9 +187,7 @@
               <td rowspan="1">最强王者</td>
               <td>王者</td>
               <td>12,000,000</td>
-              <td id="vipPromoInfo13" class="showTips12">
-                存款最少20元可申请一次晋级奖金18888元
-              </td>
+              <td id="vipPromoInfo13" class="showTips12">存款最少20元可申请一次晋级奖金18888元</td>
               <td class="showTips12">电竞/体育10倍 老虎机12倍 真人18倍</td>
               <!-- <td colspan="2" class="hideTips12">
                 <div class="vip-btn disable">未符合</div>
@@ -297,7 +299,10 @@ export default defineComponent({
     const amount = ref("$0");
     const privilegeClaimedModalVisible = ref(false);
     const vipLevel = computed(() => {
-      return store.vip;
+      return +store.vip.replace("VIP", "");
+    });
+    const currentDepositAmt = computed(() => {
+      return store.getCurrentDeposit();
     });
     const getVipLevelProgress = (vipInfo) => {
       const vipLevel = +store.vip.replace("VIP", "");
@@ -309,20 +314,20 @@ export default defineComponent({
       // }
       var levelUpDeposit = +upgradeStatus.replaceAll(",", "");
       if (!levelUpDeposit) {
-        levelUpDeposit = 0
+        levelUpDeposit = 0;
       }
       if (vipLevel === 0) {
-        return 0
+        return 0;
       }
       if (vipLevel + 1 === +vipInfo.vipLevel) {
         return (currentDeposit / levelUpDeposit) * 100;
       }
       if (currentDeposit > levelUpDeposit + 1) {
-        return 100
+        return 100;
       } else {
-        return 0
+        return 0;
       }
-      
+
       // const levelUpDeposit = +upgradeStatus.replaceAll(",", "");
       // return (currentDeposit / levelUpDeposit) * 100;
     };
@@ -526,41 +531,40 @@ export default defineComponent({
     ]);
     const initVIPTable = () => {
       if (store.token) {
-        
-      canRedeem().then((res) => {
-        if (res.code === 0) {
-          // Your arrays of elements
-          const depositPromoAvailableElements = res.data.depositPromoAvailable;
-          const promoAvailableElements = res.data.promoAvailable;
-          const unavailableElements = res.data.unavailable;
-          const claimedElements = res.data.claimed;
+        canRedeem().then((res) => {
+          if (res.code === 0) {
+            // Your arrays of elements
+            const depositPromoAvailableElements = res.data.depositPromoAvailable;
+            const promoAvailableElements = res.data.promoAvailable;
+            const unavailableElements = res.data.unavailable;
+            const claimedElements = res.data.claimed;
 
-          // Function to update properties based on the provided elements
-          function updatePropertiesBasedOnElements(elements, property) {
-            elements.forEach((element) => {
-              const index = element - 1;
-              if (index >= 0 && index < vipItems.length) {
-                vipItems[index][property] = true;
-              }
-            });
+            // Function to update properties based on the provided elements
+            function updatePropertiesBasedOnElements(elements, property) {
+              elements.forEach((element) => {
+                const index = element - 1;
+                if (index >= 0 && index < vipItems.length) {
+                  vipItems[index][property] = true;
+                }
+              });
+            }
+
+            // Call the function to update properties based on depositPromoAvailable elements
+            updatePropertiesBasedOnElements(depositPromoAvailableElements, "depositPromoAvailable");
+
+            // Call the function to update properties based on promoAvailable elements
+            updatePropertiesBasedOnElements(promoAvailableElements, "promoAvailable");
+
+            // Call the function to update properties based on unavailable elements
+            updatePropertiesBasedOnElements(unavailableElements, "unavailable");
+
+            // Call the function to update properties based on unavailable elements
+            updatePropertiesBasedOnElements(claimedElements, "claimed");
+
+            // Now, vipItems array has the updated properties based on the provided elements
+            console.log(vipItems);
           }
-
-          // Call the function to update properties based on depositPromoAvailable elements
-          updatePropertiesBasedOnElements(depositPromoAvailableElements, "depositPromoAvailable");
-
-          // Call the function to update properties based on promoAvailable elements
-          updatePropertiesBasedOnElements(promoAvailableElements, "promoAvailable");
-
-          // Call the function to update properties based on unavailable elements
-          updatePropertiesBasedOnElements(unavailableElements, "unavailable");
-
-          // Call the function to update properties based on unavailable elements
-          updatePropertiesBasedOnElements(claimedElements, "claimed");
-
-          // Now, vipItems array has the updated properties based on the provided elements
-          console.log(vipItems);
-        }
-      });
+        });
       }
     };
     const claimVIPLevelItem = (vip) => {
@@ -570,13 +574,13 @@ export default defineComponent({
         }
       });
     };
-    const currentSlide = ref(0)
+    const currentSlide = ref(0);
     const slideTo = () => {
       const vipLevel = +store.vip.replace("VIP", "");
       if (vipLevel === 0) {
-        return
+        return;
       }
-      currentSlide.value = vipLevel - 1
+      currentSlide.value = vipLevel - 1;
     };
     onMounted(() => {
       initVIPTable();
@@ -601,7 +605,8 @@ export default defineComponent({
       vipTerms,
       claimVIPLevelItem,
       currentSlide,
-      slideTo
+      slideTo,
+      currentDepositAmt
     };
   }
 });
@@ -954,12 +959,16 @@ $border-settings: 1px solid #e5e7eb;
 .carousel__prev,
 .carousel__next {
   box-sizing: content-box;
-  background: url(../assets/vip/nextprev.png) no-repeat center center;
-  background-size: contain;
+  background: transparent;
   top: 45%;
+  width: 40%;
+  height: 90%;
 
-  .carousel__icon {
-    display: none;
+  svg {
+    width: 30px;
+    height: 30px;
+    background: url(../assets/vip/nextprev.png) no-repeat center center;
+    background-size: contain;
   }
 }
 
@@ -969,7 +978,7 @@ $border-settings: 1px solid #e5e7eb;
 }
 
 .carousel__next {
-  transform: rotate(180deg);
+  right: 4%;
 }
 
 .carousel__slide > .carousel__item {

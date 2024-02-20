@@ -3,7 +3,7 @@
     <keep-alive>
       <common-header/>
     </keep-alive>
-    <router-view class="router-view" v-slot="{ Component }">
+    <router-view v-slot="{ Component }">
       <!-- <transition name="component-fade" mode="out-in"> -->
       <component :is="Component"/>
       <!-- </transition> -->
@@ -254,9 +254,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped>
-.router-view {
-  min-height: calc(100vh - 310px);
-}
-</style>

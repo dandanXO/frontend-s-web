@@ -4,6 +4,7 @@
       <q-spinner-gears size="50px" color="brightbtn" />
       <div class="label" style="color: #fff">加载中</div>
     </q-inner-loading>
+
     <div v-if="!loading">
       <q-infinite-scroll @load="onLoad" :offset="250">
         <q-card v-for="(det, n) in truncatedList" :key="n" class="q-pa-sm">
@@ -14,7 +15,7 @@
             <template v-for="obj in Object.keys(det)" :key="obj">
               <div v-if="obj === head.key" class="desc">
                 <div v-if="obj === 'type'">
-                  {{ translateRecord(det[obj], "") }}
+                  {{ translateRecord(det[obj], recordType) }}
                 </div>
                 <div v-else-if="obj === 'status'">
                   {{ checkRecord(det[obj]) }}
@@ -44,15 +45,19 @@
               </div>
             </template>
           </div>
-          <div
-            v-if="
-              (recordType === 'deposit' && det.status === 'PENDING') ||
-              (recordType === 'withdraw' && det.status === 'STEP_1')
-            "
-            class="buttons"
-          >
-            <q-btn outline label="催单" @click="feedbackTrans(det)" size="sm" color="bright" class="q-mr-sm" />
-            <q-btn outline label="复制" @click="copyText(det.serialNumber)" size="sm" color="bright" />
+          <div class="buttons">
+            <template
+              v-if="
+                (recordType === 'deposit' && det.status === 'PENDING') ||
+                (recordType === 'withdraw' && det.status === 'STEP_1')
+              "
+            >
+              <q-btn outline label="催单" @click="feedbackTrans(det)" size="sm" color="bright" class="q-mr-sm" />
+            </template>
+
+            <template v-if="recordType === 'deposit'">
+              <q-btn outline label="复制" @click="copyText(det.serialNumber, '存款编码')" size="sm" color="bright" />
+            </template>
           </div>
 
           <div v-if="recordType === 'withdraw'" class="buttons">
@@ -65,9 +70,9 @@
             >
               <q-btn @click="openWithdrawConfirmDialog(det)" outline label="确认到账" size="sm" color="bright" />
             </template>
+            <q-btn outline label="复制" @click="copyText(det.serialNumber, '单号')" size="sm" color="bright" />
           </div>
         </q-card>
-
         <template v-slot:loading>
           <div v-if="comList.length > 0">
             <div class="row justify-center q-my-md">
@@ -260,7 +265,7 @@ export default defineComponent({
 
     const copyinput = ref(null);
     const text_copied = ref("");
-    const copyText = (text) => {
+    const copyText = (text, msgTitle) => {
       text_copied.value = text;
       console.log(text_copied.value);
 
@@ -275,7 +280,7 @@ export default defineComponent({
         $q.notify({
           color: "positive",
           position: "top",
-          message: "存款编码复制成功！",
+          message: `${msgTitle}复制成功！`,
           icon: "check_circle_outline"
         });
       }, 100);

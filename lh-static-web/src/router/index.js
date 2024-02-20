@@ -161,7 +161,7 @@ const router = createRouter({
     // console.log(savedPosition);
     if (savedPosition && savedPosition.top) {
       return { left: 0, top: savedPosition.top };
-    } else if (to.path !== "/game") {
+    } else if (to.path !== "/slot") {
       return { left: 0, top: 0 };
     }
   },

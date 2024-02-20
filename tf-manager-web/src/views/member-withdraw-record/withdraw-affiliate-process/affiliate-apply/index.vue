@@ -449,7 +449,7 @@ const uiControl = reactive({
 let chooseRecord = []
 
 const startDate = new Date()
-startDate.setDate(startDate.getDate() - 7)
+startDate.setDate(startDate.getDate() - 2)
 const defaultStartDate = convertDateToStart(startDate);
 const defaultEndDate = convertDateToEnd(new Date());
 const request = reactive({

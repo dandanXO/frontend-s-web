@@ -21,33 +21,6 @@
         </div>
       </div>
     </div>
-
-    <div class="q-mt-lg q-mb-md">
-      <img src="../../../assets/images/promo/hotpromo/lottery/title-content.png" />
-    </div>
-
-    <div>
-      <p>
-        活动时间:北京时间2020年01月01日00:00:00开始
-        <br />
-        活动内容:此活动适用于所有雷火电克网站会员，在活动开始后，会员仅需当日累计存款达到1.000元即可完成签到，并当日领取相对应的奖金;签到越多，奖金越多
-      </p>
-    </div>
-
-    <div class="dailylogin daily-details">
-      <div class="dailylogin-title">
-        <div>本月签到明细</div>
-      </div>
-      <div class="months">
-        <div v-for="(mth, index) in dateDetails" :key="index" class="mth">
-          <div class="day">
-            1
-            <span class="times">次</span>
-          </div>
-          <div class="number">{{ mth.number }}元</div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 <script setup>
@@ -66,7 +39,7 @@ const init = (maxDays, dayCount, monthCount) => {
   const totalItems = maxDays;
   for (let i = 0; i < totalItems; i++) {
     dateDetails.value.push({
-      number: 7,
+      number: checkInDetails?.signBonus?.[i],
       checkInActive: i < monthCount + (1 - dayCount),
       isCheckedIn: i < monthCount
     });
@@ -84,6 +57,7 @@ const loadDailyCheckIn = () => {
       checkInDetails.monthMaxDays = res.data.monthMaxDays;
       checkInDetails.dayCount = res.data.dayCount;
       checkInDetails.monthCount = res.data.monthCount;
+      checkInDetails.signBonus = res.data.signBonus;
       init(checkInDetails.monthMaxDays, checkInDetails.dayCount, checkInDetails.monthCount);
     }
   });
