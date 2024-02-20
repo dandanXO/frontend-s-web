@@ -63,7 +63,11 @@
               <a class="share-link" :href="store.evip" target="_blank">
                 {{ store.evip }}
               </a>
-              <img class="copy-btn btn-pointer" src="../assets/images/account/account-copy-icon.png" />
+              <img
+                class="copy-btn btn-pointer"
+                src="../assets/images/account/account-copy-icon.png"
+                @click="copyLink"
+              />
             </span>
           </div>
         </q-card-section>
@@ -123,7 +127,6 @@
         <div class="acct-title-1">功能区</div>
       </div>
       <div class="acct-menu" id="id-acct-menu">
-
         <router-link to="/account/records">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-record-icon.png" />
@@ -138,7 +141,7 @@
           </div>
         </router-link>
 
-        <router-link  to="/promo?redirect=account">
+        <router-link to="/promo?redirect=account">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-promo-icon.png" />
             <div class="acct-nav-label">优惠领取</div>
@@ -182,12 +185,12 @@
         <!--          </div>-->
         <!--        </router-link>-->
 
-<!--        <router-link to="/account/assets">-->
-<!--          <div class="acct-nav-item">-->
-<!--            <img src="../assets/images/account/account-rich-icon.png" />-->
-<!--            <div class="acct-nav-label">财富中心</div>-->
-<!--          </div>-->
-<!--        </router-link>-->
+        <!--        <router-link to="/account/assets">-->
+        <!--          <div class="acct-nav-item">-->
+        <!--            <img src="../assets/images/account/account-rich-icon.png" />-->
+        <!--            <div class="acct-nav-label">财富中心</div>-->
+        <!--          </div>-->
+        <!--        </router-link>-->
 
         <!--        <router-link to="/account/personal">-->
         <!--          <div class="acct-nav-item">-->
@@ -195,7 +198,6 @@
         <!--            <div class="acct-nav-label">仓库</div>-->
         <!--          </div>-->
         <!--        </router-link>-->
-
 
         <router-link to="/account/letters">
           <div class="acct-nav-item">
@@ -293,6 +295,7 @@ import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
 // import { RiRefreshLine } from "vue-remix-icons";
 import { api } from "boot/axios";
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "AccountPage",
@@ -300,6 +303,7 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const store = userStore();
+    const $q = useQuasar();
 
     const isLogoutModal = ref(false);
 
@@ -362,6 +366,23 @@ export default defineComponent({
     const isLoadingBalance = ref(false);
 
     const selfTgurl = ref("https://" + store.evip);
+
+    const copyLink = () => {
+      const copyText = store.evip;
+      const textarea = document.createElement("textarea");
+      textarea.value = copyText;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+
+      $q.notify({
+        color: "positive",
+        position: "top",
+        message: "已复制专属网址",
+        icon: "check_circle_outline"
+      });
+    };
 
     onMounted(() => {
       getBalance();
@@ -439,7 +460,8 @@ export default defineComponent({
       imgURL,
       gotoPromo,
       slide: ref(0),
-      isLogoutModal
+      isLogoutModal,
+      copyLink
     };
   }
 });
@@ -900,7 +922,7 @@ export default defineComponent({
     text-align: center;
   }
 
-  .vipcard .btn-main{
+  .vipcard .btn-main {
     min-height: 24px;
     width: 60px;
   }
@@ -920,7 +942,7 @@ export default defineComponent({
       gap: 4px;
     }
   }
-  .acct-nav .acct-menu a .acct-nav-item img{
+  .acct-nav .acct-menu a .acct-nav-item img {
     height: 32px;
   }
 }
