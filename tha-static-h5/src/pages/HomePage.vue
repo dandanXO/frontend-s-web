@@ -42,8 +42,7 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <!--          <img src="../assets/images/menu/announce-icon.png" />-->
-          <img src="../assets/images/menu-cny/announce-cny-icon.png" />
+          <img src="../assets/images/menu/announce-icon.png" />
         </div>
         <marquee-text :repeat="announcementList.length" :duration="announcementList.length * 20">
           <div v-if="announcementList">
@@ -2042,10 +2041,6 @@ export default defineComponent({
   align-items: center;
   gap: 10px;
   margin: 10px 10px 5px;
-  background: linear-gradient(0deg, rgba(156, 17, 3, 0.8), rgba(156, 17, 3, 0.8)),
-    linear-gradient(0deg, #eb5849, #eb5849);
-  border: 1px solid #eb5849;
-  border-radius: 10px;
 
   @media (min-width: 769px) {
     margin: 10px;
@@ -2053,8 +2048,8 @@ export default defineComponent({
 
   .station-notice-wrapper {
     display: flex;
-    border-radius: 10px;
-    border: 1px solid #9c1103;
+    border-radius: 8px;
+    border: 1px solid $border-color;
     gap: 10px;
     padding: 2px 10px;
     justify-content: center;
@@ -2066,7 +2061,7 @@ export default defineComponent({
       padding-top: 3px;
 
       img {
-        width: 26px;
+        width: 21px;
         height: auto;
       }
     }
@@ -2167,47 +2162,24 @@ export default defineComponent({
 
   .game-board-item {
     border-radius: 8px;
+    width: auto;
     gap: 12px;
     height: 100%;
-    margin: 0 auto;
-    width: 135px;
-    aspect-ratio: 136/61;
+    margin: auto;
     display: flex;
     align-items: center;
     text-align: center;
     padding: 12px 12px;
     white-space: nowrap;
-    background: url("../assets/home/game-board-item-bg.png") no-repeat center center;
-    background-size: 100% 100%;
-    position: relative;
-
-    .active-flag {
-      display: none;
-    }
 
     &.active-board {
       // background: $linear-bg-4;
-      //background: url("../assets/home/game-board-item-bg-active.png") no-repeat center center;
-      background: url("../assets/images/menu-cny/game-selected.png") no-repeat center center;
-      background-size: 100% 100%;
-      aspect-ratio: 140/135;
-      padding-top: 25px;
-      margin-bottom: 20px;
-
-      //.active-flag {
-      //  display: block;
-      //  position: absolute;
-      //  top: -32px;
-      //  left: 0px;
-      //  right: 0px;
-      //  bottom: 0px;
-      //  width: 100px;
-      //  height: 100px;
-      //}
+      background: #5555aa;
     }
 
     &:hover {
       filter: brightness(0.88);
+      background: #5555aa;
     }
 
     &:active {

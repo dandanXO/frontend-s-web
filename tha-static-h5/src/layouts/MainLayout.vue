@@ -109,10 +109,10 @@
         </q-route-tab>
 
         <q-route-tab to="/finance/deposit" name="deposit" class="middle-menu">
-          <img
-            class="footer-icon"
-            :src="tab === 'deposit' ? footers['deposit']['active'] : footers['deposit']['icon']"
-          />
+          <div class="footer-icon-wrapper">
+            <img class="footer-icon" :src="footers['deposit']['icon']" />
+          </div>
+  
           <span class="footer-label">{{ $t("lang.deposit_footer") }}</span>
         </q-route-tab>
 
@@ -340,20 +340,20 @@ export default defineComponent({
     };
     const footers = reactive({
       home: {
-        icon: require("../assets/images/menu-cny/home-icon.png"),
-        active: require("../assets/images/menu-cny/home-icon-active.png")
+        icon: require("../assets/images/menu/home-icon.png"),
+        active: require("../assets/images/menu/home-icon-active.png")
       },
       deposit: {
-        icon: require("../assets/images/menu-cny/deposit-icon-active.png"),
-        active: require("../assets/images/menu-cny/deposit-icon-active.png")
+        icon: require("../assets/images/menu/deposit-icon.png"),
+        active: require("../assets/images/menu/deposit-icon-active.png")
       },
       withdraw: {
-        icon: require("../assets/images/menu-cny/withdraw-icon.png"),
-        active: require("../assets/images/menu-cny/withdraw-icon-active.png")
+        icon: require("../assets/images/menu/withdraw-icon.png"),
+        active: require("../assets/images/menu/withdraw-icon-active.png")
       },
       cs: {
-        icon: require("../assets/images/menu-cny/cs-icon.png"),
-        active: require("../assets/images/menu-cny/cs-icon-active.png")
+        icon: require("../assets/images/menu/cs-icon.png"),
+        active: require("../assets/images/menu/cs-icon-active.png")
       },
       notice: {
         icon: require("../assets/images/menu/notice-icon.png"),
@@ -364,8 +364,8 @@ export default defineComponent({
         active: require("../assets/images/menu/affiliate-icon-active.png")
       },
       app: {
-        icon: require("../assets/images/menu-cny/download-icon.png"),
-        active: require("../assets/images/menu-cny/download-active-icon.png")
+        icon: require("../assets/images/menu/download-icon.png"),
+        active: require("../assets/images/menu/download-active-icon.png")
       }
     });
 
@@ -443,22 +443,6 @@ export default defineComponent({
 }
 </style>
 <style scoped lang="scss">
-.footer-nav {
-  .footer-label {
-    font-weight: normal;
-  }
-
-  .footer-label {
-    color: #c9c9c9;
-  }
-
-  .q-tab--active {
-    .footer-label {
-      color: #ffffff;
-      -webkit-text-fill-color: #ffffff;
-    }
-  }
-}
 path {
   stroke-width: 0.5;
   stroke-dasharray: 3212;
@@ -509,11 +493,6 @@ svg path {
   // margin-top: -30px;
   z-index: 9;
   opacity: 1;
-
-  .footer-icon {
-    margin-bottom: -10px;
-    width: 68px;
-  }
 
   .footer-icon-wrapper {
     // background: linear-gradient(90deg, #cf027d 0%, #ff6370 100%),
