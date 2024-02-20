@@ -71,6 +71,10 @@ const list = reactive({
 });
 const siteData = ref([]);
 
+const request = reactive({
+  siteId: null,
+})
+
 const title = ref(['withdraw platform list', 'withdraw platform list']);
 
 function handleChangeSite() {
@@ -111,7 +115,8 @@ async function loadSites() {
 }
 
 async function loadWithdrawPlatform() {
-  const { data: ret } = await getWithdrawPlatforms();
+  request.siteId = selected.siteName
+  const { data: ret } = await getWithdrawPlatforms(request);
   const site = list.sites.find(k => k.id === selected.siteName);
   list.platforms = ret.records.filter(r => site.id === r.siteId && r.status === true);
   if (selected.siteName !== null) {
