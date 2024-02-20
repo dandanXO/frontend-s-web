@@ -18,6 +18,22 @@
           :clearable="false"
           :default-time="defaultTime"
         />
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px;margin-left:10px"
+          default-first-option
+          @focus="loadSites"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-input
           v-model="request.serialNumber"
           style="width: 300px; margin-left: 10px"
@@ -554,6 +570,7 @@ const request = reactive({
   minWithdrawAmount: null,
   maxWithdrawAmount: null,
   vipId: null,
+  siteId: null,
 })
 
 function disabledDate(time) {
@@ -575,6 +592,7 @@ function resetQuery() {
   request.minWithdrawAmount = null
   request.maxWithdrawAmount = null
   request.vipId = vipList.list[0].id
+  request.siteId = siteList.list[0].id
   uiControl.dialogVisible = false
 }
 
@@ -747,8 +765,9 @@ function populateFailReason(evt) {
   })
 }
 
-onMounted(() => {
-  loadSites()
+onMounted(async() => {
+  await loadSites()
+  request.siteId = siteList.list[0].id
   loadVips()
   loadFinancialLevels()
   loadBanks()

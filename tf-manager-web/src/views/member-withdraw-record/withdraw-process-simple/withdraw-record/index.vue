@@ -654,7 +654,6 @@ import { getFinancialLevels } from '../../../../api/financial-level'
 import { getWithdrawBanks } from '../../../../api/bank-info'
 import {
   getMemberWithdrawRecord,
-  getTotalWithdrawAmount,
   autoWithdrawToFail,
   getExportWithdrawRecord,
 } from '../../../../api/member-withdraw-record'
@@ -1030,8 +1029,7 @@ async function loadRecord() {
   page.records = ret.records
   page.total = ret.total
   if (page.records.length !== 0) {
-    const { data: amount } = await getTotalWithdrawAmount(query)
-    page.totalAmount = amount
+    page.totalAmount = ret.sums.withdrawAmount
   } else {
     page.totalAmount = 0
   }

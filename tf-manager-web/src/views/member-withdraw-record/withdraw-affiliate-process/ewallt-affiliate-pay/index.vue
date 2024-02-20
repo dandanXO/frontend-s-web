@@ -713,6 +713,7 @@ const request = reactive({
   minWithdrawAmount: null,
   maxWithdrawAmount: null,
   vipId: null,
+  siteId: null,
 })
 
 function disabledDate(time) {
@@ -734,6 +735,7 @@ function resetQuery() {
   request.minWithdrawAmount = null
   request.maxWithdrawAmount = null
   request.vipId = vipList.list[0].id
+  request.siteId = siteList.list[0].id
   uiControl.dialogVisible = false
 }
 
@@ -958,8 +960,9 @@ function populateFailReason(evt) {
   })
 }
 
-onMounted(() => {
-  loadSites()
+onMounted(async() => {
+  await loadSites()
+  request.siteId = siteList.list[0].id
   loadVips()
   loadFinancialLevels()
   loadBanks()
