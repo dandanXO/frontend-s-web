@@ -616,7 +616,7 @@ export default defineComponent({
         })
       },
       handleRegister: () => {
-        state.regForm.siteId = 6
+        state.regForm.siteId = props.siteId
         regFormRef.value.validate(async valid => {
           if (valid) {
             // if (step.value === 1) {
@@ -841,6 +841,13 @@ export default defineComponent({
         state.loginForm.site = 'IND';
         currentSite.value.lang = 'EN'
         setLanguage('en');
+      }
+      if (props.siteId === '7') {
+        currentSite.value.firstLiner = '从雷火开始'
+        currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
+        currentSite.value.logo = xfLogo
+        state.loginForm.site = 'LH1'
+        setLanguage('zh');
       }
     }
     onMounted(() => {
