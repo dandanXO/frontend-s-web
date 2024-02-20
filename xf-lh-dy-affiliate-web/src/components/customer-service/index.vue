@@ -32,7 +32,7 @@ const contactlist = ref([
   {
     icon: 'cmail',
     type: '合营部电邮',
-    link: 'mailto:affiliate@dyvip99.com',
+    link: 'mailto:affiliate@e8007.com',
     btns: [{
       text: '咨询',
       action: ''
@@ -41,7 +41,7 @@ const contactlist = ref([
   {
     icon: 'cqq',
     type: '合营QQ',
-    link: '100983290',
+    link: '1903687863',
     btns: [{
       text: '复制',
       action: ''
@@ -67,7 +67,7 @@ const contactlist = ref([
   {
     icon: 'ctelegram',
     type: 'Telegram',
-    link: '@leihuo123',
+    link: '@LH18668',
     btns: [{
       text: '复制',
       action: ''
@@ -78,8 +78,8 @@ const contactlist = ref([
     }]
   },
   {
-    icon: 'cbat',
-    type: '合营蝙蝠ID',
+    icon: 'cpaopao',
+    type: '泡泡',
     link: '12830840',
     btns: [{
       text: '复制',
