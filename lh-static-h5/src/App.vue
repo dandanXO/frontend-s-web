@@ -11,6 +11,7 @@ import CsClient from "csweb-client";
 // import CsClient from "boot/client";
 import { userStore } from "src/stores";
 import axios from "axios";
+import { cached } from "boot/cache";
 
 export default defineComponent({
   name: "App",
@@ -48,20 +49,33 @@ export default defineComponent({
     let CSAUrl;
 
     const getCSA = () => {
-      api
-        .get("/config/customerAddress")
-        .then((res) => {
-          // console.log(res);
-          const url = new URL(res.data);
-          CSAUrl = url.hostname;
+      cached
+        .get("customerAddress", () =>
+          api.get("/config/customerAddress/v2").then((res) => {
+            return res;
+          })
+        )
+        .then((data) => {
+          var url;
+          const randNum = Math.floor(Math.random() * 2) + 1;
+          if (randNum === 1) {
+            url = data.liveUrl1;
+          } else {
+            url = data.liveUrl2;
+          }
+          const urlData = new URL(url);
+
+          // debugger;
+          CSAUrl = urlData.hostname;
           initCsWeb();
           console.log(CSAUrl);
         })
         .catch((err) => {
           console.log(err);
-          CSAUrl = "csweb01.v6kthwlug.com";
+          CSAUrl = "csweb01.c8nhwrqx4.com";
         });
     };
+
 
     const initCsWeb = () => {
       var regDevice = store.getDeviceType();

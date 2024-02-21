@@ -118,18 +118,19 @@ export const userStore = defineStore("userStore", {
       return getCSAFromServer()
         .then((res) => {
           console.log(res.data);
+          var lineUrl = "";
+          const randNum = Math.floor(Math.random() * 2) + 1;
+          if (randNum === 1) {
+            lineUrl = res.data.liveUrl1;
+          } else {
+            lineUrl = res.data.liveUrl2;
+          }
+
           window.open(
-            // `http://localhost:8080?partnerCode=LHCS&way=WEB&lang=zh-CN&token=${this.token}`,
-            `${res.data}&token=${this.token}`,
+            // `https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=WEB&lang=zh-CN&token=${this.token}`,
+            `${lineUrl}&token=${this.token}`,
             "Chat Server",
-            "resizable=yes, width=" +
-              800 +
-              ", height=" +
-              880 +
-              ", top=" +
-              top +
-              ", left=" +
-              left
+            "resizable=yes, width=" + 800 + ", height=" + 880 + ", top=" + top + ", left=" + left
           );
         })
         .catch((err) => {
