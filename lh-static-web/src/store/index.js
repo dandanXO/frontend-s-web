@@ -91,7 +91,7 @@ export const userStore = defineStore("userStore", {
             this.currentDeposit = ret.data.currentDeposit;
             this.levelUpDeposit = ret.data.levelUpDeposit;
           } else {
-            throw new Error(ret.message);
+            ElMessage.error(ret.message)
           }
         });
       }

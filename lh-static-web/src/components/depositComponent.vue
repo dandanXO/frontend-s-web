@@ -286,6 +286,8 @@ function initPay() {
       if (payMethods[0].extra && payMethods[0].extra.banks) {
         bankCardList.value = payMethods[0].extra.banks;
       }
+    } else {
+      ElMessage.error(d.message)
     }
   });
 }
@@ -515,6 +517,7 @@ function doDeposit(data) {
       loadingBtn.value = false;
     } else {
       ElMessage.error("优惠存款金额不符合规则");
+      loadingBtn.value = false;
     }
   }).catch((err) => {
     console.log(err);

@@ -406,7 +406,7 @@ const onGameRecordsDialogClicked = () => {
 
 const getStepRecordsApi = (current) => {
   getStepRecords(current).then((res) => {
-    const { code, data } = res;
+    const { code, data, message } = res;
     if (code === 0) {
       if (data && data.records && data.records.length) {
         dataSource.value = data.records;
@@ -415,6 +415,8 @@ const getStepRecordsApi = (current) => {
         pagination.total = data.total;
         pagination.current = data.current;
       }
+    } else {
+      ElMessage.error(message)
     }
   });
 };
