@@ -106,7 +106,7 @@
         <img src="../assets/images/home/transfer-mid.png" />
         <div class="">转账</div>
       </router-link>
-      <router-link to="/vip" class="men btn-pointer">
+      <router-link to="/account/vip" class="men btn-pointer">
         <img src="../assets/images/home/vip-mid.png" />
         <div class="">VIP</div>
       </router-link>
