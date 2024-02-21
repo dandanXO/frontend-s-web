@@ -478,7 +478,10 @@ export default defineComponent({
         "MoneyChangeRecordView",
         "WithdrawView",
         "DepositView",
-        "OutboxView"
+        "OutboxView",
+        "BindBankCard",
+        "BindCryptoView",
+        "BindEWalletView"
       ]
     };
   }
