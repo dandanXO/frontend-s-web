@@ -115,7 +115,7 @@ import { useRoute, useRouter } from "vue-router";
 import { loadPromo } from "@/api/index/promo.js";
 import { loadPromoBanner } from "@/api/index/promo";
 import { userStore } from "@/store";
-import { ElMessageBox } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 
 import HotPromotion from '@/components/HotPromotion'
 export default defineComponent({
@@ -159,6 +159,8 @@ export default defineComponent({
       loadPromoBanner("PROMO").then((res) => {
         if (res.code === 0) {
             banner.value = res.data[0]
+        } else {
+          ElMessage.error(res.message)
         }
       })
     }

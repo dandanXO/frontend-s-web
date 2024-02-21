@@ -80,6 +80,11 @@ const submitForm = () => {
         findAccount(forgotPwdForm).then((res) => {
             if (res.code === 0) {
                 ElMessage.success("您的帐号已经发送到注册邮箱");
+            } else {
+                ElMessage.error({
+                type: "error",
+                message: res.message
+              });
             }
         })
     }).catch((err) => {
@@ -99,6 +104,11 @@ const getCode = () => {
         if (res.code === 0) {
             verificationImg.value = "data:image/png;base64," + res.data.img;
             forgotPwdForm.codeId = res.data.id;
+        } else {
+          ElMessage.error({
+            type: "error",
+            message: res.message
+          });
         }
     })
 };

@@ -348,17 +348,18 @@ export default defineComponent({
               store.getBalance();
               refreshBalance(transferInfo.platform);
               cancelTransfer();
+            } else {
+              ElMessage.error({
+                type: "error",
+                message: res.message
+              });
+              loadingTransfer.value = false
             }
-          }).catch((error) => {
-            console.log(error.message);
-            // message.error(error.message, 4);
-            loadingTransfer.value = false;
-          });
+          })
         }).catch((err) => {
             console.log(err);
             loadingTransfer.value = false;
         });
-      loadingTransfer.value = false
     };
     const formRef = ref();
     const rules = {

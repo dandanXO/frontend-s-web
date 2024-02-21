@@ -1001,6 +1001,8 @@ export default defineComponent({
             //clear array and then push new record
             dataSource.splice(0);
             dataSource.push(...response.data.records);
+          } else {
+            ElMessage.error(response.message)
           }
         });
         return;
@@ -1026,6 +1028,10 @@ export default defineComponent({
           //clear array and then push new record
           dataSource.splice(0);
           dataSource.push(...response.data.records);
+          loading.value = false;
+        } else {
+          ElMessage.error(response.message);
+          loading.value = false;
         }
       }).catch((error) => {
         console.log("error", error);
@@ -1133,6 +1139,8 @@ export default defineComponent({
           } else {
             ElMessage.error("无法提交新催单，目前尚有未处理的催单。");
           }
+        } else {
+          ElMessage.error(res.message);
         }
       });
     };
@@ -1143,7 +1151,6 @@ export default defineComponent({
       };
       confirmationOfWithdrawalReceived(obj).then((res) => {
         if (res.code === 0) {
-
           ElMessageBox.alert("已经确认到账", {
             // if you want to disable its autofocus
             // autofocus: false,
@@ -1155,6 +1162,8 @@ export default defineComponent({
           }).then(() => {
             getTime();
           });
+        } else {
+          ElMessage.error(res.message);
         }
       });
     };
@@ -1172,6 +1181,8 @@ export default defineComponent({
             reminderDialog.value = false;
             formRef.value.resetFields();
             uploadFileRef.value.clear();
+          } else {
+            ElMessage.error(res.message);
           }
         });
       }
@@ -1195,6 +1206,8 @@ export default defineComponent({
           betPagination.pagingState = response.data.pagingState;
           // dataState.betRecord = response.data.records
           dataState.betRecord.push(...response.data.records);
+        } else {
+          ElMessage.error(response.message);
         }
       });
     };
