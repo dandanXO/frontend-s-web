@@ -378,7 +378,7 @@ onMounted(() => {
     flex: 4;
     background-image: url("../../assets/images/common/common-md-btn.png");
     background-size: 100% 100%;
-    aspect-ratio: 286/96;
+    //aspect-ratio: 286/96;
     max-height: 56px;
   }
 
@@ -523,7 +523,9 @@ onMounted(() => {
     color: $white;
     top: 50%;
     font-size: 1.5rem;
-    margin-top: 0.5rem;
+    margin-top: 0px;
+    height: 50px;
+    //margin-top: 0.5rem;
   }
 }
 </style>

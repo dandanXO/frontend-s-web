@@ -46,12 +46,12 @@
           v-if="amountList.length === 0"
           hide-bottom-space
           ref="depositAmtRef"
-          label="存款金额"
+          :label="isUSDT ? '请输入USDT金额' : '请输入存款金额'"
           class="deposit-field"
           color="accent"
           name="localAmount"
           v-model="form.localAmount"
-          placeholder="输入金额"
+          placeholder="请输入存款金额"
           :rules="verifyDepositAmount"
           padding="none"
           clearable
@@ -669,14 +669,11 @@ onMounted(() => {
   if (route.meta && route.meta.isApp) {
     checkExtension();
   }
-});
-
-onActivated(() => {
-  console.log(route.meta.isApp);
   if (route.meta && !route.meta.isApp) {
     checkNewUser();
   }
 });
+
 </script>
 
 <style lang="scss">
