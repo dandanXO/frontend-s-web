@@ -819,6 +819,7 @@ export default {
     icon: 'Icon',
     id: 'ID',
     identifyCode: 'Identify Code',
+    imageSize: 'Image Size',
     import: 'Import',
     inbox: 'Inbox',
     innerSetting: 'Inner Wheel Setting',

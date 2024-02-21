@@ -825,6 +825,7 @@ export default {
     icon: '图标',
     id: 'ID',
     identifyCode: '识别码',
+    imageSize: '图像尺寸',
     import: '导入',
     inbox: '收件箱',
     innerSetting: '内圈几率设置',
