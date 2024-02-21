@@ -5,11 +5,12 @@
       <div class="deposit-option-container">
         <div class="deposit-option-btn-wrapper" v-for="(item, index) in payMethods" :key="index">
           <!-- paymentIcon is the only unique identifier, paymentId and privilegeId may be the same for 2 different payment methods -->
-          <img class="deposit-option-btn q-mt-sm" 
-          :src="`${imgURL}/payment/${item.paymentIcon}`" 
-          @click="handleDepositNodeClick(item)" 
-          :class="{ active: activeMethod.paymentIcon === item.paymentIcon }" 
-          style="width:100%"
+          <img
+            class="deposit-option-btn q-mt-sm"
+            :src="`${imgURL}/payment/${item.paymentIcon}`"
+            @click="handleDepositNodeClick(item)"
+            :class="{ active: activeMethod.paymentIcon === item.paymentIcon }"
+            style="width: 100%"
           />
           <div :class="['selected-svg', activeMethod.paymentIcon === item.paymentIcon && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -157,7 +158,7 @@
       </div>
     </div>
 
-    <div class="q-mt-lg" style="color:#576373" v-if="activeMethod.privilegeId">
+    <div class="q-mt-lg" style="color: #576373" v-if="activeMethod.privilegeId">
       <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
       <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
     </div>
@@ -283,9 +284,7 @@ const blurCode = () => {
 
 const verifyDepositAmount = ref([
   (val) => !!val || "Please enter the amount",
-  (val) =>
-    val > calculatedMinDeposit.value - 1 ||
-    "Deposit should be more than " + calculatedMinDeposit.value,
+  (val) => val > calculatedMinDeposit.value - 1 || "Deposit should be more than " + calculatedMinDeposit.value
   // (val) =>
   //   val < activeMethod.value.depositMax + 1 ||
   //   "Deposit should be between " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
@@ -306,11 +305,13 @@ const depositItems = reactive([
   { amount: 300, hotLabel: 15, isActive: false },
   { amount: 500, hotLabel: 25, isActive: false },
   { amount: 1000, hotLabel: 50, isActive: false },
+  { amount: 2000, hotLabel: 100, isActive: false },
   { amount: 3000, hotLabel: 150, isActive: false },
   { amount: 5000, hotLabel: 250, isActive: false },
   { amount: 10000, hotLabel: 500, isActive: false },
-  { amount: 30000, hotLabel: 1500, isActive: false },
-  { amount: 50000, hotLabel: 2500, isActive: false }
+  { amount: 20000, hotLabel: 1000, isActive: false }
+  // { amount: 30000, hotLabel: 1500, isActive: false },
+  // { amount: 50000, hotLabel: 2500, isActive: false }
 ]);
 
 const handleDepositItemClick = (index) => {
@@ -334,7 +335,7 @@ function initPay() {
   });
 
   payMethods.value = [];
-  console.log('SDFSDFDSCLEAR?')
+  console.log("SDFSDFDSCLEAR?");
 
   cashier.get("/session/ind/deposit/index/").then((res) => {
     $q.loading.hide();
@@ -476,10 +477,10 @@ async function confirmDeposit() {
           }
           form.paymentId = activeMethod.value.paymentId;
 
-          if(activeMethod.value.privilegeId) {
+          if (activeMethod.value.privilegeId) {
             form.privilegeId = activeMethod.value.privilegeId;
           }
-          
+
           const copy = { ...form };
           const data = {};
           Object.entries(copy).forEach(([key, value]) => {
