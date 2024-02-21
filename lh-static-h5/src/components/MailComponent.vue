@@ -2,7 +2,12 @@
   <q-page>
     <template v-if="props.type !== 'outbox'">
       <q-tabs active-color="dark" indicator-color="bright" align="justify" v-model="mailboxMessageTab">
-        <q-tab :key="index" :name="item.type" :label="item.name" v-for="(item, index) in mailboxMessageTypeData" />
+        <q-tab :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
+          <div class="tab-flex">
+            <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" />
+            <div>{{ item.name }}</div>
+          </div>
+        </q-tab>
       </q-tabs>
     </template>
 
@@ -41,7 +46,7 @@
               style=""
               @click="toggleMail(det)"
             >
-              <div class="title-div" :class="`${det.readTime ? '' : 'unread'}`">
+              <div class="title-div" :class="`${det.readTime && det.sendTime ? '' : 'unread'}`">
                 <div>
                   <q-checkbox
                     v-if="allowSelectMultiple"
@@ -52,7 +57,7 @@
                     style="font-size: 14px"
                     color="#0089ED"
                   />
-                  <q-chip size="sm" label="已读" v-if="det.readTime" />
+                  <q-chip size="sm" label="已读" v-if="det.readTime && det.sendTime" />
                   标题：
                   {{ det.title }}
                 </div>
@@ -103,7 +108,7 @@
   </q-page>
 </template>
 <script>
-import { defineComponent, onActivated, ref, computed } from "vue";
+import { defineComponent, onActivated, onMounted, ref, computed } from "vue";
 import moment from "moment";
 import { RiArrowDownSLine, RiArrowUpSLine } from "vue-remix-icons";
 import { api } from "boot/axios";
@@ -370,8 +375,15 @@ export default defineComponent({
       }
     };
 
-    onActivated(() => {
-      onLoad;
+    const hasUnreadMessages = (type) => {
+      if (type === "ALL") {
+        return truncatedList.value.some((item) => item.readTime === null);
+      }
+      return truncatedList.value.some((item) => item.type === type && item.readTime === null);
+    };
+
+    onMounted(() => {
+      onLoad();
     });
     return {
       humanDatetime(ts) {
@@ -395,7 +407,8 @@ export default defineComponent({
       props,
       msgType,
       showMailId,
-      openMsg
+      openMsg,
+      hasUnreadMessages
     };
   }
 });
@@ -428,6 +441,7 @@ export default defineComponent({
     padding: 14px 10px;
     font-size: 1.1rem;
     color: $font-1;
+    word-break: break-all;
 
     &.unread {
       font-weight: bold;
@@ -459,5 +473,17 @@ export default defineComponent({
   justify-content: flex-start;
   margin: 0px 10px;
   flex-wrap: wrap;
+}
+
+.tab-flex {
+  display: flex;
+  align-items: center;
+}
+.red-dot-icon {
+  height: 10px;
+  width: 10px;
+  background: #db0011;
+  border-radius: 50%;
+  margin-right: 5px;
 }
 </style>

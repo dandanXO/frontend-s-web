@@ -477,7 +477,8 @@ export default defineComponent({
         "BetHistoryRecordView",
         "MoneyChangeRecordView",
         "WithdrawView",
-        "DepositView"
+        "DepositView",
+        "OutboxView"
       ]
     };
   }
