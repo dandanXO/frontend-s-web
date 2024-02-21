@@ -1064,7 +1064,7 @@ async function loadBanks() {
 }
 
 async function loadPaymentCards() {
-  const { data: paymentCard } = await getAllWithdrawBankCard()
+  const { data: paymentCard } = await getAllWithdrawBankCard(request.siteId)
   paymentCardList.list = paymentCard
   paymentCardList.list.unshift({
     id: 0,
