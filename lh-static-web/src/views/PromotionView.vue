@@ -137,8 +137,8 @@ export default defineComponent({
       { code: "SPORT", img: 'sport', label: '体育优惠'},
       // { code: "POKER", img: 'poker', label: '棋牌'},
       { code: "LIVE CASINO", img: 'live', label: '真人娱乐'},
-      { code: "FISH", img: 'fish', label: '捕鱼'},
-      { code: "SLOT GAME", img: 'slot', label: '老虎机'},
+      // { code: "FISH", img: 'fish', label: '捕鱼'},
+      { code: "OTHERS", img: 'slot', label: '其他'},
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
@@ -196,9 +196,18 @@ export default defineComponent({
     const switchPromoType = (type) => {
       promoTabActive.value = type;
       if (type !== "ALL") {
-        filteredArray.value = promoState.promoList.filter(function(promo) {
-          return promo.promoType.toLowerCase().split(',').includes(type.toLowerCase());
-        });
+        if(type ==='OTHERS'){
+          filteredArray.value = promoState.promoList.filter(function(promo) {
+            const promoTypes = promo.promoType.toLowerCase().split(",");
+            return promoTypes.includes("slot game") || promoTypes.includes("welcome") || promoTypes.includes("fish");
+          });
+          console.log(filteredArray.value);
+        }else{
+          filteredArray.value = promoState.promoList.filter(function(promo) {
+            return promo.promoType.toLowerCase().split(',').includes(type.toLowerCase());
+          });
+        }
+
       } else {
         filteredArray.value = promoState.promoList
       }

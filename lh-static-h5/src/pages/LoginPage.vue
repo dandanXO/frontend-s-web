@@ -219,7 +219,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted } from "vue";
+import { defineComponent, ref, reactive, onMounted, onActivated } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
@@ -467,13 +467,19 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      getCode();
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has("register")) {
         tab.value = "register";
       }
       checkRememberPwd();
     });
+    onActivated(() => {
+      getCode();
+      setTimeout(() => {
+        getCode();
+      }, 10000);
+    });
+
     return {
       header: "Login",
       loginNameRef,
