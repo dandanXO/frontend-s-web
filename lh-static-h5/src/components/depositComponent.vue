@@ -200,7 +200,7 @@
 </template>
 
 <script setup id="DepositComponent">
-import { ref, reactive, onActivated, shallowRef, onBeforeUnmount } from "vue";
+import { ref, reactive, onMounted, onActivated, shallowRef, onBeforeUnmount } from "vue";
 import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
@@ -211,16 +211,17 @@ import liff from "@line/liff";
 var qs = require("qs");
 
 import { userStore } from "stores/index";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const store = userStore();
+const route = useRoute();
 const router = useRouter();
 const formRef = ref();
 const isNewUser = ref(false);
 const isNoBankCard = ref(false);
 const isDeposited = ref(false);
 const checkNewUser = () => {
-  if (store.phone == "") {
+  if (store.phone === "" || store.phone === null) {
     isNewUser.value = true;
   } else {
     api.get("/session/bankCard").then((response) => {
@@ -649,9 +650,32 @@ async function pDepo(deposit) {
     });
 }
 
-onActivated(() => {
+const currentPath = ref(route.path);
+const extensionState = ref(false);
+const extensionToken = ref("");
+const checkExtension = () => {
+  // console.log(currentPath.value);
+  if (currentPath.value === "/deposit") {
+    // const eToken = ref(route.query.name);
+    extensionToken.value = route.query.token;
+    extensionState.value = true;
+    // store.dispatch("token", extensionToken);
+    console.log(store);
+  }
+};
+
+onMounted(() => {
   initPay();
-  checkNewUser();
+  if (route.meta && route.meta.isApp) {
+    checkExtension();
+  }
+});
+
+onActivated(() => {
+  console.log(route.meta.isApp);
+  if (route.meta && !route.meta.isApp) {
+    checkNewUser();
+  }
 });
 </script>
 

@@ -149,12 +149,15 @@
 </template>
 
 <script lang="js">
-import {ref, defineComponent, onMounted, reactive, watch, computed} from "vue";
+import {ref, defineComponent, onActivated, reactive, watch, computed} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import {useUI} from "stores/ui";
 import {userStore} from "stores/index";
+import {isAndroid} from "boot/utils";
+import {SessionStorage} from "quasar";
+import LocalStorage from "boot/local-storage";
 // import { loadPromo } from "src/api/index/promo.js";
 // import { loadPromoBanner } from "src/api/index/promo";
 
@@ -184,6 +187,7 @@ export default defineComponent({
       {name: "FISH", label: '捕鱼'},
     ]);
 
+    const isFetchingPromo = ref(false);
     const promoTabActive = ref(promoTypes.value[0].value);
     const filteredArray = ref([]);
     const isPromoDetail = ref(false);
@@ -242,20 +246,39 @@ export default defineComponent({
           })
     }
     const showPromoDetails = (promo) => {
-      if (!store.token) {
-        isDisplayLogin.value = true
-      } else {
-
+      // extension
+      if (extensionState.value) {
         if (promo.redirectUrl.includes("page-vip")) {
-          router.push('/vip?from=promo');
+          router.push({path: "/vip", query: {token: extensionToken.value}});
         } else {
-          if (route.query.fromAccount) {
-            router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
+          router.push({path: currentPath.value, query: {name: promo.redirectUrl, token: extensionToken.value}});
+        }
+        isPromoDetail.value = true;
+        selectedPromo.value = promo;
+        if (isAndroid()) {
+          LocalStorage.set("TOKEN", extensionToken.value, 86400);
+        } else {
+          SessionStorage.set("TOKEN", extensionToken.value);
+        }
+        store.token = extensionToken.value;
+
+      } else {
+          // non extension
+        if (!store.token) {
+          isDisplayLogin.value = true
+        } else {
+
+          if (promo.redirectUrl.includes("page-vip")) {
+            router.push('/vip?from=promo');
           } else {
-            router.push({path: '/promo', query: {name: promo.redirectUrl}})
+            if (route.query.fromAccount) {
+              router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
+            } else {
+              router.push({path: '/promo', query: {name: promo.redirectUrl}})
+            }
+            isPromoDetail.value = true
+            selectedPromo.value = promo
           }
-          isPromoDetail.value = true
-          selectedPromo.value = promo
         }
       }
     }
@@ -271,7 +294,9 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      const platformApiUrl = store.token ? "/session/loggedInPromoPages" : "/promo/page";
+      const platformApiUrl = (store.hasToken() || (window.location.pathname === "/promotion" && extensionState.value === true)) ? "/session/loggedInPromoPages" : "/promo/page";
+
+      isFetchingPromo.value = window.location.pathname === "/promotion";
 
       api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
@@ -298,10 +323,27 @@ export default defineComponent({
           console.log("route.query.name",route.query.name)
 
           switchPromoType(promoState.active)
+          isFetchingPromo.value = false;
         }
       }).catch((e) => {
         console.log("error", e);
+        isFetchingPromo.value = false;
       });
+
+    }
+
+    // extension
+    const currentPath = ref(route.path);
+    const extensionState = ref(false)
+    const extensionToken = ref('')
+
+
+    const checkExtension = () => {
+      if (currentPath.value === "/promotion") {
+        // const eToken = ref(route.query.name);
+        extensionToken.value = route.query.token;
+        extensionState.value = true;
+      }
 
     }
 
@@ -329,7 +371,13 @@ export default defineComponent({
       }
     };
 
-    onMounted(() => {
+    onActivated(() => {
+      // if promo name is present, do not show promo list on first load
+      if (route.query.name) {
+        isPromoDetail.value = true;
+      }
+
+      checkExtension();
       loadBanner();
       loadAll();
     });
@@ -351,6 +399,11 @@ export default defineComponent({
       isDisplayLogin,
       parsedParam,
       getPromoLabel,
+      checkExtension,
+      currentPath,
+      extensionState,
+      extensionToken,
+      isFetchingPromo
       // routeQuery
     }
   },
