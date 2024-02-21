@@ -31,6 +31,7 @@
     "@vueuse/core": "^9.2.0",
     "aos": "^2.3.4",
     "axios": "^0.27.2",
+    "cordova-plugin-file": "^8.0.0",
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
     "csweb-client": "^1.4.1",
