@@ -119,7 +119,7 @@ export const userStore = defineStore("userStore", {
         .then((res) => {
           console.log(res.data);
           window.open(
-            // `https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=WEB&lang=zh-CN&token=${this.token}`,
+            // `http://localhost:8080?partnerCode=LHCS&way=WEB&lang=zh-CN&token=${this.token}`,
             `${res.data}&token=${this.token}`,
             "Chat Server",
             "resizable=yes, width=" +

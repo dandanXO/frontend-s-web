@@ -68,7 +68,7 @@ export default defineComponent({
       // console.log("Footer OnMounted");
 
       // 'XFCS' / 2
-      // csclient = new CsClient('XFCS', regDevice, 'zh-CN', '2', 'prod', 'https://csweb01.v6kthwlug.com/');
+      // csclient = new CsClient('LHCS', regDevice, 'zh-CN', '2', 'prod', 'https://csweb01.v6kthwlug.com/');
       csclient = new CsClient("LHCS", regDevice, "zh-CN", "2", "prod", `https://${CSAUrl}`);
 
       csclient.set("bottom", "77");
