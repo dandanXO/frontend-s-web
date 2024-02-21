@@ -12,5 +12,5 @@ export function getAppDownloadUrlFromServer() {
 }
 
 export function getCSAFromServer() {
-  return server.REST.get("/config/customerAddress");
+  return server.REST.get("/config/customerAddress/v2");
 }

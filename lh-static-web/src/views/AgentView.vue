@@ -11,15 +11,8 @@
       </div>
       <div class="buttons">
         <a :href="'https://lh1-affiliate.phoicynxeey.com?agent=' + (affCode ? affCode : '')">加入我们</a>
-        <a class="outline" href="https://partner.e88726.com/autoLogin.jsp">登录</a>
-        <a class="outline" @click.stop.prevent="
-          openWindow(
-            `https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=${regDevice}&lang=zh-CN&token=${store.token}`,
-            'Chat Server',
-            350,
-            650,
-          )
-          ">
+        <a class="outline" :href="'https://lh1-affiliate.phoicynxeey.com?agent=' + (affCode ? affCode : '')">登录</a>
+        <a class="outline" @click.stop.prevent="store.openLiveChat()">
           联系我们
         </a>
       </div>

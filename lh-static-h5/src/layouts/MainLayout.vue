@@ -165,7 +165,7 @@ export default defineComponent({
             var platformName = translateRecord(route.query.platform);
             pageName.value = `${platformName}游戏大厅`;
           }
-        } else if (route.path === "/vip") {
+        } else if (route.path === "/account/vip") {
           hasPage.value = true;
           pageName.value = "VIP";
           if (route.query.from) {
@@ -477,7 +477,11 @@ export default defineComponent({
         "BetHistoryRecordView",
         "MoneyChangeRecordView",
         "WithdrawView",
-        "DepositView"
+        "DepositView",
+        "OutboxView",
+        "BindBankCard",
+        "BindCryptoView",
+        "BindEWalletView"
       ]
     };
   }

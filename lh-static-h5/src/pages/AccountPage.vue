@@ -49,7 +49,7 @@
               </div>
             </div>
 
-            <router-link to="/vip?from=account">
+            <router-link to="/account/vip?from=account">
               <div class="vip-right btn-pointer">
                 更多VIP特权
                 <img src="../assets/images/account/account-right-small.png" />

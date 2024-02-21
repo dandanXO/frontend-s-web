@@ -113,7 +113,7 @@
           <el-input
             class="search-input"
             v-model="gamePage.searchKey"
-            @keypress.enter="searchList()"
+            @input="searchList()"
             placeholder="输入查找游戏名"
             clearable
             @clear="searchList()"
