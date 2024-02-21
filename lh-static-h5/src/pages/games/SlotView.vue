@@ -31,12 +31,13 @@
               standout
               v-model="gamePage.searchKey"
               label="查询电子游戏"
+              @update:model-value="searchList"
             >
               <!--              <template v-slot:prepend>-->
               <!--                <q-icon color="white" name="search" @click="gamePage.searchKey = ''" class="cursor-pointer" />-->
               <!--              </template>-->
               <template v-slot:append>
-                <q-btn class="search-btn" type="submit" @click="searchList" push size="md" round>
+                <q-btn class="search-btn" type="submit" push size="md" round>
                   <img src="../../assets/images/common/search-btn.svg" />
                 </q-btn>
               </template>
