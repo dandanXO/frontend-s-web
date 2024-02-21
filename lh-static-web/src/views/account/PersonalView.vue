@@ -921,6 +921,8 @@ export default defineComponent({
               })
               loadInfo();
               isEdit.value = false;
+            } else {
+              ElMessage.error(ret.message)
             }
           }).catch((err) => {
             console.log(err.message);

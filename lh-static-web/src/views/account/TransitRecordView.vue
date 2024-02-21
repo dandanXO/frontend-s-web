@@ -1109,6 +1109,8 @@ export default defineComponent({
         if (ret.code === 0) {
           totalBetRecord.totalBet = ret.data.totalBet;
           totalBetRecord.totalPayout = ret.data.totalPayout;
+        } else {
+          ElMessage.error(ret.message);
         }
       });
 
