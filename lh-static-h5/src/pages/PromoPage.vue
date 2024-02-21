@@ -9,7 +9,7 @@
         ')'
       "
     >
-      <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
+      <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify" class="promo-cat-tab">
         <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
       </q-tabs>
 
@@ -26,9 +26,16 @@
                   data-aos-easing="ease-out"
                   data-aos-duration="1000"
                 >
-                  <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)
-            || (tab.name==='others' && (promo.promoType.toLowerCase().split(',').includes('slot game') ||promo.promoType.toLowerCase().split(',').includes('welcome') || promo.promoType.toLowerCase().split(',').includes('fish')))
-">
+                  <div
+                    class="promo-item"
+                    v-if="
+                      promo.promoType.toLowerCase().split(',').includes(tab.name) ||
+                      (tab.name === 'others' &&
+                        (promo.promoType.toLowerCase().split(',').includes('slot game') ||
+                          promo.promoType.toLowerCase().split(',').includes('welcome') ||
+                          promo.promoType.toLowerCase().split(',').includes('fish')))
+                    "
+                  >
                     <a @click="showPromoDetails(promo)">
                       <div>
                         <div class="promo-ribbon">{{ getPromoLabel(promo.labelType) }}</div>
@@ -870,5 +877,11 @@ export default defineComponent({
       display: block;
     }
   }
+}
+
+.promo-cat-tab {
+  position: sticky;
+  top: 61px;
+  z-index: 3;
 }
 </style>
