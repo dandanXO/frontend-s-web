@@ -515,8 +515,9 @@ export default defineComponent({
           }
 
           .promo-item-date {
-            color: $grey-color;
-            font-size: 0.625rem;
+            color: #606479;
+            font-size: 0.825rem;
+            font-weight: bold;
           }
 
           .promo-item-title {

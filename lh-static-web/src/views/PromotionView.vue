@@ -539,8 +539,9 @@ export default defineComponent({
               justify-content: flex-start;
               align-items: flex-start;
               .front-date {
-                color: #000000;
-                font-size: 12px;
+                color: #606479;
+                font-size: 18px;
+                font-weight: 700;
               }
               .front-title {
                 color: #4c88f8;
