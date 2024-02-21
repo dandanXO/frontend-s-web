@@ -1,13 +1,7 @@
 <template>
   <q-page>
     <template v-if="props.type !== 'outbox'">
-      <q-tabs
-        active-color="dark"
-        indicator-color="bright"
-        align="justify"
-        v-model="mailboxMessageTab"
-        @update:model-value="changeMailboxType"
-      >
+      <q-tabs active-color="dark" indicator-color="bright" align="justify" v-model="mailboxMessageTab">
         <q-tab :key="index" :name="item.type" :label="item.name" v-for="(item, index) in mailboxMessageTypeData" />
       </q-tabs>
     </template>
@@ -20,7 +14,10 @@
         </q-inner-loading>
 
         <div v-if="!loading">
-          <div class="action-buttons" v-if="props.type !== 'outbox'">
+          <div
+            class="action-buttons"
+            v-if="props.type !== 'outbox' && truncatedListByType && truncatedListByType.length"
+          >
             <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md" @click="readMails(item.type)">
               全部已读
             </q-btn>
@@ -44,7 +41,7 @@
               style=""
               @click="toggleMail(det)"
             >
-              <div class="title-div">
+              <div class="title-div" :class="`${det.readTime ? '' : 'unread'}`">
                 <div>
                   <q-checkbox
                     v-if="allowSelectMultiple"
@@ -55,12 +52,12 @@
                     style="font-size: 14px"
                     color="#0089ED"
                   />
+                  <q-chip size="sm" label="已读" v-if="det.readTime" />
                   标题：
                   {{ det.title }}
                 </div>
 
                 <div class="right-title">
-                  <!-- <q-chip size="sm" label="已读" v-if="det.readTime" /> -->
                   <RiArrowUpSLine v-if="isSelectedMail === det.id" />
                   <RiArrowDownSLine v-if="isSelectedMail !== det.id" />
                 </div>
@@ -106,7 +103,7 @@
   </q-page>
 </template>
 <script>
-import { defineComponent, onMounted, ref, computed } from "vue";
+import { defineComponent, onActivated, ref, computed } from "vue";
 import moment from "moment";
 import { RiArrowDownSLine, RiArrowUpSLine } from "vue-remix-icons";
 import { api } from "boot/axios";
@@ -189,12 +186,15 @@ export default defineComponent({
     const toggleMail = (mail) => {
       if (isSelectedMail.value !== mail.id) {
         isSelectedMail.value = mail.id;
+        openMsg(mail);
       } else {
         isSelectedMail.value = -1;
       }
     };
+    const msgType = ref();
 
     const readMails = (type) => {
+      msgType.value = type;
       if (hasMailSelected.value) {
         const messagesIdArr = Object.keys(selectedMailIds.value);
         const formattedIds = messagesIdArr.join(",");
@@ -213,6 +213,16 @@ export default defineComponent({
                 position: "top",
                 icon: "check_circle_outline"
               });
+
+              // Update the readTime property of selected messages
+              truncatedList.value.forEach((item) => {
+                if (selectedMailIds.value[item.id]) {
+                  item.readTime = Date.now(); // Set readTime to current time
+                }
+              });
+
+              allowSelectMultiple.value = false;
+              selectedMailIds.value = {};
             }
           })
           .catch((error) => {
@@ -220,9 +230,12 @@ export default defineComponent({
           });
       } else {
         api
-          .post("/session/inbox/readAll", {
-            type: type
-          })
+          .post(
+            "/session/inbox/readAll",
+            qs.stringify({
+              type: type
+            })
+          )
           .then((res) => {
             if (res.code === 0) {
               $q.notify({
@@ -231,6 +244,17 @@ export default defineComponent({
                 position: "top",
                 icon: "check_circle_outline"
               });
+              // Update the readTime property of all messages
+              const currentTime = Date.now();
+              truncatedList.value.forEach((item) => {
+                if (item.type === type) {
+                  item.readTime = currentTime; // Set readTime to current time for messages of the specified type
+                }
+              });
+
+              allowSelectMultiple.value = false;
+              selectedMailIds.value = {};
+
               onLoad();
             }
           })
@@ -240,8 +264,49 @@ export default defineComponent({
       }
     };
 
+    const showMailId = ref();
+    const openMsg = (mail) => {
+      const { id, readTime } = mail;
+      showMailId.value = id;
+      mail.readTime = moment().format("YYYY-MM-DD");
+
+      // console.log(mail);
+      // mailboxNotifyState[mailboxMessageTab.value].forEach((mail) => {
+      //   if (mail.id === id) {
+      //     mail.readTime = moment().format("YYYY-MM-DD");
+      //   }
+      // });
+      // console.log(mailboxNotifyState[mailboxMessageTab.value]);
+
+      if (!readTime) {
+        api
+          .post(
+            "/session/inbox/read",
+            qs.stringify({
+              id: id
+            })
+          )
+          .then((res) => {
+            if (res.code === 0) {
+              $q.notify({
+                message: "已读消息",
+                type: "positive",
+                position: "top",
+                icon: "check_circle_outline"
+              });
+              onLoad();
+            }
+          })
+          .catch((error) => {
+            isDeleteMailModal.value = false;
+            console.log(error);
+          });
+      }
+    };
+
     const deleteMails = (type) => {
       isDeleteMailModal.value = true;
+      msgType.value = type;
     };
 
     const confirmDeleteMails = (type) => {
@@ -268,6 +333,9 @@ export default defineComponent({
                 icon: "check_circle_outline"
               });
               onLoad();
+
+              mailIdArr.length = 0;
+              selectedMailIds.value = {};
             }
           })
           .catch((error) => {
@@ -275,11 +343,15 @@ export default defineComponent({
           });
       } else {
         api
-          .post("/session/inbox/deleteAll", {
-            type: type
-          })
+          .post(
+            "/session/inbox/deleteAll",
+            qs.stringify({
+              type: msgType.value
+            })
+          )
           .then((res) => {
             isDeleteMailModal.value = false;
+            truncatedList.value = truncatedList.value.filter((item) => item.type !== msgType.value);
             if (res.code === 0) {
               $q.notify({
                 message: "已删除全部消息",
@@ -288,6 +360,7 @@ export default defineComponent({
                 icon: "check_circle_outline"
               });
               onLoad();
+              selectedMailIds.value = {};
             }
           })
           .catch((error) => {
@@ -297,7 +370,7 @@ export default defineComponent({
       }
     };
 
-    onMounted(() => {
+    onActivated(() => {
       onLoad;
     });
     return {
@@ -319,7 +392,10 @@ export default defineComponent({
       selectedMailIds,
       hasMailSelected,
       truncatedListByType,
-      props
+      props,
+      msgType,
+      showMailId,
+      openMsg
     };
   }
 });
@@ -352,6 +428,10 @@ export default defineComponent({
     padding: 14px 10px;
     font-size: 1.1rem;
     color: $font-1;
+
+    &.unread {
+      font-weight: bold;
+    }
   }
 
   .right-title {
