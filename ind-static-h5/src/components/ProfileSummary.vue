@@ -240,10 +240,13 @@ const countdown = () => {
 };
 
 const checkTopDownloadAppear = () => {
+  const omitSites = ['bw3.genoortisy.com'];
+
   if (!store.token && route.path === "/home") {
     if (
       ("standalone" in window.navigator && window.navigator.standalone) ||
-      (Platform.is.capacitor && Platform.is.android)
+      (Platform.is.capacitor && Platform.is.android) ||
+      omitSites.includes(location.host)
     ) {
       topDownload.value = false;
     } else {
