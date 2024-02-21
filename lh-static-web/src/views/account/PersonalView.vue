@@ -522,6 +522,8 @@ export default defineComponent({
           verificationImg.value = "data:image/png;base64," + res.data.img;
           updateSecurityVerified.codeId = res.data.id;
           updatePhoneVerified.codeId = res.data.id;
+        } else {
+          ElMessage.error(res.message);
         }
       }).catch(() => {
           // console.log(e.message);
@@ -609,12 +611,14 @@ export default defineComponent({
           })
 
           isEmailSending.value = false
+        } else {
+          ElMessage.error(res.message)
+          getCode()
+          isEmailSending.value = false
         }
      }).catch((e) => {
           console.log(e.message);
         // message.error(e.message);
-        getCode()
-        isEmailSending.value = false
       });
 
     })
@@ -637,6 +641,8 @@ export default defineComponent({
 
               loadInfo()
 
+            } else {
+              ElMessage.error(res.message)
             }
           }).catch((e) => {
             console.log(e.message);
@@ -714,12 +720,14 @@ export default defineComponent({
           })
 
           isPhoneSending.value = false
-        }
+        } else {
+            ElMessage.error(res.message)
+            getCode()
+            isPhoneSending.value = false
+          }
      }).catch((e) => {
           console.log(e.message);
         // message.error(e.message);
-        getCode()
-        isPhoneSending.value = false
       });
 
     })
@@ -739,6 +747,8 @@ export default defineComponent({
               updatePhoneModalVisible.value = false
               store.getMemberInfo()
               loadInfo()
+            } else {
+              ElMessage.error(res.message)
             }
           }).catch((e) => {
             console.log(e.message);
@@ -852,7 +862,7 @@ export default defineComponent({
               })
               clearPwd();
             } else {
-              // message.error(response.message);
+              ElMessage.error(response.message)
             }
           }).catch((error) => {
             console.log(error.message);

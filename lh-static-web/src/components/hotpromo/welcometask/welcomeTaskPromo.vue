@@ -335,6 +335,8 @@ const pageInit = () => {
           welcomeState.stateDetails.checkInRewardState
         );
       }
+    } else {
+      ElMessage.error(res.message)
     }
   });
 };
@@ -352,6 +354,7 @@ const claimBonus = (promoCode) => {
         bonusOpened.value = true;
       } else {
         // ElMessage.error(res.message)
+        ElMessage.error(res.message)
         bonusOpened.value = false;
       }
     })

@@ -62,6 +62,7 @@
 import { ref, onMounted } from "vue";
 import { getAnnouncement } from "@/api/personal/personal";
 import { Vue3Marquee } from "vue3-marquee";
+import { ElMessage } from "element-plus";
 
 const announcementActive = ref("");
 const announcementList = ref([]);
@@ -77,7 +78,12 @@ const loadAnnouncement = () => {
       announcementList.value = d;
       // announcementList.value = d.announcements
       // announcementList.value = res.data.announcements
-    }
+    } else {
+        ElMessage.error({
+          type: "error",
+          message: res.message
+        });
+      }
   });
 };
 

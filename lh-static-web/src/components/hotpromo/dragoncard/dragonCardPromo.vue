@@ -146,6 +146,11 @@ const pageInit = () => {
   tigerCardInit({ promoCode: props.promoCode }).then((res) => {
     if (res.code === 0) {
       cardInfo.cardDetail = res.data;
+    } else {
+      ElMessage.error({
+        type: "error",
+        message: res.message
+      });
     }
   });
 };
@@ -154,6 +159,11 @@ const loadRanking = () => {
   getLeaderboard().then((res) => {
     if (res.code === 0) {
       rankingPage.records = res.data;
+    } else {
+      ElMessage.error({
+        type: "error",
+        message: res.message
+      });
     }
   });
 };

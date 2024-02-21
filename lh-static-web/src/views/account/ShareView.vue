@@ -98,6 +98,8 @@ export default defineComponent({
       getReferralLink().then((res) => {
         if (res.code === 0) {
           referralLink.value = 'https://' + location.hostname + `/refer/${res.data}`;
+        } else {
+          ElMessage.error(res.message)
         }
       }).catch((err) => {
         console.log(err)
@@ -109,6 +111,8 @@ export default defineComponent({
         if (res.code === 0) {
           referredMember.value = res.data.referredMember;
           depositMember.value = res.data.depositMember;
+        } else {
+          ElMessage.error(res.message)
         }
       }).catch((err) => {
         console.log(err)

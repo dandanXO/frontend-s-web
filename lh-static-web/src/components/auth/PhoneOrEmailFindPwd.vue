@@ -232,6 +232,11 @@ const submitForm = () => {
           forgotPwdPostVerifyForm.codeId = res.data.codeId;
           captchaVerifyRef.value.closeDialog();
           captchaVerifyRef.value.initCountdownTimer();
+        } else {
+          ElMessage.error({
+            type: "error",
+            message: res.message
+          });
         }
       }).catch((error) => {
         console.log(error);
@@ -251,6 +256,11 @@ const submitForm = () => {
           forgotPwdPostVerifyForm.codeId = res.data.codeId;
           captchaVerifyRef.value.closeDialog();
           captchaVerifyRef.value.initCountdownTimer();
+        } else {
+          ElMessage.error({
+            type: "error",
+            message: res.message
+          });
         }
       }).catch((error) => {
         console.log(error);
@@ -282,6 +292,11 @@ const submitPostVerifyForm = () => {
         if (res.code === 0) {
           ElMessage.success("成功");
           router.push("/login");
+        } else {
+          ElMessage.error({
+            type: "error",
+            message: res.message
+          });
         }
       }).catch((error) => {
         console.log(error);
@@ -298,6 +313,11 @@ const submitPostVerifyForm = () => {
         if (res.code === 0) {
           ElMessage.success("成功");
           router.push("/login");
+        } else {
+          ElMessage.error({
+            type: "error",
+            message: res.message
+          });
         }
       }).catch((error) => {
         console.log(error);

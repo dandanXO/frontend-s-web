@@ -143,6 +143,8 @@ const pageInit = () => {
   tigerCardInit({ promoCode: "dy1-tiger-card" }).then((res) => {
     if (res.code === 0) {
       cardInfo.cardDetail = res.data;
+    } else {
+      ElMessage.error(res.message)
     }
   });
 };
@@ -151,6 +153,8 @@ const loadRanking = () => {
   getLeaderboard().then((res) => {
     if (res.code === 0) {
       rankingPage.records = res.data;
+    } else {
+      ElMessage.error(res.message);
     }
   });
 };
@@ -170,8 +174,8 @@ const getNewTigerCard = () => {
         type: "error",
         message: res.message
       });
+      isPageLoading.value = false;
     }
-    isPageLoading.value = false;
   });
 };
 
@@ -186,8 +190,10 @@ const compoundCard = () => {
         message: "success"
       });
       isPageLoading.value = false;
+    } else {
+      ElMessage.error(res.message)
+      isPageLoading.value = false;
     }
-    isPageLoading.value = false;
   });
 };
 
@@ -291,9 +297,11 @@ const submitRegisterForm = async (elForm) => {
             message: "success"
           });
           isSubmitting.value = false;
+        } else {
+          ElMessage.error(res.message)
+          isSubmitting.value = false;
         }
       });
-      isSubmitting.value = false;
     }
   });
 };
