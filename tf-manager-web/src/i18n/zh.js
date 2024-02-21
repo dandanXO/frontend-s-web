@@ -1893,6 +1893,7 @@ export default {
     BW2: 'BW2',
     BW3: 'BW3',
     BW4: 'BW4',
+    BW5: 'BW5',
     'To be affiliate paid': '待支付',
     'Affiliate Payment on going': '支付中',
     'Crypto Affiliate Payment on going': '数字币支付中',
