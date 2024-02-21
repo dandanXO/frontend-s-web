@@ -291,7 +291,7 @@
             <el-button
               v-if="scope.row.status === 'WAITING_AUTO_PAY' && hasPermission(['sys:withdraw:simple:fail'])"
               size="mini"
-              type="danger"
+              type="success"
               @click="toSuccess(scope.row)"
             >
               {{ t('fields.success') }}
