@@ -311,7 +311,11 @@ export default defineComponent({
 
     const deleteMails = (type) => {
       isDeleteMailModal.value = true;
-      msgType.value = type;
+      if (type === "ALL") {
+        msgType.value = null;
+      } else {
+        msgType.value = type;
+      }
     };
 
     const confirmDeleteMails = (type) => {

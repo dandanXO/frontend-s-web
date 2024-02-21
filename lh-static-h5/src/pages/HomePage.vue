@@ -19,8 +19,9 @@
     <div class="header-left">
       <img alt="logo" src="../assets/images/home/home-logo.png" />
     </div>
-    <div class="header-right" @click="router.push('/liveChat')">
-      <img class="btn-pointer" src="../assets/images/home/home-chat-icon.png" />
+    <div class="header-right" @click="router.push('/account/inbox')">
+      <img class="btn-pointer" src="../assets/images/home/home-message-box.png" />
+      <div class="red-dot" v-if="unreadInboxMail > 0" />
     </div>
   </div>
 
@@ -80,10 +81,10 @@
       </div>
     </div>
 
-<!--    <div class="hot-match-div">-->
-<!--      <img src="../assets/images/home/hot-icon.png" />-->
-<!--      <span>热门赛事</span>-->
-<!--    </div>-->
+    <!--    <div class="hot-match-div">-->
+    <!--      <img src="../assets/images/home/hot-icon.png" />-->
+    <!--      <span>热门赛事</span>-->
+    <!--    </div>-->
   </div>
 
   <div class="details-bar">
@@ -139,7 +140,25 @@
           <img src="../assets/images/home/games/live-icon.png" />
         </template>
       </div>
-      <div @click="selectTab('lottery')" class="game-platform btn-pointer" id="lottery-platform">
+
+      <div @click="selectTab('poker')" class="game-platform btn-pointer" id="poker-platform">
+        <template v-if="tab === 'poker'">
+          <img src="../assets/images/home/games/poker-icon-active.png" />
+        </template>
+        <template v-else>
+          <img src="../assets/images/home/games/poker-icon.png" />
+        </template>
+      </div>
+      <div @click="selectTab('others')" class="game-platform btn-pointer" id="others-platform">
+        <template v-if="tab === 'others'">
+          <img src="../assets/images/home/games/others-icon-active.png" />
+        </template>
+        <template v-else>
+          <img src="../assets/images/home/games/others-icon.png" />
+        </template>
+      </div>
+
+      <!-- <div @click="selectTab('lottery')" class="game-platform btn-pointer" id="lottery-platform">
         <template v-if="tab === 'lottery'">
           <img src="../assets/images/home/games/lottery-icon-active.png" />
         </template>
@@ -155,16 +174,6 @@
           <img src="../assets/images/home/games/slot-icon.png" />
         </template>
       </div>
-
-      <div @click="selectTab('poker')" class="game-platform btn-pointer" id="poker-platform">
-        <template v-if="tab === 'poker'">
-          <img src="../assets/images/home/games/poker-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/poker-icon.png" />
-        </template>
-      </div>
-
       <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
         <template v-if="tab === 'fishing'">
           <img src="../assets/images/home/games/fish-icon-active.png" />
@@ -172,14 +181,17 @@
         <template v-else>
           <img src="../assets/images/home/games/fish-icon.png" />
         </template>
-      </div>
+      </div> -->
     </div>
 
     <div class="game-right-platform">
       <div class="game-lists" v-if="tab === 'esport'" id="esport-lists">
         <template v-for="(item, index) in esport" :key="index">
-          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)"
-               :class="item.underMaintenance === true ? 'maintenance' : ''">
+          <div
+            class="platform-block"
+            @click="playGame(item.gameName, item.code, item.gameCode)"
+            :class="item.underMaintenance === true ? 'maintenance' : ''"
+          >
             <div class="maintenance-box" v-if="item.underMaintenance === true">
               <p>维护中</p>
               <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
@@ -188,7 +200,6 @@
               </p>
               <p class="small-size">请先前往其他场馆娱乐</p>
             </div>
-
 
             <div
               class="platform-img-frame"
@@ -215,8 +226,11 @@
 
       <div class="game-lists" v-if="tab === 'sport'" id="sport-lists">
         <template v-for="(item, index) in sport" :key="index">
-          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)"
-               :class="item.underMaintenance === true ? 'maintenance' : ''">
+          <div
+            class="platform-block"
+            @click="playGame(item.gameName, item.code, item.gameCode)"
+            :class="item.underMaintenance === true ? 'maintenance' : ''"
+          >
             <div class="maintenance-box" v-if="item.underMaintenance === true">
               <p>维护中</p>
               <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
@@ -251,8 +265,11 @@
 
       <div class="game-lists" v-if="tab === 'live'" id="live-lists">
         <template v-for="(item, index) in livecasino" :key="index">
-          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)"
-               :class="item.underMaintenance === true ? 'maintenance' : ''">
+          <div
+            class="platform-block"
+            @click="playGame(item.gameName, item.code, item.gameCode)"
+            :class="item.underMaintenance === true ? 'maintenance' : ''"
+          >
             <div class="maintenance-box" v-if="item.underMaintenance === true">
               <p>维护中</p>
               <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
@@ -287,8 +304,11 @@
 
       <div class="game-lists" v-if="tab === 'poker'" id="poker-lists">
         <template v-for="(item, index) in poker" :key="index">
-          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)"
-               :class="item.underMaintenance === true ? 'maintenance' : ''">
+          <div
+            class="platform-block"
+            @click="playGame(item.gameName, item.code, item.gameCode)"
+            :class="item.underMaintenance === true ? 'maintenance' : ''"
+          >
             <div class="maintenance-box" v-if="item.underMaintenance === true">
               <p>维护中</p>
               <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
@@ -321,46 +341,14 @@
         </template>
       </div>
 
-      <div class="game-lists" v-if="tab === 'lottery'" id="lottery-lists">
-        <template v-for="(item, index) in lottery" :key="index">
-          <div class="platform-block" @click="playGame(item.gameName, item.code, item.gameCode)"
-               :class="item.underMaintenance === true ? 'maintenance' : ''">
-            <div class="maintenance-box" v-if="item.underMaintenance === true">
-              <p>维护中</p>
-              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
-                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
-              </p>
-              <p class="small-size">请先前往其他场馆娱乐</p>
-            </div>
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-              }"
-            >
-              <div class="platform-label"></div>
-              <div class="platform-content">
-                <div class="platform-logo">
-                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
-                </div>
-                <div class="platform-title">{{ item.title }}</div>
-                <div class="platform-subtitle">{{ item.subtitle }}</div>
-                <div class="platform-rebate">
-                  最高返水
-                  <span>8%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </div>
-
-      <div class="game-lists" v-if="tab === 'slot'" id="slot-lists">
+      <!-- slot-lottery-fish -->
+      <div class="game-lists" v-if="tab === 'others'" id="others-lists">
         <template v-for="(item, index) in slot" :key="index">
-          <div class="platform-block" @click="router.push({ path: '/slot', query: { platform: item.code } })"
-               :class="item.underMaintenance === true ? 'maintenance' : ''">
+          <div
+            class="platform-block"
+            @click="router.push({ path: '/slot', query: { platform: item.code } })"
+            :class="item.underMaintenance === true ? 'maintenance' : ''"
+          >
             <div class="maintenance-box" v-if="item.underMaintenance === true">
               <p>维护中</p>
               <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
@@ -391,11 +379,50 @@
             </div>
           </div>
         </template>
-      </div>
-      <div class="game-lists" v-if="tab === 'fishing'" id="fishing-lists">
+
+        <template v-for="(item, index) in lottery" :key="index">
+          <div
+            class="platform-block"
+            @click="playGame(item.gameName, item.code, item.gameCode)"
+            :class="item.underMaintenance === true ? 'maintenance' : ''"
+          >
+            <div class="maintenance-box" v-if="item.underMaintenance === true">
+              <p>维护中</p>
+              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
+                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
+                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
+              </p>
+              <p class="small-size">请先前往其他场馆娱乐</p>
+            </div>
+
+            <div
+              class="platform-img-frame"
+              :style="{
+                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
+              }"
+            >
+              <div class="platform-label"></div>
+              <div class="platform-content">
+                <div class="platform-logo">
+                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
+                </div>
+                <div class="platform-title">{{ item.title }}</div>
+                <div class="platform-subtitle">{{ item.subtitle }}</div>
+                <div class="platform-rebate">
+                  最高返水
+                  <span>8%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+
         <template v-for="(item, index) in fishing" :key="index">
-          <div class="platform-block" @click="playGame(item.gameName, item.code, 7202)"
-               :class="item.underMaintenance === true ? 'maintenance' : ''">
+          <div
+            class="platform-block"
+            @click="playGame(item.gameName, item.code, 7202)"
+            :class="item.underMaintenance === true ? 'maintenance' : ''"
+          >
             <div class="maintenance-box" v-if="item.underMaintenance === true">
               <p>维护中</p>
               <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
@@ -427,6 +454,123 @@
           </div>
         </template>
       </div>
+
+      <!-- <div class="game-lists" v-if="tab === 'lottery'" id="lottery-lists">
+        <template v-for="(item, index) in lottery" :key="index">
+          <div
+            class="platform-block"
+            @click="playGame(item.gameName, item.code, item.gameCode)"
+            :class="item.underMaintenance === true ? 'maintenance' : ''"
+          >
+            <div class="maintenance-box" v-if="item.underMaintenance === true">
+              <p>维护中</p>
+              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
+                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
+                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
+              </p>
+              <p class="small-size">请先前往其他场馆娱乐</p>
+            </div>
+
+            <div
+              class="platform-img-frame"
+              :style="{
+                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
+              }"
+            >
+              <div class="platform-label"></div>
+              <div class="platform-content">
+                <div class="platform-logo">
+                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
+                </div>
+                <div class="platform-title">{{ item.title }}</div>
+                <div class="platform-subtitle">{{ item.subtitle }}</div>
+                <div class="platform-rebate">
+                  最高返水
+                  <span>8%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div> -->
+
+      <!-- <div class="game-lists" v-if="tab === 'slot'" id="slot-lists">
+        <template v-for="(item, index) in slot" :key="index">
+          <div
+            class="platform-block"
+            @click="router.push({ path: '/slot', query: { platform: item.code } })"
+            :class="item.underMaintenance === true ? 'maintenance' : ''"
+          >
+            <div class="maintenance-box" v-if="item.underMaintenance === true">
+              <p>维护中</p>
+              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
+                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
+                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
+              </p>
+              <p class="small-size">请先前往其他场馆娱乐</p>
+            </div>
+
+            <div
+              class="platform-img-frame"
+              :style="{
+                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
+              }"
+            >
+              <div class="platform-label"></div>
+              <div class="platform-content">
+                <div class="platform-logo">
+                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
+                </div>
+                <div class="platform-title">{{ item.title }}</div>
+                <div class="platform-subtitle">{{ item.subtitle }}</div>
+                <div class="platform-rebate">
+                  最高返水
+                  <span>8%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div> -->
+
+      <!-- <div class="game-lists" v-if="tab === 'fishing'" id="fishing-lists">
+        <template v-for="(item, index) in fishing" :key="index">
+          <div
+            class="platform-block"
+            @click="playGame(item.gameName, item.code, 7202)"
+            :class="item.underMaintenance === true ? 'maintenance' : ''"
+          >
+            <div class="maintenance-box" v-if="item.underMaintenance === true">
+              <p>维护中</p>
+              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
+                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
+                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
+              </p>
+              <p class="small-size">请先前往其他场馆娱乐</p>
+            </div>
+
+            <div
+              class="platform-img-frame"
+              :style="{
+                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
+              }"
+            >
+              <div class="platform-label"></div>
+              <div class="platform-content">
+                <div class="platform-logo">
+                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
+                </div>
+                <div class="platform-title">{{ item.title }}</div>
+                <div class="platform-subtitle">{{ item.subtitle }}</div>
+                <div class="platform-rebate">
+                  最高返水
+                  <span>8%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div> -->
     </div>
   </div>
 
@@ -648,7 +792,7 @@ import { Scrollbar } from "swiper";
 import SwiperCore, { Keyboard, Mousewheel, HashNavigation, A11y } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Thumbs, Controller } from "swiper";
-import moment from "moment"
+import moment from "moment";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/scrollbar";
@@ -1179,8 +1323,8 @@ export default defineComponent({
         store.getBalance().then((res) => {
           isLoadingBalance.value = false;
         });
-      }else{
-        router.push("/login")
+      } else {
+        router.push("/login");
       }
     };
 
@@ -1337,6 +1481,18 @@ export default defineComponent({
       }
     };
 
+    const unreadInboxMail = ref(0);
+    const getUnreadTotal = () => {
+      if (store.token) {
+        return api.get("/session/inbox/getUnreadTotal").then((total) => {
+          console.log(total);
+          if (total.code === 0) {
+            unreadInboxMail.value = total.data;
+          }
+        });
+      }
+    };
+
     onMounted(() => {
       getPlatList();
       loadData();
@@ -1345,6 +1501,7 @@ export default defineComponent({
       getVersionNo();
       checkShowImgTop();
       getAppDownloadUrl();
+      getUnreadTotal();
     });
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
@@ -1422,7 +1579,9 @@ export default defineComponent({
       isImportantAnnoucementModal,
       getImgPlatformLogo,
       getImgPlatformBg,
-      moment
+      moment,
+      unreadInboxMail,
+      getUnreadTotal
     };
   }
 });
@@ -1523,10 +1682,21 @@ export default defineComponent({
 
   .header-right {
     height: 25px;
+    position: relative;
 
     img {
       height: 100%;
       width: auto;
+    }
+
+    .red-dot {
+      height: 10px;
+      width: 10px;
+      background: #db0011;
+      border-radius: 50%;
+      position: absolute;
+      top: -3px;
+      right: -3px;
     }
   }
 }
@@ -1574,7 +1744,7 @@ export default defineComponent({
   width: $box-width;
   margin: 0 auto;
   gap: 10px;
-  padding: 10px;
+  padding: 10px 10px 0px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1769,6 +1939,9 @@ export default defineComponent({
   gap: 8px;
 
   .game-left-list {
+    position: sticky;
+    padding-top: 10px;
+    top: 0;
     flex: 2;
     display: flex;
     flex-direction: column;
@@ -1786,6 +1959,7 @@ export default defineComponent({
   }
 
   .game-right-platform {
+    padding-top: 10px;
     flex: 11;
     display: flex;
     flex-direction: column;
@@ -1811,9 +1985,9 @@ export default defineComponent({
     .platform-block {
       cursor: pointer;
       width: 100%;
-      position:relative;
+      position: relative;
 
-      &.maintenance{
+      &.maintenance {
         filter: grayscale(0.8);
       }
 
@@ -1863,7 +2037,6 @@ export default defineComponent({
           font-size: 0.85em;
         }
       }
-
 
       &:hover {
         opacity: 0.9;

@@ -144,13 +144,13 @@
           </q-input>
         </div>
 
-        <div class="row items-center justify-between q-mt-md">
+        <div class="row items-center justify-between q-mt-xs">
           <div :class="isCheckRmb ? 'checked' : ''">
             <q-checkbox
               rounded
               v-model="isCheckRmb"
               label="记住密码"
-              size="md"
+              size="xs"
               checked-icon="task_alt"
               unchecked-icon="highlight_off"
               color="light-blue-4"
@@ -533,7 +533,7 @@ export default defineComponent({
     margin: 0 auto;
     padding: 35px 0 8px;
     display: flex;
-    width: 215px;
+    width: 115px;
 
     img {
       width: 100%;
@@ -541,7 +541,7 @@ export default defineComponent({
   }
 
   .login-h2 {
-    width: 320px;
+    width: 200px;
     text-align: center;
     margin: 0 auto 10px;
 
@@ -598,7 +598,7 @@ export default defineComponent({
     background: $white;
     border-radius: 10px;
     box-shadow: 0px -8px 8px 0px #c3d4e6 inset;
-    padding: 15px 12px 20px;
+    padding: 15px 12px 15px;
 
     q-label {
       padding-top: 3px;
