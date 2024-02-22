@@ -231,6 +231,8 @@ export default {
     bet: '投注',
     payout: '结算',
     merchantDepositSummary: '商户充值汇总',
+    onlineStatsCompareChartName: '在线人数环比',
+    onlineStatsChartName: '在线人数统计',
   },
   reportGame: {
     gamePlatform: '游戏平台',
@@ -2030,6 +2032,7 @@ export default {
     'Channel Summary': '渠道报表',
     'Adjustment Reason': '平账原因',
     'User Login Log': '用户登录日志',
+    'Online Stats': '在线人数',
   },
   google: {
     google_auth_menu: '谷歌验证',

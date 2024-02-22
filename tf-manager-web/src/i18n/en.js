@@ -225,6 +225,8 @@ export default {
     bet: 'Bet',
     payout: 'Payout',
     merchantDepositSummary: 'Merchant Deposit Summary',
+    onlineStatsCompareChartName: 'Online Stats Compared By Day',
+    onlineStatsChartName: 'Online Stats',
   },
   reportGame: {
     gamePlatform: 'Game Platform',
@@ -2057,6 +2059,7 @@ export default {
     'Channel Summary': 'Channel Summary',
     'Adjustment Reason': 'Adjustment Reason',
     'User Login Log': 'User Login Log',
+    'Online Stats': 'Online Stats',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
