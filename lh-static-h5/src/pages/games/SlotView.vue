@@ -275,7 +275,7 @@ export default defineComponent({
     const scrollSlotRef = ref();
     const position = ref(0);
     const scrollToTop = (el) => {
-      scrollSlotRef.value.setScrollPosition('vertical', position)
+      scrollSlotRef.value.setScrollPosition('vertical', 0, 100)
       isShowBtt.value = false
       // const target = getScrollTarget(el[0])
       // const duration = 1000

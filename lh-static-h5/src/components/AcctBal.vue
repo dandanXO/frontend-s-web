@@ -17,7 +17,7 @@
         <div v-if="!isRefreshingBalance" class="refreshAll common-sm-btn" @click="refreshBalance('all')">
           <div class="label">一键刷新</div>
         </div>
-        <div v-else>请稍等{{ seconds }}秒</div>
+        <div v-else class="show-sec">请稍等{{ seconds }}秒</div>
         <div v-if="isTransfer && !isTransferring" class="transferAll common-sm-white-btn" @click="transferOutAll">
           <div class="label">一键转出</div>
         </div>
@@ -299,6 +299,10 @@ onMounted(() => {
       justify-content: center;
       align-items: center;
       gap: 0.75rem;
+
+      .show-sec {
+        white-space: nowrap;
+      }
 
       .refreshAll {
         display: flex;

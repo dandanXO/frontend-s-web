@@ -286,6 +286,7 @@ import { claimBonusItem, canRedeem, claim } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 // import { message } from "ant-design-vue";
+import { ElMessage } from "element-plus";
 
 export default defineComponent({
   name: "VIPView",
