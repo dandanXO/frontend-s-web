@@ -1,6 +1,6 @@
 <template>
   <div class="main-section">
-    <div v-for="e in snowCount" :key="`snow-${e}`" class="snow"></div>
+    <!-- <div v-for="e in snowCount" :key="`snow-${e}`" class="snow"></div> -->
 
     <div class="home-banner-wrapper">
       <q-carousel
@@ -42,7 +42,7 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <img src="../assets/images/menu/announce-icon.png" />
+          <img src="../assets/images/menu/announce-icon-thai-theme.png" />
         </div>
         <marquee-text :repeat="announcementList.length" :duration="announcementList.length * 20">
           <div v-if="announcementList">
