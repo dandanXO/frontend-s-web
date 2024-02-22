@@ -270,7 +270,7 @@ const onSlideChange = (slide) => {
 const init = () => {
   getUpcomingSportMatches()
     .then((res) => {
-      if (res.code === 0 && res.data) {
+      if (res.code === 0 && res.data && res.data.length > 0) {
         matchDetails.value = Array.isArray(res.data) ? res.data : [res.data];
         insuranceRecordsParam.gameType = matchDetails.value[0].gameType;
       }

@@ -58,9 +58,9 @@
           <template v-if="mailboxState.mailboxList.sent.list.length > 0">
             <el-collapse v-model="activeNames" @change="handleChange">
               <el-collapse-item v-for="item in mailboxState.mailboxList.sent.list" :key="item.id">
-                <template #title>标题：{{ item.title }}</template>
+                <template #title><p class="title-p">标题：{{ item.title }}</p></template>
                 <div>
-                  <div>正文：{{ item.content }}</div>
+                  <div class="content-p">正文：{{ item.content }}</div>
                 </div>
               </el-collapse-item>
             </el-collapse>
@@ -72,6 +72,9 @@
                 :page-size="mailboxState.mailboxList.sent.pageSize"
               />
             </div>
+          </template>
+          <template v-else>
+            <p class="empty-text">暂无记录</p>
           </template>
         </el-tab-pane>
 
@@ -869,6 +872,7 @@ onMounted(() => {
     font-weight: 600;
     color: $font-1;
     font-size: 1rem;
+    height: 60px;
   }
   :deep(.el-collapse-item__content) {
     padding: 0 16px 16px;
@@ -949,6 +953,29 @@ onMounted(() => {
 
   .mail-pagination-wrapper {
     margin-top: 20px;
+  }
+
+  .empty-text{
+    text-align: center;
+    margin-top: 50px;
+  }
+
+  .title-p{
+    width: 100%;
+    word-wrap: break-word; /* 控制文字换行 */
+    overflow-wrap: break-word;
+    text-align: left;
+    line-height: 18px;
+    margin-bottom: 5px;
+  }
+
+  .content-p{
+    width: 100%;
+    word-wrap: break-word; /* 控制文字换行 */
+    overflow-wrap: break-word;
+    text-align: left;
+    line-height: 15px;
+
   }
 }
 </style>
