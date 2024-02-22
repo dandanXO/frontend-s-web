@@ -335,7 +335,6 @@ function initPay() {
   });
 
   payMethods.value = [];
-  console.log("SDFSDFDSCLEAR?");
 
   cashier.get("/session/ind/deposit/index/").then((res) => {
     $q.loading.hide();
