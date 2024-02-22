@@ -9,7 +9,13 @@
         ')'
       "
     >
-      <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify" class="promo-cat-tab">
+      <q-tabs
+        v-if="!isPromoDetail"
+        v-model="tab"
+        align="justify"
+        class="promo-cat-tab"
+        :class="extensionState ? 'extension-tab' : ''"
+      >
         <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
       </q-tabs>
 
@@ -262,7 +268,7 @@ export default defineComponent({
       // extension
       if (extensionState.value) {
         if (promo.redirectUrl.includes("page-vip")) {
-          router.push({ path: "/account/vip", query: { token: extensionToken.value } });
+          router.push({ path: "/vip", query: { token: extensionToken.value } });
         } else {
           router.push({ path: currentPath.value, query: { name: promo.redirectUrl, token: extensionToken.value } });
         }
@@ -910,5 +916,9 @@ export default defineComponent({
   position: sticky;
   top: 61px;
   z-index: 3;
+
+  &.extension-tab {
+    top: 0;
+  }
 }
 </style>
