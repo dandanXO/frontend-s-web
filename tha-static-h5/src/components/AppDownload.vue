@@ -2,6 +2,16 @@
     <div class="app-download" v-if="isShowDownload && store.getAppDownloadUrl()">
         <div class="left">
             <img class="headicon" width="60" src="../assets/logo.png" />
+            <div class="name-and-rating">
+                <span class="name">Jolly88</span>
+                <q-rating
+                    class="rating"
+                    v-model="ratingScore"
+                    size="1em"
+                    color="irange"
+                    readonly
+                />
+            </div>
         </div>
         <div class="right">
             <a :href="store.getAppDownloadUrl()" target="_blank" class="app-download-btn">
@@ -17,6 +27,7 @@ import { userStore } from "stores/index";
 
 const store = userStore();
 const isShowDownload = ref(true);
+const ratingScore = ref(5);
 
 const close = () => {
     isShowDownload.value = false;
@@ -41,12 +52,18 @@ onMounted(() => {
     gap: 4px;
     height: 45px;
     box-shadow: 0px 4px 4px 0px rgba(4, 0, 48, 0.15);
-    background: linear-gradient(90deg, #CF027D 0%, #FF6370 100%), linear-gradient(94.81deg, #FB3CA9 7.45%, #FFA9AB 95.9%);
+    background: #900000;
     .left,
     .right {
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    .name-and-rating {
+        display: flex;
+        flex-direction: column;
+        margin-left: 5px;
     }
 
     .q-icon {
@@ -60,8 +77,8 @@ onMounted(() => {
     }
 
     .app-download-btn {
-        border: 1px solid #ffa9ab;
-        background: linear-gradient(90deg, #CF027D 0%, #FF6370 100%), linear-gradient(94.81deg, #FB3CA9 7.45%, #FFA9AB 95.9%);
+        border: 1px solid #a95658;
+        background: linear-gradient(90deg, #bd2424 0%, #670c0c 100%);
         color: #fff;
         font-size: 12px;
         white-space: nowrap;
