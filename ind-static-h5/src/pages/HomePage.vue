@@ -1524,6 +1524,8 @@ const gotoPromo = (banner) => {
     const extractedUrl = banner.redirectUrl.match(openPattern)[1];
     const [gameName, platformCode, gameCode, gameStatus, gameType, gameId] = extractedUrl.split("/");
     playGame(gameName, platformCode, gameCode, gameStatus, gameType, gameId);
+  } else if (banner.redirectUrl.slice(0, 4) === "http") {
+    window.open(banner.redirectUrl, "_blank");
   }
 };
 
