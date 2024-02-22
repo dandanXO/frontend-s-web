@@ -38,12 +38,15 @@
                   >
                     <a @click="showPromoDetails(promo)">
                       <div>
-                        <div class="promo-ribbon">{{ getPromoLabel(promo.labelType) }}</div>
-                        <div
-                          class="promo-item-date"
-                          v-if="parsedParam(promo.param).date"
-                          v-html="parsedParam(promo.param).date"
-                        />
+                        <div class="promo-label">
+                          <div class="promo-ribbon">{{ getPromoLabel(promo.labelType) }}</div>
+                          <div
+                            class="promo-item-date"
+                            v-if="parsedParam(promo.param).date"
+                            v-html="parsedParam(promo.param).date"
+                          />
+                        </div>
+
                         <div class="promo-item-title">{{ promo.title }}</div>
                         <div
                           class="promo-item-deal"
@@ -64,12 +67,14 @@
                   <div class="promo-item" v-if="tab.name === 'all'">
                     <a @click="showPromoDetails(promo)">
                       <div>
-                        <div class="promo-ribbon">{{ getPromoLabel(promo.labelType) }}</div>
-                        <div
-                          class="promo-item-date"
-                          v-if="parsedParam(promo.param).date"
-                          v-html="parsedParam(promo.param).date"
-                        />
+                        <div class="promo-label">
+                          <div class="promo-ribbon">{{ getPromoLabel(promo.labelType) }}</div>
+                          <div
+                            class="promo-item-date"
+                            v-if="parsedParam(promo.param).date"
+                            v-html="parsedParam(promo.param).date"
+                          />
+                        </div>
                         <div class="promo-item-title">{{ promo.title }}</div>
                         <div
                           class="promo-item-deal"
@@ -498,10 +503,19 @@ export default defineComponent({
           position: relative;
           border-radius: 12px;
 
-          .promo-ribbon {
+          .promo-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             position: absolute;
             top: 0;
             left: 0;
+          }
+          .promo-ribbon {
+            // position: absolute;
+            // top: 0;
+            // left: 0;
+            position: relative;
             color: #ffffff;
             font-size: 0.75rem;
             overflow: hidden;
@@ -526,13 +540,16 @@ export default defineComponent({
             color: #606479;
             font-size: 0.825rem;
             font-weight: bold;
+            // position: absolute;
+            // top: 5px;
+            // left: 100px;
           }
 
           .promo-item-title {
             color: $primary;
             font-weight: bold;
             font-size: 1rem;
-            max-width: 180px;
+            max-width: 160px;
 
             @media (min-width: 500px) {
               max-width: calc(100% - 220px);
@@ -543,6 +560,11 @@ export default defineComponent({
             color: $grey-color;
             font-weight: bold;
             font-size: 0.875rem;
+            max-width: 160px;
+
+            @media (min-width: 500px) {
+              max-width: calc(100% - 220px);
+            }
 
             & > span {
               color: $primary;
