@@ -63,7 +63,7 @@
           :class="currentSelectedMenu == e.name ? 'active-board' : ''"
           @click="switchMenu(e.name, i)"
         >
-          <!--          <img class="active-flag" :src="require(`../assets/home/game-board-item-bg-active-flag.png`)" />-->
+          <img class="active-flag" :src="require(`../assets/home/game-board-item-bg-active-flag.png`)" />
           <img :src="require(`../assets/images/index/${e.imgName}`)" />
           <span>{{ e.label }}</span>
         </div>
@@ -2150,13 +2150,13 @@ export default defineComponent({
   column-gap: 8px;
   row-gap: 14px;
   width: calc(100% - 20px);
-  background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
-  padding: 6px 12px 6px;
+  // background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
+  padding: 35px 12px 16px;
   border-radius: 12px;
   overflow-x: auto;
 
   @media (min-width: 769px) {
-    margin: 0px auto;
+    margin: 10px auto;
   }
 
   .game-board-item {
@@ -2170,15 +2170,32 @@ export default defineComponent({
     text-align: center;
     padding: 12px 12px;
     white-space: nowrap;
+    background: url("../assets/home/game-board-item-bg.png") no-repeat center center;
+    background-size: 100% 100%;
+    position: relative;
+
+    .active-flag {
+      display: none;
+    }
 
     &.active-board {
       // background: $linear-bg-4;
-      background: #5555aa;
+      background: url("../assets/home/game-board-item-bg-active.png") no-repeat center center;
+      background-size: 100% 100%;
+
+      .active-flag {
+        display: block;
+        position: absolute;
+        top: -31px;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: 35px;
+        height: 33px;
+      }
     }
 
     &:hover {
       filter: brightness(0.88);
-      background: #5555aa;
     }
 
     &:active {
