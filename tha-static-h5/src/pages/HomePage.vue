@@ -1705,6 +1705,12 @@ export default defineComponent({
         }
       } else if (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) {
         ui.appVersion = "iOS App";
+      } else if (isH5.value && Platform.is.mobile) {
+        const res = await api.get(`/config/appVersionAndUrl?type=ALL&device=ANDROID`);
+
+        if (res.data.code === 0) {
+          store.setAppDownloadUrl(res.data.data.url);
+        }
       }
     };
 
@@ -1717,18 +1723,6 @@ export default defineComponent({
     };
 
     const downloadUrl = ref("");
-
-    const getAppDownloadUrl = () => {
-      api
-        .get("/config/appDownloadUrl")
-        .then((res) => {
-          // console.log(res);
-          downloadUrl.value = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
 
     const toggleFavGame = (gameId, status) => {
       if (status === true) {
@@ -1824,7 +1818,6 @@ export default defineComponent({
       checkPlatform();
       loadHomePromoPopup();
       loadHomeData();
-      getAppDownloadUrl();
       getVersionNo();
       checkSticky();
 
@@ -2020,7 +2013,6 @@ export default defineComponent({
       isH5,
       openDownloadPage,
       cancelUpdate,
-      getAppDownloadUrl,
       favGamesList,
       sortedFavGamesList,
       // updateSortedFavGamesList,
@@ -2036,7 +2028,10 @@ export default defineComponent({
 <style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
 
-.home-decor-flower, .home-decor-bike, .home-decor-bike-2, .home-decor-tree {
+.home-decor-flower,
+.home-decor-bike,
+.home-decor-bike-2,
+.home-decor-tree {
   display: none;
 }
 
@@ -2058,7 +2053,7 @@ export default defineComponent({
   .station-notice-wrapper {
     display: flex;
     border-radius: 8px;
-    border: 1px solid #9C1103;
+    border: 1px solid #9c1103;
     gap: 10px;
     padding: 2px 10px;
     justify-content: center;
@@ -2673,7 +2668,10 @@ export default defineComponent({
   .main-section {
     background-repeat: repeat-x;
 
-    .home-decor-flower, .home-decor-bike, .home-decor-bike-2, .home-decor-tree {
+    .home-decor-flower,
+    .home-decor-bike,
+    .home-decor-bike-2,
+    .home-decor-tree {
       display: block;
       position: absolute;
     }

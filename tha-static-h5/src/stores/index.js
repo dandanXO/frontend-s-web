@@ -25,10 +25,17 @@ export const userStore = defineStore("userStore", {
       currentDeposit: "",
       levelUpDeposit: "",
       phoneVerified: false,
-      emailVerified: false
+      emailVerified: false,
+      appDownloadUrl: ''
     };
   },
   actions: {
+    setAppDownloadUrl(url) {
+      this.appDownloadUrl = url;
+    },
+    getAppDownloadUrl() {
+      return this.appDownloadUrl;
+    },
     getUnreadTotal() {
       api.get("/session/inbox/getUnreadTotal").then((ret) => {
         const res = ret.data;
