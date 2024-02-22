@@ -2160,7 +2160,7 @@ export default defineComponent({
   row-gap: 14px;
   width: calc(100% - 20px);
   // background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
-  padding: 35px 12px 16px;
+  padding: 40px 12px 16px;
   border-radius: 12px;
   overflow-x: auto;
 
@@ -2195,11 +2195,11 @@ export default defineComponent({
       .active-flag {
         display: block;
         position: absolute;
-        top: -31px;
+        top: -38px;
         left: 50%;
         transform: translate(-50%, 0);
-        width: 35px;
-        height: 33px;
+        width: 40px;
+        height: 40px;
       }
     }
 
@@ -2218,7 +2218,7 @@ export default defineComponent({
 
     img {
       width: auto;
-      max-height: 30px;
+      max-height: 40px;
     }
   }
 }
@@ -2627,7 +2627,7 @@ export default defineComponent({
     .game-board-item {
       img {
         width: auto;
-        max-height: 35px;
+        max-height: 40px;
       }
     }
   }
@@ -2680,7 +2680,7 @@ export default defineComponent({
     .home-decor-flower {
       left: 0px;
       top: 15%;
-      width: 50px;
+      width: 100px;
     }
     .home-decor-bike {
       left: 0px;
