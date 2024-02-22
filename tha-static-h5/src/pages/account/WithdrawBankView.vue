@@ -14,15 +14,12 @@
         </div>
         <div class="addbuttons"></div>
         <div class="flex-box flex-wrap bank-card-list">
-          <template
-            v-for="(bc, index) in personalState.bankCardList"
-            :key="bc.id"
-          >
+          <template v-for="(bc, index) in personalState.bankCardList" :key="bc.id">
             <div
               class="bank-card-item"
               :class="{
                 active: index === isCardActive,
-                inactive: index > isCardActive,
+                inactive: index > isCardActive
               }"
               v-if="bc.bankName"
               @click="showCard(bc, index)"
@@ -42,11 +39,7 @@
               </div>
 
               <div class="flex-box cards">
-                <div
-                  v-for="b in bc.cardNumber.split()"
-                  :key="b"
-                  class="card-num-box"
-                >
+                <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">
                   {{ b }}
                 </div>
                 <!-- <div
@@ -91,9 +84,7 @@
       </div>
     </div>
     <div class="account-title-container bindunbind">
-      <span class="account-title">{{
-        $t("lang.bank_card_unbind_record")
-      }}</span>
+      <span class="account-title">{{ $t("lang.bank_card_unbind_record") }}</span>
     </div>
     <div class="account-content last bindunbind">
       <div class="searchbar">
@@ -102,19 +93,10 @@
             <q-input filled v-model="searchForm.start">
               <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
-                  <q-popup-proxy
-                    cover
-                    transition-show="scale"
-                    transition-hide="scale"
-                  >
+                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                     <q-date v-model="searchForm.start" mask="YYYY-MM-DD">
                       <div class="row items-center justify-end">
-                        <q-btn
-                          v-close-popup
-                          label="Close"
-                          color="primary"
-                          flat
-                        />
+                        <q-btn v-close-popup label="Close" color="primary" flat />
                       </div>
                     </q-date>
                   </q-popup-proxy>
@@ -124,19 +106,10 @@
             <q-input filled v-model="searchForm.end">
               <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
-                  <q-popup-proxy
-                    cover
-                    transition-show="scale"
-                    transition-hide="scale"
-                  >
+                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                     <q-date v-model="searchForm.end" mask="YYYY-MM-DD">
                       <div class="row items-center justify-end">
-                        <q-btn
-                          v-close-popup
-                          label="Close"
-                          color="primary"
-                          flat
-                        />
+                        <q-btn v-close-popup label="Close" color="primary" flat />
                       </div>
                     </q-date>
                   </q-popup-proxy>
@@ -193,9 +166,7 @@
                 option-value="id"
                 option-label="name"
                 :label="$t('lang.select_account_add_different_banks')"
-                :rules="[
-                  (val) => !!val || $t('lang.please_select_a_bank_account'),
-                ]"
+                :rules="[(val) => !!val || $t('lang.please_select_a_bank_account')]"
                 lazy-rules
                 emit-value
                 map-options
@@ -209,13 +180,7 @@
                     />
                   </q-item-section>
                   <q-item-section>
-                    <q-item-label
-                      style="
-                        text-overflow: ellipsis;
-                        overflow: hidden;
-                        white-space: nowrap;
-                      "
-                    >
+                    <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
                       {{ scope.opt.name }}
                     </q-item-label>
                   </q-item-section>
@@ -225,11 +190,7 @@
                     <q-item-section avatar>
                       <img
                         v-if="scope.opt.bankIcon"
-                        style="
-                          width: 30px;
-                          margin-top: 10px;
-                          margin-bottom: 10px;
-                        "
+                        style="width: 30px; margin-top: 10px; margin-bottom: 10px"
                         :src="imgURL + scope.opt.bankIcon"
                       />
                     </q-item-section>
@@ -273,22 +234,14 @@
               lazy-rules
               readonly
               clearable
-              :rules="[
-                (val) =>
-                  (val && val.length > 7) ||
-                  $t('lang.please_enter_valid_phone'),
-              ]"
+              :rules="[(val) => (val && val.length > 7) || $t('lang.please_enter_valid_phone')]"
               color="white"
             >
               <template v-slot:prepend>
                 <q-icon color="white" name="smartphone" />
               </template>
               <template v-slot:append>
-                <q-btn
-                  :label="$t('lang.get_code')"
-                  color="brand"
-                  @click="openPhoneVeriDialog()"
-                />
+                <q-btn :label="$t('lang.get_code')" color="brand" @click="openPhoneVeriDialog()" />
               </template>
             </q-input>
 
@@ -304,10 +257,7 @@
               lazy-rules
               color="white"
               maxlength="6"
-              :rules="[
-                (val) =>
-                  (val && val.length > 3) || $t('lang.please_enter_phone_code'),
-              ]"
+              :rules="[(val) => (val && val.length > 3) || $t('lang.please_enter_phone_code')]"
             >
               <template v-slot:prepend>
                 <q-icon color="white" name="shield" />
@@ -325,32 +275,16 @@
             color="white"
           />
           <div class="flex flex-center">
-            <q-btn
-              class="q-mr-md"
-              :label="$t('lang.cancel')"
-              @click="bankCardModalState.visible = false"
-            />
-            <q-btn
-              color="brand"
-              :label="$t('lang.confirm')"
-              @click="submitBankCard"
-            />
+            <q-btn class="q-mr-md" :label="$t('lang.cancel')" @click="bankCardModalState.visible = false" />
+            <q-btn color="brand" :label="$t('lang.confirm')" @click="submitBankCard" />
           </div>
         </q-form>
       </q-card>
     </q-dialog>
 
-    <q-dialog
-      v-model="showCaptchaDialog"
-      width="100%"
-      no-backdrop-dismiss
-      no-esc-dismiss
-    >
+    <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss no-esc-dismiss>
       <q-card width="100%">
-        <q-card-section
-          style="padding: 10px 5px"
-          class="q-pa-md bg-dyblue text-white"
-        >
+        <q-card-section style="padding: 10px 5px" class="q-pa-md bg-dyblue text-white">
           <q-toolbar>
             <q-toolbar-title>{{ $t("lang.captcha_code") }}</q-toolbar-title>
             <q-btn flat v-close-popup round dense icon="close" />
@@ -360,11 +294,7 @@
           <q-card-section class="q-mb-md q-pa-md">
             <q-input
               ref="refInnerCaptcha"
-              :rules="[
-                (val) =>
-                  (val && val.length > 3 && val.length < 5) ||
-                  $t('lang.enter_captcha_code'),
-              ]"
+              :rules="[(val) => (val && val.length > 3 && val.length < 5) || $t('lang.enter_captcha_code')]"
               v-model="innerCaptchaRef"
               :placeholder="$t('lang.captcha_code')"
             >
@@ -378,11 +308,7 @@
               </template>
             </q-input>
           </q-card-section>
-          <q-btn
-            @click="onCaptchaSubmit"
-            :label="$t('lang.send_veri_code')"
-            color="primary"
-          />
+          <q-btn @click="onCaptchaSubmit" :label="$t('lang.send_veri_code')" color="primary" />
         </div>
       </q-card>
     </q-dialog>
@@ -852,6 +778,12 @@ export default defineComponent({
         return (val.length > 33 && val.length < 38) || t('lang.length_between_34_37')
       }
     }
+
+    const isValidCard = (val) => {
+      const phonePattern = /^\d+$/;
+      return phonePattern.test(val) || t('lang.card_num_invalid') ;
+    };
+
     return {
       searchForm,
       columns,
@@ -885,6 +817,7 @@ export default defineComponent({
       cardAddressRef,
       cardNumberRules: [
         val => (val && val.length > 0) || t('lang.please_enter_card_num'),
+        val => isValidCard(val),
         val => validateBankLength(val)
       ],
       cardAccountRules: [
@@ -999,11 +932,7 @@ export default defineComponent({
   width: 100%;
 }
 
-:deep(
-    .ant-select-single:not(.ant-select-customize-input)
-      .ant-select-selector
-      .ant-select-selection-search-input
-  ) {
+:deep(.ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input) {
   height: 40px;
 }
 
@@ -1167,11 +1096,7 @@ export default defineComponent({
       content: "";
       width: 50%;
       height: 100%;
-      background: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.3) 100%
-      );
+      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%);
       border-radius: 10px;
       transform: skewX(320deg);
     }

@@ -125,6 +125,7 @@
 import {userStore} from "@/store";
 import {defineComponent, ref, reactive, onMounted} from "vue";
 import {getInviteFriendList} from "@/api/index/promo";
+import { ElMessage } from "element-plus"
 
 export default defineComponent({
   name: "InviteFriendPromo",
@@ -187,6 +188,11 @@ export default defineComponent({
               pagination.total = response.data.total;
               dataSource.splice(0);
               dataSource.push(...response.data.records);
+            } else {
+              ElMessage.error({
+                type: "error",
+                message: response.message
+              });
             }
           })
           .catch((error) => {

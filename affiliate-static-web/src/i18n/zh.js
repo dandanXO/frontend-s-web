@@ -246,7 +246,26 @@ export default {
     withdrawPassword: "支付密码",
     withdrawPayoutBonus: '提款/派彩/奖金/调整',
     withdrawalAmount: "提款金额",
-    yesterday: "昨日"
+    yesterday: "昨日",
+    packType: "打包项目",
+    selectSystem: '选择系统',
+    appVersion: '当前版本号',
+    appName: '应用名',
+    appIcon: '应用图标',
+    packNow: '立即打包',
+    packDate: '打包时间',
+    osType: '系统类型',
+    buildStatus: '构建状态',
+    apkType: 'APK 种类',
+    normal: '正常',
+    newKey: '防毒',
+    detail: '详情',
+    packSize: '包大小',
+    packDownloadUrl: '渠道包链接',
+    unchanged: '无修改',
+    packHistory: '打包记录',
+    sequence: '序号',
+    all: '全部'
   },
   message: {
     addSuccess: "新增成功",
@@ -323,7 +342,8 @@ export default {
     understand: "理解",
     DepositCompleted: "已存款",
     depositNotification1: "您将被重定向到您的银行页面以完成存款。",
-    depositNotification2: "如果成功，您将在此页面上收到通知。"
+    depositNotification2: "如果成功，您将在此页面上收到通知。",
+    packRequestInQueue: '渠道打包请求正在等待中',
   },
   menu: {
     undefined: "",
@@ -345,7 +365,24 @@ export default {
     "Referral Link": "推广链接",
     "Affiliate Domain": "专属域名",
     "Personal Center": "个人中心",
-    "Settlement Center": "佣金"
+    "Settlement Center": "佣金",
+    "Channel Pack": "渠道打包",
+  },
+  packStatus: {
+    IN_QUEUE: '等待中',
+    IN_PROGRESS: '进行中',
+    SUCCESS: '成功',
+    FAIL: '失败',
+    CANCEL: '取消',
+  },
+  appType: {
+    ALL_SITE: '全站',
+    SPORT: '体育',
+    ESPORT: '电竞',
+  },
+  osType: {
+    ANDROID: '安卓',
+    IOS: 'IOS',
   },
   error: {
     400: "请求无效",

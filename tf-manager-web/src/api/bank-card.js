@@ -37,6 +37,6 @@ export const getWithdrawBankCard = (id, wd) => {
   return https().request("/system-bank-card/withdrawList", Method.GET, { id: id, withdrawDate: wd });
 };
 
-export const getAllWithdrawBankCard = () => {
-  return https().request("/system-bank-card/allWithdrawList", Method.GET);
+export const getAllWithdrawBankCard = (siteId) => {
+  return https().request("/system-bank-card/allWithdrawList", Method.GET, { siteId: siteId });
 };

@@ -122,7 +122,10 @@
             <el-radio-button label="TEST">TEST</el-radio-button>
           </el-radio-group>
         </el-form-item>
-        <el-form-item :label="t('fields.platformAccount')" prop="platformAccountId">
+        <el-form-item
+          :label="t('fields.platformAccount')"
+          prop="platformAccountId"
+        >
           <el-select
             filterable
             v-model="form.platformAccountId"
@@ -147,9 +150,49 @@
             :placeholder="t('fields.alias')"
           />
         </el-form-item>
+        <el-form-item :label="t('sitePlatform.followType')" prop="followType">
+          <el-radio-group
+            v-model="form.followType"
+            size="mini"
+            style="width: 300px"
+          >
+            <el-radio-button label="FOLLOW">
+              {{ t('sitePlatform.follow') }}
+            </el-radio-button>
+            <el-radio-button label="NEW">
+              {{ t('sitePlatform.new') }}
+            </el-radio-button>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item
+          v-if="form.followType === 'NEW'"
+          :label="t('fields.gameType')"
+          prop="gameType"
+        >
+          <el-select
+            v-model="form.gameType"
+            value-key="id"
+            :placeholder="t('fields.pleaseChoose')"
+            style="width: 350px"
+            filterable
+            multiple
+            @focus="loadGameTypes"
+          >
+            <el-option
+              v-for="item in gameTypes.list"
+              :key="item"
+              :label="item"
+              :value="item"
+            />
+          </el-select>
+        </el-form-item>
         <div class="dialog-footer">
-          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-          <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
+          <el-button @click="uiControl.dialogVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="submit">
+            {{ t('fields.confirm') }}
+          </el-button>
         </div>
       </el-form>
     </el-dialog>
@@ -163,9 +206,21 @@
       @selection-change="handleSelectionChange"
       :empty-text="t('fields.noData')"
     >
-      <el-table-column prop="siteName" :label="t('fields.siteName')" width="200" />
-      <el-table-column prop="platformName" :label="t('fields.platformName')" width="200" />
-      <el-table-column prop="platformAccountName" :label="t('fields.platformAccount')" width="200" />
+      <el-table-column
+        prop="siteName"
+        :label="t('fields.siteName')"
+        width="200"
+      />
+      <el-table-column
+        prop="platformName"
+        :label="t('fields.platformName')"
+        width="200"
+      />
+      <el-table-column
+        prop="platformAccountName"
+        :label="t('fields.platformAccount')"
+        width="200"
+      />
       <el-table-column prop="alias" :label="t('fields.alias')" width="180" />
       <el-table-column prop="status" :label="t('fields.status')" width="200">
         <template #default="scope">
@@ -178,7 +233,25 @@
           <el-tag v-if="scope.row.status === 'TEST'">TEST</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="createBy" :label="t('fields.createBy')" width="200" />
+      <el-table-column
+        prop="followType"
+        :label="t('fields.followType')"
+        width="200"
+      >
+        <template #default="scope">
+          <div v-if="scope.row.followType === 'FOLLOW'" type="success">
+            {{ t('sitePlatform.follow') }}
+          </div>
+          <div v-if="scope.row.followType === 'NEW'">
+            {{ t('sitePlatform.new') }}
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="createBy"
+        :label="t('fields.createBy')"
+        width="200"
+      />
       <el-table-column
         prop="createTime"
         :label="t('fields.createTime')"
@@ -197,7 +270,12 @@
           />
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')" align="right" fixed="right" width="200">
+      <el-table-column
+        :label="t('fields.operate')"
+        align="right"
+        fixed="right"
+        width="200"
+      >
         <template #default="scope">
           <el-button
             icon="el-icon-edit"
@@ -231,14 +309,15 @@ import {
 import { getSiteListSimple } from '../../../api/site'
 import { getPlatformNames } from '../../../api/platform'
 import { getPlatformAccountList } from '../../../api/system-platform-account'
-import { useStore } from '../../../store';
-import { TENANT } from "../../../store/modules/user/action-types";
-import { useI18n } from "vue-i18n";
+import { getGameTypes } from '../../../api/game'
+import { useStore } from '../../../store'
+import { TENANT } from '../../../store/modules/user/action-types'
+import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n();
-const store = useStore();
-const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
-const site = ref(null);
+const { t } = useI18n()
+const store = useStore()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
+const site = ref(null)
 const sitePlatformForm = ref(null)
 const uiControl = reactive({
   dialogVisible: false,
@@ -259,13 +338,19 @@ const request = reactive({
   platformId: null,
 })
 
+const gameTypes = reactive({
+  list: [],
+})
+
 const form = reactive({
   id: null,
   siteId: null,
   platformId: null,
   status: null,
   platformAccountId: null,
-  alias: null
+  alias: null,
+  followType: null,
+  gameType: null,
 })
 
 const formRules = reactive({
@@ -326,10 +411,11 @@ async function loadSitePlatform() {
   const { data: ret } = await getSitePlatforms(request)
   page.pages = ret.pages
   ret.records.forEach(data => {
-    data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined
-      ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
-      : null
-  });
+    data.timeZone =
+      store.state.user.sites.find(e => e.id === data.siteId) !== undefined
+        ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
+        : null
+  })
   page.records = ret.records
   page.loading = false
 }
@@ -352,6 +438,11 @@ async function loadPlatformAccounts() {
 function changePage(page) {
   request.current = page
   loadSitePlatform()
+}
+
+async function loadGameTypes() {
+  const { data: ret } = await getGameTypes()
+  gameTypes.list = ret
 }
 
 function showDialog(type) {
@@ -379,7 +470,12 @@ function showEdit(sitePlatform) {
   nextTick(() => {
     for (const key in sitePlatform) {
       if (Object.keys(form).find(k => k === key)) {
-        form[key] = sitePlatform[key]
+        if (key === 'gameType' && form.followType === 'NEW') {
+          // game type 需要进行转换
+          form[key] = sitePlatform[key].split(',') // string 转 array
+        } else {
+          form[key] = sitePlatform[key]
+        }
       }
     }
     filterPlatformAccVal.value = form.platformId
@@ -389,6 +485,12 @@ function showEdit(sitePlatform) {
 function create() {
   sitePlatformForm.value.validate(async valid => {
     if (valid) {
+      var arr = form.gameType
+      if (form.followType === 'NEW') {
+        form.gameType = arr.toString()
+      } else if (form.followType === 'FOLLOW') {
+        form.gameType = null
+      }
       await createSitePlatform(form)
       uiControl.dialogVisible = false
       await loadSitePlatform()
@@ -400,6 +502,12 @@ function create() {
 function edit() {
   sitePlatformForm.value.validate(async valid => {
     if (valid) {
+      var arr = form.gameType
+      if (form.followType === 'NEW') {
+        form.gameType = arr.toString()
+      } else if (form.followType === 'FOLLOW') {
+        form.gameType = null
+      }
       await updateSitePlatform(form)
       uiControl.dialogVisible = false
       await loadSitePlatform()
@@ -416,11 +524,11 @@ function submit() {
   }
 }
 
-onMounted(async() => {
+onMounted(async () => {
   await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
-    site.value = sites.list.find(s => s.siteName === store.state.user.siteName);
-    request.siteId = site.value.id;
+    site.value = sites.list.find(s => s.siteName === store.state.user.siteName)
+    request.siteId = site.value.id
   }
   await loadSitePlatform()
   await loadPlatforms()

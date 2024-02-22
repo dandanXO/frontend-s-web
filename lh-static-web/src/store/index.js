@@ -4,6 +4,7 @@ import { loadBalance, loadMemberInfo } from "@/api/personal/personal";
 import { useSessionStorage } from "@vueuse/core";
 import { MAIN } from "@/utils/utils";
 import { getCSAFromServer } from "@/api/index/site";
+import { ElMessage } from "element-plus";
 // import { message } from "ant-design-vue";
 
 const TOKEN_KEY = "TOKEN";
@@ -43,6 +44,7 @@ export const userStore = defineStore("userStore", {
             this.getBalance();
             this.getMemberInfo();
           } else {
+            ElMessage.error(ret.message)
             // throw new Error(ret.message);
           }
         })
@@ -64,6 +66,7 @@ export const userStore = defineStore("userStore", {
             this.getBalance();
             this.getMemberInfo();
           } else {
+            ElMessage.error(ret.message)
             // throw new Error(ret.message);
           }
         })
@@ -88,7 +91,7 @@ export const userStore = defineStore("userStore", {
             this.currentDeposit = ret.data.currentDeposit;
             this.levelUpDeposit = ret.data.levelUpDeposit;
           } else {
-            throw new Error(ret.message);
+            ElMessage.error(ret.message)
           }
         });
       }

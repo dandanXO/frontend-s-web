@@ -816,7 +816,6 @@ import { getFinancialLevels } from '../../../api/financial-level'
 import { getWithdrawBanks } from '../../../api/bank-info'
 import {
   getMemberWithdrawRecord,
-  getTotalWithdrawAmount,
   fromCheckingToApply,
   fromPayToBeforePaid,
   fromToFail,
@@ -1065,7 +1064,7 @@ async function loadBanks() {
 }
 
 async function loadPaymentCards() {
-  const { data: paymentCard } = await getAllWithdrawBankCard()
+  const { data: paymentCard } = await getAllWithdrawBankCard(request.siteId)
   paymentCardList.list = paymentCard
   paymentCardList.list.unshift({
     id: 0,
@@ -1218,8 +1217,7 @@ async function loadRecord() {
   page.records = ret.records
   page.total = ret.total
   if (page.records.length !== 0) {
-    const { data: amount } = await getTotalWithdrawAmount(query)
-    page.totalAmount = amount
+    page.totalAmount = ret.sums.withdrawAmount
   } else {
     page.totalAmount = 0
   }

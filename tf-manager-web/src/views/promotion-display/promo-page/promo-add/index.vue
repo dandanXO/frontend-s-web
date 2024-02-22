@@ -40,6 +40,38 @@
       </el-form-item>
     </el-row>
     <el-row>
+      <el-form-item
+        :label="t('fields.desktopBackgroundImage')"
+        prop="desktopImgBackgroundUrl"
+      >
+        <el-row :gutter="5">
+          <el-col
+            v-if="form.desktopImgBackgroundUrl"
+            :span="18"
+            style="width: 250px"
+          >
+            <el-image
+              v-if="form.desktopImgBackgroundUrl"
+              :src="promoDir + form.desktopImgBackgroundUrl"
+              fit="contain"
+              class="preview"
+              :preview-src-list="[promoDir + form.desktopImgBackgroundUrl]"
+            />
+          </el-col>
+          <el-col :span="6">
+            <el-button
+              icon="el-icon-search"
+              size="mini"
+              type="success"
+              @click="browseImage('DESKTOP_BACKGROUND_IMAGE')"
+            >
+              {{ t('fields.browse') }}
+            </el-button>
+          </el-col>
+        </el-row>
+      </el-form-item>
+    </el-row>
+    <el-row>
       <el-form-item :label="t('fields.mobileImage')" prop="mobileImgUrl">
         <el-row :gutter="5">
           <el-col v-if="form.mobileImgUrl" :span="18" style="width: 250px">
@@ -57,6 +89,38 @@
               size="mini"
               type="success"
               @click="browseImage('MOBILE_IMAGE')"
+            >
+              {{ t('fields.browse') }}
+            </el-button>
+          </el-col>
+        </el-row>
+      </el-form-item>
+    </el-row>
+    <el-row>
+      <el-form-item
+        :label="t('fields.mobileBackgroundImage')"
+        prop="mobileImgBackgroundUrl"
+      >
+        <el-row :gutter="5">
+          <el-col
+            v-if="form.mobileImgBackgroundUrl"
+            :span="18"
+            style="width: 250px"
+          >
+            <el-image
+              v-if="form.mobileImgBackgroundUrl"
+              :src="promoDir + form.mobileImgBackgroundUrl"
+              fit="contain"
+              class="preview"
+              :preview-src-list="[promoDir + form.mobileImgBackgroundUrl]"
+            />
+          </el-col>
+          <el-col :span="6">
+            <el-button
+              icon="el-icon-search"
+              size="mini"
+              type="success"
+              @click="browseImage('MOBILE_BACKGROUND_IMAGE')"
             >
               {{ t('fields.browse') }}
             </el-button>
@@ -198,10 +262,7 @@
     <el-row>
       <el-form-item :label="t('fields.sequence')" prop="sequence">
         <el-col :span="7">
-          <el-input-number
-            v-model="form.sequence"
-            controls-position="right"
-          />
+          <el-input-number v-model="form.sequence" controls-position="right" />
         </el-col>
       </el-form-item>
 
@@ -218,14 +279,30 @@
     </el-row>
     <el-form-item :label="t('fields.param')" prop="param">
       <div v-for="(item, index) in param" :key="index">
-        <el-input style="width: 170px; margin-top: 5px;" v-model="item.key" /> : <el-input style="width: 170px " v-model="item.value" />
-        <el-button v-if="index === param.length - 1" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
-                   @click="addParam()" plain
-        >{{ t('fields.add') }}
+        <el-input style="width: 170px; margin-top: 5px;" v-model="item.key" />
+        :
+        <el-input style="width: 170px " v-model="item.value" />
+        <el-button
+          v-if="index === param.length - 1"
+          icon="el-icon-plus"
+          size="mini"
+          type="primary"
+          style="margin-left: 20px"
+          @click="addParam()"
+          plain
+        >
+          {{ t('fields.add') }}
         </el-button>
-        <el-button v-else icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
-                   @click="delParam(index)" plain
-        >{{ t('fields.delete') }}
+        <el-button
+          v-else
+          icon="el-icon-remove"
+          size="mini"
+          type="danger"
+          style="margin-left: 20px"
+          @click="delParam(index)"
+          plain
+        >
+          {{ t('fields.delete') }}
         </el-button>
       </div>
     </el-form-item>
@@ -372,14 +449,16 @@ const store = useStore()
 const site = ref(null)
 const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
 const promoForm = ref(null)
-const param = ref([]);
+const param = ref([])
 
 const form = reactive({
   id: null,
   title: null,
   imgUrl: null,
   desktopImgUrl: null,
+  desktopImgBackgroundUrl: null,
   mobileImgUrl: null,
+  mobileImgBackgroundUrl: null,
   desktopBannerUrl: null,
   mobileBannerUrl: null,
   backgroundImgUrl: null,
@@ -390,7 +469,7 @@ const form = reactive({
   sequence: 0,
   promoCode: null,
   pageContent: null,
-  status: true,
+  status: "0",
   createTime: null,
   createBy: null,
   hasPromo: false,
@@ -501,8 +580,14 @@ function browseImage(type) {
     case 'DESKTOP_IMAGE':
       uiControl.imageSelectionTitle = t('fields.desktopImage')
       break
+    case 'DESKTOP_BACKGROUND_IMAGE':
+      uiControl.imageSelectionTitle = t('fields.desktopBackgroundImage')
+      break
     case 'MOBILE_IMAGE':
       uiControl.imageSelectionTitle = t('fields.mobileImage')
+      break
+    case 'MOBILE_BACKGROUND_IMAGE':
+      uiControl.imageSelectionTitle = t('fields.mobileBackgroundImage')
       break
     case 'DESKTOP_BANNER':
       uiControl.imageSelectionTitle = t('fields.desktopBanner')
@@ -527,7 +612,7 @@ function getInput(value) {
 function create() {
   promoForm.value.validate(async valid => {
     if (valid) {
-      form.param = constructParam();
+      form.param = constructParam()
       await createPromoPages(form)
       // redirect to promotion pages
       back()
@@ -539,7 +624,7 @@ function create() {
 function edit() {
   promoForm.value.validate(async valid => {
     if (valid) {
-      form.param = constructParam();
+      form.param = constructParam()
       await updatePromoPages(form)
       // redirect to promotion pages
       back()
@@ -550,23 +635,23 @@ function edit() {
 
 function addParam() {
   param.value.push({
-    key: "",
-    value: ""
+    key: '',
+    value: '',
   })
 }
 
 function delParam(index) {
-  param.value.splice(index, 1);
+  param.value.splice(index, 1)
 }
 
 function constructParam() {
-  const json = {};
-  Object.values(param.value).forEach((item) => {
+  const json = {}
+  Object.values(param.value).forEach(item => {
     if (item.key) {
-      json[item.key] = item.value;
+      json[item.key] = item.value
     }
-  });
-  return JSON.stringify(json);
+  })
+  return JSON.stringify(json)
 }
 
 function submit() {
@@ -604,16 +689,16 @@ async function loadForm(id, siteId) {
     promoArr.forEach(element => {
       selected.promoTypeChecked.push(element)
     })
-    param.value = [];
+    param.value = []
     if (form.param) {
       Object.entries(JSON.parse(form.param)).forEach(([key, value]) => {
-        const json = {};
-        json.key = key;
-        json.value = value;
-        param.value.push(json);
+        const json = {}
+        json.key = key
+        json.value = value
+        param.value.push(json)
       })
     }
-    addParam();
+    addParam()
   })
 }
 
@@ -687,8 +772,14 @@ function submitImage() {
     case 'DESKTOP_IMAGE':
       form.desktopImgUrl = selectedImage.path
       break
+    case 'DESKTOP_BACKGROUND_IMAGE':
+      form.desktopImgBackgroundUrl = selectedImage.path
+      break
     case 'MOBILE_IMAGE':
       form.mobileImgUrl = selectedImage.path
+      break
+    case 'MOBILE_BACKGROUND_IMAGE':
+      form.mobileImgBackgroundUrl = selectedImage.path
       break
     case 'DESKTOP_BANNER':
       form.desktopBannerUrl = selectedImage.path

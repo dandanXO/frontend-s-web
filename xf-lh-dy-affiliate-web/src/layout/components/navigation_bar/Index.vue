@@ -87,6 +87,12 @@ export default {
           router.push("/th/login")
         } else if (siteId === "5" || siteId === 5) {
           router.push("/ind/login")
+        } else if (siteId === "7" || siteId === 7) {
+          router.push("/lh/login")
+        } else if (siteId === "1" || siteId === 1) {
+          router.push("/xf/login")
+        } else if (siteId === "6" || siteId === 6) {
+          router.push("/dy/login")
         } else {
           location.reload();
         }

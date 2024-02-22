@@ -44,6 +44,7 @@ import { getVerificationCode } from "@/api/index/login";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
+import { ElMessage } from "element-plus";
 
 const loginRules = {
     loginName: [
@@ -145,6 +146,11 @@ const getCode = () => {
         if (res.code === 0) {
             verificationImg.value = "data:image/png;base64," + res.data.img;
             loginForm.codeId = res.data.id;
+        } else {
+            ElMessage.error({
+            type: "error",
+            message: res.message
+          });
         }
     })
 };

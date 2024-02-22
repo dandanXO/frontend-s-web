@@ -13,8 +13,6 @@ body {
 
 #q-app {
   background: $dark-page;
-  background: url("../assets/images/common/bg-img.jpg") no-repeat top center;
-  background-size: cover;
 }
 
 ::-webkit-scrollbar {
@@ -63,6 +61,10 @@ body {
 }
 
 .main-section {
+  background-image: url("../assets/images/common/bg-img.png");
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: cover;
   min-height: calc(100vh - 60px);
 }
 
@@ -77,18 +79,15 @@ body.body--dark {
 
 body.body--dark .q-header {
   background-image: url(../assets/images/common/header-btm-bg.png);
-  background-size: cover;
+  background-size: contain;
   background-position: top center;
-  background-repeat: no-repeat;
   height: 60px;
 
   .q-card__section {
-    /*
     background-image: url(../assets/images/common/bg-header.png);
-    background-size: 100% auto;
-    background-position: top;
+    background-size: 100% 100%;
+    background-position: bottom;
     background-repeat: no-repeat;
-    */
     height: 100%;
 
     max-width: 1280px;
@@ -376,8 +375,7 @@ svg {
 
 .page-header {
   width: 100%;
-  //background-color: $main-color;
-  background-color: #900000;
+  background-color: $main-color;
   font-size: $big-font-size;
   text-align: center;
   color: $header-color;

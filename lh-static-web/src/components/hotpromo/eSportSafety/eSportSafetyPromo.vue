@@ -271,6 +271,11 @@ const init = () => {
         if (matchDetails.value.length > 0) {
           insuranceRecordsParam.gameType = matchDetails.value[0].gameType;
         }
+      } else {
+        ElMessage.error({
+          type: "error",
+          message: res.message
+        });
       }
     })
     .catch((err) => {
@@ -299,9 +304,14 @@ const submitForm = async (elForm) => {
         });
         eSportInsuranceFormRef.value.resetFields();
         isESportInsuranceModalVisible.value = false;
+        isSubmitting.value = false;
+      } else {
+        ElMessage.error({
+          type: "error",
+          message: res.message
+        });
+        isSubmitting.value = false;
       }
-
-      isSubmitting.value = false;
     }
   });
 };

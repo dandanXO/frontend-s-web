@@ -32,3 +32,7 @@ export const getBbDachaAnswers = (query) => {
 export const updateBbDachaAnswer = (id, status) => {
   return https().request(`/bb-dacha-answer/${id}?_method=PUT`, Method.POST, { status: status }, ContentType.form);
 };
+
+export const getBbDachaAnswersForExport = (query) => {
+  return https().request("/bb-dacha-answer/export", Method.GET, query, ContentType.form);
+};

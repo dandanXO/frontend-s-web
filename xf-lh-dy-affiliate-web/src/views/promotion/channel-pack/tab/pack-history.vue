@@ -24,7 +24,7 @@
         </el-col>
         <el-col :xl="4" :lg="8" :md="8">
           <el-form-item :label="t('fields.osType')">
-            <el-select v-model="request.status" size="normal">
+            <el-select v-model="request.status" size="normal" :placeholder="t('fields.select')">
               <el-option :label="t('fields.all')" key="0" value="" />
               <el-option
                 v-for="status in statusList"
@@ -386,11 +386,11 @@ const shortcuts = [
 ]
 
 const statusList = [
-  { type: 'IN_QUEUE', display: t('packStatus.inQueue') },
-  { type: 'IN_PROGRESS', display: t('packStatus.inProgress') },
-  { type: 'SUCCESS', display: t('packStatus.success') },
-  { type: 'FAIL', display: t('packStatus.fail') },
-  { type: 'CANCEL', display: t('packStatus.cancel') },
+  { type: 'IN_QUEUE', display: t('packStatus.IN_QUEUE') },
+  { type: 'IN_PROGRESS', display: t('packStatus.IN_PROGRESS') },
+  { type: 'SUCCESS', display: t('packStatus.SUCCESS') },
+  { type: 'FAIL', display: t('packStatus.FAIL') },
+  { type: 'CANCEL', display: t('packStatus.CANCEL') },
 ]
 
 const imageDir = process.env.VUE_APP_IMAGE_CDN + '/'

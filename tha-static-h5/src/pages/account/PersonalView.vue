@@ -514,7 +514,7 @@ export default defineComponent({
       verificationCode: ""
     });
     const isValidPhone = () => {
-      const phonePattern = /^\d+$/;
+      const phonePattern = /^0[1-9][0-9]*$/;
       return phonePattern.test(updateSecurityVerified.phone) || t('lang.invalid_phone_num');
     };
     const isValidName = () => {

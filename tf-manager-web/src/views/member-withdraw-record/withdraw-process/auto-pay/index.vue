@@ -18,6 +18,22 @@
           :clearable="false"
           :default-time="defaultTime"
         />
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px;margin-left:10px"
+          default-first-option
+          @focus="loadSites"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-input
           v-model="request.serialNumber"
           style="width: 300px; margin-left: 10px"
@@ -477,7 +493,6 @@ import { getFinancialLevels } from '../../../../api/financial-level'
 import { getBankInfoListSimple } from '../../../../api/bank-info'
 import {
   getMemberWithdrawRecordAutopay,
-  getTotalWithdrawAmountByStatus,
   fromAutopayToPay,
   fromAutopayToFail,
   fromAutopayToSuccess,
@@ -558,6 +573,7 @@ const request = reactive({
   minWithdrawAmount: null,
   maxWithdrawAmount: null,
   vipId: null,
+  siteId: null,
 })
 
 function disabledDate(time) {
@@ -665,8 +681,7 @@ async function loadRecord() {
   page.total = ret.total
   if (page.records.length !== 0) {
     query.status = 'AUTOPAY, SENDING, WAITING_CALLBACK'
-    const { data: autoPayAmount } = await getTotalWithdrawAmountByStatus(query)
-    page.totalAmount = autoPayAmount
+    page.totalAmount = ret.sums.withdrawAmount
   } else {
     page.totalAmount = 0
   }
@@ -752,8 +767,9 @@ function populateFailReason(evt) {
   })
 }
 
-onMounted(() => {
-  loadSites()
+onMounted(async () => {
+  await loadSites()
+  request.siteId = siteList.list[0].id
   loadVips()
   loadFinancialLevels()
   loadBanks()

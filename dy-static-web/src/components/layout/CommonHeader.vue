@@ -30,7 +30,7 @@
               <div class="mailbox-notify" @click="checkMailboxUnread">
                 <router-link to="/center/mailbox">
                   <RiMailFill style="fill: #2db9e2; width: 20px" />
-                  <div v-if="mailboxUnreadTotal > 0" class="notify-red"></div>
+                  <div v-if="store.unreadTotal > 0" class="notify-red"></div>
                 </router-link>
               </div>
             </template>
@@ -1290,7 +1290,9 @@ export default defineComponent({
                   getCode();
                   // message.error(response.message);
                 }
-              });
+              }).catch((err) => {
+              getCode();
+            })
           })();
         } else {
           getCode();
@@ -1623,7 +1625,6 @@ export default defineComponent({
     };
 
     const isMailboxUnread = ref(false);
-    const mailboxUnreadTotal = ref(0);
 
     const openForgotDialog = () => {
       getCode();
@@ -1641,7 +1642,9 @@ export default defineComponent({
     const checkMailboxUnread = () => {
       getUnreadMailTotal().then((res) => {
         const { code, data } = res;
-        if (code === 0) mailboxUnreadTotal.value = data;
+        if (code === 0){
+          store.unreadTotal= data;
+        }
       })
         .catch((error) => {
           console.log(error);
@@ -1719,7 +1722,6 @@ export default defineComponent({
       loginCountdown,
       jumpOut,
       isMailboxUnread,
-      mailboxUnreadTotal,
       checkMailboxUnread,
       calculateMaxContentLength
     };
@@ -2657,7 +2659,7 @@ body {
       padding: 0;
 
       .imgbox {
-        background-image: url(../../assets/home/header_sport_new_2.png);
+        background-image: url(../../assets/home/header_sport_new_3.png);
         // background-size: 320%;
 
         background-size: 410%;

@@ -44,6 +44,18 @@ export const constantRoutes = [
     component: () => import(/* webpackChunkName: "registerAffiliate" */"../views/ind/register/index.vue")
   },
   {
+    path: "/lh/login",
+    name: "LH Login",
+    meta: { hidden: true },
+    component: () => import(/* webpackChunkName: "loginAffiliate" */"../views/lh/login/index.vue")
+  },
+  {
+    path: "/lh/register",
+    name: "LH Register",
+    meta: { hidden: true },
+    component: () => import(/* webpackChunkName: "registerAffiliate" */"../views/lh/register/index.vue")
+  },
+  {
     path: '/',
     component: Layout,
     redirect: '/dashboard',

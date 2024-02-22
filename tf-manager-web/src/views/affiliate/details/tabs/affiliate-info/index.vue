@@ -134,6 +134,33 @@
             {{ t('fields.disable') }}
           </el-button>
         </el-descriptions-item>
+        <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context" v-permission="['sys:affiliate:detail']">
+          <template #label>
+            <div>
+              <svg-icon icon-class="lock" style="height: 16px;width: 16px;" />
+              {{ t('fields.status') }}
+            </div>
+          </template>
+          <el-tag v-if="memberDetail.status === 'NORMAL'" size="mini" type="success">
+            {{ t('status.member.' + memberDetail.status) }}
+          </el-tag>
+          <el-tag v-if="memberDetail.status === 'FROZEN'" size="mini" type="danger">
+            {{ t('status.member.' + memberDetail.status) }}
+          </el-tag>
+          <el-tag v-if="memberDetail.status === null" size="mini" type="info">
+            -
+          </el-tag>
+          <el-button v-if="memberDetail.status === 'NORMAL'" type="info" size="mini" style="float: right;"
+                     v-permission="['sys:affiliate:update:state']" @click="showDialog('FREEZE_MEMBER')"
+          >
+            {{ t('fields.freeze') }}
+          </el-button>
+          <el-button v-if="memberDetail.status === 'FROZEN'" type="info" size="mini" style="float: right;"
+                     v-permission="['sys:affiliate:update:state']" @click="showDialog('UNFREEZE_MEMBER')"
+          >
+            {{ t('fields.open') }}
+          </el-button>
+        </el-descriptions-item>
         <el-descriptions-item
           label-align="left"
           label-class-name="member-label"
@@ -890,7 +917,7 @@
         </div>
       </el-form>
       <el-form
-        v-if="uiControl.dialogType === 'DISABLE_AFFILIATE'"
+        v-if="uiControl.dialogType === 'DISABLE_AFFILIATE' || uiControl.dialogType === 'FREEZE_MEMBER'"
         ref="freezeMemberForm"
         :model="freezeForm"
         :rules="freezeFormRules"
@@ -951,6 +978,35 @@
           <el-button type="primary" @click="freeze">
             {{ t('fields.confirm') }}
           </el-button>
+        </div>
+      </el-form>
+      <el-form v-if="uiControl.dialogType === 'UNFREEZE_MEMBER'" ref="unfreezeMemberForm" :model="unfreezeForm"
+               :rules="unfreezeFormRules" :inline="true" size="small" label-width="150px"
+      >
+        <el-form-item :label="t('fields.reason')" prop="reason">
+          <el-select
+            v-model="unfreezeForm.reason"
+            size="small"
+            :placeholder="t('fields.reason')"
+            class="filter-item"
+            style="width: 350px;"
+          >
+            <el-option
+              v-for="item in freezeReason.list"
+              :key="item.key"
+              :label="item.name"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.remark')" prop="remark">
+          <el-input type="textarea" v-model="unfreezeForm.remark" :rows="6" style="width: 350px;" maxlength="500"
+                    show-word-limit
+          />
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
+          <el-button type="primary" @click="unfreeze">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
       <el-form
@@ -1210,12 +1266,14 @@ import { useRoute } from 'vue-router'
 import { hasPermission } from '../../../../../utils/util'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { required, size } from '../../../../../utils/validate'
+import { getAffiliateInfo } from '../../../../../api/affiliate'
 import {
-  getAffiliateInfo,
   getMemberBalance,
   getMemberEmail,
   getMemberRealName,
   getMemberTelephone,
+  getMemberStatus,
+  freezeMember, unfreezeMember
 } from '../../../../../api/member'
 import { getFinancialLevels } from '../../../../../api/financial-level'
 import { getAffiliateRecord } from '../../../../../api/affiliate-record'
@@ -1306,6 +1364,7 @@ const loading = reactive({
 
 const updatePasswordForm = ref(null)
 const freezeMemberForm = ref(null)
+const unfreezeMemberForm = ref(null)
 const updateFinancialForm = ref(null)
 const updateModelForm = ref(null)
 const addRemarkForm = ref(null)
@@ -1343,6 +1402,7 @@ const memberDetail = reactive({
   totalDeposit: 0,
   totalWithdraw: 0,
   lastLoginTime: '',
+  status: '',
   affiliateStatus: '',
   commissionModel: '',
   timeType: '',
@@ -1397,6 +1457,13 @@ const freezeForm = reactive({
   remark: null,
   site: null,
 })
+
+const unfreezeForm = reactive({
+  id: null,
+  remark: null,
+  reason: null,
+  site: null
+});
 
 const financialForm = reactive({
   financial: null,
@@ -1466,6 +1533,11 @@ const freezeFormRules = reactive({
   reason: [required(t('message.validateReasonRequired'))],
 })
 
+const unfreezeFormRules = reactive({
+  reason: [required(t('message.validateReasonRequired'))],
+  remark: [required(t('message.validateRemarkRequired'))]
+});
+
 const financialFormRules = reactive({
   financial: [required(t('message.validateFinancialLevelRequired'))],
 })
@@ -1512,6 +1584,11 @@ async function loadReferralLink() {
   } else {
     link.value = ''
   }
+}
+
+async function loadMemberStatus() {
+  const { data: status } = await getMemberStatus(props.affId, memberDetail.siteId)
+  memberDetail.status = status
 }
 
 function showDialog(type) {
@@ -1593,6 +1670,21 @@ function showDialog(type) {
     }
     affForm.affiliateCode = null
     uiControl.dialogTitle = t('fields.changeAffiliate')
+  } else if (type === "FREEZE_MEMBER") {
+    if (freezeMemberForm.value) {
+      freezeMemberForm.value.resetFields();
+    }
+    freezeForm.freezeType = freezeType.list[0].value;
+    freezeForm.reason = freezeReason.list[0].value;
+    freezeForm.site = memberDetail.siteId;
+    uiControl.dialogTitle = t('fields.freezeMember');
+  } else if (type === "UNFREEZE_MEMBER") {
+    if (unfreezeMemberForm.value) {
+      unfreezeMemberForm.value.resetFields();
+    }
+    unfreezeForm.remark = "";
+    unfreezeForm.site = site.id;
+    uiControl.dialogTitle = t('fields.unfreezeMember');
   }
   uiControl.dialogVisible = true
 }
@@ -1617,16 +1709,32 @@ function changePassword() {
 function freeze() {
   freezeMemberForm.value.validate(async valid => {
     if (valid) {
-      await disableAffiliate(props.affId, freezeForm)
-      const data = await getAffiliateDetails(props.affId, site.id)
-      Object.keys({ ...data.data }).forEach(detailField => {
-        memberDetail[detailField] = data.data[detailField]
-      })
+      if (uiControl.dialogType === 'DISABLE_AFFILIATE') {
+        await disableAffiliate(props.affId, freezeForm)
+        const data = await getAffiliateDetails(props.affId, site.id)
+        Object.keys({ ...data.data }).forEach(detailField => {
+          memberDetail[detailField] = data.data[detailField]
+        })
+      } else if (uiControl.dialogType === 'FREEZE_MEMBER') {
+        await freezeMember(props.affId, freezeForm)
+        await loadMemberStatus()
+      }
       uiControl.dialogVisible = false
       ElMessage({ message: t('message.affiliateDisabled'), type: 'success' })
     }
   })
 }
+
+const unfreeze = () => {
+  unfreezeMemberForm.value.validate(async (valid) => {
+    if (valid) {
+      await unfreezeMember(props.affId, unfreezeForm);
+      await loadMemberStatus();
+      uiControl.dialogVisible = false;
+      ElMessage({ message: t('message.unfreezeMemberSuccess'), type: "success" });
+    }
+  });
+};
 
 async function approve() {
   await approveAffiliate(props.affId, LOGIN_USER_NAME.value)
@@ -1874,6 +1982,7 @@ onMounted(async () => {
   Object.keys({ ...aff }).forEach(detailField => {
     superiorAffiliateDetail[detailField] = aff[detailField]
   })
+  await loadMemberStatus()
   await loadAffiliateRemark()
   await loadBalance()
   await loadAffiliateRecord()

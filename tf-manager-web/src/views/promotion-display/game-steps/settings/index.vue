@@ -142,7 +142,6 @@ async function loadGameStepsConfig() {
         }
       }
     })
-    addParam();
   });
 }
 

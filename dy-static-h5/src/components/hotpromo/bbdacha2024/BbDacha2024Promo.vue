@@ -22,7 +22,7 @@
           <button
             class="vote-btn"
             @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.homeTeam })"
-            :disable="data.votedTeam && data.votedTeam === data.homeTeam"
+            :disabled="data.votedTeam && data.votedTeam === data.homeTeam"
           >
             {{ data.votedTeam && data.votedTeam === data.homeTeam ? "已投票" : data.votedTeam ? "" : "投票" }}
           </button>
@@ -32,10 +32,18 @@
       <div class="competition-details">
         <div class="details-date">{{ data.matchTime }}</div>
 
-        <div class="details-match">
-          2024BB
-          <br />
-          别墅冬季杯 常规赛
+        <div class="details-match" v-html="data.quizTitle"></div>
+
+        <div class="competition-mid">
+          <div v-if="(data.votedTeam && data.votedTeam === 'draw') || !data.votedTeam" class="team-vote">
+            <button
+              class="vote-btn"
+              @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: 'draw' })"
+              :disabled="data.votedTeam && data.votedTeam === 'draw'"
+            >
+              {{ data.votedTeam && data.votedTeam === "draw" ? "已投平局" : data.votedTeam ? "" : "平局" }}
+            </button>
+          </div>
         </div>
 
         <div class="details-status">
@@ -62,7 +70,7 @@
           <button
             class="vote-btn"
             @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.awayTeam })"
-            :disable="data.votedTeam && data.votedTeam === data.awayTeam"
+            :disabled="data.votedTeam && data.votedTeam === data.awayTeam"
           >
             {{ data.votedTeam && data.votedTeam === data.awayTeam ? "已投票" : data.votedTeam ? "" : "投票" }}
           </button>
@@ -87,7 +95,7 @@
       <q-tab-panel name="tabOne">
         <div class="table-container">
           <p class="q-mt-md text-bold" style="text-align: center">
-            活动期间，用户竞猜当日竞猜正确次数≥3场，彩金按当日存款总额派发对应存款反比彩金金额
+            活动期间，每日竞猜正确次数1~2场的会员当日存款可领对应存款反比金额
           </p>
 
           <table class="promo-table">
@@ -100,20 +108,15 @@
             </thead>
             <tbody>
               <tr>
-                <td>≥3</td>
-                <td>0.05%</td>
-                <td>58</td>
-              </tr>
-              <tr>
-                <td>≥5</td>
-                <td>0.08%</td>
+                <td>1~2</td>
+                <td>0.8%</td>
                 <td>128</td>
               </tr>
-              <tr>
-                <td>≥6</td>
-                <td>0.10%</td>
-                <td>388</td>
-              </tr>
+              <!--              <tr>-->
+              <!--                <td>≥3</td>-->
+              <!--                <td>1.0%</td>-->
+              <!--                <td>388</td>-->
+              <!--              </tr>-->
             </tbody>
           </table>
         </div>
@@ -125,11 +128,11 @@
         <div class="rules-container">
           <ol class="rules-content">
             <li>
-              活动期间，会员每日可免费参与全部竞猜，当日BB别墅冬季杯竞猜正确场次≥3次可获当日总存款对应反比，彩金与次日24小时内派发，彩金仅需3倍流水即可提款；
+              活动期间，BB别墅冬季杯竞猜正确场次1~2次可获当日存款对应反比，彩金与次日24小时内派发，彩金仅需3倍流水即可提款；
             </li>
             <li>活动期间，请在指定比赛开赛前竞猜，若超出开赛时间则视为放弃竞猜；</li>
             <li>
-              活动期间会员竞猜正确场次≥3次且会员当日未存款，次日清零重新计算，若会员彩金金额超出彩金上限金额则按彩金上限派发奖金；
+              活动期间会员竞猜正确场次达到对应标准且会员当日未存款，次日清零重新计算，若会员彩金金额超出彩金上限金额则按彩金上限派发奖金；
             </li>
             <li>
               每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将在任何时候保留可以全部停止、取消优惠或索回已支付全部优惠的权利；
@@ -202,8 +205,9 @@
       </div>
 
       <div class="promo-records-count">
-        <div>竞猜正确次数: {{ recordsCount.wonTimes }}</div>
-        <div>累计竞猜正确次数: {{ recordsCount.attendTimes }}</div>
+        <div>总竞猜次数: {{ recordsCount.attendTimes }}</div>
+        <div>总竞猜正确次数: {{ recordsCount.wonTimes }}</div>
+        <div>今日正确次数: {{ recordsCount.todayWonTimes }}</div>
       </div>
 
       <table class="promo-table" cellspacing="0" cellpading="0">
@@ -230,7 +234,8 @@
   <q-dialog v-model="confirmVoteDialog" persistent>
     <q-card class="confirm-vote-card">
       <q-card-section class="q-mb-md row justify-center">
-        <div class="text-h6">您确定要把票投给 {{ submitParam.answerOne }} 吗？</div>
+        <div class="text-h6" v-if="submitParam.answerOne === 'draw'">您确定要投"平局"吗？</div>
+        <div class="text-h6" v-else>您确定要把票投给 {{ submitParam.answerOne }} 吗？</div>
       </q-card-section>
 
       <q-card-actions align="center">
@@ -384,6 +389,7 @@ table.promo-table {
       display: flex;
       flex-direction: column;
       position: relative;
+      min-height: 125px;
 
       .team-logo {
         max-width: 60px;
@@ -446,8 +452,8 @@ table.promo-table {
         font-weight: 700;
         font-size: 14px;
         padding: 8px 8px;
-        border-radius: 40px;
-        width: 130px;
+        border-radius: 20px;
+        width: 140px;
         text-align: center;
         margin: 0 auto;
       }
@@ -456,8 +462,8 @@ table.promo-table {
         color: #7a8eb9;
         font-size: 14px;
         text-align: center;
-        margin-top: 16px;
-        padding-bottom: 24px;
+        margin-top: 6px;
+        padding-bottom: 0px;
       }
 
       .details-status {
@@ -469,10 +475,10 @@ table.promo-table {
         padding-top: 6px;
         line-height: 1;
         padding-bottom: 6px;
-        border-top-right-radius: 20px;
-        border-top-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
         font-weight: 700;
-        bottom: -16px;
+        top: -16px;
         left: 50%;
         transform: translate(-50%, 0);
 
@@ -606,5 +612,48 @@ table.promo-table {
       margin-bottom: 10px !important;
     }
   }
+}
+
+@media (max-width: 375px) {
+  .competition-container .competition-item .competition-details {
+    min-width: 0px;
+  }
+  .competition-container .competition-item .competiton-team {
+    width: 40%;
+  }
+  .competition-container .competition-item .competition-details .details-date {
+    width: auto;
+  }
+  .competition-container .competition-item .competiton-team .team-vote .vote-btn {
+    min-width: 50px;
+  }
+}
+
+.competition-mid {
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+  position: absolute;
+  bottom: 0px;
+  height: 36px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.competition-mid .vote-btn {
+  border-radius: 80px;
+  min-width: 80px;
+  color: #7a80a1;
+  box-shadow: 0px -2px 5px 0px #a2bff4 inset;
+  font-size: 13px;
+}
+
+.competition-mid .vote-btn:hover {
+  filter: brightness(0.8);
+}
+.competition-mid .vote-btn.disable {
+  background: #dddddd;
+  color: #ffffff;
 }
 </style>

@@ -3,7 +3,13 @@
     <div class="receive-container" v-if="!promoNotReady && !bonusOpened">
       <img :src="require(`../assets/images/hongbaoyu/hongbao-bg.png`)" style="display: block; width: 100%" />
       <div class="contents" v-if="!bonusOpened">
-        <el-button class="promo-common-btn" size="large" :loading="loadingClaim" @click="getPromotion"></el-button>
+        <q-btn
+          class="promo-common-btn"
+          size="large"
+          ripple="false"
+          :loading="loadingClaim"
+          @click="getPromotion"
+        ></q-btn>
       </div>
     </div>
 
@@ -27,7 +33,7 @@
       <div class="contents">
         <div class="bullet-wrapper">
           <img :src="require(`../assets/images/hongbaoyu/coin-bullet.png`)" />
-          <span>当日累积存款≥100元或以上会员均可参与限时红包活动</span>
+          <span>历史存款≥1000元或以上会员均可参与限时红包活动</span>
         </div>
         <div class="bullet-wrapper">
           <img :src="require(`../assets/images/hongbaoyu/coin-bullet.png`)" />
@@ -169,12 +175,13 @@ onMounted(() => {
   flex-direction: column;
   position: relative;
   background: url("../assets/images/hongbaoyu/mobile-bg-ori.png");
-  background-size: 100% auto;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
-  height: 940px;
+  height: 910px;
   background-color: #d60202;
 
   .receive-container {
+    margin-top: 3%;
     position: relative;
     width: 50%;
     // margin-top: 100px;
@@ -196,7 +203,13 @@ onMounted(() => {
         border: unset;
         aspect-ratio: 392/168;
         //height: 100px;
+        box-shadow: none;
+        transition: none;
         padding: 0 100px;
+
+        &:before {
+          box-shadow: none;
+        }
       }
 
       :deep(.el-button) {
@@ -209,6 +222,7 @@ onMounted(() => {
   }
 
   .winner-container {
+    margin-top: 0px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -258,7 +272,7 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
     position: relative;
-    margin-top: 30px;
+    margin-top: 10px;
 
     .title {
       width: 50% !important;

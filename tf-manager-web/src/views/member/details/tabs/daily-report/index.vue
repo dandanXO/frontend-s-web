@@ -57,7 +57,13 @@
               {{ list.platformName }}
             </div>
           </template>
-          <span>{{ list.bet }} / {{ list.payout }}</span>
+          <span
+            v-formatter="{data: list.bet, type: 'money'}"
+          />
+          /
+          <span
+            v-formatter="{data: list.payout, type: 'money'}"
+          />
         </el-descriptions-item>
         <!-- Add an additional empty el-descriptions-item when there are exactly three records -->
         <el-descriptions-item
@@ -92,7 +98,9 @@
               {{ t('fields.thirdPartyTotalBet') }}
             </div>
           </template>
-          <span>{{ platform.totalBet }}</span>
+          <span
+            v-formatter="{data: platform.totalBet, type: 'money'}"
+          />
         </el-descriptions-item>
         <el-descriptions-item
           label-align="left"
@@ -116,7 +124,9 @@
               {{ t('fields.thirdPartyTotalWin') }}
             </div>
           </template>
-          <span>{{ platform.totalWin }}</span>
+          <span
+            v-formatter="{data: platform.totalWin, type: 'money'}"
+          />
         </el-descriptions-item>
         <el-descriptions-item
           label-align="left"
@@ -137,6 +147,7 @@
 import { defineProps, onMounted, reactive } from 'vue'
 import moment from 'moment'
 import { memberDailyPlatformSummary } from '../../../../../api/member-daily-summary'
+import { getSimplePlatformsBySite } from '../../../../../api/platform'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 
@@ -149,6 +160,7 @@ const props = defineProps({
 })
 
 const platform = reactive({
+  allSitePlatforms: [],
   sitePlatform: [],
   totalBet: 0,
   totalWin: 0,
@@ -172,7 +184,14 @@ const request = reactive({
   betTime: [defaultStartDate, defaultEndDate],
 })
 
+async function loadAllSitePlatforms() {
+  const { data: ret } = await getSimplePlatformsBySite(site.id)
+  platform.allSitePlatforms = ret
+}
+
 async function loadPlatformSummaryList() {
+  await loadAllSitePlatforms()
+
   const query = {}
   query.siteId = site.id
   query.memberId = props.mbrId
@@ -230,12 +249,22 @@ async function loadPlatformSummaryList() {
   // Convert the object back to an array
   const resultArray = Object.values(groupedByGameType)
 
+  // compare allSitePlatforms items with resultArray, add missing platform to its type with 0 bet/payout
+  platform.allSitePlatforms.forEach((item) => {
+    const found = ret.find((element) => element.gameType === item.gameType && element.plaformName === item.code)
+    if (!found) {
+      if (!resultArray.find((element) => element.gameType === item.gameType)) {
+        resultArray.push({ gameType: item.gameType, list: [[{ platformName: item.code, bet: 0, payout: 0 }]] })
+      } else {
+        const index = resultArray.findIndex((element) => element.gameType === item.gameType)
+        resultArray[index].list[0].push({ platformName: item.code, bet: 0, payout: 0 })
+      }
+    }
+  })
   platform.sitePlatform = resultArray
   platform.totalBet = getTotalBet
   platform.totalPayout = getTotalPayout
   platform.totalWin = getTotalWinLose
-
-  console.log('gameType : ', resultArray)
 }
 
 // function calendarChange(date) {

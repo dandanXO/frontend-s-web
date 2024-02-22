@@ -62,6 +62,7 @@ const getReferral = () => {
   getReferralLink()
     .then((res) => {
       if (res.code === 0) referralLink.value = "https://" + location.hostname + `/refer/${res.data}`;
+      else ElMessage.error(res.message)
     })
     .catch((err) => {
       console.log(err);

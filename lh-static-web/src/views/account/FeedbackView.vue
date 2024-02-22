@@ -290,6 +290,8 @@ const getQuesTitleOptions = () => {
     if (res.code === 0) {
       quesTitleOptions.value = res.data
       recordsPagination.pages = res.data.length
+    } else {
+      ElMessage.error(res.message)
     }
 
   })
@@ -366,6 +368,8 @@ const btnClick = (btnType) => {
         // questionDiv.style.display = "none";
         // QRDiv.style.display = "block";
         isAnswered.value = true;
+      } else {
+        ElMessage.error(res.message)
       }
     })
   }
@@ -419,6 +423,8 @@ const loadPersonalMailbox = () => {
           const response = res.data;
           mailboxState.mailboxList[mailboxState.active].list.push(...response.records);
           mailboxState.mailboxList[mailboxState.active].total = response.total;
+        } else {
+          ElMessage.error(res.message)
         }
       })
       .catch((error) => {
@@ -438,6 +444,8 @@ const loadPersonalMailbox = () => {
         if (response.code === 0) {
           mailboxState.mailboxList["sent"].list.push(...response.data.records);
           mailboxState.mailboxList["sent"].total = response.data.total;
+        } else {
+          ElMessage.error(response.message)
         }
       })
       .catch((error) => {
@@ -507,7 +515,7 @@ const onSubmit = (e) => {
             mailboxState.mailboxList.write.title = "";
             mailboxState.mailboxList.write.content = "";
           } else {
-            // message.error(response.message);
+            ElMessage.error(response.message)
           }
         })
         .catch((error) => {
@@ -531,6 +539,8 @@ const testAns = () => {
         uiIsShowStatus.questionBox= true;
         isAnswered.value = true;
       }
+    } else {
+      ElMessage.error(res.message)
     }
   })
 }

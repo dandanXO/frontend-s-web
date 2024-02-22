@@ -322,6 +322,24 @@
             + {{ t('fields.add_new') }}
           </el-button>
         </el-form-item>
+        <el-form-item :label="t('fields.redPacketMinDayDeposit')" prop="redPacketMinDayDeposit" style="width: 600px;">
+          $
+          <el-input-number
+            v-model="form.redPacketMinDayDeposit"
+            style="width: 135px"
+            :controls="false"
+            @keypress="restrictInput($event)"
+          />
+        </el-form-item>
+        <el-form-item :label="t('fields.redPacketMinTotalDeposit')" prop="redPacketMinTotalDeposit" style="width: 600px;">
+          $
+          <el-input-number
+            v-model="form.redPacketMinTotalDeposit"
+            style="width: 135px"
+            :controls="false"
+            @keypress="restrictInput($event)"
+          />
+        </el-form-item>
         <el-form-item :label="t('fields.lastDigitMinDayDeposit')" prop="lastDigitMinDayDeposit" style="width: 600px;">
           $
           <el-input-number
@@ -676,6 +694,8 @@ const form = reactive({
   redPacketAmountAfterReachingLimit: 0,
   vipRules: [],
   lastDigitMinDayDeposit: 0,
+  redPacketMinDayDeposit: 0,
+  redPacketMinTotalDeposit: 0,
   lastDigitRules: [],
   status: null,
 })
@@ -767,10 +787,6 @@ function showEdit(banner) {
         form.siteId = element.id
       }
     })
-    console.log("===========")
-    console.log(banner)
-    console.log(form)
-    console.log("===========")
   })
 }
 

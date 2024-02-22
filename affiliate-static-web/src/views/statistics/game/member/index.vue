@@ -35,6 +35,11 @@
           $ <span v-formatter="{data: scope.row.bonus,type: 'money'}" />
         </template>
       </el-table-column>
+      <el-table-column prop="bonus" :label="t('fields.rebate')" align="center" min-width="120">
+        <template #default="scope">
+          $ <span v-formatter="{data: scope.row.rebateAmount, type: 'money'}" />
+        </template>
+      </el-table-column>
       <el-table-column prop="adjustment" :label="t('fields.adjustment')" align="center" min-width="120">
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.adjustment,type: 'money'}" />

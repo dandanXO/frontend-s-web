@@ -342,6 +342,7 @@ function resetQuery() {
   request.status = ["UNSETTLED", "SETTLED", "CANCEL"];
   request.gameName = null;
   request.affiliateName = null;
+  page.pagingState = null
 }
 
 const page = reactive({

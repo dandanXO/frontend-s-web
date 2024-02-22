@@ -227,6 +227,10 @@ export default defineComponent({
               getWithdrawalMethods();
               loadCards();
             } else {
+              ElMessage.error({
+                type: "error",
+                message: response.message
+              });
               // message.error(response.message);
             }
           }).catch((error) => {
@@ -334,6 +338,11 @@ export default defineComponent({
                   }
                 }
             });
+          } else {
+            ElMessage.error({
+              type: "error",
+              message: response.message
+            });
           }
         }).catch((error) => {
           console.log(error.message);
@@ -376,6 +385,10 @@ export default defineComponent({
             selectMethod(withdrawalMethods.value[0], 0)
           }
         } else {
+          ElMessage.error({
+            type: "error",
+            message: res.message
+          });
           // message.error(response.message);
         }
       })

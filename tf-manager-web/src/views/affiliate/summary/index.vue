@@ -144,6 +144,12 @@
             <span v-formatter="{data: scope.row.bonus, type: 'money'}" />
           </template>
         </el-table-column>
+        <el-table-column prop="rebate" :label="t('fields.rebateAmount')" align="center" width="120">
+          <template #default="scope">
+            $
+            <span v-formatter="{data: scope.row.rebate, type: 'money'}" />
+          </template>
+        </el-table-column>
         <el-table-column
           prop="bet"
           :label="t('fields.totalBet')"

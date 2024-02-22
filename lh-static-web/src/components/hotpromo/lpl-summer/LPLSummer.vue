@@ -218,7 +218,10 @@ const onClaimBtnClicked = (isBtnOne) => {
   promoApply(param)
     .then((res) => {
       if (res.code == 0) ElMessage.success("申请成功");
-      else ElMessage.error(res);
+      else ElMessage.error({
+        type: "error",
+        message: res.message
+      });
     })
     .catch(() => {})
     .then(() => {

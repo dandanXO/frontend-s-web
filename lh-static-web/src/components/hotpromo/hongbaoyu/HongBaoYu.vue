@@ -24,6 +24,7 @@
 <script setup>
 import { ref } from "vue";
 import { claimBonusItem } from "@/api/index/promo";
+import { ElMessage } from "element-plus";
 const promoNotReady = ref(false);
 const bonusOpened = ref(false);
 const winAmount = ref(0);
@@ -39,7 +40,10 @@ const getPromotion = () => {
 
         bonusOpened.value = true;
       } else {
-        // ElMessage.error(res.message)
+        ElMessage.error({
+          type: "error",
+          message: res.message
+        });
         bonusOpened.value = false;
       }
     })

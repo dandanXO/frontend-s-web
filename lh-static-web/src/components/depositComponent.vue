@@ -286,6 +286,8 @@ function initPay() {
       if (payMethods[0].extra && payMethods[0].extra.banks) {
         bankCardList.value = payMethods[0].extra.banks;
       }
+    } else {
+      ElMessage.error(d.message)
     }
   });
 }

@@ -34,11 +34,19 @@
           style="width: 200px; margin-left: 10px;"
           :placeholder="t('fields.loginName')"
         />
-        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadBbDachaAnswer">
+        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadGameStepsRecords">
           {{ t('fields.search') }}
         </el-button>
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">
           {{ t('fields.reset') }}
+        </el-button>
+        <el-button
+          size="mini"
+          type="primary"
+          v-permission="['sys:game-steps:export']"
+          @click="requestExportExcel"
+        >
+          {{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
     </div>
@@ -79,10 +87,26 @@
       v-model:page-size="request.size"
       v-model:page-count="page.pages"
       v-model:current-page="request.current"
-      @current-change="loadBbDachaAnswer"
-      @size-change="loadBbDachaAnswer"
+      @current-change="loadGameStepsRecords"
+      @size-change="loadGameStepsRecords"
     />
   </div>
+  <el-dialog
+    :title="t('fields.exportToExcel')"
+    v-model="uiControl.messageVisible"
+    append-to-body
+    width="500px"
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+  >
+    <span>{{ t('message.requestExportToExcelDone1') }}</span>
+    <router-link :to="`/site-management/download-manager`">
+      <el-link type="primary">
+        {{ t('menu.DownloadManager') }}
+      </el-link>
+    </router-link>
+    <span>{{ t('message.requestExportToExcelDone2') }}</span>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -93,13 +117,16 @@ import { onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
-import { getGameStepsRecords } from "@/api/game-steps";
+import { getGameStepsRecords, getGameStepsRecordsForExport } from "@/api/game-steps";
 import moment from "moment";
 
 const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
+const uiControl = reactive({
+  messageVisible: false
+});
 
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD');
@@ -124,15 +151,9 @@ const page = reactive({
   loading: false
 });
 
-async function loadBbDachaAnswer() {
+async function loadGameStepsRecords() {
   page.loading = true;
-  const requestCopy = { ...request };
-  const query = {};
-  Object.entries(requestCopy).forEach(([key, value]) => {
-    if (value) {
-      query[key] = value;
-    }
-  });
+  const query = checkQuery();
   const { data: ret } = await getGameStepsRecords(query);
   page.pages = ret.pages;
   page.records = ret.records;
@@ -149,6 +170,27 @@ function resetQuery() {
   request.siteId = site.value.id;
   request.loginName = null;
   request.createTime = convertDate(new Date());
+}
+
+function checkQuery() {
+  const requestCopy = { ...request };
+  const query = {};
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value;
+    }
+  });
+  return query;
+}
+
+async function requestExportExcel() {
+  const query = checkQuery()
+  query.requestBy = store.state.user.name
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+  const { data: ret } = await getGameStepsRecordsForExport(query)
+  if (ret) {
+    uiControl.messageVisible = true
+  }
 }
 
 onMounted(async () => {

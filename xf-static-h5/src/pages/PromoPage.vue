@@ -1,18 +1,11 @@
 <template>
-
-  <q-card-section class="page-title">
-    优惠活动
-  </q-card-section>
+  <q-card-section v-if="!isPromoDetail"
+    class="page-title">优惠活动</q-card-section>
 
   <div class="promo-container" style="background: #090b19">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
-        <q-tab
-          v-for="(tab, i) in tabItems"
-          :key="i"
-          :name="tab.name"
-          :label="tab.label"
-        />
+        <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
       </q-tabs>
 
       <q-tab-panels v-model="tab" animated>
@@ -28,7 +21,7 @@
                   data-aos-easing="ease-out"
                   data-aos-duration="1000"
                 >
-                  <div 
+                  <div
                   class="promo-item"
                     v-if="
                       promo.promoType
@@ -46,10 +39,7 @@
                       </div>
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
-                          <img
-                            class="promo-content"
-                            :src="imgURL + promo.mobileImgUrl"
-                          />
+                          <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
                       <div class="pad-label label-new">最新活动</div>
@@ -66,10 +56,7 @@
                       </div>
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
-                          <img
-                            class="promo-content"
-                            :src="imgURL + promo.mobileImgUrl"
-                          />
+                          <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
                       <div class="pad-label label-new">最新活动</div>
@@ -80,38 +67,28 @@
             </div>
           </div>
           <div v-else class="selected-promo">
-            <div class="selected-promo-wrapper">
-              <div class="banner-container">
-                <!-- <div
-                    class="promo-bg"
-                    :style="
-                    'background-image: url(' +
-                    imgURL +
-                    (selectedPromo.mobileBannerUrl ? selectedPromo.mobileBannerUrl : selectedPromo.mobileImgUrl) +
-                    ')'
-                  "
-                ></div> -->
-                <!-- <div class="promo-bg"> -->
+            <div class="selected-promo-wrapper" :class="`bg__${selectedPromo.promoCode}`">
+              <div class="banner-container"
+                v-if="!isSpecialPromo"
+              >
                 <img
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
                   style="display: block; width: 100%"
                 />
-                <!-- </div> -->
               </div>
-              <div class="inner">
+              <div class="inner"
+                :class="isSpecialPromo ? 'special-promo' : ''">
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
                   :class="{
-                    welcome:
-                      selectedPromo.promoType.toLowerCase() === 'welcome',
+                    welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
                     eSport: selectedPromo.promoType.toLowerCase() === 'esport',
                     fish: selectedPromo.promoType.toLowerCase() === 'fish',
-                    liveCasino:
-                      selectedPromo.promoType.toLowerCase() === 'live casino',
+                    liveCasino: selectedPromo.promoType.toLowerCase() === 'live casino',
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
@@ -126,10 +103,7 @@
   </div>
 
   <q-dialog width="100%" v-model="isDisplayLogin">
-    <q-card
-      style="width: 100%; padding: 20px"
-      class="bg-white text-black text-center"
-    >
+    <q-card style="width: 100%; padding: 20px" class="bg-white text-black text-center">
       <q-card-section class="q-mb-md">
         <strong>系统提示</strong>
         <br />
@@ -185,6 +159,7 @@ export default defineComponent({
     const $q = useQuasar();
     const ui = useUI();
     const isDisplayLogin = ref(false);
+    const isSpecialPromo= ref(false);
 
     const tab = ref("all");
     const tabItems = [
@@ -221,7 +196,7 @@ export default defineComponent({
       if (route.query === null) {
         isPromoDetail.value = false
       } else {
-        isPromoDetail.value = route.query.name
+        isPromoDetail.value = route.query.name;
         ui.setScrollPosition("vertical", 0, 200);
       }
     });
@@ -249,6 +224,13 @@ export default defineComponent({
           })
     }
     const showPromoDetails = (promo) => {
+      if (promo.promoCode === "cny-hongbaoyu" || promo.promoCode === "cny-spinwheel" || promo.redirectUrl === "cny-hongbaoyu") {
+        isSpecialPromo.value = true
+      } else {
+        isSpecialPromo.value = false
+      }
+
+
       if (!store.token) {
         isDisplayLogin.value = true
       } else {
@@ -278,7 +260,9 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      api.get("/promo/page").then((res) => {
+      const platformApiUrl = (store.hasToken()) ? "/session/loggedInPromoPages" : "/promo/page";
+
+      api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
           promoState.promoList = [];
           var promoItems = res.data;
@@ -289,7 +273,6 @@ export default defineComponent({
               // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
             } else {
               promoState.promoList.push(element);
-
               if (route.query.name && String(element.redirectUrl) === route.query.name) {
                 showPromoDetails(element)
               }
@@ -317,6 +300,7 @@ export default defineComponent({
       isPromoDetail,
       showPromoDetails,
       selectedPromo,
+      isSpecialPromo,
       banner,
       imgURL,
       store,
@@ -394,8 +378,8 @@ export default defineComponent({
       background-repeat: no-repeat;
       background-position: center bottom;
       overflow: hidden;
-      height: 40vw;
-      max-height: 130px;
+      //height: 40vw;
+      //max-height: 130px;
       margin: 10px;
 
       img {
@@ -472,7 +456,7 @@ export default defineComponent({
         // display: grid;
         // margin-top: 20px;
         // grid-template-columns: 1fr;
-        
+
         display: flex;
         margin-top: 20px;
         flex-direction: column;
@@ -487,7 +471,7 @@ export default defineComponent({
           transition: 0.4s ease-in;
           margin-bottom: 20px;
           overflow: hidden;
-          padding-top: 25px;
+          padding-top: 30px;
 
           img {
           }
@@ -512,13 +496,16 @@ export default defineComponent({
 
               display: flex;
               justify-content: center;
-              align-items: center;
+              //align-items: center;
               gap: 30px;
 
               .promo-content {
                 // width: 100%;
-                width: unset;
-                height: 100%;
+                width: 100%;
+                //aspect-ratio: 1004/252;
+                height: auto;
+
+                //height: 100%;
 
                 &.isDesktop {
                   display: block;
@@ -605,6 +592,20 @@ export default defineComponent({
     width: 100%;
 
     .selected-promo-wrapper {
+      &.bg__cny-spinwheel {
+        background-image: url("../assets/images/promotion/hotpromo/cny-spinwheel/cny-spinwheel-bg.jpg");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: top center;
+        background-color: #a1211d;
+
+        .welcome{
+          width: calc(100% - 30px);
+          margin:0 auto;
+          padding-bottom: 60px;
+        }
+      }
+
       .banner-container {
         width: 100%;
 
@@ -638,6 +639,11 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
 
+        &.special-promo {
+          width: 100%;
+          margin:0 auto;
+        }
+
         img {
           margin-bottom: 5px;
         }
@@ -660,8 +666,7 @@ export default defineComponent({
           th {
             padding: 5px;
             text-align: center;
-            background-image: linear-gradient(0deg, #07414c 0, #058096 100%),
-              linear-gradient(#d0d1d3, #d0d1d3);
+            background-image: linear-gradient(0deg, #07414c 0, #058096 100%), linear-gradient(#d0d1d3, #d0d1d3);
           }
 
           td {
@@ -724,7 +729,7 @@ export default defineComponent({
   right: 5px;
   top: 5px;
   z-index: 3;
-  
+
 }
 
 .pad-label.label-new {
@@ -735,7 +740,7 @@ export default defineComponent({
   color: #ffffff;
   padding: 12px 7px;
   position: absolute;
-  bottom: 10px;
+  bottom: 0px;
   left: 0;
   width: 100%;
 }
@@ -765,8 +770,7 @@ export default defineComponent({
   }
 
   .q-tab--active .q-tab__indicator {
-    background: url("../assets/images/promotion/tab_bg.png") no-repeat center
-      center;
+    background: url("../assets/images/promotion/tab_bg.png") no-repeat center center;
     background-size: 20px 10px;
     width: 100%;
     height: 10px;

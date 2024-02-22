@@ -27,6 +27,7 @@ export default {
     please_select_bank: "โปรดเลือกธนาคาร",
     next_page: "หน้าต่อไป",
     username_between_6_12: "ชื่อที่ใช้ลงทะเบียน ควรมีพยัญชนะ 6-12 ตัว",
+    first_digit_must_be_0: "ตัวเลขแรกต้องเป็น 0",
 
     // vip
     level: "ระดับ",
@@ -453,13 +454,14 @@ export default {
     delete: "ลบ",
     please_enter_card_num: "กรุณาใส่เลขบัตร",
     please_enter_bank_acc: "กรุณาใส่บัญชีธนาคาร",
+    card_num_invalid: "หมายเลขบัตรไม่ถูกต้อง",
     prize: "รางวัล",
     date: "วันที่",
     youWon: "คุณชนะ",
     totalBonus: "โบนัสที่ได้ทั้งหมด",
     spinRemaining: "คุณมี {spinCount} ตั๋วที่หมุนได้",
     loginToCont: "เข้าสู่ระบบเพื่อดำเนินการต่อ",
-    you_got_new_spin_wheel_spin: "ขอแสดงความยินดีด้วย ! คุณได้รับตั๋วหมุนวงล้อ",
+    you_got_new_spin_wheel_spin: "คุณได้รับตั๋วหมุนวงล้อฟรี " + "*ตรวจสอบที่หน้าโปรโมชั่น*",
     go_now: "หมุนเดี๋ยวนี้",
     step_to_download_android: "ขั้นตอนการดาวน์โหลดแอพ สำหรับแอนดรอยด์",
     step_to_download_ios: "ขั้นตอนการดาวน์โหลดแอพ สำหรับ IOS",

@@ -27,6 +27,7 @@ export default {
     please_select_bank: "Please Select A Bank",
     next_page: "Next Step",
     username_between_6_12: "Username should contain 6-12 characters",
+    first_digit_must_be_0: "First digit must be 0",
 
     // vip
     level: "Level",
@@ -453,6 +454,7 @@ export default {
     are_you_sure_want_delete: "Are you sure you want to delete ",
     delete: "Delete",
     please_enter_card_num: "Please enter card number.",
+    card_num_invalid: "Invalid Card Number",
     please_enter_bank_acc: "Please enter bank account.",
     estimate_arrival: "Estimate Withdraw: ",
 
@@ -463,7 +465,7 @@ export default {
     totalBonus: "Total Bonus",
     spinRemaining: "You have {spinCount} spins remaining",
     loginToCont: "Login to Continue",
-    you_got_new_spin_wheel_spin: "Congratulation! You 've earned a Lucky Draw Spin!",
+    you_got_new_spin_wheel_spin: "You have received a free wheel-spinning ticket. Check on the promotion page.",
     go_now: "Go Now",
     step_to_download_android: "Steps to download the app for Android",
     step_to_download_ios: "Steps to download the app for IOS",
