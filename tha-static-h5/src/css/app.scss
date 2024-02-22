@@ -13,6 +13,9 @@ body {
 
 #q-app {
   background: $dark-page;
+  background: url("../assets/images/common/bg-img-thai-theme.png") no-repeat top center;
+  background-size: cover;
+
 }
 
 ::-webkit-scrollbar {
@@ -61,10 +64,10 @@ body {
 }
 
 .main-section {
-  background-image: url("../assets/images/common/bg-img.png");
-  background-position: top center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  // background-image: url("../assets/images/common/bg-img.png");
+  // background-position: top center;
+  // background-repeat: no-repeat;
+  // background-size: cover;
   min-height: calc(100vh - 60px);
 }
 
@@ -78,7 +81,7 @@ body.body--dark {
 }
 
 body.body--dark .q-header {
-  background-image: url(../assets/images/common/header-btm-bg.png);
+  background-image: url(../assets/images/common/header-btm-bg-thai-theme.png);
   background-size: contain;
   background-position: top center;
   height: 60px;
@@ -172,6 +175,7 @@ body.body--dark .q-footer {
   background-position: top;
   margin: 0 auto;
   width: 100%;
+  background: #900000;
 
   .q-tabs {
     max-width: 600px;
@@ -645,7 +649,7 @@ input:internal-autofill-selected {
 
 @media (min-width: 991px) {
   #q-app {
-    background: url("../assets/images/common/bg-web.png") no-repeat top center;
-    background-size: cover;
+    background: url("../assets/images/common/bg-web-thai-theme.png") no-repeat top center;
+    background-size: 100% 100%;
   }
 }

@@ -861,13 +861,13 @@
     :offset="[0, 0]"
   >
     <div v-if="showSticky" class="home-sticky">
-      <img class="sticky-bear" src="../assets/home/line-bear.png" />
+      <!-- <img class="sticky-bear" src="../assets/home/line-bear.png" /> -->
       <q-btn name="close" height="20" width="20" size="xs" @click="closeLineSticky" class="sticky-close-btn">
         <q-icon name="close"></q-icon>
       </q-btn>
       <div class="sticky-container">
         <div class="line-title">LINE</div>
-        <img src="../assets/home/line-bg.png" class="line-img" />
+        <img src="../assets/home/line-bg-thai-theme.png" class="line-img" />
         <div class="line-bottom">line ID:@jolly88</div>
       </div>
     </div>
@@ -932,7 +932,7 @@
         v-close-popup
       />
 
-      <img src="../assets/images/common/home-popup-img.png" />
+      <img src="../assets/images/common/home-popup-img-thai-theme.png" />
 
       <div class="popup-list">
         <router-link to="/promo?id=81">
@@ -2787,8 +2787,10 @@ export default defineComponent({
 }
 
 .bonus-sticky-box {
-  width: 100%;
-  height: 136px;
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;
+  height: 101px;
   margin-top: 10px;
 }
 
@@ -2796,8 +2798,8 @@ export default defineComponent({
   background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-sticky.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  width: 190px;
-  height: 136px;
+  width: 120px;
+  height: 101px;
   //position: absolute;/**/
   //right: 50%;
   //top: 0;
@@ -2948,20 +2950,25 @@ export default defineComponent({
     }
 
     .popup-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 92%;
-      margin: 0 auto 14px;
-      border: 2px solid #d483ff;
-      background: rgba(52, 41, 97, 0.9);
+      margin: 0 auto;
+      // border: 2px solid #d483ff;
+      // background: rgba(52, 41, 97, 0.9);
       border-radius: 11px;
       //margin-bottom: 14px;
-      line-height: 30px;
-      font-size: 22px;
+      line-height: 20px;
+      font-size: 16px;
       text-align: center;
       padding: 8px;
-      box-shadow: 0px 3px 2px 0px #ddb2ff42 inset;
-      box-shadow: 0px 0px 5px 3px #8000ffd9;
+      // box-shadow: 0px 3px 2px 0px #ddb2ff42 inset;
+      // box-shadow: 0px 0px 5px 3px #8000ffd9;
       cursor: pointer;
       text-shadow: 1px 2px 2px #000000;
+      background: url("../assets/images/common/home-popup-item-bg-thai-theme.png") no-repeat center center;
+      background-size: 100% 100%;
 
       &:hover {
         opacity: 0.9;
@@ -2973,9 +2980,14 @@ export default defineComponent({
 
       em {
         color: #ecff17;
-        font-size: 26px;
+        font-size: 16px;
         font-weight: 600;
         font-style: normal;
+      }
+
+      span {
+        padding: 10px;
+        margin: 0px 35px;
       }
     }
   }
@@ -3022,30 +3034,37 @@ export default defineComponent({
     right: 0px;
     z-index: 15;
 
-    width: 152px;
-    height: 192px;
-    background: $primary;
+    width: 125px;
+    aspect-ratio: 184/518;
+    background: url("../assets/home/line-board.png");
+    //background: url(../assets/home/xmas-line-btn.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    //padding: 10px 0;
+    padding: 15px 0px 10px;
     border-radius: 10px 0px 0px 10px;
 
     color: $white;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
-    justify-content: center;
+    gap: 0px;
+    justify-content: flex-end;
 
     .line-title {
-      font-size: 18px;
+      padding-top: 3px;
+      font-size: 12px;
     }
 
     .line-img {
-      width: 100px;
+      width: 80px;
       height: auto;
       margin: 0 auto;
+      background: #fff;
     }
 
     .line-bottom {
-      font-size: 16px;
+      font-size: 12px;
     }
   }
 }
