@@ -139,6 +139,8 @@ export default defineComponent({
                             type: "success",
                             message: "success"
                         })
+                    } else {
+                        ElMessage.error(res.message)
                     }
 
                     isSubmitting.value = false;

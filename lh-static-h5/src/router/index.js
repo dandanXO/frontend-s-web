@@ -1,6 +1,8 @@
 import { route, store } from "quasar/wrappers";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
+import { isAndroid } from "boot/utils";
+import { SessionStorage } from "quasar";
 
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from "vue-router";
 import routes from "./routes";
@@ -33,7 +35,15 @@ export default route(function (/* { store, ssrContext } */) {
   Router.beforeEach((to, from, next) => {
     const user = userStore();
     const ui = useUI();
-    if (to.path === "/login" || to.path === "/register") {
+    if (
+      to.path === "/login" ||
+      to.path === "/register" ||
+      to.path === "/promotion" ||
+      to.path === "/deposit" ||
+      to.path === "/invitefriend" ||
+      to.path === "/vip" ||
+      to.path === "/privilege/invite"
+    ) {
       ui.hiddenFooter();
     } else {
       ui.showFooter();
@@ -43,6 +53,24 @@ export default route(function (/* { store, ssrContext } */) {
     //   sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
     //   next(`/login?register`);
     // }
+
+    if (
+      to.path === "/promotion" ||
+      to.path === "/deposit" ||
+      to.path === "/invitefriend" ||
+      to.path === "/vip" ||
+      to.path === "/privilege/invite"
+    ) {
+      if (isAndroid()) {
+        localStorage.setItem("TOKEN", to.query.token);
+      } else {
+        SessionStorage.set("TOKEN", to.query.token);
+      }
+
+      user.token = to.query.token;
+      console.log("user", user.token);
+    }
+
     if (to.name === "agentCode") {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
       if (to.query.reg) {

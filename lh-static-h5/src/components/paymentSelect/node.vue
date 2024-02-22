@@ -164,7 +164,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 $group-color: #76c034;
 // $node-color: #dd4645;
-$node-color: #33bcd4;
+$node-color: #468cff;
 .title {
   color: $group-color;
   margin: 10px auto;
@@ -206,7 +206,7 @@ $node-color: #33bcd4;
     color: #ffffff;
     cursor: pointer;
     img {
-      max-width: 75px;
+      max-width: 85px;
       margin-bottom: 10px;
       width: 100%;
       height: auto;
@@ -221,7 +221,8 @@ $node-color: #33bcd4;
       .node-text {
         .node-txt-img {
           border-color: $node-color;
-          border-width: 3px;
+          border-width: 2px;
+          box-shadow: unset;
 
           // &:before {
           //   display: block;
@@ -312,7 +313,8 @@ $node-color: #33bcd4;
   }
 
   .node-content {
-    gap: 10px;
+    column-gap: 10px;
+    row-gap: 16px;
 
     .payment-method-item {
       text-align: center;
@@ -323,7 +325,7 @@ $node-color: #33bcd4;
       display: flex;
       justify-content: center;
       width: 100%;
-      max-width: 4.5rem;
+      max-width: 5.5rem;
 
       .payment-method-wrapper {
         display: none;
@@ -352,9 +354,9 @@ $node-color: #33bcd4;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
-        width: 4.5rem;
-        height: 4.5rem;
+        box-shadow: inset 0 0 8px 0 #a9c9ea;
+        width: 5.5rem;
+        height: 5rem;
         margin-bottom: 5px;
         border: 2px solid $secondary;
         border-radius: 10px;
@@ -362,7 +364,7 @@ $node-color: #33bcd4;
         img {
           background-color: transparent;
           margin-bottom: 0;
-          padding: 5px 10px;
+          padding: 12px 14px;
           width: 100%;
           height: auto;
         }
@@ -394,8 +396,8 @@ $node-color: #33bcd4;
 
     .promo {
       position: absolute;
-      right: -5px;
-      top: -5px;
+      right: -15px;
+      top: -10px;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
@@ -403,8 +405,8 @@ $node-color: #33bcd4;
         padding: 0;
         border: 0;
         background-color: transparent;
-        max-width: 40px;
-        width: 40px;
+        max-width: 64px;
+        width: 64px;
       }
       ::after {
         position: relative;
@@ -421,5 +423,24 @@ $node-color: #33bcd4;
       }
     }
   }
+}
+
+@media (max-width: 375px) {
+  .node .node-content .node-text .node-txt-img{
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+  .node .node-item .promo img{
+    max-width: 50px;
+    width: 50px;
+  }
+  .node .node-item .promo{
+    right: -10px;
+    top: -10px;
+  }
+  .node .node-content .node-text .node-txt-img img{
+    padding: 5px 10px;
+  }
+
 }
 </style>

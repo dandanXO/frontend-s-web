@@ -30,21 +30,21 @@
       <img class="ambassador-img" src="../assets/images/affiliate/ambassador.png" alt="" />
       <div class="btn-wrapper">
         <q-btn
-          :href="'https://partner.e88726.com/register.jsp?agent=' + (affCode ? affCode : '')"
+          :href="'https://lh1-affiliate.phoicynxeey.com?agent=' + (affCode ? affCode : '')"
           label="加入我们"
           size="md"
           class="join-btn"
         >
           <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
-        <q-btn href="https://partner.e88726.com/autoLogin.jsp" label="登录" size="md" class="login-btn">
+        <q-btn :href="'https://lh1-affiliate.phoicynxeey.com?agent=' + (affCode ? affCode : '')" label="登录" size="md" class="login-btn">
           <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
 
         <q-btn
           @click.stop.prevent="
             openWindow(
-              `https://csweb01.amv4xjcbd.com/?partnerId=6&lang=en&way=${regDevice}&token=${store.token}`,
+              `https://csweb01.amv4xjcbd.com/?partnerCode=LHCS&lang=zh-CN&way=${regDevice}&token=${store.token}`,
               'Chat Server',
               350,
               650
@@ -175,7 +175,7 @@
 
     <div class="contact-us">
       <div class="register-btn-wrapper">
-        <q-btn :href="'https://partner.e88726.com/register.jsp?agent=' + (affCode ? affCode : '')" label="立即申请代理" size="lg" class="register-btn">
+        <q-btn :href="'https://lh1-affiliate.phoicynxeey.com?agent=' + (affCode ? affCode : '')" label="立即申请代理" size="lg" class="register-btn">
           <img class="mask-img" src="../assets/images/affiliate/register-btn-icon.png" alt="" />
           <img class="mask-img2" src="../assets/images/affiliate/register-btn-icon2.png" alt="" />
         </q-btn>
@@ -187,7 +187,15 @@
           <div class="two-four-hour-wrapper">
             <img class="two-four-mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
             <img class="two-four-mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
-            <div class="two-four-content">
+            <div class="two-four-content"
+                 @click.stop.prevent="
+            openWindow(
+              `https://csweb01.amv4xjcbd.com/?partnerCode=LHCS&lang=zh-CN&way=${regDevice}&token=${store.token}`,
+              'Chat Server',
+              350,
+              650
+            )
+          ">
               <img class="two-four-img" src="../assets/images/affiliate/headset-white.png" alt="" />
               <span class="two-four-text">24小时在线客服</span>
             </div>
@@ -210,8 +218,8 @@
           <div class="contact-id">LH18668</div>
         </div>
         <div class="contact-wrapper">
-          <div class="contact-method">合营部QQ</div>
-          <div class="contact-id">1903687863</div>
+          <div class="contact-method">合营部泡泡</div>
+          <div class="contact-id">LH10086</div>
         </div>
       </div>
     </div>

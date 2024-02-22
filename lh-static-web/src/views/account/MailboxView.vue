@@ -209,6 +209,8 @@ const loadPersonalMailbox = () => {
           const response = res.data;
           mailboxState.mailboxList[mailboxState.active].list.push(...response.records);
           mailboxState.mailboxList[mailboxState.active].total = response.total;
+        } else {
+          ElMessage.error(res.message)
         }
       })
       .catch((error) => {
@@ -228,6 +230,8 @@ const loadPersonalMailbox = () => {
         if (response.code === 0) {
           mailboxState.mailboxList[mailboxState.active].list.push(...response.data.records);
           mailboxState.mailboxList[mailboxState.active].total = response.data.total;
+        } else {
+          ElMessage.error(response.message)
         }
       })
       .catch((error) => {
@@ -253,6 +257,8 @@ const readAllMsg = (m) => {
 
         checkMailboxUnread();
         loadPersonalMailbox();
+      } else {
+        ElMessage.error(res.message)
       }
     })
     .catch((error) => {
@@ -285,6 +291,8 @@ const readMultipleMsg = () => {
         loadPersonalMailbox();
 
         isShowSelect.value = false;
+      } else {
+        ElMessage.error(res.message)
       }
     })
     .catch((error) => {
@@ -374,6 +382,8 @@ const deleteMultipleMsg = () => {
 
         checkMailboxUnread();
         loadPersonalMailbox();
+      } else {
+        ElMessage.error(res.message)
       }
     })
     .catch((error) => {
@@ -408,6 +418,8 @@ const deleteAllMsg = (m) => {
 
         checkMailboxUnread();
         loadPersonalMailbox();
+      } else {
+        ElMessage.error(res.message)
       }
     })
     .catch((error) => {
@@ -475,6 +487,7 @@ const onSubmit = (e) => {
             mailboxState.mailboxList.write.title = "";
             mailboxState.mailboxList.write.content = "";
           } else {
+            ElMessage.error(response.message)
             // message.error(response.message);
           }
         })

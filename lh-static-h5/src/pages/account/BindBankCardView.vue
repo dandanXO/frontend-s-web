@@ -16,6 +16,7 @@
             (val) => (val && val.length > 0) || '请输入验证码',
             (val) => (val && val.length === 4) || '验证码必须为4个字符串'
           ]"
+          @keydown.enter="onCaptchaSubmit()"
         >
           <template v-slot:append>
             <img
@@ -214,6 +215,8 @@
             clearable
             maxlength="6"
             :rules="[(val) => (val && val.length > 3) || '请输入您的注册手机验证']"
+            @keydown.enter.prevent="handleEnterKey"
+            @keydown.enter="submitBankCard()"
           ></q-input>
         </template>
       </q-form>
@@ -329,6 +332,11 @@ const onCaptchaSubmit = () => {
 
 const bankList = ref([]);
 const loadBankCards = () => {
+  bankCardInfo.bankId = null;
+  bankCardInfo.cardNumber = "";
+  bankCardInfo.cardAddress = "";
+  bankCardInfo.smsCode = "";
+
   store.getMemberInfo().then(() => {
     if (!store.realName) {
       $q.notify({
@@ -400,13 +408,18 @@ const submitBankCard = () => {
             message: "已添加银行卡",
             icon: "check_circle_outline"
           });
-
           router.push("/account/withdraw");
         }
       })
       .catch((error) => {
         console.log("error", error);
       });
+  }
+};
+
+const handleEnterKey = () => {
+  if (!document.activeElement || document.activeElement.tagName.toLowerCase() !== "input") {
+    openPhoneVeriDialog();
   }
 };
 

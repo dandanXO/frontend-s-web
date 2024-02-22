@@ -695,7 +695,6 @@ async function loadAffiliates() {
   const { data: ret } = await getAffiliateList(request.siteId);
   list.allAffiliates = ret
   list.affiliates = list.allAffiliates.filter(item => item.affiliateLevel === 'MASTER_AFFILIATE')
-  console.log('list.affiliates', list.affiliates)
 }
 
 async function loadPrivilege() {

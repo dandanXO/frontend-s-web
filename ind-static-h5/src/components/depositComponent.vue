@@ -280,11 +280,13 @@ const depositItems = reactive([
   { amount: 300, hotLabel: 15, isActive: false },
   { amount: 500, hotLabel: 25, isActive: false },
   { amount: 1000, hotLabel: 50, isActive: false },
+  { amount: 2000, hotLabel: 100, isActive: false },
   { amount: 3000, hotLabel: 150, isActive: false },
   { amount: 5000, hotLabel: 250, isActive: false },
   { amount: 10000, hotLabel: 500, isActive: false },
-  { amount: 30000, hotLabel: 1500, isActive: false },
-  { amount: 50000, hotLabel: 2500, isActive: false }
+  { amount: 20000, hotLabel: 1000, isActive: false }
+  // { amount: 30000, hotLabel: 1500, isActive: false },
+  // { amount: 50000, hotLabel: 2500, isActive: false }
 ]);
 
 const handleDepositItemClick = (index) => {

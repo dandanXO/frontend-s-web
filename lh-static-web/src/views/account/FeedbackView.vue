@@ -58,9 +58,9 @@
           <template v-if="mailboxState.mailboxList.sent.list.length > 0">
             <el-collapse v-model="activeNames" @change="handleChange">
               <el-collapse-item v-for="item in mailboxState.mailboxList.sent.list" :key="item.id">
-                <template #title>标题：{{ item.title }}</template>
+                <template #title><p class="title-p">标题：{{ item.title }}</p></template>
                 <div>
-                  <div>正文：{{ item.content }}</div>
+                  <div class="content-p">正文：{{ item.content }}</div>
                 </div>
               </el-collapse-item>
             </el-collapse>
@@ -72,6 +72,9 @@
                 :page-size="mailboxState.mailboxList.sent.pageSize"
               />
             </div>
+          </template>
+          <template v-else>
+            <p class="empty-text">暂无记录</p>
           </template>
         </el-tab-pane>
 
@@ -287,6 +290,8 @@ const getQuesTitleOptions = () => {
     if (res.code === 0) {
       quesTitleOptions.value = res.data
       recordsPagination.pages = res.data.length
+    } else {
+      ElMessage.error(res.message)
     }
 
   })
@@ -363,6 +368,8 @@ const btnClick = (btnType) => {
         // questionDiv.style.display = "none";
         // QRDiv.style.display = "block";
         isAnswered.value = true;
+      } else {
+        ElMessage.error(res.message)
       }
     })
   }
@@ -416,6 +423,8 @@ const loadPersonalMailbox = () => {
           const response = res.data;
           mailboxState.mailboxList[mailboxState.active].list.push(...response.records);
           mailboxState.mailboxList[mailboxState.active].total = response.total;
+        } else {
+          ElMessage.error(res.message)
         }
       })
       .catch((error) => {
@@ -435,6 +444,8 @@ const loadPersonalMailbox = () => {
         if (response.code === 0) {
           mailboxState.mailboxList["sent"].list.push(...response.data.records);
           mailboxState.mailboxList["sent"].total = response.data.total;
+        } else {
+          ElMessage.error(response.message)
         }
       })
       .catch((error) => {
@@ -504,7 +515,7 @@ const onSubmit = (e) => {
             mailboxState.mailboxList.write.title = "";
             mailboxState.mailboxList.write.content = "";
           } else {
-            // message.error(response.message);
+            ElMessage.error(response.message)
           }
         })
         .catch((error) => {
@@ -528,6 +539,8 @@ const testAns = () => {
         uiIsShowStatus.questionBox= true;
         isAnswered.value = true;
       }
+    } else {
+      ElMessage.error(res.message)
     }
   })
 }
@@ -869,6 +882,7 @@ onMounted(() => {
     font-weight: 600;
     color: $font-1;
     font-size: 1rem;
+    height: 60px;
   }
   :deep(.el-collapse-item__content) {
     padding: 0 16px 16px;
@@ -949,6 +963,29 @@ onMounted(() => {
 
   .mail-pagination-wrapper {
     margin-top: 20px;
+  }
+
+  .empty-text{
+    text-align: center;
+    margin-top: 50px;
+  }
+
+  .title-p{
+    width: 100%;
+    word-wrap: break-word; /* 控制文字换行 */
+    overflow-wrap: break-word;
+    text-align: left;
+    line-height: 18px;
+    margin-bottom: 5px;
+  }
+
+  .content-p{
+    width: 100%;
+    word-wrap: break-word; /* 控制文字换行 */
+    overflow-wrap: break-word;
+    text-align: left;
+    line-height: 15px;
+
   }
 }
 </style>

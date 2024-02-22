@@ -1,6 +1,6 @@
 {
   "name": "ind-project",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "55Ace App",
   "productName": "55Ace",
   "author": "KengHong <kenghongho@eagrp.net>",
@@ -45,6 +45,7 @@
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
     "es6-promise-plugin": "^4.2.2",
+    "fs-extra": "^11.2.0",
     "html2canvas": "^1.4.1",
     "image-webpack-loader": "^8.1.0",
     "imagemin": "^8.0.1",

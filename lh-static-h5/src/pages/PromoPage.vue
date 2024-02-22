@@ -9,7 +9,7 @@
         ')'
       "
     >
-      <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
+      <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify" class="promo-cat-tab">
         <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
       </q-tabs>
 
@@ -26,15 +26,27 @@
                   data-aos-easing="ease-out"
                   data-aos-duration="1000"
                 >
-                  <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
+                  <div
+                    class="promo-item"
+                    v-if="
+                      promo.promoType.toLowerCase().split(',').includes(tab.name) ||
+                      (tab.name === 'others' &&
+                        (promo.promoType.toLowerCase().split(',').includes('slot game') ||
+                          promo.promoType.toLowerCase().split(',').includes('welcome') ||
+                          promo.promoType.toLowerCase().split(',').includes('fish')))
+                    "
+                  >
                     <a @click="showPromoDetails(promo)">
                       <div>
-                        <div class="promo-ribbon">{{ getPromoLabel(promo.labelType) }}</div>
-                        <div
-                          class="promo-item-date"
-                          v-if="parsedParam(promo.param).date"
-                          v-html="parsedParam(promo.param).date"
-                        />
+                        <div class="promo-label">
+                          <div class="promo-ribbon">{{ getPromoLabel(promo.labelType) }}</div>
+                          <div
+                            class="promo-item-date"
+                            v-if="parsedParam(promo.param).date"
+                            v-html="parsedParam(promo.param).date"
+                          />
+                        </div>
+
                         <div class="promo-item-title">{{ promo.title }}</div>
                         <div
                           class="promo-item-deal"
@@ -55,12 +67,14 @@
                   <div class="promo-item" v-if="tab.name === 'all'">
                     <a @click="showPromoDetails(promo)">
                       <div>
-                        <div class="promo-ribbon">{{ getPromoLabel(promo.labelType) }}</div>
-                        <div
-                          class="promo-item-date"
-                          v-if="parsedParam(promo.param).date"
-                          v-html="parsedParam(promo.param).date"
-                        />
+                        <div class="promo-label">
+                          <div class="promo-ribbon">{{ getPromoLabel(promo.labelType) }}</div>
+                          <div
+                            class="promo-item-date"
+                            v-if="parsedParam(promo.param).date"
+                            v-html="parsedParam(promo.param).date"
+                          />
+                        </div>
                         <div class="promo-item-title">{{ promo.title }}</div>
                         <div
                           class="promo-item-deal"
@@ -149,16 +163,19 @@
 </template>
 
 <script lang="js">
-import {ref, defineComponent, onMounted, reactive, watch, computed} from "vue";
-import {useRoute, useRouter} from "vue-router";
-import {api} from "boot/axios";
-import {useQuasar} from "quasar";
-import {useUI} from "stores/ui";
-import {userStore} from "stores/index";
+import { ref, defineComponent, onActivated, reactive, watch, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { api } from "boot/axios";
+import { useQuasar } from "quasar";
+import { useUI } from "stores/ui";
+import { userStore } from "stores/index";
+import { isAndroid } from "boot/utils";
+import { SessionStorage } from "quasar";
+import LocalStorage from "boot/local-storage";
 // import { loadPromo } from "src/api/index/promo.js";
 // import { loadPromoBanner } from "src/api/index/promo";
 
-import HotPromotion from 'components/HotPromotion'
+import HotPromotion from "components/HotPromotion";
 
 export default defineComponent({
   name: "PromoView",
@@ -167,23 +184,24 @@ export default defineComponent({
   },
   setup() {
     const store = userStore();
-    const imgURL = process.env.IMAGE_CDN + '/promo/';
+    const imgURL = process.env.IMAGE_CDN + "/promo/";
     const banner = ref([]);
     const promoState = reactive({
-      active: {value: 'ALL', label: 'ALL'},
-      promoList: [],
+      active: { value: "ALL", label: "ALL" },
+      promoList: []
     });
     const promoTypes = ref([
-      {code: "ALL", img: 'all', label: '所有游戏'},
-      {code: "ESPORTS", img: 'esport', label: '电竞'},
-      {code: "SPORTS", img: 'sport', label: '体育'},
-      {code: "POKER", img: 'poker', label: '棋牌'},
-      {name: "SLOT GAME", label: '老虎机'},
+      { code: "ALL", img: "all", label: "所有游戏" },
+      { code: "ESPORTS", img: "esport", label: "电竞" },
+      { code: "SPORTS", img: "sport", label: "体育" },
+      { code: "POKER", img: "poker", label: "棋牌" },
+      { name: "SLOT GAME", label: "老虎机" },
       // {name: "slot", label: '老虎机'},
-      {name: "LIVE CASINO", label: '真人'},
-      {name: "FISH", label: '捕鱼'},
+      { name: "LIVE CASINO", label: "真人" },
+      { name: "FISH", label: "捕鱼" }
     ]);
 
+    const isFetchingPromo = ref(false);
     const promoTabActive = ref(promoTypes.value[0].value);
     const filteredArray = ref([]);
     const isPromoDetail = ref(false);
@@ -199,21 +217,20 @@ export default defineComponent({
     const tab = ref("all");
     const tabItems = [
 
-      {name: "all", label: '全部优惠'},
-      {name: "esport", label: '电竞'},
-      {name: "sport", label: '体育'},
-      // {name: "slot", label: '老虎机'},
-      {name: "slot game", label: '老虎机'},
-      // {name: "slot", label: '老虎机'},
-      {name: "live casino", label: '真人'},
-      {name: "fish", label: '捕鱼'},
+      { name: "all", label: "全部优惠" },
+      { name: "esport", label: "电竞" },
+      { name: "sport", label: "体育" },
+      // {name: "slot game", label: '老虎机'},
+      // {name: "fish", label: '捕鱼'},
+      { name: "live casino", label: "真人" },
+      { name: "others", label: "其它" }
     ];
 
     watch(() => route.query, () => {
       if (route.query === null) {
-        isPromoDetail.value = false
+        isPromoDetail.value = false;
       } else {
-        isPromoDetail.value = route.query.name
+        isPromoDetail.value = route.query.name;
         ui.setScrollPosition("vertical", 0, 200);
       }
     });
@@ -225,53 +242,74 @@ export default defineComponent({
       //   }
       // })
       api
-          .get("/promo/banner?category=PROMO")
-          .then((response) => {
-            if (response.code === 0) {
-              banner.value = response.data[0];
-              // console.log(banner.value)
-            } else {
-              // $q.notify({
-              //   color: "negative",
-              //   position: "top",
-              //   message: ret.message,
-              //   icon: "report_problem"
-              // });
-            }
-            // banners.value = response.data;
-          })
-    }
-    const showPromoDetails = (promo) => {
-      if (!store.token) {
-        isDisplayLogin.value = true
-      } else {
-
-        if (promo.redirectUrl.includes("page-vip")) {
-          router.push('/vip?from=promo');
-        } else {
-          if (route.query.fromAccount) {
-            router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
+        .get("/promo/banner?category=PROMO")
+        .then((response) => {
+          if (response.code === 0) {
+            banner.value = response.data[0];
+            // console.log(banner.value)
           } else {
-            router.push({path: '/promo', query: {name: promo.redirectUrl}})
+            // $q.notify({
+            //   color: "negative",
+            //   position: "top",
+            //   message: ret.message,
+            //   icon: "report_problem"
+            // });
           }
-          isPromoDetail.value = true
-          selectedPromo.value = promo
+          // banners.value = response.data;
+        });
+    };
+    const showPromoDetails = (promo) => {
+      // extension
+      if (extensionState.value) {
+        if (promo.redirectUrl.includes("page-vip")) {
+          router.push({ path: "/vip", query: { token: extensionToken.value } });
+        } else {
+          router.push({ path: currentPath.value, query: { name: promo.redirectUrl, token: extensionToken.value } });
+        }
+        isPromoDetail.value = true;
+        selectedPromo.value = promo;
+        if (isAndroid()) {
+          LocalStorage.set("TOKEN", extensionToken.value, 86400);
+        } else {
+          SessionStorage.set("TOKEN", extensionToken.value);
+        }
+        store.token = extensionToken.value;
+
+      } else {
+        // non extension
+        if (!store.token) {
+          isDisplayLogin.value = true;
+        } else {
+
+          if (promo.redirectUrl.includes("page-vip")) {
+            router.push("/vip?from=promo");
+          } else {
+            if (route.query.fromAccount) {
+              router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
+            } else {
+              router.push({ path: "/promo", query: { name: promo.redirectUrl } });
+            }
+            isPromoDetail.value = true;
+            selectedPromo.value = promo;
+          }
         }
       }
-    }
+    };
     const switchPromoType = (type) => {
       promoTabActive.value = type.value;
       if (type.value !== "ALL") {
-        filteredArray.value = promoState.promoList.filter(function (promo) {
-          return promo.promoType.toLowerCase().split(',').includes(type.value.toLowerCase());
+        filteredArray.value = promoState.promoList.filter(function(promo) {
+          return promo.promoType.toLowerCase().split(",").includes(type.value.toLowerCase());
         });
       } else {
-        filteredArray.value = promoState.promoList
+        filteredArray.value = promoState.promoList;
       }
     };
 
     const loadAll = () => {
-      const platformApiUrl = store.token ? "/session/loggedInPromoPages" : "/promo/page";
+      const platformApiUrl = (store.hasToken() || (window.location.pathname === "/promotion" && extensionState.value === true)) ? "/session/loggedInPromoPages" : "/promo/page";
+
+      isFetchingPromo.value = window.location.pathname === "/promotion";
 
       api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
@@ -285,25 +323,42 @@ export default defineComponent({
             } else {
               promoState.promoList.push(element);
 
-              if ((route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3') && String(element.redirectUrl) === 'lh1-invite') {
-                showPromoDetails(element)
+              if ((route.query.name === "lh1-invite-2" || route.query.name === "lh1-invite-3") && String(element.redirectUrl) === "lh1-invite") {
+                showPromoDetails(element);
               }
 
               if (route.query.name && String(element.redirectUrl) === route.query.name) {
-                showPromoDetails(element)
+                showPromoDetails(element);
               }
             }
           });
 
-          console.log("route.query.name",route.query.name)
+          console.log("route.query.name", route.query.name);
 
-          switchPromoType(promoState.active)
+          switchPromoType(promoState.active);
+          isFetchingPromo.value = false;
         }
       }).catch((e) => {
         console.log("error", e);
+        isFetchingPromo.value = false;
       });
 
-    }
+    };
+
+    // extension
+    const currentPath = ref(route.path);
+    const extensionState = ref(false);
+    const extensionToken = ref("");
+
+
+    const checkExtension = () => {
+      if (currentPath.value === "/promotion") {
+        // const eToken = ref(route.query.name);
+        extensionToken.value = route.query.token;
+        extensionState.value = true;
+      }
+
+    };
 
     const parsedParam = (paramData) => {
       const newData = JSON.parse(paramData);
@@ -329,7 +384,13 @@ export default defineComponent({
       }
     };
 
-    onMounted(() => {
+    onActivated(() => {
+      // if promo name is present, do not show promo list on first load
+      if (route.query.name) {
+        isPromoDetail.value = true;
+      }
+
+      checkExtension();
       loadBanner();
       loadAll();
     });
@@ -351,9 +412,14 @@ export default defineComponent({
       isDisplayLogin,
       parsedParam,
       getPromoLabel,
+      checkExtension,
+      currentPath,
+      extensionState,
+      extensionToken,
+      isFetchingPromo
       // routeQuery
-    }
-  },
+    };
+  }
 });
 </script>
 
@@ -437,10 +503,19 @@ export default defineComponent({
           position: relative;
           border-radius: 12px;
 
-          .promo-ribbon {
+          .promo-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             position: absolute;
             top: 0;
             left: 0;
+          }
+          .promo-ribbon {
+            // position: absolute;
+            // top: 0;
+            // left: 0;
+            position: relative;
             color: #ffffff;
             font-size: 0.75rem;
             overflow: hidden;
@@ -462,15 +537,19 @@ export default defineComponent({
           }
 
           .promo-item-date {
-            color: $grey-color;
-            font-size: 0.625rem;
+            color: #606479;
+            font-size: 0.825rem;
+            font-weight: bold;
+            // position: absolute;
+            // top: 5px;
+            // left: 100px;
           }
 
           .promo-item-title {
             color: $primary;
             font-weight: bold;
             font-size: 1rem;
-            max-width: 180px;
+            max-width: 160px;
 
             @media (min-width: 500px) {
               max-width: calc(100% - 220px);
@@ -481,6 +560,11 @@ export default defineComponent({
             color: $grey-color;
             font-weight: bold;
             font-size: 0.875rem;
+            max-width: 160px;
+
+            @media (min-width: 500px) {
+              max-width: calc(100% - 220px);
+            }
 
             & > span {
               color: $primary;
@@ -815,5 +899,11 @@ export default defineComponent({
       display: block;
     }
   }
+}
+
+.promo-cat-tab {
+  position: sticky;
+  top: 61px;
+  z-index: 3;
 }
 </style>

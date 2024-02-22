@@ -18,7 +18,7 @@
 
     <div class="transfer-mid-div">
       <div class="station-notice-wrapper">
-        <div class="volume">
+        <div class="volume" @click="showAnnouncementDialog">
           <img src="../../assets/images/home/announce-icon.png" />
         </div>
         <marquee-text :repeat="5" :duration="announcementList.length * 10">
@@ -109,6 +109,19 @@
       </q-form>
     </div>
   </q-page>
+  <q-dialog
+    width="100%"
+    class="modal-common-div" label="信息" v-model="isShowAnnouncementDialog" full-width="100">
+    <q-card class="q-pa-md modal-content">
+      <div class="headers">
+        <div class="titles">信息</div>
+        <!-- <q-btn class="color-font-1" flat v-close-popup round dense icon="close" /> -->
+      </div>
+      <div class="contents" v-for="(announcement, i) in announcementList" :key="i">
+        {{ announcement }}
+      </div>
+    </q-card>
+  </q-dialog>
 </template>
 <script setup>
 import { onMounted, ref, reactive } from "vue";
@@ -186,6 +199,10 @@ const updateTransferDropdown = () => {
   // }
 };
 const isTransferring = ref(false);
+const isShowAnnouncementDialog = ref(false);
+const showAnnouncementDialog = () => {
+  isShowAnnouncementDialog.value = true;
+}
 const submitTransfer = () => {
   amountRef.value.validate();
   if (amountRef.value.hasError) {
@@ -378,7 +395,7 @@ onMounted(() => {
     flex: 4;
     background-image: url("../../assets/images/common/common-md-btn.png");
     background-size: 100% 100%;
-    aspect-ratio: 286/96;
+    //aspect-ratio: 286/96;
     max-height: 56px;
   }
 
@@ -523,7 +540,9 @@ onMounted(() => {
     color: $white;
     top: 50%;
     font-size: 1.5rem;
-    margin-top: 0.5rem;
+    margin-top: 0px;
+    height: 50px;
+    //margin-top: 0.5rem;
   }
 }
 </style>

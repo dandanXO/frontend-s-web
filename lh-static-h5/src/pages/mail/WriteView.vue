@@ -115,6 +115,8 @@ const onSubmit = () => {
 
 const closePage = () => {
   router.push("/account/letters");
+  mailDetailList.value.title = "";
+  mailDetailList.value.content = "";
 };
 onMounted(() => {});
 </script>

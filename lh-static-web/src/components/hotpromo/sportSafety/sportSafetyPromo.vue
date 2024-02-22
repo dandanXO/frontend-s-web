@@ -270,9 +270,11 @@ const onSlideChange = (slide) => {
 const init = () => {
   getUpcomingSportMatches()
     .then((res) => {
-      if (res.code === 0 && res.data) {
+      if (res.code === 0 && res.data && res.data.length > 0) {
         matchDetails.value = Array.isArray(res.data) ? res.data : [res.data];
         insuranceRecordsParam.gameType = matchDetails.value[0].gameType;
+      } else {
+        ElMessage.error(res.message)
       }
     })
     .catch((err) => {
@@ -301,9 +303,12 @@ const submitForm = async (elForm) => {
         });
         sportInsuranceFormRef.value.resetFields();
         isSportInsuranceModalVisible.value = false;
+        isSubmitting.value = false;
+      } else {
+        ElMessage.error(res.message)
+        isSubmitting.value = false;
       }
 
-      isSubmitting.value = false;
     }
   });
 };
