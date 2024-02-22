@@ -37,11 +37,10 @@ export default route(function (/* { store, ssrContext } */) {
       console.log("Is Slot Win");
       ui.isAffiliateA= true;
 
-      fbq("init", "211810688532352");
-
+      fbq("init", "873960514528284");
 
       //For TESTING.
-      fbq("init", "241650862263360");
+      // fbq("init", "241650862263360");
       fbq("track", "PageView");
       fbq("track", "ViewContent");
 
