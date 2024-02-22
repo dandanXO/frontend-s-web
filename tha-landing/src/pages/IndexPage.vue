@@ -372,7 +372,7 @@ const isRegisterModal = ref(false);
 const hasAffiliate = ref(false);
 
 const getCode = () => {
-  api.get("/member/verificationCode")
+  api.get("/member/verificationEasyCode")
     .then((res) => {
       const response = res.data;
       if (response.code === 0) {
