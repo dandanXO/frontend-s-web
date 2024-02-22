@@ -2033,6 +2033,7 @@ export default {
     'Adjustment Reason': '平账原因',
     'User Login Log': '用户登录日志',
     'Online Stats': '在线人数',
+    'Promotion Activity': '优惠活动',
   },
   google: {
     google_auth_menu: '谷歌验证',

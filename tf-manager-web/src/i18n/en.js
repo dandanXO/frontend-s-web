@@ -2060,6 +2060,7 @@ export default {
     'Adjustment Reason': 'Adjustment Reason',
     'User Login Log': 'User Login Log',
     'Online Stats': 'Online Stats',
+    'Promotion Activity': 'Promotion Activity',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
