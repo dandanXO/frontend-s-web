@@ -2036,6 +2036,10 @@ export default defineComponent({
 <style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
 
+.home-decor-flower, .home-decor-bike, .home-decor-bike-2, .home-decor-tree {
+  display: none;
+}
+
 .home-banner-wrapper {
   position: relative;
 }
@@ -2670,6 +2674,7 @@ export default defineComponent({
     background-repeat: repeat-x;
 
     .home-decor-flower, .home-decor-bike, .home-decor-bike-2, .home-decor-tree {
+      display: block;
       position: absolute;
     }
     .home-decor-flower {
