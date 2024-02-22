@@ -1505,7 +1505,9 @@ export default defineComponent({
         return "投注"; // Bet
       } else if (betStatus === "SETTLE") {
         return "结算"; // Settle
-      } else if (betStatus === "BET_N_SETTLE") {
+      } else if (betStatus === "SETTLED") {
+        return "已结算"; // Bet & Settled
+      }else if (betStatus === "BET_N_SETTLE") {
         return "投注并结算"; // Bet & Settled
       } else if (betStatus === "CANCEL") {
         return "取消"; // Cancel
