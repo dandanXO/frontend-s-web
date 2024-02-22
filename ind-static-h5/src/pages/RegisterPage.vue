@@ -386,7 +386,6 @@ export default defineComponent({
                   // alert(affRegEvent.value);
                   Adjust.trackEvent(adjustEvent);
                 } else {
-                  console.log("Track Here");
                   affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
                   const AdjustWeb = require("@adjustcom/adjust-web-sdk");
                   AdjustWeb.trackEvent({

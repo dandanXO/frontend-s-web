@@ -52,9 +52,9 @@ export default defineComponent({
 
     const getAppInfo = async () => {
       const info = await Device.getId();
-      console.log("Device ID");
-      console.log(info);
-      console.log(info.identifier);
+      // console.log("Device ID");
+      // console.log(info);
+      // console.log(info.identifier);
     };
 
     const initOrientation = () => {
@@ -106,25 +106,19 @@ export default defineComponent({
         AdjustWeb.initSdk({
           appToken: affAppToken.value,
           environment: "production",
-          logLevel: "info",
           attributionCallback: function (e, attribution) {
             // e: internal event name, can be ignored
             // attribution: details about the changed attribution
             console.log("CALLBACK");
             console.log(attribution);
+            store.aaid = attribution && attribution.adid ? attribution.adid : "";
           }
         });
         setTimeout(() => {
           const attribution = AdjustWeb.getAttribution();
-
-          const adid = AdjustWeb.getWebUUID();
-
-          console.log("THIS");
-          console.log(adid);
           console.log("Web Adid");
-          // console.log(attribution.adid);
-
-          // store.aaid = attribution ? attribution.adid : "";
+          console.log(attribution);
+          store.aaid = attribution ? attribution.adid : "";
         }, 1500);
       }
     };
