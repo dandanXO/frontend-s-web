@@ -262,7 +262,7 @@ export default defineComponent({
       // extension
       if (extensionState.value) {
         if (promo.redirectUrl.includes("page-vip")) {
-          router.push({ path: "/vip", query: { token: extensionToken.value } });
+          router.push({ path: "/account/vip", query: { token: extensionToken.value } });
         } else {
           router.push({ path: currentPath.value, query: { name: promo.redirectUrl, token: extensionToken.value } });
         }
@@ -282,7 +282,7 @@ export default defineComponent({
         } else {
 
           if (promo.redirectUrl.includes("page-vip")) {
-            router.push("/vip?from=promo");
+            router.push("/account/vip?from=promo");
           } else {
             if (route.query.fromAccount) {
               router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
@@ -330,8 +330,13 @@ export default defineComponent({
               if (route.query.name && String(element.redirectUrl) === route.query.name) {
                 showPromoDetails(element);
               }
+
+              if ((route.query.name === "/vip")) {
+                router.push("/account/vip");
+              }
             }
           });
+
 
           console.log("route.query.name", route.query.name);
 
