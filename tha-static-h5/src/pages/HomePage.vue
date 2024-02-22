@@ -2,6 +2,11 @@
   <div class="main-section">
     <!-- <div v-for="e in snowCount" :key="`snow-${e}`" class="snow"></div> -->
 
+    <img class="home-decor-flower" src="../assets/home/home-decor-flower.png" />
+    <img class="home-decor-bike" src="../assets/home/home-decor-bike.png" />
+    <img class="home-decor-bike-2" src="../assets/home/home-decor-bike-2.png" />
+    <img class="home-decor-tree" src="../assets/home/home-decor-tree.png" />
+
     <div class="home-banner-wrapper">
       <q-carousel
         :class="!$q.screen.gt.sm ? 'home-banner-h5' : 'home-banner-web'"
@@ -2663,6 +2668,30 @@ export default defineComponent({
 
   .main-section {
     background-repeat: repeat-x;
+
+    .home-decor-flower, .home-decor-bike, .home-decor-bike-2, .home-decor-tree {
+      position: absolute;
+    }
+    .home-decor-flower {
+      left: 0px;
+      top: 15%;
+      width: 50px;
+    }
+    .home-decor-bike {
+      left: 0px;
+      bottom: 92px;
+      width: 80px;
+    }
+    .home-decor-tree {
+      right: 0px;
+      bottom: 65px;
+      width: 80px;
+    }
+    .home-decor-bike-2 {
+      right: 80px;
+      bottom: 85px;
+      width: 80px;
+    }
   }
 
   .game-grid-lists {
