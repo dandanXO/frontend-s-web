@@ -249,7 +249,7 @@ import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 import { sendSessionSms } from "@/api/personal/personal";
 import { InfoFilled } from "@element-plus/icons-vue";
-// import moment from "moment";
+import moment from "moment";
 
 export default defineComponent({
   name: "WithdrawBankView",

@@ -875,19 +875,31 @@ onMounted(() => {
 .mail-content {
   :deep(.el-collapse-item__header) {
     background: #f7f8fb;
-    color: $font-1;
+    // color: $font-1;
+    // border-radius: 10px;
+    // margin-bottom: 12px;
+    // padding: 0 16px;
+    // font-weight: 600;
+    // color: $font-1;
+    // font-size: 1rem; */
     border-radius: 10px;
     margin-bottom: 12px;
-    padding: 0 16px;
+    padding: 10px 15px;
     font-weight: 600;
     color: $font-1;
-    font-size: 1rem;
-    height: 60px;
+    word-break: break-all;
+    width: 100%;
+    overflow-wrap: break-word;
+    height: unset;
+    text-align: left;
+    line-height: 1.4rem;
   }
   :deep(.el-collapse-item__content) {
     padding: 0 16px 16px;
     color: $font-1;
     font-size: 0.875rem;
+    line-height: 1rem;
+    word-wrap: break-word;
   }
   :deep(.el-collapse-item__wrap),
   :deep(.el-collapse-item__header),

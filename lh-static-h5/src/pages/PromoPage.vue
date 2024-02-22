@@ -132,6 +132,7 @@
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
+                  v-if="selectedPromo.promoType"
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
