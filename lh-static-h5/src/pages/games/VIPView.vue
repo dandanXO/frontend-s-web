@@ -46,6 +46,7 @@
                 size="5px"
                 :value="vip.progressBarVal"
                 class="progress-bar"
+                instant-feedback
               ></q-linear-progress>
               <div class="start-end">
                 <div class="vip-card-common-text">V{{ vipIndex }}</div>
@@ -215,7 +216,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch } from "vue";
+import { ref, onActivated, computed, watch } from "vue";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
@@ -336,6 +337,14 @@ const currentDeposit = ref(0);
 // }
 
 const checkVipRedeem = () => {
+  if (!claimDesc.value) {
+    vipClaimItems.value.forEach((el, i) => {
+      el[i].vip = i
+      if (i === 0) {
+        claimDesc.value = el[0].vip
+      }
+    })
+  }
   getProgressBar();
   eventapi.get("/vip-upgrade/lh/canRedeem").then((res) => {
     
@@ -376,7 +385,7 @@ const checkVipRedeem = () => {
       if (vipLevel.value !== 0) {
         slide.value = vipLevel.value - 1;
       } else {
-        slide.value = 0
+        slide.value = 1
       }
 
       vipClaimItems[slide.value].vip = slide.value;
@@ -617,13 +626,18 @@ const claim = async () => {
   }
 };
 const vipLevel = ref(null);
-onMounted(() => {
+onActivated(() => {
   if (store.hasToken()) {
     store.getMemberInfo().then(() => {
       vipLevel.value = +store.vip.replace("VIP", "");
       currentDeposit.value = parseFloat(store.currentDeposit).toLocaleString()
       checkVipRedeem();
     });
+  } else {
+    claimDesc.value.vip = 0
+    vipItems.value.forEach((item) => {
+      item.progressBarVal = 1
+    })
   }
 });
 </script>
