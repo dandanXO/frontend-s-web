@@ -49,7 +49,9 @@
               ></q-linear-progress>
               <div class="start-end">
                 <div class="vip-card-common-text">V{{ vipIndex }}</div>
-                <div class="vip-card-current-num">{{ vip.progressBarVal === 0 ? "" : parseFloat(store.currentDeposit).toLocaleString() }}</div>
+                <div class="vip-card-current-num">
+                  {{ vip.progressBarVal === 0 ? "" : currentDeposit }}
+                </div>
                 <div class="vip-card-common-text">V{{ vipIndex + 1 }}</div>
               </div>
             </div>
@@ -578,17 +580,23 @@ const claim = async () => {
   }
 };
 
+const currentDeposit = ref();
+
 onActivated(() => {
-  store.getMemberInfo().then(() => {
-    currentAmount.value = store.balance;
-    extractNumber(store.vip);
-    slide.value = vipNumber.value;
+  if (store.token) {
+    store.getMemberInfo().then(() => {
+      currentAmount.value = store.balance;
+      extractNumber(store.vip);
+      slide.value = vipNumber.value;
 
-    vipClaimItems[slide.value].vip = slide.value;
-    claimDesc.value = vipClaimItems[slide.value];
+      vipClaimItems[slide.value].vip = slide.value;
+      claimDesc.value = vipClaimItems[slide.value];
 
-    checkVipRedeem();
-  });
+      currentDeposit.value = parseFloat(store.currentDeposit).toLocaleString();
+
+      checkVipRedeem();
+    });
+  }
 });
 </script>
 
@@ -873,7 +881,7 @@ onActivated(() => {
     color: $font-1;
   }
 
-  .vip-card-current-num{
+  .vip-card-current-num {
     margin-top: 8px;
     font-size: 11px;
   }

@@ -332,6 +332,7 @@ export default defineComponent({
 
   .personal-content-box .share-link-div {
     text-align: center;
+    word-break: break-all;
   }
 
   .share-info-box > span {

@@ -84,7 +84,7 @@ export const translateRecord = (rec, type = "") => {
   } else if (rec === "WAITING_CALLBACK") {
     return "自动支付中"; // Waiting Callback
   } else if (rec === "SETTLED") {
-    return "已处理"; // Settled
+    return "已结算"; // Settled
   } else if (rec === 1) {
     if (type == "reminder") {
       return "进行中";

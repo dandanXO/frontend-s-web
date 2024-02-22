@@ -70,7 +70,7 @@
             />
           </div>
         </div>
-        <div class="inner">
+        <div :class="`inner ${isSpinWheel ? 'full-width' : ''}`">
           <div v-if="selectedPromo.hasPromo">
             <HotPromotion :list="selectedPromo" />
           </div>
@@ -497,6 +497,10 @@ export default defineComponent({
         display: flex;
         flex-direction: column;
         gap: 8px;
+
+        &.full-width {
+          width: 100%;
+        }
 
         .hot-promo {
           background: #2b2b4b;
