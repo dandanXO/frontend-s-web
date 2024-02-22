@@ -1,6 +1,11 @@
 <template>
   <div class="main-section">
-    <div v-for="e in snowCount" :key="`snow-${e}`" class="snow"></div>
+    <!-- <div v-for="e in snowCount" :key="`snow-${e}`" class="snow"></div> -->
+
+    <img class="home-decor-flower" src="../assets/home/home-decor-flower.png" />
+    <img class="home-decor-bike" src="../assets/home/home-decor-bike.png" />
+    <img class="home-decor-bike-2" src="../assets/home/home-decor-bike-2.png" />
+    <img class="home-decor-tree" src="../assets/home/home-decor-tree.png" />
 
     <div class="home-banner-wrapper">
       <q-carousel
@@ -42,7 +47,7 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <img src="../assets/images/menu/announce-icon.png" />
+          <img src="../assets/images/menu/announce-icon-thai-theme.png" />
         </div>
         <marquee-text :repeat="announcementList.length" :duration="announcementList.length * 20">
           <div v-if="announcementList">
@@ -63,7 +68,7 @@
           :class="currentSelectedMenu == e.name ? 'active-board' : ''"
           @click="switchMenu(e.name, i)"
         >
-          <!--          <img class="active-flag" :src="require(`../assets/home/game-board-item-bg-active-flag.png`)" />-->
+          <img class="active-flag" :src="require(`../assets/home/game-board-item-bg-active-flag.png`)" />
           <img :src="require(`../assets/images/index/${e.imgName}`)" />
           <span>{{ e.label }}</span>
         </div>
@@ -861,13 +866,13 @@
     :offset="[0, 0]"
   >
     <div v-if="showSticky" class="home-sticky">
-      <img class="sticky-bear" src="../assets/home/line-bear.png" />
+      <!-- <img class="sticky-bear" src="../assets/home/line-bear.png" /> -->
       <q-btn name="close" height="20" width="20" size="xs" @click="closeLineSticky" class="sticky-close-btn">
         <q-icon name="close"></q-icon>
       </q-btn>
       <div class="sticky-container">
         <div class="line-title">LINE</div>
-        <img src="../assets/home/line-bg.png" class="line-img" />
+        <img src="../assets/home/line-bg-thai-theme.png" class="line-img" />
         <div class="line-bottom">line ID:@jolly88</div>
       </div>
     </div>
@@ -932,7 +937,7 @@
         v-close-popup
       />
 
-      <img src="../assets/images/common/home-popup-img.png" />
+      <img src="../assets/images/common/home-popup-img-thai-theme.png" />
 
       <div class="popup-list">
         <router-link to="/promo?id=81">
@@ -2031,6 +2036,10 @@ export default defineComponent({
 <style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
 
+.home-decor-flower, .home-decor-bike, .home-decor-bike-2, .home-decor-tree {
+  display: none;
+}
+
 .home-banner-wrapper {
   position: relative;
 }
@@ -2049,7 +2058,7 @@ export default defineComponent({
   .station-notice-wrapper {
     display: flex;
     border-radius: 8px;
-    border: 1px solid $border-color;
+    border: 1px solid #9C1103;
     gap: 10px;
     padding: 2px 10px;
     justify-content: center;
@@ -2150,13 +2159,13 @@ export default defineComponent({
   column-gap: 8px;
   row-gap: 14px;
   width: calc(100% - 20px);
-  background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
-  padding: 6px 12px 6px;
+  // background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
+  padding: 40px 12px 16px;
   border-radius: 12px;
   overflow-x: auto;
 
   @media (min-width: 769px) {
-    margin: 0px auto;
+    margin: 10px auto;
   }
 
   .game-board-item {
@@ -2170,15 +2179,32 @@ export default defineComponent({
     text-align: center;
     padding: 12px 12px;
     white-space: nowrap;
+    background: url("../assets/home/game-board-item-bg.png") no-repeat center center;
+    background-size: 100% 100%;
+    position: relative;
+
+    .active-flag {
+      display: none;
+    }
 
     &.active-board {
       // background: $linear-bg-4;
-      background: #5555aa;
+      background: url("../assets/home/game-board-item-bg-active.png") no-repeat center center;
+      background-size: 100% 100%;
+
+      .active-flag {
+        display: block;
+        position: absolute;
+        top: -38px;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: 40px;
+        height: 40px;
+      }
     }
 
     &:hover {
       filter: brightness(0.88);
-      background: #5555aa;
     }
 
     &:active {
@@ -2192,7 +2218,7 @@ export default defineComponent({
 
     img {
       width: auto;
-      max-height: 30px;
+      max-height: 40px;
     }
   }
 }
@@ -2601,7 +2627,7 @@ export default defineComponent({
     .game-board-item {
       img {
         width: auto;
-        max-height: 35px;
+        max-height: 40px;
       }
     }
   }
@@ -2646,6 +2672,31 @@ export default defineComponent({
 
   .main-section {
     background-repeat: repeat-x;
+
+    .home-decor-flower, .home-decor-bike, .home-decor-bike-2, .home-decor-tree {
+      display: block;
+      position: absolute;
+    }
+    .home-decor-flower {
+      left: 0px;
+      top: 15%;
+      width: 100px;
+    }
+    .home-decor-bike {
+      left: 0px;
+      bottom: 92px;
+      width: 80px;
+    }
+    .home-decor-tree {
+      right: 0px;
+      bottom: 65px;
+      width: 80px;
+    }
+    .home-decor-bike-2 {
+      right: 80px;
+      bottom: 85px;
+      width: 80px;
+    }
   }
 
   .game-grid-lists {
@@ -2787,8 +2838,10 @@ export default defineComponent({
 }
 
 .bonus-sticky-box {
-  width: 100%;
-  height: 136px;
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;
+  height: 101px;
   margin-top: 10px;
 }
 
@@ -2796,8 +2849,8 @@ export default defineComponent({
   background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-sticky.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  width: 190px;
-  height: 136px;
+  width: 120px;
+  height: 101px;
   //position: absolute;/**/
   //right: 50%;
   //top: 0;
@@ -2948,20 +3001,25 @@ export default defineComponent({
     }
 
     .popup-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 92%;
-      margin: 0 auto 14px;
-      border: 2px solid #d483ff;
-      background: rgba(52, 41, 97, 0.9);
+      margin: 0 auto;
+      // border: 2px solid #d483ff;
+      // background: rgba(52, 41, 97, 0.9);
       border-radius: 11px;
       //margin-bottom: 14px;
-      line-height: 30px;
-      font-size: 22px;
+      line-height: 20px;
+      font-size: 16px;
       text-align: center;
       padding: 8px;
-      box-shadow: 0px 3px 2px 0px #ddb2ff42 inset;
-      box-shadow: 0px 0px 5px 3px #8000ffd9;
+      // box-shadow: 0px 3px 2px 0px #ddb2ff42 inset;
+      // box-shadow: 0px 0px 5px 3px #8000ffd9;
       cursor: pointer;
       text-shadow: 1px 2px 2px #000000;
+      background: url("../assets/images/common/home-popup-item-bg-thai-theme.png") no-repeat center center;
+      background-size: 100% 100%;
 
       &:hover {
         opacity: 0.9;
@@ -2973,9 +3031,14 @@ export default defineComponent({
 
       em {
         color: #ecff17;
-        font-size: 26px;
+        font-size: 16px;
         font-weight: 600;
         font-style: normal;
+      }
+
+      span {
+        padding: 10px;
+        margin: 0px 35px;
       }
     }
   }
@@ -3022,30 +3085,37 @@ export default defineComponent({
     right: 0px;
     z-index: 15;
 
-    width: 152px;
-    height: 192px;
-    background: $primary;
+    width: 125px;
+    aspect-ratio: 184/518;
+    background: url("../assets/home/line-board.png");
+    //background: url(../assets/home/xmas-line-btn.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    //padding: 10px 0;
+    padding: 15px 0px 10px;
     border-radius: 10px 0px 0px 10px;
 
     color: $white;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
-    justify-content: center;
+    gap: 0px;
+    justify-content: flex-end;
 
     .line-title {
-      font-size: 18px;
+      padding-top: 3px;
+      font-size: 12px;
     }
 
     .line-img {
-      width: 100px;
+      width: 80px;
       height: auto;
       margin: 0 auto;
+      background: #fff;
     }
 
     .line-bottom {
-      font-size: 16px;
+      font-size: 12px;
     }
   }
 }
