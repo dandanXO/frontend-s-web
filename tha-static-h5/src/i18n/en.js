@@ -74,6 +74,7 @@ export default {
       "The world's first complete entertainment source A large and diverse game center including leading sports games and e-sport, live entertainment, lottery, electronic games. and many others The most complete variety of entertainment Now in your hands Come open a new experience with us.",
     lets_download_it: "Let's download it.",
     download: "Download",
+    download_app: "Download App",
     direct_browser_access: "Direct browser access",
 
     // affiliate
