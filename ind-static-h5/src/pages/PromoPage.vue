@@ -143,6 +143,12 @@
     </div>
   </div>
 
+  <GameModal
+    v-if="route.path !== '/account/profile'"
+    ref="allGames"
+    :closeFullGameDialog="closeFullGameDialog"
+  ></GameModal>
+
   <q-dialog width="100%" v-model="isDisplayLogin">
     <q-card style="width: 100%; padding: 20px" class="bg-white text-black text-center">
       <q-card-section class="q-mb-md">
@@ -169,10 +175,12 @@ import {userStore} from "stores/index";
 // import { loadPromoBanner } from "src/api/index/promo";
 import ProfileSummary from "components/ProfileSummary.vue";
 import HotPromotion from 'components/HotPromotion'
+import GameModal from "components/modal/GameModal.vue";
 // import HotPromotion from 'components/HotPromotion'
 export default defineComponent({
   name: "PromoView",
   components: {
+    GameModal,
     HotPromotion,
     ProfileSummary
   },
@@ -363,7 +371,44 @@ export default defineComponent({
     }
 
     const goToJoinNow = () => {
-      if (selectedPromo.value.redirectUrl === "EarnMoney") {
+      // console.log(selectedPromo.value);
+      if (selectedPromo.value.param) {
+        try {
+          const paramJson = JSON.parse(selectedPromo.value.param);
+          console.log(paramJson);
+          if (paramJson && paramJson.page) {
+            router.push(paramJson.page)
+          } else if (paramJson && paramJson.html) {
+            window.open(paramJson.html, "_blank");
+          } else if (paramJson && paramJson.game) {
+            const openPattern = /^\/open\/(.*)/;
+            const extractedUrl = paramJson.game.match(openPattern)[1];
+            const [gameName, platformCode, gameCode, gameStatus, gameType, gameId] = extractedUrl.split("/");
+            playGame(gameName, platformCode, gameCode, gameStatus, gameType, gameId);
+          }else if (paramJson && paramJson.api) {
+            const apiParams = (paramJson && paramJson.params) ? paramJson.params : {};
+            api.get(paramJson.api, {params: apiParams}).then((res) => {
+              if (res.code === 0) {
+                $q.notify({
+                  color: "positive",
+                  position: "top",
+                  message: "Success.",
+                  icon: "check_circle_outline"
+                })
+              }
+            }).catch((e) => {
+              $q.notify({
+                color: "negative",
+                position: "top",
+                message: e.message,
+                icon: "report_problem"
+              })
+            });
+          }
+        } catch (e) {
+          console.log("PArse Error");
+        }
+      } else if (selectedPromo.value.redirectUrl === "EarnMoney") {
         router.push('/earn-money')
       } else if (selectedPromo.value.redirectUrl === "VIPrewards") {
         router.push('/vip')
@@ -377,6 +422,11 @@ export default defineComponent({
         router.push(selectedPromo.value.redirectUrl);
       }
     }
+
+    const allGames = ref(null);
+    const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
+      allGames.value.open(gameName, platformCode, gameCode, gameType);
+    };
 
     const goToVip = () => {
       router.push('/vip')
@@ -433,6 +483,11 @@ export default defineComponent({
     const swipeRight = () => {
     };
 
+    const fullGameDialog = ref(false);
+    const closeFullGameDialog = () => {
+      fullGameDialog.value = false;
+    };
+
     return {
       promoState,
       promoTypes,
@@ -460,6 +515,9 @@ export default defineComponent({
       ui,
       swipeLeft,
       swipeRight,
+      route,
+      allGames,
+      closeFullGameDialog
     }
   },
 });
