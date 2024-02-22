@@ -183,26 +183,7 @@ const onlineStatOptions = reactive({
   yAxis: {
     type: 'value',
   },
-  series: [
-    {
-      data: [100, 101],
-      type: 'line',
-      smooth: true,
-      showBackground: true,
-      backgroundStyle: {
-        color: 'rgba(180, 180, 180, 0.2)',
-      },
-    },
-    {
-      data: [100, 101],
-      type: 'line',
-      smooth: true,
-      showBackground: true,
-      backgroundStyle: {
-        color: 'rgba(180, 180, 180, 0.2)',
-      },
-    },
-  ],
+  series: [],
   legend: {
     display: true,
     position: 'bottom',
@@ -232,8 +213,7 @@ const compareOptions = reactive({
   yAxis: {
     type: 'value',
   },
-  series: [
-  ],
+  series: [],
   legend: {
     display: true,
     position: 'bottom',
@@ -304,7 +284,6 @@ async function loadStats() {
       count.push(s.count)
     })
     onlineStatOptions.series.push({
-      name: item.way,
       type: 'line',
       smooth: true,
       showBackground: true,
@@ -313,6 +292,7 @@ async function loadStats() {
       },
     })
     onlineStatOptions.series[index].data = count
+    onlineStatOptions.series[index].name = item.way
   })
 }
 
@@ -333,7 +313,6 @@ async function loadCompare() {
       count.push(s.count)
     })
     compareOptions.series.push({
-      name: item.way,
       type: 'line',
       smooth: true,
       showBackground: true,
@@ -342,6 +321,7 @@ async function loadCompare() {
       },
     })
     compareOptions.series[index].data = count
+    compareOptions.series[index].name = item.way
   })
 }
 
