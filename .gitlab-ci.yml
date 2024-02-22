@@ -121,6 +121,12 @@ deploy-dy-download:
 
 #===============================================================================================
 
+deploy-lh-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-download
+
+#===============================================================================================
 deploy-xf-maintenance:
   extends: .s3-deploy
   variables:
