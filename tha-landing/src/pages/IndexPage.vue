@@ -37,7 +37,7 @@
   <q-page-sticky class="sticky-div"
                  :position="(!$q.screen.lt.sm) ? 'bottom-left' : 'top-left' "
   >
-    <img src="../assets/images/line-sticky.png"/>
+    <img src="../assets/images/line-sticky.png" @click="openUrlLine('https://line.me/R/ti/p/@632evxlk')" />
   </q-page-sticky>
 
 
@@ -451,6 +451,9 @@ const registerModal = () => {
   isRegisterModal.value = true;
   getCode();
 }
+const openUrlLine = (url) => {
+  window.open(url, '_blank');
+}
 
 const onSubmit = () => {
   const fpPromise = FingerprintJS.load();
@@ -746,7 +749,8 @@ function charType(num) {
 
 .sticky-div {
   img {
-    padding-bottom: 150px;
+    margin-bottom: 150px;
+    cursor: pointer;
   }
 }
 
