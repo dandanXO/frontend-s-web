@@ -84,7 +84,6 @@ body.body--dark .q-header {
   background-size: cover;
   background-position: top center;
   background-repeat: no-repeat;
-  height: 60px;
 
   .q-card__section {
     // background-image: url(../assets/images/common/bg-header.png);
@@ -98,8 +97,8 @@ body.body--dark .q-header {
   }
 
   margin: 0 auto;
-  padding: 3px;
-  padding-top: calc(3px + env(safe-area-inset-top, 0));
+  padding: 0px;
+  padding-top: calc(0px + env(safe-area-inset-top, 0));
 }
 
 .q-dialog__inner--minimized {

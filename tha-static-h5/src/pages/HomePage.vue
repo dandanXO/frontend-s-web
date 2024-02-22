@@ -1705,6 +1705,12 @@ export default defineComponent({
         }
       } else if (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) {
         ui.appVersion = "iOS App";
+      } else if(isH5.value){
+        const res = await api.get(`/config/appVersionAndUrl?type=ALL&device=ANDROID`);
+
+        if(res.data.code === 0) {
+          store.setAppDownloadUrl(res.data.data.url);
+        }
       }
     };
 
@@ -1717,18 +1723,6 @@ export default defineComponent({
     };
 
     const downloadUrl = ref("");
-
-    const getAppDownloadUrl = () => {
-      api
-        .get("/config/appDownloadUrl")
-        .then((res) => {
-          // console.log(res);
-          downloadUrl.value = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
 
     const toggleFavGame = (gameId, status) => {
       if (status === true) {
@@ -1824,7 +1818,6 @@ export default defineComponent({
       checkPlatform();
       loadHomePromoPopup();
       loadHomeData();
-      getAppDownloadUrl();
       getVersionNo();
       checkSticky();
 
@@ -2020,7 +2013,6 @@ export default defineComponent({
       isH5,
       openDownloadPage,
       cancelUpdate,
-      getAppDownloadUrl,
       favGamesList,
       sortedFavGamesList,
       // updateSortedFavGamesList,
