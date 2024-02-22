@@ -379,16 +379,19 @@ export default defineComponent({
                 });
 
                 //ADJUST TRACKEVENT.
+                // debugger;
                 if (Platform.is.android && Platform.is.capacitor) {
                   affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
                   var adjustEvent = new AdjustEvent(affRegEvent.value);
                   // alert(affRegEvent.value);
                   Adjust.trackEvent(adjustEvent);
                 } else {
+                  console.log("Track Here");
+                  affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
                   const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-                  // AdjustWeb.trackEvent({
-                  //   eventToken: "81ibj7"
-                  // });
+                  AdjustWeb.trackEvent({
+                    eventToken: affRegEvent.value
+                  });
                 }
 
                 store.autoLogin(res.data);
