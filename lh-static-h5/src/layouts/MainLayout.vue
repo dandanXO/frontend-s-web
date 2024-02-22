@@ -212,6 +212,8 @@ export default defineComponent({
           pageName.value = "存款";
           if (route.query.redirect) {
             prevPage.value = route.query.name;
+          } else if (route.query.from === 'vip') {
+            prevPage.value = 'account/vip'
           }
         } else if (route.path === "/finance/withdraw") {
           prevPage.value = "account";

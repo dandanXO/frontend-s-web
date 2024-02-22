@@ -585,13 +585,14 @@ export default defineComponent({
     const slideTo = () => {
       const vipLevel = +store.vip.replace("VIP", "");
       if (vipLevel === 0) {
+        currentSlide.value = 0;
         return;
       }
       currentSlide.value = vipLevel - 1;
     };
     onMounted(() => {
-      initVIPTable();
-      slideTo();
+        initVIPTable();
+        slideTo();
     });
 
     return {
@@ -705,6 +706,26 @@ $border-settings: 1px solid #e5e7eb;
       background-size: contain;
     }
 
+
+    &9 {
+      background: url("../assets/vip/badge/banner-9.png") no-repeat top center;
+      background-size: contain;
+    }
+
+&10 {
+  background: url("../assets/vip/badge/banner-10.png") no-repeat top center;
+  background-size: contain;
+}
+
+&11 {
+  background: url("../assets/vip/badge/banner-11.png") no-repeat top center;
+  background-size: contain;
+}
+
+&12 {
+  background: url("../assets/vip/badge/banner-12.png") no-repeat top center;
+  background-size: contain;
+}
     .vipLevelReachStatus {
       background: url("../assets/vip/badge/vip-level-banner-status-ribbon-unachieved.png") no-repeat left center;
       background-size: contain;
