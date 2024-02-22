@@ -2049,7 +2049,7 @@ export default defineComponent({
   .station-notice-wrapper {
     display: flex;
     border-radius: 8px;
-    border: 1px solid $border-color;
+    border: 1px solid #9C1103;
     gap: 10px;
     padding: 2px 10px;
     justify-content: center;
