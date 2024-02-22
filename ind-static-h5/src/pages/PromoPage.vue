@@ -206,7 +206,7 @@ export default defineComponent({
     const tab = ref("all");
     const tabItems = [
 
-    { name:"all", label: '全部' },
+      {name: "all", label: '全部'},
       // { name: "slot game", label: '电子'},
       // { name: "fish", label: '捕鱼'},
       // { name: "live casino", label: '真人'},
@@ -236,7 +236,7 @@ export default defineComponent({
 
     onActivated(() => {
       // if promo name is present, do not show promo list on first load
-      if(route.query.name) {
+      if (route.query.name) {
         isPromoDetail.value = true;
       }
 
@@ -256,13 +256,13 @@ export default defineComponent({
     });
 
     watch(() => vipPromoTab.value, () => {
-      if(vipPromoTab.value === 'vip') {
+      if (vipPromoTab.value === 'vip') {
         router.push('/vip');
       }
     })
 
     watch(() => route.path, () => {
-      if(route.path === '/promo') {
+      if (route.path === '/promo') {
         vipPromoTab.value = 'promo';
       }
     })
@@ -281,21 +281,21 @@ export default defineComponent({
       //   }
       // })
       api
-          .get("/promo/banner?category=PROMO")
-          .then((response) => {
-            if (response.code === 0) {
-              banner.value = response.data[0];
-              // console.log(banner.value)
-            } else {
-              // $q.notify({
-              //   color: "negative",
-              //   position: "top",
-              //   message: ret.message,
-              //   icon: "report_problem"
-              // });
-            }
-            // banners.value = response.data;
-          })
+        .get("/promo/banner?category=PROMO")
+        .then((response) => {
+          if (response.code === 0) {
+            banner.value = response.data[0];
+            // console.log(banner.value)
+          } else {
+            // $q.notify({
+            //   color: "negative",
+            //   position: "top",
+            //   message: ret.message,
+            //   icon: "report_problem"
+            // });
+          }
+          // banners.value = response.data;
+        })
     }
     const showPromoDetails = (promo) => {
       if (!store.token) {
@@ -334,7 +334,9 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      api.get("/promo/page").then((res) => {
+      const platformApiUrl = store.token ? "/session/loggedInPromoPages" : "/promo/page";
+
+      api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
           promoState.promoList = [];
           var promoItems = res.data;
@@ -361,10 +363,18 @@ export default defineComponent({
     }
 
     const goToJoinNow = () => {
-      if(selectedPromo.value.redirectUrl === "EarnMoney") {
+      if (selectedPromo.value.redirectUrl === "EarnMoney") {
         router.push('/earn-money')
       } else if (selectedPromo.value.redirectUrl === "VIPrewards") {
         router.push('/vip')
+      } else if (selectedPromo.value.redirectUrl === "Deposit") {
+        router.push('/deposit?from=/promo');
+      } else if (selectedPromo.value.redirectUrl === "Withdraw") {
+        router.push('/withdraw?from=/promo');
+      } else if (selectedPromo.value.redirectUrl.indexOf("https://") > -1 || selectedPromo.value.redirectUrl.indexOf("http://") > -1) {
+        window.open(selectedPromo.value.redirectUrl, "_blank");
+      } else if (selectedPromo.value.redirectUrl) {
+        router.push(selectedPromo.value.redirectUrl);
       }
     }
 
@@ -458,6 +468,7 @@ export default defineComponent({
 .vip-promo-tab-wrapper {
   width: 90%;
   margin: 0 auto;
+
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
@@ -1064,9 +1075,11 @@ export default defineComponent({
     justify-content: center;
     gap: 8px;
   }
+
   .date-txt {
     color: rgba(255, 255, 255, 0.7);
   }
+
   .date-timer {
     color: #fe9a9a;
     display: flex;

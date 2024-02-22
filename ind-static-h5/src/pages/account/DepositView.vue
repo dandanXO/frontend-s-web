@@ -1,23 +1,34 @@
 <template>
   <div class="deposit-wrapper">
     <div class="deposit-options">
-      <div class="lil-title">Select Amount</div>
+      <div class="lil-title">Payment Channel</div>
       <div class="deposit-option-container">
-        <template v-for="(item, index) in payMethods" :key="item + index">
-          <q-btn
-            flat
+        <div class="deposit-option-btn-wrapper" v-for="(item, index) in payMethods" :key="index">
+          <!-- paymentIcon is the only unique identifier, paymentId and privilegeId may be the same for 2 different payment methods -->
+          <img
             class="deposit-option-btn q-mt-sm"
-            :label="item.nodeName"
-            :class="{ active: activeNodeName === item.nodeName }"
+            :src="`${imgURL}/payment/${item.paymentIcon}`"
             @click="handleDepositNodeClick(item)"
+            :class="{ active: activeMethod.paymentIcon === item.paymentIcon }"
+            style="width: 100%"
           />
-        </template>
+          <div :class="['selected-svg', activeMethod.paymentIcon === item.paymentIcon && 'active']">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path
+                d="M8.12492 11.118L14.0828 5L15 5.94102L8.12492 13L4 8.76474L4.9165 7.82373L8.12492 11.118Z"
+                fill="white"
+              />
+            </svg>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="deposit-item-container q-mt-md">
+    <div class="lil-title q-mt-lg">Select Amount</div>
+    <div class="deposit-item-container q-mt-sm">
       <template v-for="(item, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
+          <q-badge v-if="activeMethod.privilegeId" color="orange" floating rounded>+{{ item.hotLabel }}</q-badge>
           <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
           <div :class="['deposit-svg', item.isActive && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -147,6 +158,11 @@
       </div>
     </div>
 
+    <div class="q-mt-lg" style="color: #576373" v-if="activeMethod.privilegeId">
+      <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
+      <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
+    </div>
+
     <div class="node-wrapper" style="display: none">
       <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
     </div>
@@ -194,6 +210,8 @@ import { useRouter } from "vue-router";
 import { convertToCommaAmount } from "src/boot/utils";
 import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
+
+const imgURL = process.env.IMAGE_CDN;
 
 var qs = require("qs");
 const store = userStore();
@@ -266,12 +284,10 @@ const blurCode = () => {
 
 const verifyDepositAmount = ref([
   (val) => !!val || "Please enter the amount",
-  (val) =>
-    val > calculatedMinDeposit.value - 1 ||
-    "Deposit should be between " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
-  (val) =>
-    val < activeMethod.value.depositMax + 1 ||
-    "Deposit should be between " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
+  (val) => val > calculatedMinDeposit.value - 1 || "Deposit should be more than " + calculatedMinDeposit.value
+  // (val) =>
+  //   val < activeMethod.value.depositMax + 1 ||
+  //   "Deposit should be between " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
 ]);
 
 const form = reactive({
@@ -289,11 +305,13 @@ const depositItems = reactive([
   { amount: 300, hotLabel: 15, isActive: false },
   { amount: 500, hotLabel: 25, isActive: false },
   { amount: 1000, hotLabel: 50, isActive: false },
+  { amount: 2000, hotLabel: 100, isActive: false },
   { amount: 3000, hotLabel: 150, isActive: false },
   { amount: 5000, hotLabel: 250, isActive: false },
   { amount: 10000, hotLabel: 500, isActive: false },
-  { amount: 30000, hotLabel: 1500, isActive: false },
-  { amount: 50000, hotLabel: 2500, isActive: false }
+  { amount: 20000, hotLabel: 1000, isActive: false }
+  // { amount: 30000, hotLabel: 1500, isActive: false },
+  // { amount: 50000, hotLabel: 2500, isActive: false }
 ]);
 
 const handleDepositItemClick = (index) => {
@@ -305,24 +323,8 @@ const handleDepositItemClick = (index) => {
   });
 };
 
-const activeNodeName = ref(null);
-const activeCode = ref(null);
 const handleDepositNodeClick = (item) => {
-  activeNodeName.value = item.nodeName;
-  activeCode.value = item.code;
-};
-
-const isUpi1Active = ref(true);
-const isUpi2Active = ref(false);
-
-const handleDepositUpiClick = (option) => {
-  if (option === 1) {
-    isUpi1Active.value = true;
-    isUpi2Active.value = false;
-  } else if (option === 2) {
-    isUpi1Active.value = false;
-    isUpi2Active.value = true;
-  }
+  activeMethod.value = item;
 };
 
 const isLoadingInitPay = ref(true);
@@ -333,9 +335,9 @@ function initPay() {
   });
 
   payMethods.value = [];
-  console.log('SDFSDFDSCLEAR?')
+  console.log("SDFSDFDSCLEAR?");
 
-  cashier.get("/session/deposit/index/").then((res) => {
+  cashier.get("/session/ind/deposit/index/").then((res) => {
     $q.loading.hide();
     isLoadingInitPay.value = false;
 
@@ -348,11 +350,6 @@ function initPay() {
       });
       if (payMethods.value[0].extra && payMethods.value[0].extra.banks) {
         bankCardList.value = payMethods.value[0].extra.banks;
-      }
-
-      if (payMethods.value.length > 0) {
-        activeNodeName.value = payMethods.value[0].nodeName;
-        activeCode.value = payMethods.value[0].code;
       }
     }
 
@@ -371,31 +368,6 @@ function initPay() {
       }
     }
     localStorage.removeItem("isBacked");
-  });
-}
-
-async function loadPrivilege(val) {
-  privilegeList.value = [];
-  hasPrivilege.value = false;
-  await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
-    if (res.code === 0) {
-      privilegeList.value = res.data.privileges;
-      hasPrivilege.value = true;
-      unselectedPrivileges.value = [];
-      freePrivilege.value = null;
-      privilegeList.value.map((p) => {
-        if (p.payTypes.indexOf(val.payType) >= 0) {
-          if (p.triggerType == "FREE") {
-            freePrivilege.value = p;
-          } else {
-            unselectedPrivileges.value.push(p);
-          }
-        }
-      });
-    } else {
-      hasPrivilege.value = false;
-      privilegeList.value = [];
-    }
   });
 }
 
@@ -445,11 +417,8 @@ async function onSelect(value) {
 }
 
 function checkMinDepositAmt() {
-  if (!selectedPrivilege.value) {
-    calculatedMinDeposit.value = activeMethod.value.depositMin;
-  } else {
-    calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, selectedPrivilege.value.depositMin);
-  }
+  // api won't return min and max values from now on, currently min set to 100
+  calculatedMinDeposit.value = 100;
 }
 
 function checkPrivilege(v) {
@@ -507,6 +476,11 @@ async function confirmDeposit() {
             }
           }
           form.paymentId = activeMethod.value.paymentId;
+
+          if (activeMethod.value.privilegeId) {
+            form.privilegeId = activeMethod.value.privilegeId;
+          }
+
           const copy = { ...form };
           const data = {};
           Object.entries(copy).forEach(([key, value]) => {
@@ -515,7 +489,6 @@ async function confirmDeposit() {
             }
           });
           data.bankCardId = 0;
-          data.code = activeCode.value;
 
           pDepo(data);
         }
@@ -529,7 +502,7 @@ async function pDepo(deposit) {
     localAmount: deposit.localAmount,
     paymentId: deposit.paymentId,
     bankId: deposit.bankId,
-    code: deposit.code
+    privilegeId: deposit.privilegeId
   };
 
   if (deposit.privilegeId) {
@@ -862,14 +835,18 @@ onMounted(() => {
     display: flex;
     gap: 12px;
   }
+
+  .deposit-option-btn-wrapper {
+    position: relative;
+  }
+
   .deposit-option-btn {
     color: #cccccc;
     background: #1d2635;
-    min-width: 80px;
     border: 3px solid transparent;
-    height: 38px;
+    // height: 38px;
     border-radius: 0.375rem;
-    aspect-ratio: 77/38;
+    // aspect-ratio: 77/38;
 
     &.active {
       background: #5c46e7;
@@ -890,6 +867,22 @@ onMounted(() => {
         height: 30px;
         background-size: 100%;
       }
+    }
+  }
+
+  .selected-svg {
+    position: absolute;
+    right: 1px;
+    bottom: 1px;
+    display: none;
+
+    svg {
+      background: #5c46e7;
+      border-radius: 3px;
+    }
+
+    &.active {
+      display: block;
     }
   }
 }
