@@ -15,7 +15,7 @@
 }
 
 .panel-title {
-  background-color: $secondary;
+  background-color: #370083;
   color: $header-color;
   font-weight: 500;
   text-align: center;
