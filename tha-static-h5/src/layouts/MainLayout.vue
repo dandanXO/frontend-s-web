@@ -1,6 +1,8 @@
 <template>
   <q-layout view="hHh Lpr lFf">
     <q-header elevated>
+      <AppDownload />
+
       <q-card-section v-if="!store.hasToken()" class="top-section justify-between items-center" horizontal>
         <q-card-actions v-if="$q.screen.gt.md">
           <div class="btn-deco-wrapper">
@@ -165,13 +167,15 @@ import { storeToRefs } from "pinia";
 import { i18nStore } from "src/router/language";
 import { useI18n } from "vue-i18n";
 import { openLiveChat } from "src/boot/utils";
+import AppDownload from '../components/AppDownload.vue';
 
 export default defineComponent({
   name: "MainLayout",
   components: {
     AccountPage,
     // RiArrowDropLeftLine,
-    RiCloseLine
+    RiCloseLine,
+    AppDownload
   },
 
   setup() {
@@ -596,7 +600,7 @@ svg path {
 }
 
 .affiliate-btn {
-  background: $border-color;
+  background: #793737;
   border-radius: 12px;
   display: flex;
   align-items: center;

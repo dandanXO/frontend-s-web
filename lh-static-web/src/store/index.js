@@ -112,6 +112,9 @@ export const userStore = defineStore("userStore", {
     memberLogout() {
       return logout().then(() => {
         this.token = null;
+        // this.vip = 'VIP0'
+        // this.currentDeposit = "0.0000"
+        location.reload();
       });
     },
     openLiveChat() {

@@ -1403,7 +1403,7 @@ const getPlatList = () => {
     .then((data) => {
       var pf = data;
       ui.slotLists = [];
-      console.log(pf);
+      // console.log(pf);
 
       pf.forEach((element) => {
         const { status } = element;

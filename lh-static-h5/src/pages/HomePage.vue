@@ -775,7 +775,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, reactive, computed } from "vue";
+import { defineComponent, onActivated, ref, reactive, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -1146,6 +1146,15 @@ export default defineComponent({
         .then((data) => {
           var pf = data;
           ui.slotLists = [];
+          esport.value = [];
+          sport.value = [];
+          livecasino.value = [];
+          poker.value = [];
+          lottery.value = [];
+          slot.value = [];
+          fishing.value = [];
+          casuals.value = [];
+
           pf.forEach((element) => {
             const platTypes = element.gameType.split(",");
             // console.log(platTypes);
@@ -1484,16 +1493,16 @@ export default defineComponent({
     const unreadInboxMail = ref(0);
     const getUnreadTotal = () => {
       if (store.token) {
-        return api.get("/session/inbox/getUnreadTotal").then((total) => {
-          console.log(total);
-          if (total.code === 0) {
-            unreadInboxMail.value = total.data;
+        return api.get("/session/inbox/getUnreadTotal").then((res) => {
+          console.log(res);
+          if (res.code === 0) {
+            unreadInboxMail.value = res.data;
           }
         });
       }
     };
 
-    onMounted(() => {
+    onActivated(() => {
       getPlatList();
       loadData();
       loadAnnouncement();

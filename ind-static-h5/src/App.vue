@@ -16,6 +16,7 @@ import { StatusBar, Style } from "@capacitor/status-bar";
 import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
 import { useUI } from "src/stores/ui";
 import axios from "axios";
+import { getAttribution } from "@adjustcom/adjust-web-sdk";
 
 export default defineComponent({
   name: "App",
@@ -51,9 +52,9 @@ export default defineComponent({
 
     const getAppInfo = async () => {
       const info = await Device.getId();
-      console.log("Device ID");
-      console.log(info);
-      console.log(info.identifier);
+      // console.log("Device ID");
+      // console.log(info);
+      // console.log(info.identifier);
     };
 
     const initOrientation = () => {
@@ -99,19 +100,50 @@ export default defineComponent({
         }, 1500);
       } else {
         //Normal WEb / H5 / iOS WEbclip.
-        // console.log("Init Web Adjust");
-        // const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-        // AdjustWeb.initSdk({
-        //   appToken: affAppToken.value,
-        //   environment: "production"
-        // });
-        // setTimeout(() => {
-        //   const resp = AdjustWeb.getAttribution();
-        //   console.log("Web Adid");
-        //   // console.log(resp.adid);
-        //   store.aaid = resp ? resp.adid : "";
-        // }, 1500);
+        console.log("Init Web Adjust");
+        console.log(affAppToken.value);
+        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        AdjustWeb.initSdk({
+          appToken: affAppToken.value,
+          environment: "production",
+          attributionCallback: function (e, attribution) {
+            // e: internal event name, can be ignored
+            // attribution: details about the changed attribution
+            console.log("CALLBACK");
+            console.log(attribution);
+            store.aaid = attribution && attribution.adid ? attribution.adid : "";
+          }
+        });
+        setTimeout(() => {
+          const attribution = AdjustWeb.getAttribution();
+          console.log("Web Adid");
+          console.log(attribution);
+          store.aaid = attribution ? attribution.adid : "";
+        }, 1500);
       }
+    };
+
+    const trackH5Affiliate = () => {
+      const omitSites = ["bw3.genoortisy.com"];
+
+      var affiliateCode = "";
+      if (omitSites.includes(window.location.host)) {
+        affiliateCode = "E4B265";
+      } else {
+        affiliateCode = "8999B3";
+      }
+
+      sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+      api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
+        if (res.code === 0) {
+          sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+          sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
+          sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+          affAppToken.value = res.data.adjust_app_token;
+          initAdjustEventTrack();
+          // alert(affAppToken.value);
+        }
+      });
     };
 
     const onDeviceReady = () => {
@@ -235,14 +267,18 @@ export default defineComponent({
       getAppInfo();
       initOrientation();
 
-      document.addEventListener(
-        "deviceready",
-        () => {
-          onDeviceReady();
-          setStatusBarColor();
-        },
-        false
-      );
+      if (isAndroid()) {
+        document.addEventListener(
+          "deviceready",
+          () => {
+            onDeviceReady();
+            setStatusBarColor();
+          },
+          false
+        );
+      } else {
+        trackH5Affiliate();
+      }
 
       document.addEventListener("visibilitychange", handleVisibilityChange);
 
