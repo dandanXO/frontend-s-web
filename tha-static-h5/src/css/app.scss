@@ -378,10 +378,10 @@ svg {
 
 .page-header {
   width: 100%;
-  background-color: $main-color;
+  background-color: #5d0d0d;
   font-size: $big-font-size;
   text-align: center;
-  color: $header-color;
+  color: #fff;
   font-family: Wave;
   min-height: 40px;
 
@@ -433,7 +433,7 @@ svg {
 }
 
 .lang-container {
-  background: $border-color;
+  background: #793737;
   border-radius: 12px;
   padding: 1px 10px;
   height: 30px;
@@ -573,7 +573,7 @@ svg {
 
 .q-field--filled.q-field--dark .q-field__control,
 .q-field--filled.q-field--dark .q-field__control:before {
-  background: $main-color;
+  background: #271c1c;
 }
 
 .verification-input:hover :before{
