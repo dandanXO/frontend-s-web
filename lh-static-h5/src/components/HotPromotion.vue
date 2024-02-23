@@ -61,7 +61,7 @@
 
     <FootballFightPromo v-if="list.redirectUrl === 'lh1-football-fight' && !isCommonPromo" />
 
-    <UpgradeHongbaoPromo v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo" />
+    <UpgradeHongBaoPromo v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo" />
 
     <GiftPromo v-if="list.redirectUrl === 'lh1-gift' && !isCommonPromo && store.token"></GiftPromo>
 
@@ -123,7 +123,7 @@ import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import DailyLoginPromo from "../components/hotpromo/dailylogin/dailyLoginPromo.vue";
 import LoginRewardPromo from "../components/hotpromo/loginreward/loginRewardPromo.vue";
 import FootballFightPromo from "../components/hotpromo/footballfight/footballFightPromo.vue";
-import UpgradeHongbaoPromo from "../components/hotpromo/upgradehongbao/upgradeHongbaoPromo.vue";
+import UpgradeHongBaoPromo from "../components/hotpromo/upgradehongbao/upgradeHongbaoPromo.vue";
 // import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 // import PrivilegeInvite from "../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue";
 // import AsiaCup2024Promo from "../components/hotpromo/asiacup2024/AsiaCup2024Promo.vue";
@@ -153,7 +153,7 @@ export default defineComponent({
     DailyLoginPromo,
     LoginRewardPromo,
     FootballFightPromo,
-    UpgradeHongbaoPromo,
+    UpgradeHongBaoPromo,
     // GiftPromo,
     // PrivilegeInvite,
     // AsiaCup2024Promo,
