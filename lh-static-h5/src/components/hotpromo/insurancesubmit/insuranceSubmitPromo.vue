@@ -4,7 +4,7 @@
       <q-btn color="brightbtn" @click="handleOpenDialog" label="点击申请" />
     </div>
 
-    <q-dialog v-model="insuranceFormModal" persistent>
+    <q-dialog v-model="insuranceFormModal">
       <q-card class="insurance-card">
         <q-card-section class="q-mb-md row justify-center">
           <div class="text-h6">{{ props.platformType == "ESPORT" ? "电竞保险" : "体育保险" }}</div>

@@ -21,13 +21,13 @@
               <img src="../../../assets/images/promo/hotpromo/lottery/lucky_prize.png" />
             </div>
             <div class="right-container">
-              <q-form>
+              <q-form @submit="chooseLuckyNumber">
                 <div class="insert-lucky-num">
                   <q-label>请输入选号</q-label>
                   <q-input v-model="luckyNumber" placeholder="0" type="number" borderless />
                 </div>
               </q-form>
-              <q-btn color="brightbtn" :loading="luckyNumberBtnLoading" @click="chooseLuckyNumber()" label="立即领取" />
+              <q-btn color="brightbtn" :loading="luckyNumberBtnLoading" @click="chooseLuckyNumber()" label="提交选号" />
             </div>
           </div>
         </q-tab-panel>
