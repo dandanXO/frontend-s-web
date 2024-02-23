@@ -2847,8 +2847,8 @@ export default defineComponent({
   background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-sticky.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  width: 120px;
-  height: 101px;
+  width: 115px;
+  height: 135px;
   //position: absolute;/**/
   //right: 50%;
   //top: 0;
