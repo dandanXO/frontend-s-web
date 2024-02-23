@@ -425,7 +425,7 @@ const getProgressBar = () => {
       
       let percentageChange = (currentDep / vipAmount * 100);
       console.log(percentageChange / 100)
-      vipItems.value[Number(vipLevel.value)].progressBarVal = percentageChange / 100
+      vipItems.value[Number(vipLevel.value)].progressBarVal = 1 - percentageChange / 100
       // // Calculate the maximum absolute percentage change
       // let maxAbsoluteChange = Math.max(Math.abs(percentageChange), 1);
 
