@@ -72,7 +72,7 @@ import { userStore } from "@/store";
 const promoCode = ref("hongbaoyu");
 
 const store = userStore();
-const privilegeClaimedModalVisible = ref(false);
+const privilegeClaimedModalVisible = ref(true);
 const promoNotReady = ref(false);
 const bonusOpened = ref(false);
 const winAmount = ref(0);

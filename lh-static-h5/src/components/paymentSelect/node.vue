@@ -197,7 +197,7 @@ $node-color: #468cff;
   // display: flex;
   grid-gap: 15px;
   display: grid;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   width: 100%;
 
   .payment-method-item {
@@ -207,7 +207,7 @@ $node-color: #468cff;
     cursor: pointer;
     img {
       max-width: 85px;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
       width: 100%;
       height: auto;
     }
@@ -278,8 +278,8 @@ $node-color: #468cff;
       display: flex;
       justify-content: flex-start;
       align-items: flex-start;
-      gap: 10px;
-      margin: 10px 0px;
+      gap: 0px;
+      margin: 10px 0px 8px;
       padding: 0 0px;
       flex-direction: column;
       .account-title-container {

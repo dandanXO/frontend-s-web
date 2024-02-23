@@ -256,53 +256,51 @@
       </div>
     </q-item-section>
 
-    <!-- <q-card class="card-account-banner"> -->
-    <!-- <q-card-section> -->
-    <!-- <q-carousel -->
-    <!-- class="account" -->
-    <!-- autoplay -->
-    <!-- navigation -->
-    <!-- v-model="slide" -->
-    <!-- swipeable -->
-    <!-- transition-next="slide-left" -->
-    <!-- transition-prev="slide-right" -->
-    <!-- animated -->
-    <!-- infinite -->
-    <!-- > -->
-    <!-- <template v-slot:navigation-icon="{ active, onClick }"> -->
-    <!-- <q-btn -->
-    <!-- padding="3px" -->
-    <!-- v-if="active" -->
-    <!-- size="xs" -->
-    <!-- color="white" -->
-    <!-- @click="onClick" -->
-    <!-- style="border: 1px solid #ffffff; border-radius: 50%; margin: 6px 8px" -->
-    <!-- /> -->
-    <!-- <q-btn -->
-    <!-- padding="3px" -->
-    <!-- v-else -->
-    <!-- size="xs" -->
-    <!-- color="transparent" -->
-    <!-- @click="onClick" -->
-    <!-- style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px" -->
-    <!-- /> -->
-    <!-- </template> -->
+    <q-card class="card-account-banner">
+      <q-card-section>
+        <q-carousel
+          class="account"
+          autoplay
+          navigation
+          v-model="slide"
+          swipeable
+          transition-next="slide-left"
+          transition-prev="slide-right"
+          animated
+          infinite
+          height="150px"
+          >
+            <template v-slot:navigation-icon="{ active, onClick }">
+              <q-btn
+              padding="3px"
+              v-if="active"
+              size="xs"
+              color="white"
+              @click="onClick"
+              style="border: 1px solid #ffffff; border-radius: 50%; margin: 6px 8px"
+              />
+              <q-btn
+              padding="3px"
+              v-else
+              size="xs"
+              color="transparent"
+              @click="onClick"
+              style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px"
+              />
+            </template>
 
-    <!-- <q-carousel-slide -->
-    <!-- v-for="(banner, i) in btm_banners" -->
-    <!-- :key="i" -->
-    <!-- :name="i" -->
-    <!-- class="column no-wrap flex-center" -->
-    <!-- :img-src="imgURL + banner.mobileImageUrl" -->
-    <!-- @click="gotoPromo(banner)" -->
-    <!-- ></q-carousel-slide> -->
-    <!-- </q-carousel> -->
-    <!-- </q-card-section> -->
-    <!-- </q-card> -->
-
-    <div>
-      <img src="../assets/images/account/account-banner.png" width="100%" />
-    </div>
+            <q-carousel-slide
+              v-for="(banner, i) in btm_banners"
+              :key="i"
+              :name="i"
+              class="column no-wrap flex-center"
+              :img-src="imgURL + banner.mobileImageUrl"
+              @click="gotoPromo(banner)"
+              >
+            </q-carousel-slide>
+        </q-carousel>
+      </q-card-section>
+    </q-card>
 
     <a @click="isLogoutModal = true">
       <div class="acct-logout btn-pointer">
@@ -980,8 +978,11 @@ export default defineComponent({
 }
 
 .card-account-banner {
-  margin: 10px 10px 0px;
-  border-radius: 10px 10px 0px 0px;
+  width: calc(100% - 2rem);
+  margin: auto;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  overflow: hidden;
 
   .account-banner-img {
     width: 100%;
