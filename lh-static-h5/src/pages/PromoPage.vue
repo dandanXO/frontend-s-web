@@ -397,6 +397,8 @@ export default defineComponent({
     };
 
     onActivated(() => {
+      isPromoDetail.value= false;
+      selectedPromo.value= {};
       // if promo name is present, do not show promo list on first load
       if (route.query.name) {
         isPromoDetail.value = true;
