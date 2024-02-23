@@ -1465,6 +1465,13 @@ export default {
     indRebateAmount: 'Rebate Amount',
     indAdjustAmount: 'Adjust Amount',
     grossProfit: 'Gross Profit',
+    addMemberTreasureKey: 'Add Member Treasure Key',
+    deductMemberTreasureKey: 'Deduct Member Treasure Key',
+    keyQuantity: 'Key Quantity',
+    keyQuantityBefore: 'Key Quantity Before',
+    keyQuantityAfter: 'Key Quantity After',
+    checkInDate: 'Check In Date',
+    consecutiveDay: 'Consecutive Day Count',
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
@@ -1864,6 +1871,7 @@ export default {
     resultCalculateSuccess: 'Result is calculated successfully',
     buildIsInQueue: 'Build is in queue',
     roleMustOnlyOne: 'Please select a role that requires authorization',
+    validateKeyQuantityRequired: 'Key quantity is required',
   },
   menu: {
     undefined: '',
@@ -2056,6 +2064,8 @@ export default {
     'Channel Summary': 'Channel Summary',
     'Adjustment Reason': 'Adjustment Reason',
     'User Login Log': 'User Login Log',
+    'Event Treasure Key': 'Event Treasure Key Record',
+    'Event Check In Record': 'Event Check In Record',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -2343,5 +2353,6 @@ export default {
     21006: 'File and os that choosing not the same',
     30000: 'PG update transaction status failed',
     24003: 'Result is already processed',
+    27000: 'Key quantity is not enough',
   },
 }
