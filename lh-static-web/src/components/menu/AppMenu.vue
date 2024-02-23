@@ -70,7 +70,7 @@ export default defineComponent({
         })
         .catch((err) => {
           console.log(err);
-          downloadUrl.value = "xf9866.app";
+          downloadUrl.value = "leihuo6.com";
         });
     };
 

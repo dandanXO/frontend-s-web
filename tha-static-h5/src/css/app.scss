@@ -13,6 +13,8 @@ body {
 
 #q-app {
   background: $dark-page;
+  background: url("../assets/images/common/bg-img-thai-theme.jpg") no-repeat top center;
+  background-size: cover;
 }
 
 ::-webkit-scrollbar {
@@ -61,10 +63,10 @@ body {
 }
 
 .main-section {
-  background-image: url("../assets/images/common/bg-img.png");
-  background-position: top center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  // background-image: url("../assets/images/common/bg-img.png");
+  // background-position: top center;
+  // background-repeat: no-repeat;
+  // background-size: cover;
   min-height: calc(100vh - 60px);
 }
 
@@ -78,16 +80,16 @@ body.body--dark {
 }
 
 body.body--dark .q-header {
-  background-image: url(../assets/images/common/header-btm-bg.png);
-  background-size: contain;
+  background-image: url(../assets/images/common/header-btm-bg-thai-theme.png);
+  background-size: cover;
   background-position: top center;
-  height: 60px;
+  background-repeat: no-repeat;
 
   .q-card__section {
-    background-image: url(../assets/images/common/bg-header.png);
-    background-size: 100% 100%;
-    background-position: bottom;
-    background-repeat: no-repeat;
+    // background-image: url(../assets/images/common/bg-header.png);
+    // background-size: 100% 100%;
+    // background-position: bottom;
+    // background-repeat: no-repeat;
     height: 100%;
 
     max-width: 1280px;
@@ -95,8 +97,8 @@ body.body--dark .q-header {
   }
 
   margin: 0 auto;
-  padding: 3px;
-  padding-top: calc(3px + env(safe-area-inset-top, 0));
+  padding: 0px;
+  padding-top: calc(0px + env(safe-area-inset-top, 0));
 }
 
 .q-dialog__inner--minimized {
@@ -172,6 +174,7 @@ body.body--dark .q-footer {
   background-position: top;
   margin: 0 auto;
   width: 100%;
+  background: #900000;
 
   .q-tabs {
     max-width: 600px;
@@ -375,10 +378,10 @@ svg {
 
 .page-header {
   width: 100%;
-  background-color: $main-color;
+  background-color: #5d0d0d;
   font-size: $big-font-size;
   text-align: center;
-  color: $header-color;
+  color: #fff;
   font-family: Wave;
   min-height: 40px;
 
@@ -430,7 +433,7 @@ svg {
 }
 
 .lang-container {
-  background: $border-color;
+  background: #793737;
   border-radius: 12px;
   padding: 1px 10px;
   height: 30px;
@@ -570,7 +573,7 @@ svg {
 
 .q-field--filled.q-field--dark .q-field__control,
 .q-field--filled.q-field--dark .q-field__control:before {
-  background: $main-color;
+  background: #5d0d0d;
 }
 
 .verification-input:hover :before{
@@ -645,7 +648,7 @@ input:internal-autofill-selected {
 
 @media (min-width: 991px) {
   #q-app {
-    background: url("../assets/images/common/bg-web.png") no-repeat top center;
-    background-size: cover;
+    background: url("../assets/images/common/bg-web-thai-theme.png") no-repeat top center;
+    background-size: 100% 100%;
   }
 }

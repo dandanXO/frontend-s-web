@@ -138,9 +138,9 @@ export default route(function (/* { store, ssrContext } */) {
     } else if (ui.isAffiliateB) {
       console.log("Slot-Win .cc");
 
-      fbq("init", "211810688532352");
+      fbq("init", "873960514528284");
 
-      fbq("init", "722685126460216");
+      // fbq("init", "722685126460216");
       fbq("track", "PageView");
       fbq("track", "ViewContent");
     }

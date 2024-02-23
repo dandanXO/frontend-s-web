@@ -143,6 +143,12 @@
     </div>
   </div>
 
+  <GameModal
+    v-if="route.path !== '/account/profile'"
+    ref="allGames"
+    :closeFullGameDialog="closeFullGameDialog"
+  ></GameModal>
+
   <q-dialog width="100%" v-model="isDisplayLogin">
     <q-card style="width: 100%; padding: 20px" class="bg-white text-black text-center">
       <q-card-section class="q-mb-md">
@@ -169,10 +175,12 @@ import {userStore} from "stores/index";
 // import { loadPromoBanner } from "src/api/index/promo";
 import ProfileSummary from "components/ProfileSummary.vue";
 import HotPromotion from 'components/HotPromotion'
+import GameModal from "components/modal/GameModal.vue";
 // import HotPromotion from 'components/HotPromotion'
 export default defineComponent({
   name: "PromoView",
   components: {
+    GameModal,
     HotPromotion,
     ProfileSummary
   },
@@ -206,7 +214,7 @@ export default defineComponent({
     const tab = ref("all");
     const tabItems = [
 
-    { name:"all", label: '全部' },
+      {name: "all", label: '全部'},
       // { name: "slot game", label: '电子'},
       // { name: "fish", label: '捕鱼'},
       // { name: "live casino", label: '真人'},
@@ -236,7 +244,7 @@ export default defineComponent({
 
     onActivated(() => {
       // if promo name is present, do not show promo list on first load
-      if(route.query.name) {
+      if (route.query.name) {
         isPromoDetail.value = true;
       }
 
@@ -256,13 +264,13 @@ export default defineComponent({
     });
 
     watch(() => vipPromoTab.value, () => {
-      if(vipPromoTab.value === 'vip') {
+      if (vipPromoTab.value === 'vip') {
         router.push('/vip');
       }
     })
 
     watch(() => route.path, () => {
-      if(route.path === '/promo') {
+      if (route.path === '/promo') {
         vipPromoTab.value = 'promo';
       }
     })
@@ -281,21 +289,21 @@ export default defineComponent({
       //   }
       // })
       api
-          .get("/promo/banner?category=PROMO")
-          .then((response) => {
-            if (response.code === 0) {
-              banner.value = response.data[0];
-              // console.log(banner.value)
-            } else {
-              // $q.notify({
-              //   color: "negative",
-              //   position: "top",
-              //   message: ret.message,
-              //   icon: "report_problem"
-              // });
-            }
-            // banners.value = response.data;
-          })
+        .get("/promo/banner?category=PROMO")
+        .then((response) => {
+          if (response.code === 0) {
+            banner.value = response.data[0];
+            // console.log(banner.value)
+          } else {
+            // $q.notify({
+            //   color: "negative",
+            //   position: "top",
+            //   message: ret.message,
+            //   icon: "report_problem"
+            // });
+          }
+          // banners.value = response.data;
+        })
     }
     const showPromoDetails = (promo) => {
       if (!store.token) {
@@ -334,7 +342,9 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      api.get("/promo/page").then((res) => {
+      const platformApiUrl = store.token ? "/session/loggedInPromoPages" : "/promo/page";
+
+      api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
           promoState.promoList = [];
           var promoItems = res.data;
@@ -361,12 +371,62 @@ export default defineComponent({
     }
 
     const goToJoinNow = () => {
-      if(selectedPromo.value.redirectUrl === "EarnMoney") {
+      // console.log(selectedPromo.value);
+      if (selectedPromo.value.param) {
+        try {
+          const paramJson = JSON.parse(selectedPromo.value.param);
+          console.log(paramJson);
+          if (paramJson && paramJson.page) {
+            router.push(paramJson.page)
+          } else if (paramJson && paramJson.html) {
+            window.open(paramJson.html, "_blank");
+          } else if (paramJson && paramJson.game) {
+            const openPattern = /^\/open\/(.*)/;
+            const extractedUrl = paramJson.game.match(openPattern)[1];
+            const [gameName, platformCode, gameCode, gameStatus, gameType, gameId] = extractedUrl.split("/");
+            playGame(gameName, platformCode, gameCode, gameStatus, gameType, gameId);
+          }else if (paramJson && paramJson.api) {
+            const apiParams = (paramJson && paramJson.params) ? paramJson.params : {};
+            api.get(paramJson.api, {params: apiParams}).then((res) => {
+              if (res.code === 0) {
+                $q.notify({
+                  color: "positive",
+                  position: "top",
+                  message: "Success.",
+                  icon: "check_circle_outline"
+                })
+              }
+            }).catch((e) => {
+              $q.notify({
+                color: "negative",
+                position: "top",
+                message: e.message,
+                icon: "report_problem"
+              })
+            });
+          }
+        } catch (e) {
+          console.log("PArse Error");
+        }
+      } else if (selectedPromo.value.redirectUrl === "EarnMoney") {
         router.push('/earn-money')
       } else if (selectedPromo.value.redirectUrl === "VIPrewards") {
         router.push('/vip')
+      } else if (selectedPromo.value.redirectUrl === "Deposit") {
+        router.push('/deposit?from=/promo');
+      } else if (selectedPromo.value.redirectUrl === "Withdraw") {
+        router.push('/withdraw?from=/promo');
+      } else if (selectedPromo.value.redirectUrl.indexOf("https://") > -1 || selectedPromo.value.redirectUrl.indexOf("http://") > -1) {
+        window.open(selectedPromo.value.redirectUrl, "_blank");
+      } else if (selectedPromo.value.redirectUrl) {
+        router.push(selectedPromo.value.redirectUrl);
       }
     }
+
+    const allGames = ref(null);
+    const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
+      allGames.value.open(gameName, platformCode, gameCode, gameType);
+    };
 
     const goToVip = () => {
       router.push('/vip')
@@ -423,6 +483,11 @@ export default defineComponent({
     const swipeRight = () => {
     };
 
+    const fullGameDialog = ref(false);
+    const closeFullGameDialog = () => {
+      fullGameDialog.value = false;
+    };
+
     return {
       promoState,
       promoTypes,
@@ -450,6 +515,9 @@ export default defineComponent({
       ui,
       swipeLeft,
       swipeRight,
+      route,
+      allGames,
+      closeFullGameDialog
     }
   },
 });
@@ -458,6 +526,7 @@ export default defineComponent({
 .vip-promo-tab-wrapper {
   width: 90%;
   margin: 0 auto;
+
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
@@ -1064,9 +1133,11 @@ export default defineComponent({
     justify-content: center;
     gap: 8px;
   }
+
   .date-txt {
     color: rgba(255, 255, 255, 0.7);
   }
+
   .date-timer {
     color: #fe9a9a;
     display: flex;

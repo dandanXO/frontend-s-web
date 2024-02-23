@@ -231,6 +231,8 @@ export default {
     bet: '投注',
     payout: '结算',
     merchantDepositSummary: '商户充值汇总',
+    onlineStatsCompareChartName: '在线人数环比',
+    onlineStatsChartName: '在线人数统计',
   },
   reportGame: {
     gamePlatform: '游戏平台',
@@ -1906,6 +1908,7 @@ export default {
     BW2: 'BW2',
     BW3: 'BW3',
     BW4: 'BW4',
+    BW5: 'BW5',
     'To be affiliate paid': '待支付',
     'Affiliate Payment on going': '支付中',
     'Crypto Affiliate Payment on going': '数字币支付中',
@@ -2039,6 +2042,8 @@ export default {
     'User Login Log': '用户登录日志',
     'Event Treasure Key': '活动宝箱钥匙记录',
     'Event Check In Record': '活动签到记录',
+    'Online Stats': '在线人数',
+    'Promotion Activity': '优惠活动',
   },
   google: {
     google_auth_menu: '谷歌验证',

@@ -243,9 +243,15 @@ const submitForm = async (elForm) => {
         });
         nbaInsuranceFormRef.value.resetFields();
         isNBAInsuranceModalVisible.value = false;
+        isSubmitting.value = false;
+      } else {
+        ElMessage.error({
+          type: "error",
+          message: res.message
+        });
+        isSubmitting.value = false;
       }
 
-      isSubmitting.value = false;
     }
   });
 };

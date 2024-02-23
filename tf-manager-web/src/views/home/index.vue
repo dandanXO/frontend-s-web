@@ -891,7 +891,7 @@ function getDepositChart(summaryList) {
       recordTime.push(item.recordTime.substring(5).replace('-', '/'))
       depositAmount.push(getDecimalValue(item.depositAmount))
       depositTransactionCount.push(item.depositCount)
-      depositMemberCount.push(item.withdrawCount)
+      depositMemberCount.push(item.depositMemberCount)
     })
     // debugger;
     depositBarchatOptions.xAxis.data = recordTime

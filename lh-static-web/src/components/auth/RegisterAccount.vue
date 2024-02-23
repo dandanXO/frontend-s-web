@@ -286,6 +286,11 @@ const getCode = () => {
         if (res.code === 0) {
             verificationImg.value = "data:image/png;base64," + res.data.img;
             regForm.codeId = res.data.id;
+        } else {
+          ElMessage.error({
+            type: "error",
+            message: res.message
+          });
         }
     })
 };

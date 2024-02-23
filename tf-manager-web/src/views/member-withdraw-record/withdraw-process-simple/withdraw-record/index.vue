@@ -288,6 +288,14 @@
             >
               {{ t('fields.fail') }}
             </el-button>
+            <el-button
+              v-if="scope.row.status === 'WAITING_AUTO_PAY' && hasPermission(['sys:withdraw:simple:fail'])"
+              size="mini"
+              type="success"
+              @click="toSuccess(scope.row)"
+            >
+              {{ t('fields.success') }}
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -656,6 +664,7 @@ import {
   getMemberWithdrawRecord,
   autoWithdrawToFail,
   getExportWithdrawRecord,
+  autoWithdrawToSuccess
 } from '../../../../api/member-withdraw-record'
 import { getMemberWithdrawLog } from '../../../../api/member-withdraw-log'
 import { getAllWithdrawBankCard } from '../../../../api/bank-card'
@@ -899,7 +908,7 @@ async function loadBanks() {
 }
 
 async function loadPaymentCards() {
-  const { data: paymentCard } = await getAllWithdrawBankCard()
+  const { data: paymentCard } = await getAllWithdrawBankCard(request.siteId)
   paymentCardList.list = paymentCard
   paymentCardList.list.unshift({
     id: 0,
@@ -935,6 +944,11 @@ async function advancedSearch() {
 
 async function toFail(val) {
   await autoWithdrawToFail(val.id, val.withdrawDate)
+  await loadRecord()
+}
+
+async function toSuccess(val) {
+  await autoWithdrawToSuccess(val.id, val.withdrawDate)
   await loadRecord()
 }
 

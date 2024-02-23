@@ -117,7 +117,10 @@ function chooseLuckyNumber() {
         ElMessage.success("成功发送号码。");
         luckyNumber.value = null;
       } else {
-        ElMessage.error(res.message);
+        ElMessage.error({
+          type: "error",
+          message: res.message
+        });
       }
     })
     .catch(() => {})

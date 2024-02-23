@@ -471,6 +471,9 @@ async function loadReport(first) {
   }
 
   const { data: ret } = await getPlatformGameReport(query)
+  ret.records.map(item => {
+    item.siteName = siteList.list.find(s => s.id === item.siteId).siteName
+  })
 
   if (first === true) {
     // 给每行数据强制追加一个数据项, 以便注入每日数据

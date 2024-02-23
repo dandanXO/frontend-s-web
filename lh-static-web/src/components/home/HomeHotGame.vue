@@ -44,6 +44,13 @@
                   }}
                 </div>
               </Transition>
+                <div class="subtitle">
+                  {{
+                    hotgame.content &&
+                    hotgame.content[hotgame.currentProvider.toLowerCase()] &&
+                    hotgame.content[hotgame.currentProvider.toLowerCase()].subtitle
+                  }}
+                </div>
               <!-- <div class="subtitle">{{ hotgame.content[hotgame.currentProvider.toLowerCase()] }}</div> -->
             </div>
             <div>
@@ -51,7 +58,7 @@
                 {{
                   hotgame.content &&
                   hotgame.content[hotgame.currentProvider.toLowerCase()] &&
-                  hotgame.content[hotgame.currentProvider.toLowerCase()].subtitle
+                  hotgame.content[hotgame.currentProvider.toLowerCase()].desc
                 }}
               </div>
               <div class="desc">还有超多独家创新玩法，足够新颖，极易操作的游戏界面， 更是在您游戏过程中增光添彩！</div>
@@ -696,10 +703,12 @@ const checkPlatforms = () => {
   console.log(hotgameData.value);
 };
 const updatePlatforms = (platforms, item, keyModifier) => {
-  platforms.forEach((p) => {
+  console.log(item.subtitle)
+  platforms.forEach((p, i) => {
     const newObject = {
       title: p.cnname,
-      subtitle: p.message,
+      subtitle: item.subtitle,
+      desc: p.message,
       charImgPath: p.image
     };
     item.content[p.code.toLowerCase() + keyModifier] = newObject;
@@ -851,12 +860,6 @@ $transition_timer: 0.5s;
             font-family: "YiHei";
             font-style: normal;
             font-weight: 400;
-            background: linear-gradient(180deg, #c2e9fb 0%, #a1c4fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
-            filter: drop-shadow(2px 1px #5799e3);
 
             line-height: normal;
 
@@ -864,10 +867,26 @@ $transition_timer: 0.5s;
               // font-size: 4.24106rem;
               font-size: 2.7106rem;
               word-break: keep-all;
+            background: linear-gradient(180deg, #AE92FF 0%, #56C2FF 100%);
+
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+            filter: drop-shadow(2px 1px #5799e3);
             }
 
             .subtitle {
               font-size: 2.70775rem;
+            background: linear-gradient(180deg, #AE92FF 0%, #56C2FF 100%);
+
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+            filter: drop-shadow(2px 1px #5799e3);
             }
           }
 

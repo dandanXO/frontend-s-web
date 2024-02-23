@@ -166,7 +166,7 @@ import { ref, computed, onUnmounted, onMounted, reactive } from "vue";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 import { getCurrentStepInit, submitGameStep, getStepRecords } from "@/api/index/promo";
-
+import { ElMessage } from "element-plus";
 const store = userStore();
 const router = useRouter();
 
@@ -191,6 +191,10 @@ const handleSpin = () => {
         handleSmoothSpin(res.data.steps, res.data.currentPlace);
         wonBonus.value = res.data.bonus;
       } else {
+        ElMessage.error({
+          type: "error",
+          message: res.message
+        });
         isBtnLoading.value = false;
       }
     })
@@ -402,7 +406,7 @@ const onGameRecordsDialogClicked = () => {
 
 const getStepRecordsApi = (current) => {
   getStepRecords(current).then((res) => {
-    const { code, data } = res;
+    const { code, data, message } = res;
     if (code === 0) {
       if (data && data.records && data.records.length) {
         dataSource.value = data.records;
@@ -411,6 +415,8 @@ const getStepRecordsApi = (current) => {
         pagination.total = data.total;
         pagination.current = data.current;
       }
+    } else {
+      ElMessage.error(message)
     }
   });
 };

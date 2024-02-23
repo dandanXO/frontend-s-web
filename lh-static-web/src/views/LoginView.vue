@@ -174,6 +174,7 @@ const sendOtp = async () => {
                     loginCountdown.value = 60;
                     countdownTimer('LOGIN')
                 } else {
+                    ElMessage.error(response.message)
                     getCode();
                 }
             })
@@ -233,6 +234,8 @@ const getCode = () => {
             loginForm.codeId = res.data.id;
             captchaForm.codeId = res.data.id;
             passForm.codeId = res.data.id
+        } else {
+            ElMessage.error(res.message)
         }
     })
 };

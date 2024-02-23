@@ -249,7 +249,7 @@ import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 import { sendSessionSms } from "@/api/personal/personal";
 import { InfoFilled } from "@element-plus/icons-vue";
-// import moment from "moment";
+import moment from "moment";
 
 export default defineComponent({
   name: "WithdrawBankView",
@@ -422,13 +422,13 @@ export default defineComponent({
           pagination.value.totalPage = response.data.total;
           pagination.value.pageCount = response.data.pages;
         } else {
-          // message.error(response.message, 4)
+          ElMessage.error({
+            type: "error",
+            message: res.message
+          });
+          tblLoading.value = false;
         }
-      }).catch((e) => {
-        console.log(e.message);
-        tblLoading.value = false;
-      });
-
+      })
     };
 
 
@@ -463,17 +463,23 @@ export default defineComponent({
           if (personalState.memberInfo.birthday) {
             personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
           }
+        } else {
+          ElMessage.error({
+            type: "error",
+            message: response.message
+          });
         }
-      }).catch((error) => {
-        console.log("error", error);
-      });
+      })
       loadMemberTelephone().then((response) => {
         if (response.code === 0) {
           bankCardInfo.telephone = response.data;
+        } else {
+          ElMessage.error({
+            type: "error",
+            message: response.message
+          });
         }
-      }).catch((error) => {
-        console.log("error", error);
-      });
+      })
     };
 
     const checkBankCards = () => {
@@ -522,10 +528,13 @@ export default defineComponent({
       loadBankCards().then((response) => {
         if (response.code === 0) {
           personalState.bankCardList.push(...response.data);
+        } else {
+          ElMessage.error({
+            type: "error",
+            message: response.message
+          });
         }
-      }).catch((error) => {
-        console.log("error", error);
-      });
+      })
     };
 
     //add bank card
@@ -567,6 +576,11 @@ export default defineComponent({
               if (res.code === 0) {
                 bankCardModalState.banks.push(...res.data);
                 selectBankType();
+              } else {
+                ElMessage.error({
+                  type: "error",
+                  message: res.message
+                });
               }
             }).catch((e) => {
               console.log("error", e);
@@ -629,6 +643,10 @@ export default defineComponent({
             });
             captchaDialogVisible.value = false;
           } else {
+            ElMessage.error({
+              type: "error",
+              message: response.message
+            });
             getCode();
           }
         });
@@ -654,6 +672,11 @@ export default defineComponent({
         if (res.code === 0) {
           verificationImg.value = "data:image/png;base64," + res.data.img;
           captchaForm.codeId = res.data.id;
+        } else {
+          ElMessage.error({
+            type: "error",
+            message: res.message
+          });
         }
       });
     };
@@ -694,7 +717,10 @@ export default defineComponent({
               bankCardModalState.visible = false;
               loadCards();
             } else {
-              // message.error(response.message);
+              ElMessage.error({
+                type: "error",
+                message: response.message
+              });
             }
           }).catch((error) => {
             console.log(error.message);
@@ -784,6 +810,11 @@ export default defineComponent({
                     personalState.bankCardList.splice(i, 1);
                   }
                 }
+              } else {
+                ElMessage.error({
+                  type: "error",
+                  message: res.message
+                });
               }
             }).catch((e) => {
               console.log("error", e);

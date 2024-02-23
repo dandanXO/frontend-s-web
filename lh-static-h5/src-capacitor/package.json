@@ -1,8 +1,8 @@
 {
   "name": "雷火",
-  "version": "1.0.27",
-  "description": "雷火官网 - 最专业的竞猜网站",
-  "author": "Mika <mika@eagrp.net>",
+  "version": "1.0.1",
+  "description": "雷火竞技 - 最专业的竞猜网站",
+  "author": "WeiSeng <weiseng@eagrp.net>",
   "private": true,
   "scripts": {
     "update": "npx cap sync && npx cap update android",
@@ -10,6 +10,7 @@
     "buildios": "npx cap sync && npx cap update ios && npx cap run ios -l"
   },
   "dependencies": {
+    "@aashu-dubey/capacitor-statusbar-safe-area": "^2.1.1",
     "@capacitor/android": "^5.2.2",
     "@capacitor/app": "^5.0.0",
     "@capacitor/browser": "^5.0.0",
@@ -17,6 +18,7 @@
     "@capacitor/core": "^5.0.0",
     "@capacitor/preferences": "^5.0.0",
     "@capacitor/splash-screen": "^5.0.0",
+    "@capacitor/status-bar": "^5.0.6",
     "cordova-plugin-inappbrowser": "^5.0.0",
     "cordova-plugin-screen-orientation": "^3.0.3",
     "es6-promise-plugin": "^4.2.2"

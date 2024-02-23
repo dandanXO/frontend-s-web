@@ -1166,7 +1166,7 @@ a {
 
   &.ind-firstPage{
     background: url('../../assets/images/ind/ind-bg.png') no-repeat center;
-
+    height: 100vh;
     .logo {
       position: absolute;
       left: 70px;

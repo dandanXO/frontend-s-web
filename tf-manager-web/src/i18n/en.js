@@ -225,6 +225,8 @@ export default {
     bet: 'Bet',
     payout: 'Payout',
     merchantDepositSummary: 'Merchant Deposit Summary',
+    onlineStatsCompareChartName: 'Online Stats Compared By Day',
+    onlineStatsChartName: 'Online Stats',
   },
   reportGame: {
     gamePlatform: 'Game Platform',
@@ -1934,6 +1936,7 @@ export default {
     BW2: 'BW2',
     BW3: 'BW3',
     BW4: 'BW4',
+    BW5: 'BW5',
     'To be affiliate paid': 'To be affiliate paid',
     'Affiliate Payment on going': 'Affiliate Payment on going',
     'Crypto Affiliate Payment on going': 'Crypto Affiliate Payment on going',
@@ -2066,6 +2069,8 @@ export default {
     'User Login Log': 'User Login Log',
     'Event Treasure Key': 'Event Treasure Key Record',
     'Event Check In Record': 'Event Check In Record',
+    'Online Stats': 'Online Stats',
+    'Promotion Activity': 'Promotion Activity',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

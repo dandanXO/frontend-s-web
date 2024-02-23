@@ -37,7 +37,7 @@
   <q-page-sticky class="sticky-div"
                  :position="(!$q.screen.lt.sm) ? 'bottom-left' : 'top-left' "
   >
-    <img src="../assets/images/line-sticky.png"/>
+    <img src="../assets/images/line-sticky.png" @click="openUrlLine('https://line.me/R/ti/p/@632evxlk')" />
   </q-page-sticky>
 
 
@@ -372,7 +372,7 @@ const isRegisterModal = ref(false);
 const hasAffiliate = ref(false);
 
 const getCode = () => {
-  api.get("/member/verificationCode")
+  api.get("/member/verificationEasyCode")
     .then((res) => {
       const response = res.data;
       if (response.code === 0) {
@@ -450,6 +450,9 @@ const goToRegister = () => {
 const registerModal = () => {
   isRegisterModal.value = true;
   getCode();
+}
+const openUrlLine = (url) => {
+  window.open(url, '_blank');
 }
 
 const onSubmit = () => {
@@ -746,7 +749,8 @@ function charType(num) {
 
 .sticky-div {
   img {
-    padding-bottom: 150px;
+    margin-bottom: 150px;
+    cursor: pointer;
   }
 }
 

@@ -105,10 +105,15 @@ const onResponse = (response) => {
         store.token = null;
         location.reload();
       }
+      // if (res.code === 36001 || 36002 || 36003 || 36004 || 36005 || 36006 || 36007 || 36008 || 36009) {
+      //   // 龙卡
+      //   return res
+      // }
       // message.error(res.message, 4);
-      ElMessage.error(res.message);
+      // ElMessage.error(res.message);
     }
-    throw new Error(res.message || "Error");
+    // throw new Error(res.message || "Error");
+      return res
   } else {
     return response.data;
   }

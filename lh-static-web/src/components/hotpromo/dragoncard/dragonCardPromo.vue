@@ -146,6 +146,11 @@ const pageInit = () => {
   tigerCardInit({ promoCode: props.promoCode }).then((res) => {
     if (res.code === 0) {
       cardInfo.cardDetail = res.data;
+    } else {
+      ElMessage.error({
+        type: "error",
+        message: res.message
+      });
     }
   });
 };
@@ -154,6 +159,11 @@ const loadRanking = () => {
   getLeaderboard().then((res) => {
     if (res.code === 0) {
       rankingPage.records = res.data;
+    } else {
+      ElMessage.error({
+        type: "error",
+        message: res.message
+      });
     }
   });
 };
@@ -173,8 +183,8 @@ const getNewTigerCard = () => {
         type: "error",
         message: res.message
       });
+      isPageLoading.value = false;
     }
-    isPageLoading.value = false;
   });
 };
 
@@ -189,8 +199,13 @@ const compoundCard = () => {
         message: "success"
       });
       isPageLoading.value = false;
+    } else {
+      ElMessage.error({
+        type: "error",
+        message: res.message
+      });
+      isPageLoading.value = false;
     }
-    isPageLoading.value = false;
   });
 };
 
@@ -289,14 +304,19 @@ const submitRegisterForm = async (elForm) => {
       form.promoCode = props.promoCode;
       giveCardToFriend(form).then((res) => {
         if (res.code === 0) {
-          ElMessage.error({
+          ElMessage.success({
             type: "success",
             message: "success"
           });
           isSubmitting.value = false;
+        } else {
+          ElMessage.error({
+            type: "error",
+            message: res.message
+          });
+          isSubmitting.value = false;
         }
       });
-      isSubmitting.value = false;
     }
   });
 };
