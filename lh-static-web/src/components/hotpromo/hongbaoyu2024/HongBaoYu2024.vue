@@ -2,19 +2,25 @@
   <div class="hongbao-container">
     <div class="hongbao-prize">
       <div class="decal"></div>
-      <div class="current">当前抽奖次数</div>
-      <div class="count">1</div>
+      <div class="current-content">
+        <div class="current">当前抽奖次数</div>
+        <div class="count">1</div>
+      </div>
+
+      <div class="prize-redeem" @click="getPromotion">
+        <img src="../../../assets/images/promotion/hotpromo/hongbaoyu2024/red-packet.png" width="350" />
+      </div>
 
       <!-- <div class="contents" v-if="!bonusOpened">
-        <el-button class="promo-common-btn" size="large" :loading="loadingClaim" @click="getPromotion">
-          打开红包
-        </el-button>
-      </div> -->
+          <el-button class="promo-common-btn" size="large" :loading="loadingClaim" @click="getPromotion">
+            打开红包
+          </el-button>
+        </div> -->
 
-      <div class="buttons">
+      <!-- <div class="buttons">
         <div class="common-btn" @click="getPromotion">抽奖</div>
         <div class="common-btn blue">十连抽</div>
-      </div>
+      </div> -->
     </div>
     <div class="activity-boxes">
       <div class="activity-box">
@@ -71,6 +77,32 @@
       </div>
     </div>
   </div>
+
+  <el-dialog
+    class="award-modal hongbaoyu-modal"
+    :close-on-click-modal="false"
+    :modal="false"
+    v-model="privilegeClaimedModalVisible"
+    align-center
+  >
+    <div class="modal-div">
+      <!-- <span class="img-item">
+        <div class="inner-contents">
+          <div class="amount">{{ winAmount }}</div>
+          <div class="bonus">奖金</div>
+        </div>
+      </span> -->
+
+      <div class="red-packet-opened">
+        <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu2024/red-packet-opened.png`)" />
+        <!-- <img src="../../../assets/images/promotion/hotpromo/red-packet-opened.png" /> -->
+        <div class="grats">恭喜中奖！</div>
+        <div class="amount">{{ winAmount }}</div>
+
+        <div class="get-btn" @click="getPromotionPrize">点击领取</div>
+      </div>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -87,6 +119,7 @@ const bonusOpened = ref(false);
 const winAmount = ref(0);
 const loadingClaim = ref(false);
 const getPromotion = () => {
+  privilegeClaimedModalVisible.value = true; // remove this line
   loadingClaim.value = true;
   claimDailyRainItem(promoCode.value)
     .then((res) => {
@@ -225,9 +258,20 @@ onMounted(() => {
     }
   }
   .hongbao-prize {
-    background: url(../../../assets/images/promotion/hotpromo/upgrade-hongbao/hongbao-bg.png) no-repeat center center;
-    padding: 20px;
-    border-radius: 20px;
+    // background: url(../../../assets/images/promotion/hotpromo/upgrade-hongbao/hongbao-bg.png) no-repeat center center;
+    // padding: 20px;
+    // border-radius: 20px;
+
+    .prize-redeem {
+      cursor: pointer;
+    }
+
+    .current-content {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      justify-content: center;
+    }
     .decal {
       background: url(../../../assets/images/promotion/hotpromo/upgrade-hongbao/union.png) no-repeat center center;
       width: 500px;
@@ -237,18 +281,17 @@ onMounted(() => {
     .current {
       font-size: 20px;
       color: #7a8eb9;
-      margin-bottom: -30px;
     }
     .count {
-      background: url(../../../assets/images/promotion/hotpromo/upgrade-hongbao/number.png) no-repeat center center;
+      //   background: url(../../../assets/images/promotion/hotpromo/upgrade-hongbao/number.png) no-repeat center center;
       color: #3f8cff;
       font-size: 50px;
-      padding-top: 120px;
-      padding-bottom: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      margin-bottom: 10px;
+      //   padding-top: 120px;
+      //   padding-bottom: 20px;
+      //   display: flex;
+      //   justify-content: center;
+      //   align-items: flex-end;
+      //   margin-bottom: 10px;
     }
   }
   .buttons {
@@ -269,6 +312,80 @@ onMounted(() => {
         color: #ffffff;
       }
     }
+  }
+}
+
+.modal-div {
+  width: 100%;
+}
+
+.red-packet-opened {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  img {
+    width: 500px;
+  }
+
+  .grats {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    margin-top: 100px;
+
+    color: #fffbfb;
+
+    text-align: center;
+    font-family: PingFang SC;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+
+  .amount {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    margin-top: 250px;
+    left: -15px;
+    color: #f23b1d;
+    font-size: 50px;
+    font-weight: bold;
+  }
+
+  .bonus {
+  }
+
+  .get-btn {
+    color: #f23b1d;
+    border-radius: 30px;
+    background: linear-gradient(180deg, #fdf4ee 0%, #fff3c0 100%);
+    position: absolute;
+    margin-top: 270px;
+    margin-left: -15px;
+    font-size: 20px;
+    padding: 12px 24px;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(0.9);
+    }
+  }
+}
+</style>
+
+<style lang="scss">
+.hongbaoyu-modal {
+  .el-dialog__header .el-dialog__headerbtn {
+    display: none !important;
   }
 }
 </style>
