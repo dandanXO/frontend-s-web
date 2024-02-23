@@ -600,7 +600,7 @@ svg path {
 }
 
 .affiliate-btn {
-  background: $border-color;
+  background: #793737;
   border-radius: 12px;
   display: flex;
   align-items: center;
