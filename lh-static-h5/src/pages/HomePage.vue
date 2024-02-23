@@ -1146,6 +1146,15 @@ export default defineComponent({
         .then((data) => {
           var pf = data;
           ui.slotLists = [];
+          esport.value = [];
+          sport.value = [];
+          livecasino.value = [];
+          poker.value = [];
+          lottery.value = [];
+          slot.value = [];
+          fishing.value = [];
+          casuals.value = [];
+
           pf.forEach((element) => {
             const platTypes = element.gameType.split(",");
             // console.log(platTypes);
