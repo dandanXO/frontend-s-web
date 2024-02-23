@@ -1472,6 +1472,13 @@ export default {
     indRebateAmount: '返点金额',
     indAdjustAmount: '资金修正金额',
     grossProfit: '毛利润',
+    addMemberTreasureKey: '添加会员宝箱钥匙',
+    deductMemberTreasureKey: '扣除会员宝箱钥匙',
+    keyQuantity: '钥匙数量',
+    keyQuantityBefore: '之前钥匙数量',
+    keyQuantityAfter: '之后钥匙数量',
+    checkInDate: '签到日期',
+    consecutiveDay: '连续签到天数',
   },
   message: {
     addRemarkSuccess: '新增备注成功',
@@ -1839,6 +1846,7 @@ export default {
     resultCalculateSuccess: '结果结算成功',
     buildIsInQueue: '构建等待中',
     roleMustOnlyOne: '请选择一个需要授权的角色',
+    validateKeyQuantityRequired: '钥匙数量必填',
   },
   menu: {
     undefined: '',
@@ -2032,6 +2040,8 @@ export default {
     'Channel Summary': '渠道报表',
     'Adjustment Reason': '平账原因',
     'User Login Log': '用户登录日志',
+    'Event Treasure Key': '活动宝箱钥匙记录',
+    'Event Check In Record': '活动签到记录',
     'Online Stats': '在线人数',
     'Promotion Activity': '优惠活动',
   },
@@ -2319,5 +2329,6 @@ export default {
     21006: '操作系统和上载应用程序不匹配',
     30000: 'PG注单设置失败',
     24003: '结果已结算',
+    27000: '钥匙数量不足',
   },
 }
