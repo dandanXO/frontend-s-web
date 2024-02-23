@@ -163,9 +163,9 @@
       <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
     </div>
 
-    <div class="node-wrapper" style="display: none">
-      <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
-    </div>
+    <!--    <div class="node-wrapper" style="display: none">-->
+    <!--      <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />-->
+    <!--    </div>-->
   </div>
 
   <q-dialog width="100%" v-model="isDeposited">
