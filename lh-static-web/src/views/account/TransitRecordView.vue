@@ -399,10 +399,10 @@
                     v-model="searchForm.gameBetRecord.platform"
                     placeholder="平台"
                     @change="searchRecord"
+                    value-key="code"
                   >
-                    <el-option key="" value="">-</el-option>
-                    <el-option v-for="p in platformsList" :key="p.code" :value="p.code">
-                      {{ getPlatform(p.code) }}
+                    <el-option key="" label="-全部平台-" value="">-</el-option>
+                    <el-option v-for="p in platformsList" :key="p.code" :label="getPlatform(p.code)" :value="p.code">
                     </el-option>
                   </el-select>
                 </el-form-item>
@@ -1248,10 +1248,8 @@ export default defineComponent({
         return "自动支付"; // Automatic Payment
       } else if (transferType === "WAITING_CALLBACK") {
         return "自动支付中"; // Waiting Callback
-      } else if (transferType === "PENDING") {
-        return "支付中"; // Pending
-      } else if (transferType === "SUCCESS") {
-        return "成功"; // Success
+      } else if (transferType === "SENDING") {
+        return "发送中"; // Sending
       } else if (transferType === "SUPPLEMENT_SUCCESS") {
         return "成功"; // Supplement Success
       } else if (transferType === "CLOSED") {
@@ -1291,7 +1289,7 @@ export default defineComponent({
         return "";
       }
       if (platformName === "AG") {
-        return "AG真人"; // AG
+        return "AG真人、XIN电子"; // AG
       } else if (platformName === "BBINDY") {
         return "BBIN真人"; // BBINDY
       } else if (platformName === "KY") {

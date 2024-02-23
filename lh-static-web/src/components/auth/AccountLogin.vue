@@ -20,7 +20,7 @@
                 <div style="display:flex;width:100%;">
                     <el-input v-model="loginForm.captchaCode" label="验证码" placeholder="请输入验证码" @keyup.enter="submitLogin" clearable>
                     </el-input>
-                    <img style="width:90px;" :src="verificationImg" @click="getCode" />
+                    <img style="width:100px;" :src="verificationImg" @click="getCode" />
                 </div>
             </el-form-item>
         </div>

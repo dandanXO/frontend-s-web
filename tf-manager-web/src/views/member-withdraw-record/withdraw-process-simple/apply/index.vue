@@ -18,6 +18,22 @@
           :clearable="false"
           :default-time="defaultTime"
         />
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px;margin-left:10px"
+          default-first-option
+          @focus="loadSites"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-input
           v-model="request.serialNumber"
           style="width: 300px; margin-left: 10px"
@@ -341,7 +357,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
 import { getVipList } from '../../../../api/vip'
 import { getFinancialLevels } from '../../../../api/financial-level'
@@ -353,14 +369,13 @@ import {
   getTotalWithdrawAmountByStatus,
   getWithdrawPlatformList,
 } from '../../../../api/member-withdraw-record'
+import { getSiteListSimple } from "@/api/site"
 import { ElMessage } from 'element-plus'
 import { hasPermission } from '../../../../utils/util'
 import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
-import { useRouter } from "vue-router";
 
-const router = useRouter()
 const checkBtnRef = ref();
 const checkBtnsRef = ref();
 const store = useStore();
@@ -397,6 +412,9 @@ const startDate = new Date()
 startDate.setDate(startDate.getDate() - 7)
 const defaultStartDate = convertDateToStart(startDate);
 const defaultEndDate = convertDateToEnd(new Date());
+const siteList = reactive({
+  list: [],
+});
 
 const request = reactive({
   size: 20,
@@ -466,6 +484,11 @@ async function loadVips() {
   }
 }
 
+async function loadSites() {
+  const { data: site } = await getSiteListSimple()
+  siteList.list = site
+}
+
 async function loadFinancialLevels() {
   const { data: financial } = await getFinancialLevels()
   financialList.list = financial
@@ -495,7 +518,6 @@ async function loadBanks() {
 async function loadRecord() {
   uiControl.dialogVisible = false
   page.loading = true
-  request.siteId = computed(() => router.currentRoute.value.query.site)
   const requestCopy = { ...request }
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
@@ -563,7 +585,9 @@ async function showDialog(type) {
   uiControl.dialogVisible = true
 }
 
-onMounted(() => {
+onMounted(async () => {
+  await loadSites()
+  request.siteId = siteList.list[0].id
   loadVips()
   loadFinancialLevels()
   loadBanks()

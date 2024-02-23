@@ -850,6 +850,7 @@ export default defineComponent({
                 message: '成功',
                 type: 'success',
               })
+              clearPwd();
             } else {
               // message.error(response.message);
             }

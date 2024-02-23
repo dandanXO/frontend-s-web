@@ -7,7 +7,7 @@
 import {onMounted} from "vue";
 
 onMounted(() => {
-  if(window.location.pathname.indexOf("dy") > -1 || window.location.pathname.indexOf("xf") > -1) {
+  if(window.location.pathname.indexOf("dy") > -1 || window.location.pathname.indexOf("xf") > -1 || window.location.pathname.indexOf("lh") > -1) {
     document.title = '代理后台';
   }
 
@@ -37,6 +37,8 @@ onMounted(() => {
       window.location.pathname = '/xf/login'
     } else if (window.location.host.indexOf('ind') > -1 || window.location.hostname.indexOf("ind-") > -1) {
       window.location.pathname = '/ind/login'
+    } else if (window.location.host.indexOf('lh1') > -1) {
+      window.location.pathname = '/lh/login'
     } else {
       window.location.pathname = '/dy/login'
     }

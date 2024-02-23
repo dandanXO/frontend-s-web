@@ -79,7 +79,7 @@
         </q-label>
         <q-input
           ref="cardNumberRef"
-          type="number"
+          type="text"
           standout
           v-model="bankCardInfo.cardNumber"
           class="q-pb-xs"
@@ -87,7 +87,7 @@
           label="请输入电子钱包"
           lazy-rules
           clearable
-          :rules="[(val) => (val && val.length > 0) || '请输入电子钱包', validateBankLength]"
+          :rules="[(val) => (val && val.length > 0) || '请输入电子钱包', validateBankLength, validateEWalletNumber]"
         ></q-input>
 
         <q-label>
@@ -235,6 +235,12 @@ const validateBankLength = (val) => {
       break;
   }
 };
+
+const validateEWalletNumber = (val) => {
+  var regex = /^[a-zA-Z0-9]+$/;
+
+  return (regex.test(val)) || "请输入有效的电子钱包号码";
+}
 
 // NOTE: no chance to validate, e.g. member telephone = 44****77
 // const isValidCnPhone = () => {

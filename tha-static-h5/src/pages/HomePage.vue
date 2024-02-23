@@ -42,8 +42,7 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <!--          <img src="../assets/images/menu/announce-icon.png" />-->
-          <img src="../assets/images/menu-cny/announce-cny-icon.png" />
+          <img src="../assets/images/menu/announce-icon.png" />
         </div>
         <marquee-text :repeat="announcementList.length" :duration="announcementList.length * 20">
           <div v-if="announcementList">
@@ -862,7 +861,7 @@
     :offset="[0, 0]"
   >
     <div v-if="showSticky" class="home-sticky">
-      <!-- <img class="sticky-bear" src="../assets/home/line-bear.png" /> -->
+      <img class="sticky-bear" src="../assets/home/line-bear.png" />
       <q-btn name="close" height="20" width="20" size="xs" @click="closeLineSticky" class="sticky-close-btn">
         <q-icon name="close"></q-icon>
       </q-btn>
@@ -933,8 +932,7 @@
         v-close-popup
       />
 
-      <!--      <img src="../assets/images/common/home-popup-img.png" />-->
-      <img src="../assets/images/common/promo-home-cnyt.png" />
+      <img src="../assets/images/common/home-popup-img.png" />
 
       <div class="popup-list">
         <router-link to="/promo?id=81">
@@ -2043,10 +2041,6 @@ export default defineComponent({
   align-items: center;
   gap: 10px;
   margin: 10px 10px 5px;
-  background: linear-gradient(0deg, rgba(156, 17, 3, 0.8), rgba(156, 17, 3, 0.8)),
-    linear-gradient(0deg, #eb5849, #eb5849);
-  border: 1px solid #eb5849;
-  border-radius: 10px;
 
   @media (min-width: 769px) {
     margin: 10px;
@@ -2054,8 +2048,8 @@ export default defineComponent({
 
   .station-notice-wrapper {
     display: flex;
-    border-radius: 10px;
-    border: 1px solid #9c1103;
+    border-radius: 8px;
+    border: 1px solid $border-color;
     gap: 10px;
     padding: 2px 10px;
     justify-content: center;
@@ -2067,7 +2061,7 @@ export default defineComponent({
       padding-top: 3px;
 
       img {
-        width: 26px;
+        width: 21px;
         height: auto;
       }
     }
@@ -2152,13 +2146,12 @@ export default defineComponent({
 .grid {
   display: flex;
   margin: 0px auto 0px;
-  //align-items: flex-start;
-  align-items: center;
+  align-items: flex-start;
   column-gap: 8px;
   row-gap: 14px;
   width: calc(100% - 20px);
-  // background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
-  padding: 5px 12px 5px;
+  background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
+  padding: 6px 12px 6px;
   border-radius: 12px;
   overflow-x: auto;
 
@@ -2168,47 +2161,24 @@ export default defineComponent({
 
   .game-board-item {
     border-radius: 8px;
+    width: auto;
     gap: 12px;
     height: 100%;
-    margin: 0 auto;
-    width: 135px;
-    aspect-ratio: 136/61;
+    margin: auto;
     display: flex;
     align-items: center;
     text-align: center;
     padding: 12px 12px;
     white-space: nowrap;
-    background: url("../assets/home/game-board-item-bg.png") no-repeat center center;
-    background-size: 100% 100%;
-    position: relative;
-
-    .active-flag {
-      display: none;
-    }
 
     &.active-board {
       // background: $linear-bg-4;
-      //background: url("../assets/home/game-board-item-bg-active.png") no-repeat center center;
-      background: url("../assets/images/menu-cny/game-selected.png") no-repeat center center;
-      background-size: 100% 100%;
-      aspect-ratio: 140/135;
-      padding-top: 25px;
-      margin-bottom: 20px;
-
-      //.active-flag {
-      //  display: block;
-      //  position: absolute;
-      //  top: -32px;
-      //  left: 0px;
-      //  right: 0px;
-      //  bottom: 0px;
-      //  width: 100px;
-      //  height: 100px;
-      //}
+      background: #5555aa;
     }
 
     &:hover {
       filter: brightness(0.88);
+      background: #5555aa;
     }
 
     &:active {
@@ -2978,25 +2948,20 @@ export default defineComponent({
     }
 
     .popup-item {
-      display: flex;
-      align-items: center;
-      justify-content: center;
       width: 92%;
-      margin: 0 auto;
-      // border: 2px solid #d483ff;
-      // background: rgba(52, 41, 97, 0.9);
+      margin: 0 auto 14px;
+      border: 2px solid #d483ff;
+      background: rgba(52, 41, 97, 0.9);
       border-radius: 11px;
       //margin-bottom: 14px;
-      line-height: 20px;
-      font-size: 16px;
+      line-height: 30px;
+      font-size: 22px;
       text-align: center;
       padding: 8px;
-      // box-shadow: 0px 3px 2px 0px #ddb2ff42 inset;
-      // box-shadow: 0px 0px 5px 3px #8000ffd9;
+      box-shadow: 0px 3px 2px 0px #ddb2ff42 inset;
+      box-shadow: 0px 0px 5px 3px #8000ffd9;
       cursor: pointer;
       text-shadow: 1px 2px 2px #000000;
-      background: url("../assets/images/common/home-popup-item-bg.png") no-repeat center center;
-      background-size: 100% 100%;
 
       &:hover {
         opacity: 0.9;
@@ -3008,14 +2973,9 @@ export default defineComponent({
 
       em {
         color: #ecff17;
-        font-size: 16px;
+        font-size: 26px;
         font-weight: 600;
         font-style: normal;
-      }
-
-      span {
-        padding: 10px;
-        margin: 0px 35px;
       }
     }
   }
@@ -3062,37 +3022,30 @@ export default defineComponent({
     right: 0px;
     z-index: 15;
 
-    width: 125px;
-    aspect-ratio: 95/159;
-    background: url("../assets/home/line-board.png");
-    //background: url(../assets/home/xmas-line-btn.png);
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    //padding: 10px 0;
-    padding: 15px 0px 10px;
+    width: 152px;
+    height: 192px;
+    background: $primary;
     border-radius: 10px 0px 0px 10px;
 
     color: $white;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0px;
-    justify-content: flex-end;
+    gap: 3px;
+    justify-content: center;
 
     .line-title {
-      padding-top: 3px;
-      font-size: 12px;
+      font-size: 18px;
     }
 
     .line-img {
-      width: 80px;
+      width: 100px;
       height: auto;
       margin: 0 auto;
-      background: #fff;
     }
 
     .line-bottom {
-      font-size: 12px;
+      font-size: 16px;
     }
   }
 }

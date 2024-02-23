@@ -107,7 +107,9 @@ export const userStore = defineStore("userStore", {
       return this.levelUpDeposit;
     },
     memberLogout() {
-      return logout().then(() => (this.token = null));
+      return logout().then(() => {
+        this.token = null;
+      });
     },
     openLiveChat() {
       const left = (screen.width - 350) * 2;

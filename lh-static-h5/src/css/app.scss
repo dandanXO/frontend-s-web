@@ -24,6 +24,7 @@ body {
 .q-page {
   max-width: 550px;
   margin: 0 auto;
+  background: $secondary;
 }
 
 ::-webkit-scrollbar {
@@ -64,9 +65,8 @@ a:focus {
   }
 }
 
-.q-page {
-  background: $secondary;
-}
+// .q-page {
+// }
 
 .q-page-container {
   padding-right: 0px !important;

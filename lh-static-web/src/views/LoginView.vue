@@ -13,7 +13,7 @@
                         <el-form ref="mobileLoginRef" :rules="mobileLoginRules" :model="loginForm" label-width="70"
                             size="large">
                             <div class="light-bg form-field">
-                                <img class="form-field-icon" src="@/assets/home/auth/phone-username-icon.png" />
+                                <img class="form-field-icon" src="@/assets/home/auth/phone-icon.png" />
                                 <el-form-item tabindex="1" label="手机号" prop="phoneNumber">
                                     <el-input v-model="loginForm.phoneNumber" placeholder="输入手机号" />
                                 </el-form-item>
@@ -23,16 +23,16 @@
                                 <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
                                 <el-form-item tabindex="2" label="验证码" prop="code">
                                     <el-row :gutter="10" style="justify-content: center; align-items: center">
-                                        <el-col :span="14">
-                                            <el-input v-model="loginForm.code" label="验证码" placeholder="请输入手机验证码"
+                                        <el-col :span="10">
+                                            <el-input v-model="loginForm.code" label="验证码" placeholder="手机验证码"
                                                 @keyup.enter="phoneLogin" />
                                         </el-col>
-                                        <el-col :span="10">
+                                        <el-col :span="14">
                                             <el-button v-if="loginCountdown === 0" @click="openCaptchaForm('LOGIN')"
                                                 size="small" color="#3bafda" style="width:100%;min-height:30px; font-size:12px;" class="blue-bg">
                                                 获取验证码
                                             </el-button>
-                                            <el-button v-else disabled size="small" class="common-btn">
+                                            <el-button v-else disabled size="small" class="blue-bg">
                                                 已发送（倒数{{ loginCountdown }}秒）
                                             </el-button>
                                         </el-col>

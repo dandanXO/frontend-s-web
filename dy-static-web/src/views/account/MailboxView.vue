@@ -318,15 +318,14 @@ const msgTitleTxt = ref();
 const msgContentTxt = ref();
 const msgDateTxt = ref();
 
-// const openMsg = (m) => {
-//   msgModalVisible.value = true;
-//   msgTitleTxt.value = m.title;
-//   msgContentTxt.value = m.content;
-//   msgDateTxt.value = m.sendTime;
-// }
-
 const openMsg = (m) => {
-  const { id } = m;
+  const { id, readTime } = m;
+
+  mailboxNotifyState[mailboxMessageTab.value].forEach((mail) => {
+    if (mail.id === id) {
+      mail.readTime = moment().format("YYYY-MM-DD");
+    }
+  });
 
   if (m.isOpen === undefined) m.isOpen = false;
   m.isOpen = !m.isOpen;
@@ -338,6 +337,7 @@ const openMsg = (m) => {
       const { code, data } = res;
 
       clearMailInboxCache();
+      checkMailboxUnread();
       // loadPersonalMailbox();
       // if (code === 0) m.content = data.content;
     })
@@ -397,6 +397,7 @@ const deleteMsg = (id, spliceIndex, callback) => {
         if (spliceIndex !== null) mailboxState.mailboxList[mailboxState.active].list.splice(spliceIndex, 1); // fake delete
 
         clearMailInboxCache();
+        checkMailboxUnread();
         loadPersonalMailbox();
 
         callback && callback();
@@ -409,7 +410,17 @@ const deleteMsg = (id, spliceIndex, callback) => {
 
 const deleteAllMsg = (m) => {
   const readType = m === null ? "ALL" : m;
-  mailboxNotifyState[readType] = [];
+
+  if (m === "ALL") {
+    mailboxNotifyState.NOTIFICATION = [];
+    mailboxNotifyState.ACTIVITY = [];
+    mailboxNotifyState.ANNOUNCEMENT = [];
+    mailboxNotifyState.PAYMENT = [];
+    mailboxNotifyState.ALL = [];
+  } else {
+    mailboxNotifyState[readType] = [];
+    mailboxNotifyState["ALL"] = mailboxNotifyState["ALL"].filter((item) => item.type !== m);
+  }
 
   deleteAllMail(m)
     .then((res) => {
@@ -441,6 +452,12 @@ const readMultipleMsg = () => {
   const selectedIdsArray = selectedMessages.map((msg) => msg.id);
   const formattedIds = selectedIdsArray.join(",");
 
+  mailboxNotifyState[mailboxMessageTab.value].forEach((mail) => {
+    if (formattedIds.indexOf(mail.id) > -1) {
+      mail.readTime = moment().format("YYYY-MM-DD");
+    }
+  });
+
   readMultipleMail(formattedIds)
     .then((res) => {
       if (res.code === 0) {
@@ -450,6 +467,7 @@ const readMultipleMsg = () => {
         });
 
         clearMailInboxCache();
+        checkMailboxUnread();
         loadPersonalMailbox();
 
         isShowSelect.value = false;
@@ -464,6 +482,18 @@ const deleteMultipleMsg = () => {
   const selectedMessages = mailboxState.mailboxList.inbox.list.filter((m) => selectedIds.value[m.id]);
   const selectedIdsArray = selectedMessages.map((msg) => msg.id);
   const formattedIds = selectedIdsArray.join(",");
+
+  selectedIdsArray.forEach((delnum) => {
+    let index = mailboxNotifyState[mailboxMessageTab.value].filter((obj) => obj.id == delnum);
+    if (index !== -1) {
+      mailboxNotifyState[mailboxMessageTab.value].splice(index, 1);
+    }
+
+    let index2 = mailboxNotifyState["ALL"].filter((obj) => obj.id == delnum);
+    if (index2 !== -1) {
+      mailboxNotifyState["ALL"].splice(index2, 1);
+    }
+  });
 
   deleteMultipleMail(formattedIds)
     .then((res) => {
@@ -488,6 +518,7 @@ const deleteMultipleMsg = () => {
         });
 
         clearMailInboxCache();
+        checkMailboxUnread();
         loadPersonalMailbox();
       }
     })
@@ -499,7 +530,7 @@ const deleteMultipleMsg = () => {
 onMounted(() => {
   loadPersonalMailbox();
   loadNotifyMailbox();
-  // getMailCatNotify();
+  checkMailboxUnread();
   // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
 });
 </script>

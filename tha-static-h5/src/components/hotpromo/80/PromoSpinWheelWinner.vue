@@ -22,6 +22,8 @@
           </q-td>
         </template>
       </q-table>
+
+      <img class="treasure-box-img" src="../../../assets/images/promotion/spinwheel/treasure_box.png" />
     </div>
 
     <!-- <div class="note">
@@ -160,13 +162,13 @@ onUnmounted(() => {
 
     .winner-table {
       border-radius: 1.25rem 1.25rem 0rem 0rem;
-      border: 1px solid #D71B0F;
+      border: 1px solid #5b0ed7;
       border-bottom: 0px solid transparent;
       box-shadow: unset;
-      background: linear-gradient(180deg, rgba(145, 1, 1, 0.4) 0%, rgba(61, 25, 23, 0) 100%);
+      background: linear-gradient(180deg, rgba(127, 56, 217, 0.4) 0%, rgba(176, 38, 198, 0) 100%);
 
       .iphone {
-        color: #FFB800;
+        color: #ffa3e0;
         text-align: center;
         font-family: Arial;
         font-size: 12px;
@@ -225,6 +227,12 @@ onUnmounted(() => {
           }
         }
       }
+    }
+
+    .treasure-box-img {
+      position: absolute;
+      top: -7.5%;
+      width: 50px;
     }
   }
 

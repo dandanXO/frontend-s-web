@@ -609,7 +609,6 @@ import {
   fromAffiliatePayToBeforePaid,
   fromAffiliatePayToSuccess,
   fromAffiliatePayToFail,
-  getTotalWithdrawAmountByStatus,
   getWithdrawPlatformList,
   fromAffiliatePayToAutopay,
 } from '../../../../api/member-withdraw-record'
@@ -714,6 +713,7 @@ const request = reactive({
   minWithdrawAmount: null,
   maxWithdrawAmount: null,
   vipId: null,
+  siteId: null,
 })
 
 function disabledDate(time) {
@@ -735,6 +735,7 @@ function resetQuery() {
   request.minWithdrawAmount = null
   request.maxWithdrawAmount = null
   request.vipId = vipList.list[0].id
+  request.siteId = siteList.list[0].id
   uiControl.dialogVisible = false
 }
 
@@ -832,8 +833,7 @@ async function loadRecord() {
   page.total = ret.total
   if (page.records.length !== 0) {
     query.status = 'STEP_3'
-    const { data: amount } = await getTotalWithdrawAmountByStatus(query)
-    page.totalAmount = amount
+    page.totalAmount = ret.sums.withdrawAmount
   } else {
     page.totalAmount = 0
   }
@@ -960,8 +960,9 @@ function populateFailReason(evt) {
   })
 }
 
-onMounted(() => {
-  loadSites()
+onMounted(async() => {
+  await loadSites()
+  request.siteId = siteList.list[0].id
   loadVips()
   loadFinancialLevels()
   loadBanks()

@@ -1,6 +1,6 @@
 <template>
   <div class="firstPage"
-       :class="props.siteId !== '5' ? '' : 'ind-firstPage'"
+       :class="[props.siteId !== '5' ? '' : 'ind-firstPage', props.siteId !== '7' ? '' : 'lh']"
   >
     <div class="inner">
       <div class="loginPage">
@@ -371,6 +371,7 @@ import { ElNotification } from 'element-plus'
 import dyLogo from '@/assets/images/dy/logowhitee.png'
 import xfLogo from '@/assets/images/xf/logowhitee.png'
 import indLogo from '@/assets/images/ind/ind-logo.png'
+import lhLogo from '@/assets/images/lh/logo.png'
 import { getVerificationImage } from '@/api/verification'
 import { getVerificationCode } from '@/api/user'
 import { useI18n } from "vue-i18n";
@@ -616,7 +617,7 @@ export default defineComponent({
         })
       },
       handleRegister: () => {
-        state.regForm.siteId = 6
+        state.regForm.siteId = props.siteId
         regFormRef.value.validate(async valid => {
           if (valid) {
             // if (step.value === 1) {
@@ -842,6 +843,13 @@ export default defineComponent({
         currentSite.value.lang = 'EN'
         setLanguage('en');
       }
+      if (props.siteId === '7') {
+        currentSite.value.firstLiner = '从雷火开始'
+        currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
+        currentSite.value.logo = lhLogo
+        state.loginForm.site = 'LH1'
+        setLanguage('zh');
+      }
     }
     onMounted(() => {
       // const swiper = new Swiper('.swiper-container', swiperOptions);
@@ -875,6 +883,7 @@ export default defineComponent({
       regFormRef,
       dyLogo,
       xfLogo,
+      lhLogo,
       verificationImg,
       disabledDate,
       ...toRefs(state),
@@ -1053,6 +1062,9 @@ a {
   background: url('../../assets/images/login/firstbg.svg') no-repeat center
     center;
   background-size: cover;
+  &.lh {
+    background: url('../../assets/images/login/lh-bg.jpg') no-repeat center center;
+  }
   .inner {
     max-width: 1200px;
     width: 100%;

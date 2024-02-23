@@ -47,7 +47,7 @@
             <el-form-item class="helptxt" label="金额" prop="localAmount">
               <el-input v-if="amountList.length === 0"
                         v-model="form.localAmount"
-                        :placeholder="isUSDT ? '输入USDT金额' : '输入存款金额'"
+                        :placeholder="isUSDT ? '请输入USDT金额' : '请输入存款金额'"
               />
 
               <el-select placeholder="选择存款金额" v-else v-model="form.localAmount">
@@ -464,6 +464,7 @@ function confirmDeposit() {
       loadingBtn.value = false;
     });
   });
+  loadingBtn.value = false;
 }
 
 function doDeposit(data) {
@@ -831,7 +832,7 @@ onMounted(() => {
 
 .submit-message {
   width: calc(100% - 40px);
-  max-width: 500px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 20px;
   height: auto;

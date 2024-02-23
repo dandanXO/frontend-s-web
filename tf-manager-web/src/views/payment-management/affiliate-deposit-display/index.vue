@@ -179,7 +179,7 @@
           </el-row>
         </el-form-item>
         <div class="dialog-footer">
-          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
+          <el-button @click="uiControl.dialogSettingVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submitSetting">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
@@ -197,7 +197,7 @@
         :rules="formRules"
         :inline="true"
         size="small"
-        label-width="150px"
+        label-width="200px"
       >
         <el-form-item :label="t('fields.affiliate')" prop="affiliateId">
           <el-select
@@ -207,7 +207,7 @@
             size="small"
             :placeholder="t('fields.affiliate')"
             class="filter-item"
-            style="width: 350px; margin-bottom: 10px"
+            style="width: 350px;"
           >
             <el-option
               v-for="item in list.affiliates"
@@ -225,7 +225,7 @@
             size="small"
             :placeholder="t('fields.paymentChannel')"
             class="filter-item"
-            style="width: 350px; margin-bottom: 10px"
+            style="width: 350px;"
           >
             <el-option
               v-for="item in list.paymentInfo"
@@ -271,7 +271,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.riskPaymentChannel') + 4" prop="paymentId4">
+        <el-form-item :label="t('fields.riskPaymentChannel')" prop="paymentId4">
           <el-select
             filterable
             clearable
@@ -285,6 +285,24 @@
               v-for="item in list.paymentInfo"
               :key="item.id"
               :label="item.paymentName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.withdrawChannel')" prop="withdrawPlatformId">
+          <el-select
+            filterable
+            clearable
+            v-model="form.withdrawPlatformId"
+            size="small"
+            :placeholder="t('fields.withdrawChannel')"
+            class="filter-item"
+            style="width: 350px;"
+          >
+            <el-option
+              v-for="item in list.siteWithdrawPlatform"
+              :key="item.id"
+              :label="item.name"
               :value="item.id"
             />
           </el-select>
@@ -448,11 +466,10 @@
       </el-row>
     </el-card>
     <el-card class="box-card" shadow="never" style="margin-top: 30px">
-      <template #header>
-        <div class="clearfix">
-          <span class="role-span">{{ t('fields.affiliateDepositChannel') }}</span>
-        </div>
-      </template>
+      <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+        <el-tab-pane :label="t('fields.superiorAffiliatePaymentChannel')" name="superior" />
+        <el-tab-pane :label="t('fields.downlineAffiliatePaymentChannel')" name="normal" />
+      </el-tabs>
       <div class="btn-group">
         <el-button
           icon="el-icon-plus"
@@ -494,6 +511,7 @@
         <el-table-column prop="paymentName2" :label="t('fields.paymentChannel') + 2" />
         <el-table-column prop="paymentName3" :label="t('fields.paymentChannel') + 3" />
         <el-table-column prop="paymentName4" :label="t('fields.riskPaymentChannel')" />
+        <el-table-column :label="t('fields.withdrawChannel')" prop="withdrawPlatformName" />
         <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:affiliate-deposit-display:update'])">
           <template #default="scope">
             <el-button
@@ -531,6 +549,8 @@ import { useI18n } from "vue-i18n";
 import { TENANT } from '../../../store/modules/user/action-types'
 import { hasPermission } from '../../../utils/util'
 import { getPaymentsSimpleBySiteId } from "../../../api/payment-display";
+import { getWithdrawPlatformsSimpleBySiteId } from "../../../api/withdraw-platform";
+import { getSiteWithdrawPlatform } from "../../../api/site-withdraw-platform";
 
 const { t } = useI18n()
 const store = useStore()
@@ -541,6 +561,7 @@ const affiliateFinancialDepositSettingForm = ref(null)
 const setting = ref(null)
 const paymentDir = process.env.VUE_APP_IMAGE + '/payment/'
 const paymethodicon = process.env.VUE_APP_IMAGE
+const activeName = ref('superior')
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: '',
@@ -558,11 +579,15 @@ const request = reactive({
   size: 30,
   current: 1,
   siteId: null,
+  affiliateLevel: 'MASTER_AFFILIATE'
 })
 const list = reactive({
   sites: [],
   paymentInfo: [],
+  withdrawPlatform: [],
+  siteWithdrawPlatform: [],
   affiliates: [],
+  allAffiliates: [],
   privileges: [],
   setting: [],
 })
@@ -580,6 +605,7 @@ const form = reactive({
   paymentId4: null,
   affiliateId: null,
   privilegeId: null,
+  withdrawPlatformId: null,
 })
 const settingForm = reactive({
   id: null,
@@ -597,6 +623,7 @@ const formRules = reactive({
   paymentId2: [required(t('message.validatePaymentNameRequired'))],
   paymentId3: [required(t('message.validatePaymentNameRequired'))],
   paymentId4: [required(t('message.validatePaymentNameRequired'))],
+  withdrawPlatformId: [required(t('message.validateWithdrawPlatformNameRequired'))],
 })
 const selectedImage = reactive({
   id: 0,
@@ -627,10 +654,29 @@ async function loadPayment() {
   list.paymentInfo = ret
 }
 
+async function loadWithdrawPlatform() {
+  const { data: ret } = await getWithdrawPlatformsSimpleBySiteId(request.siteId);
+  list.withdrawPlatform = ret
+}
+
+async function loadSiteWithdrawPlatform(siteId) {
+  const { data: ret } = await getSiteWithdrawPlatform(siteId);
+  list.siteWithdrawPlatform = ret;
+  list.siteWithdrawPlatform.forEach(platform => {
+    const matchingItem = list.withdrawPlatform.find(item => item.id === platform.withdrawPlatformId);
+    if (matchingItem) {
+      platform.name = matchingItem.name;
+      platform.id = matchingItem.id;
+    }
+  });
+}
+
 async function loadAffiliateDepositDisplay() {
+  page.loading = true
   const { data: ret } = await getAffiliateDepositDisplayList(request)
   page.records = ret.records.filter(item => item.affiliateId !== "9999")
   page.pages = ret.pages
+  page.loading = false
 }
 
 async function loadAffiliateDepositSetting() {
@@ -647,7 +693,9 @@ async function loadAffiliateDepositSetting() {
 
 async function loadAffiliates() {
   const { data: ret } = await getAffiliateList(request.siteId);
-  list.affiliates = ret
+  list.allAffiliates = ret
+  list.affiliates = list.allAffiliates.filter(item => item.affiliateLevel === 'MASTER_AFFILIATE')
+  console.log('list.affiliates', list.affiliates)
 }
 
 async function loadPrivilege() {
@@ -666,8 +714,27 @@ async function handleChangeSite() {
   await loadAffiliateDepositSetting()
   await loadAffiliateDepositDisplay()
   await loadPayment()
+  await loadWithdrawPlatform()
+  await loadSiteWithdrawPlatform(request.siteId)
   await loadAffiliates()
   await loadPrivilege()
+}
+
+const handleClick = (tab, event) => {
+  console.log(tab, event)
+  console.log('tab.props.name', tab.props.name)
+  switchToList(tab.props.name)
+}
+
+async function switchToList(type) {
+  if (type !== 'superior') {
+    request.affiliateLevel = 'AFFILIATE,SUPER_AFFILIATE,CHIEF_AFFILIATE'
+    list.affiliates = list.allAffiliates.filter(item => item.affiliateLevel !== 'MASTER_AFFILIATE')
+  } else {
+    request.affiliateLevel = 'MASTER_AFFILIATE'
+    list.affiliates = list.allAffiliates.filter(item => item.affiliateLevel === 'MASTER_AFFILIATE')
+  }
+  await loadAffiliateDepositDisplay()
 }
 
 async function browseImage(type) {
@@ -701,7 +768,11 @@ function showEdit(data) {
   nextTick(() => {
     for (const key in data) {
       if (Object.keys(form).find(k => k === key)) {
-        form[key] = data[key]
+        if (data[key] === 0) {
+          form[key] = ""
+        } else {
+          form[key] = data[key]
+        }
       }
     }
   })
@@ -859,6 +930,8 @@ onMounted(async() => {
   }
   await loadAffiliates()
   await loadPrivilege()
+  await loadWithdrawPlatform()
+  await loadSiteWithdrawPlatform(request.siteId)
   await loadPayment()
   await loadAffiliateDepositSetting()
   await loadAffiliateDepositDisplay()

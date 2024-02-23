@@ -87,7 +87,7 @@
               (val) => (val && val.length > 0) || '请输入提款金额',
               (val) => val >= selectedWithdrawalMethod.withdrawMin || '请输入正确的提款金额',
               (val) => val <= selectedWithdrawalMethod.withdrawMax || '请输入正确的提款金额',
-              !isUSDT ? (val) => (!isUSDT && /^([1-9][0-9]*)$/.test(val)) || '金额应为正数' : true
+              isValidUSDTAmt,
             ]"
             clearable
           >
@@ -227,7 +227,7 @@
 
 <script lang="js">
 /* eslint-disable */
-import {defineComponent, reactive, ref, onActivated, computed} from "vue";
+import { defineComponent, reactive, ref, onActivated, computed, onMounted } from "vue";
 import {userStore} from "stores/index";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
@@ -268,7 +268,7 @@ export default defineComponent({
       }
     };
 
-    onActivated(() => {
+    onMounted(() => {
       checkNewUser();
       store.getBalance();
       // loadPlatform()
@@ -436,6 +436,14 @@ export default defineComponent({
       }
     }
 
+    const isValidUSDTAmt = (val) => {
+      if(!isUSDT.value){
+        return true;
+      }
+      const usdtPattern = /^([1-9][0-9]*)$/;
+      return usdtPattern.test(withdrawInfo.amount) || "金额应为正数";
+    }
+
     const chooseCard = () => {
       if (isUSDT.value) {
         return '虚拟钱包'
@@ -494,7 +502,8 @@ export default defineComponent({
       openEWalletTutorial,
       tutorialLabel,
       isNewUser,
-      checkNewUser
+      checkNewUser,
+      isValidUSDTAmt
     };
   }
 });

@@ -46,12 +46,12 @@
           v-if="amountList.length === 0"
           hide-bottom-space
           ref="depositAmtRef"
-          label="存款金额"
+          :label="isUSDT ? '请输入USDT金额' : '请输入存款金额'"
           class="deposit-field"
           color="accent"
           name="localAmount"
           v-model="form.localAmount"
-          placeholder="输入金额"
+          placeholder="请输入存款金额"
           :rules="verifyDepositAmount"
           padding="none"
           clearable
@@ -200,7 +200,7 @@
 </template>
 
 <script setup id="DepositComponent">
-import { ref, reactive, onActivated, shallowRef, onBeforeUnmount } from "vue";
+import { ref, reactive, onMounted, onActivated, shallowRef, onBeforeUnmount } from "vue";
 import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
@@ -211,16 +211,17 @@ import liff from "@line/liff";
 var qs = require("qs");
 
 import { userStore } from "stores/index";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const store = userStore();
+const route = useRoute();
 const router = useRouter();
 const formRef = ref();
 const isNewUser = ref(false);
 const isNoBankCard = ref(false);
 const isDeposited = ref(false);
 const checkNewUser = () => {
-  if (store.phone == "") {
+  if (store.phone === "" || store.phone === null) {
     isNewUser.value = true;
   } else {
     api.get("/session/bankCard").then((response) => {
@@ -459,7 +460,11 @@ const depositAmtRef = ref("");
 async function confirmDeposit() {
   btnLoading.value = true;
   depositAmtRef.value.validate();
-  if (depositAmtRef.value.hasError) {
+  if (selectedPayType.value && bankCardList.value.length > 0) {
+    await payTypeClass.value.validateBank(form.bankId);
+  }
+
+  if (depositAmtRef.value.hasError || (selectedPayType.value && bankCardList.value.length > 0 && !form.bankId)) {
     btnLoading.value = false;
   } else {
     await cashier
@@ -645,10 +650,30 @@ async function pDepo(deposit) {
     });
 }
 
-onActivated(() => {
+const currentPath = ref(route.path);
+const extensionState = ref(false);
+const extensionToken = ref("");
+const checkExtension = () => {
+  // console.log(currentPath.value);
+  if (currentPath.value === "/deposit") {
+    // const eToken = ref(route.query.name);
+    extensionToken.value = route.query.token;
+    extensionState.value = true;
+    // store.dispatch("token", extensionToken);
+    console.log(store);
+  }
+};
+
+onMounted(() => {
   initPay();
-  checkNewUser();
+  if (route.meta && route.meta.isApp) {
+    checkExtension();
+  }
+  if (route.meta && !route.meta.isApp) {
+    checkNewUser();
+  }
 });
+
 </script>
 
 <style lang="scss">

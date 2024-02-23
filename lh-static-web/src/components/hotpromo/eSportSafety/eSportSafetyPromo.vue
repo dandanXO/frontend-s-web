@@ -54,6 +54,7 @@
       title="电竞保险"
       width="100%"
       align-center
+      class="dialog-insurance-box"
       style="max-width: 500px"
       @close="toggleESportInsuranceModal(false)"
     >

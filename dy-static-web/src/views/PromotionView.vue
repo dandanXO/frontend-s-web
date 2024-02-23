@@ -267,8 +267,11 @@ export default defineComponent({
     padding: 50px;
     position: relative;
     //padding-top: 370px;
-    padding-top: 480px;
+    padding-top: 500px;
     background-color: #f0f1f6;
+
+    margin: 0 auto;
+    max-width: 1920px;
   }
 
   .promo-view-container {
@@ -580,6 +583,8 @@ export default defineComponent({
     .selected-promo-wrapper {
       .banner-container {
         width: 100%;
+        max-width: 1920px;
+        margin: 0 auto;
 
         .promo-bg {
           background-size: cover;

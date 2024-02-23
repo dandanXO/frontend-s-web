@@ -45,15 +45,19 @@
               </div>
             </template>
           </div>
-          <div
-            v-if="
-              (recordType === 'deposit' && det.status === 'PENDING') ||
-              (recordType === 'withdraw' && det.status === 'STEP_1')
-            "
-            class="buttons"
-          >
-            <q-btn outline label="催单" @click="feedbackTrans(det)" size="sm" color="bright" class="q-mr-sm" />
-            <q-btn outline label="复制" @click="copyText(det.serialNumber)" size="sm" color="bright" />
+          <div class="buttons">
+            <template
+              v-if="
+                (recordType === 'deposit' && det.status === 'PENDING') ||
+                (recordType === 'withdraw' && det.status === 'STEP_1')
+              "
+            >
+              <q-btn outline label="催单" @click="feedbackTrans(det)" size="sm" color="bright" class="q-mr-sm" />
+            </template>
+
+            <template v-if="recordType === 'deposit'">
+              <q-btn outline label="复制" @click="copyText(det.serialNumber, '存款编码')" size="sm" color="bright" />
+            </template>
           </div>
 
           <div v-if="recordType === 'withdraw'" class="buttons">
@@ -66,7 +70,7 @@
             >
               <q-btn @click="openWithdrawConfirmDialog(det)" outline label="确认到账" size="sm" color="bright" />
             </template>
-            <q-btn outline label="复制" @click="copyText(det.serialNumber)" size="sm" color="bright" />
+            <q-btn outline label="复制" @click="copyText(det.serialNumber, '单号')" size="sm" color="bright" />
           </div>
         </q-card>
         <template v-slot:loading>
@@ -261,7 +265,7 @@ export default defineComponent({
 
     const copyinput = ref(null);
     const text_copied = ref("");
-    const copyText = (text) => {
+    const copyText = (text, msgTitle) => {
       text_copied.value = text;
       console.log(text_copied.value);
 
@@ -276,7 +280,7 @@ export default defineComponent({
         $q.notify({
           color: "positive",
           position: "top",
-          message: "存款编码复制成功！",
+          message: `${msgTitle}复制成功！`,
           icon: "check_circle_outline"
         });
       }, 100);

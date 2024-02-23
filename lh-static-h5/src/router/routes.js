@@ -531,6 +531,17 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/account/feedback",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/account/FeedbackView.vue")
+      }
+    ],
+    meta: { requiresAuth: true }
+  },
+  {
     path: "/finance/deposit",
     component: () => import("layouts/MainLayout.vue"),
     children: [
@@ -571,6 +582,53 @@ const routes = [
       }
     ],
     meta: { requiresAuth: true }
+  },
+
+  {
+    path: "/promotion",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/PromoPage.vue") }],
+    meta: { requiresAuth: true, isApp: true }
+  },
+  {
+    path: "/deposit",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/finance/DepositView.vue")
+      }
+    ],
+    meta: { requiresAuth: false, isApp: true }
+  },
+  {
+    path: "/invitefriend",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/account/InviteView.vue")
+      }
+    ],
+    meta: { requiresAuth: true, isApp: true }
+  },
+  {
+    path: "/vip",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "vipapp",
+        component: () => import("pages/games/VIPView.vue")
+      }
+    ],
+    meta: { requiresAuth: true, isApp: true }
+  },
+  {
+    path: "/privilege/invite",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/PrivilegeInvite.vue") }],
+    meta: { requiresAuth: true, isApp: true }
   },
   // Always leave this as last one,
   // but you can also remove it

@@ -12,27 +12,54 @@
       <div class="services">
         <div class="contact-boxes">
           <div class="contact-box" v-for="(c, i) in contactlist" :key="i">
-            <div class="contacticon"><img :src="require(`../../assets/images/${c.icon}.svg`)"></div>
+            <div class="contacticon"><img style="max-width: 75px;" :src="require(`../../assets/images/${c.icon}.svg`)"></div>
             <div class="type">{{ c.type }}</div>
             <div class="link">{{ c.link }}</div>
             <div class="buttons">
-              <el-button v-for="(btn, btnkey) in c.btns" :key="btnkey" :type="btnkey === 1 ? 'primary' : 'plain'">{{ btn.text }}</el-button>
+              <el-button @click="copyMessage(i, btn.text, btnkey)" v-for="(btn, btnkey) in c.btns" :key="btnkey" :type="btnkey === 1 ? 'primary' : 'plain'">{{ btn.text }}</el-button>
             </div>
           </div>
         </div>
-        <div class="girl"><img src="../../assets/images/login/cus-girl.png"></div>
+        <div class="girl"><img v-if="props.siteId === '7'" src="../../assets/images/login/cus-guy.png"><img v-else src="../../assets/images/login/cus-girl.png"></div>
       </div>
     </div>
   </div>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { defineProps, ref } from 'vue'
 
+const props = defineProps({
+  siteId: {
+    type: [String, Number], // Specify the allowed types for the prop
+    required: true
+  },
+});
+const mailLink = () => {
+  if (props.siteId === '7') {
+    return 'mailto:affiliate@e8007.com'
+  } else {
+    return 'mailto:affiliate@dyvip99.com'
+  }
+}
+const qqLink = () => {
+  if (props.siteId === '7') {
+    return '1903687863'
+  } else {
+    return '100983290'
+  }
+}
+const telegramLink = () => {
+  if (props.siteId === '7') {
+    return '@LH18668'
+  } else {
+    return 'leihuo123'
+  }
+}
 const contactlist = ref([
   {
     icon: 'cmail',
     type: '合营部电邮',
-    link: 'affiliate@dyvip99.com',
+    link: mailLink(),
     btns: [{
       text: '咨询',
       action: ''
@@ -41,56 +68,90 @@ const contactlist = ref([
   {
     icon: 'cqq',
     type: '合营QQ',
-    link: '100983290',
+    link: qqLink(),
     btns: [{
       text: '复制',
       action: ''
     },
     {
       text: '下载',
-      action: ''
+      action: 'https://im.qq.com/index/'
     }]
   },
   {
     icon: 'cskype',
     type: '合营部Skype',
-    link: 'Live:cid.b2a14236...',
+    link: 'live:.cid.1b8d9a018a52a8f5',
     btns: [{
       text: '复制',
       action: ''
     },
     {
       text: '下载',
-      action: ''
+      action: 'https://www.skype.com/zh-Hans/get-skype/'
     }]
   },
   {
-    icon: 'cflygram',
-    type: '合营Flygram',
-    link: 'dybet5',
+    icon: 'ctelegram',
+    type: 'Telegram',
+    link: telegramLink(),
     btns: [{
       text: '复制',
       action: ''
     },
     {
       text: '下载',
-      action: ''
+      action: 'https://telegram.org/'
     }]
   },
   {
-    icon: 'cbat',
-    type: '合营蝙蝠ID',
-    link: '12830840',
+    icon: 'cpaopao',
+    type: '泡泡',
+    link: 'LH10086',
     btns: [{
       text: '复制',
       action: ''
     },
     {
       text: '下载',
-      action: ''
+      action: 'https://paopaoim.com/index.html'
     }]
   }
 ])
+const copyMessage = (position, text, btnPosition) => {
+  console.log(position);
+  console.log(text);
+  console.log(contactlist.value)
+  if (text === '咨询') {
+    const mailtoLink = contactlist.value[position].link
+    window.open(mailtoLink, '_blank');
+  }
+  if (text === '复制') {
+    let copyText = null;
+    copyText = contactlist.value[position].link;
+    // Create a temporary textarea element
+    const tempTextarea = document.createElement("textarea");
+    tempTextarea.value = copyText;
+    document.body.appendChild(tempTextarea);
+
+    // Select the text and copy it
+    tempTextarea.select();
+    document.execCommand("copy");
+
+    // Remove the temporary textarea element
+    document.body.removeChild(tempTextarea);
+    // const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+    contactlist.value[position].btns[btnPosition].text = '已复制'
+    // copybtntxt[position].value = "已复制";
+    setTimeout(() => {
+      contactlist.value[position].btns[btnPosition].text = '复制';
+    }, 2000);
+  }
+  if (text === '下载') {
+    const downloadLink = contactlist.value[position].btns[btnPosition].action
+    window.open(downloadLink, '_blank');
+  }
+};
 </script>
 <style lang="scss">
 .customer-service {
@@ -141,6 +202,9 @@ const contactlist = ref([
         margin: 50px auto;
         .girl {
             flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             img {
                 width: 100%;
             }
@@ -165,7 +229,10 @@ const contactlist = ref([
             width: 100%;
             max-width: 200px;
             .type, .link {
-                margin: 10px;
+                margin: 10px auto;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                width: 100%;
             }
             .buttons {
                 margin-top: 20px;
