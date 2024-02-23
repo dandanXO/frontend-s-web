@@ -950,7 +950,7 @@ export default {
     nextLevelPoint: 'Next Level Point',
     no: 'No',
     noData: 'No Data',
-    noDeposit: '无存款',
+    noDeposit: 'No Deposit',
     noLimit: 'No Limit',
     noOfDeduction: 'Number of Deduction',
     noOfDepositTimes: 'Number of Deposit Times',

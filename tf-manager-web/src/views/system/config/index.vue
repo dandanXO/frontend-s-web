@@ -540,14 +540,12 @@ watch(
 
 const defaultVip = computed({
   get: () => Number(getter('default_vip', false).value),
-  // eslint-disable-next-line no-return-assign
   set: newVla =>
     (configs.value.find(item => item.code === 'default_vip').value = newVla),
 })
 
 const defaultAgentVip = computed({
   get: () => Number(getter('default_agent_vip', false).value),
-  // eslint-disable-next-line no-return-assign
   set: newVla =>
     (configs.value.find(
       item => item.code === 'default_agent_vip'
@@ -556,7 +554,6 @@ const defaultAgentVip = computed({
 
 const defaultFinancial = computed({
   get: () => Number(getter('default_financial', false).value),
-  // eslint-disable-next-line no-return-assign
   set: newVla =>
     (configs.value.find(
       item => item.code === 'default_financial'
@@ -565,7 +562,6 @@ const defaultFinancial = computed({
 
 const defaultAgentFinancial = computed({
   get: () => Number(getter('default_agent_financial', false).value),
-  // eslint-disable-next-line no-return-assign
   set: newVla =>
     (configs.value.find(
       item => item.code === 'default_agent_financial'
@@ -574,14 +570,12 @@ const defaultAgentFinancial = computed({
 
 const defaultRisk = computed({
   get: () => Number(getter('default_risk', false).value),
-  // eslint-disable-next-line no-return-assign
   set: newVla =>
     (configs.value.find(item => item.code === 'default_risk').value = newVla),
 })
 
 const defaultAgentRisk = computed({
   get: () => Number(getter('default_agent_risk', false).value),
-  // eslint-disable-next-line no-return-assign
   set: newVla =>
     (configs.value.find(
       item => item.code === 'default_agent_risk'
@@ -612,7 +606,6 @@ const affiliateShortUrlPlatform = computed(() =>
 
 const s3Url = computed({
   get: () => getter('s3_url', false).value,
-  // eslint-disable-next-line no-return-assign
   set: newVla =>
     (configs.value.find(item => item.code === 's3_url').value = newVla),
 })

@@ -572,3 +572,8 @@ svg {
   background-color: #4c9dec;
   color: #ffffff;
 }
+
+// bottom navigation
+.q-footer .q-layout__shadow:after {
+  display: none;
+}
