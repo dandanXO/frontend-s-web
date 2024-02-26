@@ -224,10 +224,12 @@ import {
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
 import { getShortcuts } from '@/utils/datetime'
+import { getSiteListSimple } from '../../../api/site'
 
 const { t } = useI18n()
 const priviTreasureKeyForm = ref(null)
 const shortcuts = getShortcuts(t)
+const site = ref(null)
 
 const uiControl = reactive({
   messageVisible: false,
@@ -254,6 +256,10 @@ startDate.setDate(startDate.getDate() - 2)
 const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
 
+const sites = reactive({
+  list: [],
+})
+
 const page = reactive({
   pages: 0,
   records: [],
@@ -265,13 +271,13 @@ const request = reactive({
   size: 20,
   current: 1,
   createTime: [defaultStartDate, defaultEndDate],
-  siteId: 2,
+  siteId: null,
   loginName: null,
 })
 
 const form = reactive({
   id: null,
-  siteId: 2,
+  siteId: null,
   memberId: null,
   loginName: null,
   quantity: null,
@@ -339,7 +345,7 @@ async function loadFormSelect() {
 
 function resetQuery() {
   request.createTime = [defaultStartDate, defaultEndDate]
-  request.siteId = 2
+  request.siteId = site.value ? site.value.id : null
   request.loginName = null
 }
 
@@ -426,7 +432,16 @@ function restrictIntegerInput(event) {
   }
 }
 
+async function loadSites() {
+  const { data: ret } = await getSiteListSimple()
+  sites.list = ret
+}
+
 onMounted(async () => {
+  await loadSites()
+  site.value = sites.list.find(s => s.siteCode === 'DY2')
+  request.siteId = site.value.id
+  form.siteId = site.value.id
   await loadTreasureKeyRecord()
 })
 </script>
