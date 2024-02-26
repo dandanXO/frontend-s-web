@@ -147,9 +147,9 @@ onMounted(async() => {
   await loadSites();
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = list.sites.find(s => s.siteName === store.state.user.siteName);
-    selected.siteName = site.value.siteName;
+    selected.siteName = site.value.id;
     await loadWithdrawPlatform();
-    await loadSiteWithdrawPlatform();
+    await loadSiteWithdrawPlatform(selected.siteName);
   }
 });
 
