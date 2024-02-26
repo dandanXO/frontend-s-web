@@ -94,7 +94,7 @@
               <el-link type="primary">
                 {{
                   scope.row.loginName
-                    .replace('(OFFICIAL)', '')
+                    .replace('(OFFICAL)', '')
                     .replace('admin', '')
                     .trim()
                 }}
@@ -349,7 +349,7 @@ async function loadSites() {
 
       return {
         name:
-          a.superiorAffiliateName !== null
+          a.superiorAffiliateName !== null && modifiedSuperiorName !== 'OFFICAL'
             ? `${a.loginName} (${modifiedSuperiorName})`
             : a.loginName,
       }
