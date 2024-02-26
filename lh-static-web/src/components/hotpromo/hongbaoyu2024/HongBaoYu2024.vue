@@ -2,10 +2,10 @@
   <div class="hongbao-container">
     <div class="hongbao-prize">
       <div class="decal"></div>
-      <div class="current-content">
-        <div class="current">当前抽奖次数</div>
-        <div class="count">1</div>
-      </div>
+      <!--      <div class="current-content">-->
+      <!--        <div class="current">当前抽奖次数</div>-->
+      <!--        <div class="count">1</div>-->
+      <!--      </div>-->
 
       <div class="prize-redeem" @click="getPromotion">
         <img src="../../../assets/images/promotion/hotpromo/hongbaoyu2024/red-packet.png" width="350" />
@@ -43,35 +43,14 @@
       <div class="activity-box">
         <div class="activity-title">活动对象</div>
         <div class="activity-content-container">
+
           <table class="content-table">
-            <tr>
-              <td>恭喜</td>
-              <td>765****3234</td>
-              <td>抽中</td>
-              <td>二等奖</td>
-              <td>Iphone15</td>
+            <tr class="winner" v-for="(item, index) in visibleItems" :key="index">
+              <td>{{ item.date }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.amount }}</td>
             </tr>
-            <tr class="txt-blue">
-              <td>恭喜</td>
-              <td>765****3234</td>
-              <td>抽中</td>
-              <td>一等奖</td>
-              <td>保时捷</td>
-            </tr>
-            <tr>
-              <td>恭喜</td>
-              <td>765****3234</td>
-              <td>抽中</td>
-              <td>二等奖</td>
-              <td>Iphone15</td>
-            </tr>
-            <tr>
-              <td>恭喜</td>
-              <td>765****3234</td>
-              <td>抽中</td>
-              <td>二等奖</td>
-              <td>Iphone15</td>
-            </tr>
+
           </table>
         </div>
       </div>
@@ -109,8 +88,10 @@
 import { ref, defineProps, onMounted } from "vue";
 import { claimDailyRainItem, getDailyRainListing } from "@/api/index/promo";
 import { userStore } from "@/store";
+import { ElMessage } from "element-plus";
 
-const promoCode = ref("hongbaoyu");
+const props = defineProps(["promoCode"]);
+const promoCode = ref(props.promoCode);
 
 const store = userStore();
 const privilegeClaimedModalVisible = ref(false);
@@ -119,7 +100,7 @@ const bonusOpened = ref(false);
 const winAmount = ref(0);
 const loadingClaim = ref(false);
 const getPromotion = () => {
-  privilegeClaimedModalVisible.value = true; // remove this line
+  // privilegeClaimedModalVisible.value = true; // remove this line
   loadingClaim.value = true;
   claimDailyRainItem(promoCode.value)
     .then((res) => {
@@ -135,7 +116,7 @@ const getPromotion = () => {
 
         bonusOpened.value = true;
       } else {
-        // ElMessage.error(res.message)
+        ElMessage.error(res.message);
         bonusOpened.value = false;
       }
     })
@@ -201,6 +182,7 @@ onMounted(() => {
     gap: 20px;
     justify-content: center;
   }
+
   .activity-boxes {
     display: flex;
     margin: 20px auto;
@@ -208,6 +190,7 @@ onMounted(() => {
     width: 100%;
     justify-content: center;
     align-items: center;
+
     .activity-box {
       border-radius: 20px;
       background: linear-gradient(180deg, #ffffff 0%, #e4efff 100%);
@@ -219,6 +202,7 @@ onMounted(() => {
       flex-direction: column;
       gap: 20px;
       height: 320px;
+
       .activity-title {
         color: #3f8cff;
         font-size: 40px;
@@ -226,18 +210,22 @@ onMounted(() => {
         font-family: "PingFang SC";
         margin-bottom: auto;
       }
+
       .activity-content-container {
       }
+
       .activity-content-item {
         display: flex;
         margin-bottom: 6px;
       }
+
       .content-title {
         width: 100px;
         color: #3f8cff;
         font-size: 20px;
         text-align: left;
       }
+
       .content-txt {
         font-size: 20px;
         color: #7a8eb9;
@@ -257,6 +245,7 @@ onMounted(() => {
       }
     }
   }
+
   .hongbao-prize {
     // background: url(../../../assets/images/promotion/hotpromo/upgrade-hongbao/hongbao-bg.png) no-repeat center center;
     // padding: 20px;
@@ -272,16 +261,19 @@ onMounted(() => {
       align-items: center;
       justify-content: center;
     }
+
     .decal {
       background: url(../../../assets/images/promotion/hotpromo/upgrade-hongbao/union.png) no-repeat center center;
       width: 500px;
       height: 40px;
       margin: 10px auto;
     }
+
     .current {
       font-size: 20px;
       color: #7a8eb9;
     }
+
     .count {
       //   background: url(../../../assets/images/promotion/hotpromo/upgrade-hongbao/number.png) no-repeat center center;
       color: #3f8cff;
@@ -294,6 +286,7 @@ onMounted(() => {
       //   margin-bottom: 10px;
     }
   }
+
   .buttons {
     .common-btn {
       font-size: 20px;
@@ -307,6 +300,7 @@ onMounted(() => {
       box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
 
       box-shadow: 0px -1px 3.6640000343322754px 0px #5894ff inset;
+
       &.blue {
         background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
         color: #ffffff;
