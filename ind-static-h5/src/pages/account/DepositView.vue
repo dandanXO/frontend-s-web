@@ -347,6 +347,9 @@ function initPay() {
         element.promoStyle = "right: -5px; top: 0px; padding: 20px;";
         payMethods.value.push(element);
       });
+      if (payMethods.value.length > 0) {
+        activeMethod.value = payMethods.value[0];
+      }
       if (payMethods.value[0].extra && payMethods.value[0].extra.banks) {
         bankCardList.value = payMethods.value[0].extra.banks;
       }
