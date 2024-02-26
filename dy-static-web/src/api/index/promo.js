@@ -167,3 +167,45 @@ export function getStepRecords(current) {
     }
   });
 }
+
+export function getKeyCount(promoCode) {
+  return server.EVENT.get(`/event-treasure/get-key`, {
+    params: {
+      promoCode
+    }
+  });
+}
+export function getOpenRecord(promoCode, page) {
+  console.log(page)
+  return server.EVENT.get(`/event-treasure/get-open-record/${promoCode}`, {
+      size: page.size,
+      current: page.current
+  });
+}
+
+export function getKeyRecord(promoCode, page) {
+  return server.EVENT.get(`/event-treasure/get-key-record/${promoCode}`, {
+      size: page.size,
+      current: page.current,
+  });
+}
+
+
+
+export function openTreasure(promoCode, treasureLevel) {
+  return server.EVENT.post(`/event-treasure/open`, { promoCode, treasureLevel });
+}
+
+
+
+export function getCheckInRecord(promoCode) {
+  return server.EVENT.get(`/event-check-in/get-record`, {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimCheckInTreasure(promoCode, days) {
+  return server.EVENT.post(`/event-check-in/open`, { promoCode, days });
+}
