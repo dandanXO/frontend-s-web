@@ -136,9 +136,10 @@ const appleItems = computed(() => {
 
 const getAppDownloadUrl = () => {
   api
-    .get("/config/appDownloadUrl")
+    .get("/app/getAppData?siteCode=lh1&appType=ALL_SITE")
     .then((res) => {
-      downloadUrl.value = res.data;
+      // console.log(res);
+      downloadUrl.value = res.data.downloadPageUrl
     })
     .catch((err) => {
       console.log(err);

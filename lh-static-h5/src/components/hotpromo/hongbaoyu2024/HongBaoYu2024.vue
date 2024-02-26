@@ -109,18 +109,14 @@ const bonusOpened = ref(false);
 const winAmount = ref(0);
 const isClaimModal = ref(false);
 const loadingClaim = ref(false);
-const promoCode = ref("hongbaoyu");
 
-// const props = defineProps({
-//   promoCode: {
-//     type: String,
-//     required: true
-//   }
-// });
+const props = defineProps(["promoCode"]);
+const promoCode = ref(props.promoCode);
+
 
 const getPromotion = () => {
   loadingClaim.value = true;
-  privilegeClaimedModalVisible.value = true; // remove this line
+  // privilegeClaimedModalVisible.value = true; // remove this line
   eventapi
     .get(`/redPacketVip/claim?promoCode=${promoCode.value}`)
     .then((res) => {
@@ -133,7 +129,12 @@ const getPromotion = () => {
         bonusOpened.value = true;
         store.getBalance();
       } else {
-        // ElMessage.error(res.message)
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: res.message,
+          icon: "report_problem"
+        });
         bonusOpened.value = false;
       }
     })

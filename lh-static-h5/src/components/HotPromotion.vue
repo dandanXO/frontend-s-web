@@ -61,7 +61,7 @@
 
     <FootballFightPromo v-if="list.redirectUrl === 'lh1-football-fight' && !isCommonPromo" />
 
-    <UpgradeHongBaoPromo v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo" />
+    <UpgradeHongBaoPromo v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo" :promo-code="list.promoCode"  />
 
     <GiftPromo v-if="list.redirectUrl === 'lh1-gift' && !isCommonPromo && store.token"></GiftPromo>
 

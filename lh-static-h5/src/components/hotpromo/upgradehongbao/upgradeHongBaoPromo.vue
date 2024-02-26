@@ -2,10 +2,10 @@
   <div class="hongbao-container">
     <div class="hongbao-prize">
       <div class="decal"></div>
-      <div class="current-content">
-        <div class="current">当前抽奖次数</div>
-        <div class="count">1</div>
-      </div>
+<!--      <div class="current-content">-->
+<!--        <div class="current">当前抽奖次数</div>-->
+<!--        <div class="count">1</div>-->
+<!--      </div>-->
 
       <div class="prize-redeem" @click="getPromotion">
         <img src="../../../assets/images/promo/hotpromo/upgradehongbao/red-packet.png" width="200" />
@@ -44,33 +44,10 @@
         <div class="activity-title">活动对象</div>
         <div class="activity-content-container">
           <table class="content-table">
-            <tr>
-              <td>恭喜</td>
-              <td>765****3234</td>
-              <td>抽中</td>
-              <td>二等奖</td>
-              <td>Iphone15</td>
-            </tr>
-            <tr class="txt-blue">
-              <td>恭喜</td>
-              <td>765****3234</td>
-              <td>抽中</td>
-              <td>一等奖</td>
-              <td>保时捷</td>
-            </tr>
-            <tr>
-              <td>恭喜</td>
-              <td>765****3234</td>
-              <td>抽中</td>
-              <td>二等奖</td>
-              <td>Iphone15</td>
-            </tr>
-            <tr>
-              <td>恭喜</td>
-              <td>765****3234</td>
-              <td>抽中</td>
-              <td>二等奖</td>
-              <td>Iphone15</td>
+            <tr class="winner" v-for="(item, index) in visibleItems" :key="index">
+              <td>{{ item.date }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.amount }}</td>
             </tr>
           </table>
         </div>
@@ -109,18 +86,13 @@ const bonusOpened = ref(false);
 const winAmount = ref(0);
 const isClaimModal = ref(false);
 const loadingClaim = ref(false);
-const promoCode = ref("hongbaoyu");
+const props = defineProps(["promoCode"]);
+const promoCode = ref(props.promoCode);
 
-// const props = defineProps({
-//   promoCode: {
-//     type: String,
-//     required: true
-//   }
-// });
 
 const getPromotion = () => {
   loadingClaim.value = true;
-  privilegeClaimedModalVisible.value = true; // remove this line
+  // privilegeClaimedModalVisible.value = true; // remove this line
   eventapi
     .get(`/redPacketVip/claim?promoCode=${promoCode.value}`)
     .then((res) => {
@@ -133,13 +105,17 @@ const getPromotion = () => {
         bonusOpened.value = true;
         store.getBalance();
       } else {
-        // ElMessage.error(res.message)
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: res.message,
+          icon: "report_problem"
+        });
         bonusOpened.value = false;
       }
     })
     .catch((err) => {
       console.log(err.message);
-      // message.error(err.message, 4);
       loadingClaim.value = false;
       // isClaimModal.value= true;
       bonusOpened.value = false;
@@ -150,6 +126,8 @@ const getPromotionPrize = () => {
   store.getBalance();
   isClaimModal.value = false;
   bonusOpened.value = false;
+
+  privilegeClaimedModalVisible.value = false;
 };
 
 const promotionListing = ref();
@@ -184,7 +162,7 @@ const getPromotionListing = () => {
     });
 };
 onMounted(() => {
-  // getPromotionListing();
+  getPromotionListing();
 });
 </script>
 
@@ -213,6 +191,7 @@ onMounted(() => {
       background: linear-gradient(180deg, #ffffff 0%, #e4efff 100%);
       flex: 1;
       padding: 16px;
+      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -244,6 +223,7 @@ onMounted(() => {
       }
 
       .content-table {
+        width: 100%;
         font-size: 14px;
         color: #7a8eb9;
 
@@ -338,7 +318,7 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     top: 0;
-    margin-top: 100px;
+    margin-top: 23%;
 
     color: #fffbfb;
 
@@ -356,8 +336,8 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     top: 0;
-    margin-top: 250px;
-    left: -15px;
+    margin-top: 48%;
+    left: -10px;
     color: #f23b1d;
     font-size: 20px;
     font-weight: bold;

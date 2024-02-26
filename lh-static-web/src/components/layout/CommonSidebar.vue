@@ -18,17 +18,17 @@
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-phone-icon.png" />
         <span style="margin-left: 5px"
-          ><span class="customer_phone">+85281701071</span></span
+        ><span class="customer_phone">+85281701071</span></span
         >
       </div>
     </div>
     <div class="sticky-sidebar-items">
-      <router-link to="/promotion" class="sticky-sidebar-item"  @mouseover="customerHovered = false">
+      <router-link to="/promotion" class="sticky-sidebar-item" @mouseover="customerHovered = false">
         <img src="../../assets/images/home/sticky-sidebar-hot-promo-icon.png" />
         <div>热门活动</div>
       </router-link>
       <div class="sticky-sidebar-item"
-        @mouseover="customerHovered = true"
+           @mouseover="customerHovered = true"
       >
         <img src="../../assets/images/home/sticky-sidebar-cs-icon.png" />
         <div>客服中心</div>
@@ -39,7 +39,7 @@
           <div>APP下载</div>
         </a>
       </div>
-      <div  @mouseover="customerHovered = false" class="sticky-sidebar-item" @click="scrollToTop">
+      <div @mouseover="customerHovered = false" class="sticky-sidebar-item" @click="scrollToTop">
         <img src="../../assets/images/home/sticky-sidebar-back-top-icon.png" />
         <div>返回顶部</div>
       </div>
@@ -50,23 +50,25 @@
 import { defineComponent, onMounted, ref } from "vue";
 import { userStore } from "@/store";
 import { getAppDownloadUrlFromServer } from "@/api/index/site";
+import { uiStore } from "@/store/ui";
 
 
 export default defineComponent({
-  components: {
-  },
+  components: {},
   setup() {
     const customerHovered = ref(false);
     const scrollToTop = () => {
       window.scroll({ behavior: "smooth", left: 0, top: 0 });
     };
     const store = userStore();
+    const ui = uiStore();
 
     const downloadUrl = ref("");
     const getAppDownloadUrl = () => {
       getAppDownloadUrlFromServer()
         .then((res) => {
-          downloadUrl.value = res;
+          downloadUrl.value = res.downloadPageUrl;
+          ui.downloadUrl = downloadUrl.value;
         })
         .catch((err) => {
           console.log(err);
@@ -75,7 +77,7 @@ export default defineComponent({
 
     onMounted(() => {
       getAppDownloadUrl();
-    })
+    });
 
     return {
       store,
@@ -112,6 +114,7 @@ export default defineComponent({
     }
   }
 }
+
 .sticky-sidebar-items {
   display: flex;
   flex-direction: column;
@@ -137,10 +140,12 @@ export default defineComponent({
       img {
         filter: brightness(1.05);
       }
+
       color: #4E93FF;
     }
   }
 }
+
 .sticky-sidebar {
   position: fixed;
   right: 0;

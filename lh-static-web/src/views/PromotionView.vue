@@ -3,22 +3,22 @@
     <div class="all-promotions" v-if="!isPromoDetail">
       <div class="promo-main-container">
         <div class="promo-type-wrapper">
-            <el-affix :offset="80">
-              <div class="type-list">
-                  <img src="../assets/promo/menu-title.png" />
-                  <div
-                    class="type-item"
-                    v-for="p in promoTypes"
-                    :class="{ active: p.code === promoTabActive }"
-                    :key="p.code"
-                    @click="switchPromoType(p.code)"
-                  >
-                    <img :src="require('../assets/promo/menu-' + p.img + '.png')" />
-                    <span style="width: 100px;" class="label">{{ p.label }}</span>
-                  </div>
+          <el-affix :offset="80">
+            <div class="type-list">
+              <img src="../assets/promo/menu-title.png" />
+              <div
+                class="type-item"
+                v-for="p in promoTypes"
+                :class="{ active: p.code === promoTabActive }"
+                :key="p.code"
+                @click="switchPromoType(p.code)"
+              >
+                <img :src="require('../assets/promo/menu-' + p.img + '.png')" />
+                <span style="width: 100px" class="label">{{ p.label }}</span>
               </div>
-            </el-affix>
-          </div>
+            </div>
+          </el-affix>
+        </div>
         <div class="promo-list-wrapper">
           <div
             class="promo-item"
@@ -30,9 +30,13 @@
           >
             <a @click="showPromoDetails(promo)">
               <div class="promo-img-wrapper">
-                <div class="promo-type">{{ getPromoLabel(promo.labelType) }}</div>
+                <div class="promo-label">
+                  <div class="label-type">{{ getPromoLabel(promo.labelType) }}</div>
+                  <div class="label-date">{{ JSON.parse(promo.param).date }}</div>
+                </div>
+
                 <div class="promo-details">
-                  <div class="front-date">{{ JSON.parse(promo.param).date }}</div>
+                  <!-- <div class="front-date">{{ JSON.parse(promo.param).date }}</div> -->
                   <div class="front-title">{{ promo.title }}</div>
                   <div class="front-sub">{{ JSON.parse(promo.param).sub }}</div>
                   <div class="front-btn">查看详情</div>
@@ -522,6 +526,38 @@ export default defineComponent({
             align-items: center;
             padding: 0 50px;
             // border-radius: 10px 10px 0 0;
+            position: relative;
+
+            .promo-label {
+              position: absolute;
+              left: 0;
+              top: 0;
+              display: flex;
+              align-items: center;
+              .label-type {
+                background: linear-gradient(89.92deg, #454bc2 0.06%, #b1a5f0 106.9%);
+                padding: 10px 30px 10px 50px;
+                color: #ffffff;
+                position: relative;
+                &:after {
+                  content: "";
+                  border-left: 0 solid transparent;
+                  border-right: 20px solid transparent;
+                  border-top: 42px solid #a89eed;
+                  display: inline-block;
+                  position: absolute;
+                  left: 100%;
+                  top: 0;
+                }
+              }
+
+              .label-date {
+                color: #606479;
+                font-size: 18px;
+                font-weight: 700;
+                padding-left: 30px;
+              }
+            }
             .promo-type {
               position: absolute;
               left: 0;

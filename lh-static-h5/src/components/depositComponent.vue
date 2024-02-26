@@ -134,9 +134,7 @@
             </q-item>
           </template>
         </q-select>
-        <div class="q-mt-sm" v-html="activeMethod.msg"></div>
-        <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
-        <div class="q-mt-sm">
+        <div class="q-mt-md">
           <q-btn
             class="common-large-btn"
             :loading="btnLoading"
@@ -145,6 +143,9 @@
             label="确定存款"
           />
         </div>
+        <div class="q-mt-sm" v-html="activeMethod.msg"></div>
+        <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
+
       </q-form>
     </div>
   </div>

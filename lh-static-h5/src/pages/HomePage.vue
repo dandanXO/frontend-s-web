@@ -2,7 +2,7 @@
   <div v-if="isH5" class="download-top-container">
     <div class="download-top-box">
       <q-icon name="close" @click="closeTopBox" />
-      <img class="headicon" src="../assets/images/home/download-logo.png" />
+      <img class="headicon" src="../assets/logo.svg" alt="download-logo" />
       <div class="download-txt-container">
         <span class="download-title">雷火电竞app下载</span>
         <span>亚洲第一实时滚球</span>
@@ -17,7 +17,7 @@
 
   <div class="home-header">
     <div class="header-left">
-      <img alt="logo" src="../assets/images/home/home-logo.png" />
+      <img alt="logo" src="../assets/logo.svg"  />
     </div>
     <div class="header-right" @click="router.push('/account/inbox')">
       <img class="btn-pointer" src="../assets/images/home/home-message-box.png" />
@@ -1418,10 +1418,10 @@ export default defineComponent({
 
     const getAppDownloadUrl = () => {
       api
-        .get("/config/appDownloadUrl")
+        .get("/app/getAppData?siteCode=lh1&appType=ALL_SITE")
         .then((res) => {
           // console.log(res);
-          downloadUrl.value = res.data;
+          downloadUrl.value = res.data.downloadPageUrl
         })
         .catch((err) => {
           console.log(err);
