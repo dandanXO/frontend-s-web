@@ -150,6 +150,8 @@ const getPromotionPrize = () => {
   store.getBalance();
   isClaimModal.value = false;
   bonusOpened.value = false;
+
+  privilegeClaimedModalVisible.value = false;
 };
 
 const promotionListing = ref();
@@ -338,7 +340,7 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     top: 0;
-    margin-top: 100px;
+    margin-top: 23%;
 
     color: #fffbfb;
 
@@ -356,8 +358,8 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     top: 0;
-    margin-top: 250px;
-    left: -15px;
+    margin-top: 48%;
+    left: -10px;
     color: #f23b1d;
     font-size: 20px;
     font-weight: bold;
