@@ -138,7 +138,7 @@ export function getKeyRecord(promoCode, page) {
 
 
 export function openTreasure(promoCode, treasureLevel) {
-  return eventapi.post(`/event-treasure/open`, { promoCode, treasureLevel });
+  return eventapi.post(`/event-treasure/open`, qs.stringify({ promoCode, treasureLevel }));
 }
 
 
@@ -152,5 +152,5 @@ export function getCheckInRecord(promoCode) {
 }
 
 export function claimCheckInTreasure(promoCode, days) {
-  return eventapi.post(`/event-check-in/open`, { promoCode, days });
+  return eventapi.post(`/event-check-in/open`, qs.stringify({ promoCode, days }));
 }

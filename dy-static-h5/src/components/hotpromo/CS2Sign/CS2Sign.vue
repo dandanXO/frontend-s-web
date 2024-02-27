@@ -27,7 +27,7 @@
                 <div class="requiredKey">钥匙*{{ item.quantity }}</div>
             </div>
           </div>
-            <div class="useKeys" @click="openBox(activeItem)">开启</div>
+            <div class="useKeys" @click="openBox(selectedTreasureLevel)">开启</div>
         </div>
       </div>
     </div>
@@ -177,10 +177,11 @@ const signNumber = ref(0);
 // };
 const items = ref([{ no: 1, amt: 100 }, { no: 2, amt: 10 }, { no: 3, amt: 30 }]);
 const activeItem = ref(2);
-
+const selectedTreasureLevel = ref('Normal');
 const setActiveItem = (itemNo) => {
   const item = items.value.find((i) => i.no === itemNo);
   if (item) {
+    selectedTreasureLevel.value = item.treasureLevel
     activeItem.value = item.no;
     reorderItems(item);
   }
@@ -200,17 +201,17 @@ const openBox = (item) => {
     $q.loading.show({
         message: "开启中... 请稍等..."
     });
-    var type = '';
-    if (item === 1) {
-        type = 'Dragon'
-    } 
-    if (item === 2) {
-        type = 'Normal'
-    }
-    if (item === 3) {
-        type = 'CS'
-    }
-    openTreasure(props.promoCode, type).then((res) => {
+    // var type = '';
+    // if (item === 1) {
+    //     type = 'Dragon'
+    // } 
+    // if (item === 2) {
+    //     type = 'Normal'
+    // }
+    // if (item === 3) {
+    //     type = 'CS'
+    // }
+    openTreasure(props.promoCode, item).then((res) => {
         if (res.code === 0) {
             // Open Dialog 
             openModal('amt', res.data);
