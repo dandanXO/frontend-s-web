@@ -196,7 +196,7 @@
 <script setup>
 import { defineProps, onMounted, reactive, ref } from 'vue';
 import moment from 'moment';
-import { getMemberBetRecords, getMemberBetRecordsTotal, requestExportMemberBetRecord } from '../../../../../api/member-bet-record';
+import { getMemberBetRecords, requestExportMemberBetRecord } from '../../../../../api/member-bet-record';
 import { getMemberDetails } from '../../../../../api/member';
 import { getPlatformsBySite } from '../../../../../api/platform';
 import { useI18n } from "vue-i18n";
@@ -358,10 +358,9 @@ async function loadMemberBetRecords(frombutton) {
   page.records = ret.records;
   page.total = ret.total;
 
-  const { data: t } = await getMemberBetRecordsTotal(query);
-  total.totalBet = t.totalBet;
-  total.totalValidBet = t.totalValidBet;
-  total.totalPayout = t.totalPayout;
+  total.totalBet = ret.sums.totalBet;
+  total.totalValidBet = ret.sums.totalValidBet;
+  total.totalPayout = ret.sums.totalPayout;
 
   page.loading = false;
 }
