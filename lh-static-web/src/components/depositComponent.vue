@@ -102,7 +102,9 @@
               placeholder="选择优惠"
               @select="checkMinDepositAmt"
               @focus="loadPrivilege(activeMethod)"
+              fit-input-width
               clearable
+              style="width:350px"
             >
               <el-option
                 v-for="p in unselectedPrivileges"
