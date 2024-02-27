@@ -514,7 +514,7 @@
               :model="forgotPwdForm"
               label-width="100"
               label-suffix=":"
-              style="width: 100%; max-width: 400px; margin: 50px auto"
+              style="width: 100%; max-width: 400px; margin: 50px auto 20px; text-align: center"
             >
               <el-form-item tabindex="1" label="用户名" prop="loginName">
                 <el-input v-model="forgotPwdForm.loginName" placeholder="输入用户名" />
@@ -522,7 +522,7 @@
               <el-form-item tabindex="2" label="手机号码" prop="phone">
                 <el-input v-model="forgotPwdForm.phone" placeholder="手机号码" />
               </el-form-item>
-              <el-form-item tabindex="3" label="验证码" prop="captchaCode">
+              <el-form-item tabindex="3" label="验证码" prop="captchaCode" v-if="!forgotPwdPostVerifyForm.codeId">
                 <el-row :gutter="10" style="justify-content: center; align-items: center">
                   <el-col :span="12">
                     <el-input
@@ -538,12 +538,62 @@
                 </el-row>
               </el-form-item>
               <el-button
+                v-if="!forgotPwdPostVerifyForm.codeId"
                 :loading="loadingBtn"
                 size="large"
                 color="#3bafda"
                 class="common-btn"
                 style="margin-left: 100px"
                 @click="submitOTPForm"
+              >
+                提交
+              </el-button>
+            </el-form>
+
+            <el-form
+              ref="forgotPwdPostVerifyFormPhoneRef"
+              :rules="forgotPwdPostVerifyFormRules"
+              :model="forgotPwdPostVerifyForm"
+              label-width="100"
+              label-suffix=":"
+              style="width: 100%; max-width: 400px; margin: 10px auto; text-align: center"
+              size="large"
+              v-if="forgotPwdPostVerifyForm.codeId"
+            >
+              <el-form-item tabindex="1" label="OTP验证码" prop="code">
+                <el-input v-model="forgotPwdPostVerifyForm.code" placeholder="OTP验证码" />
+              </el-form-item>
+
+              <el-form-item label="密码" prop="password">
+                <el-input
+                  v-model="forgotPwdPostVerifyForm.password"
+                  placeholder="请输入6-11位字母/数字组合"
+                  type="password"
+                  show-password
+                  clearable
+                >
+                  <template #append></template>
+                </el-input>
+              </el-form-item>
+
+              <el-form-item label="确认密码" prop="confirmPwd">
+                <el-input
+                  v-model="forgotPwdPostVerifyForm.confirmPwd"
+                  placeholder="请确认密码"
+                  type="password"
+                  show-password
+                  clearable
+                >
+                  <template #append></template>
+                </el-input>
+              </el-form-item>
+
+              <el-button
+                :loading="loadingBtn"
+                size="large"
+                color="#3bafda"
+                class="common-btn"
+                @click="submitForgetPwdCode"
               >
                 提交
               </el-button>
@@ -558,7 +608,7 @@
               :model="forgotPwdForm"
               label-width="100"
               label-suffix=":"
-              style="width: 100%; max-width: 400px; margin: 50px auto"
+              style="width: 100%; max-width: 400px; margin: 50px auto 20px; text-align: center"
             >
               <el-form-item tabindex="1" label="用户名" prop="loginName">
                 <el-input v-model="forgotPwdForm.loginName" placeholder="输入用户名" />
@@ -566,7 +616,7 @@
               <el-form-item tabindex="2" label="预留邮箱" prop="email">
                 <el-input v-model="forgotPwdForm.email" placeholder="预留邮箱" />
               </el-form-item>
-              <el-form-item tabindex="3" label="验证码" prop="captchaCode">
+              <el-form-item tabindex="3" label="验证码" prop="captchaCode" v-if="!forgotPwdPostVerifyForm.codeId">
                 <el-row :gutter="10" style="justify-content: center; align-items: center">
                   <el-col :span="12">
                     <el-input
@@ -582,12 +632,62 @@
                 </el-row>
               </el-form-item>
               <el-button
+                v-if="!forgotPwdPostVerifyForm.codeId"
                 :loading="loadingBtn"
                 size="large"
                 color="#3bafda"
                 class="common-btn"
                 style="margin-left: 100px"
                 @click="submitOTPForm"
+              >
+                提交
+              </el-button>
+            </el-form>
+
+            <el-form
+              ref="forgotPwdPostVerifyFormEmailRef"
+              :rules="forgotPwdPostVerifyFormRules"
+              :model="forgotPwdPostVerifyForm"
+              label-width="100"
+              label-suffix=":"
+              style="width: 100%; max-width: 400px; margin: 10px auto; text-align: center"
+              size="large"
+              v-if="forgotPwdPostVerifyForm.codeId"
+            >
+              <el-form-item tabindex="1" label="OTP验证码" prop="code">
+                <el-input v-model="forgotPwdPostVerifyForm.code" placeholder="OTP验证码" />
+              </el-form-item>
+
+              <el-form-item label="密码" prop="password">
+                <el-input
+                  v-model="forgotPwdPostVerifyForm.password"
+                  placeholder="请输入6-11位字母/数字组合"
+                  type="password"
+                  show-password
+                  clearable
+                >
+                  <template #append></template>
+                </el-input>
+              </el-form-item>
+
+              <el-form-item label="确认密码" prop="confirmPwd">
+                <el-input
+                  v-model="forgotPwdPostVerifyForm.confirmPwd"
+                  placeholder="请确认密码"
+                  type="password"
+                  show-password
+                  clearable
+                >
+                  <template #append></template>
+                </el-input>
+              </el-form-item>
+
+              <el-button
+                :loading="loadingBtn"
+                size="large"
+                color="#3bafda"
+                class="common-btn"
+                @click="submitForgetPwdCode"
               >
                 提交
               </el-button>
@@ -916,6 +1016,16 @@ export default defineComponent({
         return Promise.resolve();
       }
     };
+    const validatePassNew = async (r, v) => {
+      if (v === "") {
+        return Promise.reject("请重新输入密码");
+      } else if (v !== forgotPwdPostVerifyForm.password) {
+        return Promise.reject("密码不同");
+      } else {
+        return Promise.resolve();
+      }
+    };
+
     let validatePhoneNumber = async (r, v) => {
       var reg = /^\d+$/;
       if (v === "") {
@@ -1500,24 +1610,30 @@ export default defineComponent({
           captchaForm.codeId = res.data.id;
           passForm.codeId = res.data.id;
 
-          forgotPwdForm.codeId= res.data.id;
+          forgotPwdForm.codeId = res.data.id;
 
           // reset captcha input when captcha changes
           loginForm.captchaCode = "";
           regForm.captchaCode = "";
+          forgotPwdForm.captchaCode = "";
         }
       });
     };
     const activeTab = ref("phone");
+    const isSubmitForget = ref(false);
 
     const changeTab = () => {
-      console.log("Change tab");
+      // console.log("Change tab");
 
       forgotPwdForm.loginName = "";
       forgotPwdForm.phone = "";
       forgotPwdForm.email = "";
       forgotPwdForm.captchaCode = "";
 
+      forgotPwdPostVerifyForm.codeId = "";
+      forgotPwdPostVerifyForm.code = "";
+      forgotPwdPostVerifyForm.password = "";
+      forgotPwdPostVerifyForm.confirmPwd = "";
     };
 
     const verificationImg = ref("");
@@ -1528,8 +1644,6 @@ export default defineComponent({
           loadingBtn.value = false;
           if (res.code === 0) {
             ElMessage.success("您的帐号已经发送到注册邮箱");
-
-
           }
         }).catch((e) => {
           loadingBtn.value = false;
@@ -1603,6 +1717,10 @@ export default defineComponent({
           required: true,
           message: "请输入手机号码",
           trigger: "blur"
+        },
+        {
+          validator: validatePhoneNumber,
+          trigger: "blur"
         }
       ],
       captchaCode: [
@@ -1616,6 +1734,29 @@ export default defineComponent({
           max: 4,
           message: "长度为 4",
           trigger: "blur"
+        }
+      ]
+    };
+
+    const forgotPwdPostVerifyFormRules = {
+      code: [
+        {
+          min: 4,
+          max: 6,
+          message: "长度为 6",
+          trigger: "blur"
+        }
+      ],
+      password: [
+        {
+          validator: validatePass,
+          trigger: "change"
+        }
+      ],
+      confirmPwd: [
+        {
+          validator: validatePassNew,
+          trigger: "change"
         }
       ]
     };
@@ -1638,7 +1779,9 @@ export default defineComponent({
             codeId: forgotPwdForm.codeId
           };
 
+          loadingBtn.value = true;
           sendForgetPasswordPhone(params).then((res) => {
+            loadingBtn.value = false;
             if (res.code === 0) {
               ElMessage.success("验证码已经发送到手机");
               forgotPwdPostVerifyForm.codeId = res.data.codeId;
@@ -1651,6 +1794,7 @@ export default defineComponent({
               });
             }
           }).catch((error) => {
+            loadingBtn.value = false;
             console.log(error);
             getCode();
           });
@@ -1658,10 +1802,42 @@ export default defineComponent({
           console.log(err);
           getCode();
         }).finally(() => {
-          loadingBtn.value = false;
         });
 
       } else if (activeTab.value === "email") {
+
+        forgotPwdFormEmailRef.value.validate().then(() => {
+          const params = {
+            email: forgotPwdForm.email,
+            loginName: forgotPwdForm.loginName,
+            captchaCode: forgotPwdForm.captchaCode,
+            codeId: forgotPwdForm.codeId
+          };
+
+          loadingBtn.value = true;
+          sendForgetPasswordEmail(params).then((res) => {
+            loadingBtn.value = false;
+            if (res.code === 0) {
+              ElMessage.success("验证码已经发送到手机");
+              forgotPwdPostVerifyForm.codeId = res.data.codeId;
+              // captchaVerifyRef.value.closeDialog();
+              // captchaVerifyRef.value.initCountdownTimer();
+            } else {
+              ElMessage.error({
+                type: "error",
+                message: res.message
+              });
+            }
+          }).catch((error) => {
+            loadingBtn.value = false;
+            console.log(error);
+            getCode();
+          });
+        }).catch((err) => {
+          console.log(err);
+          getCode();
+        }).finally(() => {
+        });
 
       }
     };
@@ -1669,7 +1845,6 @@ export default defineComponent({
     const submitForgetPwdCode = () => {
       if (activeTab.value === "phone") {
 
-        loadingBtn.value = true;
 
         forgotPwdPostVerifyFormPhoneRef.value.validate().then(() => {
           const params = {
@@ -1679,10 +1854,13 @@ export default defineComponent({
             newPassword: forgotPwdPostVerifyForm.confirmPwd
           };
 
+          loadingBtn.value = true;
           verifyForgetPasswordPhone(params).then((res) => {
+            loadingBtn.value = false;
             if (res.code === 0) {
-              ElMessage.success("成功");
-              router.push("/login");
+              ElMessage.success("密码更换成功！");
+              forgetPassDialogVisible.value = false;
+              changeTab();
             } else {
               ElMessage.error({
                 type: "error",
@@ -1690,12 +1868,12 @@ export default defineComponent({
               });
             }
           }).catch((error) => {
+            loadingBtn.value = false;
             console.log(error);
           });
         }).catch((err) => {
           console.log(err);
         }).finally(() => {
-          loadingBtn.value = false;
         });
 
       } else if (activeTab.value === "email") {
@@ -1711,10 +1889,13 @@ export default defineComponent({
             newPassword: forgotPwdPostVerifyForm.confirmPwd
           };
 
+          loadingBtn.value = true;
           verifyForgetPasswordEmail(params).then((res) => {
+            loadingBtn.value = false;
             if (res.code === 0) {
-              ElMessage.success("成功");
-              router.push("/login");
+              ElMessage.success("密码更换成功！");
+              forgetPassDialogVisible.value = false;
+              changeTab();
             } else {
               ElMessage.error({
                 type: "error",
@@ -1722,12 +1903,12 @@ export default defineComponent({
               });
             }
           }).catch((error) => {
+            loadingBtn.value = false;
             console.log(error);
           });
         }).catch((err) => {
           console.log(err);
         }).finally(() => {
-          loadingBtn.value = false;
         });
 
       }
@@ -1983,6 +2164,7 @@ export default defineComponent({
       regRules,
       activeTab,
       changeTab,
+      isSubmitForget,
       forgotPwdFormPhoneRef,
       forgotPwdFormEmailRef,
       forgotPwdFormRulesEmail,
@@ -1991,6 +2173,7 @@ export default defineComponent({
       forgotPwdPostVerifyFormEmailRef,
       forgotPwdPostVerifyFormPhoneRef,
       forgotPwdPostVerifyForm,
+      forgotPwdPostVerifyFormRules,
       captchaVerifyRef,
       submitOTPForm,
       getCode,
