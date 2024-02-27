@@ -61,7 +61,7 @@
     >
       <el-table-column prop="siteName" :label="t('fields.site')" width="180" />
       <el-table-column prop="loginName" :label="t('fields.loginName')" width="180" />
-      <el-table-column prop="quesiton" :label="t('fields.question')" width="250" />
+      <el-table-column prop="question" :label="t('fields.question')" width="250" />
       <el-table-column prop="choice" :label="t('fields.choice')" width="250" />
       <el-table-column
         prop="recordTime"
