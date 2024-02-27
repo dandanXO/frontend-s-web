@@ -455,6 +455,11 @@
                     <span>{{ scope.row.recordTime }}</span>
                   </div>
                 </template>
+                <template v-if="tbl.dataIndex === 'platform'" #default="scope">
+                  <div style="display: flex; align-items: center">
+                    {{ getPlatform(scope.row.platform) }}
+                  </div>
+                </template>
                 <template v-if="tbl.dataIndex === 'bet'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span v-if="scope.row.bet !== null">
