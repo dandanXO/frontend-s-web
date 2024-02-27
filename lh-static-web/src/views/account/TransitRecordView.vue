@@ -997,7 +997,7 @@ export default defineComponent({
       // recordActive.value = key.props.name
       loading.value = true;
       if (recordActive.value === "gameBetRecord") {
-        getPlatList(recordActive.value);
+        // getPlatList(recordActive.value);
       } else if (recordActive.value === "reminderRecord") {
         financeFeedbackList(searchForm[recordActive.value]).then((response) => {
           if (response.code === 0) {
@@ -1029,6 +1029,12 @@ export default defineComponent({
           if (recordActive.value === "turnover" || recordActive.value === "gameBetRecord") {
             pagination.pagingState = response.data.pagingState;
           }
+
+          if(recordActive.value === 'gameBetRecord') {
+            totalBetRecord.totalBet = response.data.sums.totalBet;
+            totalBetRecord.totalPayout = response.data.sums.totalPayout;
+          }
+
           const dataSource = dataState[recordActive.value];
           //clear array and then push new record
           dataSource.splice(0);
