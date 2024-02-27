@@ -68,7 +68,7 @@
         </div>
         <div
           class="inner"
-          :class="
+          :class="{'isCS': selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024'},
             (selectedPromo.promoCode === 'dy2-cny2024-promo' || selectedPromo.promoCode === 'dy2-cny-step-game') &&
             'fullwidth'
           "
@@ -87,7 +87,7 @@
               slot: selectedPromo.promoType.toLowerCase() === 'slot game'
             }"
           >
-            <div v-html="selectedPromo.pageContent"></div>
+            <div :class="{'isSpecial': !isSpecialPromo}" v-html="selectedPromo.pageContent"></div>
           </div>
         </div>
       </div>
@@ -148,8 +148,8 @@ export default defineComponent({
         }
       });
     };
+    const isSpecialPromo = ref(false)
     const showPromoDetails = (promo) => {
-
       if (!store.token) {
         ElMessageBox.alert("请登录后再操作", "系统提示", {
           // if you want to disable its autofocus
@@ -170,6 +170,12 @@ export default defineComponent({
         } else if (promo.redirectUrl.includes("hongbaoyu")) {
           router.push("/privilege/hongbaoyu");
         }else {
+          console.log(promo)
+          if (promo.redirectUrl === 'dy2-cs2-copenhagen-major-2024') {
+            isSpecialPromo.value = true;
+          } else {
+            isSpecialPromo.value = false;
+          }
           router.push({ name: "promotion", query: { name: promo.redirectUrl } });
           isPromoDetail.value = true;
           selectedPromo.value = promo;
@@ -620,6 +626,26 @@ export default defineComponent({
             display: none;
           }
         }
+        &.isCS {
+          padding: 30px 0;
+          margin: 0;
+          background: url(../assets/images/promotion/hotpromo/cs2/bg.png);
+          max-width: unset;
+          width: 100%;
+          background-size: cover;
+          position: relative;
+          &:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: -10px;
+            background: url(../assets/images/promotion/hotpromo/cs2/bottombg.png)no-repeat center center;
+            width: 180px;
+            height: 340px;
+            background-size: cover;
+            z-index: -1;
+          }
+        }
 
         .hot-promo {
           // background: #201f29;
@@ -667,6 +693,9 @@ export default defineComponent({
             color: #ffd800;
             margin: 30px auto 50px;
             text-align: center;
+          }
+          .isSpecial {
+            color:#7F4C00;
           }
         }
       }
