@@ -952,7 +952,7 @@ export default {
     nextLevelPoint: 'Next Level Point',
     no: 'No',
     noData: 'No Data',
-    noDeposit: '无存款',
+    noDeposit: 'No Deposit',
     noLimit: 'No Limit',
     noOfDeduction: 'Number of Deduction',
     noOfDepositTimes: 'Number of Deposit Times',
@@ -1477,6 +1477,13 @@ export default {
     editCompetition: 'Edit Competition',
     addCompetitionCode: 'Add Competition Code',
     editCompetitionCode: 'Edit Competition Code',
+    addMemberTreasureKey: 'Add Member Treasure Key',
+    deductMemberTreasureKey: 'Deduct Member Treasure Key',
+    keyQuantity: 'Key Quantity',
+    keyQuantityBefore: 'Key Quantity Before',
+    keyQuantityAfter: 'Key Quantity After',
+    checkInDate: 'Check In Date',
+    consecutiveDay: 'Consecutive Day Count',
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
@@ -1879,6 +1886,7 @@ export default {
     validateCompetitionTypeRequired: 'Competition Type is required',
     validateCompetitionNameRequired: 'Competition Name is required',
     validateCompetitionTimeRequired: 'Competition Time is required',
+    validateKeyQuantityRequired: 'Key quantity is required',
   },
   menu: {
     undefined: '',
@@ -2076,6 +2084,8 @@ export default {
     'Promotion Activity': 'Promotion Activity',
     'Platform Competition': 'Platform Competition',
     'Platform Competition Code': 'Platform Competition Code',
+    'Event Treasure Key': 'Event Treasure Key Record',
+    'Event Check In Record': 'Event Check In Record',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -2363,5 +2373,6 @@ export default {
     21006: 'File and os that choosing not the same',
     30000: 'PG update transaction status failed',
     24003: 'Result is already processed',
+    27000: 'Key quantity is not enough',
   },
 }

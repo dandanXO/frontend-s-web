@@ -482,6 +482,7 @@ export default defineComponent({
       store.getBalance().then(() => {
         isLoadingBalance.value = false;
       });
+      //123
       timerBalance.value = setInterval(function () {
         if (store.hasToken()) {
           store.getBalance();

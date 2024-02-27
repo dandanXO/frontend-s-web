@@ -1482,6 +1482,13 @@ export default {
     editCompetition: '编辑赛事',
     addCompetitionCode: '新增赛事代码',
     editCompetitionCode: '编辑赛事代码',
+    addMemberTreasureKey: '添加会员宝箱钥匙',
+    deductMemberTreasureKey: '扣除会员宝箱钥匙',
+    keyQuantity: '钥匙数量',
+    keyQuantityBefore: '之前钥匙数量',
+    keyQuantityAfter: '之后钥匙数量',
+    checkInDate: '签到日期',
+    consecutiveDay: '连续签到天数',
   },
   message: {
     addRemarkSuccess: '新增备注成功',
@@ -1852,6 +1859,7 @@ export default {
     validateCompetitionTypeRequired: '赛事类别必填',
     validateCompetitionNameRequired: '赛事名称必填',
     validateCompetitionTimeRequired: '赛事时间必填',
+    validateKeyQuantityRequired: '钥匙数量必填',
   },
   menu: {
     undefined: '',
@@ -2049,6 +2057,8 @@ export default {
     'Promotion Activity': '优惠活动',
     'Platform Competition': '平台赛事',
     'Platform Competition Code': '平台赛事代码',
+    'Event Treasure Key': '活动宝箱钥匙记录',
+    'Event Check In Record': '活动签到记录',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -2334,5 +2344,6 @@ export default {
     21006: '操作系统和上载应用程序不匹配',
     30000: 'PG注单设置失败',
     24003: '结果已结算',
+    27000: '钥匙数量不足',
   },
 }
