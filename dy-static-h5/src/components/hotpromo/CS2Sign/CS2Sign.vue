@@ -2,7 +2,7 @@
   <div class="cs2">
     <div class="section first">
       <div class="title"><img src="../../../assets/images/promotion/hotpromo/cs2/fuli1.png" /></div>
-      <div class="tips">参与CS Major2024投注金额100元即可获得一个开箱钥匙</div>
+      <div class="tips">参与CS Major2024当日投注金额100元注单结算后，次日可获得一个开箱钥匙，每投注100元即可获得一个钥匙。</div>
       <div class="content">
         <div class="top-row">
           <div class="lft">
@@ -33,7 +33,7 @@
     </div>
     <div class="section second">
       <div class="title"><img src="../../../assets/images/promotion/hotpromo/cs2/fuli2.png" /></div>
-      <div class="tips">活动期间，连续投注 CS2Major 2024赛事21000元则视为签到成功，根据对应连续签到天数开启宝箱</div>
+      <div class="tips">活动期间，连续投注 CS2Major 2024赛事≥1000元则视为签到成功，根据对应连续签到天数开启宝箱</div>
       <div class="content">
         <div class="top-row">
           <div class="lft">
@@ -82,7 +82,7 @@
                         <td><div class="keysAmt"><img src="../../../assets/images/promotion/hotpromo/cs2/key.png" />{{ key.amount }}</div></td>
                     </tr>
                 </table>
-                <div v-else style="display: flex; justify-content: center; align-items: center; height: 400px;">
+                <div v-else style="display: flex; justify-content: center; align-items: center; height: 130px;">
                     暂无数据
                 </div>
             </div>
@@ -105,18 +105,26 @@
             width="30"
           ></q-btn>
         </div>
-            <div class="table-title">
-                日期
-            </div>
-            <div  v-if="openRecords" class="rec">
-                <div class="flex" v-for="(open, i) in openRecords" :key="i">
-                    <div>{{ open.createTime }}</div>
-                    <div class="openSuccess">开启成功  <img src="../../../assets/images/promotion/hotpromo/cs2/tick.png" /></div>
-                </div>
-            </div>
-                <div class="rec" v-else style="display: flex; justify-content: center; align-items: center; height: 400px;">
+        
+        <table>
+                    <tr>
+                        <th width="50%">日期</th>
+                        <th width="25%">消耗</th>
+                        <th width="25%">获取金额</th>
+                    </tr>
+                </table>
+            <div class="rec">
+                <table style="text-align: center;" v-if="openRecords && openRecords.length > 0" class="table-rows">
+                    <tr v-for="(open, i) in openRecords" :key="i">
+                        <td width="50%">{{ open.createTime }}</td>
+                        <td width="25%">{{ open.quantity }}</td>
+                        <td width="25%">{{ open.amount }}</td>
+                    </tr>
+                </table>
+                <div v-else style="display: flex; justify-content: center; align-items: center; height: 130px;">
                     暂无数据
                 </div>
+            </div>
         </div>
     </div>
     </q-dialog>
@@ -176,8 +184,8 @@ const signNumber = ref(0);
 //   }
 // };
 const items = ref([{ no: 1, amt: 100 }, { no: 2, amt: 10 }, { no: 3, amt: 30 }]);
-const activeItem = ref(2);
-const selectedTreasureLevel = ref('Normal');
+const activeItem = ref(3);
+const selectedTreasureLevel = ref('Dragon');
 const setActiveItem = (itemNo) => {
   const item = items.value.find((i) => i.no === itemNo);
   if (item) {
@@ -188,6 +196,7 @@ const setActiveItem = (itemNo) => {
 };
 
 const reorderItems = (activeItem) => {
+    console.log(activeItem.no)
   const index = items.value.findIndex((item) => item.no === activeItem.no);
 
   if (index !== -1) {
@@ -233,6 +242,7 @@ const init = () => {
                 element.no = i + 1;
             });
             items.value = res.data
+            setActiveItem(3)
         }
     })
   // First Privilege
@@ -551,7 +561,7 @@ onMounted(() => {
                     }
                     width: 98%;
                     margin: 0 auto;
-                    height: 16vw;
+                    height: 140px;
                     display: flex;
                     flex-direction: column;
                     gap: 5px;
