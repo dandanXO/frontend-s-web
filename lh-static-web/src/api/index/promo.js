@@ -207,3 +207,10 @@ export const submitQuestionnaire = (formData) => {
       return Promise.reject(error);
     });
 };
+
+export function claimDailyRainItem(item) {
+  return server.EVENT.get(`/redPacketVip/claim?promoCode=${item}`);
+}
+export function getDailyRainListing(item) {
+  return server.EVENT.get(`/redPacketVip/list?promoCode=${item}`);
+}

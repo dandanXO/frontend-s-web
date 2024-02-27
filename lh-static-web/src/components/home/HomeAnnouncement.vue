@@ -9,26 +9,37 @@
     <div class="notice-header">
       公告列表
       <div @click="isStationNotice = false">
-        <img src="../../assets//home/announcement/close-btn.png"/>
+        <img src="../../assets//home/announcement/close-btn.png" />
       </div>
     </div>
 
     <div>
       <el-tabs type="card" class="announcement-tabs" v-model="announcementActive" @tab-click="announcementTabChange">
-      <el-tab-pane v-for="(tab, ind) in announcementTypes" :key="tab.id" :tab="ind" :label="tab.name" :name="tab.name">
-          <template v-for="(ann, idx) in announcementList" :key="idx">
-            <template v-if="ann.typeId === tab.id">
-                <div class="announcement-content">
-                  {{ ann.content }}
-                </div>
-            </template>
-          </template>
-      </el-tab-pane>
-    </el-tabs>
-  </div>
+        <el-tab-pane v-for="(tab, ind) in announcementTypes" :key="tab.id" :tab="ind" :label="tab.name"
+                     :name="tab.name">
 
-  
-    
+          <el-collapse accordion v-model="typeActive">
+            <template v-for="(ann, idx) in announcementList" :key="idx">
+              <template v-if="ann.typeId === tab.id">
+                <el-collapse-item :name="idx" :title="ann.title" class="announcement-content">
+                  <p class="announcement-p">{{ ann.content }}</p>
+                </el-collapse-item>
+              </template>
+            </template>
+          </el-collapse>
+
+<!--          <template v-for="(ann, idx) in announcementList" :key="idx">-->
+<!--            <template v-if="ann.typeId === tab.id">-->
+<!--              <div class="announcement-content">-->
+<!--                {{ ann.content }}-->
+<!--              </div>-->
+<!--            </template>-->
+<!--          </template>-->
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+
+
   </el-dialog>
 
   <div class="top-bar-wrapper">
@@ -64,6 +75,7 @@ import { getAnnouncement } from "@/api/personal/personal";
 import { Vue3Marquee } from "vue3-marquee";
 import { ElMessage } from "element-plus";
 
+const typeActive = ref("");
 const announcementActive = ref("");
 const announcementList = ref([]);
 const announcementTypes = ref([]);
@@ -73,17 +85,17 @@ const loadAnnouncement = () => {
       const d = res.data.announcements;
       announcementTypes.value = res.data.type;
       if (res.data.type && res.data.type.length > 0) {
-        announcementActive.value = res.data.type[0].name
+        announcementActive.value = res.data.type[0].name;
       }
       announcementList.value = d;
       // announcementList.value = d.announcements
       // announcementList.value = res.data.announcements
     } else {
-        ElMessage.error({
-          type: "error",
-          message: res.message
-        });
-      }
+      ElMessage.error({
+        type: "error",
+        message: res.message
+      });
+    }
   });
 };
 
@@ -135,9 +147,11 @@ onMounted(() => {
   justify-content: space-between;
   width: 100%;
 }
+
 .announcement-tabs {
-  width: 684px;
+  width: 100%;
 }
+
 .announcement-content {
   color: #7A80A1;
   font-family: Inter;
@@ -146,11 +160,17 @@ onMounted(() => {
   line-height: 30px;
   letter-spacing: 0em;
   text-align: left;
-  max-width: 1181px;
-  height: 627px;
+  max-width: 1150px;
+  height: auto;
   margin-top: 20px;
+  padding: 0px 10px;
+
+
+  .announcement-p{
+    color: #7A80A1;
+  }
 }
-  
+
 .top-bar-wrapper {
   padding: 5px;
   color: #696d70;
@@ -185,6 +205,7 @@ onMounted(() => {
         }
 
         .station-notice {
+          cursor: pointer;
           display: flex;
           justify-content: center;
           align-items: center;

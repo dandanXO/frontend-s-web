@@ -3,7 +3,7 @@
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
-          <img class="logo" src="../../assets/logo.png" />
+          <img class="logo" src="../../assets/logo.svg" alt="logo" />
         </router-link>
 
         <div class="navigations">

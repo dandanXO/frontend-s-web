@@ -127,6 +127,13 @@
               USDT</span
             >
           </el-form-item> -->
+
+          <div class="btn-confirm">
+            <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">
+              确定
+            </el-button>
+          </div>
+
           <el-form-item v-if="selectedPayType" class="tip">
             <!-- <template #label></template> -->
             <span class="account-tip-text" style="margin-bottom: 10px; display: block; width: 100%;">
@@ -138,11 +145,13 @@
                 更新个人信息的新帐户可以参与促销活动。
             </div> -->
           </el-form-item>
-          <div class="txt-center">
+
+          <!-- <div class="txt-center">
             <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">
               确定
             </el-button>
-          </div>
+          </div> -->
+
         </el-form>
       </div>
       <el-dialog
@@ -881,5 +890,10 @@ onMounted(() => {
     border-color: #dc6666;
     background-color: #d86d6d;
   }
+}
+
+.btn-confirm {
+  margin-left: 90px; 
+  margin-bottom: 10px;
 }
 </style>

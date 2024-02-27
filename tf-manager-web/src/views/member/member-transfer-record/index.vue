@@ -45,7 +45,7 @@
             v-for="item in platforms.list"
             :key="item.id"
             :label="item.name"
-            :value="item.id"
+            :value="item.code"
           />
         </el-select>
         <el-select

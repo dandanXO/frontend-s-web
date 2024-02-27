@@ -17,7 +17,8 @@
     <LotteryPromo v-if="list.redirectUrl === 'lh1-lottery' && !isCommonPromo && store.token" />
     <GiftPromo v-if="list.redirectUrl === 'lh1-gift' && !isCommonPromo && store.token" />
     <Gift8Promo v-if="list.redirectUrl === 'lh1-gift8' && !isCommonPromo && store.token" />
-    <UpgradeHongBao v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo && store.token" />
+    <UpgradeHongBao v-if="list.redirectUrl === 'lh1-upgrade-hongbaoz' && !isCommonPromo && store.token" />
+    <HongBaoYu2024 v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
 
     <AsianCup2024 v-if="list.redirectUrl === 'lh1-promo-application-A' && !isCommonPromo && store.token" />
     <BasketballHot v-if="list.redirectUrl === 'lh1-promo-basketball' && !isCommonPromo && store.token" />
@@ -78,6 +79,7 @@ import FootballFight from "../components/hotpromo/footballfight/FootballFight.vu
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 import Gift8Promo from "../components/hotpromo/gift8/Gift8Promo.vue";
 import UpgradeHongBao from "../components/hotpromo/upgradeHongBao/UpgradeHongBao.vue";
+import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue";
 import AsianCup2024 from "../components/hotpromo/asian-cup-2024/AsianCup2024.vue";
 import BasketballHot from "../components/hotpromo/basketball-hot/BasketballHot.vue";
 import LPLSummer from "../components/hotpromo/lpl-summer/LPLSummer.vue";
@@ -118,6 +120,7 @@ export default defineComponent({
     BbDacha2024Promo,
     CnyStepGame2024Promo,
     UpgradeHongBao,
+    HongBaoYu2024,
     DragonCardPromo
     // DailyBonus
   },
@@ -342,7 +345,7 @@ export default defineComponent({
               this.emptyText = "今天没有获奖者。";
             }
           } else {
-            ElMessage.error(res.message)
+            ElMessage.error(res.message);
           }
         })
         .catch((err) => {

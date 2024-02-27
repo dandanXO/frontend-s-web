@@ -91,7 +91,14 @@
                 `/affiliate/details/${scope.row.affiliateId}?site=${request.siteId}`
               "
             >
-              <el-link type="primary">{{ scope.row.loginName }}</el-link>
+              <el-link type="primary">
+                {{
+                  scope.row.loginName
+                    .replace('(OFFICAL)', '')
+                    .replace('admin', '')
+                    .trim()
+                }}
+              </el-link>
             </router-link>
           </template>
         </el-table-column>
@@ -338,9 +345,21 @@ async function loadSites() {
   request.siteId = siteList.list.filter(x => x.siteCode === 'IND')[0].id
   const { data: affiliates } = await getAffiliateList(request.siteId)
 
-  affiliateNames.value = affiliates.map(a => {
-    return { name: a.loginName }
-  })
+  affiliateNames.value = affiliates
+    .filter(a => a.affiliateLevel === 'SUPER_AFFILIATE')
+    .map(a => {
+      const modifiedSuperiorName =
+        a.superiorAffiliateName !== null
+          ? a.superiorAffiliateName.replace('admin', '').trim()
+          : null
+
+      return {
+        name:
+          a.superiorAffiliateName !== null && modifiedSuperiorName !== 'OFFICAL'
+            ? `${a.loginName} (${modifiedSuperiorName})`
+            : a.loginName,
+      }
+    })
 }
 
 let previouseLoginNameList = ref(null)
@@ -353,7 +372,7 @@ async function loadSitesWithPreDefineAffiliate() {
 
   if (
     route.query.loginNameList !== null &&
-      route.query.loginNameList !== undefined
+    route.query.loginNameList !== undefined
   ) {
     if (previouseLoginNameList.value !== null) {
       if (route.query.loginNameList !== previouseLoginNameList.value) {
@@ -443,7 +462,7 @@ function checkQuery() {
       )
     }
   }
-  debugger;
+  debugger
   if (request.loginNameList != null && request.loginNameList.length > 0) {
     query.loginNameList = request.loginNameList.join(',')
   } else {
@@ -481,20 +500,20 @@ function getSummaries(param) {
         } else if (index === 4) {
           // profit depositWithdrawal = deposit - withdrawal
           sums[index] =
-              '$' +
-              parseFloat(
-                total.data.depositAmount - total.data.withdrawAmount
-              ).toLocaleString('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })
+            '$' +
+            parseFloat(
+              total.data.depositAmount - total.data.withdrawAmount
+            ).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
         } else {
           sums[index] =
-              '$' +
-              parseFloat(total.data[prop]).toLocaleString('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })
+            '$' +
+            parseFloat(total.data[prop]).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
         }
       }
     })
@@ -507,7 +526,7 @@ onMounted(async () => {
   watch(() => {
     if (
       route.query.loginNameList !== null &&
-        route.query.loginNameList !== undefined
+      route.query.loginNameList !== undefined
     ) {
       getFromRouter.loginNameList = route.query.loginNameList
       loadSitesWithPreDefineAffiliate()

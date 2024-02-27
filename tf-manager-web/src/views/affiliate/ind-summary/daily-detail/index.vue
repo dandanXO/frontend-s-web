@@ -91,7 +91,14 @@
                 `/affiliate/details/${scope.row.affiliateId}?site=${request.siteId}`
               "
             >
-              <el-link type="primary">{{ scope.row.loginName }}</el-link>
+              <el-link type="primary">
+                {{
+                  scope.row.loginName
+                    .replace('(OFFICAL)', '')
+                    .replace('admin', '')
+                    .trim()
+                }}
+              </el-link>
             </router-link>
           </template>
         </el-table-column>
@@ -334,7 +341,19 @@ async function loadSites() {
 
   affiliateNames.value = affiliates
     .filter(a => a.affiliateLevel === 'SUPER_AFFILIATE')
-    .map(a => ({ name: a.loginName }))
+    .map(a => {
+      const modifiedSuperiorName =
+        a.superiorAffiliateName !== null
+          ? a.superiorAffiliateName.replace('admin', '').trim()
+          : null
+
+      return {
+        name:
+          a.superiorAffiliateName !== null && modifiedSuperiorName !== 'OFFICAL'
+            ? `${a.loginName} (${modifiedSuperiorName})`
+            : a.loginName,
+      }
+    })
 }
 
 function convertDate(date) {

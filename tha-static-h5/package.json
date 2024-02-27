@@ -1,6 +1,6 @@
 {
   "name": "tha-static-h5",
-  "version": "1.0.34",
+  "version": "1.0.35",
   "description": "Jolly88เป็นคาสิโนสดและปัจจุบันเป็นคาสิโนออนไลน์ที่น่าเชื่อถือที่สุดพร้อมด้วยเกมออนไลน์และเกมสล็อตออนไลน์ยอดนิยมที่สุด",
   "productName": "Jolly88 - สล็อตออนไลน์|เกมออนไลน์ที่ดีทีสุด|ออนไลน์คาสิโนที่ไว้ใจได้",
   "author": "Mika <mika@eagrp.net>",
@@ -42,6 +42,7 @@
     "process": "^0.11.10",
     "qs": "^6.11.0",
     "quasar": "^2.8.3",
+    "terser": "5.21.0",
     "vue": "^3.0.0",
     "vue-i18n": "^9.2.2",
     "vue-marquee-text-component": "^2.0.1",
@@ -62,6 +63,7 @@
     "eslint-webpack-plugin": "^3.1.1",
     "prettier": "^2.5.1",
     "quasar-cli": "^0.17.26",
+    "terser-webpack-plugin": "~5.3.6",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0"
   },
