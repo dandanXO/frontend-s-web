@@ -832,6 +832,7 @@ export default {
     innerSetting: 'Inner Wheel Setting',
     ip: 'Access IP',
     isDeposit: 'Show Deposit',
+    isMultiple: 'Is Multiple Choice',
     itsYou: "it's you",
     jobName: 'Job Name',
     label: 'Label',
