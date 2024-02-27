@@ -356,12 +356,13 @@ onMounted(() => {
   }
   .tips {
     background: url(../../../assets/images/promotion/hotpromo/cs2/bg-gradient.png) no-repeat center center;
-    padding: 15px 0;
+    padding: 20px 30px;
     margin: 0 auto;
     text-align: center;
     color: #7f4c00;
     font-weight: 700;
     font-family: Microsoft Yahei UI;
+    background-size: 100% 100%;
   }
   .content {
     margin: 10px auto;
