@@ -31,7 +31,7 @@
                 </div>
                 <div
                   v-else-if="
-                    obj === 'commitDate' || obj === 'feedbackTime' || obj === 'recordTime' || obj === 'transferDate' || obj === 'betTime'
+                    obj === 'commitDate' || obj === 'feedbackTime' || obj === 'recordTime' || obj === 'transferDate' || (obj === 'betTime' && recordType === 'bethistory')
                   "
                 >
                   {{ humanDatetime(det[obj]) }}
