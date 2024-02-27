@@ -104,7 +104,7 @@
               <td>30,000</td>
               <td id="vipPromoInfo4">
                 存款最少100元可申请每月一次再存20% 最高奖金1888元
-                <font color="#B8945D">（仅限白银Ⅲ申请）</font>
+                <span style="color: #B8945D;">（仅限白银Ⅲ申请）</span>
               </td>
               <td>电竞/体育 15倍 老虎机12倍 真人18倍</td>
             </tr>

@@ -211,6 +211,8 @@ const loadDepositTable = (isNew) => {
     })
     .then((res) => {
       maxPage.value = res.data.pages;
+      totalBetRecord.totalBet = res.data.sums.totalBet;
+      totalBetRecord.totalPayout = res.data.sums.totalPayout;
       tableData.value.push(...res.data.records);
     })
     .finally(() => {
@@ -225,14 +227,14 @@ const loadDepositTable = (isNew) => {
     startDate: startDate,
     endDate: endDate
   };
-  api
-    .get(getRecordTotalApiUrl, {
-      params: obj
-    })
-    .then((res) => {
-      totalBetRecord.totalBet = res.data.totalBet;
-      totalBetRecord.totalPayout = res.data.totalPayout;
-    });
+  // api
+  //   .get(getRecordTotalApiUrl, {
+  //     params: obj
+  //   })
+  //   .then((res) => {
+  //     totalBetRecord.totalBet = res.data.totalBet;
+  //     totalBetRecord.totalPayout = res.data.totalPayout;
+  //   });
 };
 
 const getGameName = (gameName) => {
@@ -331,7 +333,7 @@ const tableHeaders = [
     label: "游戏类型"
   },
   {
-    key: "betStatus",
+    key: "status",
     label: "投注状态"
   }
 ];

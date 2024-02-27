@@ -694,15 +694,11 @@ export default defineComponent({
     const {height} = useElementSize(el);
     const isProfileDropDownOpen = ref(false);
 
-    const vipLevel = computed(() => {
+    const vip = computed(() => {
       if (store.vip.toUpperCase() === "NORMAL") {
         return 1;
       }
       return store.vip;
-    });
-
-    const vip = computed(() => {
-      return vipLevel.value;
     });
 
     const handleCommand = (command) => {

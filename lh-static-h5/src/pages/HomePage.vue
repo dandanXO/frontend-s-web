@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isH5" class="download-top-container">
+  <div v-if="isH5 && topBoxVisible" class="download-top-container">
     <div class="download-top-box">
       <q-icon name="close" @click="closeTopBox" />
       <img class="headicon" src="../assets/logo.svg" alt="download-logo" />
@@ -1142,6 +1142,7 @@ export default defineComponent({
     const ui = useUI();
     const scrollPageRef = ref(null);
     const isH5 = ref(false);
+    const topBoxVisible = ref(true);
     const checkPlatform = () => {
       //Is iOS Webclip App || Is Android Apk
       if (
@@ -1151,6 +1152,11 @@ export default defineComponent({
         isH5.value = false;
       } else {
         isH5.value = true;
+      }
+
+      let downloadPopup = sessionStorage.getItem("DOWNLOAD_POPUP");
+      if (downloadPopup) {
+          topBoxVisible.value = false;
       }
     };
 
@@ -1583,6 +1589,7 @@ export default defineComponent({
 
     const closeTopBox = () => {
       isH5.value = false;
+      sessionStorage.setItem("DOWNLOAD_POPUP", "1");
       // var btmSwiper = document.getElementById("btm-second-swiper");
       // btmSwiper.classList.add("longer-swiper");
     };
@@ -1762,7 +1769,8 @@ export default defineComponent({
       getImgPlatformBg,
       moment,
       unreadInboxMail,
-      getUnreadTotal
+      getUnreadTotal,
+      topBoxVisible
     };
   }
 });

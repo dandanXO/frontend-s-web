@@ -30,14 +30,14 @@
       <img class="ambassador-img" src="../assets/images/affiliate/ambassador.png" alt="" />
       <div class="btn-wrapper">
         <q-btn
-          :href="'https://lh1-affiliate.phoicynxeey.com?agent=' + (affCode ? affCode : '')"
+          :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')"
           label="加入我们"
           size="md"
           class="join-btn"
         >
           <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
-        <q-btn :href="'https://lh1-affiliate.phoicynxeey.com?agent=' + (affCode ? affCode : '')" label="登录" size="md" class="login-btn">
+        <q-btn :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')" label="登录" size="md" class="login-btn">
           <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
 

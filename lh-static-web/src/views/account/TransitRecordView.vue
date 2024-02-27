@@ -450,6 +450,11 @@
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
+                <template v-if="tbl.dataIndex === 'betTime'" #default="scope">
+                  <div style="display: flex; align-items: center">
+                    <span>{{ getFormatBetTime(scope.row.betTime) }}</span>
+                  </div>
+                </template>
                 <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{ scope.row.recordTime }}</span>
@@ -481,9 +486,9 @@
                     {{ getGameType(scope.row.gameType) }}
                   </div>
                 </template>
-                <template v-if="tbl.dataIndex === 'betStatus'" #default="scope">
+                <template v-if="tbl.dataIndex === 'status'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    {{ getBetStatus(scope.row.betStatus) }}
+                    {{ getBetStatus(scope.row.status) }}
                   </div>
                 </template>
               </el-table-column>
@@ -880,7 +885,7 @@ const tableColumns = {
     },
     {
       title: "投注状态",
-      dataIndex: "betStatus"
+      dataIndex: "status"
     }
   ],
   betRecord: [
@@ -997,7 +1002,7 @@ export default defineComponent({
       // recordActive.value = key.props.name
       loading.value = true;
       if (recordActive.value === "gameBetRecord") {
-        getPlatList(recordActive.value);
+        // getPlatList(recordActive.value);
       } else if (recordActive.value === "reminderRecord") {
         financeFeedbackList(searchForm[recordActive.value]).then((response) => {
           if (response.code === 0) {
@@ -1029,6 +1034,12 @@ export default defineComponent({
           if (recordActive.value === "turnover" || recordActive.value === "gameBetRecord") {
             pagination.pagingState = response.data.pagingState;
           }
+
+          if(recordActive.value === 'gameBetRecord') {
+            totalBetRecord.totalBet = response.data.sums.totalBet;
+            totalBetRecord.totalPayout = response.data.sums.totalPayout;
+          }
+
           const dataSource = dataState[recordActive.value];
           //clear array and then push new record
           dataSource.splice(0);
@@ -1304,6 +1315,10 @@ export default defineComponent({
       }
     };
 
+    const getFormatBetTime = (betTime) => {
+      return moment(betTime).format("YYYY-MM-DD HH:mm:ss");
+    }
+
     const getPlatform = (platformName) => {
       if (!platformName) {
         return "";
@@ -1568,7 +1583,8 @@ export default defineComponent({
       clearItems,
       formRef,
       getTransferChangeType,
-      getPlatform
+      getPlatform,
+      getFormatBetTime
     };
   }
 });
