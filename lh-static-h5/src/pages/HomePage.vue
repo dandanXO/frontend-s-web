@@ -2153,6 +2153,7 @@ export default defineComponent({
       flex-direction: column;
       justify-content: flex-start;
       align-items: center;
+      margin-bottom: 8px;
     }
 
     > div {
