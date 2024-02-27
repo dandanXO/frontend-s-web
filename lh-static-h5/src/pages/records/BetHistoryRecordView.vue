@@ -333,7 +333,7 @@ const tableHeaders = [
     label: "游戏类型"
   },
   {
-    key: "betStatus",
+    key: "status",
     label: "投注状态"
   }
 ];

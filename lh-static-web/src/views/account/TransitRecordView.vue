@@ -486,9 +486,9 @@
                     {{ getGameType(scope.row.gameType) }}
                   </div>
                 </template>
-                <template v-if="tbl.dataIndex === 'betStatus'" #default="scope">
+                <template v-if="tbl.dataIndex === 'status'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    {{ getBetStatus(scope.row.betStatus) }}
+                    {{ getBetStatus(scope.row.status) }}
                   </div>
                 </template>
               </el-table-column>
@@ -885,7 +885,7 @@ const tableColumns = {
     },
     {
       title: "投注状态",
-      dataIndex: "betStatus"
+      dataIndex: "status"
     }
   ],
   betRecord: [
