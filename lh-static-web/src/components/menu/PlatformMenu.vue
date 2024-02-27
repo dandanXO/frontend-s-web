@@ -71,9 +71,9 @@ const getPlatformList = () => {
   });
 };
 
-const filteredPlatforms = computed(() => {
-  return props.platforms.filter((nav) => platformsListDisplay.value.some((platform) => platform.code === nav.code));
-});
+// const filteredPlatforms = computed(() => {
+//   return props.platforms.filter((nav) => platformsListDisplay.value.some((platform) => platform.code === nav.code));
+// });
 
 const router = useRouter();
 const gotoGame = (item, platformType) => {

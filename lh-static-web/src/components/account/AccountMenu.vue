@@ -55,6 +55,9 @@
 <script setup>
 import { computed, ref } from "vue";
 import { userStore } from "@/store";
+import {
+  RiRefreshLine,
+} from 'vue-remix-icons';
 
 const store = userStore();
 const isLoadingBalance = ref(false);
@@ -69,15 +72,11 @@ const loginName = computed(() => {
   return store.nickName;
 });
 
-const vipLevel = computed(() => {
+const vip = computed(() => {
   if (store.vip.toUpperCase() === "NORMAL") {
     return 1;
   }
   return store.vip;
-});
-
-const vip = computed(() => {
-  return vipLevel.value;
 });
 
 const menuItems = ref([
