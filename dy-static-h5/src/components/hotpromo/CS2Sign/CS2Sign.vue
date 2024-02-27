@@ -22,7 +22,7 @@
                 <div class="requiredKey">钥匙*{{ getKeyAmt(i) }}</div>
             </div>
              -->
-            <div v-for="(item, i) in items" :key="i" class="item" :class="{ active: activeItem === item.no }" @click="setActiveItem(item.no)">
+             <div v-for="(item, i) in items" :key="i" class="item" :class="{ active: activeItem === item.no }" @click="setActiveItem(item.no)">
                 <img v-if="item.treasureLevel" :src="require(`../../../assets/images/promotion/hotpromo/cs2/${item.treasureLevel}.png`)" />
                 <div class="requiredKey">钥匙*{{ item.quantity }}</div>
             </div>
@@ -55,11 +55,23 @@
         </div>
       </div>
     </div>
-    <el-dialog class="cs2Dialog" v-model="isKeyRecordModal" lock-scroll>
+    <q-dialog  width="100%" class="cs2Dialog" v-model="isKeyRecordModal" persistent>
+        <div>
         <div class="modal-title">
             <img src="../../../assets/images/promotion/hotpromo/cs2/getkey.png" />
         </div>
         <div class="modal-body keyRec">
+        <div class="dialog-close">
+          <q-btn
+            @click="isKeyRecordModal = false"
+            v-close-popup
+            rounded
+            class="close-btn"
+            icon="close"
+            height="30"
+            width="30"
+          ></q-btn>
+        </div>
                 <table>
                     <tr><th>日期</th><th>数量</th></tr>
                 </table>
@@ -74,50 +86,77 @@
                     暂无数据
                 </div>
             </div>
-        </div>
-    </el-dialog>
-    <el-dialog class="cs2Dialog" v-model="isChestRecordModal" lock-scroll>
+        </div></div>
+    </q-dialog>
+    <q-dialog  width="100%" class="cs2Dialog" v-model="isChestRecordModal" persistent>
+        <div>
         <div class="modal-title">
             <img src="../../../assets/images/promotion/hotpromo/cs2/openchest.png" />
         </div>
         <div class="modal-body openRec">
+        <div class="dialog-close">
+          <q-btn
+            @click="isChestRecordModal = false"
+            v-close-popup
+            rounded
+            class="close-btn"
+            icon="close"
+            height="30"
+            width="30"
+          ></q-btn>
+        </div>
             <div class="table-title">
                 日期
             </div>
-            <div class="rec">
-                <div v-if="openRecords" class="flex" v-for="(open, i) in openRecords" :key="i">
+            <div  v-if="openRecords" class="rec">
+                <div class="flex" v-for="(open, i) in openRecords" :key="i">
                     <div>{{ open.createTime }}</div>
                     <div class="openSuccess">开启成功  <img src="../../../assets/images/promotion/hotpromo/cs2/tick.png" /></div>
                 </div>
-                <div v-else style="display: flex; justify-content: center; align-items: center; height: 400px;">
+            </div>
+                <div class="rec" v-else style="display: flex; justify-content: center; align-items: center; height: 400px;">
                     暂无数据
                 </div>
-            </div>
         </div>
-
-    </el-dialog>
-    <el-dialog class="cs2Dialog" v-model="isClaimModal" lock-scroll>
+    </div>
+    </q-dialog>
+    <q-dialog  width="100%" class="cs2Dialog" v-model="isClaimModal" persistent>
+        <div>
         <div class="modal-title">
             <img src="../../../assets/images/promotion/hotpromo/cs2/congrats.png" />
         </div>
         <div class="modal-body">
+        <div class="dialog-close">
+          <q-btn
+            @click="claimModalClose"
+            v-close-popup
+            rounded
+            class="close-btn"
+            icon="close"
+            height="30"
+            width="30"
+          ></q-btn>
+        </div>
             <div class="amt">
                 <div class="coin"><img src="../../../assets/images/promotion/hotpromo/cs2/coin.png" /></div>
                 <div class="value">{{ amountClaimed }}</div>
             </div>
             <div class="confirm" @click="claimModalClose">确定</div>
         </div>
+    </div>
 
-    </el-dialog>
+    </q-dialog>
   </div>
 </template>
 <script setup>
 import { ref, onMounted, defineProps } from "vue";
-import { userStore } from "@/store";
-import { getTreasureDetail, getKeyCount, getCheckInRecord, openTreasure, getKeyRecord, getOpenRecord, claimCheckInTreasure } from "@/api/index/promo";
-import { ElMessage, ElLoading } from "element-plus";
+import { userStore } from "../../../stores/index";
+import { getTreasureDetail, getKeyCount, getCheckInRecord, openTreasure, getKeyRecord, getOpenRecord, claimCheckInTreasure } from "../../../api/index/promo";
+// import { ElMessage, ElLoading } from "element-plus";
+import { useQuasar } from "quasar";
 const props = defineProps(["promoCode"]);
 const store = userStore();
+const $q = useQuasar()
 
 const keyNumber = ref(0);
 const signNumber = ref(0);
@@ -157,11 +196,10 @@ const reorderItems = (activeItem) => {
   }
 };
 const openBox = (item) => {
-    const loading = ElLoading.service({
-        lock: true,
-        text: '开启中',
-        background: 'rgba(0, 0, 0, 0.7)',
-    })
+    
+    $q.loading.show({
+        message: "开启中... 请稍等..."
+    });
     var type = '';
     if (item === 1) {
         type = 'Dragon'
@@ -178,10 +216,8 @@ const openBox = (item) => {
             openModal('amt', res.data);
             init();
         }
+        $q.loading.hide()
     })
-    setTimeout(() => {
-        loading.close()
-    }, 2000)
 }
 const claimModalClose = () => {
     isClaimModal.value = false;
@@ -195,7 +231,6 @@ const init = () => {
             res.data.forEach((element, i) => {
                 element.no = i + 1;
             });
-            console.log(res.data)
             items.value = res.data
         }
     })
@@ -208,6 +243,8 @@ const init = () => {
 //   Second Privilege
   getCheckInRecord(props.promoCode).then((res) => {
       if(res.code === 0) {
+        res.data.claimed = [3];
+        res.data.toClaim = [5, 8];
         checkInDetails.value = res.data
         signNumber.value = checkInDetails.value.currentConsecutiveDay;
         populateDayList(checkInDetails.value)
@@ -243,39 +280,33 @@ const keyRecords = ref([]);
 const openRecords = ref([]);
 const openModal = (modal, item, itemIndex) => {
     if (modal === 'getkey') {
-        const loading = ElLoading.service({
-            lock: true,
-            text: '加载记录中',
-            background: 'rgba(0, 0, 0, 0.7)',
-        })
+        $q.loading.show({
+            message: "加载记录中... 请稍等..."
+        });
         getKeyRecord(props.promoCode, search.value).then((res) => {
             res.data = []
             if (res.code === 0) {
-                keyRecords.value = res.data.records;
+                keyRecords.value = openRecords.value;
                     isKeyRecordModal.value = true
                     
             }
         })
         setTimeout(() => {
-            loading.close()
+            $q.loading.hide()
         }, 1000)
     }
     if (modal === 'openchest') {
-        const loading = ElLoading.service({
-            lock: true,
-            text: '加载记录中',
-            background: 'rgba(0, 0, 0, 0.7)',
-        })
+        $q.loading.show({
+            message: "加载记录中... 请稍等..."
+        });
         getOpenRecord(props.promoCode, search.value).then((res) => {
             if (res.code === 0) {
                 openRecords.value = res.data.records
                 isChestRecordModal.value = true
-            } else {
-                ElMessage.error(res.message)
             }
         })
         setTimeout(() => {
-            loading.close()
+            $q.loading.hide()
         }, 1000)
     }
     if (modal === 'amt') {
@@ -283,20 +314,19 @@ const openModal = (modal, item, itemIndex) => {
         amountClaimed.value = item
     }
     if (modal === 'claim') {
-        const loading = ElLoading.service({
-            lock: true,
-            text: '开启中',
-            background: 'rgba(0, 0, 0, 0.7)',
-        })
-        claimCheckInTreasure(props.promoCode, itemIndex).then((res) => {
-            if (res.code === 0) {
-                amountClaimed.value = res.data
+        $q.loading.show({
+            message: "开启中... 请稍等..."
+        });
+                amountClaimed.value = '128'
                 isClaimModal.value = true;
-            }
-        })
-        setTimeout(() => {
-            loading.close()
-        }, 1000)
+            $q.loading.hide()
+        // claimCheckInTreasure(props.promoCode, itemIndex).then((res) => {
+        //     if (res.code === 0) {
+        //         amountClaimed.value = res.data
+        //         isClaimModal.value = true;
+        //     }
+        //     $q.loading.hide()
+        // })
     }
 }
 
@@ -309,7 +339,11 @@ onMounted(() => {
 .cs2 {
   text-align: center;
   .title {
-    margin: 0 auto;
+    margin: 20px auto;
+    img {
+        width: 200% !important;
+        transform: translate(-25%, 0%);
+    }
   }
   .tips {
     background: url(../../../assets/images/promotion/hotpromo/cs2/bg-gradient.png) no-repeat center center;
@@ -321,26 +355,26 @@ onMounted(() => {
     font-family: Microsoft Yahei UI;
   }
   .content {
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 20px;
+    margin: 10px auto;
     .top-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
       .lft {
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 5px;
-        font-size: 20px;
+        font-size: 14px;
         .number {
           color: #f38100;
           font-weight: 700;
-          font-size: 25px;
+          font-size: 17px;
         }
         img {
-          height: 50px;
+            width: unset;
+            height: 25px;
         }
       }
       .buttons {
@@ -359,10 +393,11 @@ onMounted(() => {
         .item-container {
             display: flex;
             justify-content: space-around;
-            margin-bottom: 50px;
+            margin: 25px auto;
         }
          
          .item {
+        max-width: 50%;
          cursor: pointer;
          transform: scale3d(0.8, 0.8, 0.8);
          transition: transform 0.3s ease;
@@ -373,9 +408,9 @@ onMounted(() => {
          .requiredKey {
              border: 2px solid #F38100;
              background: #F381001A;
-             padding: 10px 15px;
+             padding: 5px 10px;
              border-radius: 10px;
-             width: 200px;
+             width: 70%;
              color: #F38100;
              font-weight: bold;
              margin: 10px auto;
@@ -383,17 +418,18 @@ onMounted(() => {
          .useKeys {
              background: url(../../../assets/images/promotion/hotpromo/cs2/btnbg.png)no-repeat center center;
              color: #3D1600;
-             padding: 20px 50px;
-             width: 250px;
-             background-size: cover;
-             margin: 0 auto;
-             font-weight: bold;
-             font-size: 30px;
-             cursor: pointer;
+            padding: 15px 15px;
+            background-size: cover;
+            margin: 0 auto;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+            width: 200px;
          }
         .sign-container {
             display: flex;
             justify-content: space-between;
+            flex-wrap: wrap;
             .item {
                 img {
                     width: 100%;
@@ -406,15 +442,15 @@ onMounted(() => {
                     font-weight: bold;
                     border-radius: 10px;
                     display: inline-block;
-                    padding: 6px 30px;
+                    padding: 5px;
                     font-family: 'Microsoft YaHei UI';
-                    font-size: 30px;
+    font-size: 1.8em;
                 }
-                &.isDotted {
-                    &:after {
-                        border: 1px dotted #f38100;
-                    }
-                }
+                // &.isDotted {
+                //     &:after {
+                //         border: 1px dotted #f38100;
+                //     }
+                // }
                 &:first-child {
                     &:after {
                         display: none;
@@ -424,7 +460,7 @@ onMounted(() => {
                     content: "";
                     position: absolute;
                     // background: #f38100; 
-                        border: 1px solid #f38100;
+                        // border: 1px solid #f38100;
                     height: 0px;
                     top: 7%;
                     right: 90%;
@@ -433,8 +469,8 @@ onMounted(() => {
                 
             }
             .btn {
-                font-size: 24px;
-                padding: 24px;
+                font-size: 18px;
+                padding: 20px 0;
                 font-weight: 700;
                 font-family: 'Microsoft Yahei UI';
                 &.claimed {
@@ -466,32 +502,44 @@ onMounted(() => {
     }
   }
 }
-    :deep(.cs2Dialog) {
-        width: 760px;
-        .el-dialog__header .el-dialog__headerbtn {
-            background: url(../../../assets/images/promotion/hotpromo/cs2/close.png);
-            content-visibility: hidden;
-            top: 130px;
-            right: 50px;
+.cs2Dialog {
+    max-width: 500px;
+}
+        .q-dialog__inner--minimized > div .dialog-close {
+
+            background: url(../../../assets/images/promotion/hotpromo/cs2/close.png)no-repeat center center;
+            top: 10px;
+            right: 15px;
             background-size: contain;
+            position: absolute;
+            .q-btn {
+                content-visibility: hidden;
+            }
         }
-        background: transparent;
-        box-shadow: none;
         .modal-title {
             background: url(../../../assets/images/promotion/hotpromo/cs2/star.png)no-repeat center center;
+            background-size: contain;
+            text-align: center;
             img {
                 filter: brightness(100);
+                width: 60%;
+                margin: 0 auto;
             }
         }
         .modal-body {
-            background: url(../../../assets/images/promotion/hotpromo/cs2/dialogbg.png)no-repeat center center;
-            width: 100%;
-            height: 470px;
+            position: relative;
+            background: url(../../../assets/images/promotion/hotpromo/cs2/dialogbg.png)no-repeat center top;
+            // width: 90vw;
+            // max-width: 500px;
+            width: 380px;
+            height: 300px;
             background-size: contain;
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             flex-direction: column;
+            font-size: 16px;
+            padding-top: 30px;
             &.keyRec {
                 .rec{ 
                     &::-webkit-scrollbar {
@@ -502,38 +550,40 @@ onMounted(() => {
                     &::-webkit-scrollbar-thumb {
                         background: #ffd4b3;
                     }
-                    width: 90%;
+                    width: 98%;
                     margin: 0 auto;
-                    height: 300px;
+                    height: 16vw;
                     display: flex;
                     flex-direction: column;
-                    gap: 15px;
+                    gap: 5px;
                     overflow: auto;
                     justify-content: flex-start;
                     align-items: center;
                 }
                 color: #7F4C00;
-                font-size: 20px;
                 table {
                     width: 100%;
                     .keysAmt {
                         display: flex; 
                         justify-content: center;
                         align-items: center;
-                        gap: 10px;
+                        gap: 5px;
                         color: #F38100;
                         font-weight: bold;
                         img {
-                            height: 40px;
+                            height: 25px;
                         }
                     }
                     tr td {
                         width: 50%;
-                        padding: 10px 0;
+                        padding: 5px 0;
+                        text-align: center;
                     }
                 }
             }
             &.openRec {
+                justify-content: flex-start;
+                padding: 25px 0;
                 .table-title {
                     font-weight: 700;
 
@@ -549,27 +599,31 @@ onMounted(() => {
                     }
                     width: 90%;
                     margin: 0 auto;
-                    height: 300px;
+                    height: 140px;
                     display: flex;
                     flex-direction: column;
-                    gap: 15px;
+                    gap: 5px;
                     overflow: auto;
                     justify-content: flex-start;
                     align-items: center;
                 }
                 color: #7F4C00;
-                font-size: 24px;
-                    gap: 15px;
+                    gap: 5px;
                 .flex {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    width: 80%;
+                    width: 95%;
+                    flex-wrap: unset;
                     .openSuccess {
                         display: flex;
                         justify-content: center;
                         align-items: center;
                         gap: 25px;
+                        img {
+                            
+                        height: 20px;
+                        }
                     }
                 }
             }
@@ -578,23 +632,33 @@ onMounted(() => {
             display: flex;
             justify-content: center;
             align-items: center;
+            width: 100%;
+            margin-top: -35px;
+            margin-bottom: -25px;
             .coin {
-                background: url(../../../assets/images/promotion/hotpromo/cs2/coin.png)no-repeat center center;
-                margin-left: -100px;
+                flex: 6;
+                // background: url(../../../assets/images/promotion/hotpromo/cs2/coin.png)no-repeat center center;
+                // margin-left: -100px;
+                img {
+                    width: 100%;
+                }
 
             }
             .value {
                 color: #420505;
-                font-size: 68px;
+                font-size: 3rem;
                 font-weight: 800;
+                flex: 4;
+                
             }
         }
         .confirm {
-            background: url(../../../assets/images/promotion/hotpromo/cs2/dialogbtn.png)no-repeat center -15px;
+            background: url(../../../assets/images/promotion/hotpromo/cs2/dialogbtn.png)no-repeat center -8px;
             color: #7F4C00;
-            font-size: 32px;
-            padding: 15px 100px;
+            font-size: 1.5rem;
+            padding: 12px 80px;
+            font-weight: 800;
             cursor: pointer;
+            background-size: cover;
         }
-    }
 </style>

@@ -167,7 +167,9 @@ export function getStepRecords(current) {
     }
   });
 }
-
+export function getTreasureDetail(promoCode) {
+  return server.EVENT.get(`/event-treasure/get-treasure-detail/${promoCode}`);
+}
 export function getKeyCount(promoCode) {
   return server.EVENT.get(`/event-treasure/get-key`, {
     params: {
