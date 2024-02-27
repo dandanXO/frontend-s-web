@@ -243,8 +243,6 @@ const init = () => {
 //   Second Privilege
   getCheckInRecord(props.promoCode).then((res) => {
       if(res.code === 0) {
-        res.data.claimed = [3];
-        res.data.toClaim = [5, 8];
         checkInDetails.value = res.data
         signNumber.value = checkInDetails.value.currentConsecutiveDay;
         populateDayList(checkInDetails.value)
@@ -286,7 +284,7 @@ const openModal = (modal, item, itemIndex) => {
         getKeyRecord(props.promoCode, search.value).then((res) => {
             res.data = []
             if (res.code === 0) {
-                keyRecords.value = openRecords.value;
+                keyRecords.value = res.data.records;
                     isKeyRecordModal.value = true
                     
             }
