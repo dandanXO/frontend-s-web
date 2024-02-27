@@ -80,7 +80,7 @@ const gotoGame = (item, platformType) => {
   // debugger;
   // console.log(platformType);
   if (platformType === "slot") {
-    router.push(`${props.platformName}?plat=${item.code}`);
+    router.push(`/slot?plat=${item.code}`);
   } else {
     const platName = item.alias ?? item.cnname ?? item.name;
     emits("load-game", platName, item.code, item.gameCode);
@@ -89,19 +89,19 @@ const gotoGame = (item, platformType) => {
 };
 const checkWindowSize = () => {
   console.log('resize');
-      // Access and modify the ref here
-      if (window.innerWidth < 1700) {
-        numberToShow.value = 5
-      }
-      if (window.innerWidth > 1700) {
-        numberToShow.value = 6
-      }
-      if (window.innerWidth > 1900) {
-        numberToShow.value = 7
-      }
-      if (window.innerWidth > 2000) {
-        numberToShow.value = 10
-      }
+  // Access and modify the ref here
+  if (window.innerWidth < 1700) {
+    numberToShow.value = 5
+  }
+  if (window.innerWidth > 1700) {
+    numberToShow.value = 6
+  }
+  if (window.innerWidth > 1900) {
+    numberToShow.value = 7
+  }
+  if (window.innerWidth > 2000) {
+    numberToShow.value = 10
+  }
 };
 
 

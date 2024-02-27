@@ -259,6 +259,11 @@ const handleSubmitVote = () => {
       if (res.code === 0) {
         getData();
         ElMessage.success("投票成功！");
+      } else {
+        ElMessage.error({
+          type: "error",
+          message: res.message
+        });
       }
     })
     .catch(() => {})

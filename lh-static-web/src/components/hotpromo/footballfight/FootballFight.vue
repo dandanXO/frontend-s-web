@@ -237,6 +237,12 @@ const getReferral = () => {
   getReferralLink()
     .then((res) => {
       if (res.code === 0) referralLink.value = `${window.location.origin}/refer/${res.data}`;
+      else {
+        ElMessage.error({
+          type: "error",
+          message: res.message
+        });
+      }
     })
     .catch((err) => {
       console.log(err);
@@ -270,6 +276,11 @@ const getInviteCount = () => {
       if (res.code === 0) {
         registerMembers.value = res.data.registerMembers;
         bonusAmount.value = res.data.bonusAmount;
+      } else {
+        ElMessage.error({
+          type: "error",
+          message: res.message
+        });
       }
     })
     .catch((err) => {
@@ -287,7 +298,10 @@ const retrieve = () => {
           type: "success"
         });
       } else {
-        ElMessage.error(res.message);
+        ElMessage.error({
+          type: "error",
+          message: res.message
+        });
       }
     })
     .catch((err) => {

@@ -32,7 +32,7 @@
     ></q-table>
 
     <ul>
-      <li class="dot-style">Active users: daily bet amount reaches 2000</li>
+      <li class="dot-style">Active users: daily bet amount 2000</li>
       <li class="dot-style">
         Your reward will be calculated based on the total bet amount of your members. The reward gained can either be
         withdrawn or used for further betting.

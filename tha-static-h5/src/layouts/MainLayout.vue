@@ -1,6 +1,8 @@
 <template>
   <q-layout view="hHh Lpr lFf">
     <q-header elevated>
+      <AppDownload />
+
       <q-card-section v-if="!store.hasToken()" class="top-section justify-between items-center" horizontal>
         <q-card-actions v-if="$q.screen.gt.md">
           <div class="btn-deco-wrapper">
@@ -100,20 +102,21 @@
           <span class="footer-label">{{ $t("lang.home_page") }}</span>
         </q-route-tab>
 
-        <q-route-tab to="/finance/withdraw" name="withdraw">
+        <q-route-tab to="/finance/deposit" name="deposit">
+          <img
+            class="footer-icon"
+            :src="tab === 'deposit' ? footers['deposit']['active'] : footers['deposit']['icon']"
+          />
+          <span class="footer-label">{{ $t("lang.deposit_footer") }}</span>
+        </q-route-tab>
+
+        <q-route-tab to="/finance/withdraw" name="deposit" class="middle-menu">
           <img
             class="footer-icon"
             :src="tab === 'withdraw' ? footers['withdraw']['active'] : footers['withdraw']['icon']"
           />
-          <span class="footer-label">{{ $t("lang.withdraw_footer") }}</span>
-        </q-route-tab>
-
-        <q-route-tab to="/finance/deposit" name="deposit" class="middle-menu">
-          <div class="footer-icon-wrapper">
-            <img class="footer-icon" :src="footers['deposit']['icon']" />
-          </div>
   
-          <span class="footer-label">{{ $t("lang.deposit_footer") }}</span>
+          <span class="footer-label">{{ $t("lang.withdraw_footer") }}</span>
         </q-route-tab>
 
         <!-- <q-route-tab to="/finance/deposit" name="deposit">
@@ -164,13 +167,15 @@ import { storeToRefs } from "pinia";
 import { i18nStore } from "src/router/language";
 import { useI18n } from "vue-i18n";
 import { openLiveChat } from "src/boot/utils";
+import AppDownload from '../components/AppDownload.vue';
 
 export default defineComponent({
   name: "MainLayout",
   components: {
     AccountPage,
     // RiArrowDropLeftLine,
-    RiCloseLine
+    RiCloseLine,
+    AppDownload
   },
 
   setup() {
@@ -340,32 +345,32 @@ export default defineComponent({
     };
     const footers = reactive({
       home: {
-        icon: require("../assets/images/menu/home-icon.png"),
-        active: require("../assets/images/menu/home-icon-active.png")
+        icon: require("../assets/images/menu/home-icon-thai-theme.png"),
+        active: require("../assets/images/menu/home-icon-active-thai-theme.png")
       },
       deposit: {
-        icon: require("../assets/images/menu/deposit-icon.png"),
-        active: require("../assets/images/menu/deposit-icon-active.png")
+        icon: require("../assets/images/menu/deposit-icon-thai-theme.png"),
+        active: require("../assets/images/menu/deposit-icon-active-thai-theme.png")
       },
       withdraw: {
-        icon: require("../assets/images/menu/withdraw-icon.png"),
-        active: require("../assets/images/menu/withdraw-icon-active.png")
+        icon: require("../assets/images/menu/withdraw-icon-thai-theme.png"),
+        active: require("../assets/images/menu/withdraw-icon-thai-theme.png")
       },
       cs: {
-        icon: require("../assets/images/menu/cs-icon.png"),
-        active: require("../assets/images/menu/cs-icon-active.png")
+        icon: require("../assets/images/menu/cs-icon-thai-theme.png"),
+        active: require("../assets/images/menu/cs-icon-active-thai-theme.png")
       },
       notice: {
-        icon: require("../assets/images/menu/notice-icon.png"),
-        active: require("../assets/images/menu/notice-icon-notice.png")
+        icon: require("../assets/images/menu/notice-icon-thai-theme.png"),
+        active: require("../assets/images/menu/notice-icon-active-thai-theme.png")
       },
       affiliate: {
         icon: require("../assets/images/menu/affiliate-icon.png"),
         active: require("../assets/images/menu/affiliate-icon-active.png")
       },
       app: {
-        icon: require("../assets/images/menu/download-icon.png"),
-        active: require("../assets/images/menu/download-active-icon.png")
+        icon: require("../assets/images/menu/download-icon-thai-theme.png"),
+        active: require("../assets/images/menu/download-icon-active-thai-theme.png")
       }
     });
 
@@ -443,6 +448,23 @@ export default defineComponent({
 }
 </style>
 <style scoped lang="scss">
+.footer-nav {
+  .footer-label {
+    font-weight: normal;
+  }
+
+  .footer-label {
+    color: #c9c9c9;
+  }
+
+  .q-tab--active {
+    .footer-label {
+      color: #ffffff;
+      -webkit-text-fill-color: #ffffff;
+    }
+  }
+}
+
 path {
   stroke-width: 0.5;
   stroke-dasharray: 3212;
@@ -479,7 +501,7 @@ svg path {
 .footer-icon {
   //width: 22px;
   width: 26px;
-  filter: brightness(1.4);
+  // filter: brightness(1.4);
   margin-bottom: 4px;
 }
 
@@ -493,6 +515,11 @@ svg path {
   // margin-top: -30px;
   z-index: 9;
   opacity: 1;
+
+  .footer-icon {
+    // margin-bottom: -10px;
+    width: 35px;
+  }
 
   .footer-icon-wrapper {
     // background: linear-gradient(90deg, #cf027d 0%, #ff6370 100%),

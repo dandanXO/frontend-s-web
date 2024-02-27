@@ -43,6 +43,7 @@
 <script setup>
 import { ref, onMounted, reactive } from "vue";
 import { getTeamVotes, postVote } from "@/api/index/promo";
+import { ElMessage } from "element-plus";
 
 const validateVotes = (rule, value, callback) => {
   if (!value) {
@@ -109,6 +110,11 @@ const submitVotes = () => {
       postVote(obj).then((res) => {
         if (res.code === 0) {
           isPredictModal.value = false;
+        } else {
+          ElMessage.error({
+            type: "error",
+            message: res.message
+          });
         }
       });
     }

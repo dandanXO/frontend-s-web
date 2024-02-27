@@ -40,6 +40,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { loadPromoBanner } from "@/api/index/promo";
+import { ElMessage } from "element-plus";
 
 const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
 const banners = ref([
@@ -54,6 +55,10 @@ const banners = ref([
 const loadBanners = () => {
   loadPromoBanner("HOME").then((res) => {
     if (res.code === 0) banners.value = res.data;
+    else ElMessage.error({
+                type: "error",
+                message: res.message
+              });
   });
 };
 

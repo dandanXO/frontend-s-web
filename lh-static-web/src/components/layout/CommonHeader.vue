@@ -1164,6 +1164,7 @@ export default defineComponent({
 
                 countdownTimer('REGISTER')
               } else {
+                ElMessage.error(response.message)
                 getCode();
               }
             })
@@ -1186,6 +1187,7 @@ export default defineComponent({
                 loginCountdown.value = 30;
                 countdownTimer('LOGIN')
               } else {
+                ElMessage.error(response.message)
                 getCode();
               }
             })
@@ -1351,6 +1353,8 @@ export default defineComponent({
           regForm.codeId = res.data.id;
           captchaForm.codeId = res.data.id;
           passForm.codeId = res.data.id
+        } else {
+          ElMessage.error(res.message)
         }
       })
     };
@@ -1360,6 +1364,8 @@ export default defineComponent({
         findAccount(passForm).then((res) => {
           if (res.code === 0) {
             ElMessage.success("您的帐号已经发送到注册邮箱");
+          } else {
+            ElMessage.error(res.message)
           }
         })
       });
@@ -1533,6 +1539,8 @@ export default defineComponent({
       getUnreadTotal().then((response) => {
         if (response.code === 0) {
           store.unreadTotal= response.data;
+        } else {
+          ElMessage.error(response.message)
         }
       }).catch((error) => {
         // console.log("error===", error)

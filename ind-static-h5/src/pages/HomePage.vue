@@ -290,7 +290,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return '';
+                            return `url(https://www.55ace.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -326,7 +326,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return '';
+                            return `url(https://www.55ace.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -386,7 +386,7 @@
                             try {
                               return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return '';
+                              return `url(https://www.55ace.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -427,7 +427,7 @@
                           try {
                             return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return '';
+                            return `url(https://www.55ace.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -685,7 +685,7 @@
                       try {
                         return `url(${require(`../assets/images/index/sport/item-game-${item.name.toLowerCase()}.png`)})`;
                       } catch (e) {
-                        return '';
+                        return `url(https://www.55ace.com/static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
                       }
                     })()
                   }"
@@ -836,7 +836,9 @@
 
           <template v-if="isGameLoading">
             <div class="loader-container">
-              <div><q-spinner color="yellow" size="10em" :thickness="10" /></div>
+              <div>
+                <q-spinner color="yellow" size="10em" :thickness="10" />
+              </div>
               <div>Loading... Please wait...</div>
             </div>
           </template>
@@ -1216,6 +1218,8 @@ const loadHotGameList = () => {
     )
     .then((res) => {
       hotGameList.value = res;
+
+      hotGameList.value.sort((a, b) => a.sequence - b.sequence);
     });
 };
 
@@ -1399,6 +1403,8 @@ const getPlatList = () => {
     .then((data) => {
       var pf = data;
       ui.slotLists = [];
+      // console.log(pf);
+
       pf.forEach((element) => {
         const { status } = element;
         if (status === "TEST" && store.memberType !== "TEST") return;
@@ -1442,6 +1448,18 @@ const getPlatList = () => {
           lottery.value.push(lottObj);
         }
       });
+
+      // console.log("Before");
+      // console.log(sport.value);
+      livecasino.value.sort((a, b) => a.sequence - b.sequence);
+      sport.value.sort((a, b) => a.sequence - b.sequence);
+      esport.value.sort((a, b) => a.sequence - b.sequence);
+      poker.value.sort((a, b) => a.sequence - b.sequence);
+      slot.value.sort((a, b) => a.sequence - b.sequence);
+      lottery.value.sort((a, b) => a.sequence - b.sequence);
+
+      // console.log("After");
+      // console.log(sport.value);
     })
     .catch((err) => {});
 };
@@ -1475,6 +1493,7 @@ const gotoPromo = (banner) => {
   const urlPattern = /^\/url\/(.*)/;
   const platformPattern = /^\/platform\/(.*)/;
   const gamePattern = /^\/game\/(.*)/;
+  const openPattern = /^\/open\/(.*)/;
 
   if (banner.redirectUrl.match(urlPattern)) {
     const extractedUrl = banner.redirectUrl.match(urlPattern)[1];
@@ -1501,6 +1520,12 @@ const gotoPromo = (banner) => {
       default:
         return null;
     }
+  } else if (banner.redirectUrl.match(openPattern)) {
+    const extractedUrl = banner.redirectUrl.match(openPattern)[1];
+    const [gameName, platformCode, gameCode, gameStatus, gameType, gameId] = extractedUrl.split("/");
+    playGame(gameName, platformCode, gameCode, gameStatus, gameType, gameId);
+  } else if (banner.redirectUrl.slice(0, 4) === "http") {
+    window.open(banner.redirectUrl, "_blank");
   }
 };
 
@@ -2311,6 +2336,7 @@ onMounted(() => {
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
+
   .game-logo {
     width: 30vw;
     background-position: center;
@@ -2699,6 +2725,7 @@ onMounted(() => {
   // overflow-x: hidden;
   // padding-bottom: 20px;
   margin-bottom: 10px;
+
   .cat-selection-container {
     display: flex;
     gap: 6px;
@@ -2728,6 +2755,7 @@ onMounted(() => {
 
   &.cat-lobby {
     background-position: -83px 0px;
+
     &.active {
       background-position: 0px 0px;
     }
@@ -2735,6 +2763,7 @@ onMounted(() => {
 
   &.cat-hot {
     background-position: -83px -65px;
+
     &.active {
       background-position: 0px -65px;
     }
@@ -2742,6 +2771,7 @@ onMounted(() => {
 
   &.cat-casino {
     background-position: -83px -130px;
+
     &.active {
       background-position: 0px -130px;
     }
@@ -2749,6 +2779,7 @@ onMounted(() => {
 
   &.cat-slot {
     background-position: -83px -195px;
+
     &.active {
       background-position: 0px -195px;
     }
@@ -2756,6 +2787,7 @@ onMounted(() => {
 
   &.cat-fishing {
     background-position: -83px -260px;
+
     &.active {
       background-position: 0px -260px;
     }
@@ -2763,6 +2795,7 @@ onMounted(() => {
 
   &.cat-sport {
     background-position: -83px -325px;
+
     &.active {
       background-position: 0px -325px;
     }
@@ -2879,12 +2912,15 @@ onMounted(() => {
   padding-top: 16px;
 
   font-family: "Manrope", sans-serif;
+
   .q-tab__label {
     font-size: 16px;
   }
+
   .q-tab--active .q-tab__indicator {
     height: 0px;
   }
+
   .q-item__label {
     color: #fff;
   }

@@ -285,7 +285,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, watch } from "vue";
+import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
@@ -297,10 +297,12 @@ export default defineComponent({
   name: "RegisterPage",
   setup() {
     onMounted(() => {
-      getCode();
       getReferralCode();
       getAffiliateCode();
     });
+    onActivated(() => {
+      getCode();
+    })
     const store = userStore();
     const verificationImg = ref("");
     const isValidName = () => {

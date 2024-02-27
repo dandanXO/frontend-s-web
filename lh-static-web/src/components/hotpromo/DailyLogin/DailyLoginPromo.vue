@@ -42,6 +42,11 @@ const loadDailyCheckIn = () => {
     if (res.code === 0) {
       checkInDetails.value = res.data;
       generateMonthMaxDaysArray(checkInDetails.value);
+    } else {
+      ElMessage.error({
+        type: "error",
+        message: res.message
+      });
     }
   });
 };
@@ -84,6 +89,11 @@ const checkIn = (mth) => {
         message: "领取成功"
       });
       getCheckInDays(res.data)
+    } else {
+      ElMessage.error({
+        type: "error",
+        message: res.message
+      });
     }
   });
 };

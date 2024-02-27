@@ -24,11 +24,11 @@
           <div class="status">
             <img
               :src="
-                require(`../../assets/images/vip/status-${vip.progressBarVal === 0 ? 'achieved' : 'inachieved'}.png`)
+                require(`../../assets/images/vip/status-${vip.progressBarVal === 100 || vipLevel >= vip.level ? 'achieved' : 'inachieved'}.png`)
               "
               alt=""
             />
-            <span class="vip-card-common-text">{{ vip.progressBarVal === 0 ? "已达到" : "未达到" }}</span>
+            <span class="vip-card-common-text">{{ vip.progressBarVal === 100 || vipLevel >= vip.level ? "已达到" : "未达到" }}</span>
           </div>
           <div class="vip-card-info">
             <div class="level">
@@ -46,10 +46,11 @@
                 size="5px"
                 :value="vip.progressBarVal"
                 class="progress-bar"
+                instant-feedback
               ></q-linear-progress>
               <div class="start-end">
                 <div class="vip-card-common-text">V{{ vipIndex }}</div>
-                <div class="vip-card-current-num">{{ vip.progressBarVal === 0 ? "" : parseFloat(store.currentDeposit).toLocaleString() }}</div>
+                <div class="vip-card-current-num" v-if="vipLevel === vipIndex">{{ currentDeposit }}</div>
                 <div class="vip-card-common-text">V{{ vipIndex + 1 }}</div>
               </div>
             </div>
@@ -64,7 +65,6 @@
       </q-card-section>
 
       <q-separator></q-separator>
-
       <q-card-section class="level-promo-body">
         <div class="promo">
           <div class="common-text">{{ `VIP${claimDesc.vip + 1}优惠` }}</div>
@@ -74,11 +74,10 @@
           <div class="common-text">流水要求</div>
           <div class="common-text">{{ claimDesc.turnover }}</div>
         </div>
-
         <div
           class="claim-btn-container"
-          @click="claim()"
-          v-if="claimDesc.availableBtn"
+          @click="claimDesc.availableBtn ? claim() : null"
+          v-if="claimDesc.availableBtn || claimDesc.claimedBtn"
           :class="claimDesc.claimedBtn ? 'status-claimed' : ''"
         >
           <img class="claim-btn" src="../../assets/images/vip/claim-btn.png" alt="" />
@@ -233,17 +232,17 @@ const tab = ref("rules");
 const slide = ref(0);
 const vipItems = ref([
   { level: "1", title: "青铜2", amount: "一笔存款" },
-  { level: "1", title: "青铜1", amount: "3,000" },
-  { level: "2", title: "白银3", amount: "30,000" },
-  { level: "2", title: "白银2", amount: "80,000" },
-  { level: "3", title: "白银1", amount: "200,000" },
-  { level: "3", title: "黄金3", amount: "400,000" },
-  { level: "4", title: "黄金2", amount: "600,000" },
-  { level: "4", title: "黄金1", amount: "1,000,000" },
-  { level: "5", title: "铂金2", amount: "2,000,000" },
-  { level: "5", title: "铂金1", amount: "4,000,000" },
-  { level: "6", title: "钻石", amount: "8,000,000" },
-  { level: "7", title: "王者", amount: "12,000,000" }
+  { level: "2", title: "青铜1", amount: "3,000" },
+  { level: "3", title: "白银3", amount: "30,000" },
+  { level: "4", title: "白银2", amount: "80,000" },
+  { level: "5", title: "白银1", amount: "200,000" },
+  { level: "6", title: "黄金3", amount: "400,000" },
+  { level: "7", title: "黄金2", amount: "600,000" },
+  { level: "8", title: "黄金1", amount: "1,000,000" },
+  { level: "9", title: "铂金2", amount: "2,000,000" },
+  { level: "10", title: "铂金1", amount: "4,000,000" },
+  { level: "11", title: "钻石", amount: "8,000,000" },
+  { level: "12", title: "王者", amount: "12,000,000" }
 ]);
 
 const vipClaimItems = [
@@ -327,63 +326,70 @@ const vipClaimItems = [
   }
 ];
 
-const claimDesc = ref();
-const currentAmount = ref(0);
+const claimDesc = ref(vipClaimItems[0]);
+const currentDeposit = ref(0);
 
-for (let i = 0, l = vipItems.value.length; i < l; i++) {
-  const vipItem = vipItems.value[i];
-  let _amount = vipItem.amount.replaceAll(",", "");
-
-  const maxReversedVal = 1 - 1;
-  if (i === 0) {
-    vipItem.progressBarVal = maxReversedVal;
-  } else {
-    const progressBarVal = currentAmount.value / _amount;
-    if (progressBarVal >= 1) {
-      vipItem.progressBarVal = maxReversedVal;
-    } else {
-      vipItem.progressBarVal = 1 - progressBarVal;
-      if (!claimDesc.value) {
-        vipClaimItems[i].vip = i;
-        claimDesc.value = vipClaimItems[i];
-      }
-    }
-  }
-}
-
-const vipRedeemData = ref();
+// for (let i = 0, l = vipItems.value.length; i < l; i++) {
+//   if (!claimDesc.value) {
+//     vipClaimItems[i].vip = i;
+//     claimDesc.value = vipClaimItems[i];
+//   }
+// }
 
 const checkVipRedeem = () => {
+  if (!claimDesc.value) {
+    vipClaimItems.value.forEach((el, i) => {
+      el[i].vip = i
+      if (i === 0) {
+        claimDesc.value = el[0].vip
+      }
+    })
+  }
+  getProgressBar();
   eventapi.get("/vip-upgrade/lh/canRedeem").then((res) => {
+    
     if (res.code === 0) {
-      vipRedeemData.value = res.data;
+      console.log(res.data)
+      // Your arrays of elements
+      const depositPromoAvailableElements = res.data.depositPromoAvailable;
+      const promoAvailableElements = res.data.promoAvailable;
+      const unavailableElements = res.data.unavailable;
+      const claimedElements = res.data.claimed;
 
-      vipItems.value.forEach((vipItem, index) => {
-        let _amount = parseInt(vipItem.amount.replaceAll(",", ""), 10);
-        vipItem.progressBarVal = index === 0 ? 0 : Math.max(0, 1 - currentAmount.value / _amount);
+      // Function to update properties based on the provided elements
+      function updatePropertiesBasedOnElements(elements, property) {
+        elements.forEach((element, i) => {
+          const index = element - 1;
+          // vipClaimItems[i].vip = i
+          if (index >= 0 && index < vipClaimItems.length) {
+            vipClaimItems[index][property] = true;
+          }
+        });
+      }
 
-        if (!claimDesc.value && index !== 0 && currentAmount.value / _amount < 1) {
-          vipClaimItems[index].vip = index;
-          claimDesc.value = vipClaimItems[index];
-        }
+      // Call the function to update properties based on depositPromoAvailable elements
+      updatePropertiesBasedOnElements(depositPromoAvailableElements, "depositPromoBtn");
 
-        // if (vipRedeemData.value.unavailable.includes(index + 1)) {
-        //   vipClaimItems[index].availableBtn = true;
-        // }
+      // Call the function to update properties based on promoAvailable elements
+      updatePropertiesBasedOnElements(promoAvailableElements, "availableBtn");
 
-        if (vipRedeemData.value.claimed.includes(index + 1)) {
-          vipClaimItems[index].claimedBtn = true;
-          vipClaimItems[index].availableBtn = true;
-        }
+      // Call the function to update properties based on unavailable elements
+      updatePropertiesBasedOnElements(unavailableElements, "unavailable");
 
-        if (vipRedeemData.value.promoAvailable.includes(index + 1)) {
-          vipClaimItems[index].availableBtn = true;
-        }
+      // Call the function to update properties based on unavailable elements
+      updatePropertiesBasedOnElements(claimedElements, "claimedBtn");
 
-        if (vipRedeemData.value.depositPromoAvailable.includes(index + 1)) {
-          vipClaimItems[index].depositPromoBtn = true;
-        }
-      });
+      // Now, vipItems array has the updated properties based on the provided elements
+      // vipClaimItems[slide.value].vip = slide.value + 1;
+      // claimDesc.value = vipClaimItems[slide.value];
+      if (vipLevel.value !== 0) {
+        slide.value = vipLevel.value - 1;
+      } else {
+        slide.value = 1
+      }
+
+      vipClaimItems[slide.value].vip = slide.value;
+      claimDesc.value = vipClaimItems[slide.value];
     } else {
       $q.notify({
         color: "negative",
@@ -391,9 +397,50 @@ const checkVipRedeem = () => {
         message: res.message,
         icon: "report_problem"
       });
-    }
-  });
+          }
+        });
 };
+const getProgressBar = () => {
+  vipItems.value.forEach((vip, i) => {
+    if (Number(vipLevel.value + 1) > Number(vip.level)) {
+      vip.progressBarVal = 0
+    } else {
+      vip.progressBarVal = 1
+    }
+    // if (vipLevel.value > vip.level) {
+    //   vip.progressBarVal = 100
+    // }
+    
+    if (Number(vipLevel.value + 1 === Number(vip.level))) {
+      // Remove commas from the string
+      let amt = vip.amount.replace(/,/g, '');
+      let current = currentDeposit.value.replace(/,/g, '');
+
+      // Parse the string into a number
+      let vipAmount = parseInt(amt, 10);
+      let currentDep = parseInt(current, 10);
+
+      console.log(vipAmount); // Outputs: 400000
+      console.log(currentDep);
+      
+      let percentageChange = (currentDep / vipAmount * 100);
+      console.log(percentageChange / 100)
+      vipItems.value[Number(vipLevel.value)].progressBarVal = 1 - percentageChange / 100
+      // // Calculate the maximum absolute percentage change
+      // let maxAbsoluteChange = Math.max(Math.abs(percentageChange), 1);
+
+      // // Normalize to a range between 0 and 1
+      // let normalizedValue = Math.abs(percentageChange) / maxAbsoluteChange;
+
+      // // Map the normalized value to a range with increments of 0.1
+      // let mappedValue = Math.ceil(normalizedValue * 10) / 10;
+
+      // console.log(mappedValue); // Outputs: 0.8
+      // // var currentProgressPercentage = Math.abs((vipAmount - currentDep) / currentDep) / 100;
+      // vipItems.value[Number(vipLevel.value)].progressBarVal = mappedValue
+    }
+  })
+}
 
 watch(slide, (newValue) => {
   if (vipClaimItems[newValue]) {
@@ -563,8 +610,9 @@ const claim = async () => {
         message: "领取成功",
         icon: "check_circle_outline"
       });
-
-      checkVipRedeem();
+      claimDesc.value.claimedBtn = true;
+      
+      claimDesc.value.availableBtn = false;
     } else {
       $q.notify({
         color: "negative",
@@ -577,18 +625,20 @@ const claim = async () => {
     console.error("Error in VIP claim:", error);
   }
 };
-
+const vipLevel = ref(null);
 onActivated(() => {
-  store.getMemberInfo().then(() => {
-    currentAmount.value = store.balance;
-    extractNumber(store.vip);
-    slide.value = vipNumber.value;
-
-    vipClaimItems[slide.value].vip = slide.value;
-    claimDesc.value = vipClaimItems[slide.value];
-
-    checkVipRedeem();
-  });
+  if (store.hasToken()) {
+    store.getMemberInfo().then(() => {
+      vipLevel.value = +store.vip.replace("VIP", "");
+      currentDeposit.value = parseFloat(store.currentDeposit).toLocaleString()
+      checkVipRedeem();
+    });
+  } else {
+    claimDesc.value.vip = 0
+    vipItems.value.forEach((item) => {
+      item.progressBarVal = 1
+    })
+  }
 });
 </script>
 
@@ -681,6 +731,9 @@ onActivated(() => {
 
           div {
             color: $dark;
+            &.vip-card-current-num {
+              color: #86570b;
+            }
           }
         }
       }
@@ -873,7 +926,7 @@ onActivated(() => {
     color: $font-1;
   }
 
-  .vip-card-current-num{
+  .vip-card-current-num {
     margin-top: 8px;
     font-size: 11px;
   }

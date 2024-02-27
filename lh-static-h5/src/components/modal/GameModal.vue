@@ -405,6 +405,10 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               srcData = srcData.replaceAll(/\\\"/g, '"').replaceAll(/\n/g, "");
               src.value = srcData;
               visible.value = true;
+            } else if (platformCode === "SABA") {
+              // newWin.location.href = response.data;
+              var currentUrl = window.location.hostname;
+              window.location.href = response.data + `&homeUrl=${currentUrl}`;
             } else if (way == "ANDROID") {
               var ref = cordova.InAppBrowser.open(srcData, "_blank", "location=no,zoom=no");
             } else {

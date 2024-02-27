@@ -1498,6 +1498,7 @@ export default {
     BW2: 'BW2',
     BW3: 'BW3',
     BW4: 'BW4',
+    BW5: 'BW5',
     'To be affiliate paid': 'เพื่อเป็นพันธมิตรจ่าย',
     'Affiliate Payment on going': 'กำลังดำเนินการจ่ายเงินพันธมิตร',
     'Crypto Affiliate Payment on going': 'กำลังจ่ายคลิปโตพันธมิตร',

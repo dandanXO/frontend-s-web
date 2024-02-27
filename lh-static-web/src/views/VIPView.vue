@@ -286,6 +286,7 @@ import { claimBonusItem, canRedeem, claim } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 // import { message } from "ant-design-vue";
+import { ElMessage } from "element-plus";
 
 export default defineComponent({
   name: "VIPView",
@@ -353,13 +354,15 @@ export default defineComponent({
             loadingMClaim.value = false;
             loadingBClaim.value = false;
             store.getBalance();
+          } else {
+            ElMessage.error(res.message);
+            loadingClaim.value = false;
+            loadingMClaim.value = false;
+            loadingBClaim.value = false;
           }
         })
         .catch((err) => {
           console.log(err.message);
-          loadingClaim.value = false;
-          loadingMClaim.value = false;
-          loadingBClaim.value = false;
         });
     };
 
@@ -563,6 +566,8 @@ export default defineComponent({
 
             // Now, vipItems array has the updated properties based on the provided elements
             console.log(vipItems);
+          } else {
+             ElMessage.error(res.message)
           }
         });
       }
@@ -571,6 +576,8 @@ export default defineComponent({
       claim(vip.vipLevel).then((res) => {
         if (res.code === 0) {
           initVIPTable();
+        } else {
+          ElMessage.error(res.message)
         }
       });
     };
@@ -578,13 +585,14 @@ export default defineComponent({
     const slideTo = () => {
       const vipLevel = +store.vip.replace("VIP", "");
       if (vipLevel === 0) {
+        currentSlide.value = 0;
         return;
       }
       currentSlide.value = vipLevel - 1;
     };
     onMounted(() => {
-      initVIPTable();
-      slideTo();
+        initVIPTable();
+        slideTo();
     });
 
     return {
@@ -698,6 +706,26 @@ $border-settings: 1px solid #e5e7eb;
       background-size: contain;
     }
 
+
+    &9 {
+      background: url("../assets/vip/badge/banner-9.png") no-repeat top center;
+      background-size: contain;
+    }
+
+&10 {
+  background: url("../assets/vip/badge/banner-10.png") no-repeat top center;
+  background-size: contain;
+}
+
+&11 {
+  background: url("../assets/vip/badge/banner-11.png") no-repeat top center;
+  background-size: contain;
+}
+
+&12 {
+  background: url("../assets/vip/badge/banner-12.png") no-repeat top center;
+  background-size: contain;
+}
     .vipLevelReachStatus {
       background: url("../assets/vip/badge/vip-level-banner-status-ribbon-unachieved.png") no-repeat left center;
       background-size: contain;

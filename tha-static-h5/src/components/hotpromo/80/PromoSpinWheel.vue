@@ -27,10 +27,7 @@
 
   <div class="spinwheel-container">
     <div class="spin-count-board">
-      <img
-        class="spin-count-board-img"
-        src="../../../assets/images/promotion/spinwheel/spin_count_board.png"
-      />
+      <img class="spin-count-board-img" src="../../../assets/images/promotion/spinwheel/spin_count_board.png" />
       <span>
         {{
           $t("lang.spinRemaining", {
@@ -490,7 +487,7 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   position: relative;
-  background: url(../../../assets/images/promotion/spinwheel/h5_bg.png);
+  background: url(../../../assets/images/promotion/spinwheel/h5_bg-thai-theme.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -510,7 +507,7 @@ onMounted(() => {
 
     span {
       position: absolute;
-      bottom: 10%;
+      bottom: 15%;
       color: #fff;
       text-align: center;
       font-family: FZHanZhenGuangBiaoS-GB;
@@ -571,12 +568,12 @@ onMounted(() => {
 
       span {
         position: relative;
-        top: 4%;
-        left: 11.5%;
+        top: 1%;
+        left: 13%;
         color: #fbff1e;
         text-align: center;
         font-family: FZHanZhenGuangBiaoS-GB;
-        font-size: 2.5vw;
+        font-size: 2vw;
         font-weight: 600;
         line-height: 100%; /* 2.11175rem */
       }
@@ -671,7 +668,7 @@ onMounted(() => {
   }
 
   .spinwheel-container {
-    background: url(../../../assets/images/promotion/spinwheel/web_bg.png);
+    background: url(../../../assets/images/promotion/spinwheel/web_bg-thai-theme.png);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -706,9 +703,9 @@ onMounted(() => {
 
       .prize-lock-day {
         span {
-          top: 4%;
-          left: 7%;
-          font-size: 1.15rem;
+          top: 1%;
+          left: 8%;
+          font-size: 0.75rem;
         }
       }
     }
@@ -739,6 +736,11 @@ onMounted(() => {
 @media (min-width: 980px) {
   .spinwheel-container .spin-count-board span {
     font-size: 1.3rem;
+  }
+  .spinwheel-container .inner-wheel .prize-lock-day span {
+    top: 1%;
+    left: 8%;
+    font-size: 0.9rem;
   }
 }
 

@@ -341,6 +341,8 @@ export default defineComponent({
             if (this.winnerDataSource.length === 0) {
               this.emptyText = "今天没有获奖者。";
             }
+          } else {
+            ElMessage.error(res.message)
           }
         })
         .catch((err) => {

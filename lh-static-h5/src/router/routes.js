@@ -77,7 +77,8 @@ const routes = [
         name: "slot",
         component: () => import("pages/games/SlotView.vue")
       }
-    ]
+    ],
+    meta: { requiresAuth: true }
   },
   {
     path: "/fishing",

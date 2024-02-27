@@ -4,6 +4,7 @@ import { loadBalance, loadMemberInfo } from "@/api/personal/personal";
 import { useSessionStorage } from "@vueuse/core";
 import { MAIN } from "@/utils/utils";
 import { getCSAFromServer } from "@/api/index/site";
+import { ElMessage } from "element-plus";
 // import { message } from "ant-design-vue";
 
 const TOKEN_KEY = "TOKEN";
@@ -43,6 +44,7 @@ export const userStore = defineStore("userStore", {
             this.getBalance();
             this.getMemberInfo();
           } else {
+            ElMessage.error(ret.message)
             // throw new Error(ret.message);
           }
         })
@@ -64,6 +66,7 @@ export const userStore = defineStore("userStore", {
             this.getBalance();
             this.getMemberInfo();
           } else {
+            ElMessage.error(ret.message)
             // throw new Error(ret.message);
           }
         })
@@ -88,7 +91,7 @@ export const userStore = defineStore("userStore", {
             this.currentDeposit = ret.data.currentDeposit;
             this.levelUpDeposit = ret.data.levelUpDeposit;
           } else {
-            throw new Error(ret.message);
+            ElMessage.error(ret.message)
           }
         });
       }
@@ -109,6 +112,9 @@ export const userStore = defineStore("userStore", {
     memberLogout() {
       return logout().then(() => {
         this.token = null;
+        // this.vip = 'VIP0'
+        // this.currentDeposit = "0.0000"
+        location.reload();
       });
     },
     openLiveChat() {
@@ -118,18 +124,19 @@ export const userStore = defineStore("userStore", {
       return getCSAFromServer()
         .then((res) => {
           console.log(res.data);
+          var lineUrl = "";
+          const randNum = Math.floor(Math.random() * 2) + 1;
+          if (randNum === 1) {
+            lineUrl = res.data.liveUrl1;
+          } else {
+            lineUrl = res.data.liveUrl2;
+          }
+
           window.open(
             // `https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=WEB&lang=zh-CN&token=${this.token}`,
-            `${res.data}&token=${this.token}`,
+            `${lineUrl}&token=${this.token}`,
             "Chat Server",
-            "resizable=yes, width=" +
-              800 +
-              ", height=" +
-              880 +
-              ", top=" +
-              top +
-              ", left=" +
-              left
+            "resizable=yes, width=" + 800 + ", height=" + 880 + ", top=" + top + ", left=" + left
           );
         })
         .catch((err) => {

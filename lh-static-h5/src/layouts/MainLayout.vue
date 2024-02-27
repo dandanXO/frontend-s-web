@@ -165,7 +165,7 @@ export default defineComponent({
             var platformName = translateRecord(route.query.platform);
             pageName.value = `${platformName}游戏大厅`;
           }
-        } else if (route.path === "/vip") {
+        } else if (route.path === "/account/vip") {
           hasPage.value = true;
           pageName.value = "VIP";
           if (route.query.from) {
@@ -212,6 +212,8 @@ export default defineComponent({
           pageName.value = "存款";
           if (route.query.redirect) {
             prevPage.value = route.query.name;
+          } else if (route.query.from === 'vip') {
+            prevPage.value = 'account/vip'
           }
         } else if (route.path === "/finance/withdraw") {
           prevPage.value = "account";
@@ -477,7 +479,11 @@ export default defineComponent({
         "BetHistoryRecordView",
         "MoneyChangeRecordView",
         "WithdrawView",
-        "DepositView"
+        "DepositView",
+        "OutboxView",
+        "BindBankCard",
+        "BindCryptoView",
+        "BindEWalletView"
       ]
     };
   }

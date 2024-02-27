@@ -54,6 +54,7 @@
 <script setup>
 import { ref, defineExpose } from 'vue';
 import { getVerificationCode } from "@/api/index/login";
+import { ElMessage } from "element-plus";
 
 const props = defineProps(['type', 'form', 'onClickConfirm']);
 
@@ -72,6 +73,11 @@ const getCode = () => {
         if (res.code === 0) {
             verificationImg.value = "data:image/png;base64," + res.data.img;
             props.form.codeId = res.data.id;
+        } else {
+            ElMessage.error({
+            type: "error",
+            message: res.message
+          });
         }
     })
 };

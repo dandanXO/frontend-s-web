@@ -9,8 +9,10 @@
 // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js
 
 const ESLintPlugin = require("eslint-webpack-plugin");
+const path = require("path");
 
 const { configure } = require("quasar/wrappers");
+const fs = require("fs-extra");
 
 const isImageCompress = true;
 
@@ -73,7 +75,6 @@ module.exports = configure(function (ctx) {
       // chainWebpack(chain) {
       //   chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
       // }
-
       chainWebpack(chain) {
         chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
 
@@ -88,6 +89,15 @@ module.exports = configure(function (ctx) {
             }
           ]);
         }
+      },
+
+      // Add a hook to copy assets after the build
+      afterBuild({ cfg }) {
+        const fs = require("fs-extra");
+        const sourceDir = path.resolve(__dirname, "src/assets");
+        const destinationDir = path.resolve(__dirname, "dist/spa/static");
+
+        fs.copySync(sourceDir, destinationDir);
       }
     },
 

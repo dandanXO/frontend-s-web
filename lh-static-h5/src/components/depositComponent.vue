@@ -92,7 +92,7 @@
           {{
             activeMethod.depositMax
               ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value)
-              : "No Limit"
+              : " "
           }}
         </div>
 
@@ -223,15 +223,16 @@ const isDeposited = ref(false);
 const checkNewUser = () => {
   if (store.phone === "" || store.phone === null) {
     isNewUser.value = true;
-  } else {
-    api.get("/session/bankCard").then((response) => {
-      if (response.code === 0) {
-        if (response.data.length === 0) {
-          isNoBankCard.value = true;
-        }
-      }
-    });
   }
+  // else {
+  //   api.get("/session/bankCard").then((response) => {
+  //     if (response.code === 0) {
+  //       if (response.data.length === 0) {
+  //         isNoBankCard.value = true;
+  //       }
+  //     }
+  //   });
+  // }
 };
 
 const isLoading = ref(true);
@@ -458,55 +459,59 @@ function clearInfo() {
 const depositAmtRef = ref("");
 
 async function confirmDeposit() {
-  btnLoading.value = true;
-  depositAmtRef.value.validate();
-  if (selectedPayType.value && bankCardList.value.length > 0) {
-    await payTypeClass.value.validateBank(form.bankId);
-  }
-
-  if (depositAmtRef.value.hasError || (selectedPayType.value && bankCardList.value.length > 0 && !form.bankId)) {
-    btnLoading.value = false;
+  if (!extensionState.value && (store.phone === "" || store.phone === null)) {
+    isNewUser.value = true;
   } else {
-    await cashier
-      .get(`/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`)
-      .then((d) => {
-        if (d.code === 11002) {
-          if (d.data && d.data.suggestion) {
-            form.localAmount = d.data.suggestion;
-            btnLoading.value = false;
-          }
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: d.message,
-            icon: "report_problem"
-          });
-        } else {
-          if (freePrivilege.value) {
-            if (selectedPrivilege.value) {
-              form.privilegeId = selectedPrivilege.value.id + "," + freePrivilege.value.id;
-            } else {
-              form.privilegeId = "," + freePrivilege.value.id;
+    btnLoading.value = true;
+    depositAmtRef.value.validate();
+    if (selectedPayType.value && bankCardList.value.length > 0) {
+      await payTypeClass.value.validateBank(form.bankId);
+    }
+
+    if (depositAmtRef.value.hasError || (selectedPayType.value && bankCardList.value.length > 0 && !form.bankId)) {
+      btnLoading.value = false;
+    } else {
+      await cashier
+        .get(`/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`)
+        .then((d) => {
+          if (d.code === 11002) {
+            if (d.data && d.data.suggestion) {
+              form.localAmount = d.data.suggestion;
+              btnLoading.value = false;
             }
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: d.message,
+              icon: "report_problem"
+            });
           } else {
-            if (selectedPrivilege.value) {
-              form.privilegeId = selectedPrivilege.value.id;
+            if (freePrivilege.value) {
+              if (selectedPrivilege.value) {
+                form.privilegeId = selectedPrivilege.value.id + "," + freePrivilege.value.id;
+              } else {
+                form.privilegeId = "," + freePrivilege.value.id;
+              }
             } else {
-              form.privilegeId = null;
+              if (selectedPrivilege.value) {
+                form.privilegeId = selectedPrivilege.value.id;
+              } else {
+                form.privilegeId = null;
+              }
             }
+            form.paymentId = activeMethod.value.paymentId;
+            const copy = { ...form };
+            const data = {};
+            Object.entries(copy).forEach(([key, value]) => {
+              if (value) {
+                data[key] = value;
+              }
+            });
+            data.bankCardId = 0;
+            pDepo(data);
           }
-          form.paymentId = activeMethod.value.paymentId;
-          const copy = { ...form };
-          const data = {};
-          Object.entries(copy).forEach(([key, value]) => {
-            if (value) {
-              data[key] = value;
-            }
-          });
-          data.bankCardId = 0;
-          pDepo(data);
-        }
-      });
+        });
+    }
   }
 }
 
@@ -543,6 +548,7 @@ async function pDepo(deposit) {
           btnLoading.value = false;
         } else {
           if (
+            !extensionState.value &&
             (Platform.is.desktop || Platform.is.webkit) &&
             !Platform.is.capacitor &&
             Platform.is.name !== "webkit" &&
@@ -565,6 +571,16 @@ async function pDepo(deposit) {
               }
             } else {
               const newWin = window.open(`/`);
+              if (!newWin) {
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message: '无法打开充值页面。请检查游览器是否拦截弹窗页面，并修改为"允许弹窗"后再进行充值操作。',
+                  icon: "report_problem"
+                });
+                btnLoading.value = false;
+                return;
+              }
               newWin.localStorage.setItem("formDetails", JSON.stringify(form));
               if (response.payResultType === "GET_SUBMIT") {
                 newWin.location.href = response.requestUrl;
