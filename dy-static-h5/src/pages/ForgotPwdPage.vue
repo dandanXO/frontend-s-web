@@ -19,25 +19,28 @@
 
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="phone">
-        <div class="text-blue-grey" v-if="!isEmailSent">方式：请输入您需找回登陆密码的用户名和验证手机号码</div>
+        <div class="text-blue-grey" v-if="!isPhoneSent">方式：请输入您需找回登陆密码的用户名和验证手机号码</div>
 
         <div class="forgetpass-board q-gutter-y-md">
-          <q-form v-if="!isEmailSent" class="rounded-borders" ref="phoneFormRef">
+          <q-form v-if="!isPhoneSent" class="rounded-borders" ref="phoneFormRef">
             <q-row class="row items-baseline justify-start">
               <q-item-label>
                 <span class="text-red">*&nbsp;</span>
                 用户名:
               </q-item-label>
               <q-input
-                ref="emailRef"
+                ref="userRef"
                 hide-bottom-space
-                type="email"
+                type="text"
                 borderless
                 clearable
                 placeholder="请输入用户名"
                 v-model="passwordFormPhone.loginName"
                 lazy-rules
-                :rules="[(val) => (val && val.length > 0) || '请输入用户名']"
+                :rules="[
+                  (val) => (val && val.length > 0) || '请输入用户名',
+                  (val) => (val && val.length >= 6 && val.length <= 12) || '长度要在 6-12 之间'
+                ]"
                 color="white"
               ></q-input>
             </q-row>
@@ -48,14 +51,14 @@
                 手机号码:
               </q-item-label>
               <q-input
-                ref="emailRef"
+                ref="phoneRef"
                 hide-bottom-space
-                type="email"
+                type="text"
                 borderless
                 clearable
                 v-model="passwordFormPhone.phone"
                 placeholder="请输入手机号码"
-                :rules="[(val) => (val && val.length > 0) || '请输入手机号码']"
+                :rules="[(val) => (val && val.length > 0) || '请输入手机号码', (val) => isValidPhone(val)]"
                 color="white"
                 label-color="secondary"
               ></q-input>
@@ -74,6 +77,7 @@
                 ref="verificationRef"
                 hide-bottom-space
                 type="text"
+                placeholder="请输入验证码"
                 v-model="passwordFormPhone.captchaCode"
                 :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
                 label-color=""
@@ -95,17 +99,19 @@
             </div>
           </q-form>
 
-          <div v-if="isEmailSent" class="text-blue q-px-md">OTP短信已发送到您的注册手机, 请输入OTP和新密码。</div>
-          <q-form v-if="isEmailSent" class="q-gutter-y-md rounded-borders form-after-submit">
+          <div v-if="isPhoneSent" class="text-blue q-px-md">OTP短信已发送到您的注册手机, 请输入OTP和新密码。</div>
+          <q-form v-if="isPhoneSent" class="q-gutter-y-md rounded-borders form-after-submit">
             <q-input
               ref="codeRef"
               filled
               hide-bottom-space
-              v-model="verificationForm.code"
+              v-model="verificationPhoneForm.code"
               label="OTP码"
-              lazy-rules
               clearable
-              :rules="[(val) => (val && val.length > 0) || '请输入OTP码']"
+              :rules="[
+                (val) => (val && val.length > 0) || '请输入OTP码',
+                (val) => (val && val.length >= 4 && val.length <= 6) || 'OTP长度不符'
+              ]"
             >
               <template v-slot:prepend>
                 <q-icon name="qr_code" />
@@ -116,14 +122,12 @@
               :type="isPwd ? 'password' : 'text'"
               filled
               hide-bottom-space
-              v-model="verificationForm.newPassword"
+              v-model="verificationPhoneForm.newPassword"
               label="新密码"
               clearable
-              lazy-rules
               :rules="[
                 (val) => (val && val.length > 0) || '请输入密码',
-                (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12',
-                (val) => (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) || '密码安全级别必须至少为好'
+                (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
               ]"
             >
               <template v-slot:prepend>
@@ -138,38 +142,19 @@
                 />
               </template>
             </q-input>
-            <div v-if="verificationForm.newPassword" class="password-str-div">
-              <span
-                :class="{
-                  'weak-pwd': pwdStrength == 'weak',
-                  'normal-pwd': pwdStrength == 'normal',
-                  'strong-pwd': pwdStrength == 'strong'
-                }"
-              >
-                弱
-              </span>
-              <span
-                :class="{
-                  'normal-pwd': pwdStrength == 'normal',
-                  'strong-pwd': pwdStrength == 'strong'
-                }"
-              >
-                好
-              </span>
-              <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">强</span>
-            </div>
             <q-input
               ref="confirmPwdRef"
               :type="isPwd ? 'password' : 'text'"
               filled
               hide-bottom-space
-              v-model="verificationForm.newPassword"
+              v-model="verificationPhoneForm.confirmPwd"
               label="确认新密码"
               clearable
               lazy-rules
               :rules="[
                 (val) => (val && val.length > 0) || '请输入确认密码',
-                (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
+                (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12',
+                validatePassNew
               ]"
             >
               <template v-slot:prepend>
@@ -198,7 +183,170 @@
         </div>
       </q-tab-panel>
       <q-tab-panel name="email">
-        <div class="text-blue-grey">方式：请输入您需找回登陆密码的用户名和验证邮箱</div>
+        <div class="text-blue-grey" v-if="!isEmailSent">方式：请输入您需找回登陆密码的用户名和验证邮箱</div>
+
+        <div class="forgetpass-board q-gutter-y-md">
+          <q-form v-if="!isEmailSent" class="rounded-borders" ref="phoneFormRef">
+            <q-row class="row items-baseline justify-start">
+              <q-item-label>
+                <span class="text-red">*&nbsp;</span>
+                用户名:
+              </q-item-label>
+              <q-input
+                ref="userRef2"
+                hide-bottom-space
+                type="text"
+                borderless
+                clearable
+                placeholder="请输入用户名"
+                v-model="passwordFormEmail.loginName"
+                lazy-rules
+                :rules="[
+                  (val) => (val && val.length > 0) || '请输入用户名',
+                  (val) => (val && val.length >= 6 && val.length <= 12) || '长度要在 6-12 之间'
+                ]"
+                color="white"
+              ></q-input>
+            </q-row>
+
+            <q-row class="row items-baseline justify-start">
+              <q-item-label>
+                <span class="text-red">*&nbsp;</span>
+                验证邮箱:
+              </q-item-label>
+              <q-input
+                ref="emailRef"
+                hide-bottom-space
+                type="email"
+                borderless
+                clearable
+                v-model="passwordFormEmail.email"
+                placeholder="请输入验证邮箱"
+                :rules="[(val) => (val && val.length > 0) || '请输入验证邮箱', (val) => isValidEmail(val)]"
+                color="white"
+                label-color="secondary"
+              ></q-input>
+            </q-row>
+
+            <q-row class="row items-baseline justify-start">
+              <q-item-label>
+                <span class="text-red">*&nbsp;</span>
+                验证码
+              </q-item-label>
+
+              <q-input
+                standout
+                class="captcha-textfield"
+                bg-color="white"
+                ref="verificationRef"
+                hide-bottom-space
+                type="text"
+                placeholder="请输入验证码"
+                v-model="passwordFormEmail.captchaCode"
+                :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
+                label-color=""
+              >
+                <template v-slot:append>
+                  <img :src="verificationImg" @click="getCode" />
+                </template>
+              </q-input>
+            </q-row>
+
+            <div class="row justify-between items-center q-mt-md">
+              <q-btn
+                @click.prevent="submitSendOtp('email')"
+                label="提交"
+                width="100%"
+                color="dyblue"
+                style="width: 100%"
+              />
+            </div>
+          </q-form>
+
+          <div v-if="isEmailSent" class="text-blue q-px-md">OTP信息已发送到您的注册邮箱, 请输入OTP和新密码。</div>
+          <q-form v-if="isEmailSent" class="q-gutter-y-md rounded-borders form-after-submit">
+            <q-input
+              ref="codeRef2"
+              filled
+              hide-bottom-space
+              v-model="verificationForm.code"
+              label="OTP码"
+              lazy-rules
+              clearable
+              :rules="[
+                (val) => (val && val.length > 0) || '请输入OTP码',
+                (val) => (val && val.length >= 4 && val.length <= 6) || 'OTP长度不符'
+              ]"
+            >
+              <template v-slot:prepend>
+                <q-icon name="qr_code" />
+              </template>
+            </q-input>
+            <q-input
+              ref="newPwdRef2"
+              :type="isPwd ? 'password' : 'text'"
+              filled
+              hide-bottom-space
+              v-model="verificationForm.newPassword"
+              label="新密码"
+              clearable
+              lazy-rules
+              :rules="[
+                (val) => (val && val.length > 0) || '请输入密码',
+                (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
+              ]"
+            >
+              <template v-slot:prepend>
+                <q-icon name="lock_open" />
+              </template>
+              <template v-slot:append>
+                <q-icon
+                  color="bright"
+                  :name="isPwd ? 'visibility_off' : 'visibility'"
+                  class="cursor-pointer"
+                  @click="isPwd = !isPwd"
+                />
+              </template>
+            </q-input>
+            <q-input
+              ref="confirmPwdRef2"
+              :type="isPwd ? 'password' : 'text'"
+              filled
+              hide-bottom-space
+              v-model="verificationForm.confirmPwd"
+              label="确认新密码"
+              clearable
+              lazy-rules
+              :rules="[
+                (val) => (val && val.length > 0) || '请输入确认密码',
+                (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12',
+                validatePassNew2
+              ]"
+            >
+              <template v-slot:prepend>
+                <q-icon name="lock_open" />
+              </template>
+              <template v-slot:append>
+                <q-icon
+                  color="bright"
+                  :name="isPwd ? 'visibility_off' : 'visibility'"
+                  class="cursor-pointer"
+                  @click="isPwd = !isPwd"
+                />
+              </template>
+            </q-input>
+            <div class="row justify-between items-center">
+              <q-btn
+                @click.prevent="onVerifyForgotPassword('email')"
+                label="提交"
+                width="100%"
+                class="common-large-btn"
+                color="brightbtn"
+                style="width: 100%"
+              />
+            </div>
+          </q-form>
+        </div>
       </q-tab-panel>
       <q-tab-panel name="mail">
         <div class="text-blue-grey">方式：请输入您的注册邮箱</div>
@@ -210,7 +358,7 @@
             </q-item-label>
 
             <q-input
-              ref="emailRef"
+              ref="emailRef2"
               hide-bottom-space
               type="email"
               borderless
@@ -235,7 +383,7 @@
               class="captcha-textfield"
               bg-color="white"
               ref="verificationRef"
-              placeholder="请输入4位验证码"
+              placeholder="请输入验证码"
               type="text"
               v-model="passwordForm.captchaCode"
               :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
@@ -299,17 +447,24 @@ export default defineComponent({
     };
     const loginNameRef = ref();
     const emailRef = ref();
+    const emailRef2 = ref();
+
+    const phoneRef = ref();
+    const userRef2 = ref();
+    const userRef = ref();
     const ftCaptchaRef = ref();
     const codeRef = ref();
     const newPwdRef = ref();
     const captchaRef = ref();
+    const confirmPwdRef = ref();
+
+    const newPwdRef2 = ref();
+    const codeRef2 = ref();
+    const confirmPwdRef2 = ref();
+
     const $q = useQuasar();
     const pwdStrength = ref("");
-    const isValidEmail = () => {
-      const emailPattern =
-        /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
-      return emailPattern.test(passwordForm.email) || "请输入有效电子邮件";
-    };
+
     var qs = require("qs");
     const route = useRoute();
     const router = useRouter();
@@ -339,63 +494,86 @@ export default defineComponent({
       confirmPwd: ""
     });
 
+    const verificationPhoneForm = reactive({
+      email: null,
+      phone: null,
+      code: "",
+      codeId: SessionStorage.getItem("phoneCodeId"),
+      newPassword: "",
+      confirmPwd: ""
+    });
+
     const submitSendOtp = (method) => {
       if (method === "phone") {
-        $q.loading.show({
-          message: "发送验证码中..."
-        });
-        api
-          .post("/otp/sendForgetPasswordPhone", qs.stringify(passwordFormPhone))
-          .then((response) => {
-            if (response.code === 0) {
-              isEmailSent.value = true;
-              SessionStorage.set("phoneCodeId", response.data.codeId);
-            }
-            $q.loading.hide();
+        phoneRef.value.validate();
+        userRef.value.validate();
 
-            $q.notify({
-              color: "positive",
-              position: "top",
-              message: "请输入新密码",
-              icon: "check_circle_outline"
-            });
-          })
-          .catch((error) => {
-            $q.loading.hide();
+        if (phoneRef.value.hasError || userRef.value.hasError) {
+        } else {
+          $q.loading.show({
+            message: "发送验证码中..."
           });
-        getCode();
+          api
+            .post("/otp/sendForgetPasswordPhone", qs.stringify(passwordFormPhone))
+            .then((response) => {
+              if (response.code === 0) {
+                isPhoneSent.value = true;
+                SessionStorage.set("phoneCodeId", response.data.codeId);
+              }
+              $q.loading.hide();
+
+              $q.notify({
+                color: "positive",
+                position: "top",
+                message: "请输入新密码",
+                icon: "check_circle_outline"
+              });
+              getCode();
+            })
+            .catch((error) => {
+              getCode();
+              $q.loading.hide();
+            });
+        }
       } else if (method === "email") {
-        $q.loading.show({
-          message: "发送验证码中..."
-        });
-        api
-          .post("/otp/sendForgetPasswordEmail", qs.stringify(passwordFormEmail))
-          .then((response) => {
-            if (response.code === 0) {
-              isEmailSent.value = true;
-              SessionStorage.set("emailCodeId", response.data.codeId);
-            }
-            $q.loading.hide();
+        emailRef.value.validate();
+        userRef2.value.validate();
 
-            $q.notify({
-              color: "positive",
-              position: "top",
-              message: "请输入新密码",
-              icon: "check_circle_outline"
-            });
-          })
-          .catch((error) => {
-            $q.loading.hide();
+        if (emailRef.value.hasError || userRef2.value.hasError) {
+        } else {
+          $q.loading.show({
+            message: "发送验证码中..."
           });
-        getCode();
+          api
+            .post("/otp/sendForgetPasswordEmail", qs.stringify(passwordFormEmail))
+            .then((response) => {
+              if (response.code === 0) {
+                isEmailSent.value = true;
+                SessionStorage.set("emailCodeId", response.data.codeId);
+              }
+              $q.loading.hide();
+
+              $q.notify({
+                color: "positive",
+                position: "top",
+                message: "请输入新密码",
+                icon: "check_circle_outline"
+              });
+              getCode();
+            })
+            .catch((error) => {
+              getCode();
+              $q.loading.hide();
+            });
+        }
       }
     };
 
     const submitForgetPass = () => {
-      emailRef.value.validate();
+      emailRef2.value.validate();
       verificationRef.value.validate();
 
-      if (emailRef.value.hasError || verificationRef.value.hasError) {
+      if (emailRef2.value.hasError || verificationRef.value.hasError) {
       } else {
         findAccount(passwordForm)
           .then((res) => {
@@ -406,6 +584,8 @@ export default defineComponent({
                 color: "positive",
                 position: "top"
               });
+
+              passwordForm.email = "";
             }
           })
           .catch((res) => {
@@ -413,60 +593,31 @@ export default defineComponent({
           });
       }
     };
-    const onSubmitForgotPwd = () => {
-      emailRef.value.validate();
-      ftCaptchaRef.value.validate();
-      $q.loading.show({
-        message: "注册中..."
-      });
-      if (emailRef.value.hasError || ftCaptchaRef.value.hasError) {
-        $q.loading.hide();
-      } else {
-        api
-          .post("/otp/sendForgetPasswordEmail", qs.stringify(passwordForm))
-          .then((response) => {
-            if (response.code === 0) {
-              isEmailSent.value = true;
-              SessionStorage.set("emailCodeId", response.data.codeId);
-            } else {
-              // $q.notify({
-              //   color: "negative",
-              //   position: "top",
-              //   message: res.message,
-              //   icon: "report_problem"
-              // });
-            }
-            $q.loading.hide();
-          })
-          .catch((error) => {
-            $q.loading.hide();
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: error.message,
-            //   icon: "report_problem"
-            // });
-          });
-        getCode();
-      }
-    };
+
     const onVerifyForgotPassword = (method) => {
       if (method == "phone") {
         codeRef.value.validate();
         newPwdRef.value.validate();
-        captchaRef.value.validate();
+        confirmPwdRef.value.validate();
         $q.loading.show({
           message: "提交中.."
         });
-        if (codeRef.value.hasError || newPwdRef.value.hasError || captchaRef.value.hasError) {
+        if (codeRef.value.hasError || newPwdRef.value.hasError || confirmPwdRef.value.hasError) {
           $q.loading.hide();
         } else {
-          verificationForm.codeId = SessionStorage.getItem("emailCodeId");
-          verificationForm.email = passwordForm.email;
+          verificationPhoneForm.codeId = SessionStorage.getItem("phoneCodeId");
+          verificationPhoneForm.phone = passwordFormPhone.phone;
+
           api
-            .post("/otp/verifyForgetPasswordPhone", qs.stringify(verificationForm))
+            .post("/otp/verifyForgetPasswordPhone", qs.stringify(verificationPhoneForm))
             .then((response) => {
               if (response.code === 0) {
+                $q.notify({
+                  color: "positive",
+                  position: "top",
+                  message: "密码修改成功",
+                  icon: "check_circle_outline"
+                });
                 router.push("/login");
               } else {
               }
@@ -484,21 +635,27 @@ export default defineComponent({
           getCode();
         }
       } else if (method == "email") {
-        codeRef.value.validate();
-        newPwdRef.value.validate();
-        captchaRef.value.validate();
+        codeRef2.value.validate();
+        newPwdRef2.value.validate();
+        confirmPwdRef2.value.validate();
         $q.loading.show({
           message: "提交中.."
         });
-        if (codeRef.value.hasError || newPwdRef.value.hasError || captchaRef.value.hasError) {
+        if (codeRef2.value.hasError || newPwdRef2.value.hasError || confirmPwdRef2.value.hasError) {
           $q.loading.hide();
         } else {
           verificationForm.codeId = SessionStorage.getItem("emailCodeId");
-          verificationForm.email = passwordForm.email;
+          verificationForm.email = passwordFormEmail.email;
           api
             .post("/otp/verifyForgetPasswordEmail", qs.stringify(verificationForm))
             .then((response) => {
               if (response.code === 0) {
+                $q.notify({
+                  color: "positive",
+                  position: "top",
+                  message: "密码修改成功",
+                  icon: "check_circle_outline"
+                });
                 router.push("/login");
               } else {
               }
@@ -530,57 +687,44 @@ export default defineComponent({
       passwordFormEmail.loginName = "";
       passwordFormEmail.email = "";
       passwordFormEmail.captchaCode = "";
-
-      fgtpwdTab.value = tabVal;
     };
 
-    watch(
-      () => verificationForm.newPassword,
-      () => {
-        pwdStrength.value = "";
+    const isValidPhone = (val) => {
+      const phonePattern = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
+      return phonePattern.test(val) || "请输入有效的电话号码";
+    };
 
-        var pwd = verificationForm.newPassword;
-        var result = 0;
-        for (var i = 0, len = pwd.length; i < len; ++i) {
-          result |= charType(pwd.charCodeAt(i));
-        }
+    const isValidEmail = (val) => {
+      const emailPattern =
+        /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
+      return emailPattern.test(val) || "请输入有效电子邮件";
+    };
 
-        var level = 0;
-        for (var i = 0; i <= 4; i++) {
-          if (result & 1) {
-            level++;
-          }
-          result = result >>> 1;
-        }
-        if (pwd.length >= 6) {
-          switch (level) {
-            case 1:
-              pwdStrength.value = "weak";
-              break;
-            case 2:
-              pwdStrength.value = "normal";
-              break;
-            case 3:
-            case 4:
-              pwdStrength.value = "strong";
-              break;
-          }
-        } else {
-          pwdStrength.value = "weak";
-        }
+    const validatePassNew = () => {
+      if (verificationPhoneForm.confirmPwd !== verificationPhoneForm.newPassword) {
+        return "密码不同";
       }
-    );
+    };
+
+    const validatePassNew2 = () => {
+      if (verificationForm.confirmPwd !== verificationForm.newPassword) {
+        return "密码不同";
+      }
+    };
+
     return {
       header: "Forgot Account & Password",
       passwordForm,
       verificationForm,
+      validatePassNew,
+      validatePassNew2,
+      verificationPhoneForm,
       verificationImg,
       activeTab,
       getCode,
       isValidEmail,
       isEmailSent,
       isPhoneSent,
-      onSubmitForgotPwd,
       submitForgetPass,
       onVerifyForgotPassword,
       submitSendOtp,
@@ -588,14 +732,23 @@ export default defineComponent({
       passwordFormEmail,
       loginNameRef,
       emailRef,
+      emailRef2,
+      phoneRef,
+      userRef,
+      userRef2,
       ftCaptchaRef,
+      confirmPwdRef,
       verificationRef,
       codeRef,
       newPwdRef,
       captchaRef,
+      newPwdRef2,
+      codeRef2,
+      confirmPwdRef2,
       pwdStrength,
       tab,
       isPwd,
+      isValidPhone,
       goToTab,
       passRef
     };
