@@ -95,7 +95,7 @@
             </template>
           </q-input>
 
-          <q-btn class="common-md-white-btn" label="最大金额" @click="updateTransferAmt" />
+          <q-btn class="common-md-white-btn" style="white-space: nowrap" label="最大金额" @click="updateTransferAmt" />
         </div>
 
         <q-btn
