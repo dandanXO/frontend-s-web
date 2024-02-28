@@ -55,7 +55,8 @@
           type="primary"
           v-permission="['sys:report:summary:export']"
           @click="requestExportExcel"
-        >{{ t('fields.requestExportToExcel') }}
+        >
+          {{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
     </div>
@@ -335,8 +336,13 @@
       :current-page="request.current"
     />
 
-    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
-               :close-on-click-modal="false" :close-on-press-escape="false"
+    <el-dialog
+      :title="t('fields.exportToExcel')"
+      v-model="uiControl.messageVisible"
+      append-to-body
+      width="500px"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
     >
       <span>{{ t('message.requestExportToExcelDone1') }}</span>
       <router-link :to="`/site-management/download-manager`">
@@ -352,7 +358,11 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getSummaryReport, getTotalSummaryReport, getExportSummaryReport } from '../../../api/report-summary'
+import {
+  getDorisSummaryReport,
+  getDorisTotalSummaryReport,
+  getExportSummaryReport,
+} from '../../../api/report-summary'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
@@ -385,7 +395,7 @@ const page = reactive({
 })
 
 const totalPage = reactive({
-  records: []
+  records: [],
 })
 
 const request = reactive({
@@ -434,8 +444,8 @@ async function loadSummaryRecord() {
     }
   }
 
-  const { data: ret } = await getSummaryReport(query)
-  const { data: ret1 } = await getTotalSummaryReport(query)
+  const { data: ret } = await getDorisSummaryReport(query)
+  const { data: ret1 } = await getDorisTotalSummaryReport(query)
   totalPage.records = ret1.records
   page.pages = ret.pages
   page.records = ret.records
@@ -477,14 +487,23 @@ function getSummaries(param) {
           sums[index] = t('fields.total')
         } else if (index === 3) {
         } else {
-          var prop = column.property;
-          if (index === 1 || index === 2 || index === 7 || index === 9 || index === 11 || index === 13) {
-            sums[index] = totalPage.records[0][prop];
+          var prop = column.property
+          if (
+            index === 1 ||
+            index === 2 ||
+            index === 7 ||
+            index === 9 ||
+            index === 11 ||
+            index === 13
+          ) {
+            sums[index] = totalPage.records[0][prop]
           } else {
-            sums[index] = "$" + parseFloat(totalPage.records[0][prop]).toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            });
+            sums[index] =
+              '$' +
+              parseFloat(totalPage.records[0][prop]).toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })
           }
         }
       })
@@ -527,12 +546,12 @@ function checkQuery() {
 }
 
 async function requestExportExcel() {
-  const query = checkQuery();
-  query.requestBy = store.state.user.name;
-  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-  const { data: ret } = await getExportSummaryReport(query);
+  const query = checkQuery()
+  query.requestBy = store.state.user.name
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+  const { data: ret } = await getExportSummaryReport(query)
   if (ret) {
-    uiControl.messageVisible = true;
+    uiControl.messageVisible = true
   }
 }
 </script>
