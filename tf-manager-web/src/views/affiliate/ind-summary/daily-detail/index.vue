@@ -294,8 +294,8 @@ import { onMounted, reactive, ref } from 'vue'
 import { hasPermission } from '../../../../utils/util'
 import moment from 'moment'
 import {
-  queryDailySummary,
-  queryDailySummaryTotal,
+  queryDailySummaryList,
+  queryDailySummaryTotalList,
 } from '../../../../api/affiliate-daily-summary'
 import { getSiteListSimple } from '../../../../api/site'
 import { getAffiliateList } from '../../../../api/affiliate-record'
@@ -425,7 +425,13 @@ function checkQuery() {
   }
 
   if (request.loginNameList != null) {
-    query.loginNameList = request.loginNameList.join(',')
+    query.loginNameList = request.loginNameList
+      .map(name => {
+        const nameParts = name.split('(')
+        return nameParts[0].trim()
+      })
+      .join(',')
+    // query.loginNameList = request.loginNameList.join(',')
   }
 
   query.affiliateLevel = request.affiliateLevel
@@ -436,8 +442,8 @@ function checkQuery() {
 async function loadRecord() {
   page.loading = true
   const query = checkQuery()
-  const { data: ret } = await queryDailySummary(query)
-  const { data: ret1 } = await queryDailySummaryTotal(query)
+  const { data: ret } = await queryDailySummaryList(query)
+  const { data: ret1 } = await queryDailySummaryTotalList(query)
   total.data = ret1
   page.pages = ret.pages
   page.records = ret.records
