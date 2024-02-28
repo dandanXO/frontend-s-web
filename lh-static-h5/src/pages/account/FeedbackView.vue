@@ -23,11 +23,32 @@
                 </div>
                 <div class="answer-container">
                   <q-form>
-                        <span v-for="(ans, index) in item.choices" :key="index">
-                        <q-radio @click="getSelected(item,ans.choice)" name="optionModal" v-model="optionModal"
-                                 :val="index" :label="ans.choice" />
+                    <span v-for="(ans, index) in item.choices" :key="index">
+                      <q-checkbox
+                        v-if="item.isMultiple"
+                        v-model="optionModal" 
+                        :val="index" 
+                        :label="ans.choice" 
+                        @update:model-value="(newValue) => {
+                          toggleSelected(item, ans.needSpecify ? answerInputModal : ans.choice, newValue.includes(index), ans.needSpecify)
+                        }"
+                      />
+                      <q-radio v-else @click="getSelected(item,ans.choice)" name="optionModal" v-model="optionModal"
+                              :val="index" :label="ans.choice" />
 
-                        <div v-if="optionModal === index && ans.needSpecify">
+                      <div v-if="item.isMultiple && Array.isArray(optionModal) && JSON.parse(JSON.stringify(optionModal)).includes(index) && ans.needSpecify">
+                        <q-input
+                          class="answer-input-fill"
+                          v-model="answerInputModal"
+                          placeholder="请输入获取渠道"
+                          type="textarea"
+                          :autosize="{ minRows: 4 }"
+                          @change="(val) => {
+                            toggleSelected(item, val, true, ans.needSpecify)
+                          }"
+                        />
+                      </div>
+                      <div v-else-if="optionModal === index && ans.needSpecify">
                         <q-input
                           class="answer-input-fill"
                           v-model="answerInputModal"
@@ -36,8 +57,8 @@
                           :autosize="{ minRows: 4 }"
                           @change="getSelected(item, ans.choice)"
                         />
-                            </div>
-                          </span>
+                      </div>
+                    </span>
                   </q-form>
                   <!-- <el-radio-group v-model="optionModal" >
                     <el-radio v-for="(ans, index) in item.choices" :key="index" :label="index" @click="getSelected(item, ans.choice)">
@@ -135,7 +156,7 @@ function onBtnStartAnswerClick() {
 }
 
 const quesTitleOptions = ref([]);
-let optionModal = ref(null);
+let optionModal = ref([]);
 
 const referralLink = ref();
 const getReferral = () => {
@@ -243,6 +264,27 @@ const getSelected = (item, ans) => {
   };
   cacheChoices[item.sequence - 1] = cacheObj;
 };
+const toggleSelected = (item, ans, isChecked, needSpecify) => {
+  const input = answerInputModal.value;
+  
+  const previousChoicesArr = Array.from(choices[item.sequence - 1]?.choice || []);
+  const newChoicesArr = [...previousChoicesArr, ans].filter(item => !isChecked ? item !== ans : item);
+
+  var obj = {
+    question: item.question,
+    choice: newChoicesArr
+  };
+  choices[item.sequence - 1] = obj;
+  var cacheObj = {
+    sequence: item.sequence,
+    question: item.question,
+    choice:newChoicesArr,
+    input: input,
+    needSpecify,
+    isMultiple: true
+  };
+  cacheChoices[item.sequence - 1] = cacheObj;
+};
 const btnClick = async (btnType) => {
   if (optionModal.value === null && (btnType === "next" || btnType === "final")) {
     return $q.notify({
@@ -252,7 +294,7 @@ const btnClick = async (btnType) => {
       icon: "report_problem"
     });
   }
-  optionModal.value = null;
+  optionModal.value = [];
   answerInputModal.value = null;
   const prevBtn = document.getElementById("prevBtn");
   const nextBtn = document.getElementById("nextBtn");
@@ -286,7 +328,17 @@ const btnClick = async (btnType) => {
   cacheChoices.forEach((c) => {
     if (c.sequence === recordsPagination.current) {
       const choicesArray = quesTitleOptions.value[Number(c.sequence) - 1].choices;
-      const chosenChoice = choicesArray.findIndex(choice => choice.choice === c.choice);
+      const chosenChoice = (() => {
+        if(c.isMultiple) {
+          const multipleChoices =  c.choice.map((selectedChoice) => choicesArray.findIndex(({choice}) => choice === selectedChoice));
+          const needSpecifyChoice = choicesArray.findIndex(choice => choice.needSpecify);
+
+          return c.input ? [needSpecifyChoice, ...multipleChoices] : multipleChoices;
+        }
+
+        return choicesArray.findIndex(choice => choice.choice === c.choice);
+      })();
+      
       optionModal.value = chosenChoice;
       answerInputModal.value = c.input ? c.input : "";
     }
@@ -297,6 +349,11 @@ const btnClick = async (btnType) => {
     // const QRDiv = document.getElementById("QRContainer");
     // When Submit API is COMPLETE
 
+    const choicesLockedIn = Array.from(choices).map((field) => ({
+      ...field,
+      choice: Array.isArray(field.choice) ? field.choice.join(',') : field.choice
+    }));
+
     var evtArray = Object.values(process.env.EVT_API);
     var evtApi = evtArray[getRndInteger(0, evtArray.length)];
     try {
@@ -304,7 +361,7 @@ const btnClick = async (btnType) => {
         `${evtApi}/questionnaire/submit`,
         {
           method: "POST",
-          body: JSON.stringify(choices),
+          body: JSON.stringify(choicesLockedIn),
           headers: {
             token: `${store.token}`,
             "Content-Type": "application/json"
