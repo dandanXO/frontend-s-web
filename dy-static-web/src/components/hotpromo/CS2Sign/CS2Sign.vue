@@ -221,6 +221,15 @@ const init = () => {
       if(res.code === 0) {
         checkInDetails.value = res.data
         signNumber.value = checkInDetails.value.currentConsecutiveDay;
+        dayList.value = []
+        checkInDetails.value.dayList.forEach((day) => {
+            const obj = {
+                no: day,
+                claimed: false,
+                toClaim: false
+            }
+            dayList.value.push(obj)
+        })
         populateDayList(checkInDetails.value)
       }
   })
@@ -303,6 +312,8 @@ const openModal = (modal, item, itemIndex) => {
             if (res.code === 0) {
                 amountClaimed.value = res.data
                 isClaimModal.value = true;
+                dayList.value[itemIndex].toClaim = false;
+                dayList.value[itemIndex].claimed = true;
             }
         })
         setTimeout(() => {
