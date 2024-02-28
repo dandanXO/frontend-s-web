@@ -1002,7 +1002,7 @@ export default defineComponent({
       // recordActive.value = key.props.name
       loading.value = true;
       if (recordActive.value === "gameBetRecord") {
-        // getPlatList(recordActive.value);
+        getPlatList(recordActive.value);
       } else if (recordActive.value === "reminderRecord") {
         financeFeedbackList(searchForm[recordActive.value]).then((response) => {
           if (response.code === 0) {
@@ -1115,20 +1115,20 @@ export default defineComponent({
         platformsList.value = ret;
       });
 
-      const obj = {
-        memberId: searchForm.gameBetRecord.memberId,
-        platform: searchForm.gameBetRecord.platform,
-        startDate: searchForm.gameBetRecord.startDate,
-        endDate: searchForm.gameBetRecord.endDate
-      };
-      gameBetRecordTotal(obj).then((ret) => {
-        if (ret.code === 0) {
-          totalBetRecord.totalBet = ret.data.totalBet;
-          totalBetRecord.totalPayout = ret.data.totalPayout;
-        } else {
-          ElMessage.error(ret.message);
-        }
-      });
+      // const obj = {
+      //   memberId: searchForm.gameBetRecord.memberId,
+      //   platform: searchForm.gameBetRecord.platform,
+      //   startDate: searchForm.gameBetRecord.startDate,
+      //   endDate: searchForm.gameBetRecord.endDate
+      // };
+      // gameBetRecordTotal(obj).then((ret) => {
+      //   if (ret.code === 0) {
+      //     totalBetRecord.totalBet = ret.data.totalBet;
+      //     totalBetRecord.totalPayout = ret.data.totalPayout;
+      //   } else {
+      //     ElMessage.error(ret.message);
+      //   }
+      // });
 
     };
 
