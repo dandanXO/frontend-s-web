@@ -6,6 +6,7 @@ export default {
     status: {
       OPEN: '开启',
       CLOSE: '关闭',
+      TEST: '测试',
     },
   },
   affiliate: {
@@ -2047,8 +2048,9 @@ export default {
     'User Login Log': '用户登录日志',
     'Online Stats': '在线人数',
     'Promotion Activity': '优惠活动',
-    'Platform Competition': '平台赛事',
-    'Platform Competition Code': '平台赛事代码',
+    'Competition Management': '赛事管理',
+    'Competition List': '赛事列表',
+    'Competition Code': '赛事代码',
   },
   google: {
     google_auth_menu: '谷歌验证',
