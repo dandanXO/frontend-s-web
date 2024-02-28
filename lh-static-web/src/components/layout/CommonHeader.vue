@@ -11,15 +11,17 @@
             <template v-if="!nav.hasicon">
               <div class="header-menu-item">
                 <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
+                  <div class="menu-icon">
                   <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase()">
                     <img
-                      class="menu-icon"
                       :src="require(`../../assets/images/home/menu/${nav.code}-icon-active.png`)"
                     />
                   </template>
                   <template v-else>
-                    <img class="menu-icon" :src="require(`../../assets/images/home/menu/${nav.code}-icon.png`)" />
+                    <img :src="require(`../../assets/images/home/menu/${nav.code}-icon.png`)" />
                   </template>
+                </div>
+                 {{ nav.name }}
                 </router-link>
               </div>
             </template>
@@ -1873,8 +1875,9 @@ body {
     background: $color-white;
 
     position: relative;
-    box-shadow: $shadow-header;
+    // box-shadow: $shadow-header;
 
+    background: linear-gradient(180deg, #8e8fff, #b4dcff, transparent);
     .top-nav-inner {
       max-width: $maxwidth;
       margin: 0 auto;
@@ -1944,7 +1947,15 @@ body {
           }
 
           .menu-icon {
-            width: 50px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+            img {
+            width: 20px;
+            margin: 0 auto;
+
+            }
           }
 
           span:first-child {
@@ -1983,8 +1994,8 @@ body {
 
         .sub-menu {
           transition: $page-trans;
-          background: rgba(239, 242, 245, 0.95);
-          box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 4px 0px 0px #a7c2dd;
+          // background: rgba(239, 242, 245, 0.95);
+          // box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 4px 0px 0px #a7c2dd;
           backdrop-filter: blur(24.5px);
           overflow: hidden;
           height: 0px;

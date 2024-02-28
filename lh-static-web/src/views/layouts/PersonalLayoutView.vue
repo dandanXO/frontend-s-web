@@ -76,7 +76,8 @@ export default defineComponent({
 .account-container {
   font-size: 14px;
   padding: 20px;
-  background: #f4f8f9;
+  // background: #f4f8f9;
+  background: #ffffff;
   display: flex;
   justify-content: center;
   align-items: flex-start;

@@ -142,7 +142,7 @@ export default defineComponent({
       // { code: "POKER", img: 'poker', label: '棋牌'},
       { code: "LIVE CASINO", img: 'live', label: '真人娱乐'},
       // { code: "FISH", img: 'fish', label: '捕鱼'},
-      { code: "OTHERS", img: 'slot', label: '其他'},
+      { code: "OTHERS", img: 'slot', label: '其他优惠'},
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
