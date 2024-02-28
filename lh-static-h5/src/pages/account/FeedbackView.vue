@@ -36,7 +36,7 @@
                       <q-radio v-else @click="getSelected(item,ans.choice)" name="optionModal" v-model="optionModal"
                               :val="index" :label="ans.choice" />
 
-                      <div v-if="item.isMultiple && Array.isArray(optionModal) && JSON.parse(JSON.stringify(optionModal)).includes(index) && ans.needSpecify">
+                      <div v-if="item.isMultiple && Array.isArray(optionModal) && Array.from(optionModal).includes(index) && ans.needSpecify">
                         <q-input
                           class="answer-input-fill"
                           v-model="answerInputModal"
