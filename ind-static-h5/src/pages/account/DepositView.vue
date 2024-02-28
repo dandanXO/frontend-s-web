@@ -163,9 +163,9 @@
       <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
     </div>
 
-    <div class="node-wrapper" style="display: none">
-      <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
-    </div>
+    <!--    <div class="node-wrapper" style="display: none">-->
+    <!--      <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />-->
+    <!--    </div>-->
   </div>
 
   <q-dialog width="100%" v-model="isDeposited">
@@ -347,6 +347,9 @@ function initPay() {
         element.promoStyle = "right: -5px; top: 0px; padding: 20px;";
         payMethods.value.push(element);
       });
+      if (payMethods.value.length > 0) {
+        activeMethod.value = payMethods.value[0];
+      }
       if (payMethods.value[0].extra && payMethods.value[0].extra.banks) {
         bankCardList.value = payMethods.value[0].extra.banks;
       }

@@ -66,7 +66,7 @@ export default defineComponent({
     const getAppDownloadUrl = () => {
       getAppDownloadUrlFromServer()
         .then((res) => {
-          downloadUrl.value = res;
+          downloadUrl.value = res.downloadPageUrl;
         })
         .catch((err) => {
           console.log(err);

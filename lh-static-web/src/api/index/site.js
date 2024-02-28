@@ -7,7 +7,7 @@ export function getSiteParamFromServer() {
 
 export function getAppDownloadUrlFromServer() {
   return cached.get("APPDOWNLOAD_URL", () =>
-    server.REST.get("/config/appDownloadUrl")
+    server.REST.get("/app/getAppData?siteCode=lh1&appType=ALL_SITE")
   );
 }
 

@@ -700,6 +700,8 @@ export default defineComponent({
           dataSource.value = [];
         if (response.code === 0) {
           pagination.total = response.data.length;
+          totalBetRecord.totalBet = response.data.sums.totalBet
+          totalBetRecord.totalPayout = response.data.sums.totalPayout
           //clear array and then push new record
           dataSource.splice(0);
           dataSource.push(...response.data.records);
@@ -767,12 +769,12 @@ export default defineComponent({
         startDate: searchForm.gameBetRecord.startDate,
         endDate: searchForm.gameBetRecord.endDate,
       }
-      api.get("/session/member/gameBetRecordTotal", {params: obj}).then((ret) => {
-        if (ret.code === 0) {
-          totalBetRecord.totalBet = ret.data.totalBet
-          totalBetRecord.totalPayout = ret.data.totalPayout
-        }
-      })
+      // api.get("/session/member/gameBetRecordTotal", {params: obj}).then((ret) => {
+      //   if (ret.code === 0) {
+      //     totalBetRecord.totalBet = ret.data.totalBet
+      //     totalBetRecord.totalPayout = ret.data.totalPayout
+      //   }
+      // })
 
     };
     const betRecordDialog = ref(false)

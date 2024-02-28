@@ -70,7 +70,7 @@
             </div>
             <div class="bank-number-wrapper">
               <div>卡号：</div>
-              <div class="bank-number">{{ bankCard.cardNumber }}</div>
+              <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
               <img
                 class="copy-btn"
                 src="../../assets/images/account/account-copy-icon.png"
@@ -99,7 +99,7 @@
             </div>
             <div class="bank-number-wrapper">
               <div>卡号：</div>
-              <div class="bank-number">{{ bankCard.cardNumber }}</div>
+              <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
               <img
                 class="copy-btn"
                 src="../../assets/images/account/account-copy-icon.png"
@@ -128,7 +128,7 @@
             </div>
             <div class="bank-number-wrapper">
               <div>卡号：</div>
-              <div class="bank-number">{{ bankCard.cardNumber }}</div>
+              <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
               <img
                 class="copy-btn"
                 src="../../assets/images/account/account-copy-icon.png"
@@ -157,7 +157,7 @@
             </div>
             <div class="bank-number-wrapper">
               <div>卡号：</div>
-              <div class="bank-number">{{ bankCard.cardNumber }}</div>
+              <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
               <img
                 class="copy-btn"
                 src="../../assets/images/account/account-copy-icon.png"
@@ -289,6 +289,15 @@ const loadCards = () => {
     .catch((error) => {
       console.log("error", error);
     });
+};
+
+const formatCardNumber = (cardNumber) => {
+  const firstFourDigits = cardNumber.slice(0, 4);
+  const lastFourDigits = cardNumber.slice(-4);
+  const middleDigits = cardNumber.slice(4, -4);
+  const maskedPortion = " **** **** "; // Mask all digits in the middle
+
+  return firstFourDigits + maskedPortion + lastFourDigits;
 };
 
 onActivated(() => {

@@ -108,24 +108,12 @@
           </div>
           <div v-else class="selected-promo">
             <div class="selected-promo-wrapper">
-              <div class="banner-container">
-                <!-- <div
-                    class="promo-bg"
-                    :style="
-                    'background-image: url(' +
-                    imgURL +
-                    (selectedPromo.mobileBannerUrl ? selectedPromo.mobileBannerUrl : selectedPromo.mobileImgUrl) +
-                    ')'
-                  "
-                ></div> -->
-
-                <!-- <div class="promo-bg"> -->
+              <div class="banner-container" v-if="selectedPromo?.mobileBannerUrl">
                 <img
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
                   style="display: block; width: 100%"
                 />
-                <!-- </div> -->
               </div>
               <div class="inner">
                 <div v-if="selectedPromo.hasPromo">
@@ -397,6 +385,8 @@ export default defineComponent({
     };
 
     onActivated(() => {
+      isPromoDetail.value= false;
+      selectedPromo.value= {};
       // if promo name is present, do not show promo list on first load
       if (route.query.name) {
         isPromoDetail.value = true;

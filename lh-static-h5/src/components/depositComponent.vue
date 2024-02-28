@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md" style="overflow: auto; margin: 8px 8px">
+  <div class="q-pa-xs" style="overflow: auto; margin: 2px 8px">
     <div class="q-mb-lg">
       <span class="additional-tips">如果遇到存款问题，请立即联系在线客服解决！</span>
     </div>
@@ -84,7 +84,7 @@
           </template>
         </q-select>
 
-        <div class="q-mt-md q-mb-md text-grey text-bold q-pb-md">
+        <div class="q-mt-sm q-mb-sm text-grey text-bold ">
           最低金额:
           {{ calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0 }}
           <br />
@@ -96,7 +96,7 @@
           }}
         </div>
 
-        <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="兑换率">
+        <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-xs" label="兑换率">
           <span class="text-positive">
             1.00 USDT ≈ {{ activeMethod.currencyRate }}
             {{ store.currency.value }}
@@ -113,7 +113,7 @@
         ></BankComponent>
         <q-select
           ref="offerRef"
-          class="deposit-selection q-mt-md"
+          class="deposit-selection q-mt-xs"
           label="选择优惠"
           filled
           :options="unselectedPrivileges"
@@ -134,8 +134,6 @@
             </q-item>
           </template>
         </q-select>
-        <div class="q-mt-md" v-html="activeMethod.msg"></div>
-        <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
         <div class="q-mt-md">
           <q-btn
             class="common-large-btn"
@@ -145,6 +143,9 @@
             label="确定存款"
           />
         </div>
+        <div class="q-mt-sm" v-html="activeMethod.msg"></div>
+        <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
+
       </q-form>
     </div>
   </div>

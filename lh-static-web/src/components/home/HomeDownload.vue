@@ -11,63 +11,63 @@
 
         <div class="tab-wrapper">
           <el-tabs class="tab" v-model="activeKey" type="card">
-            <el-tab-pane key="1" label="全站APP">
+            <el-tab-pane name="1" label="全站APP">
               <div class="tab-title">综合客户端下载</div>
               <div class="tab-desc">
                 引领市场的卓越技术，自主研发了全套终端应用，让您畅享 Web,H5,更有iOS,Android原生APP，让您随时随地，娱乐
                 投注！
               </div>
               <div class="download">
-                <div class="qr-wrapper">
-                  <img src="../../assets/home/download/app.png" />
-                  <div class="link-desc">扫码进入下载页面</div>
-                  <div class="link">www.leihuo.com</div>
-                </div>
+<!--                <div class="qr-wrapper">-->
+<!--                  <img src="../../assets/home/download/app.png" />-->
+<!--                  <div class="link-desc">扫码进入下载页面</div>-->
+<!--                  <div class="link">www.leihuo.com</div>-->
+<!--                </div>-->
                 <div class="dl-wrapper">
-                  <img src="../../assets/home/download/app.png" />
+                  <VueQRCodeComponent :size="140" :text="ui.downloadUrl" />
                   <div class="link-desc">手机免费下载地址</div>
-                  <div class="link">www.leihuo.com</div>
+                  <div class="link">{{ui.downloadUrl}}</div>
                 </div>
               </div>
             </el-tab-pane>
-            <el-tab-pane key="2" label="电竞APP">
-              <div class="tab-title">电竞App下载</div>
-              <div class="tab-desc">
-                引领市场的卓越技术，自主研发了全套终端应用，让您畅享 Web,H5,更有iOS,Android原生APP，让您随时随地，娱乐
-                投注！
-              </div>
-              <div class="download">
-                <div class="qr-wrapper">
-                  <img src="../../assets/home/download/app.png" />
-                  <div class="link-desc">扫码进入下载页面</div>
-                  <div class="link">www.leihuo.com</div>
-                </div>
-                <div class="dl-wrapper">
-                  <img src="../../assets/home/download/app.png" />
-                  <div class="link-desc">手机免费下载地址</div>
-                  <div class="link">www.leihuo.com</div>
-                </div>
-              </div>
-            </el-tab-pane>
-            <el-tab-pane key="3" label="体育APP">
-              <div class="tab-title">体育App下载</div>
-              <div class="tab-desc">
-                引领市场的卓越技术，自主研发了全套终端应用，让您畅享 Web,H5,更有iOS,Android原生APP，让您随时随地，娱乐
-                投注！
-              </div>
-              <div class="download">
-                <div class="qr-wrapper">
-                  <img src="../../assets/home/download/app.png" />
-                  <div class="link-desc">扫码进入下载页面</div>
-                  <div class="link">www.leihuo.com</div>
-                </div>
-                <div class="dl-wrapper">
-                  <img src="../../assets/home/download/app.png" />
-                  <div class="link-desc">手机免费下载地址</div>
-                  <div class="link">www.leihuo.com</div>
-                </div>
-              </div>
-            </el-tab-pane>
+<!--            <el-tab-pane name="2"  label="电竞APP">-->
+<!--              <div class="tab-title">电竞App下载</div>-->
+<!--              <div class="tab-desc">-->
+<!--                引领市场的卓越技术，自主研发了全套终端应用，让您畅享 Web,H5,更有iOS,Android原生APP，让您随时随地，娱乐-->
+<!--                投注！-->
+<!--              </div>-->
+<!--              <div class="download">-->
+<!--                <div class="qr-wrapper">-->
+<!--                  <img src="../../assets/home/download/app.png" />-->
+<!--                  <div class="link-desc">扫码进入下载页面</div>-->
+<!--                  <div class="link">www.leihuo.com</div>-->
+<!--                </div>-->
+<!--                <div class="dl-wrapper">-->
+<!--                  <img src="../../assets/home/download/app.png" />-->
+<!--                  <div class="link-desc">手机免费下载地址</div>-->
+<!--                  <div class="link">www.leihuo.com</div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </el-tab-pane>-->
+<!--            <el-tab-pane key="3" label="体育APP" >-->
+<!--              <div class="tab-title">体育App下载</div>-->
+<!--              <div class="tab-desc">-->
+<!--                引领市场的卓越技术，自主研发了全套终端应用，让您畅享 Web,H5,更有iOS,Android原生APP，让您随时随地，娱乐-->
+<!--                投注！-->
+<!--              </div>-->
+<!--              <div class="download">-->
+<!--                <div class="qr-wrapper">-->
+<!--                  <img src="../../assets/home/download/app.png" />-->
+<!--                  <div class="link-desc">扫码进入下载页面</div>-->
+<!--                  <div class="link">www.leihuo.com</div>-->
+<!--                </div>-->
+<!--                <div class="dl-wrapper">-->
+<!--                  <img src="../../assets/home/download/app.png" />-->
+<!--                  <div class="link-desc">手机免费下载地址</div>-->
+<!--                  <div class="link">www.leihuo.com</div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </el-tab-pane>-->
           </el-tabs>
         </div>
       </div>
@@ -79,10 +79,15 @@
 import { onMounted, ref } from "vue";
 import HomeTitle from "@/atoms/HomeTitle.vue";
 import HomeContentTitle from "@/atoms/HomeContentTitle.vue";
+import { uiStore } from "@/store/ui";
+import VueQRCodeComponent from "vue-qrcode-component";
 
 const activeKey= ref("1");
+const ui= uiStore()
 
-onMounted(() => {});
+
+onMounted(() => {
+});
 </script>
 
 <style lang="scss">
@@ -160,7 +165,7 @@ onMounted(() => {});
             align-items: center;
             justify-content: center;
             gap: 25px;
-            margin: 4rem 0 1rem 0;
+            margin: 3.2rem 0 1rem 0;
 
             .qr-wrapper,
             .dl-wrapper {
@@ -168,6 +173,18 @@ onMounted(() => {});
               background: #e3f5ff;
               text-align: center;
               padding: 0.5rem 1rem;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              gap: 3px;
+
+              div{
+                text-align: center;
+              }
+
+              canvas{
+                text-align: center;
+              }
 
               .link-desc {
                 color: #7a80a1;

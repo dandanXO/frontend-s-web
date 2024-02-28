@@ -3,7 +3,7 @@
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
-          <img class="logo" src="../../assets/logo.png" />
+          <img class="logo" src="../../assets/logo.svg" alt="logo" />
         </router-link>
 
         <div class="navigations">
@@ -694,15 +694,11 @@ export default defineComponent({
     const {height} = useElementSize(el);
     const isProfileDropDownOpen = ref(false);
 
-    const vipLevel = computed(() => {
+    const vip = computed(() => {
       if (store.vip.toUpperCase() === "NORMAL") {
         return 1;
       }
       return store.vip;
-    });
-
-    const vip = computed(() => {
-      return vipLevel.value;
     });
 
     const handleCommand = (command) => {

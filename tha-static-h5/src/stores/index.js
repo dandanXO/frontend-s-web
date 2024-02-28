@@ -113,6 +113,12 @@ export const userStore = defineStore("userStore", {
 
           if (ret.data.regHost && ret.data.regHost.indexOf("slot-win.cc") > -1) {
             ui.isAffiliateB = true;
+
+            fbq("init", "873960514528284");
+
+            // fbq("init", "722685126460216");
+            fbq("track", "PageView");
+            fbq("track", "ViewContent");
           }
         } else {
           this.memberLogout();

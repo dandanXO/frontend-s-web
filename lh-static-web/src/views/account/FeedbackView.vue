@@ -154,7 +154,7 @@
               </div>
               <div class="qr-code-div">
                 <VueQRCodeComponent :size="188" :text="referralLink" />
-                <img src="../../assets/feedback/share.png"/>
+                <!-- <img src="../../assets/feedback/share.png"/> -->
               </div>
               <div class="url-div">
                 <el-input 

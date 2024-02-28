@@ -49,6 +49,12 @@
       <el-table-column prop="sequence" :label="t('fields.sequence')" min-width="180" />
       <el-table-column prop="siteName" :label="t('fields.site')" min-width="250" />
       <el-table-column prop="question" :label="t('fields.question')" min-width="250" />
+      <el-table-column prop="isMultiple" :label="t('fields.isMultiple')" min-width="180">
+        <template #default="scope">
+          <el-tag v-if="scope.row.isMultiple" type="success">{{ t('fields.yes') }}</el-tag>
+          <el-tag v-else type="danger">{{ t('fields.no') }}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column
         :label="t('fields.operate')"
         align="right"
@@ -119,6 +125,9 @@
       </el-form-item>
       <el-form-item :label="t('fields.question')" prop="question">
         <el-input v-model="form.question" style="width: 350px;" maxlength="50" />
+      </el-form-item>
+      <el-form-item :label="t('fields.isMultiple')" prop="isMultiple">
+        <el-checkbox v-model="form.isMultiple" :true-label="true" :false-label="false" />
       </el-form-item>
       <el-form-item :label="t('fields.choice')" prop="choice">
         <div v-for="(item, index) in choiceParam" :key="index">
@@ -206,6 +215,7 @@ const form = reactive({
   siteId: null,
   sequence: null,
   question: null,
+  isMultiple: false,
   choice: null
 });
 

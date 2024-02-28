@@ -135,6 +135,14 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("init", "722685126460216");
       fbq("track", "PageView");
       fbq("track", "ViewContent");
+    } else if (window.location.href.indexOf("jo98.cc") > -1) {
+      ui.isAffiliateB = true;
+      console.log("jo98.cc");
+
+      fbq("init", "873960514528284");
+
+      fbq("track", "PageView");
+      fbq("track", "ViewContent");
     } else if (ui.isAffiliateB) {
       console.log("Slot-Win .cc");
 
