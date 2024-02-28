@@ -2,7 +2,7 @@
   <div class="cs2">
     <div class="section first">
       <div class="title"><img src="../../../assets/images/promotion/hotpromo/cs2/fuli1.png" /></div>
-      <div class="tips">参与CS Major2024投注金额100元即可获得一个开箱钥匙</div>
+      <div class="tips">参与CS Major2024当日投注金额100元注单结算后，次日可获得一个开箱钥匙，每投注100元即可获得一个钥匙。</div>
       <div class="content">
         <div class="top-row">
           <div class="lft">
@@ -33,7 +33,7 @@
     </div>
     <div class="section second">
       <div class="title"><img src="../../../assets/images/promotion/hotpromo/cs2/fuli2.png" /></div>
-      <div class="tips">活动期间，连续投注 CS2Major 2024赛事21000元则视为签到成功，根据对应连续签到天数开启宝箱</div>
+      <div class="tips">活动期间，连续投注 CS2Major 2024赛事≥1000元则视为签到成功，根据对应连续签到天数开启宝箱</div>
       <div class="content">
         <div class="top-row">
           <div class="lft">
@@ -81,14 +81,23 @@
             <img src="../../../assets/images/promotion/hotpromo/cs2/openchest.png" />
         </div>
         <div class="modal-body openRec">
-            <div class="table-title">
-                日期
-            </div>
             <div class="rec">
-                <div v-if="openRecords" class="flex" v-for="(open, i) in openRecords" :key="i">
-                    <div>{{ open.createTime }}</div>
-                    <div class="openSuccess">开启成功  <img src="../../../assets/images/promotion/hotpromo/cs2/tick.png" /></div>
-                </div>
+            <div class="table-title" style="width: 100%;">
+                <table style="width: 100%;">
+                    <tr>
+                        <th width="50%">日期</th>
+                        <th width="25%">消耗</th>
+                        <th width="25%">获取金额</th>
+                    </tr>
+                </table>
+            </div>
+                <table style="width: 100%;" v-if="openRecords">
+                    <tr v-for="(open, i) in openRecords" :key="i">
+                        <td width="50%">{{ open.createTime }}</td>
+                        <td width="25%">{{ open.quantity }}</td>
+                        <td width="25%">{{ open.amount }}</td>
+                    </tr>
+                    </table>
                 <div v-else style="display: flex; justify-content: center; align-items: center; height: 400px;">
                     暂无数据
                 </div>
@@ -137,8 +146,8 @@ const signNumber = ref(0);
 //   }
 // };
 const items = ref([{ no: 1, amt: 100 }, { no: 2, amt: 10 }, { no: 3, amt: 30 }]);
-const activeItem = ref(2);
-const selectedTreasureLevel = ref('Normal');
+const activeItem = ref(3);
+const selectedTreasureLevel = ref('Dragon');
 
 const setActiveItem = (itemNo) => {
   const item = items.value.find((i) => i.no === itemNo);
@@ -197,8 +206,8 @@ const init = () => {
             res.data.forEach((element, i) => {
                 element.no = i + 1;
             });
-            console.log(res.data)
             items.value = res.data
+            setActiveItem(3)
         }
     })
   // First Privilege

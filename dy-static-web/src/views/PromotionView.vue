@@ -46,7 +46,13 @@
 
     <div v-else class="selected-promo">
       <div class="selected-promo-wrapper">
-        <div class="banner-container" v-if="selectedPromo.promoCode !== 'dy2-cny-step-game'">
+        <div
+          class="banner-container"
+          v-if="selectedPromo.promoCode !== 'dy2-cny-step-game'"
+          :class="{
+            isCSBanner: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024'
+          }"
+        >
           <div
             class="promo-bg isDesktop"
             :style="
@@ -68,10 +74,11 @@
         </div>
         <div
           class="inner"
-          :class="{'isCS': selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024'},
-            (selectedPromo.promoCode === 'dy2-cny2024-promo' || selectedPromo.promoCode === 'dy2-cny-step-game') &&
-            'fullwidth'
-          "
+          :class="{
+            isCS: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024',
+            fullwidth:
+              selectedPromo.promoCode === 'dy2-cny2024-promo' || selectedPromo.promoCode === 'dy2-cny-step-game'
+          }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
             <HotPromotion :list="selectedPromo" />
@@ -87,7 +94,7 @@
               slot: selectedPromo.promoType.toLowerCase() === 'slot game'
             }"
           >
-            <div :class="{'isSpecial': !isSpecialPromo}" v-html="selectedPromo.pageContent"></div>
+            <div :class="{ isSpecial: !isSpecialPromo }" v-html="selectedPromo.pageContent"></div>
           </div>
         </div>
       </div>
@@ -592,6 +599,14 @@ export default defineComponent({
         max-width: 1920px;
         margin: 0 auto;
 
+        &.isCSBanner {
+          min-height: 600px;
+
+          .promo-bg {
+            min-height: 600px !important;
+          }
+        }
+
         .promo-bg {
           background-size: cover;
           background-repeat: no-repeat;
@@ -628,9 +643,9 @@ export default defineComponent({
         }
         &.isCS {
           padding: 30px 0;
-          margin: 0;
+          margin: 0 auto;
+          max-width: 1920px;
           background: url(../assets/images/promotion/hotpromo/cs2/bg.png);
-          max-width: unset;
           width: 100%;
           background-size: cover;
           position: relative;
@@ -639,7 +654,7 @@ export default defineComponent({
             position: absolute;
             bottom: 0;
             left: -10px;
-            background: url(../assets/images/promotion/hotpromo/cs2/bottombg.png)no-repeat center center;
+            background: url(../assets/images/promotion/hotpromo/cs2/bottombg.png) no-repeat center center;
             width: 180px;
             height: 340px;
             background-size: cover;
@@ -695,7 +710,7 @@ export default defineComponent({
             text-align: center;
           }
           .isSpecial {
-            color:#7F4C00;
+            color: #7f4c00;
           }
         }
       }

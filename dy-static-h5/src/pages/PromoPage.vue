@@ -737,11 +737,14 @@ export default defineComponent({
           margin: 0px;
           width: 100%;
           gap: 0px;
+    padding: 10px;
             background: url(../assets/images/promotion/hotpromo/cs2/bg.png)no-repeat center center;
           p {
             padding: 25px;
             color: #7f4c00;
             font-family: Microsoft Yahei UI;
+            max-width: 100%;
+
           }
         }
 
