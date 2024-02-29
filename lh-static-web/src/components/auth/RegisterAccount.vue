@@ -71,7 +71,13 @@
         <el-button class="blue-bg primary-btn" size="large" @click="submitRegisterForm(registerRef)">注册</el-button>
     </div>
 
-    <div style="text-align: center;margin-top: 20px;">已有账号？<router-link to="/login">去登录</router-link></div>
+
+
+  <div class="flex-div">
+    <div style="text-align: center;">已有账号？<router-link to="/login">去登录</router-link></div>
+
+    <div><router-link to="/">先去逛逛</router-link></div>
+  </div>
 </template>
   
 <script setup>
@@ -416,6 +422,13 @@ onMounted(() => {
 .primary-btn {
     margin-top: 20px;
     width: 100%;
+}
+
+.flex-div{
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>
 

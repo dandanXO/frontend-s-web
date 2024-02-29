@@ -1,7 +1,9 @@
 <template>
   <div class="platform-section">
 
-    <div class="platform-container">
+    <div class="platform-container"
+      :class="(platformType === 'slot') ? 'slot-container' : ''"
+    >
       <div class="platform-container-inner">
         <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
         <template v-for="(item, index) in platformsListDisplay" :key="index">

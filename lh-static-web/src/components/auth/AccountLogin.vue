@@ -26,7 +26,7 @@
         </div>
 
         <div class="agreement-and-forget-pass">
-            <div>登录即代表同意并遵守《用户协议》</div><div><router-link to="/forgotPwd">忘记密码？</router-link></div>
+            <div>登录即代表同意并遵守《用户协议》</div><div><router-link to="/forgotPwd">忘记密码</router-link></div>
         </div>
 
 
@@ -35,7 +35,12 @@
         </el-button>
     </el-form>
 
-    <div style="text-align: center;margin-top: 20px;">没有账号？<router-link to="/register">去注册</router-link></div>
+    <div class="flex-div">
+      <div style="text-align: left;">没有账号？<router-link to="/register">去注册</router-link></div>
+
+      <div><router-link to="/">先去逛逛</router-link></div>
+    </div>
+
 </template>
   
 <script setup>
@@ -203,6 +208,13 @@ onMounted(() => {
 .primary-btn {
     margin-top: 20px;
     width: 100%;
+}
+
+.flex-div{
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>
 

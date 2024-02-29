@@ -17,6 +17,11 @@
   align-items: center;
   min-height: calc(100vh - 188px);
 
+  &.slot-container{
+    min-height: initial;
+    padding: 0 px;
+  }
+
   .platform-desc {
     color: #3063ab;
     font-size: 14px;
