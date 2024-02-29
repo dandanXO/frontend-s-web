@@ -194,14 +194,7 @@
             @click="playGame(item.gameName, item.code, item.gameCode)"
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
-            <div class="maintenance-box" v-if="item.underMaintenance === true">
-              <p>维护中</p>
-              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
-                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
-              </p>
-              <p class="small-size">请先前往其他场馆娱乐</p>
-            </div>
+            <MaintenanceBox :item="item"/>
 
             <div
               class="platform-img-frame"
@@ -233,14 +226,8 @@
             @click="playGame(item.gameName, item.code, item.gameCode)"
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
-            <div class="maintenance-box" v-if="item.underMaintenance === true">
-              <p>维护中</p>
-              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
-                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
-              </p>
-              <p class="small-size">请先前往其他场馆娱乐</p>
-            </div>
+            <MaintenanceBox :item="item" />
+
 
             <div
               class="platform-img-frame"
@@ -272,14 +259,8 @@
             @click="playGame(item.gameName, item.code, item.gameCode)"
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
-            <div class="maintenance-box" v-if="item.underMaintenance === true">
-              <p>维护中</p>
-              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
-                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
-              </p>
-              <p class="small-size">请先前往其他场馆娱乐</p>
-            </div>
+            <MaintenanceBox :item="item" />
+
 
             <div
               class="platform-img-frame"
@@ -311,14 +292,8 @@
             @click="playGame(item.gameName, item.code, item.gameCode)"
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
-            <div class="maintenance-box" v-if="item.underMaintenance === true">
-              <p>维护中</p>
-              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
-                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
-              </p>
-              <p class="small-size">请先前往其他场馆娱乐</p>
-            </div>
+            <MaintenanceBox :item="item" />
+
 
             <div
               class="platform-img-frame"
@@ -354,14 +329,8 @@
             @click="router.push({ path: '/slot', query: { platform: item.code } })"
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
-            <div class="maintenance-box" v-if="item.underMaintenance === true">
-              <p>维护中</p>
-              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
-                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
-              </p>
-              <p class="small-size">请先前往其他场馆娱乐</p>
-            </div>
+            <MaintenanceBox :item="item" />
+
 
             <div
               class="platform-img-frame"
@@ -391,14 +360,8 @@
             @click="playGame(item.gameName, item.code, item.gameCode)"
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
-            <div class="maintenance-box" v-if="item.underMaintenance === true">
-              <p>维护中</p>
-              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
-                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
-              </p>
-              <p class="small-size">请先前往其他场馆娱乐</p>
-            </div>
+            <MaintenanceBox :item="item" />
+
 
             <div
               class="platform-img-frame"
@@ -428,14 +391,8 @@
             @click="playGame(item.gameName, item.code, 7202)"
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
-            <div class="maintenance-box" v-if="item.underMaintenance === true">
-              <p>维护中</p>
-              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
-                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
-              </p>
-              <p class="small-size">请先前往其他场馆娱乐</p>
-            </div>
+            <MaintenanceBox :item="item" />
+
 
             <div
               class="platform-img-frame"
@@ -468,14 +425,8 @@
             @click="playGame(item.gameName, item.code, item.gameCode)"
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
-            <div class="maintenance-box" v-if="item.underMaintenance === true">
-              <p>维护中</p>
-              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
-                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
-              </p>
-              <p class="small-size">请先前往其他场馆娱乐</p>
-            </div>
+               <MaintenanceBox :item="item" :moment="moment(item.maintenanceStartTime)" />
+
 
             <div
               class="platform-img-frame"
@@ -507,14 +458,8 @@
             @click="router.push({ path: '/slot', query: { platform: item.code } })"
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
-            <div class="maintenance-box" v-if="item.underMaintenance === true">
-              <p>维护中</p>
-              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
-                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
-              </p>
-              <p class="small-size">请先前往其他场馆娱乐</p>
-            </div>
+               <MaintenanceBox :item="item" :moment="moment(item.maintenanceStartTime)" />
+
 
             <div
               class="platform-img-frame"
@@ -546,14 +491,8 @@
             @click="playGame(item.gameName, item.code, 7202)"
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
-            <div class="maintenance-box" v-if="item.underMaintenance === true">
-              <p>维护中</p>
-              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
-                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
-              </p>
-              <p class="small-size">请先前往其他场馆娱乐</p>
-            </div>
+            <MaintenanceBox :item="item" :moment="moment(item.maintenanceStartTime)" />
+
 
             <div
               class="platform-img-frame"
@@ -946,11 +885,11 @@
 </template>
 
 <script>
-import { defineComponent, onActivated, ref, reactive, computed } from "vue";
+import { computed, defineComponent, onActivated, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
-import { cached, TIME_EXPIRED } from "boot/cache";
-import { useQuasar, Platform } from "quasar";
+import { cached } from "boot/cache";
+import { Platform, useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
@@ -958,23 +897,21 @@ import MarqueeText from "vue-marquee-text-component";
 import { App } from "@capacitor/app";
 
 import { useUI } from "stores/ui";
-import { Scrollbar } from "swiper";
 // Import Swiper Vue.js components
-import SwiperCore, { Keyboard, Mousewheel, HashNavigation, A11y } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Thumbs, Controller } from "swiper";
+import SwiperCore, { A11y, Controller, HashNavigation, Keyboard, Mousewheel, Scrollbar, Thumbs } from "swiper";
 import moment from "moment";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/scrollbar";
+import { translateRecord } from "src/directives/translate";
+import MaintenanceBox from "components/MaintenanceBox.vue";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
-
-import { translateRecord } from "src/directives/translate";
 
 export default defineComponent({
   name: "IndexPage",
   components: {
+    MaintenanceBox,
     // Swiper,
     // SwiperSlide,
     GameModal,
@@ -2180,14 +2117,17 @@ export default defineComponent({
       position: relative;
 
       &.maintenance {
-        filter: grayscale(0.8);
         pointer-events: none;
+
+        .platform-img-frame{
+          filter:  blur(2px);
+        }
       }
 
       &.maintenance:after {
         content: "";
         position: absolute;
-        background: rgba(2, 9, 73, 0.4);
+        background: #012C6A50;
         top: 0%;
         width: 100%;
         height: 100%;
@@ -2200,36 +2140,6 @@ export default defineComponent({
         font-weight: bold;
       }
 
-      .maintenance-box {
-        position: absolute;
-        top: 3%;
-        bottom: 3%;
-        padding-top: 0px;
-        padding-bottom: 0px;
-        color: #ffffff;
-        font-size: 1.1em;
-        font-weight: bold;
-        width: 90%;
-        left: 5%;
-        right: 5%;
-        height: 94%;
-        z-index: 33;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        gap: 5px;
-
-        p {
-          font-size: 1.1em;
-          margin-top: 0px;
-          margin-bottom: 0px;
-        }
-
-        .small-size {
-          font-size: 0.85em;
-        }
-      }
 
       &:hover {
         opacity: 0.9;
