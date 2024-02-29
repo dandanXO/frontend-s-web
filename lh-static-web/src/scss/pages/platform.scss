@@ -1,4 +1,4 @@
-.platform-section{
+.platform-section {
   background-image: url("../../assets/home/home-bg.jpg");
   background-repeat: no-repeat;
   background-size: 100% auto;
@@ -155,6 +155,7 @@
         margin-top: 1rem;
         max-width: 32rem;
         min-width: 45px;
+        height: 50px;
       }
 
       .platform-pattern-row {
@@ -237,12 +238,12 @@
       .platform-play-btn {
         margin-top: 1rem;
 
-        .maintenance-p{
+        .maintenance-p {
           margin: 15px 3px;
           font-size: 16px;
           color: $font-1;
 
-          em{
+          em {
             font-weight: bold;
             font-style: initial;
           }
@@ -262,19 +263,18 @@
           cursor: pointer;
           transition: 0.3s all;
 
-          &.btn-maintenance{
-            background: rgba(0,0,0,0.3);
+          &.btn-maintenance {
+            background: rgba(0, 0, 0, 0.3);
             pointer-events: none;
 
-            .maintenance-state{
-              display:flex;
+            .maintenance-state {
+              display: flex;
               align-items: center;
               justify-content: space-between;
-              gap:8px;
+              gap: 8px;
 
-              img{
+              img {
                 width: 22px;
-
               }
             }
           }
