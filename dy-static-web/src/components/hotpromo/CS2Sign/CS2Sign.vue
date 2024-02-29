@@ -308,7 +308,7 @@ const openModal = (modal, item, itemIndex) => {
             text: '开启中',
             background: 'rgba(0, 0, 0, 0.7)',
         })
-        claimCheckInTreasure(props.promoCode, itemIndex).then((res) => {
+        claimCheckInTreasure(props.promoCode, item).then((res) => {
             if (res.code === 0) {
                 amountClaimed.value = res.data
                 isClaimModal.value = true;

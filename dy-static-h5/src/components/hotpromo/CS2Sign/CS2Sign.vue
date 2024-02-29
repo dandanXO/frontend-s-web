@@ -336,7 +336,7 @@ const openModal = (modal, item, itemIndex) => {
             message: "开启中... 请稍等..."
         });
             $q.loading.hide()
-        claimCheckInTreasure(props.promoCode, itemIndex).then((res) => {
+        claimCheckInTreasure(props.promoCode, item).then((res) => {
             if (res.code === 0) {
                 amountClaimed.value = res.data
                 isClaimModal.value = true;
