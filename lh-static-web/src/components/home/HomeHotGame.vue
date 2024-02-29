@@ -54,7 +54,7 @@
                 </div>
               <!-- <div class="subtitle">{{ hotgame.content[hotgame.currentProvider.toLowerCase()] }}</div> -->
             </div>
-            <div>
+            <div class="description">
               <div class="desc">
                 {{
                   hotgame.content &&
@@ -62,7 +62,7 @@
                   hotgame.content[hotgame.currentProvider.toLowerCase()].desc
                 }}
               </div>
-              <div class="desc">还有超多独家创新玩法，足够新颖，极易操作的游戏界面， 更是在您游戏过程中增光添彩！</div>
+              <!-- <div class="desc">还有超多独家创新玩法，足够新颖，极易操作的游戏界面， 更是在您游戏过程中增光添彩！</div> -->
             </div>
             <div v-if="hotgame.content.isShowSportsIcon" :class="`game-icon-wrapper ${hotgame.subtitle.toLowerCase()}`">
               <img
@@ -892,7 +892,6 @@ $transition_timer: 0.5s;
             font-weight: 400;
 
             line-height: normal;
-
             .title {
               // font-size: 4.24106rem;
               font-size: 2.7106rem;
@@ -920,6 +919,13 @@ $transition_timer: 0.5s;
             }
           }
 
+          .description {
+              min-height: 100px;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+            }
           .desc {
             color: #3063ab;
             font-family: Microsoft YaHei;
