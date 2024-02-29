@@ -265,7 +265,7 @@ const rules = {
       trigger: "blur"
     },
     {
-      pattern: "^[0-9]*(\\.[0-9]{0,2})?$",
+      pattern: /^\d+$/,
       message: "金额应为正数",
       trigger: "change"
     },
@@ -476,7 +476,10 @@ function confirmDeposit() {
       console.log(err);
       loadingBtn.value = false;
     });
-  });
+  }).catch((vali) => {
+    console.log("HERE")
+    console.log(vali)
+  })
   setTimeout(() => {
     loadingBtn.value = false;
   },1000)
