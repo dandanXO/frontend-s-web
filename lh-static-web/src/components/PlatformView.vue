@@ -5,16 +5,7 @@
       <template v-for="(item, index) in platformsListDisplay" :key="index">
         <template v-if="selectedPlat === item.code">
           <div class="platform-item platform-item--img" data-aos="fade-right" data-aos-duration="1000"
-               :class="item.underMaintenance === true ? 'maintenance' : ''">
-
-            <div class="maintenance-box" v-if="item.underMaintenance === true">
-              <p>维护中</p>
-              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
-                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
-              </p>
-              <p class="small-size">请先前往其他场馆娱乐</p>
-            </div>
+               >
 
             <img
               :src="
@@ -23,10 +14,8 @@
             />
           </div>
 
-          <div class="platform-item"
-               :class="item.underMaintenance === true ? 'maintenance' : ''">
+          <div class="platform-item">
             <div class="platform-title-wrap" data-aos="fade-left" data-aos-delay="100">
-              <!--              <pre>{{item}}</pre>-->
               <div class="platform-title">{{ item.cnname ?? item.name }}</div>
               <div class="platform-subtitle">{{ platformName }}</div>
             </div>
@@ -75,7 +64,24 @@
             <!--            data-aos-delay="300"-->
             <!--            data-aos-duration="500"-->
             <div class="platform-play-btn" v-if="platformType !== 'slot'">
-              <div class="btn-blue" @click="openGame(item, item.code, item.gameCode)">进入游戏</div>
+              <div class="btn-blue" @click="openGame(item, item.code, item.gameCode)"
+                   :class="item.underMaintenance === true ? 'btn-maintenance' : ''"
+              >
+                <span class="maintenance-state" v-if="item.underMaintenance === true">
+                  <img src="../assets/svg/maintenance-icon.svg" />
+                  维护中</span>
+                <span v-else>进入游戏</span>
+              </div>
+
+
+              <p v-if="item.underMaintenance === true && item.maintenanceStartTime && item.maintenanceEndTime" class="maintenance-p">
+                维护时间: <em>{{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
+                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}</em>
+              </p>
+              <p v-else>
+                &nbsp;
+              </p>
+
             </div>
           </div>
         </template>

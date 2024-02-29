@@ -6,7 +6,7 @@
       </div>
       <router-link to="/finance/deposit">
         <div class="account-item">
-          <span>充值</span>
+          <span>存款</span>
         </div>
       </router-link>
       <router-link to="/finance/withdraw">

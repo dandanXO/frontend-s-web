@@ -34,7 +34,6 @@
         </div>
         <div :class="`hotgame-content-wrapper ${hotgame.isShow ? 'show' : ''}`">
           <div class="left-container"
-               :class="hotgame.currentPlat && hotgame.currentPlat.underMaintenance === true ? 'maintenance' : ''"
           >
             <div class="title-wrapper">
               <Transition :key="transitionDesc" name="fade" enter>
@@ -100,23 +99,29 @@
                 </div> -->
               </div>
             </div>
-            <el-button size="small" class="common-btn game-start-btn" @click="onEnterGameClick(hotgame, hotgame.type)">
-              {{ hotgame.type !== "slot" ? `进入游戏` : `进入场馆` }}
-            </el-button>
+            <template v-if="hotgame.currentPlat?.underMaintenance === true ? 'maintenance' : ''">
+              <el-button size="small" class="common-btn game-start-btn btn-maintenance" >
+                <span class="maintenance-state"><img src="../../assets/svg/maintenance-icon.svg" />
+                维护中</span>
+              </el-button>
+            </template>
+            <template v-else>
+              <el-button size="small" class="common-btn game-start-btn" @click="onEnterGameClick(hotgame, hotgame.type)">
+                {{ hotgame.type !== "slot" ? `进入游戏` : `进入场馆` }}
+              </el-button>
+            </template>
+
+            <p v-if="hotgame.currentPlat?.underMaintenance === true && hotgame.currentPlat?.maintenanceStartTime && hotgame.currentPlat?.maintenanceEndTime" class="maintenance-p">
+              维护时间: <em>{{ moment(hotgame.currentPlat?.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
+              {{ moment(hotgame.currentPlat?.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}</em>
+            </p>
+            <p class="maintenance-p" v-else>
+              &nbsp;
+            </p>
+
           </div>
           <div class="right-container"
-               :class="hotgame.currentPlat?.underMaintenance === true ? 'maintenance' : ''"
           >
-
-            <div class="maintenance-box" v-if="hotgame.currentPlat?.underMaintenance === true">
-              <p>维护中</p>
-              <p v-if="hotgame.currentPlat.maintenanceStartTime && hotgame.currentPlat.maintenanceEndTime" class="small-size">
-                维护时间: {{ moment(hotgame.currentPlat.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                {{ moment(hotgame.currentPlat.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
-              </p>
-              <p class="small-size">请先前往其他场馆娱乐</p>
-            </div>
-
 
             <Transition :key="transitionKey" appear>
 
@@ -873,13 +878,13 @@ $transition_timer: 0.5s;
           position: relative;
           width: 55%;
 
-          &.maintenance {
-            filter: grayscale(0.8);
-
-            .game-start-btn{
-              pointer-events: none;
-            }
-          }
+          //&.maintenance {
+          //  filter: grayscale(0.8);
+          //
+          //  .game-start-btn{
+          //    pointer-events: none;
+          //  }
+          //}
 
           .title-wrapper {
             font-family: "YiHei";
@@ -987,6 +992,17 @@ $transition_timer: 0.5s;
             }
           }
 
+          .maintenance-p{
+            margin: 0px 3px 0px;
+            font-size: 16px;
+            color: $font-1;
+
+            em{
+              font-weight: bold;
+              font-style: initial;
+            }
+          }
+
           .game-start-btn {
             width: 10rem;
             height: 2.5rem;
@@ -997,6 +1013,24 @@ $transition_timer: 0.5s;
             font-size: 1.15281rem;
             font-weight: 400;
             line-height: 2.5rem;
+
+            &.btn-maintenance{
+              background: rgba(0,0,0,0.3);
+              pointer-events: none;
+              border:none;
+              box-shadow:none;
+
+              .maintenance-state{
+                display:flex;
+                align-items: center;
+                justify-content: space-between;
+                gap:8px;
+
+                img{
+                  width: 22px;
+                }
+              }
+            }
 
             &:hover {
               filter: brightness(1.2);
@@ -1014,41 +1048,41 @@ $transition_timer: 0.5s;
           position: relative;
           width: 45%;
 
-          &.maintenance {
-            filter: grayscale(0.8);
-          }
+          //&.maintenance {
+          //  filter: grayscale(0.8);
+          //}
 
-          .maintenance-box {
-            position: absolute;
-            top: 10%;
-            width: 94%;
-            left: 3%;
-            right: 3%;
-            height: 80%;
-            padding:15px 10px;
-            color: #ffffff;
-            font-size: 24px;
-            font-weight: bold;
-            z-index: 33;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-
-            background: rgba(2, 9, 73, 0.4);
-            border-radius: 30px;
-
-            p {
-              font-size: 30px;
-              margin-top: 3px;
-              margin-bottom: 3px;
-            }
-
-            .small-size {
-              font-size: 16px;
-            }
-          }
+          //.maintenance-box {
+          //  position: absolute;
+          //  top: 10%;
+          //  width: 94%;
+          //  left: 3%;
+          //  right: 3%;
+          //  height: 80%;
+          //  padding:15px 10px;
+          //  color: #ffffff;
+          //  font-size: 24px;
+          //  font-weight: bold;
+          //  z-index: 33;
+          //  display: flex;
+          //  flex-direction: column;
+          //  justify-content: center;
+          //  align-items: center;
+          //  gap: 15px;
+          //
+          //  background: rgba(2, 9, 73, 0.4);
+          //  border-radius: 30px;
+          //
+          //  p {
+          //    font-size: 30px;
+          //    margin-top: 3px;
+          //    margin-bottom: 3px;
+          //  }
+          //
+          //  .small-size {
+          //    font-size: 16px;
+          //  }
+          //}
 
 
           img {

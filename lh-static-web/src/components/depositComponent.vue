@@ -477,7 +477,6 @@ function confirmDeposit() {
       loadingBtn.value = false;
     });
   }).catch((vali) => {
-    console.log("HERE")
     console.log(vali)
   })
   setTimeout(() => {
