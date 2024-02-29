@@ -224,7 +224,7 @@ const openBox = (item) => {
         if (res.code === 0) {
             // Open Dialog 
             openModal('amt', res.data);
-            init();
+            // init();
         }
         $q.loading.hide()
     })
