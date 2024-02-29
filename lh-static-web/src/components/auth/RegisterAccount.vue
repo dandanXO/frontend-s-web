@@ -74,7 +74,7 @@
 
 
   <div class="flex-div">
-    <div style="text-align: center;">已有账号？<router-link to="/login">去登录</router-link></div>
+    <div style="text-align: center;"  class="font-gray">已有账号？<router-link to="/login">去登录</router-link></div>
 
     <div><router-link to="/">先去逛逛</router-link></div>
   </div>

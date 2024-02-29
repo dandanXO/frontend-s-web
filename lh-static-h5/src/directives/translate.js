@@ -133,7 +133,7 @@ export const translateRecord = (rec, type = "") => {
     return "XIN"; // AG
   } else if (rec === "AG") {
     return "AG"; // AG
-  } else if (rec === "BBINDY") {
+  } else if (rec === "BBINDY" || rec === "BBIN") {
     return "BBIN真人"; // BBINDY
   } else if (rec === "PINNACLE") {
     return "平博体育"; // BBINDY
@@ -141,12 +141,12 @@ export const translateRecord = (rec, type = "") => {
     return "WE真人"; // EBET
   } else if (rec === "ALLBET") {
     return "欧博"; // EBET
-  } else if (rec === "KY") {
+  } else if (rec === "KY" || rec === "KYDY") {
     return "开元棋牌"; // KY
   } else if (rec === "DT") {
     return "大唐棋牌"; // DT
   } else if (rec === "LEG") {
-    return "乐游棋牌"; // KY
+    return "乐游棋牌"; // LEG
   } else if (rec === "GLFC") {
     return "高登棋牌"; // DT
   } else if (rec === "GFLC") {
@@ -155,10 +155,12 @@ export const translateRecord = (rec, type = "") => {
     return "TCG彩票"; // TCG
   } else if (rec === "SGWin") {
     return "双赢彩票"; // SGWin
-  } else if (rec === "PTDY") {
+  } else if (rec === "PTDY" || rec === "PT") {
     return "PT电子"; // PTDY
   } else if (rec === "PGDY") {
     return "PG电子"; // PGDY
+  }  else if (rec === "RG") {
+    return "RG电竞"; // RG
   } else {
     return rec;
   }

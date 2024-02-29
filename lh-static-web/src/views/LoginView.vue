@@ -44,7 +44,7 @@
               </div>
 
               <div class="agreement-and-forget-pass">
-                <div>登录即代表同意并遵守《用户协议》</div><div><router-link to="/forgotPwd">忘记密码</router-link></div>
+                <div class="font-gray">登录即代表同意并遵守《用户协议》</div><div><router-link to="/forgotPwd">忘记密码</router-link></div>
               </div>
 
               <el-button :loading="loadingBtn" size="large" class="blue-bg primary-btn" @click="phoneLogin">
@@ -55,7 +55,7 @@
             </el-form>
 
             <div class="flex-div">
-              <div style="text-align: left;">没有账号？<router-link to="/register">去注册</router-link></div>
+              <div style="text-align: left;"  class="font-gray">没有账号？<router-link to="/register">去注册</router-link></div>
 
               <div><router-link to="/">先去逛逛</router-link></div>
             </div>
@@ -112,15 +112,32 @@ const captchaRules = {
   ]
 };
 
+
+const isValidPhone = (r, v) => {
+  const phonePattern = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
+  if (!v) {
+    return Promise.reject("请输入电话号码");
+  } else if (phonePattern.test(v)) {
+    return Promise.resolve();
+  } else {
+    return Promise.reject("请输入有效的电话号码");
+  }
+};
+
+
 const mobileLoginRules = {
   phoneNumber: [
     {
       required: true,
       message: "请输入手机号码",
       trigger: "blur"
+    },
+    {
+      validator: isValidPhone,
+      trigger: "blur"
     }
   ],
-  code: [
+  code:[
     {
       required: true,
       message: "请输入验证码",
@@ -145,6 +162,7 @@ const captchaForm = reactive({
   captchaCode: "",
   codeId: ""
 });
+
 
 const passForm = reactive({
   email: ""
@@ -197,10 +215,15 @@ const sendOtp = async () => {
 };
 
 const openCaptchaForm = (type) => {
-  captchaForm.captchaCode = "";
-  captchaForm.type = type;
-  captchaDialogVisible.value = true;
-  getCode();
+  mobileLoginRef.value.validateField("phoneNumber").then(() => {
+    captchaForm.captchaCode = "";
+    captchaForm.type = type;
+    captchaDialogVisible.value = true;
+    getCode();
+  }).catch((err) => {
+
+  })
+
 };
 
 const phoneLogin = () => {
@@ -266,7 +289,7 @@ onMounted(() => {
   width: 100%;
   min-height: 100vh;
   height: 100%;
-  background: url("@/assets/home/auth/login-page-bg.jpg") no-repeat center center;
+  background: url("@/assets/home/auth/login-page-bg.jpg") no-repeat top center;
   background-size: cover;
   display: flex;
 }
@@ -277,7 +300,7 @@ onMounted(() => {
   justify-content: flex-start;
   align-items: center;
   gap: 30px;
-  margin: 5% auto;
+  margin: 40px auto;
   width: 100%;
   max-width: 500px;
 }
@@ -328,6 +351,7 @@ onMounted(() => {
 }
 
 .agreement-and-forget-pass {
+  margin-top: 55px;
   display: flex;
   justify-content: space-between;
 
