@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <div class="top-image-div">
-      <img src="../assets/login/login-top-cny.png" />
+      <img src="../assets/login/login-top.png" />
     </div>
 
     <div class="login-tab-div">
@@ -179,8 +179,8 @@
               class="q-mt-md"
               label="登录"
               width="100%"
-              color="#ffffff"
-              style="width: 100%; letter-spacing: 2px; background: linear-gradient(180deg, #fd3b2a 0%, #ac260b 100%)"
+              color="primary"
+              style="width: 100%; letter-spacing: 2px"
               size="16px"
               rounded
             />
@@ -574,7 +574,7 @@ export default defineComponent({
 
   .top-image-div {
     width: 100%;
-    max-height: 295px;
+    max-height: 205px;
 
     img {
       width: 100%;
@@ -651,8 +651,8 @@ export default defineComponent({
 
   .q-tab--active .q-tab__indicator {
     height: 100%;
-    // background: #0089ED;
-    background: linear-gradient(180deg, #fd3b2a 0%, #ac260b 100%);
+    background: #0089ed;
+    //background: linear-gradient(180deg, #fd3b2a 0%, #ac260b 100%);
     border-radius: 30px;
   }
 
