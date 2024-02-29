@@ -11,7 +11,7 @@
             <template v-if="!nav.hasicon">
               <div class="header-menu-item">
                 <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
-                  <div class="menu-icon">
+                  <!-- <div class="menu-icon">
                   <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase()">
                     <img
                       :src="require(`../../assets/images/home/menu/${nav.code}-icon-active.png`)"
@@ -20,8 +20,8 @@
                   <template v-else>
                     <img :src="require(`../../assets/images/home/menu/${nav.code}-icon.png`)" />
                   </template>
-                </div>
-                 {{ nav.name }}
+                </div> -->
+                <div class="menu-text" :class="{'active': route.name === nav.code || route.name === nav.enName.toLowerCase()}">{{ nav.name }}</div> 
                 </router-link>
               </div>
             </template>
@@ -33,28 +33,36 @@
             <template v-if="nav.hasicon">
               <div class="header-menu-item">
                 <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
-                  <span>
-                    <img
+                  <div
+                    :class="[{'active': (route.name === nav.code || route.name === nav.enName.toLowerCase())}, nav.code.toLowerCase(), 'icon']"
+                  >
+                  </div>
+                    <!-- <img
                       class="hover-icon"
-                      src="../../assets/images/home/header-promo-icon.svg"
-                      v-if="nav.code === 'Promotion'"
+                      src="../../assets/images/home/header-promo-icon.png"
+                      v-if="nav.code === 'Promotion' && (route.name !== nav.code && route.name !== nav.enName.toLowerCase())"
                     />
                     <img
                       class="hover-icon"
-                      src="../../assets/images/home/header-affiliate-icon.svg"
+                      src="../../assets/images/home/header-promo-icon-hover.png"
+                      v-if="nav.code === 'Promotion' && (route.name === nav.code || route.name === nav.enName.toLowerCase())"
+                    />
+                    
+                    <img
+                      class="hover-icon"
+                      src="../../assets/images/home/header-affiliate-icon.png"
                       v-if="nav.code === 'Agent'"
                     />
                     <img
                       class="hover-icon"
-                      src="../../assets/images/home/header-download-icon.svg"
+                      src="../../assets/images/home/header-download-icon.png"
                       v-if="nav.code === 'App'"
                     />
                     <img
                       class="hover-icon"
-                      src="../../assets/images/home/header-vip-icon.svg"
+                      src="../../assets/images/home/header-vip-icon.png"
                       v-if="nav.code === 'VIP'"
-                    />
-                  </span>
+                    /> -->
                   <span>{{ nav.name }}</span>
                 </router-link>
               </div>
@@ -167,7 +175,7 @@
                     </span>
                   </div>
                   <el-icon>
-                    <RiRefreshLine color="#468CFF" />
+                    <RiRefreshLine color="#ffffff" />
                   </el-icon>
                 </a>
               </div>
@@ -652,7 +660,7 @@ export default defineComponent({
       {code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true},
       {code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true},
       {code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: false, hasicon: true},
-      {code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true},
+      {code: "Affiliate", name: "加盟", enName: "Affiliate", path: "/affiliate", hasicon: true},
       {code: "App", name: "APP", enName: "App", path: "/app", submenu: false, hasicon: true},
       {code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true},
     ]
@@ -720,8 +728,9 @@ export default defineComponent({
         onLogout();
       }
     };
-
+    const isHovered = ref(false);
     const showSubMenu = (nav) => {
+      isHovered.value = true
       if (nav.submenu === true) {
         selectedMenu.value = nav.code
       } else {
@@ -1546,6 +1555,7 @@ export default defineComponent({
     }
 
     return {
+      isHovered,
       token,
       el,
       height,
@@ -1697,7 +1707,7 @@ body {
     }
 
     .details-name {
-      color: $font-1;
+      color: $color-white;
       font-weight: bold;
     }
 
@@ -1719,6 +1729,7 @@ body {
     .details-balance {
       display: flex;
       align-items: center;
+      color: #ffffff;
 
       .assets-text {
         white-space: nowrap;
@@ -1743,7 +1754,7 @@ body {
     justify-content: center;
     flex-direction: column;
     font-size: 0.75rem;
-    color: $font-1;
+    color: #ffffff;
     cursor: pointer;
 
     &:hover {
@@ -1761,6 +1772,7 @@ body {
       justify-content: center;
       border-radius: 50%;
       box-shadow: 0px 2px 5px 0px #bbdcff inset;
+          background: #fff;
     }
 
     img {
@@ -1877,7 +1889,9 @@ body {
     position: relative;
     // box-shadow: $shadow-header;
 
-    background: linear-gradient(180deg, #8e8fff, #b4dcff, transparent);
+    // background: linear-gradient(180deg, #8e8fff, #b4dcff, transparent);
+    background: linear-gradient(180deg, #489CFF 0, rgba(243, 247, 253, 0) 100%);
+
     .top-nav-inner {
       max-width: $maxwidth;
       margin: 0 auto;
@@ -1936,26 +1950,48 @@ body {
           flex-direction: column;
           text-decoration: none;
           gap: 2px;
-          color: $font-1;
+          // color: $font-1;
+          color: #ffffff;
 
+            // filter: brightness(0.8);
           &.icon {
             gap: 0;
           }
-
-          &:hover {
-            filter: brightness(0.8);
-          }
-
           .menu-icon {
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             img {
             width: 20px;
             margin: 0 auto;
 
             }
+          }
+          .menu-text {
+            color: #ffffff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+              &:after {
+              content: "";
+              background: transparent;
+              width: 20px;
+              height: 2px;
+              margin-top: 5px;
+            }
+            &.active, &:hover {
+
+              &:after {
+              content: "";
+              background: #ffffff;
+              width: 25px;
+              height: 2px;
+              border-radius: 10px;
+            }
+            } 
           }
 
           span:first-child {
@@ -1985,10 +2021,10 @@ body {
               color: $link-active;
             }
 
-            img.hover-icon {
-              filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
-                contrast(102%);
-            }
+            // img.hover-icon {
+            //   filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
+            //     contrast(102%);
+            // }
           }
         }
 
@@ -2581,5 +2617,47 @@ body {
 
 .header-menu-item {
   // display: flex;
+  .icon {
+    width: 22px;
+    height: 22px;
+  }
+  &:hover {
+    .promotion {
+      background: url(../../assets/images/home/header-promotion-icon-hover.png)no-repeat center center;
+    }
+    .affiliate {
+      background: url(../../assets/images/home/header-affiliate-icon-hover.png)no-repeat center center;
+    }
+    .vip {
+      background: url(../../assets/images/home/header-vip-icon-hover.png)no-repeat center center;
+    }
+    .app {
+      background: url(../../assets/images/home/header-app-icon-hover.png)no-repeat center center;
+    }
+  }
+  .promotion {
+    background: url(../../assets/images/home/header-promotion-icon.png)no-repeat center center;
+    &.active {
+      background: url(../../assets/images/home/header-promotion-icon-hover.png)no-repeat center center;
+    }
+  }
+  .affiliate {
+    background: url(../../assets/images/home/header-affiliate-icon.png)no-repeat center center;
+    &.active {
+      background: url(../../assets/images/home/header-affiliate-icon-hover.png)no-repeat center center;
+    }
+  }
+  .vip {
+    background: url(../../assets/images/home/header-vip-icon.png)no-repeat center center;
+    &.active {
+      background: url(../../assets/images/home/header-vip-icon-hover.png)no-repeat center center;
+    }
+  }
+  .app {
+    background: url(../../assets/images/home/header-app-icon.png)no-repeat center center;
+    &.active {
+      background: url(../../assets/images/home/header-app-icon-hover.png)no-repeat center center;
+    }
+  }
 }
 </style>
