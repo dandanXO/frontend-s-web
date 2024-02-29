@@ -265,7 +265,7 @@ const rules = {
       trigger: "blur"
     },
     {
-      pattern: /^\d+$/,
+      pattern: /^[1-9]\d*$/,
       message: "金额应为正数",
       trigger: "change"
     },
