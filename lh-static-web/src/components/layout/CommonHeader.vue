@@ -3,7 +3,7 @@
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
-          <img class="logo" src="../../assets/logo.svg" alt="logo" />
+          <img class="logo" src="../../assets/logo.png" alt="logo" />
         </router-link>
 
         <div class="navigations">
@@ -1892,6 +1892,8 @@ body {
     // background: linear-gradient(180deg, #8e8fff, #b4dcff, transparent);
     background: linear-gradient(180deg, #489CFF 0, rgba(243, 247, 253, 0) 100%);
 
+    height: 180px;
+    margin-bottom: -110px;
     .top-nav-inner {
       max-width: $maxwidth;
       margin: 0 auto;
@@ -2037,7 +2039,8 @@ body {
           height: 0px;
           position: absolute;
           left: 0;
-          top: 100%;
+          // top: 100%;
+          top: calc(100% - 110px);
           width: 100%;
 
           > div {
