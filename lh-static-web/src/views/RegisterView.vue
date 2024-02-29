@@ -24,7 +24,7 @@ import RegisterAccount from "@/components/auth/RegisterAccount.vue";
   width: 100%;
   min-height: 100vh;
   height: 100%;
-  background: url("@/assets/home/auth/login-page-bg.jpg") no-repeat center center;
+  background: url("@/assets/home/auth/login-page-bg.jpg") no-repeat top center;
   background-size: cover;
   display: flex;
 }
@@ -35,7 +35,7 @@ import RegisterAccount from "@/components/auth/RegisterAccount.vue";
   justify-content: flex-start;
   align-items: center;
   gap: 30px;
-  margin: 5% auto;
+  margin: 40px auto;
   width: 100%;
   max-width: 600px;
 }

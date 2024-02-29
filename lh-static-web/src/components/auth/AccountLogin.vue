@@ -26,7 +26,7 @@
         </div>
 
         <div class="agreement-and-forget-pass">
-            <div>登录即代表同意并遵守《用户协议》</div><div><router-link to="/forgotPwd">忘记密码</router-link></div>
+            <div  class="font-gray">登录即代表同意并遵守《用户协议》</div><div><router-link to="/forgotPwd">忘记密码</router-link></div>
         </div>
 
 
@@ -36,7 +36,7 @@
     </el-form>
 
     <div class="flex-div">
-      <div style="text-align: left;">没有账号？<router-link to="/register">去注册</router-link></div>
+      <div style="text-align: left;"  class="font-gray">没有账号？<router-link to="/register">去注册</router-link></div>
 
       <div><router-link to="/">先去逛逛</router-link></div>
     </div>
