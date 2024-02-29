@@ -1,3 +1,12 @@
+.platform-section{
+  background-image: url("../../assets/home/home-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: top center;
+  padding-top: 0px;
+  width: 100%;
+}
+
 .platform-container {
   max-width: $maxwidth;
   margin-left: auto;
@@ -7,6 +16,11 @@
   justify-content: center;
   align-items: center;
   min-height: calc(100vh - 188px);
+
+  &.slot-container{
+    min-height: initial;
+    padding: 0 px;
+  }
 
   .platform-desc {
     color: #3063ab;
@@ -20,9 +34,11 @@
     grid-template-columns: 47% 53%;
 
     .platform-item {
+      min-width: 320px;
       display: flex;
       align-content: center;
       flex-direction: column;
+      justify-content: flex-end;
       margin: auto 0;
       position: relative;
 
@@ -138,6 +154,7 @@
         color: $font-3;
         margin-top: 1rem;
         max-width: 32rem;
+        min-width: 45px;
       }
 
       .platform-pattern-row {
