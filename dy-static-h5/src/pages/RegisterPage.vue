@@ -251,8 +251,8 @@
         class="q-mt-lg"
         label="注册"
         width="100%"
-        color="#ffffff"
-        style="width: 100%; letter-spacing: 2px; background: linear-gradient(180deg, #fd3b2a 0%, #ac260b 100%)"
+        color="primary"
+        style="width: 100%; letter-spacing: 2px"
         size="16px"
         rounded
       />
@@ -271,7 +271,7 @@ import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
-console.log("test")
+console.log("test");
 export default defineComponent({
   name: "RegisterPage",
   emits: ["changeTab"],
