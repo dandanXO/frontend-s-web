@@ -192,12 +192,12 @@
 
 <script setup>
 import { nextTick, onMounted, reactive, ref } from 'vue'
-import { required } from '../../../utils/validate'
+import { required } from '../../../../utils/validate'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { getPlatformsBySite } from '../../../api/platform'
-import { getSiteListSimple } from '../../../api/site'
-import { hasRole, hasPermission } from '../../../utils/util'
-import { useStore } from '../../../store'
+import { getPlatformsBySite } from '../../../../api/platform'
+import { getSiteListSimple } from '../../../../api/site'
+import { hasRole, hasPermission } from '../../../../utils/util'
+import { useStore } from '../../../../store'
 import { useI18n } from 'vue-i18n'
 import {
   getCompetitionsCode,
@@ -205,7 +205,7 @@ import {
   updateCompetitionCode,
   deleteCompetitionCode,
   getCompetitionGameList
-} from '../../../api/platform-competition'
+} from '../../../../api/platform-competition'
 
 const { t } = useI18n()
 const store = useStore()

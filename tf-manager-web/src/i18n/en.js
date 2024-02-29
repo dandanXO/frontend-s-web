@@ -6,6 +6,7 @@ export default {
     status: {
       OPEN: 'Open',
       CLOSE: 'Close',
+      TEST: 'Test',
     },
   },
   affiliate: {
@@ -2094,8 +2095,9 @@ export default {
     'Event Check In Record': 'Event Check In Record',
     'Online Stats': 'Online Stats',
     'Promotion Activity': 'Promotion Activity',
-    'Platform Competition': 'Platform Competition',
-    'Platform Competition Code': 'Platform Competition Code',
+    'Competition Management': 'Competition Management',
+    'Competition List': 'Competition List',
+    'Competition Code': 'Competition Code',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

@@ -241,6 +241,27 @@
             </el-col>
           </el-row>
         </el-form-item>
+        <el-form-item :label="t('fields.sequence')" prop="sequence">
+          <el-input-number
+            type="number"
+            v-model.number="form.sequence"
+            :min="0"
+            style="width: 350px"
+            @keypress="restrictInput($event)"
+            controls-position="right"
+          />
+        </el-form-item>
+        <el-form-item :label="t('fields.status')" prop="status">
+          <el-radio-group
+            v-model="form.status"
+            size="mini"
+            style="width: 300px"
+          >
+            <el-radio-button label="OPEN">{{ t('common.status.OPEN') }}</el-radio-button>
+            <el-radio-button label="CLOSE">{{ t('common.status.CLOSE') }}</el-radio-button>
+            <el-radio-button label="TEST">{{ t('common.status.TEST') }}</el-radio-button>
+          </el-radio-group>
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">
             {{ t('fields.cancel') }}
@@ -366,6 +387,8 @@
       <el-table-column prop="competitionTime" :label="t('fields.competitionTime')" />
       <el-table-column prop="teamOneName" :label="t('fields.teamOne')" />
       <el-table-column prop="teamTwoName" :label="t('fields.teamTwo')" />
+      <el-table-column prop="sequence" :label="t('fields.sequence')" />
+      <el-table-column prop="status" :label="t('fields.status')" />
       <el-table-column
         :label="t('fields.operate')"
         v-if="
@@ -405,13 +428,13 @@
 
 <script setup>
 import { nextTick, onMounted, reactive, ref } from 'vue'
-import { required } from '../../../utils/validate'
+import { required } from '../../../../utils/validate'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { getPlatformsBySite } from '../../../api/platform'
-import { getSiteImage } from '../../../api/site-image'
-import { getSiteListSimple } from '../../../api/site'
-import { hasRole, hasPermission } from '../../../utils/util'
-import { useStore } from '../../../store'
+import { getPlatformsBySite } from '../../../../api/platform'
+import { getSiteImage } from '../../../../api/site-image'
+import { getSiteListSimple } from '../../../../api/site'
+import { hasRole, hasPermission } from '../../../../utils/util'
+import { useStore } from '../../../../store'
 import { useI18n } from 'vue-i18n'
 import {
   getCompetitions,
@@ -419,7 +442,7 @@ import {
   updateCompetition,
   deleteCompetition,
   getCompetitionGameList
-} from '../../../api/platform-competition'
+} from '../../../../api/platform-competition'
 
 const { t } = useI18n()
 const store = useStore()
@@ -481,6 +504,8 @@ const form = reactive({
   teamOneLogo: null,
   teamTwoName: null,
   teamTwoLogo: null,
+  sequence: null,
+  status: null,
 })
 
 const imageList = reactive({
@@ -506,6 +531,8 @@ const formRules = reactive({
   teamOneLogo: [required(t('message.validateTeamOneIconRequired'))],
   teamTwoName: [required(t('message.validateTeamTwoRequired'))],
   teamTwoLogo: [required(t('message.validateTeamTwoIconRequired'))],
+  sequence: [required(t('message.validateSequenceRequired'))],
+  status: [required(t('message.validateStatusRequired'))],
 })
 
 const platforms = reactive({
@@ -605,6 +632,13 @@ async function changeImagePage(page) {
   const { data: ret } = await getSiteImage(imageRequest)
   imageList.list = ret.records
   imageList.pages = ret.pages
+}
+
+function restrictInput(event) {
+  var charCode = event.which ? event.which : event.keyCode
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault()
+  }
 }
 
 function showDialog(type) {
