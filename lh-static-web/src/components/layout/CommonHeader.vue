@@ -3,7 +3,7 @@
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
-          <img class="logo" src="../../assets/logo.png" alt="logo" />
+          <img class="logo" src="../../assets/logo.png" />
         </router-link>
 
         <div class="navigations">
@@ -11,17 +11,15 @@
             <template v-if="!nav.hasicon">
               <div class="header-menu-item">
                 <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
-                  <!-- <div class="menu-icon">
                   <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase()">
                     <img
+                      class="menu-icon"
                       :src="require(`../../assets/images/home/menu/${nav.code}-icon-active.png`)"
                     />
                   </template>
                   <template v-else>
-                    <img :src="require(`../../assets/images/home/menu/${nav.code}-icon.png`)" />
+                    <img class="menu-icon" :src="require(`../../assets/images/home/menu/${nav.code}-icon.png`)" />
                   </template>
-                </div> -->
-                <div class="menu-text" :class="{'active': route.name === nav.code || route.name === nav.enName.toLowerCase()}">{{ nav.name }}</div> 
                 </router-link>
               </div>
             </template>
@@ -33,36 +31,28 @@
             <template v-if="nav.hasicon">
               <div class="header-menu-item">
                 <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
-                  <div
-                    :class="[{'active': (route.name === nav.code || route.name === nav.enName.toLowerCase())}, nav.code.toLowerCase(), 'icon']"
-                  >
-                  </div>
-                    <!-- <img
+                  <span>
+                    <img
                       class="hover-icon"
-                      src="../../assets/images/home/header-promo-icon.png"
-                      v-if="nav.code === 'Promotion' && (route.name !== nav.code && route.name !== nav.enName.toLowerCase())"
+                      src="../../assets/images/home/header-promo-icon.svg"
+                      v-if="nav.code === 'Promotion'"
                     />
                     <img
                       class="hover-icon"
-                      src="../../assets/images/home/header-promo-icon-hover.png"
-                      v-if="nav.code === 'Promotion' && (route.name === nav.code || route.name === nav.enName.toLowerCase())"
-                    />
-                    
-                    <img
-                      class="hover-icon"
-                      src="../../assets/images/home/header-affiliate-icon.png"
+                      src="../../assets/images/home/header-affiliate-icon.svg"
                       v-if="nav.code === 'Agent'"
                     />
                     <img
                       class="hover-icon"
-                      src="../../assets/images/home/header-download-icon.png"
+                      src="../../assets/images/home/header-download-icon.svg"
                       v-if="nav.code === 'App'"
                     />
                     <img
                       class="hover-icon"
-                      src="../../assets/images/home/header-vip-icon.png"
+                      src="../../assets/images/home/header-vip-icon.svg"
                       v-if="nav.code === 'VIP'"
-                    /> -->
+                    />
+                  </span>
                   <span>{{ nav.name }}</span>
                 </router-link>
               </div>
@@ -114,72 +104,72 @@
           </router-link>
         </div>
 
-        
-            <div class="profile-info" v-if="store.token">
-              <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand" @visible-change="(isOpen) => isProfileDropDownOpen = isOpen">
+
+        <div class="profile-info" v-if="store.token">
+          <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand">
                 <span class="el-dropdown-link">
                   <div class="profile-img-wrapper">
                     <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
-                    <img class="dropdown-icon" :style="isProfileDropDownOpen ? 'transform:rotate(180deg)' : ''" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
+                    <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
                   </div>
                 </span>
-                <template #dropdown>
-                  <el-dropdown-menu class="profile-info-dropdown-content">
-                    <el-dropdown-item command="personal">
-                      <div style="display: flex; align-items: center; gap: 10px;color: #222;margin: auto;">
-                        <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
-                        <span>个人信息</span>
-                      </div>
-                    </el-dropdown-item>
-                    <el-dropdown-item command="deposit">
-                      <div style="display: flex; align-items: center; gap: 10px;color: #222;margin: auto;">
-                        <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
-                        <span>充值中心</span>
-                      </div>
-                    </el-dropdown-item>
-                    <el-dropdown-item command="transfer">
-                      <div style="display: flex; align-items: center; gap: 10px;color: #222;margin: auto;">
-                        <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
-                        <span>快速转账</span>
-                      </div>
-                    </el-dropdown-item>
-                    <el-dropdown-item command="promotion">
-                      <div style="display: flex; align-items: center; gap: 10px;color: #222;margin: auto;">
-                        <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
-                        <span>优惠领取</span>
-                    </div>
-                    </el-dropdown-item>
-                    <el-dropdown-item command="logout">
-                      <button class="standard-button btn-color-white" style="color:#468CFF">
-                        退出登录
-                      </button>
-                    </el-dropdown-item>
-                  </el-dropdown-menu>
-                </template>
-              </el-dropdown>
-              <div class="profile-details">
-                <div class="name-and-vip-wrapper">
-                  <div class="details-name">
-                    {{ store.nickName }}
+            <template #dropdown>
+              <el-dropdown-menu class="profile-info-dropdown-content">
+                <el-dropdown-item command="personal">
+                  <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                    <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
+                    <span>个人信息</span>
                   </div>
-                  <div class="account-vip-label">
-                    {{ vip }}
+                </el-dropdown-item>
+                <el-dropdown-item command="deposit">
+                  <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                    <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
+                    <span>充值中心</span>
                   </div>
-                </div>
-                <a @click="refreshBalance" class="details-balance">
-                  <div class="flex-wrap" style="display:flex;align-items: center;flex-wrap: nowrap;">
-                    <span class="assets-text">总资产:</span>
-                    <span class="amount">
+                </el-dropdown-item>
+                <el-dropdown-item command="transfer">
+                  <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                    <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
+                    <span>快速转账</span>
+                  </div>
+                </el-dropdown-item>
+                <el-dropdown-item command="promotion">
+                  <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                    <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
+                    <span>优惠领取</span>
+                  </div>
+                </el-dropdown-item>
+                <el-dropdown-item command="logout">
+                  <button class="standard-button btn-color-white" style="color:#468CFF">
+                    退出登录
+                  </button>
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+          <div class="profile-details">
+            <div class="name-and-vip-wrapper">
+              <div class="details-name">
+                {{ store.nickName }}
+              </div>
+              <div class="account-vip-label">
+                {{ vip }}
+              </div>
+            </div>
+            <a @click="refreshBalance" class="details-balance">
+              <div class="flex-wrap" style="display:flex;align-items: center;flex-wrap: nowrap;">
+                <span class="assets-text">总资产:</span>
+                <span class="amount">
                       <span v-if="isLoadingBalance">加载中...</span>
                       <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ store.balance }}</span>
                     </span>
-                  </div>
-                  <el-icon>
-                    <RiRefreshLine color="#ffffff" />
-                  </el-icon>
-                </a>
               </div>
-            </div>
+              <el-icon>
+                <RiRefreshLine color="#468CFF" />
+              </el-icon>
+            </a>
+          </div>
+        </div>
 
         <!-- <div v-if="store.token" class="profile-actions">
           <router-link to="/center/mailbox" class="action-btn-full">
@@ -605,11 +595,10 @@
 <script lang="js">
 
 import "vue3-carousel/dist/carousel.css";
-import { defineComponent, onMounted, ref, reactive, watch, computed, watchEffect } from "vue";
+import {defineComponent, onMounted, ref, reactive, watch, computed} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {userStore} from "@/store/index";
-import {getVerificationCode, register} from "@/api/index/login";
-import { findAccount } from "@/api/index/forgotPwd";
+import {getVerificationCode, register, findAccount} from "@/api/index/login";
 import {sendSms} from "@/api/personal/personal";
 import {ElMessage} from "element-plus";
 import {
@@ -660,7 +649,7 @@ export default defineComponent({
       {code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true},
       {code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true},
       {code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: false, hasicon: true},
-      {code: "Affiliate", name: "加盟", enName: "Affiliate", path: "/affiliate", hasicon: true},
+      {code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true},
       {code: "App", name: "APP", enName: "App", path: "/app", submenu: false, hasicon: true},
       {code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true},
     ]
@@ -702,13 +691,16 @@ export default defineComponent({
     const scroll = ref(0);
     const selectedMenu = ref(false);
     const {height} = useElementSize(el);
-    const isProfileDropDownOpen = ref(false);
 
-    const vip = computed(() => {
+    const vipLevel = computed(() => {
       if (store.vip.toUpperCase() === "NORMAL") {
         return 1;
       }
       return store.vip;
+    });
+
+    const vip = computed(() => {
+      return vipLevel.value;
     });
 
     const handleCommand = (command) => {
@@ -728,9 +720,8 @@ export default defineComponent({
         onLogout();
       }
     };
-    const isHovered = ref(false);
+
     const showSubMenu = (nav) => {
-      isHovered.value = true
       if (nav.submenu === true) {
         selectedMenu.value = nav.code
       } else {
@@ -1128,8 +1119,7 @@ export default defineComponent({
 
     const onLogout = () => {
       store.memberLogout().then(() => {
-        router.push("/home");
-        // location.reload();
+        location.reload();
       });
     };
     const registerRef = ref([])
@@ -1147,34 +1137,33 @@ export default defineComponent({
           codeId: captchaForm.codeId
         }
         sendSms(smsDetail)
-            .then((response) => {
-              if (response.code == 0) {
-                disableSendVerificationButton.value = true
+          .then((response) => {
+            if (response.code == 0) {
+              disableSendVerificationButton.value = true
 
-                regForm.smsCodeId = response.data.codeId;
+              regForm.smsCodeId = response.data.codeId;
 
-                ElMessage({
-                  type: 'success',
-                  message: '发送手机验证码成功'
-                });
+              ElMessage({
+                type: 'success',
+                message: '发送手机验证码成功'
+              });
 
-                captchaDialogVisible.value = false;
+              captchaDialogVisible.value = false;
 
-                regCountdown.value = registerSendOtpDisabledTimeout;
+              regCountdown.value = registerSendOtpDisabledTimeout;
 
-                const now = new Date();
+              const now = new Date();
 
-                now.setSeconds(now.getSeconds() + registerSendOtpDisabledTimeout);
+              now.setSeconds(now.getSeconds() + registerSendOtpDisabledTimeout);
 
-                lsStore(registerSendOtpDisabledKey, now.getTime());
-                lsStore(registerTelephoneKey, regForm.telephone);
+              lsStore(registerSendOtpDisabledKey, now.getTime());
+              lsStore(registerTelephoneKey, regForm.telephone);
 
-                countdownTimer('REGISTER')
-              } else {
-                ElMessage.error(response.message)
-                getCode();
-              }
-            })
+              countdownTimer('REGISTER')
+            } else {
+              getCode();
+            }
+          })
       } else if (captchaForm.type === 'LOGIN') {
         const smsDetail = {
           telephone: loginForm.phoneNumber,
@@ -1182,22 +1171,21 @@ export default defineComponent({
           codeId: captchaForm.codeId
         }
         sendSms(smsDetail)
-            .then((response) => {
-              if (response.code == 0) {
-                loginForm.smsCodeId = response.data.codeId;
-                ElMessage({
-                  type: 'success',
-                  message: '发送手机验证码成功'
-                });
-                captchaDialogVisible.value = false;
-                getCode();
-                loginCountdown.value = 30;
-                countdownTimer('LOGIN')
-              } else {
-                ElMessage.error(response.message)
-                getCode();
-              }
-            })
+          .then((response) => {
+            if (response.code == 0) {
+              loginForm.smsCodeId = response.data.codeId;
+              ElMessage({
+                type: 'success',
+                message: '发送手机验证码成功'
+              });
+              captchaDialogVisible.value = false;
+              getCode();
+              loginCountdown.value = 30;
+              countdownTimer('LOGIN')
+            } else {
+              getCode();
+            }
+          })
       }
     };
 
@@ -1247,25 +1235,25 @@ export default defineComponent({
             const sidParam = FingerprintJS.hashComponents(allComponents);
             regForm.sid = sidParam;
             register(regForm)
-                .then((response) => {
-                  const regResult = response.code;
-                  if (regResult === 0) {
-                    ElMessage({
-                      type: 'success',
-                      message: '注册成功'
-                    });
-                    store.autoLogin(response.data);
-                    registerDialogVisible.value = false;
-                    store.regPageVisible = false
-                    // loginDialogVisible.value = true;
+              .then((response) => {
+                const regResult = response.code;
+                if (regResult === 0) {
+                  ElMessage({
+                    type: 'success',
+                    message: '注册成功'
+                  });
+                  store.autoLogin(response.data);
+                  registerDialogVisible.value = false;
+                  store.regPageVisible = false
+                  // loginDialogVisible.value = true;
 
-                    sessionStorage.removeItem("REFERRAL_CODE");
-                    // getCode();
-                  } else {
-                    getCode();
-                    // message.error(response.message);
-                  }
-                })
+                  sessionStorage.removeItem("REFERRAL_CODE");
+                  // getCode();
+                } else {
+                  getCode();
+                  // message.error(response.message);
+                }
+              })
           })();
         } else {
           getCode();
@@ -1311,7 +1299,7 @@ export default defineComponent({
 
     });
 
-    watchEffect(() => store.loginPageVisible, () => {
+    watch(() => store.loginPageVisible, () => {
       if (store.loginPageVisible) {
         // loginDialogVisible.value = true
         router.push('/login');
@@ -1322,7 +1310,7 @@ export default defineComponent({
       // Optionally you can set immediate: true config for the watcher to run on init
       // }, { immediate: true });
     });
-    watchEffect(() => store.regPageVisible, () => {
+    watch(() => store.regPageVisible, () => {
       if (store.regPageVisible) {
         // registerDialogVisible.value = true
         router.push('/register');
@@ -1360,8 +1348,6 @@ export default defineComponent({
           regForm.codeId = res.data.id;
           captchaForm.codeId = res.data.id;
           passForm.codeId = res.data.id
-        } else {
-          ElMessage.error(res.message)
         }
       })
     };
@@ -1371,8 +1357,6 @@ export default defineComponent({
         findAccount(passForm).then((res) => {
           if (res.code === 0) {
             ElMessage.success("您的帐号已经发送到注册邮箱");
-          } else {
-            ElMessage.error(res.message)
           }
         })
       });
@@ -1392,31 +1376,31 @@ export default defineComponent({
 
         loginRef.value.validate().then(() => {
           store
-              .memberLogin({
-                loginName: loginForm.loginName,
-                password: loginForm.password,
-                sid: sidParam,
-                captchaCode: loginForm.captchaCode,
-                codeId: loginForm.codeId,
-              })
-              .then(() => {
-                // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
-                if (store.token) {
-                  // router.push(jumpUrl);
-                  loginDialogVisible.value = false;
-                  store.loginPageVisible = false;
+            .memberLogin({
+              loginName: loginForm.loginName,
+              password: loginForm.password,
+              sid: sidParam,
+              captchaCode: loginForm.captchaCode,
+              codeId: loginForm.codeId,
+            })
+            .then(() => {
+              // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
+              if (store.token) {
+                // router.push(jumpUrl);
+                loginDialogVisible.value = false;
+                store.loginPageVisible = false;
 
-                  sessionStorage.removeItem("REFERRAL_CODE");
-                  loginForm.loginName = null
-                  loginForm.password = null
-                  loginForm.captchaCode = null
-                } else {
-                  // loginForm.loginName = null
-                  // loginForm.password = null
-                  // loginForm.captchaCode = null
-                  getCode();
-                }
-              }).catch((error) => {
+                sessionStorage.removeItem("REFERRAL_CODE");
+                loginForm.loginName = null
+                loginForm.password = null
+                loginForm.captchaCode = null
+              } else {
+                // loginForm.loginName = null
+                // loginForm.password = null
+                // loginForm.captchaCode = null
+                getCode();
+              }
+            }).catch((error) => {
             // message.error(error.message);
             console.log(error.message);
             getCode();
@@ -1441,25 +1425,25 @@ export default defineComponent({
 
         mobileLoginRef.value.validate().then(() => {
           store
-              .telephoneLogin({
-                phoneNumber: loginForm.phoneNumber,
-                sid: sidParam,
-                code: loginForm.code,
-                smsCodeId: loginForm.smsCodeId,
-              })
-              .then(() => {
-                // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
-                if (store.token) {
-                  // router.push(jumpUrl);
-                  loginDialogVisible.value = false;
-                  store.loginPageVisible = false;
+            .telephoneLogin({
+              phoneNumber: loginForm.phoneNumber,
+              sid: sidParam,
+              code: loginForm.code,
+              smsCodeId: loginForm.smsCodeId,
+            })
+            .then(() => {
+              // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
+              if (store.token) {
+                // router.push(jumpUrl);
+                loginDialogVisible.value = false;
+                store.loginPageVisible = false;
 
-                  sessionStorage.removeItem("REFERRAL_CODE");
-                } else {
-                  loginForm.phoneNumber = null
-                  loginForm.code = null
-                }
-              }).catch((error) => {
+                sessionStorage.removeItem("REFERRAL_CODE");
+              } else {
+                loginForm.phoneNumber = null
+                loginForm.code = null
+              }
+            }).catch((error) => {
             // message.error(error.message);
             console.log(error.message);
           });
@@ -1497,47 +1481,47 @@ export default defineComponent({
       return 8;
     }
 
-    // watch(
-    //     () => regForm.password,
-        // () => {
-        //   pwdStrength.value = "";
+    watch(
+      () => regForm.password,
+      // () => {
+      //   pwdStrength.value = "";
 
-        //   var pwd = regForm.password;
-        //   var result = 0;
-        //   for (var i = 0, len = pwd.length; i < len; ++i) {
-        //     result |= charType(pwd.charCodeAt(i));
-        //   }
+      //   var pwd = regForm.password;
+      //   var result = 0;
+      //   for (var i = 0, len = pwd.length; i < len; ++i) {
+      //     result |= charType(pwd.charCodeAt(i));
+      //   }
 
-        //   var level = 0;
-        //   for (i = 0; i <= 4; i++) {
-        //     if (result & 1) {
-        //       level++;
-        //     }
-        //     result = result >>> 1;
-        //   }
+      //   var level = 0;
+      //   for (i = 0; i <= 4; i++) {
+      //     if (result & 1) {
+      //       level++;
+      //     }
+      //     result = result >>> 1;
+      //   }
 
-        //   // console.log(level);
+      //   // console.log(level);
 
-        //   if (pwd.length >= 6) {
-        //     switch (level) {
-        //       case 1:
-        //         pwdStrength.value = "weak";
-        //         break;
-        //       case 2:
-        //         pwdStrength.value = "normal";
-        //         break;
-        //       case 3:
-        //       case 4:
-        //         pwdStrength.value = "strong";
-        //         break;
-        //     }
-        //   } else {
-        //     pwdStrength.value = "weak";
-        //   }
+      //   if (pwd.length >= 6) {
+      //     switch (level) {
+      //       case 1:
+      //         pwdStrength.value = "weak";
+      //         break;
+      //       case 2:
+      //         pwdStrength.value = "normal";
+      //         break;
+      //       case 3:
+      //       case 4:
+      //         pwdStrength.value = "strong";
+      //         break;
+      //     }
+      //   } else {
+      //     pwdStrength.value = "weak";
+      //   }
 
-        //   // console.log(pwdStrength.value);
-        // },
-    // );
+      //   // console.log(pwdStrength.value);
+      // },
+    );
     const todayDate = () => {
       return 'GTM+8 ' + moment().utcOffset('+08:00').format('M/D/YYYY, h:mm:ss A ') + moment(new Date()).locale('zh-cn').format('dddd');
     }
@@ -1546,8 +1530,6 @@ export default defineComponent({
       getUnreadTotal().then((response) => {
         if (response.code === 0) {
           store.unreadTotal= response.data;
-        } else {
-          ElMessage.error(response.message)
         }
       }).catch((error) => {
         // console.log("error===", error)
@@ -1555,7 +1537,6 @@ export default defineComponent({
     }
 
     return {
-      isHovered,
       token,
       el,
       height,
@@ -1616,8 +1597,7 @@ export default defineComponent({
       route,
       getUnreadMail,
       vip,
-      handleCommand,
-      isProfileDropDownOpen
+      handleCommand
     }
   }
 });
@@ -1707,7 +1687,7 @@ body {
     }
 
     .details-name {
-      color: $color-white;
+      color: $font-1;
       font-weight: bold;
     }
 
@@ -1729,7 +1709,6 @@ body {
     .details-balance {
       display: flex;
       align-items: center;
-      color: #ffffff;
 
       .assets-text {
         white-space: nowrap;
@@ -1754,7 +1733,7 @@ body {
     justify-content: center;
     flex-direction: column;
     font-size: 0.75rem;
-    color: #ffffff;
+    color: $font-1;
     cursor: pointer;
 
     &:hover {
@@ -1772,7 +1751,6 @@ body {
       justify-content: center;
       border-radius: 50%;
       box-shadow: 0px 2px 5px 0px #bbdcff inset;
-          background: #fff;
     }
 
     img {
@@ -1887,13 +1865,8 @@ body {
     background: $color-white;
 
     position: relative;
-    // box-shadow: $shadow-header;
+    box-shadow: $shadow-header;
 
-    // background: linear-gradient(180deg, #8e8fff, #b4dcff, transparent);
-    background: linear-gradient(180deg, #489CFF 0, rgba(243, 247, 253, 0) 100%);
-
-    height: 180px;
-    margin-bottom: -110px;
     .top-nav-inner {
       max-width: $maxwidth;
       margin: 0 auto;
@@ -1952,48 +1925,18 @@ body {
           flex-direction: column;
           text-decoration: none;
           gap: 2px;
-          // color: $font-1;
-          color: #ffffff;
+          color: $font-1;
 
-            // filter: brightness(0.8);
           &.icon {
             gap: 0;
           }
-          .menu-icon {
-            height: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            img {
-            width: 20px;
-            margin: 0 auto;
 
-            }
+          &:hover {
+            filter: brightness(0.8);
           }
-          .menu-text {
-            color: #ffffff;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-              &:after {
-              content: "";
-              background: transparent;
-              width: 20px;
-              height: 2px;
-              margin-top: 5px;
-            }
-            &.active, &:hover {
 
-              &:after {
-              content: "";
-              background: #ffffff;
-              width: 25px;
-              height: 2px;
-              border-radius: 10px;
-            }
-            } 
+          .menu-icon {
+            width: 50px;
           }
 
           span:first-child {
@@ -2023,24 +1966,23 @@ body {
               color: $link-active;
             }
 
-            // img.hover-icon {
-            //   filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
-            //     contrast(102%);
-            // }
+            img.hover-icon {
+              filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
+              contrast(102%);
+            }
           }
         }
 
         .sub-menu {
           transition: $page-trans;
-          // background: rgba(239, 242, 245, 0.95);
-          // box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 4px 0px 0px #a7c2dd;
+          background: rgba(239, 242, 245, 0.95);
+          box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 4px 0px 0px #a7c2dd;
           backdrop-filter: blur(24.5px);
           overflow: hidden;
           height: 0px;
           position: absolute;
           left: 0;
-          // top: 100%;
-          top: calc(100% - 110px);
+          top: 100%;
           width: 100%;
 
           > div {
@@ -2620,47 +2562,5 @@ body {
 
 .header-menu-item {
   // display: flex;
-  .icon {
-    width: 22px;
-    height: 22px;
-  }
-  &:hover {
-    .promotion {
-      background: url(../../assets/images/home/header-promotion-icon-hover.png)no-repeat center center;
-    }
-    .affiliate {
-      background: url(../../assets/images/home/header-affiliate-icon-hover.png)no-repeat center center;
-    }
-    .vip {
-      background: url(../../assets/images/home/header-vip-icon-hover.png)no-repeat center center;
-    }
-    .app {
-      background: url(../../assets/images/home/header-app-icon-hover.png)no-repeat center center;
-    }
-  }
-  .promotion {
-    background: url(../../assets/images/home/header-promotion-icon.png)no-repeat center center;
-    &.active {
-      background: url(../../assets/images/home/header-promotion-icon-hover.png)no-repeat center center;
-    }
-  }
-  .affiliate {
-    background: url(../../assets/images/home/header-affiliate-icon.png)no-repeat center center;
-    &.active {
-      background: url(../../assets/images/home/header-affiliate-icon-hover.png)no-repeat center center;
-    }
-  }
-  .vip {
-    background: url(../../assets/images/home/header-vip-icon.png)no-repeat center center;
-    &.active {
-      background: url(../../assets/images/home/header-vip-icon-hover.png)no-repeat center center;
-    }
-  }
-  .app {
-    background: url(../../assets/images/home/header-app-icon.png)no-repeat center center;
-    &.active {
-      background: url(../../assets/images/home/header-app-icon-hover.png)no-repeat center center;
-    }
-  }
 }
 </style>
