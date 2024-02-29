@@ -291,6 +291,7 @@ const blurCode = () => {
 
 const verifyDepositAmount = ref([
   (val) => !!val || "请输入金额",
+  (val) => (val && /^\d+$/.test(val)) || '存款金额不能带有小数',
   (val) =>
     val > calculatedMinDeposit.value - 1 ||
     "存款应介于 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,

@@ -1037,7 +1037,7 @@ export default defineComponent({
           const platformBlocks= document.getElementsByClassName("platform-block");
           const blockHeight = platformBlocks ? platformBlocks[0].offsetHeight / 4 * 3 : 75;
 
-          console.log("scroll");
+          // console.log("scroll");
 
           var checkItem1 = document.getElementById("esport-lists");
           var checkItem2 = document.getElementById("sport-lists");
@@ -1052,8 +1052,8 @@ export default defineComponent({
           var positionTop4 = checkItem4.getBoundingClientRect().top;
           var positionTop5 = checkItem5.getBoundingClientRect().top;
 
-          console.log(positionTop4);
-          console.log(positionTop5);
+          // console.log(positionTop4);
+          // console.log(positionTop5);
 
           if (0 > positionTop5 - 5) {
             tab.value = "others";
@@ -1067,7 +1067,7 @@ export default defineComponent({
             tab.value = "esport";
           }
 
-          console.log(tab.value);
+          // console.log(tab.value);
         }
       }
     };
@@ -1420,11 +1420,11 @@ export default defineComponent({
               var slotObj = Object.assign({}, element);
 
               if (slotObj.code === "AG") {
-                slotObj.title = "XIN 电子";
+                slotObj.title = "XIN电子";
               } else if (slotObj.alias) {
-                slotObj.title = translateRecord(slotObj.alias) + " 电子";
+                slotObj.title = translateRecord(slotObj.alias) ;
               } else {
-                slotObj.title = translateRecord(slotObj.name) + " 电子";
+                slotObj.title = translateRecord(slotObj.name) ;
               }
 
               slotObj.icon = "slot";
@@ -1434,7 +1434,8 @@ export default defineComponent({
               let slotItem = {
                 id: slotObj.id,
                 code: slotObj.code,
-                icon: slotObj.name
+                icon: slotObj.name,
+                title: slotObj.title
               };
               // console.log(slotItem);
               ui.slotLists.push(slotItem);
@@ -1466,7 +1467,7 @@ export default defineComponent({
             }
             if (platTypes.indexOf("LOTTERY") > -1) {
               var lottObj = Object.assign({}, element);
-              lottObj.title = lottObj.name + " 彩票";
+              lottObj.title = lottObj.name + "彩票";
               lottObj.icon = "lottery";
               lottObj.subtitle = "彩票游戏";
               //HArdCode hid BBIN
@@ -1644,13 +1645,14 @@ export default defineComponent({
 
     const getImgPlatformLogo = (platform, code, alias) => {
       try {
-        let effectiveCode;
-        if (code.toLowerCase() === "pm" || code.toLowerCase() === "db") {
-          effectiveCode = code.toLowerCase();
-        } else {
-          effectiveCode = alias || code.toLowerCase();
-        }
-        return `${require(`../assets/images/home/${platform}/logo-${effectiveCode.toLowerCase()}.png`)}`;
+        // let effectiveCode;
+        // if (code.toLowerCase() === "pm" || code.toLowerCase() === "db") {
+        //   effectiveCode = code.toLowerCase();
+        // } else {
+        //   effectiveCode = alias || code.toLowerCase();
+        // }
+
+        return `${require(`../assets/images/home/${platform}/logo-${code.toLowerCase()}.png`)}`;
       } catch (e) {
         return `${require(`../assets/images/home/logo-empty.png`)}`;
       }
@@ -1658,13 +1660,13 @@ export default defineComponent({
 
     const getImgPlatformBg = (platform, code, alias) => {
       try {
-        let effectiveCode;
-        if (code.toLowerCase() === "pm" || code.toLowerCase() === "db") {
-          effectiveCode = code.toLowerCase();
-        } else {
-          effectiveCode = alias || code.toLowerCase();
-        }
-        return `url(${require(`../assets/images/home/${platform}/platform-item-${effectiveCode.toLowerCase()}.png`)})`;
+        // let effectiveCode;
+        // if (code.toLowerCase() === "pm" || code.toLowerCase() === "db") {
+        //   effectiveCode = code.toLowerCase();
+        // } else {
+        //   effectiveCode = alias || code.toLowerCase();
+        // }
+        return `url(${require(`../assets/images/home/${platform}/platform-item-${code.toLowerCase()}.png`)})`;
       } catch (e) {
         return `url(${require(`../assets/images/home/${platform}/platform-item-empty.png`)})`;
       }
@@ -1674,7 +1676,7 @@ export default defineComponent({
     const getUnreadTotal = () => {
       if (store.token) {
         return api.get("/session/inbox/getUnreadTotal").then((res) => {
-          console.log(res);
+          // console.log(res);
           if (res.code === 0) {
             unreadInboxMail.value = res.data;
           }
@@ -2179,6 +2181,7 @@ export default defineComponent({
 
       &.maintenance {
         filter: grayscale(0.8);
+        pointer-events: none;
       }
 
       &.maintenance:after {

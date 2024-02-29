@@ -28,6 +28,10 @@
 
       &.maintenance {
         filter: grayscale(0.8);
+
+        .btn-blue{
+          pointer-events: none;
+        }
       }
 
       .maintenance-box {

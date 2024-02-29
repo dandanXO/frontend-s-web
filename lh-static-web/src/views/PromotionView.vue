@@ -140,9 +140,9 @@ export default defineComponent({
       { code: "ESPORT", img: 'esport', label: '电竞优惠'},
       { code: "SPORT", img: 'sport', label: '体育优惠'},
       // { code: "POKER", img: 'poker', label: '棋牌'},
-      { code: "LIVE CASINO", img: 'live', label: '真人娱乐'},
+      { code: "LIVE CASINO", img: 'live', label: '真人优惠'},
       // { code: "FISH", img: 'fish', label: '捕鱼'},
-      { code: "OTHERS", img: 'slot', label: '其他'},
+      { code: "OTHERS", img: 'slot', label: '其他优惠'},
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
@@ -199,7 +199,14 @@ export default defineComponent({
         }
       }
     }
+
+    const scrollToTop = () => {
+      window.scroll({ behavior: "smooth", left: 0, top: 0 });
+    };
+
     const switchPromoType = (type) => {
+      scrollToTop();
+    
       promoTabActive.value = type;
       if (type !== "ALL") {
         if(type ==='OTHERS'){
