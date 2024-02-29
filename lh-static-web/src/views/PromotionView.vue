@@ -698,7 +698,7 @@ export default defineComponent({
         padding: 20px;
         display: flex;
         flex-direction: column;
-        background-size: 100%;
+    background-size: 100% 100%;
         background-position: top center;
         gap: 20px;
         background-repeat: no-repeat;
