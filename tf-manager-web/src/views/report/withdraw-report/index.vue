@@ -62,7 +62,7 @@
     <el-table
       :data="page.records"
       ref="table"
-      row-key="id"
+      row-key="name"
       :expand-row-keys="expandrowkey"
       size="small"
       highlight-current-row
