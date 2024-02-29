@@ -24,7 +24,8 @@ export const userStore = defineStore("userStore", {
       evip: "",
       currency: { value: "￥", label: "RMB" },
       loginPageVisible: false,
-      regPageVisible: false
+      regPageVisible: false,
+      visitorId: ""
     };
   },
   actions: {
@@ -106,14 +107,7 @@ export const userStore = defineStore("userStore", {
             // `https://csweb01.v6kthwlug.com/?partnerCode=XFCS&lang=zh-CN&token=${this.token}`,
             `${res.data}${this.token}`,
             "Chat Server",
-            "resizable=yes, width=" +
-              800 +
-              ", height=" +
-              880 +
-              ", top=" +
-              top +
-              ", left=" +
-              left
+            "resizable=yes, width=" + 800 + ", height=" + 880 + ", top=" + top + ", left=" + left
           );
         })
         .catch((err) => {

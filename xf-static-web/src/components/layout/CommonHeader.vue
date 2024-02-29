@@ -8,10 +8,7 @@
             <!-- Since svg icons do not carry any attributes by default -->
             <!-- You need to provide attributes directly -->
             <div>
-              <RiVolumeUpFill
-                style="fill: #2db9e2; width: 20px !important"
-                @click="openPopup(announcementList)"
-              />
+              <RiVolumeUpFill style="fill: #2db9e2; width: 20px !important" @click="openPopup(announcementList)" />
             </div>
 
             <div class="station-notice">
@@ -37,20 +34,13 @@
         </div>
         <div v-if="!store.token" class="right-contents">
           <a class="common-btn grey" @click="openUsernameLogin()">登录</a>
-          <a class="common-btn" @click="registerDialogVisible = true">
-            开设账户
-          </a>
+          <a class="common-btn" @click="registerDialogVisible = true">开设账户</a>
           <a class="common-link" @click="openForgotDialog">忘记账号?</a>
         </div>
         <div class="details" v-if="store.token">
           <el-dropdown @command="handleCommand" trigger="click">
             <span class="el-dropdown-link">
-              <el-tag
-                size="small"
-                type="warning"
-                effect="dark"
-                style="margin-right: 10px; font-weight: bold"
-              >
+              <el-tag size="small" type="warning" effect="dark" style="margin-right: 10px; font-weight: bold">
                 {{ store.vip }}
               </el-tag>
               {{ store.nickName }}
@@ -94,9 +84,7 @@
             </el-icon>
           </a>
           <div class="top-deposit">
-            <router-link to="/center/deposit" class="common-btn">
-              充值
-            </router-link>
+            <router-link to="/center/deposit" class="common-btn">充值</router-link>
           </div>
         </div>
       </div>
@@ -107,11 +95,7 @@
           <img src="../../assets/logo.png" />
         </router-link>
         <div class="navigations">
-          <div
-            class="header-menu-item"
-            v-for="nav in navigations"
-            :key="nav.name"
-          >
+          <div class="header-menu-item" v-for="nav in navigations" :key="nav.name">
             <!-- <a
               v-if="nav.enName === 'Esports' || nav.enName === 'Sports'"
               @click="checkMaintenance"
@@ -121,55 +105,19 @@
               <span>{{ nav.enName }}</span>
             </a> -->
 
-            <router-link
-              @mouseover="showSubMenu(nav)"
-              @mouseup="selectedMenu = ''"
-              :to="nav.path"
-            >
+            <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
               <span>{{ nav.name }}</span>
               <span>{{ nav.enName }}</span>
             </router-link>
           </div>
-          <div
-            @mouseleave="selectedMenu = ''"
-            class="sub-menu"
-            :style="'height:' + height + 'px;'"
-          >
-            <GameMenu
-              :list="slotPlatform"
-              ref="el"
-              v-if="selectedMenu === 'Game'"
-            />
-            <SportsMenu
-              ref="el"
-              v-if="selectedMenu === 'Sports'"
-              @load-modal="openGame"
-            />
-            <EsportsMenu
-              ref="el"
-              v-if="selectedMenu === 'Esports'"
-              @load-modal="openGame"
-            />
-            <LiveCasinoMenu
-              ref="el"
-              v-if="selectedMenu === 'Live Casino'"
-              @load-modal="openGame"
-            />
-            <LotteryMenu
-              ref="el"
-              v-if="selectedMenu === 'Lottery'"
-              @load-modal="openGame"
-            />
-            <PokerMenu
-              ref="el"
-              v-if="selectedMenu === 'Poker'"
-              @load-modal="openGame"
-            />
-            <FishingMenu
-              ref="el"
-              v-if="selectedMenu === 'Fishing'"
-              @load-modal="openGame"
-            />
+          <div @mouseleave="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">
+            <GameMenu :list="slotPlatform" ref="el" v-if="selectedMenu === 'Game'" />
+            <SportsMenu ref="el" v-if="selectedMenu === 'Sports'" @load-modal="openGame" />
+            <EsportsMenu ref="el" v-if="selectedMenu === 'Esports'" @load-modal="openGame" />
+            <LiveCasinoMenu ref="el" v-if="selectedMenu === 'Live Casino'" @load-modal="openGame" />
+            <LotteryMenu ref="el" v-if="selectedMenu === 'Lottery'" @load-modal="openGame" />
+            <PokerMenu ref="el" v-if="selectedMenu === 'Poker'" @load-modal="openGame" />
+            <FishingMenu ref="el" v-if="selectedMenu === 'Fishing'" @load-modal="openGame" />
             <PromotionMenu ref="el" v-if="selectedMenu === 'Promotion'" />
             <AppMenu ref="el" v-if="selectedMenu === 'App'" />
           </div>
@@ -197,24 +145,13 @@
               style="width: 100%; max-width: 400px; margin: 50px auto"
             >
               <el-form-item tabindex="1" label="用户名" prop="loginName">
-                <el-input
-                  v-model="loginForm.loginName"
-                  placeholder="输入用户名"
-                />
+                <el-input v-model="loginForm.loginName" placeholder="输入用户名" />
               </el-form-item>
               <el-form-item tabindex="2" label="密码" prop="password">
-                <el-input
-                  v-model="loginForm.password"
-                  placeholder="输入密码"
-                  type="password"
-                  show-password
-                />
+                <el-input v-model="loginForm.password" placeholder="输入密码" type="password" show-password />
               </el-form-item>
               <el-form-item tabindex="3" label="验证码" prop="captchaCode">
-                <el-row
-                  :gutter="10"
-                  style="justify-content: center; align-items: center"
-                >
+                <el-row :gutter="10" style="justify-content: center; align-items: center">
                   <el-col :span="12">
                     <el-input
                       v-model="loginForm.captchaCode"
@@ -224,11 +161,7 @@
                     />
                   </el-col>
                   <el-col :span="12">
-                    <img
-                      style="width: 70%"
-                      :src="verificationImg"
-                      @click="getCode"
-                    />
+                    <img style="width: 70%" :src="verificationImg" @click="getCode" />
                   </el-col>
                 </el-row>
               </el-form-item>
@@ -254,16 +187,10 @@
               style="width: 100%; max-width: 400px; margin: 50px auto"
             >
               <el-form-item tabindex="1" label="手机号" prop="phoneNumber">
-                <el-input
-                  v-model="loginForm.phoneNumber"
-                  placeholder="输入手机号"
-                />
+                <el-input v-model="loginForm.phoneNumber" placeholder="输入手机号" />
               </el-form-item>
               <el-form-item tabindex="2" label="手机验证码" prop="smsCode">
-                <el-row
-                  :gutter="10"
-                  style="justify-content: center; align-items: center"
-                >
+                <el-row :gutter="10" style="justify-content: center; align-items: center">
                   <el-col :span="12">
                     <el-input
                       v-model="loginForm.smsCode"
@@ -281,19 +208,11 @@
                     >
                       发送验证码
                     </el-button>
-                    <div v-else disabled>
-                      已发送（倒数{{ loginCountdown }}秒）
-                    </div>
+                    <div v-else disabled>已发送（倒数{{ loginCountdown }}秒）</div>
                   </el-col>
                 </el-row>
               </el-form-item>
-              <el-button
-                size="large"
-                color="#3bafda"
-                class="common-btn"
-                style="margin-left: 100px"
-                @click="phoneLogin"
-              >
+              <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px" @click="phoneLogin">
                 登录
               </el-button>
             </el-form>
@@ -302,13 +221,7 @@
       </span>
     </el-dialog>
 
-    <el-dialog
-      class="noPadding"
-      v-model="registerDialogVisible"
-      width="1280px"
-      align-center
-      style="max-width: 1200px"
-    >
+    <el-dialog class="noPadding" v-model="registerDialogVisible" width="1280px" align-center style="max-width: 1200px">
       <div class="register-container">
         <div class="registered-left">
           <div class="title"></div>
@@ -358,10 +271,7 @@
             <el-form-item label="姓名" prop="realName">
               <el-space>
                 <el-input v-model="regForm.realName" placeholder="输入姓名" />
-                <el-tooltip
-                  content="范围在2-12位之间, 由中文字符组成"
-                  placement="right"
-                >
+                <el-tooltip content="范围在2-12位之间, 由中文字符组成" placement="right">
                   <el-icon :size="10">
                     <InfoFilled />
                   </el-icon>
@@ -371,14 +281,8 @@
 
             <el-form-item label="用户名" prop="loginName">
               <el-space>
-                <el-input
-                  v-model="regForm.loginName"
-                  placeholder="输入用户名"
-                />
-                <el-tooltip
-                  content="范围在6-12位之间, 由字母和数字组成"
-                  placement="right"
-                >
+                <el-input v-model="regForm.loginName" placeholder="输入用户名" />
+                <el-tooltip content="范围在6-12位之间, 由字母和数字组成" placement="right">
                   <el-icon :size="10">
                     <InfoFilled />
                   </el-icon>
@@ -424,10 +328,7 @@
                   </div> -->
                 </el-col>
                 <el-col :span="4">
-                  <el-tooltip
-                    content="范围在6-12位之间, 由字母和数字组成"
-                    placement="right"
-                  >
+                  <el-tooltip content="范围在6-12位之间, 由字母和数字组成" placement="right">
                     <el-icon :size="10">
                       <InfoFilled />
                     </el-icon>
@@ -444,10 +345,7 @@
                   type="password"
                   show-password
                 />
-                <el-tooltip
-                  content="范围在6-12位之间, 由字母和数字组成"
-                  placement="right"
-                >
+                <el-tooltip content="范围在6-12位之间, 由字母和数字组成" placement="right">
                   <el-icon :size="10">
                     <InfoFilled />
                   </el-icon>
@@ -495,11 +393,7 @@
               </div>
             </el-form-item> -->
             <el-form-item label="电话验证码" prop="smsCode" v-if="isSendOtp">
-              <el-input
-                class="half"
-                v-model="regForm.smsCode"
-                placeholder="输入电话验证码"
-              />
+              <el-input class="half" v-model="regForm.smsCode" placeholder="输入电话验证码" />
             </el-form-item>
             <el-form-item label="验证码" prop="captchaCode">
               <el-row :gutter="10">
@@ -516,17 +410,9 @@
                 </el-col>
               </el-row>
             </el-form-item>
-            <el-form-item
-              label="推荐码"
-              prop="codeAffiliate"
-              v-if="!hasAffiliate"
-            >
+            <el-form-item label="推荐码" prop="codeAffiliate" v-if="!hasAffiliate">
               <el-space>
-                <el-input
-                  class="half"
-                  v-model="regForm.codeAffiliate"
-                  placeholder="输入推荐码"
-                />
+                <el-input class="half" v-model="regForm.codeAffiliate" placeholder="输入推荐码" />
                 <!-- <el-input
                   v-else
                   class="half"
@@ -549,12 +435,8 @@
               </el-space>
             </el-form-item>
           </el-form>
-          <el-button color="#3bafda" @click="resetRegForm(registerRef)">
-            重新填写
-          </el-button>
-          <el-button @click="submitRegisterForm(registerRef)" color="#3bafda">
-            确认注册
-          </el-button>
+          <el-button color="#3bafda" @click="resetRegForm(registerRef)">重新填写</el-button>
+          <el-button @click="submitRegisterForm(registerRef)" color="#3bafda">确认注册</el-button>
         </div>
       </div>
     </el-dialog>
@@ -568,57 +450,27 @@
       :close-on-click-modal="false"
       @keydown.enter.prevent
     >
-      <el-form
-        ref="captchaRef"
-        :rules="captchaRules"
-        :model="captchaForm"
-        label-width="100"
-        label-suffix=":"
-      >
+      <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="100" label-suffix=":">
         <el-form-item tabindex="3" label="验证码" prop="captchaCode">
-          <el-row
-            :gutter="10"
-            style="justify-content: center; align-items: center"
-          >
+          <el-row :gutter="10" style="justify-content: center; align-items: center">
             <el-col :span="12">
-              <el-input
-                v-model="captchaForm.captchaCode"
-                label="验证码"
-                placeholder="验证码"
-                @keyup.enter="sendOtp"
-              />
+              <el-input v-model="captchaForm.captchaCode" label="验证码" placeholder="验证码" @keyup.enter="sendOtp" />
             </el-col>
             <el-col :span="12">
-              <img
-                style="width: 50%; margin-top: 6px"
-                :src="verificationImg"
-                @click="getCode"
-              />
+              <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
             </el-col>
           </el-row>
         </el-form-item>
-        <el-button
-          size="large"
-          color="#3bafda"
-          class="common-btn"
-          style="margin-left: 100px"
-          @click="sendOtp"
-        >
+        <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px" @click="sendOtp">
           发送
         </el-button>
       </el-form>
     </el-dialog>
 
-    <el-dialog
-      v-model="forgetPassDialogVisible"
-      title="忘记账号"
-      width="50%"
-      align-center
-      style="max-width: 800px"
-    >
+    <el-dialog v-model="forgetPassDialogVisible" title="忘记账号" width="50%" align-center style="max-width: 800px">
       <span>
         <el-tabs type="card" v-model="activeTab" @tabChange="changeTab">
-            <el-tab-pane label="手机找回密码" name="phone">
+          <el-tab-pane label="手机找回密码" name="phone">
             <p>方式：请输入您需找回登陆密码的用户名和验证手机号码</p>
             <el-form
               ref="forgotPwdFormPhoneRef"
@@ -806,7 +658,7 @@
             </el-form>
           </el-tab-pane>
           <el-tab-pane label="邮箱找回账号" name="account">
-             <p>方式：请输入您的注册邮箱，我们将发送您的账户名到您的注册邮箱。</p>
+            <p>方式：请输入您的注册邮箱，我们将发送您的账户名到您的注册邮箱。</p>
             <el-form
               ref="passRef"
               :rules="forgetPassRules"
@@ -819,10 +671,7 @@
                 <el-input v-model="passForm.email" placeholder="输入注册邮箱" />
               </el-form-item>
               <el-form-item tabindex="2" label="验证码" prop="captchaCode">
-                <el-row
-                  :gutter="10"
-                  style="justify-content: center; align-items: center"
-                >
+                <el-row :gutter="10" style="justify-content: center; align-items: center">
                   <el-col :span="12">
                     <el-input
                       v-model="passForm.captchaCode"
@@ -832,11 +681,7 @@
                     />
                   </el-col>
                   <el-col :span="12">
-                    <img
-                      style="width: 50%; margin-top: 6px"
-                      :src="verificationImg"
-                      @click="getCode"
-                    />
+                    <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
                   </el-col>
                 </el-row>
               </el-form-item>
@@ -865,18 +710,8 @@
       :footer="null"
       title="公告"
     >
-      <el-tabs
-        type="card"
-        class="announcementTabs"
-        v-model="announcementActive"
-        @tab-click="announcementTabChange"
-      >
-        <el-tab-pane
-          v-for="(tab, ind) in announcementTypes"
-          :key="tab.id"
-          :tab="ind"
-          :label="tab.name"
-        >
+      <el-tabs type="card" class="announcementTabs" v-model="announcementActive" @tab-click="announcementTabChange">
+        <el-tab-pane v-for="(tab, ind) in announcementTypes" :key="tab.id" :tab="ind" :label="tab.name">
           <el-collapse accordion v-model="typeActive">
             <template v-for="(ann, idx) in announcementList" :key="idx">
               <template v-if="ann.typeId === tab.id">
@@ -890,13 +725,7 @@
       </el-tabs>
     </el-dialog>
 
-    <el-dialog
-      class="noPadding"
-      v-model="noticeDialogVisible"
-      width="1280px"
-      align-center
-      style="max-width: 600px"
-    >
+    <el-dialog class="noPadding" v-model="noticeDialogVisible" width="1280px" align-center style="max-width: 600px">
       <div class="noticedialog">
         <div class="title">系统提示</div>
         <div class="contents">
@@ -906,9 +735,7 @@
           尊敬的兴發会员：为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！兴發娱乐
           2022/10/13
         </div>
-        <el-button class="common-btn" @click="noticeDialogVisible = false">
-          确认
-        </el-button>
+        <el-button class="common-btn" @click="noticeDialogVisible = false">确认</el-button>
       </div>
     </el-dialog>
 
@@ -953,7 +780,6 @@ import {InfoFilled, ArrowDown, Refresh} from '@element-plus/icons-vue'
 import {storeToRefs} from "pinia";
 import { getPlatformList } from "@/api/platform/platform";
 import GameModal from "@/components/modal/GameModal";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import {getSiteParamFromServer} from "@/api/index/site";
 import { ElMessageBox } from "element-plus";
 
@@ -963,7 +789,6 @@ import {
   sendForgetPasswordEmail,
   verifyForgetPasswordEmail
 } from "@/api/index/forgotPwd";
-
 
 export default defineComponent({
   name: "CommonHeader",
@@ -1705,16 +1530,9 @@ export default defineComponent({
       if (!elForm) return
       await elForm.validate((valid) => {
         if (valid) {
-          const fpPromise = FingerprintJS.load();
           (async () => {
-            const fp = await fpPromise;
-            const result = await fp.get();
-            const excludes = {value: ["timezone", "timeZoneOffset"]};
-            const allComponents = {...result.components};
-            excludes.value.forEach((element) => {
-              delete allComponents[element];
-            });
-            const sidParam = FingerprintJS.hashComponents(allComponents);
+            const sidParam = store.visitorId;;
+
             regForm.sid = sidParam;
             register(regForm)
                 .then((response) => {
@@ -2173,17 +1991,9 @@ export default defineComponent({
     };
 
     const submitLogin = () => {
-      loadingBtn.value = true
-      const fpPromise = FingerprintJS.load();
+      loadingBtn.value = true;
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = {value: ["timezone", "timeZoneOffset"]};
-        const allComponents = {...result.components};
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+        const sidParam = store.visitorId;
 
         loginRef.value.validate().then(() => {
           store
@@ -2222,17 +2032,9 @@ export default defineComponent({
     };
 
     const phoneLogin = () => {
-      loadingBtn.value = true
-      const fpPromise = FingerprintJS.load();
+      loadingBtn.value = true;
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = {value: ["timezone", "timeZoneOffset"]};
-        const allComponents = {...result.components};
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+        const sidParam = store.visitorId;
 
         mobileLoginRef.value.validate().then(() => {
           store
@@ -2978,7 +2780,7 @@ body {
 
   &.live {
     .platform-title {
-      font-size: 2.0em;
+      font-size: 2em;
     }
   }
 

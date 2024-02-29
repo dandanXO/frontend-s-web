@@ -4,26 +4,26 @@
 
 <script>
 import { defineComponent, onMounted } from "vue";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
+// import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { memberAccessLog } from "@/api/index/login";
+import { userStore } from "@/store";
+import { getVisitorId } from "@/utils/utils";
 
 export default defineComponent({
   setup() {
     const checkSID = () => {
+      const store = userStore();
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
-      const fpPromise = FingerprintJS.load();
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+        const visitorId = sessionStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+        store.visitorId = visitorId;
+
+        console.log("SID");
+        console.log(visitorId);
+
         const obj = {
-          identifier: sidParam,
-          affiliateCode: affiliateItem,
+          identifier: store.visitorId,
+          affiliateCode: affiliateItem
         };
         memberAccessLog(obj).then((res) => {
           if (res.code === 0) {
@@ -34,7 +34,7 @@ export default defineComponent({
     onMounted(() => {
       checkSID();
     });
-  },
+  }
 });
 </script>
 <style lang="scss">

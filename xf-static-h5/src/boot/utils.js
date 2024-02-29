@@ -1,4 +1,6 @@
 import { Platform } from "quasar";
+import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-vue-v3";
+
 
 export const MAIN = "MAIN";
 
@@ -80,3 +82,16 @@ export const getTimeout = key => {
 }
 
 export const getImageUrl = srcPath => require(`/src/assets/${srcPath}`)
+
+export const getVisitorId = async () => {
+  const { getData } = useVisitorData({ extendedResult: true }, { immediate: false });
+
+  const fp = await getData({ ignoreCache: true });
+
+  console.log("VisitorInfo");
+  console.log(fp);
+  if (fp?.visitorId) {
+    sessionStorage.setItem("VISITOR_ID", fp.visitorId);
+  }
+  return fp?.visitorId;
+};
