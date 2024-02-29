@@ -33,7 +33,9 @@
           </div>
         </div>
         <div :class="`hotgame-content-wrapper ${hotgame.isShow ? 'show' : ''}`">
-          <div class="left-container">
+          <div class="left-container"
+               :class="hotgame.currentPlat && hotgame.currentPlat.underMaintenance === true ? 'maintenance' : ''"
+          >
             <div class="title-wrapper">
               <Transition :key="transitionDesc" name="fade" enter>
                 <div class="title" v-if="hotgame.currentProvider">
@@ -102,8 +104,22 @@
               {{ hotgame.type !== "slot" ? `进入游戏` : `进入场馆` }}
             </el-button>
           </div>
-          <div class="right-container">
+          <div class="right-container"
+               :class="hotgame.currentPlat?.underMaintenance === true ? 'maintenance' : ''"
+          >
+
+            <div class="maintenance-box" v-if="hotgame.currentPlat?.underMaintenance === true">
+              <p>维护中</p>
+              <p v-if="hotgame.currentPlat.maintenanceStartTime && hotgame.currentPlat.maintenanceEndTime" class="small-size">
+                维护时间: {{ moment(hotgame.currentPlat.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
+                {{ moment(hotgame.currentPlat.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
+              </p>
+              <p class="small-size">请先前往其他场馆娱乐</p>
+            </div>
+
+
             <Transition :key="transitionKey" appear>
+
               <img
                 v-if="
                 hotgame.content &&
@@ -144,6 +160,7 @@ import {
   pokerPlatforms,
   sportsPlatforms
 } from "@/shared/platformArray";
+import moment from "moment";
 
 const store = userStore();
 const router = useRouter();
@@ -703,7 +720,7 @@ const checkPlatforms = () => {
   console.log(hotgameData.value);
 };
 const updatePlatforms = (platforms, item, keyModifier) => {
-  console.log(item.subtitle)
+  // console.log(item.subtitle)
   platforms.forEach((p, i) => {
     const newObject = {
       title: p.cnname,
@@ -856,6 +873,14 @@ $transition_timer: 0.5s;
           position: relative;
           width: 55%;
 
+          &.maintenance {
+            filter: grayscale(0.8);
+
+            .game-start-btn{
+              pointer-events: none;
+            }
+          }
+
           .title-wrapper {
             font-family: "YiHei";
             font-style: normal;
@@ -988,6 +1013,43 @@ $transition_timer: 0.5s;
           align-items: flex-end;
           position: relative;
           width: 45%;
+
+          &.maintenance {
+            filter: grayscale(0.8);
+          }
+
+          .maintenance-box {
+            position: absolute;
+            top: 10%;
+            width: 94%;
+            left: 3%;
+            right: 3%;
+            height: 80%;
+            padding:15px 10px;
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: bold;
+            z-index: 33;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+
+            background: rgba(2, 9, 73, 0.4);
+            border-radius: 30px;
+
+            p {
+              font-size: 30px;
+              margin-top: 3px;
+              margin-bottom: 3px;
+            }
+
+            .small-size {
+              font-size: 16px;
+            }
+          }
+
 
           img {
             position: relative;

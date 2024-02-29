@@ -38,7 +38,7 @@ function getInitApi(apiLinks, urlLsName) {
     }
 
     axios.get(initApi + "/ping").then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.status === 200) {
         localStorage.setItem(urlLsName, initApi);
       } else {
