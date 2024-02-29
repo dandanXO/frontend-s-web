@@ -1,3 +1,12 @@
+.platform-section{
+  background-image: url("../../assets/home/home-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: top center;
+  padding-top: 0px;
+  width: 100%;
+}
+
 .platform-container {
   max-width: $maxwidth;
   margin-left: auto;
@@ -20,9 +29,11 @@
     grid-template-columns: 47% 53%;
 
     .platform-item {
+      min-width: 320px;
       display: flex;
       align-content: center;
       flex-direction: column;
+      justify-content: flex-end;
       margin: auto 0;
       position: relative;
 
@@ -138,6 +149,7 @@
         color: $font-3;
         margin-top: 1rem;
         max-width: 32rem;
+        min-width: 45px;
       }
 
       .platform-pattern-row {
