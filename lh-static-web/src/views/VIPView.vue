@@ -310,24 +310,27 @@ export default defineComponent({
       const currentDeposit = +store.getCurrentDeposit();
       const upgradeStatus = vipInfo.upgrade;
 
-      // if (vipLevel >= +vipInfo.vipLevel) {
-      //   return 100;
-      // }
+      if (vipLevel >= +vipInfo.vipLevel) {
+        return 100;
+      }
       var levelUpDeposit = +upgradeStatus.replaceAll(",", "");
       if (!levelUpDeposit) {
-        levelUpDeposit = 0;
+        levelUpDeposit = 0
       }
       if (vipLevel === 0) {
-        return 0;
+        return 0
       }
       if (vipLevel + 1 === +vipInfo.vipLevel) {
         return (currentDeposit / levelUpDeposit) * 100;
       }
       if (currentDeposit > levelUpDeposit + 1) {
-        return 100;
+        return 100
       } else {
-        return 0;
+        return 0
       }
+      
+      // const levelUpDeposit = +upgradeStatus.replaceAll(",", "");
+      // return (currentDeposit / levelUpDeposit) * 100;
 
       // const levelUpDeposit = +upgradeStatus.replaceAll(",", "");
       // return (currentDeposit / levelUpDeposit) * 100;
