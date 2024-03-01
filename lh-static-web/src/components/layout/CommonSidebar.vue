@@ -34,10 +34,10 @@
         <div>客服中心</div>
       </div>
       <div @mouseover="customerHovered = false">
-        <a :href="downloadUrl" target="_blank" class="sticky-sidebar-item">
+        <router-link to="/app" class="sticky-sidebar-item">
           <img src="../../assets/images/home/sticky-sidebar-app-dl-icon.png" />
           <div>APP下载</div>
-        </a>
+        </router-link>
       </div>
       <div @mouseover="customerHovered = false" class="sticky-sidebar-item" @click="scrollToTop">
         <img src="../../assets/images/home/sticky-sidebar-back-top-icon.png" />

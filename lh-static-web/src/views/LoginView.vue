@@ -240,6 +240,10 @@ const phoneLogin = () => {
     const sidParam = FingerprintJS.hashComponents(allComponents);
 
     mobileLoginRef.value.validate().then(() => {
+      if (!loginForm.smsCodeId) {
+        ElMessage.error('请先获取验证码');
+        return;
+      }
       store
         .telephoneLogin({
           phoneNumber: loginForm.phoneNumber,

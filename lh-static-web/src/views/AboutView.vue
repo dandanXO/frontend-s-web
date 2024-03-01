@@ -42,9 +42,10 @@ const tabInfo = ref([
 
 const route = useRoute();
 const router = useRouter();
+const affCode = sessionStorage.getItem("AFFILIATE_CODE");
 
 const updateTab = (pane) => {
-  if (pane.props.name === "agent") window.open("https://partner.e88726.com/", "_self");
+  if (pane.props.name === "agent") window.open('https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : ''), "_self");
   else router.push({ query: { id: pane.props.name } });
 };
 
