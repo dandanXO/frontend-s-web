@@ -433,6 +433,26 @@ function confirmDeposit() {
         });
       return;
     }
+    if (!store.realName) {
+      ElMessageBox.confirm(
+        "您还未绑定真实姓名，请前往绑定", "系统提示",
+        {
+          showClose: "false",
+          cancelButtonClass: "cancel-btn",
+          confirmButtonText: "确认",
+          cancelButtonText: "取消",
+          type: "warning",
+          draggable: true,
+          buttonSize: "small"
+        }
+      )
+        .then(() => {
+          router.push("/center/personal");
+        })
+        .catch(() => {
+        });
+      return;
+    }
   }
   loadingBtn.value = true;
 

@@ -31,7 +31,7 @@
             ref="loginNameRef"
             v-model="loginForm.loginName"
             placeholder="请输入用户名"
-            :rules="[(val) => (val && val.length > 0) || '请输入用户名']"
+            :rules="[(val) => (val && val.length > 0) || '请输入用户名',(val) => (val && val.length >= 6 && val.length <= 12) || '长度要在 6-12 之间']"
             color="white"
             label-color="secondary"
             autocomplete="username"
@@ -187,7 +187,7 @@
     </q-form>
 
     <div class="login-bottom-div">
-      <img src="../assets/images/login/login-btm-banner.png" />
+      <img src="../assets/images/login/login-banner.png" />
     </div>
   </div>
 

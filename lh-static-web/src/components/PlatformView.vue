@@ -4,7 +4,10 @@
     <div class="platform-container"
       :class="(platformType === 'slot') ? 'slot-container' : ''"
     >
-      <div class="platform-container-inner">
+      <div class="platform-container-slot" v-if="platformType === 'slot'">
+        <img src="../assets/slot/slot-top-bg.png">
+      </div>
+      <div class="platform-container-inner" v-if="platformType !== 'slot'">
         <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
         <template v-for="(item, index) in platformsListDisplay" :key="index">
           <template v-if="selectedPlat === item.code">

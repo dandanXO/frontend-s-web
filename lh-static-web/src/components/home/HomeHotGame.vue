@@ -755,7 +755,7 @@ $transition_timer: 0.5s;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.3rem;
     margin: 2.5rem 0 0 0;
 
     .hotgame-wrapper {
@@ -766,7 +766,6 @@ $transition_timer: 0.5s;
         display: flex;
 
         .hotgame-banner {
-          width: 60px;
           width: 65px;
           height: 36.5rem;
           // height: 28.5rem;
@@ -811,8 +810,9 @@ $transition_timer: 0.5s;
           }
 
           .hotgame-text {
+            color: #000;
             display: flex;
-            gap: 5px;
+            gap: 7px;
             margin: 0 0.25rem 3rem 0;
 
             .title {
@@ -821,7 +821,7 @@ $transition_timer: 0.5s;
               text-align: center;
               font-family: PingFang SC;
               font-size: 1.156rem;
-              font-weight: 500;
+              font-weight: 600;
               line-height: 1.5rem;
             }
 
@@ -831,7 +831,7 @@ $transition_timer: 0.5s;
               text-align: center;
               font-family: PingFang SC;
               font-size: 0.578rem;
-              font-weight: 400;
+              font-weight: 500;
               line-height: 0.75rem;
               margin: 0.075rem 0 0 0;
             }

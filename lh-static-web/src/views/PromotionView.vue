@@ -179,7 +179,8 @@ export default defineComponent({
               showClose: false,
               buttonSize: 'large'
           }).then(() => {
-              store.loginPageVisible = true
+            router.push('/login');
+              // store.loginPageVisible = true
           })
           return
       } else {

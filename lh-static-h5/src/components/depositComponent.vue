@@ -183,16 +183,16 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog class="modal-common-div" width="100%" v-model="isNoBankCard" no-backdrop-dismiss no-esc-dismiss>
+  <q-dialog class="modal-common-div" width="100%" v-model="isNoRealName" no-backdrop-dismiss no-esc-dismiss>
     <q-card style="width: 100%; padding: 1rem 0.5rem" class="">
       <q-card-section class="contents q-mb-md">
         <strong>温馨提示</strong>
         <br />
         <br />
-        为保证资金安全，存款前先绑定银行卡
+        您还未绑定真实姓名，请前往绑定。
       </q-card-section>
       <q-card-actions align="right">
-        <router-link to="/account/withdraw">
+        <router-link to="/account/personal">
           <q-btn class="common-md-btn" label="前往绑定" color="brightbtn" />
         </router-link>
       </q-card-actions>
@@ -220,10 +220,16 @@ const router = useRouter();
 const formRef = ref();
 const isNewUser = ref(false);
 const isNoBankCard = ref(false);
+const isNoRealName= ref(false);
 const isDeposited = ref(false);
 const checkNewUser = () => {
   if (store.phone === "" || store.phone === null) {
     isNewUser.value = true;
+    return;
+  }
+  if (store.realName === "" || store.realName === null) {
+    isNoRealName.value = true;
+    return;
   }
   // else {
   //   api.get("/session/bankCard").then((response) => {
@@ -463,6 +469,8 @@ const depositAmtRef = ref("");
 async function confirmDeposit() {
   if (!extensionState.value && (store.phone === "" || store.phone === null)) {
     isNewUser.value = true;
+  }else if (!extensionState.value && (store.realName === "" || store.realName === null)) {
+    isNoRealName.value = true;
   } else {
     btnLoading.value = true;
     depositAmtRef.value.validate();

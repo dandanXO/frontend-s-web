@@ -89,7 +89,9 @@
 
   <div class="details-bar">
     <div class="message" @click="refreshBalance">
-      <span class="main-balance">
+      <span class="main-balance"
+        :class="(!store.token) ?  'main-nologin' : ''"
+      >
         {{ store.token ? (!isLoadingBalance ? "¥" + mainWallet.toFixed(2) : "加载中...") : "您还未登录" }}
       </span>
       <span>{{ store.token ? "中心钱包" : "登录/注册后查看" }}</span>
@@ -1892,6 +1894,10 @@ export default defineComponent({
   .main-balance {
     font-size: 1.6rem;
     color: $dark;
+
+    &.main-nologin{
+      font-size: 1rem;
+    }
   }
 
   .menulist {
