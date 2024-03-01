@@ -131,6 +131,12 @@
             $ <span v-formatter="{data: scope.row.amount,type: 'money'}" />
           </template>
         </el-table-column>
+        <el-table-column prop="maxRebate" :label="t('fields.maxRebate')" align="center" min-width="100">
+          <template #default="scope">
+            <span v-if="scope.row.maxRebate">$ <span v-formatter="{data: scope.row.maxRebate,type: 'money'}" /></span>
+            <span v-else>-</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="status" :label="t('fields.status')" align="center" min-width="120">
           <template #default="scope">
             <el-tag v-if="scope.row.status === 'DISTRIBUTED'" size="mini" type="success">{{ t('distributeStatus.' + scope.row.status) }}</el-tag>
