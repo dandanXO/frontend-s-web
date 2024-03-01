@@ -316,7 +316,7 @@ async function loadDaily(row, expandedRows) {
     const { data: ret } = await getDailyReport(dailyquery)
     page.records.forEach((temp, index) => {
       // 找到当前点击的行，把动态获取到的数据赋值进去
-      if (temp.id === row.paymentId) {
+      if (temp.paymentId === row.paymentId) {
         page.records[index].ruleItemData = ret.records
         console.log(page.records)
       }
