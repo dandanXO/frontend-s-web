@@ -4,6 +4,7 @@ import router from './router'
 import {createPinia} from "pinia";
 import ElementPlus from 'element-plus'
 import AOS from "aos";
+import { fpjsPlugin } from "@fingerprintjs/fingerprintjs-pro-vue-v3";
 
 import "aos/dist/aos.css";
 import "@/scss/common.scss";
@@ -20,5 +21,11 @@ app
     .use(ElementPlus, {
         locale: zhCn
     })
+    .use(fpjsPlugin, {
+        loadOptions: {
+            apiKey: "b1A4V9htZ4ySmb8ycMQb",
+            region: "ap"
+        }
+    })    
     .mount("#app");
 
