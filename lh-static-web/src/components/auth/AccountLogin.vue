@@ -3,14 +3,14 @@
         <div class="light-bg form-field">
             <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
             <el-form-item label="用户名" prop="loginName">
-                <el-input v-model="loginForm.loginName" placeholder="请输入6-11位非汉字字符" clearable />
+                <el-input v-model="loginForm.loginName" placeholder="请输入6-12位非汉字字符" clearable />
             </el-form-item>
         </div>
 
         <div class="light-bg form-field">
             <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
             <el-form-item label="密码" prop="password">
-                <el-input v-model="loginForm.password" placeholder="请输入6-11位字母/数字组合" type="password" show-password clearable />
+                <el-input v-model="loginForm.password" placeholder="请输入6-12位字母/数字组合" type="password" show-password clearable />
             </el-form-item>
         </div>
 

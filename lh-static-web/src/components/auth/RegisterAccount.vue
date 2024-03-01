@@ -19,7 +19,7 @@
         <div class="light-bg form-field">
             <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
             <el-form-item label="用户名" prop="loginName">
-                <el-input class="wTip" v-model="regForm.loginName" placeholder="请输入6-11位非汉字字符" clearable>
+                <el-input class="wTip" v-model="regForm.loginName" placeholder="请输入6-12位非汉字字符" clearable>
                     <template #append></template>
                 </el-input>
             </el-form-item>
@@ -28,7 +28,7 @@
         <div class="light-bg form-field">
             <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
             <el-form-item label="密码" prop="password">
-                <el-input class="wTip" v-model="regForm.password" placeholder="请输入6-11位字母/数字组合" type="password" show-password clearable>
+                <el-input class="wTip" v-model="regForm.password" placeholder="请输入6-12位字母/数字组合" type="password" show-password clearable>
                     <template #append></template>
                 </el-input>
             </el-form-item>
@@ -197,7 +197,6 @@ let validatePass = async (r, v) => {
 };
 
 const regRules = {
-
     realName: [
         {
             required: false,
