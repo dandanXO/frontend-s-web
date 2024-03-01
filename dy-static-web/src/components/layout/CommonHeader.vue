@@ -818,7 +818,7 @@ import { useElementSize } from "@vueuse/core";
 import { ArrowDown, Refresh, ArrowRight, ArrowLeft } from "@element-plus/icons-vue";
 import { storeToRefs } from "pinia";
 import GameModal from "@/components/modal/GameModal";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
+// import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import moment from "moment";
 import { lsGet, lsStore, lsRemove, getTimeout } from "@/utils/utils";
 import { getUnreadMailTotal } from "@/api/personal/mailbox";
@@ -1908,7 +1908,7 @@ export default defineComponent({
     };
     const submitLogin = () => {
       loadingBtn.value = true;
-      
+
       (async () => {
         const sidParam = store.visitorId;
         loginRef.value.validate().then(() => {

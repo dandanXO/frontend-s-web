@@ -8,16 +8,30 @@ import { memberAccessLog } from "@/api/index/login";
 import axios from "axios";
 import { userStore } from "@/store";
 import { getVisitorId } from "@/utils/utils";
+import FingerprintJS from "@fingerprintjs/fingerprintjs-pro";
 
 export default defineComponent({
   setup() {
     const store = userStore();
-    
+
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
-      
+
+      const fpPromise = FingerprintJS.load({
+        apiKey: "b1A4V9htZ4ySmb8ycMQb",
+        region: "ap"
+      });
+
+      fpPromise
+        .then((fp) => fp.get())
+        .then((result) => {
+          console.log("Ssads");
+          console.log(result?.visitorId);
+        });
+
       (async () => {
-        const visitorId = sessionStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+        const visitorId = "";
+        // const visitorId = sessionStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
         store.visitorId = visitorId;
 
         console.log("SID");
