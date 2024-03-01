@@ -187,7 +187,7 @@
     </q-form>
 
     <div class="login-bottom-div">
-      <img src="../assets/images/login/login-btm-banner.png" />
+      <img src="../assets/images/login/login-banner.png" />
     </div>
   </div>
 
