@@ -57,7 +57,7 @@
             </div> -->
 
             <div class="vip-txt-left">
-              <div>晋级流水（元）</div>
+              <div>晋级存款（元）</div>
               <div>{{ formatNumber(store.currentDeposit) }}/{{ formatNumber(store.levelUpDeposit) }}</div>
             </div>
 
