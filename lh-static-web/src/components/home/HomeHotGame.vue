@@ -866,9 +866,9 @@ $transition_timer: 0.5s;
 
         &.show {
           width: 38.5rem;
-          height: 100%;
           margin: 0 0 0 0px;
           padding-left: 0.75rem;
+          height: 600px;
         }
 
         .left-container {
