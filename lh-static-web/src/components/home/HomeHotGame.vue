@@ -747,7 +747,7 @@ $transition_timer: 0.5s;
 
 .hotgame-section {
   width: 80%;
-  max-width: 1040px;
+  max-width: 1100px;
   margin: 0 auto;
 
   .hotgame-container {
@@ -761,6 +761,8 @@ $transition_timer: 0.5s;
     .hotgame-wrapper {
       display: flex;
       align-items: center;
+      overflow: hidden;
+      height: 600px;
 
       .hotgame-banner-wrapper {
         display: flex;
