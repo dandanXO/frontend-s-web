@@ -11,7 +11,6 @@
   <el-carousel
     class="banner-slider"
     indicator-position="outside"
-    arrow="never"
     :autoplay="false"
   >
     <el-carousel-item
