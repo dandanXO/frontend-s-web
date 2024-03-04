@@ -261,7 +261,7 @@ onMounted(() => {});
 
       .item-wrapper {
         border-radius: 1.25rem;
-        background: #fff;
+        background: #EEF8FF;
         box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.22);
         padding: 0.5rem;
         width: calc((100% - 2rem )/ 2);
