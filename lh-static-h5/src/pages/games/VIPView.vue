@@ -20,15 +20,22 @@
         class="column no-wrap flex-center"
       >
         <div class="vip-card-container">
-          <img class="card-img" :src="require(`../../assets/images/vip/vip${vip.level}.png`)" alt="" />
+          <div class="card-img-wrap">
+            <img class="card-img" :src="require(`../../assets/images/vip/vip${vip.level}.png`)" alt="" />
+          </div>
+
           <div class="status">
             <img
               :src="
-                require(`../../assets/images/vip/status-${vip.progressBarVal === 100 || vipLevel >= vip.level ? 'achieved' : 'inachieved'}.png`)
+                require(`../../assets/images/vip/status-${
+                  vip.progressBarVal === 100 || vipLevel >= vip.level ? 'achieved' : 'inachieved'
+                }.png`)
               "
               alt=""
             />
-            <span class="vip-card-common-text">{{ vip.progressBarVal === 100 || vipLevel >= vip.level ? "已达到" : "未达到" }}</span>
+            <span class="vip-card-common-text">
+              {{ vip.progressBarVal === 100 || vipLevel >= vip.level ? "已达到" : "未达到" }}
+            </span>
           </div>
           <div class="vip-card-info">
             <div class="level">
@@ -203,7 +210,9 @@
           <li>
             在某些未知因素超出可控范围的情况下，雷火电竞保留可单方面执行的决定权，并承诺会在这类紧急问题发生时解释给客户原因并听取客户反馈与客户沟通协商解决。
           </li>
-          <li>雷火电竞保留对本次活动的修订、终止和最终解释权，超出本网站控制外的技术错误，雷火电竞将不承担任何责任。</li>
+          <li>
+            雷火电竞保留对本次活动的修订、终止和最终解释权，超出本网站控制外的技术错误，雷火电竞将不承担任何责任。
+          </li>
           <li>雷火电竞有权延长，缩短，终止，或者修改此活动！此活动最终解释权归雷火电竞所有。</li>
         </ul>
       </div>
@@ -335,17 +344,16 @@ const currentDeposit = ref(0);
 const checkVipRedeem = () => {
   if (!claimDesc.value) {
     vipClaimItems.value.forEach((el, i) => {
-      el[i].vip = i
+      el[i].vip = i;
       if (i === 0) {
-        claimDesc.value = el[0].vip
+        claimDesc.value = el[0].vip;
       }
-    })
+    });
   }
   getProgressBar();
   eventapi.get("/vip-upgrade/lh/canRedeem").then((res) => {
-
     if (res.code === 0) {
-      console.log(res.data)
+      console.log(res.data);
       // Your arrays of elements
       const depositPromoAvailableElements = res.data.depositPromoAvailable;
       const promoAvailableElements = res.data.promoAvailable;
@@ -381,7 +389,7 @@ const checkVipRedeem = () => {
       if (vipLevel.value !== 0) {
         slide.value = vipLevel.value - 1;
       } else {
-        slide.value = 1
+        slide.value = 1;
       }
 
       vipClaimItems[slide.value].vip = slide.value;
@@ -393,15 +401,15 @@ const checkVipRedeem = () => {
         message: res.message,
         icon: "report_problem"
       });
-          }
-        });
+    }
+  });
 };
 const getProgressBar = () => {
   vipItems.value.forEach((vip, i) => {
     if (Number(vipLevel.value + 1) > Number(vip.level)) {
-      vip.progressBarVal = 0
+      vip.progressBarVal = 0;
     } else {
-      vip.progressBarVal = 1
+      vip.progressBarVal = 1;
     }
     // if (vipLevel.value > vip.level) {
     //   vip.progressBarVal = 100
@@ -409,8 +417,8 @@ const getProgressBar = () => {
 
     if (Number(vipLevel.value + 1 === Number(vip.level))) {
       // Remove commas from the string
-      let amt = vip.amount.replace(/,/g, '');
-      let current = currentDeposit.value.replace(/,/g, '');
+      let amt = vip.amount.replace(/,/g, "");
+      let current = currentDeposit.value.replace(/,/g, "");
 
       // Parse the string into a number
       let vipAmount = parseInt(amt, 10);
@@ -419,9 +427,9 @@ const getProgressBar = () => {
       console.log(vipAmount); // Outputs: 400000
       console.log(currentDep);
 
-      let percentageChange = (currentDep / vipAmount * 100);
-      console.log(percentageChange / 100)
-      vipItems.value[Number(vipLevel.value)].progressBarVal = 1 - percentageChange / 100
+      let percentageChange = (currentDep / vipAmount) * 100;
+      console.log(percentageChange / 100);
+      vipItems.value[Number(vipLevel.value)].progressBarVal = 1 - percentageChange / 100;
       // // Calculate the maximum absolute percentage change
       // let maxAbsoluteChange = Math.max(Math.abs(percentageChange), 1);
 
@@ -435,8 +443,8 @@ const getProgressBar = () => {
       // // var currentProgressPercentage = Math.abs((vipAmount - currentDep) / currentDep) / 100;
       // vipItems.value[Number(vipLevel.value)].progressBarVal = mappedValue
     }
-  })
-}
+  });
+};
 
 watch(slide, (newValue) => {
   if (vipClaimItems[newValue]) {
@@ -626,14 +634,14 @@ onActivated(() => {
   if (store.hasToken()) {
     store.getMemberInfo().then(() => {
       vipLevel.value = +store.vip.replace("VIP", "");
-      currentDeposit.value = parseFloat(store.currentDeposit).toLocaleString()
+      currentDeposit.value = parseFloat(store.currentDeposit).toLocaleString();
       checkVipRedeem();
     });
   } else {
-    claimDesc.value.vip = 0
+    claimDesc.value.vip = 0;
     vipItems.value.forEach((item) => {
-      item.progressBarVal = 1
-    })
+      item.progressBarVal = 1;
+    });
   }
 });
 </script>
@@ -661,8 +669,16 @@ onActivated(() => {
   .vip-card-container {
     position: relative;
 
+    .card-img-wrap {
+      min-height: 160px;
+
+      @media (min-width: 470px) {
+        min-height: 210px;
+      }
+    }
+
     .card-img {
-      width: 67.5vw;
+      width: 100%;
     }
 
     .status {
@@ -686,7 +702,11 @@ onActivated(() => {
     .vip-card-info {
       position: absolute;
       left: 10%;
-      top: 35%;
+      top: 25%;
+
+      @media (min-width: 470px) {
+        top: 35%;
+      }
 
       .level {
         display: flex;

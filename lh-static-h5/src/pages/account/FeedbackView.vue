@@ -26,34 +26,67 @@
                     <span v-for="(ans, index) in item.choices" :key="index">
                       <q-checkbox
                         v-if="item.isMultiple"
-                        v-model="optionModal" 
-                        :val="index" 
-                        :label="ans.choice" 
-                        @update:model-value="(newValue) => {
-                          toggleSelected(item, ans.needSpecify ? answerInputModal : ans.choice, newValue.includes(index), ans.needSpecify)
-                        }"
+                        v-model="optionModal"
+                        :val="index"
+                        :label="ans.choice"
+                        @update:model-value="
+                          (newValue) => {
+                            toggleSelected(
+                              item,
+                              ans.needSpecify ? answerInputModal : ans.choice,
+                              newValue.includes(index),
+                              ans.needSpecify
+                            );
+                          }
+                        "
                       />
-                      <q-radio v-else @click="getSelected(item,ans.choice)" name="optionModal" v-model="optionModal"
-                              :val="index" :label="ans.choice" />
+                      <q-radio
+                        v-else
+                        @click="getSelected(item, ans.choice)"
+                        name="optionModal"
+                        v-model="optionModal"
+                        :val="index"
+                        :label="ans.choice"
+                      />
 
-                      <div v-if="item.isMultiple && Array.isArray(optionModal) && Array.from(optionModal).includes(index) && ans.needSpecify">
+                      <div
+                        v-if="
+                          item.isMultiple &&
+                          Array.isArray(optionModal) &&
+                          Array.from(optionModal).includes(index) &&
+                          ans.needSpecify
+                        "
+                      >
                         <q-input
                           class="answer-input-fill"
                           v-model="answerInputModal"
                           placeholder="请输入获取渠道"
                           type="textarea"
                           :autosize="{ minRows: 4 }"
-                          @change="(val) => {
-                            toggleSelected(item, val, true, ans.needSpecify)
-                          }"
+                          @change="
+                            (val) => {
+                              toggleSelected(item, val, true, ans.needSpecify);
+                            }
+                          "
                         />
                       </div>
-                      <div v-else-if="optionModal === index && ans.needSpecify">
+                      <div v-else-if="optionModal === index && ans.needSpecify && optionModal !== 0">
                         <q-input
                           class="answer-input-fill"
                           v-model="answerInputModal"
                           placeholder="请输入获取渠道"
                           type="textarea"
+                          :autosize="{ minRows: 4 }"
+                          @change="getSelected(item, ans.choice)"
+                        />
+                      </div>
+                      <div v-else-if="optionModal === index && ans.needSpecify && optionModal === 0">
+                        <q-input
+                          class="answer-input-fill"
+                          v-model="answerInputModal"
+                          placeholder="请输入获取渠道"
+                          type="textarea"
+                          :rules="[(val) => (val && val.length >= 15) || '请输入十五字或以上']"
                           :autosize="{ minRows: 4 }"
                           @change="getSelected(item, ans.choice)"
                         />
@@ -79,11 +112,19 @@
               </template>
             </div>
 
-            <div :class="`content-btn ${recordsPagination.current === 1 ? 'active' : ''}` "
-                 style="display: flex; justify-content: space-between; gap: 10px;">
+            <div
+              :class="`content-btn ${recordsPagination.current === 1 ? 'active' : ''}`"
+              style="display: flex; justify-content: space-between; gap: 10px"
+            >
               <div>
-                <q-btn color="brightbtn" id="prevBtn" class="standard-button btn-color-blue" @click="btnClick('prev')"
-                       style="display: none;">上一题
+                <q-btn
+                  color="brightbtn"
+                  id="prevBtn"
+                  class="standard-button btn-color-blue"
+                  @click="btnClick('prev')"
+                  style="display: none"
+                >
+                  上一题
                 </q-btn>
               </div>
               <div>
@@ -92,8 +133,14 @@
                 </q-btn>
               </div>
               <div>
-                <q-btn color="brightbtn" id="finalBtn" class="standard-button btn-color-blue" @click="btnClick('final')"
-                       style="display: none;">完成
+                <q-btn
+                  color="brightbtn"
+                  id="finalBtn"
+                  class="standard-button btn-color-blue"
+                  @click="btnClick('final')"
+                  style="display: none"
+                >
+                  完成
                 </q-btn>
               </div>
             </div>
@@ -106,25 +153,23 @@
               <span class="span2">下月问卷将于次月1号重新开启</span>
             </div>
             <div class="header-title-div" style="margin-top: 25px">
-              <span class="span3">此次问卷提供<span class="span1" style="color: #468CFF">18-188元</span>建议金</span>
+              <span class="span3">
+                此次问卷提供
+                <span class="span1" style="color: #468cff">18-188元</span>
+                建议金
+              </span>
             </div>
             <div class="qr-code-div">
               <VueQRCodeComponent :size="188" :text="referralLink" />
-<!--              <img src="../../assets/feedback/share.png" />-->
+              <!--              <img src="../../assets/feedback/share.png" />-->
             </div>
             <div class="url-div">
-              <q-input
-                class="url-input-fill"
-                v-model="referralLink"
-                :readonly="true"
-                type="url"
-              />
+              <q-input class="url-input-fill" v-model="referralLink" :readonly="true" type="url" />
               <div>
-                <q-btn color="brightbtn" style="width: 100px;" @click="copyMessage()">{{ copybtntxt }}</q-btn>
+                <q-btn color="brightbtn" style="width: 100px" @click="copyMessage()">{{ copybtntxt }}</q-btn>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -242,7 +287,6 @@ const getQuesTitleOptions = () => {
       quesTitleOptions.value = res.data;
       recordsPagination.pages = res.data.length;
     }
-
   });
 };
 
@@ -266,9 +310,9 @@ const getSelected = (item, ans) => {
 };
 const toggleSelected = (item, ans, isChecked, needSpecify) => {
   const input = answerInputModal.value;
-  
+
   const previousChoicesArr = Array.from(choices[item.sequence - 1]?.choice || []);
-  const newChoicesArr = [...previousChoicesArr, ans].filter(item => !isChecked ? item !== ans : item);
+  const newChoicesArr = [...previousChoicesArr, ans].filter((item) => (!isChecked ? item !== ans : item));
 
   var obj = {
     question: item.question,
@@ -278,7 +322,7 @@ const toggleSelected = (item, ans, isChecked, needSpecify) => {
   var cacheObj = {
     sequence: item.sequence,
     question: item.question,
-    choice:newChoicesArr,
+    choice: newChoicesArr,
     input: input,
     needSpecify,
     isMultiple: true
@@ -329,16 +373,18 @@ const btnClick = async (btnType) => {
     if (c.sequence === recordsPagination.current) {
       const choicesArray = quesTitleOptions.value[Number(c.sequence) - 1].choices;
       const chosenChoice = (() => {
-        if(c.isMultiple) {
-          const multipleChoices =  c.choice.map((selectedChoice) => choicesArray.findIndex(({choice}) => choice === selectedChoice));
-          const needSpecifyChoice = choicesArray.findIndex(choice => choice.needSpecify);
+        if (c.isMultiple) {
+          const multipleChoices = c.choice.map((selectedChoice) =>
+            choicesArray.findIndex(({ choice }) => choice === selectedChoice)
+          );
+          const needSpecifyChoice = choicesArray.findIndex((choice) => choice.needSpecify);
 
           return c.input ? [needSpecifyChoice, ...multipleChoices] : multipleChoices;
         }
 
-        return choicesArray.findIndex(choice => choice.choice === c.choice);
+        return choicesArray.findIndex((choice) => choice.choice === c.choice);
       })();
-      
+
       optionModal.value = chosenChoice;
       answerInputModal.value = c.input ? c.input : "";
     }
@@ -351,23 +397,20 @@ const btnClick = async (btnType) => {
 
     const choicesLockedIn = Array.from(choices).map((field) => ({
       ...field,
-      choice: Array.isArray(field.choice) ? field.choice.join(',') : field.choice
+      choice: Array.isArray(field.choice) ? field.choice.join(",") : field.choice
     }));
 
     var evtArray = Object.values(process.env.EVT_API);
     var evtApi = evtArray[getRndInteger(0, evtArray.length)];
     try {
-      const response = await fetch(
-        `${evtApi}/questionnaire/submit`,
-        {
-          method: "POST",
-          body: JSON.stringify(choicesLockedIn),
-          headers: {
-            token: `${store.token}`,
-            "Content-Type": "application/json"
-          }
+      const response = await fetch(`${evtApi}/questionnaire/submit`, {
+        method: "POST",
+        body: JSON.stringify(choicesLockedIn),
+        headers: {
+          token: `${store.token}`,
+          "Content-Type": "application/json"
         }
-      );
+      });
       const data = await response.json();
       if (data.code === 0) {
         // questionDiv.style.display = "none";
@@ -460,8 +503,8 @@ onMounted(() => {
     padding: 20px 12px 12px;
     border-radius: 20px;
     border: 3px solid #fff;
-    background: #FCFDFE;
-    box-shadow: 0px 4px 0px 0px #A7C2DD;
+    background: #fcfdfe;
+    box-shadow: 0px 4px 0px 0px #a7c2dd;
     background: radial-gradient(177.6% 177.6% at 50% 50%, #fff 0%, rgba(255, 255, 255, 0) 100%);
     display: flex;
     flex-direction: column;
@@ -494,8 +537,8 @@ onMounted(() => {
   padding: 20px 12px 12px;
   border-radius: 20px;
   border: 3px solid #fff;
-  background: #FCFDFE;
-  box-shadow: 0px 4px 0px 0px #A7C2DD;
+  background: #fcfdfe;
+  box-shadow: 0px 4px 0px 0px #a7c2dd;
   background: radial-gradient(177.6% 177.6% at 50% 50%, #fff 0%, rgba(255, 255, 255, 0) 100%);
   display: flex;
   flex-direction: column;
@@ -571,7 +614,7 @@ onMounted(() => {
       line-height: 22px;
       letter-spacing: 0em;
       text-align: left;
-      color: #4288FF;
+      color: #4288ff;
       margin-bottom: 20px;
       display: flex;
       justify-content: flex-start;
@@ -669,7 +712,7 @@ onMounted(() => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #424F72;
+    color: #424f72;
     margin-top: 10px;
     gap: 5px;
   }
@@ -706,7 +749,7 @@ onMounted(() => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #424F72;
+    color: #424f72;
     margin-top: 30px;
     gap: 5px;
   }
@@ -715,7 +758,7 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #3F8CFF;
+    color: #3f8cff;
     margin-top: 30px;
     gap: 5px;
     width: 100%;
@@ -729,7 +772,7 @@ onMounted(() => {
     }
 
     :deep(.el-input__inner) {
-      color: #3F8CFF;
+      color: #3f8cff;
     }
 
     :deep(.el-input__wrapper) {
@@ -762,9 +805,7 @@ onMounted(() => {
   line-height: 20px;
   letter-spacing: 0em;
   text-align: center;
-
 }
-
 
 .mail-content {
   :deep(.el-collapse-item__header) {

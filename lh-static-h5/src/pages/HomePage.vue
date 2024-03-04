@@ -843,7 +843,7 @@
 
         <q-tab-panels v-model="activeKey" animated>
           <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
-            <q-list style="min-height: 65vh">
+            <q-list style="max-height: 65vh">
               <div v-for="(ann, idx) in announcementList" :key="idx">
                 <span v-if="ann.typeId === tab.id">
                   <q-expansion-item
@@ -1882,7 +1882,7 @@ export default defineComponent({
   .message {
     flex: 3;
     padding: 0px 8px 0px 0px;
-    border-right: 1px dashed $font-1;
+    //border-right: 1px dashed $font-1;
     color: $font-1;
     font-size: 1rem;
     display: flex;

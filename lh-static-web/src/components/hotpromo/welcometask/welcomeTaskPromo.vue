@@ -24,33 +24,19 @@
               <p>首充充值：</p>
               <p>累计充值100元奖励5元</p>
               <button
-                v-show="
-                  welcomeState.stateDetails.firstDepositState != 'CLAIMED'
-                "
+                v-show="welcomeState.stateDetails.firstDepositState != 'CLAIMED'"
                 :disabled="welcomeState.stateDetails.firstDepositState != 'YES'"
-                :class="[
-                  first - button,
-                  welcomeState.stateDetails.firstDepositState != 'YES'
-                    ? 'active-disabled'
-                    : '',
-                ]"
+                :class="[first - button, welcomeState.stateDetails.firstDepositState != 'YES' ? 'active-disabled' : '']"
                 @click="claimBonus('xf-welcome-first-deposit')"
               >
                 领取
               </button>
               <button
-                v-show="
-                  welcomeState.stateDetails.firstDepositState == 'CLAIMED'
-                "
+                v-show="welcomeState.stateDetails.firstDepositState == 'CLAIMED'"
                 :disabled="welcomeState.stateDetails.firstDepositState != 'YES'"
-                :class="[
-                  first - button,
-                  welcomeState.stateDetails.firstDepositState != 'YES'
-                    ? 'active-disabled'
-                    : '',
-                ]"
+                :class="[first - button, welcomeState.stateDetails.firstDepositState != 'YES' ? 'active-disabled' : '']"
               >
-                已领取
+                领取成功
               </button>
             </div>
           </section>
@@ -65,12 +51,7 @@
               <button
                 v-show="welcomeState.stateDetails.firstBetState != 'CLAIMED'"
                 :disabled="welcomeState.stateDetails.firstBetState != 'YES'"
-                :class="[
-                  first - cast,
-                  welcomeState.stateDetails.firstBetState != 'YES'
-                    ? 'active-disabled'
-                    : '',
-                ]"
+                :class="[first - cast, welcomeState.stateDetails.firstBetState != 'YES' ? 'active-disabled' : '']"
                 @click="claimBonus('xf-welcome-first-bet')"
               >
                 领取
@@ -78,14 +59,9 @@
               <button
                 v-show="welcomeState.stateDetails.firstBetState == 'CLAIMED'"
                 :disabled="welcomeState.stateDetails.firstBetState != 'YES'"
-                :class="[
-                  first - cast,
-                  welcomeState.stateDetails.firstBetState != 'YES'
-                    ? 'active-disabled'
-                    : '',
-                ]"
+                :class="[first - cast, welcomeState.stateDetails.firstBetState != 'YES' ? 'active-disabled' : '']"
               >
-                已领取
+                领取成功
               </button>
             </div>
           </section>
@@ -100,12 +76,7 @@
               <button
                 v-show="welcomeState.stateDetails.firstFriendState != 'CLAIMED'"
                 :disabled="welcomeState.stateDetails.firstDepositState != 'YES'"
-                :class="[
-                  invite - button,
-                  welcomeState.stateDetails.firstFriendState != 'YES'
-                    ? 'active-disabled'
-                    : '',
-                ]"
+                :class="[invite - button, welcomeState.stateDetails.firstFriendState != 'YES' ? 'active-disabled' : '']"
                 @click="claimBonus('xf-welcome-friend')"
               >
                 领取
@@ -113,14 +84,9 @@
               <button
                 v-show="welcomeState.stateDetails.firstFriendState == 'CLAIMED'"
                 :disabled="welcomeState.stateDetails.firstDepositState != 'YES'"
-                :class="[
-                  invite - button,
-                  welcomeState.stateDetails.firstFriendState != 'YES'
-                    ? 'active-disabled'
-                    : '',
-                ]"
+                :class="[invite - button, welcomeState.stateDetails.firstFriendState != 'YES' ? 'active-disabled' : '']"
               >
-                已领取
+                领取成功
               </button>
             </div>
           </section>
@@ -134,10 +100,7 @@
           <section>
             <h3>签到礼包</h3>
             <p>领取限时：注册日期，7日内领取奖励</p>
-            <p>
-              第一天奖励：无 第二天奖励：无 第三天奖励：无 第四天奖励：无
-              第五天奖励：88元
-            </p>
+            <p>第一天奖励：无 第二天奖励：无 第三天奖励：无 第四天奖励：无 第五天奖励：88元</p>
           </section>
         </div>
         <hr class="sign-line" />
@@ -146,16 +109,8 @@
             <section>
               <span class="sign-day">第一天</span>
             </section>
-            <section
-              v-show="checkInRewardState.stateDetails.checkInDays < 1"
-              class="sign-round"
-            >
-              未签
-            </section>
-            <section
-              v-show="checkInRewardState.stateDetails.checkInDays > 0"
-              class="sign-round sign-shade"
-            >
+            <section v-show="checkInRewardState.stateDetails.checkInDays < 1" class="sign-round">未签</section>
+            <section v-show="checkInRewardState.stateDetails.checkInDays > 0" class="sign-round sign-shade">
               已签
             </section>
           </div>
@@ -163,16 +118,8 @@
             <section>
               <span class="sign-day">第二天</span>
             </section>
-            <section
-              v-show="checkInRewardState.stateDetails.checkInDays < 2"
-              class="sign-round"
-            >
-              未签
-            </section>
-            <section
-              v-show="checkInRewardState.stateDetails.checkInDays > 1"
-              class="sign-round sign-shade"
-            >
+            <section v-show="checkInRewardState.stateDetails.checkInDays < 2" class="sign-round">未签</section>
+            <section v-show="checkInRewardState.stateDetails.checkInDays > 1" class="sign-round sign-shade">
               已签
             </section>
           </div>
@@ -180,16 +127,8 @@
             <section>
               <span class="sign-day">第三天</span>
             </section>
-            <section
-              v-show="checkInRewardState.stateDetails.checkInDays < 3"
-              class="sign-round"
-            >
-              未签
-            </section>
-            <section
-              v-show="checkInRewardState.stateDetails.checkInDays > 2"
-              class="sign-round sign-shade"
-            >
+            <section v-show="checkInRewardState.stateDetails.checkInDays < 3" class="sign-round">未签</section>
+            <section v-show="checkInRewardState.stateDetails.checkInDays > 2" class="sign-round sign-shade">
               已签
             </section>
           </div>
@@ -197,16 +136,8 @@
             <section>
               <span class="sign-day">第四天</span>
             </section>
-            <section
-              v-show="checkInRewardState.stateDetails.checkInDays < 4"
-              class="sign-round"
-            >
-              未签
-            </section>
-            <section
-              v-show="checkInRewardState.stateDetails.checkInDays > 3"
-              class="sign-round sign-shade"
-            >
+            <section v-show="checkInRewardState.stateDetails.checkInDays < 4" class="sign-round">未签</section>
+            <section v-show="checkInRewardState.stateDetails.checkInDays > 3" class="sign-round sign-shade">
               已签
             </section>
           </div>
@@ -214,59 +145,37 @@
             <section>
               <span class="sign-day">第五天</span>
             </section>
-            <section
-              v-show="checkInRewardState.stateDetails.checkInDays < 5"
-              class="sign-round sign-gift"
-            >
+            <section v-show="checkInRewardState.stateDetails.checkInDays < 5" class="sign-round sign-gift">
               <p>得88彩金</p>
               <span>大礼包</span>
             </section>
-            <section
-              v-show="checkInRewardState.stateDetails.checkInDays > 4"
-              class="sign-round sign-gift sign-shade"
-            >
+            <section v-show="checkInRewardState.stateDetails.checkInDays > 4" class="sign-round sign-gift sign-shade">
               <p>得88彩金</p>
               <span>大礼包</span>
             </section>
           </div>
-          <div
-            class="sign-in"
-            v-show="welcomeState.stateDetails.checkInRewardState != 'NO'"
-          >
+          <div class="sign-in" v-show="welcomeState.stateDetails.checkInRewardState != 'NO'">
             <p>
-              您已累计签到<span class="checkDay">{{
-                checkInRewardState.stateDetails.checkInDays
-              }}</span
-              >天
+              您已累计签到
+              <span class="checkDay">{{ checkInRewardState.stateDetails.checkInDays }}</span>
+              天
             </p>
             <button
-              :disabled="
-                checkInRewardState.stateDetails.todayCheckInState != 'YES'
-              "
+              :disabled="checkInRewardState.stateDetails.todayCheckInState != 'YES'"
               :class="[
                 check - sign,
-                checkInRewardState.stateDetails.todayCheckInState != 'YES'
-                  ? 'active-disabled'
-                  : '',
+                checkInRewardState.stateDetails.todayCheckInState != 'YES' ? 'active-disabled' : ''
               ]"
               @click="claimBonus('xf-welcome-check-in')"
             >
               点击签到
             </button>
           </div>
-          <div
-            class="sign-in"
-            v-show="welcomeState.stateDetails.checkInRewardState == 'NO'"
-          >
+          <div class="sign-in" v-show="welcomeState.stateDetails.checkInRewardState == 'NO'">
             <p>你已经不能领取</p>
             <button
               :disabled="welcomeState.stateDetails.checkInRewardState == 'NO'"
-              :class="[
-                check - sign,
-                welcomeState.stateDetails.checkInRewardState == 'NO'
-                  ? 'active-disabled'
-                  : '',
-              ]"
+              :class="[check - sign, welcomeState.stateDetails.checkInRewardState == 'NO' ? 'active-disabled' : '']"
             >
               点击签到
             </button>
@@ -284,18 +193,12 @@
       <div class="noob-active">
         <p>1：两项新手任务完成后需在活动页面完成领取和签到。</p>
         <p>2：签到任务每日完成后，需在活动页面点击签到为有效，逾时不予补偿。</p>
-        <p>
-          3：新手任务领取奖金需完成三倍流水。即可提款，所获彩金不可与返水活动共享。
-        </p>
-        <p>
-          4：此活动只针对新注册用户有效，活动期间只能享受一次，逾期视为自动放弃本活动资格。
-        </p>
+        <p>3：新手任务领取奖金需完成三倍流水。即可提款，所获彩金不可与返水活动共享。</p>
+        <p>4：此活动只针对新注册用户有效，活动期间只能享受一次，逾期视为自动放弃本活动资格。</p>
         <p>
           5：每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能享受一次活动，对违规的用户，保留无限期审核，如发现恶意刷取活动套利者，将扣除红利及所得盈利。
         </p>
-        <p>
-          6：凡参加活动用户，即表示接受且自愿遵守平台规定，平台保留最终解释权。
-        </p>
+        <p>6：凡参加活动用户，即表示接受且自愿遵守平台规定，平台保留最终解释权。</p>
       </div>
     </div>
   </div>
@@ -313,10 +216,10 @@ const store = userStore();
 // const checkInDays = ref(3);
 
 const welcomeState = reactive({
-  stateDetails: {},
+  stateDetails: {}
 });
 const checkInRewardState = reactive({
-  stateDetails: {},
+  stateDetails: {}
 });
 onMounted(() => {
   if (store.token) {
@@ -331,12 +234,10 @@ const pageInit = () => {
     if (res.code === 0) {
       welcomeState.stateDetails = res.data;
       if (welcomeState.stateDetails.checkInRewardState !== "NO") {
-        checkInRewardState.stateDetails = JSON.parse(
-          welcomeState.stateDetails.checkInRewardState
-        );
+        checkInRewardState.stateDetails = JSON.parse(welcomeState.stateDetails.checkInRewardState);
       }
     } else {
-      ElMessage.error(res.message)
+      ElMessage.error(res.message);
     }
   });
 };
@@ -354,7 +255,7 @@ const claimBonus = (promoCode) => {
         bonusOpened.value = true;
       } else {
         // ElMessage.error(res.message)
-        ElMessage.error(res.message)
+        ElMessage.error(res.message);
         bonusOpened.value = false;
       }
     })
@@ -512,8 +413,7 @@ button {
   width: 200px;
   height: 48px;
   font-size: 18px;
-  background-image: linear-gradient(90deg, #0ca9bc 0, #0a5e89 100%),
-    linear-gradient(#fff, #fff);
+  background-image: linear-gradient(90deg, #0ca9bc 0, #0a5e89 100%), linear-gradient(#fff, #fff);
   background-blend-mode: normal, normal;
   box-shadow: 0 3px 4px 0 rgba(13, 110, 200, 0.29);
   border-radius: 6px;
@@ -617,8 +517,7 @@ button {
   height: 36px;
   font-size: 14px;
   margin: 15px 0 0 40px;
-  background-image: linear-gradient(90deg, #0ca9bc 0, #0a5e89 100%),
-    linear-gradient(#fff, #fff);
+  background-image: linear-gradient(90deg, #0ca9bc 0, #0a5e89 100%), linear-gradient(#fff, #fff);
   background-blend-mode: normal, normal;
   border-radius: 6px;
   color: #fff;
@@ -675,8 +574,7 @@ button {
 
 .sign-shade {
   color: #fff;
-  background-image: linear-gradient(90deg, #0ca9bc 0, #0a5e89 100%),
-    linear-gradient(#2e334c, #2e334c);
+  background-image: linear-gradient(90deg, #0ca9bc 0, #0a5e89 100%), linear-gradient(#2e334c, #2e334c);
   background-blend-mode: normal, normal;
 }
 
@@ -684,8 +582,7 @@ button {
 .sign-in > button {
   width: 200px;
   height: 48px;
-  background-image: linear-gradient(90deg, #0ca9bc 0, #0a5e89 100%),
-    linear-gradient(#fff, #fff);
+  background-image: linear-gradient(90deg, #0ca9bc 0, #0a5e89 100%), linear-gradient(#fff, #fff);
   background-blend-mode: normal, normal;
   box-shadow: 0 3px 4px 0 rgba(13, 110, 200, 0.29);
 }

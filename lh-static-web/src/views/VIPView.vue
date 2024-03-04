@@ -61,7 +61,7 @@
           >
             领取VIP等级奖励
           </div>
-          <div class="vipLevelButton claimed" v-if="vip.claimed && !vip.unavailable">已领取</div>
+          <div class="vipLevelButton claimed" v-if="vip.claimed && !vip.unavailable">领取成功</div>
         </div>
       </Slide>
       <template #addons>
@@ -991,7 +991,7 @@ $border-settings: 1px solid #e5e7eb;
 .carousel__next {
   box-sizing: content-box;
   background: transparent;
-  top: 45%;
+  top: 180px;
   width: 40%;
   height: 90%;
 
@@ -1004,7 +1004,6 @@ $border-settings: 1px solid #e5e7eb;
 }
 
 .carousel__prev {
-  top: 46.5%;
   left: 4%;
 }
 
