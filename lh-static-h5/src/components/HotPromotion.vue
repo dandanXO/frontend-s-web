@@ -21,7 +21,6 @@
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
     <HongBaoYu2024 v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" :promo-code="list.promoCode" />
     <UpcomingMatchPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-nba-safety'" platformType="NBA" />
-    <InsuranceSubmitPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-nba-safety'" platformType="NBA" />
 
     <UpcomingMatchPromo
       v-if="
@@ -61,7 +60,10 @@
 
     <FootballFightPromo v-if="list.redirectUrl === 'lh1-football-fight' && !isCommonPromo" />
 
-    <UpgradeHongBaoPromo v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo" :promo-code="list.promoCode"  />
+    <UpgradeHongBaoPromo
+      v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo"
+      :promo-code="list.promoCode"
+    />
 
     <GiftPromo v-if="list.redirectUrl === 'lh1-gift' && !isCommonPromo && store.token"></GiftPromo>
 
