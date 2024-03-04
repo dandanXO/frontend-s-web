@@ -502,7 +502,7 @@ const uiControl = reactive({
 });
 
 const EXPORT_HEADER = [t('fields.loginName'), t('fields.vipLevel'), t('fields.platform'), t('fields.gameType'), t('fields.betAmount'),
-  t('fields.amount'), t('fields.status'), t('fields.rebateDistributeTime'), t('fields.distributeBy'), t('fields.distributeTime'), t('fields.updateBy'), t('fields.updateTime')];
+  t('fields.amount'), t('fields.maxRebate'), t('fields.status'), t('fields.rebateDistributeTime'), t('fields.distributeBy'), t('fields.distributeTime'), t('fields.updateBy'), t('fields.updateTime')];
 
 const EXPORT_CANCEL_REBATE_LIST_HEADER = [
   'Login Name',
@@ -745,8 +745,7 @@ function distributeRebate() {
     }
   ).then(async () => {
     const query = checkQuery();
-    await distribute(query);
-    await loadVipRebateRecords();
+    distribute(query);
     ElMessage({ message: t('message.rebateSuccess'), type: "success" });
   });
 }
