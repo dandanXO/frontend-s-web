@@ -54,7 +54,8 @@
 	background-size: 100% 100%;
 	width: 85%;
 	height: 50px;
-	margin-top: 5px;;
+	margin-top: 5px;
+	max-width: 450px;
 }
 
 .download_btn a{
@@ -72,9 +73,10 @@
 .download_des {
 	font-size: 12px;
 	width: 90%;
-	margin-top: 10px;
-	text-align: left;
+	/*margin-top: 10px;*/
+	text-align: center;
 	color: #FFFFFF;
+	margin: 10px auto;
 }
 
 .download_install_des {
