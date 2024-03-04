@@ -1,5 +1,6 @@
 import { Platform } from "quasar";
 import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-vue-v3";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
 export const MAIN = "MAIN";
 
@@ -88,7 +89,18 @@ export const getVisitorId = async () => {
   console.log(fp);
   if (fp?.visitorId) {
     sessionStorage.setItem("VISITOR_ID", fp.visitorId);
+    return fp?.visitorId;
+  } else {
+    const fpPromise = FingerprintJS.load();
+    const fp = await fpPromise;
+    const result = await fp.get();
+    const { timezone, ...allComponents } = result.components;
+    // console.log(allComponents);
+    const sidParam = FingerprintJS.hashComponents(allComponents);
+    console.log("Use Normal Fingerprint");
+    console.log(sidParam);
+    sessionStorage.setItem("VISITOR_ID", sidParam);
+    return sidParam;
   }
-  return fp?.visitorId;
 };
 
