@@ -1531,7 +1531,7 @@ export default defineComponent({
       await elForm.validate((valid) => {
         if (valid) {
           (async () => {
-            const sidParam = store.visitorId;;
+            const sidParam = store.visitorId;
 
             regForm.sid = sidParam;
             register(regForm)
