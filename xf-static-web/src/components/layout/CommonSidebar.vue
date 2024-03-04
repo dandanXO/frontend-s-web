@@ -33,7 +33,7 @@
           <div class="content-line"></div>
           <div class="customer-email">
             <RiMailFill />
-            <span style="margin-left: 5px">cs@xf966.com</span>
+            <span style="margin-left: 5px">cs@xf969.com</span>
           </div>
           <div class="content-line"></div>
           <div class="customer-num">
