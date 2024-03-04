@@ -90,7 +90,7 @@
   <div class="details-bar">
     <div class="message" @click="refreshBalance">
       <span class="main-balance"
-        :class="(!store.token) ?  'main-nologin' : ''"
+            :class="(!store.token) ?  'main-nologin' : ''"
       >
         {{ store.token ? (!isLoadingBalance ? "¥" + mainWallet.toFixed(2) : "加载中...") : "您还未登录" }}
       </span>
@@ -204,7 +204,7 @@
             @click="playGame(item.gameName, item.code, item.gameCode)"
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
-            <MaintenanceBox :item="item"/>
+            <MaintenanceBox :item="item" />
 
             <div
               class="platform-img-frame"
@@ -328,7 +328,7 @@
         </template>
       </div>
       <div class="game-lists" id="slot-lists">
-        
+
         <template v-for="(item, index) in slot" :key="index">
           <div
             class="platform-block"
@@ -981,10 +981,10 @@ export default defineComponent({
 
     const onHomeScroll = (position) => {
       if (route.path === "/") {
-        // console.log(position);
+        // console.log("SCROLL");
         if (!isScrolling.value) {
-          const rightPlatform= document.getElementById("id-right-platform");
-          const platformBlocks= document.getElementsByClassName("platform-block");
+          const rightPlatform = document.getElementById("id-right-platform");
+          const platformBlocks = document.getElementsByClassName("platform-block");
           const blockHeight = platformBlocks ? platformBlocks[0].offsetHeight / 4 * 3 : 75;
 
           // console.log("scroll");
@@ -1004,14 +1004,19 @@ export default defineComponent({
           var positionTop5 = checkItem5.getBoundingClientRect().top;
           var positionTop6 = checkItem6.getBoundingClientRect().top;
 
-          // console.log(positionTop4);
-          // console.log(positionTop5);
+          // console.log(blockHeight);
+          // console.log(positionTop6);
+          var bodyElement = document.body;
+          var bodyOffset = bodyElement.getBoundingClientRect();
+          var windowHeight = window.innerHeight;
+          // console.log(windowHeight);
+          // console.log(bodyOffset.bottom);
 
-          if (0 > positionTop6 - 5) {
+          if (windowHeight + 15 > bodyOffset.bottom) {
             tab.value = "others";
-          } else if (0 > positionTop5 - 5 && positionTop6 >= blockHeight ) {
+          } else if (0 > positionTop5 - 5 && positionTop6 >= blockHeight) {
             tab.value = "slot";
-          } else if (0 > positionTop4 - 5 && positionTop5 >= blockHeight ) {
+          } else if (0 > positionTop4 - 5 && positionTop5 >= blockHeight) {
             tab.value = "poker";
           } else if (0 > positionTop3 - 5 && positionTop4 >= blockHeight) {
             tab.value = "live";
@@ -1086,7 +1091,7 @@ export default defineComponent({
     const imgNotFound = require(`../assets/images/home/img-not-found.png`);
 
 
-    const selectedTab= ref("");
+    const selectedTab = ref("");
     const esport = ref([]);
     const sport = ref([]);
     const livecasino = ref([]);
@@ -1113,7 +1118,7 @@ export default defineComponent({
 
       let downloadPopup = sessionStorage.getItem("DOWNLOAD_POPUP");
       if (downloadPopup) {
-          topBoxVisible.value = false;
+        topBoxVisible.value = false;
       }
     };
 
@@ -1381,9 +1386,9 @@ export default defineComponent({
               if (slotObj.code === "AG") {
                 slotObj.title = "XIN电子";
               } else if (slotObj.alias) {
-                slotObj.title = translateRecord(slotObj.alias) ;
+                slotObj.title = translateRecord(slotObj.alias);
               } else {
-                slotObj.title = translateRecord(slotObj.name) ;
+                slotObj.title = translateRecord(slotObj.name);
               }
 
               slotObj.icon = "slot";
@@ -1915,7 +1920,7 @@ export default defineComponent({
     font-size: 1.6rem;
     color: $dark;
 
-    &.main-nologin{
+    &.main-nologin {
       font-size: 1rem;
     }
   }
@@ -2145,8 +2150,8 @@ export default defineComponent({
       &.maintenance {
         pointer-events: none;
 
-        .platform-img-frame{
-          filter:  blur(2px);
+        .platform-img-frame {
+          filter: blur(2px);
         }
       }
 
