@@ -804,6 +804,8 @@ $gold: #efcf68;
 .blue-content-table-container {
   margin-top: 20px;
   table {
+    width: 100%;
+    text-align: center;
     tr:first-child td {
       background: #e7f3ff !important;
       color: #424f72 !important;

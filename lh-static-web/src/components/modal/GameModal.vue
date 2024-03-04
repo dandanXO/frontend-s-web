@@ -125,6 +125,7 @@ import { transfer } from "@/api/personal/transfer";
 import { storeToRefs } from "pinia";
 import DepositComponent from "@/components/depositComponent.vue";
 import { ElMessageBox } from "element-plus";
+import { useRouter } from "vue-router";
 // import { Modal } from "ant-design-vue";
 
 const store = userStore();
@@ -182,6 +183,7 @@ const src = ref("");
 const logoShow = ref(true);
 const title = ref("");
 const iframeScroll = ref(true);
+const router = useRouter();
 
 const transferInfo = ref({
   amount: null,
@@ -276,7 +278,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         showClose: false,
         buttonSize: "large"
       }).then(() => {
-        store.loginPageVisible = true;
+        // store.loginPageVisible = true;
+        router.push("/login");
       });
     }
   }

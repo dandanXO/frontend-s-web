@@ -62,7 +62,7 @@
     <el-table
       :data="page.records"
       ref="table"
-      row-key="id"
+      row-key="name"
       :expand-row-keys="expandrowkey"
       size="small"
       highlight-current-row
@@ -306,7 +306,7 @@ async function loadDaily(row, expandedRows) {
     const { data: ret } = await getDailyReport(dailyquery)
     page.records.forEach((temp, index) => {
       // 找到当前点击的行，把动态获取到的数据赋值进去
-      if (temp.id === row.id) {
+      if (temp.name === row.name) {
         page.records[index].ruleItemData = ret.records
         console.log(page.records)
       }
@@ -407,34 +407,35 @@ function getSummaries(param) {
         } else if (column.property === 'totalWithdrawAmount') {
           sums[index] =
             '$' +
-            parseFloat(totalPage.records[0].totalWithdrawAmount).toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })
+            parseFloat(totalPage.records[0].totalWithdrawAmount).toLocaleString(
+              'en-US',
+              {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }
+            )
         } else if (column.property === 'totalFailWithdraw') {
           sums[index] = totalPage.records[0].totalFailWithdraw
         } else if (column.property === 'totalFailWithdrawAmount') {
           sums[index] =
             '$' +
-            parseFloat(totalPage.records[0].totalFailWithdrawAmount).toLocaleString(
-              'en-US',
-              {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }
-            )
+            parseFloat(
+              totalPage.records[0].totalFailWithdrawAmount
+            ).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
         } else if (column.property === 'totalSuccessWithdraw') {
           sums[index] = totalPage.records[0].totalSuccessWithdraw
         } else if (column.property === 'totalSuccessWithdrawAmount') {
           sums[index] =
             '$' +
-            parseFloat(totalPage.records[0].totalSuccessWithdrawAmount).toLocaleString(
-              'en-US',
-              {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }
-            )
+            parseFloat(
+              totalPage.records[0].totalSuccessWithdrawAmount
+            ).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
         }
       })
     }

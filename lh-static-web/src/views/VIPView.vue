@@ -61,7 +61,7 @@
           >
             领取VIP等级奖励
           </div>
-          <div class="vipLevelButton claimed" v-if="vip.claimed && !vip.unavailable">已领取</div>
+          <div class="vipLevelButton claimed" v-if="vip.claimed && !vip.unavailable">领取成功</div>
         </div>
       </Slide>
       <template #addons>
@@ -310,24 +310,27 @@ export default defineComponent({
       const currentDeposit = +store.getCurrentDeposit();
       const upgradeStatus = vipInfo.upgrade;
 
-      // if (vipLevel >= +vipInfo.vipLevel) {
-      //   return 100;
-      // }
+      if (vipLevel >= +vipInfo.vipLevel) {
+        return 100;
+      }
       var levelUpDeposit = +upgradeStatus.replaceAll(",", "");
       if (!levelUpDeposit) {
-        levelUpDeposit = 0;
+        levelUpDeposit = 0
       }
       if (vipLevel === 0) {
-        return 0;
+        return 0
       }
       if (vipLevel + 1 === +vipInfo.vipLevel) {
         return (currentDeposit / levelUpDeposit) * 100;
       }
       if (currentDeposit > levelUpDeposit + 1) {
-        return 100;
+        return 100
       } else {
-        return 0;
+        return 0
       }
+      
+      // const levelUpDeposit = +upgradeStatus.replaceAll(",", "");
+      // return (currentDeposit / levelUpDeposit) * 100;
 
       // const levelUpDeposit = +upgradeStatus.replaceAll(",", "");
       // return (currentDeposit / levelUpDeposit) * 100;
@@ -988,7 +991,7 @@ $border-settings: 1px solid #e5e7eb;
 .carousel__next {
   box-sizing: content-box;
   background: transparent;
-  top: 45%;
+  top: 180px;
   width: 40%;
   height: 90%;
 
@@ -1001,7 +1004,6 @@ $border-settings: 1px solid #e5e7eb;
 }
 
 .carousel__prev {
-  top: 46.5%;
   left: 4%;
 }
 

@@ -115,9 +115,9 @@
               v-for="b in withdrawState.bankCardList"
               :key="b.id"
               :value="b.id"
-              :label="b.bankName + ' - ' + b.cardNumber"
+              :label="b.bankName + ' - ' + '****' + b.cardNumber.slice(-4)"
             >
-              {{ b.bankName }} - {{ b.cardNumber }}
+              {{ b.bankName }} - {{ '****' + b.cardNumber.slice(-4) }}
             </el-option>
           </el-select>
         </el-form-item>

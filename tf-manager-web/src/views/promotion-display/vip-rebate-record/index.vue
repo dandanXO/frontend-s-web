@@ -131,6 +131,12 @@
             $ <span v-formatter="{data: scope.row.amount,type: 'money'}" />
           </template>
         </el-table-column>
+        <el-table-column prop="maxRebate" :label="t('fields.maxRebate')" align="center" min-width="100">
+          <template #default="scope">
+            <span v-if="scope.row.maxRebate">$ <span v-formatter="{data: scope.row.maxRebate,type: 'money'}" /></span>
+            <span v-else>-</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="status" :label="t('fields.status')" align="center" min-width="120">
           <template #default="scope">
             <el-tag v-if="scope.row.status === 'DISTRIBUTED'" size="mini" type="success">{{ t('distributeStatus.' + scope.row.status) }}</el-tag>
@@ -496,7 +502,7 @@ const uiControl = reactive({
 });
 
 const EXPORT_HEADER = [t('fields.loginName'), t('fields.vipLevel'), t('fields.platform'), t('fields.gameType'), t('fields.betAmount'),
-  t('fields.amount'), t('fields.status'), t('fields.rebateDistributeTime'), t('fields.distributeBy'), t('fields.distributeTime'), t('fields.updateBy'), t('fields.updateTime')];
+  t('fields.amount'), t('fields.maxRebate'), t('fields.status'), t('fields.rebateDistributeTime'), t('fields.distributeBy'), t('fields.distributeTime'), t('fields.updateBy'), t('fields.updateTime')];
 
 const EXPORT_CANCEL_REBATE_LIST_HEADER = [
   'Login Name',
@@ -739,8 +745,7 @@ function distributeRebate() {
     }
   ).then(async () => {
     const query = checkQuery();
-    await distribute(query);
-    await loadVipRebateRecords();
+    distribute(query);
     ElMessage({ message: t('message.rebateSuccess'), type: "success" });
   });
 }

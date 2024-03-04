@@ -2,8 +2,8 @@
   <div class="maintenance-box" v-if="item.underMaintenance === true">
     <p class="maintenance-title"><img src="../assets/images/home/maintenance-icon.svg" />维护中</p>
     <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
-      维护时间: {{ moment().format("YYYY/MM/DD hh:mm A") }} -
-      {{ moment().format("YYYY/MM/DD hh:mm A") }}
+      维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD HH:mm") }} -
+      {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD HH:mm") }}
     </p>
   </div>
 </template>

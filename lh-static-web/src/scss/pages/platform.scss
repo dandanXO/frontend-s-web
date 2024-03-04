@@ -1,3 +1,19 @@
+.platform-section {
+  background-image: url("../../assets/home/home-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: top center;
+  padding-top: 0px;
+  width: 100%;
+}
+.platform-container-slot {
+  overflow: hidden;
+  height: 310px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+}
 .platform-container {
   max-width: $maxwidth;
   margin-left: auto;
@@ -6,7 +22,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 188px);
+  min-height: calc(100vh - 95px);
+
+  &.slot-container {
+    min-height: 300px;
+    padding: 20px;
+    overflow: hidden;
+    margin-bottom: -20px;
+  }
 
   .platform-desc {
     color: #3063ab;
@@ -15,74 +38,22 @@
 
   .platform-container-inner {
     display: grid;
+    width: 100%;
     padding-right: 20px;
     gap: 20px;
     grid-template-columns: 47% 53%;
+    min-height: 600px;
 
     .platform-item {
+      min-width: 320px;
       display: flex;
       align-content: center;
       flex-direction: column;
+      justify-content: flex-start;
       margin: auto 0;
       position: relative;
-
-      //&.maintenance {
-      //  filter: grayscale(0.8);
-      //
-      //  .btn-blue{
-      //    pointer-events: none;
-      //  }
-      //}
-      //
-      //.maintenance-box {
-      //  position: absolute;
-      //  top: 10%;
-      //  bottom: 20%;
-      //  left: 10%;
-      //  right: 10%;
-      //  padding-top: 15px;
-      //  padding-bottom: 15px;
-      //  color: #ffffff;
-      //  font-size: 26px;
-      //  font-weight: bold;
-      //  width: 80%;
-      //  z-index: 33;
-      //  display: flex;
-      //  flex-direction: column;
-      //  justify-content: center;
-      //  align-items: center;
-      //  gap: 15px;
-      //
-      //  p {
-      //    font-size: 30px;
-      //    margin-top: 3px;
-      //    margin-bottom: 3px;
-      //  }
-      //
-      //  .small-size {
-      //    font-size: 16px;
-      //  }
-      //}
-
+      min-height: 600px;
       &--img {
-        //&.maintenance:after {
-        //  content: "";
-        //  position: absolute;
-        //  background: rgba(2, 9, 73, 0.4);
-        //  top: 12.5%;
-        //  width: 80%;
-        //  left: 10%;
-        //  right: 10%;
-        //  height: 75%;
-        //  display: flex;
-        //  justify-content: center;
-        //  align-items: center;
-        //  border-radius: 30px;
-        //  color: #ffffff;
-        //  font-size: 24px;
-        //  font-weight: bold;
-        //}
-
         img {
           display: block;
           width: 100%;
@@ -138,6 +109,8 @@
         color: $font-3;
         margin-top: 1rem;
         max-width: 32rem;
+        min-width: 45px;
+        height: 50px;
       }
 
       .platform-pattern-row {
@@ -220,12 +193,12 @@
       .platform-play-btn {
         margin-top: 1rem;
 
-        .maintenance-p{
+        .maintenance-p {
           margin: 15px 3px;
           font-size: 16px;
           color: $font-1;
 
-          em{
+          em {
             font-weight: bold;
             font-style: initial;
           }
@@ -245,19 +218,18 @@
           cursor: pointer;
           transition: 0.3s all;
 
-          &.btn-maintenance{
-            background: rgba(0,0,0,0.3);
+          &.btn-maintenance {
+            background: rgba(0, 0, 0, 0.3);
             pointer-events: none;
 
-            .maintenance-state{
-              display:flex;
+            .maintenance-state {
+              display: flex;
               align-items: center;
               justify-content: space-between;
-              gap:8px;
+              gap: 8px;
 
-              img{
+              img {
                 width: 22px;
-
               }
             }
           }
@@ -412,6 +384,7 @@
     border-radius: 1.5rem;
     border: 1px solid #5c9fff;
     padding: 1rem;
+    position: relative;
     .plat-options-wrapper {
       display: flex;
       justify-content: center;
@@ -459,9 +432,12 @@
     }
     .search-container {
       display: flex;
-      margin-top: 2rem;
+      // margin-top: 2rem;
       padding: 1rem;
       justify-content: space-between;
+      position: absolute;
+      right: 15px;
+      top: 15px;
       .search-input {
         // padding: 20px 20px 20px 30px;
         margin: 0 0 0 auto;

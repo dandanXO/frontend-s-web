@@ -60,20 +60,39 @@
       </div>
       <img
         src="../../../assets/images/promotion/hotpromo/esportquiz/union.png"
-        style="display: flex; align-self: center; width: 60%; margin: 0 auto 20px"
+        style="display: flex; align-self: center; width: 60%; margin: 0 auto 30px"
       />
       <div class="prize-quiz-main">
         <div class="title" id="title">
           {{ matchInfo.quizTitle || "答题区" }}
         </div>
         <div :class="`start-answer-box ${uiIsShowStatus.startAnswerBox ? '' : 'hide'}`">
-          <div class="book-img">
-            <img
-              src="../../../assets/images/promotion/hotpromo/esportquiz/img_book_7.png"
-              style="width: 180px; height: 78px"
-            />
+          <div class="flex-div">
+            <div class="team-div">
+              <div class="team-logo">
+                <img :src="imgURL + `promo/` + matchInfo.homeTeamIcon" />
+              </div>
+              <div>{{ matchInfo.homeTeam }}</div>
+            </div>
+            <div class="book-img">
+              <div class="match-time">
+                {{ matchInfo.matchTime }}
+              </div>
+              <!--              <img-->
+              <!--                src="../../../assets/images/promotion/hotpromo/esportquiz/img_book_7.png"-->
+              <!--                style="width: 180px; height: 78px"-->
+              <!--              />-->
+
+              <div class="btn-start-answer" @click="onBtnStartAnswerClick()">开始答题</div>
+            </div>
+            <div class="team-div">
+              <div class="team-logo">
+                <img :src="imgURL + `promo/` + matchInfo.awayTeamIcon" />
+              </div>
+              <div>{{ matchInfo.awayTeam }}</div>
+            </div>
           </div>
-          <div class="btn-start-answer" @click="onBtnStartAnswerClick()">开始答题</div>
+
         </div>
         <div :class="`questions-box ${uiIsShowStatus.questionBox ? 'show' : ''}`">
           <div class="questions-container">
@@ -193,6 +212,8 @@ import {
 import moment from "moment";
 
 const store = userStore();
+const imgURL = process.env.VUE_APP_IMAGE_CDN + "/";
+
 
 onMounted(() => {
   if (!store.token) {
@@ -208,6 +229,7 @@ const uiIsShowStatus = reactive({
   startAnswerBox: true,
   questionBox: false
 });
+
 function onBtnStartAnswerClick() {
   uiIsShowStatus.startAnswerBox = false;
   uiIsShowStatus.questionBox = true;
@@ -218,6 +240,9 @@ const matchInfo = reactive({
   quizTitle: "",
   homeTeam: "",
   awayTeam: "",
+  homeTeamIcon: "",
+  awayTeamIcon: "",
+  matchTime: "",
   questionOne: "",
   questionTwo: "",
   questionThree: "",
@@ -232,6 +257,7 @@ const quizSubmitInfo = reactive({
   quizId: -1,
   quizTitle: ""
 });
+
 function getMatchInfo() {
   getSportMatchQuizInfo().then((res) => {
     // sometimes no upcoming match
@@ -242,12 +268,15 @@ function getMatchInfo() {
         id,
         homeTeam,
         awayTeam,
+        matchTime,
         questionOne,
         questionTwo,
         questionThree,
         choiceOne,
         choiceTwo,
-        choiceThree
+        choiceThree,
+        homeTeamIcon,
+        awayTeamIcon
       } = res.data;
 
       // matchInfo
@@ -256,6 +285,10 @@ function getMatchInfo() {
 
       matchInfo.homeTeam = homeTeam;
       matchInfo.awayTeam = awayTeam;
+
+      matchInfo.matchTime = matchTime;
+      matchInfo.homeTeamIcon = homeTeamIcon;
+      matchInfo.awayTeamIcon = awayTeamIcon;
 
       matchInfo.questionOne = questionOne;
       matchInfo.questionTwo = questionTwo;
@@ -280,6 +313,7 @@ const recordsPagination = reactive({ size: 5, current: 1, total: 0, pages: 0 });
 const paginationInfo = reactive({ pageSize: 5, pageNumber: 1, pageTotal: 0 });
 
 const isHasRecord = ref(false);
+
 function getRecords() {
   getMemberSportMatchRecord(recordsPagination).then((res) => {
     console.log("data", res.data);
@@ -333,6 +367,7 @@ function onPaginationClick(pageIndex) {
 }
 
 const tableInfo = ref([]);
+
 function getRecordList() {
   tableInfo.value = [];
   const { pageSize, pageNumber } = paginationInfo;
@@ -377,22 +412,26 @@ function getRecordList() {
 // }
 
 const isFirstQuestionClicked = ref(false);
+
 function onFirstQuestionClick(flag) {
   isFirstQuestionClicked.value = flag;
 }
 
 const isSecondQuestionClicked = ref(false);
+
 function onSecondQuestionClick(flag) {
   isSecondQuestionClicked.value = flag;
 }
 
 const isThirdQuestionClicked = ref(false);
+
 function onThirdQuestionClick(flag) {
   isThirdQuestionClicked.value = flag;
 }
 
 let firstChoice = "";
 const firstChoiceIndex = ref();
+
 function onFirstChoiceSelectionClick(choice, selectionIndex) {
   firstChoice = choice;
   firstChoiceIndex.value = selectionIndex;
@@ -400,6 +439,7 @@ function onFirstChoiceSelectionClick(choice, selectionIndex) {
 
 let secondChoice = "";
 const secondChoiceIndex = ref();
+
 function onSecondChoiceSelectionClick(choice, selectionIndex) {
   secondChoice = choice;
   secondChoiceIndex.value = selectionIndex;
@@ -407,6 +447,7 @@ function onSecondChoiceSelectionClick(choice, selectionIndex) {
 
 let thirdChoice = "";
 const thirdChoiceIndex = ref();
+
 function onThirdChoiceSelectionClick(choice, selectionIndex) {
   thirdChoice = choice;
   thirdChoiceIndex.value = selectionIndex;
@@ -415,6 +456,7 @@ function onThirdChoiceSelectionClick(choice, selectionIndex) {
 const firstChoiceRef = ref("");
 const secondChoiceRef = ref("");
 const thirdChoiceRef = ref("");
+
 function onChoiceSubmit(key) {
   if (key === "first") {
     if (!firstChoice) {
@@ -499,21 +541,22 @@ const submittedFormStatus = ref(false);
     .prize-quiz-jc-container {
       gap: 10px;
       width: 780px;
-      height: 250px;
+      height: 200px;
       // background: url("../../../assets/images/promotion/hotpromo/esportquiz/bg_jc_8.png") center no-repeat;
       background: linear-gradient(
-        90.02deg,
-        rgba(5, 210, 255, 0) 0.02%,
-        rgba(0, 117, 255, 0.14) 49.86%,
-        rgba(5, 210, 255, 0) 99.97%
+          90.02deg,
+          rgba(5, 210, 255, 0) 0.02%,
+          rgba(0, 117, 255, 0.14) 49.86%,
+          rgba(5, 210, 255, 0) 99.97%
       );
 
-      padding-top: 50px;
-      margin: 50px auto;
+      padding-top: 10px;
+      margin: 90px auto 40px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
+
       .prize-quiz-jc-pool {
         img {
           width: 100%;
@@ -528,8 +571,8 @@ const submittedFormStatus = ref(false);
         background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        height: 128px;
-        line-height: 128px;
+        height: 90px;
+        line-height: 90px;
         font-family: fantasy;
         filter: drop-shadow(2px 4px 6px white);
       }
@@ -538,7 +581,7 @@ const submittedFormStatus = ref(false);
     .prize-quiz-main {
       // background-color: #e4f6ff;
       box-shadow: 0px 5px 10px 0px rgba(12, 3, 7, 0.2);
-      border-radius: 8px;
+      border-radius: 40px;
       min-height: 315px;
 
       background: url("../../../assets/images/promotion/hotpromo/esportquiz/answer.png") center no-repeat;
@@ -546,9 +589,38 @@ const submittedFormStatus = ref(false);
       display: flex;
       justify-content: center;
       flex-direction: column;
+
+      .flex-div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        div {
+          margin-top: 10px;
+          font-size: 20px;
+          color: #424F72;
+
+        }
+
+        .team-div {
+          text-align: center;
+
+          .team-logo {
+            width: 80px;
+            height: auto;
+            max-height: 80px;
+
+            img {
+              width: 100%;
+              height: auto;
+            }
+          }
+        }
+      }
+
       .start-answer-box {
-        width: 264px;
-        margin: 50px auto;
+        width: calc(100% - 200px);
+        margin: 20px auto;
 
         &.hide {
           display: none;
@@ -556,9 +628,21 @@ const submittedFormStatus = ref(false);
 
         .book-img {
           text-align: center;
-          margin-bottom: 5px;
-          margin-top: 13px;
+          margin-bottom: 0px;
+          margin-top: 20px;
+
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
+          gap: 20px;
         }
+
+        .match-time{
+          color: #424F72;
+          font-size: 26px;
+        }
+
 
         .btn-start-answer {
           display: flex;
@@ -571,6 +655,17 @@ const submittedFormStatus = ref(false);
           padding: 8px 15px;
           cursor: pointer;
           background-size: 214px;
+          width: 400px;
+
+          &:hover{
+            opacity: 0.9;
+          }
+
+          &:active{
+            filter: brightness(0.9);
+            transform: translate(0px, 1px);
+          }
+
         }
       }
 
@@ -637,12 +732,23 @@ const submittedFormStatus = ref(false);
               background-image: linear-gradient(255deg, #0094ff 0%, #18c5ff 100%), linear-gradient(#0084a4, #0084a4);
               background-blend-mode: normal, normal;
               border-radius: 4px;
-    margin: auto;
+              margin: auto;
+
               &.submitted-ans {
                 filter: brightness(0.8);
                 cursor: not-allowed;
                 pointer-events: all !important;
               }
+
+              &:hover{
+                opacity: 0.9;
+              }
+
+              &:active{
+                filter: brightness(0.9);
+                transform: translate(0px, 1px);
+              }
+
             }
           }
         }

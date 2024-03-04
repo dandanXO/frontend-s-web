@@ -128,8 +128,54 @@
         <el-form-item v-if="uiControl.dialogType === 'CREATE'" :label="t('fields.homeTeam')" prop="homeTeam">
           <el-input v-model="form.homeTeam" style="width: 350px;" maxlength="50" @change="populateChoiceOne" />
         </el-form-item>
+        <el-form-item :label="t('fields.homeTeamIcon')" prop="homeTeamIcon">
+          <el-row :gutter="5" style="width: 350px">
+            <el-col v-if="form.homeTeamIcon" :span="18">
+              <el-image
+                v-if="form.homeTeamIcon"
+                :src="promoDir + form.homeTeamIcon"
+                fit="contain"
+                class="preview"
+                :preview-src-list="[promoDir + form.homeTeamIcon]"
+              />
+            </el-col>
+            <el-col :span="6">
+              <el-button
+                icon="el-icon-search"
+                size="mini"
+                type="success"
+                @click="browseImage('HOME_TEAM_ICON')"
+              >
+                {{ t('fields.browse') }}
+              </el-button>
+            </el-col>
+          </el-row>
+        </el-form-item>
         <el-form-item v-if="uiControl.dialogType === 'CREATE'" :label="t('fields.awayTeam')" prop="awayTeam">
           <el-input v-model="form.awayTeam" style="width: 350px;" maxlength="50" @change="populateChoiceOne" />
+        </el-form-item>
+        <el-form-item :label="t('fields.awayTeamIcon')" prop="awayTeamIcon">
+          <el-row :gutter="5" style="width: 350px">
+            <el-col v-if="form.awayTeamIcon" :span="18">
+              <el-image
+                v-if="form.awayTeamIcon"
+                :src="promoDir + form.awayTeamIcon"
+                fit="contain"
+                class="preview"
+                :preview-src-list="[promoDir + form.awayTeamIcon]"
+              />
+            </el-col>
+            <el-col :span="6">
+              <el-button
+                icon="el-icon-search"
+                size="mini"
+                type="success"
+                @click="browseImage('AWAY_TEAM_ICON')"
+              >
+                {{ t('fields.browse') }}
+              </el-button>
+            </el-col>
+          </el-row>
         </el-form-item>
         <el-form-item
           :label="t('fields.poolAmount')"
@@ -612,6 +658,112 @@
       @size-change="loadGameQuiz"
     />
   </div>
+  <el-dialog
+    :title="uiControl.imageSelectionTitle"
+    v-model="uiControl.imageSelectionVisible"
+    append-to-body
+    width="50%"
+    :close-on-press-escape="false"
+  >
+    <div class="search">
+      <el-input
+        v-model="imageRequest.name"
+        size="small"
+        style="width: 200px"
+        :placeholder="t('fields.imageName')"
+      />
+      <el-select
+        v-model="imageRequest.siteId"
+        size="small"
+        :placeholder="t('fields.site')"
+        class="filter-item"
+        style="width: 120px; margin-left: 5px"
+      >
+        <el-option
+          v-for="item in sites.list"
+          :key="item.id"
+          :label="item.siteName"
+          :value="item.id"
+        />
+      </el-select>
+      <el-button
+        style="margin-left: 20px"
+        icon="el-icon-search"
+        size="mini"
+        type="success"
+        ref="searchImage"
+        @click="loadSiteImage"
+      >
+        {{ t('fields.search') }}
+      </el-button>
+      <el-button
+        icon="el-icon-refresh"
+        size="mini"
+        type="warning"
+        @click="resetImageQuery()"
+      >
+        {{ t('fields.reset') }}
+      </el-button>
+    </div>
+    <div class="grid-container">
+      <div
+        v-for="item in imageList.list"
+        :key="item"
+        class="grid-item"
+        :class="item.id === selectedImage.id ? 'selected' : ''"
+      >
+        <el-image
+          :src="promoDir + item.path"
+          fit="contain"
+          style="aspect-ratio: 1/1"
+          @click="selectImage(item)"
+        />
+      </div>
+    </div>
+    <el-pagination
+      class="pagination"
+      @current-change="changeImagePage"
+      layout="prev, pager, next"
+      :page-size="imageRequest.size"
+      :page-count="imageList.pages"
+      :current-page="imageRequest.current"
+    />
+    <div class="image-info" v-if="selectedImage.id !== 0">
+      <el-row>
+        <el-col :span="4">
+          <h3>{{ t('fields.selectedImage') }}</h3>
+        </el-col>
+        <el-col :span="20">
+          <el-image
+            :src="promoDir + selectedImage.path"
+            fit="contain"
+            class="smallPreview"
+            :preview-src-list="[promoDir + selectedImage.path]"
+          />
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">{{ t('fields.imageSite') }} :</el-col>
+        <el-col :span="20">{{ selectedImage.siteName }}</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">{{ t('fields.imageName') }} :</el-col>
+        <el-col :span="20">{{ selectedImage.name }}</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">{{ t('fields.imageRemark') }} :</el-col>
+        <el-col :span="20">{{ selectedImage.remark }}</el-col>
+      </el-row>
+      <div class="dialog-footer">
+        <el-button @click="uiControl.imageSelectionVisible = false">
+          {{ t('fields.cancel') }}
+        </el-button>
+        <el-button type="primary" @click="submitImage">
+          {{ t('fields.confirm') }}
+        </el-button>
+      </div>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -628,14 +780,28 @@ import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
 import moment from "moment";
+import { getSiteImage } from "@/api/site-image";
 
 const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
+const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
 const site = ref(null);
 const choiceOne = ref([]);
 const choiceTwo = ref([]);
 const choiceThree = ref([]);
+const imageList = reactive({
+  dataList: [],
+  pages: 0,
+})
+
+const selectedImage = reactive({
+  id: 0,
+  name: '',
+  siteName: '',
+  remark: '',
+  path: '',
+})
 
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
@@ -659,6 +825,15 @@ const request = reactive({
   status: null,
   startTime: [convertStartDate(new Date()), convertDate(new Date())]
 });
+
+const imageRequest = reactive({
+  size: 10,
+  current: 1,
+  name: null,
+  siteId: null,
+  category: 'PROMO',
+  promoType: 'TEAM_ICON',
+})
 
 const gameQuizForm = ref(null);
 const endQuizForm = ref(null);
@@ -689,7 +864,10 @@ const uiControl = reactive({
     { key: 3, displayName: 'gameQuiz.questions.4', value: 'gameQuiz.questions.4' },
     { key: 4, displayName: 'gameQuiz.questions.5', value: 'gameQuiz.questions.5' },
     { key: 5, displayName: 'gameQuiz.questions.6', value: 'gameQuiz.questions.6' }
-  ]
+  ],
+  imageSelectionTitle: '',
+  imageSelectionType: '',
+  imageSelectionVisible: false
 });
 const page = reactive({
   pages: 0,
@@ -704,7 +882,9 @@ const form = reactive({
   quizTitle: null,
   gameType: null,
   homeTeam: null,
+  homeTeamIcon: null,
   awayTeam: null,
+  awayTeamIcon: null,
   poolAmount: 0,
   questionOne: null,
   choiceOne: null,
@@ -808,7 +988,9 @@ const formRules = reactive({
   quizTitle: [required(t('message.validateQuizTitleRequired'))],
   gameType: [required(t('message.validateGameTypeRequired'))],
   homeTeam: [required(t('message.validateHomeTeamRequired'))],
+  homeTeamIcon: [required(t('message.validateHomeTeamIconRequired'))],
   awayTeam: [required(t('message.validateAwayTeamRequired'))],
+  awayTeamIcon: [required(t('message.validateAwayTeamIconRequired'))],
   poolAmount: [required(t('message.validatePoolAmountRequired'))],
   questionOne: [required(t('message.validateQuestionOneRequired'))],
   choiceOne: [required(t('message.validateChoiceOneRequired')), { validator: validateChoiceOne, trigger: "blur" }],
@@ -1094,6 +1276,59 @@ function populateChoice() {
       choiceThree.value[1].value = form.awayTeam
     }
   }
+}
+
+function resetImageQuery() {
+  imageRequest.name = null
+  imageRequest.siteId = site.value ? site.value.id : null
+}
+
+async function changeImagePage(page) {
+  imageRequest.current = page
+  const { data: ret } = await getSiteImage(imageRequest)
+  imageList.list = ret.records
+  imageList.pages = ret.pages
+}
+
+function selectImage(item) {
+  selectedImage.id = item.id
+  selectedImage.name = item.name
+  selectedImage.siteName = item.siteName
+  selectedImage.path = item.path
+  selectedImage.remark = item.remark
+}
+
+async function browseImage(type) {
+  await loadSiteImage()
+  switch (type) {
+    case 'HOME_TEAM_ICON':
+      uiControl.imageSelectionTitle = t('fields.homeTeamIcon')
+      break
+    case 'AWAY_TEAM_ICON':
+      uiControl.imageSelectionTitle = t('fields.awayTeamIcon')
+      break
+  }
+  uiControl.imageSelectionType = type
+  uiControl.imageSelectionVisible = true
+}
+
+async function loadSiteImage() {
+  selectedImage.id = 0
+  const { data: ret } = await getSiteImage(imageRequest)
+  imageList.list = ret.records
+  imageList.pages = ret.pages
+}
+
+function submitImage() {
+  switch (uiControl.imageSelectionType) {
+    case 'HOME_TEAM_ICON':
+      form.homeTeamIcon = selectedImage.path
+      break
+    case 'AWAY_TEAM_ICON':
+      form.awayTeamIcon = selectedImage.path
+      break
+  }
+  uiControl.imageSelectionVisible = false
 }
 
 onMounted(async () => {

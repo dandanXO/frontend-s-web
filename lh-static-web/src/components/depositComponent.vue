@@ -265,7 +265,7 @@ const rules = {
       trigger: "blur"
     },
     {
-      pattern: /^\d+$/,
+      pattern: /^[1-9]\d*$/,
       message: "金额应为正数",
       trigger: "change"
     },
@@ -416,6 +416,26 @@ function confirmDeposit() {
     if (!store.phone) {
       ElMessageBox.confirm(
         "为保证资金安全，存款前请先验证手机号", "系统提示",
+        {
+          showClose: "false",
+          cancelButtonClass: "cancel-btn",
+          confirmButtonText: "确认",
+          cancelButtonText: "取消",
+          type: "warning",
+          draggable: true,
+          buttonSize: "small"
+        }
+      )
+        .then(() => {
+          router.push("/center/personal");
+        })
+        .catch(() => {
+        });
+      return;
+    }
+    if (!store.realName) {
+      ElMessageBox.confirm(
+        "您还未绑定真实姓名，请前往绑定", "系统提示",
         {
           showClose: "false",
           cancelButtonClass: "cancel-btn",

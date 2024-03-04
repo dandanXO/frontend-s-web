@@ -54,7 +54,7 @@
                 </div>
               <!-- <div class="subtitle">{{ hotgame.content[hotgame.currentProvider.toLowerCase()] }}</div> -->
             </div>
-            <div>
+            <div class="description">
               <div class="desc">
                 {{
                   hotgame.content &&
@@ -62,7 +62,7 @@
                   hotgame.content[hotgame.currentProvider.toLowerCase()].desc
                 }}
               </div>
-              <div class="desc">还有超多独家创新玩法，足够新颖，极易操作的游戏界面， 更是在您游戏过程中增光添彩！</div>
+              <!-- <div class="desc">还有超多独家创新玩法，足够新颖，极易操作的游戏界面， 更是在您游戏过程中增光添彩！</div> -->
             </div>
             <div v-if="hotgame.content.isShowSportsIcon" :class="`game-icon-wrapper ${hotgame.subtitle.toLowerCase()}`">
               <img
@@ -747,7 +747,7 @@ $transition_timer: 0.5s;
 
 .hotgame-section {
   width: 80%;
-  max-width: 1040px;
+  max-width: 1100px;
   margin: 0 auto;
 
   .hotgame-container {
@@ -755,18 +755,19 @@ $transition_timer: 0.5s;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.3rem;
     margin: 2.5rem 0 0 0;
 
     .hotgame-wrapper {
       display: flex;
       align-items: center;
+      overflow: hidden;
+      height: 600px;
 
       .hotgame-banner-wrapper {
         display: flex;
 
         .hotgame-banner {
-          width: 60px;
           width: 65px;
           height: 36.5rem;
           // height: 28.5rem;
@@ -811,8 +812,9 @@ $transition_timer: 0.5s;
           }
 
           .hotgame-text {
+            color: #000;
             display: flex;
-            gap: 5px;
+            gap: 7px;
             margin: 0 0.25rem 3rem 0;
 
             .title {
@@ -821,7 +823,7 @@ $transition_timer: 0.5s;
               text-align: center;
               font-family: PingFang SC;
               font-size: 1.156rem;
-              font-weight: 500;
+              font-weight: 600;
               line-height: 1.5rem;
             }
 
@@ -831,7 +833,7 @@ $transition_timer: 0.5s;
               text-align: center;
               font-family: PingFang SC;
               font-size: 0.578rem;
-              font-weight: 400;
+              font-weight: 500;
               line-height: 0.75rem;
               margin: 0.075rem 0 0 0;
             }
@@ -866,9 +868,9 @@ $transition_timer: 0.5s;
 
         &.show {
           width: 38.5rem;
-          height: 100%;
           margin: 0 0 0 0px;
           padding-left: 0.75rem;
+          height: 600px;
         }
 
         .left-container {
@@ -892,7 +894,6 @@ $transition_timer: 0.5s;
             font-weight: 400;
 
             line-height: normal;
-
             .title {
               // font-size: 4.24106rem;
               font-size: 2.7106rem;
@@ -920,6 +921,13 @@ $transition_timer: 0.5s;
             }
           }
 
+          .description {
+              min-height: 100px;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+            }
           .desc {
             color: #3063ab;
             font-family: Microsoft YaHei;

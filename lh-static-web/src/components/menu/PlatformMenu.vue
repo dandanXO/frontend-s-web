@@ -9,8 +9,8 @@
         <div class="maintenance-box" v-if="item.underMaintenance === true">
           <p>维护中</p>
           <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
-            维护时间:<br/> {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }}<br/>-
-            {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
+            维护时间:<br/> {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD HH:mm") }}<br/>-
+            {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD HH:mm") }}
           </p>
           <p class="small-size">请先前往其他场馆娱乐</p>
         </div>

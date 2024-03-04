@@ -89,7 +89,9 @@
 
   <div class="details-bar">
     <div class="message" @click="refreshBalance">
-      <span class="main-balance">
+      <span class="main-balance"
+        :class="(!store.token) ?  'main-nologin' : ''"
+      >
         {{ store.token ? (!isLoadingBalance ? "¥" + mainWallet.toFixed(2) : "加载中...") : "您还未登录" }}
       </span>
       <span>{{ store.token ? "中心钱包" : "登录/注册后查看" }}</span>
@@ -841,7 +843,7 @@
 
         <q-tab-panels v-model="activeKey" animated>
           <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
-            <q-list style="min-height: 65vh">
+            <q-list style="max-height: 65vh">
               <div v-for="(ann, idx) in announcementList" :key="idx">
                 <span v-if="ann.typeId === tab.id">
                   <q-expansion-item
@@ -1880,7 +1882,7 @@ export default defineComponent({
   .message {
     flex: 3;
     padding: 0px 8px 0px 0px;
-    border-right: 1px dashed $font-1;
+    //border-right: 1px dashed $font-1;
     color: $font-1;
     font-size: 1rem;
     display: flex;
@@ -1892,6 +1894,10 @@ export default defineComponent({
   .main-balance {
     font-size: 1.6rem;
     color: $dark;
+
+    &.main-nologin{
+      font-size: 1rem;
+    }
   }
 
   .menulist {

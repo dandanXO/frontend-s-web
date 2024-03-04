@@ -179,7 +179,8 @@ export default defineComponent({
               showClose: false,
               buttonSize: 'large'
           }).then(() => {
-              store.loginPageVisible = true
+            router.push('/login');
+              // store.loginPageVisible = true
           })
           return
       } else {
@@ -698,7 +699,7 @@ export default defineComponent({
         padding: 20px;
         display: flex;
         flex-direction: column;
-        background-size: 100%;
+    background-size: 100% 100%;
         background-position: top center;
         gap: 20px;
         background-repeat: no-repeat;

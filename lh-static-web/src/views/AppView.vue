@@ -235,11 +235,10 @@ export default defineComponent({
 
       .bottom {
         display: flex;
-        justify-content: space-between;
-        padding: 0px 50px;
+        justify-content: center;
         align-items: flex-end;
-        gap: 20px;
-        padding: 0px 20px;
+        gap: 45px;
+        padding: 0px 20px 20px;
 
         .platform-button-w-qr-code {
           display: flex;

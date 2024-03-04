@@ -20,15 +20,22 @@
         class="column no-wrap flex-center"
       >
         <div class="vip-card-container">
-          <img class="card-img" :src="require(`../../assets/images/vip/vip${vip.level}.png`)" alt="" />
+          <div class="card-img-wrap">
+            <img class="card-img" :src="require(`../../assets/images/vip/vip${vip.level}.png`)" alt="" />
+          </div>
+
           <div class="status">
             <img
               :src="
-                require(`../../assets/images/vip/status-${vip.progressBarVal === 100 || vipLevel >= vip.level ? 'achieved' : 'inachieved'}.png`)
+                require(`../../assets/images/vip/status-${
+                  vip.progressBarVal === 100 || vipLevel >= vip.level ? 'achieved' : 'inachieved'
+                }.png`)
               "
               alt=""
             />
-            <span class="vip-card-common-text">{{ vip.progressBarVal === 100 || vipLevel >= vip.level ? "已达到" : "未达到" }}</span>
+            <span class="vip-card-common-text">
+              {{ vip.progressBarVal === 100 || vipLevel >= vip.level ? "已达到" : "未达到" }}
+            </span>
           </div>
           <div class="vip-card-info">
             <div class="level">
@@ -193,22 +200,20 @@
       <div class="tnc-note">
         <ul class="common-text">
           <li>
-            所有雷火电竞会员存款达到一定额度即可享受特定免费奖金、存款奖金或其他奖励相应的VIP等级要求。
-            要存款和接收奖金，您只需完成（存款+奖金）*相应的成交倍数即可提款。
+            所有雷火电竞会员存款达到相应VIP等级要求即可享有特定免费奖金、存送奖金或其他奖励，存送奖金只需完成（存款+奖金）*相应流水倍数即可提款。
           </li>
-          <li>满足相应等级要求的会员可点击“待领取”领取免费奖金 或存款并选择相应的存款折扣。</li>
-          <li>每个级别对应的折扣所需的流水是不同的。 会员需满足相应的流水 方可申请提款。</li>
+          <li>达到相应等级要求的会员可以点击"待领取"，领取免费奖金或存款选择相对应的存送优惠即可。</li>
+          <li>各等级所对应的优惠所要求的流水有所不同，会员需要达到相应流水方可申请提款。</li>
           <li>
-            此促销活动仅适用于拥有独立帐户的玩家。 地址、电子邮件地址、
-            电话号码、付款方式（相同的借记卡/信用卡/银行帐号） IP
-            地址、相同网络环境等将作为判断是否独立的条件。对于任何被发现有违反、欺骗、利用规则行为的会员以及赚取非法利润的条款，雷火电竞保留停止或取消福利的权利或随时索回所有已支付的福利。
+            此优惠促销只适用于拥有一个独立账户的玩家。住址、电子邮箱地址﹑电话号码﹑支付方式（相同借记卡/信用卡/银行账户号码）IP地址，同一网络环境等将可以作为判定是否独立玩家的条件。对于发现任何有违背、欺骗、或利用规则和条款进行非法获利的会员，雷火电竞保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。
           </li>
           <li>
-            若某些未知因素超出可控范围，雷火电竞保留单方面作出决定的权利
-            发生此类紧急问题时向客户解释原因并听取客户意见的决定和承诺 反馈并与客户沟通协商解决。
+            在某些未知因素超出可控范围的情况下，雷火电竞保留可单方面执行的决定权，并承诺会在这类紧急问题发生时解释给客户原因并听取客户反馈与客户沟通协商解决。
           </li>
-          <li>雷火电竞保留对本次活动的修改、终止和最终解释权。 雷火电竞 对本网站无法控制的技术错误不承担任何责任。</li>
-          <li>雷火电竞有权延长、缩短、终止、修改本次活动！ 最终解释权 本次赛事归属雷火电竞所有。</li>
+          <li>
+            雷火电竞保留对本次活动的修订、终止和最终解释权，超出本网站控制外的技术错误，雷火电竞将不承担任何责任。
+          </li>
+          <li>雷火电竞有权延长，缩短，终止，或者修改此活动！此活动最终解释权归雷火电竞所有。</li>
         </ul>
       </div>
     </div>
@@ -216,7 +221,7 @@
 </template>
 
 <script setup>
-import { ref, onActivated, computed, watch } from "vue";
+import { ref, onActivated, watch } from "vue";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
@@ -339,17 +344,16 @@ const currentDeposit = ref(0);
 const checkVipRedeem = () => {
   if (!claimDesc.value) {
     vipClaimItems.value.forEach((el, i) => {
-      el[i].vip = i
+      el[i].vip = i;
       if (i === 0) {
-        claimDesc.value = el[0].vip
+        claimDesc.value = el[0].vip;
       }
-    })
+    });
   }
   getProgressBar();
   eventapi.get("/vip-upgrade/lh/canRedeem").then((res) => {
-    
     if (res.code === 0) {
-      console.log(res.data)
+      console.log(res.data);
       // Your arrays of elements
       const depositPromoAvailableElements = res.data.depositPromoAvailable;
       const promoAvailableElements = res.data.promoAvailable;
@@ -385,7 +389,7 @@ const checkVipRedeem = () => {
       if (vipLevel.value !== 0) {
         slide.value = vipLevel.value - 1;
       } else {
-        slide.value = 1
+        slide.value = 1;
       }
 
       vipClaimItems[slide.value].vip = slide.value;
@@ -397,24 +401,24 @@ const checkVipRedeem = () => {
         message: res.message,
         icon: "report_problem"
       });
-          }
-        });
+    }
+  });
 };
 const getProgressBar = () => {
   vipItems.value.forEach((vip, i) => {
     if (Number(vipLevel.value + 1) > Number(vip.level)) {
-      vip.progressBarVal = 0
+      vip.progressBarVal = 0;
     } else {
-      vip.progressBarVal = 1
+      vip.progressBarVal = 1;
     }
     // if (vipLevel.value > vip.level) {
     //   vip.progressBarVal = 100
     // }
-    
+
     if (Number(vipLevel.value + 1 === Number(vip.level))) {
       // Remove commas from the string
-      let amt = vip.amount.replace(/,/g, '');
-      let current = currentDeposit.value.replace(/,/g, '');
+      let amt = vip.amount.replace(/,/g, "");
+      let current = currentDeposit.value.replace(/,/g, "");
 
       // Parse the string into a number
       let vipAmount = parseInt(amt, 10);
@@ -422,10 +426,10 @@ const getProgressBar = () => {
 
       console.log(vipAmount); // Outputs: 400000
       console.log(currentDep);
-      
-      let percentageChange = (currentDep / vipAmount * 100);
-      console.log(percentageChange / 100)
-      vipItems.value[Number(vipLevel.value)].progressBarVal = 1 - percentageChange / 100
+
+      let percentageChange = (currentDep / vipAmount) * 100;
+      console.log(percentageChange / 100);
+      vipItems.value[Number(vipLevel.value)].progressBarVal = 1 - percentageChange / 100;
       // // Calculate the maximum absolute percentage change
       // let maxAbsoluteChange = Math.max(Math.abs(percentageChange), 1);
 
@@ -439,8 +443,8 @@ const getProgressBar = () => {
       // // var currentProgressPercentage = Math.abs((vipAmount - currentDep) / currentDep) / 100;
       // vipItems.value[Number(vipLevel.value)].progressBarVal = mappedValue
     }
-  })
-}
+  });
+};
 
 watch(slide, (newValue) => {
   if (vipClaimItems[newValue]) {
@@ -611,7 +615,7 @@ const claim = async () => {
         icon: "check_circle_outline"
       });
       claimDesc.value.claimedBtn = true;
-      
+
       claimDesc.value.availableBtn = false;
     } else {
       $q.notify({
@@ -630,14 +634,14 @@ onActivated(() => {
   if (store.hasToken()) {
     store.getMemberInfo().then(() => {
       vipLevel.value = +store.vip.replace("VIP", "");
-      currentDeposit.value = parseFloat(store.currentDeposit).toLocaleString()
+      currentDeposit.value = parseFloat(store.currentDeposit).toLocaleString();
       checkVipRedeem();
     });
   } else {
-    claimDesc.value.vip = 0
+    claimDesc.value.vip = 0;
     vipItems.value.forEach((item) => {
-      item.progressBarVal = 1
-    })
+      item.progressBarVal = 1;
+    });
   }
 });
 </script>
@@ -665,8 +669,16 @@ onActivated(() => {
   .vip-card-container {
     position: relative;
 
+    .card-img-wrap {
+      min-height: 160px;
+
+      @media (min-width: 470px) {
+        min-height: 210px;
+      }
+    }
+
     .card-img {
-      width: 67.5vw;
+      width: 100%;
     }
 
     .status {
@@ -690,7 +702,11 @@ onActivated(() => {
     .vip-card-info {
       position: absolute;
       left: 10%;
-      top: 35%;
+      top: 25%;
+
+      @media (min-width: 470px) {
+        top: 35%;
+      }
 
       .level {
         display: flex;
