@@ -45,7 +45,9 @@
                     <a @click="showPromoDetails(promo)">
                       <div>
                         <div class="promo-label">
-                          <div class="promo-ribbon">{{ getPromoLabel(promo.labelType) }}</div>
+                          <div class="promo-ribbon" v-if="promo.labelType !== 2">
+                            {{ getPromoLabel(promo.labelType) }}
+                          </div>
                           <div
                             class="promo-item-date"
                             v-if="parsedParam(promo.param).date"
@@ -74,7 +76,9 @@
                     <a @click="showPromoDetails(promo)">
                       <div>
                         <div class="promo-label">
-                          <div class="promo-ribbon">{{ getPromoLabel(promo.labelType) }}</div>
+                          <div class="promo-ribbon" v-if="promo.labelType !== 2">
+                            {{ getPromoLabel(promo.labelType) }}
+                          </div>
                           <div
                             class="promo-item-date"
                             v-if="parsedParam(promo.param).date"
@@ -506,9 +510,9 @@ export default defineComponent({
           border-radius: 12px;
 
           .promo-label {
+            height: 24px;
             display: flex;
             align-items: center;
-            gap: 12px;
             position: absolute;
             top: 0;
             left: 0;
@@ -542,6 +546,7 @@ export default defineComponent({
             color: #606479;
             font-size: 0.825rem;
             font-weight: bold;
+            padding-left: 12px;
             // position: absolute;
             // top: 5px;
             // left: 100px;

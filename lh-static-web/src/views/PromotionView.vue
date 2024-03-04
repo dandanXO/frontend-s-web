@@ -31,7 +31,7 @@
             <a @click="showPromoDetails(promo)">
               <div class="promo-img-wrapper">
                 <div class="promo-label">
-                  <div class="label-type">{{ getPromoLabel(promo.labelType) }}</div>
+                  <div class="label-type" v-if="promo.labelType !== 2">{{ getPromoLabel(promo.labelType) }}</div>
                   <div class="label-date">{{ JSON.parse(promo.param).date }}</div>
                 </div>
 
@@ -207,7 +207,7 @@ export default defineComponent({
 
     const switchPromoType = (type) => {
       scrollToTop();
-    
+
       promoTabActive.value = type;
       if (type !== "ALL") {
         if(type ==='OTHERS'){
@@ -542,6 +542,7 @@ export default defineComponent({
               top: 0;
               display: flex;
               align-items: center;
+              height: 42px;
               .label-type {
                 background: linear-gradient(89.92deg, #454bc2 0.06%, #b1a5f0 106.9%);
                 padding: 10px 30px 10px 50px;
@@ -699,7 +700,7 @@ export default defineComponent({
         padding: 20px;
         display: flex;
         flex-direction: column;
-    background-size: 100% 100%;
+        background-size: 100% 100%;
         background-position: top center;
         gap: 20px;
         background-repeat: no-repeat;
