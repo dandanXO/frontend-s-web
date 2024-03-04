@@ -10,9 +10,20 @@
     padding: 15px;
     transition: 0.3s all;
     cursor: pointer;
-    position:relative;
+    position: relative;
+    animation: fadeIn 1s ease-in-out forwards;
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-    &.maintenance{
+    &.maintenance {
       filter: grayscale(0.8);
       pointer-events: none;
     }
@@ -61,7 +72,6 @@
       }
     }
 
-
     &:hover {
       background: linear-gradient(180deg, #73b2ff1e 0%, #3982ff23 100%);
       .platform-menu-btn a {
@@ -70,9 +80,9 @@
       }
     }
 
-    &:active{
+    &:active {
       filter: brightness(0.96);
-      transform: translate(0px , 1px);
+      transform: translate(0px, 1px);
     }
 
     .platform-menu-title {

@@ -761,7 +761,7 @@ $transition_timer: 0.5s;
     .hotgame-wrapper {
       display: flex;
       align-items: center;
-      overflow: hidden;
+      // overflow: hidden;
       height: 600px;
 
       .hotgame-banner-wrapper {
@@ -868,9 +868,10 @@ $transition_timer: 0.5s;
 
         &.show {
           width: 38.5rem;
-          margin: 0 0 0 0px;
+          // margin: 0 0 0 0px;
+          margin: 0 -10px 0 0px;
           padding-left: 0.75rem;
-          height: 600px;
+          height: 500px;
         }
 
         .left-container {
@@ -1124,7 +1125,7 @@ $transition_timer: 0.5s;
 
           .character-esports-rg {
             position: relative;
-            right: 1rem;
+            right: 0rem;
             height: 27rem;
           }
 
@@ -1132,7 +1133,7 @@ $transition_timer: 0.5s;
           .character-sports-im,
           .character-sports-saba {
             position: relative;
-            right: 1rem;
+            right: 0rem;
             height: 25rem;
           }
 
@@ -1140,9 +1141,14 @@ $transition_timer: 0.5s;
           .character-sports-panda {
             position: relative;
             right: 0;
-            height: 25rem;
+            height: 26rem;
           }
 
+          .character-sports-pm {
+            position: relative;
+            right: 0.5rem;
+            height: 24rem;
+          }
           .character-sports-cr {
             position: relative;
             right: 1.5rem;
@@ -1153,7 +1159,7 @@ $transition_timer: 0.5s;
           .character-casino-ag {
             position: relative;
             right: 0.5rem;
-            height: 23rem;
+            height: 28rem;
           }
 
           .character-casino-db {
@@ -1165,7 +1171,7 @@ $transition_timer: 0.5s;
           .character-casino-bg {
             position: relative;
             right: 1rem;
-            height: 23rem;
+            height: 27rem;
           }
 
           .character-casino-we {
@@ -1208,7 +1214,7 @@ $transition_timer: 0.5s;
 
           .character-board-leyou {
             position: relative;
-            right: 4rem;
+            // right: 4rem;
             height: 23rem;
           }
 
@@ -1242,6 +1248,11 @@ $transition_timer: 0.5s;
             position: relative;
             right: 2.75rem;
             height: 23rem;
+          }
+          .character-slots-ag {
+            position: relative;
+            right: 4rem;
+            height: 24rem;
           }
 
           // fishing

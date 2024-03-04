@@ -3,7 +3,7 @@
     v-model="isStationNotice"
     :maskClosable="false"
     :footer="null"
-    style="border-radius: 8px; width: 1181px;"
+    style="border-radius: 8px; width: 800px;"
     class="notice-modal"
   >
     <div class="notice-header">
