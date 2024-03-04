@@ -18,7 +18,7 @@
         <div class="help-content">
             <div class="about-title">联系我们</div>
             <p>我们为您提供中/英文双语专业客服和团队为您提供24/7专业服务， 您也可以随时通过以下方式联系我们：<br>
-            客服邮箱：cs@xf966.com<br>
+            客服邮箱：cs@xf969.com<br>
             市场部邮箱：marketing@xf986.com<br>
             代理部邮箱：affiliate@xf986.com<br>
             CEO投诉/意见箱：complaint@xf926.com<br>
