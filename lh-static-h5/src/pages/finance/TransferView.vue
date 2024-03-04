@@ -17,8 +17,8 @@
     </div>
 
     <div class="transfer-mid-div">
-      <div class="station-notice-wrapper">
-        <div class="volume" @click="showAnnouncementDialog">
+      <div class="station-notice-wrapper" @click="showAnnouncementDialog">
+        <div class="volume" >
           <img src="../../assets/images/home/announce-icon.png" />
         </div>
         <marquee-text :repeat="5" :duration="announcementList.length * 10">
@@ -111,7 +111,7 @@
   </q-page>
   <q-dialog
     width="100%"
-    class="modal-common-div" label="信息" v-model="isShowAnnouncementDialog" full-width="100">
+    class="modal-common-div" label="信息" v-model="isShowAnnouncementDialog" full-width>
     <q-card class="q-pa-md modal-content">
       <div class="headers">
         <div class="titles">信息</div>
