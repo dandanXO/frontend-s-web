@@ -56,6 +56,21 @@
         </template>
       </el-table-column>
       <el-table-column
+        prop="status"
+        :label="t('fields.status')"
+        width="150"
+        v-if="hasPermission(['sys:questionnaire:update'])"
+      >
+        <template #default="scope">
+          <el-switch
+            v-model="scope.row.status"
+            active-color="#409EFF"
+            inactive-color="#F56C6C"
+            @change="changeQuestionnaireStatus(scope.row.id, scope.row.status)"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
         :label="t('fields.operate')"
         align="right"
         fixed="right"
@@ -173,7 +188,10 @@ import { nextTick, onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
-import { getQuestionnaire, getQuestionnaireChoice, createQuestionnaire, updateQuestionnaire, deleteQuestionnaire } from "@/api/questionnaire";
+import {
+  getQuestionnaire, getQuestionnaireChoice, createQuestionnaire,
+  updateQuestionnaire, updateQuestionnaireStatus, deleteQuestionnaire
+} from "@/api/questionnaire";
 import { required } from "@/utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
 
@@ -395,6 +413,10 @@ async function removeQuestionnaire(questionnaire) {
     await loadQuestionnaire()
     ElMessage({ message: t('message.deleteSuccess'), type: 'success' })
   })
+}
+
+async function changeQuestionnaireStatus(id, status) {
+  await updateQuestionnaireStatus(id, status)
 }
 
 onMounted(async () => {

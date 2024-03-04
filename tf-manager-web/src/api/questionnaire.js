@@ -17,6 +17,10 @@ export const updateQuestionnaire = (id, questionnaire) => {
   return https().request(`/questionnaire/${id}?_method=PUT`, Method.POST, questionnaire, ContentType.form);
 };
 
+export const updateQuestionnaireStatus = (id, status) => {
+  return https().request(`/questionnaire/${id}/status?_method=PUT`, Method.POST, { status: status }, ContentType.form);
+};
+
 export const deleteQuestionnaire = (ids) => {
   return https().request(`/questionnaire?_method=DELETE`, Method.POST, { ids: ids.join(",") }, ContentType.form);
 };
