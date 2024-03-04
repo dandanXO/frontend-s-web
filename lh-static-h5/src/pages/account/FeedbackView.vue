@@ -60,7 +60,7 @@
                         <q-input
                           class="answer-input-fill"
                           v-model="answerInputModal"
-                          placeholder="请输入获取渠道"
+                          placeholder="请输入"
                           type="textarea"
                           :autosize="{ minRows: 4 }"
                           @change="
@@ -74,7 +74,7 @@
                         <q-input
                           class="answer-input-fill"
                           v-model="answerInputModal"
-                          placeholder="请输入获取渠道"
+                          placeholder="请输入"
                           type="textarea"
                           :autosize="{ minRows: 4 }"
                           @change="getSelected(item, ans.choice)"
@@ -84,7 +84,7 @@
                         <q-input
                           class="answer-input-fill"
                           v-model="answerInputModal"
-                          placeholder="请输入获取渠道"
+                          placeholder="十五字或以上"
                           type="textarea"
                           :rules="[(val) => (val && val.length >= 15) || '请输入十五字或以上']"
                           :autosize="{ minRows: 4 }"

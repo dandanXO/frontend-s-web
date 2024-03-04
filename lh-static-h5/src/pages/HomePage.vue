@@ -151,6 +151,14 @@
           <img src="../assets/images/home/games/poker-icon.png" />
         </template>
       </div>
+      <div @click="selectTab('slot')" class="game-platform btn-pointer" id="slot-platform">
+        <template v-if="tab === 'slot'">
+          <img src="../assets/images/home/games/slot-icon-active.png" />
+        </template>
+        <template v-else>
+          <img src="../assets/images/home/games/slot-icon.png" />
+        </template>
+      </div>
       <div @click="selectTab('others')" class="game-platform btn-pointer" id="others-platform">
         <template v-if="tab === 'others'">
           <img src="../assets/images/home/games/others-icon-active.png" />
@@ -319,12 +327,8 @@
           </div>
         </template>
       </div>
-
-
-      <!-- slot-lottery-fish -->
-
-
-      <div class="game-lists" id="others-lists">
+      <div class="game-lists" id="slot-lists">
+        
         <template v-for="(item, index) in slot" :key="index">
           <div
             class="platform-block"
@@ -355,6 +359,13 @@
             </div>
           </div>
         </template>
+      </div>
+
+
+      <!-- slot-lottery-fish -->
+
+
+      <div class="game-lists" id="others-lists">
 
         <template v-for="(item, index) in lottery" :key="index">
           <div
@@ -982,7 +993,8 @@ export default defineComponent({
           var checkItem2 = document.getElementById("sport-lists");
           var checkItem3 = document.getElementById("live-lists");
           var checkItem4 = document.getElementById("poker-lists");
-          var checkItem5 = document.getElementById("others-lists");
+          var checkItem5 = document.getElementById("slot-lists");
+          var checkItem6 = document.getElementById("others-lists");
 
 
           var positionTop1 = checkItem1.getBoundingClientRect().top;
@@ -990,12 +1002,15 @@ export default defineComponent({
           var positionTop3 = checkItem3.getBoundingClientRect().top;
           var positionTop4 = checkItem4.getBoundingClientRect().top;
           var positionTop5 = checkItem5.getBoundingClientRect().top;
+          var positionTop6 = checkItem6.getBoundingClientRect().top;
 
           // console.log(positionTop4);
           // console.log(positionTop5);
 
-          if (0 > positionTop5 - 5) {
+          if (0 > positionTop6 - 5) {
             tab.value = "others";
+          } else if (0 > positionTop5 - 5 && positionTop6 >= blockHeight ) {
+            tab.value = "slot";
           } else if (0 > positionTop4 - 5 && positionTop5 >= blockHeight ) {
             tab.value = "poker";
           } else if (0 > positionTop3 - 5 && positionTop4 >= blockHeight) {
@@ -1035,6 +1050,9 @@ export default defineComponent({
         // firstSwiper.value?.slideTo(slideIndex, 500);
         scrollToSlide("poker-lists");
       }
+      if (tab === "slot") {
+        scrollToSlide("slot-lists");
+      }
       if (tab === "others") {
         // slideIndex = esport.value.length + sport.value.length + livecasino.value.length + poker.value.length;
         // firstSwiper.value?.slideTo(slideIndex, 500);
@@ -1054,7 +1072,7 @@ export default defineComponent({
       const activeSlideClassName = activeSlide.className;
       // Check if the class name contains "sport," "slot," or "esport"
       // Array of keywords to check
-      const keywords = ["slot", "live", "sport", "esport", "others"];
+      const keywords = ["slot", "live", "sport", "esport", "slot", "others"];
 
       // Iterate over each keyword
       for (const keyword of keywords) {
@@ -1342,6 +1360,8 @@ export default defineComponent({
                 liveObj.title = "DB真人";
               } else if (liveObj.code === "EBET") {
                 liveObj.title = "WE真人";
+              } else if (liveObj.code === "BBINDY") {
+                liveObj.title = "BBIN真人";
               } else {
                 liveObj.title = translateRecord(liveObj.name) + "真人";
               }
