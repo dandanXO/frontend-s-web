@@ -41,6 +41,7 @@ export const userStore = defineStore("userStore", {
             hasCheckedVersion: false,
             hasClosedDL: false,
             appDownloadUrl: '',
+            visitorId: ""
         };
     },
     actions: {

@@ -1,12 +1,13 @@
+import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-vue-v3";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
+
 export const MAIN = "MAIN";
 
 export const getRndInteger = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 export const isMobile = () => {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
-  );
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 };
 export const getMobileOS = () => {
   const ua = navigator.userAgent;
@@ -53,3 +54,27 @@ export const getTimeout = (key) => {
 };
 
 export const getImageUrl = (srcPath) => require(`/src/assets/${srcPath}`);
+
+export const getVisitorId = async () => {
+  const { getData } = useVisitorData({ extendedResult: true }, { immediate: false });
+
+  const fp = await getData({ ignoreCache: true });
+
+  console.log("VisitorInfo");
+  console.log(fp);
+  if (fp?.visitorId) {
+    sessionStorage.setItem("VISITOR_ID", fp.visitorId);
+    return fp?.visitorId;
+  } else {
+    const fpPromise = FingerprintJS.load();
+    const fp = await fpPromise;
+    const result = await fp.get();
+    const { timezone, ...allComponents } = result.components;
+    // console.log(allComponents);
+    const sidParam = FingerprintJS.hashComponents(allComponents);
+    console.log("Use Normal Fingerprint");
+    console.log(sidParam);
+    sessionStorage.setItem("VISITOR_ID", sidParam);
+    return sidParam;
+  }
+};

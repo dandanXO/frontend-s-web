@@ -11,8 +11,8 @@ const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
 const crtArray = process.env.VUE_APP_CR_API.split(",");
 
-const baseEvtUrl= getEvtUrl();
-const baseCrtUrl= getCrtUrl();
+const baseEvtUrl = getEvtUrl();
+const baseCrtUrl = getCrtUrl();
 
 const onRequest = (config) => {
   const store = userStore();
@@ -125,7 +125,7 @@ const checkSuccessUrl = () => {
     axios
       .get(successRstUrl + "/ping")
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.status !== 200) {
           localStorage.removeItem("successfulApiUrl");
         }
@@ -141,7 +141,7 @@ const checkSuccessUrl = () => {
     axios
       .get(successEvtUrl + "/ping")
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.status !== 200) {
           localStorage.removeItem("successfulEvtUrl");
         }
@@ -157,7 +157,7 @@ const checkSuccessUrl = () => {
     axios
       .get(successCrtUrl + "/ping")
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.status !== 200) {
           localStorage.removeItem("successfulCrtUrl");
         }
@@ -201,7 +201,7 @@ function getEvtUrl() {
     axios
       .get(successEvtUrl + "/ping")
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.status !== 200) {
           localStorage.removeItem("successfulEvtUrl");
         }
@@ -216,7 +216,7 @@ function getEvtUrl() {
     var testEvtApi = evtArray[getRndInteger(0, evtArray.length)];
 
     axios.get(testEvtApi + "/ping").then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.status === 200) {
         localStorage.setItem("successfulEvtUrl", testEvtApi);
       } else {
@@ -234,7 +234,7 @@ function getCrtUrl() {
     axios
       .get(successCrtUrl + "/ping")
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.status !== 200) {
           localStorage.removeItem("successfulCrtUrl");
         }
@@ -249,7 +249,7 @@ function getCrtUrl() {
     var crtTestApi = crtArray[getRndInteger(0, crtArray.length)];
 
     axios.get(crtTestApi + "/ping").then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.status === 200) {
         localStorage.setItem("successfulCrtUrl", crtTestApi);
       } else {
@@ -288,8 +288,7 @@ export const server = new Proxy(
             window.location.reload;
           }
           restInitialized = true;
-          instance.defaults.baseURL =
-            rstArray[getRndInteger(0, rstArray.length)];
+          instance.defaults.baseURL = rstArray[getRndInteger(0, rstArray.length)];
         }
       } else if (propKey === "EVENT") {
         instance.defaults.baseURL = baseEvtUrl;

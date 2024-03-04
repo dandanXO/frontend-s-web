@@ -259,7 +259,6 @@ import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import RegisterPage from "../pages/RegisterPage.vue";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import qs from "qs";
 
 export default defineComponent({
@@ -333,16 +332,8 @@ export default defineComponent({
     };
 
     const onSubmit = () => {
-      const fpPromise = FingerprintJS.load();
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+        const sidParam = store.visitorId;
         if (loginType.value === false) {
           loginNameRef.value.validate();
           passwordRef.value.validate();

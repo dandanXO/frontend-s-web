@@ -818,7 +818,7 @@ import { useElementSize } from "@vueuse/core";
 import { ArrowDown, Refresh, ArrowRight, ArrowLeft } from "@element-plus/icons-vue";
 import { storeToRefs } from "pinia";
 import GameModal from "@/components/modal/GameModal";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
+// import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import moment from "moment";
 import { lsGet, lsStore, lsRemove, getTimeout } from "@/utils/utils";
 import { getUnreadMailTotal } from "@/api/personal/mailbox";
@@ -1450,16 +1450,8 @@ export default defineComponent({
       if (!elForm) return;
       await elForm.validate((valid) => {
         if (valid) {
-          const fpPromise = FingerprintJS.load();
           (async () => {
-            const fp = await fpPromise;
-            const result = await fp.get();
-            const excludes = { value: ["timezone", "timeZoneOffset"] };
-            const allComponents = { ...result.components };
-            excludes.value.forEach((element) => {
-              delete allComponents[element];
-            });
-            const sidParam = FingerprintJS.hashComponents(allComponents);
+            const sidParam = store.visitorId;
             regForm.sid = sidParam;
             register(regForm)
               .then((response) => {
@@ -1916,17 +1908,9 @@ export default defineComponent({
     };
     const submitLogin = () => {
       loadingBtn.value = true;
-      const fpPromise = FingerprintJS.load();
-      (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
 
+      (async () => {
+        const sidParam = store.visitorId;
         loginRef.value.validate().then(() => {
           store
             .memberLogin({
@@ -1967,16 +1951,9 @@ export default defineComponent({
 
     const phoneLogin = () => {
       loadingBtn.value = true;
-      const fpPromise = FingerprintJS.load();
+      
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+        const sidParam = store.visitorId;
 
         mobileLoginRef.value.validate().then(() => {
           store
