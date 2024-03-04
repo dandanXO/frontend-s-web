@@ -1,42 +1,42 @@
 <template>
   <div v-if="upcomingMatchDetails.length > 0">
-    <swiper
+    <div
       :slides-per-view="props.platformType === 'NBA' || upcomingMatchDetails.length < 2 ? 1 : 2"
       :loop="false"
       @swiper="onSwiper"
       :space-between="20"
       @slideChange="onSlideChange"
-      class="swiper-wrapper"
+      class="swiper-wrapper bet-info-container"
     >
       <template v-for="(upcomingMatchDetail, index) in upcomingMatchDetails" :key="index">
-        <swiper-slide>
-          <div class="bet-info-box">
-            <div class="bet-info-date">{{ getMatchDateOnly(upcomingMatchDetail.matchTime) }}</div>
-            <div class="bet-info-details">
-              <div class="info-team info-team-one">
-                <div class="info-team-logo">
-                  <img :src="imgURL + upcomingMatchDetail.teamOneIcon" />
-                </div>
-                <div class="info-team-name" v-html="upcomingMatchDetail.teamOne" />
+        <!-- <swiper-slide> -->
+        <div class="bet-info-box">
+          <div class="bet-info-date">{{ getMatchDateOnly(upcomingMatchDetail.matchTime) }}</div>
+          <div class="bet-info-details">
+            <div class="info-team info-team-one">
+              <div class="info-team-logo">
+                <img :src="imgURL + upcomingMatchDetail.teamOneIcon" />
               </div>
+              <div class="info-team-name" v-html="upcomingMatchDetail.teamOne" />
+            </div>
 
-              <div class="bet-info-title">
-                <div>{{ upcomingMatchDetail.matchTitle }}</div>
+            <div class="bet-info-title">
+              <div>{{ upcomingMatchDetail.matchTitle }}</div>
 
-                <div class="bet-info-time">{{ getMatchTimeOnly(upcomingMatchDetail.matchTime) }}</div>
+              <div class="bet-info-time">{{ getMatchTimeOnly(upcomingMatchDetail.matchTime) }}</div>
+            </div>
+
+            <div class="info-team info-team-two">
+              <div class="info-team-logo">
+                <img :src="imgURL + upcomingMatchDetail.teamTwoIcon" />
               </div>
-
-              <div class="info-team info-team-two">
-                <div class="info-team-logo">
-                  <img :src="imgURL + upcomingMatchDetail.teamTwoIcon" />
-                </div>
-                <div class="info-team-name" v-html="upcomingMatchDetail.teamTwo" />
-              </div>
+              <div class="info-team-name" v-html="upcomingMatchDetail.teamTwo" />
             </div>
           </div>
-        </swiper-slide>
+        </div>
+        <!-- </swiper-slide> -->
       </template>
-    </swiper>
+    </div>
     <!-- <div class="swiper-button-prev" @click="prevSlide"></div> -->
     <!-- <div class="swiper-button-next" @click="nextSlide"></div> -->
   </div>
@@ -141,6 +141,12 @@ onMounted(() => {
   margin-top: -30px;
 }
 
+.bet-info-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .bet-info-box {
   border-radius: 12px;
   // border: 1px solid #0c9bff;
@@ -151,6 +157,7 @@ onMounted(() => {
   max-width: 90%;
   margin: auto;
   overflow: hidden;
+  width: 100%;
 
   .bet-info-date {
     background: #e7f3ff;
