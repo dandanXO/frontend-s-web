@@ -3,72 +3,90 @@
     <HomeTitle title="APP下载" subtitle="APP DOWNLOAD"></HomeTitle>
     <div class="download-container">
       <div class="left-container">
-        <img src="../../assets/home/download/bg.png" />
+        <img src="../../assets/home/download/download-bg.png" width="100%" />
       </div>
 
       <div class="right-container">
         <HomeContentTitle title="APP下载"></HomeContentTitle>
 
         <div class="tab-wrapper">
-          <el-tabs class="tab" v-model="activeKey" type="card">
-            <el-tab-pane name="1" label="全站APP">
-              <div class="tab-title">综合客户端下载</div>
+          <div class="dl-tab">
+            <div class="tab-title">综合客户端下载</div>
+            <div class="tab-desc">
+              引领市场的卓越技术，自主研发了全套终端应用，让您畅享 Web,H5,更有iOS,Android原生APP，让您随时随地，娱乐
+              投注！
+            </div>
+            <div class="download">
+              <div class="dl-mobile-img">
+                <img src="../../assets/home/download/mobile-img.png" width="100%" />
+              </div>
+              <div class="dl-wrapper">
+                <VueQRCodeComponent :size="120" :text="ui.downloadUrl" class="dl-frame" />
+                <div class="link-desc">手机免费下载地址</div>
+                <div class="link">{{ ui.downloadUrl }}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <el-tabs class="tab" v-model="activeKey" type="card"> -->
+          <!-- <el-tab-pane name="1" label="全站APP"> -->
+          <!-- <div class="tab-title">综合客户端下载</div>
               <div class="tab-desc">
                 引领市场的卓越技术，自主研发了全套终端应用，让您畅享 Web,H5,更有iOS,Android原生APP，让您随时随地，娱乐
                 投注！
               </div>
-              <div class="download">
-<!--                <div class="qr-wrapper">-->
-<!--                  <img src="../../assets/home/download/app.png" />-->
-<!--                  <div class="link-desc">扫码进入下载页面</div>-->
-<!--                  <div class="link">www.leihuo.com</div>-->
-<!--                </div>-->
-                <div class="dl-wrapper">
+              <div class="download"> -->
+          <!--                <div class="qr-wrapper">-->
+          <!--                  <img src="../../assets/home/download/app.png" />-->
+          <!--                  <div class="link-desc">扫码进入下载页面</div>-->
+          <!--                  <div class="link">www.leihuo.com</div>-->
+          <!--                </div>-->
+          <!-- <div class="dl-wrapper">
                   <VueQRCodeComponent :size="140" :text="ui.downloadUrl" />
                   <div class="link-desc">手机免费下载地址</div>
                   <div class="link">{{ui.downloadUrl}}</div>
                 </div>
-              </div>
-            </el-tab-pane>
-<!--            <el-tab-pane name="2"  label="电竞APP">-->
-<!--              <div class="tab-title">电竞App下载</div>-->
-<!--              <div class="tab-desc">-->
-<!--                引领市场的卓越技术，自主研发了全套终端应用，让您畅享 Web,H5,更有iOS,Android原生APP，让您随时随地，娱乐-->
-<!--                投注！-->
-<!--              </div>-->
-<!--              <div class="download">-->
-<!--                <div class="qr-wrapper">-->
-<!--                  <img src="../../assets/home/download/app.png" />-->
-<!--                  <div class="link-desc">扫码进入下载页面</div>-->
-<!--                  <div class="link">www.leihuo.com</div>-->
-<!--                </div>-->
-<!--                <div class="dl-wrapper">-->
-<!--                  <img src="../../assets/home/download/app.png" />-->
-<!--                  <div class="link-desc">手机免费下载地址</div>-->
-<!--                  <div class="link">www.leihuo.com</div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </el-tab-pane>-->
-<!--            <el-tab-pane key="3" label="体育APP" >-->
-<!--              <div class="tab-title">体育App下载</div>-->
-<!--              <div class="tab-desc">-->
-<!--                引领市场的卓越技术，自主研发了全套终端应用，让您畅享 Web,H5,更有iOS,Android原生APP，让您随时随地，娱乐-->
-<!--                投注！-->
-<!--              </div>-->
-<!--              <div class="download">-->
-<!--                <div class="qr-wrapper">-->
-<!--                  <img src="../../assets/home/download/app.png" />-->
-<!--                  <div class="link-desc">扫码进入下载页面</div>-->
-<!--                  <div class="link">www.leihuo.com</div>-->
-<!--                </div>-->
-<!--                <div class="dl-wrapper">-->
-<!--                  <img src="../../assets/home/download/app.png" />-->
-<!--                  <div class="link-desc">手机免费下载地址</div>-->
-<!--                  <div class="link">www.leihuo.com</div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </el-tab-pane>-->
-          </el-tabs>
+              </div> -->
+          <!-- </el-tab-pane> -->
+          <!--            <el-tab-pane name="2"  label="电竞APP">-->
+          <!--              <div class="tab-title">电竞App下载</div>-->
+          <!--              <div class="tab-desc">-->
+          <!--                引领市场的卓越技术，自主研发了全套终端应用，让您畅享 Web,H5,更有iOS,Android原生APP，让您随时随地，娱乐-->
+          <!--                投注！-->
+          <!--              </div>-->
+          <!--              <div class="download">-->
+          <!--                <div class="qr-wrapper">-->
+          <!--                  <img src="../../assets/home/download/app.png" />-->
+          <!--                  <div class="link-desc">扫码进入下载页面</div>-->
+          <!--                  <div class="link">www.leihuo.com</div>-->
+          <!--                </div>-->
+          <!--                <div class="dl-wrapper">-->
+          <!--                  <img src="../../assets/home/download/app.png" />-->
+          <!--                  <div class="link-desc">手机免费下载地址</div>-->
+          <!--                  <div class="link">www.leihuo.com</div>-->
+          <!--                </div>-->
+          <!--              </div>-->
+          <!--            </el-tab-pane>-->
+          <!--            <el-tab-pane key="3" label="体育APP" >-->
+          <!--              <div class="tab-title">体育App下载</div>-->
+          <!--              <div class="tab-desc">-->
+          <!--                引领市场的卓越技术，自主研发了全套终端应用，让您畅享 Web,H5,更有iOS,Android原生APP，让您随时随地，娱乐-->
+          <!--                投注！-->
+          <!--              </div>-->
+          <!--              <div class="download">-->
+          <!--                <div class="qr-wrapper">-->
+          <!--                  <img src="../../assets/home/download/app.png" />-->
+          <!--                  <div class="link-desc">扫码进入下载页面</div>-->
+          <!--                  <div class="link">www.leihuo.com</div>-->
+          <!--                </div>-->
+          <!--                <div class="dl-wrapper">-->
+          <!--                  <img src="../../assets/home/download/app.png" />-->
+          <!--                  <div class="link-desc">手机免费下载地址</div>-->
+          <!--                  <div class="link">www.leihuo.com</div>-->
+          <!--                </div>-->
+          <!--              </div>-->
+          <!--            </el-tab-pane>-->
+          <!-- </el-tabs> -->
         </div>
       </div>
     </div>
@@ -82,12 +100,10 @@ import HomeContentTitle from "@/atoms/HomeContentTitle.vue";
 import { uiStore } from "@/store/ui";
 import VueQRCodeComponent from "vue-qrcode-component";
 
-const activeKey= ref("1");
-const ui= uiStore()
+const activeKey = ref("1");
+const ui = uiStore();
 
-
-onMounted(() => {
-});
+onMounted(() => {});
 </script>
 
 <style lang="scss">
@@ -102,17 +118,17 @@ onMounted(() => {
     justify-content: center;
 
     .left-container {
-      //   width: 55%;
+      width: 50%;
 
       img {
-        width: 35rem;
+        // width: 35rem;
         position: relative;
-        right: 2.5rem;
+        // right: 2.5rem;
       }
     }
 
     .right-container {
-      width: 45%;
+      width: 50%;
 
       .tab-wrapper {
         border-radius: 1.25rem;
@@ -120,26 +136,11 @@ onMounted(() => {
         box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.22);
         padding: 0.5rem;
 
-        .tab {
-          border-radius: 0.8125rem;
+        .dl-tab {
+          margin: 6px;
           border: 1px solid #5c9fff;
+          border-radius: 0.8125rem;
           padding: 1rem;
-
-          .el-tabs__header {
-            border-bottom: unset;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 3.0625rem;
-            background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-            box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
-            padding: 0.25rem 0;
-            color: #468cff;
-            font-family: Microsoft YaHei;
-            font-size: 0.875rem;
-            font-weight: 400;
-            line-height: normal;
-          }
 
           .tab-title {
             color: #7a80a1;
@@ -147,7 +148,7 @@ onMounted(() => {
             font-size: 1.79594rem;
             font-weight: 700;
             line-height: normal;
-            margin: 1rem;
+            margin-bottom: 1rem;
             text-align: center;
           }
 
@@ -165,24 +166,43 @@ onMounted(() => {
             align-items: center;
             justify-content: center;
             gap: 25px;
-            margin: 3.2rem 0 1rem 0;
+            margin: 1rem 0 0.5rem 0;
+
+            .dl-mobile-img {
+              width: 60%;
+            }
+
+            .dl-wrapper {
+              width: 40%;
+            }
+
+            .dl-frame {
+              background-image: url(../../assets/home/download/qr-frame.png);
+              background-position: center center;
+              background-size: 100% 100%;
+              padding: 40px 12px 24px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin-bottom: 6px;
+            }
 
             .qr-wrapper,
             .dl-wrapper {
-              border-radius: 0.875rem;
-              background: #e3f5ff;
-              text-align: center;
-              padding: 0.5rem 1rem;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              gap: 3px;
+              // border-radius: 0.875rem;
+              // background: #e3f5ff;
+              // text-align: center;
+              // padding: 0.5rem 1rem;
+              // display: flex;
+              // flex-direction: column;
+              // align-items: center;
+              // gap: 3px;
 
-              div{
+              div {
                 text-align: center;
               }
 
-              canvas{
+              canvas {
                 text-align: center;
               }
 
@@ -207,6 +227,28 @@ onMounted(() => {
             .qr-wrapper {
             }
             .dl-wrapper {
+            }
+          }
+
+          .tab {
+            border-radius: 0.8125rem;
+            border: 1px solid #5c9fff;
+            padding: 1rem;
+
+            .el-tabs__header {
+              border-bottom: unset;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border-radius: 3.0625rem;
+              background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
+              box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
+              padding: 0.25rem 0;
+              color: #468cff;
+              font-family: Microsoft YaHei;
+              font-size: 0.875rem;
+              font-weight: 400;
+              line-height: normal;
             }
           }
         }

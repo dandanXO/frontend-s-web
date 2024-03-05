@@ -33,8 +33,7 @@
           </div>
         </div>
         <div :class="`hotgame-content-wrapper ${hotgame.isShow ? 'show' : ''}`">
-          <div class="left-container"
-          >
+          <div class="left-container">
             <div class="title-wrapper">
               <Transition :key="transitionDesc" name="fade" enter>
                 <div class="title" v-if="hotgame.currentProvider">
@@ -45,13 +44,13 @@
                   }}
                 </div>
               </Transition>
-                <div class="subtitle">
-                  {{
-                    hotgame.content &&
-                    hotgame.content[hotgame.currentProvider.toLowerCase()] &&
-                    hotgame.content[hotgame.currentProvider.toLowerCase()].subtitle
-                  }}
-                </div>
+              <div class="subtitle">
+                {{
+                  hotgame.content &&
+                  hotgame.content[hotgame.currentProvider.toLowerCase()] &&
+                  hotgame.content[hotgame.currentProvider.toLowerCase()].subtitle
+                }}
+              </div>
               <!-- <div class="subtitle">{{ hotgame.content[hotgame.currentProvider.toLowerCase()] }}</div> -->
             </div>
             <div class="description">
@@ -100,43 +99,53 @@
               </div>
             </div>
             <template v-if="hotgame.currentPlat?.underMaintenance === true ? 'maintenance' : ''">
-              <el-button size="small" class="common-btn game-start-btn btn-maintenance" >
-                <span class="maintenance-state"><img src="../../assets/svg/maintenance-icon.svg" />
-                维护中</span>
+              <el-button size="small" class="common-btn game-start-btn btn-maintenance">
+                <span class="maintenance-state">
+                  <img src="../../assets/svg/maintenance-icon.svg" />
+                  维护中
+                </span>
               </el-button>
             </template>
             <template v-else>
-              <el-button size="small" class="common-btn game-start-btn" @click="onEnterGameClick(hotgame, hotgame.type)">
+              <el-button
+                size="small"
+                class="common-btn game-start-btn"
+                @click="onEnterGameClick(hotgame, hotgame.type)"
+              >
                 {{ hotgame.type !== "slot" ? `进入游戏` : `进入场馆` }}
               </el-button>
             </template>
 
-            <p v-if="hotgame.currentPlat?.underMaintenance === true && hotgame.currentPlat?.maintenanceStartTime && hotgame.currentPlat?.maintenanceEndTime" class="maintenance-p">
-              维护时间: <em>{{ moment(hotgame.currentPlat?.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-              {{ moment(hotgame.currentPlat?.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}</em>
+            <p
+              v-if="
+                hotgame.currentPlat?.underMaintenance === true &&
+                hotgame.currentPlat?.maintenanceStartTime &&
+                hotgame.currentPlat?.maintenanceEndTime
+              "
+              class="maintenance-p"
+            >
+              维护时间:
+              <em>
+                {{ moment(hotgame.currentPlat?.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
+                {{ moment(hotgame.currentPlat?.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
+              </em>
             </p>
-            <p class="maintenance-p" v-else>
-              &nbsp;
-            </p>
-
+            <p class="maintenance-p" v-else>&nbsp;</p>
           </div>
-          <div class="right-container"
-          >
-
+          <div class="right-container">
             <Transition :key="transitionKey" appear>
-
               <img
                 v-if="
-                hotgame.content &&
-                hotgame.content[hotgame.currentProvider] &&
-                hotgame.content[hotgame.currentProvider].charImgPath
-              "
+                  hotgame.content &&
+                  hotgame.content[hotgame.currentProvider] &&
+                  hotgame.content[hotgame.currentProvider].charImgPath
+                "
                 :class="`character-${hotgame.subtitle.toLowerCase()}-${hotgame.currentProvider}`"
                 :src="
-                require(`../../assets/home/hotgame/content/${hotgame.section}/${
-                  hotgame.content[hotgame.currentProvider].charImgPath
-                }/character.png`)
-              "
+                  require(`../../assets/home/hotgame/content/${hotgame.section}/${
+                    hotgame.content[hotgame.currentProvider].charImgPath
+                  }/character.png`)
+                "
               />
             </Transition>
           </div>
@@ -808,6 +817,10 @@ $transition_timer: 0.5s;
 
             &.highlight {
               border-bottom: 0.1rem solid white;
+
+              & ~ .hotgame-text {
+                color: #fff;
+              }
             }
           }
 
@@ -899,36 +912,34 @@ $transition_timer: 0.5s;
               // font-size: 4.24106rem;
               font-size: 2.7106rem;
               word-break: keep-all;
-            background: linear-gradient(180deg, #AE92FF 0%, #56C2FF 100%);
+              background: linear-gradient(180deg, #ae92ff 0%, #56c2ff 100%);
 
-
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
-            filter: drop-shadow(2px 1px #5799e3);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;
+              text-fill-color: transparent;
+              filter: drop-shadow(2px 1px #5799e3);
             }
 
             .subtitle {
               font-size: 2.70775rem;
-            background: linear-gradient(180deg, #AE92FF 0%, #56C2FF 100%);
+              background: linear-gradient(180deg, #ae92ff 0%, #56c2ff 100%);
 
-
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
-            filter: drop-shadow(2px 1px #5799e3);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;
+              text-fill-color: transparent;
+              filter: drop-shadow(2px 1px #5799e3);
             }
           }
 
           .description {
-              min-height: 100px;
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-              align-items: center;
-            }
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          }
           .desc {
             color: #3063ab;
             font-family: Microsoft YaHei;
@@ -1001,12 +1012,12 @@ $transition_timer: 0.5s;
             }
           }
 
-          .maintenance-p{
+          .maintenance-p {
             margin: 0px 3px 0px;
             font-size: 16px;
             color: $font-1;
 
-            em{
+            em {
               font-weight: bold;
               font-style: initial;
             }
@@ -1023,19 +1034,19 @@ $transition_timer: 0.5s;
             font-weight: 400;
             line-height: 2.5rem;
 
-            &.btn-maintenance{
-              background: rgba(0,0,0,0.3);
+            &.btn-maintenance {
+              background: rgba(0, 0, 0, 0.3);
               pointer-events: none;
-              border:none;
-              box-shadow:none;
+              border: none;
+              box-shadow: none;
 
-              .maintenance-state{
-                display:flex;
+              .maintenance-state {
+                display: flex;
                 align-items: center;
                 justify-content: space-between;
-                gap:8px;
+                gap: 8px;
 
-                img{
+                img {
                   width: 22px;
                 }
               }
@@ -1046,7 +1057,7 @@ $transition_timer: 0.5s;
             }
             &:active {
               filter: brightness(1.1);
-              transform: translate(0px ,1px);
+              transform: translate(0px, 1px);
             }
           }
         }
@@ -1092,7 +1103,6 @@ $transition_timer: 0.5s;
           //    font-size: 16px;
           //  }
           //}
-
 
           img {
             position: relative;
@@ -1307,4 +1317,3 @@ $transition_timer: 0.5s;
   transform: translateY(100px);
 }
 </style>
-

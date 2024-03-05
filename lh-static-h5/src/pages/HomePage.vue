@@ -2222,8 +2222,7 @@ export default defineComponent({
         // }
 
         .platform-logo {
-          // margin-top: auto;
-          height: 1.25rem;
+          height: 1.6rem;
 
           img {
             display: block;

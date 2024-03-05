@@ -331,7 +331,7 @@ function getMatchInfo() {
 
       matchInfo.homeTeamIcon = homeTeamIcon;
       matchInfo.awayTeamIcon = awayTeamIcon;
-      matchInfo.matchTime= matchTime;
+      matchInfo.matchTime = matchTime;
 
       matchInfo.questionOne = questionOne;
       matchInfo.questionTwo = questionTwo;
@@ -970,7 +970,6 @@ const getMatchTimeOnly = (matchTime) => {
 }
 
 .dialog-content {
-  background: salmon;
   background-image: url(../../../assets/images/promo/hotpromo/esportquiz/question-dialog-bg.png);
   background-position: center center;
   background-size: cover;
