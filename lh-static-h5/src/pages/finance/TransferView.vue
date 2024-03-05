@@ -18,7 +18,7 @@
 
     <div class="transfer-mid-div">
       <div class="station-notice-wrapper" @click="showAnnouncementDialog">
-        <div class="volume" >
+        <div class="volume">
           <img src="../../assets/images/home/announce-icon.png" />
         </div>
         <marquee-text :repeat="5" :duration="announcementList.length * 10">
@@ -63,13 +63,17 @@
           >
             <template v-slot:selected-item="scope">
               <q-item-section>
-                <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ scope.opt.label }}</q-item-label>
+                <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ scope.opt.label
+                  }}
+                </q-item-label>
               </q-item-section>
             </template>
             <template v-slot:option="scope">
               <q-item v-bind="scope.itemProps">
                 <q-item-section avatar>
-                  <img :src="require(`../../assets/images/home/${scope.opt.type.toLowerCase()}/logo-${scope.opt.code.toLowerCase()}.png`)" :style="scope.opt.type === 'main' ? 'width: 15px; margin: 10px 10px 10px 5px;' : 'width: 30px; margin-top: 10px; margin-bottom: 10px;'">
+                  <img
+                    :src="require(`../../assets/images/home/${scope.opt.type.toLowerCase()}/logo-${scope.opt.code.toLowerCase()}.png`)"
+                    :style="scope?.opt?.type === 'main' ? 'width: 15px; margin: 10px 10px 10px 5px;' : 'width: 30px; margin-top: 10px; margin-bottom: 10px;'">
                   <!-- <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;" :src="imgURL + scope.opt.bankIcon"> -->
                 </q-item-section>
                 <q-item-section>
@@ -93,7 +97,7 @@
             map-options
             @update:model-value="updateTransferDropdown"
           /> -->
-          
+
           <q-select
             class="q-mb-md"
             filled
@@ -108,13 +112,17 @@
           >
             <template v-slot:selected-item="scope">
               <q-item-section>
-                <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ scope.opt.label }}</q-item-label>
+                <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ scope.opt.label
+                  }}
+                </q-item-label>
               </q-item-section>
             </template>
             <template v-slot:option="scope">
               <q-item v-bind="scope.itemProps">
                 <q-item-section avatar>
-                  <img :src="require(`../../assets/images/home/${scope.opt.type.toLowerCase()}/logo-${scope.opt.code.toLowerCase()}.png`)" :style="scope.opt.type === 'main' ? 'width: 15px; margin: 10px 10px 10px 5px;' : 'width: 30px; margin-top: 10px; margin-bottom: 10px;'">
+                  <img
+                    :src="require(`../../assets/images/home/${scope.opt.type.toLowerCase()}/logo-${scope.opt.code.toLowerCase()}.png`)"
+                    :style="scope.opt.type === 'main' ? 'width: 15px; margin: 10px 10px 10px 5px;' : 'width: 30px; margin-top: 10px; margin-bottom: 10px;'">
                   <!-- <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;" :src="imgURL + scope.opt.bankIcon"> -->
                 </q-item-section>
                 <q-item-section>
@@ -238,6 +246,8 @@ const updateTransferDropdown = () => {
     ];
     transferToOpt.value = [];
     platforms.forEach((plat) => {
+      console.log(plat);
+
       var obj = {
         id: plat.id,
         label: plat.name,
@@ -247,28 +257,19 @@ const updateTransferDropdown = () => {
       transferToOpt.value.push(obj);
       transferFromOpt.value.push(obj);
     });
+
+    console.log(transferFromOpt.value);
+
     if (!transferTo.value || transferTo.value === "main") {
       transferTo.value = platforms[0].id;
     }
   }
-  // if (transferFrom.value === 'main') {
-  //   transferToOpt.value = []
-  // } else {
-  //   platforms.forEach(plat => {
-  //     var obj = {
-  //       id: plat.id,
-  //       label: plat.code
-  //     }
-  //     transferFromOpt.value.push(obj)
-  //     transferToOpt.value.push(obj)
-  //   });
-  // }
 };
 const isTransferring = ref(false);
 const isShowAnnouncementDialog = ref(false);
 const showAnnouncementDialog = () => {
   isShowAnnouncementDialog.value = true;
-}
+};
 const submitTransfer = () => {
   amountRef.value.validate();
   if (amountRef.value.hasError) {
@@ -356,38 +357,21 @@ const updateTransferAmt = () => {
   });
 };
 const getPlatList = () => {
-  if (store.memberType === "TEST") {
-    api.get("/session/loggedInPlatform").then((res) => {
-      res.data.forEach((p) => {
-        if (p.walletType !== "SEAMLESS") {
-          platforms.push({
-            id: p.id,
-            code: p.code,
-            name: translateRecord(p.name),
-            amount: 0
-          });
-          getPlatBalances(p.code);
-        }
-      });
-      updateTransferDropdown();
+  api.get("/session/loggedInPlatform").then((res) => {
+    res.data.forEach((p) => {
+      if (p.walletType !== "SEAMLESS") {
+        platforms.push({
+          id: p.id,
+          code: p.code,
+          name: translateRecord(p.name),
+          type: p.gameType,
+          amount: 0
+        });
+        getPlatBalances(p.code);
+      }
     });
-  } else {
-    api.get("/platform").then((res) => {
-      res.data.forEach((p) => {
-        if (p.walletType !== "SEAMLESS") {
-          platforms.push({
-            id: p.id,
-            code: p.code,
-            name: translateRecord(p.name),
-            type: p.gameType,
-            amount: 0
-          });
-          getPlatBalances(p.code);
-        }
-      });
-      updateTransferDropdown();
-    });
-  }
+    updateTransferDropdown();
+  });
 };
 const getPlatBalances = (plat) => {
   const platform = platforms.find((p) => p.code === plat);
