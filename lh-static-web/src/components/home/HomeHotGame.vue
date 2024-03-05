@@ -153,7 +153,7 @@
       </div>
     </div>
   </div>
-  <GameModal ref="platformGame"></GameModal>
+  <GameModal ref="platformGame" @open-login-dialog="openLoginDialog"></GameModal>
 </template>
 
 <script setup>

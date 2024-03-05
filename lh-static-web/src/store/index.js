@@ -44,7 +44,7 @@ export const userStore = defineStore("userStore", {
             this.getBalance();
             this.getMemberInfo();
           } else {
-            ElMessage.error(ret.message)
+            ElMessage.error(ret.message);
             // throw new Error(ret.message);
           }
         })
@@ -66,7 +66,7 @@ export const userStore = defineStore("userStore", {
             this.getBalance();
             this.getMemberInfo();
           } else {
-            ElMessage.error(ret.message)
+            ElMessage.error(ret.message);
             // throw new Error(ret.message);
           }
         })
@@ -91,7 +91,7 @@ export const userStore = defineStore("userStore", {
             this.currentDeposit = ret.data.currentDeposit;
             this.levelUpDeposit = ret.data.levelUpDeposit;
           } else {
-            ElMessage.error(ret.message)
+            ElMessage.error(ret.message);
           }
         });
       }

@@ -173,14 +173,14 @@ export default defineComponent({
       if (!store.token) {
           ElMessageBox.alert('请登录后再操作', '系统提示', {
               // if you want to disable its autofocus
-              // autofocus: false,
+              // autofocus: false,sd
               center: true,
               confirmButtonText: '确认',
               showClose: false,
               buttonSize: 'large'
           }).then(() => {
-            router.push('/login');
-              // store.loginPageVisible = true
+            // router.push('/login');
+              store.loginPageVisible = true
           })
           return
       } else {
