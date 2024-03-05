@@ -41,8 +41,8 @@
       <div>
         <span class="bottom-button" @click="showDrawer">存款</span>
       </div>
-        
-        <span class="copy-button" @click="copyTo" @blur="changeText">{{copyText}}</span>
+
+      <span class="copy-button" @click="copyTo" @blur="changeText">{{ copyText }}</span>
     </div>
     <el-drawer
       :append-to-body="true"
@@ -141,16 +141,16 @@ const showDrawer = () => {
   quickTransferTab.value = false;
   drawerVisible.value = true;
 };
-const copyText = ref('复制网址');
+const copyText = ref("复制网址");
 let intervalId = null;
 const copyTo = () => {
   // copyToClipboard(src.value);
   // copyText.value = '已复制';
   // setInterval({copyText.value = '已复制'}, 1000)
   // copyText.value = '复制网址';
-  
+
   navigator.clipboard.writeText(src.value);
-  copyText.value = '已复制';
+  copyText.value = "已复制";
 
   // Clear previous interval if any
   if (intervalId) {
@@ -159,11 +159,11 @@ const copyTo = () => {
 
   // Set a new interval to change the text back after 5 seconds
   intervalId = setInterval(() => {
-    copyText.value = '复制网址';
+    copyText.value = "复制网址";
     clearInterval(intervalId);
     intervalId = null;
   }, 2000); // 5000 milliseconds = 5 seconds
-}
+};
 
 const onClose = () => {
   drawerVisible.value = false;
@@ -236,7 +236,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
       } else if (
         platformCode === "SGWin" ||
         platformCode === "TCG" ||
-        platformCode === 'PT' ||
+        platformCode === "PT" ||
         (platformCode === "BBINDY" && gameCode === "bbkeno_lobby_pc")
       ) {
         launchSessionGame(platformCode, {
@@ -278,8 +278,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         showClose: false,
         buttonSize: "large"
       }).then(() => {
-        // store.loginPageVisible = true;
-        router.push("/login");
+        store.loginPageVisible = true;
+        // router.push("/login");
+        // emits("open-login-dialog");
       });
     }
   }
@@ -290,6 +291,7 @@ const loadGame = () => {
     logoShow.value = false;
   }
 };
+
 defineExpose({
   open
 });
@@ -446,7 +448,7 @@ defineExpose({
   position: absolute;
   top: 8px;
   right: 50px;
-    gap: 10px;
+  gap: 10px;
   // right: -60px;
   // width: 60px;
   // display: flex;
@@ -457,7 +459,7 @@ defineExpose({
   // background: #d48eff;
   display: flex;
   .bottom-button,
-  .copy-button  {
+  .copy-button {
     display: block;
     font-size: 13px;
     text-align: center;

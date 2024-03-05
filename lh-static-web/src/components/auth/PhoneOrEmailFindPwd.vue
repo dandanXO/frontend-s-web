@@ -9,20 +9,30 @@
 
     <CaptchaVerify :form="forgotPwdForm" :onClickConfirm="submitForm" ref="captchaVerifyRef" :type="props.type" />
 
-    <el-button :loading="loadingBtn" size="large" class="blue-bg primary-btn" @click="submitForm"
-               v-if="!forgotPwdPostVerifyForm.codeId">
+    <el-button
+      :loading="loadingBtn"
+      size="large"
+      class="blue-bg primary-btn"
+      @click="submitForm"
+      v-if="!forgotPwdPostVerifyForm.codeId"
+    >
       提交
     </el-button>
   </el-form>
 
-  <el-form ref="forgotPwdPostVerifyFormRef" :rules="forgotPwdPostVerifyFormRules" :model="forgotPwdPostVerifyForm"
-           label-width="90" size="large" v-if="forgotPwdPostVerifyForm.codeId">
+  <el-form
+    ref="forgotPwdPostVerifyFormRef"
+    :rules="forgotPwdPostVerifyFormRules"
+    :model="forgotPwdPostVerifyForm"
+    label-width="90"
+    size="large"
+    v-if="forgotPwdPostVerifyForm.codeId"
+  >
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
       <el-form-item label="验证码" prop="code">
-        <div style="display:flex;width:100%;">
-          <el-input v-model="forgotPwdPostVerifyForm.code" label="验证码" placeholder="验证码">
-          </el-input>
+        <div style="display: flex; width: 100%">
+          <el-input v-model="forgotPwdPostVerifyForm.code" label="验证码" placeholder="验证码"></el-input>
         </div>
       </el-form-item>
     </div>
@@ -30,8 +40,14 @@
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
       <el-form-item label="密码" prop="password">
-        <el-input class="wTip" v-model="forgotPwdPostVerifyForm.password" placeholder="请输入6-11位字母/数字组合"
-                  type="password" show-password clearable>
+        <el-input
+          class="wTip"
+          v-model="forgotPwdPostVerifyForm.password"
+          placeholder="请输入6-11位字母/数字组合"
+          type="password"
+          show-password
+          clearable
+        >
           <template #append></template>
         </el-input>
       </el-form-item>
@@ -40,8 +56,14 @@
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
       <el-form-item label="确认密码" prop="confirmPwd">
-        <el-input class="half wTip" v-model="forgotPwdPostVerifyForm.confirmPwd" placeholder="请确认密码"
-                  type="password" show-password clearable>
+        <el-input
+          class="half wTip"
+          v-model="forgotPwdPostVerifyForm.confirmPwd"
+          placeholder="请确认密码"
+          type="password"
+          show-password
+          clearable
+        >
           <template #append></template>
         </el-input>
       </el-form-item>
@@ -52,14 +74,13 @@
     </el-button>
   </el-form>
 
-
-  <div style="text-align: center;margin-top: 20px;">
-    <router-link to="/login">返回登入页面</router-link>
+  <div style="text-align: center; margin-top: 20px">
+    <a @click="openLoginDialog">返回登入页面</a>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from "vue";
+import { ref, onMounted, reactive, defineEmits } from "vue";
 import {
   sendForgetPasswordPhone,
   verifyForgetPasswordPhone,
@@ -69,6 +90,12 @@ import {
 import CaptchaVerify from "./CaptchaVerify.vue";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
+
+const emits = defineEmits(["open-login-dialog, close-dialog"]);
+
+const openLoginDialog = () => {
+  emits("open-login-dialog");
+};
 
 const props = defineProps(["type"]);
 
@@ -208,7 +235,7 @@ const forgotPwdPostVerifyForm = reactive({
 });
 
 const captchaVerifyRef = ref();
-const router= useRouter();
+const router = useRouter();
 
 const forgotPwdFormRef = ref();
 const forgotPwdPostVerifyFormRef = ref();
@@ -217,117 +244,134 @@ const loadingBtn = ref(false);
 const submitForm = () => {
   loadingBtn.value = true;
 
-  forgotPwdFormRef.value.validate().then(() => {
-    if (props.type === "phone") {
-      const params = {
-        phone: forgotPwdForm.phone,
-        loginName: forgotPwdForm.loginName,
-        captchaCode: forgotPwdForm.captchaCode,
-        codeId: forgotPwdForm.codeId
-      };
+  forgotPwdFormRef.value
+    .validate()
+    .then(() => {
+      if (props.type === "phone") {
+        const params = {
+          phone: forgotPwdForm.phone,
+          loginName: forgotPwdForm.loginName,
+          captchaCode: forgotPwdForm.captchaCode,
+          codeId: forgotPwdForm.codeId
+        };
 
-      sendForgetPasswordPhone(params).then((res) => {
-        if (res.code === 0) {
-          ElMessage.success("验证码已经发送到手机");
-          forgotPwdPostVerifyForm.codeId = res.data.codeId;
-          captchaVerifyRef.value.closeDialog();
-          captchaVerifyRef.value.initCountdownTimer();
-        } else {
-          ElMessage.error({
-            type: "error",
-            message: res.message
+        sendForgetPasswordPhone(params)
+          .then((res) => {
+            if (res.code === 0) {
+              ElMessage.success("验证码已经发送到手机");
+              forgotPwdPostVerifyForm.codeId = res.data.codeId;
+              captchaVerifyRef.value.closeDialog();
+              captchaVerifyRef.value.initCountdownTimer();
+              // emits("close-dialog");
+            } else {
+              ElMessage.error({
+                type: "error",
+                message: res.message
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            captchaVerifyRef.value.getCode();
           });
-        }
-      }).catch((error) => {
-        console.log(error);
-        captchaVerifyRef.value.getCode();
-      });
-    } else {
-      const params = {
-        email: forgotPwdForm.email,
-        loginName: forgotPwdForm.loginName,
-        captchaCode: forgotPwdForm.captchaCode,
-        codeId: forgotPwdForm.codeId
-      };
+      } else {
+        const params = {
+          email: forgotPwdForm.email,
+          loginName: forgotPwdForm.loginName,
+          captchaCode: forgotPwdForm.captchaCode,
+          codeId: forgotPwdForm.codeId
+        };
 
-      sendForgetPasswordEmail(params).then((res) => {
-        if (res.code === 0) {
-          ElMessage.success("验证码已经发送到邮箱");
-          forgotPwdPostVerifyForm.codeId = res.data.codeId;
-          captchaVerifyRef.value.closeDialog();
-          captchaVerifyRef.value.initCountdownTimer();
-        } else {
-          ElMessage.error({
-            type: "error",
-            message: res.message
+        sendForgetPasswordEmail(params)
+          .then((res) => {
+            if (res.code === 0) {
+              ElMessage.success("验证码已经发送到邮箱");
+              forgotPwdPostVerifyForm.codeId = res.data.codeId;
+              captchaVerifyRef.value.closeDialog();
+              captchaVerifyRef.value.initCountdownTimer();
+              // emits("close-dialog");
+            } else {
+              ElMessage.error({
+                type: "error",
+                message: res.message
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            captchaVerifyRef.value.getCode();
           });
-        }
-      }).catch((error) => {
-        console.log(error);
-        captchaVerifyRef.value.getCode();
-      });
-    }
-
-  }).catch((err) => {
-    console.log(err);
-    captchaVerifyRef.value.getCode();
-  }).finally(() => {
-    loadingBtn.value = false;
-  });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      captchaVerifyRef.value.getCode();
+    })
+    .finally(() => {
+      loadingBtn.value = false;
+    });
 };
 
 const submitPostVerifyForm = () => {
   loadingBtn.value = true;
 
-  forgotPwdPostVerifyFormRef.value.validate().then(() => {
-    if (props.type === "phone") {
-      const params = {
-        phone: forgotPwdForm.phone,
-        code: forgotPwdPostVerifyForm.code,
-        codeId: forgotPwdPostVerifyForm.codeId,
-        newPassword: forgotPwdPostVerifyForm.confirmPwd
-      };
+  forgotPwdPostVerifyFormRef.value
+    .validate()
+    .then(() => {
+      if (props.type === "phone") {
+        const params = {
+          phone: forgotPwdForm.phone,
+          code: forgotPwdPostVerifyForm.code,
+          codeId: forgotPwdPostVerifyForm.codeId,
+          newPassword: forgotPwdPostVerifyForm.confirmPwd
+        };
 
-      verifyForgetPasswordPhone(params).then((res) => {
-        if (res.code === 0) {
-          ElMessage.success("成功");
-          router.push("/login");
-        } else {
-          ElMessage.error({
-            type: "error",
-            message: res.message
+        verifyForgetPasswordPhone(params)
+          .then((res) => {
+            if (res.code === 0) {
+              ElMessage.success("成功");
+              openLoginDialog();
+            } else {
+              ElMessage.error({
+                type: "error",
+                message: res.message
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
           });
-        }
-      }).catch((error) => {
-        console.log(error);
-      });
-    } else {
-      const params = {
-        email: forgotPwdForm.email,
-        code: forgotPwdPostVerifyForm.code,
-        codeId: forgotPwdPostVerifyForm.codeId,
-        newPassword: forgotPwdPostVerifyForm.confirmPwd
-      };
+      } else {
+        const params = {
+          email: forgotPwdForm.email,
+          code: forgotPwdPostVerifyForm.code,
+          codeId: forgotPwdPostVerifyForm.codeId,
+          newPassword: forgotPwdPostVerifyForm.confirmPwd
+        };
 
-      verifyForgetPasswordEmail(params).then((res) => {
-        if (res.code === 0) {
-          ElMessage.success("成功");
-          router.push("/login");
-        } else {
-          ElMessage.error({
-            type: "error",
-            message: res.message
+        verifyForgetPasswordEmail(params)
+          .then((res) => {
+            if (res.code === 0) {
+              ElMessage.success("成功");
+              openLoginDialog();
+            } else {
+              ElMessage.error({
+                type: "error",
+                message: res.message
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
           });
-        }
-      }).catch((error) => {
-        console.log(error);
-      });
-    }
-  }).catch((err) => {
-    console.log(err);
-  }).finally(() => {
-    loadingBtn.value = false;
-  });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      loadingBtn.value = false;
+    });
 };
 </script>
 
@@ -389,4 +433,3 @@ const submitPostVerifyForm = () => {
   }
 }
 </style>
-  

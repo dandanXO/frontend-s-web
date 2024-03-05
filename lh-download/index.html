@@ -26,7 +26,7 @@
 
     <div class="download_bg" style="height: auto">
         <img src="img/download_logo.png" style="width: 73%;max-width:280px;margin-top: 20px;"/>
-        <div class="host_address" id="web_show">leihuo6.com</div>
+        <!--        <div class="host_address" id="web_show">leihuo6.com</div>-->
         <img class="customer_icon" id="dy_customer" src="img/download_customer.png"/>
         <!--<img src="img/download_pic.png" style="width: 90%;margin-top: 10px;"/> -->
         <img src="img/download_text.png" style="width: 90%;max-width:650px;margin-top: 15px;"/>
@@ -184,13 +184,14 @@
         // );
 
         var androidHtml = '';
+        var websiteHtmlAnd = '';
         androidDownload.forEach((list, index) => {
             for (const key in list) {
                 if (list.hasOwnProperty(key)) {
                     const value = list[key];
                     console.log(`Key: ${key}, Value: ${value}`);
-
-                    androidHtml = `
+                    if (key !== '网站入口') {
+                        androidHtml = `
             <div class="download_btn" id="btn_${index}">
             <a
                 id="download_${index}"
@@ -200,10 +201,23 @@
             >
         </div>
 ` + androidHtml;
+                    } else {
+                        websiteHtmlAnd = `
+                        <div class="download_btn" id="btn_${index}">
+            <a
+                id="download_${index}"
+                href="${value}"
+                data-clipboard-text='FGH{"agentCode":null,"regFrom":null,"downloadUrl":"${host}"}'
+            >${key}</a
+            >
+        </div>
+`;
+
+                    }
                 }
             }
 
-            $("#android-lists").html(androidHtml)
+            $("#android-lists").html(androidHtml + websiteHtmlAnd)
         })
 
 
@@ -219,13 +233,15 @@
         }
 
         var iosHTMl = '';
+        var websiteHtml = '';
         iosDownload.forEach((list, index) => {
             for (const key in list) {
                 if (list.hasOwnProperty(key)) {
                     const value = list[key];
                     console.log(`Key: ${key}, Value: ${value}`);
 
-                    iosHTMl = iosHTMl + `
+                    if (key !== '网站入口') {
+                        iosHTMl = iosHTMl + `
             <div class="download_btn" id="btn_${index}">
             <a
                 id="download_${index}"
@@ -235,10 +251,22 @@
             >
         </div>
 `;
+                    } else {
+                        websiteHtml =  `
+                        <div class="download_btn" id="btn_${index}">
+            <a
+                id="download_${index}"
+                href="${value}"
+                data-clipboard-text='FGH{"agentCode":null,"regFrom":null,"downloadUrl":"${host}"}'
+            >${key}</a
+            >
+        </div>
+`;
+                    }
                 }
             }
 
-            $("#ios-lists").html(iosHTMl)
+            $("#ios-lists").html(iosHTMl + websiteHtml)
         })
 
     }

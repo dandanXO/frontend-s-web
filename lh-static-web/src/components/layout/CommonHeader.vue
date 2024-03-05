@@ -4,7 +4,6 @@
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
           <img class="logo" src="../../assets/logo-1.png" />
-
         </router-link>
 
         <div class="navigations">
@@ -74,14 +73,14 @@
         </div>
 
         <div v-if="!store.token" class="right-contents">
-          <router-link to="/login" class="action-btn">
+          <!-- <router-link to="/login" class="action-btn">
             <a class="header-btn btn-color-blue">登录</a>
           </router-link>
           <router-link to="/register" class="action-btn">
             <a class="header-btn btn-color-white">注册</a>
-          </router-link>
-          <!-- <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">登录</a>
-          <a class="header-btn btn-color-white" @click="registerDialogVisible = true">注册</a> -->
+          </router-link> -->
+          <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">登录</a>
+          <a class="header-btn btn-color-white" @click="registerDialogVisible = true">注册</a>
         </div>
 
         <div v-if="store.token" class="profile-actions">
@@ -105,45 +104,42 @@
           </router-link>
         </div>
 
-
         <div class="profile-info" v-if="store.token">
           <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand">
-                <span class="el-dropdown-link">
-                  <div class="profile-img-wrapper">
-                    <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
-                    <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
-                  </div>
-                </span>
+            <span class="el-dropdown-link">
+              <div class="profile-img-wrapper">
+                <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
+                <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
+              </div>
+            </span>
             <template #dropdown>
               <el-dropdown-menu class="profile-info-dropdown-content">
                 <el-dropdown-item command="personal">
-                  <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
                     <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
                     <span>个人信息</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="deposit">
-                  <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
                     <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
                     <span>充值中心</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="transfer">
-                  <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
                     <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
                     <span>快速转账</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="promotion">
-                  <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
                     <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
                     <span>优惠领取</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="logout">
-                  <button class="standard-button btn-color-white" style="color:#468CFF">
-                    退出登录
-                  </button>
+                  <button class="standard-button btn-color-white" style="color: #468cff">退出登录</button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -158,12 +154,12 @@
               </div>
             </div>
             <a @click="refreshBalance" class="details-balance">
-              <div class="flex-wrap" style="display:flex;align-items: center;flex-wrap: nowrap;">
+              <div class="flex-wrap" style="display: flex; align-items: center; flex-wrap: nowrap">
                 <span class="assets-text">总资产:</span>
                 <span class="amount">
-                      <span v-if="isLoadingBalance">加载中...</span>
-                      <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ store.balance }}</span>
-                    </span>
+                  <span v-if="isLoadingBalance">加载中...</span>
+                  <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ store.balance }}</span>
+                </span>
               </div>
               <el-icon>
                 <RiRefreshLine color="#468CFF" />
@@ -190,7 +186,7 @@
       </div>
     </div>
 
-    <el-dialog
+    <!-- <el-dialog
       v-model="loginDialogVisible"
       title="会员登录"
       width="50%"
@@ -288,178 +284,56 @@
           </el-tab-pane>
         </el-tabs>
       </span>
+    </el-dialog> -->
+
+    <el-dialog
+      class="acc-dialog"
+      v-model="loginDialogVisible"
+      width="1280px"
+      align-center
+      style="max-width: 1280px"
+      @close="store.loginPageVisible = false"
+    >
+      <div class="acc-dialog-container">
+        <div class="acc-dialog-left">
+          <div class="acc-dialog-img">
+            <img src="../../assets/home/acc-dialog-img.png" />
+          </div>
+        </div>
+        <div class="acc-dialog-right">
+          <div class="acc-dialog-homelogo">
+            <img src="../../assets/images/home/header-logo.png" width="132" />
+          </div>
+          <div class="acc-dialog-content">
+            <LoginDialog
+              @close-dialog="loginDialogVisible = false"
+              @open-reg-dialog="openRegDialog"
+              @open-forgotpwd-dialog="openForgotpwdDialog"
+            />
+          </div>
+        </div>
+      </div>
     </el-dialog>
 
     <el-dialog
-      class="noPadding register-dialog"
+      class="acc-dialog"
       v-model="registerDialogVisible"
       width="1280px"
       align-center
       style="max-width: 1200px"
       @close="store.regPageVisible = false"
     >
-      <div class="register-container">
-        <div class="registered-left">
-          <div class="title"></div>
-          <ul class="tips">
-            <li>标记有 * 者为必填项目。</li>
-            <li>手机号码为找回密码的重要凭证，请务必填写真实信息。</li>
-            <li>若公司有其他活动会邮件通知您，请您务必填写真实有效的邮箱。"</li>
-          </ul>
+      <div class="acc-dialog-container">
+        <div class="acc-dialog-left">
+          <div class="acc-dialog-img">
+            <img src="../../assets/home/acc-dialog-img.png" />
+          </div>
         </div>
-        <div class="registered-right">
-          <el-form ref="registerRef" :rules="regRules" :model="regForm" label-width="100">
-            <el-row>
-              <el-col>
-                <span class="title">注册账号</span>
-              </el-col>
-            </el-row>
-
-            <el-form-item label="姓名" prop="realName">
-              <el-space>
-                <el-input
-                  class="wTip"
-                  v-model="regForm.realName"
-                  placeholder="输入姓名"
-                  :rules="[
-                    { required: true, message: '请输入姓名' },
-                    {
-                      pattern: '^([\u4e00-\u9fa5]*)$',
-                      message: '请输入中文字符',
-                      trigger: 'change'
-                    }
-                  ]"
-                >
-                  <template #append>范围在2-12位之间, 由中文字符组成</template>
-                </el-input>
-              </el-space>
-            </el-form-item>
-
-            <el-form-item label="用户名" prop="loginName">
-              <el-space>
-                <el-input class="wTip" v-model="regForm.loginName" placeholder="输入用户名">
-                  <template #append>范围在6-12位之间, 由字母和数字组成</template>
-                </el-input>
-              </el-space>
-            </el-form-item>
-            <el-form-item label="密码" prop="password">
-              <el-space>
-                <el-input class="wTip" v-model="regForm.password" placeholder="输入密码" type="password" show-password>
-                  <template #append>密码范围在6-12位之间, 由字母和数字组成</template>
-                </el-input>
-              </el-space>
-              <el-row>
-                <!-- <div v-if="regForm.password" class="password-str-div">
-                  <span
-                    :class="{
-                      'weak-pwd': pwdStrength == 'weak',
-                      'normal-pwd': pwdStrength == 'normal',
-                      'strong-pwd': pwdStrength == 'strong'
-                    }"
-                  >
-                    弱
-                  </span>
-                  <span
-                    :class="{
-                      'normal-pwd': pwdStrength == 'normal',
-                      'strong-pwd': pwdStrength == 'strong'
-                    }"
-                  >
-                    好
-                  </span>
-                  <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">
-                    强
-                  </span>
-                </div> -->
-              </el-row>
-            </el-form-item>
-            <!-- <el-form-item label="密码" prop="password">
-              <el-space>
-                  <el-input class="half" v-model="regForm.password" placeholder="输入密码" type="password"
-                            show-password/>
-                  <el-tooltip content="范围在6-12位之间, 由字母和数字组成" placement="right">
-                    <el-icon :size="10">
-                      <InfoFilled/>
-                    </el-icon>
-                  </el-tooltip>
-                  </el-space>
-            </el-form-item> -->
-            <el-form-item label="确认密码" prop="confirmPwd">
-              <el-space>
-                <el-input
-                  class="half wTip"
-                  v-model="regForm.confirmPwd"
-                  placeholder="输入确认密码"
-                  type="password"
-                  show-password
-                >
-                  <template #append>密码范围在6-12位之间, 由字母和数字组成</template>
-                </el-input>
-              </el-space>
-            </el-form-item>
-            <!-- <el-row>
-              <el-col>
-                <span class="title account">会员资料</span>
-              </el-col>
-            </el-row> -->
-            <!-- <el-form-item label="电话号码" prop="telephone">
-              <el-space>
-
-              <el-input :disabled="disableSendVerificationButton" class="half" v-model="regForm.telephone" placeholder="输入电话号码"/>
-              <el-button :disabled="disableSendVerificationButton" @click="openCaptchaForm('REGISTER')" size="small" class="common-btn">
-                <span v-if="disableSendVerificationButton">已发送（倒数{{ regCountdown }}秒)</span>
-                <span v-else >发送验证码</span>
-              </el-button>
-
-
-            </el-space>
-            </el-form-item>
-            <el-form-item label="手机验证码" prop="smsCode">
-              <el-space>
-                <el-input
-                  class="half"
-                  v-model="regForm.smsCode"
-                  placeholder="输入手机验证码"
-                />
-              </el-space>
-            </el-form-item>
-            <el-form-item label="邮件" prop="email">
-              <el-space>
-                <el-input
-                  class="half"
-                  v-model="regForm.email"
-                  placeholder="输入邮件"
-                />
-              </el-space>
-            </el-form-item> -->
-            <el-form-item label="推荐码" prop="codeAffiliate">
-              <el-space>
-                <el-input
-                  v-if="!hasAffiliate"
-                  class="half"
-                  v-model="regForm.codeAffiliate"
-                  placeholder="若不是合营下会员无需填写输入推荐码"
-                />
-                <el-input
-                  v-else
-                  class="half"
-                  v-model="regForm.codeAffiliate"
-                  placeholder="若不是合营下会员无需填写"
-                  readonly
-                  disabled
-                />
-              </el-space>
-            </el-form-item>
-            <el-form-item label="验证码" prop="captchaCode">
-              <el-space>
-                <el-input v-model="regForm.captchaCode" label="验证码" placeholder="验证码" />
-
-                <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
-              </el-space>
-            </el-form-item>
-          </el-form>
-          <el-button class="common-btn" color="#3bafda" @click="resetRegForm(registerRef)">重新填写</el-button>
-          <el-button class="common-btn" @click="submitRegisterForm(registerRef)" color="#3bafda">确认注册</el-button>
+        <div class="acc-dialog-right">
+          <div class="acc-dialog-homelogo">
+            <img src="../../assets/images/home/header-logo.png" width="132" />
+          </div>
+          <RegisterAccount @close-dialog="registerDialogVisible = false" @open-login-dialog="openLoginDialog" />
         </div>
       </div>
     </el-dialog>
@@ -490,79 +364,29 @@
       </el-form>
     </el-dialog>
 
-    <el-dialog v-model="forgetPassDialogVisible" title="忘记账号" width="50%" align-center style="max-width: 800px">
-      <span>
-        <el-tabs>
-          <!-- <el-tab-pane label="邮箱找回密码">
-              <p>方式：请输入您需找回登陆密码的用户名和预留邮箱地址</p>
-              <el-form ref="loginRef" :rules="loginRules" :model="passForm" label-width="100" label-suffix=":"
-                       style="width: 100%; max-width: 400px; margin: 50px auto;">
-                <el-form-item tabindex="1" label="用户名" prop="loginName">
-                  <el-input v-model="passForm.loginName" placeholder="输入用户名"/>
-                </el-form-item>
-                <el-form-item tabindex="2" label="预留邮箱" prop="email">
-                  <el-input v-model="passForm.email" placeholder="预留邮箱"/>
-                </el-form-item>
-                <el-form-item tabindex="3" label="验证码" prop="captchaCode">
-                  <el-row :gutter="10" style="justify-content: center; align-items: center;">
-                    <el-col :span="12">
-                      <el-input
-                          v-model="passForm.captchaCode"
-                          label="验证码"
-                          placeholder="验证码"
-                          @keyup.enter="submitLogin"
-                      />
-                    </el-col>
-                    <el-col :span="12">
-                     <img style="width: 50%; margin-top: 6px;" :src="verificationImg" @click="getCode"/>
-                    </el-col>
-                  </el-row>
-                </el-form-item><el-button :loading="loadingBtn" size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
-                                          @click="submitLogin">登录</el-button>
-              </el-form>
-            </el-tab-pane> -->
-          <el-tab-pane label="邮箱找回账号">
-            <p>方式：请输入您的注册邮箱</p>
-            <el-form
-              ref="passRef"
-              :rules="forgetPassRules"
-              :model="passForm"
-              label-width="100"
-              label-suffix=":"
-              style="width: 100%; max-width: 400px; margin: 50px auto"
-            >
-              <el-form-item tabindex="1" label="注册邮箱" prop="email">
-                <el-input v-model="passForm.email" placeholder="输入注册邮箱" />
-              </el-form-item>
-              <el-form-item tabindex="2" label="验证码" prop="captchaCode">
-                <el-row :gutter="10" style="justify-content: center; align-items: center">
-                  <el-col :span="12">
-                    <el-input
-                      v-model="passForm.captchaCode"
-                      label="验证码"
-                      placeholder="验证码"
-                      @keyup.enter="submitForgetPass"
-                    />
-                  </el-col>
-                  <el-col :span="12">
-                    <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
-                  </el-col>
-                </el-row>
-              </el-form-item>
-              <el-button
-                :loading="loadingBtn"
-                size="large"
-                color="#3bafda"
-                class="common-btn"
-                style="margin-left: 100px"
-                @click="submitForgetPass"
-              >
-                提交
-              </el-button>
-            </el-form>
-          </el-tab-pane>
-        </el-tabs>
-      </span>
+    <el-dialog
+      class="acc-dialog"
+      v-model="forgetPassDialogVisible"
+      width="1280px"
+      align-center
+      style="max-width: 1200px"
+      @close="store.forgetPassDialogVisible = false"
+    >
+      <div class="acc-dialog-container">
+        <div class="acc-dialog-left">
+          <div class="acc-dialog-img">
+            <img src="../../assets/home/acc-dialog-img.png" />
+          </div>
+        </div>
+        <div class="acc-dialog-right">
+          <div class="acc-dialog-homelogo">
+            <img src="../../assets/images/home/header-logo.png" width="132" />
+          </div>
+          <div class="acc-dialog-content">
+            <ForgotPwdDialog @close-dialog="forgetPassDialogVisible = false" @open-login-dialog="openLoginDialog" />
+          </div>
+        </div>
+      </div>
     </el-dialog>
 
     <el-dialog class="noPadding" v-model="noticeDialogVisible" width="1280px" align-center style="max-width: 600px">
@@ -623,6 +447,9 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import moment from 'moment';
 import {lsGet, lsStore, lsRemove, getTimeout} from '@/utils/utils'
 import { getUnreadTotal } from "@/api/personal/mailbox";
+import LoginDialog from "@/views/LoginDialog.vue";
+import RegisterAccount from "@/components/auth/RegisterAccount.vue";
+import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
 
 export default defineComponent({
   name: "CommonHeader",
@@ -637,7 +464,10 @@ export default defineComponent({
     PromotionMenu,
     AppMenu,
     RiRefreshLine,
-    GameModal
+    GameModal,
+    LoginDialog,
+    ForgotPwdDialog,
+    RegisterAccount
   },
   data: () => ({
     // carousel settings
@@ -1284,16 +1114,16 @@ export default defineComponent({
         getUnreadMail()
       }
 
-      if(store.loginPageVisible) {
-        router.push('/login');
-        return;
-      }
-
-      // if (store.loginPageVisible) {
-      //   loginDialogVisible.value = true
-      // } else {
-      //   loginDialogVisible.value = false
+      // if(store.loginPageVisible) {
+      //   router.push('/login');
+      //   return;
       // }
+
+      if (store.loginPageVisible) {
+        loginDialogVisible.value = true
+      } else {
+        loginDialogVisible.value = false
+      }
 
       // console.log(route);
       // alert(route.name)
@@ -1303,8 +1133,8 @@ export default defineComponent({
 
     watch(() => store.loginPageVisible, () => {
       if (store.loginPageVisible) {
-        // loginDialogVisible.value = true
-        router.push('/login');
+        loginDialogVisible.value = true
+        // router.push('/login');
         return;
       } else {
         loginDialogVisible.value = false
@@ -1538,6 +1368,22 @@ export default defineComponent({
       });
     }
 
+    const openLoginDialog = () => {
+      registerDialogVisible.value = false;
+      forgetPassDialogVisible.value = false;
+      loginDialogVisible.value = true;
+    }
+
+    const openRegDialog = () => {
+      loginDialogVisible.value = false;
+      registerDialogVisible.value = true;
+    }
+
+    const openForgotpwdDialog = () => {
+      loginDialogVisible.value = false;
+      forgetPassDialogVisible.value = true;
+    }
+
     return {
       token,
       el,
@@ -1599,7 +1445,10 @@ export default defineComponent({
       route,
       getUnreadMail,
       vip,
-      handleCommand
+      handleCommand,
+      openLoginDialog,
+      openRegDialog,
+      openForgotpwdDialog
     }
   }
 });
@@ -1970,7 +1819,7 @@ body {
 
             img.hover-icon {
               filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
-              contrast(102%);
+                contrast(102%);
             }
           }
         }
@@ -2505,21 +2354,82 @@ body {
   }
 }
 
-.register-dialog {
+.acc-dialog {
+  &.el-dialog {
+    box-shadow: none;
+    border-radius: 20px;
+    // overflow: hidden;
+
+    .el-dialog__body {
+      padding: 0;
+
+      .acc-dialog-container {
+        display: flex;
+      }
+      .acc-dialog-left {
+        width: calc(100% - 450px);
+        background-image: url(../../assets/home/acc-dialog-bg.png);
+        background-size: 100% 100%;
+        background-position: center center;
+        background-color: transparent;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+        background-color: #ffffff;
+        padding: 8px;
+
+        .acc-dialog-img {
+          margin-top: -50px;
+          margin-left: -140px;
+          margin-right: -70px;
+          img {
+            display: block;
+            width: 100%;
+          }
+        }
+      }
+      .acc-dialog-right {
+        width: 450px;
+        padding: 24px 24px 24px 40px;
+
+        .acc-dialog-content {
+          padding-top: 30px;
+        }
+      }
+    }
+  }
+
   .el-dialog__header .el-dialog__headerbtn {
+    top: 10px;
+    right: 10px;
     .el-dialog {
       &__close {
-        color: #000000;
+        color: #000000 !important;
         opacity: 0.5;
 
         &:hover {
           opacity: 1;
-          color: #000000;
+          color: #000000 !important;
         }
       }
     }
   }
 }
+
+// .register-dialog {
+//   .el-dialog__header .el-dialog__headerbtn {
+//     .el-dialog {
+//       &__close {
+//         color: #000000;
+//         opacity: 0.5;
+
+//         &:hover {
+//           opacity: 1;
+//           color: #000000;
+//         }
+//       }
+//     }
+//   }
+// }
 
 .mailbox-notify {
   position: relative;
