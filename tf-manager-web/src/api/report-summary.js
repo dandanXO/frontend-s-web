@@ -55,6 +55,15 @@ export const getMemberReport = data => {
   )
 }
 
+export const getMemberProfitRanking = data => {
+  return https().request(
+    '/report/getMemberProfitRanking',
+    Method.GET,
+    data,
+    ContentType.form
+  )
+}
+
 export const getExportWithdrawalReviewReport = data => {
   return https().request(
     '/report/requestWithdrawalReviewReportExport',
