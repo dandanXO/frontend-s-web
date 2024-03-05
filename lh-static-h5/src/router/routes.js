@@ -631,6 +631,11 @@ const routes = [
     children: [{ path: "", component: () => import("pages/PrivilegeInvite.vue") }],
     meta: { requiresAuth: true, isApp: true }
   },
+  {
+    path: "/tutorial/usdt",
+    children: [{ path: "", component: () => import("pages/UsdtTutorial.vue") }],
+    meta: { requiresAuth: false, isApp: true }
+  },
   // Always leave this as last one,
   // but you can also remove it
   {

@@ -10,8 +10,8 @@
         <img src="../assets/images/affiliate/official-partner.png" width="256">
       </div>
       <div class="buttons">
-        <a :href="'https://lh1-affiliate.phoicynxeey.com?agent=' + (affCode ? affCode : '')">加入我们</a>
-        <a class="outline" :href="'https://lh1-affiliate.phoicynxeey.com?agent=' + (affCode ? affCode : '')">登录</a>
+        <a :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')">加入我们</a>
+        <a class="outline" :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')">登录</a>
         <a class="outline" @click.stop.prevent="store.openLiveChat()">
           联系我们
         </a>

@@ -45,7 +45,9 @@
                     <a @click="showPromoDetails(promo)">
                       <div>
                         <div class="promo-label">
-                          <div class="promo-ribbon">{{ getPromoLabel(promo.labelType) }}</div>
+                          <div class="promo-ribbon" v-if="promo.labelType !== 2">
+                            {{ getPromoLabel(promo.labelType) }}
+                          </div>
                           <div
                             class="promo-item-date"
                             v-if="parsedParam(promo.param).date"
@@ -74,7 +76,9 @@
                     <a @click="showPromoDetails(promo)">
                       <div>
                         <div class="promo-label">
-                          <div class="promo-ribbon">{{ getPromoLabel(promo.labelType) }}</div>
+                          <div class="promo-ribbon" v-if="promo.labelType !== 2">
+                            {{ getPromoLabel(promo.labelType) }}
+                          </div>
                           <div
                             class="promo-item-date"
                             v-if="parsedParam(promo.param).date"
@@ -108,24 +112,12 @@
           </div>
           <div v-else class="selected-promo">
             <div class="selected-promo-wrapper">
-              <div class="banner-container">
-                <!-- <div
-                    class="promo-bg"
-                    :style="
-                    'background-image: url(' +
-                    imgURL +
-                    (selectedPromo.mobileBannerUrl ? selectedPromo.mobileBannerUrl : selectedPromo.mobileImgUrl) +
-                    ')'
-                  "
-                ></div> -->
-
-                <!-- <div class="promo-bg"> -->
+              <div class="banner-container" v-if="selectedPromo?.mobileBannerUrl">
                 <img
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
                   style="display: block; width: 100%"
                 />
-                <!-- </div> -->
               </div>
               <div class="inner">
                 <div v-if="selectedPromo.hasPromo">
@@ -397,6 +389,8 @@ export default defineComponent({
     };
 
     onActivated(() => {
+      isPromoDetail.value= false;
+      selectedPromo.value= {};
       // if promo name is present, do not show promo list on first load
       if (route.query.name) {
         isPromoDetail.value = true;
@@ -516,9 +510,9 @@ export default defineComponent({
           border-radius: 12px;
 
           .promo-label {
+            height: 24px;
             display: flex;
             align-items: center;
-            gap: 12px;
             position: absolute;
             top: 0;
             left: 0;
@@ -552,6 +546,7 @@ export default defineComponent({
             color: #606479;
             font-size: 0.825rem;
             font-weight: bold;
+            padding-left: 12px;
             // position: absolute;
             // top: 5px;
             // left: 100px;

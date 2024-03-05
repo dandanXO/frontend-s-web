@@ -280,7 +280,7 @@
 import { onMounted, reactive } from 'vue';
 import { useStore } from "@/store";
 import moment from 'moment';
-import { getMemberBetRecords, getPlatformsBySite, getVipName, getTotal } from '../../../api/affiliate-bet-record';
+import { getMemberBetRecords, getPlatformsBySite, getVipName } from '../../../api/affiliate-bet-record';
 import { useI18n } from "vue-i18n";
 import { useRoute } from 'vue-router'
 import emptyComp from "@/components/empty"
@@ -481,10 +481,9 @@ async function loadBetRecords() {
   page.pages = ret.pages;
   page.records = ret.records;
   page.total = ret.total;
-  const { data: total } = await getTotal(store.state.user.id, query);
-  page.totalBet = total.totalBet;
-  page.totalPayout = total.totalPayout;
-  page.totalCompanyProfit = total.totalCompanyProfit;
+  page.totalBet = ret.sums.totalBet;
+  page.totalPayout = ret.sums.totalPayout;
+  page.totalCompanyProfit = ret.sums.totalBet - ret.sums.totalPayout;
   page.loading = false;
 }
 

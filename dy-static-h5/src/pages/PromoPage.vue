@@ -92,7 +92,8 @@
                 :class="{
                   cny2024: selectedPromo.promoCode === 'dy2-cny2024-promo',
                   hongbaoyu: selectedPromo.promoCode === 'hongbaoyu',
-                  cnystepgame: selectedPromo.promoCode === 'dy2-cny-step-game'
+                  cnystepgame: selectedPromo.promoCode === 'dy2-cny-step-game',
+                  cs2: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024'
                 }"
               >
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
@@ -731,6 +732,20 @@ export default defineComponent({
 
         &.cny2024 {
           width: 100%;
+        }
+        &.cs2 {
+          margin: 0px;
+          width: 100%;
+          gap: 0px;
+    padding: 10px;
+            background: url(../assets/images/promotion/hotpromo/cs2/bg.png)no-repeat center center;
+          p {
+            padding: 25px;
+            color: #7f4c00;
+            font-family: Microsoft Yahei UI;
+            max-width: 100%;
+
+          }
         }
 
         img {

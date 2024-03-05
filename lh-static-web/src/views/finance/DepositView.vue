@@ -23,7 +23,7 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .additional-tips {
-  padding: 10px;
+  // padding: 10px;
   text-align: center;
   display: flex;
   justify-content: center;

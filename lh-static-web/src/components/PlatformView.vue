@@ -1,57 +1,53 @@
 <template>
-  <div class="platform-container">
-    <div class="platform-container-inner">
-      <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
-      <template v-for="(item, index) in platformsListDisplay" :key="index">
-        <template v-if="selectedPlat === item.code">
-          <div class="platform-item platform-item--img" data-aos="fade-right" data-aos-duration="1000"
-               :class="item.underMaintenance === true ? 'maintenance' : ''">
+  <div class="platform-section">
 
-            <div class="maintenance-box" v-if="item.underMaintenance === true">
-              <p>维护中</p>
-              <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
-                维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
-              </p>
-              <p class="small-size">请先前往其他场馆娱乐</p>
-            </div>
+    <div class="platform-container"
+      :class="(platformType === 'slot') ? 'slot-container' : ''"
+    >
+      <div class="platform-container-slot" v-if="platformType === 'slot'">
+        <img src="../assets/slot/slot-top-bg.png">
+      </div>
+      <div class="platform-container-inner" v-if="platformType !== 'slot'">
+        <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
+        <template v-for="(item, index) in platformsListDisplay" :key="index">
+          <template v-if="selectedPlat === item.code">
+            <div class="platform-item platform-item--img" data-aos="fade-right" data-aos-duration="1000"
+            >
 
-            <img
-              :src="
+              <img
+                :src="
                 require('../assets/' + platformType + '/' + platformType + '-item-' + item.code.toLowerCase() + '.png')
               "
-            />
-          </div>
-
-          <div class="platform-item"
-               :class="item.underMaintenance === true ? 'maintenance' : ''">
-            <div class="platform-title-wrap" data-aos="fade-left" data-aos-delay="100">
-              <!--              <pre>{{item}}</pre>-->
-              <div class="platform-title">{{ item.cnname ?? item.name }}</div>
-              <div class="platform-subtitle">{{ platformName }}</div>
+              />
             </div>
 
-            <div class="platform-txt-box" data-aos="fade-left" data-aos-delay="200" v-html="item.message"></div>
+            <div class="platform-item">
+              <div class="platform-title-wrap" data-aos="fade-left" data-aos-delay="100">
+                <div class="platform-title">{{ item.cnname ?? item.name }}</div>
+                <div class="platform-subtitle">{{ platformName }}</div>
+              </div>
 
-            <div class="platform-pattern-row" data-aos="fade-left" data-aos-delay="300" v-if="platformPattern">
-              <img :src="require('../assets/' + platformType + '/' + platformType + '-pattern.png')" />
-            </div>
+              <div class="platform-txt-box" data-aos="fade-left" data-aos-delay="200" v-html="item.message"></div>
 
-            <div class="platform-list-box">
-              <!-- <span
-                class="platform-list-item"
-                v-for="(plat, platIndex) in filteredPlatforms"
-                :key="platIndex"
-                @click="clickPlat(plat)"
-                :class="{ active: selectedPlat === plat.code }"
-              > -->
-              <span
-                class="platform-list-item"
-                v-for="(plat, platIndex) in platformsListDisplay"
-                :key="platIndex"
-                @click="clickPlat(plat)"
-                :class="{ active: selectedPlat === plat.code }"
-              >
+              <div class="platform-pattern-row" data-aos="fade-left" data-aos-delay="300" v-if="platformPattern">
+                <img :src="require('../assets/' + platformType + '/' + platformType + '-pattern.png')" />
+              </div>
+
+              <div class="platform-list-box">
+                <!-- <span
+                  class="platform-list-item"
+                  v-for="(plat, platIndex) in filteredPlatforms"
+                  :key="platIndex"
+                  @click="clickPlat(plat)"
+                  :class="{ active: selectedPlat === plat.code }"
+                > -->
+                <span
+                  class="platform-list-item"
+                  v-for="(plat, platIndex) in platformsListDisplay"
+                  :key="platIndex"
+                  @click="clickPlat(plat)"
+                  :class="{ active: selectedPlat === plat.code }"
+                >
                 <div class="list-item-btn">
                   <span>
                     <img
@@ -69,130 +65,147 @@
                 </div>
                 <div class="list-item-txt">{{ plat.alias ?? plat.cnname }}</div>
               </span>
-            </div>
+              </div>
 
-            <!--            data-aos="fade-in"-->
-            <!--            data-aos-delay="300"-->
-            <!--            data-aos-duration="500"-->
-            <div class="platform-play-btn" v-if="platformType !== 'slot'">
-              <div class="btn-blue" @click="openGame(item, item.code, item.gameCode)">进入游戏</div>
+              <!--            data-aos="fade-in"-->
+              <!--            data-aos-delay="300"-->
+              <!--            data-aos-duration="500"-->
+              <div class="platform-play-btn" v-if="platformType !== 'slot'">
+                <div class="btn-blue" @click="openGame(item, item.code, item.gameCode)"
+                     :class="item.underMaintenance === true ? 'btn-maintenance' : ''"
+                >
+                <span class="maintenance-state" v-if="item.underMaintenance === true">
+                  <img src="../assets/svg/maintenance-icon.svg" />
+                  维护中</span>
+                  <span v-else>进入游戏</span>
+                </div>
+
+
+                <p v-if="item.underMaintenance === true && item.maintenanceStartTime && item.maintenanceEndTime"
+                   class="maintenance-p">
+                  维护时间: <em>{{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
+                  {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}</em>
+                </p>
+                <p v-else>
+                  &nbsp;
+                </p>
+
+              </div>
             </div>
-          </div>
+          </template>
         </template>
-      </template>
+      </div>
     </div>
-  </div>
 
-  <div class="margin-center game-container" v-if="platformExpandable">
-    <div class="all-game-container">
-      <div class="plat-options-wrapper">
-        <div class="plat-options-container">
-          <template v-for="(item, index) in platformsListDisplay" :key="index">
-            <!-- <div class="plat-option" @click="switchPlat(item)" :class="{ active: selectedPlat === item.code }"> -->
-            <div class="plat-option" @click="clickPlat(item)" :class="{ active: selectedPlat === item.code }">
-              <img
-                :src="
+    <div class="margin-center game-container" v-if="platformExpandable">
+      <div class="all-game-container">
+        <div class="plat-options-wrapper">
+          <div class="plat-options-container">
+            <template v-for="(item, index) in platformsListDisplay" :key="index">
+              <!-- <div class="plat-option" @click="switchPlat(item)" :class="{ active: selectedPlat === item.code }"> -->
+              <div class="plat-option" @click="clickPlat(item)" :class="{ active: selectedPlat === item.code }">
+                <img
+                  :src="
                   require(`../assets/game/plat-logo-${item.code.toLowerCase()}${
                     selectedPlat !== item.code ? '-blue' : ''
                   }.png`)
                 "
-              />
-            </div>
-          </template>
-        </div>
-      </div>
-
-      <div class="plat-games-container">
-        <div class="grid-items flex-box flex-align-center search-container web-only-box">
-<!--          <el-tabs v-model="gameCat" @tab-click="handleClick" class="game-cat-tabs">-->
-<!--            <el-tab-pane label="全部游戏" name="allGame"></el-tab-pane>-->
-<!--            <el-tab-pane label="热门游戏" name="hotGame"></el-tab-pane>-->
-<!--            <el-tab-pane label="最新游戏" name="newGame"></el-tab-pane>-->
-<!--          </el-tabs>-->
-
-          <el-input
-            class="search-input"
-            v-model="gamePage.searchKey"
-            @input="searchList()"
-            placeholder="输入查找游戏名"
-            clearable
-            @clear="searchList()"
-          >
-            <template #suffix>
-              <el-icon :width="15" @click="searchList()">
-                <Search />
-              </el-icon>
+                />
+              </div>
             </template>
-          </el-input>
-        </div>
-
-        <div class="game-list-wrapper">
-          <div
-            class="game-slot animate__animated animate__fadeInRight"
-            v-for="game in gamePage.gameList"
-            :key="game.id"
-          >
-            <a @click="openGame(game, selectedPlat, game.code)">
-              <div class="slot-img">
-                <el-image :src="game.icon" lazy>
-                  <template #placeholder>
-                    <img :src="game.default" />
-                  </template>
-                  <template #error>
-                    <div class="image-slot">
-                      <img :src="game.default" />
-                    </div>
-                  </template>
-                </el-image>
-              </div>
-
-              <div class="slot-details">
-                <div class="slot-name">
-                  {{ game.name }}
-                </div>
-
-                <div class="slot-fav">
-<!--                  <el-icon>-->
-<!--                    <RiHeartLine />-->
-<!--                  </el-icon>-->
-<!--                  <el-icon>-->
-<!--                    <RiHeartFill />-->
-<!--                  </el-icon>-->
-                </div>
-              </div>
-
-              <!-- <div class="slot-name">
-                <img src="../assets/images/games/play-icon.png" />
-                {{ game.name }}
-
-                <div class="slot-fav">
-                  <el-icon :width="30">
-                    <RiHeartLine />
-                    <RiHeartFill />
-                  </el-icon>
-                </div>
-              </div> -->
-            </a>
           </div>
         </div>
-        <div class="pagination-wrapper">
-          <el-pagination
-            background
-            layout="prev, pager, next"
-            :total="gamePage.total"
-            @current-change="changePage(gamePage.currentPage, gamePage.pageSize)"
-            v-model:current-page="gamePage.currentPage"
-            v-model:pageSize="gamePage.pageSize"
-            default-page-size="30"
-          />
+
+        <div class="plat-games-container">
+          <div class="grid-items flex-box flex-align-center search-container web-only-box">
+            <!--          <el-tabs v-model="gameCat" @tab-click="handleClick" class="game-cat-tabs">-->
+            <!--            <el-tab-pane label="全部游戏" name="allGame"></el-tab-pane>-->
+            <!--            <el-tab-pane label="热门游戏" name="hotGame"></el-tab-pane>-->
+            <!--            <el-tab-pane label="最新游戏" name="newGame"></el-tab-pane>-->
+            <!--          </el-tabs>-->
+
+            <el-input
+              class="search-input"
+              v-model="gamePage.searchKey"
+              @input="searchList()"
+              placeholder="输入查找游戏名"
+              clearable
+              @clear="searchList()"
+            >
+              <template #suffix>
+                <el-icon :width="15" @click="searchList()">
+                  <Search />
+                </el-icon>
+              </template>
+            </el-input>
+          </div>
+
+          <div class="game-list-wrapper">
+            <div
+              class="game-slot animate__animated animate__fadeInRight"
+              v-for="game in gamePage.gameList"
+              :key="game.id"
+            >
+              <a @click="openGame(game, selectedPlat, game.code)">
+                <div class="slot-img">
+                  <el-image :src="game.icon" lazy>
+                    <template #placeholder>
+                      <img :src="game.default" />
+                    </template>
+                    <template #error>
+                      <div class="image-slot">
+                        <img :src="game.default" />
+                      </div>
+                    </template>
+                  </el-image>
+                </div>
+
+                <div class="slot-details">
+                  <div class="slot-name">
+                    {{ game.name }}
+                  </div>
+
+                  <div class="slot-fav">
+                    <!--                  <el-icon>-->
+                    <!--                    <RiHeartLine />-->
+                    <!--                  </el-icon>-->
+                    <!--                  <el-icon>-->
+                    <!--                    <RiHeartFill />-->
+                    <!--                  </el-icon>-->
+                  </div>
+                </div>
+
+                <!-- <div class="slot-name">
+                  <img src="../assets/images/games/play-icon.png" />
+                  {{ game.name }}
+
+                  <div class="slot-fav">
+                    <el-icon :width="30">
+                      <RiHeartLine />
+                      <RiHeartFill />
+                    </el-icon>
+                  </div>
+                </div> -->
+              </a>
+            </div>
+          </div>
+          <div class="pagination-wrapper">
+            <el-pagination
+              background
+              layout="prev, pager, next"
+              :total="gamePage.total"
+              @current-change="changePage(gamePage.currentPage, gamePage.pageSize)"
+              v-model:current-page="gamePage.currentPage"
+              v-model:pageSize="gamePage.pageSize"
+              default-page-size="30"
+            />
+          </div>
         </div>
       </div>
     </div>
+
+    <GameModal ref="platformGame"></GameModal>
   </div>
-
-  <!-- <pre>{{ gamePage.gameList }}</pre> -->
-
-  <GameModal ref="platformGame"></GameModal>
 </template>
 
 <script setup>
@@ -344,9 +357,9 @@ const getPlatGameList = () => {
 
 const searchList = () => {
   // if (gamePage.searchKey) {
-    gamePage.gameList = gameListData.value.filter((game) => {
-      return game.name.toLowerCase().includes(gamePage.searchKey.toLowerCase());
-    });
+  gamePage.gameList = gameListData.value.filter((game) => {
+    return game.name.toLowerCase().includes(gamePage.searchKey.toLowerCase());
+  });
   // }
 };
 const loadGameList = () => {

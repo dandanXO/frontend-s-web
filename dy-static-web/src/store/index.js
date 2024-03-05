@@ -26,7 +26,8 @@ export const userStore = defineStore("userStore", {
       loginPageVisible: false,
       regPageVisible: false,
       unreadTotal: 0,
-      siteId: 6
+      siteId: 6,
+      visitorId: ""
     };
   },
   actions: {

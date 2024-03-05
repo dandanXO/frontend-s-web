@@ -450,9 +450,19 @@
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
+                <template v-if="tbl.dataIndex === 'betTime'" #default="scope">
+                  <div style="display: flex; align-items: center">
+                    <span>{{ getFormatBetTime(scope.row.betTime) }}</span>
+                  </div>
+                </template>
                 <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{ scope.row.recordTime }}</span>
+                  </div>
+                </template>
+                <template v-if="tbl.dataIndex === 'platform'" #default="scope">
+                  <div style="display: flex; align-items: center">
+                    {{ getPlatform(scope.row.platform) }}
                   </div>
                 </template>
                 <template v-if="tbl.dataIndex === 'bet'" #default="scope">
@@ -476,9 +486,9 @@
                     {{ getGameType(scope.row.gameType) }}
                   </div>
                 </template>
-                <template v-if="tbl.dataIndex === 'betStatus'" #default="scope">
+                <template v-if="tbl.dataIndex === 'status'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    {{ getBetStatus(scope.row.betStatus) }}
+                    {{ getBetStatus(scope.row.status) }}
                   </div>
                 </template>
               </el-table-column>
@@ -875,7 +885,7 @@ const tableColumns = {
     },
     {
       title: "投注状态",
-      dataIndex: "betStatus"
+      dataIndex: "status"
     }
   ],
   betRecord: [
@@ -1024,6 +1034,12 @@ export default defineComponent({
           if (recordActive.value === "turnover" || recordActive.value === "gameBetRecord") {
             pagination.pagingState = response.data.pagingState;
           }
+
+          if(recordActive.value === 'gameBetRecord') {
+            totalBetRecord.totalBet = response.data.sums.totalBet;
+            totalBetRecord.totalPayout = response.data.sums.totalPayout;
+          }
+
           const dataSource = dataState[recordActive.value];
           //clear array and then push new record
           dataSource.splice(0);
@@ -1099,20 +1115,20 @@ export default defineComponent({
         platformsList.value = ret;
       });
 
-      const obj = {
-        memberId: searchForm.gameBetRecord.memberId,
-        platform: searchForm.gameBetRecord.platform,
-        startDate: searchForm.gameBetRecord.startDate,
-        endDate: searchForm.gameBetRecord.endDate
-      };
-      gameBetRecordTotal(obj).then((ret) => {
-        if (ret.code === 0) {
-          totalBetRecord.totalBet = ret.data.totalBet;
-          totalBetRecord.totalPayout = ret.data.totalPayout;
-        } else {
-          ElMessage.error(ret.message);
-        }
-      });
+      // const obj = {
+      //   memberId: searchForm.gameBetRecord.memberId,
+      //   platform: searchForm.gameBetRecord.platform,
+      //   startDate: searchForm.gameBetRecord.startDate,
+      //   endDate: searchForm.gameBetRecord.endDate
+      // };
+      // gameBetRecordTotal(obj).then((ret) => {
+      //   if (ret.code === 0) {
+      //     totalBetRecord.totalBet = ret.data.totalBet;
+      //     totalBetRecord.totalPayout = ret.data.totalPayout;
+      //   } else {
+      //     ElMessage.error(ret.message);
+      //   }
+      // });
 
     };
 
@@ -1216,7 +1232,8 @@ export default defineComponent({
 
     const imgURL = process.env.VUE_APP_IMAGE_CDN;
     const getImageLink = (linkId) => {
-      reminderForm.photos = imgURL + "/order/" + store.siteId + "/" + linkId;
+      reminderForm.photos = linkId;
+      // reminderForm.photos = imgURL + "/" + linkId;
     };
 
     const getTurnoverType = (turnoverType) => {
@@ -1298,6 +1315,10 @@ export default defineComponent({
         return transferChangeType;
       }
     };
+
+    const getFormatBetTime = (betTime) => {
+      return moment(betTime).format("YYYY-MM-DD HH:mm:ss");
+    }
 
     const getPlatform = (platformName) => {
       if (!platformName) {
@@ -1563,7 +1584,8 @@ export default defineComponent({
       clearItems,
       formRef,
       getTransferChangeType,
-      getPlatform
+      getPlatform,
+      getFormatBetTime
     };
   }
 });

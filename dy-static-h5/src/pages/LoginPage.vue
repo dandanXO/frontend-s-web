@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <div class="top-image-div">
-      <img src="../assets/login/login-top-cny.png" />
+      <img src="../assets/login/login-top.png" />
     </div>
 
     <div class="login-tab-div">
@@ -179,8 +179,8 @@
               class="q-mt-md"
               label="登录"
               width="100%"
-              color="#ffffff"
-              style="width: 100%; letter-spacing: 2px; background: linear-gradient(180deg, #fd3b2a 0%, #ac260b 100%)"
+              color="primary"
+              style="width: 100%; letter-spacing: 2px"
               size="16px"
               rounded
             />
@@ -259,7 +259,6 @@ import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import RegisterPage from "../pages/RegisterPage.vue";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import qs from "qs";
 
 export default defineComponent({
@@ -333,16 +332,8 @@ export default defineComponent({
     };
 
     const onSubmit = () => {
-      const fpPromise = FingerprintJS.load();
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+        const sidParam = store.visitorId;
         if (loginType.value === false) {
           loginNameRef.value.validate();
           passwordRef.value.validate();
@@ -574,7 +565,7 @@ export default defineComponent({
 
   .top-image-div {
     width: 100%;
-    max-height: 295px;
+    max-height: 205px;
 
     img {
       width: 100%;
@@ -651,8 +642,8 @@ export default defineComponent({
 
   .q-tab--active .q-tab__indicator {
     height: 100%;
-    // background: #0089ED;
-    background: linear-gradient(180deg, #fd3b2a 0%, #ac260b 100%);
+    background: #0089ed;
+    //background: linear-gradient(180deg, #fd3b2a 0%, #ac260b 100%);
     border-radius: 30px;
   }
 

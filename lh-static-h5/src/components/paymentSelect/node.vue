@@ -197,7 +197,7 @@ $node-color: #468cff;
   // display: flex;
   grid-gap: 15px;
   display: grid;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   width: 100%;
 
   .payment-method-item {
@@ -207,7 +207,7 @@ $node-color: #468cff;
     cursor: pointer;
     img {
       max-width: 85px;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
       width: 100%;
       height: auto;
     }
@@ -278,8 +278,8 @@ $node-color: #468cff;
       display: flex;
       justify-content: flex-start;
       align-items: flex-start;
-      gap: 10px;
-      margin: 10px 0px;
+      gap: 0px;
+      margin: 10px 0px 8px;
       padding: 0 0px;
       flex-direction: column;
       .account-title-container {
@@ -426,21 +426,28 @@ $node-color: #468cff;
 }
 
 @media (max-width: 375px) {
-  .node .node-content .node-text .node-txt-img{
+  .node .node-content .node-text .node-txt-img {
     width: 4.5rem;
     height: 4.5rem;
   }
-  .node .node-item .promo img{
+  .node .node-item .promo img {
     max-width: 50px;
     width: 50px;
   }
-  .node .node-item .promo{
+  .node .node-item .promo {
     right: -10px;
     top: -10px;
   }
-  .node .node-content .node-text .node-txt-img img{
+  .node .node-content .node-text .node-txt-img img {
     padding: 5px 10px;
   }
+}
 
+.node-item.payment-method-item {
+  pointer-events: auto;
+}
+
+.node-group {
+  pointer-events: none;
 }
 </style>

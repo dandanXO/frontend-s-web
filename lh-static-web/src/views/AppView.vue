@@ -54,7 +54,6 @@ import VueQRCodeComponent from "vue-qrcode-component";
 import GameModal from "@/components/modal/GameModal";
 import { getAppDownloadUrlFromServer } from "@/api/index/site";
 import aos from "aos";
-// import VueQrious from "vue-qrious";
 
 export default defineComponent({
   components: {
@@ -68,24 +67,24 @@ export default defineComponent({
       {
         code: "H5",
         name: "手机H5网页",
-        link: "https://m.e8386.com",
-        mobile: "https://m.e8386.com"
+        link: window.location.host,
+        mobile: window.location.host,
       },
       {
         code: "QZ",
         name: "全站APP下载",
-        link: "https://m.e8386.com"
+        link: ""
       },
-      {
-        code: "DJ",
-        name: "雷火电竞APP下载",
-        link: "https://m.e8386.com"
-      },
-      {
-        code: "TY",
-        name: "雷火体育APP下载",
-        link: "https://m.e8386.com"
-      }
+      // {
+      //   code: "DJ",
+      //   name: "雷火电竞APP下载",
+      //   link: "https://m.e8386.com"
+      // },
+      // {
+      //   code: "TY",
+      //   name: "雷火体育APP下载",
+      //   link: "https://m.e8386.com"
+      // }
     ]);
     const selectedPlat = ref();
     const clickPlat = (plat) => {
@@ -105,7 +104,12 @@ export default defineComponent({
     const getAppDownloadUrl = () => {
       getAppDownloadUrlFromServer()
         .then((res) => {
-          downloadUrl.value = res;
+          downloadUrl.value = res.downloadPageUrl;
+          platforms.value.forEach((platform) => {
+            if(platform.code=='QZ'){
+              platform.link= downloadUrl.value;
+            }
+          })
         })
         .catch((err) => {
           console.log(err);
@@ -231,11 +235,10 @@ export default defineComponent({
 
       .bottom {
         display: flex;
-        justify-content: space-between;
-        padding: 0px 50px;
+        justify-content: center;
         align-items: flex-end;
-        gap: 20px;
-        padding: 0px 20px;
+        gap: 45px;
+        padding: 0px 20px 20px;
 
         .platform-button-w-qr-code {
           display: flex;

@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-    <img alt="雷火" src="~assets/logo.png" style="width: 200px" />
+    <img alt="雷火" src="~assets/logo.svg" style="width: 200px" />
   </q-page>
 </template>
 

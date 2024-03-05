@@ -115,9 +115,9 @@
               v-for="b in withdrawState.bankCardList"
               :key="b.id"
               :value="b.id"
-              :label="b.bankName + ' - ' + b.cardNumber"
+              :label="b.bankName + ' - ' + '****' + b.cardNumber.slice(-4)"
             >
-              {{ b.bankName }} - {{ b.cardNumber }}
+              {{ b.bankName }} - {{ '****' + b.cardNumber.slice(-4) }}
             </el-option>
           </el-select>
         </el-form-item>
@@ -387,7 +387,7 @@ export default defineComponent({
         } else {
           ElMessage.error({
             type: "error",
-            message: res.message
+            message: response.message
           });
           // message.error(response.message);
         }

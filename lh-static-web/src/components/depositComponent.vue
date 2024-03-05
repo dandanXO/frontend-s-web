@@ -102,7 +102,9 @@
               placeholder="选择优惠"
               @select="checkMinDepositAmt"
               @focus="loadPrivilege(activeMethod)"
+              fit-input-width
               clearable
+              style="width:350px"
             >
               <el-option
                 v-for="p in unselectedPrivileges"
@@ -127,6 +129,13 @@
               USDT</span
             >
           </el-form-item> -->
+
+          <div class="btn-confirm">
+            <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">
+              确定
+            </el-button>
+          </div>
+
           <el-form-item v-if="selectedPayType" class="tip">
             <!-- <template #label></template> -->
             <span class="account-tip-text" style="margin-bottom: 10px; display: block; width: 100%;">
@@ -138,11 +147,13 @@
                 更新个人信息的新帐户可以参与促销活动。
             </div> -->
           </el-form-item>
-          <div class="txt-center">
+
+          <!-- <div class="txt-center">
             <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">
               确定
             </el-button>
-          </div>
+          </div> -->
+
         </el-form>
       </div>
       <el-dialog
@@ -254,7 +265,7 @@ const rules = {
       trigger: "blur"
     },
     {
-      pattern: "^[0-9]*(\\.[0-9]{0,2})?$",
+      pattern: /^[1-9]\d*$/,
       message: "金额应为正数",
       trigger: "change"
     },
@@ -422,6 +433,26 @@ function confirmDeposit() {
         });
       return;
     }
+    if (!store.realName) {
+      ElMessageBox.confirm(
+        "您还未绑定真实姓名，请前往绑定", "系统提示",
+        {
+          showClose: "false",
+          cancelButtonClass: "cancel-btn",
+          confirmButtonText: "确认",
+          cancelButtonText: "取消",
+          type: "warning",
+          draggable: true,
+          buttonSize: "small"
+        }
+      )
+        .then(() => {
+          router.push("/center/personal");
+        })
+        .catch(() => {
+        });
+      return;
+    }
   }
   loadingBtn.value = true;
 
@@ -465,7 +496,9 @@ function confirmDeposit() {
       console.log(err);
       loadingBtn.value = false;
     });
-  });
+  }).catch((vali) => {
+    console.log(vali)
+  })
   setTimeout(() => {
     loadingBtn.value = false;
   },1000)
@@ -881,5 +914,10 @@ onMounted(() => {
     border-color: #dc6666;
     background-color: #d86d6d;
   }
+}
+
+.btn-confirm {
+  margin-left: 90px; 
+  margin-bottom: 10px;
 }
 </style>

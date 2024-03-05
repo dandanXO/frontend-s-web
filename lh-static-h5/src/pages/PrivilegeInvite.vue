@@ -641,6 +641,12 @@ export default defineComponent({
 <style scoped lang="scss">
 $gold: #efcf68;
 
+.title-img {
+  img {
+    width: 100%;
+  }
+}
+
 .white-btn-qr-container {
   display: flex;
   align-items: center;
@@ -804,6 +810,8 @@ $gold: #efcf68;
 .blue-content-table-container {
   margin-top: 20px;
   table {
+    width: 100%;
+    text-align: center;
     tr:first-child td {
       background: #e7f3ff !important;
       color: #424f72 !important;
@@ -845,6 +853,7 @@ $gold: #efcf68;
     margin-top: 30px;
     img {
       display: block;
+      width: 100%;
       // max-width: 300px;
     }
   }
@@ -944,6 +953,8 @@ $gold: #efcf68;
   }
 
   .tab-section {
+    width: calc(100% - 20px);
+    margin: 0 auto;
     // height: fit-content;
     // width: 100%;
     // background-image: url(../assets/images/promo/hotpromo/privilegeinvite/tab-content.png);

@@ -49,6 +49,27 @@
       <el-table-column prop="sequence" :label="t('fields.sequence')" min-width="180" />
       <el-table-column prop="siteName" :label="t('fields.site')" min-width="250" />
       <el-table-column prop="question" :label="t('fields.question')" min-width="250" />
+      <el-table-column prop="isMultiple" :label="t('fields.isMultiple')" min-width="180">
+        <template #default="scope">
+          <el-tag v-if="scope.row.isMultiple" type="success">{{ t('fields.yes') }}</el-tag>
+          <el-tag v-else type="danger">{{ t('fields.no') }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="status"
+        :label="t('fields.status')"
+        width="150"
+        v-if="hasPermission(['sys:questionnaire:update'])"
+      >
+        <template #default="scope">
+          <el-switch
+            v-model="scope.row.status"
+            active-color="#409EFF"
+            inactive-color="#F56C6C"
+            @change="changeQuestionnaireStatus(scope.row.id, scope.row.status)"
+          />
+        </template>
+      </el-table-column>
       <el-table-column
         :label="t('fields.operate')"
         align="right"
@@ -120,6 +141,9 @@
       <el-form-item :label="t('fields.question')" prop="question">
         <el-input v-model="form.question" style="width: 350px;" maxlength="50" />
       </el-form-item>
+      <el-form-item :label="t('fields.isMultiple')" prop="isMultiple">
+        <el-checkbox v-model="form.isMultiple" :true-label="true" :false-label="false" />
+      </el-form-item>
       <el-form-item :label="t('fields.choice')" prop="choice">
         <div v-for="(item, index) in choiceParam" :key="index">
           <span class="param-label">{{ t('fields.choice') }}:</span>
@@ -164,7 +188,10 @@ import { nextTick, onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
-import { getQuestionnaire, getQuestionnaireChoice, createQuestionnaire, updateQuestionnaire, deleteQuestionnaire } from "@/api/questionnaire";
+import {
+  getQuestionnaire, getQuestionnaireChoice, createQuestionnaire,
+  updateQuestionnaire, updateQuestionnaireStatus, deleteQuestionnaire
+} from "@/api/questionnaire";
 import { required } from "@/utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
 
@@ -206,6 +233,7 @@ const form = reactive({
   siteId: null,
   sequence: null,
   question: null,
+  isMultiple: false,
   choice: null
 });
 
@@ -385,6 +413,10 @@ async function removeQuestionnaire(questionnaire) {
     await loadQuestionnaire()
     ElMessage({ message: t('message.deleteSuccess'), type: 'success' })
   })
+}
+
+async function changeQuestionnaireStatus(id, status) {
+  await updateQuestionnaireStatus(id, status)
 }
 
 onMounted(async () => {

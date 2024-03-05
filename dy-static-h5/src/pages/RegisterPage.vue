@@ -251,8 +251,8 @@
         class="q-mt-lg"
         label="注册"
         width="100%"
-        color="#ffffff"
-        style="width: 100%; letter-spacing: 2px; background: linear-gradient(180deg, #fd3b2a 0%, #ac260b 100%)"
+        color="primary"
+        style="width: 100%; letter-spacing: 2px"
         size="16px"
         rounded
       />
@@ -270,7 +270,6 @@ import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 console.log("test")
 export default defineComponent({
   name: "RegisterPage",
@@ -383,16 +382,8 @@ export default defineComponent({
         $q.loading.hide();
       } else {
         var qs = require("qs");
-        const fpPromise = FingerprintJS.load();
+        const sidParam = store.visitorId;
         (async () => {
-          const fp = await fpPromise;
-          const result = await fp.get();
-          const excludes = { value: ["timezone", "timeZoneOffset"] };
-          const allComponents = { ...result.components };
-          excludes.value.forEach((element) => {
-            delete allComponents[element];
-          });
-          const sidParam = FingerprintJS.hashComponents(allComponents);
           regForm.sid = sidParam;
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
           if ("standalone" in window.navigator && window.navigator.standalone) {

@@ -3,7 +3,8 @@
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
-          <img class="logo" src="../../assets/logo.png" />
+          <img class="logo" src="../../assets/logo-1.png" />
+
         </router-link>
 
         <div class="navigations">
@@ -104,72 +105,72 @@
           </router-link>
         </div>
 
-        
-            <div class="profile-info" v-if="store.token">
-              <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand" @visible-change="(isOpen) => isProfileDropDownOpen = isOpen">
+
+        <div class="profile-info" v-if="store.token">
+          <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand">
                 <span class="el-dropdown-link">
                   <div class="profile-img-wrapper">
                     <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
-                    <img class="dropdown-icon" :style="isProfileDropDownOpen ? 'transform:rotate(180deg)' : ''" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
+                    <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
                   </div>
                 </span>
-                <template #dropdown>
-                  <el-dropdown-menu class="profile-info-dropdown-content">
-                    <el-dropdown-item command="personal">
-                      <div style="display: flex; align-items: center; gap: 10px;color: #222;margin: auto;">
-                        <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
-                        <span>个人信息</span>
-                      </div>
-                    </el-dropdown-item>
-                    <el-dropdown-item command="deposit">
-                      <div style="display: flex; align-items: center; gap: 10px;color: #222;margin: auto;">
-                        <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
-                        <span>充值中心</span>
-                      </div>
-                    </el-dropdown-item>
-                    <el-dropdown-item command="transfer">
-                      <div style="display: flex; align-items: center; gap: 10px;color: #222;margin: auto;">
-                        <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
-                        <span>快速转账</span>
-                      </div>
-                    </el-dropdown-item>
-                    <el-dropdown-item command="promotion">
-                      <div style="display: flex; align-items: center; gap: 10px;color: #222;margin: auto;">
-                        <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
-                        <span>优惠领取</span>
-                    </div>
-                    </el-dropdown-item>
-                    <el-dropdown-item command="logout">
-                      <button class="standard-button btn-color-white" style="color:#468CFF">
-                        退出登录
-                      </button>
-                    </el-dropdown-item>
-                  </el-dropdown-menu>
-                </template>
-              </el-dropdown>
-              <div class="profile-details">
-                <div class="name-and-vip-wrapper">
-                  <div class="details-name">
-                    {{ store.nickName }}
+            <template #dropdown>
+              <el-dropdown-menu class="profile-info-dropdown-content">
+                <el-dropdown-item command="personal">
+                  <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                    <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
+                    <span>个人信息</span>
                   </div>
-                  <div class="account-vip-label">
-                    {{ vip }}
+                </el-dropdown-item>
+                <el-dropdown-item command="deposit">
+                  <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                    <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
+                    <span>充值中心</span>
                   </div>
-                </div>
-                <a @click="refreshBalance" class="details-balance">
-                  <div class="flex-wrap" style="display:flex;align-items: center;flex-wrap: nowrap;">
-                    <span class="assets-text">总资产:</span>
-                    <span class="amount">
+                </el-dropdown-item>
+                <el-dropdown-item command="transfer">
+                  <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                    <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
+                    <span>快速转账</span>
+                  </div>
+                </el-dropdown-item>
+                <el-dropdown-item command="promotion">
+                  <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                    <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
+                    <span>优惠领取</span>
+                  </div>
+                </el-dropdown-item>
+                <el-dropdown-item command="logout">
+                  <button class="standard-button btn-color-white" style="color:#468CFF">
+                    退出登录
+                  </button>
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+          <div class="profile-details">
+            <div class="name-and-vip-wrapper">
+              <div class="details-name">
+                {{ store.nickName }}
+              </div>
+              <div class="account-vip-label">
+                {{ vip }}
+              </div>
+            </div>
+            <a @click="refreshBalance" class="details-balance">
+              <div class="flex-wrap" style="display:flex;align-items: center;flex-wrap: nowrap;">
+                <span class="assets-text">总资产:</span>
+                <span class="amount">
                       <span v-if="isLoadingBalance">加载中...</span>
                       <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ store.balance }}</span>
                     </span>
-                  </div>
-                  <el-icon>
-                    <RiRefreshLine color="#468CFF" />
-                  </el-icon>
-                </a>
               </div>
-            </div>
+              <el-icon>
+                <RiRefreshLine color="#468CFF" />
+              </el-icon>
+            </a>
+          </div>
+        </div>
 
         <!-- <div v-if="store.token" class="profile-actions">
           <router-link to="/center/mailbox" class="action-btn-full">
@@ -595,11 +596,11 @@
 <script lang="js">
 
 import "vue3-carousel/dist/carousel.css";
-import { defineComponent, onMounted, ref, reactive, watch, computed, watchEffect } from "vue";
+import {defineComponent, onMounted, ref, reactive, watch, computed} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {userStore} from "@/store/index";
 import {getVerificationCode, register} from "@/api/index/login";
-import { findAccount } from "@/api/index/forgotPwd";
+import { findAccount} from "@/api/index/forgotPwd";
 import {sendSms} from "@/api/personal/personal";
 import {ElMessage} from "element-plus";
 import {
@@ -692,7 +693,6 @@ export default defineComponent({
     const scroll = ref(0);
     const selectedMenu = ref(false);
     const {height} = useElementSize(el);
-    const isProfileDropDownOpen = ref(false);
 
     const vipLevel = computed(() => {
       if (store.vip.toUpperCase() === "NORMAL") {
@@ -1121,8 +1121,7 @@ export default defineComponent({
 
     const onLogout = () => {
       store.memberLogout().then(() => {
-        router.push("/home");
-        // location.reload();
+        location.reload();
       });
     };
     const registerRef = ref([])
@@ -1140,34 +1139,33 @@ export default defineComponent({
           codeId: captchaForm.codeId
         }
         sendSms(smsDetail)
-            .then((response) => {
-              if (response.code == 0) {
-                disableSendVerificationButton.value = true
+          .then((response) => {
+            if (response.code == 0) {
+              disableSendVerificationButton.value = true
 
-                regForm.smsCodeId = response.data.codeId;
+              regForm.smsCodeId = response.data.codeId;
 
-                ElMessage({
-                  type: 'success',
-                  message: '发送手机验证码成功'
-                });
+              ElMessage({
+                type: 'success',
+                message: '发送手机验证码成功'
+              });
 
-                captchaDialogVisible.value = false;
+              captchaDialogVisible.value = false;
 
-                regCountdown.value = registerSendOtpDisabledTimeout;
+              regCountdown.value = registerSendOtpDisabledTimeout;
 
-                const now = new Date();
+              const now = new Date();
 
-                now.setSeconds(now.getSeconds() + registerSendOtpDisabledTimeout);
+              now.setSeconds(now.getSeconds() + registerSendOtpDisabledTimeout);
 
-                lsStore(registerSendOtpDisabledKey, now.getTime());
-                lsStore(registerTelephoneKey, regForm.telephone);
+              lsStore(registerSendOtpDisabledKey, now.getTime());
+              lsStore(registerTelephoneKey, regForm.telephone);
 
-                countdownTimer('REGISTER')
-              } else {
-                ElMessage.error(response.message)
-                getCode();
-              }
-            })
+              countdownTimer('REGISTER')
+            } else {
+              getCode();
+            }
+          })
       } else if (captchaForm.type === 'LOGIN') {
         const smsDetail = {
           telephone: loginForm.phoneNumber,
@@ -1175,22 +1173,21 @@ export default defineComponent({
           codeId: captchaForm.codeId
         }
         sendSms(smsDetail)
-            .then((response) => {
-              if (response.code == 0) {
-                loginForm.smsCodeId = response.data.codeId;
-                ElMessage({
-                  type: 'success',
-                  message: '发送手机验证码成功'
-                });
-                captchaDialogVisible.value = false;
-                getCode();
-                loginCountdown.value = 30;
-                countdownTimer('LOGIN')
-              } else {
-                ElMessage.error(response.message)
-                getCode();
-              }
-            })
+          .then((response) => {
+            if (response.code == 0) {
+              loginForm.smsCodeId = response.data.codeId;
+              ElMessage({
+                type: 'success',
+                message: '发送手机验证码成功'
+              });
+              captchaDialogVisible.value = false;
+              getCode();
+              loginCountdown.value = 30;
+              countdownTimer('LOGIN')
+            } else {
+              getCode();
+            }
+          })
       }
     };
 
@@ -1240,25 +1237,25 @@ export default defineComponent({
             const sidParam = FingerprintJS.hashComponents(allComponents);
             regForm.sid = sidParam;
             register(regForm)
-                .then((response) => {
-                  const regResult = response.code;
-                  if (regResult === 0) {
-                    ElMessage({
-                      type: 'success',
-                      message: '注册成功'
-                    });
-                    store.autoLogin(response.data);
-                    registerDialogVisible.value = false;
-                    store.regPageVisible = false
-                    // loginDialogVisible.value = true;
+              .then((response) => {
+                const regResult = response.code;
+                if (regResult === 0) {
+                  ElMessage({
+                    type: 'success',
+                    message: '注册成功'
+                  });
+                  store.autoLogin(response.data);
+                  registerDialogVisible.value = false;
+                  store.regPageVisible = false
+                  // loginDialogVisible.value = true;
 
-                    sessionStorage.removeItem("REFERRAL_CODE");
-                    // getCode();
-                  } else {
-                    getCode();
-                    // message.error(response.message);
-                  }
-                })
+                  sessionStorage.removeItem("REFERRAL_CODE");
+                  // getCode();
+                } else {
+                  getCode();
+                  // message.error(response.message);
+                }
+              })
           })();
         } else {
           getCode();
@@ -1304,7 +1301,7 @@ export default defineComponent({
 
     });
 
-    watchEffect(() => store.loginPageVisible, () => {
+    watch(() => store.loginPageVisible, () => {
       if (store.loginPageVisible) {
         // loginDialogVisible.value = true
         router.push('/login');
@@ -1315,7 +1312,7 @@ export default defineComponent({
       // Optionally you can set immediate: true config for the watcher to run on init
       // }, { immediate: true });
     });
-    watchEffect(() => store.regPageVisible, () => {
+    watch(() => store.regPageVisible, () => {
       if (store.regPageVisible) {
         // registerDialogVisible.value = true
         router.push('/register');
@@ -1353,8 +1350,6 @@ export default defineComponent({
           regForm.codeId = res.data.id;
           captchaForm.codeId = res.data.id;
           passForm.codeId = res.data.id
-        } else {
-          ElMessage.error(res.message)
         }
       })
     };
@@ -1364,8 +1359,6 @@ export default defineComponent({
         findAccount(passForm).then((res) => {
           if (res.code === 0) {
             ElMessage.success("您的帐号已经发送到注册邮箱");
-          } else {
-            ElMessage.error(res.message)
           }
         })
       });
@@ -1385,31 +1378,31 @@ export default defineComponent({
 
         loginRef.value.validate().then(() => {
           store
-              .memberLogin({
-                loginName: loginForm.loginName,
-                password: loginForm.password,
-                sid: sidParam,
-                captchaCode: loginForm.captchaCode,
-                codeId: loginForm.codeId,
-              })
-              .then(() => {
-                // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
-                if (store.token) {
-                  // router.push(jumpUrl);
-                  loginDialogVisible.value = false;
-                  store.loginPageVisible = false;
+            .memberLogin({
+              loginName: loginForm.loginName,
+              password: loginForm.password,
+              sid: sidParam,
+              captchaCode: loginForm.captchaCode,
+              codeId: loginForm.codeId,
+            })
+            .then(() => {
+              // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
+              if (store.token) {
+                // router.push(jumpUrl);
+                loginDialogVisible.value = false;
+                store.loginPageVisible = false;
 
-                  sessionStorage.removeItem("REFERRAL_CODE");
-                  loginForm.loginName = null
-                  loginForm.password = null
-                  loginForm.captchaCode = null
-                } else {
-                  // loginForm.loginName = null
-                  // loginForm.password = null
-                  // loginForm.captchaCode = null
-                  getCode();
-                }
-              }).catch((error) => {
+                sessionStorage.removeItem("REFERRAL_CODE");
+                loginForm.loginName = null
+                loginForm.password = null
+                loginForm.captchaCode = null
+              } else {
+                // loginForm.loginName = null
+                // loginForm.password = null
+                // loginForm.captchaCode = null
+                getCode();
+              }
+            }).catch((error) => {
             // message.error(error.message);
             console.log(error.message);
             getCode();
@@ -1434,25 +1427,25 @@ export default defineComponent({
 
         mobileLoginRef.value.validate().then(() => {
           store
-              .telephoneLogin({
-                phoneNumber: loginForm.phoneNumber,
-                sid: sidParam,
-                code: loginForm.code,
-                smsCodeId: loginForm.smsCodeId,
-              })
-              .then(() => {
-                // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
-                if (store.token) {
-                  // router.push(jumpUrl);
-                  loginDialogVisible.value = false;
-                  store.loginPageVisible = false;
+            .telephoneLogin({
+              phoneNumber: loginForm.phoneNumber,
+              sid: sidParam,
+              code: loginForm.code,
+              smsCodeId: loginForm.smsCodeId,
+            })
+            .then(() => {
+              // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
+              if (store.token) {
+                // router.push(jumpUrl);
+                loginDialogVisible.value = false;
+                store.loginPageVisible = false;
 
-                  sessionStorage.removeItem("REFERRAL_CODE");
-                } else {
-                  loginForm.phoneNumber = null
-                  loginForm.code = null
-                }
-              }).catch((error) => {
+                sessionStorage.removeItem("REFERRAL_CODE");
+              } else {
+                loginForm.phoneNumber = null
+                loginForm.code = null
+              }
+            }).catch((error) => {
             // message.error(error.message);
             console.log(error.message);
           });
@@ -1490,47 +1483,47 @@ export default defineComponent({
       return 8;
     }
 
-    // watch(
-    //     () => regForm.password,
-        // () => {
-        //   pwdStrength.value = "";
+    watch(
+      () => regForm.password,
+      // () => {
+      //   pwdStrength.value = "";
 
-        //   var pwd = regForm.password;
-        //   var result = 0;
-        //   for (var i = 0, len = pwd.length; i < len; ++i) {
-        //     result |= charType(pwd.charCodeAt(i));
-        //   }
+      //   var pwd = regForm.password;
+      //   var result = 0;
+      //   for (var i = 0, len = pwd.length; i < len; ++i) {
+      //     result |= charType(pwd.charCodeAt(i));
+      //   }
 
-        //   var level = 0;
-        //   for (i = 0; i <= 4; i++) {
-        //     if (result & 1) {
-        //       level++;
-        //     }
-        //     result = result >>> 1;
-        //   }
+      //   var level = 0;
+      //   for (i = 0; i <= 4; i++) {
+      //     if (result & 1) {
+      //       level++;
+      //     }
+      //     result = result >>> 1;
+      //   }
 
-        //   // console.log(level);
+      //   // console.log(level);
 
-        //   if (pwd.length >= 6) {
-        //     switch (level) {
-        //       case 1:
-        //         pwdStrength.value = "weak";
-        //         break;
-        //       case 2:
-        //         pwdStrength.value = "normal";
-        //         break;
-        //       case 3:
-        //       case 4:
-        //         pwdStrength.value = "strong";
-        //         break;
-        //     }
-        //   } else {
-        //     pwdStrength.value = "weak";
-        //   }
+      //   if (pwd.length >= 6) {
+      //     switch (level) {
+      //       case 1:
+      //         pwdStrength.value = "weak";
+      //         break;
+      //       case 2:
+      //         pwdStrength.value = "normal";
+      //         break;
+      //       case 3:
+      //       case 4:
+      //         pwdStrength.value = "strong";
+      //         break;
+      //     }
+      //   } else {
+      //     pwdStrength.value = "weak";
+      //   }
 
-        //   // console.log(pwdStrength.value);
-        // },
-    // );
+      //   // console.log(pwdStrength.value);
+      // },
+    );
     const todayDate = () => {
       return 'GTM+8 ' + moment().utcOffset('+08:00').format('M/D/YYYY, h:mm:ss A ') + moment(new Date()).locale('zh-cn').format('dddd');
     }
@@ -1539,8 +1532,6 @@ export default defineComponent({
       getUnreadTotal().then((response) => {
         if (response.code === 0) {
           store.unreadTotal= response.data;
-        } else {
-          ElMessage.error(response.message)
         }
       }).catch((error) => {
         // console.log("error===", error)
@@ -1608,8 +1599,7 @@ export default defineComponent({
       route,
       getUnreadMail,
       vip,
-      handleCommand,
-      isProfileDropDownOpen
+      handleCommand
     }
   }
 });
@@ -1906,7 +1896,7 @@ body {
       }
 
       .logo {
-        height: 55px;
+        height: 70px;
         //width: 102px;
 
         img {
@@ -1980,7 +1970,7 @@ body {
 
             img.hover-icon {
               filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
-                contrast(102%);
+              contrast(102%);
             }
           }
         }

@@ -74,9 +74,14 @@ export default defineComponent({
 
 <style lang="scss">
 .account-container {
+  background-image: url("../../assets/images/home/main-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: top center;
   font-size: 14px;
   padding: 20px;
-  background: #f4f8f9;
+  // background: #f4f8f9;
+  //background: #ffffff;
   display: flex;
   justify-content: center;
   align-items: flex-start;

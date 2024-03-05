@@ -14,7 +14,7 @@
           <el-option
             v-for="item in queryValueList.list"
             :key="item.key"
-            :label="item.name"
+            :label="t('fields.' + item.name)"
             :value="item.value"
           />
         </el-select>
@@ -192,14 +192,14 @@ const props = defineProps({
 
 const queryValueList = reactive({
   list: [
-    { key: 1, name: 'Last Login IP', value: 'riskInfoIpLogin' },
-    { key: 2, name: 'Registration IP', value: 'riskInfoIpRegistration' },
-    { key: 3, name: 'Real Name', value: 'riskInfoRealName' },
-    { key: 4, name: 'Email', value: 'riskInfoEmail' },
-    { key: 5, name: 'Telephone', value: 'riskInfoTelephone' },
-    { key: 6, name: 'Password', value: 'riskInfoPassword' },
-    { key: 7, name: 'Bank Card', value: 'riskInfoBankCard' },
-    { key: 8, name: 'SID', value: 'riskInfoSid' }
+    { key: 1, name: 'lastLoginIp', value: 'riskInfoIpLogin' },
+    { key: 2, name: 'registerIp', value: 'riskInfoIpRegistration' },
+    { key: 3, name: 'realName', value: 'riskInfoRealName' },
+    { key: 4, name: 'email', value: 'riskInfoEmail' },
+    { key: 5, name: 'telephone', value: 'riskInfoTelephone' },
+    { key: 6, name: 'password', value: 'riskInfoPassword' },
+    { key: 7, name: 'bankCard', value: 'riskInfoBankCard' },
+    { key: 8, name: 'sid', value: 'riskInfoSid' }
   ]
 })
 

@@ -235,12 +235,7 @@ export default defineComponent({
           });
       } else {
         api
-          .post(
-            "/session/inbox/readAll",
-            qs.stringify({
-              type: type
-            })
-          )
+          .post("/session/inbox/readAll")
           .then((res) => {
             if (res.code === 0) {
               $q.notify({
@@ -249,12 +244,13 @@ export default defineComponent({
                 position: "top",
                 icon: "check_circle_outline"
               });
+
               // Update the readTime property of all messages
               const currentTime = Date.now();
               truncatedList.value.forEach((item) => {
-                if (item.type === type) {
-                  item.readTime = currentTime; // Set readTime to current time for messages of the specified type
-                }
+                // if (item.type === type) {
+                item.readTime = currentTime; // Set readTime to current time for messages of the specified type
+                // }
               });
 
               allowSelectMultiple.value = false;
@@ -352,12 +348,7 @@ export default defineComponent({
           });
       } else {
         api
-          .post(
-            "/session/inbox/deleteAll",
-            qs.stringify({
-              type: msgType.value
-            })
-          )
+          .post("/session/inbox/deleteAll")
           .then((res) => {
             isDeleteMailModal.value = false;
             truncatedList.value = truncatedList.value.filter((item) => item.type !== msgType.value);
@@ -369,6 +360,7 @@ export default defineComponent({
                 icon: "check_circle_outline"
               });
               onLoad();
+              truncatedList.value = [];
               selectedMailIds.value = {};
             }
           })

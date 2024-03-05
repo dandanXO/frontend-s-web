@@ -115,28 +115,24 @@
             />
           </el-select>
         </el-form-item>
-        <el-row>
-          <el-col>
-            <el-form-item :label="t('fields.startTime')" prop="startTime">
-              <el-date-picker
-                type="date"
-                value-format="YYYY-MM-DD"
-                v-model="form.startTime"
-                style="width: 145px"
-                :disabled-date="disabledStartDate"
-              />
-            </el-form-item>
-            <el-form-item :label="t('fields.endTime')" prop="endTime">
-              <el-date-picker
-                type="date"
-                value-format="YYYY-MM-DD"
-                v-model="form.endTime"
-                style="width: 145px"
-                :disabled-date="disabledEndDate"
-              />
-            </el-form-item>
-          </el-col>
-        </el-row>
+        <el-form-item :label="t('fields.startTime')" prop="startTime">
+          <el-date-picker
+            type="datetime"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            v-model="form.startTime"
+            style="width: 450px"
+            :disabled-date="disabledStartDate"
+          />
+        </el-form-item>
+        <el-form-item :label="t('fields.endTime')" prop="endTime">
+          <el-date-picker
+            type="datetime"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            v-model="form.endTime"
+            style="width: 450px"
+            :disabled-date="disabledEndDate"
+          />
+        </el-form-item>
         <el-form-item :label="t('fields.frequency')" prop="frequency">
           <el-select
             v-model="form.frequency"
@@ -586,7 +582,7 @@ function disabledStartDate(time) {
     var date = new Date(changedDate)
     return (
       time.getTime() <= moment(Date.now()).subtract(1, 'days') ||
-      time.getTime() >= moment(date).subtract(1, 'days')
+      time.getTime() >= moment(date)
     )
   }
   return time.getTime() <= moment(Date.now()).subtract(1, 'days')
@@ -718,9 +714,7 @@ async function showEdit(privilegeInfo) {
   await nextTick(() => {
     for (const key in privilegeInfo) {
       if (Object.keys(form).find(k => k === key)) {
-        if (key === 'startTime' || key === 'endTime') {
-          form[key] = String(privilegeInfo[key]).slice(0, 10)
-        } else if (
+        if (
           privilegeInfo.bonusType === 'RATIO' &&
           key === 'bonusAmount'
         ) {

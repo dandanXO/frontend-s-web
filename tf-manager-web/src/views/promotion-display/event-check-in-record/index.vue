@@ -105,12 +105,13 @@
 </template>
 
 <script setup>
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
 import { listMemberCheckInRecord } from '../../../api/privi-member-check-in-record'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
 import { getShortcuts } from '@/utils/datetime'
+import { getSiteListSimple } from '../../../api/site'
 
 const { t } = useI18n()
 const shortcuts = getShortcuts(t)
@@ -119,6 +120,11 @@ const startDate = new Date()
 startDate.setDate(startDate.getDate() - 2)
 const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
+const site = ref(null)
+
+const sites = reactive({
+  list: [],
+})
 
 const page = reactive({
   pages: 0,
@@ -135,7 +141,7 @@ const request = reactive({
   size: 20,
   current: 1,
   checkInDate: [defaultStartDate, defaultEndDate],
-  siteId: 2,
+  siteId: null,
   loginName: null,
 })
 
@@ -155,7 +161,7 @@ function disabledDate(time) {
 
 function resetQuery() {
   request.checkInDate = [defaultStartDate, defaultEndDate]
-  request.siteId = 2
+  request.siteId = site.value ? site.value.id : null
   request.loginName = null
 }
 
@@ -187,7 +193,15 @@ async function loadRecord() {
   page.loading = false
 }
 
+async function loadSites() {
+  const { data: ret } = await getSiteListSimple()
+  sites.list = ret
+}
+
 onMounted(async () => {
+  await loadSites()
+  site.value = sites.list.find(s => s.siteCode === 'DY2')
+  request.siteId = site.value.id
   await loadRecord()
 })
 </script>

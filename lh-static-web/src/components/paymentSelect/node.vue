@@ -190,7 +190,7 @@ $node-color: #4873f1;
   // grid-gap: 20px;
   // margin-top: 10px;
   display: flex;
-  grid-gap: 20px;
+  column-gap: 20px;
   // margin-top: 20px;
   flex-wrap: wrap;
   // padding-bottom: 20px;
@@ -316,7 +316,7 @@ $node-color: #4873f1;
     }
   }
   .node-content {
-    gap: 15px;
+    // gap: 15px;
     .payment-method-item {
       text-align: center;
       padding: 10px 20px 15px;

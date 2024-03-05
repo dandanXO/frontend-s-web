@@ -46,7 +46,13 @@
 
     <div v-else class="selected-promo">
       <div class="selected-promo-wrapper">
-        <div class="banner-container" v-if="selectedPromo.promoCode !== 'dy2-cny-step-game'">
+        <div
+          class="banner-container"
+          v-if="selectedPromo.promoCode !== 'dy2-cny-step-game'"
+          :class="{
+            isCSBanner: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024'
+          }"
+        >
           <div
             class="promo-bg isDesktop"
             :style="
@@ -68,10 +74,11 @@
         </div>
         <div
           class="inner"
-          :class="
-            (selectedPromo.promoCode === 'dy2-cny2024-promo' || selectedPromo.promoCode === 'dy2-cny-step-game') &&
-            'fullwidth'
-          "
+          :class="{
+            isCS: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024',
+            fullwidth:
+              selectedPromo.promoCode === 'dy2-cny2024-promo' || selectedPromo.promoCode === 'dy2-cny-step-game'
+          }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
             <HotPromotion :list="selectedPromo" />
@@ -87,7 +94,7 @@
               slot: selectedPromo.promoType.toLowerCase() === 'slot game'
             }"
           >
-            <div v-html="selectedPromo.pageContent"></div>
+            <div :class="{ isSpecial: !isSpecialPromo }" v-html="selectedPromo.pageContent"></div>
           </div>
         </div>
       </div>
@@ -148,8 +155,8 @@ export default defineComponent({
         }
       });
     };
+    const isSpecialPromo = ref(false)
     const showPromoDetails = (promo) => {
-
       if (!store.token) {
         ElMessageBox.alert("请登录后再操作", "系统提示", {
           // if you want to disable its autofocus
@@ -170,6 +177,12 @@ export default defineComponent({
         } else if (promo.redirectUrl.includes("hongbaoyu")) {
           router.push("/privilege/hongbaoyu");
         }else {
+          console.log(promo)
+          if (promo.redirectUrl === 'dy2-cs2-copenhagen-major-2024') {
+            isSpecialPromo.value = true;
+          } else {
+            isSpecialPromo.value = false;
+          }
           router.push({ name: "promotion", query: { name: promo.redirectUrl } });
           isPromoDetail.value = true;
           selectedPromo.value = promo;
@@ -258,16 +271,14 @@ export default defineComponent({
   }
   // background: #090b19;
   .all-promotions {
-    background-image: url("../assets/images/promotion/dy-banner.png");
-    //background-image: url("../assets/promo/dy-banner.jpg");
+    background-image: url(../assets/promo/bg-top.jpg);
     background-repeat: no-repeat;
     background-position: top center;
     background-size: contain;
     min-height: 40vh;
     padding: 50px;
     position: relative;
-    //padding-top: 370px;
-    padding-top: 500px;
+    padding-top: 370px;
     background-color: #f0f1f6;
 
     margin: 0 auto;
@@ -586,6 +597,14 @@ export default defineComponent({
         max-width: 1920px;
         margin: 0 auto;
 
+        &.isCSBanner {
+          min-height: 600px;
+
+          .promo-bg {
+            min-height: 600px !important;
+          }
+        }
+
         .promo-bg {
           background-size: cover;
           background-repeat: no-repeat;
@@ -618,6 +637,26 @@ export default defineComponent({
 
           .promo-view-container {
             display: none;
+          }
+        }
+        &.isCS {
+          padding: 30px 0;
+          margin: 0 auto;
+          max-width: 1920px;
+          background: url(../assets/images/promotion/hotpromo/cs2/bg.png);
+          width: 100%;
+          background-size: cover;
+          position: relative;
+          &:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: -10px;
+            background: url(../assets/images/promotion/hotpromo/cs2/bottombg.png) no-repeat center center;
+            width: 180px;
+            height: 340px;
+            background-size: cover;
+            z-index: -1;
           }
         }
 
@@ -667,6 +706,9 @@ export default defineComponent({
             color: #ffd800;
             margin: 30px auto 50px;
             text-align: center;
+          }
+          .isSpecial {
+            color: #7f4c00;
           }
         }
       }
