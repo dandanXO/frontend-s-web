@@ -135,7 +135,7 @@ const submitLogin = () => {
             codeId: loginForm.codeId
           })
           .then(() => {
-            const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
+            const jumpUrl = route.query.redirect ? route.query.redirect.toString() : route.path;
             if (store.token) {
               router.push(jumpUrl);
 

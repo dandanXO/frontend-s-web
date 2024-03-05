@@ -262,7 +262,7 @@ const submitForm = () => {
               forgotPwdPostVerifyForm.codeId = res.data.codeId;
               captchaVerifyRef.value.closeDialog();
               captchaVerifyRef.value.initCountdownTimer();
-              emits("close-dialog");
+              // emits("close-dialog");
             } else {
               ElMessage.error({
                 type: "error",
@@ -289,7 +289,7 @@ const submitForm = () => {
               forgotPwdPostVerifyForm.codeId = res.data.codeId;
               captchaVerifyRef.value.closeDialog();
               captchaVerifyRef.value.initCountdownTimer();
-              emits("close-dialog");
+              // emits("close-dialog");
             } else {
               ElMessage.error({
                 type: "error",
