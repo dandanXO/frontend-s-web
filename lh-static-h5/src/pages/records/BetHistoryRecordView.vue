@@ -54,7 +54,7 @@
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
               <q-date v-model="startDate" mask="YYYY-MM-DD" @update:model-value="searchRecord">
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="white" flat />
+                  <q-btn v-close-popup label="关闭" color="primary" flat />
                 </div>
               </q-date>
             </q-popup-proxy>
@@ -68,7 +68,7 @@
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
               <q-date v-model="endDate" mask="YYYY-MM-DD" @update:model-value="searchRecord">
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="white" flat />
+                  <q-btn v-close-popup label="关闭" color="primary" flat />
                 </div>
               </q-date>
             </q-popup-proxy>

@@ -94,7 +94,7 @@
                           >
                             <!-- <q-date v-model="query.recordTime" @update:model-value="v-close-popup" > -->
                             <div class="row items-center justify-end">
-                              <q-btn v-close-popup label="Close" color="primary" flat></q-btn>
+                              <q-btn v-close-popup label="关闭" color="primary" flat></q-btn>
                             </div>
                           </q-date>
                         </q-popup-proxy>

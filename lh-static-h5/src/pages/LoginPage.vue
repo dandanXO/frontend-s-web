@@ -401,7 +401,6 @@ export default defineComponent({
               })
               .then(() => {
                 $q.loading.hide();
-                getCode();
                 sessionStorage.removeItem("REFERRAL_CODE");
 
                 if (isCheckRmb.value) {
@@ -442,7 +441,7 @@ export default defineComponent({
               message: '请验证手机码',
               icon: "report_problem"
             });
-            return 
+            return
           }
           $q.loading.show({
             message: "登录中"
@@ -494,9 +493,6 @@ export default defineComponent({
     });
     onActivated(() => {
       getCode();
-      setTimeout(() => {
-        getCode();
-      }, 10000);
     });
 
     return {
