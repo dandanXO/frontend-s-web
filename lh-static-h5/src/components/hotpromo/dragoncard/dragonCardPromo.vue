@@ -10,49 +10,49 @@
         已有{{ cardInfo.cardDetail.setting.cardCount }}人集齐,{{ cardInfo.cardDetail.setting.openStr }}开奖
       </div>
       <div class="text-center">
-        <div class="huka-btn huka-take-btn waves-effect" @click="getNewTigerCard">领取龙卡</div>
+        <div class="longka-btn longka-take-btn waves-effect" @click="getNewTigerCard">领取龙卡</div>
       </div>
       <div v-if="cardInfo.cardDetail.leftCount > 0" class="redeem-tips">
         剩下 {{ cardInfo.cardDetail.leftCount }} 次机会领取
       </div>
 
       <div class="content">
-        <div class="huka-wrap">
-          <div class="huka-title">
-            <img src="../../../assets/images/promo/hotpromo/dragoncard/my_huka.png" alt="" />
+        <div class="longka-wrap">
+          <div class="longka-title">
+            <img src="../../../assets/images/promo/hotpromo/dragoncard/my_longka.png" alt="" />
           </div>
-          <div class="huka-container">
-            <div class="huka-list">
+          <div class="longka-container">
+            <div class="longka-list">
               <div
-                v-for="(huka, i) in hukaList"
+                v-for="(longka, i) in longkaList"
                 :key="i"
-                :class="{ 'huka-selected': isSelected === huka.code }"
-                class="huka"
-                @click="selectHuka(huka)"
+                :class="{ 'longka-selected': isSelected === longka.code }"
+                class="longka"
+                @click="selectlongka(longka)"
               >
-                <img :src="require(`../../../assets/images/promo/hotpromo/dragoncard/${huka.image}.png`)" alt="" />
-                <div class="huka-own-count">
-                  {{ cardInfo.cardDetail[huka.code] }}
+                <img :src="require(`../../../assets/images/promo/hotpromo/dragoncard/${longka.image}.png`)" alt="" />
+                <div class="longka-own-count">
+                  {{ cardInfo.cardDetail[longka.code] }}
                 </div>
               </div>
             </div>
-            <div class="huka-gold">
+            <div class="longka-gold">
               <div class="goldhu" style="position: relative">
                 <img src="../../../assets/images/promo/hotpromo/dragoncard/bonus.png" alt="" />
-                <div class="huka-own-count" style="right: 4px; top: 8px">
+                <div class="longka-own-count" style="right: 4px; top: 8px">
                   {{ cardInfo.cardDetail.goldhu }}
                 </div>
               </div>
             </div>
           </div>
-          <div class="huka-footer">
-            <div class="huka-btn waves-effect give-btn" @click="isGiftModal = true">赠送龙卡</div>
-            <div class="huka-btn waves-effect combo-btn" @click="compoundCard">合成大奖卡</div>
+          <div class="longka-footer">
+            <div class="longka-btn waves-effect give-btn" @click="isGiftModal = true">赠送龙卡</div>
+            <div class="longka-btn waves-effect combo-btn" @click="compoundCard">合成大奖卡</div>
           </div>
         </div>
-        <div class="huka-ranking-wrap">
-          <div class="huka-ranking-title">
-            <img src="../../../assets/images/promo/hotpromo/dragoncard/huka_ranking.png" alt="" />
+        <div class="longka-ranking-wrap">
+          <div class="longka-ranking-title">
+            <img src="../../../assets/images/promo/hotpromo/dragoncard/longka_ranking.png" alt="" />
           </div>
 
           <q-table :loading="rankingPage.loading" :columns="columns" :rows="rankingRecord()" square></q-table>
@@ -110,7 +110,7 @@
             class="q-mt-md"
             label="请选择龙卡"
             filled
-            :options="hukaList"
+            :options="longkaList"
             option-value="code"
             option-label="label"
             v-model="form.type"
@@ -151,12 +151,12 @@
         </q-form>
       </q-card>
     </q-dialog>
-    <q-dialog align-center class="wonHukaBox" v-model="isCardModal" :show-close="false">
-      <span v-for="(huka, i) in hukaList" :key="i">
-        <div v-if="cardWon === huka.code" class="wincontents">
-          <div class="message">恭喜您获得一张: {{ huka.label }}</div>
+    <q-dialog align-center class="wonlongkaBox" v-model="isCardModal" :show-close="false">
+      <span v-for="(longka, i) in longkaList" :key="i">
+        <div v-if="cardWon === longka.code" class="wincontents">
+          <div class="message">恭喜您获得一张: {{ longka.label }}</div>
           <div class="amount">
-            <img :src="require(`../../../assets/images/promo/hotpromo/dragoncard/${huka.image}.png`)" />
+            <img :src="require(`../../../assets/images/promo/hotpromo/dragoncard/${longka.image}.png`)" />
           </div>
         </div>
       </span>
@@ -272,41 +272,41 @@ const compoundCard = () => {
   });
 };
 
-const hukaList = ref([
+const longkaList = ref([
   {
-    code: "hongyunhu",
-    image: "hyh",
+    code: "hongyunlong",
+    image: "hyl",
     count: 0,
     label: "鸿运龙"
   },
   {
-    code: "jilihu",
-    image: "jlh",
+    code: "jililong",
+    image: "jll",
     count: 0,
     label: "吉利龙"
   },
   {
-    code: "pinganhu",
-    image: "pah",
+    code: "pinganlong",
+    image: "pal",
     count: 0,
     label: "平安龙"
   },
   {
-    code: "ruyihu",
-    image: "ryh",
+    code: "ruyilong",
+    image: "ryl",
     count: 0,
     label: "如意龙"
   },
   {
-    code: "xinyunhu",
-    image: "xyh",
+    code: "xinyunlong",
+    image: "xyl",
     count: 0,
     label: "幸运龙"
   }
 ]);
-const isSelected = ref("xinyunhu");
-const selectHuka = (huka) => {
-  isSelected.value = huka.code;
+const isSelected = ref("xinyunlong");
+const selectlongka = (longka) => {
+  isSelected.value = longka.code;
 };
 
 const isGiftModal = ref(false);
@@ -348,13 +348,13 @@ const sendRules = {
   ]
 };
 var qs = require("qs");
-const hukaFormRef = ref();
+const longkaFormRef = ref();
 const typeRef = ref(null);
 const friendLoginNameRef = ref(null);
 const realNameRef = ref(null);
 const isSubmitting = ref(false);
 const resetRegForm = (formEl) => {
-  // hukaFormRef.value.resetValidation();
+  // longkaFormRef.value.resetValidation();
   form.type = null;
   form.realName = null;
   form.friendLoginName = null;
@@ -486,7 +486,7 @@ const columns = [
 </style>
 <style lang="scss">
 body {
-  .wonHukaBox {
+  .wonlongkaBox {
     width: 100%;
     height: 500px;
     background: none;
@@ -573,14 +573,14 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
-.huka-wrap {
+.longka-wrap {
   display: inline-block;
   padding: 1.5rem;
   width: 100%;
   background-color: white;
 }
 
-.huka-wrap .huka-title {
+.longka-wrap .longka-title {
   text-align: center;
   width: 100%;
   img {
@@ -588,7 +588,7 @@ body {
   }
 }
 
-.huka-container {
+.longka-container {
   display: flex;
   margin-top: 1.5rem;
   gap: 15px;
@@ -597,7 +597,7 @@ body {
   flex-direction: column;
 }
 
-.huka-wrap .huka-footer {
+.longka-wrap .longka-footer {
   margin-top: 1rem;
   display: flex;
   gap: 10px;
@@ -620,7 +620,7 @@ body {
   margin-bottom: 20px;
 }
 
-.huka-list {
+.longka-list {
   display: flex;
   flex-direction: row;
   background: #fffbce;
@@ -635,7 +635,7 @@ body {
   justify-content: center;
   align-items: center;
   flex: 2;
-  .huka {
+  .longka {
     position: relative;
     width: calc(25% - 9px);
     margin: 0 9px;
@@ -643,7 +643,7 @@ body {
   }
 }
 
-.huka-btn {
+.longka-btn {
   background: transparent url(../../../assets/images/promo/hotpromo/dragoncard/btn_bg.png) 50% no-repeat;
   background-size: cover;
   width: 140px;
@@ -656,11 +656,11 @@ body {
   cursor: pointer;
 }
 
-.huka-take-btn {
+.longka-take-btn {
   margin: 20px auto;
 }
 
-.huka-own-count {
+.longka-own-count {
   position: absolute;
   right: -14px;
   top: -14px;
@@ -677,20 +677,20 @@ body {
   border-radius: 20px;
 }
 
-.huka-list > div img {
+.longka-list > div img {
   border: 2px solid transparent;
   width: 100%;
   max-width: 100%;
 }
 
-.huka-list > div.huka-selected img {
+.longka-list > div.longka-selected img {
   border: 2px solid #810203;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
 }
 
-.huka-gold {
+.longka-gold {
   padding: 0.2rem;
   flex: 1;
   gap: 20px;
@@ -699,30 +699,30 @@ body {
   width: 60%;
   background: #ffcf6f;
 }
-.huka-gold-inner {
+.longka-gold-inner {
   border: 1px solid #8a6b28;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
 }
 
-.huka-gold img {
+.longka-gold img {
   width: 100%;
   max-width: 100%;
 }
 
-.huka-ranking-wrap {
+.longka-ranking-wrap {
   text-align: center;
 }
 
-.huka-ranking-title {
+.longka-ranking-title {
   margin: 3rem 0 1rem;
   img {
     width: 100%;
   }
 }
 
-.huka-ranking-table {
+.longka-ranking-table {
   background-color: #1d212e;
   margin: 0 auto;
   color: #8a6b28;
@@ -734,23 +734,23 @@ body {
   font-weight: 400;
 }
 
-.huka-ranking-table th {
+.longka-ranking-table th {
   border-bottom: 1px solid #8a6b28;
   line-height: 32px;
 }
 
-.huka-ranking-table tr {
+.longka-ranking-table tr {
   line-height: 32px;
 }
 
-.huka-ranking-pagination {
+.longka-ranking-pagination {
   margin: 0 auto;
   padding-top: 0.5rem;
   color: #8a6b28;
 }
 
-.huka-ranking-pagination .next-page,
-.huka-ranking-pagination .prev-page {
+.longka-ranking-pagination .next-page,
+.longka-ranking-pagination .prev-page {
   cursor: pointer;
 }
 
