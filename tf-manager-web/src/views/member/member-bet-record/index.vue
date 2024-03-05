@@ -253,7 +253,7 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue';
 import moment from 'moment';
-import { getMemberBetRecordList, getMemberBetRecordListTotal, requestExportMemberBetRecord } from '../../../api/member-bet-record';
+import { getMemberBetRecordList, requestExportMemberBetRecord } from '../../../api/member-bet-record';
 import { getPlatformsBySite } from '../../../api/platform';
 import { useI18n } from "vue-i18n";
 import { getSiteListSimple } from '../../../api/site';
@@ -418,9 +418,8 @@ async function loadMemberBetRecords() {
   page.records = ret.records;
   page.total = ret.total;
 
-  const { data: t } = await getMemberBetRecordListTotal(query);
-  total.totalBet = t.totalBet;
-  total.totalPayout = t.totalPayout;
+  total.totalBet = ret.sums.totalBet;
+  total.totalPayout = ret.sums.totalPayout;
 
   page.loading = false;
 }

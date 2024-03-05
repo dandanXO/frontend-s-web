@@ -397,7 +397,7 @@ onMounted(async() => {
   await loadCurrency()
   await loadFinancialLevels();
   await loadPayTypes();
-  form.payType = payTypeList.list[0].code;
+  form.payType = filteredPayTypeList.list[0].code;
   await loadDepositSetting();
 });
 

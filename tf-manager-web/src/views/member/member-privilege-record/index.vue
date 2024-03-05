@@ -189,6 +189,7 @@
         </el-form-item>
         <el-form-item :label="t('fields.privilegeName')" prop="privilegeId">
           <el-select
+            filterable
             v-model="form.privilegeId"
             size="small"
             class="filter-item"

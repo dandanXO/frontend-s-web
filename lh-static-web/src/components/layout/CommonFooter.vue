@@ -94,7 +94,7 @@
           <li><router-link to="/about?id=aboutus">关于我们</router-link></li>
           <li><router-link to="/about?id=rule">竞猜规则</router-link></li>
           <li><router-link to="/about?id=pay">补偿</router-link></li>
-          <li><a href="https://partner.e88726.com/">加盟代理</a></li>
+          <li><a :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')">加盟代理</a></li>
           <li><router-link to="/about?id=blame">博彩责任</router-link></li>
         </ul>
         <!-- <div class="tagline">雷火是全球领先的合法博彩公司，拥有菲律宾政府PAGCOR 所颁发的离岸博彩许可证，并受其监管</div> -->
@@ -118,11 +118,13 @@ export default defineComponent({
     const openRegPage = () => {
       store.regPageVisible = true;
     };
+    const affCode = sessionStorage.getItem("AFFILIATE_CODE");
     return {
       isFireFox,
       isChrome,
       store,
-      openRegPage
+      openRegPage,
+      affCode
     };
   }
 });

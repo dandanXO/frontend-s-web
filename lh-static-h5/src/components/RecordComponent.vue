@@ -31,7 +31,7 @@
                 </div>
                 <div
                   v-else-if="
-                    obj === 'commitDate' || obj === 'feedbackTime' || obj === 'recordTime' || obj === 'transferDate'
+                    obj === 'commitDate' || obj === 'feedbackTime' || obj === 'recordTime' || obj === 'transferDate' || (obj === 'betTime' && recordType === 'bethistory')
                   "
                 >
                   {{ humanDatetime(det[obj]) }}
@@ -321,8 +321,10 @@ export default defineComponent({
       });
     };
 
+    const imgURL = process.env.IMAGE_CDN;
     const getImageLink = (linkId) => {
-      reminderForm.photos = `https://file.rd7etvkrgt.com/order/1/${linkId}`;
+      reminderForm.photos = linkId;
+      // reminderForm.photos = `${imgURL}/${linkId}`;
     };
 
     const submitReminder = () => {

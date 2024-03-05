@@ -31,7 +31,7 @@
             ref="loginNameRef"
             v-model="loginForm.loginName"
             placeholder="请输入用户名"
-            :rules="[(val) => (val && val.length > 0) || '请输入用户名']"
+            :rules="[(val) => (val && val.length > 0) || '请输入用户名',(val) => (val && val.length >= 6 && val.length <= 12) || '长度要在 6-12 之间']"
             color="white"
             label-color="secondary"
             autocomplete="username"
@@ -100,7 +100,11 @@
           </q-input>
         </div>
 
-        <div v-if="loginType" class="q-gutter-y-md">
+        <div v-if="loginType">
+          <q-label>
+            电话号码:
+            <em>*</em>
+          </q-label>
           <q-input
             hide-bottom-space
             ref="telephoneRef"
@@ -110,13 +114,18 @@
             color="white"
             :readonly="phoneLoginForm.smsCodeId ? true : false"
             clearable
-            label-color="brand"
             autocomplete="username"
+            rounded
+            standout
           >
             <template v-slot:prepend>
               <q-icon color="bright" name="phone" />
             </template>
           </q-input>
+          <q-label>
+            短信验证码:
+            <em>*</em>
+          </q-label>
           <q-input
             @pressEnter="alert('ah')"
             ref="phoneVerificationRef"
@@ -127,7 +136,8 @@
             clearable
             :rules="[(val) => (val && val.length > 3) || '请输入短信验证码']"
             color="white"
-            label-color="brand"
+            rounded
+            standout
           >
             <template v-slot:append>
               <q-btn
@@ -187,7 +197,7 @@
     </q-form>
 
     <div class="login-bottom-div">
-      <img src="../assets/images/login/login-btm-banner.png" />
+      <img src="../assets/images/login/login-banner.png" />
     </div>
   </div>
 
@@ -391,7 +401,6 @@ export default defineComponent({
               })
               .then(() => {
                 $q.loading.hide();
-                getCode();
                 sessionStorage.removeItem("REFERRAL_CODE");
 
                 if (isCheckRmb.value) {
@@ -422,12 +431,21 @@ export default defineComponent({
         } else {
           telephoneRef.value.validate();
           phoneVerificationRef.value.validate();
-          $q.loading.show({
-            message: "登录中"
-          });
           if (telephoneRef.value.hasError || phoneVerificationRef.value.hasError) {
             $q.loading.hide();
           } else {
+          if (!phoneLoginForm.smsCodeId) {
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: '请验证手机码',
+              icon: "report_problem"
+            });
+            return
+          }
+          $q.loading.show({
+            message: "登录中"
+          });
             store
               .memberLoginviaPhone({
                 phoneNumber: phoneLoginForm.phoneNumber,
@@ -475,9 +493,6 @@ export default defineComponent({
     });
     onActivated(() => {
       getCode();
-      setTimeout(() => {
-        getCode();
-      }, 10000);
     });
 
     return {

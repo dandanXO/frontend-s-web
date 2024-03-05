@@ -126,9 +126,20 @@
             $ <span v-formatter="{data: scope.row.betAmount,type: 'money'}" />
           </template>
         </el-table-column>
+        <el-table-column v-if="request.siteId !== 3" prop="rebatePercentage" :label="t('fields.rebatePercentage')" align="center" min-width="120">
+          <template #default="scope">
+            {{ (scope.row.rebatePercentage).toFixed(2) }} %
+          </template>
+        </el-table-column>
         <el-table-column prop="amount" :label="t('fields.amount')" align="center" min-width="100" sortable>
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.amount,type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column v-if="request.siteId !== 3" prop="maxRebate" :label="t('fields.maxRebate')" align="center" min-width="100">
+          <template #default="scope">
+            <span v-if="scope.row.maxRebate">$ <span v-formatter="{data: scope.row.maxRebate,type: 'money'}" /></span>
+            <span v-else>-</span>
           </template>
         </el-table-column>
         <el-table-column prop="status" :label="t('fields.status')" align="center" min-width="120">
@@ -496,7 +507,12 @@ const uiControl = reactive({
 });
 
 const EXPORT_HEADER = [t('fields.loginName'), t('fields.vipLevel'), t('fields.platform'), t('fields.gameType'), t('fields.betAmount'),
-  t('fields.amount'), t('fields.status'), t('fields.rebateDistributeTime'), t('fields.distributeBy'), t('fields.distributeTime'), t('fields.updateBy'), t('fields.updateTime')];
+  t('fields.amount'), t('fields.rebatePercentage'), t('fields.maxRebate'), t('fields.status'), t('fields.rebateDistributeTime'),
+  t('fields.distributeBy'), t('fields.distributeTime'), t('fields.updateBy'), t('fields.updateTime')];
+
+const EXPORT_TH_HEADER = [t('fields.loginName'), t('fields.vipLevel'), t('fields.platform'), t('fields.gameType'), t('fields.betAmount'),
+  t('fields.amount'), t('fields.status'), t('fields.rebateDistributeTime'),
+  t('fields.distributeBy'), t('fields.distributeTime'), t('fields.updateBy'), t('fields.updateTime')];
 
 const EXPORT_CANCEL_REBATE_LIST_HEADER = [
   'Login Name',
@@ -683,7 +699,7 @@ async function exportExcel() {
   const query = checkQuery();
   query.current = 1;
   const { data: ret } = await getVipRebateRecord(query);
-  const exportData = [EXPORT_HEADER];
+  const exportData = [request.siteId !== 3 ? EXPORT_HEADER : EXPORT_TH_HEADER];
   const maxLength = [];
 
   pushRecordToData(ret.records, exportData);
@@ -720,6 +736,10 @@ function pushRecordToData(records, exportData) {
     delete item.id;
     delete item.memberId;
     delete item.vipId;
+    if (request.siteId === 3) {
+      delete item.maxRebate;
+      delete item.rebatePercentage;
+    }
   })
   const data = records.map(record => {
     record.status = t('distributeStatus.' + record.status);
@@ -739,8 +759,7 @@ function distributeRebate() {
     }
   ).then(async () => {
     const query = checkQuery();
-    await distribute(query);
-    await loadVipRebateRecords();
+    distribute(query);
     ElMessage({ message: t('message.rebateSuccess'), type: "success" });
   });
 }

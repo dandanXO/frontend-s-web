@@ -3,7 +3,7 @@
     <q-header v-if="hasPage" :class="hasShadow ? 'with-shadow' : ''">
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
-          <router-link to="/"><img src="../assets/logo.png" /></router-link>
+          <router-link to="/"><img src="../assets/logo.svg" alt="logo" /></router-link>
         </div>
         <q-card-actions v-if="!store.hasToken()">
           <q-btn glossy color="brand" to="/login">登录</q-btn>
@@ -40,7 +40,7 @@
             color="brightbtn"
             v-for="(plat, n) in platformsList"
             :key="n"
-            :label="plat.icon"
+            :label="plat.title"
           />
         </div>
       </q-scroll-area>
@@ -386,59 +386,24 @@ export default defineComponent({
 
     const platformsFixed = ref([
       {
-        id: "81",
-        code: "BBINDY",
-        icon: "bbin"
-      },
-      {
-        id: "21",
+        id: 21,
         code: "PG",
         icon: "PG"
       },
       {
-        id: "73",
-        code: "MGP",
-        icon: "MG"
-      },
-      {
-        id: "55",
-        code: "TTG",
-        icon: "ttg"
-      },
-      {
-        id: "72",
-        code: "SG",
-        icon: "sg"
-      },
-      {
-        id: "22",
-        code: "PP",
-        icon: "pp"
-      },
-      {
-        id: "31",
-        code: "JDB",
-        icon: "jdb"
-      },
-      {
-        id: "70",
-        code: "AMEBA",
-        icon: "AMEBA"
-      },
-      {
-        id: "54",
-        code: "PT",
-        icon: "pt"
-      },
-      {
-        id: "65",
+        id: 65,
         code: "SW",
         icon: "SW"
       },
       {
-        id: "33",
-        code: "CQ9",
-        icon: "CQ9"
+        id: 54,
+        code: "PT",
+        icon: "PT"
+      },
+      {
+        id: 26,
+        code: "AG",
+        icon: "AG"
       }
     ]);
 
@@ -446,9 +411,9 @@ export default defineComponent({
       if (ui.slotLists.length === 0) {
         return platformsFixed.value;
       }
+      // console.log( ui.slotLists);
       return ui.slotLists;
     });
-    // console.log(platformsList.value);
 
     onMounted(() => {
       checkRoute();

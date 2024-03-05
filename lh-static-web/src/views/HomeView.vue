@@ -34,15 +34,16 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .home {
-  margin: 0 0 2.5rem 0;
-
-}
-
-.home-mid-section{
-  background-image: url("../assets/home/home-bg.jpg");
+  margin: 0px;
+  background-image: url("../assets/images/home/home-bg.jpg");
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: top center;
+}
+
+.home-mid-section{
+
   padding-top: 20px;
+  padding-bottom: 2.5rem;
 }
 </style>

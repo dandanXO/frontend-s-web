@@ -731,7 +731,8 @@ export default defineComponent({
         "PromoRecordView",
         "BetHistoryRecordView",
         "MoneyChangeRecordView",
-        "WithdrawView"
+        "WithdrawView",
+        "ForgotPwdPage"
       ]
     };
   }

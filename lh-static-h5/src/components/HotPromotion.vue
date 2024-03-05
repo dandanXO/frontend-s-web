@@ -21,7 +21,6 @@
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
     <HongBaoYu2024 v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" :promo-code="list.promoCode" />
     <UpcomingMatchPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-nba-safety'" platformType="NBA" />
-    <InsuranceSubmitPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-nba-safety'" platformType="NBA" />
 
     <UpcomingMatchPromo
       v-if="
@@ -61,7 +60,10 @@
 
     <FootballFightPromo v-if="list.redirectUrl === 'lh1-football-fight' && !isCommonPromo" />
 
-    <UpgradeHongbaoPromo v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo" />
+    <UpgradeHongBaoPromo
+      v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo"
+      :promo-code="list.promoCode"
+    />
 
     <GiftPromo v-if="list.redirectUrl === 'lh1-gift' && !isCommonPromo && store.token"></GiftPromo>
 
@@ -112,7 +114,7 @@ import DragonCardPromo from "../components/hotpromo/dragoncard/dragonCardPromo.v
 // import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
-// import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue";
+import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue";
 import UpcomingMatchPromo from "../components/hotpromo/upcomingmatch/upcomingMatchPromo.vue";
 import InsuranceSubmitPromo from "../components/hotpromo/insurancesubmit/insuranceSubmitPromo.vue";
 import FeedbackAwardPromo from "../components/hotpromo/feedbackaward/feedbackAwardPromo.vue";
@@ -123,7 +125,7 @@ import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import DailyLoginPromo from "../components/hotpromo/dailylogin/dailyLoginPromo.vue";
 import LoginRewardPromo from "../components/hotpromo/loginreward/loginRewardPromo.vue";
 import FootballFightPromo from "../components/hotpromo/footballfight/footballFightPromo.vue";
-// import UpgradeHongbaoPromo from "../components/hotpromo/upgradehongbao/upgradeHongbaoPromo.vue";
+import UpgradeHongBaoPromo from "../components/hotpromo/upgradehongbao/upgradeHongBaoPromo.vue";
 // import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 // import PrivilegeInvite from "../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue";
 // import AsiaCup2024Promo from "../components/hotpromo/asiacup2024/AsiaCup2024Promo.vue";
@@ -142,7 +144,7 @@ export default defineComponent({
     DragonCardPromo,
     // PrizePoolVotePromo,
     GoldenEggPromo,
-    // HongBaoYu2024,
+    HongBaoYu2024,
     UpcomingMatchPromo,
     InsuranceSubmitPromo,
     FeedbackAwardPromo,
@@ -153,7 +155,7 @@ export default defineComponent({
     DailyLoginPromo,
     LoginRewardPromo,
     FootballFightPromo,
-    // UpgradeHongbaoPromo
+    UpgradeHongBaoPromo,
     // GiftPromo,
     // PrivilegeInvite,
     // AsiaCup2024Promo,

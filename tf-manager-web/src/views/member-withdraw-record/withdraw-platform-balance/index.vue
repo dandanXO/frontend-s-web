@@ -28,7 +28,11 @@
               style="width: 100%" highlight-current-row :empty-text="t('fields.noData')"
     >
       <el-table-column prop="mallName" :label="t('fields.mallName')" width="300" />
-      <el-table-column prop="balance" :label="t('fields.balance')" width="200" sortable />
+      <el-table-column prop="balance" :label="t('fields.balance')" width="200" sortable>
+        <template #default="scope">
+          <span v-formatter="{data: scope.row.balance,type: 'money'}" />
+        </template>
+      </el-table-column>
     </el-table>
 
   </div>

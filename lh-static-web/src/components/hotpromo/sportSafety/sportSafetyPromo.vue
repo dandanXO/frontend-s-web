@@ -1,56 +1,56 @@
 <template>
   <div>
-    <div style="padding-top: 250px;"></div>
-    <div class="slider" style="position: relative;">
-    
-    <swiper
-      :slides-per-view="matchDetails.length > 1 ? 2 : 1"
-      :spaceBetween="20"
-      :loop="false"
-      @swiper="onSwiper"
-      @slideChange="onSlideChange"
-      class="swiper-wrapper"
-    >
-      <template v-for="(item, index) in matchDetails" :key="item.id">
-        <swiper-slide>
-          <div class="bet-info-box">
-            <div class="bet-info-date">{{ formatDate(item.matchTime).date }}</div>
-            <div class="bet-info-details">
-              <div class="info-team info-team-one">
-                <div class="info-team-logo">
-                  <img :src="`${iconImageBasePath}/${item.teamOneIcon}`" />
+    <div style="padding-top: 250px"></div>
+    <div class="slider" style="position: relative" v-if="matchDetails.length > 0">
+      <swiper
+        :slides-per-view="matchDetails.length > 1 ? 2 : 1"
+        :spaceBetween="20"
+        :loop="false"
+        @swiper="onSwiper"
+        @slideChange="onSlideChange"
+        class="swiper-wrapper"
+      >
+        <template v-for="(item, index) in matchDetails" :key="item.id">
+          <swiper-slide>
+            <div class="bet-info-box">
+              <div class="bet-info-date">{{ formatDate(item.matchTime).date }}</div>
+              <div class="bet-info-details">
+                <div class="info-team info-team-one">
+                  <div class="info-team-logo">
+                    <img :src="`${iconImageBasePath}/${item.teamOneIcon}`" />
+                  </div>
+                  <div class="info-team-name" v-html="item.teamOne" />
                 </div>
-                <div class="info-team-name" v-html="item.teamOne" />
-              </div>
 
-              <div class="bet-info-vs">
-                <span>{{ item.matchTitle }}</span>
-                <br />
-                VS
-                <br />
-                {{ formatDate(item.matchTime).time }}
-              </div>
-
-              <div class="info-team info-team-two">
-                <div class="info-team-logo">
-                  <img :src="`${iconImageBasePath}/${item.teamTwoIcon}`" />
+                <div class="bet-info-vs">
+                  <span>{{ item.matchTitle }}</span>
+                  <br />
+                  VS
+                  <br />
+                  {{ formatDate(item.matchTime).time }}
                 </div>
-                <div class="info-team-name" v-html="item.teamTwo" />
+
+                <div class="info-team info-team-two">
+                  <div class="info-team-logo">
+                    <img :src="`${iconImageBasePath}/${item.teamTwoIcon}`" />
+                  </div>
+                  <div class="info-team-name" v-html="item.teamTwo" />
+                </div>
               </div>
             </div>
-          </div>
-        </swiper-slide>
-      </template>
-    </swiper>
-    <div class="swiper-button-prev" @click="prevSlide"></div>
-    <div class="swiper-button-next" @click="nextSlide"></div>
-    <button
-      class="common-btn apply-btn"
-      @click="applySportInsurance()"
-      :disabled="isNaN(sportInsuranceFormData.gameMatchId)"
-    >
-      点击申请
-    </button></div>
+          </swiper-slide>
+        </template>
+      </swiper>
+      <div class="swiper-button-prev" @click="prevSlide"></div>
+      <div class="swiper-button-next" @click="nextSlide"></div>
+      <button
+        class="common-btn apply-btn"
+        @click="applySportInsurance()"
+        :disabled="isNaN(sportInsuranceFormData.gameMatchId)"
+      >
+        点击申请
+      </button>
+    </div>
 
     <el-dialog
       v-model="isSportInsuranceModalVisible"
@@ -162,7 +162,7 @@
 </template>
 <script setup>
 import { ElMessage } from "element-plus";
-import { onMounted, ref, reactive } from "vue";
+import { onActivated, ref, reactive } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -274,7 +274,7 @@ const init = () => {
         matchDetails.value = Array.isArray(res.data) ? res.data : [res.data];
         insuranceRecordsParam.gameType = matchDetails.value[0].gameType;
       } else {
-        ElMessage.error(res.message)
+        ElMessage.error(res.message);
       }
     })
     .catch((err) => {
@@ -305,10 +305,9 @@ const submitForm = async (elForm) => {
         isSportInsuranceModalVisible.value = false;
         isSubmitting.value = false;
       } else {
-        ElMessage.error(res.message)
+        ElMessage.error(res.message);
         isSubmitting.value = false;
       }
-
     }
   });
 };
@@ -355,11 +354,18 @@ const loadSportInsuranceRecords = (param) => {
     insuranceRecordsModalVisible.value = true;
     insuranceRecords.value = res.data.records;
 
-    insuranceRecordsParam.gameType = res.data.records[0].gameType;
-    insuranceRecordsParam.records = res.data.records;
-    insuranceRecordsParam.current = res.data.current;
-    insuranceRecordsParam.total = res.data.total;
-    insuranceRecordsParam.maxPage = Math.ceil(insuranceRecordsParam.total / insuranceRecordsParam.size);
+    if (insuranceRecords.value.length > 0) {
+      insuranceRecordsParam.gameType = res.data.records[0].gameType;
+      insuranceRecordsParam.records = res.data.records;
+      insuranceRecordsParam.current = res.data.current;
+      insuranceRecordsParam.total = res.data.total;
+      insuranceRecordsParam.maxPage = Math.ceil(insuranceRecordsParam.total / insuranceRecordsParam.size);
+    } else {
+      ElMessage({
+        message: "没有记录",
+        type: "error"
+      });
+    }
   });
 };
 
@@ -381,7 +387,7 @@ const recordPageControl = (direction) => {
     }
   }
 };
-onMounted(() => {
+onActivated(() => {
   init();
   getPlatList();
 });

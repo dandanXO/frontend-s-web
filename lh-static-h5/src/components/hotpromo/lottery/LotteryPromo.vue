@@ -21,13 +21,13 @@
               <img src="../../../assets/images/promo/hotpromo/lottery/lucky_prize.png" />
             </div>
             <div class="right-container">
-              <q-form>
+              <q-form @submit="chooseLuckyNumber">
                 <div class="insert-lucky-num">
                   <q-label>请输入选号</q-label>
                   <q-input v-model="luckyNumber" placeholder="0" type="number" borderless />
                 </div>
               </q-form>
-              <q-btn color="brightbtn" :loading="luckyNumberBtnLoading" @click="chooseLuckyNumber()" label="立即领取" />
+              <q-btn color="brightbtn" :loading="luckyNumberBtnLoading" @click="chooseLuckyNumber()" label="提交选号" />
             </div>
           </div>
         </q-tab-panel>
@@ -51,7 +51,7 @@
                           >
                             <!-- <q-date v-model="query.recordTime" @update:model-value="v-close-popup" > -->
                             <div class="row items-center justify-end">
-                              <q-btn v-close-popup label="Close" color="primary" flat></q-btn>
+                              <q-btn v-close-popup label="关闭" color="primary" flat></q-btn>
                             </div>
                           </q-date>
                         </q-popup-proxy>

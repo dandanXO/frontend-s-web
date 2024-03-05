@@ -6,7 +6,7 @@
       </div>
       <router-link to="/finance/deposit">
         <div class="account-item">
-          <span>充值</span>
+          <span>存款</span>
         </div>
       </router-link>
       <router-link to="/finance/withdraw">
@@ -17,8 +17,8 @@
     </div>
 
     <div class="transfer-mid-div">
-      <div class="station-notice-wrapper">
-        <div class="volume" @click="showAnnouncementDialog">
+      <div class="station-notice-wrapper" @click="showAnnouncementDialog">
+        <div class="volume">
           <img src="../../assets/images/home/announce-icon.png" />
         </div>
         <marquee-text :repeat="5" :duration="announcementList.length * 10">
@@ -36,7 +36,7 @@
     <div class="transfer-tab-section q-pa-md q-mx-sm q-my-md" v-if="!autoTransfer">
       <q-form ref="transferFormRef">
         <div class="transferfromto q-mb-md">
-          <q-select
+          <!-- <q-select
             hide-bottom-space
             rounded
             outlined
@@ -47,11 +47,45 @@
             :options="transferFromOpt"
             map-options
             @update:model-value="updateTransferDropdown"
-          />
+          /> -->
+          <q-select
+            ref="transferFormRef"
+            class="q-mb-md"
+            filled
+            label-color="grey"
+            v-model="transferFrom"
+            :options="transferFromOpt"
+            option-value="id"
+            option-label="label"
+            emit-value
+            map-options
+            @update:model-value="updateTransferDropdown"
+          >
+            <template v-slot:selected-item="scope">
+              <q-item-section>
+                <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ scope.opt.label
+                  }}
+                </q-item-label>
+              </q-item-section>
+            </template>
+            <template v-slot:option="scope">
+              <q-item v-bind="scope.itemProps">
+                <q-item-section avatar>
+                  <img
+                    :src="require(`../../assets/images/home/${scope.opt.type.toLowerCase()}/logo-${scope.opt.code.toLowerCase()}.png`)"
+                    :style="scope?.opt?.type === 'main' ? 'width: 15px; margin: 10px 10px 10px 5px;' : 'width: 30px; margin-top: 10px; margin-bottom: 10px;'">
+                  <!-- <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;" :src="imgURL + scope.opt.bankIcon"> -->
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label>{{ scope.opt.label }}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
           <div class="icon">
             <img src="../../assets/images/account/transfer-arrow.png" />
           </div>
-          <q-select
+          <!-- <q-select
             hide-bottom-space
             rounded
             outlined
@@ -62,7 +96,41 @@
             :options="transferToOpt"
             map-options
             @update:model-value="updateTransferDropdown"
-          />
+          /> -->
+
+          <q-select
+            class="q-mb-md"
+            filled
+            label-color="grey"
+            v-model="transferTo"
+            :options="transferToOpt"
+            option-value="id"
+            option-label="label"
+            emit-value
+            map-options
+            @update:model-value="updateTransferDropdown"
+          >
+            <template v-slot:selected-item="scope">
+              <q-item-section>
+                <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ scope.opt.label
+                  }}
+                </q-item-label>
+              </q-item-section>
+            </template>
+            <template v-slot:option="scope">
+              <q-item v-bind="scope.itemProps">
+                <q-item-section avatar>
+                  <img
+                    :src="require(`../../assets/images/home/${scope.opt.type.toLowerCase()}/logo-${scope.opt.code.toLowerCase()}.png`)"
+                    :style="scope.opt.type === 'main' ? 'width: 15px; margin: 10px 10px 10px 5px;' : 'width: 30px; margin-top: 10px; margin-bottom: 10px;'">
+                  <!-- <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;" :src="imgURL + scope.opt.bankIcon"> -->
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label>{{ scope.opt.label }}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
         </div>
         <div class="transferamounts q-my-md">
           <template v-for="(amt, i) in amounts" :key="i">
@@ -95,7 +163,7 @@
             </template>
           </q-input>
 
-          <q-btn class="common-md-white-btn" label="最大金额" @click="updateTransferAmt" />
+          <q-btn class="common-md-white-btn" style="white-space: nowrap" label="最大金额" @click="updateTransferAmt" />
         </div>
 
         <q-btn
@@ -111,7 +179,7 @@
   </q-page>
   <q-dialog
     width="100%"
-    class="modal-common-div" label="信息" v-model="isShowAnnouncementDialog" full-width="100">
+    class="modal-common-div" label="信息" v-model="isShowAnnouncementDialog" full-width>
     <q-card class="q-pa-md modal-content">
       <div class="headers">
         <div class="titles">信息</div>
@@ -160,7 +228,9 @@ const updateTransferDropdown = () => {
       {
         id: "main",
         value: "中心钱包",
-        label: "中心钱包"
+        label: "中心钱包",
+        code: "main",
+        type: "main"
       }
     ];
     transferTo.value = "main";
@@ -169,40 +239,37 @@ const updateTransferDropdown = () => {
       {
         id: "main",
         value: "中心钱包",
-        label: "中心钱包"
+        label: "中心钱包",
+        code: "main",
+        type: "main"
       }
     ];
     transferToOpt.value = [];
     platforms.forEach((plat) => {
+      console.log(plat);
+
       var obj = {
         id: plat.id,
-        label: plat.name
+        label: plat.name,
+        code: plat.code,
+        type: plat.type
       };
       transferToOpt.value.push(obj);
       transferFromOpt.value.push(obj);
     });
+
+    console.log(transferFromOpt.value);
+
     if (!transferTo.value || transferTo.value === "main") {
       transferTo.value = platforms[0].id;
     }
   }
-  // if (transferFrom.value === 'main') {
-  //   transferToOpt.value = []
-  // } else {
-  //   platforms.forEach(plat => {
-  //     var obj = {
-  //       id: plat.id,
-  //       label: plat.code
-  //     }
-  //     transferFromOpt.value.push(obj)
-  //     transferToOpt.value.push(obj)
-  //   });
-  // }
 };
 const isTransferring = ref(false);
 const isShowAnnouncementDialog = ref(false);
 const showAnnouncementDialog = () => {
   isShowAnnouncementDialog.value = true;
-}
+};
 const submitTransfer = () => {
   amountRef.value.validate();
   if (amountRef.value.hasError) {
@@ -290,37 +357,21 @@ const updateTransferAmt = () => {
   });
 };
 const getPlatList = () => {
-  if (store.memberType === "TEST") {
-    api.get("/session/loggedInPlatform").then((res) => {
-      res.data.forEach((p) => {
-        if (p.walletType !== "SEAMLESS") {
-          platforms.push({
-            id: p.id,
-            code: p.code,
-            name: translateRecord(p.name),
-            amount: 0
-          });
-          getPlatBalances(p.code);
-        }
-      });
-      updateTransferDropdown();
+  api.get("/session/loggedInPlatform").then((res) => {
+    res.data.forEach((p) => {
+      if (p.walletType !== "SEAMLESS") {
+        platforms.push({
+          id: p.id,
+          code: p.code,
+          name: translateRecord(p.name),
+          type: p.gameType,
+          amount: 0
+        });
+        getPlatBalances(p.code);
+      }
     });
-  } else {
-    api.get("/platform").then((res) => {
-      res.data.forEach((p) => {
-        if (p.walletType !== "SEAMLESS") {
-          platforms.push({
-            id: p.id,
-            code: p.code,
-            name: translateRecord(p.name),
-            amount: 0
-          });
-          getPlatBalances(p.code);
-        }
-      });
-      updateTransferDropdown();
-    });
-  }
+    updateTransferDropdown();
+  });
 };
 const getPlatBalances = (plat) => {
   const platform = platforms.find((p) => p.code === plat);

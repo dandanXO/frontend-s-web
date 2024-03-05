@@ -4,28 +4,27 @@
 
 <script>
 import { defineComponent, onMounted } from "vue";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { memberAccessLog } from "@/api/index/login";
 import axios from "axios";
+import { userStore } from "@/store";
+import { getVisitorId } from "@/utils/utils";
 
 export default defineComponent({
   setup() {
+    const store = userStore();
+
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
-      const fpPromise = FingerprintJS.load();
+
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
-        console.log(sidParam);
+        const visitorId = sessionStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+        store.visitorId = visitorId;
+
+        console.log("SID");
+        console.log(visitorId);
 
         const obj = {
-          identifier: sidParam,
+          identifier: store.visitorId,
           affiliateCode: affiliateItem
         };
         memberAccessLog(obj).then((res) => {
@@ -38,16 +37,7 @@ export default defineComponent({
 
     const getOnlineStatApi = async () => {
       // console.log("Ok Online.");
-      const fpPromise = FingerprintJS.load();
-
-      const fp = await fpPromise;
-      const result = await fp.get();
-      const excludes = { value: ["timezone", "timeZoneOffset"] };
-      const allComponents = { ...result.components };
-      excludes.value.forEach((element) => {
-        delete allComponents[element];
-      });
-      const sidParam = FingerprintJS.hashComponents(allComponents);
+      const sidParam = store.visitorId;
       const way = "web";
 
       if (sidParam) {

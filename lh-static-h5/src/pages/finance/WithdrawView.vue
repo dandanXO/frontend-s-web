@@ -27,7 +27,7 @@
             option-value="id"
             emit-value
             :label="'选择' + chooseLabel()"
-            class="withdraw-selection q-mt-md q-mb-md"
+            class="withdraw-selection q-mt-sm q-mb-sm"
             :options="withdrawState.bankCardList"
             map-options
             :rules="[(val) => !!val || '请选择' + chooseLabel()]"
@@ -103,7 +103,7 @@
             </template>
           </q-input>
           <div
-            class="q-mt-md q-mb-md text-grey text-bold q-pb-md"
+            class="q-mt-sm q-mb-sm text-grey text-bold q-pb-sm"
             style="border-bottom: 1px solid #434343"
             v-show="selectedWithdrawalMethod"
           >
@@ -125,28 +125,28 @@
             </template>
           </div>
           <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
-            <div class="q-my-md" style="display: flex; justify-content: center; align-items: center">
+            <div class="q-my-sm" style="display: flex; justify-content: center; align-items: center">
               <span style="flex: 1">实施汇率：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
                 {{ store.currency.value }}
               </span>
             </div>
-            <div class="q-mt-md" style="display: flex; justify-content: center; align-items: center">
+            <div class="q-mt-sm" style="display: flex; justify-content: center; align-items: center">
               <span style="flex: 1">预计到帐：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 {{ (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate).toFixed(2) }}
                 USDT
               </span>
             </div>
-            <div class="q-mt-md text-neontb">*特别说明：三方自动收取提币 1.00 USDT 手续费！</div>
+            <div class="q-mt-sm text-neontb">*特别说明：三方自动收取提币 1.00 USDT 手续费！</div>
           </div>
 <!--          <div v-else-if="!isEWALLET && !isUSDT">-->
 <!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
 <!--          </div>-->
           <div v-else-if="isEWALLET">
-            <div class="q-mt-md text-neontb">*特别说明：提款钱包和游戏账号的姓名务必一致</div>
-            <div class="q-mt-md q-mb-md text-center">
+            <div class="q-mt-sm text-neontb">*特别说明：提款钱包和游戏账号的姓名务必一致</div>
+            <div class="q-mt-sm q-mb-sm text-center">
               <q-btn
                 style="border: 1px solid #33bcd4; color: #33bcd4"
                 @click="openEWalletTutorial(selectedWithdrawalMethod.code)"
@@ -535,7 +535,7 @@ export default defineComponent({
   width: $box-width;
   margin: 10px auto;
   border-radius: 10px;
-  padding: 15px 12px 20px;
+  padding: 10px 12px 15px;
   box-shadow: $shadow-bg;
   background: $white;
 }
@@ -544,10 +544,10 @@ export default defineComponent({
   grid-template-columns: repeat(4, 1fr);
   text-align: center;
   overflow-x: unset;
-  padding: 15px 5px;
+  padding: 0px 5px;
   grid-gap: 10px;
   grid-column-gap: 10px;
-  grid-row-gap: 20px;
+  grid-row-gap: 5px;
 
   .withdraw-type-item {
     display: flex;
@@ -563,7 +563,6 @@ export default defineComponent({
       border: 2px solid transparent;
       border-radius: 10px;
       max-width: 4.5rem;
-      margin-bottom: 5px;
     }
 
     img {

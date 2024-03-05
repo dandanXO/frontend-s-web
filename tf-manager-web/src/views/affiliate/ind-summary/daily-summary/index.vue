@@ -427,9 +427,9 @@
 import { onMounted, reactive, defineExpose } from 'vue'
 import moment from 'moment'
 import {
-  getSummaryReport,
+  getDorisSummaryReport,
   // getSummaryMemberReport,
-  getTotalSummaryReport,
+  getDorisTotalSummaryReport,
   getExportSummaryReport,
   // getExportSummaryMemberReport
 } from '../../../../api/report-summary'
@@ -533,8 +533,8 @@ async function loadSummaryRecord() {
     }
   }
 
-  const { data: ret } = await getSummaryReport(query)
-  const { data: ret1 } = await getTotalSummaryReport(query)
+  const { data: ret } = await getDorisSummaryReport(query)
+  const { data: ret1 } = await getDorisTotalSummaryReport(query)
   totalPage.records = ret1.records
   page.pages = ret.pages
   page.records = ret.records

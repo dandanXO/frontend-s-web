@@ -76,7 +76,7 @@
 
   <div class="prize-quiz-container">
     <div><img src="../../../assets/images/promo/hotpromo/esportquiz/pattern-top.png" /></div>
-    <div class="prize-quiz-content-container">
+    <div class="prize-quiz-content-container" v-if="matchInfo.homeTeam && matchInfo.awayTeam">
       <div :class="`questions-main-title ${uiIsShowStatus.questionBox ? '' : 'hide'}`">{{ matchInfo.quizTitle }}</div>
 
       <div class="prize-quiz-jc-container" :class="`${uiIsShowStatus.startAnswerBox ? '' : 'hide'}`">
@@ -90,7 +90,9 @@
         </div>
         <div class="start-answer-box">
           <div class="team-content">
-            <div class="team-logo"></div>
+            <div class="team-logo">
+              <img :src="imgURL + `promo/` + matchInfo.homeTeamIcon" />
+            </div>
             <div>{{ matchInfo.homeTeam }}</div>
           </div>
 
@@ -104,7 +106,9 @@
           </div>
 
           <div class="team-content">
-            <div class="team-logo"></div>
+            <div class="team-logo">
+              <img :src="imgURL + `promo/` + matchInfo.awayTeamIcon" />
+            </div>
             <div>{{ matchInfo.awayTeam }}</div>
           </div>
         </div>
@@ -245,6 +249,7 @@ import moment from "moment";
 
 const $q = useQuasar();
 const store = userStore();
+const imgURL = process.env.IMAGE_CDN + "/";
 
 onMounted(() => {
   if (!store.token) {
@@ -276,6 +281,8 @@ const matchInfo = reactive({
   quizTitle: "",
   homeTeam: "",
   awayTeam: "",
+  homeTeamIcon: "",
+  awayTeamIcon: "",
   questionOne: "",
   questionTwo: "",
   questionThree: "",
@@ -308,6 +315,8 @@ function getMatchInfo() {
         choiceOne,
         choiceTwo,
         choiceThree,
+        homeTeamIcon,
+        awayTeamIcon,
         matchTime,
         startTime,
         endTime
@@ -320,71 +329,17 @@ function getMatchInfo() {
       matchInfo.homeTeam = homeTeam;
       matchInfo.awayTeam = awayTeam;
 
-      matchInfo.questionOne = questionOne;
-      matchInfo.questionTwo = questionTwo;
-      matchInfo.questionThree = questionThree;
-
-      matchInfo.choiceOne = JSON.parse(choiceOne);
-      matchInfo.choiceTwo = JSON.parse(choiceTwo);
-      matchInfo.choiceThree = JSON.parse(choiceThree);
-
-      // quizSubmitInfo
-      if (id >= 0) quizSubmitInfo.quizId = id;
-      quizSubmitInfo.quizTitle = quizTitle;
-    } else {
-      const {
-        poolAmount,
-        quizTitle,
-        id,
-        homeTeam,
-        awayTeam,
-        questionOne,
-        questionTwo,
-        questionThree,
-        choiceOne,
-        choiceTwo,
-        choiceThree,
-        matchTime,
-        startTime,
-        endTime
-      } = {
-        id: 52,
-        siteId: 6,
-        quizTitle: "LPL 春季赛 02-05 17:00 WE VS LGD 第2局",
-        gameType: "LOL",
-        homeTeam: "WE",
-        awayTeam: "LGD",
-        poolAmount: 500000.0,
-        questionOne: "哪方获胜?",
-        choiceOne: '["WE","LGD"]',
-        questionTwo: "击杀最高队伍?",
-        choiceTwo: '["WE","LGD"]',
-        questionThree: "两队指定回合局数/击杀",
-        choiceThree: '["单","双"]',
-        status: "ONGOING",
-        matchTime: "2024-02-05 17:00:00",
-        startTime: "2024-02-05 00:00:00",
-        endTime: "2024-02-05 17:00:00"
-      };
-
-      // matchInfo
-      if (poolAmount) matchInfo.poolAmount = poolAmount;
-      if (quizTitle) matchInfo.quizTitle = quizTitle;
-
-      matchInfo.homeTeam = homeTeam;
-      matchInfo.awayTeam = awayTeam;
-
-      matchInfo.questionOne = questionOne;
-      matchInfo.questionTwo = questionTwo;
-      matchInfo.questionThree = questionThree;
-
-      matchInfo.choiceOne = JSON.parse(choiceOne);
-      matchInfo.choiceTwo = JSON.parse(choiceTwo);
-      matchInfo.choiceThree = JSON.parse(choiceThree);
-
+      matchInfo.homeTeamIcon = homeTeamIcon;
+      matchInfo.awayTeamIcon = awayTeamIcon;
       matchInfo.matchTime = matchTime;
-      matchInfo.startTime = startTime;
-      matchInfo.endTime = endTime;
+
+      matchInfo.questionOne = questionOne;
+      matchInfo.questionTwo = questionTwo;
+      matchInfo.questionThree = questionThree;
+
+      matchInfo.choiceOne = JSON.parse(choiceOne);
+      matchInfo.choiceTwo = JSON.parse(choiceTwo);
+      matchInfo.choiceThree = JSON.parse(choiceThree);
 
       // quizSubmitInfo
       if (id >= 0) quizSubmitInfo.quizId = id;
@@ -760,7 +715,7 @@ const getMatchTimeOnly = (matchTime) => {
     .title-record {
       background: url("../../../assets/images/promo/hotpromo/esportquiz/title_record.png") center no-repeat;
       background-size: contain;
-      margin: 69px auto 22px auto;
+      margin: 45px auto 22px auto;
     }
 
     .record-table {
@@ -1015,7 +970,6 @@ const getMatchTimeOnly = (matchTime) => {
 }
 
 .dialog-content {
-  background: salmon;
   background-image: url(../../../assets/images/promo/hotpromo/esportquiz/question-dialog-bg.png);
   background-position: center center;
   background-size: cover;

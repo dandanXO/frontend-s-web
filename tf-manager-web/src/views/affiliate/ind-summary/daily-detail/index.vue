@@ -91,7 +91,14 @@
                 `/affiliate/details/${scope.row.affiliateId}?site=${request.siteId}`
               "
             >
-              <el-link type="primary">{{ scope.row.loginName }}</el-link>
+              <el-link type="primary">
+                {{
+                  scope.row.loginName
+                    .replace('(OFFICAL)', '')
+                    .replace('admin', '')
+                    .trim()
+                }}
+              </el-link>
             </router-link>
           </template>
         </el-table-column>
@@ -287,8 +294,8 @@ import { onMounted, reactive, ref } from 'vue'
 import { hasPermission } from '../../../../utils/util'
 import moment from 'moment'
 import {
-  queryDailySummary,
-  queryDailySummaryTotal,
+  queryDailySummaryList,
+  queryDailySummaryTotalList,
 } from '../../../../api/affiliate-daily-summary'
 import { getSiteListSimple } from '../../../../api/site'
 import { getAffiliateList } from '../../../../api/affiliate-record'
@@ -334,7 +341,19 @@ async function loadSites() {
 
   affiliateNames.value = affiliates
     .filter(a => a.affiliateLevel === 'SUPER_AFFILIATE')
-    .map(a => ({ name: a.loginName }))
+    .map(a => {
+      const modifiedSuperiorName =
+        a.superiorAffiliateName !== null
+          ? a.superiorAffiliateName.replace('admin', '').trim()
+          : null
+
+      return {
+        name:
+          a.superiorAffiliateName !== null && modifiedSuperiorName !== 'OFFICAL'
+            ? `${a.loginName} (${modifiedSuperiorName})`
+            : a.loginName,
+      }
+    })
 }
 
 function convertDate(date) {
@@ -406,7 +425,13 @@ function checkQuery() {
   }
 
   if (request.loginNameList != null) {
-    query.loginNameList = request.loginNameList.join(',')
+    query.loginNameList = request.loginNameList
+      .map(name => {
+        const nameParts = name.split('(')
+        return nameParts[0].trim()
+      })
+      .join(',')
+    // query.loginNameList = request.loginNameList.join(',')
   }
 
   query.affiliateLevel = request.affiliateLevel
@@ -417,8 +442,8 @@ function checkQuery() {
 async function loadRecord() {
   page.loading = true
   const query = checkQuery()
-  const { data: ret } = await queryDailySummary(query)
-  const { data: ret1 } = await queryDailySummaryTotal(query)
+  const { data: ret } = await queryDailySummaryList(query)
+  const { data: ret1 } = await queryDailySummaryTotalList(query)
   total.data = ret1
   page.pages = ret.pages
   page.records = ret.records

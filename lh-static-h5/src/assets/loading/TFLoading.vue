@@ -1,6 +1,6 @@
 <template>
   <div class="loading">
-    <img src="../../assets/logo.png" />
+    <img src="../../assets/logo.svg" alt="logo" />
     <ul>
       <li v-for="v in 5" :key="v"></li>
     </ul>
@@ -26,7 +26,7 @@
 
 <style scoped lang="scss">
 .logo {
-  background-image: url("../../assets/logo.png");
+  background-image: url("../../assets/logo.svg");
   background-position: center;
   background-repeat: no-repeat;
   width: 389px;

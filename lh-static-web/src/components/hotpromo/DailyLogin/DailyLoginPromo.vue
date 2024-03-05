@@ -124,7 +124,7 @@ onMounted(() => {
     display: flex;
     flex-wrap: wrap;
     column-gap: 40px;
-    padding: 40px;
+    padding: 30px 30px 20px;
     background: #ffffffcc;
     .mth {
       &.check-in {

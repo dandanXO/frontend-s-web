@@ -245,6 +245,9 @@ onMounted(() => {
   if (isRefreshingBalance.value) {
     setTimer();
   }
+
+  isExpanded.value = true;
+  transferBox.value = 160;
 });
 </script>
 <style scoped lang="scss">

@@ -44,16 +44,16 @@
                   }}
                 </div>
               </Transition>
-                <div class="subtitle">
-                  {{
-                    hotgame.content &&
-                    hotgame.content[hotgame.currentProvider.toLowerCase()] &&
-                    hotgame.content[hotgame.currentProvider.toLowerCase()].subtitle
-                  }}
-                </div>
+              <div class="subtitle">
+                {{
+                  hotgame.content &&
+                  hotgame.content[hotgame.currentProvider.toLowerCase()] &&
+                  hotgame.content[hotgame.currentProvider.toLowerCase()].subtitle
+                }}
+              </div>
               <!-- <div class="subtitle">{{ hotgame.content[hotgame.currentProvider.toLowerCase()] }}</div> -->
             </div>
-            <div>
+            <div class="description">
               <div class="desc">
                 {{
                   hotgame.content &&
@@ -61,7 +61,7 @@
                   hotgame.content[hotgame.currentProvider.toLowerCase()].desc
                 }}
               </div>
-              <div class="desc">还有超多独家创新玩法，足够新颖，极易操作的游戏界面， 更是在您游戏过程中增光添彩！</div>
+              <!-- <div class="desc">还有超多独家创新玩法，足够新颖，极易操作的游戏界面， 更是在您游戏过程中增光添彩！</div> -->
             </div>
             <div v-if="hotgame.content.isShowSportsIcon" :class="`game-icon-wrapper ${hotgame.subtitle.toLowerCase()}`">
               <img
@@ -98,24 +98,54 @@
                 </div> -->
               </div>
             </div>
-            <el-button size="small" class="common-btn game-start-btn" @click="onEnterGameClick(hotgame, hotgame.type)">
-              {{ hotgame.type !== "slot" ? `进入游戏` : `进入场馆` }}
-            </el-button>
+            <template v-if="hotgame.currentPlat?.underMaintenance === true ? 'maintenance' : ''">
+              <el-button size="small" class="common-btn game-start-btn btn-maintenance">
+                <span class="maintenance-state">
+                  <img src="../../assets/svg/maintenance-icon.svg" />
+                  维护中
+                </span>
+              </el-button>
+            </template>
+            <template v-else>
+              <el-button
+                size="small"
+                class="common-btn game-start-btn"
+                @click="onEnterGameClick(hotgame, hotgame.type)"
+              >
+                {{ hotgame.type !== "slot" ? `进入游戏` : `进入场馆` }}
+              </el-button>
+            </template>
+
+            <p
+              v-if="
+                hotgame.currentPlat?.underMaintenance === true &&
+                hotgame.currentPlat?.maintenanceStartTime &&
+                hotgame.currentPlat?.maintenanceEndTime
+              "
+              class="maintenance-p"
+            >
+              维护时间:
+              <em>
+                {{ moment(hotgame.currentPlat?.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
+                {{ moment(hotgame.currentPlat?.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
+              </em>
+            </p>
+            <p class="maintenance-p" v-else>&nbsp;</p>
           </div>
           <div class="right-container">
             <Transition :key="transitionKey" appear>
               <img
                 v-if="
-                hotgame.content &&
-                hotgame.content[hotgame.currentProvider] &&
-                hotgame.content[hotgame.currentProvider].charImgPath
-              "
+                  hotgame.content &&
+                  hotgame.content[hotgame.currentProvider] &&
+                  hotgame.content[hotgame.currentProvider].charImgPath
+                "
                 :class="`character-${hotgame.subtitle.toLowerCase()}-${hotgame.currentProvider}`"
                 :src="
-                require(`../../assets/home/hotgame/content/${hotgame.section}/${
-                  hotgame.content[hotgame.currentProvider].charImgPath
-                }/character.png`)
-              "
+                  require(`../../assets/home/hotgame/content/${hotgame.section}/${
+                    hotgame.content[hotgame.currentProvider].charImgPath
+                  }/character.png`)
+                "
               />
             </Transition>
           </div>
@@ -144,6 +174,7 @@ import {
   pokerPlatforms,
   sportsPlatforms
 } from "@/shared/platformArray";
+import moment from "moment";
 
 const store = userStore();
 const router = useRouter();
@@ -703,7 +734,7 @@ const checkPlatforms = () => {
   console.log(hotgameData.value);
 };
 const updatePlatforms = (platforms, item, keyModifier) => {
-  console.log(item.subtitle)
+  // console.log(item.subtitle)
   platforms.forEach((p, i) => {
     const newObject = {
       title: p.cnname,
@@ -725,7 +756,7 @@ $transition_timer: 0.5s;
 
 .hotgame-section {
   width: 80%;
-  max-width: 1040px;
+  max-width: 1100px;
   margin: 0 auto;
 
   .hotgame-container {
@@ -733,18 +764,19 @@ $transition_timer: 0.5s;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.3rem;
     margin: 2.5rem 0 0 0;
 
     .hotgame-wrapper {
       display: flex;
       align-items: center;
+      // overflow: hidden;
+      height: 600px;
 
       .hotgame-banner-wrapper {
         display: flex;
 
         .hotgame-banner {
-          width: 60px;
           width: 65px;
           height: 36.5rem;
           // height: 28.5rem;
@@ -785,12 +817,17 @@ $transition_timer: 0.5s;
 
             &.highlight {
               border-bottom: 0.1rem solid white;
+
+              & ~ .hotgame-text {
+                color: #fff;
+              }
             }
           }
 
           .hotgame-text {
+            color: #000;
             display: flex;
-            gap: 5px;
+            gap: 7px;
             margin: 0 0.25rem 3rem 0;
 
             .title {
@@ -799,7 +836,7 @@ $transition_timer: 0.5s;
               text-align: center;
               font-family: PingFang SC;
               font-size: 1.156rem;
-              font-weight: 500;
+              font-weight: 600;
               line-height: 1.5rem;
             }
 
@@ -809,7 +846,7 @@ $transition_timer: 0.5s;
               text-align: center;
               font-family: PingFang SC;
               font-size: 0.578rem;
-              font-weight: 400;
+              font-weight: 500;
               line-height: 0.75rem;
               margin: 0.075rem 0 0 0;
             }
@@ -844,9 +881,10 @@ $transition_timer: 0.5s;
 
         &.show {
           width: 38.5rem;
-          height: 100%;
-          margin: 0 0 0 0px;
+          // margin: 0 0 0 0px;
+          margin: 0 -10px 0 0px;
           padding-left: 0.75rem;
+          height: 500px;
         }
 
         .left-container {
@@ -856,40 +894,52 @@ $transition_timer: 0.5s;
           position: relative;
           width: 55%;
 
+          //&.maintenance {
+          //  filter: grayscale(0.8);
+          //
+          //  .game-start-btn{
+          //    pointer-events: none;
+          //  }
+          //}
+
           .title-wrapper {
             font-family: "YiHei";
             font-style: normal;
             font-weight: 400;
 
             line-height: normal;
-
             .title {
               // font-size: 4.24106rem;
               font-size: 2.7106rem;
               word-break: keep-all;
-            background: linear-gradient(180deg, #AE92FF 0%, #56C2FF 100%);
+              background: linear-gradient(180deg, #ae92ff 0%, #56c2ff 100%);
 
-
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
-            filter: drop-shadow(2px 1px #5799e3);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;
+              text-fill-color: transparent;
+              filter: drop-shadow(2px 1px #5799e3);
             }
 
             .subtitle {
               font-size: 2.70775rem;
-            background: linear-gradient(180deg, #AE92FF 0%, #56C2FF 100%);
+              background: linear-gradient(180deg, #ae92ff 0%, #56c2ff 100%);
 
-
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
-            filter: drop-shadow(2px 1px #5799e3);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;
+              text-fill-color: transparent;
+              filter: drop-shadow(2px 1px #5799e3);
             }
           }
 
+          .description {
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          }
           .desc {
             color: #3063ab;
             font-family: Microsoft YaHei;
@@ -962,6 +1012,17 @@ $transition_timer: 0.5s;
             }
           }
 
+          .maintenance-p {
+            margin: 0px 3px 0px;
+            font-size: 16px;
+            color: $font-1;
+
+            em {
+              font-weight: bold;
+              font-style: initial;
+            }
+          }
+
           .game-start-btn {
             width: 10rem;
             height: 2.5rem;
@@ -973,12 +1034,30 @@ $transition_timer: 0.5s;
             font-weight: 400;
             line-height: 2.5rem;
 
+            &.btn-maintenance {
+              background: rgba(0, 0, 0, 0.3);
+              pointer-events: none;
+              border: none;
+              box-shadow: none;
+
+              .maintenance-state {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
+
+                img {
+                  width: 22px;
+                }
+              }
+            }
+
             &:hover {
               filter: brightness(1.2);
             }
             &:active {
               filter: brightness(1.1);
-              transform: translate(0px ,1px);
+              transform: translate(0px, 1px);
             }
           }
         }
@@ -988,6 +1067,42 @@ $transition_timer: 0.5s;
           align-items: flex-end;
           position: relative;
           width: 45%;
+
+          //&.maintenance {
+          //  filter: grayscale(0.8);
+          //}
+
+          //.maintenance-box {
+          //  position: absolute;
+          //  top: 10%;
+          //  width: 94%;
+          //  left: 3%;
+          //  right: 3%;
+          //  height: 80%;
+          //  padding:15px 10px;
+          //  color: #ffffff;
+          //  font-size: 24px;
+          //  font-weight: bold;
+          //  z-index: 33;
+          //  display: flex;
+          //  flex-direction: column;
+          //  justify-content: center;
+          //  align-items: center;
+          //  gap: 15px;
+          //
+          //  background: rgba(2, 9, 73, 0.4);
+          //  border-radius: 30px;
+          //
+          //  p {
+          //    font-size: 30px;
+          //    margin-top: 3px;
+          //    margin-bottom: 3px;
+          //  }
+          //
+          //  .small-size {
+          //    font-size: 16px;
+          //  }
+          //}
 
           img {
             position: relative;
@@ -1020,7 +1135,7 @@ $transition_timer: 0.5s;
 
           .character-esports-rg {
             position: relative;
-            right: 1rem;
+            right: 0rem;
             height: 27rem;
           }
 
@@ -1028,7 +1143,7 @@ $transition_timer: 0.5s;
           .character-sports-im,
           .character-sports-saba {
             position: relative;
-            right: 1rem;
+            right: 0rem;
             height: 25rem;
           }
 
@@ -1036,9 +1151,14 @@ $transition_timer: 0.5s;
           .character-sports-panda {
             position: relative;
             right: 0;
-            height: 25rem;
+            height: 26rem;
           }
 
+          .character-sports-pm {
+            position: relative;
+            right: 0.5rem;
+            height: 24rem;
+          }
           .character-sports-cr {
             position: relative;
             right: 1.5rem;
@@ -1049,7 +1169,7 @@ $transition_timer: 0.5s;
           .character-casino-ag {
             position: relative;
             right: 0.5rem;
-            height: 23rem;
+            height: 28rem;
           }
 
           .character-casino-db {
@@ -1061,7 +1181,7 @@ $transition_timer: 0.5s;
           .character-casino-bg {
             position: relative;
             right: 1rem;
-            height: 23rem;
+            height: 27rem;
           }
 
           .character-casino-we {
@@ -1104,7 +1224,7 @@ $transition_timer: 0.5s;
 
           .character-board-leyou {
             position: relative;
-            right: 4rem;
+            // right: 4rem;
             height: 23rem;
           }
 
@@ -1138,6 +1258,11 @@ $transition_timer: 0.5s;
             position: relative;
             right: 2.75rem;
             height: 23rem;
+          }
+          .character-slots-ag {
+            position: relative;
+            right: 4rem;
+            height: 24rem;
           }
 
           // fishing
@@ -1192,4 +1317,3 @@ $transition_timer: 0.5s;
   transform: translateY(100px);
 }
 </style>
-

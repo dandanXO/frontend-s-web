@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md" style="overflow: auto; margin: 8px 8px">
+  <div class="q-pa-xs" style="overflow: auto; margin: 2px 8px">
     <div class="q-mb-lg">
       <span class="additional-tips">如果遇到存款问题，请立即联系在线客服解决！</span>
     </div>
@@ -84,7 +84,7 @@
           </template>
         </q-select>
 
-        <div class="q-mt-md q-mb-md text-grey text-bold q-pb-md">
+        <div class="q-mt-sm q-mb-sm text-grey text-bold ">
           最低金额:
           {{ calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0 }}
           <br />
@@ -96,7 +96,7 @@
           }}
         </div>
 
-        <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="兑换率">
+        <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-xs" label="兑换率">
           <span class="text-positive">
             1.00 USDT ≈ {{ activeMethod.currencyRate }}
             {{ store.currency.value }}
@@ -113,7 +113,7 @@
         ></BankComponent>
         <q-select
           ref="offerRef"
-          class="deposit-selection q-mt-md"
+          class="deposit-selection q-mt-xs"
           label="选择优惠"
           filled
           :options="unselectedPrivileges"
@@ -134,8 +134,6 @@
             </q-item>
           </template>
         </q-select>
-        <div class="q-mt-md" v-html="activeMethod.msg"></div>
-        <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
         <div class="q-mt-md">
           <q-btn
             class="common-large-btn"
@@ -145,6 +143,9 @@
             label="确定存款"
           />
         </div>
+        <div class="q-mt-sm" v-html="activeMethod.msg"></div>
+        <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
+
       </q-form>
     </div>
   </div>
@@ -182,16 +183,16 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog class="modal-common-div" width="100%" v-model="isNoBankCard" no-backdrop-dismiss no-esc-dismiss>
+  <q-dialog class="modal-common-div" width="100%" v-model="isNoRealName" no-backdrop-dismiss no-esc-dismiss>
     <q-card style="width: 100%; padding: 1rem 0.5rem" class="">
       <q-card-section class="contents q-mb-md">
         <strong>温馨提示</strong>
         <br />
         <br />
-        为保证资金安全，存款前先绑定银行卡
+        您还未绑定真实姓名，请前往绑定。
       </q-card-section>
       <q-card-actions align="right">
-        <router-link to="/account/withdraw">
+        <router-link to="/account/personal">
           <q-btn class="common-md-btn" label="前往绑定" color="brightbtn" />
         </router-link>
       </q-card-actions>
@@ -219,10 +220,16 @@ const router = useRouter();
 const formRef = ref();
 const isNewUser = ref(false);
 const isNoBankCard = ref(false);
+const isNoRealName= ref(false);
 const isDeposited = ref(false);
 const checkNewUser = () => {
   if (store.phone === "" || store.phone === null) {
     isNewUser.value = true;
+    return;
+  }
+  if (store.realName === "" || store.realName === null) {
+    isNoRealName.value = true;
+    return;
   }
   // else {
   //   api.get("/session/bankCard").then((response) => {
@@ -290,6 +297,7 @@ const blurCode = () => {
 
 const verifyDepositAmount = ref([
   (val) => !!val || "请输入金额",
+  (val) => (val && /^\d+$/.test(val)) || '存款金额不能带有小数',
   (val) =>
     val > calculatedMinDeposit.value - 1 ||
     "存款应介于 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
@@ -461,6 +469,8 @@ const depositAmtRef = ref("");
 async function confirmDeposit() {
   if (!extensionState.value && (store.phone === "" || store.phone === null)) {
     isNewUser.value = true;
+  }else if (!extensionState.value && (store.realName === "" || store.realName === null)) {
+    isNoRealName.value = true;
   } else {
     btnLoading.value = true;
     depositAmtRef.value.validate();

@@ -107,6 +107,8 @@ const selectedIds = ref({});
 const store = userStore();
 const showMailId = ref();
 
+const activeNames= ref();
+
 const mailboxMessageTypeData = ref([
   { num: 1, type: "NOTIFICATION", name: "通知" },
   { num: 2, type: "ACTIVITY", name: "活动" },
@@ -127,6 +129,10 @@ const changeMailboxType = (nk) => {
 
   loadPersonalMailbox();
 };
+
+const handleChange= () => {
+
+}
 
 const mailboxNotifyState = reactive({
   NOTIFICATION: [],
