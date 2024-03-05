@@ -129,7 +129,7 @@
       >
         <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
           <router-link
-            :to="`/member/details/${scope.row.memberId}?site=${request.siteId}`"
+            :to="`/member/details/${scope.row.siteMemberId}?site=${request.siteId}`"
           >
             <el-link type="primary">{{ scope.row.member }}</el-link>
           </router-link>
@@ -228,58 +228,6 @@
       :current-page="request.current"
     />
 
-    <el-dialog
-      :title="t('fields.toreview')"
-      v-model="uiControl.dialogVisible"
-      append-to-body
-      width="500px"
-      :close-on-click-modal="false"
-      :close-on-press-escape="false"
-    >
-      <div class="dialog-footer">
-        <el-form
-          ref="reviewForm"
-          :model="form"
-          :inline="true"
-          size="small"
-          label-width="150px"
-        >
-          <el-form-item :label="t('fields.review')" prop="review">
-            <el-select
-              v-model="form.review"
-              class="filter-item"
-              style="width: 120px; margin-left: 5px"
-            >
-              <el-option
-                v-for="item in reviewList.list"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
-          </el-form-item>
-
-          <el-form-item :label="t('fields.remark')" prop="remark">
-            <el-input
-              v-model="form.remark"
-              style="width: 350px;"
-              :rows="7"
-              type="textarea"
-            />
-          </el-form-item>
-
-          <div class="dialog-footer">
-            <el-button @click="uiControl.dialogVisible = false">
-              {{ t('fields.cancel') }}
-            </el-button>
-            <el-button type="primary" @click="submit">
-              {{ t('fields.confirm') }}
-            </el-button>
-          </div>
-        </el-form>
-      </div>
-    </el-dialog>
-
     <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
                :close-on-click-modal="false" :close-on-press-escape="false"
     >
@@ -297,13 +245,12 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getMemberProfitRanking, addReview } from '../../../api/report-summary'
+import { getMemberProfitRanking } from '../../../api/report-summary'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
-// import { getVipList } from '../../../api/vip'
 import { getFinancialLevels } from '../../../api/financial-level'
 import { selectList } from "../../../api/risk-level"
 import {
@@ -324,9 +271,6 @@ const site = ref(null)
 const siteList = reactive({
   list: [],
 })
-// const vipList = reactive({
-//   list: [],
-// })
 const financialLevelList = reactive({
   list: [],
 })
@@ -344,41 +288,10 @@ const sortList = reactive({
   ],
 })
 
-const reviewList = reactive({
-  list: [
-    { label: t('fields.reviewno'), value: '1' },
-    { label: t('fields.reviewsuccess'), value: '2' },
-    { label: t('fields.reviewfail'), value: '3' },
-  ],
-})
-
-const reviewStatusList = reactive({
-  list: [
-    { label: t('fields.allreviewstatus'), value: '1' },
-    { label: t('fields.reviewno'), value: '未复核' },
-    { label: t('fields.reviewsuccess'), value: '正确' },
-    { label: t('fields.reviewfail'), value: '错误' },
-  ],
-})
-
-const profitList = reactive({
-  list: [
-    { label: t('fields.allprofit'), value: '1' },
-    { label: t('fields.profitpositive'), value: '2' },
-    { label: t('fields.profitnegative'), value: '3' },
-  ],
-})
-
 const page = reactive({
   pages: 0,
   records: [],
   loading: false,
-})
-const reviewForm = ref(null)
-const form = reactive({
-  id: null,
-  review: null,
-  remark: null,
 })
 
 const request = reactive({
@@ -388,7 +301,6 @@ const request = reactive({
   recordTime: [defaultStartDate, defaultEndDate],
   siteId: null,
   sort: null,
-  // vip: null,
   financialLevel: null,
   profit: null,
   reviewStatus: null,
@@ -425,26 +337,12 @@ function disabledDate(time) {
   )
 }
 
-function submit() {
-  reviewForm.value.validate(async valid => {
-    if (valid) {
-      await addReview(form)
-      uiControl.dialogVisible = false
-      await loadMemberRecord()
-    }
-  })
-}
-
 function resetQuery() {
   request.name = null
   request.recordTime = [defaultStartDate, defaultEndDate]
   request.siteId = site.value ? site.value.id : null
   request.sort = sortList.list[0].value
-
-  // request.vip = vipList.list[0].id
   request.financialLevel = financialLevelList.list[0].id
-  request.profit = profitList.list[0].value
-  request.reviewStatus = reviewStatusList.list[0].value
   request.min = ''
   request.max = ''
   request.reviewby = ''
@@ -487,17 +385,6 @@ async function loadSites() {
   siteList.list = site
 }
 
-// async function loadVipList() {
-//   var ret = []
-//   ret.push({ id: '1', name: t('fields.allvip') })
-//   const { data: vList } = await getVipList({ siteId: request.siteId })
-//   vList.forEach((item, index) => {
-//     ret.push(item)
-//   })
-//   vipList.list = ret
-//   request.vip = vipList.list[0].id
-// }
-
 const loadRiskLevels = async () => {
   var ret = []
   ret.push({ id: '1', levelName: t('fields.allrisklevel') })
@@ -538,8 +425,6 @@ onMounted(async () => {
     request.siteId = 1
   }
   request.sort = sortList.list[0].value
-  request.profit = profitList.list[0].value
-  request.reviewStatus = reviewStatusList.list[0].value
   loadFinancialLevelList()
   loadRiskLevels()
   await loadMemberRecord()
