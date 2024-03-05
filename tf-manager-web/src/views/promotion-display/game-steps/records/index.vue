@@ -22,9 +22,12 @@
           format="DD/MM/YYYY"
           value-format="YYYY-MM-DD"
           size="small"
-          type="date"
-          :placeholder="t('fields.createTime')"
-          style="width: 180px; margin-left: 10px;"
+          type="daterange"
+          range-separator=":"
+          :start-placeholder="t('fields.startDate')"
+          :end-placeholder="t('fields.endDate')"
+          style="width: 350px; margin-left: 10px;"
+          :shortcuts="shortcuts"
           :editable="false"
           :clearable="false"
         />
@@ -60,6 +63,7 @@
       :empty-text="t('fields.noData')"
     >
       <el-table-column prop="loginName" :label="t('fields.loginName')" width="200" />
+      <el-table-column prop="stage" :label="t('fields.stage')" width="180" />
       <el-table-column prop="previousPlace" :label="t('fields.previousPlace')" width="180" />
       <el-table-column prop="steps" :label="t('fields.steps')" width="180" />
       <el-table-column prop="currentPlace" :label="t('fields.currentPlace')" width="180" />
@@ -119,6 +123,7 @@ import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 import { getGameStepsRecords, getGameStepsRecordsForExport } from "@/api/game-steps";
 import moment from "moment";
+import { getShortcuts } from '@/utils/datetime'
 
 const { t } = useI18n();
 const store = useStore();
@@ -127,6 +132,8 @@ const site = ref(null);
 const uiControl = reactive({
   messageVisible: false
 });
+const defaultDate = convertDate(new Date())
+const shortcuts = getShortcuts(t)
 
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD');
@@ -137,7 +144,7 @@ const request = reactive({
   current: 1,
   siteId: null,
   loginName: null,
-  createTime: convertDate(new Date())
+  createTime: [defaultDate, defaultDate]
 });
 
 const sites = reactive({
@@ -169,7 +176,7 @@ async function loadSites() {
 function resetQuery() {
   request.siteId = site.value.id;
   request.loginName = null;
-  request.createTime = convertDate(new Date());
+  request.createTime = [defaultDate, defaultDate];
 }
 
 function checkQuery() {
@@ -180,6 +187,12 @@ function checkQuery() {
       query[key] = value;
     }
   });
+
+  if (request.createTime !== null) {
+    if (request.createTime.length === 2) {
+      query.createTime = request.createTime.join(',')
+    }
+  }
   return query;
 }
 
