@@ -116,21 +116,23 @@
               </el-button>
             </template>
 
-            <p
-              v-if="
-                hotgame.currentPlat?.underMaintenance === true &&
-                hotgame.currentPlat?.maintenanceStartTime &&
-                hotgame.currentPlat?.maintenanceEndTime
-              "
-              class="maintenance-p"
-            >
-              维护时间:
-              <em>
-                {{ moment(hotgame.currentPlat?.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                {{ moment(hotgame.currentPlat?.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
-              </em>
-            </p>
-            <p class="maintenance-p" v-else>&nbsp;</p>
+            <div style="height: 50px">
+              <p
+                v-if="
+                  hotgame.currentPlat?.underMaintenance === true &&
+                  hotgame.currentPlat?.maintenanceStartTime &&
+                  hotgame.currentPlat?.maintenanceEndTime
+                "
+                class="maintenance-p"
+              >
+                维护时间:
+                <em>
+                  {{ moment(hotgame.currentPlat?.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
+                  {{ moment(hotgame.currentPlat?.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
+                </em>
+              </p>
+              <p class="maintenance-p" v-else>&nbsp;</p>
+            </div>
           </div>
           <div class="right-container">
             <Transition :key="transitionKey" appear>
@@ -904,7 +906,7 @@ $transition_timer: 0.5s;
         .left-container {
           display: flex;
           flex-direction: column;
-          gap: 1rem;
+          gap: 0.8rem;
           position: relative;
           width: 55%;
 
