@@ -45,7 +45,8 @@
     padding-right: 0px;
     gap: 100px;
     grid-template-columns: 52% 48%;
-    min-height: 620px;
+    min-height: 675px;
+    overflow: visible;
 
     .platform-item {
       min-width: 320px;
@@ -54,10 +55,10 @@
       flex-direction: column;
       justify-content: flex-start;
       margin: auto 0;
-      padding-top: 30px;
+      padding-top: 0px;
       padding-bottom:30px;
       position: relative;
-      min-height: 620px;
+      min-height: 675px;
 
       &--img {
         img {
@@ -77,6 +78,7 @@
         font-size: 80px;
         line-height: 1.1;
         text-align: left;
+        padding-top: 30px;
 
         //background: linear-gradient(180deg, #3AACFF 30.46%, #FF53F8 71.84%);
         // background: linear-gradient(180deg, #c2e9fb 0%, #a1c4fc 100%);
@@ -242,7 +244,7 @@
 
         .btn-blue {
           height: 3rem;
-          min-width: 7rem;
+          min-width: 155px;
           border-radius: 5rem;
           display: inline-flex;
           align-items: center;
