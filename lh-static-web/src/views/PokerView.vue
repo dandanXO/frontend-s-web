@@ -16,5 +16,5 @@ import { pokerPlatforms } from "@/shared/platformArray";
 const platformType = ref("poker");
 const platformGameType = ref("POKER");
 const platformName = ref("POKER");
-const platformPattern = ref(false);
+const platformPattern = ref(true);
 </script>

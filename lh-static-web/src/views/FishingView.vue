@@ -17,5 +17,5 @@ import { fishingPlatforms } from "@/shared/platformArray";
 const platformType = ref("fishing");
 const platformGameType = ref("FISH");
 const platformName = ref("FISHING");
-const platformPattern = ref(false);
+const platformPattern = ref(true);
 </script>

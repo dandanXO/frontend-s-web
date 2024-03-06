@@ -17,5 +17,5 @@ import { slotPlatforms } from "@/shared/platformArray";
 const platformType = ref("slot");
 const platformGameType = ref("SLOT");
 const platformName = ref("SLOTS");
-const platformPattern = ref(false);
+const platformPattern = ref(true);
 </script>

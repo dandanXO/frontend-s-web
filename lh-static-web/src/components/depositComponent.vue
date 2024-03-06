@@ -36,6 +36,7 @@
       </div>
       <div class="deposit-container" v-else>
         <el-form
+          class="deposit-form"
           ref="formRef"
           :model="form"
           :rules="rules"
@@ -774,11 +775,16 @@ onMounted(() => {
     .el-select__wrapper {
       width: 350px;
     }
-
   }
 }
 </style>
 <style scoped lang="scss">
+.deposit-form {
+  :deep(.el-input__wrapper), :deep(.el-select__wrapper) {
+    background-color: #f7f8fb;
+    box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+  }
+}
 
 .txt-center {
   margin: 50px auto 20px;

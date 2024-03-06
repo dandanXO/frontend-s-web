@@ -16,5 +16,5 @@ import { liveCasinoPlatforms } from "@/shared/platformArray";
 const platformType = ref("live");
 const platformGameType = ref("LIVE");
 const platformName = ref("LIVE CASINO");
-const platformPattern = ref(false);
+const platformPattern = ref(true);
 </script>
