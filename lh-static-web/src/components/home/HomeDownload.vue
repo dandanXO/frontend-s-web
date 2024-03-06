@@ -25,7 +25,7 @@
               <div class="dl-wrapper">
                 <VueQRCodeComponent :size="120" :text="ui.downloadUrl" class="dl-frame" />
                 <div class="link-desc">手机免费下载地址</div>
-                <div class="link"><a :href="ui.downloadUrl">{{ ui.downloadUrl }}</a></div>
+                <div class="link"><a :href="ui.downloadUrl" target="_blank">{{ ui.downloadUrl }}</a></div>
               </div>
             </div>
           </div>
