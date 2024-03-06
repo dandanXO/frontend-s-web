@@ -1719,7 +1719,7 @@ body {
     box-shadow: $shadow-header;
 
     .top-nav-inner {
-      max-width: $maxwidth;
+      max-width: 1250px;
       margin: 0 auto;
       width: 100%;
       display: flex;
@@ -1728,7 +1728,7 @@ body {
       gap: 15px;
 
       &.logged-in-nav {
-        max-width: 1420px;
+        max-width: 1400px;
       }
 
       .logospon {
@@ -1783,7 +1783,7 @@ body {
           }
 
           &:hover {
-            filter: brightness(0.8);
+            filter: brightness(0.85);
           }
 
           .menu-icon {
