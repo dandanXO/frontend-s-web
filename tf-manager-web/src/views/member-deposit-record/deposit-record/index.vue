@@ -110,6 +110,7 @@
           size="mini"
           type="success"
           @click="loadRecord()"
+          :disabled="page.loading"
         >
           {{ t('fields.search') }}
         </el-button>

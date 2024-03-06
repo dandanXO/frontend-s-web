@@ -39,7 +39,7 @@
           :editable="false"
           :clearable="false"
         />
-        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadWithdrawalBankBlacklist">
+        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadWithdrawalBankBlacklist" :disabled="page.loading">
           {{ t('fields.search') }}
         </el-button>
         <el-button style="margin-left: 20px" icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">

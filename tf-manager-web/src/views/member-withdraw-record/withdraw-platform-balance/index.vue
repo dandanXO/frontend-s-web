@@ -18,7 +18,7 @@
             :value="item.id"
           />
         </el-select>
-        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadBalance()">
+        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadBalance()" :disabled="page.loading">
           {{ t('fields.search') }}
         </el-button>
       </div>
