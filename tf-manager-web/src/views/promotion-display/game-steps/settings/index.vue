@@ -453,6 +453,7 @@ onMounted(async() => {
 }
 
 .param-input {
+  display: inline-block;
   width: 170px;
   margin-left: 5px;
   margin-right: 15px;
