@@ -56,17 +56,19 @@
       justify-content: flex-start;
       margin: auto 0;
       padding-top: 0px;
-      padding-bottom:30px;
+      padding-bottom:0px;
       position: relative;
       min-height: 675px;
 
       &--img {
+        justify-content: center;
         img {
           display: block;
           //width: 100%;
           transform: scale(1.25);
           width: 748px;
           max-width: 749px;
+
         }
       }
 
