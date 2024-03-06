@@ -175,7 +175,7 @@
 
     <div class="contact-us">
       <div class="register-btn-wrapper">
-        <q-btn :href="'https://lh1-affiliate.phoicynxeey.com?agent=' + (affCode ? affCode : '')" label="立即申请代理" size="lg" class="register-btn">
+        <q-btn :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')" label="立即申请代理" size="lg" class="register-btn">
           <img class="mask-img" src="../assets/images/affiliate/register-btn-icon.png" alt="" />
           <img class="mask-img2" src="../assets/images/affiliate/register-btn-icon2.png" alt="" />
         </q-btn>

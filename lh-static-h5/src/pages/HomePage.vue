@@ -19,7 +19,7 @@
     <div class="header-left">
       <img alt="logo" src="../assets/logo.svg" />
     </div>
-    <div class="header-right" @click="router.push('/account/inbox')">
+    <div class="header-right" @click="router.push('/account/inbox?redirect=home')">
       <img class="btn-pointer" src="../assets/images/home/home-message-box.png" />
       <div class="red-dot" v-if="unreadInboxMail > 0" />
     </div>
@@ -97,19 +97,19 @@
       <span>{{ store.token ? "中心钱包" : "登录/注册后查看" }}</span>
     </div>
     <div class="menulist">
-      <router-link to="/finance/deposit?redirect=/" class="men btn-pointer">
+      <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/deposit-mid.png" />
         <div class="">存款</div>
       </router-link>
-      <router-link to="/finance/withdraw?redirect=/" class="men btn-pointer">
+      <router-link to="/finance/withdraw?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/withdraw-mid.png" />
         <div class="">取款</div>
       </router-link>
-      <router-link to="/account/transfer?redirect=/" class="men btn-pointer">
+      <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/transfer-mid.png" />
         <div class="">转账</div>
       </router-link>
-      <router-link to="/account/vip" class="men btn-pointer">
+      <router-link to="/account/vip?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/vip-mid.png" />
         <div class="">VIP</div>
       </router-link>
