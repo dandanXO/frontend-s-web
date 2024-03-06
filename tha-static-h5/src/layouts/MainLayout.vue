@@ -102,21 +102,21 @@
           <span class="footer-label">{{ $t("lang.home_page") }}</span>
         </q-route-tab>
 
-        <q-route-tab to="/finance/deposit" name="deposit">
-          <img
-            class="footer-icon"
-            :src="tab === 'deposit' ? footers['deposit']['active'] : footers['deposit']['icon']"
-          />
-          <span class="footer-label">{{ $t("lang.deposit_footer") }}</span>
-        </q-route-tab>
-
-        <q-route-tab to="/finance/withdraw" name="deposit" class="middle-menu">
+        <q-route-tab to="/finance/withdraw" name="withdraw">
           <img
             class="footer-icon"
             :src="tab === 'withdraw' ? footers['withdraw']['active'] : footers['withdraw']['icon']"
           />
-  
           <span class="footer-label">{{ $t("lang.withdraw_footer") }}</span>
+        </q-route-tab>
+
+        <q-route-tab to="/finance/deposit" name="deposit" class="middle-menu">
+          <img
+            class="footer-icon"
+            :src="tab === 'deposit' ? footers['deposit']['active'] : footers['deposit']['icon']"
+          />
+
+          <span class="footer-label">{{ $t("lang.deposit_footer") }}</span>
         </q-route-tab>
 
         <!-- <q-route-tab to="/finance/deposit" name="deposit">
@@ -167,7 +167,7 @@ import { storeToRefs } from "pinia";
 import { i18nStore } from "src/router/language";
 import { useI18n } from "vue-i18n";
 import { openLiveChat } from "src/boot/utils";
-import AppDownload from '../components/AppDownload.vue';
+import AppDownload from "../components/AppDownload.vue";
 
 export default defineComponent({
   name: "MainLayout",
@@ -349,12 +349,12 @@ export default defineComponent({
         active: require("../assets/images/menu/home-icon-active-thai-theme.png")
       },
       deposit: {
-        icon: require("../assets/images/menu/deposit-icon-thai-theme.png"),
-        active: require("../assets/images/menu/deposit-icon-active-thai-theme.png")
-      },
-      withdraw: {
         icon: require("../assets/images/menu/withdraw-icon-thai-theme.png"),
         active: require("../assets/images/menu/withdraw-icon-thai-theme.png")
+      },
+      withdraw: {
+        icon: require("../assets/images/menu/deposit-icon-thai-theme.png"),
+        active: require("../assets/images/menu/deposit-icon-active-thai-theme.png")
       },
       cs: {
         icon: require("../assets/images/menu/cs-icon-thai-theme.png"),
