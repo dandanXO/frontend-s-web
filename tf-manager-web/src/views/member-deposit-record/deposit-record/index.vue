@@ -927,6 +927,9 @@ async function loadRecord() {
   uiControl.dialogVisible = false
   page.loading = true
 
+  setTimeout(() => {
+    page.loading = false
+  }, 1000);
   const query = checkQuery()
   const { data: ret } = await getDepositRecord(query)
   page.pages = ret.pages
@@ -937,7 +940,6 @@ async function loadRecord() {
   } else {
     page.totalAmount = 0
   }
-
   page.loading = false
 }
 
