@@ -3,7 +3,7 @@
     <q-header v-if="hasPage" :class="hasShadow ? 'with-shadow' : ''">
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
-          <router-link to="/"><img src="../assets/logo.svg" alt="logo" /></router-link>
+          <router-link to="/"><img src="../assets/logo-1.png" alt="logo" /></router-link>
         </div>
         <q-card-actions v-if="!store.hasToken()">
           <q-btn glossy color="brand" to="/login">登录</q-btn>

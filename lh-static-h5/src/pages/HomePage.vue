@@ -2,7 +2,7 @@
   <div v-if="isH5 && topBoxVisible" class="download-top-container">
     <div class="download-top-box">
       <q-icon name="close" @click="closeTopBox" />
-      <img class="headicon" src="../assets/logo.svg" alt="download-logo" />
+      <img class="headicon" src="../assets/logo-1.png" alt="download-logo" />
       <div class="download-txt-container">
         <span class="download-title">雷火电竞app下载</span>
         <span>亚洲第一实时滚球</span>
@@ -17,7 +17,7 @@
 
   <div class="home-header">
     <div class="header-left">
-      <img alt="logo" src="../assets/logo.svg" />
+      <img alt="logo" src="../assets/logo-1.png" />
     </div>
     <div class="header-right" @click="router.push('/account/inbox?redirect=home')">
       <img class="btn-pointer" src="../assets/images/home/home-message-box.png" />
