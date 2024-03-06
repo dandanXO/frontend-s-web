@@ -924,6 +924,7 @@ $transition_timer: 0.5s;
             font-weight: 400;
 
             line-height: normal;
+
             .title {
               // font-size: 4.24106rem;
               font-size: 2.7106rem;
@@ -956,6 +957,7 @@ $transition_timer: 0.5s;
             justify-content: center;
             align-items: center;
           }
+
           .desc {
             color: #3063ab;
             font-family: Microsoft YaHei;
@@ -1011,20 +1013,20 @@ $transition_timer: 0.5s;
                 height: 2rem;
                 padding: 0.25rem;
                 border-radius: 0.3145rem;
-                border: 0.839px solid #fcfcfc;
-                background: linear-gradient(180deg, #c3e8fa 0%, #a1c4fc 100%);
+                border: 1px solid #0E7DFF;
+                background: linear-gradient(180deg, #DCEBFF 0%, #F4F4F4 100%);
                 object-fit: contain;
 
+
                 &.active {
-                  border-radius: 0.3145rem;
-                  border: 2.516px solid #c5ebff;
-                  background: linear-gradient(180deg, #2eadee 0%, #a1c4fc 100%);
+                  border: 0px;
+                  background: linear-gradient(180deg, #7ED5FF 0%, #0E7DFF 100%);
                   box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
                 }
               }
 
               .game-provider-text {
-                color: #3063ab;
+                color: #A5C0E4;
                 text-align: center;
                 font-family: Microsoft YaHei;
                 font-size: 0.73363rem;
@@ -1035,6 +1037,18 @@ $transition_timer: 0.5s;
                 &.active {
                   color: #3063ab;
                   font-weight: 700;
+                }
+              }
+
+              &:hover {
+                .game-provider-text {
+                  color: #3063ab;
+                  font-weight: 700;
+                }
+                .game-provider-img {
+                  border: 0px;
+                  background: linear-gradient(180deg, #7ED5FF 0%, #0E7DFF 100%);
+                  box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
                 }
               }
             }
@@ -1083,6 +1097,7 @@ $transition_timer: 0.5s;
             &:hover {
               filter: brightness(1.2);
             }
+
             &:active {
               filter: brightness(1.1);
               transform: translate(0px, 1px);
@@ -1187,6 +1202,7 @@ $transition_timer: 0.5s;
             right: 0.5rem;
             height: 24rem;
           }
+
           .character-sports-cr {
             position: relative;
             right: 1.5rem;
@@ -1287,6 +1303,7 @@ $transition_timer: 0.5s;
             right: 2.75rem;
             height: 23rem;
           }
+
           .character-slots-ag {
             position: relative;
             right: 4rem;
