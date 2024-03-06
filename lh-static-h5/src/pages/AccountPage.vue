@@ -157,7 +157,7 @@
     <q-item-section class="acct-nav">
       <div class="acct-title">
         <div class="acct-title-1">福利中心 尽享优惠</div>
-        <router-link class="acct-title-link" to="/promo">
+        <router-link class="acct-title-link" to="/promo?redirect=account">
           领取福利
           <q-icon name="chevron_right" size="20px" />
         </router-link>

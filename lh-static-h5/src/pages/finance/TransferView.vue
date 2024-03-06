@@ -4,12 +4,12 @@
       <div class="account-item is-active">
         <span>转账</span>
       </div>
-      <router-link to="/finance/deposit">
+      <router-link to="/finance/deposit?redirect=account/transfer">
         <div class="account-item">
           <span>存款</span>
         </div>
       </router-link>
-      <router-link to="/finance/withdraw">
+      <router-link to="/finance/withdraw?redirect=account/transfer">
         <div class="account-item">
           <span>提款</span>
         </div>

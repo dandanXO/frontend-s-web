@@ -188,7 +188,7 @@
         </div>
       </div>
       <div>
-        <a :href="'https://lh1-affiliate.phoicynxeey.com?agent=' +
+        <a :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' +
           (affCode ? affCode : '')
           " class="agent-reg-btn">立即申请代理</a>
       </div>

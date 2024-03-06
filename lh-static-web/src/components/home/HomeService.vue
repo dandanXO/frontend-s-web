@@ -2,7 +2,7 @@
   <div class="service-section">
     <HomeTitle title="优质服务" subtitle="EXCELLENT SERVICE"></HomeTitle>
     <div class="service-container">
-      <div class="top-container">
+      <div class="top-container" data-aos="fade-down">
         <div class="counter">
           <div class="circle">
             <div class="inner-circle">
@@ -76,7 +76,7 @@
           <div class="title-en">Cooperative Gaming Platform</div>
         </div>
       </div>
-      <div class="bot-container">
+      <div class="bot-container" data-aos="fade-up">
         <div class="item-wrapper">
           <div class="item">
             <div class="left-container">

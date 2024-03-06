@@ -308,6 +308,10 @@ body {
     color: #ffffff;
     background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
     box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
+    filter: brightness(0.9);
+  }
+  &:active {
+    transform: translateY(2px);
   }
 }
 .common-btn {
