@@ -366,6 +366,8 @@ const loadGamePlayerCurrentStep = (callback) => {
       claimedBonus.value = data.claimedPlaces;
       currentStage.value = data.currentStage;
 
+      stageOptions.value = [];
+
       for (let i = 1; i <= currentStage.value; i++) {
         stageOptions.value.push({
           value: i,
@@ -390,6 +392,8 @@ const loadGamePlayerCurrentStepSecond = (callback) => {
       spinLeft.value = data.availableSpin;
       claimedBonus.value = data.claimedPlaces;
       currentStage.value = data.currentStage;
+
+      stageOptions.value = [];
 
       for (let i = 1; i <= currentStage.value; i++) {
         stageOptions.value.push({
