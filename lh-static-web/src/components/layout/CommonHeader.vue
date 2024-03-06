@@ -302,7 +302,7 @@
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-homelogo">
-            <img src="../../assets/images/home/header-logo.png" width="132" />
+            <img src="../../assets/logo-1.png" width="150" />
           </div>
           <div class="acc-dialog-content">
             <LoginDialog
@@ -331,7 +331,7 @@
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-homelogo">
-            <img src="../../assets/images/home/header-logo.png" width="132" />
+            <img src="../../assets/logo-1.png" width="150" />
           </div>
           <RegisterAccount @close-dialog="registerDialogVisible = false" @open-login-dialog="openLoginDialog" />
         </div>
@@ -380,7 +380,7 @@
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-homelogo">
-            <img src="../../assets/images/home/header-logo.png" width="132" />
+            <img src="../../assets/logo-1.png" width="150" />
           </div>
           <div class="acc-dialog-content">
             <ForgotPwdDialog @close-dialog="forgetPassDialogVisible = false" @open-login-dialog="openLoginDialog" />
@@ -2392,7 +2392,7 @@ body {
         padding: 24px 24px 24px 40px;
 
         .acc-dialog-content {
-          padding-top: 30px;
+          padding-top: 26px;
         }
       }
     }
