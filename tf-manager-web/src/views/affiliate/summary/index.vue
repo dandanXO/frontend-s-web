@@ -83,7 +83,7 @@
         :resizable="true"
         :data="page.records"
         v-loading="page.loading"
-        row-key="id"
+        row-key="affiliateId"
         :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
         :empty-text="t('fields.noData')"
         highlight-current-row
@@ -144,7 +144,12 @@
             <span v-formatter="{data: scope.row.bonus, type: 'money'}" />
           </template>
         </el-table-column>
-        <el-table-column prop="rebate" :label="t('fields.rebateAmount')" align="center" width="120">
+        <el-table-column
+          prop="rebate"
+          :label="t('fields.rebateAmount')"
+          align="center"
+          width="120"
+        >
           <template #default="scope">
             $
             <span v-formatter="{data: scope.row.rebate, type: 'money'}" />
@@ -183,13 +188,25 @@
             <span v-formatter="{data: scope.row.payout, type: 'money'}" />
           </template>
         </el-table-column>
-        <el-table-column prop="platformFee" :label="t('fields.platformFee')" align="center" width="120">
+        <el-table-column
+          prop="platformFee"
+          :label="t('fields.platformFee')"
+          align="center"
+          width="120"
+        >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.platformFee, type: 'money'}" />
+            <span
+              v-formatter="{data: scope.row.platformFee, type: 'money'}"
+            />
           </template>
         </el-table-column>
-        <el-table-column prop="paymentFee" :label="t('fields.paymentFee')" align="center" width="120">
+        <el-table-column
+          prop="paymentFee"
+          :label="t('fields.paymentFee')"
+          align="center"
+          width="120"
+        >
           <template #default="scope">
             $
             <span v-formatter="{data: scope.row.paymentFee, type: 'money'}" />
