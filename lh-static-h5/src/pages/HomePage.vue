@@ -196,8 +196,7 @@
 
     <div class="game-right-platform" v-scroll="onHomeScroll" id="id-right-platform">
 
-
-      <div class="game-lists" id="esport-lists">
+      <div class="game-lists fade-in-image" id="esport-lists">
         <template v-for="(item, index) in esport" :key="index">
           <div
             class="platform-block"
@@ -229,7 +228,7 @@
         </template>
       </div>
 
-      <div class="game-lists" id="sport-lists">
+      <div class="game-lists fade-in-image" id="sport-lists">
         <template v-for="(item, index) in sport" :key="index">
           <div
             class="platform-block"
@@ -262,7 +261,7 @@
         </template>
       </div>
 
-      <div class="game-lists" id="live-lists">
+      <div class="game-lists fade-in-image" id="live-lists">
         <template v-for="(item, index) in livecasino" :key="index">
           <div
             class="platform-block"
@@ -295,7 +294,7 @@
         </template>
       </div>
 
-      <div class="game-lists" id="poker-lists">
+      <div class="game-lists fade-in-image" id="poker-lists">
         <template v-for="(item, index) in poker" :key="index">
           <div
             class="platform-block"
@@ -327,7 +326,7 @@
           </div>
         </template>
       </div>
-      <div class="game-lists" id="slot-lists">
+      <div class="game-lists fade-in-image" id="slot-lists">
 
         <template v-for="(item, index) in slot" :key="index">
           <div
@@ -361,11 +360,7 @@
         </template>
       </div>
 
-
-      <!-- slot-lottery-fish -->
-
-
-      <div class="game-lists" id="others-lists">
+      <div class="game-lists fade-in-image" id="others-lists">
 
         <template v-for="(item, index) in lottery" :key="index">
           <div
@@ -2281,7 +2276,15 @@ export default defineComponent({
       }
     }
   }
+
+  .fade-in-image { animation: fadeIn 1.5s; }
 }
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 
 //Above is New One (LH)
 
