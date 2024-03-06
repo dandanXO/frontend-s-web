@@ -236,7 +236,9 @@ async function loadGameStepsConfig() {
   });
   const { data: stgs } = await getGameStepsStages(request.siteId);
   stages.value = stgs;
-  activeTab.value = stages.value[0].stage
+  if (stages.value.length > 0) {
+    activeTab.value = stages.value[0].stage
+  }
 }
 
 function showEdit(setting) {
