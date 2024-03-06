@@ -27,6 +27,7 @@
             data-aos="zoom-in"
             data-aos-easing="ease-out"
             data-aos-duration="1000"
+            data-aos-offset="-300"
           >
             <a @click="showPromoDetails(promo)">
               <div class="promo-img-wrapper">
