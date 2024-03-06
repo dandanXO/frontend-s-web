@@ -42,14 +42,7 @@ import { loadPromoBanner } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 
 const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
-const banners = ref([
-  {
-    src: "83ac7ea8-c77d-4cf0-976a-7f1a5e1b0027.png"
-  },
-  {
-    src: "9ba30f5e-162a-429e-a811-ad918c958fbd.jpg"
-  }
-]);
+const banners = ref([]);
 
 const loadBanners = () => {
   loadPromoBanner("HOME").then((res) => {
