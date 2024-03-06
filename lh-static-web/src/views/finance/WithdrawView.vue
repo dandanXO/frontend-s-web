@@ -637,6 +637,11 @@ export default defineComponent({
   :deep(.el-form-item__content) {
     gap: 15px;
   }
+
+  :deep(.el-input__wrapper), :deep(.el-select__wrapper) {
+    background-color: #f7f8fb;
+    box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+  }
 }
 </style>
 <style scoped lang="scss">
