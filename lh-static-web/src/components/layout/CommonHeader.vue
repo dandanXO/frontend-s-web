@@ -320,7 +320,7 @@
       v-model="registerDialogVisible"
       width="1280px"
       align-center
-      style="max-width: 1200px"
+      style="max-width: 1280px"
       @close="store.regPageVisible = false"
     >
       <div class="acc-dialog-container">
@@ -369,7 +369,7 @@
       v-model="forgetPassDialogVisible"
       width="1280px"
       align-center
-      style="max-width: 1200px"
+      style="max-width: 1280px"
       @close="store.forgetPassDialogVisible = false"
     >
       <div class="acc-dialog-container">

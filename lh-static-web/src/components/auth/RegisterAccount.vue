@@ -109,14 +109,15 @@
   </div>
 
   <div class="flex-div">
+    <div style="visibility:hidden">
+      <a @click="closeRegDialog">先去逛逛</a>
+    </div>
+    
     <div style="text-align: center" class="font-gray">
       已有账号？
       <a @click="openLoginDialog">去登录</a>
     </div>
 
-    <div>
-      <a @click="closeRegDialog">先去逛逛</a>
-    </div>
   </div>
 </template>
 
@@ -460,8 +461,10 @@ onMounted(() => {
 <style scoped lang="scss">
 .light-bg {
   font-size: 14px;
-  border-radius: 30px;
-  box-shadow: 0px -1.7px 6.09px 0px #a2bff4 inset;
+  background-color: #f7f8fb;
+  border-radius: 15px;
+  box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+  margin-bottom: 30px;
 }
 
 .form-field {
