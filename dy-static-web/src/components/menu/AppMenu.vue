@@ -4,10 +4,7 @@
       <template v-for="(det, idx) in platforms" :key="idx">
         <div class="appmeu-container">
           <div class="appmenu-img">
-            <img
-              :src="require('../../assets/app/appmenu_' + det.image + '.png')"
-              alt=""
-            />
+            <img :src="require('../../assets/app/appmenu_' + det.image + '.png')" alt="" />
           </div>
           <div>
             <div class="img-qr-title">{{ det.name }}APP</div>
@@ -16,10 +13,7 @@
             </div>
             <div class="img-desc">扫一扫下载{{ det.name }}APP</div>
             <div class="img-slogan">支持IOS & Android等全部移动设备</div>
-            <a
-              class="app-url"
-              :href="`${downloadUrl}?url=${downloadUrl}&agentCode=`"
-            >
+            <a class="app-url" :href="`${downloadUrl}?url=${downloadUrl}&agentCode=`">
               {{ downloadUrl }}
             </a>
           </div>
@@ -88,7 +82,7 @@ export default defineComponent({
         })
         .catch((err) => {
           console.log(err);
-          downloadUrl.value = "xf9866.app";
+          downloadUrl.value = "";
         });
     };
 
