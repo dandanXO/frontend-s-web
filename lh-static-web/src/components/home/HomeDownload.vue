@@ -2,11 +2,13 @@
   <div class="download-section">
     <HomeTitle title="APP下载" subtitle="APP DOWNLOAD"></HomeTitle>
     <div class="download-container">
-      <div class="left-container">
+      <div class="left-container" 
+        data-aos="fade-left">
         <img src="../../assets/home/download/download-bg.png" width="100%" />
       </div>
 
-      <div class="right-container">
+      <div class="right-container" 
+        data-aos="fade-right">
         <HomeContentTitle title="APP下载"></HomeContentTitle>
 
         <div class="tab-wrapper">
@@ -23,7 +25,7 @@
               <div class="dl-wrapper">
                 <VueQRCodeComponent :size="120" :text="ui.downloadUrl" class="dl-frame" />
                 <div class="link-desc">手机免费下载地址</div>
-                <div class="link">{{ ui.downloadUrl }}</div>
+                <div class="link"><a :href="ui.downloadUrl">{{ ui.downloadUrl }}</a></div>
               </div>
             </div>
           </div>
