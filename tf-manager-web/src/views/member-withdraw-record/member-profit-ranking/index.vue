@@ -96,6 +96,7 @@
           size="mini"
           type="success"
           @click="loadMemberRecord()"
+          :disabled="page.loading"
         >
           {{ t('fields.search') }}
         </el-button>

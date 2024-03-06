@@ -53,7 +53,7 @@
         <el-input v-model="request.loginName" style="width: 200px; margin-left: 10px" size="small" maxlength="50" :placeholder="t('fields.loginName')" />
         <el-input v-model="request.serialNumber" style="width: 300px; margin-left: 10px" size="small" maxlength="50" :placeholder="t('fields.serialNo')" />
         <el-input v-model="request.thirdSerialNumber" style="width: 300px; margin-left: 10px" size="small" maxlength="50" :placeholder="t('fields.thirdSerialNo')" />
-        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadRecord()">
+        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadRecord()" :disabled="page.loading">
           {{ t('fields.search') }}
         </el-button>
         <el-button size="mini" @click="resetQuery()">{{ t('fields.reset') }}</el-button>

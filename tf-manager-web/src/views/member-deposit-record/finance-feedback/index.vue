@@ -112,6 +112,7 @@
           size="mini"
           type="success"
           @click="loadFinanceFeedback()"
+          :disabled="page.loading"
         >
           {{ t('fields.search') }}
         </el-button>
