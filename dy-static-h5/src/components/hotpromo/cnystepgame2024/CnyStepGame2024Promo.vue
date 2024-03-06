@@ -146,7 +146,6 @@
     <div class="dialog-html">
       <div class="dialog-header">
         <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/game-head-title-03.png" />
-
         <div class="dialog-close">
           <q-btn
             @click="gameRecordsDialog = false"
@@ -160,6 +159,12 @@
         </div>
       </div>
       <div class="dialog-body">
+        <q-select filled v-model="stageValue" :options="stageOptions" @update:model-value="handleStageChange">
+          <template v-slot:selected>
+            {{ stageValue.label }}
+          </template>
+        </q-select>
+
         <q-table
           :columns="columns"
           :rows="stepRecords"
@@ -206,6 +211,31 @@
       </div>
     </div>
   </q-dialog>
+
+  <q-dialog v-model="endStepDialog" width="500px" align-center class="game-dialog">
+    <div class="dialog-html">
+      <div class="dialog-header">
+        <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/game-head-title-01.png" />
+        <div class="dialog-close">
+          <q-btn
+            @click="endStepDialog = false"
+            v-close-popup
+            rounded
+            class="close-btn"
+            icon="close"
+            height="30"
+            width="30"
+          ></q-btn>
+        </div>
+      </div>
+
+      <div class="dialog-body end-step">
+        <div class="won-txt notoppadding">恭喜您完成了这个游戏！</div>
+
+        <button class="game-btn" @click="endStepDialog = false">继续闯关</button>
+      </div>
+    </div>
+  </q-dialog>
   <!-- game dialogs end -->
 </template>
 
@@ -223,12 +253,19 @@ const gameRulesDialog = ref(false);
 const gameRecordsDialog = ref(false);
 
 const wonBonusDialog = ref(false);
+const endStepDialog = ref(false);
 const wonBonus = ref(0);
 
 const isBtnLoading = ref(false);
 
 const smoothSpinOn = ref(false);
 const spinToNum = ref(0);
+
+const stageValue = ref({
+  value: 1,
+  label: "第1阶段"
+});
+const stageOptions = ref([]);
 
 const stepRecords = ref([]);
 const pagination = reactive({
@@ -242,17 +279,17 @@ const pagination = reactive({
 const openRecordDialog = () => {
   gameRecordsDialog.value = true;
 
-  getStepRecordApi(1);
+  getStepRecordsApi(1, stageValue.value.value);
 };
 
 const handleCurrentChange = (val) => {
   pagination.current = val;
 
-  getStepRecordApi(pagination.current);
+  getStepRecordsApi(pagination.current, stageValue.value.value);
 };
 
-const getStepRecordApi = (current) => {
-  getStepRecords(current).then((res) => {
+const getStepRecordsApi = (current, stage) => {
+  getStepRecords(current, stage).then((res) => {
     const { code, data } = res;
     if (code === 0) {
       if (data && data.records && data.records.length) {
@@ -274,12 +311,15 @@ const getStepRecordApi = (current) => {
 const handleSpin = () => {
   isBtnLoading.value = true;
 
-  submitGameStep()
+  const param = { stage: "" };
+  param.stage = currentStage.value;
+  submitGameStep(param)
     .then((res) => {
       if (res.code === 0) {
         spinnedStepData.value = res.data;
         handleSmoothSpin(res.data.steps, res.data.currentPlace);
         wonBonus.value = res.data.bonus;
+        stepEndPlace.value = res.data.endPlace;
       } else {
         isBtnLoading.value = false;
       }
@@ -309,7 +349,9 @@ const handleSmoothSpin = (steps, currentPlace) => {
 const stepData = ref();
 const spinLeft = ref(0);
 const stepCurrentPlace = ref(0);
+const stepEndPlace = ref(0);
 const claimedBonus = ref([]);
+const currentStage = ref(0);
 
 const spinnedStepData = ref();
 
@@ -322,6 +364,14 @@ const loadGamePlayerCurrentStep = (callback) => {
       stepCurrentPlace.value = data.currentPlace;
       spinLeft.value = data.availableSpin;
       claimedBonus.value = data.claimedPlaces;
+      currentStage.value = data.currentStage;
+
+      for (let i = 1; i <= currentStage.value; i++) {
+        stageOptions.value.push({
+          value: i,
+          label: `第${i}阶段`
+        });
+      }
 
       handlePlayerStepDirect(stepCurrentPlace.value);
     }
@@ -339,6 +389,14 @@ const loadGamePlayerCurrentStepSecond = (callback) => {
       stepCurrentPlace.value = data.currentPlace;
       spinLeft.value = data.availableSpin;
       claimedBonus.value = data.claimedPlaces;
+      currentStage.value = data.currentStage;
+
+      for (let i = 1; i <= currentStage.value; i++) {
+        stageOptions.value.push({
+          value: i,
+          label: `第${i}阶段`
+        });
+      }
     }
 
     callback && callback();
@@ -463,6 +521,13 @@ const handlePlayerStep = (targetStep) => {
           wonBonusDialog.value = true;
         }, 500);
       }
+
+      if (currentStep === stepEndPlace.value && currentStage.value === 1) {
+        setTimeout(() => {
+          endStepDialog.value = true;
+          gamePlayerStep.value = 0;
+        }, 500);
+      }
     }
   }
 };
@@ -541,6 +606,10 @@ const resizeGame = () => {
     //   containerEle.style.marginBottom = `0px`;
     // }
   }
+};
+
+const handleStageChange = () => {
+  getStepRecordsApi(pagination.current, stageValue.value.value);
 };
 
 onUnmounted(() => {
@@ -922,7 +991,7 @@ onUnmounted(() => {
 <style lang="scss">
 // dialog styling
 .game-dialog {
-  background-color: #ffeacf;
+  // background-color: #ffeacf;
   border-radius: 12px;
 
   .dialog-header {
@@ -977,6 +1046,10 @@ onUnmounted(() => {
     min-height: calc(85vh);
     margin: auto;
 
+    &.end-step {
+      min-height: 0;
+    }
+
     ol {
       margin-top: 0px;
 
@@ -1019,6 +1092,39 @@ onUnmounted(() => {
 
     .q-table td {
       padding: 5px 6px;
+    }
+
+    .game-btn {
+      position: relative;
+      background-size: 100% 100%;
+      background-position: center center;
+      background-repeat: no-repeat;
+      width: 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      color: #ffffff;
+      font-weight: 700;
+      line-height: 0;
+      padding-bottom: 5px;
+      aspect-ratio: 183/54;
+      height: 45px;
+      background-color: transparent;
+      border: 0;
+      background-image: url("../../../assets/images/promotion/hotpromo/cnystepgame2024/game-btn-01.png");
+      margin: 12px auto 0;
+
+      &:hover {
+        filter: brightness(0.8);
+        cursor: pointer;
+      }
+
+      &.disabled,
+      &[disabled] {
+        filter: brightness(0.4);
+        cursor: auto;
+      }
     }
   }
 
