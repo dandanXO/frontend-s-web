@@ -16,5 +16,5 @@ import { lotteryPlatforms } from "@/shared/platformArray";
 const platformType = ref("lottery");
 const platformGameType = ref("LOTTERY");
 const platformName = ref("LOTTERY");
-const platformPattern = ref(false);
+const platformPattern = ref(true);
 </script>
