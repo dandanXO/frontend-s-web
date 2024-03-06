@@ -155,15 +155,17 @@ export function getCurrentStepInit() {
   return server.EVENT.get(`/game-steps/initiate`, {});
 }
 
-export function submitGameStep() {
-  return server.EVENT.post(`/game-steps/step`);
+export function submitGameStep(param) {
+  const { stage } = param;
+  return server.EVENT.post(`/game-steps/step`, { stage });
 }
 
-export function getStepRecords(current) {
+export function getStepRecords(current, currentStage) {
   return server.EVENT.get(`/game-steps/records`, {
     params: {
       size: 10,
-      current: current
+      current: current,
+      stage: currentStage
     }
   });
 }
@@ -178,27 +180,23 @@ export function getKeyCount(promoCode) {
   });
 }
 export function getOpenRecord(promoCode, page) {
-  console.log(page)
+  console.log(page);
   return server.EVENT.get(`/event-treasure/get-open-record/${promoCode}`, {
-      size: page.size,
-      current: page.current
+    size: page.size,
+    current: page.current
   });
 }
 
 export function getKeyRecord(promoCode, page) {
   return server.EVENT.get(`/event-treasure/get-key-record/${promoCode}`, {
-      size: page.size,
-      current: page.current,
+    size: page.size,
+    current: page.current
   });
 }
-
-
 
 export function openTreasure(promoCode, treasureLevel) {
   return server.EVENT.post(`/event-treasure/open`, { promoCode, treasureLevel });
 }
-
-
 
 export function getCheckInRecord(promoCode) {
   return server.EVENT.get(`/event-check-in/get-record`, {
