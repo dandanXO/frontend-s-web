@@ -517,9 +517,9 @@ const reviewList = reactive({
 const reviewStatusList = reactive({
   list: [
     { label: t('fields.allreviewstatus'), value: '1' },
-    { label: t('fields.reviewno'), value: '未复核' },
-    { label: t('fields.reviewsuccess'), value: '正确' },
-    { label: t('fields.reviewfail'), value: '错误' },
+    { label: t('fields.reviewno'), value: 'PENDING' },
+    { label: t('fields.reviewsuccess'), value: 'APPROVED' },
+    { label: t('fields.reviewfail'), value: 'REJECTED' },
   ],
 })
 
