@@ -1,6 +1,10 @@
 <template>
   <div class="vip-container">
-    <div class="banner-container" />
+    <div class="header-section">
+      <img src="../assets/vip/vip-header.png" class="vip-header" />
+
+    </div>
+<!--    <div class="banner-container" />-->
 
     <Carousel v-model="currentSlide" :items-to-show="2.95" :wrap-around="true">
       <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
@@ -652,9 +656,25 @@ $border-settings: 1px solid #e5e7eb;
   }
 }
 .vip-container {
-  background: #f3f7fd;
+  position:relative;
+  background-image: url("../assets/vip/vip-bg.jpg");
+  background-color: #f3f7fd;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+  background-attachment: fixed;
   color: #8d8d8d;
   min-height: 100vh;
+
+  .header-section{
+    margin:0 auto;
+    width: 100%;
+    text-align: center;
+  }
+  .vip-header{
+    width: 400px;
+    margin: 10px auto;
+  }
 
   .banner-container {
     background: url("../assets/vip/banner.png") no-repeat center center;
@@ -1013,7 +1033,7 @@ $border-settings: 1px solid #e5e7eb;
 
 .carousel__slide > .carousel__item {
   transform: scale(0.2);
-  filter: brightness(0.7);
+  //filter: brightness(0.7);
   transition: 0.5s;
 }
 

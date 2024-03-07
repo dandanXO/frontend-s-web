@@ -56,7 +56,7 @@
       justify-content: flex-start;
       margin: auto 0;
       padding-top: 0px;
-      padding-bottom:0px;
+      padding-bottom: 0px;
       position: relative;
       min-height: 675px;
 
@@ -68,7 +68,6 @@
           transform: scale(1.25);
           width: 748px;
           max-width: 749px;
-
         }
       }
 
@@ -128,7 +127,7 @@
       .platform-pattern-row {
         margin-top: 1rem;
 
-        img{
+        img {
           height: 50px;
         }
       }
@@ -152,10 +151,9 @@
           filter: brightness(1.05);
           font-weight: bold;
 
-
           .list-item-btn {
-            border:0px;
-            background: linear-gradient(180deg, #7ED5FF 0%, #0E7DFF 100%);
+            border: 0px;
+            background: linear-gradient(180deg, #7ed5ff 0%, #0e7dff 100%);
             padding: 0.35rem;
 
             animation: scaleUpAbit 0.5s ease-in-out forwards;
@@ -166,8 +164,7 @@
             }
           }
 
-
-          .list-item-txt{
+          .list-item-txt {
             color: $font-3;
           }
         }
@@ -176,8 +173,8 @@
           font-weight: bold;
 
           .list-item-btn {
-            border:0px;
-            background: linear-gradient(180deg, #7ED5FF 0%, #0E7DFF 100%);
+            border: 0px;
+            background: linear-gradient(180deg, #7ed5ff 0%, #0e7dff 100%);
             padding: 0.35rem;
             box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.3);
 
@@ -186,13 +183,13 @@
             }
           }
 
-          .list-item-txt{
+          .list-item-txt {
             color: $font-3;
           }
         }
 
         .list-item-btn {
-          border: 1px solid #0E7DFF;
+          border: 1px solid #0e7dff;
           height: 4rem;
           width: 4rem;
           display: flex;
@@ -207,7 +204,7 @@
           cursor: pointer;
 
           & > span {
-            background: linear-gradient(180deg, #DCEBFF 0%, #F4F4F4 100%);
+            background: linear-gradient(180deg, #dcebff 0%, #f4f4f4 100%);
             width: 100%;
             height: 100%;
             display: flex;
@@ -226,7 +223,7 @@
         .list-item-txt {
           text-align: center;
           white-space: nowrap;
-          color: #A5C0E4;
+          color: #a5c0e4;
         }
       }
 
@@ -467,6 +464,11 @@
       min-width: 5rem;
       box-shadow: 0px -3px 6px 0px transparent inset, 0px -2px 4px 0px transparent inset;
       transition: 0.3s all;
+      .text {
+        color: #5894ff;
+        font-size: 20px;
+        font-weight: bold;
+      }
 
       img {
         display: block;
@@ -477,11 +479,17 @@
       &:hover {
         background: linear-gradient(180deg, #73b2ff60 0%, #3982ff69 100%);
         box-shadow: 0px -3px 6px 0px #b1d7ff inset, 0px -2px 4px 0px #5894ff inset;
+        .text {
+          color: #ffffff;
+        }
       }
 
       &.active {
         background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
         box-shadow: 0px -3px 6px 0px #b1d7ff inset, 0px -2px 4px 0px #5894ff inset;
+        .text {
+          color: #ffffff;
+        }
       }
     }
 

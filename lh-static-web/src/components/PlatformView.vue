@@ -104,13 +104,17 @@
             <template v-for="(item, index) in platformsListDisplay" :key="index">
               <!-- <div class="plat-option" @click="switchPlat(item)" :class="{ active: selectedPlat === item.code }"> -->
               <div class="plat-option" @click="clickPlat(item)" :class="{ active: selectedPlat === item.code }">
-                <img
+                <!-- <img
                   :src="
                   require(`../assets/game/plat-logo-${item.code.toLowerCase()}${
                     selectedPlat !== item.code ? '-blue' : ''
                   }.png`)
                 "
-                />
+                /> -->
+                <div class="text">
+                  <span v-if="item.code === 'AG'">XIN</span>
+                  <span v-else>{{ item.code }}</span>
+              </div>
               </div>
             </template>
           </div>
