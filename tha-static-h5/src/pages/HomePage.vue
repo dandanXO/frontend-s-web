@@ -2241,7 +2241,7 @@ export default defineComponent({
     .platform-img {
       width: 100%;
       height: auto;
-      aspect-ratio: 280/328;
+      aspect-ratio: 140/218;
       background-size: contain;
       background-repeat: no-repeat;
       background-position: top center;

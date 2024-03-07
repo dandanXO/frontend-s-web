@@ -24,36 +24,37 @@
     </div>
     <div class="activity-boxes">
       <div class="activity-box">
-        <div class="activity-title">活动时间</div>
-        <div class="activity-content-container">
-          <div class="activity-content-item">
-            <div class="content-title">活动时间:</div>
-            <div class="content-txt">所有会员</div>
-          </div>
-          <div class="activity-content-item">
-            <div class="content-title">抽奖次数:</div>
-            <div class="content-txt">每10,000元有效投注可获得一次抽奖</div>
-          </div>
-          <div class="activity-content-item">
-            <div class="content-title">时间:</div>
-            <div class="content-txt">2023/11/10-2024/1/4</div>
-          </div>
-        </div>
-      </div>
-      <div class="activity-box">
         <div class="activity-title">活动对象</div>
         <div class="activity-content-container">
-
           <table class="content-table">
             <tr class="winner" v-for="(item, index) in visibleItems" :key="index">
               <td>{{ item.date }}</td>
               <td>{{ item.name }}</td>
               <td>{{ item.amount }}</td>
             </tr>
-
           </table>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="promo-container">
+    <div class="promo-view-container">
+      <table border="0" width="600" cellpadding="0" cellspacing="0">
+        <tbody>
+          <tr>
+            <th>红包雨发放时间</th>
+            <th>每日次数</th>
+          </tr>
+          <tr>
+            <td>18:00 ~ 19:00</td>
+            <td rowspan="2">每日2次</td>
+          </tr>
+          <tr>
+            <td>20:00 ~ 21:00</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -200,6 +201,7 @@ onMounted(() => {
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      max-width: 690px;
       gap: 20px;
       height: 320px;
 
@@ -373,6 +375,13 @@ onMounted(() => {
       filter: brightness(0.9);
     }
   }
+}
+
+.promo-container .promo-view-container table {
+  margin-top: 24px;
+  color: #7a8eb9;
+  font-size: 20px;
+  min-width: 60%;
 }
 </style>
 

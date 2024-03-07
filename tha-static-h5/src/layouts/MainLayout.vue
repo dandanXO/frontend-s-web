@@ -349,12 +349,12 @@ export default defineComponent({
         active: require("../assets/images/menu/home-icon-active-thai-theme.png")
       },
       deposit: {
-        icon: require("../assets/images/menu/withdraw-icon-thai-theme.png"),
-        active: require("../assets/images/menu/withdraw-icon-thai-theme.png")
+        icon: require("../assets/images/menu/deposit-icon-thai-theme.png"),
+        active: require("../assets/images/menu/deposit-icon-thai-theme.png")
       },
       withdraw: {
-        icon: require("../assets/images/menu/deposit-icon-thai-theme.png"),
-        active: require("../assets/images/menu/deposit-icon-active-thai-theme.png")
+        icon: require("../assets/images/menu/withdraw-icon-thai-theme.png"),
+        active: require("../assets/images/menu/withdraw-icon-active-thai-theme.png")
       },
       cs: {
         icon: require("../assets/images/menu/cs-icon-thai-theme.png"),
@@ -518,7 +518,9 @@ svg path {
 
   .footer-icon {
     // margin-bottom: -10px;
-    width: 35px;
+    width: 58px;
+    height: 58px;
+    aspect-ratio: 58 / 58;
   }
 
   .footer-icon-wrapper {
