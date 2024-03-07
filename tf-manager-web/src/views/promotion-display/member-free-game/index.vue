@@ -96,15 +96,18 @@
       <el-table-column prop="validity" :label="t('fields.validity')" />
       <el-table-column prop="round" :label="t('fields.round')" />
       <el-table-column prop="platform" :label="t('fields.platform')" />
-      <el-table-column prop="gameIds" :label="t('fields.gameCode')" />
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
       <el-table-column prop="createTime" :label="t('fields.createTime')" />
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" />
       <el-table-column prop="updateTime" :label="t('fields.updateTime')" />
       <el-table-column type="title" :label="t('fields.status')">
         <template #default="scope">
-          <el-tag v-if="scope.row.status === 0" size="mini" type="success">{{ t('fields.success') }}</el-tag>
-          <el-tag v-else size="mini" type="danger">{{ t('fields.fail') }}</el-tag>
+          <el-tag v-if="scope.row.status === 0" size="mini" type="success">
+            {{ t('fields.success') }}
+          </el-tag>
+          <el-tag v-else size="mini" type="danger">
+            {{ t('fields.fail') }}
+          </el-tag>
         </template>
       </el-table-column>
       <el-table-column type="title" :label="t('fields.action')">
@@ -150,7 +153,6 @@
           :placeholder="t('fields.site')"
           style="width: 350px;"
           filterable
-          default-first-option
           @change="loadPlatform(form.siteId)"
         >
           <el-option
@@ -197,15 +199,22 @@
       </el-form-item>
 
       <el-form-item :label="t('fields.gameCode')" prop="gameIds">
-        <el-input
-          v-model="form.gameIds"
-          style="width: 350px"
-          type="textarea"
-          :rows="6"
-          maxlength="200"
-          show-word-limit
-          :placeholder="t('message.memberFreeGameIds')"
-        />
+        <el-select
+          multiple
+          filterable
+          v-model="selected.gameId"
+          size="small"
+          :placeholder="t('fields.memberFreeGameIds')"
+          class="filter-item"
+          style="width: 350px; margin-bottom: 10px"
+        >
+          <el-option
+            v-for="item in game.list"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-select>
       </el-form-item>
 
       <el-form-item :label="t('fields.validity')" prop="validity">
@@ -236,7 +245,7 @@ import {
   addMemberFreeGame,
   resend,
 } from '../../../api/member-free-game'
-import { getPlatformsBySite } from '../../../api/platform';
+import { getPlatformsBySite } from '../../../api/platform'
 import { ElMessage } from 'element-plus'
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
@@ -254,8 +263,8 @@ const siteList = reactive({
   list: [],
 })
 const platform = reactive({
-  list: null
-});
+  list: null,
+})
 
 const statusList = reactive({
   list: [
@@ -270,6 +279,63 @@ const statusList = reactive({
   ],
 })
 
+const game = reactive({
+  list: [
+    { name: '火熱辣椒Hot Chilli', id: '5' },
+    { name: '秦皇傳說Chin Shi Huang', id: '2' },
+    { name: '發財樹Fortune Tree', id: '6' },
+    { name: '上海甜心Shanghai Beauty', id: '17' },
+    { name: '極速發發發Fa Fa Fa', id: '21' },
+    { name: '極速777SevenSevenSeven', id: '27' },
+    { name: '瘋狂777Crazy777', id: '35' },
+    { name: '人魚甜心Bubble Beauty', id: '30' },
+    { name: '包青天Bao boon chin', id: '36' },
+    { name: '瘋狂一路發Crazy FaFaFa', id: '40' },
+    { name: '喜洋洋XiYangYang', id: '43' },
+    { name: '極速豬來了FortunePig', id: '33' },
+    { name: '封神Fengshen', id: '38' },
+    { name: '瘋狂搶金樂Golden Bank', id: '45' },
+    { name: '霸金磚Lucky Goldbricks', id: '48' },
+    { name: '衝鋒野牛Charge Buffalo', id: '47' },
+    { name: '超級王牌Super Ace', id: '49' },
+    { name: '黃金艷后Golden Queen', id: '58' },
+    { name: '瘋狂錢來也Money Coming', id: '51' },
+    { name: '叢林之王Jungle King', id: '16' },
+    { name: '拳王Boxing King', id: '77' },
+    { name: '秘境奪寶Secret Treasure', id: '78' },
+    { name: '象財神Lucky Coming', id: '91' },
+    { name: '猴子派對Monkey Party', id: '67' },
+    { name: '幸運女神Lucky Lady', id: '89' },
+    { name: '真有錢Super Rich', id: '100' },
+    { name: '羅馬XRomaX', id: '102' },
+    { name: '黃金帝國Golden Empire', id: '103' },
+    { name: '迦羅寶石Fortune Gems', id: '109' },
+    { name: '嗨翻夜Party Night', id: '76' },
+    { name: '阿拉丁Magic Lamp', id: '108' },
+    { name: '王牌特務Agent Ace', id: '115' },
+    { name: 'TWINWINS', id: '106' },
+    { name: '阿里巴巴Ali Baba', id: '110' },
+    { name: '無限王牌Mega Ace', id: '134' },
+    { name: '黃金之書Book of Gold', id: '87' },
+    { name: '雷神X Thor X', id: '130' },
+    { name: 'Happy Taxi', id: '116' },
+    { name: '瘋狂淘金Gold Rush', id: '137' },
+    { name: '瑪雅帝國Mayan Empire', id: '135' },
+    { name: '慶典之月Bone Fortune', id: '126' },
+    { name: '吉利財神JILI CAISHEN', id: '144' },
+    { name: '賞金獵人Bonus Hunter', id: '142' },
+    { name: '世界盃World Cup', id: '146' },
+    { name: '森巴嘉年華Samba', id: '136' },
+    { name: '招財貓Neko Fortune', id: '145' },
+    { name: '搖滾甜心Rock Beauty', id: '18' },
+    { name: '夜上海Night City', id: '37' },
+    { name: '鑽石派對DiamondParty', id: '44' },
+    { name: '海島甜心Hawaii Beauty', id: '26' },
+    { name: '球好運Lucky Ball', id: '13' },
+    { name: '超爆Hyper Burst', id: '14' },
+  ],
+})
+
 const startDate = new Date()
 const defaultDate = convertDate(startDate)
 
@@ -280,8 +346,10 @@ const form = reactive({
   round: null,
   validity: null,
   platform: null,
-  gameIds: null
+  gameIds: null,
 })
+
+const selected = reactive({ gameId: [] })
 
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD HH:mm:ss')
@@ -317,8 +385,64 @@ async function showDialog() {
   if (memberFreeGameForm.value) {
     memberFreeGameForm.value.resetFields()
   }
+
+  selected.gameId = [
+    '2',
+    '5',
+    '6',
+    '17',
+    '21',
+    '27',
+    '35',
+    '30',
+    '36',
+    '40',
+    '43',
+    '33',
+    '38',
+    '45',
+    '48',
+    '47',
+    '49',
+    '58',
+    '51',
+    '16',
+    '77',
+    '78',
+    '91',
+    '67',
+    '89',
+    '100',
+    '102',
+    '103',
+    '109',
+    '76',
+    '108',
+    '115',
+    '106',
+    '110',
+    '134',
+    '87',
+    '130',
+    '116',
+    '137',
+    '135',
+    '126',
+    '144',
+    '142',
+    '146',
+    '136',
+    '145',
+    '18',
+    '37',
+    '44',
+    '26',
+    '13',
+    '14',
+  ]
+
   uiControl.dialogVisible = true
-  form.validity = defaultDate;
+  form.validity = defaultDate
 }
 
 function changePage(page) {
@@ -328,12 +452,8 @@ function changePage(page) {
 
 const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
-  loginName: [
-    required(t('message.validateLoginNameRequired')),
-  ],
-  gameIds: [
-    required(t('message.validateGameCodeRequired'))
-  ],
+  loginName: [required(t('message.validateLoginNameRequired'))],
+  gameIds: [required(t('message.validateGameCodeRequired'))],
   platform: [required(t('message.validatePlatformRequired'))],
   round: [required(t('message.validateRoundRequired'))],
 })
@@ -354,6 +474,7 @@ async function loadMemberFreeGame() {
 }
 
 function createMemberFreeGame() {
+  form.gameIds = selected.gameId.join(',')
   memberFreeGameForm.value.validate(async valid => {
     if (valid) {
       await addMemberFreeGame(form)
@@ -381,8 +502,8 @@ async function loadSites() {
 }
 
 async function loadPlatform(siteId) {
-  const { data: ret } = await getPlatformsBySite(siteId);
-  platform.list = ret;
+  const { data: ret } = await getPlatformsBySite(siteId)
+  platform.list = ret
 }
 
 onMounted(async () => {
