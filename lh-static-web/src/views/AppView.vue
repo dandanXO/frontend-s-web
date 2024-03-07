@@ -23,7 +23,7 @@
           实时直播，热门活动享不停
         </div>
         <div class="buttons">
-          <div class="btn iphone">
+          <!-- <div class="btn iphone">
             <img src="../assets/app/ios-icon.png" />
             iPhone 版
             <div class="qrcode">
@@ -36,7 +36,27 @@
             <div class="qrcode">
               <VueQRCodeComponent :size="120" :text="downloadUrl" />
             </div>
-          </div>
+          </div> -->
+          <template v-for="(det, idx) in platforms" :key="idx">
+            <div class="platform-button-w-qr-code">
+              <div class="platform-button" @click="clickPlat(det)">{{ det.name }}</div>
+              <div :class="`platform-qr-code ${selectedPlat === det.code ? 'visible' : ''}`">
+                <div class="close-btn" @click="closePlatformQRCode">&#x2716;</div>
+                <div class="qr-code-wrapper">
+                  <VueQRCodeComponent :size="120" :text="det.link" />
+                </div>
+                <div class="supported-mobile-os">
+                  <img src="../assets/app/ios-icon.png" />
+                  <img src="../assets/app/android-icon.png" />
+                  <span v-if="det.mobile">手机访问</span>
+                </div>
+                <div>
+                  <a v-if="det.mobile" :href="det.mobile" target="_blank">{{ det.mobile }}</a>
+                  <span v-else>手机用户扫码下载</span>
+                </div>
+              </div>
+            </div>
+          </template>
         </div>
       </div>
       <div class="swiper-wrap">
@@ -250,8 +270,8 @@ export default defineComponent({
   }
   .buttons {
     display: flex;
-    gap: 20px;
-    margin-bottom: 200px;
+    gap: 70px;
+    padding-top: 100px;
     .btn {
       background: url(../assets/app/btn.png) no-repeat center center;
       background-size: contain;
@@ -292,6 +312,84 @@ export default defineComponent({
         }
       }
     }
+    .platform-button-w-qr-code {
+          display: flex;
+          justify-content: center;
+          position: relative;
+        }
+
+        .platform-button {
+          width: 242px;
+          height: 68px;
+          font-size: 22px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #fff;
+          line-height: 30px;
+          padding: 10px 20px;
+          border-radius: 100px;
+          background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+          box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
+          cursor: pointer;
+          z-index: 1;
+
+          &.outline {
+            background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
+            box-shadow: 0px 2px 4.579999923706055px 0px #bbdcff inset;
+            box-shadow: 0px -1px 3.6640000343322754px 0px #a2bff4 inset;
+            color: #468cff;
+          }
+        }
+
+        .platform-qr-code {
+          position: absolute;
+          bottom: -20px;
+          margin: auto;
+          width: 280px;
+          height: 297px;
+          box-shadow: 0px 4px 34px 0px #00000033;
+          background-color: #ffffffd6;
+          border-radius: 8px;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: center;
+          padding: 20px;
+          display: none;
+
+          .supported-mobile-os {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            span {
+              line-height: 29px;
+              padding: 0px 3px;
+            }
+          }
+
+          .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            cursor: pointer;
+            color: #0000004d;
+          }
+
+          .qr-code-wrapper {
+            background-image: url("./../assets/app/square-crosshair.png");
+            background-size: 100% 100%;
+            padding: 8px;
+          }
+
+          &.visible {
+            display: flex;
+            animation-duration: 0.5s;
+            animation-fill-mode: both;
+            animation-name: fadeInUp;
+          }
+        }
   }
 }
 .animated {
