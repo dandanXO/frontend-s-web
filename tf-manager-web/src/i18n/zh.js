@@ -2208,6 +2208,11 @@ export default {
     PERMANENT: '永久冻结',
     UNFREEZE: '解除冻结',
   },
+  reviewStatus: {
+    PENDING: '未复核',
+    APPROVED: '正确',
+    REJECTED: '错误',
+  },
   error: {
     400: '请求无效',
     401: '用户未授权',

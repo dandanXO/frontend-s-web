@@ -2236,6 +2236,11 @@ export default {
     PERMANENT: 'Permanent',
     UNFREEZE: 'Unfreeze',
   },
+  reviewStatus: {
+    PENDING: 'Pending',
+    APPROVED: 'Approved',
+    REJECTED: 'Rejected',
+  },
   error: {
     400: 'Bad Request',
     401: 'Unauthorized Request',
