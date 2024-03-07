@@ -136,7 +136,7 @@ onMounted(() => {
   background-color: #f7f8fb;
   border-radius: 15px;
   box-shadow: 0px 0px 8px 0px #a9c9ea inset;
-  margin-bottom: 30px;
+  //margin-bottom: 30px;
 }
 
 .form-field {
