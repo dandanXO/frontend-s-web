@@ -369,17 +369,17 @@
         fixed="right"
       >
         <template #default="scope1">
-          <label v-if="scope1.row.review !== '未复核'">
-            {{ scope1.row.review }}
+          <label v-if="scope1.row.review !== 'PENDING'">
+            {{ t('reviewStatus.' + scope1.row.review) }}
           </label>
 
           <el-button
-            v-if="scope1.row.review === '未复核'"
+            v-if="scope1.row.review === 'PENDING'"
             size="mini"
             type="primary"
             @click="showDialog(scope1.row)"
           >
-            {{ t('fields.review') }}
+            {{ t('reviewStatus.PENDING') }}
           </el-button>
         </template>
       </el-table-column>
@@ -542,7 +542,9 @@ const page1 = reactive({
 })
 const reviewForm = ref(null)
 const form = reactive({
-  id: null,
+  siteId: null,
+  memberId: null,
+  recordTime: null,
   review: null,
   remark: null,
 })
@@ -890,15 +892,20 @@ async function loadDetail() {
 }
 
 async function showDialog(record) {
+  if (reviewForm.value) {
+    reviewForm.value.resetFields()
+  }
   if (hasPermission(['sys:report:summary:review'])) {
-    if (record.review === '未复核') {
+    if (record.review === 'PENDING') {
       form.review = '1'
     } else if (record.review === '') {
       form.review = '2'
     } else {
       form.review = '3'
     }
-    form.id = record.id
+    form.memberId = record.memberId
+    form.recordTime = record.time
+    form.siteId = record.siteId
 
     uiControl.dialogVisible = true
   }
