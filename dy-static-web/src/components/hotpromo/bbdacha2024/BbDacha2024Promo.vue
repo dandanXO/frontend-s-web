@@ -80,7 +80,7 @@
   </div>
 
   <div class="tips-container">
-    <div class="tips-txt">注：赛事每一轮天数不一致，总存款以每一轮的第一天与最后一天统计。</div>
+    <div class="tips-txt">注：请于每场指定开赛时间前选择完成竞猜，超出开赛时间则无法参与竞猜。</div>
     <div class="tips-record" @click="tableRecordDialog = true">【投票记录】</div>
   </div>
 
@@ -120,6 +120,8 @@
             </tr>
           </tbody>
         </table>
+
+        <div class="tips-txt-bottom">注：赛事每一轮天数不一致，总存款以每一轮的第一天与最后一天统计。</div>
       </div>
 
       <div class="head-title my-40">
@@ -390,6 +392,15 @@ table.promo-table {
   thead th {
     width: 80px;
   }
+}
+
+.tips-txt-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #424f72;
+  margin: 20px auto 10px;
+  width: 100%;
 }
 
 table.promo-table.record-table {
