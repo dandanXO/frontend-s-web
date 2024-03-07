@@ -80,8 +80,7 @@
   </div>
 
   <div class="tips-container">
-    <div class="tips-txt">注：赛事每一轮天数不一致，总存款以每一轮的第一天与最后一天统计。</div>
-
+    <div class="tips-txt">注：请于每场指定开赛时间前选择完成竞猜，超出开赛时间则无法参与竞猜。</div>
     <div class="tips-record" @click="tableRecordDialog = true">【投票记录】</div>
   </div>
 
@@ -124,6 +123,8 @@
               </tr>
             </tbody>
           </table>
+
+          <div class="tips-txt-bottom">注：赛事每一轮天数不一致，总存款以每一轮的第一天与最后一天统计。</div>
         </div>
 
         <div class="head-title">
@@ -353,6 +354,10 @@ onMounted(() => {
 
 <style scoped lang="scss">
 // table styling
+.table-container .promo-table {
+  margin: 10px auto 5px;
+}
+
 table.promo-table {
   width: 100%;
   th {
@@ -372,6 +377,15 @@ table.promo-table {
     font-size: 12px;
   }
 }
+
+.tips-txt-bottom {
+    color: #424f72;
+    display: flex; 
+    margin-bottom: 20px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
 
 .competition-container {
   margin-top: 20px;
