@@ -35,7 +35,7 @@
         <div class="details-match" v-html="data.quizTitle"></div>
 
         <div class="competition-mid">
-          <div v-if="(data.votedTeam && data.votedTeam === 'draw') || !data.votedTeam" class="team-vote">
+          <div v-if="((data.votedTeam && data.votedTeam === 'draw') || (!data.votedTeam && data.status !== 'CANCEL'))" class="team-vote">
             <button
               class="vote-btn"
               @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: 'draw' })"
