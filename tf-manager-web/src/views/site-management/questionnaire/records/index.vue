@@ -20,13 +20,15 @@
         <el-date-picker
           v-model="request.recordTime"
           format="DD/MM/YYYY"
-          value-format="YYYY-MM-DD"
+          value-format="YYYY-MM-DD HH:mm:ss"
           size="small"
           type="daterange"
-          :placeholder="t('fields.recordTime')"
+          :start-placeholder="t('fields.startDate')"
+          :end-placeholder="t('fields.endDate')"
           style="width: 250px; margin-left: 10px;"
           :editable="false"
           :clearable="false"
+          :default-time="defaultTime"
         />
         <el-input
           v-model="request.loginName"
@@ -124,12 +126,19 @@ const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
-
+const defaultTime = [
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 1, 1, 23, 59, 59),
+];
 const uiControl = reactive({
   messageVisible: false
 });
 function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD');
+  return moment(date).endOf('day').format('YYYY-MM-DD HH:mm:ss');
+}
+
+function convertStartDate(date) {
+  return moment(date).startOf('day').format('YYYY-MM-DD HH:mm:ss');
 }
 
 const request = reactive({
@@ -137,7 +146,7 @@ const request = reactive({
   current: 1,
   siteId: null,
   loginName: null,
-  recordTime: [convertDate(new Date()), convertDate(new Date())]
+  recordTime: [convertStartDate(new Date()), convertDate(new Date())]
 });
 
 const sites = reactive({
@@ -169,7 +178,7 @@ async function loadSites() {
 function resetQuery() {
   request.siteId = site.value.id;
   request.loginName = null;
-  request.recordTime = [convertDate(new Date()), convertDate(new Date())];
+  request.recordTime = [convertStartDate(new Date()), convertDate(new Date())];
 }
 
 function checkQuery() {
