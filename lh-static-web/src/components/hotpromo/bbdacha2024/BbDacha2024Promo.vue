@@ -1,189 +1,196 @@
 <template>
-  <div class="head-title mb-40">
-    <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/head-title-01.png" />
-  </div>
+  <div class="match-vote-wrapper">
+    <div class="head-title mb-40">
+      <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/head-title-01.png" />
+    </div>
 
-  <div class="competition-container">
-    <p v-if="isLoaded && upcomingData.length === 0" style="text-align: center">目前没有赛事。</p>
+    <div class="competition-container">
+      <p v-if="isLoaded && upcomingData.length === 0" style="text-align: center">目前没有赛事。</p>
 
-    <div
-      v-for="(data, dataIndex) in upcomingData"
-      :key="`upcoming-${dataIndex}`"
-      :class="`competition-item ${data.votedTeam ? 'competition-item--voted' : ''}  ${
-        data.status === 'ENDED' ? 'competition-item--ended' : data.status === 'CANCEL' ? 'competition-item--ended' : ''
-      }`"
-    >
-      <div class="competiton-team team-one">
-        <div :class="`team-logo ${data.votedTeam === data.homeTeam ? 'team-logo--voted' : ''}`">
-          <img :src="imgURL + data.homeTeamIcon" />
-        </div>
-        <div class="team-name">{{ data.homeTeam }}</div>
-        <div v-if="(data.votedTeam && data.votedTeam === data.homeTeam) || !data.votedTeam" class="team-vote">
-          <button
-            class="vote-btn"
-            @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.homeTeam })"
-            :disable="data.votedTeam && data.votedTeam === data.homeTeam"
-          >
-            {{ data.votedTeam && data.votedTeam === data.homeTeam ? "已投票" : data.votedTeam ? "" : "投票" }}
-          </button>
-        </div>
-      </div>
-
-      <div class="competition-details">
-        <div class="details-date">{{ data.matchTime }}</div>
-
-        <div class="details-match">
-          2024BB
-          <br />
-          别墅冬季杯 常规赛
+      <div
+        v-for="(data, dataIndex) in upcomingData"
+        :key="`upcoming-${dataIndex}`"
+        :class="`competition-item ${data.votedTeam ? 'competition-item--voted' : ''}  ${
+          data.status === 'ENDED'
+            ? 'competition-item--ended'
+            : data.status === 'CANCEL'
+            ? 'competition-item--ended'
+            : ''
+        }`"
+      >
+        <div class="competiton-team team-one">
+          <div :class="`team-logo ${data.votedTeam === data.homeTeam ? 'team-logo--voted' : ''}`">
+            <img :src="imgURL + data.homeTeamIcon" />
+          </div>
+          <div class="team-name">{{ data.homeTeam }}</div>
+          <div v-if="(data.votedTeam && data.votedTeam === data.homeTeam) || !data.votedTeam" class="team-vote">
+            <button
+              class="vote-btn"
+              @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.homeTeam })"
+              :disable="data.votedTeam && data.votedTeam === data.homeTeam"
+            >
+              {{ data.votedTeam && data.votedTeam === data.homeTeam ? "已投票" : data.votedTeam ? "" : "投票" }}
+            </button>
+          </div>
         </div>
 
-        <div class="details-status">
-          <span>
-            {{
-              data.status === "ONGOING"
-                ? "进行中"
-                : data.status === "ENDED"
-                ? "已结束"
-                : data.status === "CANCEL"
-                ? "已取消"
-                : ""
-            }}
-          </span>
-        </div>
-      </div>
+        <div class="competition-details">
+          <div class="details-date">{{ data.matchTime }}</div>
 
-      <div class="competiton-team team-two">
-        <div :class="`team-logo ${data.votedTeam === data.awayTeam ? 'team-logo--voted' : ''}`">
-          <img :src="imgURL + data.awayTeamIcon" />
+          <div class="details-match">
+            2024BB
+            <br />
+            别墅冬季杯 常规赛
+          </div>
+
+          <div class="details-status">
+            <span>
+              {{
+                data.status === "ONGOING"
+                  ? "进行中"
+                  : data.status === "ENDED"
+                  ? "已结束"
+                  : data.status === "CANCEL"
+                  ? "已取消"
+                  : ""
+              }}
+            </span>
+          </div>
         </div>
-        <div class="team-name">{{ data.awayTeam }}</div>
-        <div v-if="(data.votedTeam && data.votedTeam === data.awayTeam) || !data.votedTeam" class="team-vote">
-          <button
-            class="vote-btn"
-            @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.awayTeam })"
-            :disable="data.votedTeam && data.votedTeam === data.awayTeam"
-          >
-            {{ data.votedTeam && data.votedTeam === data.awayTeam ? "已投票" : data.votedTeam ? "" : "投票" }}
-          </button>
+
+        <div class="competiton-team team-two">
+          <div :class="`team-logo ${data.votedTeam === data.awayTeam ? 'team-logo--voted' : ''}`">
+            <img :src="imgURL + data.awayTeamIcon" />
+          </div>
+          <div class="team-name">{{ data.awayTeam }}</div>
+          <div v-if="(data.votedTeam && data.votedTeam === data.awayTeam) || !data.votedTeam" class="team-vote">
+            <button
+              class="vote-btn"
+              @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.awayTeam })"
+              :disable="data.votedTeam && data.votedTeam === data.awayTeam"
+            >
+              {{ data.votedTeam && data.votedTeam === data.awayTeam ? "已投票" : data.votedTeam ? "" : "投票" }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="tips-container">
-    <div class="tips-txt">注：请于每场指定开赛时间前选择完成竞猜，超出开赛时间则无法参与竞猜。</div>
+    <div class="tips-container">
+      <div class="tips-txt">注：请于每场指定开赛时间前选择完成竞猜，超出开赛时间则无法参与竞猜。</div>
 
-    <div class="tips-record" @click="tableRecordDialog = true">【投票记录】</div>
-  </div>
+      <div class="tips-record" @click="tableRecordDialog = true">【投票记录】</div>
+    </div>
 
-  <div class="tabs-container">
-    <div class="tab-header">
+    <div class="tabs-container">
+      <!-- <div class="tab-header">
       <div class="tab-title" :class="activeKey === 'tabOne' && 'active'" @click="handleTabClick('tabOne')">活动一</div>
       <div class="tab-title" :class="activeKey === 'tabTwo' && 'active'" @click="handleTabClick('tabTwo')">活动二</div>
-    </div>
+    </div> -->
 
-    <div class="tab-panel" v-if="activeKey === 'tabOne'">
-      <div class="table-container">
-        <p class="top-liner">活动期间，用户竞猜当日竞猜正确次数≥3场，彩金按当日存款总额派发对应存款反比彩金金额</p>
+      <div class="tab-panel" v-if="activeKey === 'tabOne'">
+        <div class="table-container">
+          <p class="top-liner">活动期间，用户竞猜当日竞猜正确次数≥3场，彩金按当日存款总额派发对应存款反比彩金金额</p>
 
-        <table class="promo-table">
-          <thead>
-            <tr>
-              <th>竞猜正确场次</th>
-              <th>存款反比</th>
-              <th>彩金上限</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>≥3</td>
-              <td>0.05%</td>
-              <td>58</td>
-            </tr>
-            <tr>
-              <td>≥5</td>
-              <td>0.08%</td>
-              <td>128</td>
-            </tr>
-            <tr>
-              <td>≥6</td>
-              <td>0.10%</td>
-              <td>388</td>
-            </tr>
-          </tbody>
-        </table>
+          <table class="promo-table">
+            <!-- style="background: #e7f3ff; color: #7a8eb9" -->
+            <thead>
+              <tr>
+                <th>竞猜正确场次</th>
+                <th>存款反比</th>
+                <th>彩金上限</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>≥3</td>
+                <td>0.05%</td>
+                <td>58</td>
+              </tr>
+              <tr>
+                <td>≥5</td>
+                <td>0.08%</td>
+                <td>128</td>
+              </tr>
+              <tr>
+                <td>≥6</td>
+                <td>0.10%</td>
+                <td>388</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="head-title my-40">
+          <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/head-title-02.png" />
+        </div>
+
+        <div class="rules-container">
+          <ol class="rules-content">
+            <li>
+              活动期间，会员每日可免费参与全部竞猜，当日BB别墅冬季杯竞猜正确场次≥3次可获当日总存款对应反比，彩金与次日24小时内派发，彩金仅需3倍流水即可提款；
+            </li>
+            <li>活动期间，请在指定比赛开赛前竞猜，若超出开赛时间则视为放弃竞猜；</li>
+            <li>
+              活动期间会员竞猜正确场次≥3次且会员当日未存款，次日清零重新计算，若会员彩金金额超出彩金上限金额则按彩金上限派发奖金；
+            </li>
+            <li>
+              每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将在任何时候保留可以全部停止、取消优惠或索回已支付全部优惠的权利；
+            </li>
+            <li>为避免文字理解差异，本站保留该活动的最终解释权；</li>
+          </ol>
+        </div>
       </div>
 
-      <div class="head-title my-40">
-        <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/head-title-02.png" />
-      </div>
+      <div class="tab-panel" v-if="activeKey === 'tabTwo'">
+        <div class="table-container">
+          <p class="top-liner">
+            活动期间，BB别墅冬季杯赛事结束后累计竞猜正确次数≥10次且投注BB别墅杯累计有效投注≥3000元，即可领取对应彩金。
+          </p>
 
-      <div class="rules-container">
-        <ol class="rules-content">
-          <li>
-            活动期间，会员每日可免费参与全部竞猜，当日BB别墅冬季杯竞猜正确场次≥3次可获当日总存款对应反比，彩金与次日24小时内派发，彩金仅需3倍流水即可提款；
-          </li>
-          <li>活动期间，请在指定比赛开赛前竞猜，若超出开赛时间则视为放弃竞猜；</li>
-          <li>
-            活动期间会员竞猜正确场次≥3次且会员当日未存款，次日清零重新计算，若会员彩金金额超出彩金上限金额则按彩金上限派发奖金；
-          </li>
-          <li>
-            每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将在任何时候保留可以全部停止、取消优惠或索回已支付全部优惠的权利；
-          </li>
-          <li>为避免文字理解差异，本站保留该活动的最终解释权；</li>
-        </ol>
-      </div>
-    </div>
+          <table class="promo-table">
+            <thead>
+              <tr>
+                <th>累计竞猜正确次数</th>
+                <th>BB别墅杯累计投注金额</th>
+                <th>彩金</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>≥10</td>
+                <td>≥10,000</td>
+                <td>88</td>
+              </tr>
+              <tr>
+                <td>≥15</td>
+                <td>≥50,000</td>
+                <td>288</td>
+              </tr>
+              <tr>
+                <td>≥20</td>
+                <td>≥100,000</td>
+                <td>688</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-    <div class="tab-panel" v-if="activeKey === 'tabTwo'">
-      <div class="table-container">
-        <p class="top-liner">
-          活动期间，BB别墅冬季杯赛事结束后累计竞猜正确次数≥10次且投注BB别墅杯累计有效投注≥3000元，即可领取对应彩金。
-        </p>
+        <div class="head-title my-40">
+          <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/head-title-02.png" />
+        </div>
 
-        <table class="promo-table">
-          <thead>
-            <tr>
-              <th>累计竞猜正确次数</th>
-              <th>BB别墅杯累计投注金额</th>
-              <th>彩金</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>≥10</td>
-              <td>≥10,000</td>
-              <td>88</td>
-            </tr>
-            <tr>
-              <td>≥15</td>
-              <td>≥50,000</td>
-              <td>288</td>
-            </tr>
-            <tr>
-              <td>≥20</td>
-              <td>≥100,000</td>
-              <td>688</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="head-title my-40">
-        <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/head-title-02.png" />
-      </div>
-
-      <div class="rules-container">
-        <ol class="rules-content">
-          <li>BB别墅冬季杯赛事结束后竞猜正确累计次数≥10次且累计BB别墅冬季杯有效投注≥10,000元即可领取对应奖金；</li>
-          <li>活动奖金以最低档位为准，若竞猜正确次数≥15次且投注金额≥10，000元，则彩金按88元派发；</li>
-          <li>活动奖金以决赛后次日24小时内派发至会员钱包，彩金仅需3倍流水即可提款；</li>
-          <li>
-            每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将在任何时候保留可以全部停止、取消优惠或索回已支付全部优惠的权利；
-          </li>
-          <li>为避免文字理解差异，本站保留该活动的最终解释权；</li>
-        </ol>
+        <div class="rules-container">
+          <ol class="rules-content">
+            <li>BB别墅冬季杯赛事结束后竞猜正确累计次数≥10次且累计BB别墅冬季杯有效投注≥10,000元即可领取对应奖金；</li>
+            <li>活动奖金以最低档位为准，若竞猜正确次数≥15次且投注金额≥10，000元，则彩金按88元派发；</li>
+            <li>活动奖金以决赛后次日24小时内派发至会员钱包，彩金仅需3倍流水即可提款；</li>
+            <li>
+              每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将在任何时候保留可以全部停止、取消优惠或索回已支付全部优惠的权利；
+            </li>
+            <li>为避免文字理解差异，本站保留该活动的最终解释权；</li>
+          </ol>
+        </div>
       </div>
     </div>
   </div>
@@ -339,6 +346,11 @@ onMounted(() => {
   &.my-40 {
     margin: 40px 0;
   }
+}
+
+.match-vote-wrapper {
+  max-width: 1400px;
+  margin: auto;
 }
 // table styling
 
