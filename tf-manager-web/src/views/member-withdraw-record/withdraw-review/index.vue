@@ -118,7 +118,7 @@
         </el-select>
 
         <el-input
-          v-model="request.reviewby"
+          v-model="request.reviewBy"
           size="small"
           style="width: 200px; margin-left: 5px"
           :placeholder="t('fields.reviewby')"
@@ -355,7 +355,7 @@
       </el-table-column>
 
       <el-table-column
-        prop="reviewby"
+        prop="reviewBy"
         :label="t('fields.reviewby')"
         width="120"
       />
@@ -562,7 +562,7 @@ const request = reactive({
   reviewStatus: null,
   min: null,
   max: null,
-  reviewby: null,
+  reviewBy: null,
 })
 
 const uiControl = reactive({
@@ -608,7 +608,7 @@ function resetQuery() {
   request.reviewStatus = reviewStatusList.list[0].value
   request.min = ''
   request.max = ''
-  request.reviewby = ''
+  request.reviewBy = ''
 }
 
 async function loadMemberRecord() {
