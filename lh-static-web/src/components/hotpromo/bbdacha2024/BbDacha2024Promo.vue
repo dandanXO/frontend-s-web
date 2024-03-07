@@ -228,7 +228,7 @@
             <tr>
               <td>{{ record.createTime }}</td>
               <td>{{ record.quizTitle }}</td>
-              <td>{{ record.answerOne }}</td>
+              <td>{{ record.answerOne === 'draw' ? '平局' : record.answerOne }}</td>
             </tr>
           </template>
         </tbody>
