@@ -43,7 +43,7 @@
                 > -->
                 <span
                   class="platform-list-item"
-                  v-for="(plat, platIndex) in platformsListDisplay"
+                  v-for="(plat, platIndex) in filteredPlatforms"
                   :key="platIndex"
                   @click="clickPlat(plat)"
                   :class="{ active: selectedPlat === plat.code }"

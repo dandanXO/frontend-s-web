@@ -7,7 +7,7 @@
     <div class="menu-title-container">
       <div class="account-content withdrawal">
         <div class="flex-box">
-      <span class="">提款流程：</span>
+          <span class="">提款流程：</span>
           <div class="step-item active">申请中</div>
           <RiArrowRightSLine />
           <div class="step-item">审核中</div>
@@ -52,7 +52,7 @@
               </el-input>
             </el-col>
             <el-col :span="12">
-              <span v-if="selectedWithdrawalMethod">
+              <span v-if="selectedWithdrawalMethod && selectedWithdrawalMethod.withdrawMin">
                 {{
                   `单笔限额: ${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax} ${store.currency.label}`
                 }}
@@ -105,21 +105,27 @@
             }
           ]"
         >
-          <el-select
-            @click="withdrawState.bankCardList.length === 0 ? checkBankCards() : ''"
-            v-model="withdrawInfo.cardId"
-            :placeholder="`选择${cardLabel()}`"
-            style="width: 300px"
-          >
-            <el-option
-              v-for="b in withdrawState.bankCardList"
-              :key="b.id"
-              :value="b.id"
-              :label="b.bankName + ' - ' + '****' + b.cardNumber.slice(-4)"
+          <template v-if="isLoaded">
+            <el-select
+              @click="withdrawState.bankCardList.length === 0 ? checkBankCards() : ''"
+              v-model="withdrawInfo.cardId"
+              :placeholder="`选择${cardLabel()}`"
+              style="width: 300px"
             >
-              {{ b.bankName }} - {{ '****' + b.cardNumber.slice(-4) }}
-            </el-option>
-          </el-select>
+              <el-option
+                v-for="b in withdrawState.bankCardList"
+                :key="b.id"
+                :value="b.id"
+                :label="b.bankName + ' - ' + '****' + b.cardNumber.slice(-4)"
+              >
+                {{ b.bankName }} - {{ "****" + b.cardNumber.slice(-4) }}
+              </el-option>
+            </el-select>
+          </template>
+          <template v-else>
+            <span>加载中...</span>
+          </template>
+
         </el-form-item>
         <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="预计到账">
           <span style="color: #17cd27">
@@ -164,7 +170,6 @@
 <script lang="js">
 import { defineComponent, reactive, ref, onMounted } from "vue";
 import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/personal/personal";
-// import { message } from "ant-design-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import { RiArrowRightSLine } from "vue-remix-icons";
@@ -179,18 +184,19 @@ export default defineComponent({
     const router = useRouter();
     const loadingBtn = ref(false);
     const store = userStore();
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/withdraw/';
+    const imgURL = process.env.VUE_APP_IMAGE_CDN + "/withdraw/";
     const formRef = ref();
     const activeItem = ref(0);
     const isUSDT = ref(false);
     const isEWALLET = ref(false);
     const isALIPAY = ref(false);
+    const isLoaded = ref(false);
     const withdrawState = reactive({
-      bankCardList: [],
+      bankCardList: []
     });
     const withdrawInfo = reactive({
       cardId: undefined,
-      amount: "",
+      amount: ""
     });
     const withdrawalMethods = ref([
       // {
@@ -208,7 +214,7 @@ export default defineComponent({
       //   bankName: 'ZALO',
       //   recommended: false
       // }
-    ])
+    ]);
     onMounted(() => {
       getWithdrawalMethods();
     });
@@ -218,12 +224,12 @@ export default defineComponent({
         .validate()
         .then(() => {
           confirmWithdraw(withdrawInfo).then((response) => {
-            if(response.code === 0) {
+            if (response.code === 0) {
               store.getBalance();
               ElMessage({
-                message: '成功',
-                type: 'success',
-              })
+                message: "成功",
+                type: "success"
+              });
               getWithdrawalMethods();
               loadCards();
             } else {
@@ -234,155 +240,158 @@ export default defineComponent({
               // message.error(response.message);
             }
           }).catch((error) => {
-              console.log(error.message);
+            console.log(error.message);
             // message.error(error.message, 4)
           });
         }).catch((error) => {
-          console.log("error", error);
-        });
-        loadingBtn.value = false;
+        console.log("error", error);
+      });
+      loadingBtn.value = false;
     };
     const withdrawRules = {
       amount: [
         {
           required: true,
           message: "请输入金额",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
-          pattern: '^([1-9][0-9]*)$',
+          pattern: "^([1-9][0-9]*)$",
           message: "金额应为正数",
-          trigger: "change",
+          trigger: "change"
         },
         {
           validator: verifyWithdrawAmount,
-          trigger: "change",
-        },
-      ],
+          trigger: "change"
+        }
+      ]
     };
     const checkBankCards = () => {
 
-      if(isUSDT.value){
+      if (isUSDT.value) {
         ElMessageBox.alert(
-          '请先绑定虚拟币钱包', "系统提示",
+          "请先绑定虚拟币钱包", "系统提示",
           {
             showClose: false,
             showCancelButton: false,
-            confirmButtonText: '确认',
+            confirmButtonText: "确认",
             draggable: false,
-            buttonSize: 'small',
+            buttonSize: "small",
             closeOnClickModal: false,
-            center: true,
+            center: true
           }
         )
           .then(() => {
-            router.push('/center/personal')
+            router.push("/center/personal");
           })
           .catch(() => {
-          })
-      } else if(isEWALLET.value){
+          });
+      } else if (isEWALLET.value) {
         ElMessageBox.alert(
-          '请先绑定电子钱包', "系统提示",
+          "请先绑定电子钱包", "系统提示",
           {
             showClose: false,
             showCancelButton: false,
-            confirmButtonText: '确认',
+            confirmButtonText: "确认",
             draggable: false,
-            buttonSize: 'small',
+            buttonSize: "small",
             closeOnClickModal: false,
-            center: true,
+            center: true
           }
         )
           .then(() => {
-            router.push('/center/personal')
+            router.push("/center/personal");
           })
           .catch(() => {
-          })
-      } else{
+          });
+      } else {
         ElMessageBox.alert(
-          '请先绑定银行卡', "系统提示",
+          "请先绑定银行卡", "系统提示",
           {
             showClose: false,
             showCancelButton: false,
-            confirmButtonText: '确认',
+            confirmButtonText: "确认",
             draggable: false,
-            buttonSize: 'small',
+            buttonSize: "small",
             closeOnClickModal: false,
-            center: true,
+            center: true
           }
         )
           .then(() => {
-            router.push('/center/personal')
+            router.push("/center/personal");
           })
           .catch(() => {
-          })
+          });
       }
 
-    }
+    };
     const loadCards = () => {
-        withdrawState.bankCardList = []
-        loadBankCards().then((response) => {
-          if (response.code === 0) {
-            response.data.forEach(element => {
-              if (element.bankType === 'BANK') {
-                  if (element.bankCode !== 'alipay' && element.bankType.includes(selectedWithdrawalMethod.value.code)) {
-                    withdrawState.bankCardList.push(element)
-                  }
-                  if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
-                    withdrawState.bankCardList.push(element)
-                  }
-                } else {
-                  // console.log(selectedWithdrawalMethod.value.code)
-                  if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
-                    withdrawState.bankCardList.push(element)
-                  }
-                }
-            });
-          } else {
-            ElMessage.error({
-              type: "error",
-              message: response.message
-            });
-          }
-        }).catch((error) => {
-          console.log(error.message);
-          // message.error(error.message, 4)
-           })
-    }
+      isLoaded.value = false;
+      loadBankCards().then((response) => {
+        isLoaded.value = true;
+        withdrawState.bankCardList = [];
+        if (response.code === 0) {
+          response.data.forEach(element => {
+            if (element.bankType === "BANK") {
+              if (element.bankCode !== "alipay" && element.bankType.includes(selectedWithdrawalMethod.value.code)) {
+                withdrawState.bankCardList.push(element);
+              }
+              if (element.bankCode === "alipay" && selectedWithdrawalMethod.value.code === "ALIPAY") {
+                withdrawState.bankCardList.push(element);
+              }
+            } else {
+              // console.log(selectedWithdrawalMethod.value.code)
+              if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
+                withdrawState.bankCardList.push(element);
+              }
+            }
+          });
+        } else {
+          ElMessage.error({
+            type: "error",
+            message: response.message
+          });
+        }
+      }).catch((error) => {
+        console.log(error.message);
+        isLoaded.value = true;
+      });
+    };
 
     async function verifyWithdrawAmount(r, v) {
       if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
         if (v < selectedWithdrawalMethod.value.withdrawMin || v > selectedWithdrawalMethod.value.withdrawMax) {
           return Promise.reject(
             "存入金额介于 " +
-              selectedWithdrawalMethod.value.withdrawMin +
-              " - " +
-              selectedWithdrawalMethod.value.withdrawMax
+            selectedWithdrawalMethod.value.withdrawMin +
+            " - " +
+            selectedWithdrawalMethod.value.withdrawMax
           );
         } else {
-            return Promise.resolve();
+          return Promise.resolve();
         }
       }
     }
-    const selectedWithdrawalMethod = ref({})
+
+    const selectedWithdrawalMethod = ref({});
     const selectMethod = (method, index) => {
       formRef.value.resetFields();
       withdrawInfo.withdrawCode = null;
       withdrawInfo.cardId = null;
-      selectedWithdrawalMethod.value = method
+      selectedWithdrawalMethod.value = method;
       withdrawInfo.withdrawCode = method.code;
       activeItem.value = index;
-      isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
-      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY')
-      isALIPAY.value = withdrawInfo.withdrawCode.includes('ALIPAY')
-      loadCards()
-    }
+      isUSDT.value = withdrawInfo.withdrawCode.includes("USDT");
+      isEWALLET.value = withdrawInfo.withdrawCode.includes("KDPAY") || withdrawInfo.withdrawCode.includes("EBPAY") || withdrawInfo.withdrawCode.includes("OKPAY");
+      isALIPAY.value = withdrawInfo.withdrawCode.includes("ALIPAY");
+      loadCards();
+    };
     const getWithdrawalMethods = () => {
       withdrawEntrance().then((response) => {
         if (response.code === 0) {
           withdrawalMethods.value = response.data;
           if (withdrawalMethods.value.length) {
-            selectMethod(withdrawalMethods.value[0], 0)
+            selectMethod(withdrawalMethods.value[0], 0);
           }
         } else {
           ElMessage.error({
@@ -391,22 +400,22 @@ export default defineComponent({
           });
           // message.error(response.message);
         }
-      })
-    }
+      });
+    };
     const cardLabel = () => {
       if (isUSDT.value) {
-        return '钱包地址'
+        return "钱包地址";
       } else if (isEWALLET.value) {
-        return '电子钱包'
+        return "电子钱包";
       } else {
-        return '银行卡'
+        return "银行卡";
       }
-    }
+    };
     const openEWalletTutorial = (code) => {
       const urlMap = {
-        'KDPAY': 'http://jiaocheng.kdpay123.com',
-        'EBPAY': 'https://www.ebpay009.com/syjc',
-        'OKPAY': 'https://me-qr.com/l/okpay'
+        "KDPAY": "http://jiaocheng.kdpay123.com",
+        "EBPAY": "https://www.ebpay009.com/syjc",
+        "OKPAY": "https://me-qr.com/l/okpay"
       };
 
       const url = urlMap[code];
@@ -434,9 +443,10 @@ export default defineComponent({
       loadingBtn,
       checkBankCards,
       cardLabel,
-      openEWalletTutorial
+      openEWalletTutorial,
+      isLoaded
     };
-  },
+  }
 });
 </script>
 
@@ -449,35 +459,44 @@ export default defineComponent({
   height: 100%;
   box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
 }
+
 .account-container {
   .account-content-wrapper {
     .withdrawalmethod {
       overflow: auto;
     }
+
     .withdrawal {
       margin: 10px 0;
+
       .flex-box {
-        display: flex;    justify-content: flex-start;
-    gap: 10px;
-    align-items: center;
+        display: flex;
+        justify-content: flex-start;
+        gap: 10px;
+        align-items: center;
+
         svg {
           width: 20px;
           fill: #6c757d;
         }
       }
+
       .withdraw-tip {
         color: #ff7f10;
         margin-top: 15px;
       }
+
       ul {
         margin: 20px auto;
         padding: 0 0 0 20px;
+
         li {
           list-style-type: disc;
           margin-bottom: 10px;
         }
       }
     }
+
     .step-item {
       color: #ffffff;
       width: 130px;
@@ -521,6 +540,7 @@ export default defineComponent({
         background-image: linear-gradient(267deg, #78abfa 0, #4877ec 100%), linear-gradient(#5b80e7, #5b80e7);
         border: 0;
         padding-left: 0px;
+
         &::after {
           border-left: 25px solid #74aef8;
           top: 0;
@@ -529,40 +549,44 @@ export default defineComponent({
           border-bottom: 25px solid transparent;
         }
       }
+
       &:first-child::before,
       &:last-child::after {
         display: none;
       }
     }
+
     .withdraw-type-item {
       display: flex;
       cursor: pointer;
-    justify-content: center;
-    min-width: 6rem;
-    background-color: #f7f8fb;
-    border-radius: 15px;
-    box-shadow: inset 0 0 8px 0 #a9c9ea;
-    margin-bottom: 30px;
-    border: 2px solid transparent;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    padding: 10px;
+      justify-content: center;
+      min-width: 6rem;
+      background-color: #f7f8fb;
+      border-radius: 15px;
+      box-shadow: inset 0 0 8px 0 #a9c9ea;
+      margin-bottom: 30px;
+      border: 2px solid transparent;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      padding: 10px;
+
       img {
         //     width: 40px;
         // padding: 8px 20px;
         // background: #ffffff;
         // border: 1px solid #ced4da;
-    max-width: 2.3rem;
-    width: 100%;
-    height: auto;
-    margin-bottom: 0;
-    border: 0;
-    padding: 0;
+        max-width: 2.3rem;
+        width: 100%;
+        height: auto;
+        margin-bottom: 0;
+        border: 0;
+        padding: 0;
       }
+
       &.active {
-    border: 2px solid #468cff;
-    box-shadow: unset;
+        border: 2px solid #468cff;
+        box-shadow: unset;
         // border-bottom: 4px solid #1bcef1;
         // border: 1px solid #ffd800;
         // color: #ffd800;
@@ -571,6 +595,7 @@ export default defineComponent({
           // background: #bad2ff;
           // border-color: #4873f1;
         }
+
         &:before {
           display: block;
           content: "";
@@ -585,11 +610,13 @@ export default defineComponent({
           background-position: center center;
         }
       }
+
       .type-name {
         line-height: 15px;
         margin: 10px 0 0;
         overflow-wrap: break-word;
       }
+
       .promo {
         position: absolute;
         right: 0;
@@ -606,18 +633,22 @@ export default defineComponent({
         line-height: 10px;
         border-radius: 0 10px;
         font-weight: bold;
+
         ::after {
           position: relative;
         }
       }
     }
   }
+
   .withdraw-btn {
     // min-width: 300px;
     margin: 30px auto;
+
     &.cancel {
       margin-right: 60px;
     }
+
     // height: 50px;
     // margin-top: 50px;
     // &.withdraw {
@@ -632,8 +663,10 @@ export default defineComponent({
     // }
   }
 }
+
 .withdraw-form {
   padding: 20px 0;
+
   :deep(.el-form-item__content) {
     gap: 15px;
   }
@@ -675,16 +708,19 @@ export default defineComponent({
         min-width: unset;
         margin: 20px auto;
       }
+
       .step-item {
         font-size: 10px;
         line-height: 25px;
         font-weight: bold;
+
         &::before,
         &::after {
           content: "";
           position: absolute;
           top: 0px;
         }
+
         &::before {
           left: 0;
           top: -2px;
@@ -692,6 +728,7 @@ export default defineComponent({
           border-top: 15px solid transparent;
           border-bottom: 15px solid transparent;
         }
+
         &::after {
           border-left: 13px solid #74aef8;
           right: -13px;
@@ -699,11 +736,13 @@ export default defineComponent({
           border-bottom: 13px solid transparent;
           z-index: 1;
         }
+
         &.active {
           color: #24222e;
           background: #ffffff;
           border: 0;
           padding-left: 0px;
+
           &::after {
             border-left: 15px solid #ffffff;
             top: 0;
@@ -712,6 +751,7 @@ export default defineComponent({
             border-bottom: 15px solid transparent;
           }
         }
+
         &:first-child::before,
         &:last-child::after {
           display: none;
@@ -737,29 +777,35 @@ export default defineComponent({
       display: flex;
       flex-direction: column;
     }
+
     .ant-input {
       width: 100%;
     }
   }
 }
+
 :deep(.ant-input-affix-wrapper) {
   background: #15141b;
   border: 0;
   padding: 8px 16px;
   max-width: 280px;
+
   .ant-input {
     border: 0;
   }
+
   .ant-input-suffix {
     color: #ffffff;
   }
 }
+
 :deep(
     .ant-form-item-has-error .ant-input-affix-wrapper:hover,
     .ant-form-item-has-error .ant-input-affix-wrapper:focus
   ) {
   background: #15141b;
 }
+
 :deep(
     .ant-form-item-has-error .ant-input,
     .ant-form-item-has-error .ant-input-affix-wrapper,
@@ -774,6 +820,7 @@ export default defineComponent({
   margin-bottom: 30px;
   color: #ff7f10;
 }
+
 .tip-text {
   margin-bottom: 10px;
   display: block;
@@ -781,13 +828,13 @@ export default defineComponent({
   color: #ff7f10;
 }
 
-.menu-title-container{
-  .menu-title{
+.menu-title-container {
+  .menu-title {
     font-size: 18px;
     color: #424F72;
   }
 
-  .additional-title{
+  .additional-title {
     padding-left: 16px;
   }
 }
