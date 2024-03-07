@@ -255,7 +255,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:game-match:update-status']) || hasPermission(['sys:game-match:update']) || hasPermission(['sys:game-match:delete']))" fixed="right" width="280">
+      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:game-match:update-status']) || hasPermission(['sys:game-match:update']) || hasPermission(['sys:game-match:del']))" fixed="right" width="280">
         <template #default="scope">
           <el-button
             v-if="scope.row.status === 'ACTIVE'"
@@ -278,7 +278,7 @@
             icon="el-icon-remove"
             size="small"
             type="danger"
-            v-permission="['sys:game-match:delete']"
+            v-permission="['sys:game-match:del']"
             @click="removeMatch(scope.row.id)"
           />
         </template>
