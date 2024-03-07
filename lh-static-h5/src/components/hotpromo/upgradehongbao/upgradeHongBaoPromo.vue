@@ -2,10 +2,10 @@
   <div class="hongbao-container">
     <div class="hongbao-prize">
       <div class="decal"></div>
-<!--      <div class="current-content">-->
-<!--        <div class="current">当前抽奖次数</div>-->
-<!--        <div class="count">1</div>-->
-<!--      </div>-->
+      <!--      <div class="current-content">-->
+      <!--        <div class="current">当前抽奖次数</div>-->
+      <!--        <div class="count">1</div>-->
+      <!--      </div>-->
 
       <div class="prize-redeem" @click="getPromotion">
         <img src="../../../assets/images/promo/hotpromo/upgradehongbao/red-packet.png" width="200" />
@@ -24,23 +24,6 @@
     </div>
     <div class="activity-boxes">
       <div class="activity-box">
-        <div class="activity-title">活动时间</div>
-        <div class="activity-content-container">
-          <div class="activity-content-item">
-            <div class="content-title">活动时间:</div>
-            <div class="content-txt">所有会员</div>
-          </div>
-          <div class="activity-content-item">
-            <div class="content-title">抽奖次数:</div>
-            <div class="content-txt">每10,000元有效投注可获得一次抽奖</div>
-          </div>
-          <div class="activity-content-item">
-            <div class="content-title">时间:</div>
-            <div class="content-txt">2023/11/10-2024/1/4</div>
-          </div>
-        </div>
-      </div>
-      <div class="activity-box">
         <div class="activity-title">活动对象</div>
         <div class="activity-content-container">
           <table class="content-table">
@@ -54,6 +37,22 @@
       </div>
     </div>
   </div>
+
+  <table border="0" width="100%" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <th>红包雨发放时间</th>
+        <th>每日次数</th>
+      </tr>
+      <tr>
+        <td>18:00 ~ 19:00</td>
+        <td rowspan="2">每日2次</td>
+      </tr>
+      <tr>
+        <td>20:00 ~ 21:00</td>
+      </tr>
+    </tbody>
+  </table>
 
   <q-dialog
     class="award-modal hongbaoyu-modal"
@@ -88,7 +87,6 @@ const isClaimModal = ref(false);
 const loadingClaim = ref(false);
 const props = defineProps(["promoCode"]);
 const promoCode = ref(props.promoCode);
-
 
 const getPromotion = () => {
   loadingClaim.value = true;
