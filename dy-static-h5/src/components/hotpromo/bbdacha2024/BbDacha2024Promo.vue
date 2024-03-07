@@ -81,12 +81,11 @@
 
   <div class="tips-container">
     <div class="tips-txt">注：请于每场指定开赛时间前选择完成竞猜，超出开赛时间则无法参与竞猜。</div>
-
     <div class="tips-record" @click="tableRecordDialog = true">【投票记录】</div>
   </div>
 
   <div class="tabs-container">
-    <q-tabs v-model="activeKey">
+    <q-tabs v-model="activeKey" style="display: none;">
       <q-tab name="tabOne" label="活动一" />
       <q-tab name="tabTwo" label="活动二" />
     </q-tabs>
@@ -95,7 +94,7 @@
       <q-tab-panel name="tabOne">
         <div class="table-container">
           <p class="q-mt-md text-bold" style="text-align: center">
-            活动期间，每日竞猜正确次数1~2场的会员当日存款可领对应存款反比金额
+            活动期间，每轮中超竞猜正确次数≥2场可获每轮总存款的对应存款反比奖金。
           </p>
 
           <table class="promo-table">
@@ -108,17 +107,24 @@
             </thead>
             <tbody>
               <tr>
-                <td>1~2</td>
-                <td>0.8%</td>
-                <td>128</td>
+                <td>≥2</td>
+                <td>0.5%</td>
+                <td>58</td>
               </tr>
-              <!--              <tr>-->
-              <!--                <td>≥3</td>-->
-              <!--                <td>1.0%</td>-->
-              <!--                <td>388</td>-->
-              <!--              </tr>-->
+              <tr>
+                <td>≥3</td>
+                <td>0.8%</td>
+                <td>88</td>
+              </tr>
+              <tr>
+                <td>≥5</td>
+                <td>1.0%</td>
+                <td>188</td>
+              </tr>
             </tbody>
           </table>
+
+          <div class="tips-txt-bottom">注：赛事每一轮天数不一致，总存款以每一轮的第一天与最后一天统计。</div>
         </div>
 
         <div class="head-title">
@@ -128,11 +134,11 @@
         <div class="rules-container">
           <ol class="rules-content">
             <li>
-              活动期间，BB别墅冬季杯竞猜正确场次1~2次可获当日存款对应反比，彩金与次日24小时内派发，彩金仅需3倍流水即可提款；
+              活动期间，中国超级联赛每一轮竞猜正确场次≥2次可获每轮开始与结束时间总存款的对应反比，彩金与次日24小时内派发，彩金仅需3倍流水即可提款；
             </li>
             <li>活动期间，请在指定比赛开赛前竞猜，若超出开赛时间则视为放弃竞猜；</li>
             <li>
-              活动期间会员竞猜正确场次达到对应标准且会员当日未存款，次日清零重新计算，若会员彩金金额超出彩金上限金额则按彩金上限派发奖金；
+              活动期间会员竞猜正确场次≥2次且会员当日未存款，次日清零重新计算，若会员彩金金额超出彩金上限金额则按彩金上限派发奖金；
             </li>
             <li>
               每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将在任何时候保留可以全部停止、取消优惠或索回已支付全部优惠的权利；
@@ -143,7 +149,7 @@
       </q-tab-panel>
     </q-tab-panels>
 
-    <q-tab-panels v-model="activeKey">
+    <!-- <q-tab-panels v-model="activeKey">
       <q-tab-panel name="tabTwo">
         <div class="table-container">
           <p class="q-mt-md text-bold" style="text-align: center">
@@ -194,7 +200,7 @@
           </ol>
         </div>
       </q-tab-panel>
-    </q-tab-panels>
+    </q-tab-panels> -->
   </div>
 
   <q-dialog v-model="tableRecordDialog" full-width>
@@ -348,6 +354,10 @@ onMounted(() => {
 
 <style scoped lang="scss">
 // table styling
+.table-container .promo-table {
+  margin: 10px auto 5px;
+}
+
 table.promo-table {
   width: 100%;
   th {
@@ -367,6 +377,15 @@ table.promo-table {
     font-size: 12px;
   }
 }
+
+.tips-txt-bottom {
+    color: #424f72;
+    display: flex; 
+    margin-bottom: 20px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
 
 .competition-container {
   margin-top: 20px;
