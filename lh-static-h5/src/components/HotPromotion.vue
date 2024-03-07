@@ -79,7 +79,7 @@
 
     <Cny2024Promo v-if="list.redirectUrl === 'lh1-cny2024-promo' && !isCommonPromo && store.token"></Cny2024Promo>
     <BbDacha2024Promo
-      v-if="list.redirectUrl === 'lh1-bb-dacha-2024' && !isCommonPromo && store.token"
+      v-if="list.redirectUrl === 'lh1-match-vote' && !isCommonPromo && store.token"
     ></BbDacha2024Promo>
     <CnyStepGame2024Promo
       v-if="list.redirectUrl === 'lh1-cny-step-game' && !isCommonPromo && store.token"
@@ -132,7 +132,7 @@ import UpgradeHongBaoPromo from "../components/hotpromo/upgradehongbao/upgradeHo
 // import BasketballHot from "../components/hotpromo/basketballHot/BasketballHot.vue";
 import LplSummerPromo from "../components/hotpromo/lplsummer/LplSummerPromo.vue";
 // import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
-// import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
+import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
 // import CnyStepGame2024Promo from "../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue";
 
 export default defineComponent({
@@ -160,9 +160,9 @@ export default defineComponent({
     // PrivilegeInvite,
     // AsiaCup2024Promo,
     // BasketballHot,
-    LplSummerPromo
+    LplSummerPromo,
     // Cny2024Promo,
-    // BbDacha2024Promo,
+    BbDacha2024Promo,
     // CnyStepGame2024Promo
   },
   props: {
@@ -235,7 +235,7 @@ export default defineComponent({
       this.list.redirectUrl === "dy-promo-application-A" ||
       this.list.redirectUrl === "dy-promo-application-B" ||
       this.list.redirectUrl === "lh1-cny2024-promo" ||
-      this.list.redirectUrl === "lh1-bb-dacha-2024" ||
+      this.list.redirectUrl === "lh1-match-vote" ||
       this.list.redirectUrl === "lh1-cny-step-game" ||
       this.list.redirectUrl === "lh1-feedback-award" ||
       this.list.redirectUrl === "lh1-invite" ||
