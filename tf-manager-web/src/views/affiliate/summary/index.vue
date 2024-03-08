@@ -83,7 +83,7 @@
         :resizable="true"
         :data="page.records"
         v-loading="page.loading"
-        row-key="id"
+        row-key="affiliateId"
         :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
         :empty-text="t('fields.noData')"
         highlight-current-row
