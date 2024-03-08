@@ -887,7 +887,7 @@ $transition_timer: 0.5s;
 
       .hotgame-content-wrapper {
         display: flex;
-        align-items: center;
+        align-items: flex-end;
         gap: 1rem;
         width: 0;
         height: 0;
@@ -1150,106 +1150,142 @@ $transition_timer: 0.5s;
           img {
             position: relative;
             right: 4rem;
-            height: 27rem;
+            bottom:0px;
+            height: 30rem;
 
             &.character-fishing-gps {
               right: 9rem;
             }
           }
 
+
+          //lottery
+          .character-lottery-tcg{
+            right: 6rem;
+          }
+
+          .character-lottery-lh {
+            position: relative;
+            right: 3rem;
+            height: 30rem;
+          }
+
           // esports
           .character-esports-lh {
             position: relative;
-            right: 4rem;
-            height: 27rem;
+            right: 8rem;
+            height: 29rem;
           }
 
-          .character-esports-im {
+          .character-esports-imes {
             position: relative;
-            right: 6rem;
-            height: 25rem;
+            right: 8rem;
+            height: 30rem;
           }
 
           .character-esports-ia {
             position: relative;
-            right: 7.5rem;
-            height: 25rem;
+            right: 10rem;
+            height: 30rem;
           }
 
           .character-esports-rg {
             position: relative;
-            right: 0rem;
-            height: 27rem;
+            right: 4rem;
+            height: 30rem;
           }
 
           // sports
-          .character-sports-im,
+          .character-sports-im{
+            position: relative;
+            right: 1rem;
+            height: 28rem;
+          }
+
           .character-sports-saba {
             position: relative;
-            right: 0rem;
-            height: 25rem;
+            right: 3rem;
+            height: 28rem;
           }
 
           .character-sports-pinnacle,
           .character-sports-panda {
             position: relative;
-            right: 0;
-            height: 26rem;
+            right: 1rem;
+            height: 29rem;
           }
 
           .character-sports-pm {
             position: relative;
-            right: 0.5rem;
-            height: 24rem;
+            right: 2.5rem;
+            height: 28rem;
           }
 
           .character-sports-cr {
             position: relative;
             right: 1.5rem;
-            height: 24rem;
+            height: 28rem;
           }
 
           // casino
           .character-casino-ag {
             position: relative;
-            right: 0.5rem;
-            height: 28rem;
+            right: 2.5rem;
+            height: 31rem;
           }
 
-          .character-casino-db {
+          .character-casino-pmlive{
             position: relative;
-            right: 1rem;
-            height: 23rem;
+            right: 5rem;
+            height: 31rem;
+          }
+
+          .character-casino-db{
+            position: relative;
+            right: 4rem;
+            height: 30rem;
           }
 
           .character-casino-bg {
             position: relative;
-            right: 1rem;
-            height: 27rem;
+            right: 4rem;
+            height: 29rem;
           }
 
           .character-casino-we {
             position: relative;
             right: 4rem;
-            height: 23rem;
+            height: 30rem;
           }
 
           .character-casino-ob {
             position: relative;
-            right: 2.25rem;
-            height: 23rem;
+            right: 3.25rem;
+            height: 27rem;
           }
 
           .character-casino-bbin {
             position: relative;
             right: 3.25rem;
-            height: 23rem;
+            height: 29rem;
           }
 
           .character-casino-evo {
             position: relative;
-            right: 6.5rem;
-            height: 23rem;
+            right: 9.5rem;
+            height: 29rem;
+          }
+
+          .character-casino-allbet{
+            right: 6rem;
+          }
+
+          .character-casino-we{
+            right: 8rem;
+          }
+
+          .character-casino-bbindy{
+            right: 6rem;
           }
 
           // board
@@ -1257,70 +1293,73 @@ $transition_timer: 0.5s;
           .character-board-gd {
             position: relative;
             right: 2.25rem;
-            height: 23rem;
+            height: 30rem;
           }
 
           .character-board-ky {
             position: relative;
-            right: 3rem;
-            height: 23rem;
+            right: 8rem;
+            height: 30rem;
           }
 
-          .character-board-leyou {
+          .character-board-leyou,.character-board-leg {
             position: relative;
-            // right: 4rem;
-            height: 23rem;
+             right: 7rem;
+            height: 30rem;
           }
 
-          // lottery
-          .character-lottery-lh {
-            position: relative;
-            right: 3rem;
-            height: 25rem;
+          .character-board-dt{
+            height: 32rem;
+            right: 8rem;
           }
+
+          .character-board-gflc{
+            right: 6rem;
+          }
+
 
           // slots
           .character-slots-pg {
             position: relative;
-            right: 1.75rem;
-            height: 23rem;
+            right: 5.5rem;
+            height: 29rem;
           }
 
           .character-slots-sw {
             position: relative;
-            right: 2rem;
-            height: 23rem;
+            right: 5rem;
+            height: 29rem;
           }
 
           .character-slots-pt {
             position: relative;
-            right: 2rem;
-            height: 23rem;
+            right: 5rem;
+            height: 29rem;
           }
 
           .character-slots-evo {
             position: relative;
             right: 2.75rem;
-            height: 23rem;
+            height: 29rem;
           }
 
           .character-slots-ag {
             position: relative;
-            right: 4rem;
-            height: 24rem;
+            right: 7rem;
+            height: 29rem;
           }
 
           // fishing
           .character-fishing-ag {
             position: relative;
             right: 4rem;
-            height: 21rem;
+            height: 29rem;
           }
 
           .character-fishing-mw {
             position: relative;
             right: 5.5rem;
-            height: 21rem;
+            height: 29rem;
           }
         }
       }
