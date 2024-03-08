@@ -316,7 +316,7 @@ const isHasRecord = ref(false);
 
 function getRecords() {
   getMemberSportMatchRecord(recordsPagination).then((res) => {
-    console.log("data", res.data);
+    // console.log("data", res.data);
     const { code, data } = res;
     if (code == 0) {
       records.value = data.records;

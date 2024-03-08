@@ -109,7 +109,7 @@ export default defineComponent({
     const onSwiper = (swiper) => {};
 
     const onSlideChange = () => {
-      console.log("slide change");
+      // console.log("slide change");
     };
     const appGame = ref(null);
     const platforms = ref([

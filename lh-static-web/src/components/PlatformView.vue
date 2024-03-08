@@ -256,8 +256,8 @@ const getPlatList = () => {
       element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase())
     );
 
-    console.log("Platform");
-    console.log(platformsListDisplay.value);
+    // console.log("Platform");
+    // console.log(platformsListDisplay.value);
 
     platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
       const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
@@ -385,8 +385,8 @@ const loadGameList = () => {
 };
 
 const changePage = (page, pageSize) => {
-  console.log(page);
-  console.log(pageSize);
+  // console.log(page);
+  // console.log(pageSize);
   gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
 };
 

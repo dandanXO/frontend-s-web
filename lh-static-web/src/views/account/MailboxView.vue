@@ -277,7 +277,7 @@ const readMultipleMsg = () => {
   const selectedIdsArray = selectedMessages.map((msg) => msg.id);
   const formattedIds = selectedIdsArray.join(",");
 
-  console.log(mailboxMessageTab.value);
+  // console.log(mailboxMessageTab.value);
   mailboxNotifyState[mailboxMessageTab.value].forEach((mail) => {
     if(formattedIds.indexOf(mail.id) > -1){
       mail.readTime = moment().format("YYYY-MM-DD");

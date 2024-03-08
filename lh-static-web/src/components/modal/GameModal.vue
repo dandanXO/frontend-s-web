@@ -220,8 +220,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.token) {
-      console.log(gameCode);
-      console.log(platformCode);
+      // console.log(gameCode);
+      // console.log(platformCode);
       if (gameCode === "bbkeno_lobby_pc") {
         iframeScroll.value = true;
       }

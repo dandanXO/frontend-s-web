@@ -665,7 +665,6 @@ export default defineComponent({
           // captchaForm.captchaCode = "";
           getCode();
           verificationPhoneModalVisible.value = true;
-          console.log()
 
         }).catch((err) => {
             ElMessage({

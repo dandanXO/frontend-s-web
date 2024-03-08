@@ -556,7 +556,7 @@ export default defineComponent({
         if (response.code === 0) {
           personalState.memberInfo = response.data;
           bankCardInfo.telephone = personalState.memberInfo.telephone;
-          console.log(bankCardInfo.telephone)
+          // console.log(bankCardInfo.telephone)
           if (personalState.memberInfo.birthday) {
             personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
           }

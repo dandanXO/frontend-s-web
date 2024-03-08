@@ -572,7 +572,7 @@ export default defineComponent({
             updatePropertiesBasedOnElements(claimedElements, "claimed");
 
             // Now, vipItems array has the updated properties based on the provided elements
-            console.log(vipItems);
+            // console.log(vipItems);
           } else {
              ElMessage.error(res.message)
           }
