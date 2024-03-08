@@ -126,6 +126,13 @@ const menuItems = ref([
     .account-details-balance {
       margin-top: 10px;
       color: $color-white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      svg {
+        color: #ffffff;
+      }
     }
 
     .profile-actions {
