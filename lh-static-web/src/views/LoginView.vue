@@ -9,7 +9,7 @@
       <div class="card-bg">
         <el-tabs>
           <el-tab-pane label="账户登录">
-            <AccountLogin />
+            <AccountLogin page-type="view" />
           </el-tab-pane>
           <el-tab-pane label="手机登录">
             <el-form ref="mobileLoginRef" :rules="mobileLoginRules" :model="loginForm" label-width="70"
