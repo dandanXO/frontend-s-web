@@ -88,7 +88,7 @@ const gotoGame = (item, platformType) => {
   }
 };
 const checkWindowSize = () => {
-  console.log('resize');
+  // console.log('resize');
   // Access and modify the ref here
   if (window.innerWidth < 1700) {
     numberToShow.value = 5

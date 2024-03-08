@@ -216,7 +216,7 @@ export default defineComponent({
             const promoTypes = promo.promoType.toLowerCase().split(",");
             return promoTypes.includes("slot game") || promoTypes.includes("welcome") || promoTypes.includes("fish");
           });
-          console.log(filteredArray.value);
+          // console.log(filteredArray.value);
         }else{
           filteredArray.value = promoState.promoList.filter(function(promo) {
             return promo.promoType.toLowerCase().split(',').includes(type.toLowerCase());

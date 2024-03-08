@@ -401,7 +401,7 @@ function checkPrivilege(v) {
 
 function selectedBank(value) {
   form.bankId = value.value;
-  console.log(form.bankId);
+  // console.log(form.bankId);
 }
 
 function clearInfo() {
@@ -498,7 +498,7 @@ function confirmDeposit() {
       loadingBtn.value = false;
     });
   }).catch((vali) => {
-    console.log(vali)
+    // console.log(vali)
   })
   setTimeout(() => {
     loadingBtn.value = false;
