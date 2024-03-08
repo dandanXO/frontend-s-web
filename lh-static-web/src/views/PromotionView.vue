@@ -3,7 +3,7 @@
     <div class="all-promotions" v-if="!isPromoDetail">
       <div class="promo-main-container">
         <div class="promo-type-wrapper">
-          <el-affix :offset="80">
+          <div style="position:sticky; top: 0;">
             <div class="type-list">
               <img src="../assets/promo/menu-title.png" />
               <div
@@ -17,7 +17,7 @@
                 <span style="width: 100px" class="label">{{ p.label }}</span>
               </div>
             </div>
-          </el-affix>
+          </div>
         </div>
         <div class="promo-list-wrapper">
           <div
@@ -436,6 +436,8 @@ export default defineComponent({
           flex-direction: column;
           gap: 35px;
           min-height: 818px;
+          position: sticky;
+          top: 100px;
           .type-item {
             cursor: pointer;
             // border-radius: 20px;
