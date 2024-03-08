@@ -43,7 +43,7 @@ export default defineComponent({
           if (res.data.announcements) {
             const d = res.data.announcements;
             announcementsList.value = d;
-            console.log(announcementsList.value)
+            // console.log(announcementsList.value)
           }
           if (res.data.type) {
             const e = res.data.type
