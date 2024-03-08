@@ -10,7 +10,7 @@
           <template v-for="nav in navigations" :key="nav.name">
             <template v-if="!nav.hasicon">
               <div class="header-menu-item">
-                <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
+                <a @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
                   <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase()">
                     <img
                       class="menu-icon"
@@ -22,7 +22,7 @@
                     <img class="menu-icon" :src="require(`../../assets/images/home/menu/${nav.code}-icon.png`)" />
                     <h2 class="nav-title">{{ nav.name }}</h2>
                   </template>
-                </router-link>
+                </a>
               </div>
             </template>
           </template>
@@ -1386,11 +1386,26 @@ export default defineComponent({
       forgetPassDialogVisible.value = true;
     };
 
+    const goPath = (path, element) => {
+      const parentElement = element.target.parentNode;
+      setTimeout(() => {
+        const mouseUpEvent = new MouseEvent("mouseup", {
+          bubbles: true,
+          cancelable: true,
+          view: window
+        });
+        parentElement.dispatchEvent(mouseUpEvent);
+      }, 50);
+
+      router.push(path);
+    };
+
     return {
       token,
       el,
       height,
       showSubMenu,
+      goPath,
       scroll,
       selectedMenu,
       noticesList: [

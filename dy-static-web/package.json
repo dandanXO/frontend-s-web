@@ -21,6 +21,7 @@
     "cross-env": "^7.0.3",
     "dotenv-cli": "^7.0.0",
     "element-plus": "2.2.33",
+    "fingerprintjs": "^0.5.3",
     "gsap": "^3.12.1",
     "moment": "^2.29.4",
     "pinia": "^2.0.30",

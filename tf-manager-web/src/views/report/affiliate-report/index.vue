@@ -107,7 +107,7 @@
     <el-table
       :data="page.records"
       ref="table"
-      row-key="id"
+      row-key="rowId"
       size="small"
       highlight-current-row
       v-loading="page.loading"

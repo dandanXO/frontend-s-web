@@ -112,7 +112,8 @@ defineExpose({
 <style scoped lang="scss">
 .light-bg {
     font-size: 14px;
-    border-radius: 30px;
+  background-color: #f7f8fb;
+  border-radius: 15px;
     box-shadow: 0px -1.7px 6.09px 0px #a2bff4 inset;
 }
 
