@@ -220,9 +220,12 @@ onMounted(() => {});
               .link {
                 color: #468cff;
                 font-family: PingFang SC;
-                font-size: 1rem;
+                font-size: 0.75rem;
+                text-align: center;
+                margin:0 auto;
                 font-weight: 400;
                 line-height: 116.5%; /* 1.165rem */
+
               }
             }
 
