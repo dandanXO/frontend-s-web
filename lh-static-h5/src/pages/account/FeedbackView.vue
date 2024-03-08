@@ -2,7 +2,8 @@
   <div class="account-box account-contents">
     <div class="account-content mail mail-content">
       <div class="q-ma-md" key="quiz" name="quiz" :label="'有奖问答'">
-        <div v-if="!uiIsShowStatus.questionBox" class="quiz-container">
+        <div v-if="!uiIsShowStatus.showQuestions" class="quiz-disable">活动尚未开启</div>
+        <div v-if="!uiIsShowStatus.questionBox && uiIsShowStatus.showQuestions" class="quiz-container">
           <div class="quiz-content">
             <div class="content-title">让我们聆听您的心声</div>
             <div class="content-desc">雷火有奖问卷调查，您的意见和建议对我们非常重要</div>
@@ -191,7 +192,8 @@ const store = userStore();
 const recordsPagination = reactive({ size: 0, current: 0, total: 0, pages: 0 });
 const uiIsShowStatus = reactive({
   startAnswerBox: true,
-  questionBox: false
+  questionBox: false,
+  showQuestions: true
 });
 
 function onBtnStartAnswerClick() {
@@ -286,6 +288,8 @@ const getQuesTitleOptions = () => {
     if (res.code === 0) {
       quesTitleOptions.value = res.data;
       recordsPagination.pages = res.data.length;
+
+      uiIsShowStatus.showQuestions = quesTitleOptions.value.length !== 0;
     }
   });
 };
@@ -902,5 +906,16 @@ onMounted(() => {
   .mail-pagination-wrapper {
     margin-top: 20px;
   }
+}
+
+.quiz-disable {
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+  align-items: center;
+  margin-top: 40px;
+  font-weight: 600;
+  color: $font-2;
+  font-size: 1.275rem;
 }
 </style>
