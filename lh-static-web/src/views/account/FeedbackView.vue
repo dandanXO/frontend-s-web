@@ -79,7 +79,8 @@
         </el-tab-pane>
 
         <el-tab-pane key="quiz" name="quiz" :label="'有奖问答'">
-          <div v-if="!uiIsShowStatus.questionBox" class="quiz-container">
+          <div v-if="!uiIsShowStatus.showQuestions" class="quiz-disable">活动尚未开启</div>
+          <div v-if="!uiIsShowStatus.questionBox && uiIsShowStatus.showQuestions" class="quiz-container">
             <div class="quiz-header">
               有奖问答
             </div>
@@ -214,7 +215,8 @@ const store = userStore();
 const recordsPagination = reactive({ size: 3, current: 1, total: 3, pages: 3 });
 const uiIsShowStatus = reactive({
   startAnswerBox: true,
-  questionBox: false
+  questionBox: false,
+  showQuestions: true,
 });
 function onBtnStartAnswerClick() {
   // debugger;
@@ -314,6 +316,7 @@ const getQuesTitleOptions = () => {
     if (res.code === 0) {
       quesTitleOptions.value = res.data
       recordsPagination.pages = res.data.length
+      uiIsShowStatus.showQuestions = quesTitleOptions.value.length !== 0
     } else {
       ElMessage.error(res.message)
     }
@@ -1059,5 +1062,16 @@ onMounted(() => {
     line-height: 15px;
 
   }
+}
+
+.quiz-disable {
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+  align-items: center;
+  margin-top: 40px;
+  font-weight: 600;
+  color: $font-2;
+  font-size: 1.275rem;
 }
 </style>

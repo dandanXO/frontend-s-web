@@ -235,11 +235,6 @@ export default defineComponent({
     });
 
     const loadBanner = () => {
-      // loadPromoBanner("PROMO").then((res) => {
-      //   if (res.code === 0) {
-      //       banner.value = res.data[0]
-      //   }
-      // })
       api
         .get("/promo/banner?category=PROMO")
         .then((response) => {
@@ -254,7 +249,6 @@ export default defineComponent({
             //   icon: "report_problem"
             // });
           }
-          // banners.value = response.data;
         });
     };
     const showPromoDetails = (promo) => {
@@ -337,7 +331,7 @@ export default defineComponent({
           });
 
 
-          console.log("route.query.name", route.query.name);
+          // console.log("route.query.name", route.query.name);
 
           switchPromoType(promoState.active);
           isFetchingPromo.value = false;
@@ -397,7 +391,7 @@ export default defineComponent({
       }
 
       checkExtension();
-      loadBanner();
+      // loadBanner();
       loadAll();
     });
 

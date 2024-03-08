@@ -274,7 +274,7 @@ export default defineComponent({
       }
     };
     onMounted(() => {
-      loadBanner();
+      // loadBanner();
       loadAll();
     });
 

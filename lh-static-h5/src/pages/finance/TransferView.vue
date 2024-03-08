@@ -246,7 +246,7 @@ const updateTransferDropdown = () => {
     ];
     transferToOpt.value = [];
     platforms.forEach((plat) => {
-      console.log(plat);
+      // console.log(plat);
 
       var obj = {
         id: plat.id,
