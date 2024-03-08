@@ -3,14 +3,20 @@
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/name-icon.png" />
       <el-form-item label="姓名" prop="realName">
-        <el-input class="wTip" v-model="regForm.realName" placeholder="输入姓名" :rules="[
-                    { required: true, message: '姓名必须与提款银行卡账号姓名一致' },
-                    {
-                        pattern: '^([\u4e00-\u9fa5]*)$',
-                        message: '请输入中文字符',
-                        trigger: 'change'
-                    }
-                ]" clearable>
+        <el-input
+          class="wTip"
+          v-model="regForm.realName"
+          placeholder="输入姓名"
+          :rules="[
+            { required: true, message: '姓名必须与提款银行卡账号姓名一致' },
+            {
+              pattern: '^([\u4e00-\u9fa5]*)$',
+              message: '请输入中文字符',
+              trigger: 'change'
+            }
+          ]"
+          clearable
+        >
           <template #append></template>
         </el-input>
       </el-form-item>
@@ -28,8 +34,14 @@
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
       <el-form-item label="密码" prop="password">
-        <el-input class="wTip" v-model="regForm.password" placeholder="请输入6-12位字母/数字组合" type="password"
-                  show-password clearable>
+        <el-input
+          class="wTip"
+          v-model="regForm.password"
+          placeholder="请输入6-12位字母/数字组合"
+          type="password"
+          show-password
+          clearable
+        >
           <template #append></template>
         </el-input>
       </el-form-item>
@@ -38,8 +50,14 @@
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
       <el-form-item label="确认密码" prop="confirmPwd">
-        <el-input class="half wTip" v-model="regForm.confirmPwd" placeholder="请确认密码" type="password" show-password
-                  clearable>
+        <el-input
+          class="half wTip"
+          v-model="regForm.confirmPwd"
+          placeholder="请确认密码"
+          type="password"
+          show-password
+          clearable
+        >
           <template #append></template>
         </el-input>
       </el-form-item>
@@ -48,24 +66,40 @@
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/referral-icon.png" />
       <el-form-item label="推荐码" prop="codeAffiliate">
-        <el-input v-if="!hasAffiliate" class="half" v-model="regForm.codeAffiliate"
-                  placeholder="如果没有 无需填写" clearable />
-        <el-input v-else class="half" v-model="regForm.codeAffiliate" placeholder="如果没有 无需填写" readonly
-                  disabled clearable />
+        <el-input
+          v-if="!hasAffiliate"
+          class="half"
+          v-model="regForm.codeAffiliate"
+          placeholder="如果没有 无需填写"
+          clearable
+        />
+        <el-input
+          v-else
+          class="half"
+          v-model="regForm.codeAffiliate"
+          placeholder="如果没有 无需填写"
+          readonly
+          disabled
+          clearable
+        />
       </el-form-item>
     </div>
 
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
       <el-form-item label="验证码" prop="captchaCode">
-        <div style="display:flex;width:100%;">
-          <el-input @keyup.enter="submitRegisterForm(registerRef)" v-model="regForm.captchaCode" label="验证码"
-                    placeholder="请输入验证码" clearable />
-          <img style="width:90px;" :src="verificationImg" @click="getCode" />
+        <div style="display: flex; width: 100%">
+          <el-input
+            @keyup.enter="submitRegisterForm(registerRef)"
+            v-model="regForm.captchaCode"
+            label="验证码"
+            placeholder="请输入验证码"
+            clearable
+          />
+          <img style="width: 90px" :src="verificationImg" @click="getCode" />
         </div>
       </el-form-item>
     </div>
-
   </el-form>
   <!-- <div>
       <el-button class="blue-bg primary-btn" size="large" @click="resetRegForm(registerRef)">重新填写</el-button>
@@ -74,20 +108,21 @@
     <el-button class="blue-bg primary-btn" size="large" @click="submitRegisterForm(registerRef)">注册</el-button>
   </div>
 
-
   <div class="flex-div">
-    <div style="text-align: center;" class="font-gray">已有账号？
-      <router-link to="/login">去登录</router-link>
+    <div style="visibility:hidden">
+      <a @click="closeRegDialog">先去逛逛</a>
+    </div>
+    
+    <div style="text-align: center" class="font-gray">
+      已有账号？
+      <a @click="openLoginDialog">去登录</a>
     </div>
 
-    <div>
-      <router-link to="/">先去逛逛</router-link>
-    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from "vue";
+import { ref, onMounted, reactive, defineEmits } from "vue";
 import { userStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
 import { lsGet } from "@/utils/utils";
@@ -338,50 +373,55 @@ const verificationImg = ref("");
 
 const submitRegisterForm = async (elForm) => {
   if (!elForm) return;
-  await elForm.validate((valid) => {
-    if (valid) {
-      const fpPromise = FingerprintJS.load();
-      (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
-        regForm.sid = sidParam;
-        register(regForm)
-          .then((response) => {
-            const regResult = response.code;
-            if (regResult === 0) {
-              ElMessage({
-                type: "success",
-                message: "注册成功"
-              });
-              store.autoLogin(response.data);
-
-              sessionStorage.removeItem("REFERRAL_CODE");
-              sessionStorage.removeItem("AFFILIATE_CODE");
-
-              if (store.token) {
+  await elForm
+    .validate((valid) => {
+      if (valid) {
+        const fpPromise = FingerprintJS.load();
+        (async () => {
+          const fp = await fpPromise;
+          const result = await fp.get();
+          const excludes = { value: ["timezone", "timeZoneOffset"] };
+          const allComponents = { ...result.components };
+          excludes.value.forEach((element) => {
+            delete allComponents[element];
+          });
+          const sidParam = FingerprintJS.hashComponents(allComponents);
+          regForm.sid = sidParam;
+          register(regForm)
+            .then((response) => {
+              const regResult = response.code;
+              if (regResult === 0) {
+                ElMessage({
+                  type: "success",
+                  message: "注册成功"
+                });
+                store.autoLogin(response.data);
+                emits("close-dialog");
                 router.push("/welcome");
+
+                sessionStorage.removeItem("REFERRAL_CODE");
+                sessionStorage.removeItem("AFFILIATE_CODE");
+
+                if (store.token) {
+                  router.push("/welcome");
+                }
+              } else {
+                ElMessage.error(response.message);
+                getCode();
               }
-            } else {
-              ElMessage.error(response.message)
+            })
+            .catch((err) => {
+              console.log(err.message);
               getCode();
-            }
-          }).catch((err) => {
-          console.log(err.message);
-          getCode();
-        });
-      })();
-    } else {
-      getCode();
-    }
-  }).catch((errr) => {
-    console.log(errr)
-  })
+            });
+        })();
+      } else {
+        getCode();
+      }
+    })
+    .catch((errr) => {
+      console.log(errr);
+    });
 };
 
 const regForm = reactive({
@@ -401,6 +441,15 @@ const regForm = reactive({
 
 const registerRef = ref([]);
 
+const emits = defineEmits(["close-dialog, open-login-dialog"]);
+
+const closeRegDialog = () => {
+  emits("close-dialog");
+};
+
+const openLoginDialog = () => {
+  emits("open-login-dialog");
+};
 
 onMounted(() => {
   getCode();
@@ -412,8 +461,10 @@ onMounted(() => {
 <style scoped lang="scss">
 .light-bg {
   font-size: 14px;
-  border-radius: 30px;
-  box-shadow: 0px -1.7px 6.09px 0px #a2bff4 inset;
+  background-color: #f7f8fb;
+  border-radius: 15px;
+  box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+  margin-bottom: 30px;
 }
 
 .form-field {
@@ -436,7 +487,7 @@ onMounted(() => {
   box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
   color: #fff;
   font-size: 14px;
-  border-radius: 30px;
+  border-radius: 8px;
 }
 
 .primary-btn {
@@ -474,4 +525,3 @@ onMounted(() => {
   }
 }
 </style>
-  

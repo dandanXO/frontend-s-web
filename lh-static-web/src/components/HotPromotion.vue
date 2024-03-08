@@ -31,7 +31,7 @@
       />
     </div>
     <BbDacha2024Promo
-      v-if="list.redirectUrl === 'lh1-bb-dacha-2024' && !isCommonPromo && store.token"
+      v-if="list.redirectUrl === 'lh1-match-vote' && !isCommonPromo && store.token"
     ></BbDacha2024Promo>
     <!-- <VIPUpgradePromo v-if="list.redirectUrl === 'lh1-vip-upgrade-bonus' && !isCommonPromo && store.token" />
     <ReferBonusPromo v-if="list.redirectUrl === 'lh1-refer-bonus' && !isCommonPromo && store.token" /> -->
@@ -386,7 +386,7 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-vip-upgrade-bonus" ||
       this.list.redirectUrl === "lh1-refer-bonus" ||
       this.list.redirectUrl === "lh1-cny2024-promo" ||
-      this.list.redirectUrl === "lh1-bb-dacha-2024" ||
+      this.list.redirectUrl === "lh1-match-vote" ||
       this.list.redirectUrl === "lh1-cny-step-game" ||
       this.list.redirectUrl === "lh1-feedback-award" ||
       this.list.redirectUrl === "lh1-upgrade-hongbao"

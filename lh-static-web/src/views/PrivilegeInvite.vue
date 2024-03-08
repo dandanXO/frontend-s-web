@@ -428,7 +428,6 @@ export default defineComponent({
       };
       tableRecords.value = [];
       getRecommendPrivilegeRecord(params).then((data) => {
-        console.log("here", data);
         tableRecords.value = data.data;
         if(!tableRecords.value || tableRecords.value.length ===0){
           ElMessage.error("推广纪录为空。");

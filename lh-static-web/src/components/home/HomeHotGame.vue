@@ -116,21 +116,23 @@
               </el-button>
             </template>
 
-            <p
-              v-if="
-                hotgame.currentPlat?.underMaintenance === true &&
-                hotgame.currentPlat?.maintenanceStartTime &&
-                hotgame.currentPlat?.maintenanceEndTime
-              "
-              class="maintenance-p"
-            >
-              维护时间:
-              <em>
-                {{ moment(hotgame.currentPlat?.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                {{ moment(hotgame.currentPlat?.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
-              </em>
-            </p>
-            <p class="maintenance-p" v-else>&nbsp;</p>
+            <div style="height: 50px">
+              <p
+                v-if="
+                  hotgame.currentPlat?.underMaintenance === true &&
+                  hotgame.currentPlat?.maintenanceStartTime &&
+                  hotgame.currentPlat?.maintenanceEndTime
+                "
+                class="maintenance-p"
+              >
+                维护时间:
+                <em>
+                  {{ moment(hotgame.currentPlat?.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
+                  {{ moment(hotgame.currentPlat?.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
+                </em>
+              </p>
+              <p class="maintenance-p" v-else>&nbsp;</p>
+            </div>
           </div>
           <div class="right-container">
             <Transition :key="transitionKey" appear>
@@ -153,7 +155,7 @@
       </div>
     </div>
   </div>
-  <GameModal ref="platformGame"></GameModal>
+  <GameModal ref="platformGame" @open-login-dialog="openLoginDialog"></GameModal>
 </template>
 
 <script setup>
@@ -264,16 +266,17 @@ const hotgameData = ref([
     type: "sport",
     content: {
       isShowSportsIcon: [
-        require("../../assets/home/hotgame/content/sports/icon_basketball.png"),
-        require("../../assets/home/hotgame/content/sports/icon_football.png"),
-        require("../../assets/home/hotgame/content/sports/icon_volleyball.png"),
-        require("../../assets/home/hotgame/content/sports/icon_tennis.png"),
-        require("../../assets/home/hotgame/content/sports/icon_union.png"),
-        require("../../assets/home/hotgame/content/sports/icon_american_footerball.png"),
-        require("../../assets/home/hotgame/content/sports/icon_shuttlecock.png"),
-        require("../../assets/home/hotgame/content/sports/icon_badminton.png"),
-        require("../../assets/home/hotgame/content/sports/icon_table_tennis.png"),
-        require("../../assets/home/hotgame/content/sports/icon_hockey.png")
+        require("../../assets/sports/sports-pattern.png")
+        // require("../../assets/home/hotgame/content/sports/icon_basketball.png"),
+        // require("../../assets/home/hotgame/content/sports/icon_football.png"),
+        // require("../../assets/home/hotgame/content/sports/icon_volleyball.png"),
+        // require("../../assets/home/hotgame/content/sports/icon_tennis.png"),
+        // require("../../assets/home/hotgame/content/sports/icon_union.png"),
+        // require("../../assets/home/hotgame/content/sports/icon_american_footerball.png"),
+        // require("../../assets/home/hotgame/content/sports/icon_shuttlecock.png"),
+        // require("../../assets/home/hotgame/content/sports/icon_badminton.png"),
+        // require("../../assets/home/hotgame/content/sports/icon_table_tennis.png"),
+        // require("../../assets/home/hotgame/content/sports/icon_hockey.png")
       ],
       providerList: [
         // {
@@ -347,6 +350,9 @@ const hotgameData = ref([
     section: "live",
     type: "live",
     content: {
+      isShowSportsIcon: [
+        require("../../assets/live/live-pattern.png")
+      ],
       providerList: [
         // {
         //   key: "ag",
@@ -443,16 +449,17 @@ const hotgameData = ref([
     type: "lottery",
     content: {
       isShowSportsIcon: [
-        require("../../assets/home/hotgame/content/sports/icon_basketball.png"),
-        require("../../assets/home/hotgame/content/sports/icon_football.png"),
-        require("../../assets/home/hotgame/content/sports/icon_volleyball.png"),
-        require("../../assets/home/hotgame/content/sports/icon_tennis.png"),
-        require("../../assets/home/hotgame/content/sports/icon_union.png"),
-        require("../../assets/home/hotgame/content/sports/icon_american_footerball.png"),
-        require("../../assets/home/hotgame/content/sports/icon_shuttlecock.png"),
-        require("../../assets/home/hotgame/content/sports/icon_badminton.png"),
-        require("../../assets/home/hotgame/content/sports/icon_table_tennis.png"),
-        require("../../assets/home/hotgame/content/sports/icon_hockey.png")
+        require("../../assets/lottery/lottery-pattern.png")
+        // require("../../assets/home/hotgame/content/sports/icon_basketball.png"),
+        // require("../../assets/home/hotgame/content/sports/icon_football.png"),
+        // require("../../assets/home/hotgame/content/sports/icon_volleyball.png"),
+        // require("../../assets/home/hotgame/content/sports/icon_tennis.png"),
+        // require("../../assets/home/hotgame/content/sports/icon_union.png"),
+        // require("../../assets/home/hotgame/content/sports/icon_american_footerball.png"),
+        // require("../../assets/home/hotgame/content/sports/icon_shuttlecock.png"),
+        // require("../../assets/home/hotgame/content/sports/icon_badminton.png"),
+        // require("../../assets/home/hotgame/content/sports/icon_table_tennis.png"),
+        // require("../../assets/home/hotgame/content/sports/icon_hockey.png")
       ],
       providerList: [
         // {
@@ -482,6 +489,9 @@ const hotgameData = ref([
     section: "slot",
     type: "slot",
     content: {
+      isShowSportsIcon: [
+        require("../../assets/slot/slot-pattern.png")
+      ],
       providerList: [
         // {
         //   key: "pg",
@@ -543,6 +553,9 @@ const hotgameData = ref([
     section: "poker",
     type: "poker",
     content: {
+      isShowSportsIcon: [
+        require("../../assets/poker/poker-pattern.png")
+      ],
       providerList: [
         // {
         //   key: "dat",
@@ -604,6 +617,9 @@ const hotgameData = ref([
     section: "fishing",
     type: "fish",
     content: {
+      isShowSportsIcon: [
+        require("../../assets/fishing/fishing-pattern.png")
+      ],
       providerList: [
         // {
         //   key: "ag",
@@ -890,7 +906,7 @@ $transition_timer: 0.5s;
         .left-container {
           display: flex;
           flex-direction: column;
-          gap: 1rem;
+          gap: 0.8rem;
           position: relative;
           width: 55%;
 
@@ -908,6 +924,7 @@ $transition_timer: 0.5s;
             font-weight: 400;
 
             line-height: normal;
+
             .title {
               // font-size: 4.24106rem;
               font-size: 2.7106rem;
@@ -940,6 +957,7 @@ $transition_timer: 0.5s;
             justify-content: center;
             align-items: center;
           }
+
           .desc {
             color: #3063ab;
             font-family: Microsoft YaHei;
@@ -960,6 +978,18 @@ $transition_timer: 0.5s;
             img {
               width: 1.5rem;
               height: 1.5rem;
+            }
+
+            &.sports, &.casino, &.lottery, &.board, &.fishing, &.slots {
+              img {
+                width: auto;
+              }
+            }
+
+            &.lottery, &.fishing, &.slots {
+              img {
+                height: 1.8rem;
+              }
             }
           }
 
@@ -983,20 +1013,20 @@ $transition_timer: 0.5s;
                 height: 2rem;
                 padding: 0.25rem;
                 border-radius: 0.3145rem;
-                border: 0.839px solid #fcfcfc;
-                background: linear-gradient(180deg, #c3e8fa 0%, #a1c4fc 100%);
+                border: 1px solid #0E7DFF;
+                background: linear-gradient(180deg, #DCEBFF 0%, #F4F4F4 100%);
                 object-fit: contain;
 
+
                 &.active {
-                  border-radius: 0.3145rem;
-                  border: 2.516px solid #c5ebff;
-                  background: linear-gradient(180deg, #2eadee 0%, #a1c4fc 100%);
+                  border: 0px;
+                  background: linear-gradient(180deg, #7ED5FF 0%, #0E7DFF 100%);
                   box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
                 }
               }
 
               .game-provider-text {
-                color: #3063ab;
+                color: #A5C0E4;
                 text-align: center;
                 font-family: Microsoft YaHei;
                 font-size: 0.73363rem;
@@ -1007,6 +1037,18 @@ $transition_timer: 0.5s;
                 &.active {
                   color: #3063ab;
                   font-weight: 700;
+                }
+              }
+
+              &:hover {
+                .game-provider-text {
+                  color: #3063ab;
+                  font-weight: 700;
+                }
+                .game-provider-img {
+                  border: 0px;
+                  background: linear-gradient(180deg, #7ED5FF 0%, #0E7DFF 100%);
+                  box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
                 }
               }
             }
@@ -1055,6 +1097,7 @@ $transition_timer: 0.5s;
             &:hover {
               filter: brightness(1.2);
             }
+
             &:active {
               filter: brightness(1.1);
               transform: translate(0px, 1px);
@@ -1159,6 +1202,7 @@ $transition_timer: 0.5s;
             right: 0.5rem;
             height: 24rem;
           }
+
           .character-sports-cr {
             position: relative;
             right: 1.5rem;
@@ -1259,6 +1303,7 @@ $transition_timer: 0.5s;
             right: 2.75rem;
             height: 23rem;
           }
+
           .character-slots-ag {
             position: relative;
             right: 4rem;

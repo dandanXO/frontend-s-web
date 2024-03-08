@@ -3,7 +3,7 @@
     <q-header v-if="hasPage" :class="hasShadow ? 'with-shadow' : ''">
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
-          <router-link to="/"><img src="../assets/logo.svg" alt="logo" /></router-link>
+          <router-link to="/"><img src="../assets/logo-1.png" alt="logo" /></router-link>
         </div>
         <q-card-actions v-if="!store.hasToken()">
           <q-btn glossy color="brand" to="/login">登录</q-btn>
@@ -199,7 +199,6 @@ export default defineComponent({
         } else if (route.path === "/promo") {
           hasPage.value = true;
           pageName.value = "优惠";
-          prevPage.value = "/";
           hasShadow.value = false;
 
           if (route.query.name) {
@@ -210,25 +209,19 @@ export default defineComponent({
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "存款";
-          if (route.query.redirect) {
-            prevPage.value = route.query.name;
-          } else if (route.query.from === 'vip') {
-            prevPage.value = 'account/vip'
+          if (route.query.from === "vip") {
+            prevPage.value = "account/vip";
           }
         } else if (route.path === "/finance/withdraw") {
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "提款";
-          if (route.query.redirect) {
-            prevPage.value = route.query.name;
-          }
+
         } else if (route.path === "/account/transfer") {
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "转账";
-          if (route.query.redirect) {
-            prevPage.value = route.query.name;
-          }
+
         } else if (route.path === "/account/records") {
           prevPage.value = "account";
           hasPage.value = true;

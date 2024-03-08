@@ -131,6 +131,16 @@
       <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/game-head-title-03.png" />
     </div>
     <div class="dialog-body step-history-body">
+      <el-select v-model="stageValue" size="large" style="width: 120px; margin-bottom: 12px">
+        <el-option
+          v-for="item in stageOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+          @click="onGameRecordsDialogClicked"
+        />
+      </el-select>
+
       <el-table :data="dataSource" stripe style="width: 100%">
         <el-table-column prop="createTime" label="日期" />
         <el-table-column prop="steps" label="转动步数" />
@@ -159,6 +169,17 @@
       </div>
     </div>
   </el-dialog>
+
+  <el-dialog v-model="endStepDialog" width="1000px" align-center :close-on-click-modal="false" class="game-dialog">
+    <div class="dialog-header">
+      <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/game-head-title-01.png" />
+    </div>
+    <div class="dialog-body">
+      <div class="won-txt notoppadding">恭喜您完成了这个游戏！</div>
+
+      <button class="game-btn" @click="endStepDialog = false">继续闯关</button>
+    </div>
+  </el-dialog>
   <!-- game dialogs end -->
 </template>
 
@@ -167,6 +188,7 @@ import { ref, computed, onUnmounted, onMounted, reactive } from "vue";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 import { getCurrentStepInit, submitGameStep, getStepRecords } from "@/api/index/promo";
+import { ArrowDown } from "@element-plus/icons-vue";
 
 const store = userStore();
 const router = useRouter();
@@ -174,6 +196,7 @@ const router = useRouter();
 const gameRulesDialog = ref(false);
 const gameRecordsDialog = ref(false);
 const wonBonusDialog = ref(false);
+const endStepDialog = ref(false);
 
 const isBtnLoading = ref(false);
 
@@ -182,15 +205,57 @@ const spinToNum = ref(0);
 
 const wonBonus = ref(0);
 
+const stepData = ref();
+const spinLeft = ref(0);
+const stepCurrentPlace = ref(0);
+const stepEndPlace = ref(0);
+const claimedBonus = ref([]);
+const currentStage = ref(0);
+
+const spinnedStepData = ref();
+
+const stageValue = ref(1);
+const stageOptions = ref([]);
+
+const loadGamePlayerCurrentStep = (callback) => {
+  getCurrentStepInit().then((res) => {
+    const { code, data } = res;
+
+    if (code == 0) {
+      stepData.value = data;
+      stepCurrentPlace.value = data.currentPlace;
+      spinLeft.value = data.availableSpin;
+      claimedBonus.value = data.claimedPlaces;
+      currentStage.value = data.currentStage;
+
+      stageOptions.value = [];
+      
+      for (let i = 1; i <= currentStage.value; i++) {
+        stageOptions.value.push({
+          value: i,
+          label: `第${i}阶段`
+        });
+      }
+
+      handlePlayerStepDirect(stepCurrentPlace.value);
+    }
+
+    callback && callback();
+  });
+};
+
 const handleSpin = () => {
   isBtnLoading.value = true;
 
-  submitGameStep()
+  const param = { stage: "" };
+  param.stage = currentStage.value;
+  submitGameStep(param)
     .then((res) => {
       if (res.code === 0) {
         spinnedStepData.value = res.data;
         handleSmoothSpin(res.data.steps, res.data.currentPlace);
         wonBonus.value = res.data.bonus;
+        stepEndPlace.value = res.data.endPlace;
       } else {
         isBtnLoading.value = false;
       }
@@ -217,30 +282,6 @@ const handleSmoothSpin = (steps, currentPlace) => {
   }, 3000);
 };
 
-const stepData = ref();
-const spinLeft = ref(0);
-const stepCurrentPlace = ref(0);
-const claimedBonus = ref([]);
-
-const spinnedStepData = ref();
-
-const loadGamePlayerCurrentStep = (callback) => {
-  getCurrentStepInit().then((res) => {
-    const { code, data } = res;
-
-    if (code == 0) {
-      stepData.value = data;
-      stepCurrentPlace.value = data.currentPlace;
-      spinLeft.value = data.availableSpin;
-      claimedBonus.value = data.claimedPlaces;
-
-      handlePlayerStepDirect(stepCurrentPlace.value);
-    }
-
-    callback && callback();
-  });
-};
-
 const loadGamePlayerCurrentStepSecond = (callback) => {
   getCurrentStepInit().then((res) => {
     const { code, data } = res;
@@ -250,6 +291,16 @@ const loadGamePlayerCurrentStepSecond = (callback) => {
       stepCurrentPlace.value = data.currentPlace;
       spinLeft.value = data.availableSpin;
       claimedBonus.value = data.claimedPlaces;
+      currentStage.value = data.currentStage;
+
+      stageOptions.value = [];
+
+      for (let i = 1; i <= currentStage.value; i++) {
+        stageOptions.value.push({
+          value: i,
+          label: `第${i}阶段`
+        });
+      }
     }
 
     callback && callback();
@@ -374,6 +425,13 @@ const handlePlayerStep = (targetStep) => {
           wonBonusDialog.value = true;
         }, 500);
       }
+
+      if (currentStep === stepEndPlace.value && currentStage.value === 1) {
+        setTimeout(() => {
+          endStepDialog.value = true;
+          gamePlayerStep.value = 0;
+        }, 500);
+      }
     }
   }
 };
@@ -397,12 +455,11 @@ const pagination = reactive({
 
 const onGameRecordsDialogClicked = () => {
   gameRecordsDialog.value = true;
-
-  getStepRecordsApi(1);
+  getStepRecordsApi(1, stageValue.value);
 };
 
-const getStepRecordsApi = (current) => {
-  getStepRecords(current).then((res) => {
+const getStepRecordsApi = (current, stage) => {
+  getStepRecords(current, stage).then((res) => {
     const { code, data } = res;
     if (code === 0) {
       if (data && data.records && data.records.length) {
@@ -419,7 +476,7 @@ const getStepRecordsApi = (current) => {
 const handleCurrentChange = (val) => {
   pagination.current = val;
 
-  getStepRecordsApi(pagination.current);
+  getStepRecordsApi(pagination.current, stageValue.value);
 };
 
 onMounted(() => {
@@ -832,6 +889,10 @@ onUnmounted(() => {
       text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
       font-weight: 700;
 
+      &.notoppadding {
+        padding-top: 0;
+      }
+
       span {
         font-size: 150%;
         color: #bc0629;
@@ -851,6 +912,37 @@ onUnmounted(() => {
       color: #fdcf35 !important;
       height: 40px !important;
       width: 40px !important;
+    }
+  }
+
+  .game-btn {
+    position: relative;
+    background-size: 100% 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
+    color: #ffffff;
+    font-weight: 700;
+    line-height: 0;
+    padding-bottom: 5px;
+    height: 60px;
+    background-color: transparent;
+    background-image: url("../../../assets/images/promotion/hotpromo/cnystepgame2024/game-btn-01.png");
+    margin: 30px auto 0;
+
+    &:hover {
+      filter: brightness(0.8);
+      cursor: pointer;
+    }
+
+    &.disabled,
+    &[disabled] {
+      filter: brightness(0.4);
+      cursor: auto;
     }
   }
 }

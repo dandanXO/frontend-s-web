@@ -118,7 +118,7 @@
         </el-select>
 
         <el-input
-          v-model="request.reviewby"
+          v-model="request.reviewBy"
           size="small"
           style="width: 200px; margin-left: 5px"
           :placeholder="t('fields.reviewby')"
@@ -144,6 +144,7 @@
           size="mini"
           type="success"
           @click="loadMemberRecord()"
+          :disabled="page.loading"
         >
           {{ t('fields.search') }}
         </el-button>
@@ -354,7 +355,7 @@
       </el-table-column>
 
       <el-table-column
-        prop="reviewby"
+        prop="reviewBy"
         :label="t('fields.reviewby')"
         width="120"
       />
@@ -368,17 +369,17 @@
         fixed="right"
       >
         <template #default="scope1">
-          <label v-if="scope1.row.review !== '未复核'">
-            {{ scope1.row.review }}
+          <label v-if="scope1.row.review !== 'PENDING'">
+            {{ t('reviewStatus.' + scope1.row.review) }}
           </label>
 
           <el-button
-            v-if="scope1.row.review === '未复核'"
+            v-if="scope1.row.review === 'PENDING'"
             size="mini"
             type="primary"
             @click="showDialog(scope1.row)"
           >
-            {{ t('fields.review') }}
+            {{ t('reviewStatus.PENDING') }}
           </el-button>
         </template>
       </el-table-column>
@@ -516,9 +517,9 @@ const reviewList = reactive({
 const reviewStatusList = reactive({
   list: [
     { label: t('fields.allreviewstatus'), value: '1' },
-    { label: t('fields.reviewno'), value: '未复核' },
-    { label: t('fields.reviewsuccess'), value: '正确' },
-    { label: t('fields.reviewfail'), value: '错误' },
+    { label: t('fields.reviewno'), value: 'PENDING' },
+    { label: t('fields.reviewsuccess'), value: 'APPROVED' },
+    { label: t('fields.reviewfail'), value: 'REJECTED' },
   ],
 })
 
@@ -541,7 +542,9 @@ const page1 = reactive({
 })
 const reviewForm = ref(null)
 const form = reactive({
-  id: null,
+  siteId: null,
+  memberId: null,
+  recordTime: null,
   review: null,
   remark: null,
 })
@@ -559,7 +562,7 @@ const request = reactive({
   reviewStatus: null,
   min: null,
   max: null,
-  reviewby: null,
+  reviewBy: null,
 })
 
 const uiControl = reactive({
@@ -605,7 +608,7 @@ function resetQuery() {
   request.reviewStatus = reviewStatusList.list[0].value
   request.min = ''
   request.max = ''
-  request.reviewby = ''
+  request.reviewBy = ''
 }
 
 async function loadMemberRecord() {
@@ -889,15 +892,20 @@ async function loadDetail() {
 }
 
 async function showDialog(record) {
+  if (reviewForm.value) {
+    reviewForm.value.resetFields()
+  }
   if (hasPermission(['sys:report:summary:review'])) {
-    if (record.review === '未复核') {
+    if (record.review === 'PENDING') {
       form.review = '1'
     } else if (record.review === '') {
       form.review = '2'
     } else {
       form.review = '3'
     }
-    form.id = record.id
+    form.memberId = record.memberId
+    form.recordTime = record.time
+    form.siteId = record.siteId
 
     uiControl.dialogVisible = true
   }

@@ -93,6 +93,17 @@
             <a v-if="scope.row.progress === 100" class="el-button el-button--primary" :href="downloadLinkPrefix + '/' + scope.row.downloadUrl">{{ t('fields.download') }}</a>
           </template>
         </el-table-column>
+        <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:download-manager:del'])" fixed="right" width="180">
+          <template #default="scope">
+            <el-button
+              icon="el-icon-remove"
+              size="small"
+              type="danger"
+              v-permission="['sys:download-manager:del']"
+              @click="removeDownloadUrl(scope.row.id)"
+            />
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         class="pagination"
@@ -112,12 +123,14 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue';
 import moment from 'moment';
-import { getExportList } from '../../../api/download-manager';
+import { hasRole, hasPermission } from "@/utils/util";
+import { getExportList, deleteDownloadUrl } from '../../../api/download-manager';
 import { useI18n } from "vue-i18n";
 import { getSiteListSimple } from '../../../api/site';
 import { useStore } from '../../../store';
 import { TENANT, ADMIN } from '../../../store/modules/user/action-types';
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { ElMessage, ElMessageBox } from 'element-plus';
 
 const { t } = useI18n();
 const store = useStore()
@@ -228,6 +241,18 @@ async function loadRecords() {
 
   timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false;
+}
+
+async function removeDownloadUrl(id) {
+  ElMessageBox.confirm(t('message.confirmDelete'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
+    await deleteDownloadUrl(id)
+    await loadRecords()
+    ElMessage({ message: t('message.deleteSuccess'), type: 'success' })
+  })
 }
 
 onMounted(async() => {

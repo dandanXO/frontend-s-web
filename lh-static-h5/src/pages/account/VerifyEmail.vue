@@ -288,7 +288,7 @@ export default defineComponent({
         otpCountdownCount.value--;
       }, 1000);
     };
-    
+
     const openVerificationDialog = () => {
       getCode()
       showCaptchaDialog.value = true
@@ -331,7 +331,7 @@ export default defineComponent({
               $q.notify({message, color});
             getCode();
 
-            console.log('onCaptchaSubmit', res)
+            // console.log('onCaptchaSubmit', res)
           })
     }
 

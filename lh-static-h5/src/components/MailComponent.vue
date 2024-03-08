@@ -13,11 +13,6 @@
 
     <q-tab-panels v-model="mailboxMessageTab" animated>
       <q-tab-panel :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
-        <q-inner-loading :showing="loading">
-          <q-spinner-gears size="50px" color="brand" />
-          <div class="label">加载中</div>
-        </q-inner-loading>
-
         <div v-if="!loading">
           <div
             class="action-buttons"
@@ -87,6 +82,13 @@
               </div>
             </template>
           </q-infinite-scroll>
+        </div>
+
+        <div class="loading-container" v-else>
+          <q-inner-loading :showing="loading">
+            <q-spinner-gears size="50px" color="brand" />
+            <div class="label">加载中</div>
+          </q-inner-loading>
         </div>
       </q-tab-panel>
     </q-tab-panels>
@@ -233,6 +235,40 @@ export default defineComponent({
           .catch((error) => {
             console.log(error);
           });
+      } else if (type !== "ALL") {
+        api
+          .post(
+            "/session/inbox/readAll",
+            qs.stringify({
+              type: type
+            })
+          )
+          .then((res) => {
+            if (res.code === 0) {
+              $q.notify({
+                message: "全部消息已读",
+                type: "positive",
+                position: "top",
+                icon: "check_circle_outline"
+              });
+
+              // Update the readTime property of all messages
+              const currentTime = Date.now();
+              truncatedList.value.forEach((item) => {
+                if (item.type === type) {
+                  item.readTime = currentTime; // Set readTime to current time for messages of the specified type
+                }
+              });
+
+              allowSelectMultiple.value = false;
+              selectedMailIds.value = {};
+
+              onLoad();
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       } else {
         api
           .post("/session/inbox/readAll")
@@ -346,11 +382,40 @@ export default defineComponent({
           .catch((error) => {
             console.log(error);
           });
+      } else if (msgType.value !== null) {
+        api
+          .post(
+            "/session/inbox/deleteAll",
+            qs.stringify({
+              type: msgType.value
+            })
+          )
+          .then((res) => {
+            isDeleteMailModal.value = false;
+
+            truncatedList.value = truncatedList.value.filter((item) => item.type !== msgType.value);
+            if (res.code === 0) {
+              $q.notify({
+                message: "已删除全部消息",
+                type: "positive",
+                position: "top",
+                icon: "check_circle_outline"
+              });
+              onLoad();
+              // truncatedList.value = [];
+              selectedMailIds.value = {};
+            }
+          })
+          .catch((error) => {
+            isDeleteMailModal.value = false;
+            console.log(error);
+          });
       } else {
         api
           .post("/session/inbox/deleteAll")
           .then((res) => {
             isDeleteMailModal.value = false;
+
             truncatedList.value = truncatedList.value.filter((item) => item.type !== msgType.value);
             if (res.code === 0) {
               $q.notify({
@@ -461,6 +526,14 @@ export default defineComponent({
 
 .buttons {
   text-align: right;
+}
+
+.loading-container {
+  min-height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .action-buttons {

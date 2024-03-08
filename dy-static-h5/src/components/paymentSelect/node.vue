@@ -332,6 +332,7 @@ $node-color: #4ab6fd;
 
       .overflow {
         font-size: 0.9em;
+        white-space: nowrap;
       }
     }
   }

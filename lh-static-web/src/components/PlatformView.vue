@@ -43,7 +43,7 @@
                 > -->
                 <span
                   class="platform-list-item"
-                  v-for="(plat, platIndex) in platformsListDisplay"
+                  v-for="(plat, platIndex) in filteredPlatforms"
                   :key="platIndex"
                   @click="clickPlat(plat)"
                   :class="{ active: selectedPlat === plat.code }"
@@ -104,13 +104,17 @@
             <template v-for="(item, index) in platformsListDisplay" :key="index">
               <!-- <div class="plat-option" @click="switchPlat(item)" :class="{ active: selectedPlat === item.code }"> -->
               <div class="plat-option" @click="clickPlat(item)" :class="{ active: selectedPlat === item.code }">
-                <img
+                <!-- <img
                   :src="
                   require(`../assets/game/plat-logo-${item.code.toLowerCase()}${
                     selectedPlat !== item.code ? '-blue' : ''
                   }.png`)
                 "
-                />
+                /> -->
+                <div class="text">
+                  <span v-if="item.code === 'AG'">XIN</span>
+                  <span v-else>{{ item.code }}</span>
+              </div>
               </div>
             </template>
           </div>
@@ -252,8 +256,8 @@ const getPlatList = () => {
       element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase())
     );
 
-    console.log("Platform");
-    console.log(platformsListDisplay.value);
+    // console.log("Platform");
+    // console.log(platformsListDisplay.value);
 
     platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
       const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
@@ -381,8 +385,8 @@ const loadGameList = () => {
 };
 
 const changePage = (page, pageSize) => {
-  console.log(page);
-  console.log(pageSize);
+  // console.log(page);
+  // console.log(pageSize);
   gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
 };
 

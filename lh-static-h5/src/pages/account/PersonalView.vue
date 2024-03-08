@@ -202,7 +202,7 @@ export default defineComponent({
     const isEditBirthday = ref(false);
     const loadInfo = () => {
       personalState.memberInfo = userStore();
-      console.log(personalState.memberInfo.realName);
+      // console.log(personalState.memberInfo.realName);
       if (personalState.memberInfo.birthday > 0) {
         personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("YYYY-MM-DD");
       }
@@ -369,7 +369,7 @@ export default defineComponent({
           return;
         }
       }
-      console.log(updateInfo);
+      // console.log(updateInfo);
       updateInfo.birthday = moment(formDetail.birthday, "YYYY/MM/DD").format("YYYY-MM-DD");
       updateInfo.realName = formDetail.realName;
 
@@ -443,7 +443,7 @@ export default defineComponent({
           if (message)
             $q.notify({message, color});
 
-          console.log('onCaptchaSubmit', res)
+          // console.log('onCaptchaSubmit', res)
         })
     }
 

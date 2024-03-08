@@ -4,24 +4,25 @@
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
           <img class="logo" src="../../assets/logo-1.png" />
-
         </router-link>
 
         <div class="navigations">
           <template v-for="nav in navigations" :key="nav.name">
             <template v-if="!nav.hasicon">
               <div class="header-menu-item">
-                <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
+                <a @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
                   <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase()">
                     <img
                       class="menu-icon"
                       :src="require(`../../assets/images/home/menu/${nav.code}-icon-active.png`)"
                     />
+                    <h2 class="nav-title active">{{ nav.name }}</h2>
                   </template>
                   <template v-else>
                     <img class="menu-icon" :src="require(`../../assets/images/home/menu/${nav.code}-icon.png`)" />
+                    <h2 class="nav-title">{{ nav.name }}</h2>
                   </template>
-                </router-link>
+                </a>
               </div>
             </template>
           </template>
@@ -74,14 +75,14 @@
         </div>
 
         <div v-if="!store.token" class="right-contents">
-          <router-link to="/login" class="action-btn">
+          <!-- <router-link to="/login" class="action-btn">
             <a class="header-btn btn-color-blue">登录</a>
           </router-link>
           <router-link to="/register" class="action-btn">
             <a class="header-btn btn-color-white">注册</a>
-          </router-link>
-          <!-- <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">登录</a>
-          <a class="header-btn btn-color-white" @click="registerDialogVisible = true">注册</a> -->
+          </router-link> -->
+          <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">登录</a>
+          <a class="header-btn btn-color-white" @click="registerDialogVisible = true">注册</a>
         </div>
 
         <div v-if="store.token" class="profile-actions">
@@ -105,45 +106,42 @@
           </router-link>
         </div>
 
-
         <div class="profile-info" v-if="store.token">
           <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand">
-                <span class="el-dropdown-link">
-                  <div class="profile-img-wrapper">
-                    <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
-                    <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
-                  </div>
-                </span>
+            <span class="el-dropdown-link">
+              <div class="profile-img-wrapper">
+                <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
+                <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
+              </div>
+            </span>
             <template #dropdown>
               <el-dropdown-menu class="profile-info-dropdown-content">
                 <el-dropdown-item command="personal">
-                  <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
                     <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
                     <span>个人信息</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="deposit">
-                  <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
                     <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
                     <span>充值中心</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="transfer">
-                  <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
                     <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
                     <span>快速转账</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="promotion">
-                  <div style="display: flex; align-items: center; gap: 10px;color: #a8b5c3;margin: auto;">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
                     <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
                     <span>优惠领取</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="logout">
-                  <button class="standard-button btn-color-white" style="color:#468CFF">
-                    退出登录
-                  </button>
+                  <button class="standard-button btn-color-white" style="color: #468cff">退出登录</button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -158,12 +156,12 @@
               </div>
             </div>
             <a @click="refreshBalance" class="details-balance">
-              <div class="flex-wrap" style="display:flex;align-items: center;flex-wrap: nowrap;">
+              <div class="flex-wrap" style="display: flex; align-items: center; flex-wrap: nowrap">
                 <span class="assets-text">总资产:</span>
                 <span class="amount">
-                      <span v-if="isLoadingBalance">加载中...</span>
-                      <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ store.balance }}</span>
-                    </span>
+                  <span v-if="isLoadingBalance">加载中...</span>
+                  <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ store.balance }}</span>
+                </span>
               </div>
               <el-icon>
                 <RiRefreshLine color="#468CFF" />
@@ -190,7 +188,7 @@
       </div>
     </div>
 
-    <el-dialog
+    <!-- <el-dialog
       v-model="loginDialogVisible"
       title="会员登录"
       width="50%"
@@ -288,178 +286,56 @@
           </el-tab-pane>
         </el-tabs>
       </span>
+    </el-dialog> -->
+
+    <el-dialog
+      class="acc-dialog"
+      v-model="loginDialogVisible"
+      width="1280px"
+      align-center
+      style="max-width: 1280px"
+      @close="store.loginPageVisible = false"
+    >
+      <div class="acc-dialog-container">
+        <div class="acc-dialog-left">
+          <div class="acc-dialog-img">
+            <img src="../../assets/home/acc-dialog-img.png" />
+          </div>
+        </div>
+        <div class="acc-dialog-right">
+          <div class="acc-dialog-homelogo">
+            <img src="../../assets/logo-1.png" width="150" />
+          </div>
+          <div class="acc-dialog-content">
+            <LoginDialog
+              @close-dialog="loginDialogVisible = false"
+              @open-reg-dialog="openRegDialog"
+              @open-forgotpwd-dialog="openForgotpwdDialog"
+            />
+          </div>
+        </div>
+      </div>
     </el-dialog>
 
     <el-dialog
-      class="noPadding register-dialog"
+      class="acc-dialog"
       v-model="registerDialogVisible"
       width="1280px"
       align-center
-      style="max-width: 1200px"
+      style="max-width: 1280px"
       @close="store.regPageVisible = false"
     >
-      <div class="register-container">
-        <div class="registered-left">
-          <div class="title"></div>
-          <ul class="tips">
-            <li>标记有 * 者为必填项目。</li>
-            <li>手机号码为找回密码的重要凭证，请务必填写真实信息。</li>
-            <li>若公司有其他活动会邮件通知您，请您务必填写真实有效的邮箱。"</li>
-          </ul>
+      <div class="acc-dialog-container">
+        <div class="acc-dialog-left">
+          <div class="acc-dialog-img">
+            <img src="../../assets/home/acc-dialog-img.png" />
+          </div>
         </div>
-        <div class="registered-right">
-          <el-form ref="registerRef" :rules="regRules" :model="regForm" label-width="100">
-            <el-row>
-              <el-col>
-                <span class="title">注册账号</span>
-              </el-col>
-            </el-row>
-
-            <el-form-item label="姓名" prop="realName">
-              <el-space>
-                <el-input
-                  class="wTip"
-                  v-model="regForm.realName"
-                  placeholder="输入姓名"
-                  :rules="[
-                    { required: true, message: '请输入姓名' },
-                    {
-                      pattern: '^([\u4e00-\u9fa5]*)$',
-                      message: '请输入中文字符',
-                      trigger: 'change'
-                    }
-                  ]"
-                >
-                  <template #append>范围在2-12位之间, 由中文字符组成</template>
-                </el-input>
-              </el-space>
-            </el-form-item>
-
-            <el-form-item label="用户名" prop="loginName">
-              <el-space>
-                <el-input class="wTip" v-model="regForm.loginName" placeholder="输入用户名">
-                  <template #append>范围在6-12位之间, 由字母和数字组成</template>
-                </el-input>
-              </el-space>
-            </el-form-item>
-            <el-form-item label="密码" prop="password">
-              <el-space>
-                <el-input class="wTip" v-model="regForm.password" placeholder="输入密码" type="password" show-password>
-                  <template #append>密码范围在6-12位之间, 由字母和数字组成</template>
-                </el-input>
-              </el-space>
-              <el-row>
-                <!-- <div v-if="regForm.password" class="password-str-div">
-                  <span
-                    :class="{
-                      'weak-pwd': pwdStrength == 'weak',
-                      'normal-pwd': pwdStrength == 'normal',
-                      'strong-pwd': pwdStrength == 'strong'
-                    }"
-                  >
-                    弱
-                  </span>
-                  <span
-                    :class="{
-                      'normal-pwd': pwdStrength == 'normal',
-                      'strong-pwd': pwdStrength == 'strong'
-                    }"
-                  >
-                    好
-                  </span>
-                  <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">
-                    强
-                  </span>
-                </div> -->
-              </el-row>
-            </el-form-item>
-            <!-- <el-form-item label="密码" prop="password">
-              <el-space>
-                  <el-input class="half" v-model="regForm.password" placeholder="输入密码" type="password"
-                            show-password/>
-                  <el-tooltip content="范围在6-12位之间, 由字母和数字组成" placement="right">
-                    <el-icon :size="10">
-                      <InfoFilled/>
-                    </el-icon>
-                  </el-tooltip>
-                  </el-space>
-            </el-form-item> -->
-            <el-form-item label="确认密码" prop="confirmPwd">
-              <el-space>
-                <el-input
-                  class="half wTip"
-                  v-model="regForm.confirmPwd"
-                  placeholder="输入确认密码"
-                  type="password"
-                  show-password
-                >
-                  <template #append>密码范围在6-12位之间, 由字母和数字组成</template>
-                </el-input>
-              </el-space>
-            </el-form-item>
-            <!-- <el-row>
-              <el-col>
-                <span class="title account">会员资料</span>
-              </el-col>
-            </el-row> -->
-            <!-- <el-form-item label="电话号码" prop="telephone">
-              <el-space>
-
-              <el-input :disabled="disableSendVerificationButton" class="half" v-model="regForm.telephone" placeholder="输入电话号码"/>
-              <el-button :disabled="disableSendVerificationButton" @click="openCaptchaForm('REGISTER')" size="small" class="common-btn">
-                <span v-if="disableSendVerificationButton">已发送（倒数{{ regCountdown }}秒)</span>
-                <span v-else >发送验证码</span>
-              </el-button>
-
-
-            </el-space>
-            </el-form-item>
-            <el-form-item label="手机验证码" prop="smsCode">
-              <el-space>
-                <el-input
-                  class="half"
-                  v-model="regForm.smsCode"
-                  placeholder="输入手机验证码"
-                />
-              </el-space>
-            </el-form-item>
-            <el-form-item label="邮件" prop="email">
-              <el-space>
-                <el-input
-                  class="half"
-                  v-model="regForm.email"
-                  placeholder="输入邮件"
-                />
-              </el-space>
-            </el-form-item> -->
-            <el-form-item label="推荐码" prop="codeAffiliate">
-              <el-space>
-                <el-input
-                  v-if="!hasAffiliate"
-                  class="half"
-                  v-model="regForm.codeAffiliate"
-                  placeholder="若不是合营下会员无需填写输入推荐码"
-                />
-                <el-input
-                  v-else
-                  class="half"
-                  v-model="regForm.codeAffiliate"
-                  placeholder="若不是合营下会员无需填写"
-                  readonly
-                  disabled
-                />
-              </el-space>
-            </el-form-item>
-            <el-form-item label="验证码" prop="captchaCode">
-              <el-space>
-                <el-input v-model="regForm.captchaCode" label="验证码" placeholder="验证码" />
-
-                <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
-              </el-space>
-            </el-form-item>
-          </el-form>
-          <el-button class="common-btn" color="#3bafda" @click="resetRegForm(registerRef)">重新填写</el-button>
-          <el-button class="common-btn" @click="submitRegisterForm(registerRef)" color="#3bafda">确认注册</el-button>
+        <div class="acc-dialog-right">
+          <div class="acc-dialog-homelogo">
+            <img src="../../assets/logo-1.png" width="150" />
+          </div>
+          <RegisterAccount @close-dialog="registerDialogVisible = false" @open-login-dialog="openLoginDialog" />
         </div>
       </div>
     </el-dialog>
@@ -490,79 +366,29 @@
       </el-form>
     </el-dialog>
 
-    <el-dialog v-model="forgetPassDialogVisible" title="忘记账号" width="50%" align-center style="max-width: 800px">
-      <span>
-        <el-tabs>
-          <!-- <el-tab-pane label="邮箱找回密码">
-              <p>方式：请输入您需找回登陆密码的用户名和预留邮箱地址</p>
-              <el-form ref="loginRef" :rules="loginRules" :model="passForm" label-width="100" label-suffix=":"
-                       style="width: 100%; max-width: 400px; margin: 50px auto;">
-                <el-form-item tabindex="1" label="用户名" prop="loginName">
-                  <el-input v-model="passForm.loginName" placeholder="输入用户名"/>
-                </el-form-item>
-                <el-form-item tabindex="2" label="预留邮箱" prop="email">
-                  <el-input v-model="passForm.email" placeholder="预留邮箱"/>
-                </el-form-item>
-                <el-form-item tabindex="3" label="验证码" prop="captchaCode">
-                  <el-row :gutter="10" style="justify-content: center; align-items: center;">
-                    <el-col :span="12">
-                      <el-input
-                          v-model="passForm.captchaCode"
-                          label="验证码"
-                          placeholder="验证码"
-                          @keyup.enter="submitLogin"
-                      />
-                    </el-col>
-                    <el-col :span="12">
-                     <img style="width: 50%; margin-top: 6px;" :src="verificationImg" @click="getCode"/>
-                    </el-col>
-                  </el-row>
-                </el-form-item><el-button :loading="loadingBtn" size="large" color="#3bafda" class="common-btn" style="margin-left: 100px;"
-                                          @click="submitLogin">登录</el-button>
-              </el-form>
-            </el-tab-pane> -->
-          <el-tab-pane label="邮箱找回账号">
-            <p>方式：请输入您的注册邮箱</p>
-            <el-form
-              ref="passRef"
-              :rules="forgetPassRules"
-              :model="passForm"
-              label-width="100"
-              label-suffix=":"
-              style="width: 100%; max-width: 400px; margin: 50px auto"
-            >
-              <el-form-item tabindex="1" label="注册邮箱" prop="email">
-                <el-input v-model="passForm.email" placeholder="输入注册邮箱" />
-              </el-form-item>
-              <el-form-item tabindex="2" label="验证码" prop="captchaCode">
-                <el-row :gutter="10" style="justify-content: center; align-items: center">
-                  <el-col :span="12">
-                    <el-input
-                      v-model="passForm.captchaCode"
-                      label="验证码"
-                      placeholder="验证码"
-                      @keyup.enter="submitForgetPass"
-                    />
-                  </el-col>
-                  <el-col :span="12">
-                    <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
-                  </el-col>
-                </el-row>
-              </el-form-item>
-              <el-button
-                :loading="loadingBtn"
-                size="large"
-                color="#3bafda"
-                class="common-btn"
-                style="margin-left: 100px"
-                @click="submitForgetPass"
-              >
-                提交
-              </el-button>
-            </el-form>
-          </el-tab-pane>
-        </el-tabs>
-      </span>
+    <el-dialog
+      class="acc-dialog"
+      v-model="forgetPassDialogVisible"
+      width="1280px"
+      align-center
+      style="max-width: 1280px"
+      @close="store.forgetPassDialogVisible = false"
+    >
+      <div class="acc-dialog-container">
+        <div class="acc-dialog-left">
+          <div class="acc-dialog-img">
+            <img src="../../assets/home/acc-dialog-img.png" />
+          </div>
+        </div>
+        <div class="acc-dialog-right">
+          <div class="acc-dialog-homelogo">
+            <img src="../../assets/logo-1.png" width="150" />
+          </div>
+          <div class="acc-dialog-content">
+            <ForgotPwdDialog @close-dialog="forgetPassDialogVisible = false" @open-login-dialog="openLoginDialog" />
+          </div>
+        </div>
+      </div>
     </el-dialog>
 
     <el-dialog class="noPadding" v-model="noticeDialogVisible" width="1280px" align-center style="max-width: 600px">
@@ -596,33 +422,36 @@
 <script lang="js">
 
 import "vue3-carousel/dist/carousel.css";
-import {defineComponent, onMounted, ref, reactive, watch, computed} from "vue";
-import {useRoute, useRouter} from "vue-router";
-import {userStore} from "@/store/index";
-import {getVerificationCode, register} from "@/api/index/login";
-import { findAccount} from "@/api/index/forgotPwd";
-import {sendSms} from "@/api/personal/personal";
-import {ElMessage} from "element-plus";
+import { defineComponent, onMounted, ref, reactive, watch, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { userStore } from "@/store/index";
+import { getVerificationCode, register } from "@/api/index/login";
+import { findAccount } from "@/api/index/forgotPwd";
+import { sendSms } from "@/api/personal/personal";
+import { ElMessage } from "element-plus";
 import {
-  RiRefreshLine,
-} from 'vue-remix-icons';
-import GameMenu from '@/components/menu/GameMenu.vue'
-import EsportsMenu from '@/components/menu/EsportsMenu.vue'
-import SportsMenu from '@/components/menu/SportsMenu.vue'
-import LiveCasinoMenu from '@/components/menu/LiveCasinoMenu.vue'
-import LotteryMenu from '@/components/menu/LotteryMenu.vue'
-import PokerMenu from '@/components/menu/PokerMenu.vue'
-import FishingMenu from '@/components/menu/FishingMenu.vue'
-import PromotionMenu from '@/components/menu/PromotionMenu.vue'
-import AppMenu from '@/components/menu/AppMenu.vue'
-import 'vue3-marquee/dist/style.css'
-import {useElementSize} from '@vueuse/core'
-import {storeToRefs} from "pinia";
+  RiRefreshLine
+} from "vue-remix-icons";
+import GameMenu from "@/components/menu/GameMenu.vue";
+import EsportsMenu from "@/components/menu/EsportsMenu.vue";
+import SportsMenu from "@/components/menu/SportsMenu.vue";
+import LiveCasinoMenu from "@/components/menu/LiveCasinoMenu.vue";
+import LotteryMenu from "@/components/menu/LotteryMenu.vue";
+import PokerMenu from "@/components/menu/PokerMenu.vue";
+import FishingMenu from "@/components/menu/FishingMenu.vue";
+import PromotionMenu from "@/components/menu/PromotionMenu.vue";
+import AppMenu from "@/components/menu/AppMenu.vue";
+import "vue3-marquee/dist/style.css";
+import { useElementSize } from "@vueuse/core";
+import { storeToRefs } from "pinia";
 import GameModal from "@/components/modal/GameModal";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
-import moment from 'moment';
-import {lsGet, lsStore, lsRemove, getTimeout} from '@/utils/utils'
+import moment from "moment";
+import { lsGet, lsStore, lsRemove, getTimeout } from "@/utils/utils";
 import { getUnreadTotal } from "@/api/personal/mailbox";
+import LoginDialog from "@/views/LoginDialog.vue";
+import RegisterAccount from "@/components/auth/RegisterAccount.vue";
+import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
 
 export default defineComponent({
   name: "CommonHeader",
@@ -637,42 +466,45 @@ export default defineComponent({
     PromotionMenu,
     AppMenu,
     RiRefreshLine,
-    GameModal
+    GameModal,
+    LoginDialog,
+    ForgotPwdDialog,
+    RegisterAccount
   },
   data: () => ({
     // carousel settings
     navigations: [
-      {code: "home", name: "首页", enName: "Home", path: "/home"},
-      {code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true},
-      {code: "sports", name: "体育", enName: "Sports", path: "/sports", submenu: true},
-      {code: "live", name: "真人", enName: "Live", path: "/live-casino", submenu: true},
-      {code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true},
-      {code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true},
-      {code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true},
-      {code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true},
-      {code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: false, hasicon: true},
-      {code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true},
-      {code: "App", name: "APP", enName: "App", path: "/app", submenu: false, hasicon: true},
-      {code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true},
+      { code: "home", name: "首页", enName: "Home", path: "/home" },
+      { code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true },
+      { code: "sports", name: "体育", enName: "Sports", path: "/sports", submenu: true },
+      { code: "live", name: "真人", enName: "Live", path: "/live-casino", submenu: true },
+      { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true },
+      { code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true },
+      { code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true },
+      { code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true },
+      { code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: false, hasicon: true },
+      { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true },
+      { code: "App", name: "APP", enName: "App", path: "/app", submenu: false, hasicon: true },
+      { code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true }
     ]
   }),
   setup() {
-    const registerTelephoneKey = `registerTelephoneKey`
-    const registerSendOtpDisabledKey = `registeredSendOtpDisabled`
+    const registerTelephoneKey = `registerTelephoneKey`;
+    const registerSendOtpDisabledKey = `registeredSendOtpDisabled`;
 
-    const registerSendOtpDisabledTimeout = 60
-    const registerSendOtpDisabledTimeoutLeft = getTimeout(registerSendOtpDisabledKey)
+    const registerSendOtpDisabledTimeout = 60;
+    const registerSendOtpDisabledTimeoutLeft = getTimeout(registerSendOtpDisabledKey);
 
     let cachedTelephone = lsGet(registerTelephoneKey);
-    let initialRegisterSendOtpDisabledTimeout = false
+    let initialRegisterSendOtpDisabledTimeout = false;
 
     if (registerSendOtpDisabledTimeoutLeft) {
-      initialRegisterSendOtpDisabledTimeout = true
+      initialRegisterSendOtpDisabledTimeout = true;
     } else {
-      lsRemove(registerSendOtpDisabledKey)
-      lsRemove(registerTelephoneKey)
+      lsRemove(registerSendOtpDisabledKey);
+      lsRemove(registerTelephoneKey);
 
-      cachedTelephone = '';
+      cachedTelephone = "";
     }
 
     const disableSendVerificationButton = ref(initialRegisterSendOtpDisabledTimeout);
@@ -680,19 +512,19 @@ export default defineComponent({
 
     const loadingBtn = ref(false);
     const store = userStore();
-    const {token} = storeToRefs(store);
+    const { token } = storeToRefs(store);
     const router = useRouter();
     const route = useRoute();
-    const loginDialogVisible = ref(false)
-    const registerDialogVisible = ref(false)
-    const forgetPassDialogVisible = ref(false)
-    const noticeDialogVisible = ref(false)
-    const logoutDialogVisible = ref(false)
-    const captchaDialogVisible = ref(false)
+    const loginDialogVisible = ref(false);
+    const registerDialogVisible = ref(false);
+    const forgetPassDialogVisible = ref(false);
+    const noticeDialogVisible = ref(false);
+    const logoutDialogVisible = ref(false);
+    const captchaDialogVisible = ref(false);
     const el = ref(null);
     const scroll = ref(0);
     const selectedMenu = ref(false);
-    const {height} = useElementSize(el);
+    const { height } = useElementSize(el);
 
     const vipLevel = computed(() => {
       if (store.vip.toUpperCase() === "NORMAL") {
@@ -725,14 +557,14 @@ export default defineComponent({
 
     const showSubMenu = (nav) => {
       if (nav.submenu === true) {
-        selectedMenu.value = nav.code
+        selectedMenu.value = nav.code;
       } else {
-        selectedMenu.value = ''
+        selectedMenu.value = "";
       }
-    }
+    };
     let validatePass = async (r, v) => {
       if (v === "") {
-        return Promise.reject('请输入密码');
+        return Promise.reject("请输入密码");
       } else {
         return validatePassStrength(r, v);
       }
@@ -817,23 +649,23 @@ export default defineComponent({
     };
     let validatePhoneNumber = async (r, v) => {
       var reg = /^\d+$/;
-      if (v === '') {
-        return Promise.reject('请验证您的电话号码');
+      if (v === "") {
+        return Promise.reject("请验证您的电话号码");
       } else if (!reg.test(v)) {
-        return Promise.reject('电话号码只允许使用数字');
+        return Promise.reject("电话号码只允许使用数字");
       } else {
         return Promise.resolve();
       }
     };
     const loginForm = reactive({
-      name: '',
-    })
-    const loginRef = ref([])
-    const mobileLoginRef = ref([])
-    const captchaRef = ref([])
+      name: ""
+    });
+    const loginRef = ref([]);
+    const mobileLoginRef = ref([]);
+    const captchaRef = ref([]);
     const hasAffiliate = ref(false);
-    const regCountdown = ref(registerSendOtpDisabledTimeoutLeft)
-    const loginCountdown = ref(0)
+    const regCountdown = ref(registerSendOtpDisabledTimeoutLeft);
+    const loginCountdown = ref(0);
 
     const loginRules = {
       loginName: [
@@ -919,7 +751,7 @@ export default defineComponent({
       loginName: "",
       password: "",
       confirmPwd: "",
-      telephone: cachedTelephone ?? '',
+      telephone: cachedTelephone ?? "",
       email: "",
       captchaCode: "",
       regHost: location.hostname,
@@ -937,30 +769,30 @@ export default defineComponent({
           min: 2,
           max: 12,
           message: "长度应为 2 至 12",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           validator: validateRealName,
-          trigger: "change",
-        },
+          trigger: "change"
+        }
       ],
       loginName: [
         {
           min: 6,
           max: 12,
           message: "长度应为 6 至 12",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           validator: validateName,
-          trigger: "change",
-        },
+          trigger: "change"
+        }
       ],
       password: [
         {
           validator: validatePass,
-          trigger: "change",
-        },
+          trigger: "change"
+        }
         // {
         //   required: true,
         //   message: "Password is required",
@@ -989,14 +821,14 @@ export default defineComponent({
         // },
         {
           validator: validatePass2,
-          trigger: "change",
-        },
+          trigger: "change"
+        }
       ],
       telephone: [
         {
           validator: validatePhoneNumber,
-          trigger: "change",
-        },
+          trigger: "change"
+        }
       ],
       // birthday: [
       //   {
@@ -1015,66 +847,66 @@ export default defineComponent({
           min: 6,
           max: 6,
           message: "长度应为 6",
-          trigger: "blur",
-        },
+          trigger: "blur"
+        }
       ],
       email: [
         {
           required: true,
           message: "请输入您的邮箱",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           type: "email",
           message: "电子邮件地址无效",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           max: 50,
           message: "长度应小于 50",
-          trigger: "blur",
-        },
+          trigger: "blur"
+        }
       ],
       captchaCode: [
         {
           required: true,
           message: "需要验证码",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           min: 4,
           max: 4,
           message: "长度应为 4",
-          trigger: "change",
-        },
-      ],
+          trigger: "change"
+        }
+      ]
     };
     const passForm = reactive({
-      email: '',
-    })
+      email: ""
+    });
 
-    const passRef = ref([])
+    const passRef = ref([]);
     const forgetPassRules = {
 
       email: [
         {
           required: true,
           message: "请输入您的邮箱",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           type: "email",
           message: "电子邮件地址无效",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           max: 50,
           message: "长度应小于 50",
-          trigger: "blur",
-        },
-      ],
+          trigger: "blur"
+        }
+      ]
 
-    }
+    };
     const passRules = {
       loginName: [
         {
@@ -1114,40 +946,40 @@ export default defineComponent({
     const getAffiliateCode = () => {
       const affCode = sessionStorage.getItem("AFFILIATE_CODE");
       if (affCode) {
-        hasAffiliate.value = true
+        hasAffiliate.value = true;
         regForm.codeAffiliate = affCode;
       }
-    }
+    };
 
     const onLogout = () => {
       store.memberLogout().then(() => {
         location.reload();
       });
     };
-    const registerRef = ref([])
+    const registerRef = ref([]);
     const resetRegForm = (formEl) => {
-      if (!formEl) return
-      formEl.resetFields()
-    }
+      if (!formEl) return;
+      formEl.resetFields();
+    };
 
     const sendOtp = async () => {
 
-      if (captchaForm.type === 'REGISTER') {
+      if (captchaForm.type === "REGISTER") {
         const smsDetail = {
           telephone: regForm.telephone,
           captchaCode: captchaForm.captchaCode,
           codeId: captchaForm.codeId
-        }
+        };
         sendSms(smsDetail)
           .then((response) => {
             if (response.code == 0) {
-              disableSendVerificationButton.value = true
+              disableSendVerificationButton.value = true;
 
               regForm.smsCodeId = response.data.codeId;
 
               ElMessage({
-                type: 'success',
-                message: '发送手机验证码成功'
+                type: "success",
+                message: "发送手机验证码成功"
               });
 
               captchaDialogVisible.value = false;
@@ -1161,58 +993,58 @@ export default defineComponent({
               lsStore(registerSendOtpDisabledKey, now.getTime());
               lsStore(registerTelephoneKey, regForm.telephone);
 
-              countdownTimer('REGISTER')
+              countdownTimer("REGISTER");
             } else {
               getCode();
             }
-          })
-      } else if (captchaForm.type === 'LOGIN') {
+          });
+      } else if (captchaForm.type === "LOGIN") {
         const smsDetail = {
           telephone: loginForm.phoneNumber,
           captchaCode: captchaForm.captchaCode,
           codeId: captchaForm.codeId
-        }
+        };
         sendSms(smsDetail)
           .then((response) => {
             if (response.code == 0) {
               loginForm.smsCodeId = response.data.codeId;
               ElMessage({
-                type: 'success',
-                message: '发送手机验证码成功'
+                type: "success",
+                message: "发送手机验证码成功"
               });
               captchaDialogVisible.value = false;
               getCode();
               loginCountdown.value = 30;
-              countdownTimer('LOGIN')
+              countdownTimer("LOGIN");
             } else {
               getCode();
             }
-          })
+          });
       }
     };
 
     const countdownTimer = (type) => {
-      if (type === 'REGISTER') {
+      if (type === "REGISTER") {
         if (regCountdown.value > 0) {
           setTimeout(() => {
-            regCountdown.value -= 1
-            countdownTimer('REGISTER')
-          }, 1000)
+            regCountdown.value -= 1;
+            countdownTimer("REGISTER");
+          }, 1000);
         } else {
           lsRemove(registerSendOtpDisabledKey);
           lsRemove(registerTelephoneKey);
 
-          disableSendVerificationButton.value = false
+          disableSendVerificationButton.value = false;
         }
-      } else if (type === 'LOGIN') {
+      } else if (type === "LOGIN") {
         if (loginCountdown.value > 0) {
           setTimeout(() => {
-            loginCountdown.value -= 1
-            countdownTimer('LOGIN')
-          }, 1000)
+            loginCountdown.value -= 1;
+            countdownTimer("LOGIN");
+          }, 1000);
         }
       }
-    }
+    };
 
     const openCaptchaForm = (type) => {
       captchaForm.captchaCode = "";
@@ -1222,15 +1054,15 @@ export default defineComponent({
     };
 
     const submitRegisterForm = async (elForm) => {
-      if (!elForm) return
+      if (!elForm) return;
       await elForm.validate((valid) => {
         if (valid) {
           const fpPromise = FingerprintJS.load();
           (async () => {
             const fp = await fpPromise;
             const result = await fp.get();
-            const excludes = {value: ["timezone", "timeZoneOffset"]};
-            const allComponents = {...result.components};
+            const excludes = { value: ["timezone", "timeZoneOffset"] };
+            const allComponents = { ...result.components };
             excludes.value.forEach((element) => {
               delete allComponents[element];
             });
@@ -1241,12 +1073,12 @@ export default defineComponent({
                 const regResult = response.code;
                 if (regResult === 0) {
                   ElMessage({
-                    type: 'success',
-                    message: '注册成功'
+                    type: "success",
+                    message: "注册成功"
                   });
                   store.autoLogin(response.data);
                   registerDialogVisible.value = false;
-                  store.regPageVisible = false
+                  store.regPageVisible = false;
                   // loginDialogVisible.value = true;
 
                   sessionStorage.removeItem("REFERRAL_CODE");
@@ -1255,24 +1087,24 @@ export default defineComponent({
                   getCode();
                   // message.error(response.message);
                 }
-              })
+              });
           })();
         } else {
           getCode();
         }
-      })
-    }
+      });
+    };
 
-    const modalGame = ref(null)
+    const modalGame = ref(null);
     const openGame = (gameName, code, gameCode) => {
       modalGame.value.open(gameName, code, gameCode);
-    }
+    };
 
 
     onMounted(() => {
 
       if (regCountdown.value > 0)
-        countdownTimer('REGISTER')
+        countdownTimer("REGISTER");
       getAffiliateCode();
       getCode();
       getReferalCode();
@@ -1281,19 +1113,19 @@ export default defineComponent({
         store.getBalance();
         store.getMemberInfo();
 
-        getUnreadMail()
+        getUnreadMail();
       }
 
-      if(store.loginPageVisible) {
-        router.push('/login');
-        return;
-      }
-
-      // if (store.loginPageVisible) {
-      //   loginDialogVisible.value = true
-      // } else {
-      //   loginDialogVisible.value = false
+      // if(store.loginPageVisible) {
+      //   router.push('/login');
+      //   return;
       // }
+
+      if (store.loginPageVisible) {
+        loginDialogVisible.value = true;
+      } else {
+        loginDialogVisible.value = false;
+      }
 
       // console.log(route);
       // alert(route.name)
@@ -1303,11 +1135,11 @@ export default defineComponent({
 
     watch(() => store.loginPageVisible, () => {
       if (store.loginPageVisible) {
-        // loginDialogVisible.value = true
-        router.push('/login');
+        loginDialogVisible.value = true;
+        // router.push('/login');
         return;
       } else {
-        loginDialogVisible.value = false
+        loginDialogVisible.value = false;
       }
       // Optionally you can set immediate: true config for the watcher to run on init
       // }, { immediate: true });
@@ -1315,10 +1147,10 @@ export default defineComponent({
     watch(() => store.regPageVisible, () => {
       if (store.regPageVisible) {
         // registerDialogVisible.value = true
-        router.push('/register');
+        router.push("/register");
         return;
       } else {
-        registerDialogVisible.value = false
+        registerDialogVisible.value = false;
       }
       // Optionally you can set immediate: true config for the watcher to run on init
       // }, { immediate: true });
@@ -1332,15 +1164,15 @@ export default defineComponent({
         registerDialogVisible.value = true;
         regForm.referrer = referCode;
       }
-    }
+    };
 
 
-    const isLoadingBalance = ref(false)
+    const isLoadingBalance = ref(false);
     const refreshBalance = () => {
       isLoadingBalance.value = true;
       store.getBalance().then(() => {
         isLoadingBalance.value = false;
-      })
+      });
     };
     const getCode = () => {
       getVerificationCode().then((res) => {
@@ -1349,9 +1181,9 @@ export default defineComponent({
           loginForm.codeId = res.data.id;
           regForm.codeId = res.data.id;
           captchaForm.codeId = res.data.id;
-          passForm.codeId = res.data.id
+          passForm.codeId = res.data.id;
         }
-      })
+      });
     };
     const verificationImg = ref("");
     const submitForgetPass = () => {
@@ -1360,17 +1192,17 @@ export default defineComponent({
           if (res.code === 0) {
             ElMessage.success("您的帐号已经发送到注册邮箱");
           }
-        })
+        });
       });
-    }
+    };
     const submitLogin = () => {
-      loadingBtn.value = true
+      loadingBtn.value = true;
       const fpPromise = FingerprintJS.load();
       (async () => {
         const fp = await fpPromise;
         const result = await fp.get();
-        const excludes = {value: ["timezone", "timeZoneOffset"]};
-        const allComponents = {...result.components};
+        const excludes = { value: ["timezone", "timeZoneOffset"] };
+        const allComponents = { ...result.components };
         excludes.value.forEach((element) => {
           delete allComponents[element];
         });
@@ -1383,7 +1215,7 @@ export default defineComponent({
               password: loginForm.password,
               sid: sidParam,
               captchaCode: loginForm.captchaCode,
-              codeId: loginForm.codeId,
+              codeId: loginForm.codeId
             })
             .then(() => {
               // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
@@ -1393,9 +1225,9 @@ export default defineComponent({
                 store.loginPageVisible = false;
 
                 sessionStorage.removeItem("REFERRAL_CODE");
-                loginForm.loginName = null
-                loginForm.password = null
-                loginForm.captchaCode = null
+                loginForm.loginName = null;
+                loginForm.password = null;
+                loginForm.captchaCode = null;
               } else {
                 // loginForm.loginName = null
                 // loginForm.password = null
@@ -1408,18 +1240,18 @@ export default defineComponent({
             getCode();
           });
         });
-        loadingBtn.value = false
+        loadingBtn.value = false;
       })();
     };
 
     const phoneLogin = () => {
-      loadingBtn.value = true
+      loadingBtn.value = true;
       const fpPromise = FingerprintJS.load();
       (async () => {
         const fp = await fpPromise;
         const result = await fp.get();
-        const excludes = {value: ["timezone", "timeZoneOffset"]};
-        const allComponents = {...result.components};
+        const excludes = { value: ["timezone", "timeZoneOffset"] };
+        const allComponents = { ...result.components };
         excludes.value.forEach((element) => {
           delete allComponents[element];
         });
@@ -1431,7 +1263,7 @@ export default defineComponent({
               phoneNumber: loginForm.phoneNumber,
               sid: sidParam,
               code: loginForm.code,
-              smsCodeId: loginForm.smsCodeId,
+              smsCodeId: loginForm.smsCodeId
             })
             .then(() => {
               // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
@@ -1442,8 +1274,8 @@ export default defineComponent({
 
                 sessionStorage.removeItem("REFERRAL_CODE");
               } else {
-                loginForm.phoneNumber = null
-                loginForm.code = null
+                loginForm.phoneNumber = null;
+                loginForm.code = null;
               }
             }).catch((error) => {
             // message.error(error.message);
@@ -1451,7 +1283,7 @@ export default defineComponent({
           });
         });
       })();
-      loadingBtn.value = false
+      loadingBtn.value = false;
     };
     // const submitRegisterForm = () => {
     //   registerRef.value
@@ -1484,7 +1316,7 @@ export default defineComponent({
     }
 
     watch(
-      () => regForm.password,
+      () => regForm.password
       // () => {
       //   pwdStrength.value = "";
 
@@ -1525,24 +1357,55 @@ export default defineComponent({
       // },
     );
     const todayDate = () => {
-      return 'GTM+8 ' + moment().utcOffset('+08:00').format('M/D/YYYY, h:mm:ss A ') + moment(new Date()).locale('zh-cn').format('dddd');
-    }
+      return "GTM+8 " + moment().utcOffset("+08:00").format("M/D/YYYY, h:mm:ss A ") + moment(new Date()).locale("zh-cn").format("dddd");
+    };
 
     const getUnreadMail = () => {
       getUnreadTotal().then((response) => {
         if (response.code === 0) {
-          store.unreadTotal= response.data;
+          store.unreadTotal = response.data;
         }
       }).catch((error) => {
         // console.log("error===", error)
       });
-    }
+    };
+
+    const openLoginDialog = () => {
+      registerDialogVisible.value = false;
+      forgetPassDialogVisible.value = false;
+      loginDialogVisible.value = true;
+    };
+
+    const openRegDialog = () => {
+      loginDialogVisible.value = false;
+      registerDialogVisible.value = true;
+    };
+
+    const openForgotpwdDialog = () => {
+      loginDialogVisible.value = false;
+      forgetPassDialogVisible.value = true;
+    };
+
+    const goPath = (path, element) => {
+      const parentElement = element.target.parentNode;
+      setTimeout(() => {
+        const mouseUpEvent = new MouseEvent("mouseup", {
+          bubbles: true,
+          cancelable: true,
+          view: window
+        });
+        parentElement.dispatchEvent(mouseUpEvent);
+      }, 50);
+
+      router.push(path);
+    };
 
     return {
       token,
       el,
       height,
       showSubMenu,
+      goPath,
       scroll,
       selectedMenu,
       noticesList: [
@@ -1599,8 +1462,11 @@ export default defineComponent({
       route,
       getUnreadMail,
       vip,
-      handleCommand
-    }
+      handleCommand,
+      openLoginDialog,
+      openRegDialog,
+      openForgotpwdDialog
+    };
   }
 });
 </script>
@@ -1658,11 +1524,13 @@ body {
 .profile-info {
   display: flex;
   align-items: center;
+
   .profile-img-wrapper {
     cursor: pointer;
     width: 65px;
     margin-right: 0.75rem;
     position: relative;
+
     .profile-img {
       display: block;
       width: 100%;
@@ -1715,6 +1583,7 @@ body {
       .assets-text {
         white-space: nowrap;
       }
+
       .amount {
         margin-right: 0.5rem;
         white-space: nowrap;
@@ -1726,6 +1595,7 @@ body {
 .profile-actions {
   display: flex;
   gap: 1rem;
+
   .action-btn {
     // height: 30px;
     gap: 2px;
@@ -1740,6 +1610,7 @@ body {
 
     &:hover {
       color: $link-active;
+
       .icon-rounded {
         box-shadow: 0px 2px 5px 0px #498bd1 inset;
       }
@@ -1870,7 +1741,7 @@ body {
     box-shadow: $shadow-header;
 
     .top-nav-inner {
-      max-width: $maxwidth;
+      max-width: 1250px;
       margin: 0 auto;
       width: 100%;
       display: flex;
@@ -1879,7 +1750,7 @@ body {
       gap: 15px;
 
       &.logged-in-nav {
-        max-width: 1420px;
+        max-width: 1400px;
       }
 
       .logospon {
@@ -1934,7 +1805,7 @@ body {
           }
 
           &:hover {
-            filter: brightness(0.8);
+            filter: brightness(0.85);
           }
 
           .menu-icon {
@@ -1969,8 +1840,7 @@ body {
             }
 
             img.hover-icon {
-              filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
-              contrast(102%);
+              filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%) contrast(102%);
             }
           }
         }
@@ -2505,21 +2375,86 @@ body {
   }
 }
 
-.register-dialog {
+.acc-dialog {
+  &.el-dialog {
+    box-shadow: none;
+    border-radius: 20px;
+    // overflow: hidden;
+
+    .el-dialog__body {
+      padding: 0;
+
+      .acc-dialog-container {
+        display: flex;
+      }
+
+      .acc-dialog-left {
+        width: calc(100% - 450px);
+        background-image: url(../../assets/home/acc-dialog-bg.png);
+        background-size: 100% 100%;
+        background-position: center center;
+        background-color: transparent;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+        background-color: #ffffff;
+        padding: 8px;
+
+        .acc-dialog-img {
+          margin-top: -50px;
+          margin-left: -140px;
+          margin-right: -70px;
+
+          img {
+            display: block;
+            width: 100%;
+          }
+        }
+      }
+
+      .acc-dialog-right {
+        width: 450px;
+        padding: 24px 24px 24px 40px;
+
+        .acc-dialog-content {
+          padding-top: 26px;
+        }
+      }
+    }
+  }
+
   .el-dialog__header .el-dialog__headerbtn {
+    top: 10px;
+    right: 10px;
+
     .el-dialog {
       &__close {
-        color: #000000;
+        color: #000000 !important;
         opacity: 0.5;
 
         &:hover {
           opacity: 1;
-          color: #000000;
+          color: #000000 !important;
         }
       }
     }
   }
 }
+
+// .register-dialog {
+//   .el-dialog__header .el-dialog__headerbtn {
+//     .el-dialog {
+//       &__close {
+//         color: #000000;
+//         opacity: 0.5;
+
+//         &:hover {
+//           opacity: 1;
+//           color: #000000;
+//         }
+//       }
+//     }
+//   }
+// }
 
 .mailbox-notify {
   position: relative;
@@ -2563,6 +2498,30 @@ body {
 }
 
 .header-menu-item {
+  position: relative;
   // display: flex;
+  a {
+    position: relative;
+  }
+
+  .nav-title {
+    position: absolute;
+    margin: 0px;
+    bottom: 12px;
+    font-size: 12px;
+    width: 100%;
+    padding: 0px 6px 0px 8px;
+    z-index: 2;
+    color: #565C84;
+    letter-spacing: 1px;
+    text-align: center;
+    font-family: PingFang SC;
+    line-height: 18px;
+
+    &.active {
+      font-weight: 500;
+      color: #fff;
+    }
+  }
 }
 </style>

@@ -65,7 +65,9 @@
               </q-item-section>
               <q-item-section>
                 <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
-                  {{ scope.opt.bankName }} - {{ scope.opt.cardNumber }}
+                  {{ scope.opt.bankName }} - ****{{
+                      scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
+                  }}
                 </q-item-label>
               </q-item-section>
             </template>
@@ -126,7 +128,7 @@
           </div>
           <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
             <div class="q-my-sm" style="display: flex; justify-content: center; align-items: center">
-              <span style="flex: 1">实施汇率：</span>
+              <span style="flex: 1">实时汇率：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
                 {{ store.currency.value }}

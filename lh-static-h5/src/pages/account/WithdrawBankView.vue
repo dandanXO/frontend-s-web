@@ -71,11 +71,11 @@
             <div class="bank-number-wrapper">
               <div>卡号：</div>
               <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
-              <img
+              <!-- <img
                 class="copy-btn"
                 src="../../assets/images/account/account-copy-icon.png"
                 @click="copy(bankCard.cardNumber)"
-              />
+              /> -->
             </div>
           </div>
           <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>
@@ -100,11 +100,11 @@
             <div class="bank-number-wrapper">
               <div>卡号：</div>
               <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
-              <img
+              <!-- <img
                 class="copy-btn"
                 src="../../assets/images/account/account-copy-icon.png"
                 @click="copy(bankCard.cardNumber)"
-              />
+              /> -->
             </div>
           </div>
           <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>
@@ -129,11 +129,11 @@
             <div class="bank-number-wrapper">
               <div>卡号：</div>
               <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
-              <img
+              <!-- <img
                 class="copy-btn"
                 src="../../assets/images/account/account-copy-icon.png"
                 @click="copy(bankCard.cardNumber)"
-              />
+              /> -->
             </div>
           </div>
           <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>
@@ -158,11 +158,11 @@
             <div class="bank-number-wrapper">
               <div>卡号：</div>
               <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
-              <img
+              <!-- <img
                 class="copy-btn"
                 src="../../assets/images/account/account-copy-icon.png"
                 @click="copy(bankCard.cardNumber)"
-              />
+              /> -->
             </div>
           </div>
           <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>

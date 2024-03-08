@@ -2,7 +2,7 @@
   <div v-if="isH5 && topBoxVisible" class="download-top-container">
     <div class="download-top-box">
       <q-icon name="close" @click="closeTopBox" />
-      <img class="headicon" src="../assets/logo.svg" alt="download-logo" />
+      <img class="headicon" src="../assets/logo-1.png" alt="download-logo" />
       <div class="download-txt-container">
         <span class="download-title">雷火电竞app下载</span>
         <span>亚洲第一实时滚球</span>
@@ -17,9 +17,9 @@
 
   <div class="home-header">
     <div class="header-left">
-      <img alt="logo" src="../assets/logo.svg" />
+      <img alt="logo" src="../assets/logo-1.png" />
     </div>
-    <div class="header-right" @click="router.push('/account/inbox')">
+    <div class="header-right" @click="router.push('/account/inbox?redirect=home')">
       <img class="btn-pointer" src="../assets/images/home/home-message-box.png" />
       <div class="red-dot" v-if="unreadInboxMail > 0" />
     </div>
@@ -97,19 +97,19 @@
       <span>{{ store.token ? "中心钱包" : "登录/注册后查看" }}</span>
     </div>
     <div class="menulist">
-      <router-link to="/finance/deposit?redirect=/" class="men btn-pointer">
+      <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/deposit-mid.png" />
         <div class="">存款</div>
       </router-link>
-      <router-link to="/finance/withdraw?redirect=/" class="men btn-pointer">
+      <router-link to="/finance/withdraw?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/withdraw-mid.png" />
         <div class="">取款</div>
       </router-link>
-      <router-link to="/account/transfer?redirect=/" class="men btn-pointer">
+      <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/transfer-mid.png" />
         <div class="">转账</div>
       </router-link>
-      <router-link to="/account/vip" class="men btn-pointer">
+      <router-link to="/account/vip?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/vip-mid.png" />
         <div class="">VIP</div>
       </router-link>
@@ -196,8 +196,7 @@
 
     <div class="game-right-platform" v-scroll="onHomeScroll" id="id-right-platform">
 
-
-      <div class="game-lists" id="esport-lists">
+      <div class="game-lists fade-in-image" id="esport-lists">
         <template v-for="(item, index) in esport" :key="index">
           <div
             class="platform-block"
@@ -229,7 +228,7 @@
         </template>
       </div>
 
-      <div class="game-lists" id="sport-lists">
+      <div class="game-lists fade-in-image" id="sport-lists">
         <template v-for="(item, index) in sport" :key="index">
           <div
             class="platform-block"
@@ -262,7 +261,7 @@
         </template>
       </div>
 
-      <div class="game-lists" id="live-lists">
+      <div class="game-lists fade-in-image" id="live-lists">
         <template v-for="(item, index) in livecasino" :key="index">
           <div
             class="platform-block"
@@ -295,7 +294,7 @@
         </template>
       </div>
 
-      <div class="game-lists" id="poker-lists">
+      <div class="game-lists fade-in-image" id="poker-lists">
         <template v-for="(item, index) in poker" :key="index">
           <div
             class="platform-block"
@@ -327,7 +326,7 @@
           </div>
         </template>
       </div>
-      <div class="game-lists" id="slot-lists">
+      <div class="game-lists fade-in-image" id="slot-lists">
 
         <template v-for="(item, index) in slot" :key="index">
           <div
@@ -361,11 +360,7 @@
         </template>
       </div>
 
-
-      <!-- slot-lottery-fish -->
-
-
-      <div class="game-lists" id="others-lists">
+      <div class="game-lists fade-in-image" id="others-lists">
 
         <template v-for="(item, index) in lottery" :key="index">
           <div
@@ -2281,7 +2276,15 @@ export default defineComponent({
       }
     }
   }
+
+  .fade-in-image { animation: fadeIn 1.5s; }
 }
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 
 //Above is New One (LH)
 

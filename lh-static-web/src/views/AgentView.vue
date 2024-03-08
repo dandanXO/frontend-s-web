@@ -7,7 +7,7 @@
       <div class="affiliate-desc">
         <img src="../assets/images/affiliate/professional-team.png" width="256">
         <img src="../assets/images/affiliate/best-quality-service.png" width="256">
-        <img src="../assets/images/affiliate/official-partner.png" width="256">
+        <img src="../assets/images/affiliate/official-partner.png" width="285">
       </div>
       <div class="buttons">
         <a :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')">加入我们</a>
@@ -188,7 +188,7 @@
         </div>
       </div>
       <div>
-        <a :href="'https://lh1-affiliate.phoicynxeey.com?agent=' +
+        <a :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' +
           (affCode ? affCode : '')
           " class="agent-reg-btn">立即申请代理</a>
       </div>

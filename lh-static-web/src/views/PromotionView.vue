@@ -27,6 +27,7 @@
             data-aos="zoom-in"
             data-aos-easing="ease-out"
             data-aos-duration="1000"
+            data-aos-offset="-300"
           >
             <a @click="showPromoDetails(promo)">
               <div class="promo-img-wrapper">
@@ -173,14 +174,14 @@ export default defineComponent({
       if (!store.token) {
           ElMessageBox.alert('请登录后再操作', '系统提示', {
               // if you want to disable its autofocus
-              // autofocus: false,
+              // autofocus: false,sd
               center: true,
               confirmButtonText: '确认',
               showClose: false,
               buttonSize: 'large'
           }).then(() => {
-            router.push('/login');
-              // store.loginPageVisible = true
+            // router.push('/login');
+              store.loginPageVisible = true
           })
           return
       } else {
@@ -215,7 +216,7 @@ export default defineComponent({
             const promoTypes = promo.promoType.toLowerCase().split(",");
             return promoTypes.includes("slot game") || promoTypes.includes("welcome") || promoTypes.includes("fish");
           });
-          console.log(filteredArray.value);
+          // console.log(filteredArray.value);
         }else{
           filteredArray.value = promoState.promoList.filter(function(promo) {
             return promo.promoType.toLowerCase().split(',').includes(type.toLowerCase());
@@ -273,7 +274,7 @@ export default defineComponent({
       }
     };
     onMounted(() => {
-      loadBanner();
+      // loadBanner();
       loadAll();
     });
 

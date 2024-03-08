@@ -186,10 +186,14 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="review" :label="t('fields.review')" width="120" />
+      <el-table-column prop="review" :label="t('fields.review')" width="120">
+        <template #default="scope">
+          <span>{{ t('reviewStatus.' + scope.row.review) }}</span>
+        </template>
+      </el-table-column>
 
       <el-table-column
-        prop="reviewby"
+        prop="reviewBy"
         :label="t('fields.reviewby')"
         width="120"
       />

@@ -286,7 +286,7 @@ export default defineComponent({
               showVerifyBtn.value = false;
               showVerificationTokenInput.value = true
               phoneCodeId.value = res.data.codeId;
-              console.log(res.data.codeId)
+              // console.log(res.data.codeId)
               countdownOtp();
             } else {
               color = 'negative';
@@ -298,7 +298,7 @@ export default defineComponent({
               $q.notify({message, color});
             }
 
-            console.log('onCaptchaSubmit', res)
+            // console.log('onCaptchaSubmit', res)
           })
     }
 

@@ -270,7 +270,7 @@ import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
-console.log("test")
+
 export default defineComponent({
   name: "RegisterPage",
   emits: ["changeTab"],

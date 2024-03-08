@@ -2,8 +2,6 @@
   <div class="home">
     <HomeBanner></HomeBanner>
     <div class="home-mid-section">
-
-
       <HomeAnnouncement></HomeAnnouncement>
       <HomeDownload></HomeDownload>
       <HomeHotGame></HomeHotGame>
@@ -28,8 +26,7 @@ const openGame = (gameName, platType, gameCode, scrollingState) => {
   gameMenu.value.open(gameName, platType, gameCode, scrollingState);
 };
 
-onMounted(() => {
-});
+onMounted(() => {});
 </script>
 
 <style scoped lang="scss">
@@ -41,8 +38,7 @@ onMounted(() => {
   background-position: top center;
 }
 
-.home-mid-section{
-
+.home-mid-section {
   padding-top: 20px;
   padding-bottom: 2.5rem;
 }

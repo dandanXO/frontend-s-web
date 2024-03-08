@@ -254,7 +254,7 @@ export default defineComponent({
           balanceLoading.value = false;
         } else {
             loadBalance(plat).then((response) => {
-              console.log(plat, response.data)
+              // console.log(plat, response.data)
               if (plaform) {
                 plaform.amount = response.data;
               }
