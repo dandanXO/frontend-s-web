@@ -501,7 +501,7 @@ export default defineComponent({
 
     const shareInvite = () => {
       if(window.location.pathname === "/promotion"){
-        document.location.href = "app://invite";
+        router.push("/invitefriend?token=" + store.token);
       }else{
         router.push("/account/invite?from=promo?name=lh1-invite");
       }
