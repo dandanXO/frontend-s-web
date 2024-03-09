@@ -716,6 +716,7 @@ const checkPlatforms = () => {
         const additem = _.clone(plat);
         if (item.type === "slot" && additem.code === "AG") {
           additem.name = "XIN";
+          additem.alias= "XIN电子";
         }
         item.content.providerList.push(additem);
       }
