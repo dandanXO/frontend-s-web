@@ -135,6 +135,8 @@ export default {
       TRASNFER_IN: '转入',
       TRANSFER_OUT: '转出',
       AFFILIATE_SETTLEMENT: '代理结算',
+      AFFILIATE_DEPOSIT: '额度代存',
+      AFFILIATE_COMMISSION: '佣金代存'
     },
   },
   status: {
