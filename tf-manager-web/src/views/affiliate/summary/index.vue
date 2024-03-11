@@ -445,6 +445,7 @@ const request = reactive({
 const memberRequest = reactive({
   size: 10,
   current: 1,
+  siteId: null,
 })
 
 async function loadSites() {
@@ -537,6 +538,7 @@ function showDialog(type, members) {
 
 async function loadNewMember(members) {
   memberPage.loading = true
+  memberRequest.siteId = request.siteId
   const requestCopy = { ...memberRequest }
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
