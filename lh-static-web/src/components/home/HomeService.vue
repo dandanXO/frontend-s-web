@@ -183,9 +183,13 @@ onMounted(() => {});
           align-items: center;
           justify-content: center;
           border-radius: 50%;
-          border: 3px solid #94baf8;
-          background: linear-gradient(180deg, #93f2ff 3.39%, #3a69f7 100%);
-          box-shadow: 0px 4px 20px 0px rgba(255, 255, 255, 0.88) inset;
+          //border: 3px solid #94baf8;
+          //background: linear-gradient(180deg, #93f2ff 3.39%, #3a69f7 100%);
+          background-image: url("../../assets/home/blue-circle.png");
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: 100% 100%;
+          //box-shadow: 0px 4px 20px 0px rgba(255, 255, 255, 0.88) inset;
           margin: 0 0 2rem 0;
 
           .inner-circle {
@@ -218,7 +222,7 @@ onMounted(() => {});
               background-clip: text;
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
-              -webkit-text-stroke-width: 0.5px;
+              -webkit-text-stroke-width: 0.1px;
               -webkit-text-stroke-color: white;
             }
 
