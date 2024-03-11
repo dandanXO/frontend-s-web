@@ -42,7 +42,8 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/deposit" ||
       to.path === "/invitefriend" ||
       to.path === "/vip" ||
-      to.path === "/privilege/invite"
+      to.path === "/privilege/invite" ||
+      to.path === "/maintenance"
     ) {
       ui.hiddenFooter();
     } else {
