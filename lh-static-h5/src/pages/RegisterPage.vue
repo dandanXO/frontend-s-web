@@ -12,7 +12,7 @@
           standout
           clearable
           v-model="regForm.loginName"
-          placeholder="6-11个字符，包含大小写字母"
+          placeholder="6-12个字符，包含大小写字母"
           lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || '请输入用户名',

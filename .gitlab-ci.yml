@@ -156,6 +156,13 @@ deploy-lh-tutorials:
 
 #===============================================================================================
 
+deploy-lh-maintenance:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-maintenance
+
+#===============================================================================================
+
 deploy-ind-download:
   extends: .s3-deploy
   variables:

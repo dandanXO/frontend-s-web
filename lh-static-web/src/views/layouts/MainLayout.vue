@@ -1,25 +1,26 @@
 <template>
   <div>
     <keep-alive>
-      <common-header/>
+      <common-header v-if="!shouldHideHeaderAndFooter" />
     </keep-alive>
     <router-view v-slot="{ Component }">
       <!-- <transition name="component-fade" mode="out-in"> -->
-      <component :is="Component"/>
+      <component :is="Component" />
       <!-- </transition> -->
     </router-view>
     <keep-alive>
-      <common-footer/>
+      <common-footer v-if="!shouldHideHeaderAndFooter" />
     </keep-alive>
-    <common-sidebar/>
+    <common-sidebar v-if="!shouldHideHeaderAndFooter" />
   </div>
 </template>
 
 <script lang="js">
-import {defineComponent} from "vue";
+import {defineComponent,computed} from "vue";
 import CommonHeader from "@/components/layout/CommonHeader.vue";
 import CommonFooter from "@/components/layout/CommonFooter.vue";
 import CommonSidebar from "@/components/layout/CommonSidebar.vue";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   name: "LayoutView",
@@ -251,7 +252,12 @@ export default defineComponent({
     }
   },
   setup() {
-    return {};
+    const route = useRoute();
+    return {
+      shouldHideHeaderAndFooter: computed(() => {
+        return route.path === "/maintenance";
+      }),
+    };
   },
 });
 </script>
