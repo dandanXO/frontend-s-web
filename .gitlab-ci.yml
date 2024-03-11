@@ -336,3 +336,11 @@ build-image-lh-static-h5:
     PROJECT: lh-static-h5
   needs:
     - build-lh-static-h5
+
+#===============================================================================================
+
+deploy-lh-landing:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-landing
+
