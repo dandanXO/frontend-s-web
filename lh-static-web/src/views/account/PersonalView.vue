@@ -213,14 +213,14 @@
 
             <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">
               <el-form-item ref="refOldPassword" label="旧密码" name="oldPassword" prop="oldPassword">
-                <el-input type="password" v-model="updatePwdInfo.oldPassword" :placeholder="'请输入旧密码'" />
+                <el-input style="width:200px;" type="password" v-model="updatePwdInfo.oldPassword" :placeholder="'请输入旧密码'" clearable show-password />
               </el-form-item>
 
               <el-form-item ref="refPassword" label="新密码" name="password" prop="password">
-                <el-input type="password" v-model="updatePwdInfo.password" :placeholder="'请输入新密码'" />
+                <el-input style="width:200px;" type="password" v-model="updatePwdInfo.password" :placeholder="'请输入新密码'" clearable show-password />
               </el-form-item>
               <el-form-item ref="refConfirmPassword" label="确认密码" name="confirmPassword" prop="confirmPassword">
-                <el-input type="password" v-model="updatePwdInfo.confirmPassword" :placeholder="'请再次输入新密码'" />
+                <el-input style="width:200px;" type="password" v-model="updatePwdInfo.confirmPassword" :placeholder="'请再次输入新密码'" clearable show-password />
               </el-form-item>
               <div class="txt-center btn-container">
                 <button
@@ -872,6 +872,15 @@ export default defineComponent({
       });
       loadingPwBtn.value = false
     };
+
+    const validatePwd = async (r,v) => {
+      if(updatePwdInfo.confirmPassword !== updatePwdInfo.password){
+        return Promise.reject("确认密码与新密码不符合");
+      } else {
+        return Promise.resolve();
+      }
+    }
+
     const updatePwdRules = {
       oldPassword: [
         {
@@ -898,8 +907,27 @@ export default defineComponent({
           message: "长度应为 6 到 12 数字",
           trigger: "blur"
         }
+      ],
+      confirmPassword: [
+        {
+          required: true,
+          message: "请输入确认密码",
+          trigger: "blur"
+        },
+        {
+          min: 6,
+          max: 12,
+          message: "长度应为 6 到 12 数字",
+          trigger: "blur"
+        },
+        {
+          required: true,
+          validator: validatePwd,
+          trigger: "blur"
+        }
       ]
     };
+
 
     const isEdit = ref(false)
     const updateFormDetails = reactive(
