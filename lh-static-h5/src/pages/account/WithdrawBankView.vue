@@ -194,7 +194,7 @@ const onBindCardClick = (path) => {
   router.push(path);
 };
 
-const isCardVisible = reactive({ bankCard: false, crypto: false, ewallet: false, alipay: false });
+const isCardVisible = reactive({ BANK: true, CRYPTO: true, EWALLET: true, ALIPAY: true });
 const onShowCardClick = (key) => {
   isCardVisible[key] = !isCardVisible[key];
 };
