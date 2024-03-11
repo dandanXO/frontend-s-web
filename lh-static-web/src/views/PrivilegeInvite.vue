@@ -312,16 +312,16 @@
           <div class="input-row">
             <label>返利类型</label>
             <select class="record-select-input record-type" v-model="checkRecordFormData.recordType">
-              <option value="INVITER">邀请返利</option>
-              <option value="INVITEES">受邀返利</option>
+              <option value="REFERRER">邀请返利</option>
+              <option value="FRIEND">受邀返利</option>
             </select>
           </div>
           <div class="input-row">
             <label>活动类型</label>
             <select class="record-select-input privilege-type" v-model="checkRecordFormData.privilegeType">
-              <option value="WeekFirstDeposit">邀请首存送</option>
-              <option value="WeekTotal">邀请周存送</option>
-              <option value="Bet">返利无上限</option>
+              <option value="FIRST_DEPOSIT">邀请首存送</option>
+              <option value="WEEKLY_DEPOSIT">邀请周存送</option>
+              <option value="BET_REBATE">返利无上限</option>
             </select>
           </div>
           <div class="input-row">&nbsp;</div>
@@ -392,8 +392,8 @@ export default defineComponent({
       yesterdayFriendBet: 0
     });
     const checkRecordFormData = reactive({
-      recordType: "INVITER",
-      privilegeType: "WeekFirstDeposit",
+      recordType: "REFERRER",
+      privilegeType: "FIRST_DEPOSIT",
       date: moment().utcOffset("+08:00").format("YYYY-MM-DD"),
       user: ""
     });
@@ -419,6 +419,7 @@ export default defineComponent({
 
     const tableRecords = ref([]);
     const getRecords = () => {
+      console.log(checkRecordFormData)
       const params = {
         rebateType: checkRecordFormData.recordType,
         bonusType: checkRecordFormData.privilegeType,
