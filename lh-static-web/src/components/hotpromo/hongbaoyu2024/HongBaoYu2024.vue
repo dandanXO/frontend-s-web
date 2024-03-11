@@ -24,7 +24,7 @@
     </div>
     <div class="activity-boxes">
       <div class="activity-box">
-        <div class="activity-title">活动对象</div>
+        <div class="activity-title">中奖名单</div>
         <div class="activity-content-container">
           <table class="content-table">
             <tr class="winner" v-for="(item, index) in visibleItems" :key="index">
@@ -38,7 +38,7 @@
     </div>
   </div>
 
-  <div class="promo-container">
+  <div class="promo-container-hongbao">
     <div class="promo-view-container">
       <table border="0" width="600" cellpadding="0" cellspacing="0">
         <tbody>
@@ -377,7 +377,7 @@ onMounted(() => {
   }
 }
 
-.promo-container .promo-view-container table {
+.promo-container-hongbao .promo-view-container table {
   margin-top: 24px;
   color: #7a8eb9;
   font-size: 20px;

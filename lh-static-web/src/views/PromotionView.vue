@@ -298,7 +298,7 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .promo-container {
-  min-height: 700px;
+  min-height: 600px;
 
   .all-promotions {
     background: url(../assets/promo/bg-top2.jpg) no-repeat center top;

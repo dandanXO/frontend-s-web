@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="padding-top: 250px"></div>
+<!--    <div style="padding-top: 250px"></div>-->
     <div class="slider" style="position: relative" v-if="matchDetails.length > 0">
       <swiper
         :slides-per-view="matchDetails.length > 1 ? 2 : 1"
@@ -162,7 +162,7 @@
 </template>
 <script setup>
 import { ElMessage } from "element-plus";
-import { onActivated, ref, reactive } from "vue";
+import { onActivated, ref, reactive, onMounted } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -387,7 +387,7 @@ const recordPageControl = (direction) => {
     }
   }
 };
-onActivated(() => {
+onMounted(() => {
   init();
   getPlatList();
 });
