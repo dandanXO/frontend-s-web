@@ -347,7 +347,7 @@
           <div class="no-item-table" v-if="tableRecords.length === 0">
             <p>暂无数据</p>
           </div>
-          <div class="record-table" v-else>
+          <div class="record-contents" v-else>
             <template v-for="list of tableRecords">
               <div>{{ list.loginName }}</div>
               <div>{{ list.depositOrBet }}</div>
@@ -710,7 +710,7 @@ $gold: #efcf68;
       }
 
       .input-user {
-        width: 150px;
+        width: 160px;
         height: 40px;
         background-color: #f5f5f5;
         border: solid 1px #b89523;
@@ -722,7 +722,7 @@ $gold: #efcf68;
       }
 
       .input-datetime {
-        width: 150px;
+        width: 160px;
         height: 40px;
         background-color: #f5f5f5;
         border: solid 1px #b89523;
@@ -753,6 +753,17 @@ $gold: #efcf68;
       grid-template-columns: repeat(3, 1fr);
       margin: 16px auto 0px;
       width: 100%;
+      text-align: center;
+    }
+    .record-contents {
+      background: #ebe2b5;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      width: 100%;
+      text-align: center;
+      div {
+        padding: 10px;
+      }
     }
 
     .no-item-table {

@@ -379,7 +379,7 @@
               <div class="no-item-table" v-if="tableRecords.length === 0">
                 <p>暂无数据</p>
               </div>
-              <div class="record-table" v-else>
+              <div class="record-contents" v-else>
                 <template v-for="(list, i) of tableRecords" :key="i">
                   <div>{{ list.loginName }}</div>
                   <div>{{ list.depositOrBet }}</div>
@@ -496,6 +496,14 @@ export default defineComponent({
       tableRecords.value = [];
       getRecommendPrivilegeRecord(params).then((data) => {
         tableRecords.value = data.data;
+        if(!tableRecords.value || tableRecords.value.length ===0) {
+          $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message: '推广纪录为空。',
+                  icon: "report_problem"
+                });
+        }
       });
     };
 
@@ -1125,6 +1133,7 @@ $gold: #efcf68;
     margin-bottom: 30px;
     width: 100%;
     height: auto;
+    filter: invert(1) brightness(2.5);
   }
 
   .record-selection {
@@ -1147,7 +1156,7 @@ $gold: #efcf68;
       width: 160px;
       height: 40px;
       background-color: #f5f5f5;
-      border: solid 1px #b89523;
+      border: solid 1px #6ea5ff;
       color: #000000;
       font-size: 16px;
       border-radius: 4px;
@@ -1159,10 +1168,10 @@ $gold: #efcf68;
     }
 
     .input-user {
-      width: 150px;
+      width: 160px;
       height: 40px;
       background-color: #f5f5f5;
-      border: solid 1px #b89523;
+      border: solid 1px #468cff;
       color: #000000;
       font-size: 16px;
       border-radius: 4px;
@@ -1171,10 +1180,10 @@ $gold: #efcf68;
     }
 
     .input-datetime {
-      width: 150px;
+      width: 160px;
       height: 40px;
       background-color: #f5f5f5;
-      border: solid 1px #b89523;
+      border: solid 1px #468cff;
       color: #000000;
       font-size: 16px;
       border-radius: 4px;
@@ -1186,7 +1195,8 @@ $gold: #efcf68;
     cursor: pointer;
       width: 150px;
       height: 40px;
-      background-color: #fcec97;
+      background-color: #468cff;
+      color: #ffffff;
       border-radius: 30px;
       display: flex;
       border: 0px;
@@ -1203,11 +1213,26 @@ $gold: #efcf68;
     grid-template-columns: repeat(3, 1fr);
     margin: 16px auto 0px;
     width: 100%;
+    background: #468cff;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px;
+  }
+  .record-contents {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    background: #d2e3ff;
+    color: #000000;
+    text-align: center;
+    div {
+    padding: 10px;
+    }
   }
 
   .no-item-table {
     width: 100%;
-    background-color: #ebe2b5 !important;
+    background-color: #d2e3ff !important;
     height: 40px;
 
     > p {
