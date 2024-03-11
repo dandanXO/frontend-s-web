@@ -87,7 +87,14 @@
                 `/affiliate/details/${scope.row.affiliateId}?site=${request.siteId}`
               "
             >
-              <el-link type="primary">{{ scope.row.loginName }}</el-link>
+              <el-link type="primary">
+                {{
+                  scope.row.loginName
+                    .replace('(OFFICAL)', '')
+                    .replace('admin', '')
+                    .trim()
+                }}
+              </el-link>
             </router-link>
           </template>
         </el-table-column>
