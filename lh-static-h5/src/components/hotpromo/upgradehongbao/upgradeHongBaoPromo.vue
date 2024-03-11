@@ -24,7 +24,7 @@
     </div>
     <div class="activity-boxes">
       <div class="activity-box">
-        <div class="activity-title">活动对象</div>
+        <div class="activity-title">中奖名单</div>
         <div class="activity-content-container">
           <table class="content-table">
             <tr class="winner" v-for="(item, index) in visibleItems" :key="index">
@@ -57,7 +57,7 @@
   <q-dialog
     class="award-modal hongbaoyu-modal"
     width="100%"
-    v-model="privilegeClaimedModalVisible"
+    v-model="isClaimModal"
     no-backdrop-dismiss
     no-esc-dismiss
   >
@@ -79,7 +79,6 @@ import { eventapi } from "boot/axios";
 import { userStore } from "src/stores";
 
 const store = userStore();
-const privilegeClaimedModalVisible = ref(false);
 const promoNotReady = ref(false);
 const bonusOpened = ref(false);
 const winAmount = ref(0);
@@ -90,7 +89,6 @@ const promoCode = ref(props.promoCode);
 
 const getPromotion = () => {
   loadingClaim.value = true;
-  // privilegeClaimedModalVisible.value = true; // remove this line
   eventapi
     .get(`/redPacketVip/claim?promoCode=${promoCode.value}`)
     .then((res) => {
@@ -102,6 +100,7 @@ const getPromotion = () => {
 
         bonusOpened.value = true;
         store.getBalance();
+
       } else {
         $q.notify({
           color: "negative",
@@ -125,7 +124,6 @@ const getPromotionPrize = () => {
   isClaimModal.value = false;
   bonusOpened.value = false;
 
-  privilegeClaimedModalVisible.value = false;
 };
 
 const promotionListing = ref();
@@ -337,7 +335,7 @@ onMounted(() => {
     margin-top: 48%;
     left: -10px;
     color: #f23b1d;
-    font-size: 20px;
+    font-size: 35px;
     font-weight: bold;
   }
 

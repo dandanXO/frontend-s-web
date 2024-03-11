@@ -211,7 +211,7 @@
       @keydown.enter.prevent
     >
       <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="100" label-suffix=":">
-        <el-form-item tabindex="3" label="验证码" prop="captchaCode">
+        <el-form-item tabindex="3" label="验证码" prop="captchaCode" :rules="[{ required: true, message: '请输入验证码', trigger: 'blur' }]" >
           <el-row :gutter="10" style="justify-content: center; align-items: center">
             <el-col :span="12">
               <el-input v-model="captchaForm.captchaCode" label="验证码" placeholder="验证码" @keyup.enter="sendOtp" />
