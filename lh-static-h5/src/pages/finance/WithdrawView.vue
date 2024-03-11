@@ -332,7 +332,7 @@ export default defineComponent({
             if (amountRef.value) {
               setTimeout(()=>{
                 amountRef.value.resetValidation();
-              },10)
+              },0)
             }
 
           } else {
@@ -405,7 +405,7 @@ export default defineComponent({
           if (amountRef.value) {
             setTimeout(()=>{
               amountRef.value.resetValidation();
-            },10)
+            },0)
           }
         }
       }).catch((error) => {
