@@ -30,7 +30,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f3f7fd;
+  background-image: url("../assets/images/maintenance/main-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top center;
   flex-direction: column;
   padding: 20px;
 
