@@ -89,7 +89,10 @@
           min-width="180"
         >
           <template #default="scope">
-            <span>{{ f(scope.row.subType) }}</span>
+            <span v-if="scope.row.subType === null">-</span>
+            <span v-else-if="scope.row.type === 'AFFILIATE_TRANSFER' && scope.row.subType === 'DEPOSIT'">{{ t('moneyChange.subType.AFFILIATE_DEPOSIT') }}</span>
+            <span v-else-if="scope.row.type === 'AFFILIATE_TRANSFER' && scope.row.subType === 'COMMISSION'">{{ t('moneyChange.subType.AFFILIATE_COMMISSION') }}</span>
+            <span v-else>{{ t('moneyChange.subType.' + scope.row.subType) }}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -285,19 +288,6 @@ async function loadMemberMoneyChange(frombutton) {
 onMounted(() => {
   loadMemberMoneyChange()
 })
-
-function f(val) {
-  if (val === null) {
-    return '-'
-  }
-  if (val === 'DEPOSIT') {
-    return t('moneyChange.subType.DEPOSIT')
-  }
-  if (val === 'WITHDRAW') {
-    return t('moneyChange.subType.WITHDRAW')
-  }
-  return val
-}
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
 .header-container {

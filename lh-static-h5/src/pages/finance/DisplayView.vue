@@ -159,7 +159,7 @@ function postSubmit() {
     data.push(dd);
   }
 
-  console.log(data);
+  // console.log(data);
 
   nextTick(() => {
     document.getElementById("submitBtn").click();

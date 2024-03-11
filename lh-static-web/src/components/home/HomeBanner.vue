@@ -11,7 +11,8 @@
   <el-carousel
     class="banner-slider"
     indicator-position="outside"
-    :autoplay="false"
+    :autoplay="true"
+    :interval=5000
   >
     <el-carousel-item
       class="banner-container"

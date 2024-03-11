@@ -69,7 +69,7 @@
         <div :class="`start-answer-box ${uiIsShowStatus.startAnswerBox ? '' : 'hide'}`">
           <div class="flex-div">
             <div class="team-div">
-              <div class="team-logo">
+              <div class="team-logo" v-if="matchInfo?.homeTeamIcon">
                 <img :src="imgURL + `promo/` + matchInfo.homeTeamIcon" />
               </div>
               <div>{{ matchInfo.homeTeam }}</div>
@@ -86,7 +86,7 @@
               <div class="btn-start-answer" @click="onBtnStartAnswerClick()">开始答题</div>
             </div>
             <div class="team-div">
-              <div class="team-logo">
+              <div class="team-logo" v-if="matchInfo?.awayTeamIcon">
                 <img :src="imgURL + `promo/` + matchInfo.awayTeamIcon" />
               </div>
               <div>{{ matchInfo.awayTeam }}</div>

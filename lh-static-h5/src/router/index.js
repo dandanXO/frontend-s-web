@@ -68,7 +68,7 @@ export default route(function (/* { store, ssrContext } */) {
       }
 
       user.token = to.query.token;
-      console.log("user", user.token);
+      // console.log("user", user.token);
     }
 
     if (to.name === "agentCode") {

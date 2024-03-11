@@ -63,6 +63,8 @@ import { userStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 
+const props= defineProps(["pageType"]);
+
 const loginRules = {
   loginName: [
     {
@@ -136,7 +138,7 @@ const submitLogin = () => {
             codeId: loginForm.codeId
           })
           .then(() => {
-            const jumpUrl = route.query.redirect ? route.query.redirect.toString() : route.path;
+            const jumpUrl = route.query.redirect ? route.query.redirect.toString() : props.pageType === 'view' ? '/' : route.path;
             if (store.token) {
               router.push(jumpUrl);
 

@@ -1,6 +1,6 @@
 <template>
   <div class="loading">
-    <img src="../../assets/logo.svg" alt="logo" />
+    <img src="../../assets/logo-1.png" alt="logo" />
     <!-- <ul>
       <li v-for="v in 5" :key="v"></li>
     </ul> -->

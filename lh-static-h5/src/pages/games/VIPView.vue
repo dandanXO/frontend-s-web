@@ -353,7 +353,7 @@ const checkVipRedeem = () => {
   getProgressBar();
   eventapi.get("/vip-upgrade/lh/canRedeem").then((res) => {
     if (res.code === 0) {
-      console.log(res.data);
+      // console.log(res.data);
       // Your arrays of elements
       const depositPromoAvailableElements = res.data.depositPromoAvailable;
       const promoAvailableElements = res.data.promoAvailable;
@@ -424,11 +424,11 @@ const getProgressBar = () => {
       let vipAmount = parseInt(amt, 10);
       let currentDep = parseInt(current, 10);
 
-      console.log(vipAmount); // Outputs: 400000
-      console.log(currentDep);
+      // console.log(vipAmount); // Outputs: 400000
+      // console.log(currentDep);
 
       let percentageChange = (currentDep / vipAmount) * 100;
-      console.log(percentageChange / 100);
+      // console.log(percentageChange / 100);
       vipItems.value[Number(vipLevel.value)].progressBarVal = 1 - percentageChange / 100;
       // // Calculate the maximum absolute percentage change
       // let maxAbsoluteChange = Math.max(Math.abs(percentageChange), 1);

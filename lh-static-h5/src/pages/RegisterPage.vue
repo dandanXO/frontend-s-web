@@ -569,7 +569,7 @@ export default defineComponent({
             showCaptchaDialog.value = false;
             regForm.smsCode = "";
             regForm.smsCodeId = res.data.codeId;
-            console.log(res.data.codeId);
+            // console.log(res.data.codeId);
           } else {
             color = "negative";
             getInnerCode();
@@ -579,7 +579,7 @@ export default defineComponent({
             $q.notify({ message, color });
           }
 
-          console.log("onCaptchaSubmit", res);
+          // console.log("onCaptchaSubmit", res);
         })
         .catch(() => {
           getInnerCode();

@@ -3,7 +3,7 @@
     <div class="all-promotions" v-if="!isPromoDetail">
       <div class="promo-main-container">
         <div class="promo-type-wrapper">
-          <el-affix :offset="80">
+          <div style="position:sticky; top: 0;">
             <div class="type-list">
               <img src="../assets/promo/menu-title.png" />
               <div
@@ -17,7 +17,7 @@
                 <span style="width: 100px" class="label">{{ p.label }}</span>
               </div>
             </div>
-          </el-affix>
+          </div>
         </div>
         <div class="promo-list-wrapper">
           <div
@@ -57,7 +57,9 @@
     </div>
     <div v-else class="selected-promo">
       <div class="selected-promo-wrapper">
-        <div class="banner-container">
+        <div class="banner-container"
+          v-if="selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl"
+        >
           <div class="promo-bg isDesktop">
             <img
               :src="
@@ -65,15 +67,6 @@
               "
             />
           </div>
-          <!-- <div
-            class="promo-bg isDesktop"
-            :style="
-              'background-image: url(' +
-              imgURL +
-              (selectedPromo.desktopBannerUrl ? selectedPromo.desktopBannerUrl : selectedPromo.desktopImgUrl) +
-              ''
-            "
-          ></div> -->
           <div
             class="promo-bg isMobile"
             :style="
@@ -87,9 +80,9 @@
         <div
           class="inner"
           :style="
-            selectedPromo.desktopImgBackgroundUrl
+            selectedPromo?.desktopImgBackgroundUrl
               ? `background-image: url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
-              : 'background-image: url(../assets/promo/web-bg.jpg)'
+              : 'background-image: url(' + require(`../assets/promo/web-bg.jpg`) + '\''
           "
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
@@ -98,12 +91,12 @@
           <div
             class="promo-view-container"
             :class="{
-              welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
-              sport: selectedPromo.promoType.toLowerCase() === 'sport',
-              eSport: selectedPromo.promoType.toLowerCase() === 'esport',
-              fish: selectedPromo.promoType.toLowerCase() === 'fish',
-              liveCasino: selectedPromo.promoType.toLowerCase() === 'livecasino',
-              slot: selectedPromo.promoType.toLowerCase() === 'slot game'
+              welcome: selectedPromo.promoType?.toLowerCase() === 'welcome',
+              sport: selectedPromo.promoType?.toLowerCase() === 'sport',
+              eSport: selectedPromo.promoType?.toLowerCase() === 'esport',
+              fish: selectedPromo.promoType?.toLowerCase() === 'fish',
+              liveCasino: selectedPromo.promoType?.toLowerCase() === 'livecasino',
+              slot: selectedPromo.promoType?.toLowerCase() === 'slot game'
             }"
           >
             <div v-html="selectedPromo.pageContent"></div>
@@ -115,7 +108,7 @@
 </template>
 
 <script lang="js">
-import { ref, defineComponent, onMounted, reactive, watch } from "vue";
+import { ref, defineComponent, onMounted, reactive, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { loadPromo } from "@/api/index/promo.js";
 import { loadPromoBanner } from "@/api/index/promo";
@@ -147,19 +140,22 @@ export default defineComponent({
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
-    const isPromoDetail = ref(false);
+    const isPromoDetail = computed(() => {
+      if(route.query && route.query?.name){
+        return true;
+      }
+      return false;
+    })
     const selectedPromo = ref({});
     const route = useRoute();
     const router = useRouter();
-    watch(() => route.query, () => {
-      if (route.query === null) {
-       isPromoDetail.value = false
-      } else {
-        isPromoDetail.value = route.query.name
-      }
-      // Optionally you can set immediate: true config for the watcher to run on init
-      // }, { immediate: true });
-    });
+    // watch(() => route.query, () => {
+    //   if (route.query === null) {
+    //    isPromoDetail.value = false
+    //   } else {
+    //     isPromoDetail.value = route.query.name
+    //   }
+    // });
     const loadBanner = () => {
       loadPromoBanner("PROMO").then((res) => {
         if (res.code === 0) {
@@ -196,7 +192,7 @@ export default defineComponent({
           // } else {
           //   router.push({name: 'promotion', query: {name: promo.redirectUrl}})
           // }
-          isPromoDetail.value = true
+          // isPromoDetail.value = true;
           selectedPromo.value = promo
         }
       }
@@ -274,15 +270,15 @@ export default defineComponent({
       }
     };
     onMounted(() => {
-      loadBanner();
+      // loadBanner();
       loadAll();
     });
 
-    watch(() => route.query.name, () => {
-      if (!route.query.name) {
-        isPromoDetail.value = false
-      }
-    });
+    // watch(() => route.query.name, () => {
+    //   if (!route.query.name) {
+    //     isPromoDetail.value = false
+    //   }
+    // });
 
     return {
       promoState,
@@ -302,6 +298,8 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .promo-container {
+  min-height: 700px;
+
   .all-promotions {
     background: url(../assets/promo/bg-top2.jpg) no-repeat center top;
     width: 100%;
@@ -436,6 +434,8 @@ export default defineComponent({
           flex-direction: column;
           gap: 35px;
           min-height: 818px;
+          position: sticky;
+          top: 100px;
           .type-item {
             cursor: pointer;
             // border-radius: 20px;

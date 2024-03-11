@@ -40,13 +40,13 @@ export default defineComponent({
       }else {
         current.value = 1;
         endDate = moment(startDate).add(-1, "days").format("YYYY-MM-DD");
-        console.log(endDate);
+        // console.log(endDate);
 
         startDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
-        console.log(startDate);
+        // console.log(startDate);
 
         if (endDate <= moment().add(-29, "days").format("YYYY-MM-DD")) {
-          console.log("mor than 3 months");
+          // console.log("mor than 3 months");
           isEnded.value = true;
           return;
         }
@@ -68,7 +68,7 @@ export default defineComponent({
         "current": current.value
       };
       var apiKey = apiUrl + "_" + startDate + "_" + endDate + "_" + current.value;
-      console.log(apiKey);
+      // console.log(apiKey);
 
       cached.get(apiKey, () => api.get(apiUrl, {
           params: paramData

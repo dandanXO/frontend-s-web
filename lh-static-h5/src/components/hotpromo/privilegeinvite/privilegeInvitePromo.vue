@@ -500,7 +500,11 @@ export default defineComponent({
     };
 
     const shareInvite = () => {
-      router.push("/account/invite?from=promo?name=lh1-invite");
+      if(window.location.pathname === "/promotion"){
+        router.push("/invitefriend?token=" + store.token);
+      }else{
+        router.push("/account/invite?from=promo?name=lh1-invite");
+      }
     };
 
     const qrRef = ref();

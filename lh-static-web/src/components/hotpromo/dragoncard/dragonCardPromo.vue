@@ -211,37 +211,37 @@ const compoundCard = () => {
 
 const longkaList = ref([
   {
-    code: "hongyunlong",
+    code: "hongyunhu",
     image: "hyl",
     count: 0,
     label: "鸿运龙"
   },
   {
-    code: "jililong",
+    code: "jilihu",
     image: "jll",
     count: 0,
     label: "吉利龙"
   },
   {
-    code: "pinganlong",
+    code: "pinganhu",
     image: "pal",
     count: 0,
     label: "平安龙"
   },
   {
-    code: "ruyilong",
+    code: "ruyihu",
     image: "ryl",
     count: 0,
     label: "如意龙"
   },
   {
-    code: "xinyunlong",
+    code: "xinyunhu",
     image: "xyl",
     count: 0,
     label: "幸运龙"
   }
 ]);
-const isSelected = ref("xinyunlong");
+const isSelected = ref("xinyunhu");
 const selectlongka = (longka) => {
   isSelected.value = longka.code;
 };
@@ -581,7 +581,8 @@ body {
   text-align: center;
   width: 24px;
   height: 24px;
-  line-height: 24px;
+  line-height: 22px;
+  padding-bottom: 2px;
   font-weight: 700;
   color: #ffd97f;
   -webkit-border-radius: 14px;
