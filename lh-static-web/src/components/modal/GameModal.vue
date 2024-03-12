@@ -97,7 +97,6 @@
         <!-- <div class="">
           <span class="title">快速存款</span>
         </div> -->
-        <pre>asdasdasdasd</pre>
         <DepositComponent />
       </span>
     </el-drawer>
