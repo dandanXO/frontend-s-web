@@ -134,7 +134,10 @@ export default boot(({ app, router }) => {
             router.push("/login");
           });
         }
-        if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED) {
+        if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
+          res.code === ResponseCode.ERROR_NAME_EXIST ||
+          res.code === ResponseCode.ERROR_TOKEN_MISSED 
+        ) {
           SessionStorage.remove("TOKEN");
           LocalStorage.remove("TOKEN");
           window.location.href = "/";
