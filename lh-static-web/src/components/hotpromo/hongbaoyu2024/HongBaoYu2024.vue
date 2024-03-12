@@ -248,7 +248,7 @@ onMounted(() => {
 
       .content-table {
         max-height: 200px;
-        overflow-y: auto;
+        overflow-y: hidden;
         display: block;
         font-size: 20px;
         color: #7a8eb9;
