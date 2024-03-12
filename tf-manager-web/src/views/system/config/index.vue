@@ -355,53 +355,43 @@
         </div>
       </div>
     </el-form-item>
-    <el-divider v-if="configs.customList.length > 0" />
-    <div v-for="(item, index) in configs.customList" :key="index">
-      <el-divider
-        style="width: 80%; margin-left: 10%; --el-border-style: dashed;"
-        v-if="
-          index !== 0 &&
-            item.configGroup !== configs.customList[index - 1].configGroup
-        "
-      />
-      <el-form-item
-        border-color="#dcdcdc"
-        border-style="dashed"
-        :label="
-          index !== 0 &&
-            item.configGroup === configs.customList[index - 1].configGroup
-            ? ''
-            : item.configGroup
-        "
-        size="mini"
-      >
-        <el-input disabled v-model="item.code" />
-        -
-        <el-input disabled v-model="item.value" />
-        <el-button
-          icon="el-icon-edit"
+    <el-collapse v-model="uiControl.activeGroups">
+      <el-collapse-item v-for="groupConfig in configs.customGroup" :title="groupConfig.group" :name="groupConfig.group" :key="groupConfig.group">
+        <el-form-item
+          v-for="item in groupConfig.items"
+          border-color="#dcdcdc"
+          border-style="dashed"
+          label=""
           size="mini"
-          type="success"
-          style="margin-left: 20px"
-          @click="showEdit(item)"
-          plain
+          :key="item.code"
         >
-          {{ t('fields.edit') }}
-        </el-button>
-        <el-button
-          icon="el-icon-remove"
-          size="mini"
-          type="danger"
-          style="margin-left: 20px"
-          @click="delConfig(item.id)"
-          plain
-        >
-          {{ t('fields.delete') }}
-        </el-button>
-      </el-form-item>
-    </div>
-    <el-divider />
-    <el-form-item size="mini">
+          <el-input class="disable-input" v-model="item.code" />
+          -
+          <el-input class="disable-input" v-model="item.value" />
+          <el-button
+            icon="el-icon-edit"
+            size="mini"
+            type="success"
+            style="margin-left: 20px"
+            @click="showEdit(item)"
+            plain
+          >
+            {{ t('fields.edit') }}
+          </el-button>
+          <el-button
+            icon="el-icon-remove"
+            size="mini"
+            type="danger"
+            style="margin-left: 20px"
+            @click="delConfig(item.id)"
+            plain
+          >
+            {{ t('fields.delete') }}
+          </el-button>
+        </el-form-item>
+      </el-collapse-item>
+    </el-collapse>
+    <el-form-item size="mini" style="margin-top: 20px;">
       <el-button type="primary" @click="updateConfigs">
         {{ t('fields.confirm') }}
       </el-button>
@@ -488,11 +478,13 @@ const risks = ref([])
 const configs = reactive({
   value: [],
   customList: [],
+  customGroup: [],
 })
 
 const uiControl = reactive({
   dialogTitle: '',
   dialogVisible: false,
+  activeGroups: [],
 })
 
 const configForm = ref(null)
@@ -734,6 +726,20 @@ async function loadConfigs() {
       }
     }
   })
+  // group customList items by configGroup and store in customGroup as {group: configGroup, items: [customList]}
+  configs.customGroup = []
+  let group = null
+  let items = []
+  for (let index = 0; index < configs.customList.length; index++) {
+    if (group !== configs.customList[index].configGroup) {
+      if (group !== null) {
+        configs.customGroup.push({ group, items })
+      }
+      group = configs.customList[index].configGroup
+      items = []
+    }
+    items.push(configs.customList[index])
+  }
 }
 
 function showEdit(customConfig) {
@@ -867,5 +873,9 @@ onMounted(() => {
 .dialog-footer {
   display: flex;
   justify-content: flex-end;
+}
+
+.disable-input {
+  pointer-events: none;
 }
 </style>
