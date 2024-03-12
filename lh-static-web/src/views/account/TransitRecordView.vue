@@ -126,7 +126,7 @@
 
                 <template v-if="tbl.dataIndex === 'subType'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    {{ getSubType(scope.row.subType) }}
+                    {{ getSubType(scope.row.subType, scope.row.type) }}
                   </div>
                 </template>
 
@@ -1309,7 +1309,9 @@ export default defineComponent({
       }
       if (transferChangeType === "WITHDRAW") {
         return "转出"; // Withdraw
-      } else if (transferChangeType === "DEPOSIT") {
+      } else if (transferChangeType === "WITHDRAW_FAIL") {
+        return "失败"; // Withdraw
+      }else if (transferChangeType === "DEPOSIT") {
         return "转入"; // DEPOSIT
       } else {
         return transferChangeType;
@@ -1395,15 +1397,24 @@ export default defineComponent({
       }
     };
 
-    const getSubType = (subType) => {
-      if (!subType) {
+    const getSubType = (subType, type) => {
+      // return subType + "_" + type;
+
+      if (!type) {
         return "";
+      }
+      if(type === 'WITHDRAW_FAIL'){
+       return "转账失败";
       }
       if (subType === "DEPOSIT") {
         return "转进"; // 转进
       } else if (subType === "WITHDRAW") {
         return "转出"; // 转出
-      } else {
+      } else if (type === "WITHDRAW") {
+        return "转出"; // 转出
+      } else if (type === "DEPOSIT") {
+        return "转进"; // 转出
+      }else {
         return subType;
       }
     };
