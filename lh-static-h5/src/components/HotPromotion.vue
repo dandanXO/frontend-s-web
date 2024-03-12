@@ -63,6 +63,7 @@
     <UpgradeHongBaoPromo
       v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo"
       :promo-code="list.promoCode"
+      :params="list.param"
     />
 
     <GiftPromo v-if="list.redirectUrl === 'lh1-gift' && !isCommonPromo && store.token"></GiftPromo>

@@ -47,11 +47,11 @@
             <th>每日次数</th>
           </tr>
           <tr>
-            <td>18:00 ~ 19:00</td>
+            <td>{{ startTime.time1 }}</td>
             <td rowspan="2">每日2次</td>
           </tr>
           <tr>
-            <td>20:00 ~ 21:00</td>
+            <td>{{ startTime.time2 }}</td>
           </tr>
         </tbody>
       </table>
@@ -86,13 +86,18 @@
 </template>
 
 <script setup>
-import { ref, defineProps, onMounted } from "vue";
+import { ref, defineProps, onMounted, reactive } from "vue";
 import { claimDailyRainItem, getDailyRainListing } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { ElMessage } from "element-plus";
 
-const props = defineProps(["promoCode"]);
+const props = defineProps(["promoCode", "params"]);
 const promoCode = ref(props.promoCode);
+
+const startTime= reactive({
+  time1: "17:00 ~ 18:00",
+  time2: "19:00 ~ 20:00"
+})
 
 const store = userStore();
 const privilegeClaimedModalVisible = ref(false);
@@ -168,6 +173,14 @@ const getPromotionListing = () => {
 
 onMounted(() => {
   getPromotionListing();
+
+  const params= props.params ? JSON.parse(props.params) : "";
+  if(params?.time1){
+    startTime.time1= params.time1;
+  }
+  if(params?.time2){
+    startTime.time2= params.time2;
+  }
 });
 </script>
 
@@ -210,7 +223,7 @@ onMounted(() => {
         font-size: 40px;
         font-weight: 700;
         font-family: "PingFang SC";
-        margin-bottom: auto;
+        margin-bottom: 10px;
       }
 
       .activity-content-container {

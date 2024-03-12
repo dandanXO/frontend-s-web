@@ -18,7 +18,7 @@
     <GiftPromo v-if="list.redirectUrl === 'lh1-gift' && !isCommonPromo && store.token" />
     <Gift8Promo v-if="list.redirectUrl === 'lh1-gift8' && !isCommonPromo && store.token" />
     <UpgradeHongBao v-if="list.redirectUrl === 'lh1-upgrade-hongbaoz' && !isCommonPromo && store.token" />
-    <HongBaoYu2024 v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
+    <HongBaoYu2024 v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo && store.token" :promo-code="list.promoCode" :params="list.param" />
 
     <AsianCup2024 v-if="list.redirectUrl === 'lh1-promo-application-A' && !isCommonPromo && store.token" />
     <BasketballHot v-if="list.redirectUrl === 'lh1-promo-basketball' && !isCommonPromo && store.token" />
