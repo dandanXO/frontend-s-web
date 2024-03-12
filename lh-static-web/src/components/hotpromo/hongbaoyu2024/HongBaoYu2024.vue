@@ -199,8 +199,8 @@ onMounted(() => {
 
   .activity-boxes {
     display: flex;
-    margin: 20px auto;
-    gap: 20px;
+    margin: 16px auto;
+    gap: 15px;
     width: 100%;
     justify-content: center;
     align-items: center;
@@ -209,21 +209,21 @@ onMounted(() => {
       border-radius: 20px;
       background: linear-gradient(180deg, #ffffff 0%, #e4efff 100%);
       flex: 1;
-      padding: 40px;
+      padding: 30px;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
       max-width: 690px;
-      gap: 20px;
-      height: 320px;
+      gap: 15px;
+      height: 330px;
 
       .activity-title {
         color: #3f8cff;
         font-size: 40px;
         font-weight: 700;
         font-family: "PingFang SC";
-        margin-bottom: 10px;
+        margin-bottom: 0px;
       }
 
       .activity-content-container {
@@ -247,6 +247,9 @@ onMounted(() => {
       }
 
       .content-table {
+        max-height: 200px;
+        overflow-y: hidden;
+        display: block;
         font-size: 20px;
         color: #7a8eb9;
 
