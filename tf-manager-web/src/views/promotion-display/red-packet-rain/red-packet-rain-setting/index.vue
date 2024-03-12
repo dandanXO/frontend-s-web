@@ -804,7 +804,7 @@ function showEdit(banner) {
 }
 
 const goToList = (row) => {
-      router.push('/promotion/red-packet-rain-list?id='+row.privilegeId).catch(err => {
+      router.push('/promo-activity/red-packet-rain-list?id='+row.privilegeId).catch(err => {
         console.warn(err)
       })
     }
