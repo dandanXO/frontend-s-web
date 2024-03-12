@@ -287,6 +287,7 @@ const form = reactive({
 function resetQuery() {
   request.loginName = null
   request.affiliateCode = null
+  request.siteCode = site.value ? site.value.siteCode : null
 }
 
 function checkQuery() {
