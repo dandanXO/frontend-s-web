@@ -791,6 +791,7 @@ const request = reactive({
   name: null,
   code: null,
   siteId: null,
+  sort: 1,
 })
 
 const validateWithdrawAmount = (rule, value, callback) => {
@@ -849,6 +850,7 @@ function resetQuery() {
   request.code = null
   uiControl.dialogVisible = false
   request.siteId = siteList.list[0].id
+  request.sort = 1
 }
 
 const page = reactive({
