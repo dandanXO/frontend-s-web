@@ -1,9 +1,14 @@
 export const translateRecord = (rec, type = "") => {
   if (rec === "WITHDRAW_FAIL") {
+    if(type === "moneyChange"){
+      return "转账失败";
+    }
     return "提款失败"; // Fail Withdrawal
   } else if (rec === "WITHDRAW") {
-    if (type === "transfer" || type === "moneyChange") {
+    if (type === "transfer") {
       return "转出";
+    }else if(type === "moneyChange"){
+      return "转账";
     }
     return "提款"; // Withdraw
   } else if (rec === "DEPOSIT") {

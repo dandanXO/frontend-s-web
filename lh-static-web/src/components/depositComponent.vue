@@ -309,7 +309,6 @@ async function loadPrivilege(val) {
   await loadPrivileges(val.paymentId).then((d) => {
     if (d.code == 0) {
       privilegeList.value = d.data.privileges;
-      hasPrivilege.value = true;
       freePrivilege.value = null;
       unselectedPrivileges.value = [];
       privilegeList.value.map((p) => {
@@ -317,6 +316,7 @@ async function loadPrivilege(val) {
           if (p.triggerType == "FREE") {
             freePrivilege.value = p;
           } else {
+            hasPrivilege.value = true;
             unselectedPrivileges.value.push(p);
           }
         }
