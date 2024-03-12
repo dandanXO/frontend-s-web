@@ -210,7 +210,7 @@ export default defineComponent({
         if(type ==='OTHERS'){
           filteredArray.value = promoState.promoList.filter(function(promo) {
             const promoTypes = promo.promoType.toLowerCase().split(",");
-            return promoTypes.includes("slot game") || promoTypes.includes("welcome") || promoTypes.includes("fish");
+            return promoTypes.includes("slot game") || promoTypes.includes("welcome") || promoTypes.includes("fish") || promoTypes.includes("poker");
           });
           // console.log(filteredArray.value);
         }else{

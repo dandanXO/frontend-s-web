@@ -39,6 +39,7 @@
                       (tab.name === 'others' &&
                         (promo.promoType.toLowerCase().split(',').includes('slot game') ||
                           promo.promoType.toLowerCase().split(',').includes('welcome') ||
+                          promo.promoType.toLowerCase().split(',').includes('poker') ||
                           promo.promoType.toLowerCase().split(',').includes('fish')))
                     "
                   >
