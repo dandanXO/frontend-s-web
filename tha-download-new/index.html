@@ -30,7 +30,7 @@
     <div>
         <header class="S3WLMd" role="banner">
             <nav class="oPjgQb"><a class="f0UV3d">
-                <svg class="kOqhQd" aria-hidden="true" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <svg class="kOqhQd" style="width:40px;height: 40px;" aria-hidden="true" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
                     <path fill="none" d="M0,0h40v40H0V0z"></path>
                     <g>
                         <path d="M19.7,19.2L4.3,35.3c0,0,0,0,0,0c0.5,1.7,2.1,3,4,3c0.8,0,1.5-0.2,2.1-0.6l0,0l17.4-9.9L19.7,19.2z"
@@ -110,7 +110,7 @@
                                         <div class="u4ICaf">
                                             <div class="VfPpkd-dgl2Hf-ppHlrf-sM5MNb">
                                                 <button id="installButton"
-                                                        class="install-btn VfPpkd-LgbsSe VfPpkd-LgbsSe-OWXEXe-k8QpJ VfPpkd-LgbsSe-OWXEXe-dgl2Hf nCP5yc AjY5Oe DuMIQc LQeN7 MjT6xe sOCCfd brKGGd BhQfub zwjsl">
+                                                        class="disabled-btn install-btn VfPpkd-LgbsSe VfPpkd-LgbsSe-OWXEXe-k8QpJ VfPpkd-LgbsSe-OWXEXe-dgl2Hf nCP5yc AjY5Oe DuMIQc LQeN7 MjT6xe sOCCfd brKGGd BhQfub zwjsl">
                                                     ติดตั้ง
                                                 </button>
                                             </div>
@@ -706,7 +706,106 @@
 </div>
 
 <script type="text/javascript">
-    var versionNo = "1.0.37";
+    var versionNo = "1.0.38";
+
+    const searchParams = new URLSearchParams(window.location.search);
+    let affidValue = searchParams.get('id');
+    const campaignname = searchParams.get('campaignname');
+    const campaignid = searchParams.get('campaignid');
+    const adsetid = searchParams.get('adsetid');
+    const adsetname = searchParams.get('adsetname');
+    const adname = searchParams.get('adname');
+    const adid = searchParams.get('adid');
+    const fbclid = searchParams.get('fbclid');
+    const fbpid = searchParams.get('fbpid');
+    const autoDownload = searchParams.get("autoDownload");
+
+    affidValue = affidValue ?? '';
+    console.log(window.location.href)
+    if(affidValue==='' && (window.location.hostname.indexOf("jo2.app") > -1 || window.location.hostname.indexOf("localhost") > -1)){
+        affidValue= "C128A1";
+    }else if(affidValue==='' && window.location.hostname.indexOf("jo3.app") > -1){
+        affidValue= "75DC1D";
+    }
+
+    var apiUrl = '';
+    getApiUrl();
+
+    async function getApiUrl() {
+        var button;
+        var apkUrl= '';
+
+        if(!affidValue){
+            apiUrl = `https://uxz7l.vqeah3flhb.com/app/download/url?siteCode=th1&appType=ALL_SITE`;
+        }else{
+            apiUrl = `https://tljwn.plan2wtion.com/app/download/affiliate/${affidValue}`;
+        }
+        console.log(apkUrl);
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'th1',
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await response.json();
+            if (data) {
+                console.log("data", data);
+                apkUrl = data.data;
+                // alert(apkUrl);
+
+                button = document.getElementById("installButton");
+                //Android or Browser.
+                //Change URL ./download/jb_app.apk when go Live.
+                button.classList.remove("disabled-btn");
+                button.onclick = function () {
+                    downloadApk(apkUrl, affidValue)
+                    return false;
+                }
+
+                // if (autoDownload == "1") {
+                //     downloadApk(code, pp, fbclid, fbpid)
+                // }
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    // function getQueryVariable(variable) {
+    //     var query = window.location.search.substring(1);
+    //     var vars = query.split("&");
+    //     for (var i = 0; i < vars.length; i++) {
+    //         var pair = vars[i].split("=");
+    //         if (pair[0] == variable) {
+    //             return pair[1];
+    //         }
+    //     }
+    //     return "";
+    // }
+    //
+    // var code = getQueryVariable("code")
+    // var pp = new Array(7)
+    // for (let i = 0; i < pp.length; i++) {
+    //     pp[i] = getQueryVariable("p" + i)
+    //     pp[i] = pp[i].replace(/{|}/g, "")
+    // }
+
+
+    function downloadApk(apkUrl, affiliateCode) {
+        console.log(apkUrl)
+        var date = Date.now();
+        // alert(url)
+        const link = document.createElement("a");
+        link.style.display = "none";
+        link.href = apkUrl;
+        link.download = "jb_app_1.0.38.apk"
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
 
     $(document).ready(function (e) {
 
@@ -727,28 +826,9 @@
         } else {
             loadCSS("style/css/indexnew.css");
             $("#android-body").show();
-
-            //Android or Browser.
-            //Change URL ./download/jb_app.apk when go Live.
-            var androidUrl = "https://file.rd7etvkrgt.com/apps/3/jb_app_1.0.37.apk"
-            var button = document.getElementById("installButton");
-            // button.innerText = "Install"
-            // button.classList.remove("disabled-btn");
-            button.onclick = function () {
-                const link = document.createElement("a");
-                link.style.display = "none";
-                link.href = androidUrl;
-                link.download = "jb_app_1.0.37.apk"
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
-
         }
 
         thelist = document.getElementById("scroll-list");
-// thelist705 = document.getElementById("scroll-list-705");
-// thelist706 = document.getElementById("scroll-list-706");
         thebtn = document.getElementById("scroll-btn");
 
         boardleft = document.getElementById("scroll-left-board");
