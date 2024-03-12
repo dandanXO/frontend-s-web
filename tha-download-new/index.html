@@ -30,7 +30,8 @@
     <div>
         <header class="S3WLMd" role="banner">
             <nav class="oPjgQb"><a class="f0UV3d">
-                <svg class="kOqhQd" style="width:40px;height: 40px;" aria-hidden="true" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <svg class="kOqhQd" style="width:40px;height: 40px;" aria-hidden="true" viewBox="0 0 40 40"
+                     xmlns="http://www.w3.org/2000/svg">
                     <path fill="none" d="M0,0h40v40H0V0z"></path>
                     <g>
                         <path d="M19.7,19.2L4.3,35.3c0,0,0,0,0,0c0.5,1.7,2.1,3,4,3c0.8,0,1.5-0.2,2.1-0.6l0,0l17.4-9.9L19.7,19.2z"
@@ -572,7 +573,8 @@
                             <section class="HcyOxe">
                                 <header class="cswwxf">
                                     <div class="VMq4uf">
-                                        <div class="EaMWib"><h2 class="XfZNbf">มีอะไรใหม่(<span id="versionNo"></span>)</h2></div>
+                                        <div class="EaMWib"><h2 class="XfZNbf">มีอะไรใหม่(<span id="versionNo"></span>)
+                                        </h2></div>
                                     </div>
                                 </header>
                                 <div class="SfzRHd">
@@ -723,10 +725,10 @@
 
     affidValue = affidValue ?? '';
     console.log(window.location.href)
-    if(affidValue==='' && (window.location.hostname.indexOf("jo2.app") > -1 || window.location.hostname.indexOf("localhost") > -1)){
-        affidValue= "C128A1";
-    }else if(affidValue==='' && window.location.hostname.indexOf("jo3.app") > -1){
-        affidValue= "75DC1D";
+    if (affidValue === '' && (window.location.hostname.indexOf("jo2.app") > -1)) {
+        affidValue = "C128A1";
+    } else if (affidValue === '' && window.location.hostname.indexOf("jo3.app") > -1) {
+        affidValue = "75DC1D";
     }
 
     var apiUrl = '';
@@ -734,48 +736,44 @@
 
     async function getApiUrl() {
         var button;
-        // var apkUrl= '';
+        var apkUrl = '';
 
-        if(!affidValue){
+        if (!affidValue) {
             apiUrl = `https://uxz7l.vqeah3flhb.com/app/download/url?siteCode=th1&appType=ALL_SITE`;
-        }else{
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                });
+                const data = await response.json();
+                if (data) {
+                    console.log("data", data);
+                    apkUrl = data.data;
+                    button = document.getElementById("installButton");
+                    // //Android or Browser.
+                    // //Change URL ./download/jb_app.apk when go Live.
+                    button.classList.remove("disabled-btn");
+                    button.onclick = function () {
+                        downloadApk(apkUrl, affidValue)
+                        return false;
+                    }
+                }
+            } catch (error) {
+                console.log(error)
+            }
+
+        } else {
             apiUrl = `https://tljwn.plan2wtion.com/app/download/affiliate/th1/${affidValue}`;
-        }
-        console.log(apiUrl);
-
-        button = document.getElementById("installButton");
-        // //Android or Browser.
-        // //Change URL ./download/jb_app.apk when go Live.
-        button.classList.remove("disabled-btn");
-        button.onclick = function () {
-            downloadApk(apiUrl, affidValue)
-            return false;
+            button = document.getElementById("installButton");
+            // //Android or Browser.
+            // //Change URL ./download/jb_app.apk when go Live.
+            button.classList.remove("disabled-btn");
+            button.onclick = function () {
+                downloadApk(apiUrl, affidValue)
+                return false;
+            }
         }
 
-        return;
-        // try {
-        //     const response = await fetch(apiUrl, {
-        //         method: 'GET',
-        //         headers: {
-        //             'Authorization': 'th1',
-        //             'Content-Type': 'application/json'
-        //         }
-        //     });
-        //     const data = await response.json();
-        //     if (data) {
-        //         console.log("data", data);
-        //         // apkUrl = data.data;
-        //         // // alert(apkUrl);
-        //         //
-        //
-        //
-        //         // if (autoDownload == "1") {
-        //         //     downloadApk(code, pp, fbclid, fbpid)
-        //         // }
-        //     }
-        // } catch (error) {
-        //     console.log(error)
-        // }
+
     }
 
     // function getQueryVariable(variable) {
@@ -798,15 +796,13 @@
     // }
 
 
-    function downloadApk(apkUrl, affiliateCode) {
+    function downloadApk(apkUrl) {
         console.log(apkUrl);
-        // alert(apkUrl)
 
-        // var date = Date.now();
         const link = document.createElement("a");
         link.style.display = "none";
         link.href = apkUrl;
-        link.download = `jb_app_${versionNo}.apk`
+        link.download = 'jb_app_1.0.38.apk'
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
