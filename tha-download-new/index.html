@@ -706,6 +706,7 @@
 </div>
 
 <script type="text/javascript">
+    //NEED TO CHANGE THIS VERSION NO.
     var versionNo = "1.0.38";
 
     const searchParams = new URLSearchParams(window.location.search);
@@ -733,45 +734,48 @@
 
     async function getApiUrl() {
         var button;
-        var apkUrl= '';
+        // var apkUrl= '';
 
         if(!affidValue){
             apiUrl = `https://uxz7l.vqeah3flhb.com/app/download/url?siteCode=th1&appType=ALL_SITE`;
         }else{
-            apiUrl = `https://tljwn.plan2wtion.com/app/download/affiliate/${affidValue}`;
+            apiUrl = `https://tljwn.plan2wtion.com/app/download/affiliate/th1/${affidValue}`;
         }
-        console.log(apkUrl);
+        console.log(apiUrl);
 
-        try {
-            const response = await fetch(apiUrl, {
-                method: 'GET',
-                headers: {
-                    'Authorization': 'th1',
-                    'Content-Type': 'application/json'
-                }
-            });
-            const data = await response.json();
-            if (data) {
-                console.log("data", data);
-                apkUrl = data.data;
-                // alert(apkUrl);
-
-                button = document.getElementById("installButton");
-                //Android or Browser.
-                //Change URL ./download/jb_app.apk when go Live.
-                button.classList.remove("disabled-btn");
-                button.onclick = function () {
-                    downloadApk(apkUrl, affidValue)
-                    return false;
-                }
-
-                // if (autoDownload == "1") {
-                //     downloadApk(code, pp, fbclid, fbpid)
-                // }
-            }
-        } catch (error) {
-            console.log(error)
+        button = document.getElementById("installButton");
+        // //Android or Browser.
+        // //Change URL ./download/jb_app.apk when go Live.
+        button.classList.remove("disabled-btn");
+        button.onclick = function () {
+            downloadApk(apiUrl, affidValue)
+            return false;
         }
+
+        return;
+        // try {
+        //     const response = await fetch(apiUrl, {
+        //         method: 'GET',
+        //         headers: {
+        //             'Authorization': 'th1',
+        //             'Content-Type': 'application/json'
+        //         }
+        //     });
+        //     const data = await response.json();
+        //     if (data) {
+        //         console.log("data", data);
+        //         // apkUrl = data.data;
+        //         // // alert(apkUrl);
+        //         //
+        //
+        //
+        //         // if (autoDownload == "1") {
+        //         //     downloadApk(code, pp, fbclid, fbpid)
+        //         // }
+        //     }
+        // } catch (error) {
+        //     console.log(error)
+        // }
     }
 
     // function getQueryVariable(variable) {
@@ -795,13 +799,14 @@
 
 
     function downloadApk(apkUrl, affiliateCode) {
-        console.log(apkUrl)
-        var date = Date.now();
-        // alert(url)
+        console.log(apkUrl);
+        // alert(apkUrl)
+
+        // var date = Date.now();
         const link = document.createElement("a");
         link.style.display = "none";
         link.href = apkUrl;
-        link.download = "jb_app_1.0.38.apk"
+        link.download = `jb_app_${versionNo}.apk`
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
