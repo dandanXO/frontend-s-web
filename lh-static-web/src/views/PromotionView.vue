@@ -141,7 +141,7 @@ export default defineComponent({
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
     const isPromoDetail = computed(() => {
-      if(route.query && route.query?.name){
+      if(route.query && route.query?.name && store.token){
         return true;
       }
       return false;
