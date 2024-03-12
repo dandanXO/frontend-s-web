@@ -177,7 +177,7 @@
                 </div>
               </div>
 
-              <button
+              <el-button
                 style="margin-top: 10px"
                 :loading="loadingBtn"
                 class="standard-button btn-color-blue"
@@ -185,16 +185,14 @@
                 @click="updateState"
               >
                 提交
-              </button>
+              </el-button>
 
               <button
                 class="standard-button btn-color-blue"
                 v-if="
                   !isEdit &&
-                  (!personalState.memberInfo.realName ||
-                    !personalState.memberInfo.email ||
-                    !personalState.memberInfo.birthday ||
-                    !personalState.memberInfo.telephone)
+                  (
+                    !personalState.memberInfo.birthday)
                 "
                 @click="isEdit = !isEdit"
               >
