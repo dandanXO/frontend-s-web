@@ -97,6 +97,7 @@
         <!-- <div class="">
           <span class="title">快速存款</span>
         </div> -->
+        <pre>asdasdasdasd</pre>
         <DepositComponent />
       </span>
     </el-drawer>
@@ -323,6 +324,10 @@ defineExpose({
 
 .node-modal .node .node .account-title-container {
   margin: 0;
+}
+
+.el-popper.is-pure.is-light.el-select__popper {
+  z-index: 5000 !important;
 }
 </style>
 
