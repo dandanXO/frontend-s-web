@@ -236,6 +236,9 @@ body {
 .account-box .el-overlay {
   z-index: 2000 !important; /* Adjust this value as needed */
 }
+.el-message{
+  z-index: 8999 !important;
+}
 .el-message-box__header {
   font-weight: bold;
   color: #595959;
