@@ -45,11 +45,11 @@
         <th>每日次数</th>
       </tr>
       <tr>
-        <td>18:00 ~ 19:00</td>
+        <td>{{ startTime.time1 }}</td>
         <td rowspan="2">每日2次</td>
       </tr>
       <tr>
-        <td>20:00 ~ 21:00</td>
+        <td>{{ startTime.time2 }}</td>
       </tr>
     </tbody>
   </table>
@@ -74,7 +74,7 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted, ref } from "vue";
+import { defineProps, onMounted, ref ,reactive} from "vue";
 import { eventapi } from "boot/axios";
 import { userStore } from "src/stores";
 
@@ -84,8 +84,13 @@ const bonusOpened = ref(false);
 const winAmount = ref(0);
 const isClaimModal = ref(false);
 const loadingClaim = ref(false);
-const props = defineProps(["promoCode"]);
+const props = defineProps(["promoCode", "params"]);
 const promoCode = ref(props.promoCode);
+
+const startTime= reactive({
+  time1: "16:00 ~ 17:00",
+  time2: "18:00 ~ 19:00"
+})
 
 const getPromotion = () => {
   loadingClaim.value = true;
@@ -159,6 +164,15 @@ const getPromotionListing = () => {
 };
 onMounted(() => {
   getPromotionListing();
+
+  const params= props.params ? JSON.parse(props.params) : "";
+  if(params?.time1){
+    startTime.time1= params.time1;
+  }
+  if(params?.time2){
+    startTime.time2= params.time2;
+  }
+
 });
 </script>
 
