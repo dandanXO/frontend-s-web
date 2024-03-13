@@ -13,6 +13,10 @@ export const getActivePrivilegeInfoBySiteId = (siteId) => {
   return https().request("/privilegeInfo/priviList", Method.GET, { siteId: siteId }, ContentType.form);
 };
 
+export const getActivePrivilegeInfoBySiteIdWithoutRebate = (siteId) => {
+  return https().request("/privilegeInfo/priviListWithoutRebate", Method.GET, { siteId: siteId }, ContentType.form);
+};
+
 export const getAllPrivilegeInfo = () => {
   return https().request("/privilegeInfo/allList", Method.GET);
 };
@@ -27,6 +31,10 @@ export const getSimplePrivilegeBySiteId = (siteId) => {
 
 export const getPrivilegeExcelMapping = (siteId) => {
   return https().request("/privilegeInfo/excelMapping", Method.GET, { siteId: siteId }, ContentType.form);
+};
+
+export const getPrivilegeExcelMappingWithoutRebate = (siteId) => {
+  return https().request("/privilegeInfo/excelMappingWithoutRebate", Method.GET, { siteId: siteId }, ContentType.form);
 };
 
 export const createPrivilegeInfo = (privilegeInfo) => {
