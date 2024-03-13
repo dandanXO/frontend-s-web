@@ -29,7 +29,8 @@ export const userStore = defineStore("userStore", {
       currentDeposit: "0.0000",
       levelUpDeposit: "0",
       siteId: 7,
-      unreadTotal: 0
+      unreadTotal: 0,
+      visitorId: ""
     };
   },
   actions: {

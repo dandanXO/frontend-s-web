@@ -37,7 +37,8 @@ export const userStore = defineStore("userStore", {
             phoneVerified: false,
             emailVerified: false,
             currentDeposit: "",
-            levelUpDeposit: ""
+            levelUpDeposit: "",
+          visitorId: ""
         };
     },
     actions: {
