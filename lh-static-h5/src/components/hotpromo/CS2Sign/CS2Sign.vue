@@ -407,10 +407,10 @@ onMounted(() => {
   text-align: center;
   .title {
     margin: 20px auto;
-    img {
-      width: 200% !important;
-      transform: translate(-25%, 0%);
-    }
+    // img {
+    //   width: 200% !important;
+    //   transform: translate(-25%, 0%);
+    // }
   }
   .tips {
     background: linear-gradient(90deg, rgba(72, 188, 241, 0) 4.96%, rgba(72, 188, 241, 0.2) 48.61%, rgba(72, 188, 241, 0) 94.97%) no-repeat center center;
@@ -485,7 +485,7 @@ onMounted(() => {
       }
       .useKeys {
         background: url(../../../assets/images/promo/hotpromo/cs2/btnbg.png) no-repeat center center;
-        color: #3d1600;
+        color: #0154A6;
         padding: 15px 15px;
         background-size: contain;
         margin: 0 auto;
