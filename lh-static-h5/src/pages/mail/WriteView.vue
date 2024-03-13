@@ -5,7 +5,7 @@
         <div class="write-board-div q-pa-md">
           <div class="top q-pb-md">
             <div class="title">标题</div>
-            <q-btn-dropdown color="brightbtn" label="快捷输入" menu-anchor="bottom end">
+            <q-btn-dropdown color="brightbtn" :label="`${mailDetailList.feedbackType || '快捷输入'}`" menu-anchor="bottom end">
               <q-list>
                 <q-item v-for="(item, i) in feedbackTypes" :key="i" clickable v-close-popup @click="onItemClick(item)">
                   <q-item-section>
