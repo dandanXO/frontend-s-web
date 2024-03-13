@@ -356,7 +356,7 @@ import { getShortcuts } from '@/utils/datetime'
 import { hasPermission } from '../../../utils/util'
 import { required } from '../../../utils/validate'
 import { ElMessage } from 'element-plus'
-import { getActivePrivilegeInfoBySiteId, getPrivilegeExcelMapping } from '../../../api/privilege-info'
+import { getActivePrivilegeInfoBySiteIdWithoutRebate, getPrivilegeExcelMappingWithoutRebate } from '../../../api/privilege-info'
 import { createBatchPrivilege, distributePrivilege } from '../../../api/member-privilege'
 import { findIdByLoginName } from '../../../api/member'
 import { formatInputTimeZone } from "@/utils/format-timeZone"
@@ -619,7 +619,7 @@ function distributePromo() {
 }
 
 async function loadPrivilegeInfos() {
-  const { data: privilegeInfo } = await getActivePrivilegeInfoBySiteId(form.siteId);
+  const { data: privilegeInfo } = await getActivePrivilegeInfoBySiteIdWithoutRebate(form.siteId);
   privilegeInfoList.list = privilegeInfo;
 }
 
@@ -645,10 +645,10 @@ async function downloadTemplate() {
   let privilegeMapping = {};
 
   if (site.value && site.value.id) {
-    const { data: ret } = await getPrivilegeExcelMapping(site.value.id);
+    const { data: ret } = await getPrivilegeExcelMappingWithoutRebate(site.value.id);
     privilegeMapping = ret;
   } else {
-    const { data: ret } = await getPrivilegeExcelMapping();
+    const { data: ret } = await getPrivilegeExcelMappingWithoutRebate();
     privilegeMapping = ret;
   }
   const exportMapping = [EXPORT_MAPPING_PRIVI_HEADER];
