@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>雷火App下载</title>
+    <title>App下载</title>
 
     <link rel="stylesheet" type="text/css" href="css/download_index.css">
     <link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
@@ -32,31 +31,11 @@
         <img src="img/download_text.png" style="width: 90%;max-width:650px;margin-top: 15px;"/>
         <img src="img/download-icons_2.png" style="width: 80%;max-width:500px;margin-top: 25px;"/>
         <div class="games_title_container"></div>
-        <div class="download_btn" style="margin-top: 15px;" id="btn_fast"
-             hidden="hidden"
-        ><a
-                id="download_fast">雷火快捷APP（推荐使用,免安装）</a></div>
-
         <div style="width:100%; text-align: center;padding:20px 0px 10px;font-size:18px;font-weight: bold;"
              id="before-load">加载中。。。
         </div>
         <div id="android-lists"
              style="width:100%;margin:10px auto 0px;display:flex;flex-direction: column;align-items: center;gap:4px;">
-            <!--            <div class="download_btn" id="btn_1">-->
-            <!--                <a-->
-            <!--                        id="download_1"-->
-            <!--                        href="https://kcx3zdl.ycylbj.com/dy_app_signed.apk"-->
-            <!--                        data-clipboard-text='FGH{"agentCode":null,"regFrom":null,"downloadUrl":"dd880.app"}'-->
-            <!--                >东赢全站APP（线路一）</a-->
-            <!--                >-->
-            <!--            </div>-->
-            <!--            <div class="download_btn" id="btn_2">-->
-            <!--                <a-->
-            <!--                        id="download_2"-->
-            <!--                        data-clipboard-text='FGH{"agentCode":null,"regFrom":null,"downloadUrl":"dd880.app"}'-->
-            <!--                >东赢全站APP（线路二）</a-->
-            <!--                >-->
-            <!--            </div>-->
         </div>
 
         <div id="ios-lists"
@@ -89,8 +68,6 @@
 
 <script>
     var dateTime = "2024-01-10 7.30pm";
-
-    var gamesTitleList = ["体育", "真人", "电竞", "棋牌", "电子", "彩票"];
     var andList = [
         {imgurl: 'img/android/01.png'},
         {imgurl: 'img/android/02.png'},
@@ -148,7 +125,6 @@
         } else {
             $(".download").show();
             if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
-                // alert('若要安装，请先打开设置-通用-设备管理-东赢体育');
                 showIOS();
             } else if (/(Android)/i.test(navigator.userAgent)) {
                 showAndroid();
@@ -177,10 +153,7 @@
                 '" alt=""/></div>'
             );
         }
-        // $("#download").attr(
-        //     "href",
-        //     "https://xinfa-files.s3.ap-southeast-1.amazonaws.com/app/dy_app_1.0.22.apk"
-        // );
+
 
         var androidHtml = '';
         var websiteHtmlAnd = '';
