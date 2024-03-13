@@ -24,13 +24,7 @@
 <div class="download" style="display: block;">
 
     <div class="download_bg" style="height: auto">
-        <img src="img/download_logo.png" style="width: 73%;max-width:280px;margin-top: 20px;"/>
-        <!--        <div class="host_address" id="web_show">leihuo6.com</div>-->
-        <img class="customer_icon" id="dy_customer" src="img/download_customer.png"/>
-        <!--<img src="img/download_pic.png" style="width: 90%;margin-top: 10px;"/> -->
-        <img src="img/download_text.png" style="width: 90%;max-width:650px;margin-top: 15px;"/>
-        <img src="img/download-icons_2.png" style="width: 80%;max-width:500px;margin-top: 25px;"/>
-        <div class="games_title_container"></div>
+
         <div style="width:100%; text-align: center;padding:20px 0px 10px;font-size:18px;font-weight: bold;"
              id="before-load">加载中。。。
         </div>
@@ -43,9 +37,6 @@
 
         </div>
 
-
-        <div class="download_des">下载安装过程中请勿切换网络，推荐使用手机自带浏览器打开本页面下滑查看安装教程。</div>
-        <div class="download_install_des">下滑查看安装教程</div>
     </div>
 
     <div class="swiper_parent">
@@ -62,12 +53,10 @@
 
 </div>
 
-<div class="weixin_tip" style="display: none;">
-    <img id="tips" src="img/wxtips_android.png" alt="" style="width:100%;height:auto;">
-</div>
 
 <script>
     var dateTime = "2024-01-10 7.30pm";
+
     var andList = [
         {imgurl: 'img/android/01.png'},
         {imgurl: 'img/android/02.png'},
@@ -89,9 +78,6 @@
 
     getApiUrl();
 
-    $('#dy_customer').click(() => {
-        window.open("https://csweb01.c8nhwrqx4.com/?partnerCode=LHCS&way=H5&lang=zh-CN")
-    })
 
     async function getApiUrl() {
         try {
@@ -153,7 +139,6 @@
                 '" alt=""/></div>'
             );
         }
-
 
         var androidHtml = '';
         var websiteHtmlAnd = '';

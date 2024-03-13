@@ -17,7 +17,7 @@
       <div class="content">
         <div class="longka-wrap">
           <div class="longka-title">
-            <img src="../../../assets/images/promotion/hotpromo/dragoncard/my-longka.png" alt="" />
+            <img src="../../../assets/images/promotion/hotpromo/dragoncard/mycard-dragon.png" alt="" />
           </div>
           <div class="longka-container">
             <div class="longka-list">
@@ -46,7 +46,7 @@
         </div>
         <div class="longka-ranking-wrap">
           <div class="longka-ranking-title">
-            <img src="../../../assets/images/promotion/hotpromo/dragoncard/longka-ranking.png" alt="" />
+            <img src="../../../assets/images/promotion/hotpromo/dragoncard/dragon-rank.png" alt="" />
           </div>
 
           <el-table :data="rankingRecord()" :loading="rankingPage.loading">
@@ -69,6 +69,29 @@
         </div>
       </div>
     </div>
+
+    <div class="bottom-content">
+      <p>
+        <img src="../../../assets/images/promotion/hotpromo/dragoncard/dragon-time.png" />
+      </p>
+      <table class="longka-ranking-table" v-if="cardInfo.cardDetail.setting">
+        <thead>
+        <tr>
+          <td>期数</td>
+          <td>集卡时间</td>
+          <td>开奖时间</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>{{ cardInfo.cardDetail.setting.periodStr }}</td>
+          <td>{{ cardInfo.cardDetail.setting.lotteryStr }}</td>
+          <td>{{ cardInfo.cardDetail.setting.openStr }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
     <el-dialog align-center v-model="isGiftModal" title="赠送龙卡" width="500">
       <el-form :rules="sendRules" ref="longkaFormRef" style="padding: 20px" :model="form">
         <el-form-item prop="type" label="龙卡" :label-width="formLabelWidth">
@@ -103,7 +126,7 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref, reactive } from "vue";
+import { onMounted, ref, reactive, defineProps } from "vue";
 import {
   tigerCardInit,
   getLeaderboard,
@@ -333,13 +356,13 @@ const submitRegisterForm = async (elForm) => {
 .tigercard-container {
   .el-table {
     &__empty-text p {
-      color: #6d9ef9;
+      color: #B97A89;
     }
 
     max-width: 650px;
     margin: 0 auto;
 
-    background: #6d9ef9;
+    background: #FFF3F4;
     border-radius: 10px;
     border: 0;
 
@@ -348,19 +371,20 @@ const submitRegisterForm = async (elForm) => {
       line-height: 32px;
 
       &.el-table__cell {
-        color: #ffffff;
-        border-bottom: 1px solid #ffd97f;
-        background-color: #6d9ef9;
+        color: #B97A89;
+        border-bottom: 1px solid #ECEDF0;
+        background-color: #FFF3F4;
 
         &.is-leaf {
-          border-bottom: 1px solid #ffd97f;
+          border-bottom: 1px solid #ECEDF0
+        ;
         }
       }
     }
 
     td {
       &.el-table__cell {
-        color: #6d9ef9;
+        color: #B97A89;
         text-align: center;
         border: 0;
       }
@@ -376,7 +400,7 @@ const submitRegisterForm = async (elForm) => {
     }
 
     .el-pager li {
-      color: #6d9ef9;
+      color: #B97A89;
       min-width: unset;
 
       &.btn-quicknext {
@@ -393,12 +417,12 @@ const submitRegisterForm = async (elForm) => {
           margin-left: 8px;
         }
 
-        color: #6d9ef9;
+        color: #B97A89;
       }
     }
 
     button:hover {
-      color: #6d9ef9;
+      color: #B97A89;
     }
   }
 }
@@ -627,20 +651,23 @@ body {
 }
 
 .longka-ranking-table {
-  background-color: #1d212e;
+  background-color: #fff;
   margin: 0 auto;
-  color: #ffd97f;
+  color: #B97A89;
   text-align: center;
   width: 50%;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
   font-weight: 400;
+  table-layout: fixed;
 }
 
-.longka-ranking-table th {
-  border-bottom: 1px solid #ffd97f;
+.longka-ranking-table thead {
   line-height: 32px;
+  background: #FFF3F4;
+  color: #770202;
+  font-weight: bold;
 }
 
 .longka-ranking-table tr {
@@ -651,6 +678,13 @@ body {
   margin: 0 auto;
   padding-top: 0.5rem;
   color: #ffd97f;
+}
+
+.bottom-content{
+    p{
+      text-align: center;
+    }
+
 }
 
 .longka-ranking-pagination .next-page,

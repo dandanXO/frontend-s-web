@@ -363,8 +363,8 @@ const getAffiliateCode = () => {
 
 const getReferalCode = () => {
   const referCode = sessionStorage.getItem("REFERRAL_CODE");
-
-  if (referCode && route.query && route.query.refer) {
+// && route.query && route.query.refer
+  if (referCode ) {
     regForm.referrer = referCode;
   }
 };
