@@ -478,6 +478,7 @@ export default {
     answerOne: 'Question One Answer',
     answerTwo: 'Question Two Answer',
     answerThree: 'Question Three Answer',
+    appVersion: 'App Version',
     applying: 'Applying',
     approve: 'Approve',
     assigned: 'Assigned',
