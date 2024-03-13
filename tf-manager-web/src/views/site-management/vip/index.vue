@@ -74,7 +74,7 @@
             style="width: 350px;"
             default-first-option
             clearable
-            @change="handleChangeMinCreditAndLevel()"
+            @change="handleChangeLevel()"
             @clear="handleClearPreviousLevel()"
           >
             <el-option
@@ -208,14 +208,6 @@ const validateLevel = (rule, value, callback) => {
   }
 };
 
-const validateLevelUpCreditMin = (rule, value, callback) => {
-  if (value < minCredit.value) {
-    callback(new Error(t('message.levelUpCreditMoreThan') + minCredit.value));
-  } else {
-    callback();
-  }
-};
-
 const request = reactive({
   siteId: null
 });
@@ -225,8 +217,6 @@ const sites = reactive({
   list: []
 });
 let timeZone = null;
-
-const minCredit = ref(Number(0));
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -269,10 +259,7 @@ const formRules = reactive({
     validator: validateLevel,
     trigger: "blur"
   }],
-  levelUpCredit: [required(t('message.validateLevelUpCreditRequired')), numericOnly(t('message.validateNumberOnly')), {
-    validator: validateLevelUpCreditMin,
-    trigger: "blur"
-  }],
+  levelUpCredit: [required(t('message.validateLevelUpCreditRequired')), numericOnly(t('message.validateNumberOnly'))],
   siteId: [required(t('message.validateSiteRequired'))]
 });
 
@@ -292,10 +279,9 @@ function handleSelectionChange(val) {
   }
 }
 
-function handleChangeMinCreditAndLevel() {
+function handleChangeLevel() {
   page.records.forEach(vip => {
     if (vip.id === form.previousLevel) {
-      minCredit.value = vip.levelUpCredit;
       form.level = vip.level + 1;
       form.siteId = vip.siteId;
     }
@@ -374,7 +360,7 @@ function showEdit(vip) {
     list.previousLevel = newRecord;
 
     // update default level up credit value && level
-    handleChangeMinCreditAndLevel();
+    handleChangeLevel();
   });
 }
 
