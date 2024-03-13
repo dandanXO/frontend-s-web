@@ -7,7 +7,7 @@
             <div class="title">标题</div>
             <q-btn-dropdown color="brightbtn" label="快捷输入" menu-anchor="bottom end">
               <q-list>
-                <q-item v-for="(item, i) in options" :key="i" clickable v-close-popup @click="onItemClick(item)">
+                <q-item v-for="(item, i) in feedbackTypes" :key="i" clickable v-close-popup @click="onItemClick(item)">
                   <q-item-section>
                     <q-item-label>{{ item }}</q-item-label>
                   </q-item-section>
@@ -88,8 +88,23 @@ const mailDetailList = ref({
   title: "",
   content: ""
 });
+
+const feedbackTypes = ref([]);
+
+const loadFeedbackType = () => {
+  api
+    .get("/session/feedback/types", {})
+    .then((res) => {
+      const { code, data } = res;
+      if (code === 0) feedbackTypes.value = data;
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
+};
+
 const onItemClick = (item) => {
-  mailDetailList.value.title = item;
+  mailDetailList.value.feedbackType = item;
 };
 const titleRef = ref();
 const contentRef = ref();
@@ -101,10 +116,14 @@ const onSubmit = () => {
     $q.loading.hide();
   } else {
     api
-      .post("/session/writeOutbox", qs.stringify(mailDetailList.value))
+      .post("/session/feedback", qs.stringify(mailDetailList.value))
       .then((response) => {
         if (response.code === 0) {
           modalSendSuccess.value = true;
+
+          mailDetailList.value.feedbackType = "";
+          mailDetailList.value.title = "";
+          mailDetailList.value.content = "";
         }
       })
       .catch((error) => {
@@ -118,7 +137,9 @@ const closePage = () => {
   mailDetailList.value.title = "";
   mailDetailList.value.content = "";
 };
-onMounted(() => {});
+onMounted(() => {
+  loadFeedbackType();
+});
 </script>
 <style scoped lang="scss">
 .write-letter {
