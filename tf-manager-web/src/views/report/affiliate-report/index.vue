@@ -191,12 +191,12 @@
         align="center"
         min-width="110"
       />
-      <el-table-column
+      <!-- <el-table-column
         prop="totalRegisterMemberCount"
         :label="t('fields.totalRegisterCount')"
         align="center"
         min-width="140"
-      />
+      /> -->
       <el-table-column
         prop="ftdMemberCount"
         :label="t('fields.ftdCount')"
