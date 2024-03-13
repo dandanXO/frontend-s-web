@@ -24,6 +24,20 @@
           maxlength="50"
           :placeholder="t('fields.loginName')"
         />
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+        >
+          <el-option
+            v-for="item in sites.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -105,13 +119,15 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, computed } from 'vue'
 import moment from 'moment'
 import { listMemberCheckInRecord } from '../../../api/privi-member-check-in-record'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
 import { getShortcuts } from '@/utils/datetime'
 import { getSiteListSimple } from '../../../api/site'
+import { useStore } from '../../../store'
+import { TENANT } from '../../../store/modules/user/action-types'
 
 const { t } = useI18n()
 const shortcuts = getShortcuts(t)
@@ -121,6 +137,8 @@ startDate.setDate(startDate.getDate() - 2)
 const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
 const site = ref(null)
+const store = useStore()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 
 const sites = reactive({
   list: [],
@@ -161,7 +179,7 @@ function disabledDate(time) {
 
 function resetQuery() {
   request.checkInDate = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : sites.list[0].id
   request.loginName = null
 }
 
@@ -200,8 +218,13 @@ async function loadSites() {
 
 onMounted(async () => {
   await loadSites()
-  site.value = sites.list.find(s => s.siteCode === 'DY2')
-  request.siteId = site.value.id
+  request.siteId = sites.list[0].id
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = sites.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    request.siteId = site.value.id
+  }
   await loadRecord()
 })
 </script>
