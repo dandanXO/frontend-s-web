@@ -19,7 +19,7 @@
       <div class="content">
         <div class="longka-wrap">
           <div class="longka-title">
-            <img src="../../../assets/images/promo/hotpromo/dragoncard/my_longka.png" alt="" />
+            <img src="../../../assets/images/promo/hotpromo/dragoncard/mycard-dragon.png" alt="" />
           </div>
           <div class="longka-container">
             <div class="longka-list">
@@ -52,7 +52,7 @@
         </div>
         <div class="longka-ranking-wrap">
           <div class="longka-ranking-title">
-            <img src="../../../assets/images/promo/hotpromo/dragoncard/longka_ranking.png" alt="" />
+            <img src="../../../assets/images/promo/hotpromo/dragoncard/dragon-rank.png" alt="" />
           </div>
 
           <q-table :loading="rankingPage.loading" :columns="columns" :rows="rankingRecord()" square></q-table>
@@ -82,20 +82,22 @@
 
     <div class="bottom-content">
       <p>
-        <img :src="require(`../../../assets/images/promo/hotpromo/dragoncard/title_event_time.png`)" />
+        <img :src="require(`../../../assets/images/promo/hotpromo/dragoncard/dragon-time.png`)" />
       </p>
-      <table v-if="cardInfo.cardDetail.setting">
+      <table class="longka-ranking-table" v-if="cardInfo.cardDetail.setting">
+        <thead>
+        <tr>
+          <td>期数</td>
+          <td>集卡时间</td>
+          <td>开奖时间</td>
+        </tr>
+        </thead>
         <tbody>
-          <tr>
-            <td>期数</td>
-            <td>集卡时间</td>
-            <td>开奖时间</td>
-          </tr>
-          <tr>
-            <td>{{ cardInfo.cardDetail.setting.periodStr }}</td>
-            <td>{{ cardInfo.cardDetail.setting.lotteryStr }}</td>
-            <td>{{ cardInfo.cardDetail.setting.openStr }}</td>
-          </tr>
+        <tr>
+          <td>{{ cardInfo.cardDetail.setting.periodStr }}</td>
+          <td>{{ cardInfo.cardDetail.setting.lotteryStr }}</td>
+          <td>{{ cardInfo.cardDetail.setting.openStr }}</td>
+        </tr>
         </tbody>
       </table>
     </div>
@@ -412,62 +414,77 @@ const columns = [
 .tigercard-container {
   .q-table {
     &__empty-text p {
-      color: #8a6b28;
+      color: #B97A89;
     }
+
     max-width: 650px;
     margin: 0 auto;
 
     background: white;
     border-radius: 10px;
     border: 0;
-    color: #8a6b28;
+    color: #B97A89;
+
     th {
       text-align: center;
       line-height: 32px;
-      background: white !important;
-      border: 1px solid #8a6b28;
+      color: #770202;
+      font-weight: bold;
+      background: #FFF3F4 !important;
+      border: 1px solid #ECEDF0;
+
       &.q-table__cell {
-        color: #8a6b28;
-        border-bottom: 1px solid #8a6b28;
+        color: #B97A89;
+        border-bottom: 1px solid #ECEDF0;
         background-color: white;
+
         &.is-leaf {
-          border-bottom: 1px solid #8a6b28;
+          border-bottom: 1px solid #ECEDF0;
         }
       }
     }
+
     td {
-      border: 1px solid #8a6b28 !important;
+      border: 1px solid #ECEDF0 !important;
+
       &.q-table__cell {
-        color: #8a6b28;
+        color: #B97A89;
         text-align: center;
         border: 0;
       }
     }
   }
+
   .q-table__bottom {
-    color: #8a6b28;
+    color: #B97A89;
+
     .q-field__native {
-      color: #8a6b28;
+      color: #B97A89;
     }
+
     .q-field__append {
-      color: #8a6b28;
+      color: #B97A89;
     }
   }
 
   .q-pagination {
     margin: 10px auto;
     justify-content: center;
+
     .q-pager {
       pointer-events: none;
     }
+
     .q-pager li {
-      color: #8a6b28;
+      color: #B97A89;
       min-width: unset;
+
       &.btn-quicknext {
         svg {
           display: none;
         }
       }
+
       &.is-active,
       &:hover {
         &:after {
@@ -475,11 +492,13 @@ const columns = [
           display: inline-block;
           margin-left: 8px;
         }
-        color: #ffd87f;
+
+        color: #B97A89;
       }
     }
+
     button:hover {
-      color: #ffd87f;
+      color: #B97A89;
     }
   }
 }
@@ -500,6 +519,7 @@ body {
       height: 100%;
       flex-direction: column;
       gap: 10px;
+
       .message {
         padding: 10px;
         font-size: 30px;
@@ -509,15 +529,18 @@ body {
         -webkit-text-fill-color: transparent;
         font-weight: bold;
       }
+
       .amount {
         color: #ffae00;
         font-size: 50px;
         font-weight: bold;
         padding-bottom: 10px;
+
         span {
           font-size: 30px;
         }
       }
+
       .q-button {
         margin-bottom: 20px;
         padding: 25px 0;
@@ -528,6 +551,7 @@ body {
         background-image: linear-gradient(358deg, #bea229, transparent);
         box-shadow: 0px 5px 1px #895d00;
         font-weight: bold;
+
         span {
           color: #3a0001;
         }
@@ -541,6 +565,7 @@ body {
   margin: 0 auto;
   width: 100%;
 }
+
 .banner {
   background: #000 url(https://eqwp2f.sdwukong.com/resource/es/img/banner.b26099dc.png) top no-repeat;
   max-width: 1920px;
@@ -583,6 +608,7 @@ body {
 .longka-wrap .longka-title {
   text-align: center;
   width: 100%;
+
   img {
     width: 100%;
   }
@@ -635,6 +661,7 @@ body {
   justify-content: center;
   align-items: center;
   flex: 2;
+
   .longka {
     position: relative;
     width: calc(25% - 9px);
@@ -700,6 +727,7 @@ body {
   width: 60%;
   background: #ffcf6f;
 }
+
 .longka-gold-inner {
   border: 1px solid #8a6b28;
   -webkit-border-radius: 8px;
@@ -718,26 +746,34 @@ body {
 
 .longka-ranking-title {
   margin: 3rem 0 1rem;
+
   img {
     width: 100%;
   }
 }
 
 .longka-ranking-table {
-  background-color: #1d212e;
+  background-color: #fff;
   margin: 0 auto;
-  color: #8a6b28;
+  color: #B97A89;
   text-align: center;
   width: 50%;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
   font-weight: 400;
+  table-layout: fixed;
 }
 
-.longka-ranking-table th {
-  border-bottom: 1px solid #8a6b28;
+.longka-ranking-table thead {
   line-height: 32px;
+  background: #FFF3F4;
+  color: #770202;
+  font-weight: bold;
+}
+
+.longka-ranking-table thead td{
+  background-color: #FFF3F4 !important;
 }
 
 .longka-ranking-table tr {

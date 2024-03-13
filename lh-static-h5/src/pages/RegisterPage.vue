@@ -229,8 +229,23 @@
           rounded
           standout
           clearable
-          v-model="regForm.referrer"
+          v-model="regForm.codeAffiliate"
           placeholder="如不是合营玩家不用填写"
+        >
+          <template v-slot:prepend>
+            <img src="../assets/images/login/veri-icon.png" width="24" />
+          </template>
+        </q-input>
+        <q-input
+          v-else
+          ref="affiliateCodeRef"
+          rounded
+          standout
+          clearable
+          v-model="regForm.codeAffiliate"
+          placeholder="如不是合营玩家不用填写"
+          readonly
+          disable
         >
           <template v-slot:prepend>
             <img src="../assets/images/login/veri-icon.png" width="24" />
@@ -374,7 +389,6 @@ export default defineComponent({
     const getReferralCode = () => {
       const refCode = sessionStorage.getItem("REFERRAL_CODE");
       if (refCode) {
-        hasAffiliate.value = true;
         regForm.referrer = refCode;
       }
     };
