@@ -13,6 +13,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@fingerprintjs/fingerprintjs-pro-vue-v3": "^1.4.0",
     "@fingerprintjs/fingerprintjs": "^3.4.0",
     "animate.css": "^4.1.1",
     "ant-design-vue": "^2.2.8",
