@@ -392,7 +392,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-match-vote" ||
       this.list.redirectUrl === "lh1-cny-step-game" ||
       this.list.redirectUrl === "lh1-feedback-award" ||
-      this.list.redirectUrl === "lh1-upgrade-hongbao"
+      this.list.redirectUrl === "lh1-upgrade-hongbao" ||
+      this.list.redirectUrl === "lh-cs2-copenhagen-major-2024"
     ) {
       this.isCommonPromo = false;
     } else {
