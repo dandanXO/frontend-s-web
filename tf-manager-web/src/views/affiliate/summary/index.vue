@@ -234,7 +234,7 @@
             <el-link
               v-if="scope.row.newMemberCount !== 0"
               type="primary"
-              @click="showDialog('MEMBER', scope.row.newMembers)"
+              @click="showDialog('MEMBER', scope.row.affiliateId)"
             >
               {{ scope.row.newMemberCount }}
             </el-link>
@@ -513,17 +513,17 @@ async function loadRecord() {
   page.loading = false
 }
 
-function showDialog(type, members) {
+function showDialog(type, memberId) {
   if (type === 'MEMBER') {
-    newMembers.list = members
-    loadNewMember(newMembers.list)
+    // newMembers.list = members
+    loadNewMember(memberId)
     uiControl.dialogTitle = t('fields.newMember')
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
 }
 
-async function loadNewMember(members) {
+async function loadNewMember(memberId) {
   memberPage.loading = true
   memberRequest.siteId = request.siteId
   const requestCopy = { ...memberRequest }
@@ -536,17 +536,22 @@ async function loadNewMember(members) {
 
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
-      query.recordTime = query.recordTime.join(',')
+      query.recordTime = request.recordTime.join(',')
+    } else {
+      query.recordTime = request.recordTime[0]
     }
   }
 
-  if (members !== null) {
-    if (members.length > 1) {
-      query.memberId = members.join(',')
-    } else {
-      query.memberId = members[0]
-    }
-  }
+  // if (members !== null) {
+  //   if (members.length > 1) {
+  //     query.memberId = members.join(',')
+  //   } else {
+  //     query.memberId = members[0]
+  //   }
+  // }
+
+  query.memberId = memberId
+
   const { data: ret } = await getAffiliateSummaryNewMember(query)
   memberPage.pages = ret.pages
   memberPage.records = ret.records
