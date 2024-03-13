@@ -82,7 +82,7 @@
           size="small"
           :placeholder="t('fields.sorting')"
           class="filter-item"
-          style="width: 210px; margin-left: 10px"
+          style="width: 280px; margin-left: 10px"
         >
           <el-option
             v-for="item in uiControl.sortList"

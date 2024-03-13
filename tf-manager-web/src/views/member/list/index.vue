@@ -352,6 +352,12 @@
             <span v-if="scope.row.financialLevel !== null">{{ scope.row.financialLevel }}</span>
           </template>
         </el-table-column>
+        <el-table-column prop="riskLevel" :label="t('fields.riskLevel')" width="150">
+          <template #default="scope">
+            <span v-if="scope.row.riskLevel === null">-</span>
+            <span v-if="scope.row.riskLevel !== null">{{ scope.row.riskLevel }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="status" :label="t('fields.status')" width="150">
           <template #default="scope">
             <el-tag v-if="scope.row.status === 'NORMAL'" type="success" size="mini">{{ scope.row.status }}</el-tag>
