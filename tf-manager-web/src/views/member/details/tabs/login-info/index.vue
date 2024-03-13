@@ -107,6 +107,18 @@
         </template>
       </el-table-column>
       <el-table-column
+        :label="t('fields.appVersion')"
+        prop="appVersion"
+        align="center"
+        min-width="120"
+      >
+        <template #default="scope">
+          <span v-if="!scope.row.appVersion">-</span>
+          <span v-else>{{ scope.row.appVersion }}</span>
+        </template>
+
+      </el-table-column>
+      <el-table-column
         :label="t('fields.loginFailedReason')"
         prop="remark"
         align="center"

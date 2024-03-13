@@ -484,6 +484,7 @@ export default {
     answerOne: '题目一答案',
     answerTwo: '题目二答案',
     answerThree: '题目三答案',
+    appVersion: 'App版本',
     applying: '申请中',
     approve: '批准',
     assigned: '已分配',
