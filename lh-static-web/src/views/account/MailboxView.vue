@@ -1,6 +1,6 @@
 <template>
   <div class="account-box account-contents">
-    <Mail v-if="showMailId" :mail="mailboxState.mailboxList.inbox.list[0]" :closeMail="() => showMailId = undefined"/>
+    <Mail v-if="showMailId || showMailId === 0" :mail="showMailId ? mailboxState.mailboxList.inbox.list[showMailId] : mailboxState.mailboxList.inbox.list[0]" :closeMail="() => showMailId = undefined"/>
     <template v-else>
       <div class="menu-title-container">
         <div class="menu-title">消息中心</div>
@@ -48,7 +48,7 @@
                 </div>
               </div>
               <el-collapse v-model="activeNames" @change="handleChange">
-                <el-collapse-item v-for="item in mailboxState.mailboxList.inbox.list" :key="item.id" @click="openMsg(item)">
+                <el-collapse-item v-for="(item, index) in mailboxState.mailboxList.inbox.list" :key="index" @click="openMsg(item, index)">
                   <template #title>
                     <div v-if="isShowSelect" class="mailbox-checkbox" @click.stop="">
                       <el-checkbox v-model="selectedIds[item.id]" size="large" />
@@ -306,9 +306,11 @@ const readMultipleMsg = () => {
     });
 };
 
-const openMsg = (mail) => {
+const openMsg = (mail, idx) => {
   const { id, readTime } = mail;
-  showMailId.value = id;
+  
+  showMailId.value = idx;
+  // showMailId.value = id;
   mail.readTime = moment().format("YYYY-MM-DD");
 
   // console.log(mail);

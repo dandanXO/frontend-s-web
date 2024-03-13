@@ -7,7 +7,7 @@
         </div>
         <el-divider/>
         <div class="mail-content">
-            {{ props.mail.content }}
+            {{ props.mail?.content }}
         </div>
     </div>
 </template>
