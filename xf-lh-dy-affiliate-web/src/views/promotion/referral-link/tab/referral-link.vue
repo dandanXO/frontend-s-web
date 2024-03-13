@@ -449,6 +449,14 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  width: 270px;
+}
+
+.card-panel-description a{
+  width: auto;
+  display: inline-block;
+  white-space: normal;
+  word-break: break-word;
 }
 
 .btn-group {
