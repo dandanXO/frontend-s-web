@@ -89,7 +89,7 @@ const https = (api) => {
   const token = store.state.user.token;
   const currentHost = window.location.host
   const thaiHost = "affiliate-web.monemental.com"
-  const indHost = "ind-affiliate.wbesfdides.com"
+  const indHost = "ind-nfaet6t.exerpsison.com"
   const lhHost = "lh1-affiliate.phoicynxeey.com"
   const isAff = api === 'affiliate'
   const isCr = api === 'cashier'
