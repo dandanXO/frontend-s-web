@@ -162,7 +162,7 @@
             </span>
             <span v-else-if="scope.row.status === 'PENDING'">{{ t('fields.suspend') }}</span>
             <span v-else-if="scope.row.status === 'SUCCESS'">{{ t('fields.success') }}</span>
-            <span v-else>{{ scope.row.status }}</span>
+            <span v-else>{{ t('withdrawStatus.' + scope.row.status) }}</span>
           </template>
         </el-table-column>
         <el-table-column
