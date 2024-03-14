@@ -77,7 +77,7 @@
         <el-tab-pane key="sent" name="sent" :label="'我的反馈'">
           <template v-if="mailboxState.mailboxList.sent.list.length > 0">
             <el-collapse v-model="activeNames" @change="handleChange">
-              <el-collapse-item v-for="item in mailboxState.mailboxList.sent.list" :key="item.id">
+              <el-collapse-item v-for="item in mailboxState.mailboxList.sent.list" :key="item.id" @click="openMsg(item)">
                 <template #title><p class="title-p">标题：{{ item.title }}</p></template>
                 <div>
                   <div class="content-p">正文：{{ item.content }}</div>
@@ -223,7 +223,7 @@
 
 <script setup>
 import { ref, reactive, onMounted } from "vue";
-import { mailInbox, mailOutbox, submitFeedback, getFeedbackType } from "@/api/personal/mailbox";
+import { mailInbox, mailOutbox, submitFeedback, getFeedbackType, readFeedback } from "@/api/personal/mailbox";
 // import { message } from "ant-design-vue";
 import { getQuestionnaireList, submitQuestionnaire, getQuestionnaireAns } from "@/api/index/promo";
 import { userStore } from "@/store"
@@ -564,6 +564,25 @@ const mailTabChange = (nk) => {
     if (mailList && mailList.length === 0) {
       loadPersonalMailbox();
     }
+  }
+};
+
+const openMsg = (m) => {
+  const { id } = m;
+
+  if (m.isOpen === undefined) m.isOpen = false;
+  m.isOpen = !m.isOpen;
+  m.readTime = true;
+
+  if (!m.content) {
+    readFeedback({ id })
+      .then((res) => {
+        const { code, data } = res;
+        if (code === 0) m.content = data.content;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 };
 
