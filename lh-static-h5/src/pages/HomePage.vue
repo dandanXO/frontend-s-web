@@ -159,6 +159,7 @@
           <img src="../assets/images/home/games/slot-icon.png" />
         </template>
       </div>
+      <!--
       <div @click="selectTab('others')" class="game-platform btn-pointer" id="others-platform">
         <template v-if="tab === 'others'">
           <img src="../assets/images/home/games/others-icon-active.png" />
@@ -167,21 +168,13 @@
           <img src="../assets/images/home/games/others-icon.png" />
         </template>
       </div>
-
-      <!-- <div @click="selectTab('lottery')" class="game-platform btn-pointer" id="lottery-platform">
+      -->
+      <div @click="selectTab('lottery')" class="game-platform btn-pointer" id="lottery-platform">
         <template v-if="tab === 'lottery'">
           <img src="../assets/images/home/games/lottery-icon-active.png" />
         </template>
         <template v-else>
           <img src="../assets/images/home/games/lottery-icon.png" />
-        </template>
-      </div>
-      <div @click="selectTab('slot')" class="game-platform btn-pointer" id="slot-platform">
-        <template v-if="tab === 'slot'">
-          <img src="../assets/images/home/games/slot-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/slot-icon.png" />
         </template>
       </div>
       <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
@@ -191,7 +184,7 @@
         <template v-else>
           <img src="../assets/images/home/games/fish-icon.png" />
         </template>
-      </div> -->
+      </div>
     </div>
 
     <div class="game-right-platform" v-scroll="onHomeScroll" id="id-right-platform">
@@ -360,6 +353,7 @@
         </template>
       </div>
 
+      <!--
       <div class="game-lists fade-in-image" id="others-lists">
 
         <template v-for="(item, index) in lottery" :key="index">
@@ -424,16 +418,17 @@
           </div>
         </template>
       </div>
+      -->
 
 
-      <!-- <div class="game-lists" v-if="tab === 'lottery'" id="lottery-lists">
+      <div class="game-lists" id="lottery-lists">
         <template v-for="(item, index) in lottery" :key="index">
           <div
             class="platform-block"
             @click="playGame(item.gameName, item.code, item.gameCode)"
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
-               <MaintenanceBox :item="item" :moment="moment(item.maintenanceStartTime)" />
+            <MaintenanceBox :item="item" :moment="moment(item.maintenanceStartTime)" />
 
 
             <div
@@ -457,42 +452,42 @@
             </div>
           </div>
         </template>
-      </div> -->
+      </div>
 
       <!-- <div class="game-lists" v-if="tab === 'slot'" id="slot-lists">
-        <template v-for="(item, index) in slot" :key="index">
+      <template v-for="(item, index) in slot" :key="index">
+        <div
+          class="platform-block"
+          @click="router.push({ path: '/slot', query: { platform: item.code } })"
+          :class="item.underMaintenance === true ? 'maintenance' : ''"
+        >
+            <MaintenanceBox :item="item" :moment="moment(item.maintenanceStartTime)" />
+
+
           <div
-            class="platform-block"
-            @click="router.push({ path: '/slot', query: { platform: item.code } })"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
+            class="platform-img-frame"
+            :style="{
+              'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
+            }"
           >
-               <MaintenanceBox :item="item" :moment="moment(item.maintenanceStartTime)" />
-
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-              }"
-            >
-              <div class="platform-label"></div>
-              <div class="platform-content">
-                <div class="platform-logo">
-                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
-                </div>
-                <div class="platform-title">{{ item.title }}</div>
-                <div class="platform-subtitle">{{ item.subtitle }}</div>
-                <div class="platform-rebate">
-                  最高返水
-                  <span>8%</span>
-                </div>
+            <div class="platform-label"></div>
+            <div class="platform-content">
+              <div class="platform-logo">
+                <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
+              </div>
+              <div class="platform-title">{{ item.title }}</div>
+              <div class="platform-subtitle">{{ item.subtitle }}</div>
+              <div class="platform-rebate">
+                最高返水
+                <span>8%</span>
               </div>
             </div>
           </div>
-        </template>
+        </div>
+      </template>
       </div> -->
 
-      <!-- <div class="game-lists" v-if="tab === 'fishing'" id="fishing-lists">
+      <div class="game-lists" id="fishing-lists">
         <template v-for="(item, index) in fishing" :key="index">
           <div
             class="platform-block"
@@ -523,7 +518,7 @@
             </div>
           </div>
         </template>
-      </div> -->
+      </div>
 
 
       <!--      <div class="index-platform-container" style="overflow: hidden">-->
@@ -953,7 +948,7 @@ export default defineComponent({
       isScrolling.value = true;
       var slideItem = document.getElementById(slide_id);
       var bodyElement = document.body;
-
+      
       if (slideItem) {
 
         var divOffset = slideItem.getBoundingClientRect();
@@ -989,8 +984,9 @@ export default defineComponent({
           var checkItem3 = document.getElementById("live-lists");
           var checkItem4 = document.getElementById("poker-lists");
           var checkItem5 = document.getElementById("slot-lists");
-          var checkItem6 = document.getElementById("others-lists");
-
+          // var checkItem6 = document.getElementById("others-lists");
+          var checkItem6 = document.getElementById("lottery-lists");
+          var checkItem7 = document.getElementById("fishing-lists");
 
           var positionTop1 = checkItem1.getBoundingClientRect().top;
           var positionTop2 = checkItem2.getBoundingClientRect().top;
@@ -998,6 +994,8 @@ export default defineComponent({
           var positionTop4 = checkItem4.getBoundingClientRect().top;
           var positionTop5 = checkItem5.getBoundingClientRect().top;
           var positionTop6 = checkItem6.getBoundingClientRect().top;
+          var positionTop7 = checkItem7.getBoundingClientRect().top;
+          var positionTop8 = checkItem8.getBoundingClientRect().top;
 
           // console.log(blockHeight);
           // console.log(positionTop6);
@@ -1009,6 +1007,10 @@ export default defineComponent({
 
           if (windowHeight + 15 > bodyOffset.bottom) {
             tab.value = "others";
+          } else if (0 > positionTop7 - 5 && positionTop8 >= blockHeight) {
+            tab.value = "fishing";
+          } else if (0 > positionTop6 - 5 && positionTop7 >= blockHeight) {
+            tab.value = "lottery";
           } else if (0 > positionTop5 - 5 && positionTop6 >= blockHeight) {
             tab.value = "slot";
           } else if (0 > positionTop4 - 5 && positionTop5 >= blockHeight) {
@@ -1058,6 +1060,16 @@ export default defineComponent({
         // firstSwiper.value?.slideTo(slideIndex, 500);
         scrollToSlide("others-lists");
       }
+      if (tab === "lottery") {
+        // slideIndex = esport.value.length + sport.value.length + livecasino.value.length + poker.value.length;
+        // firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide("lottery-lists");
+      }
+      if (tab === "fishing") {
+        // slideIndex = esport.value.length + sport.value.length + livecasino.value.length + poker.value.length;
+        // firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide("fishing-lists");
+      }
 
     };
     const onSlideChange = (swiper) => {
@@ -1072,7 +1084,7 @@ export default defineComponent({
       const activeSlideClassName = activeSlide.className;
       // Check if the class name contains "sport," "slot," or "esport"
       // Array of keywords to check
-      const keywords = ["slot", "live", "sport", "esport", "slot", "others"];
+      const keywords = ["slot", "live", "sport", "esport", "slot", "lottery", "fishing"];
 
       // Iterate over each keyword
       for (const keyword of keywords) {
