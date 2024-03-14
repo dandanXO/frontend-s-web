@@ -161,7 +161,7 @@
     </div>
     <el-dialog
         class="bankModal"
-        width="500"
+        width="600"
         v-model="bankCardModalState.visible"
         :footer="null"
         title="绑定银行卡"
