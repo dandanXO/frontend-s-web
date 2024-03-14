@@ -67,6 +67,11 @@ export function getFeedbackType() {
   return server.REST.get("/session/feedback/types", {});
 }
 
+export function readFeedback(param) {
+  const { id } = param;
+  return server.REST.get(`/session/feedback/${id}/read`, {});
+}
+
 export function submitFeedback(param) {
   const { feedbackType, title, content } = param;
   return server.REST.post("/session/feedback", { feedbackType, title, content });
