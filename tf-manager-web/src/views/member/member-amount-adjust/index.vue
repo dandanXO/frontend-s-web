@@ -43,7 +43,7 @@
           @focus="loadCauseBySiteId"
         >
           <el-option
-            v-for="item in adjustTypeList.list"
+            v-for="item in adjustTypeList.requestList"
             :key="item"
             :label="item"
             :value="item"
@@ -173,10 +173,10 @@
             filterable
             default-first-option
             required
-            @focus="loadAdjustType"
+            @focus="loadCauseBySiteId"
           >
             <el-option
-              v-for="item in adjustTypeList.list"
+              v-for="item in adjustTypeList.importFormList"
               :key="item"
               :label="item"
               :value="item"
@@ -274,7 +274,7 @@
             :disabled="!form.siteId"
           >
             <el-option
-              v-for="item in adjustTypeList.list"
+              v-for="item in adjustTypeList.formList"
               :key="item"
               :label="item"
               :value="item"
@@ -428,7 +428,9 @@ const siteList = reactive({
   list: []
 });
 const adjustTypeList = reactive({
-  list: []
+  requestList: [],
+  formList: [],
+  importFormList: []
 })
 
 const shortcuts = getShortcuts(t);
@@ -571,9 +573,19 @@ async function loadFormSelect() {
 }
 
 async function loadCauseBySiteId() {
+  if (request.siteId) {
+    const { data: adjustType } = await getReasonsSimple(request.siteId);
+    adjustTypeList.requestList = adjustType;
+  }
+
   if (form.siteId) {
     const { data: adjustType } = await getReasonsSimple(form.siteId);
-    adjustTypeList.list = adjustType;
+    adjustTypeList.formList = adjustType;
+  }
+
+  if (importForm.siteId) {
+    const { data: adjustType } = await getReasonsSimple(importForm.siteId);
+    adjustTypeList.importFormList = adjustType;
   }
 }
 

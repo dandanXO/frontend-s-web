@@ -48,7 +48,7 @@
                   <td>流水要求</td>
                 </tr>
                 <tr>
-                  <td>≥1,00</td>
+                  <td>≥100</td>
                   <td>28</td>
                   <td rowspan="6">
                     3倍/
@@ -80,15 +80,15 @@
             </div>
 
             <p class="red q-mt-lg">
-              例如：会员A邀请一位好友首存100元，则可获取8元奖金；若想获取下一档位38元，则需好友再次存1000元；
+              例如：会员A邀请一位好友首存100元，则可获取28元奖金；若想获取下一档位108元，则需好友再次存1000元；
               奖金将会在次日凌晨00:00至下午16:00之间自动派发至您的主账户，
               如果下周您邀请的好友依旧符合存款金额，那么您在下周会再次获得对应奖金。
             </p>
           </div>
 
-          <div class="row justify-center">
-            <q-btn color="brightbtn" @blur="blurCode" label="点击申请" />
-          </div>
+<!--          <div class="row justify-center">-->
+<!--            <q-btn color="brightbtn" @blur="blurCode" label="点击申请" />-->
+<!--          </div>-->
 
           <div class="blue-content-rules">
             <div class="rules-img">
@@ -96,14 +96,14 @@
             </div>
             <ol>
               <li>
-                每个通过您推广链接进行注册，并完成相应首存的用户，您将获得对应的邀请奖金；每个受邀请人完成对应存款金额，在单周内邀请人能最高可获得1472元。
+                每个通过您推广链接进行注册，并完成相应首存的用户，您将获得对应的邀请奖金；每个受邀请人完成对应存款金额，在单周内邀请人能最高可获得4022元。
               </li>
               <li>
                 您每邀请一位新会员，从注册的日期开始算起，可享受4次推荐奖金，每个自然周一
                 00:00刷新1次，期间每个对应的档位奖金都 可以领取一次；逾期将会视为自动放弃。
               </li>
               <li>
-                例如：会员A邀请一位好友首存100元，则可获取8元奖金；若想获取下一档位38元，则需好友再次存1000元；奖金将会自动派发至主钱包。
+                例如：会员A邀请一位好友首存100元，则可获取28元奖金；若想获取下一档位108元，则需好友再次存1000元；奖金将会自动派发至主钱包。
               </li>
               <li>邀请人等级不得低于vip2。</li>
               <li>
@@ -152,7 +152,7 @@
                   <td>好友周累计存款</td>
                   <td>邀请人比例</td>
                   <td>受邀请人比例</td>
-                  <td>好友周累计存款</td>
+                  <td>总奖金上限</td>
                   <td>流水要求</td>
                 </tr>
                 <tr>
@@ -223,9 +223,9 @@
             </p>
           </div>
 
-          <div class="row justify-center">
-            <q-btn color="brightbtn" @blur="blurCode" label="点击申请" />
-          </div>
+<!--          <div class="row justify-center">-->
+<!--            <q-btn color="brightbtn" @blur="blurCode" label="点击申请" />-->
+<!--          </div>-->
 
           <div class="blue-content-rules">
             <div class="rules-img">

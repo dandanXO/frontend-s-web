@@ -1,33 +1,39 @@
 <template>
   <div class="table-record">
-
-    <q-select
+    <div class="flex-div">
+      <span class="select-stage">选择平台：</span>
+      <q-select
         allowClear
         rounded
         outlined
         dense
         color="white"
-        style="width: 320px;margin:10px auto 8px;"
+        style="width: 200px;margin:10px auto 8px 8px;"
         v-model="platform"
         :options="platformsList"
         placeholder="选择平台"
         @update:model-value="searchRecord"
-    >
-    </q-select>
+      >
+      </q-select>
+      <div class="payout-total">
+        <div>总投注: {{ totalBetRecord.totalBet }}</div>
+        <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
+      </div>
+    </div>
 
     <RecordComponent
-        ref="recordRef"
-        recordType="bethistory"
-        :loading="visible"
-        :list="tableData"
-        :headers="tableHeaders"
-        @loadnewdata="loadNewData"
-        :isEnded="isEnded"
+      ref="recordRef"
+      recordType="bethistory"
+      :loading="visible"
+      :list="tableData"
+      :headers="tableHeaders"
+      @loadnewdata="loadNewData"
+      :isEnded="isEnded"
     />
   </div>
 </template>
 <script lang="js">
-import {defineComponent, onMounted, ref} from "vue";
+import {defineComponent, onMounted, ref, reactive} from "vue";
 import RecordComponent from "../../components/RecordComponent.vue";
 import {api} from "boot/axios";
 import moment from "moment/moment";
@@ -41,6 +47,11 @@ export default defineComponent({
     RecordComponent
   },
   setup() {
+
+    const totalBetRecord = reactive({
+      totalBet: 0,
+      totalPayout: 0
+    });
 
     const store = userStore();
     const visible = ref(true);
@@ -106,12 +117,14 @@ export default defineComponent({
       };
 
       api.get(apiUrl, {
-            params: paramData
-          }
+          params: paramData
+        }
       ).then((res) => {
         if (res.data.records.length > 0) {
           tableData.value.push(...res.data.records);
         }
+        totalBetRecord.totalBet = res.data.sums.totalBet;
+        totalBetRecord.totalPayout = res.data.sums.totalPayout;
 
       }).finally(() => {
         if (isNew) {
@@ -165,7 +178,7 @@ export default defineComponent({
         label: "游戏类型"
       },
       {
-        key: "betStatus",
+        key: "status",
         label: "投注状态"
       }
     ];
@@ -183,7 +196,8 @@ export default defineComponent({
       searchRecord,
       platformsList,
       recordRef,
-      platform
+      platform,
+      totalBetRecord
     };
   }
 });
@@ -205,5 +219,30 @@ export default defineComponent({
   .q-btn {
     font-size: 11px !important;
   }
+}
+
+.flex-div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  span {
+    font-size: 14px;
+    padding-left: 5px;
+    min-width: 50px;
+
+    &:nth-child(3) {
+      margin-left: 10px;
+    }
+
+    &.select-stage {
+      min-width: 80px;
+    }
+  }
+}
+
+.payout-total {
+margin-right: 5px;
+
 }
 </style>

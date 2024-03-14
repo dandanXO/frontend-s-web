@@ -513,17 +513,17 @@ async function loadRecord() {
   page.loading = false
 }
 
-function showDialog(type, memberId) {
+function showDialog(type, affiliateId) {
   if (type === 'MEMBER') {
     // newMembers.list = members
-    loadNewMember(memberId)
+    loadNewMember(affiliateId)
     uiControl.dialogTitle = t('fields.newMember')
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
 }
 
-async function loadNewMember(memberId) {
+async function loadNewMember(affiliateId) {
   memberPage.loading = true
   memberRequest.siteId = request.siteId
   const requestCopy = { ...memberRequest }
@@ -536,9 +536,22 @@ async function loadNewMember(memberId) {
 
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
-      query.recordTime = request.recordTime.join(',')
+      query.recordTime = JSON.parse(JSON.stringify(request.recordTime))
+
+      query.recordTime[0] = moment(query.recordTime[0]).format(
+        'YYYY-MM-DD 00:00:00'
+      )
+      query.recordTime[1] = moment(query.recordTime[1]).format(
+        'YYYY-MM-DD 23:59:59'
+      )
+
+      query.recordTime = query.recordTime.join(',')
+
+      console.log('query.recordTime 1 : ', query.recordTime)
     } else {
-      query.recordTime = request.recordTime[0]
+      query.recordTime = moment(request.recordTime[0]).format(
+        'YYYY-MM-DD 00:00:00'
+      )
     }
   }
 
@@ -549,8 +562,7 @@ async function loadNewMember(memberId) {
   //     query.memberId = members[0]
   //   }
   // }
-
-  query.memberId = memberId
+  query.affiliateId = affiliateId
 
   const { data: ret } = await getAffiliateSummaryNewMember(query)
   memberPage.pages = ret.pages

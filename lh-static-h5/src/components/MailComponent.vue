@@ -314,32 +314,48 @@ export default defineComponent({
       //   }
       // });
       // console.log(mailboxNotifyState[mailboxMessageTab.value]);
-
-      if (!readTime) {
-        api
-          .post(
-            "/session/inbox/read",
-            qs.stringify({
-              id: id
-            })
-          )
-          .then((res) => {
-            if (res.code === 0) {
-              $q.notify({
-                message: "已读消息",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
-              });
-              onLoad();
-            }
+      
+      if(props.type === 'outbox') {
+        api.get(
+          `/session/feedback/${id}/read`).then((res) => {
+          if (res.code === 0) {
+            !readTime && $q.notify({
+              message: "已读消息",
+              type: "positive",
+              position: "top",
+              icon: "check_circle_outline"
+            });
+            mail.content = res.data.content;
+            onLoad();
+          }
+        })
+        .catch((error) => {
+          isDeleteMailModal.value = false;
+          console.log(error);
+        });
+      } else if(!readTime) {
+        api.post(
+          "/session/inbox/read",
+          qs.stringify({
+            id: id
           })
-          .catch((error) => {
-            isDeleteMailModal.value = false;
-            console.log(error);
-          });
+        ).then((res) => {
+          if (res.code === 0) {
+            $q.notify({
+              message: "已读消息",
+              type: "positive",
+              position: "top",
+              icon: "check_circle_outline"
+            });
+            onLoad();
+          }
+        })
+        .catch((error) => {
+          isDeleteMailModal.value = false;
+          console.log(error);
+        });
       }
-    };
+    }
 
     const deleteMails = (type) => {
       isDeleteMailModal.value = true;

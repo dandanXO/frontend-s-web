@@ -419,9 +419,9 @@
                     {{ getGameType(scope.row.gameType) }}
                   </div>
                 </template>
-                <template v-if="tbl.dataIndex === 'betStatus'" #default="scope">
+                <template v-if="tbl.dataIndex === 'status'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    {{ getBetStatus(scope.row.betStatus) }}
+                    {{ getBetStatus(scope.row.status) }}
                   </div>
                 </template>
               </el-table-column>
@@ -813,7 +813,7 @@ const tableColumns = {
     },
     {
       title: "投注状态",
-      dataIndex: "betStatus"
+      dataIndex: "status"
     }
   ],
   betRecord: [
@@ -996,6 +996,12 @@ export default defineComponent({
           if (recordActive.value === 'turnover' || recordActive.value === 'gameBetRecord') {
             pagination.pagingState = response.data.pagingState;
           }
+
+          if(recordActive.value === 'gameBetRecord') {
+            totalBetRecord.totalBet = response.data.sums.totalBet;
+            totalBetRecord.totalPayout = response.data.sums.totalPayout;
+          }
+
           const dataSource = dataState[recordActive.value];
           //clear array and then push new record
           dataSource.splice(0);
@@ -1067,18 +1073,18 @@ export default defineComponent({
       }
 
 
-      const obj = {
-        memberId: searchForm.gameBetRecord.memberId,
-        platform: searchForm.gameBetRecord.platform,
-        startDate: searchForm.gameBetRecord.startDate,
-        endDate: searchForm.gameBetRecord.endDate,
-      }
-      gameBetRecordTotal(obj).then((ret) => {
-        if (ret.code === 0) {
-          totalBetRecord.totalBet = ret.data.totalBet
-          totalBetRecord.totalPayout = ret.data.totalPayout
-        }
-      })
+      // const obj = {
+      //   memberId: searchForm.gameBetRecord.memberId,
+      //   platform: searchForm.gameBetRecord.platform,
+      //   startDate: searchForm.gameBetRecord.startDate,
+      //   endDate: searchForm.gameBetRecord.endDate,
+      // }
+      // gameBetRecordTotal(obj).then((ret) => {
+      //   if (ret.code === 0) {
+      //     totalBetRecord.totalBet = ret.data.totalBet
+      //     totalBetRecord.totalPayout = ret.data.totalPayout
+      //   }
+      // })
 
     };
     const selectedBetRecord = ref({})
@@ -1167,7 +1173,8 @@ export default defineComponent({
           betRecordDialog.value = true
           betPagination.pagingState = response.data.pagingState;
           // dataState.betRecord = response.data.records
-          dataState.betRecord.push(...response.data.records)
+          dataState.betRecord.push(...response.data.records);
+
         }
       })
     }
@@ -1411,18 +1418,20 @@ export default defineComponent({
       if (!betStatus) {
         return ''
       }
-      if (betStatus === 'BET') {
-        return '投注' // Bet
-      } else if (betStatus === 'SETTLE') {
-        return '结算' // Settle
-      } else if (betStatus === 'BET_N_SETTLE') {
-        return '投注并结算' // Bet & Settled
-      } else if (betStatus === 'CANCEL') {
-        return '取消' // Cancel
-      } else if (betStatus === 'PATCH') {
-        return '修补' // Patch
+      if (betStatus === "BET") {
+        return "投注"; // Bet
+      } else if (betStatus === "SETTLE") {
+        return "结算"; // Settle
+      } else if (betStatus === "SETTLED") {
+        return "已结算"; // Bet & Settled
+      }else if (betStatus === "BET_N_SETTLE") {
+        return "投注并结算"; // Bet & Settled
+      } else if (betStatus === "CANCEL") {
+        return "取消"; // Cancel
+      } else if (betStatus === "PATCH") {
+        return "修补"; // Patch
       } else {
-        return betStatus
+        return betStatus;
       }
     }
     const formRef = ref(null)
