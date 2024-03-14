@@ -948,7 +948,7 @@ export default defineComponent({
       isScrolling.value = true;
       var slideItem = document.getElementById(slide_id);
       var bodyElement = document.body;
-      
+
       if (slideItem) {
 
         var divOffset = slideItem.getBoundingClientRect();
@@ -1806,7 +1806,7 @@ export default defineComponent({
 
 .q-carousel.home {
   width: calc(100% - 2rem);
-  margin: 10px auto;
+  margin: 6px auto;
   height: auto;
   border-radius: 16px;
   aspect-ratio: 1000/400;
@@ -1862,7 +1862,7 @@ export default defineComponent({
 
 .mid-announcement-section {
   width: $box-width;
-  margin: 10px auto 10px;
+  margin: 4px auto 4px;
   height: 36px;
   display: flex;
   justify-content: space-between;
@@ -1903,7 +1903,7 @@ export default defineComponent({
   width: $box-width;
   margin: 0 auto;
   gap: 10px;
-  padding: 10px 10px 0px;
+  padding: 6px 10px 0px;
   display: flex;
   justify-content: space-between;
   align-items: center;
