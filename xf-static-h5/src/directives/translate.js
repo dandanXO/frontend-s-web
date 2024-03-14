@@ -122,7 +122,11 @@ export const translateRecord = (rec, type = "") => {
   }else if (rec === "MGP") {
     return "MG"; // AG
   } else if (rec === "AG") {
-    return "AG真人"; // AG
+    if(type==='SLOT'){
+      return "XIN电子"
+    }else{
+      return "AG真人"; // AG
+    }
   } else if (rec === "BBINDY") {
     return "BBIN真人"; // BBINDY
   } else if (rec === "EBET") {
