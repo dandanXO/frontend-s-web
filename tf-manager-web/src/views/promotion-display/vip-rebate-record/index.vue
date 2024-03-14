@@ -8,6 +8,7 @@
           :placeholder="t('fields.site')"
           style="width: 120px"
           @focus="loadSites"
+          @change="loadSitePlatforms"
         >
           <el-option
             v-for="item in siteList.list"
@@ -36,6 +37,20 @@
           size="small"
           :placeholder="t('fields.loginName')"
         />
+        <el-select
+          v-model="request.platform"
+          size="small"
+          :placeholder="t('fields.platform')"
+          style="margin-left: 5px; width: 150px"
+          @focus="loadSitePlatforms"
+        >
+          <el-option
+            v-for="item in platform.list"
+            :key="item.id"
+            :label="item.name"
+            :value="item.code"
+          />
+        </el-select>
         <el-select
           v-model="request.gameType"
           size="small"
@@ -470,6 +485,7 @@ import { required } from '../../../utils/validate';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { getVipRebateRecordDetails } from '../../../api/vip-rebate-record-detail';
 import { findIdByLoginName } from '../../../api/member';
+import { getPlatformsBySite } from '../../../api/platform';
 
 const { t } = useI18n();
 const store = useStore()
@@ -481,6 +497,9 @@ const site = ref(null)
 const siteList = reactive({
   list: []
 });
+const platform = reactive({
+  list: []
+})
 let timeZone = null;
 const exportPercentage = ref(0);
 const uiControl = reactive({
@@ -535,6 +554,7 @@ const request = reactive({
   recordTime: [defaultDate, defaultDate],
   siteId: null,
   loginName: null,
+  platform: null,
   gameType: [],
   status: ["PENDING", "DISTRIBUTED", "CANCEL"]
 });
@@ -543,6 +563,7 @@ function resetQuery() {
   request.recordTime = [defaultDate, defaultDate];
   request.siteId = siteList.list[0].id;
   request.loginName = null;
+  request.platform = null;
   request.gameType = [];
   request.status = ["PENDING", "DISTRIBUTED", "CANCEL"];
 }
@@ -609,6 +630,12 @@ async function loadSites() {
   request.siteId = siteList.list[0].id;
   importForm.siteId = siteList.list[0].id
 };
+
+async function loadSitePlatforms() {
+  request.platform = null;
+  const { data: ret } = await getPlatformsBySite(request.siteId)
+  platform.list = ret
+}
 
 function checkQuery() {
   const requestCopy = { ...request };
@@ -900,6 +927,7 @@ onMounted(async() => {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
   }
+  await loadSitePlatforms();
 })
 </script>
 

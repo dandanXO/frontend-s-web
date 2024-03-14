@@ -97,6 +97,10 @@ export default {
     0: '未确认',
     1: '已到账',
   },
+  outboxStatus: {
+    0: 'Not reply yet',
+    1: 'Has been replied',
+  },
   editCheckedStatus: {
     0: '未审核',
     1: '已更改',
