@@ -27,16 +27,13 @@ if((
     window.webkit.messageHandlers.notifyApp.postMessage("Test123123");
   }
   if( window["WebScript"]){
-    window["WebScript"].postMessage("Android 111");
-    window["WebScript"].notifyApp("Android 333");
+    window["WebScript"].notifyApp("Android 33");
   }
 
-  window.addEventListener('message', function(event) {
+  window.addEventListener('sendWebMessage', function(event) {
     console.log("RECEIVE FROM JAVA");
-    if (_.isString(event.data)) {
       console.log(event.data);
       alert(event.data);
-    }
   });
 
   var rstApi = getInitApi(rstArray, "LH_H5_RST_URL");

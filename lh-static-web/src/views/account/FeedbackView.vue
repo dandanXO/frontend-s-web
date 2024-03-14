@@ -483,7 +483,7 @@ const onItemClick = (item) => {
 const loadingBtn = ref(false);
 const mailboxData = ref([]);
 const mailboxState = reactive({
-  active: "quiz",
+  active: "write",
   mailboxList: {
     inbox: {
       list: [],

@@ -119,7 +119,7 @@
         />
       </div>
     </div>
-    <el-dialog class="bankModal" width="500" v-model="bankCardModalState.visible" :footer="null" title="绑定银行卡">
+    <el-dialog class="bankModal" width="600" v-model="bankCardModalState.visible" :footer="null" title="绑定银行卡">
       <el-form ref="bankCardFormRef" :model="bankCardInfo" :rules="bankCardRules">
         <el-form-item prop="bankId" :rules="[{ required: true, message: '请选择银行', trigger: 'blur' }]">
           <el-row :gutter="20">
