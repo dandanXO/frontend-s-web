@@ -54,7 +54,7 @@
 
             <div class="rebate-list bg-dark">≥5,000</div>
             <div class="rebate-list bg-dark">158元</div>
-            <div class="rebate-list bg-dark">1倍/不限场馆</div>
+            <div class="rebate-list bg-dark">3倍/不限场馆</div>
 
             <div class="rebate-list">≥10,000</div>
             <div class="rebate-list">388元</div>

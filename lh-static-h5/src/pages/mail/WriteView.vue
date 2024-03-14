@@ -4,16 +4,21 @@
       <q-form ref="formRef" :model="mailDetailList">
         <div class="write-board-div q-pa-md">
           <div class="top q-pb-md">
+            <div class="title">意见类型</div>
+          </div>
+          <q-btn-dropdown style="width:100%;" color="brightbtn" :label="`${mailDetailList.feedbackType || '快捷输入'}`" menu-anchor="bottom end">
+            <q-list>
+              <q-item v-for="(item, i) in feedbackTypes" :key="i" clickable v-close-popup @click="onItemClick(item)">
+                <q-item-section>
+                  <q-item-label>{{ item }}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-btn-dropdown>
+        </div>
+        <div class="write-board-div q-pa-md">
+          <div class="top q-pb-md">
             <div class="title">标题</div>
-            <q-btn-dropdown color="brightbtn" :label="`${mailDetailList.feedbackType || '快捷输入'}`" menu-anchor="bottom end">
-              <q-list>
-                <q-item v-for="(item, i) in feedbackTypes" :key="i" clickable v-close-popup @click="onItemClick(item)">
-                  <q-item-section>
-                    <q-item-label>{{ item }}</q-item-label>
-                  </q-item-section>
-                </q-item>
-              </q-list>
-            </q-btn-dropdown>
           </div>
           <q-input
             :rules="[

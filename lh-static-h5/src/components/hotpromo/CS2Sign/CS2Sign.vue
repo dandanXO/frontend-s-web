@@ -111,7 +111,7 @@
                 <td>
                   <div class="keysAmt">
                     <img src="../../../assets/images/promo/hotpromo/cs2/key.png" />
-                    {{ key.amount }}
+                    {{ key.quantity }}
                   </div>
                 </td>
               </tr>
@@ -352,7 +352,6 @@ const openModal = (modal, item, itemIndex) => {
       message: "加载记录中... 请稍等..."
     });
     getKeyRecord(props.promoCode, search.value).then((res) => {
-      res.data = [];
       if (res.code === 0) {
         keyRecords.value = res.data.records;
         isKeyRecordModal.value = true;
