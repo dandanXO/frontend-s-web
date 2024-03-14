@@ -481,6 +481,22 @@
             {{ t('fields.update') }}
           </el-button>
         </el-descriptions-item>
+        <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context">
+          <template #label>
+            <div>
+              <svg-icon icon-class="skill" style="height: 16px;width: 16px;" />
+              {{ t('fields.riskLevel') }}
+            </div>
+          </template>
+          <span v-if="memberDetail.risk !== null">{{ memberDetail.risk }}</span>
+          <span v-if="memberDetail.risk === null">-</span>
+          <span class="level-color" :style="{backgroundColor: memberDetail.riskColor}" />
+          <el-button type="info" size="mini" style="float: right;" v-permission="['sys:member:update:risk']"
+                     @click="showDialog('UPDATE_RISK')" :disabled="riskList.list.length === 0"
+          >
+            {{ t('fields.update') }}
+          </el-button>
+        </el-descriptions-item>
       </el-descriptions>
     </el-card>
 
@@ -1256,6 +1272,37 @@
           </el-button>
         </div>
       </el-form>
+      <el-form v-if="uiControl.dialogType === 'UPDATE_RISK'" ref="updateRiskForm" :model="riskForm"
+               :rules="riskFormRules" :inline="true" size="small" label-width="150px"
+      >
+        <el-form-item :label="t('fields.member')">
+          <el-input style="width: 350px" :placeholder="t('fields.loginName')" v-model="memberDetail.loginName" disabled />
+        </el-form-item>
+        <el-form-item :label="t('fields.riskLevel')" prop="risk">
+          <el-select
+            v-model="riskForm.risk"
+            size="small"
+            :placeholder="t('fields.riskLevel')"
+            class="filter-item"
+            style="width: 315px;"
+            default-first-option
+            @change="populateRiskColor"
+            @focus="loadRiskLevels"
+          >
+            <el-option
+              v-for="item in riskList.list"
+              :key="item.id"
+              :label="item.levelName"
+              :value="item.id"
+            />
+          </el-select>
+          <span class="level-color" :style="{backgroundColor: selectedRiskColor.levelColor}" />
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
+          <el-button type="primary" @click="updateField('RISK')">{{ t('fields.confirm') }}</el-button>
+        </div>
+      </el-form>
     </el-dialog>
   </div>
 </template>
@@ -1273,7 +1320,7 @@ import {
   getMemberRealName,
   getMemberTelephone,
   getMemberStatus,
-  freezeMember, unfreezeMember
+  freezeMember, unfreezeMember, updateRisk
 } from '../../../../../api/member'
 import { getFinancialLevels } from '../../../../../api/financial-level'
 import { getAffiliateRecord } from '../../../../../api/affiliate-record'
@@ -1297,6 +1344,7 @@ import {
 import { useStore } from '../../../../../store'
 import { useI18n } from 'vue-i18n'
 import { getConfigList } from '../../../../../api/config'
+import { selectList } from "@/api/risk-level";
 
 const { t } = useI18n()
 const store = useStore()
@@ -1317,7 +1365,12 @@ const route = useRoute()
 const site = reactive({
   id: route.query.site,
 })
-
+const riskList = reactive({
+  list: []
+});
+const selectedRiskColor = reactive({
+  levelColor: null,
+});
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: '',
@@ -1373,6 +1426,10 @@ const commissionForm = ref(null)
 const updateTimeTypeModel = ref(null)
 const updateBelongTypeModel = ref(null)
 const changeAffForm = ref(null)
+const riskForm = reactive({
+  risk: null
+});
+const updateRiskForm = ref(null);
 const freezeType = reactive({
   list: [
     { key: 1, name: t('types.NORMAL'), value: 'NORMAL' },
@@ -1418,6 +1475,8 @@ const memberDetail = reactive({
   totalBonus: 0,
   site: '',
   siteId: 0,
+  risk: '',
+  riskColor: '',
 })
 
 const affiliateDetails = reactive({
@@ -1557,6 +1616,10 @@ const affFormRules = reactive({
   affiliateCode: [required(t('message.validateAffiliateCodeRequired'))],
 })
 
+const riskFormRules = reactive({
+  risk: [required(t('message.validateRiskLevelRequired'))]
+});
+
 const loadAffiliateRemark = async () => {
   loading.remark = true
   const { data: ret } = await getAffiliateRemark(props.affId, request)
@@ -1564,6 +1627,16 @@ const loadAffiliateRemark = async () => {
   page.records = ret.records
   loading.remark = false
 }
+
+const loadRiskLevels = async () => {
+  const { data: risk } = await selectList({ siteId: memberDetail.siteId });
+  riskList.list = risk;
+};
+
+const populateRiskColor = () => {
+  const risk = riskList.list.find(r => r.id === riskForm.risk);
+  selectedRiskColor.levelColor = risk.levelColor;
+};
 
 const changePage = page => {
   if (request.current >= 1) {
@@ -1685,6 +1758,19 @@ function showDialog(type) {
     unfreezeForm.remark = "";
     unfreezeForm.site = site.id;
     uiControl.dialogTitle = t('fields.unfreezeMember');
+  } else if (type === "UPDATE_RISK") {
+    if (updateRiskForm.value) {
+      updateRiskForm.value.resetFields();
+    }
+    if (memberDetail.risk) {
+      const risk = riskList.list.find(r => r.levelName === memberDetail.risk);
+      riskForm.risk = risk.id;
+      selectedRiskColor.levelColor = risk.levelColor;
+    } else {
+      riskForm.risk = riskList.list[0].id;
+      selectedRiskColor.levelColor = riskList.list[0].levelColor;
+    }
+    uiControl.dialogTitle = t('fields.updateRiskLevel');
   }
   uiControl.dialogVisible = true
 }
@@ -1783,6 +1869,18 @@ function updateField(type) {
         })
       }
     })
+  } else if (type === "RISK") {
+    updateRiskForm.value.validate(async (valid) => {
+      if (valid) {
+        await updateRisk(props.affId, riskForm.risk, site.id);
+        const data = await getAffiliateDetails(props.affId, site.id);
+        Object.keys({ ...data.data }).forEach(detailField => {
+          memberDetail[detailField] = data.data[detailField];
+        });
+        uiControl.dialogVisible = false;
+        ElMessage({ message: t('message.updateRiskLevelSuccess'), type: "success" });
+      }
+    });
   }
 }
 
@@ -1987,6 +2085,7 @@ onMounted(async () => {
   await loadBalance()
   await loadAffiliateRecord()
   await loadReferralLink()
+  await loadRiskLevels();
   loading.accountInfo = false
   loading.loginInfo = false
   loading.affiliateInfo = false
@@ -2094,5 +2193,13 @@ onMounted(async () => {
 
 .refresh-platform-btn {
   float: right;
+}
+
+.level-color {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 5px;
 }
 </style>
