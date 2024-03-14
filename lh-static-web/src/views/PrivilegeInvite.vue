@@ -137,20 +137,20 @@
             <div class="rebate-header">好友周累计存款</div>
             <div class="rebate-header">邀请人比例</div>
             <div class="rebate-header">受邀请人比例</div>
-            <div class="rebate-header">好友周累计存款</div>
+            <div class="rebate-header">总奖金上限</div>
             <div class="rebate-header">流水要求</div>
 
             <div class="rebate-list bg-dark">VIP2</div>
             <div class="rebate-list bg-dark">≥5,000元</div>
-            <div class="rebate-list bg-dark">&nbsp;</div>
-            <div class="rebate-list bg-dark">&nbsp;</div>
+            <div class="rebate-list bg-dark">1%</div>
+            <div class="rebate-list bg-dark">1%</div>
             <div class="rebate-list bg-dark">88元</div>
             <div class="rebate-list bg-dark"></div>
 
             <div class="rebate-list">VIP3-VIP4</div>
             <div class="rebate-list">≥10,000元</div>
-            <div class="rebate-list"></div>
-            <div class="rebate-list"></div>
+            <div class="rebate-list">1%</div>
+            <div class="rebate-list">1%</div>
             <div class="rebate-list">188元</div>
             <div class="rebate-list"></div>
 
@@ -163,22 +163,22 @@
 
             <div class="rebate-list">VIP7-VIP8</div>
             <div class="rebate-list">≥100,000元</div>
-            <div class="rebate-list"></div>
-            <div class="rebate-list"></div>
+            <div class="rebate-list">1%</div>
+            <div class="rebate-list">1%</div>
             <div class="rebate-list">888元</div>
             <div class="rebate-list"></div>
 
             <div class="rebate-list bg-dark">VIP9</div>
             <div class="rebate-list bg-dark">≥500,000元</div>
-            <div class="rebate-list bg-dark">&nbsp;</div>
-            <div class="rebate-list bg-dark">&nbsp;</div>
+            <div class="rebate-list bg-dark">1%</div>
+            <div class="rebate-list bg-dark">1%</div>
             <div class="rebate-list bg-dark">8888元</div>
             <div class="rebate-list bg-dark"></div>
 
             <div class="rebate-list">VIP10</div>
             <div class="rebate-list">≥1,000,000元</div>
-            <div class="rebate-list"></div>
-            <div class="rebate-list"></div>
+            <div class="rebate-list">1%</div>
+            <div class="rebate-list">1%</div>
             <div class="rebate-list">88888元</div>
             <div class="rebate-list"></div>
           </div>
