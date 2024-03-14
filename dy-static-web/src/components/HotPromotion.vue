@@ -44,7 +44,7 @@
       v-if="list.redirectUrl === 'dy2-cny-step-game' && !isCommonPromo && store.token"
     ></CnyStepGame2024Promo>
     <CS2Sign v-if="list.redirectUrl === 'dy2-cs2-copenhagen-major-2024' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
-
+    <BonusSpinWheel v-if="list.redirectUrl === 'dy2-spin-wheel' && !isCommonPromo && store.token" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -83,6 +83,7 @@ import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
 import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
 import CnyStepGame2024Promo from "../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue";
 import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
+import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
 // import VIPUpgradePromo from "../components/hotpromo/vipupgrade/VIPUpgradePromo.vue";
 // import ReferBonusPromo from "../components/hotpromo/referbonus/ReferBonusPromo.vue";
 import { ElMessage } from "element-plus";
@@ -113,7 +114,8 @@ export default defineComponent({
     Cny2024Promo,
     BbDacha2024Promo,
     CnyStepGame2024Promo,
-    CS2Sign
+    CS2Sign,
+    BonusSpinWheel
     // VIPUpgradePromo,
     // ReferBonusPromo
     // DailyBonus
@@ -261,7 +263,8 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-cny2024-promo" ||
       this.list.redirectUrl === "dy2-bb-dacha-2024" ||
       this.list.redirectUrl === "dy2-cny-step-game" || 
-      this.list.redirectUrl === "dy2-cs2-copenhagen-major-2024"
+      this.list.redirectUrl === "dy2-cs2-copenhagen-major-2024" || 
+      this.list.redirectUrl === "dy2-spin-wheel"
     ) {
       this.isCommonPromo = false;
     } else {
