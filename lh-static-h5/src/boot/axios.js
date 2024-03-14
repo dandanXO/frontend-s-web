@@ -25,20 +25,19 @@ if((window.location.pathname === "/promotion" ||
     window.webkit.messageHandlers.notifyApp.postMessage("Test123123");
   }
 
-  if (
-    (Platform.is.desktop || Platform.is.webkit) &&
-    Platform.is.name !== "webkit" &&
-    window.opener
-  ) {
-    window.opener.postMessage("OPner11123");
-  } else {
-    window.postMessage("NormalParent123");
+  if( window["WebScript"]){
+    window["WebScript"].postMessage("Android 111");
+    window["WebScript"].notifyApp("Android 333");
+  } else if(window.parent) {
+    window.parent.postMessage("Parent zz 123");
+  } else{
+    window.postMessage("Normal 123");
   }
 
   window.addEventListener('message', function(event) {
     console.log("RECEIVE FROM JAVA");
     if (_.isString(event.data)) {
-      console.log(event.data)
+      console.log(event.data);
     }
   });
 
