@@ -27,6 +27,7 @@ if((
     window.webkit.messageHandlers.notifyApp.postMessage("Test123123");
   }
   if( window["WebScript"]){
+    console.log("TIS")
     window["WebScript"].notifyApp("Android 33");
   }
 
