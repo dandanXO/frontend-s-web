@@ -87,7 +87,7 @@
               <td>
                 <div class="keysAmt">
                   <img src="../../../assets/images/promotion/hotpromo/cs2/key.png" />
-                  {{ key.amount }}
+                  {{ key.quantity }}
                 </div>
               </td>
             </tr>
@@ -304,7 +304,6 @@ const openModal = (modal, item, itemIndex) => {
       background: "rgba(0, 0, 0, 0.7)"
     });
     getKeyRecord(props.promoCode, search.value).then((res) => {
-      res.data = [];
       if (res.code === 0) {
         keyRecords.value = res.data.records;
         isKeyRecordModal.value = true;
