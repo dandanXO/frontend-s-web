@@ -26,11 +26,19 @@ router.beforeEach(async (to, _, next) => {
       next();
     } else {
       const currentHost = window.location.host
+      const siteCode = currentHost.substring(0, 3)
       const thaiHost = "affiliate-web.monemental.com"
       if (currentHost === thaiHost) {
         next(`/th/login?redirect=${to.path}`);
       } else {
-        next(`/login?redirect=${to.path}`);
+        console.log(siteCode)
+        if (siteCode === 'lh1') {
+          next(`/lh/login?redirect=${to.path}`)
+        } else if (siteCode === 'dy2') {
+          next(`/dy/login?redirect=${to.path}`)
+        } else {
+          next(`/login?redirect=${to.path}`);
+        }
       }
       // Other pages that do not have menu to access are redirected to the login page.
     }
