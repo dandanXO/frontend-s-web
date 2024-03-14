@@ -121,7 +121,6 @@ export default defineComponent({
     };
 
     const loadPlatformLists = () => {
-      debugger;
       var platformApiUrl = store.hasToken()
         ? "/session/loggedInPlatform"
         : "/platform";
