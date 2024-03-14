@@ -42,6 +42,12 @@
             :value="item.value"
           />
         </el-select>
+        <el-input
+          v-model="request.memberName"
+          size="small"
+          style="margin-left: 5px; width: 150px;"
+          :placeholder="t('fields.memberName')"
+        />
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -78,6 +84,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="title" :label="t('fields.title')" />
+      <el-table-column prop="memberName" :label="t('fields.memberName')" />
       <el-table-column prop="content" :label="t('fields.content')" />
       <el-table-column prop="sendTime" :label="t('fields.sendTime')">
         <template #default="scope">
@@ -154,12 +161,14 @@ const request = reactive({
   siteId: null,
   sendTime: [],
   type: null,
+  memberName: null,
 })
 
 function resetQuery() {
   request.sendTime = [];
   request.type = null;
-  request.siteId = null;
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
+  request.memberName = null;
 }
 
 const list = reactive({
