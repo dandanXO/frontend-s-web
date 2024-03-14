@@ -995,7 +995,6 @@ export default defineComponent({
           var positionTop5 = checkItem5.getBoundingClientRect().top;
           var positionTop6 = checkItem6.getBoundingClientRect().top;
           var positionTop7 = checkItem7.getBoundingClientRect().top;
-          var positionTop8 = checkItem8.getBoundingClientRect().top;
 
           // console.log(blockHeight);
           // console.log(positionTop6);
@@ -1006,8 +1005,6 @@ export default defineComponent({
           // console.log(bodyOffset.bottom);
 
           if (windowHeight + 15 > bodyOffset.bottom) {
-            tab.value = "others";
-          } else if (0 > positionTop7 - 5 && positionTop8 >= blockHeight) {
             tab.value = "fishing";
           } else if (0 > positionTop6 - 5 && positionTop7 >= blockHeight) {
             tab.value = "lottery";
