@@ -18,12 +18,7 @@ const mailboxData = ref({
 });
 const loadOutbox = () => {
   api
-    .get("/session/outbox", {
-      params: {
-        type: mailboxData.value.type,
-        orderBy: mailboxData.value.orderBy
-      }
-    })
+    .get("/session/feedback/replies", {})
     .then((response) => {
       if (response.code === 0) {
         mailData.value = response.data.records;

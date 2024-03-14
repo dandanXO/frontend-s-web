@@ -531,6 +531,18 @@ export default defineComponent({
     const updateSecurityModalVisible = ref(false);
     const updateSecurityFormRef = ref();
     const captchaUpdateRef = ref();
+
+    const isValidPhone = (r, v) => {
+      const phonePattern = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
+      if (!v) {
+        return Promise.reject("请输入电话号码");
+      } else if (phonePattern.test(v)) {
+        return Promise.resolve();
+      } else {
+        return Promise.reject("请输入有效的电话号码");
+      }
+    };
+
     const updateSecurityVerified = reactive({
       verificationCode: "",
       emailAddress: "",
@@ -808,6 +820,10 @@ export default defineComponent({
           message: "请输入电话号码",
           trigger: "blur",
         },
+        {
+          validator: isValidPhone,
+          trigger: "blur"
+        }
       ],
       verificationCode: [
         {
