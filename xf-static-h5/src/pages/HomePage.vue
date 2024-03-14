@@ -906,6 +906,15 @@ export default defineComponent({
                 slotObj.subtitle = "电子游戏";
                 // console.log(slotObj);
                 if (slotObj.code === "AG") {
+                  slotObj.title= "XIN 电子";
+                  let slotItem = {
+                    id: slotObj.id,
+                    code: slotObj.code,
+                    icon: slotObj.name
+                  };
+                  // console.log(slotItem);
+                  ui.slotLists.push(slotItem);
+                  slot.value.push(slotObj);
                 } else {
                   let slotItem = {
                     id: slotObj.id,

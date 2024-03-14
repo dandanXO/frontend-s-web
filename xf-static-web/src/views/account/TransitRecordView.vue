@@ -588,7 +588,7 @@ import {
 } from "@/api/personal/personal";
 import moment from "moment";
 // import { message } from "ant-design-vue";
-import {getPlatformList} from "@/api/platform/platform";
+import {getPlatformList, getLoggedInPlatformList} from "@/api/platform/platform";
 import {userStore} from "@/store";
 import FileUpload from "@/components/FileUpload.vue"
 import EmptyData from "@/components/emptyData.vue"
@@ -1056,9 +1056,16 @@ export default defineComponent({
     });
     const platformsList = ref([])
     const getPlatList = () => {
-      getPlatformList().then((ret) => {
-        platformsList.value = ret
-      })
+      if(store.token){
+        getLoggedInPlatformList().then((ret) => {
+          platformsList.value = ret
+        })
+      }else{
+        getPlatformList().then((ret) => {
+          platformsList.value = ret
+        })
+      }
+
 
       const obj = {
         memberId: searchForm.gameBetRecord.memberId,
@@ -1176,7 +1183,7 @@ export default defineComponent({
         return ''
       }
       if (platformName === 'AG') {
-        return 'AG真人' // AG
+        return 'AG真人, XIN电子' // AG
       } else if (platformName === 'BBINDY') {
         return 'BBIN真人' // BBINDY
       }  else if (platformName === 'KY') {

@@ -192,7 +192,7 @@ export default defineComponent({
           hasDrawer.value = true;
           pageName.value = "Slot";
           if (route.query.platform) {
-            var platformName = route.query.platform == 'BBINDY' ? 'BBIN' : translateRecord(route.query.platform);
+            var platformName = route.query.platform == 'BBINDY' ? 'BBIN' : translateRecord(route.query.platform , "SLOT");
             pageName.value = `${platformName}游戏大厅`;
           }
         } else if (route.path === "/forgot-account") {
@@ -385,6 +385,11 @@ export default defineComponent({
         icon: 'PG',
       },
       {
+        id: '26',
+        code: 'AG',
+        icon: 'XIN',
+      },
+      {
         id: '73',
         code: 'MGP',
         icon: 'MG',
@@ -437,7 +442,7 @@ export default defineComponent({
       }
       return ui.slotLists;
     });
-    // console.log(platformsList.value);
+    console.log(platformsList.value);
 
     onMounted(() => {
       checkRoute();
