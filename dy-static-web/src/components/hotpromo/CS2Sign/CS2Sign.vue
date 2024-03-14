@@ -39,6 +39,8 @@
             </div>
           </div>
           <div class="useKeys" @click="openBox(selectedTreasureLevel)">开启</div>
+
+          <p class="tips-p">注：系统会在注单已结算后次日中午12点后统计所有记录，并自动派发钥匙</p>
         </div>
       </div>
     </div>
@@ -66,6 +68,7 @@
               <div class="btn notComplete" v-if="!day.claimed && !day.toClaim">&nbsp;</div>
             </div>
           </div>
+          <p class="tips-p">注：系统会在注单已结算后次日中午12点后统计所有记录，并自动统计签到日期</p>
         </div>
       </div>
     </div>
@@ -537,7 +540,7 @@ onMounted(() => {
   }
 
   .section {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 
     &.first {
     }
@@ -545,6 +548,11 @@ onMounted(() => {
     &.second {
     }
   }
+}
+
+.tips-p {
+  margin-top: 10px;
+  margin-bottom: 0px;
 }
 
 :deep(.cs2Dialog) {
