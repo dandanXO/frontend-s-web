@@ -176,7 +176,7 @@ const request = reactive({
 function resetQuery() {
   request.createTime = [];
   request.memberName = null;
-  request.siteId = null;
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
 }
 
 const form = reactive({
@@ -309,6 +309,8 @@ onMounted(async() => {
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
+  } else {
+    request.siteId = siteList.list[0].id;
   }
   await loadMessageOutbox();
 });
