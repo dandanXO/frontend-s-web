@@ -98,8 +98,8 @@ export default {
     1: '已到账',
   },
   outboxStatus: {
-    0: 'Not sent yet',
-    1: 'Has been sent',
+    0: 'Not reply yet',
+    1: 'Has been replied',
   },
   editCheckedStatus: {
     0: '未审核',

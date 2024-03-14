@@ -98,8 +98,8 @@ export default {
     1: '已到账',
   },
   outboxStatus: {
-    0: '未发送',
-    1: '已发送',
+    0: '未回复',
+    1: '已回复',
   },
   editCheckedStatus: {
     0: '未审核',

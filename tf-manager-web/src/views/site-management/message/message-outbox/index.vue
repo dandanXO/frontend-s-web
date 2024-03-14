@@ -217,7 +217,7 @@ function showDialog(row, type) {
       dialogForm.value.resetFields();
     }
     form.content = null;
-    if (row.siteName === 'DongYing' || row.siteName === 'XingFa' || row.siteName === 'LeiHuo') {
+    if (row.siteName === 'Dongying' || row.siteName === 'XingFa' || row.siteName === 'LeiHuo') {
       form.title = '回复: ' + form.title;
     } else {
       form.title = 'RE: ' + form.title;
