@@ -45,32 +45,32 @@
             <div class="rebate-header">流水要求</div>
 
             <div class="rebate-list bg-dark">≥100</div>
-            <div class="rebate-list bg-dark">8元</div>
+            <div class="rebate-list bg-dark">28元</div>
             <div class="rebate-list bg-dark"></div>
 
             <div class="rebate-list">≥1,000</div>
-            <div class="rebate-list">38元</div>
+            <div class="rebate-list">108元</div>
             <div class="rebate-list"></div>
 
             <div class="rebate-list bg-dark">≥5,000</div>
-            <div class="rebate-list bg-dark">58元</div>
+            <div class="rebate-list bg-dark">158元</div>
             <div class="rebate-list bg-dark">1倍/不限场馆</div>
 
             <div class="rebate-list">≥10,000</div>
-            <div class="rebate-list">88元</div>
+            <div class="rebate-list">388元</div>
             <div class="rebate-list"></div>
 
             <div class="rebate-list bg-dark">≥30,000</div>
-            <div class="rebate-list bg-dark">388元</div>
+            <div class="rebate-list bg-dark">1588元</div>
             <div class="rebate-list bg-dark"></div>
 
             <div class="rebate-list">≥50,000</div>
-            <div class="rebate-list">888元</div>
+            <div class="rebate-list">1888元</div>
             <div class="rebate-list"></div>
           </div>
 
           <p class="example-text">
-            例如：会员A邀请一位好友首存100元，则可获取8元奖金；若想获取下一档位38元，则需好友再次存1000元；
+            例如：会员A邀请一位好友首存100元，则可获取28元奖金；若想获取下一档位108元，则需好友再次存1000元；
             奖金将会在次日凌晨00:00至下午16:00之间自动派发至您的主账户，
             如果下周您邀请的好友依旧符合存款金额，那么您在下周会再次获得对应奖金。
           </p>
@@ -86,14 +86,14 @@
           <div class="rules">
             <p>
               1.每个通过您推广链接进行注册，并完成相应首存的用户，您将获得对应的邀请奖金；每个受邀请人完成对应存款金额，在单周内
-              邀请人能最高可获得1472元。
+              邀请人能最高可获得4022元。
             </p>
             <p>
               2.您每邀请一位新会员，从注册的日期开始算起，可享受4次推荐奖金，每个自然周一 00:00
               刷新1次，期间每个对应的档位奖金都 可以领取一次；逾期将会视为自动放弃。
             </p>
             <p>
-              3.例如：会员A邀请一位好友首存100元，则可获取8元奖金；若想获取下一档位38元，则需好友再次存1000元；奖金将会自动派
+              3.例如：会员A邀请一位好友首存100元，则可获取28元奖金；若想获取下一档位108元，则需好友再次存1000元；奖金将会自动派
               发至主钱包。
             </p>
             <p>4.邀请人等级不得低于vip2。</p>
