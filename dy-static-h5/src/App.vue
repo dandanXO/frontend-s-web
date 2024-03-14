@@ -24,9 +24,9 @@ export default defineComponent({
     $q.dark.set(false);
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
-      
+
       (async () => {
-        const visitorId = sessionStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+        const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
         store.visitorId = visitorId;
 
         console.log("SID");

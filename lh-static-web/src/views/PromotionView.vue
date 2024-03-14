@@ -101,6 +101,9 @@
           >
             <div v-html="selectedPromo.pageContent"></div>
           </div>
+          <div v-if="['lh-cs2-copenhagen-major-2024'].includes(selectedPromo.redirectUrl)" class="corner-decor" style="position:absolute;left:0px;bottom:0px;">
+            <img width="125px" v-if="selectedPromo.redirectUrl === 'lh-cs2-copenhagen-major-2024'" src="../assets/images/promotion/hotpromo/cs2/bottombg.png" />
+          </div>
         </div>
       </div>
     </div>
@@ -705,6 +708,11 @@ export default defineComponent({
         background-position: top center;
         gap: 20px;
         background-repeat: no-repeat;
+        
+        &:has(.corner-decor) {
+          position: relative;
+        }
+
         .hot-promo {
           // background: #201f29;
           border-radius: 10px;

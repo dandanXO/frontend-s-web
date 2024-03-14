@@ -149,6 +149,13 @@ deploy-lh-download:
 
 #===============================================================================================
 
+deploy-lh-download-v2:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-download-v2
+
+#===============================================================================================
+
 deploy-lh-tutorials:
   extends: .s3-deploy
   variables:

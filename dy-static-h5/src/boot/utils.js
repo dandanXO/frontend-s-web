@@ -88,7 +88,7 @@ export const getVisitorId = async () => {
   console.log("VisitorInfo");
   console.log(fp);
   if (fp?.visitorId) {
-    sessionStorage.setItem("VISITOR_ID", fp.visitorId);
+    localStorage.setItem("VISITOR_ID", fp.visitorId);
     return fp?.visitorId;
   } else {
     const fpPromise = FingerprintJS.load();
@@ -99,8 +99,7 @@ export const getVisitorId = async () => {
     const sidParam = FingerprintJS.hashComponents(allComponents);
     console.log("Use Normal Fingerprint");
     console.log(sidParam);
-    sessionStorage.setItem("VISITOR_ID", sidParam);
+    localStorage.setItem("VISITOR_ID", sidParam);
     return sidParam;
   }
 };
-

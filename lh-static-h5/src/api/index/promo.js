@@ -109,3 +109,45 @@ export function submitGameStep() {
 export function getStepRecords(current) {
   return eventapi.get(`/game-steps/records?size=10&current=${current}`, {});
 }
+
+// 意见反馈
+export function getTreasureDetail(promoCode) {
+  return eventapi.get(`/event-treasure/get-treasure-detail/${promoCode}`);
+}
+export function getKeyCount(promoCode) {
+  return eventapi.get(`/event-treasure/get-key`, {
+    params: {
+      promoCode
+    }
+  });
+}
+export function getOpenRecord(promoCode, page) {
+  console.log(page);
+  return eventapi.get(`/event-treasure/get-open-record/${promoCode}`, {
+    size: page.size,
+    current: page.current
+  });
+}
+
+export function getKeyRecord(promoCode, page) {
+  return eventapi.get(`/event-treasure/get-key-record/${promoCode}`, {
+    size: page.size,
+    current: page.current
+  });
+}
+
+export function openTreasure(promoCode, treasureLevel) {
+  return eventapi.post(`/event-treasure/open`, qs.stringify({ promoCode, treasureLevel }));
+}
+
+export function getCheckInRecord(promoCode) {
+  return eventapi.get(`/event-check-in/get-record`, {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimCheckInTreasure(promoCode, days) {
+  return eventapi.post(`/event-check-in/open`, qs.stringify({ promoCode, days }));
+}

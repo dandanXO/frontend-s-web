@@ -85,6 +85,7 @@
     <CnyStepGame2024Promo
       v-if="list.redirectUrl === 'lh1-cny-step-game' && !isCommonPromo && store.token"
     ></CnyStepGame2024Promo>
+    <CS2Sign v-if="list.redirectUrl === 'lh-cs2-copenhagen-major-2024' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -135,6 +136,7 @@ import LplSummerPromo from "../components/hotpromo/lplsummer/LplSummerPromo.vue"
 // import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
 import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
 // import CnyStepGame2024Promo from "../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue";
+import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -164,6 +166,7 @@ export default defineComponent({
     LplSummerPromo,
     // Cny2024Promo,
     BbDacha2024Promo,
+    CS2Sign
     // CnyStepGame2024Promo
   },
   props: {
@@ -250,7 +253,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-login-reward" ||
       this.list.redirectUrl === "lh1-football-fight" ||
       this.list.redirectUrl === "lh1-dragon-card" ||
-      this.list.redirectUrl === "lh1-lpl-game"
+      this.list.redirectUrl === "lh1-lpl-game" ||
+      this.list.redirectUrl === "lh-cs2-copenhagen-major-2024"
     ) {
       this.isCommonPromo = false;
     } else {

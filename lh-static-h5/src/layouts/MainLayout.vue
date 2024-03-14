@@ -15,7 +15,7 @@
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
-        <router-link :to="prevPage ? '/' + prevPage : '/'">
+        <router-link v-if="prevPage" :to="prevPage ? '/' + prevPage : '/'">
           <img class="back-icon" src="../assets/images/common/left-back-icon.svg" />
         </router-link>
         {{ pageName }}
@@ -200,6 +200,7 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = "优惠";
           hasShadow.value = false;
+          prevPage.value = false;
 
           if (route.query.name) {
             hasPage.value = true;

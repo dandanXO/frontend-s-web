@@ -24,6 +24,20 @@
           maxlength="50"
           :placeholder="t('fields.loginName')"
         />
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+        >
+          <el-option
+            v-for="item in sites.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -77,6 +91,22 @@
         size="small"
         label-width="150px"
       >
+        <el-form-item :label="t('fields.site')" prop="siteId">
+          <el-select
+            v-model="form.siteId"
+            size="small"
+            :placeholder="t('fields.site')"
+            class="filter-item"
+            style="width: 120px; margin-left: 5px"
+          >
+            <el-option
+              v-for="item in sites.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.loginName')" prop="loginName">
           <el-input v-model="form.loginName" style="width: 350px" />
           <span
@@ -102,14 +132,20 @@
             {{ t('fields.cancel') }}
           </el-button>
           <el-button
-            v-if="uiControl.dialogType === 'CREATE_ADD' && hasPermission(['sys:privi:treasure-key:add'])"
+            v-if="
+              uiControl.dialogType === 'CREATE_ADD' &&
+                hasPermission(['sys:privi:treasure-key:add'])
+            "
             type="primary"
             @click="createAdd"
           >
             {{ t('fields.confirm') }}
           </el-button>
           <el-button
-            v-if="uiControl.dialogType === 'CREATE_DEDUCT' && hasPermission(['sys:privi:treasure-key:deduct'])"
+            v-if="
+              uiControl.dialogType === 'CREATE_DEDUCT' &&
+                hasPermission(['sys:privi:treasure-key:deduct'])
+            "
             type="primary"
             @click="createDeduct"
           >
@@ -137,19 +173,13 @@
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="adjustReason"
-        :label="t('fields.adjustReason')"
-      >
+      <el-table-column prop="adjustReason" :label="t('fields.adjustReason')">
         <template #default="scope">
           <span v-if="scope.row.adjustReason !== null"> {{ scope.row.adjustReason }}</span>
           <span v-else>-</span>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="quantity"
-        :label="t('fields.keyQuantity')"
-      />
+      <el-table-column prop="quantity" :label="t('fields.keyQuantity')" />
       <el-table-column
         prop="quantityBefore"
         :label="t('fields.keyQuantityBefore')"
@@ -158,10 +188,7 @@
         prop="quantityAfter"
         :label="t('fields.keyQuantityAfter')"
       />
-      <el-table-column
-        prop="amount"
-        :label="t('fields.amount')"
-      >
+      <el-table-column prop="amount" :label="t('fields.amount')">
         <template #default="scope">
           <div v-if="scope.row.amount !== null">
             $
@@ -208,28 +235,30 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, computed } from 'vue'
 import { required } from '../../../utils/validate'
 import { ElMessage } from 'element-plus'
 import moment from 'moment'
-import {
-  findIdByLoginName
-} from '../../../api/member'
+import { findIdByLoginName } from '../../../api/member'
 import {
   addTreasureKey,
   deductTreasureKey,
   listTreasureKeyRecord,
-  getMemberKey
+  getMemberKey,
 } from '../../../api/privi-treasure-key-record'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
 import { getShortcuts } from '@/utils/datetime'
 import { getSiteListSimple } from '../../../api/site'
+import { useStore } from '../../../store'
+import { TENANT } from '../../../store/modules/user/action-types'
 
 const { t } = useI18n()
 const priviTreasureKeyForm = ref(null)
 const shortcuts = getShortcuts(t)
 const site = ref(null)
+const store = useStore()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 
 const uiControl = reactive({
   messageVisible: false,
@@ -282,16 +311,17 @@ const form = reactive({
   loginName: null,
   quantity: null,
   adjustReason: null,
-  privilegeCode: 'dy2-cs2-copenhagen-major-2024',
+  privilegeCode: '',
 })
 
 const loginNameValidator = async (rule, value, callback) => {
+  if (form.siteId === 6) {
+    form.privilegeCode = 'dy2-cs2-copenhagen-major-2024'
+  } else {
+    form.privilegeCode = 'lh-cs2-copenhagen-major-2024'
+  }
   if (uiControl.dialogType === 'CREATE_DEDUCT') {
-    const { data } = await getMemberKey(
-      value,
-      form.siteId,
-      form.privilegeCode
-    )
+    const { data } = await getMemberKey(value, form.siteId, form.privilegeCode)
     if (data === null || data === undefined) {
       callback(new Error(t('message.memberNotInSite')))
     } else {
@@ -300,11 +330,7 @@ const loginNameValidator = async (rule, value, callback) => {
     }
   } else {
     uiControl.keyQuantity = null
-    const { data } = await getMemberKey(
-      value,
-      form.siteId,
-      form.privilegeCode
-    )
+    const { data } = await getMemberKey(value, form.siteId, form.privilegeCode)
     if (data === null || data === undefined) {
       callback(new Error(t('message.memberNotInSite')))
     } else {
@@ -345,7 +371,7 @@ async function loadFormSelect() {
 
 function resetQuery() {
   request.createTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : sites.list[0].id
   request.loginName = null
 }
 
@@ -427,7 +453,7 @@ function createDeduct() {
 
 function restrictIntegerInput(event) {
   var charCode = event.which ? event.which : event.keyCode
-  if ((charCode < 48 || charCode > 57) || charCode === 46) {
+  if (charCode < 48 || charCode > 57 || charCode === 46) {
     event.preventDefault()
   }
 }
@@ -439,9 +465,13 @@ async function loadSites() {
 
 onMounted(async () => {
   await loadSites()
-  site.value = sites.list.find(s => s.siteCode === 'DY2')
-  request.siteId = site.value.id
-  form.siteId = site.value.id
+  request.siteId = sites.list[0].id
+  form.siteId = sites.list[0].id
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = sites.list.find(s => s.siteName === store.state.user.siteName)
+    request.siteId = site.value.id
+    form.siteId = site.value.id
+  }
   await loadTreasureKeyRecord()
 })
 </script>

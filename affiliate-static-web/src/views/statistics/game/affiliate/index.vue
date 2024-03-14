@@ -104,12 +104,14 @@
 import { onMounted, reactive, defineExpose, defineProps } from 'vue';
 import { countChild, getAffiliateChildGameStats, getAffiliateGameStats } from '../../../../api/statistics';
 import { useI18n } from "vue-i18n";
+import { useStore } from "@/store";
 
 defineExpose({
   loadAffiliateSummary
 });
 
 const { t } = useI18n();
+const store = useStore();
 
 const props = defineProps({
   affId: {
@@ -138,6 +140,7 @@ const page = reactive({
 async function loadAffiliateSummary() {
   page.loading = true;
   const query = checkQuery();
+  query.siteId = store.state.user.siteId;
   const { data: ret } = await getAffiliateGameStats(props.affId, query);
   page.pages = ret.pages;
   page.records = ret.records;
