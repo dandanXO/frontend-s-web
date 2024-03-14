@@ -21,14 +21,7 @@ export function mailInbox(mailQuery) {
 }
 
 export function mailOutbox(mailQuery) {
-  return server.REST.get("/session/outbox", {
-    params: {
-      type: mailQuery.type,
-      current: mailQuery.current,
-      size: mailQuery.size,
-      orderBy: mailQuery.orderBy
-    }
-  });
+  return server.REST.get("/session/feedback/replies", {});
 }
 
 export function wirteMail(mail) {
