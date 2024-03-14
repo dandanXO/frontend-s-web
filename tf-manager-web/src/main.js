@@ -25,6 +25,7 @@ const currentHost = window.location.host
 let baseApi;
 let baseWss;
 
+console.log(currentHost)
 switch (currentHost) {
   case process.env.VUE_APP_IND2_HOST:
     baseApi = process.env.VUE_APP_IND2_API;
