@@ -121,7 +121,14 @@ export default defineComponent({
     };
 
     const loadPlatformLists = () => {
-      cached.get("PLATFORMS", () => api.get("/platform").then((response) => {
+      debugger;
+      var platformApiUrl = store.hasToken()
+        ? "/session/loggedInPlatform"
+        : "/platform";
+      var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
+
+
+      cached.get(platformApiKey, () => api.get(platformApiUrl).then((response) => {
         return response
       })).then((data) => {
         console.log(data);

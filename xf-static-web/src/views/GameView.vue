@@ -26,22 +26,13 @@
         <div class="plat-type-container">
           <div class="plat-list">
             <template v-for="p in platforms" :key="p">
-              <template v-if="p.code === 'AG'"></template>
-              <template v-else>
-                <div
-                  class="plat-item"
-                  :class="{ active: p === activePlat }"
-                  @click="switchPlat(p)"
-                >
-                  {{ getGameLabel(p.name) }}
-                </div>
-              </template>
+              <div class="plat-item" :class="{ active: p === activePlat }" @click="switchPlat(p)">
+                {{ getGameLabel(p.name) }}
+              </div>
             </template>
           </div>
         </div>
-        <div
-          class="grid-items flex-box flex-align-center search-container web-only-box"
-        >
+        <div class="grid-items flex-box flex-align-center search-container web-only-box">
           <el-input
             class="search-input"
             v-model="gamePage.searchKey"
@@ -269,7 +260,9 @@ export default defineComponent({
         return 'AE 电子'
       } else if (gameLabel === 'MGP') {
         return 'MG 电子'
-      } else {
+      } else if (gameLabel === 'AG') {
+        return 'XIN 电子'
+      }else {
         return gameLabel + ' 电子'
       }
     }
@@ -678,8 +671,7 @@ export default defineComponent({
             }
             &.active,
             &:hover {
-              background-image: linear-gradient(90deg, #35d8f2 0, #2188c9 100%),
-                linear-gradient(#2a313e, #2a313e);
+              background-image: linear-gradient(90deg, #35d8f2 0, #2188c9 100%), linear-gradient(#2a313e, #2a313e);
               color: #fff;
             }
           }
