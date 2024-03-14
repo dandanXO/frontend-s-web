@@ -12,32 +12,30 @@ const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
 
 
-if((window.location.pathname === "/promotion" ||
-  window.location.pathname === "/deposit" ||
-  window.location.pathname === "/invitefriend" ||
-  window.location.pathname === "/vip" ||
-  window.location.pathname === "/invitefriend" ||
-  window.location.pathname === "/privilege/invite")){
+// window.location.pathname === "/promotion" ||
+// window.location.pathname === "/deposit" ||
+// window.location.pathname === "/invitefriend" ||  window.location.pathname === "/invitefriend" ||
+// window.location.pathname === "/privilege/invite" ||
+//
+if((
+  window.location.pathname === "/vip"
+)){
 
   if( window.webkit
     && window.webkit.messageHandlers
     && window.webkit.messageHandlers.notifyApp ){
     window.webkit.messageHandlers.notifyApp.postMessage("Test123123");
   }
-
   if( window["WebScript"]){
     window["WebScript"].postMessage("Android 111");
     window["WebScript"].notifyApp("Android 333");
-  } else if(window.parent) {
-    window.parent.postMessage("Parent zz 123");
-  } else{
-    window.postMessage("Normal 123");
   }
 
   window.addEventListener('message', function(event) {
     console.log("RECEIVE FROM JAVA");
     if (_.isString(event.data)) {
       console.log(event.data);
+      alert(event.data);
     }
   });
 
