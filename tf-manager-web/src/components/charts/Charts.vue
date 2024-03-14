@@ -59,7 +59,7 @@ onMounted(() => {
 watch(
   options,
   newOptions => {
-    chart.setOption(newOptions)
+    chart.setOption(newOptions, true)
   },
   { deep: true }
 )
