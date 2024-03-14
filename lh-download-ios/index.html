@@ -1,145 +1,150 @@
 <html>
-    <head>
-        <style>
-            body {
-                width: 100vw;
-                height: 100vh;
-                padding: 0;
-                margin: 0;
-            }
+<head>
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
 
-            .container {
-                width: 100%;
-                height: 100%;
-                background: url(./assets/images/bg.png) no-repeat center center;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-            }
+        .container {
+            width: 100%;
+            height: auto;
+            background: url(./assets/images/bg.png) no-repeat center center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
-            .wrapper {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-            }
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
 
-            .logo {
-                aspect-ratio: 822/375;
-                width: 600px;
-            }
+        .logo {
+            aspect-ratio: 822/375;
+            width: 600px;
+        }
 
-            .step-1 {
-                position: relative;
-                background: url(./assets/images/step-1.png) no-repeat center center;
-                aspect-ratio: 1009/691;
-                background-size: 100% 100%;
-                width: 900px;
+        .step-1 {
+            position: relative;
+            background: url(./assets/images/step-1.png) no-repeat center center;
+            aspect-ratio: 1009/691;
+            background-size: 100% 100%;
+            width: 900px;
 
-            }
+        }
 
-            .step-2 {
-                position: relative;
-                background: url(./assets/images/step-2.png) no-repeat center center;
-                aspect-ratio: 1009/820;
-                background-size: 100% 100%;
-                width: 900px;
+        .step-2 {
+            position: relative;
+            background: url(./assets/images/step-2.png) no-repeat center center;
+            aspect-ratio: 1009/820;
+            background-size: 100% 100%;
+            width: 900px;
 
-            }
+        }
 
-            .step-1-action-wrapper, .step-2-action-wrapper {
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                bottom: 5%;
-                left: 50%;
-                transform: translate(-50%, -40%);
-                gap: 10px;
-                align-items: center;
-                justify-content: center;
-            }
+        .step-1-action-wrapper, .step-2-action-wrapper {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            bottom: 5%;
+            left: 50%;
+            transform: translate(-50%, -40%);
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+        }
 
-            .step-2-action-wrapper {
-                transform: translate(-50%, -25%);
-                gap: 30px;
-            }
+        .step-2-action-wrapper {
+            transform: translate(-50%, -25%);
+            gap: 30px;
+        }
 
-            .row {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 20px;
-            }
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
 
-            button {
-                border: none;
-            }
+        button {
+            border: none;
+        }
 
-            .step-1-btn {
-                aspect-ratio: 606/179;
-                width: 350px;
-                background: url(./assets/images/step-1-btn.png);
-                background-size: 100% 100%;
-            }
+        .step-1-btn {
+            aspect-ratio: 606/179;
+            width: 350px;
+            background: url(./assets/images/step-1-btn.png);
+            background-size: 100% 100%;
+        }
 
-            .step-2-btn {
-                aspect-ratio: 603/179;
-                width: 350px;
-                background: url(./assets/images/step-2-btn.png);
-                background-size: 100% 100%;
-            }
+        .step-2-btn {
+            aspect-ratio: 603/179;
+            width: 350px;
+            background: url(./assets/images/step-2-btn.png);
+            background-size: 100% 100%;
+        }
 
-            .step-2-hint {
-                aspect-ratio: 928/156;
-                width: 750px;
-            }
+        .step-2-hint {
+            aspect-ratio: 928/156;
+            width: 750px;
+        }
 
-            .step-1-btn:hover, .step-2-btn:hover {
-                opacity: 0.9;
-            }
+        .step-1-btn:hover, .step-2-btn:hover {
+            opacity: 0.9;
+        }
 
-            .step-1-btn:active, .step-2-btn:active {
-                filter: brightness(0.85);
-                transform: translate(0px, 2px);
-            }
+        .step-1-btn:active, .step-2-btn:active {
+            filter: brightness(0.85);
+            transform: translate(0px, 2px);
+        }
 
-            .step-1-btn-decor {
-                aspect-ratio: 270/270;
-                width: 150px;
-                
-            }
+        .step-1-btn-decor {
+            aspect-ratio: 270/270;
+            width: 150px;
 
-            .step-2-btn-decor {
-                aspect-ratio: 279/279;
-                width: 150px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="wrapper">
-                <img class="logo" src="./assets/images/logo.png" />
-                <div class="step-1">
-                    <div class="step-1-action-wrapper">
-                        <div class="row">
-                            <img class="step-1-btn-decor" src="./assets/images/step-1-btn-decor.png" />
-                            <a target="_blank" href="#" class="step-1-btn"></a>
-                        </div>
-                    </div>
-                </div>
+        }
 
-                <div class="step-2">
-                    <div class="step-2-action-wrapper">
-                        <div class="row">
-                            <img class="step-2-btn-decor" src="./assets/images/step-2-btn-decor.png" />
-                            <a target="_blank" href="#" class="step-2-btn"></a>
-                        </div>
-                        <div class="row">
-                            <img class="step-2-hint" src="./assets/images/step-2-hint.png" />
-                        </div>
-                    </div>
+        .step-2-btn-decor {
+            aspect-ratio: 279/279;
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="wrapper">
+        <img class="logo" src="./assets/images/logo.png"/>
+        <div class="step-1">
+            <div class="step-1-action-wrapper">
+                <div class="row">
+                    <img class="step-1-btn-decor" src="./assets/images/step-1-btn-decor.png"/>
+                    <a target="_blank" href="https://apps.apple.com/us/app/testflight/id899247664?ct=SUWKTUN396"
+                       class="step-1-btn"></a>
                 </div>
             </div>
         </div>
-    </body>
+
+        <div class="step-2">
+            <div class="step-2-action-wrapper">
+                <div class="row">
+                    <img class="step-2-btn-decor" src="./assets/images/step-2-btn-decor.png"/>
+                    <a target="_blank" href="#" class="step-2-btn"></a>
+                </div>
+                <div class="row">
+                    <img class="step-2-hint" src="./assets/images/step-2-hint.png"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+
+</script>
 </html>
