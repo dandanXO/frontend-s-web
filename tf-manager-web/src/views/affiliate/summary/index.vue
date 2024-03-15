@@ -246,16 +246,22 @@
           :label="t('fields.activeMemberCount')"
           align="center"
           width="120"
+        />
+        <el-table-column
+          prop="totalRegisterMemberCount"
+          :label="t('fields.totalRegisterCount')"
+          align="center"
+          width="120"
         >
           <template #default="scope">
             <el-link
-              v-if="scope.row.activeMemberCount !== 0"
+              v-if="scope.row.totalRegisterMemberCount !== 0"
               type="primary"
               @click="showDialog('ALLMEMBER', scope.row.affiliateId)"
             >
-              {{ scope.row.activeMemberCount }}
+              {{ scope.row.totalRegisterMemberCount }}
             </el-link>
-            <span v-else>{{ scope.row.activeMemberCount }}</span>
+            <span v-else>{{ scope.row.totalRegisterMemberCount }}</span>
           </template>
         </el-table-column>
       </el-table>
