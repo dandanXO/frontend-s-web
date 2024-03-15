@@ -347,6 +347,7 @@ export default {
     daily: 'Daily',
     newbie: 'Newbie',
     limit: 'Limit',
+    featured: 'Featured',
   },
   messageType: {
     NOTIFICATION: 'Notification',

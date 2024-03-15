@@ -538,6 +538,7 @@ const labelType = reactive({
     { key: 5, displayName: t('promoLabel.daily'), value: 4 },
     { key: 6, displayName: t('promoLabel.newbie'), value: 5 },
     { key: 7, displayName: t('promoLabel.limit'), value: 6 },
+    { key: 8, displayName: t('promoLabel.featured'), value: 7 },
   ],
 })
 const promoTypes = [
