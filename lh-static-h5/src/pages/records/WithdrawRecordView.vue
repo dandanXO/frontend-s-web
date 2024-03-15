@@ -104,7 +104,7 @@ export default defineComponent({
         label: "提款数额"
       },
       {
-        key: "status",
+        key: "statusName",
         label: "状态"
       },
       // {
