@@ -971,6 +971,8 @@ export default defineComponent({
         // console.log("SCROLL");
         if (!isScrolling.value) {
           const rightPlatform = document.getElementById("id-right-platform");
+          const gameLeftList = document.querySelector(".game-left-list");
+
           const platformBlocks = document.getElementsByClassName("platform-block");
           const blockHeight = platformBlocks ? (platformBlocks[0].offsetHeight / 4) * 3 : 75;
           // rightPlatformContainer.value.addEventListener("scroll", onHomeScroll);
@@ -1014,14 +1016,26 @@ export default defineComponent({
             tab.value = "lottery";
           } else if (0 > positionTop5 - 5) {
             tab.value = "slot";
+            gameLeftList.scrollTo({
+              top: 1000,
+              behavior: "smooth"
+            });
           } else if (0 > positionTop4 - 5) {
             tab.value = "poker";
           } else if (0 > positionTop3 - 5) {
             tab.value = "live";
           } else if (0 > positionTop2 - 5) {
             tab.value = "sport";
+            gameLeftList.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
           } else if (0 > positionTop1 - 5) {
             tab.value = "esport";
+            gameLeftList.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
           }
           // console.log("blockHeight", blockHeight);
           // console.log(tab.value);
@@ -1031,6 +1045,7 @@ export default defineComponent({
 
     const setSelectedSwiper = (tab) => {
       const gameRightPlatform = document.querySelector(".game-right-platform");
+      const gameLeftList = document.querySelector(".game-left-list");
       const scrollItem1 = document.getElementById("esport-lists");
       const scrollItem2 = document.getElementById("sport-lists");
       const scrollItem3 = document.getElementById("live-lists");
@@ -1048,6 +1063,11 @@ export default defineComponent({
         gameRightPlatform.scrollTo({
           top: scrollItem1.offsetTop - gameRightPlatform.offsetTop,
           behavior: "smooth" // Optional: Use smooth scrolling
+        });
+
+        gameLeftList.scrollTo({
+          top: 0,
+          behavior: "smooth"
         });
 
         // rightPlatformContainer.value.scrollToSlide("esport-lists");
@@ -1086,6 +1106,11 @@ export default defineComponent({
           top: scrollItem5.offsetTop - gameRightPlatform.offsetTop,
           behavior: "smooth" // Optional: Use smooth scrolling
         });
+
+        gameLeftList.scrollTo({
+          top: gameLeftList.scrollHeight,
+          behavior: "smooth"
+        });
       }
       if (tab === "others") {
         // slideIndex = esport.value.length + sport.value.length + livecasino.value.length + poker.value.length;
@@ -1108,6 +1133,11 @@ export default defineComponent({
         gameRightPlatform.scrollTo({
           top: scrollItem7.offsetTop - gameRightPlatform.offsetTop,
           behavior: "smooth" // Optional: Use smooth scrolling
+        });
+
+        gameLeftList.scrollTo({
+          top: 5000,
+          behavior: "smooth"
         });
       }
     };
