@@ -359,6 +359,10 @@ export default {
     follow: 'ก่อนที่จะติดตาม',
     new: 'อัพเดตประเภทเกม',
   },
+  sortType: {
+    ASC: 'Ascending',
+    DESC: 'Descending'
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -1003,6 +1007,7 @@ export default {
     operateTime: 'Operate Time',
     operationTime: 'Operation Time',
     operationType: 'Operation Type',
+    orderBy: 'Order By',
     orderNo: 'Order No',
     orderTrackingNo: 'Order Tracking No',
     outerSetting: 'Outer Wheel Setting',
@@ -1207,6 +1212,7 @@ export default {
     smsSendTime: 'Send Time',
     smsType: 'Type',
     sorting: 'Sorting',
+    sortType: 'Sort Type',
     sourceType: 'Source Type',
     sportBetResult: 'Sport Bet Result',
     stage: 'Stage',
