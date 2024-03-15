@@ -89,9 +89,7 @@
 
   <div class="details-bar">
     <div class="message" @click="refreshBalance">
-      <span class="main-balance"
-            :class="(!store.token) ?  'main-nologin' : ''"
-      >
+      <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
         {{ store.token ? (!isLoadingBalance ? "¥" + mainWallet.toFixed(2) : "加载中...") : "您还未登录" }}
       </span>
       <span>{{ store.token ? "中心钱包" : "登录/注册后查看" }}</span>
@@ -187,8 +185,7 @@
       </div>
     </div>
 
-    <div class="game-right-platform" v-scroll="onHomeScroll" id="id-right-platform">
-
+    <div class="game-right-platform" v-scroll="onHomeScroll" id="id-right-platform" ref="rightPlatformContainer">
       <div class="game-lists fade-in-image" id="esport-lists">
         <template v-for="(item, index) in esport" :key="index">
           <div
@@ -230,7 +227,6 @@
           >
             <MaintenanceBox :item="item" />
 
-
             <div
               class="platform-img-frame"
               :style="{
@@ -262,7 +258,6 @@
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
             <MaintenanceBox :item="item" />
-
 
             <div
               class="platform-img-frame"
@@ -296,7 +291,6 @@
           >
             <MaintenanceBox :item="item" />
 
-
             <div
               class="platform-img-frame"
               :style="{
@@ -319,8 +313,8 @@
           </div>
         </template>
       </div>
-      <div class="game-lists fade-in-image" id="slot-lists">
 
+      <div class="game-lists fade-in-image" id="slot-lists">
         <template v-for="(item, index) in slot" :key="index">
           <div
             class="platform-block"
@@ -328,7 +322,6 @@
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
             <MaintenanceBox :item="item" />
-
 
             <div
               class="platform-img-frame"
@@ -420,7 +413,6 @@
       </div>
       -->
 
-
       <div class="game-lists" id="lottery-lists">
         <template v-for="(item, index) in lottery" :key="index">
           <div
@@ -429,7 +421,6 @@
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
             <MaintenanceBox :item="item" :moment="moment(item.maintenanceStartTime)" />
-
 
             <div
               class="platform-img-frame"
@@ -496,7 +487,6 @@
           >
             <MaintenanceBox :item="item" :moment="moment(item.maintenanceStartTime)" />
 
-
             <div
               class="platform-img-frame"
               :style="{
@@ -519,7 +509,6 @@
           </div>
         </template>
       </div>
-
 
       <!--      <div class="index-platform-container" style="overflow: hidden">-->
       <!--        &lt;!&ndash; Main Swiper -> pass thumbs swiper instance &ndash;&gt;-->
@@ -794,11 +783,8 @@
       <!--          <swiper-slide style="opacity: 0"></swiper-slide>-->
       <!--        </swiper>-->
       <!--      </div>-->
-
-
     </div>
   </div>
-
 
   <GameModal ref="allGames"></GameModal>
 
@@ -950,7 +936,6 @@ export default defineComponent({
       var bodyElement = document.body;
 
       if (slideItem) {
-
         var divOffset = slideItem.getBoundingClientRect();
         var bodyOffset = bodyElement.getBoundingClientRect();
 
@@ -969,14 +954,28 @@ export default defineComponent({
       }, 2000);
     };
 
+    const rightPlatformContainer = ref(null);
+
+    const handleScroll = () => {
+      if (
+        rightPlatformContainer.value.scrollHeight - rightPlatformContainer.value.scrollTop ===
+        rightPlatformContainer.value.clientHeight
+      ) {
+        onHomeScroll();
+      }
+    };
+
     const onHomeScroll = (position) => {
+      // console.log("SCROLL");
       if (route.path === "/") {
         // console.log("SCROLL");
         if (!isScrolling.value) {
           const rightPlatform = document.getElementById("id-right-platform");
-          const platformBlocks = document.getElementsByClassName("platform-block");
-          const blockHeight = platformBlocks ? platformBlocks[0].offsetHeight / 4 * 3 : 75;
+          const gameLeftList = document.querySelector(".game-left-list");
 
+          const platformBlocks = document.getElementsByClassName("platform-block");
+          const blockHeight = platformBlocks ? (platformBlocks[0].offsetHeight / 4) * 3 : 75;
+          // rightPlatformContainer.value.addEventListener("scroll", onHomeScroll);
           // console.log("scroll");
 
           var checkItem1 = document.getElementById("esport-lists");
@@ -988,13 +987,13 @@ export default defineComponent({
           var checkItem6 = document.getElementById("lottery-lists");
           var checkItem7 = document.getElementById("fishing-lists");
 
-          var positionTop1 = checkItem1.getBoundingClientRect().top;
-          var positionTop2 = checkItem2.getBoundingClientRect().top;
-          var positionTop3 = checkItem3.getBoundingClientRect().top;
-          var positionTop4 = checkItem4.getBoundingClientRect().top;
-          var positionTop5 = checkItem5.getBoundingClientRect().top;
-          var positionTop6 = checkItem6.getBoundingClientRect().top;
-          var positionTop7 = checkItem7.getBoundingClientRect().top;
+          var positionTop1 = checkItem1.getBoundingClientRect().top - 335;
+          var positionTop2 = checkItem2.getBoundingClientRect().top - 335;
+          var positionTop3 = checkItem3.getBoundingClientRect().top - 335;
+          var positionTop4 = checkItem4.getBoundingClientRect().top - 335;
+          var positionTop5 = checkItem5.getBoundingClientRect().top - 335;
+          var positionTop6 = checkItem6.getBoundingClientRect().top - 335;
+          var positionTop7 = checkItem7.getBoundingClientRect().top - 335;
 
           // console.log(blockHeight);
           // console.log(positionTop6);
@@ -1004,70 +1003,143 @@ export default defineComponent({
           // console.log(windowHeight);
           // console.log(bodyOffset.bottom);
 
-          if (windowHeight + 15 > bodyOffset.bottom) {
-            tab.value = "fishing";
-          } else if (0 > positionTop6 - 5 && positionTop7 >= blockHeight) {
-            tab.value = "lottery";
-          } else if (0 > positionTop5 - 5 && positionTop6 >= blockHeight) {
-            tab.value = "slot";
-          } else if (0 > positionTop4 - 5 && positionTop5 >= blockHeight) {
-            tab.value = "poker";
-          } else if (0 > positionTop3 - 5 && positionTop4 >= blockHeight) {
-            tab.value = "live";
-          } else if (0 > positionTop2 - 5 && positionTop3 >= blockHeight) {
-            tab.value = "sport";
-          } else if (0 > positionTop1 - 5 && positionTop2 >= blockHeight) {
-            tab.value = "esport";
-          }
+          // positionTop7 >= blockHeight
+          // positionTop6 >= blockHeight
+          // positionTop5 >= blockHeight
+          // positionTop4 >= blockHeight
+          // positionTop3 >= blockHeight
+          // positionTop2 >= blockHeight
 
+          if (0 > positionTop7 - 5) {
+            tab.value = "fishing";
+          } else if (0 > positionTop6 - 5) {
+            tab.value = "lottery";
+          } else if (0 > positionTop5 - 5) {
+            tab.value = "slot";
+            gameLeftList.scrollTo({
+              top: 1000,
+              behavior: "smooth"
+            });
+          } else if (0 > positionTop4 - 5) {
+            tab.value = "poker";
+          } else if (0 > positionTop3 - 5) {
+            tab.value = "live";
+          } else if (0 > positionTop2 - 5) {
+            tab.value = "sport";
+            gameLeftList.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          } else if (0 > positionTop1 - 5) {
+            tab.value = "esport";
+            gameLeftList.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          // console.log("blockHeight", blockHeight);
           // console.log(tab.value);
         }
       }
     };
 
-
     const setSelectedSwiper = (tab) => {
+      const gameRightPlatform = document.querySelector(".game-right-platform");
+      const gameLeftList = document.querySelector(".game-left-list");
+      const scrollItem1 = document.getElementById("esport-lists");
+      const scrollItem2 = document.getElementById("sport-lists");
+      const scrollItem3 = document.getElementById("live-lists");
+      const scrollItem4 = document.getElementById("poker-lists");
+      const scrollItem5 = document.getElementById("slot-lists");
+      const scrollItem6 = document.getElementById("lottery-lists");
+      const scrollItem7 = document.getElementById("fishing-lists");
+
       // console.log(tab.name);
       // var slideIndex = 0;
       if (tab === "esport") {
         // slideIndex = 0;
         // firstSwiper.value?.slideTo(slideIndex, 500);
-        scrollToSlide("esport-lists");
+        // scrollToSlide("esport-lists");
+        gameRightPlatform.scrollTo({
+          top: scrollItem1.offsetTop - gameRightPlatform.offsetTop,
+          behavior: "smooth" // Optional: Use smooth scrolling
+        });
+
+        gameLeftList.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+
+        // rightPlatformContainer.value.scrollToSlide("esport-lists");
+        // rightPlatformContainer.value.addEventListener("scroll", onHomeScroll);
       }
       if (tab === "sport") {
         // slideIndex = esport.value.length;
         // firstSwiper.value?.slideTo(slideIndex, 500);
-        scrollToSlide("sport-lists");
+        // scrollToSlide("sport-lists");
+        gameRightPlatform.scrollTo({
+          top: scrollItem2.offsetTop - gameRightPlatform.offsetTop,
+          behavior: "smooth" // Optional: Use smooth scrolling
+        });
       }
       if (tab === "live") {
         // slideIndex = esport.value.length + sport.value.length;
         // firstSwiper.value?.slideTo(slideIndex, 500);
-        scrollToSlide("live-lists");
+        // scrollToSlide("live-lists");
+        gameRightPlatform.scrollTo({
+          top: scrollItem3.offsetTop - gameRightPlatform.offsetTop,
+          behavior: "smooth" // Optional: Use smooth scrolling
+        });
       }
       if (tab === "poker") {
         // slideIndex = esport.value.length + sport.value.length + livecasino.value.length;
         // firstSwiper.value?.slideTo(slideIndex, 500);
-        scrollToSlide("poker-lists");
+        // scrollToSlide("poker-lists");
+        gameRightPlatform.scrollTo({
+          top: scrollItem4.offsetTop - gameRightPlatform.offsetTop,
+          behavior: "smooth" // Optional: Use smooth scrolling
+        });
       }
       if (tab === "slot") {
-        scrollToSlide("slot-lists");
+        // scrollToSlide("slot-lists");
+        gameRightPlatform.scrollTo({
+          top: scrollItem5.offsetTop - gameRightPlatform.offsetTop,
+          behavior: "smooth" // Optional: Use smooth scrolling
+        });
+
+        gameLeftList.scrollTo({
+          top: gameLeftList.scrollHeight,
+          behavior: "smooth"
+        });
       }
       if (tab === "others") {
         // slideIndex = esport.value.length + sport.value.length + livecasino.value.length + poker.value.length;
         // firstSwiper.value?.slideTo(slideIndex, 500);
-        scrollToSlide("others-lists");
+        // scrollToSlide("others-lists");
       }
       if (tab === "lottery") {
         // slideIndex = esport.value.length + sport.value.length + livecasino.value.length + poker.value.length;
         // firstSwiper.value?.slideTo(slideIndex, 500);
-        scrollToSlide("lottery-lists");
+        // scrollToSlide("lottery-lists");
+        gameRightPlatform.scrollTo({
+          top: scrollItem6.offsetTop - gameRightPlatform.offsetTop,
+          behavior: "smooth" // Optional: Use smooth scrolling
+        });
       }
       if (tab === "fishing") {
         // slideIndex = esport.value.length + sport.value.length + livecasino.value.length + poker.value.length;
         // firstSwiper.value?.slideTo(slideIndex, 500);
-        scrollToSlide("fishing-lists");
-      }
+        // scrollToSlide("fishing-lists");
+        gameRightPlatform.scrollTo({
+          top: scrollItem7.offsetTop - gameRightPlatform.offsetTop,
+          behavior: "smooth" // Optional: Use smooth scrolling
+        });
 
+        gameLeftList.scrollTo({
+          top: 5000,
+          behavior: "smooth"
+        });
+      }
     };
     const onSlideChange = (swiper) => {
       // Get the active slide index
@@ -1093,7 +1165,6 @@ export default defineComponent({
       }
     };
     const imgNotFound = require(`../assets/images/home/img-not-found.png`);
-
 
     const selectedTab = ref("");
     const esport = ref([]);
@@ -1195,8 +1266,7 @@ export default defineComponent({
             return null;
           }
         })
-        .catch(() => {
-        });
+        .catch(() => {});
       return item.value;
     };
 
@@ -1245,8 +1315,7 @@ export default defineComponent({
               // }
             }
           })
-          .catch(() => {
-          });
+          .catch(() => {});
       }
     };
 
@@ -1259,8 +1328,7 @@ export default defineComponent({
           } else {
           }
         })
-        .catch(() => {
-        });
+        .catch(() => {});
     }
 
     const platforms = ref([]);
@@ -1447,8 +1515,7 @@ export default defineComponent({
             return a.sequence - b.sequence;
           });
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     };
 
     const tab = ref("esport");
@@ -1661,6 +1728,8 @@ export default defineComponent({
       checkShowImgTop();
       getAppDownloadUrl();
       getUnreadTotal();
+
+      rightPlatformContainer.value.addEventListener("scroll", onHomeScroll);
     });
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
@@ -1740,7 +1809,9 @@ export default defineComponent({
       moment,
       unreadInboxMail,
       getUnreadTotal,
-      topBoxVisible
+      topBoxVisible,
+      rightPlatformContainer,
+      handleScroll
     };
   }
 });
@@ -1751,6 +1822,10 @@ export default defineComponent({
 }
 
 .download-top-container {
+  position: absolute;
+  top: 0;
+  z-index: 2;
+
   padding: 8px 10px;
   background: $white;
   box-shadow: 0px 5px 10px 0px #0000001f;
@@ -1903,7 +1978,7 @@ export default defineComponent({
   width: $box-width;
   margin: 0 auto;
   gap: 10px;
-  padding: 6px 10px 0px;
+  padding: 0px 10px 0px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2098,36 +2173,66 @@ export default defineComponent({
   align-items: flex-start;
   justify-content: space-between;
   width: $box-width;
-  margin: 0px auto 30px;
+  margin: 0px auto 00px;
   gap: 8px;
 
   .game-left-list {
-    position: sticky;
-    padding-top: 10px;
+    // position: sticky;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: calc(100vh - 390px);
+    margin-top: 0px;
     top: 0;
     flex: 2;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap: 10px;
+    gap: 0px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-color: transparent transparent;
+
+    .game-platform {
+      padding: 0;
+      margin: 0;
+    }
 
     > div {
       width: 100%;
     }
 
     img {
+      display: block;
       width: 100%;
     }
   }
 
   .game-right-platform {
-    padding-top: 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    // padding-right: 2px;
+    // margin-right: -4px;
+    height: calc(100vh - 390px);
+    margin-top: 0px;
     flex: 11;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-color: transparent transparent;
 
     .game-lists {
       gap: 8px;
@@ -2162,7 +2267,7 @@ export default defineComponent({
       &.maintenance:after {
         content: "";
         position: absolute;
-        background: #012C6A50;
+        background: #012c6a50;
         top: 0%;
         width: 100%;
         height: 100%;
@@ -2174,7 +2279,6 @@ export default defineComponent({
         font-size: 24px;
         font-weight: bold;
       }
-
 
       &:hover {
         opacity: 0.9;
@@ -2286,14 +2390,19 @@ export default defineComponent({
     }
   }
 
-  .fade-in-image { animation: fadeIn 1.5s; }
+  .fade-in-image {
+    animation: fadeIn 1.5s;
+  }
 }
 
 @keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
-
 
 //Above is New One (LH)
 

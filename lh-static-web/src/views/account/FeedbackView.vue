@@ -993,6 +993,7 @@ onMounted(() => {
 
 
 .mail-content {
+  overflow-wrap: break-word;
   :deep(.el-collapse-item__header) {
     background: #f7f8fb;
     // color: $font-1;

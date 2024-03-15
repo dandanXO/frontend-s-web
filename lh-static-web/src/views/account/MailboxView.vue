@@ -521,6 +521,7 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .mail-content {
+  overflow-wrap: break-word;
   .mailbox-checkbox {
     display: flex;
     align-items: center;
