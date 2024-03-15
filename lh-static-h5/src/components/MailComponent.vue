@@ -151,10 +151,10 @@ export default defineComponent({
   emits: ["readMsg"],
   setup(props, context) {
     const mailboxMessageTypeData = ref([
-      { num: 1, type: "NOTIFICATION", name: "通知" },
       { num: 2, type: "ACTIVITY", name: "活动" },
       { num: 3, type: "ANNOUNCEMENT", name: "公告" },
       { num: 4, type: "PAYMENT", name: "充提" },
+      { num: 1, type: "NOTIFICATION", name: "通知" },
       { num: 5, type: "ALL", name: "全部" }
     ]);
     const mailboxMessageTab = ref(mailboxMessageTypeData.value[0].type);
