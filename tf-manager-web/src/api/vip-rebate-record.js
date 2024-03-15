@@ -20,3 +20,7 @@ export const distribute = (rebate) => {
 export const batchCancel = (records) => {
   return https(5 * 60 * 1000).request("/vip-rebate-record/batchCancel", Method.POST, { records: JSON.stringify(records) }, ContentType.form);
 };
+
+export const cancelByQuery = (rebate) => {
+  return https().request("/vip-rebate-record/cancelByQuery?_method=PUT", Method.POST, rebate, ContentType.form);
+};

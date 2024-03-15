@@ -555,6 +555,7 @@ export default {
     callbackUrl: 'Callback URL',
     cancel: 'Cancel',
     cancelBbDacha: 'Cancel BB Dacha',
+    cancelBySearch: 'Cancel By Query',
     cancelDeposit: 'Cancel Deposit',
     cancelGameMatch: 'Cancel Game Match',
     cancelGift: 'Cancel Gift Redemption',
@@ -1550,6 +1551,8 @@ export default {
       'Confirm that you want to cancel this BB Dacha, the operation cannot be undone',
     confirmCancelQuiz:
       'Confirm that you want to cancel this quiz, the operation cannot be undone',
+    confirmCancelRebate:
+      'Confirm that you want to cancel the rebate records, the operation cannot be undone',
     confirmCopy: 'Do you want to copy from ',
     confirmCopyTo: ' to ',
     confirmDelete:
