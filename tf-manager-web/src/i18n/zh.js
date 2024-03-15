@@ -136,7 +136,7 @@ export default {
       TRANSFER_OUT: '转出',
       AFFILIATE_SETTLEMENT: '代理结算',
       AFFILIATE_DEPOSIT: '额度代存',
-      AFFILIATE_COMMISSION: '佣金代存'
+      AFFILIATE_COMMISSION: '佣金代存',
     },
   },
   status: {
@@ -475,6 +475,7 @@ export default {
     allprofit: '全部盈亏',
     allreviewstatus: '全部复核状态',
     allrisklevel: '全部风险等级',
+    allmembers: '全部会员',
     allmembertype: '全部会员状态',
     amount: '金额',
     amountLimitPerRain: '每场红包雨金额限制',
@@ -1587,7 +1588,8 @@ export default {
     memberNotInSite: '会员不存在于此站点',
     memberFreeGameLogin: '玩家账号, 超过一笔时以逗号分隔(最多200笔账号)',
     memberFreeGameRound: '局数',
-    memberFreeGameIds: '可使用游戏 ID, 超过一笔时以逗号分隔; 长度 (含逗号) 上限 200',
+    memberFreeGameIds:
+      '可使用游戏 ID, 超过一笔时以逗号分隔; 长度 (含逗号) 上限 200',
     multipleQuerySeparatedBySpace: '使用空格来区分多个搜索条件',
     multiwheelprizeform: '输入 0 以代表大奖',
     noAvailablePrivilege: '当前无可用的优惠',
