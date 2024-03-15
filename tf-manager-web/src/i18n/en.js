@@ -140,7 +140,7 @@ export default {
       TRANSFER_OUT: 'Transfer Out',
       AFFILIATE_SETTLEMENT: 'Affiliate Settlement',
       AFFILIATE_DEPOSIT: 'Transfer from Balance',
-      AFFILIATE_COMMISSION: 'Transfer from Commission Balance'
+      AFFILIATE_COMMISSION: 'Transfer from Commission Balance',
     },
   },
   status: {
@@ -480,6 +480,7 @@ export default {
     allprofit: 'All Profit',
     allreviewstatus: 'All Review Status',
     allrisklevel: 'All Risk Level',
+    allmembers: 'All Members',
     allmembertype: 'All Member Type',
     announcementType: 'Announcement Type',
     answer: 'Answer',
@@ -1602,9 +1603,11 @@ export default {
     logoutPlayerSuccess: 'Logout Player Success',
     maxGreaterThanMin: 'Maximum must be greater than minimum',
     memberNotInSite: 'Member could not be found in this site',
-    memberFreeGameLogin: 'Login name, separate with commas if there is more than one name (maximum 200 names)',
+    memberFreeGameLogin:
+      'Login name, separate with commas if there is more than one name (maximum 200 names)',
     memberFreeGameRound: 'Free game round',
-    memberFreeGameIds: 'Game IDs can be used, separated by commas if there is more than one; the maximum length (including commas) is 200',
+    memberFreeGameIds:
+      'Game IDs can be used, separated by commas if there is more than one; the maximum length (including commas) is 200',
     multipleQuerySeparatedBySpace:
       'Multiple query conditions are separated by spaces',
     multiwheelprizeform: 'Insert 0 as Grand Prize',
@@ -1616,7 +1619,8 @@ export default {
     promoDistributionSuccess: 'Promo Distribution Success',
     redeemCashSuccess: 'Redeem Cash Success',
     reenterPassword: 'Please re-enter the password',
-    rebateSuccess: 'VIP Rebate distribution in process, please refresh and check on the records later.',
+    rebateSuccess:
+      'VIP Rebate distribution in process, please refresh and check on the records later.',
     registerSuccess: 'Register Success',
     referSuccess: 'Distribute Refer Friend Promo Success',
     replySuccess: 'Reply Success',
