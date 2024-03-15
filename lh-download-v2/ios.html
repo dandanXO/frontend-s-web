@@ -317,7 +317,7 @@
         async function getApiUrl() {
             var clickBtn = document.getElementById("click-btn");
             clickBtn.onclick = async function () {
-                var apiUrl = 'https://conffea.vpvov.com:8190'
+                var apiUrl = 'https://conffea.vpvov.com:8190/getTfData'
                 try {
                     const response = await fetch(apiUrl, {
                         method: 'GET',
@@ -330,10 +330,11 @@
                             var openUrl = data.data;
                             window.location.href= openUrl;
                         }
-						else
-						{
-							alert(data.msg)
-						}
+                        else
+                        {
+                            alert(data.msg)
+                        }
+
                     }
                 } catch (error) {
                     console.log(error)
