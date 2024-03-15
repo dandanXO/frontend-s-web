@@ -110,6 +110,15 @@
           >
             {{ t('fields.batchCancel') }}
           </el-button>
+          <el-button
+            icon="el-icon-close"
+            size="mini"
+            type="danger"
+            v-permission="['sys:vip-rebate-record:cancel']"
+            @click="cancelBySearch"
+          >
+            {{ t('fields.cancelBySearch') }}
+          </el-button>
         </div>
       </div>
     </div>
@@ -362,7 +371,7 @@
   </el-dialog>
 
   <el-dialog
-    :title="t('fields.massImport')"
+    :title="t('fields.batchCancel')"
     v-model="uiControl.importDialogVisible"
     append-to-body
     width="1000px"
@@ -480,7 +489,7 @@ import { useI18n } from "vue-i18n";
 import { getSiteListSimple } from '../../../api/site';
 import { useStore } from '../../../store';
 import { TENANT } from '../../../store/modules/user/action-types';
-import { adjustAmount, distribute, getTotal, getVipRebateRecord, batchCancel } from '../../../api/vip-rebate-record';
+import { adjustAmount, distribute, getTotal, getVipRebateRecord, batchCancel, cancelByQuery } from '../../../api/vip-rebate-record';
 import { required } from '../../../utils/validate';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { getVipRebateRecordDetails } from '../../../api/vip-rebate-record-detail';
@@ -522,7 +531,7 @@ const uiControl = reactive({
     { key: 2, displayName: "DISTRIBUTED", value: "DISTRIBUTED" },
     { key: 3, displayName: "CANCEL", value: "CANCEL" }
   ],
-  importDialogVisible: false,
+  importDialogVisible: false
 });
 
 const EXPORT_HEADER = [t('fields.loginName'), t('fields.vipLevel'), t('fields.platform'), t('fields.gameType'), t('fields.betAmount'),
@@ -918,6 +927,22 @@ async function confirmImport() {
       loadVipRebateRecords();
       importForm.cause = null;
     }
+  });
+}
+
+async function cancelBySearch() {
+  ElMessageBox.confirm(
+    t('message.confirmCancelRebate'),
+    {
+      confirmButtonText: t('fields.confirm'),
+      cancelButtonText: t('fields.cancel'),
+      type: "warning"
+    }
+  ).then(async () => {
+    const query = checkQuery();
+    await cancelByQuery(query);
+    ElMessage({ message: t('message.cancelSuccess'), type: "success" });
+    loadVipRebateRecords()
   });
 }
 
