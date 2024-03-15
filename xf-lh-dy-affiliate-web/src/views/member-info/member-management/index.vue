@@ -31,7 +31,14 @@
                 />
               </el-checkbox-group>
             </el-col>
-            <el-col class="memberTag" :xl="3" :lg="4" :md="12" :sm="24" style="margin-left: auto; text-align: right;">
+            <el-col
+              class="memberTag"
+              :xl="3"
+              :lg="4"
+              :md="12"
+              :sm="24"
+              style="margin-left: auto; text-align: right;"
+            >
               <el-button
                 icon="el-icon-setting"
                 type="primary"
@@ -52,20 +59,29 @@
             </el-col>
             <el-col :xl="8" :lg="8" :md="10" :sm="8">
               <el-form-item :label="t('fields.depositAmount') + ' :'">
-                <el-input size="normal" v-model="request.depositMinAmount" class="input-min">
+                <el-input
+                  size="normal"
+                  v-model="request.depositMinAmount"
+                  class="input-min"
+                >
                   <template #append>
                     -
                   </template>
                 </el-input>
                 <el-input
                   v-model="request.depositMaxAmount"
-                  class="input-max" size="normal"
+                  class="input-max"
+                  size="normal"
                 />
               </el-form-item>
             </el-col>
             <el-col :xl="8" :lg="8" :md="6" :sm="6">
               <el-form-item :label="t('fields.betRecord') + ' :'">
-                <el-select style="width: 100%;" size="normal" v-model="request.isBet">
+                <el-select
+                  style="width: 100%;"
+                  size="normal"
+                  v-model="request.isBet"
+                >
                   <el-option key="1" value="-1" :label="t('fields.all')">
                     {{ t('fields.all') }}
                   </el-option>
@@ -120,8 +136,50 @@
                 />
               </el-form-item>
             </el-col>
-            <el-col :xl="6" :lg="6" :md="12" style="text-align: center; margin-top: 10px;">
-              <div style="margin-top: 10px; width: 100%; display: flex; align-items: center; justify-content: center">
+          </el-row>
+        </div>
+        <div class="inputs-wrap">
+          <el-row :gutter="20" style="gap: 10px;">
+            <el-col :xl="7" :lg="7" :md="7" :sm="7">
+              <el-form-item :label="t('fields.orderBy') + ' :'">
+                <el-select
+                  style="width: 100%;"
+                  size="normal"
+                  v-model="request.orderBy"
+                >
+                  <el-option
+                    v-for="item in uiControl.orderBy"
+                    :key="item.display"
+                    :label="t('fields.' + item.display)"
+                    :value="item.value"
+                  />
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :xl="7" :lg="7" :md="7" :sm="7">
+              <el-form-item :label="t('fields.sortType') + ' :'">
+                <el-select
+                  style="width: 100%;"
+                  size="normal"
+                  v-model="request.sortType"
+                >
+                  <el-option
+                    v-for="item in uiControl.sortType"
+                    :key="item.display"
+                    :label="t('sortType.' + item.display)"
+                    :value="item.value"
+                  />
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col
+              :xl="8"
+              :lg="8"
+              :md="8"
+            >
+              <div
+                style="margin-top: 10px; width: 100%; display: flex; align-items: center; justify-content: center"
+              >
                 <el-button
                   icon="el-icon-search"
                   type="primary"
@@ -130,7 +188,12 @@
                 >
                   {{ $t('fields.search') }}
                 </el-button>
-                <el-button size="normal" type="primary" plain @click="resetQuery()">
+                <el-button
+                  size="normal"
+                  type="primary"
+                  plain
+                  @click="resetQuery()"
+                >
                   {{ $t('fields.reset') }}
                 </el-button>
               </div>
@@ -164,7 +227,7 @@
             </tr>
           </thead>
           <tbody v-if="page.records.length > 0">
-            <tr v-for="(item) in page.records" :key="item.id">
+            <tr v-for="item in page.records" :key="item.id">
               <td :data-label="t('fields.sequence')">
                 <input
                   type="checkbox"
@@ -174,9 +237,15 @@
                 >
               </td>
               <td :data-label="t('fields.loginName')">{{ item.loginName }}</td>
-              <td :data-label="t('fields.totalDeposit')">{{ '$' + formatMoney(item.totalDeposit) }}</td>
-              <td :data-label="t('fields.totalWithdraw')">{{ '$' + formatMoney(item.totalWithdraw) }}</td>
-              <td :data-label="t('fields.winLoss')">{{ '$' + formatMoney(item.winLoss) }}</td>
+              <td :data-label="t('fields.totalDeposit')">
+                {{ '$' + formatMoney(item.totalDeposit) }}
+              </td>
+              <td :data-label="t('fields.totalWithdraw')">
+                {{ '$' + formatMoney(item.totalWithdraw) }}
+              </td>
+              <td :data-label="t('fields.winLoss')">
+                {{ '$' + formatMoney(item.winLoss) }}
+              </td>
               <td :data-label="t('fields.regTime')">
                 <span v-if="item.regTime === null">-</span>
                 <span>{{ formatDateTime(item.regTime) }}</span>
@@ -185,7 +254,9 @@
                 <span v-if="item.lastLoginTime === null">-</span>
                 <span>{{ formatDateTime(item.lastLoginTime) }}</span>
               </td>
-              <td :data-label="t('fields.memberTag')">{{ formatmTag(item.tags) }}</td>
+              <td :data-label="t('fields.memberTag')">
+                {{ formatmTag(item.tags) }}
+              </td>
               <td class="relativerow" :data-label="t('fields.operate')">
                 <el-dropdown>
                   <span class="el-dropdown-link">
@@ -196,12 +267,26 @@
                   </span>
                   <template #dropdown>
                     <el-dropdown-menu>
-                      <el-dropdown-item @click="showMemberInfo(item)">{{ t('fields.memberInfo') }}</el-dropdown-item>
-                      <el-dropdown-item @click="transferRedirect(item.loginName)">{{ t('menu.Transfer') }}</el-dropdown-item>
-                      <el-dropdown-item @click="showEditTag(item)">{{ t('fields.editTag') }}</el-dropdown-item>
-                      <el-dropdown-item @click="showEditRemark(item)">{{ t('fields.remark') }}</el-dropdown-item>
-                      <el-dropdown-item @click="showDepositRecord(item)">{{ t('fields.depositRecord') }}</el-dropdown-item>
-                      <el-dropdown-item @click="showGameRecord(item.loginName)"> {{ t('fields.betRecord') }}</el-dropdown-item>
+                      <el-dropdown-item @click="showMemberInfo(item)">
+                        {{ t('fields.memberInfo') }}
+                      </el-dropdown-item>
+                      <el-dropdown-item
+                        @click="transferRedirect(item.loginName)"
+                      >
+                        {{ t('menu.Transfer') }}
+                      </el-dropdown-item>
+                      <el-dropdown-item @click="showEditTag(item)">
+                        {{ t('fields.editTag') }}
+                      </el-dropdown-item>
+                      <el-dropdown-item @click="showEditRemark(item)">
+                        {{ t('fields.remark') }}
+                      </el-dropdown-item>
+                      <el-dropdown-item @click="showDepositRecord(item)">
+                        {{ t('fields.depositRecord') }}
+                      </el-dropdown-item>
+                      <el-dropdown-item @click="showGameRecord(item.loginName)">
+                        {{ t('fields.betRecord') }}
+                      </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
@@ -233,9 +318,7 @@
       <div style="display: flex; gap: 10px;">
         <el-row :gutter="20" style="gap: 10px">
           <el-col :xl="8" :lg="18" :md="16" :xs="16">
-            <el-form-item
-              :label="t('fields.recordTime') + ' :'"
-            >
+            <el-form-item :label="t('fields.recordTime') + ' :'">
               <el-date-picker
                 v-model="memberRequest.recordTime"
                 format="DD/MM/YYYY"
@@ -288,7 +371,11 @@
               >
                 {{ t('member.status.frozen') }}
               </el-tag>
-              <el-tag v-if="memberInfo.status === null" type="info" size="normal">
+              <el-tag
+                v-if="memberInfo.status === null"
+                type="info"
+                size="normal"
+              >
                 -
               </el-tag>
             </el-form-item>
@@ -359,9 +446,14 @@
                 <emptyComp />
               </td>
             </tr>
-            <tr v-for="(record, index) in memberInfo.memberBetRecordSummaryVOList" :key="index">
+            <tr
+              v-for="(record, index) in memberInfo.memberBetRecordSummaryVOList"
+              :key="index"
+            >
               <td :data-label="t('fields.sequence')">{{ index + 1 }}</td>
-              <td :data-label="t('fields.platform')">{{ record.platform + ' - ' + record.gameType }}</td>
+              <td :data-label="t('fields.platform')">
+                {{ record.platform + ' - ' + record.gameType }}
+              </td>
               <td :data-label="t('fields.validBet')">{{ record.validBet }}</td>
               <td :data-label="t('fields.winLoss')">{{ record.winLoss }}</td>
             </tr>
@@ -462,12 +554,13 @@
           </tr>
         </thead>
         <tbody v-if="memberDepositInfo.page.records.length > 0">
-          <tr v-for="(item, index) in memberDepositInfo.page.records" :key="item.id">
+          <tr
+            v-for="(item, index) in memberDepositInfo.page.records"
+            :key="item.id"
+          >
             <td>{{ (depositRequest.current - 1) * 10 + index + 1 }}</td>
             <td>{{ item.serialNumber }}</td>
-            <td>
-              ${{ item.depositAmount.toFixed(2) }}
-            </td>
+            <td>${{ item.depositAmount.toFixed(2) }}</td>
             <td>
               {{ formatDate(item.depositDate) }}
             </td>
@@ -475,14 +568,22 @@
               {{ formatDate(item.finishDate) }}
             </td>
             <td>
-              <span v-if="['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(item.status)">
-                <span class="success-tag">{{ t('depositStatus.' + item.status) }}</span>
+              <span
+                v-if="['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(item.status)"
+              >
+                <span class="success-tag">
+                  {{ t('depositStatus.' + item.status) }}
+                </span>
               </span>
               <span v-else-if="item.status === 'CLOSED'">
-                <span class="danger-tag">{{ t('depositStatus.' + item.status) }}</span>
+                <span class="danger-tag">
+                  {{ t('depositStatus.' + item.status) }}
+                </span>
               </span>
               <span v-else-if="item.status === 'PENDING'">
-                <span class="warning-tag">{{ t('depositStatus.' + item.status) }}</span>
+                <span class="warning-tag">
+                  {{ t('depositStatus.' + item.status) }}
+                </span>
               </span>
               <span v-else>
                 <span class="info-tag">-</span>
@@ -521,8 +622,8 @@ import { getAffiliateTagList } from '../../../api/affiliate-tag'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { getMemberDepositRecords } from '../../../api/affiliate-deposit-record';
-import emptyComp from '@/components/empty';
+import { getMemberDepositRecords } from '../../../api/affiliate-deposit-record'
+import emptyComp from '@/components/empty'
 const store = useStore()
 const { t } = useI18n()
 const router = useRouter()
@@ -552,6 +653,16 @@ const uiControl = reactive({
   depositDialogVisible: false,
   editBtn: true,
   editType: 'One',
+  orderBy: [
+    { display: 'totalDeposit', value: 'total_deposit' },
+    { display: 'totalWithdraw', value: 'total_withdraw' },
+    { display: 'winLoss', value: 'netProfit' }
+  ],
+  sortType: [
+    { display: 'DESC', value: 'DESC' },
+    { display: 'ASC', value: 'ASC' },
+  ],
+
 })
 
 const memberInfo = reactive({
@@ -601,28 +712,28 @@ const unAssigned = reactive({
 const dialog = reactive({
   loading: false,
 })
-const formatMoney = (value) => {
+const formatMoney = value => {
   if (typeof value !== 'number') {
-    return '-';
+    return '-'
   }
   // Assuming you want to format to two decimal places
-  return value.toFixed(2);
-};
+  return value.toFixed(2)
+}
 
-const formatDateTime = (value) => {
+const formatDateTime = value => {
   if (!value) {
-    return '-';
+    return '-'
   }
-  const date = new Date(value);
-  return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
-};
+  const date = new Date(value)
+  return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
+}
 
-const formatmTag = (tags) => {
+const formatmTag = tags => {
   if (!Array.isArray(tags) || tags.length === 0) {
-    return '-';
+    return '-'
   }
-  return tags.join(', ');
-};
+  return tags.join(', ')
+}
 
 const shortcuts = [
   {
@@ -732,6 +843,8 @@ const request = reactive({
   size: 20,
   current: 1,
   memberTags: [],
+  orderBy: uiControl.orderBy[0].value,
+  sortType: uiControl.sortType[0].value,
 })
 
 const memberRequest = reactive({
@@ -1017,7 +1130,7 @@ async function submitRemark() {
   uiControl.remarkDialogVisible = false
 }
 function formatDate(date) {
-  return date ? moment(date).format('YYYY/MM/DD HH:mm:ss') : '-';
+  return date ? moment(date).format('YYYY/MM/DD HH:mm:ss') : '-'
 }
 
 onMounted(() => {
