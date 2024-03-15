@@ -31,7 +31,11 @@
                 </div>
                 <div
                   v-else-if="
-                    obj === 'commitDate' || obj === 'feedbackTime' || obj === 'recordTime' || obj === 'transferDate' || (obj === 'betTime' && recordType === 'bethistory')
+                    obj === 'commitDate' ||
+                    obj === 'feedbackTime' ||
+                    obj === 'recordTime' ||
+                    obj === 'transferDate' ||
+                    (obj === 'betTime' && recordType === 'bethistory')
                   "
                 >
                   {{ humanDatetime(det[obj]) }}
@@ -58,19 +62,20 @@
             <template v-if="recordType === 'deposit'">
               <q-btn outline label="复制" @click="copyText(det.serialNumber, '存款编码')" size="sm" color="bright" />
             </template>
-          </div>
+            <!-- </div> -->
 
-          <div v-if="recordType === 'withdraw'" class="buttons">
-            <template
-              v-if="
-                det.status === 'SUCCESS' &&
-                (det.currencyName === 'CNY' || det.currencyName === 'AliCNY') &&
-                det.confirmStatus === 0
-              "
-            >
-              <q-btn @click="openWithdrawConfirmDialog(det)" outline label="确认到账" size="sm" color="bright" />
+            <template v-if="recordType === 'withdraw'">
+              <template
+                v-if="
+                  det.status === 'SUCCESS' &&
+                  (det.currencyName === 'CNY' || det.currencyName === 'AliCNY') &&
+                  det.confirmStatus === 0
+                "
+              >
+                <q-btn @click="openWithdrawConfirmDialog(det)" outline label="确认到账" size="sm" color="bright" />
+              </template>
+              <q-btn outline label="复制" @click="copyText(det.serialNumber, '单号')" size="sm" color="bright" />
             </template>
-            <q-btn outline label="复制" @click="copyText(det.serialNumber, '单号')" size="sm" color="bright" />
           </div>
         </q-card>
         <template v-slot:loading>

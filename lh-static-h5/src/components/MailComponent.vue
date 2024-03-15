@@ -314,7 +314,7 @@ export default defineComponent({
       //   }
       // });
       // console.log(mailboxNotifyState[mailboxMessageTab.value]);
-      
+
       if(props.type === 'outbox') {
         api.get(
           `/session/feedback/${id}/read`).then((res) => {
@@ -536,7 +536,8 @@ export default defineComponent({
     font-size: 1rem;
     height: auto;
     overflow: hidden;
-    text-overflow: ellipsis;
+    overflow-wrap: break-word;
+    // text-overflow: ellipsis;
   }
 }
 
