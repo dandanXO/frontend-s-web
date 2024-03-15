@@ -656,7 +656,7 @@ const uiControl = reactive({
   orderBy: [
     { display: 'totalDeposit', value: 'total_deposit' },
     { display: 'totalWithdraw', value: 'total_withdraw' },
-    { display: 'winLoss', value: 'netProfit' }
+    { display: 'winLoss', value: 'win_loss' }
   ],
   sortType: [
     { display: 'DESC', value: 'DESC' },
