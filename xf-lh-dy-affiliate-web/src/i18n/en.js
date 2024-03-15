@@ -112,6 +112,10 @@ export default {
     commissionCalculatorNote:
       'Note: The simulator calculates based on the average rebate and bonus estimates, and the venue selection defaults to the situation where all members participate in the game at the same venue. The results are for reference only.',
   },
+  sortType: {
+    ASC: 'ASC',
+    DESC: 'DESC'
+  },
   fields: {
     account: 'Account',
     accountInfo: 'Account Information',
@@ -425,6 +429,8 @@ export default {
     grossProfit: 'Gross Profit',
     totalBetMemberCount: 'Total Member Bet Count',
     totalDepositMemberCount: 'Total Member Deposit Count',
+    orderBy: 'Order By',
+    sortType: 'Sort Type',
   },
   message: {
     adjustSuccess: 'Adjust Success',

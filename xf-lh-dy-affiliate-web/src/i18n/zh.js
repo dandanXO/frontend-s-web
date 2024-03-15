@@ -109,6 +109,10 @@ export default {
     commissionCalculatorNote:
       '注：模拟器按照返水和红利均值预估，场馆选择默认会员都在统一场馆参与游戏的情况进行计算，结果仅供参考。',
   },
+  sortType: {
+    ASC: '顺序',
+    DESC: '逆序'
+  },
   fields: {
     account: '账号',
     accountInfo: '账号信息',
@@ -422,6 +426,8 @@ export default {
     grossProfit: '毛利润',
     totalBetMemberCount: '总下注人数',
     totalDepositMemberCount: '总充值人数',
+    orderBy: '排序字段',
+    sortType: '排序方式',
   },
   message: {
     addSuccess: '新增成功',
