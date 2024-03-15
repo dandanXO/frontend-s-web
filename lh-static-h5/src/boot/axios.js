@@ -12,34 +12,29 @@ const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
 
 
-if((window.location.pathname === "/promotion" ||
-  window.location.pathname === "/deposit" ||
-  window.location.pathname === "/invitefriend" ||
-  window.location.pathname === "/vip" ||
-  window.location.pathname === "/invitefriend" ||
-  window.location.pathname === "/privilege/invite")){
+// window.location.pathname === "/promotion" ||
+// window.location.pathname === "/deposit" ||
+// window.location.pathname === "/invitefriend" ||  window.location.pathname === "/invitefriend" ||
+// window.location.pathname === "/privilege/invite" ||
+//
+if((
+  window.location.pathname === "/vip"
+)){
 
   if( window.webkit
     && window.webkit.messageHandlers
     && window.webkit.messageHandlers.notifyApp ){
     window.webkit.messageHandlers.notifyApp.postMessage("Test123123");
   }
-
-  if (
-    (Platform.is.desktop || Platform.is.webkit) &&
-    Platform.is.name !== "webkit" &&
-    window.opener
-  ) {
-    window.opener.postMessage("OPner11123");
-  } else {
-    window.postMessage("NormalParent123");
+  if( window["WebScript"]){
+    console.log("TIS")
+    window["WebScript"].notifyApp("Android 33");
   }
 
-  window.addEventListener('message', function(event) {
+  window.addEventListener('sendWebMessage', function(event) {
     console.log("RECEIVE FROM JAVA");
-    if (_.isString(event.data)) {
-      console.log(event.data)
-    }
+      console.log(event.data);
+      alert(event.data);
   });
 
   var rstApi = getInitApi(rstArray, "LH_H5_RST_URL");

@@ -246,7 +246,18 @@
           :label="t('fields.activeMemberCount')"
           align="center"
           width="120"
-        />
+        >
+          <template #default="scope">
+            <el-link
+              v-if="scope.row.activeMemberCount !== 0"
+              type="primary"
+              @click="showDialog('ALLMEMBER', scope.row.affiliateId)"
+            >
+              {{ scope.row.activeMemberCount }}
+            </el-link>
+            <span v-else>{{ scope.row.activeMemberCount }}</span>
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         :total="page.total"
@@ -518,6 +529,9 @@ function showDialog(type, affiliateId) {
     // newMembers.list = members
     loadNewMember(affiliateId)
     uiControl.dialogTitle = t('fields.newMember')
+  } else if (type === 'ALLMEMBER') {
+    loadAllMember(affiliateId)
+    uiControl.dialogTitle = t('fields.allmembers')
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
@@ -546,8 +560,6 @@ async function loadNewMember(affiliateId) {
       )
 
       query.recordTime = query.recordTime.join(',')
-
-      console.log('query.recordTime 1 : ', query.recordTime)
     } else {
       query.recordTime = moment(request.recordTime[0]).format(
         'YYYY-MM-DD 00:00:00'
@@ -562,6 +574,24 @@ async function loadNewMember(affiliateId) {
   //     query.memberId = members[0]
   //   }
   // }
+  query.affiliateId = affiliateId
+
+  const { data: ret } = await getAffiliateSummaryNewMember(query)
+  memberPage.pages = ret.pages
+  memberPage.records = ret.records
+  memberPage.loading = false
+}
+
+async function loadAllMember(affiliateId) {
+  memberPage.loading = true
+  memberRequest.siteId = request.siteId
+  const requestCopy = { ...memberRequest }
+  const query = {}
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value
+    }
+  })
   query.affiliateId = affiliateId
 
   const { data: ret } = await getAffiliateSummaryNewMember(query)

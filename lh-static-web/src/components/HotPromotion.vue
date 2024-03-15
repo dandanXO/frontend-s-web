@@ -43,6 +43,7 @@
     ></CnyStepGame2024Promo>
     <CS2Sign v-if="list.redirectUrl === 'lh-cs2-copenhagen-major-2024' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
 
+    <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel' && !isCommonPromo && store.token" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -88,6 +89,7 @@ import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
 import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
 import CnyStepGame2024Promo from "../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue";
 import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
+import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -124,7 +126,8 @@ export default defineComponent({
     UpgradeHongBao,
     HongBaoYu2024,
     DragonCardPromo,
-    CS2Sign
+    CS2Sign,
+    BonusSpinWheel
     // DailyBonus
   },
   props: {
@@ -393,7 +396,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-cny-step-game" ||
       this.list.redirectUrl === "lh1-feedback-award" ||
       this.list.redirectUrl === "lh1-upgrade-hongbao" ||
-      this.list.redirectUrl === "lh-cs2-copenhagen-major-2024"
+      this.list.redirectUrl === "lh-cs2-copenhagen-major-2024" ||
+      this.list.redirectUrl === "lh1-spin-wheel"
     ) {
       this.isCommonPromo = false;
     } else {

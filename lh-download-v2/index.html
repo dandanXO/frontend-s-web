@@ -80,7 +80,7 @@
 
     async function getApiUrl() {
         try {
-            const response = await fetch(`data.txt`, {headers: {
+            const response = await fetch(`https://conffea.vpvov.com:8190/getDownData`, {headers: {
                     'Content-Type': 'text/plain; charset=UTF-8'
                 }});
             const data = await response.json();
@@ -192,6 +192,15 @@
 
         var iosHTMl = '';
         var websiteHtml = '';
+        var safariHTml= `
+                        <div class="download_btn" id="btn_99">
+            <a
+                id="download_99"
+                href="/ios.html"
+            >特殊链接</a
+            >
+        </div>
+`;
         iosDownload.forEach((list, index) => {
             for (const key in list) {
                 if (list.hasOwnProperty(key)) {
@@ -224,7 +233,7 @@
                 }
             }
 
-            $("#ios-lists").html(iosHTMl + websiteHtml)
+            $("#ios-lists").html(iosHTMl + websiteHtml + safariHTml)
         })
 
     }

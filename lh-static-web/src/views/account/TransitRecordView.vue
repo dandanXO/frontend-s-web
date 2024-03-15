@@ -211,7 +211,7 @@
 
                 <template v-if="tbl.dataIndex === 'status'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    <span>{{ getWithdrawStatus(scope.row.status) }}</span>
+                    <span>{{ scope.row.statusName }}</span>
                   </div>
                 </template>
 

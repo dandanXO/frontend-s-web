@@ -483,7 +483,7 @@ const onItemClick = (item) => {
 const loadingBtn = ref(false);
 const mailboxData = ref([]);
 const mailboxState = reactive({
-  active: "quiz",
+  active: "write",
   mailboxList: {
     inbox: {
       list: [],
@@ -993,6 +993,7 @@ onMounted(() => {
 
 
 .mail-content {
+  overflow-wrap: break-word;
   :deep(.el-collapse-item__header) {
     background: #f7f8fb;
     // color: $font-1;

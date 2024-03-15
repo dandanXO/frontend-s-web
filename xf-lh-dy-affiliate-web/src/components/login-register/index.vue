@@ -453,6 +453,12 @@ export default defineComponent({
             message: t('message.requiredLoginName'),
             trigger: 'blur',
           },
+          {
+            required: true,
+            pattern: /^[a-zA-Z1-9][a-zA-Z0-9]*$/,
+            message: "代理账号只能有数字或字母组成",
+            trigger: "blur"
+          }
         ],
         password: [
           {

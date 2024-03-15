@@ -39,6 +39,7 @@
             </div>
           </div>
           <div class="useKeys" @click="openBox(selectedTreasureLevel)">开启</div>
+          <div class="tips-p" style="margin-top:10px;">注：系统会在注单已结算后次日中午12点后统计所有记录，并自动派发钥匙</div>
         </div>
       </div>
     </div>
@@ -66,12 +67,13 @@
               <div class="btn notComplete" v-if="!day.claimed && !day.toClaim">&nbsp;</div>
             </div>
           </div>
+          <div class="tips-p">注：系统会在注单已结算后次日中午12点后统计所有记录，并自动统计签到日期</div>
         </div>
       </div>
     </div>
     <div class="section third">
       <div class="content">
-        <p>1.活动期间，每日报注CS2Major 2024赛事达到100元有效投注即可获得1个开箱钥匙，开箱钥匙与开箱次数每日不设上限；</p>
+        <p>1.活动期间，每日投注CS2Major 2024赛事达到100元有效投注即可获得1个开箱钥匙，开箱钥匙与开箱次数每日不设上限；</p>
         <p>2.活动期间，开箱钥匙可积攒使用，获得开箱钥匙满足开箱条件可在活动期间任意时间开启宝箱，超出活动时间未开启宝箱则不予补偿;</p>
         <p>3.开启宝箱后获得彩金由系统自动实时派发至会员主钱包内，彩金3倍流水即可出款； </p>
         <p>4.活动期间，参与CS2Major 2024赛事有效投注≥1,000元则视为签到成功，达到指定签到天数则可开启签到宝箱，每个宝箱每位用户仅可开启一次; </p>
@@ -229,6 +231,11 @@ const openBox = (item) => {
       // Open Dialog
       openModal("amt", res.data);
       init();
+    } else {
+      ElMessage.error({
+        type: "error",
+        message: res.message
+      });
     }
   });
   setTimeout(() => {
@@ -446,7 +453,7 @@ onMounted(() => {
         transition: transform 0.3s ease;
 
         &.active {
-          transform: scale3d(1.1, 1.1, 1.1);
+          transform: scale3d(1.2, 1.2, 1.2);
         }
       }
 
@@ -719,4 +726,5 @@ onMounted(() => {
     cursor: pointer;
   }
 }
+
 </style>
