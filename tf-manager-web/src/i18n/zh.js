@@ -353,6 +353,7 @@ export default {
     daily: '日常',
     newbie: '新人',
     limit: '限时',
+    featured: '精选',
   },
   messageType: {
     NOTIFICATION: '通知',
