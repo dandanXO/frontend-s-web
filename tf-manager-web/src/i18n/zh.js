@@ -365,6 +365,10 @@ export default {
     follow: '遵循之前',
     new: '更新游戏类型',
   },
+  sortType: {
+    ASC: '升序',
+    DESC: '降序'
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -1009,6 +1013,7 @@ export default {
     operateTime: '操作时间',
     operationTime: '操作时间',
     operationType: '操作类型',
+    orderBy: '排序字段',
     orderNo: '订单号',
     orderTrackingNo: '订单号',
     outerSetting: '外圈几率设置',
@@ -1213,6 +1218,7 @@ export default {
     smsSendTime: '发送时间',
     smsType: '短信类型',
     sorting: '排序',
+    sortType: '排序类型',
     sourceType: '来源类型',
     sportBetResult: '体育投注结果',
     stage: '关卡',
