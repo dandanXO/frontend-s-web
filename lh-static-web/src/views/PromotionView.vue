@@ -304,12 +304,12 @@ export default defineComponent({
   min-height: 600px;
 
   .all-promotions {
-    background: url(../assets/promo/bg-top2.jpg) no-repeat center top;
+    background: url(../assets/promo/bg-top3.jpg) no-repeat center top;
     width: 100%;
     background-size: 100% auto;
     padding: 50px;
     position: relative;
-    padding-top: max(300px, 22vw);
+    padding-top: max(110px, 16vw);
     background-color: #f3f7fd;
   }
   .promo-view-container {
