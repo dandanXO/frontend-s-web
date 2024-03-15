@@ -1517,6 +1517,7 @@ body {
       right: 2px;
       width: 12px;
       height: 12px;
+      opacity: 0;
     }
   }
 
@@ -1815,7 +1816,8 @@ body {
             }
 
             img.hover-icon {
-              filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%) contrast(102%);
+              filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
+                contrast(102%);
             }
           }
         }
