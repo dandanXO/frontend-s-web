@@ -1,5 +1,38 @@
 <template>
   <div class="roles-main">
+    <div class="inputs-wrap">
+      <el-select
+        v-model="request.orderBy"
+        size="small"
+        :placeholder="t('fields.orderBy')"
+        class="filter-item"
+        style="width: 120px;margin-left: 5px"
+      >
+        <el-option
+          v-for="item in uiControl.orderBy"
+          :key="item.key"
+          :label="t('fields.' + item.displayName)"
+          :value="item.value"
+        />
+      </el-select>
+      <el-select
+        v-model="request.sortType"
+        size="small"
+        :placeholder="t('fields.sortType')"
+        class="filter-item"
+        style="width: 120px;margin-left: 5px"
+      >
+        <el-option
+          v-for="item in uiControl.sortType"
+          :key="item.key"
+          :label="t('sortType.' + item.displayName)"
+          :value="item.value"
+        />
+      </el-select>
+      <el-button icon="el-icon-search" type="primary" style="margin-left: 5px" @click="loadAffiliateMembers" size="small">
+        {{ t('fields.search') }}
+      </el-button>
+    </div>
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <template #header>
         <div class="clearfix">
@@ -81,9 +114,22 @@ const props = defineProps({
   }
 })
 
+const uiControl = reactive({
+  orderBy: [
+    { key: 0, displayName: 'totalDeposit', value: 'total_deposit' },
+    { key: 1, displayName: 'totalWithdraw', value: 'total_withdraw' }
+  ],
+  sortType: [
+    { key: 0, displayName: 'DESC', value: 'DESC' },
+    { key: 1, displayName: 'ASC', value: 'ASC' }
+  ]
+})
+
 const request = reactive({
   size: 20,
-  current: 1
+  current: 1,
+  orderBy: uiControl.orderBy[0].value,
+  sortType: uiControl.sortType[0].value
 });
 
 const page = reactive({

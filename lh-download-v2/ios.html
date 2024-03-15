@@ -290,7 +290,7 @@
             } else {
                 // Not Safari
                 console.log("You are not using Safari.");
-                // $(".modal-open").show();
+                $(".modal-open").show();
 
                 $(".step-2-btn, .step-1-btn").css("pointer-events", "none").css("filter", "grayscale(1)");
             }
@@ -334,7 +334,7 @@
                         {
                             alert(data.msg)
                         }
-                    
+
                     }
                 } catch (error) {
                     console.log(error)
