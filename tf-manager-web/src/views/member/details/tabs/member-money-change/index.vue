@@ -143,7 +143,7 @@
           <template #default="scope">
             <span v-if="scope.row.beforeBalance === null">-</span>
             <span v-if="scope.row.beforeBalance !== null">
-              {{ scope.row.beforeBalance }}
+              $<span v-formatter="{data: scope.row.beforeBalance, type: 'money'}" />
             </span>
           </template>
         </el-table-column>
@@ -156,7 +156,7 @@
           <template #default="scope">
             <span v-if="scope.row.afterBalance === null">-</span>
             <span v-if="scope.row.afterBalance !== null">
-              {{ scope.row.afterBalance }}
+              $<span v-formatter="{data: scope.row.afterBalance, type: 'money'}" />
             </span>
           </template>
         </el-table-column>
@@ -169,7 +169,7 @@
           <template #default="scope">
             <span v-if="scope.row.platformBalance === null">-</span>
             <span v-if="scope.row.platformBalance !== null">
-              {{ scope.row.platformBalance }}
+              $<span v-formatter="{data: scope.row.platformBalance, type: 'money'}" />
             </span>
           </template>
         </el-table-column>
