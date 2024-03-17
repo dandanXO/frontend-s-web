@@ -143,6 +143,14 @@ export default route(function (/* { store, ssrContext } */) {
 
       fbq("track", "PageView");
       fbq("track", "ViewContent");
+    } else if (window.location.href.indexOf("jo77.cc") > -1) {
+      ui.isAffiliateB = true;
+      console.log("jo77.cc");
+
+      fbq("init", "CNRDC33C77U4A9P32PIG");
+
+      fbq("track", "PageView");
+      fbq("track", "ViewContent");
     } else if (ui.isAffiliateB) {
       console.log("Slot-Win .cc");
 
