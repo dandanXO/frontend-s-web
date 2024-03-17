@@ -803,7 +803,7 @@
             size="small"
             :placeholder="t('fields.clientType')"
             class="filter-item"
-            style="width: 200px;"
+            style="width: 250px;"
             default-first-option
           >
             <el-option
