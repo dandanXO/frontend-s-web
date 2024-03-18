@@ -54,7 +54,10 @@
                       <el-checkbox v-model="selectedIds[item.id]" size="large" />
                     </div>
                     <div v-if="item.readTime" class="read-badge">已读</div>
-                    <div :class="`title-text ${item.readTime ? '' : 'unread'}`">标题：{{ item.title }}</div>
+                    <div class="title-wrapper">
+                      <div :class="`title-text ${item.readTime ? '' : 'unread'}`" :title="item.title">标题：{{ item.title }}</div>
+                      <div class="read-time" :title="`已读: ${moment(item.readTime).format('YYYY-MM-DD HH:mm:ss')}`"><i>{{ moment(item.readTime).format('MM-DD') }}</i></div>
+                    </div>
                   </template>
                   <div>
                     <div>正文：{{ item.content }}</div>
@@ -127,7 +130,8 @@ const changeMailboxType = (nk) => {
     mailboxMessageType.value = nk.props.name;
   }
 
-  loadPersonalMailbox();
+  // reset to page 1 when change tab
+  changePage(1);
 };
 
 const handleChange= () => {
@@ -663,5 +667,24 @@ onMounted(() => {
   font-size: 10px;
   line-height: 16px;
   margin-right: 10px;
+}
+
+.title-wrapper {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  
+  .title-text {
+    text-align: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .read-time {
+    font-size: 0.8rem;
+    font-weight: 400;
+    margin: 0 10px;
+  }
 }
 </style>
