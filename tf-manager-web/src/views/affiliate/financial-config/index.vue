@@ -359,8 +359,6 @@ function showEdit(data) {
         form[key] = data[key]
       }
     }
-    console.log(form)
-    console.log(data)
     selected.paymentId = []
     if (form.paymentIds !== null) {
       const paymentIdList = form.paymentIds.split(',')
