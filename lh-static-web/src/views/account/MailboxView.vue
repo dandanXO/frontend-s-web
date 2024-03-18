@@ -56,7 +56,7 @@
                     <div v-if="item.readTime" class="read-badge">已读</div>
                     <div class="title-wrapper">
                       <div :class="`title-text ${item.readTime ? '' : 'unread'}`" :title="item.title">标题：{{ item.title }}</div>
-                      <div v-if="item.readTime" class="read-time" :title="`已读: ${moment(item.readTime).format('YYYY-MM-DD HH:mm:ss')}`"><i>{{ moment(item.readTime).format('MM-DD') }}</i></div>
+                      <div v-if="item.sendTime" class="send-time" :title="`发送时间: ${moment(item.sendTime).format('YYYY-MM-DD HH:mm:ss')}`"><i>{{ moment(item.sendTime).format('MM-DD') }}</i></div>
                     </div>
                   </template>
                   <div>
@@ -682,7 +682,7 @@ onMounted(() => {
     white-space: nowrap;
   }
 
-  .read-time {
+  .send-time {
     font-size: 0.8rem;
     font-weight: 400;
     margin: 0 10px;

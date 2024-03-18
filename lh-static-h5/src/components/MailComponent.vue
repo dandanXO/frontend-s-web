@@ -54,7 +54,7 @@
                   />
                   <q-chip size="sm" label="已读" v-if="det.readTime && det.sendTime" />
                   <div class="title-text" :title="det.title">标题：{{ det.title }}</div>
-                  <div v-if="det.readTime" class="read-time" :title="`已读: ${formatReadtime(det.readTime)}`"><i>{{ formatReadtime(det.readTime) }}</i></div>
+                  <div v-if="det.sendTime" class="send-time" :title="`发送时间: ${formatSendTime(det.sendTime)}`"><i>{{ formatSendTime(det.sendTime) }}</i></div>
                   <div class="right-title">
                     <RiArrowUpSLine v-if="isSelectedMail === det.id" />
                     <RiArrowDownSLine v-if="isSelectedMail !== det.id" />
@@ -465,7 +465,7 @@ export default defineComponent({
       humanDatetime(ts) {
         return moment(ts).format("YYYY-MM-DD HH:mm:ss");
       },
-      formatReadtime(ts) {
+      formatSendTime(ts) {
         return moment(ts).format("MM-DD");
       },
       onLoad,
@@ -535,7 +535,7 @@ export default defineComponent({
         flex: 1;
       }
 
-      .read-time {
+      .send-time {
         font-size: 0.8rem;
         font-weight: 400;
         margin: 0 10px;
