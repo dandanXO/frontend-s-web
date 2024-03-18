@@ -49,6 +49,11 @@ if((
   var evtApi = getInitApi(evtArray, "LH_H5_EVT_URL");
 }
 
+function sendWebMessage(message){
+  alert("OK LE")
+  alert(message)
+}
+
 
 const api = axios.create({ baseURL: rstApi });
 const cashier = axios.create({ baseURL: crtApi });
