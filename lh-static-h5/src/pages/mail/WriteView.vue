@@ -6,6 +6,13 @@
           <div class="top q-pb-md">
             <div class="title">意见类型</div>
           </div>
+          <q-select 
+            name="title"
+            v-model="mailDetailList.feedbackType" :options="feedbackTypes" :label="`${mailDetailList.feedbackType || '快捷输入'}`"
+            ref="feedbackTypeRef"
+            :rules="[(val) => !!val || '请选择']" />
+
+          <!--
           <q-btn-dropdown style="width:100%;" color="brightbtn" :label="`${mailDetailList.feedbackType || '快捷输入'}`" menu-anchor="bottom end">
             <q-list>
               <q-item v-for="(item, i) in feedbackTypes" :key="i" clickable v-close-popup @click="onItemClick(item)">
@@ -15,6 +22,7 @@
               </q-item>
             </q-list>
           </q-btn-dropdown>
+          -->
         </div>
         <div class="write-board-div q-pa-md">
           <div class="top q-pb-md">
@@ -90,6 +98,7 @@ const $q = useQuasar();
 const router = useRouter();
 const options = ["存款问题", "转账问题", "提款问题", "其他"];
 const mailDetailList = ref({
+  feedbackType: "",
   title: "",
   content: ""
 });
@@ -111,13 +120,15 @@ const loadFeedbackType = () => {
 const onItemClick = (item) => {
   mailDetailList.value.feedbackType = item;
 };
+const feedbackTypeRef = ref();
 const titleRef = ref();
 const contentRef = ref();
 const modalSendSuccess = ref(false);
 const onSubmit = () => {
+  feedbackTypeRef.value.validate();
   titleRef.value.validate();
   contentRef.value.validate();
-  if (titleRef.value.hasError || contentRef.value.hasError) {
+  if (titleRef.value.hasError || contentRef.value.hasError || feedbackTypeRef.value.hasError) {
     $q.loading.hide();
   } else {
     api
