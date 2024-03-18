@@ -44,7 +44,7 @@
         </div>
         <div class="bank-card-item" @click="bankCardModal('bank')">
           <RiLink />
-          <span class="lock-card-txt">添加银行卡</span>
+          <span class="lock-card-txt">添加银行卡 / 电子钱包 / 虚拟币</span>
         </div>
       </div>
     </div>
