@@ -59,7 +59,8 @@ const onResponse = (response) => {
     } else if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
       res.code === ResponseCode.ERROR_TOKEN_MISSED ||
       res.code === ResponseCode.ERROR_NAME_EXIST ||
-      res.code === ResponseCode.ERROR_TOKEN_LOGGED) {
+      res.code === ResponseCode.ERROR_TOKEN_LOGGED ||
+      res.code === ResponseCode.ERROR_TOKEN_FAILED) {
       ElMessage({
         message: "Please re-login. Code: " + res.code,
         type: "error"
