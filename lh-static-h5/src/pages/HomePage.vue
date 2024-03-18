@@ -1343,7 +1343,6 @@ export default defineComponent({
       total: 0
     });
     const gameListData = ref([]);
-    const fishPlatforms = ref([]);
 
     var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
     var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
