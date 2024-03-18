@@ -185,7 +185,6 @@ async function loadUserLoginLog() {
     }
   }
 
-  console.log('query : ', query)
   const { data: ret } = await getUserLoginLog(query)
   page.pages = ret.pages
   page.records = ret.records
@@ -198,9 +197,9 @@ function changePage(page) {
   loadUserLoginLog()
 }
 
-onMounted(async () => {
-  await loadSites()
-  await loadUserLoginLog()
+onMounted(() => {
+  loadSites()
+  loadUserLoginLog()
 })
 </script>
 
