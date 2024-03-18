@@ -10,9 +10,9 @@
         <img src="../assets/images/affiliate/official-partner.png" width="285">
       </div>
       <div class="buttons">
-        <a :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')">加入我们</a>
-        <a class="outline" :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')">登录</a>
-        <a class="outline" @click.stop.prevent="store.openLiveChat()">
+        <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">加入我们</a>
+        <a class="outline" :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">登录</a>
+        <a class="outline" :href="affiliateUrl + 'login?view=2&agent=' + (affCode ? affCode : '')" target="_blank">
           联系我们
         </a>
       </div>
@@ -188,7 +188,7 @@
         </div>
       </div>
       <div>
-        <a :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' +
+        <a :href="affiliateUrl + 'login?agent=' +
           (affCode ? affCode : '')
           " class="agent-reg-btn">立即申请代理</a>
       </div>
@@ -197,14 +197,15 @@
   </div>
 </template>
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 // import { useI18n } from "vue-i18n";
 import { userStore } from "@/store";
 import { getDevice } from "@/utils/utils";
 
 export default defineComponent({
   setup() {
-    // const { t } = useI18n();
+    const affiliateUrl = ref('https://lh1-affiliate.phoicynxeey.com/lh/');
+
     const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
       var left = (screen.width - popupWinWidth) * 2;
       var top = (screen.height - popupWinHeight) / 4;
@@ -269,6 +270,7 @@ export default defineComponent({
       regDevice,
       store,
       openWindow,
+      affiliateUrl
     };
   },
 });
