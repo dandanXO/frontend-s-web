@@ -30,26 +30,27 @@
       <img class="ambassador-img" src="../assets/images/affiliate/ambassador.png" alt="" />
       <div class="btn-wrapper">
         <q-btn
-          :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')"
+          :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')"
           label="加入我们"
           size="md"
           class="join-btn"
         >
           <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
-        <q-btn :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')" label="登录" size="md" class="login-btn">
+        <q-btn :href="affiliateUrl +'login?agent=' + (affCode ? affCode : '')" label="登录" size="md" class="login-btn">
           <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
 
+        <!--        @click.stop.prevent="-->
+        <!--        openWindow(-->
+        <!--        `https://csweb01.amv4xjcbd.com/?partnerCode=LHCS&lang=zh-CN&way=${regDevice}&token=${store.token}`,-->
+        <!--        'Chat Server',-->
+        <!--        350,-->
+        <!--        650-->
+        <!--        )-->
+        <!--        "-->
         <q-btn
-          @click.stop.prevent="
-            openWindow(
-              `https://csweb01.amv4xjcbd.com/?partnerCode=LHCS&lang=zh-CN&way=${regDevice}&token=${store.token}`,
-              'Chat Server',
-              350,
-              650
-            )
-          "
+          :href="affiliateUrl +'login?view=2&agent=' + (affCode ? affCode : '')"
           label="联系我们"
           size="md"
           class="contact-btn"
@@ -175,11 +176,20 @@
 
     <div class="contact-us">
       <div class="register-btn-wrapper">
-        <q-btn :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')" label="立即申请代理" size="lg" class="register-btn">
+        <q-btn :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')" label="立即申请代理" size="lg" class="register-btn">
           <img class="mask-img" src="../assets/images/affiliate/register-btn-icon.png" alt="" />
           <img class="mask-img2" src="../assets/images/affiliate/register-btn-icon2.png" alt="" />
         </q-btn>
       </div>
+
+      <!--      @click.stop.prevent="-->
+      <!--      openWindow(-->
+      <!--      `https://csweb01.amv4xjcbd.com/?partnerCode=LHCS&lang=zh-CN&way=${regDevice}&token=${store.token}`,-->
+      <!--      'Chat Server',-->
+      <!--      350,-->
+      <!--      650-->
+      <!--      )-->
+      <!--      "-->
 
       <div class="contact-info">
         <div class="title-wrapper">
@@ -187,17 +197,9 @@
           <div class="two-four-hour-wrapper">
             <img class="two-four-mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
             <img class="two-four-mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
-            <div class="two-four-content"
-                 @click.stop.prevent="
-            openWindow(
-              `https://csweb01.amv4xjcbd.com/?partnerCode=LHCS&lang=zh-CN&way=${regDevice}&token=${store.token}`,
-              'Chat Server',
-              350,
-              650
-            )
-          ">
-              <img class="two-four-img" src="../assets/images/affiliate/headset-white.png" alt="" />
-              <span class="two-four-text">24小时在线客服</span>
+            <div class="two-four-content">
+              <a :href="affiliateUrl +'login?view=2&agent=' + (affCode ? affCode : '')" target="_blank" ><img class="two-four-img" src="../assets/images/affiliate/headset-white.png" alt="" />
+                <span class="two-four-text">24小时在线客服</span></a>
             </div>
           </div>
         </div>
@@ -229,6 +231,9 @@
 <script setup>
 import { userStore } from "../stores/index";
 import { Platform } from "quasar";
+import {ref} from "vue";
+
+const affiliateUrl= ref('https://lh1-affiliate.phoicynxeey.com/lh/');
 
 const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
   const left = (screen.width - popupWinWidth) * 2;
@@ -301,7 +306,7 @@ const rows = [
     word-break: keep-all;
     text-align: center;
     text-shadow: 0px 7.804098606109619px 7.804098606109619px rgba(0, 0, 0, 0.47),
-      3.9020493030548096px 3.9020493030548096px 0px #9da6d4;
+    3.9020493030548096px 3.9020493030548096px 0px #9da6d4;
     font-family: FZTanHeiS-B-GB;
     font-size: 3.46239rem;
     font-weight: 400;
