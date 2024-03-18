@@ -473,7 +473,7 @@ const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
 
 const request = reactive({
-  size: 2,
+  size: 20,
   current: 1,
   siteId: null,
   recordTime: [defaultStartDate, defaultEndDate],
@@ -483,13 +483,13 @@ const request = reactive({
 })
 
 const memberRequest = reactive({
-  size: 2,
+  size: 15,
   current: 1,
   siteId: null,
 })
 
 const allMemberRequest = reactive({
-  size: 2,
+  size: 15,
   current: 1,
   siteId: null,
 })
