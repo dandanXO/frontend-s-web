@@ -13,6 +13,11 @@
           <referralLink />
         </el-tab-pane>
       </el-tabs>
+      <el-tabs v-model="activeName2" style="margin-top:20px">
+        <el-tab-pane :label="t('fields.exclusiveDomain')" name="domain-name">
+          <domainName />
+        </el-tab-pane>
+      </el-tabs>
     </el-card>
   </div>
 </template>
@@ -21,7 +26,9 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import referralLink from './tab/referral-link.vue'
+import domainName from './tab/domain-name.vue'
 
 const { t } = useI18n()
 const activeName = ref('referral-link')
+const activeName2 = ref('domain-name')
 </script>

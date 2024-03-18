@@ -428,6 +428,10 @@ export default {
     totalDepositMemberCount: '总充值人数',
     orderBy: '排序字段',
     sortType: '排序方式',
+    exclusiveDomain: '专属域名',
+    pcWay: 'PC端',
+    mobileWay: '移动端',
+    forgetPassword: '忘记密码',
   },
   message: {
     addSuccess: '新增成功',
