@@ -12,13 +12,16 @@ const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
 
 
-// window.location.pathname === "/promotion" ||
-// window.location.pathname === "/deposit" ||
-// window.location.pathname === "/invitefriend" ||  window.location.pathname === "/invitefriend" ||
-// window.location.pathname === "/privilege/invite" ||
-//
+var rstApi = getInitApi(rstArray, "LH_H5_RST_URL");
+var crtApi = getInitApi(crtArray, "LH_H5_CRT_URL");
+var evtApi = getInitApi(evtArray, "LH_H5_EVT_URL");
+
 if((
-  window.location.pathname === "/vip"
+  window.location.pathname === "/vip" ||
+  window.location.pathname === "/promotion" ||
+  window.location.pathname === "/deposit" ||
+  window.location.pathname === "/invitefriend" ||
+  window.location.pathname === "/privilege/invite"
 )){
 
   //IOS
@@ -33,27 +36,24 @@ if((
   }
 
   window.addEventListener('message', function(event) {
-      console.log(event.data);
-      alert("SUCCESS!")
-      alert(event.data);
+    console.log(event.data);
+    if(event?.type ==='sendWebMessage' && event.data !== undefined){
+      alert("SUCCESS 2")
+      // alert(event.data);
+
+      const returnJson =event.data;
+      if(returnJson?.rest){
+        api.defaults.baseURL= returnJson?.rest;
+      }
+      if(returnJson?.promo){
+        eventapi.defaults.baseURL= returnJson?.promo;
+      }
+      if(returnJson?.cashier){
+        cashier.defaults.baseURL= returnJson?.cashier;
+      }
+    }
   });
-
-  var rstApi = getInitApi(rstArray, "LH_H5_RST_URL");
-  var crtApi = getInitApi(crtArray, "LH_H5_CRT_URL");
-  var evtApi = getInitApi(evtArray, "LH_H5_EVT_URL");
-
-
-}else{
-  var rstApi = getInitApi(rstArray, "LH_H5_RST_URL");
-  var crtApi = getInitApi(crtArray, "LH_H5_CRT_URL");
-  var evtApi = getInitApi(evtArray, "LH_H5_EVT_URL");
 }
-
-function sendWebMessage(message){
-  alert("OK LE")
-  alert(message)
-}
-
 
 const api = axios.create({ baseURL: rstApi });
 const cashier = axios.create({ baseURL: crtApi });
@@ -151,7 +151,6 @@ export default boot(({ app, router }) => {
             window.location.pathname === "/deposit" ||
             window.location.pathname === "/invitefriend" ||
             window.location.pathname === "/vip" ||
-            window.location.pathname === "/invitefriend" ||
             window.location.pathname === "/privilege/invite") &&
           (res.code === ResponseCode.ERROR_TOKEN_MISSED ||
             res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
