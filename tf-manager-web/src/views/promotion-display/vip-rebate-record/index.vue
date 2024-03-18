@@ -169,7 +169,8 @@
         <el-table-column prop="status" :label="t('fields.status')" align="center" min-width="120">
           <template #default="scope">
             <el-tag v-if="scope.row.status === 'DISTRIBUTED'" size="mini" type="success">{{ t('distributeStatus.' + scope.row.status) }}</el-tag>
-            <el-tag v-else-if="scope.row.status === 'PENDING'" size="mini" type="warning">{{ t('distributeStatus.' + scope.row.status) }}</el-tag>
+            <el-tag v-else-if="scope.row.status === 'IN_PROGRESS'" size="mini" type="warning">{{ t('distributeStatus.' + scope.row.status) }}</el-tag>
+            <el-tag v-else-if="scope.row.status === 'PENDING'" size="mini" type="primary">{{ t('distributeStatus.' + scope.row.status) }}</el-tag>
             <el-tag v-else size="mini" type="danger">{{ t('distributeStatus.' + scope.row.status) }}</el-tag>
           </template>
         </el-table-column>
@@ -528,8 +529,9 @@ const uiControl = reactive({
   ],
   status: [
     { key: 1, displayName: "PENDING", value: "PENDING" },
-    { key: 2, displayName: "DISTRIBUTED", value: "DISTRIBUTED" },
-    { key: 3, displayName: "CANCEL", value: "CANCEL" }
+    { key: 2, displayName: "IN_PROGRESS", value: "IN_PROGRESS" },
+    { key: 3, displayName: "DISTRIBUTED", value: "DISTRIBUTED" },
+    { key: 4, displayName: "CANCEL", value: "CANCEL" }
   ],
   importDialogVisible: false
 });
@@ -565,7 +567,7 @@ const request = reactive({
   loginName: null,
   platform: null,
   gameType: [],
-  status: ["PENDING", "DISTRIBUTED", "CANCEL"]
+  status: ["PENDING", "IN_PROGRESS", "DISTRIBUTED", "CANCEL"]
 });
 
 function resetQuery() {
@@ -574,7 +576,7 @@ function resetQuery() {
   request.loginName = null;
   request.platform = null;
   request.gameType = [];
-  request.status = ["PENDING", "DISTRIBUTED", "CANCEL"];
+  request.status = ["PENDING", "IN_PROGRESS", "DISTRIBUTED", "CANCEL"];
 }
 
 const page = reactive({
@@ -795,8 +797,9 @@ function distributeRebate() {
     }
   ).then(async () => {
     const query = checkQuery();
-    distribute(query);
+    await distribute(query);
     ElMessage({ message: t('message.rebateSuccess'), type: "success" });
+    loadVipRebateRecords();
   });
 }
 
