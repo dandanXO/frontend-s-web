@@ -49,7 +49,20 @@ const onResponse = (response) => {
   }
   if (res.code !== ResponseCode.SUCCESS) {
     if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
-      console.log(res, ' there has been an err with the api unauthosized')
+      ElMessage({
+        message: "Duplicated login.",
+        type: "error"
+      });
+      location.reload();
+    } else if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
+      res.code === ResponseCode.ERROR_TOKEN_MISSED ||
+      res.code === ResponseCode.ERROR_TOKEN_INVALID ||
+      res.code === ResponseCode.ERROR_TOKEN_LOGGED ||
+      res.code === ResponseCode.ERROR_TOKEN_FAILED) {
+      ElMessage({
+        message: "Please re-login. Code: " + res.code,
+        type: "error"
+      });
       location.reload();
     } else {
       // const router = useRouter()
