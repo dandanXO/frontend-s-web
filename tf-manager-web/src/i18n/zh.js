@@ -1899,6 +1899,7 @@ export default {
     validateHostRequired: '域名必填',
     validatePortRequired: '端口必填',
     validateSignNameRequired: '公司名字必填',
+    validateSearchCondition: '请输入至少一个搜索条件',
     validateSecretIdRequired: '密码必填',
     validateSecretKeyRequired: '密钥必填',
     validateAppIdRequired: '应用ID必填',
