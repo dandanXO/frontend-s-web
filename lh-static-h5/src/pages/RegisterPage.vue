@@ -16,7 +16,8 @@
           lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || '请输入用户名',
-            (val) => (val && val.length >= 6 && val.length <= 12) || '用户名个数必须在6和12之间'
+            (val) => (val && val.length >= 6 && val.length <= 12) || '用户名个数必须在6和12之间',
+            validLoginName
           ]"
           color="white"
         >
@@ -548,6 +549,11 @@ export default defineComponent({
       }
     };
 
+    const validLoginName = () => {
+      const namePattern = /^[a-zA-Z0-9_#+-]+$/;
+      return namePattern.test(regForm.loginName) || "用户名不允许使用特殊字符";
+    }
+
     const onCaptchaSubmit = () => {
       if (!regForm.telephone) {
         $q.notify({
@@ -618,7 +624,8 @@ export default defineComponent({
       openPhoneVeriDialog,
       phoneVerificationRef,
       isValidCnPhone,
-      hasAffiliate
+      hasAffiliate,
+      validLoginName
     };
   }
 });

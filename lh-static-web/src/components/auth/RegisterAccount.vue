@@ -37,7 +37,7 @@
         <el-input
           class="wTip"
           v-model="regForm.password"
-          placeholder="请输入6-12位字母/数字组合"
+          placeholder="请输入6-12位密码"
           type="password"
           show-password
           clearable
@@ -53,7 +53,7 @@
         <el-input
           class="half wTip"
           v-model="regForm.confirmPwd"
-          placeholder="请确认密码"
+          placeholder="请输入确认密码"
           type="password"
           show-password
           clearable
@@ -112,7 +112,7 @@
     <div style="visibility:hidden">
       <a @click="closeRegDialog">先去逛逛</a>
     </div>
-    
+
     <div style="text-align: center" class="font-gray">
       已有账号？
       <a @click="openLoginDialog">去登录</a>
@@ -158,6 +158,10 @@ const checkName = (v) => {
   const alphanumeric = /^[\p{L}\p{N}]*$/u;
   return v.match(alphanumeric);
 };
+const checkName2 = (v) => {
+  const alphaRegex = /^[a-zA-Z0-9_#+-]+$/;
+  return v.match(alphaRegex);
+}
 
 const checkRealName = (v) => {
   // const alphanumeric = /^[\p{L}\p{N}]*$/u;
@@ -168,9 +172,9 @@ const checkRealName = (v) => {
 let validateName = async (r, v) => {
   if (v === "") {
     return Promise.reject("请输入登录名");
-  } else if (!checkName(v)) {
+  } else if (!checkName2(v)) {
     return Promise.reject("不允许使用特殊字符");
-  } else {
+  }else {
     return Promise.resolve();
   }
 };
