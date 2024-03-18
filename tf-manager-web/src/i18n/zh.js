@@ -277,6 +277,7 @@ export default {
   },
   distributeStatus: {
     PENDING: '未派发',
+    IN_PROGRESS: '派发中',
     DISTRIBUTED: '已派发',
     CANCEL: '已取消',
   },

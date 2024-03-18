@@ -271,6 +271,7 @@ export default {
   },
   distributeStatus: {
     PENDING: 'Pending',
+    IN_PROGRESS: 'Distributing',
     DISTRIBUTED: 'Distributed',
     CANCEL: 'Cancel',
   },
