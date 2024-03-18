@@ -56,7 +56,7 @@
                     <div v-if="item.readTime" class="read-badge">已读</div>
                     <div class="title-wrapper">
                       <div :class="`title-text ${item.readTime ? '' : 'unread'}`" :title="item.title">标题：{{ item.title }}</div>
-                      <div class="read-time" :title="`已读: ${moment(item.readTime).format('YYYY-MM-DD HH:mm:ss')}`"><i>{{ moment(item.readTime).format('MM-DD') }}</i></div>
+                      <div v-if="item.readTime" class="read-time" :title="`已读: ${moment(item.readTime).format('YYYY-MM-DD HH:mm:ss')}`"><i>{{ moment(item.readTime).format('MM-DD') }}</i></div>
                     </div>
                   </template>
                   <div>
@@ -673,6 +673,7 @@ onMounted(() => {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr auto;
+  align-items: center;
   
   .title-text {
     text-align: left;
