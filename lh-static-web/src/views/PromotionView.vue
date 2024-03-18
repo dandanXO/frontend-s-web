@@ -136,8 +136,8 @@ export default defineComponent({
       { code:"ALL", img: 'all', label: '全站优惠' },
       { code: "ESPORT", img: 'esport', label: '电竞优惠'},
       { code: "SPORT", img: 'sport', label: '体育优惠'},
-      // { code: "POKER", img: 'poker', label: '棋牌'},
       { code: "LIVE CASINO", img: 'live', label: '真人优惠'},
+      { code: "POKER", img: 'poker', label: '棋牌优惠'},
       // { code: "FISH", img: 'fish', label: '捕鱼'},
       { code: "OTHERS", img: 'slot', label: '其他优惠'},
     ]);
