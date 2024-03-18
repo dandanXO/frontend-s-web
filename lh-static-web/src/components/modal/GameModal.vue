@@ -324,6 +324,10 @@ defineExpose({
 .node-modal .node .node .account-title-container {
   margin: 0;
 }
+
+.el-popper.is-pure.is-light.el-select__popper {
+  z-index: 5000 !important;
+}
 </style>
 
 <style scoped lang="scss">

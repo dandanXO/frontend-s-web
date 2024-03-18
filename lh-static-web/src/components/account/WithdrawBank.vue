@@ -44,7 +44,7 @@
         </div>
         <div class="bank-card-item" @click="bankCardModal('bank')">
           <RiLink />
-          <span class="lock-card-txt">添加银行卡</span>
+          <span class="lock-card-txt">添加银行卡 / 电子钱包 / 虚拟币</span>
         </div>
       </div>
     </div>
@@ -119,7 +119,7 @@
         />
       </div>
     </div>
-    <el-dialog class="bankModal" width="500" v-model="bankCardModalState.visible" :footer="null" title="绑定银行卡">
+    <el-dialog class="bankModal" width="600" v-model="bankCardModalState.visible" :footer="null" title="绑定银行卡">
       <el-form ref="bankCardFormRef" :model="bankCardInfo" :rules="bankCardRules">
         <el-form-item prop="bankId" :rules="[{ required: true, message: '请选择银行', trigger: 'blur' }]">
           <el-row :gutter="20">
@@ -211,7 +211,7 @@
       @keydown.enter.prevent
     >
       <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="100" label-suffix=":">
-        <el-form-item tabindex="3" label="验证码" prop="captchaCode">
+        <el-form-item tabindex="3" label="验证码" prop="captchaCode" :rules="[{ required: true, message: '请输入验证码', trigger: 'blur' }]" >
           <el-row :gutter="10" style="justify-content: center; align-items: center">
             <el-col :span="12">
               <el-input v-model="captchaForm.captchaCode" label="验证码" placeholder="验证码" @keyup.enter="sendOtp" />

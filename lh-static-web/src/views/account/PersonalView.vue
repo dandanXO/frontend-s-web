@@ -177,7 +177,7 @@
                 </div>
               </div>
 
-              <button
+              <el-button
                 style="margin-top: 10px"
                 :loading="loadingBtn"
                 class="standard-button btn-color-blue"
@@ -185,16 +185,14 @@
                 @click="updateState"
               >
                 提交
-              </button>
+              </el-button>
 
               <button
                 class="standard-button btn-color-blue"
                 v-if="
                   !isEdit &&
-                  (!personalState.memberInfo.realName ||
-                    !personalState.memberInfo.email ||
-                    !personalState.memberInfo.birthday ||
-                    !personalState.memberInfo.telephone)
+                  (
+                    !personalState.memberInfo.birthday)
                 "
                 @click="isEdit = !isEdit"
               >
@@ -213,14 +211,14 @@
 
             <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">
               <el-form-item ref="refOldPassword" label="旧密码" name="oldPassword" prop="oldPassword">
-                <el-input type="password" v-model="updatePwdInfo.oldPassword" :placeholder="'请输入旧密码'" />
+                <el-input style="width:200px;" type="password" v-model="updatePwdInfo.oldPassword" :placeholder="'请输入旧密码'" clearable show-password />
               </el-form-item>
 
               <el-form-item ref="refPassword" label="新密码" name="password" prop="password">
-                <el-input type="password" v-model="updatePwdInfo.password" :placeholder="'请输入新密码'" />
+                <el-input style="width:200px;" type="password" v-model="updatePwdInfo.password" :placeholder="'请输入新密码'" clearable show-password />
               </el-form-item>
               <el-form-item ref="refConfirmPassword" label="确认密码" name="confirmPassword" prop="confirmPassword">
-                <el-input type="password" v-model="updatePwdInfo.confirmPassword" :placeholder="'请再次输入新密码'" />
+                <el-input style="width:200px;" type="password" v-model="updatePwdInfo.confirmPassword" :placeholder="'请再次输入新密码'" clearable show-password />
               </el-form-item>
               <div class="txt-center btn-container">
                 <button
@@ -533,6 +531,18 @@ export default defineComponent({
     const updateSecurityModalVisible = ref(false);
     const updateSecurityFormRef = ref();
     const captchaUpdateRef = ref();
+
+    const isValidPhone = (r, v) => {
+      const phonePattern = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
+      if (!v) {
+        return Promise.reject("请输入电话号码");
+      } else if (phonePattern.test(v)) {
+        return Promise.resolve();
+      } else {
+        return Promise.reject("请输入有效的电话号码");
+      }
+    };
+
     const updateSecurityVerified = reactive({
       verificationCode: "",
       emailAddress: "",
@@ -810,6 +820,10 @@ export default defineComponent({
           message: "请输入电话号码",
           trigger: "blur",
         },
+        {
+          validator: isValidPhone,
+          trigger: "blur"
+        }
       ],
       verificationCode: [
         {
@@ -872,6 +886,15 @@ export default defineComponent({
       });
       loadingPwBtn.value = false
     };
+
+    const validatePwd = async (r,v) => {
+      if(updatePwdInfo.confirmPassword !== updatePwdInfo.password){
+        return Promise.reject("确认密码与新密码不符合");
+      } else {
+        return Promise.resolve();
+      }
+    }
+
     const updatePwdRules = {
       oldPassword: [
         {
@@ -898,8 +921,27 @@ export default defineComponent({
           message: "长度应为 6 到 12 数字",
           trigger: "blur"
         }
+      ],
+      confirmPassword: [
+        {
+          required: true,
+          message: "请输入确认密码",
+          trigger: "blur"
+        },
+        {
+          min: 6,
+          max: 12,
+          message: "长度应为 6 到 12 数字",
+          trigger: "blur"
+        },
+        {
+          required: true,
+          validator: validatePwd,
+          trigger: "blur"
+        }
       ]
     };
+
 
     const isEdit = ref(false)
     const updateFormDetails = reactive(

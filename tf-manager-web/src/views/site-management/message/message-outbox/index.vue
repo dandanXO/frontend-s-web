@@ -125,6 +125,13 @@
           />
         </template>
       </el-table-column>
+
+      <el-table-column prop="status" :label="t('fields.status')" align="center" min-width="140">
+          <template #default="scope">
+            <el-tag v-if="scope.row.status === 1" size="mini" type="success">{{ t('outboxStatus.1') }}</el-tag>
+            <el-tag v-else size="mini" type="warning">{{ t('outboxStatus.0') }}</el-tag>
+          </template>
+        </el-table-column>
     </el-table>
   </div>
   <el-pagination
@@ -176,14 +183,15 @@ const request = reactive({
 function resetQuery() {
   request.createTime = [];
   request.memberName = null;
-  request.siteId = null;
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
 }
 
 const form = reactive({
   memberName: [],
   title: null,
   content: null,
-  siteName: null
+  siteName: null,
+  id: null,
 });
 
 let chooseMessage = [];
@@ -209,7 +217,11 @@ function showDialog(row, type) {
       dialogForm.value.resetFields();
     }
     form.content = null;
-    form.title = 'RE: ' + form.title;
+    if (row.siteName === 'Dongying' || row.siteName === 'XingFa' || row.siteName === 'LeiHuo') {
+      form.title = '回复: ' + form.title;
+    } else {
+      form.title = 'RE: ' + form.title;
+    }
     uiControl.dialogVisible = true;
   }
   uiControl.dialogType = type;
@@ -291,6 +303,8 @@ function send() {
       arr.push(form.memberName)
       item.recipient = arr;
       item.receiveType = 'MULTIPLE';
+      console.log(form)
+      console.log()
       Object.entries(form).forEach(([k, v]) => {
         if (k !== "siteName" && k !== "memberName") {
           item[k] = v;
@@ -309,6 +323,8 @@ onMounted(async() => {
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
+  } else {
+    request.siteId = siteList.list[0].id;
   }
   await loadMessageOutbox();
 });

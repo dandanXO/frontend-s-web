@@ -152,7 +152,7 @@
                   <td>好友周累计存款</td>
                   <td>邀请人比例</td>
                   <td>受邀请人比例</td>
-                  <td>好友周累计存款</td>
+                  <td>总奖金上限</td>
                   <td>流水要求</td>
                 </tr>
                 <tr>
@@ -345,16 +345,16 @@
               <div class="input-row">
                 <label>返利类型</label>
                 <select class="record-select-input record-type" v-model="checkRecordFormData.recordType">
-                  <option value="INVITER">邀请返利</option>
-                  <option value="INVITEES">受邀返利</option>
+                  <option value="REFERRER">邀请返利</option>
+                  <option value="FRIEND">受邀返利</option>
                 </select>
               </div>
               <div class="input-row">
                 <label>活动类型</label>
                 <select class="record-select-input privilege-type" v-model="checkRecordFormData.privilegeType">
-                  <option value="WeekFirstDeposit">邀请首存送</option>
-                  <option value="WeekTotal">邀请周存送</option>
-                  <option value="Bet">返利无上限</option>
+                  <option value="FIRST_DEPOSIT">邀请首存送</option>
+                  <option value="WEEKLY_DEPOSIT">邀请周存送</option>
+                  <option value="BET_REBATE">返利无上限</option>
                 </select>
               </div>
 
@@ -425,8 +425,8 @@ export default defineComponent({
       yesterdayFriendBet: 0
     });
     const checkRecordFormData = reactive({
-      recordType: "INVITER",
-      privilegeType: "WeekFirstDeposit",
+      recordType: "REFERRER",
+      privilegeType: "FIRST_DEPOSIT",
       date: moment().utcOffset("+08:00").format("YYYY-MM-DD"),
       user: ""
     });
@@ -487,10 +487,10 @@ export default defineComponent({
     var tableRecords = ref([]);
     const getRecords = () => {
       const params = {
-        recordType: checkRecordFormData.recordType,
-        privilegeType: checkRecordFormData.privilegeType,
-        queryTime: checkRecordFormData.date,
-        recommendedName: checkRecordFormData.user,
+        rebateType: checkRecordFormData.recordType,
+        bonusTime: checkRecordFormData.privilegeType,
+        date: checkRecordFormData.date,
+        loginName: checkRecordFormData.user,
         token: store.token
       };
       tableRecords.value = [];
@@ -500,8 +500,8 @@ export default defineComponent({
     };
 
     const shareInvite = () => {
-      if(window.location.pathname === "/promotion"){
-        document.location.href = "app://invite";
+      if(window.location.pathname === "/privilege/invite"){
+        router.push("/invitefriend?token=" + store.token);
       }else{
         router.push("/account/invite?from=promo?name=lh1-invite");
       }

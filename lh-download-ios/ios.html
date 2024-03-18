@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <style>
+        html {
+            width: 100%;
+            height: 100vh;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            margin: 0 auto;
+            max-width: 500px;
+            width: 100%;
+            height: 100%;
+            background: url(./assets/images/bg.png) no-repeat center center;
+            display: flex;
+            background-size: 100% 100%;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            aspect-ratio: 822/375;
+            max-width: 320px;
+            width: 50%;
+            margin: 10px auto;
+        }
+
+        .step-1 {
+            position: relative;
+            background: url(./assets/images/step-1.png) no-repeat center center;
+            aspect-ratio: 1009/691;
+            background-size: 100% 100%;
+            width: calc(100% - 20px);
+            margin: 0 auto;
+        }
+
+        .step-2 {
+            position: relative;
+            background: url(./assets/images/step-2.png) no-repeat center center;
+            aspect-ratio: 1009/820;
+            background-size: 100% 100%;
+            width: calc(100% - 20px);
+            margin: 0 auto;
+        }
+
+        .step-1-action-wrapper, .step-2-action-wrapper {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            bottom: 5%;
+            left: 50%;
+            width: 80%;
+            transform: translate(-50%, -40%);
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step-2-action-wrapper {
+            transform: translate(-50%, -10%);
+            gap: 30px;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        button {
+            border: none;
+        }
+
+        .step-1-btn {
+            aspect-ratio: 606/179;
+            flex: 3;
+            background: url(./assets/images/step-1-btn.png);
+            background-size: 100% 100%;
+            width: 200px;
+        }
+
+        .step-2-btn {
+            aspect-ratio: 603/179;
+            flex: 3;
+            background: url(./assets/images/step-2-btn.png);
+            background-size: 100% 100%;
+            width: 200px;
+        }
+
+        .step-2-hint {
+            aspect-ratio: 928/156;
+            width: calc(100% - 0px);
+            margin: 0 auto;
+        }
+
+        .step-1-btn:hover, .step-2-btn:hover {
+            opacity: 0.9;
+        }
+
+        .step-1-btn:active, .step-2-btn:active {
+            filter: brightness(0.85);
+            transform: translate(0px, 2px);
+        }
+
+        .step-1-btn-decor {
+            aspect-ratio: 270/270;
+            flex: 1;
+            width: 80px;
+        }
+
+        .step-2-btn-decor {
+            aspect-ratio: 279/279;
+            flex: 1;
+            width: 80px;
+        }
+
+        .modal-open {
+            position: fixed;
+            background: rgba(0, 0, 0, 0.5);
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+            width: 100vw;
+            height: 100vh;
+            z-index: 99;
+        }
+
+        .modal-div {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .modal-inner {
+            width: calc(100% - 80px);
+            min-width: 330px;
+            height: 200px;
+            background: #fff;
+            border-radius: 10px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .modal-header {
+            border-radius: 10px 10px 0px 0px;
+            background: #40B6FC;
+            height: 80px;
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: #fff;
+            font-weight: bold;
+            font-size: 19px;
+        }
+
+        .modal-input {
+            background: #b3b3b3;
+            height: 38px;
+            border-radius: 20px;
+            width: calc(100% - 20px);
+            margin: 25px auto 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+
+        .url-input {
+            padding: 4px 10px;
+            box-sizing: border-box;
+            font-size: 17px;
+            white-space: nowrap;
+            overflow: hidden;
+            width: calc(100% - 60px);
+            text-overflow: ellipsis;
+        }
+
+        .copy-btn {
+            background: #40B6FC;
+            height: 100%;
+            border-radius: 0px 24px 24px 0px;
+            width: 60px;
+            padding: 4px 8px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .copy-btn:active {
+            filter: brightness(0.86);
+            transform: translate(0.5px, 1px);
+        }
+    </style>
+    <title id="main-title">App</title>
+    <script src="js/jquery-3.6.1.min.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="container">
+    <div class="wrapper">
+        <img class="logo" src="./assets/images/logo.png"/>
+        <div class="step-1">
+            <div class="step-1-action-wrapper">
+                <div class="row">
+                    <img class="step-1-btn-decor" src="./assets/images/step-1-btn-decor.png"/>
+                    <a target="_blank" href="https://apps.apple.com/us/app/testflight/id899247664?ct=SUWKTUN396"
+                       class="step-1-btn"></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-2">
+            <div class="step-2-action-wrapper">
+                <div class="row">
+                    <img class="step-2-btn-decor" src="./assets/images/step-2-btn-decor.png"/>
+                    <a target="_blank" id="click-btn" class="step-2-btn"></a>
+                </div>
+                <div class="row">
+                    <img class="step-2-hint" src="./assets/images/step-2-hint.png"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-open" style="display:none;">
+    <div class="modal-div">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <img src="./assets/images/safari-logo.svg" style="width: 50px;height: 50px;"/>
+                <div>请使用Safari游览器打开</div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-input">
+                    <div id="id-url-input" class="url-input"></div>
+                    <div class="copy-btn" id="id-copy-btn">复制</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+
+    $(document).ready(function (e) {
+        detectIfSafari();
+        getApiUrl();
+
+        $("#id-url-input").text(window.location.href);
+
+        function detectIfSafari() {
+            if (navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome')) {
+                // Safari detected
+                console.log("You are using Safari.");
+            } else {
+                // Not Safari
+                console.log("You are not using Safari.");
+                // $(".modal-open").show();
+
+                $(".step-2-btn, .step-1-btn").css("pointer-events", "none").css("filter", "grayscale(1)");
+            }
+        }
+
+        $("#id-copy-btn").click(function(e){
+            var textToCopy= $("#id-url-input").text();
+
+            copyTextToClipboard(textToCopy);
+            alert("复制成功。")
+        })
+
+        function copyTextToClipboard(text) {
+            var textarea = document.createElement("textarea");
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textarea);
+        }
+
+
+
+        async function getApiUrl() {
+            var clickBtn = document.getElementById("click-btn");
+            clickBtn.onclick = async function () {
+                var apiUrl = 'https://conffea.vpvov.com:8190'
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'GET',
+                    });
+                    const data = await response.json();
+                    if (data) {
+                        // debugger;
+                        console.log("data", data);
+                        if (data.code == 1) {
+                            var openUrl = data.data;
+                            window.location.href= openUrl;
+                        }
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        }
+    })
+</script>
+</html>

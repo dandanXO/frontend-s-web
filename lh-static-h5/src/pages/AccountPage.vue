@@ -56,7 +56,7 @@
               </div>
             </div> -->
 
-            <div class="vip-txt-left">
+            <div class="vip-txt-left" :class="isHideLevelUp && 'opacity-0'">
               <div>晋级存款（元）</div>
               <div>{{ formatNumber(store.currentDeposit) }}/{{ formatNumber(store.levelUpDeposit) }}</div>
             </div>
@@ -269,35 +269,34 @@
           animated
           infinite
           height="150px"
-          >
-            <template v-slot:navigation-icon="{ active, onClick }">
-              <q-btn
+        >
+          <template v-slot:navigation-icon="{ active, onClick }">
+            <q-btn
               padding="3px"
               v-if="active"
               size="xs"
               color="white"
               @click="onClick"
               style="border: 1px solid #ffffff; border-radius: 50%; margin: 6px 8px"
-              />
-              <q-btn
+            />
+            <q-btn
               padding="3px"
               v-else
               size="xs"
               color="transparent"
               @click="onClick"
               style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px"
-              />
-            </template>
+            />
+          </template>
 
-            <q-carousel-slide
-              v-for="(banner, i) in btm_banners"
-              :key="i"
-              :name="i"
-              class="column no-wrap flex-center"
-              :img-src="imgURL + banner.mobileImageUrl"
-              @click="gotoPromo(banner)"
-              >
-            </q-carousel-slide>
+          <q-carousel-slide
+            v-for="(banner, i) in btm_banners"
+            :key="i"
+            :name="i"
+            class="column no-wrap flex-center"
+            :img-src="imgURL + banner.mobileImageUrl"
+            @click="gotoPromo(banner)"
+          ></q-carousel-slide>
         </q-carousel>
       </q-card-section>
     </q-card>
@@ -350,6 +349,7 @@ export default defineComponent({
     const $q = useQuasar();
 
     const isLogoutModal = ref(false);
+    const isHideLevelUp = ref(false);
 
     const logout = () => {
       store.memberLogout().then(() => {
@@ -499,13 +499,24 @@ export default defineComponent({
     };
 
     const updatedVip = () => {
-      const currentVip = parseInt(store.vip.match(/\d+/)[0]); // Extract number from string
-      const updatedVip = currentVip + 1; // Increment the VIP value by 1
-      return "VIP" + updatedVip.toString(); // Concatenate with 'VIP ' prefix
+      const currentVip = parseInt(store.vip.match(/\d+/)[0]);
+      const updatedVip = currentVip + 1;
+
+      if (currentVip < 12) {
+        return "VIP" + updatedVip.toString();
+      } else {
+        getVipProgress(true);
+        isHideLevelUp.value = true;
+        return "已满级";
+      }
     };
 
-    const getVipProgress = () => {
-      vipProgress.value = parseFloat(store.currentDeposit) / parseFloat(store.levelUpDeposit);
+    const getVipProgress = (max) => {
+      if (max) {
+        vipProgress.value = parseFloat(store.currentDeposit) / parseFloat(store.currentDeposit);
+      } else {
+        vipProgress.value = parseFloat(store.currentDeposit) / parseFloat(store.levelUpDeposit);
+      }
     };
 
     return {
@@ -532,7 +543,8 @@ export default defineComponent({
       vipProgress,
       getVipProgress,
       formatNumber,
-      updatedVip
+      updatedVip,
+      isHideLevelUp
     };
   }
 });
@@ -730,6 +742,10 @@ export default defineComponent({
         display: flex;
         color: $grey-color;
         font-size: 0.875rem;
+
+        &.opacity-0 {
+          opacity: 0;
+        }
       }
 
       .vip-left {
@@ -1061,7 +1077,7 @@ export default defineComponent({
 }
 .vip-link {
   background: linear-gradient(180deg, #32a9ff 0%, #3b5afe 100%);
-  min-width: 52px;
+  min-width: 60px;
   height: 20px;
   border-radius: 20px;
   display: flex;

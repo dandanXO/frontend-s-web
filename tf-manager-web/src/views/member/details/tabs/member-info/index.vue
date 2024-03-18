@@ -504,7 +504,7 @@
               </div>
             </div>
           </el-descriptions-item>
-          <el-descriptions-item :label="t('fields.withdrawableBalance')">
+          <el-descriptions-item v-if="memberDetail.siteId === '5' || memberDetail.site === 5" :label="t('fields.withdrawableBalance')">
             <div style="display: inline-block;" v-loading="loading.total">
               <div class="balance">
                 $ <span v-formatter="{data: memberDetail.withdrawableBalance,type: 'money'}" />

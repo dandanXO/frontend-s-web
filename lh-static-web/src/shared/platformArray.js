@@ -319,7 +319,7 @@ export const fishingPlatforms = [
     code: "GPS",
     cnname: "GPS决战中途岛",
     image: "gps",
-    message: "炫彩3D精致画面，身临其境海天—色;超高爆率燃爆全屏，招财鱼潮—炮千金;多人同台趣味比拼，休闲集结快乐出击 ",
+    message: "炫彩3D精致画面，身临其境海天—色;超高爆率燃爆全屏，招财游戏—炮千金;多人同台趣味比拼，休闲集结快乐出击 ",
     caption: "",
     gameCode: 7202
   },

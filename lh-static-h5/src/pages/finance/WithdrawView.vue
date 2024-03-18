@@ -328,6 +328,13 @@ export default defineComponent({
             });
             getWithdrawalMethods();
 
+            withdrawInfo.amount = "";
+            if (amountRef.value) {
+              setTimeout(()=>{
+                amountRef.value.resetValidation();
+              },0)
+            }
+
           } else {
             $q.notify({
               color: "negative",
@@ -394,9 +401,11 @@ export default defineComponent({
           if (cardRef.value) {
             cardRef.value.resetValidation();
           }
+          withdrawInfo.amount = "";
           if (amountRef.value) {
-            withdrawInfo.amount = "";
-            amountRef.value.resetValidation();
+            setTimeout(()=>{
+              amountRef.value.resetValidation();
+            },0)
           }
         }
       }).catch((error) => {

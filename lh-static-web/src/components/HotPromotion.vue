@@ -18,7 +18,7 @@
     <GiftPromo v-if="list.redirectUrl === 'lh1-gift' && !isCommonPromo && store.token" />
     <Gift8Promo v-if="list.redirectUrl === 'lh1-gift8' && !isCommonPromo && store.token" />
     <UpgradeHongBao v-if="list.redirectUrl === 'lh1-upgrade-hongbaoz' && !isCommonPromo && store.token" />
-    <HongBaoYu2024 v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
+    <HongBaoYu2024 v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo && store.token" :promo-code="list.promoCode" :params="list.param" />
 
     <AsianCup2024 v-if="list.redirectUrl === 'lh1-promo-application-A' && !isCommonPromo && store.token" />
     <BasketballHot v-if="list.redirectUrl === 'lh1-promo-basketball' && !isCommonPromo && store.token" />
@@ -26,7 +26,7 @@
     <Cny2024Promo v-if="list.redirectUrl === 'lh1-cny2024-promo' && !isCommonPromo && store.token" />
     <div style="text-align: center" v-if="list.redirectUrl === 'lh1-feedback-award' && !isCommonPromo && store.token">
       <img
-        style="max-width: 1200px; width: 100%; margin: 10px auto"
+        style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
         src="../assets/images/promotion/hotpromo/lhfeedback/feedback.png"
       />
     </div>
@@ -41,7 +41,9 @@
     <CnyStepGame2024Promo
       v-if="list.redirectUrl === 'lh1-cny-step-game' && !isCommonPromo && store.token"
     ></CnyStepGame2024Promo>
+    <CS2Sign v-if="list.redirectUrl === 'lh-cs2-copenhagen-major-2024' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
 
+    <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel' && !isCommonPromo && store.token" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -86,6 +88,8 @@ import LPLSummer from "../components/hotpromo/lpl-summer/LPLSummer.vue";
 import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
 import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
 import CnyStepGame2024Promo from "../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue";
+import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
+import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -121,7 +125,9 @@ export default defineComponent({
     CnyStepGame2024Promo,
     UpgradeHongBao,
     HongBaoYu2024,
-    DragonCardPromo
+    DragonCardPromo,
+    CS2Sign,
+    BonusSpinWheel
     // DailyBonus
   },
   props: {
@@ -389,7 +395,9 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-match-vote" ||
       this.list.redirectUrl === "lh1-cny-step-game" ||
       this.list.redirectUrl === "lh1-feedback-award" ||
-      this.list.redirectUrl === "lh1-upgrade-hongbao"
+      this.list.redirectUrl === "lh1-upgrade-hongbao" ||
+      this.list.redirectUrl === "lh-cs2-copenhagen-major-2024" ||
+      this.list.redirectUrl === "lh1-spin-wheel"
     ) {
       this.isCommonPromo = false;
     } else {

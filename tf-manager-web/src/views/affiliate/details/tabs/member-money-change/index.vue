@@ -54,7 +54,13 @@
         <el-table-column prop="subType" :label="t('fields.privilege')" align="center" min-width="180">
           <template #default="scope">
             <span v-if="scope.row.subType === null">-</span>
-            <span v-if="scope.row.subType !== null">{{ t('moneyChange.subType.' + scope.row.subType) }}</span>
+            <span v-else-if="scope.row.type === 'AFFILIATE_TRANSFER' && scope.row.subType === 'DEPOSIT'">{{ t('moneyChange.subType.AFFILIATE_DEPOSIT') }}</span>
+            <span v-else-if="scope.row.type === 'AFFILIATE_TRANSFER' && scope.row.subType === 'COMMISSION'">{{ t('moneyChange.subType.AFFILIATE_COMMISSION') }}</span>
+            <span
+              v-else-if="scope.row.subType === 'DEPOSIT' || scope.row.subType === 'WITHDRAW' ||
+                scope.row.subType === 'TRASNFER_IN' || scope.row.subType === 'TRANSFER_OUT' || scope.row.subType === 'AFFILIATE_SETTLEMENT'"
+            >{{ t('moneyChange.subType.' + scope.row.subType) }}</span>
+            <span v-else>{{ scope.row.subType }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="platformName" :label="t('fields.platformName')" align="center" min-width="180">

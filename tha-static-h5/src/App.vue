@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import { Platform, useQuasar } from "quasar";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
@@ -25,6 +25,7 @@ export default defineComponent({
     const $q = useQuasar();
     $q.dark.set(true);
     $q.screen.setSizes({ sm: 500, md: 768, lg: 991, xl: 1280 });
+    const channelValue = ref("");
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
@@ -133,6 +134,44 @@ export default defineComponent({
       }
     };
 
+    const errorHandler = (error) => {
+      console.error("File error: " + error.code);
+    };
+    
+    const onDeviceReady = () => {
+      // Get the file system
+      window.resolveLocalFileSystemURL(
+        cordova.file.applicationDirectory,
+        function (applicationDirectory) {
+          applicationDirectory.getFile(
+            "channel.json",
+            { create: false, exclusive: false },
+            function (fileEntry) {
+              // Read the file
+              fileEntry.file(function (file) {
+                var reader = new FileReader();
+
+                reader.onloadend = function (evt) {
+                  console.log("Read as text: ", evt.target.result);
+                  const jsonData = evt.target.result;
+                  const json = JSON.parse(jsonData);
+                  if (json && json.channel) {
+                    sessionStorage.setItem("AFFILIATE_CODE", json.channel);
+                    channelValue.value = sessionStorage.getItem("AFFILIATE_CODE");
+                  }
+                };
+
+                // Read the file as text
+                reader.readAsText(file);
+              }, errorHandler);
+            },
+            errorHandler
+          );
+        },
+        errorHandler
+      );
+    };
+
     onMounted(() => {
       checkSID();
       initCsWeb();
@@ -140,6 +179,14 @@ export default defineComponent({
       checkAgentFrom();
       // initListenApp();
       // getCSA();
+
+      document.addEventListener(
+        "deviceready",
+        () => {
+          onDeviceReady();
+        },
+        false
+      );
     });
   }
 });

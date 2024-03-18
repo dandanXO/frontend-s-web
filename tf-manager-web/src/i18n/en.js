@@ -97,6 +97,10 @@ export default {
     0: '未确认',
     1: '已到账',
   },
+  outboxStatus: {
+    0: 'Not reply yet',
+    1: 'Has been replied',
+  },
   editCheckedStatus: {
     0: '未审核',
     1: '已更改',
@@ -135,6 +139,8 @@ export default {
       TRASNFER_IN: 'Transfer In',
       TRANSFER_OUT: 'Transfer Out',
       AFFILIATE_SETTLEMENT: 'Affiliate Settlement',
+      AFFILIATE_DEPOSIT: 'Transfer from Balance',
+      AFFILIATE_COMMISSION: 'Transfer from Commission Balance',
     },
   },
   status: {
@@ -265,6 +271,7 @@ export default {
   },
   distributeStatus: {
     PENDING: 'Pending',
+    IN_PROGRESS: 'Distributing',
     DISTRIBUTED: 'Distributed',
     CANCEL: 'Cancel',
   },
@@ -341,6 +348,7 @@ export default {
     daily: 'Daily',
     newbie: 'Newbie',
     limit: 'Limit',
+    featured: 'Featured',
   },
   messageType: {
     NOTIFICATION: 'Notification',
@@ -352,6 +360,10 @@ export default {
     followType: 'พิมพ์',
     follow: 'ก่อนที่จะติดตาม',
     new: 'อัพเดตประเภทเกม',
+  },
+  sortType: {
+    ASC: 'Ascending',
+    DESC: 'Descending'
   },
   fields: {
     account: 'Account',
@@ -470,12 +482,14 @@ export default {
     allprofit: 'All Profit',
     allreviewstatus: 'All Review Status',
     allrisklevel: 'All Risk Level',
+    allmembers: 'All Members',
     allmembertype: 'All Member Type',
     announcementType: 'Announcement Type',
     answer: 'Answer',
     answerOne: 'Question One Answer',
     answerTwo: 'Question Two Answer',
     answerThree: 'Question Three Answer',
+    appVersion: 'App Version',
     applying: 'Applying',
     approve: 'Approve',
     assigned: 'Assigned',
@@ -527,6 +541,14 @@ export default {
     bonusAmount: 'Bonus Amount',
     bonusReceived: 'Bonus Received',
     bonusType: 'Bonus Type',
+    byDepositDateDesc: 'Sort by Deposit Date DESC',
+    byDepositDateAsc: 'Sort by Deposit Date ASC',
+    byFinishDateDesc: 'Sort by Finish Date DESC',
+    byFinishDateAsc: 'Sort by Finish Date ASC',
+    byPaymentDateDesc: 'Sort by Payment Date DESC',
+    byPaymentDateAsc: 'Sort by Payment Date ASC',
+    byWithdrawDateDesc: 'Sort by Withdraw Date DESC',
+    byWithdrawDateAsc: 'Sort by Withdraw Date ASC',
     byprofitasc: 'Sort by profit ASC',
     byprofitdesc: 'Sort by profit DESC',
     bydateasc: 'Sort by date ASC',
@@ -535,6 +557,7 @@ export default {
     callbackUrl: 'Callback URL',
     cancel: 'Cancel',
     cancelBbDacha: 'Cancel BB Dacha',
+    cancelBySearch: 'Cancel By Query',
     cancelDeposit: 'Cancel Deposit',
     cancelGameMatch: 'Cancel Game Match',
     cancelGift: 'Cancel Gift Redemption',
@@ -988,6 +1011,7 @@ export default {
     operateTime: 'Operate Time',
     operationTime: 'Operation Time',
     operationType: 'Operation Type',
+    orderBy: 'Order By',
     orderNo: 'Order No',
     orderTrackingNo: 'Order Tracking No',
     outerSetting: 'Outer Wheel Setting',
@@ -1192,6 +1216,7 @@ export default {
     smsSendTime: 'Send Time',
     smsType: 'Type',
     sorting: 'Sorting',
+    sortType: 'Sort Type',
     sourceType: 'Source Type',
     sportBetResult: 'Sport Bet Result',
     stage: 'Stage',
@@ -1528,6 +1553,8 @@ export default {
       'Confirm that you want to cancel this BB Dacha, the operation cannot be undone',
     confirmCancelQuiz:
       'Confirm that you want to cancel this quiz, the operation cannot be undone',
+    confirmCancelRebate:
+      'Confirm that you want to cancel the rebate records, the operation cannot be undone',
     confirmCopy: 'Do you want to copy from ',
     confirmCopyTo: ' to ',
     confirmDelete:
@@ -1581,9 +1608,11 @@ export default {
     logoutPlayerSuccess: 'Logout Player Success',
     maxGreaterThanMin: 'Maximum must be greater than minimum',
     memberNotInSite: 'Member could not be found in this site',
-    memberFreeGameLogin: 'Login name, separate with commas if there is more than one name (maximum 200 names)',
+    memberFreeGameLogin:
+      'Login name, separate with commas if there is more than one name (maximum 200 names)',
     memberFreeGameRound: 'Free game round',
-    memberFreeGameIds: 'Game IDs can be used, separated by commas if there is more than one; the maximum length (including commas) is 200',
+    memberFreeGameIds:
+      'Game IDs can be used, separated by commas if there is more than one; the maximum length (including commas) is 200',
     multipleQuerySeparatedBySpace:
       'Multiple query conditions are separated by spaces',
     multiwheelprizeform: 'Insert 0 as Grand Prize',
@@ -1595,7 +1624,8 @@ export default {
     promoDistributionSuccess: 'Promo Distribution Success',
     redeemCashSuccess: 'Redeem Cash Success',
     reenterPassword: 'Please re-enter the password',
-    rebateSuccess: 'VIP Rebate distribution in process, please refresh and check on the records later.',
+    rebateSuccess:
+      'VIP Rebate distribution in process, please refresh and check on the records later.',
     registerSuccess: 'Register Success',
     referSuccess: 'Distribute Refer Friend Promo Success',
     replySuccess: 'Reply Success',
@@ -1899,6 +1929,7 @@ export default {
     validateHostRequired: 'Host is required',
     validatePortRequired: 'Port is required',
     validateSignNameRequired: 'Sign Name is required',
+    validateSearchCondition: 'Enter at least one query condition',
     validateSecretIdRequired: 'Secret ID is required',
     validateSecretKeyRequired: 'Secret Key is required',
     validateAppIdRequired: 'Application ID is required',

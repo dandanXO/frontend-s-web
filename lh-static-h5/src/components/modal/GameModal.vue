@@ -400,7 +400,14 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             let srcData = response.data;
 
             if (platformCode === "PT") {
-              window.open(response.data, "_blank");
+              if(Platform.is.ios &&  Platform.is.mobile && Platform.is.safari){
+                const newWin = window.open(`/`, "_self");
+                if(newWin){
+                  newWin.location.href = response.data;
+                }
+              }else{
+                window.open(response.data, "_blank");
+              }
             } else if (platformCode === "PG") {
               srcData = srcData.replaceAll(/\\\"/g, '"').replaceAll(/\n/g, "");
               src.value = srcData;

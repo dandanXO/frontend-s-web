@@ -81,15 +81,20 @@
           min-width="100"
           width="120"
         >
-          <template
-            #default="scope"
-          >
+          <template #default="scope">
             <router-link
               :to="
                 `/affiliate/details/${scope.row.affiliateId}?site=${request.siteId}`
               "
             >
-              <el-link type="primary">{{ scope.row.loginName }}</el-link>
+              <el-link type="primary">
+                {{
+                  scope.row.loginName
+                    .replace('(OFFICAL)', '')
+                    .replace('admin', '')
+                    .trim()
+                }}
+              </el-link>
             </router-link>
           </template>
         </el-table-column>
@@ -331,7 +336,7 @@ async function loadSites() {
   request.siteId = site.id
   const { data: affiliates } = await getAffiliateList(store.state.user.id)
 
-  affiliateNames.list = affiliates;
+  affiliateNames.list = affiliates
 }
 
 function convertDate(date) {
@@ -372,13 +377,15 @@ function checkQuery() {
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
       query.recordTime = request.recordTime
-      query.recordTime[0] = moment(query.recordTime[0]).format('YYYY-MM-DD') + ' 00:00:00'
-      query.recordTime[1] = moment(query.recordTime[1]).format('YYYY-MM-DD') + ' 23:59:59'
+      query.recordTime[0] =
+        moment(query.recordTime[0]).format('YYYY-MM-DD') + ' 00:00:00'
+      query.recordTime[1] =
+        moment(query.recordTime[1]).format('YYYY-MM-DD') + ' 23:59:59'
       query.recordTime = query.recordTime.join(',')
     }
   }
   if (request.loginNameList === null || request.loginNameList.length === 0) {
-    query.loginNameList = affiliateNames.list.join(',');
+    query.loginNameList = affiliateNames.list.join(',')
   } else {
     query.loginNameList = request.loginNameList.join(',')
   }
@@ -407,7 +414,7 @@ function getSummaries(param) {
         sums[index] = t('fields.total')
       } else if (index > 1) {
         var prop = column.property
-        if (index === 5 || index === 6 || index === 11 || index === 12) {
+        if (index === 5 || index === 6 || index === 12 || index === 13) {
           sums[index] = total.data[prop]
         } else if (index === 4) {
           // profit depositWithdrawal = deposit - withdrawal

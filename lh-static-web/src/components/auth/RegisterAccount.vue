@@ -37,7 +37,7 @@
         <el-input
           class="wTip"
           v-model="regForm.password"
-          placeholder="请输入6-12位字母/数字组合"
+          placeholder="请输入6-12位密码"
           type="password"
           show-password
           clearable
@@ -53,7 +53,7 @@
         <el-input
           class="half wTip"
           v-model="regForm.confirmPwd"
-          placeholder="请确认密码"
+          placeholder="请输入确认密码"
           type="password"
           show-password
           clearable
@@ -112,7 +112,7 @@
     <div style="visibility:hidden">
       <a @click="closeRegDialog">先去逛逛</a>
     </div>
-    
+
     <div style="text-align: center" class="font-gray">
       已有账号？
       <a @click="openLoginDialog">去登录</a>
@@ -126,7 +126,6 @@ import { ref, onMounted, reactive, defineEmits } from "vue";
 import { userStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
 import { lsGet } from "@/utils/utils";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { ElMessage } from "element-plus";
 import { getVerificationCode, register } from "@/api/index/login";
 
@@ -159,6 +158,10 @@ const checkName = (v) => {
   const alphanumeric = /^[\p{L}\p{N}]*$/u;
   return v.match(alphanumeric);
 };
+const checkName2 = (v) => {
+  const alphaRegex = /^[a-zA-Z0-9_#+-]+$/;
+  return v.match(alphaRegex);
+}
 
 const checkRealName = (v) => {
   // const alphanumeric = /^[\p{L}\p{N}]*$/u;
@@ -169,9 +172,9 @@ const checkRealName = (v) => {
 let validateName = async (r, v) => {
   if (v === "") {
     return Promise.reject("请输入登录名");
-  } else if (!checkName(v)) {
+  } else if (!checkName2(v)) {
     return Promise.reject("不允许使用特殊字符");
-  } else {
+  }else {
     return Promise.resolve();
   }
 };
@@ -363,8 +366,8 @@ const getAffiliateCode = () => {
 
 const getReferalCode = () => {
   const referCode = sessionStorage.getItem("REFERRAL_CODE");
-
-  if (referCode && route.query && route.query.refer) {
+// && route.query && route.query.refer
+  if (referCode ) {
     regForm.referrer = referCode;
   }
 };
@@ -376,16 +379,8 @@ const submitRegisterForm = async (elForm) => {
   await elForm
     .validate((valid) => {
       if (valid) {
-        const fpPromise = FingerprintJS.load();
         (async () => {
-          const fp = await fpPromise;
-          const result = await fp.get();
-          const excludes = { value: ["timezone", "timeZoneOffset"] };
-          const allComponents = { ...result.components };
-          excludes.value.forEach((element) => {
-            delete allComponents[element];
-          });
-          const sidParam = FingerprintJS.hashComponents(allComponents);
+          const sidParam = store.visitorId;
           regForm.sid = sidParam;
           register(regForm)
             .then((response) => {

@@ -77,6 +77,20 @@
           maxlength="40"
           :placeholder="t('fields.loginName')"
         />
+        <el-select
+          v-model="request.sort"
+          size="small"
+          :placeholder="t('fields.sorting')"
+          class="filter-item"
+          style="width: 280px; margin-left: 10px"
+        >
+          <el-option
+            v-for="item in uiControl.sortList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -783,6 +797,23 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.clientType')" prop="clientType">
+          <el-select
+            v-model="request.clientType"
+            size="small"
+            :placeholder="t('fields.clientType')"
+            class="filter-item"
+            style="width: 250px;"
+            default-first-option
+          >
+            <el-option
+              v-for="item in uiControl.clientType"
+              :key="item.key"
+              :label="item.displayName"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.totalTime')" prop="totalTime">
           <el-select
             v-model="request.totalTime"
@@ -833,6 +864,7 @@ import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/date
 import { getSiteListSimple } from "@/api/site";
 import { TENANT } from "@/store/modules/user/action-types";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+
 const { t } = useI18n();
 const store = useStore()
 const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
@@ -880,6 +912,12 @@ const uiControl = reactive({
     { key: 6, displayName: 'More than 20 minutes', value: '>1200' },
     { key: 7, displayName: 'More than 30 minutes', value: '>1800' },
   ],
+  clientType: [
+    { key: 1, displayName: 'WEB', value: 'WEB' },
+    { key: 2, displayName: 'H5', value: 'H5' },
+    { key: 3, displayName: 'IOS', value: 'IOS' },
+    { key: 4, displayName: 'ANDROID', value: 'ANDROID' },
+  ],
   statusList: [
     { key: 0, displayName: t('withdrawStatus.ALL') },
     { key: 1, displayName: t('withdrawStatus.APPLY'), value: 'APPLY' },
@@ -904,6 +942,12 @@ const uiControl = reactive({
   selectedDateType: [
     { key: 0, displayName: t('dateType.withdrawDate'), value: 0 },
     { key: 1, displayName: t('dateType.paymentDate'), value: 1 },
+  ],
+  sortList: [
+    { label: t('fields.byWithdrawDateDesc'), value: 1 },
+    { label: t('fields.byWithdrawDateAsc'), value: 2 },
+    { label: t('fields.byPaymentDateDesc'), value: 3 },
+    { label: t('fields.byPaymentDateAsc'), value: 4 },
   ],
 })
 
@@ -947,6 +991,8 @@ const request = reactive({
   name: null,
   code: null,
   siteId: null,
+  clientType: null,
+  sort: 1,
 })
 
 const validateWithdrawAmount = (rule, value, callback) => {
@@ -966,10 +1012,10 @@ const searchFormRule = reactive({
 function disabledDate(time) {
   return (
     time.getTime() <
-      moment(new Date())
-        .subtract(2, 'months')
-        .startOf('month')
-        .format('x') || time.getTime() > new Date().getTime()
+    moment(new Date())
+      .subtract(2, 'months')
+      .startOf('month')
+      .format('x') || time.getTime() > new Date().getTime()
   )
 }
 
@@ -1005,6 +1051,7 @@ function resetQuery() {
   request.code = null
   uiControl.dialogVisible = false
   request.siteId = siteList.list[0].id
+  request.sort = 1
 }
 
 const page = reactive({

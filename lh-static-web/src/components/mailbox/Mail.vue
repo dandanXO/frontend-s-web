@@ -7,7 +7,7 @@
         </div>
         <el-divider/>
         <div class="mail-content">
-            {{ props.mail.content }}
+            {{ props.mail?.content }}
         </div>
     </div>
 </template>
@@ -56,6 +56,7 @@ const props = defineProps(['mail', 'closeMail']);
 }
 
 .mail-content {
+    overflow-wrap: break-word;
     font-size: 16px;
     color: #1d1e1f;
 }

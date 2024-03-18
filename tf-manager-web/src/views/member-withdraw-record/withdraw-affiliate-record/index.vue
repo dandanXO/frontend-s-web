@@ -77,6 +77,20 @@
           maxlength="40"
           :placeholder="t('fields.loginName')"
         />
+        <el-select
+          v-model="request.sort"
+          size="small"
+          :placeholder="t('fields.sorting')"
+          class="filter-item"
+          style="width: 280px; margin-left: 10px"
+        >
+          <el-option
+            v-for="item in uiControl.sortList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -944,6 +958,12 @@ const uiControl = reactive({
     { key: 0, displayName: t('dateType.withdrawDate'), value: 0 },
     { key: 1, displayName: t('dateType.paymentDate'), value: 1 },
   ],
+  sortList: [
+    { label: t('fields.byWithdrawDateDesc'), value: 1 },
+    { label: t('fields.byWithdrawDateAsc'), value: 2 },
+    { label: t('fields.byPaymentDateDesc'), value: 3 },
+    { label: t('fields.byPaymentDateAsc'), value: 4 },
+  ],
 })
 
 const startDate = new Date()
@@ -986,6 +1006,7 @@ const request = reactive({
   name: null,
   code: null,
   siteId: null,
+  sort: 1,
 })
 
 const validateWithdrawAmount = (rule, value, callback) => {
@@ -1045,6 +1066,7 @@ function resetQuery() {
   request.code = null
   uiControl.dialogVisible = false
   request.siteId = siteList.list[0].id
+  request.sort = 1
 }
 
 const page = reactive({

@@ -269,6 +269,7 @@ async function loadSites() {
 
 async function loadStats() {
   const recordTime = []
+  onlineStatOptions.series = []
 
   const { data: ret } = await getOnlineStats(request.siteId, request.recordTime[0], request.recordTime[1])
   if (ret.length === 0) {
@@ -298,6 +299,7 @@ async function loadStats() {
 
 async function loadCompare() {
   const recordTime = []
+  compareOptions.series = []
 
   const { data: ret } = await getCompareOnlineStats(compareRequest.siteId, compareRequest.recordTime, compareRequest.compareDays);
   if (ret.length === 0) {

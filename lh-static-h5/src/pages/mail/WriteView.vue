@@ -4,27 +4,40 @@
       <q-form ref="formRef" :model="mailDetailList">
         <div class="write-board-div q-pa-md">
           <div class="top q-pb-md">
+            <div class="title">意见类型</div>
+          </div>
+          <q-select 
+            name="title"
+            v-model="mailDetailList.feedbackType" :options="feedbackTypes" :label="`${mailDetailList.feedbackType || '快捷输入'}`"
+            ref="feedbackTypeRef"
+            :rules="[(val) => !!val || '请选择']" />
+
+          <!--
+          <q-btn-dropdown style="width:100%;" color="brightbtn" :label="`${mailDetailList.feedbackType || '快捷输入'}`" menu-anchor="bottom end">
+            <q-list>
+              <q-item v-for="(item, i) in feedbackTypes" :key="i" clickable v-close-popup @click="onItemClick(item)">
+                <q-item-section>
+                  <q-item-label>{{ item }}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-btn-dropdown>
+          -->
+        </div>
+        <div class="write-board-div q-pa-md">
+          <div class="top q-pb-md">
             <div class="title">标题</div>
-            <q-btn-dropdown color="brightbtn" label="快捷输入" menu-anchor="bottom end">
-              <q-list>
-                <q-item v-for="(item, i) in options" :key="i" clickable v-close-popup @click="onItemClick(item)">
-                  <q-item-section>
-                    <q-item-label>{{ item }}</q-item-label>
-                  </q-item-section>
-                </q-item>
-              </q-list>
-            </q-btn-dropdown>
           </div>
           <q-input
             :rules="[
               (val) => (val && val.length > 0) || '请输入标题',
-              (val) => (val && val.length < 255) || '标题长度为255以下.'
+              (val) => (val && val.length <= 200) || '标题长度为200或以下.'
             ]"
             ref="titleRef"
             name="title"
             counter
             bottom-slots
-            maxlength="255"
+            maxlength="200"
             v-model="mailDetailList.title"
             class="textarea-input"
             filled
@@ -85,26 +98,48 @@ const $q = useQuasar();
 const router = useRouter();
 const options = ["存款问题", "转账问题", "提款问题", "其他"];
 const mailDetailList = ref({
+  feedbackType: "",
   title: "",
   content: ""
 });
-const onItemClick = (item) => {
-  mailDetailList.value.title = item;
+
+const feedbackTypes = ref([]);
+
+const loadFeedbackType = () => {
+  api
+    .get("/session/feedback/types", {})
+    .then((res) => {
+      const { code, data } = res;
+      if (code === 0) feedbackTypes.value = data;
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
 };
+
+const onItemClick = (item) => {
+  mailDetailList.value.feedbackType = item;
+};
+const feedbackTypeRef = ref();
 const titleRef = ref();
 const contentRef = ref();
 const modalSendSuccess = ref(false);
 const onSubmit = () => {
+  feedbackTypeRef.value.validate();
   titleRef.value.validate();
   contentRef.value.validate();
-  if (titleRef.value.hasError || contentRef.value.hasError) {
+  if (titleRef.value.hasError || contentRef.value.hasError || feedbackTypeRef.value.hasError) {
     $q.loading.hide();
   } else {
     api
-      .post("/session/writeOutbox", qs.stringify(mailDetailList.value))
+      .post("/session/feedback", qs.stringify(mailDetailList.value))
       .then((response) => {
         if (response.code === 0) {
           modalSendSuccess.value = true;
+
+          mailDetailList.value.feedbackType = "";
+          mailDetailList.value.title = "";
+          mailDetailList.value.content = "";
         }
       })
       .catch((error) => {
@@ -118,7 +153,9 @@ const closePage = () => {
   mailDetailList.value.title = "";
   mailDetailList.value.content = "";
 };
-onMounted(() => {});
+onMounted(() => {
+  loadFeedbackType();
+});
 </script>
 <style scoped lang="scss">
 .write-letter {

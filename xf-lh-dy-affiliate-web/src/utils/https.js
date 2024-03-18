@@ -49,7 +49,20 @@ const onResponse = (response) => {
   }
   if (res.code !== ResponseCode.SUCCESS) {
     if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
-      console.log(res, ' there has been an err with the api unauthosized')
+      ElMessage({
+        message: "Duplicated login.",
+        type: "error"
+      });
+      location.reload();
+    } else if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
+      res.code === ResponseCode.ERROR_TOKEN_MISSED ||
+      res.code === ResponseCode.ERROR_TOKEN_INVALID ||
+      res.code === ResponseCode.ERROR_TOKEN_LOGGED ||
+      res.code === ResponseCode.ERROR_TOKEN_FAILED) {
+      ElMessage({
+        message: "Please re-login. Code: " + res.code,
+        type: "error"
+      });
       location.reload();
     } else {
       // const router = useRouter()
@@ -89,7 +102,7 @@ const https = (api) => {
   const token = store.state.user.token;
   const currentHost = window.location.host
   const thaiHost = "affiliate-web.monemental.com"
-  const indHost = "ind-affiliate.wbesfdides.com"
+  const indHost = "ind-nfaet6t.exerpsison.com"
   const lhHost = "lh1-affiliate.phoicynxeey.com"
   const isAff = api === 'affiliate'
   const isCr = api === 'cashier'

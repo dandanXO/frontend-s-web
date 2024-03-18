@@ -232,14 +232,13 @@
         min-width="100"
       >
         <template #default="scope">
-          <el-link
-            type="primary"
-            :href="'' + scope.row.photos + ''"
-            v-if="scope.row.photos !== ''"
-            target="_blank"
-          >
-            {{ t('fields.show') }}
-          </el-link>
+          <el-image
+            hide-on-click-modal
+            style="width: 30px; height: 30px; border: 1px solid grey"
+            :src="scope.row.photos"
+            :preview-src-list="[scope.row.photos]"
+            fit="cover"
+          />
         </template>
       </el-table-column>
 

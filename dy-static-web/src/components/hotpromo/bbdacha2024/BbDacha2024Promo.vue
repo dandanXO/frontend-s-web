@@ -81,7 +81,7 @@
 
   <div class="tips-container">
     <div class="tips-txt">注：请于每场指定开赛时间前选择完成竞猜，超出开赛时间则无法参与竞猜。</div>
-    <div class="tips-record" @click="tableRecordDialog = true">【投票记录】</div>
+    <div class="tips-record" @click="openTableRecordDialog">【投票记录】</div>
   </div>
 
   <div class="tabs-container">
@@ -287,6 +287,26 @@ const recordsCount = reactive({
   attendTimes: 0,
   todayWonTimes: 0
 });
+
+const openTableRecordDialog = () => {
+  Promise.all([getBBDachaAnsweredRecords(), getBBDachaRecordsCount()]).then((values) => {
+    const [bbDachaAnsweredRecords, bbDachaRecordsCount] = values;
+    if (bbDachaAnsweredRecords.code === 0) {
+      if (bbDachaAnsweredRecords?.data?.records?.length) {
+        answeredRecords.value = bbDachaAnsweredRecords.data.records;
+      }
+    }
+
+    if (bbDachaRecordsCount.code === 0) {
+      recordsCount.wonTimes = bbDachaRecordsCount.data.wonTimes;
+      recordsCount.attendTimes = bbDachaRecordsCount.data.attendTimes;
+      recordsCount.todayWonTimes = bbDachaRecordsCount.data.todayWonTimes;
+    }
+
+    tableRecordDialog.value = true;
+  });
+};
+
 const getData = () => {
   Promise.all([getBBDachaUpcoming(), getBBDachaAnsweredRecords(), getBBDachaRecordsCount()]).then((values) => {
     const [bbDachaUpcoming, bbDachaAnsweredRecords, bbDachaRecordsCount] = values;

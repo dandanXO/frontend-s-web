@@ -35,6 +35,7 @@
           <span>姓名</span>
         </template>
       </q-input>
+
       <q-input
         ref="birthdayRef"
         standout
@@ -49,16 +50,18 @@
         readonly
         mask="date"
         :rules="[(val) => (val && val.length > 0) || '请输入生日']"
+        @click="toggleShowPopup"
       >
         <template v-slot:prepend>
           <span>生日</span>
         </template>
 
         <template v-slot:append>
-          <q-icon name="event" color="accent" class="cursor-pointer">
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="formDetail.birthday" mask="YYYY-MM-DD">
+          <q-icon v-if="isEditBirthday" name="event" color="accent" class="cursor-pointer">
+            <q-popup-proxy cover transition-show="scale" transition-hide="scale" v-model="showDatePopup">
+              <q-date v-model="formDetail.birthday" >
                 <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="确认" flat />
                   <q-btn v-close-popup label="关闭" flat />
                 </div>
               </q-date>
@@ -192,7 +195,14 @@ export default defineComponent({
       end: ""
     });
 
+    const showDatePopup = ref(false)
     const profileFormRef = ref();
+
+    const toggleShowPopup = () => {
+      if(isEditBirthday.value=== true){
+        showDatePopup.value = true
+      }
+    }
 
     const store = userStore();
     const router = useRouter();
@@ -215,7 +225,7 @@ export default defineComponent({
       formDetail.emailVerified = personalState.memberInfo.emailVerified;
 
       isEditEmail.value = (formDetail.emailVerified === false) ? true : false;
-      isEditBirthday.value = (!formDetail.birthday) ? true : false;
+      isEditBirthday.value = (!personalState.memberInfo.birthday) ? true : false;
       isEditPhone.value = (formDetail.phoneVerified === false) ? true : false;
     };
 
@@ -485,7 +495,9 @@ export default defineComponent({
       captchaRef,
       showCaptchaDialog,
       openVerificationDialog,
-      onCaptchaSubmit
+      onCaptchaSubmit,
+      showDatePopup,
+      toggleShowPopup
     };
   }
 });

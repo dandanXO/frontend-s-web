@@ -9,7 +9,7 @@
       <div class="card-bg">
         <el-tabs>
           <el-tab-pane label="账户登录">
-            <AccountLogin />
+            <AccountLogin page-type="view" />
           </el-tab-pane>
           <el-tab-pane label="手机登录">
             <el-form ref="mobileLoginRef" :rules="mobileLoginRules" :model="loginForm" label-width="70"
@@ -88,7 +88,6 @@
 <script setup>
 import { ref, onMounted, reactive } from "vue";
 import { getVerificationCode } from "@/api/index/login";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "@/store/index";
 import { sendSms } from "@/api/personal/personal";
 import AccountLogin from "@/components/auth/AccountLogin.vue";
@@ -227,17 +226,9 @@ const openCaptchaForm = (type) => {
 
 const phoneLogin = () => {
   loadingBtn.value = true;
-  const fpPromise = FingerprintJS.load();
-  (async () => {
-    const fp = await fpPromise;
-    const result = await fp.get();
-    const excludes = { value: ["timezone", "timeZoneOffset"] };
-    const allComponents = { ...result.components };
-    excludes.value.forEach((element) => {
-      delete allComponents[element];
-    });
-    const sidParam = FingerprintJS.hashComponents(allComponents);
+  const sidParam = store.visitorId;
 
+  (async () => {
     mobileLoginRef.value.validate().then(() => {
       if (!loginForm.smsCodeId) {
         ElMessage.error('请先获取验证码');

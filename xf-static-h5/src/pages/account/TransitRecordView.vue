@@ -941,7 +941,12 @@ export default defineComponent({
     });
     const platformsList = ref([])
     const getPlatList = () => {
-      api.get("/platform").then((ret) => {
+      var platformApiUrl = store.hasToken()
+        ? "/session/loggedInPlatform"
+        : "/platform";
+      var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
+
+      api.get(platformApiUrl).then((ret) => {
         if (ret.code === 0) {
           platformsList.value = ret.data
         }

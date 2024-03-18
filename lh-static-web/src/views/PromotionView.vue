@@ -3,7 +3,7 @@
     <div class="all-promotions" v-if="!isPromoDetail">
       <div class="promo-main-container">
         <div class="promo-type-wrapper">
-          <el-affix :offset="80">
+          <div style="position:sticky; top: 0;">
             <div class="type-list">
               <img src="../assets/promo/menu-title.png" />
               <div
@@ -17,7 +17,7 @@
                 <span style="width: 100px" class="label">{{ p.label }}</span>
               </div>
             </div>
-          </el-affix>
+          </div>
         </div>
         <div class="promo-list-wrapper">
           <div
@@ -57,7 +57,9 @@
     </div>
     <div v-else class="selected-promo">
       <div class="selected-promo-wrapper">
-        <div class="banner-container">
+        <div class="banner-container"
+          v-if="selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl"
+        >
           <div class="promo-bg isDesktop">
             <img
               :src="
@@ -65,15 +67,6 @@
               "
             />
           </div>
-          <!-- <div
-            class="promo-bg isDesktop"
-            :style="
-              'background-image: url(' +
-              imgURL +
-              (selectedPromo.desktopBannerUrl ? selectedPromo.desktopBannerUrl : selectedPromo.desktopImgUrl) +
-              ''
-            "
-          ></div> -->
           <div
             class="promo-bg isMobile"
             :style="
@@ -87,9 +80,9 @@
         <div
           class="inner"
           :style="
-            selectedPromo.desktopImgBackgroundUrl
+            selectedPromo?.desktopImgBackgroundUrl
               ? `background-image: url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
-              : 'background-image: url(../assets/promo/web-bg.jpg)'
+              : 'background-image: url(' + require(`../assets/promo/web-bg.jpg`) + '\''
           "
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
@@ -98,15 +91,18 @@
           <div
             class="promo-view-container"
             :class="{
-              welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
-              sport: selectedPromo.promoType.toLowerCase() === 'sport',
-              eSport: selectedPromo.promoType.toLowerCase() === 'esport',
-              fish: selectedPromo.promoType.toLowerCase() === 'fish',
-              liveCasino: selectedPromo.promoType.toLowerCase() === 'livecasino',
-              slot: selectedPromo.promoType.toLowerCase() === 'slot game'
+              welcome: selectedPromo.promoType?.toLowerCase() === 'welcome',
+              sport: selectedPromo.promoType?.toLowerCase() === 'sport',
+              eSport: selectedPromo.promoType?.toLowerCase() === 'esport',
+              fish: selectedPromo.promoType?.toLowerCase() === 'fish',
+              liveCasino: selectedPromo.promoType?.toLowerCase() === 'livecasino',
+              slot: selectedPromo.promoType?.toLowerCase() === 'slot game'
             }"
           >
             <div v-html="selectedPromo.pageContent"></div>
+          </div>
+          <div v-if="['lh-cs2-copenhagen-major-2024'].includes(selectedPromo.redirectUrl)" class="corner-decor" style="position:absolute;left:0px;bottom:0px;">
+            <img width="125px" v-if="selectedPromo.redirectUrl === 'lh-cs2-copenhagen-major-2024'" src="../assets/images/promotion/hotpromo/cs2/bottombg.png" />
           </div>
         </div>
       </div>
@@ -115,7 +111,7 @@
 </template>
 
 <script lang="js">
-import { ref, defineComponent, onMounted, reactive, watch } from "vue";
+import { ref, defineComponent, onMounted, reactive, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { loadPromo } from "@/api/index/promo.js";
 import { loadPromoBanner } from "@/api/index/promo";
@@ -140,26 +136,29 @@ export default defineComponent({
       { code:"ALL", img: 'all', label: '全站优惠' },
       { code: "ESPORT", img: 'esport', label: '电竞优惠'},
       { code: "SPORT", img: 'sport', label: '体育优惠'},
-      // { code: "POKER", img: 'poker', label: '棋牌'},
       { code: "LIVE CASINO", img: 'live', label: '真人优惠'},
+      { code: "POKER", img: 'poker', label: '棋牌优惠'},
       // { code: "FISH", img: 'fish', label: '捕鱼'},
       { code: "OTHERS", img: 'slot', label: '其他优惠'},
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
-    const isPromoDetail = ref(false);
+    const isPromoDetail = computed(() => {
+      if(route.query && route.query?.name && store.token){
+        return true;
+      }
+      return false;
+    })
     const selectedPromo = ref({});
     const route = useRoute();
     const router = useRouter();
-    watch(() => route.query, () => {
-      if (route.query === null) {
-       isPromoDetail.value = false
-      } else {
-        isPromoDetail.value = route.query.name
-      }
-      // Optionally you can set immediate: true config for the watcher to run on init
-      // }, { immediate: true });
-    });
+    // watch(() => route.query, () => {
+    //   if (route.query === null) {
+    //    isPromoDetail.value = false
+    //   } else {
+    //     isPromoDetail.value = route.query.name
+    //   }
+    // });
     const loadBanner = () => {
       loadPromoBanner("PROMO").then((res) => {
         if (res.code === 0) {
@@ -196,7 +195,7 @@ export default defineComponent({
           // } else {
           //   router.push({name: 'promotion', query: {name: promo.redirectUrl}})
           // }
-          isPromoDetail.value = true
+          // isPromoDetail.value = true;
           selectedPromo.value = promo
         }
       }
@@ -278,11 +277,11 @@ export default defineComponent({
       loadAll();
     });
 
-    watch(() => route.query.name, () => {
-      if (!route.query.name) {
-        isPromoDetail.value = false
-      }
-    });
+    // watch(() => route.query.name, () => {
+    //   if (!route.query.name) {
+    //     isPromoDetail.value = false
+    //   }
+    // });
 
     return {
       promoState,
@@ -302,13 +301,15 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .promo-container {
+  min-height: 600px;
+
   .all-promotions {
-    background: url(../assets/promo/bg-top2.jpg) no-repeat center top;
+    background: url(../assets/promo/bg-top3.jpg) no-repeat center top;
     width: 100%;
     background-size: 100% auto;
     padding: 50px;
     position: relative;
-    padding-top: max(300px, 22vw);
+    padding-top: max(110px, 16vw);
     background-color: #f3f7fd;
   }
   .promo-view-container {
@@ -436,6 +437,8 @@ export default defineComponent({
           flex-direction: column;
           gap: 35px;
           min-height: 818px;
+          position: sticky;
+          top: 100px;
           .type-item {
             cursor: pointer;
             // border-radius: 20px;
@@ -705,6 +708,11 @@ export default defineComponent({
         background-position: top center;
         gap: 20px;
         background-repeat: no-repeat;
+        
+        &:has(.corner-decor) {
+          position: relative;
+        }
+
         .hot-promo {
           // background: #201f29;
           border-radius: 10px;

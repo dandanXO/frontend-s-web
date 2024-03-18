@@ -128,18 +128,35 @@ export default route(function (/* { store, ssrContext } */) {
 
       gtag("js", new Date());
       gtag("config", "UA-780462346-6");
-    } else if (window.location.href.indexOf("jo88.cc") > -1) {
+    } else if (
+      window.location.href.indexOf("https://jo88.cc") > -1 ||
+      window.location.href.indexOf("https://www.jo88.cc") > -1
+    ) {
       ui.isAffiliateB = true;
       console.log("jo88.cc");
 
       fbq("init", "722685126460216");
       fbq("track", "PageView");
       fbq("track", "ViewContent");
-    } else if (window.location.href.indexOf("jo98.cc") > -1) {
+    } else if (
+      window.location.href.indexOf("https://jo98.cc") > -1 ||
+      window.location.href.indexOf("https://www.jo98.cc") > -1
+    ) {
       ui.isAffiliateB = true;
       console.log("jo98.cc");
 
-      fbq("init", "873960514528284");
+      fbq("init", "426253023210597");
+
+      fbq("track", "PageView");
+      fbq("track", "ViewContent");
+    } else if (
+      window.location.href.indexOf("https://jo77.cc") > -1 ||
+      window.location.href.indexOf("https://www.jo77.cc") > -1
+    ) {
+      ui.isAffiliateB = true;
+      console.log("IS https://jo77.cc");
+
+      fbq("init", "CNRDC33C77U4A9P32PIG");
 
       fbq("track", "PageView");
       fbq("track", "ViewContent");

@@ -169,6 +169,20 @@
             :value="item.paymentName"
           />
         </el-select>
+        <el-select
+          v-model="request.sort"
+          size="small"
+          :placeholder="t('fields.sorting')"
+          class="filter-item"
+          style="width: 210px;margin-right:10px"
+        >
+          <el-option
+            v-for="item in uiControl.sortList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
         <el-button
           size="mini"
           type="primary"
@@ -730,6 +744,12 @@ const uiControl = reactive({
     { key: 0, displayName: t('dateType.depositDate'), value: 0 },
     { key: 1, displayName: t('dateType.finishDate'), value: 1 },
   ],
+  sortList: [
+    { label: t('fields.byDepositDateDesc'), value: 1 },
+    { label: t('fields.byDepositDateAsc'), value: 2 },
+    { label: t('fields.byFinishDateDesc'), value: 3 },
+    { label: t('fields.byFinishDateAsc'), value: 4 },
+  ],
 })
 
 const startDate = new Date()
@@ -757,6 +777,8 @@ const request = reactive({
   thirdPartyName: null,
   paymentType: null,
   siteId: null,
+  clientType: null,
+  sort: 1,
 })
 
 const validateDepositAmount = (rule, value, callback) => {
@@ -805,6 +827,7 @@ function resetQuery() {
   request.transactionTime = uiControl.timeList[0].value
   uiControl.dialogVisible = false
   request.siteId = siteList.list[0].id
+  request.sort = 1
 }
 
 const page = reactive({

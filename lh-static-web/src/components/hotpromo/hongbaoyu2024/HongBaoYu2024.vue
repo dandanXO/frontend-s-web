@@ -24,7 +24,7 @@
     </div>
     <div class="activity-boxes">
       <div class="activity-box">
-        <div class="activity-title">活动对象</div>
+        <div class="activity-title">中奖名单</div>
         <div class="activity-content-container">
           <table class="content-table">
             <tr class="winner" v-for="(item, index) in visibleItems" :key="index">
@@ -38,7 +38,7 @@
     </div>
   </div>
 
-  <div class="promo-container">
+  <div class="promo-container-hongbao">
     <div class="promo-view-container">
       <table border="0" width="600" cellpadding="0" cellspacing="0">
         <tbody>
@@ -47,11 +47,11 @@
             <th>每日次数</th>
           </tr>
           <tr>
-            <td>18:00 ~ 19:00</td>
+            <td>{{ startTime.time1 }}</td>
             <td rowspan="2">每日2次</td>
           </tr>
           <tr>
-            <td>20:00 ~ 21:00</td>
+            <td>{{ startTime.time2 }}</td>
           </tr>
         </tbody>
       </table>
@@ -86,13 +86,18 @@
 </template>
 
 <script setup>
-import { ref, defineProps, onMounted } from "vue";
+import { ref, defineProps, onMounted, reactive } from "vue";
 import { claimDailyRainItem, getDailyRainListing } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { ElMessage } from "element-plus";
 
-const props = defineProps(["promoCode"]);
+const props = defineProps(["promoCode", "params"]);
 const promoCode = ref(props.promoCode);
+
+const startTime= reactive({
+  time1: "17:00 ~ 18:00",
+  time2: "19:00 ~ 20:00"
+})
 
 const store = userStore();
 const privilegeClaimedModalVisible = ref(false);
@@ -168,6 +173,14 @@ const getPromotionListing = () => {
 
 onMounted(() => {
   getPromotionListing();
+
+  const params= props.params ? JSON.parse(props.params) : "";
+  if(params?.time1){
+    startTime.time1= params.time1;
+  }
+  if(params?.time2){
+    startTime.time2= params.time2;
+  }
 });
 </script>
 
@@ -186,8 +199,8 @@ onMounted(() => {
 
   .activity-boxes {
     display: flex;
-    margin: 20px auto;
-    gap: 20px;
+    margin: 16px auto;
+    gap: 15px;
     width: 100%;
     justify-content: center;
     align-items: center;
@@ -196,21 +209,21 @@ onMounted(() => {
       border-radius: 20px;
       background: linear-gradient(180deg, #ffffff 0%, #e4efff 100%);
       flex: 1;
-      padding: 40px;
+      padding: 30px;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
       max-width: 690px;
-      gap: 20px;
-      height: 320px;
+      gap: 15px;
+      height: 330px;
 
       .activity-title {
         color: #3f8cff;
         font-size: 40px;
         font-weight: 700;
         font-family: "PingFang SC";
-        margin-bottom: auto;
+        margin-bottom: 0px;
       }
 
       .activity-content-container {
@@ -234,6 +247,9 @@ onMounted(() => {
       }
 
       .content-table {
+        max-height: 200px;
+        overflow-y: hidden;
+        display: block;
         font-size: 20px;
         color: #7a8eb9;
 
@@ -377,7 +393,7 @@ onMounted(() => {
   }
 }
 
-.promo-container .promo-view-container table {
+.promo-container-hongbao .promo-view-container table {
   margin-top: 24px;
   color: #7a8eb9;
   font-size: 20px;

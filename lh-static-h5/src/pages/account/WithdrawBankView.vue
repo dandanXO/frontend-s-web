@@ -8,7 +8,7 @@
   >
     <q-card style="width: 100%" class="modalcontent">
       <div class="headers">
-        <div class="titles">请输入解绑银行卡号</div>
+        <div class="titles">{{ getTitleText() }}</div>
         <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
       </div>
       <q-form class="unbind-form">
@@ -194,7 +194,7 @@ const onBindCardClick = (path) => {
   router.push(path);
 };
 
-const isCardVisible = reactive({ bankCard: false, crypto: false, ewallet: false, alipay: false });
+const isCardVisible = reactive({ BANK: true, CRYPTO: true, EWALLET: true, ALIPAY: true });
 const onShowCardClick = (key) => {
   isCardVisible[key] = !isCardVisible[key];
 };
@@ -230,6 +230,15 @@ const onUnbindClick = (card) => {
 
   selectedUnbindBankCard.value = card;
 };
+
+const getTitleText = () => {
+  const { bankType, bankCode } = selectedUnbindBankCard.value;
+
+  if (isAlipay(bankCode)) return "请输入解绑支付宝号";
+  else if (bankType === BANK_CARD) return "请输入解绑银行卡号";
+  else if (bankType === CRYPTO) return "请输入解绑虚拟币账户";
+  else if (bankType === EWALLET) return "请输入解绑电子钱包";
+}
 
 const unbindBankCard = () => {
   unbindBankCardNoRef.value.validate();

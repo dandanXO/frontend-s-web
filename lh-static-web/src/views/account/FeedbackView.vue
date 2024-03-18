@@ -13,6 +13,26 @@
             label-width="100"
             hideRequiredMark="true"
           >
+
+            <div class="mail-input-item">
+              <div class="input-title">意见类型</div>
+              <div class="input-fill">
+                <el-select
+                  class="feedback-select"
+                  placeholder="意见类型选择"
+                  v-model="mailboxState.mailboxList.write.feedbackType"
+                >
+                  <el-option
+                    v-for="(feedback, feedbackIndex) in feedbackTypes"
+                    :key="`feedback-${feedbackIndex}`"
+                    :value="feedback"
+                  >
+                    {{ feedback }}
+                  </el-option>
+                </el-select>
+              </div>
+            </div>
+
             <div class="mail-input-item">
               <div class="input-title-container">
                 <div class="input-title">标题</div>
@@ -57,7 +77,7 @@
         <el-tab-pane key="sent" name="sent" :label="'我的反馈'">
           <template v-if="mailboxState.mailboxList.sent.list.length > 0">
             <el-collapse v-model="activeNames" @change="handleChange">
-              <el-collapse-item v-for="item in mailboxState.mailboxList.sent.list" :key="item.id">
+              <el-collapse-item v-for="item in mailboxState.mailboxList.sent.list" :key="item.id" @click="openMsg(item)">
                 <template #title><p class="title-p">标题：{{ item.title }}</p></template>
                 <div>
                   <div class="content-p">正文：{{ item.content }}</div>
@@ -203,7 +223,7 @@
 
 <script setup>
 import { ref, reactive, onMounted } from "vue";
-import { mailInbox, mailOutbox, wirteMail } from "@/api/personal/mailbox";
+import { mailInbox, mailOutbox, submitFeedback, getFeedbackType, readFeedback } from "@/api/personal/mailbox";
 // import { message } from "ant-design-vue";
 import { getQuestionnaireList, submitQuestionnaire, getQuestionnaireAns } from "@/api/index/promo";
 import { userStore } from "@/store"
@@ -218,6 +238,20 @@ const uiIsShowStatus = reactive({
   questionBox: false,
   showQuestions: true,
 });
+
+const feedbackTypes = ref("");
+const loadFeedbackType = () => {
+  getFeedbackType()
+    .then((res) => {
+      const { code, data } = res;
+      if (code === 0) feedbackTypes.value = data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+
 function onBtnStartAnswerClick() {
   // debugger;
   uiIsShowStatus.startAnswerBox = false;
@@ -449,7 +483,7 @@ const onItemClick = (item) => {
 const loadingBtn = ref(false);
 const mailboxData = ref([]);
 const mailboxState = reactive({
-  active: "quiz",
+  active: "write",
   mailboxList: {
     inbox: {
       list: [],
@@ -533,8 +567,28 @@ const mailTabChange = (nk) => {
   }
 };
 
+const openMsg = (m) => {
+  const { id } = m;
+
+  if (m.isOpen === undefined) m.isOpen = false;
+  m.isOpen = !m.isOpen;
+  m.readTime = true;
+
+  if (!m.content) {
+    readFeedback({ id })
+      .then((res) => {
+        const { code, data } = res;
+        if (code === 0) m.content = data.content;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+};
+
 const formRef = ref();
 const rules = {
+  feedbackType: [{ required: true, message: "请选择意见类型" }],
   title: [
     {
       required: true,
@@ -566,7 +620,7 @@ const onSubmit = (e) => {
   formRef.value
     .validate()
     .then(() => {
-      wirteMail(mailboxState.mailboxList.write)
+      submitFeedback(mailboxState.mailboxList.write)
         .then((response) => {
           if (response.code === 0) {
             ElMessage({
@@ -575,6 +629,7 @@ const onSubmit = (e) => {
             });
             loadPersonalMailbox();
 
+            mailboxState.mailboxList.write.feedbackType = "";
             mailboxState.mailboxList.write.title = "";
             mailboxState.mailboxList.write.content = "";
           } else {
@@ -612,6 +667,8 @@ onMounted(() => {
   if (store.token) {
     testAns();
     getReferral();
+
+    loadFeedbackType();
   }
   
   // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
@@ -936,6 +993,7 @@ onMounted(() => {
 
 
 .mail-content {
+  overflow-wrap: break-word;
   :deep(.el-collapse-item__header) {
     background: #f7f8fb;
     // color: $font-1;
@@ -1016,7 +1074,7 @@ onMounted(() => {
         width: 80px;
       }
 
-      :deep(.el-input__wrapper) {
+      :deep(.el-input__wrapper), :deep(.el-select__wrapper) {
         box-shadow: 0px 0px 8px 0px #a9c9ea inset;
         border-radius: 10px;
         background: #f7f8fb;

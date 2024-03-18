@@ -169,7 +169,7 @@
           v-formatter="{data: page.totalPayout,type: 'money'}"
         /></span>
         <span style="margin-right:20px;">{{ t('fields.totalCompanyProfit') }}: $ <span
-          v-formatter="{data: page.totalPayout-page.totalBet,type: 'money'}"
+          v-formatter="{data: page.totalBet-page.totalPayout,type: 'money'}"
         /></span>
       </div>
       <el-pagination

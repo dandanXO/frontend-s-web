@@ -81,12 +81,14 @@
 import { onMounted, reactive, defineExpose, defineProps } from 'vue';
 import { getMemberGameStats } from '../../../../api/statistics';
 import { useI18n } from "vue-i18n";
+import { useStore } from "@/store";
 
 defineExpose({
   loadMemberSummary
 });
 
 const { t } = useI18n();
+const store = useStore();
 
 const props = defineProps({
   affId: {
@@ -127,6 +129,7 @@ async function loadMemberSummary() {
       query.recordTime = request.recordTime.join(",");
     }
   }
+  query.siteId = store.state.user.siteId;
   const { data: ret } = await getMemberGameStats(props.affId, query);
   page.pages = ret.pages;
   page.records = ret.records;

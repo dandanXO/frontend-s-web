@@ -108,7 +108,7 @@
           <el-input v-if="uiControl.dialogType === 'EDIT'" v-model="form.gameType" class="filter-item" style="width: 350px" disabled />
         </el-form-item>
         <el-form-item :label="t('fields.rebatePercentage')" prop="rebatePercentage">
-          <el-input-number type="number" v-model.number="form.rebatePercentage" :precision="2" :step="0.01" :min="0" :max="10"
+          <el-input-number type="number" v-model.number="form.rebatePercentage" :precision="4" :step="0.0001" :min="0" :max="10"
                            style="width: 350px;" @keypress="restrictInput($event)" controls-position="right"
           />
         </el-form-item>

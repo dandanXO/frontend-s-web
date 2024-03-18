@@ -97,7 +97,10 @@ const onResponse = (response) => {
       store.token = null;
       location.reload();
     } else {
-      if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED) {
+      if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
+        res.code === ResponseCode.ERROR_TOKEN_MISSED ||
+        res.code === ResponseCode.ERROR_NAME_EXIST
+      ) {
         store.token = null;
         location.reload();
       }

@@ -582,6 +582,8 @@ export default defineComponent({
     const claimVIPLevelItem = (vip) => {
       claim(vip.vipLevel).then((res) => {
         if (res.code === 0) {
+          ElMessage.success("领取成功！");
+          store.getBalance();
           initVIPTable();
         } else {
           ElMessage.error(res.message)

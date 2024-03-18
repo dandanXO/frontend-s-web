@@ -222,6 +222,7 @@ export default defineComponent({
       // {name: "slot game", label: '老虎机'},
       // {name: "fish", label: '捕鱼'},
       { name: "live casino", label: "真人" },
+      { name: "poker", label: "棋牌" },
       { name: "others", label: "其它" }
     ];
 

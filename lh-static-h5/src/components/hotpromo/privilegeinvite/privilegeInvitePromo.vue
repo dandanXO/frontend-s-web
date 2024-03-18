@@ -48,7 +48,7 @@
                   <td>流水要求</td>
                 </tr>
                 <tr>
-                  <td>≥1,00</td>
+                  <td>≥100</td>
                   <td>28</td>
                   <td rowspan="6">
                     3倍/
@@ -80,15 +80,15 @@
             </div>
 
             <p class="red q-mt-lg">
-              例如：会员A邀请一位好友首存100元，则可获取8元奖金；若想获取下一档位38元，则需好友再次存1000元；
+              例如：会员A邀请一位好友首存100元，则可获取28元奖金；若想获取下一档位108元，则需好友再次存1000元；
               奖金将会在次日凌晨00:00至下午16:00之间自动派发至您的主账户，
               如果下周您邀请的好友依旧符合存款金额，那么您在下周会再次获得对应奖金。
             </p>
           </div>
 
-          <div class="row justify-center">
-            <q-btn color="brightbtn" @blur="blurCode" label="点击申请" />
-          </div>
+<!--          <div class="row justify-center">-->
+<!--            <q-btn color="brightbtn" @blur="blurCode" label="点击申请" />-->
+<!--          </div>-->
 
           <div class="blue-content-rules">
             <div class="rules-img">
@@ -96,14 +96,14 @@
             </div>
             <ol>
               <li>
-                每个通过您推广链接进行注册，并完成相应首存的用户，您将获得对应的邀请奖金；每个受邀请人完成对应存款金额，在单周内邀请人能最高可获得1472元。
+                每个通过您推广链接进行注册，并完成相应首存的用户，您将获得对应的邀请奖金；每个受邀请人完成对应存款金额，在单周内邀请人能最高可获得4022元。
               </li>
               <li>
                 您每邀请一位新会员，从注册的日期开始算起，可享受4次推荐奖金，每个自然周一
                 00:00刷新1次，期间每个对应的档位奖金都 可以领取一次；逾期将会视为自动放弃。
               </li>
               <li>
-                例如：会员A邀请一位好友首存100元，则可获取8元奖金；若想获取下一档位38元，则需好友再次存1000元；奖金将会自动派发至主钱包。
+                例如：会员A邀请一位好友首存100元，则可获取28元奖金；若想获取下一档位108元，则需好友再次存1000元；奖金将会自动派发至主钱包。
               </li>
               <li>邀请人等级不得低于vip2。</li>
               <li>
@@ -152,7 +152,7 @@
                   <td>好友周累计存款</td>
                   <td>邀请人比例</td>
                   <td>受邀请人比例</td>
-                  <td>好友周累计存款</td>
+                  <td>总奖金上限</td>
                   <td>流水要求</td>
                 </tr>
                 <tr>
@@ -223,9 +223,9 @@
             </p>
           </div>
 
-          <div class="row justify-center">
-            <q-btn color="brightbtn" @blur="blurCode" label="点击申请" />
-          </div>
+<!--          <div class="row justify-center">-->
+<!--            <q-btn color="brightbtn" @blur="blurCode" label="点击申请" />-->
+<!--          </div>-->
 
           <div class="blue-content-rules">
             <div class="rules-img">
@@ -345,16 +345,16 @@
               <div class="input-row">
                 <label>返利类型</label>
                 <select class="record-select-input record-type" v-model="checkRecordFormData.recordType">
-                  <option value="INVITER">邀请返利</option>
-                  <option value="INVITEES">受邀返利</option>
+                  <option value="REFERRER">邀请返利</option>
+                  <option value="FRIEND">受邀返利</option>
                 </select>
               </div>
               <div class="input-row">
                 <label>活动类型</label>
                 <select class="record-select-input privilege-type" v-model="checkRecordFormData.privilegeType">
-                  <option value="WeekFirstDeposit">邀请首存送</option>
-                  <option value="WeekTotal">邀请周存送</option>
-                  <option value="Bet">返利无上限</option>
+                  <option value="FIRST_DEPOSIT">邀请首存送</option>
+                  <option value="WEEKLY_DEPOSIT">邀请周存送</option>
+                  <option value="BET_REBATE">返利无上限</option>
                 </select>
               </div>
 
@@ -379,7 +379,7 @@
               <div class="no-item-table" v-if="tableRecords.length === 0">
                 <p>暂无数据</p>
               </div>
-              <div class="record-table" v-else>
+              <div class="record-contents" v-else>
                 <template v-for="(list, i) of tableRecords" :key="i">
                   <div>{{ list.loginName }}</div>
                   <div>{{ list.depositOrBet }}</div>
@@ -425,8 +425,8 @@ export default defineComponent({
       yesterdayFriendBet: 0
     });
     const checkRecordFormData = reactive({
-      recordType: "INVITER",
-      privilegeType: "WeekFirstDeposit",
+      recordType: "REFERRER",
+      privilegeType: "FIRST_DEPOSIT",
       date: moment().utcOffset("+08:00").format("YYYY-MM-DD"),
       user: ""
     });
@@ -487,21 +487,29 @@ export default defineComponent({
     var tableRecords = ref([]);
     const getRecords = () => {
       const params = {
-        recordType: checkRecordFormData.recordType,
-        privilegeType: checkRecordFormData.privilegeType,
-        queryTime: checkRecordFormData.date,
-        recommendedName: checkRecordFormData.user,
+        rebateType: checkRecordFormData.recordType,
+        bonusType: checkRecordFormData.privilegeType,
+        date: checkRecordFormData.date,
+        loginName: checkRecordFormData.user,
         token: store.token
       };
       tableRecords.value = [];
       getRecommendPrivilegeRecord(params).then((data) => {
         tableRecords.value = data.data;
+        if(!tableRecords.value || tableRecords.value.length ===0) {
+          $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message: '推广纪录为空。',
+                  icon: "report_problem"
+                });
+        }
       });
     };
 
     const shareInvite = () => {
       if(window.location.pathname === "/promotion"){
-        document.location.href = "app://invite";
+        router.push("/invitefriend?token=" + store.token);
       }else{
         router.push("/account/invite?from=promo?name=lh1-invite");
       }
@@ -843,6 +851,7 @@ $gold: #efcf68;
 
   a {
     text-decoration: underline;
+    cursor: pointer;
   }
 }
 
@@ -1124,6 +1133,7 @@ $gold: #efcf68;
     margin-bottom: 30px;
     width: 100%;
     height: auto;
+    filter: invert(1) brightness(2.5);
   }
 
   .record-selection {
@@ -1146,7 +1156,7 @@ $gold: #efcf68;
       width: 160px;
       height: 40px;
       background-color: #f5f5f5;
-      border: solid 1px #b89523;
+      border: solid 1px #6ea5ff;
       color: #000000;
       font-size: 16px;
       border-radius: 4px;
@@ -1158,10 +1168,10 @@ $gold: #efcf68;
     }
 
     .input-user {
-      width: 150px;
+      width: 160px;
       height: 40px;
       background-color: #f5f5f5;
-      border: solid 1px #b89523;
+      border: solid 1px #468cff;
       color: #000000;
       font-size: 16px;
       border-radius: 4px;
@@ -1170,10 +1180,10 @@ $gold: #efcf68;
     }
 
     .input-datetime {
-      width: 150px;
+      width: 160px;
       height: 40px;
       background-color: #f5f5f5;
-      border: solid 1px #b89523;
+      border: solid 1px #468cff;
       color: #000000;
       font-size: 16px;
       border-radius: 4px;
@@ -1182,9 +1192,11 @@ $gold: #efcf68;
     }
 
     .search-btn {
+    cursor: pointer;
       width: 150px;
       height: 40px;
-      background-color: #fcec97;
+      background-color: #468cff;
+      color: #ffffff;
       border-radius: 30px;
       display: flex;
       border: 0px;
@@ -1201,11 +1213,26 @@ $gold: #efcf68;
     grid-template-columns: repeat(3, 1fr);
     margin: 16px auto 0px;
     width: 100%;
+    background: #468cff;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px;
+  }
+  .record-contents {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    background: #d2e3ff;
+    color: #000000;
+    text-align: center;
+    div {
+    padding: 10px;
+    }
   }
 
   .no-item-table {
     width: 100%;
-    background-color: #ebe2b5 !important;
+    background-color: #d2e3ff !important;
     height: 40px;
 
     > p {

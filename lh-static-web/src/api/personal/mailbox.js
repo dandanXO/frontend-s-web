@@ -21,14 +21,7 @@ export function mailInbox(mailQuery) {
 }
 
 export function mailOutbox(mailQuery) {
-  return server.REST.get("/session/outbox", {
-    params: {
-      type: mailQuery.type,
-      current: mailQuery.current,
-      size: mailQuery.size,
-      orderBy: mailQuery.orderBy
-    }
-  });
+  return server.REST.get("/session/feedback/replies", {});
 }
 
 export function wirteMail(mail) {
@@ -67,4 +60,19 @@ export function readMail(mailQuery) {
   return server.REST.post("/session/inbox/read", {
     id: mailQuery.id
   });
+}
+
+// 意见反馈
+export function getFeedbackType() {
+  return server.REST.get("/session/feedback/types", {});
+}
+
+export function readFeedback(param) {
+  const { id } = param;
+  return server.REST.get(`/session/feedback/${id}/read`, {});
+}
+
+export function submitFeedback(param) {
+  const { feedbackType, title, content } = param;
+  return server.REST.post("/session/feedback", { feedbackType, title, content });
 }

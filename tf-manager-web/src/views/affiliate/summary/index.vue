@@ -234,7 +234,7 @@
             <el-link
               v-if="scope.row.newMemberCount !== 0"
               type="primary"
-              @click="showDialog('MEMBER', scope.row.newMembers)"
+              @click="showDialog('MEMBER', scope.row.affiliateId)"
             >
               {{ scope.row.newMemberCount }}
             </el-link>
@@ -247,6 +247,23 @@
           align="center"
           width="120"
         />
+        <el-table-column
+          prop="totalRegisterMemberCount"
+          :label="t('fields.totalRegisterCount')"
+          align="center"
+          width="120"
+        >
+          <template #default="scope">
+            <el-link
+              v-if="scope.row.totalRegisterMemberCount !== 0"
+              type="primary"
+              @click="showDialog('ALLMEMBER', scope.row.affiliateId)"
+            >
+              {{ scope.row.totalRegisterMemberCount }}
+            </el-link>
+            <span v-else>{{ scope.row.totalRegisterMemberCount }}</span>
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         :total="page.total"
@@ -270,8 +287,16 @@
         height="600"
         size="small"
         :resizable="true"
-        :data="memberPage.records"
-        v-loading="memberPage.loading"
+        :data="
+          currentPageType === 'newRegister'
+            ? memberPage.records
+            : allMemberPage.records
+        "
+        v-loading="
+          currentPageType === 'newRegister'
+            ? memberPage.loading
+            : allMemberPage.loading
+        "
         row-key="id"
         :empty-text="t('fields.noData')"
       >
@@ -383,11 +408,29 @@
       </el-table>
       <el-pagination
         class="pagination"
-        @current-change="changePage"
+        @current-change="changePage($event, currentPageType)"
         layout="prev, pager, next"
-        :page-size="memberRequest.size"
-        :page-count="memberPage.pages"
-        :current-page="memberRequest.current"
+        :page-size="
+          currentPageType === 'main'
+            ? memberRequest.size
+            : currentPageType === 'newRegister'
+              ? memberRequest.size
+              : allMemberRequest.size
+        "
+        :page-count="
+          currentPageType === 'main'
+            ? request.pages
+            : currentPageType === 'newRegister'
+              ? memberPage.pages
+              : allMemberPage.pages
+        "
+        :current-page="
+          currentPageType === 'main'
+            ? request.current
+            : currentPageType === 'newRegister'
+              ? memberPage.current
+              : allMemberPage.current
+        "
       />
     </el-dialog>
   </div>
@@ -404,16 +447,13 @@ import {
 import { getSiteListSimple } from '../../../api/site'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
-import { formatInputTimeZone } from '@/utils/format-timeZone'
 
 const { t } = useI18n()
 const siteList = reactive({
   list: [],
 })
 
-const newMembers = reactive({
-  list: [],
-})
+let currentPageType = ref('main')
 
 const shortcuts = getShortcuts(t)
 const uiControl = reactive({
@@ -443,8 +483,15 @@ const request = reactive({
 })
 
 const memberRequest = reactive({
-  size: 10,
+  size: 15,
   current: 1,
+  siteId: null,
+})
+
+const allMemberRequest = reactive({
+  size: 15,
+  current: 1,
+  siteId: null,
 })
 
 async function loadSites() {
@@ -485,6 +532,14 @@ const memberPage = reactive({
   pages: 0,
   records: [],
   loading: false,
+  affiliateId: null,
+})
+
+const allMemberPage = reactive({
+  pages: 0,
+  records: [],
+  loading: false,
+  affiliateId: null,
 })
 
 function checkQuery() {
@@ -495,20 +550,8 @@ function checkQuery() {
       query[key] = value
     }
   })
-  const timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
-      query.recordTime = JSON.parse(JSON.stringify(request.recordTime))
-      query.recordTime[0] = formatInputTimeZone(
-        query.recordTime[0],
-        timeZone,
-        'start'
-      )
-      query.recordTime[1] = formatInputTimeZone(
-        query.recordTime[1],
-        timeZone,
-        'end'
-      )
       query.recordTime = query.recordTime.join(',')
     }
   }
@@ -519,24 +562,31 @@ async function loadRecord() {
   page.loading = true
   const query = checkQuery()
   const { data: ret } = await getAffiliateSummary(query)
+  currentPageType = 'main'
   page.pages = ret.pages
   page.records = ret.records
   page.total = ret.total
   page.loading = false
 }
 
-function showDialog(type, members) {
+function showDialog(type, affiliateId) {
   if (type === 'MEMBER') {
-    newMembers.list = members
-    loadNewMember(newMembers.list)
+    // newMembers.list = members
+    currentPageType = 'newRegister'
+    loadNewMember(affiliateId)
     uiControl.dialogTitle = t('fields.newMember')
+  } else if (type === 'ALLMEMBER') {
+    currentPageType = 'allMembers'
+    loadAllMember(affiliateId)
+    uiControl.dialogTitle = t('fields.allmembers')
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
 }
 
-async function loadNewMember(members) {
+async function loadNewMember(affiliateId) {
   memberPage.loading = true
+  memberRequest.siteId = request.siteId
   const requestCopy = { ...memberRequest }
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
@@ -545,46 +595,75 @@ async function loadNewMember(members) {
     }
   })
 
-  const timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
       query.recordTime = JSON.parse(JSON.stringify(request.recordTime))
-      query.recordTime[0] = formatInputTimeZone(
-        query.recordTime[0],
-        timeZone,
-        'start'
+
+      query.recordTime[0] = moment(query.recordTime[0]).format(
+        'YYYY-MM-DD 00:00:00'
       )
-      query.recordTime[1] = formatInputTimeZone(
-        query.recordTime[1],
-        timeZone,
-        'end'
+      query.recordTime[1] = moment(query.recordTime[1]).format(
+        'YYYY-MM-DD 23:59:59'
       )
+
       query.recordTime = query.recordTime.join(',')
     } else {
-      query.recordTime = formatInputTimeZone(
-        request.recordTime[0],
-        timeZone,
-        'start'
+      query.recordTime = moment(request.recordTime[0]).format(
+        'YYYY-MM-DD 00:00:00'
       )
     }
   }
 
-  if (members !== null) {
-    if (members.length > 1) {
-      query.memberId = members.join(',')
-    } else {
-      query.memberId = members[0]
-    }
-  }
+  // if (members !== null) {
+  //   if (members.length > 1) {
+  //     query.memberId = members.join(',')
+  //   } else {
+  //     query.memberId = members[0]
+  //   }
+  // }
+  query.affiliateId = affiliateId
+
   const { data: ret } = await getAffiliateSummaryNewMember(query)
+  currentPageType = 'newRegister'
   memberPage.pages = ret.pages
   memberPage.records = ret.records
   memberPage.loading = false
+  memberPage.affiliateId = affiliateId
 }
 
-function changePage(page) {
-  memberRequest.current = page
-  loadNewMember(newMembers.list)
+async function loadAllMember(affiliateId) {
+  allMemberPage.loading = true
+  allMemberRequest.siteId = request.siteId
+  const requestCopy = { ...allMemberRequest }
+  const query = {}
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value
+    }
+  })
+  query.affiliateId = affiliateId
+
+  const { data: ret } = await getAffiliateSummaryNewMember(query)
+  currentPageType = 'allMembers'
+
+  allMemberPage.pages = ret.pages
+  allMemberPage.records = ret.records
+  allMemberPage.loading = false
+  allMemberPage.affiliateId = affiliateId
+}
+
+function changePage(page, pageType) {
+  if (pageType === 'main') {
+    request.current = page
+  } else if (pageType === 'newRegister') {
+    memberRequest.current = page
+    loadNewMember(memberPage.affiliateId)
+  } else if (pageType === 'allMembers') {
+    allMemberRequest.current = page
+    loadAllMember(allMemberPage.affiliateId)
+  }
+  // memberRequest.current = page
+  // loadNewMember(newMembers.list)
 }
 
 onMounted(async () => {

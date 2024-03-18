@@ -365,7 +365,7 @@ async function loadPrivilege(val) {
   await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
     if (res.code === 0) {
       privilegeList.value = res.data.privileges;
-      hasPrivilege.value = true;
+
       unselectedPrivileges.value = [];
       freePrivilege.value = null;
       privilegeList.value.map((p) => {
@@ -374,6 +374,7 @@ async function loadPrivilege(val) {
             freePrivilege.value = p;
           } else {
             unselectedPrivileges.value.push(p);
+            hasPrivilege.value = true;
           }
         }
       });

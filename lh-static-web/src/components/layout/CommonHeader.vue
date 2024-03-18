@@ -445,7 +445,6 @@ import "vue3-marquee/dist/style.css";
 import { useElementSize } from "@vueuse/core";
 import { storeToRefs } from "pinia";
 import GameModal from "@/components/modal/GameModal";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import moment from "moment";
 import { lsGet, lsStore, lsRemove, getTimeout } from "@/utils/utils";
 import { getUnreadTotal } from "@/api/personal/mailbox";
@@ -478,10 +477,10 @@ export default defineComponent({
       { code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true },
       { code: "sports", name: "体育", enName: "Sports", path: "/sports", submenu: true },
       { code: "live", name: "真人", enName: "Live", path: "/live-casino", submenu: true },
-      { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true },
-      { code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true },
       { code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true },
-      { code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true },
+      { code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true },
+      { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true },
+      { code: "fish", name: "娱乐", enName: "Fishing", path: "/fishing", submenu: true },
       { code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: false, hasicon: true },
       { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true },
       { code: "App", name: "APP", enName: "App", path: "/app", submenu: false, hasicon: true },
@@ -1057,16 +1056,8 @@ export default defineComponent({
       if (!elForm) return;
       await elForm.validate((valid) => {
         if (valid) {
-          const fpPromise = FingerprintJS.load();
+          const sidParam = store.visitorId;
           (async () => {
-            const fp = await fpPromise;
-            const result = await fp.get();
-            const excludes = { value: ["timezone", "timeZoneOffset"] };
-            const allComponents = { ...result.components };
-            excludes.value.forEach((element) => {
-              delete allComponents[element];
-            });
-            const sidParam = FingerprintJS.hashComponents(allComponents);
             regForm.sid = sidParam;
             register(regForm)
               .then((response) => {
@@ -1197,16 +1188,8 @@ export default defineComponent({
     };
     const submitLogin = () => {
       loadingBtn.value = true;
-      const fpPromise = FingerprintJS.load();
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+        const sidParam = store.visitorId;
 
         loginRef.value.validate().then(() => {
           store
@@ -1246,16 +1229,8 @@ export default defineComponent({
 
     const phoneLogin = () => {
       loadingBtn.value = true;
-      const fpPromise = FingerprintJS.load();
+      const sidParam = store.visitorId;
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
 
         mobileLoginRef.value.validate().then(() => {
           store
@@ -1542,6 +1517,7 @@ body {
       right: 2px;
       width: 12px;
       height: 12px;
+      opacity: 0;
     }
   }
 
@@ -1840,7 +1816,8 @@ body {
             }
 
             img.hover-icon {
-              filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%) contrast(102%);
+              filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
+                contrast(102%);
             }
           }
         }
@@ -2508,11 +2485,11 @@ body {
     position: absolute;
     margin: 0px;
     bottom: 12px;
-    font-size: 12px;
+    font-size: 14px;
     width: 100%;
     padding: 0px 6px 0px 8px;
     z-index: 2;
-    color: #565C84;
+    color: #000;
     letter-spacing: 1px;
     text-align: center;
     font-family: PingFang SC;

@@ -393,6 +393,11 @@
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
+                <template v-if="tbl.dataIndex === 'betTime'" #default="scope">
+                  <div style="display: flex; align-items: center">
+                    <span>{{ getFormatBetTime(scope.row.betTime) }}</span>
+                  </div>
+                </template>
                 <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{ scope.row.recordTime }}</span>
@@ -419,9 +424,9 @@
                     {{ getGameType(scope.row.gameType) }}
                   </div>
                 </template>
-                <template v-if="tbl.dataIndex === 'betStatus'" #default="scope">
+                <template v-if="tbl.dataIndex === 'status'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    {{ getBetStatus(scope.row.betStatus) }}
+                    {{ getBetStatus(scope.row.status) }}
                   </div>
                 </template>
               </el-table-column>
@@ -588,7 +593,7 @@ import {
 } from "@/api/personal/personal";
 import moment from "moment";
 // import { message } from "ant-design-vue";
-import {getPlatformList} from "@/api/platform/platform";
+import {getPlatformList, getLoggedInPlatformList} from "@/api/platform/platform";
 import {userStore} from "@/store";
 import FileUpload from "@/components/FileUpload.vue"
 import EmptyData from "@/components/emptyData.vue"
@@ -813,7 +818,7 @@ const tableColumns = {
     },
     {
       title: "投注状态",
-      dataIndex: "betStatus"
+      dataIndex: "status"
     }
   ],
   betRecord: [
@@ -996,6 +1001,12 @@ export default defineComponent({
           if (recordActive.value === 'turnover' || recordActive.value === 'gameBetRecord') {
             pagination.pagingState = response.data.pagingState;
           }
+
+          if(recordActive.value === 'gameBetRecord') {
+            totalBetRecord.totalBet = response.data.sums.totalBet;
+            totalBetRecord.totalPayout = response.data.sums.totalPayout;
+          }
+
           const dataSource = dataState[recordActive.value];
           //clear array and then push new record
           dataSource.splice(0);
@@ -1056,22 +1067,29 @@ export default defineComponent({
     });
     const platformsList = ref([])
     const getPlatList = () => {
-      getPlatformList().then((ret) => {
-        platformsList.value = ret
-      })
-
-      const obj = {
-        memberId: searchForm.gameBetRecord.memberId,
-        platform: searchForm.gameBetRecord.platform,
-        startDate: searchForm.gameBetRecord.startDate,
-        endDate: searchForm.gameBetRecord.endDate,
+      if(store.token){
+        getLoggedInPlatformList().then((ret) => {
+          platformsList.value = ret
+        })
+      }else{
+        getPlatformList().then((ret) => {
+          platformsList.value = ret
+        })
       }
-      gameBetRecordTotal(obj).then((ret) => {
-        if (ret.code === 0) {
-          totalBetRecord.totalBet = ret.data.totalBet
-          totalBetRecord.totalPayout = ret.data.totalPayout
-        }
-      })
+
+
+      // const obj = {
+      //   memberId: searchForm.gameBetRecord.memberId,
+      //   platform: searchForm.gameBetRecord.platform,
+      //   startDate: searchForm.gameBetRecord.startDate,
+      //   endDate: searchForm.gameBetRecord.endDate,
+      // }
+      // gameBetRecordTotal(obj).then((ret) => {
+      //   if (ret.code === 0) {
+      //     totalBetRecord.totalBet = ret.data.totalBet
+      //     totalBetRecord.totalPayout = ret.data.totalPayout
+      //   }
+      // })
 
     };
     const selectedBetRecord = ref({})
@@ -1160,7 +1178,8 @@ export default defineComponent({
           betRecordDialog.value = true
           betPagination.pagingState = response.data.pagingState;
           // dataState.betRecord = response.data.records
-          dataState.betRecord.push(...response.data.records)
+          dataState.betRecord.push(...response.data.records);
+
         }
       })
     }
@@ -1171,12 +1190,16 @@ export default defineComponent({
       reminderForm.photos = `${imgURL}/order/1/${linkId}`
     }
 
+    const getFormatBetTime = (betTime) => {
+      return moment(betTime).format("YYYY-MM-DD HH:mm:ss");
+    }
+
     const getPlatform = (platformName) => {
       if (!platformName) {
         return ''
       }
       if (platformName === 'AG') {
-        return 'AG真人' // AG
+        return 'AG真人, XIN电子' // AG
       } else if (platformName === 'BBINDY') {
         return 'BBIN真人' // BBINDY
       }  else if (platformName === 'KY') {
@@ -1404,18 +1427,20 @@ export default defineComponent({
       if (!betStatus) {
         return ''
       }
-      if (betStatus === 'BET') {
-        return '投注' // Bet
-      } else if (betStatus === 'SETTLE') {
-        return '结算' // Settle
-      } else if (betStatus === 'BET_N_SETTLE') {
-        return '投注并结算' // Bet & Settled
-      } else if (betStatus === 'CANCEL') {
-        return '取消' // Cancel
-      } else if (betStatus === 'PATCH') {
-        return '修补' // Patch
+      if (betStatus === "BET") {
+        return "投注"; // Bet
+      } else if (betStatus === "SETTLE") {
+        return "结算"; // Settle
+      } else if (betStatus === "SETTLED") {
+        return "已结算"; // Bet & Settled
+      }else if (betStatus === "BET_N_SETTLE") {
+        return "投注并结算"; // Bet & Settled
+      } else if (betStatus === "CANCEL") {
+        return "取消"; // Cancel
+      } else if (betStatus === "PATCH") {
+        return "修补"; // Patch
       } else {
-        return betStatus
+        return betStatus;
       }
     }
     const formRef = ref(null)
@@ -1465,7 +1490,8 @@ export default defineComponent({
       formRef,
       getTransferChangeType,
       getPlatform,
-      imgURL
+      imgURL,
+      getFormatBetTime
     };
   }
 });

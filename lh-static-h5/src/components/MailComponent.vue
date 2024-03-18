@@ -42,7 +42,7 @@
               @click="toggleMail(det)"
             >
               <div class="title-div" :class="`${det.readTime && det.sendTime ? '' : 'unread'}`">
-                <div>
+                <div class="title-wrapper">
                   <q-checkbox
                     v-if="allowSelectMultiple"
                     rounded
@@ -53,13 +53,12 @@
                     color="#0089ED"
                   />
                   <q-chip size="sm" label="已读" v-if="det.readTime && det.sendTime" />
-                  标题：
-                  {{ det.title }}
-                </div>
-
-                <div class="right-title">
-                  <RiArrowUpSLine v-if="isSelectedMail === det.id" />
-                  <RiArrowDownSLine v-if="isSelectedMail !== det.id" />
+                  <div class="title-text" :title="det.title">标题：{{ det.title }}</div>
+                  <div v-if="det.sendTime" class="send-time" :title="`发送时间: ${formatSendTime(det.sendTime)}`"><i>{{ formatSendTime(det.sendTime) }}</i></div>
+                  <div class="right-title">
+                    <RiArrowUpSLine v-if="isSelectedMail === det.id" />
+                    <RiArrowDownSLine v-if="isSelectedMail !== det.id" />
+                  </div>
                 </div>
               </div>
               <div class="mailcontents" v-if="isSelectedMail === det.id">
@@ -151,10 +150,10 @@ export default defineComponent({
   emits: ["readMsg"],
   setup(props, context) {
     const mailboxMessageTypeData = ref([
-      { num: 1, type: "NOTIFICATION", name: "通知" },
       { num: 2, type: "ACTIVITY", name: "活动" },
       { num: 3, type: "ANNOUNCEMENT", name: "公告" },
       { num: 4, type: "PAYMENT", name: "充提" },
+      { num: 1, type: "NOTIFICATION", name: "通知" },
       { num: 5, type: "ALL", name: "全部" }
     ]);
     const mailboxMessageTab = ref(mailboxMessageTypeData.value[0].type);
@@ -315,31 +314,47 @@ export default defineComponent({
       // });
       // console.log(mailboxNotifyState[mailboxMessageTab.value]);
 
-      if (!readTime) {
-        api
-          .post(
-            "/session/inbox/read",
-            qs.stringify({
-              id: id
-            })
-          )
-          .then((res) => {
-            if (res.code === 0) {
-              $q.notify({
-                message: "已读消息",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
-              });
-              onLoad();
-            }
+      if(props.type === 'outbox') {
+        api.get(
+          `/session/feedback/${id}/read`).then((res) => {
+          if (res.code === 0) {
+            !readTime && $q.notify({
+              message: "已读消息",
+              type: "positive",
+              position: "top",
+              icon: "check_circle_outline"
+            });
+            mail.content = res.data.content;
+            onLoad();
+          }
+        })
+        .catch((error) => {
+          isDeleteMailModal.value = false;
+          console.log(error);
+        });
+      } else if(!readTime) {
+        api.post(
+          "/session/inbox/read",
+          qs.stringify({
+            id: id
           })
-          .catch((error) => {
-            isDeleteMailModal.value = false;
-            console.log(error);
-          });
+        ).then((res) => {
+          if (res.code === 0) {
+            $q.notify({
+              message: "已读消息",
+              type: "positive",
+              position: "top",
+              icon: "check_circle_outline"
+            });
+            onLoad();
+          }
+        })
+        .catch((error) => {
+          isDeleteMailModal.value = false;
+          console.log(error);
+        });
       }
-    };
+    }
 
     const deleteMails = (type) => {
       isDeleteMailModal.value = true;
@@ -450,6 +465,9 @@ export default defineComponent({
       humanDatetime(ts) {
         return moment(ts).format("YYYY-MM-DD HH:mm:ss");
       },
+      formatSendTime(ts) {
+        return moment(ts).format("MM-DD");
+      },
       onLoad,
       truncatedList,
       comList,
@@ -504,6 +522,26 @@ export default defineComponent({
     color: $font-1;
     word-break: break-all;
 
+    .title-wrapper {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      
+      .title-text {
+        text-align: left;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        flex: 1;
+      }
+
+      .send-time {
+        font-size: 0.8rem;
+        font-weight: 400;
+        margin: 0 10px;
+      }
+    }
+
     &.unread {
       font-weight: bold;
     }
@@ -520,7 +558,8 @@ export default defineComponent({
     font-size: 1rem;
     height: auto;
     overflow: hidden;
-    text-overflow: ellipsis;
+    overflow-wrap: break-word;
+    // text-overflow: ellipsis;
   }
 }
 

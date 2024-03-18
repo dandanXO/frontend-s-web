@@ -24,7 +24,7 @@
     </div>
     <div class="activity-boxes">
       <div class="activity-box">
-        <div class="activity-title">活动对象</div>
+        <div class="activity-title">中奖名单</div>
         <div class="activity-content-container">
           <table class="content-table">
             <tr class="winner" v-for="(item, index) in visibleItems" :key="index">
@@ -45,11 +45,11 @@
         <th>每日次数</th>
       </tr>
       <tr>
-        <td>18:00 ~ 19:00</td>
+        <td>{{ startTime.time1 }}</td>
         <td rowspan="2">每日2次</td>
       </tr>
       <tr>
-        <td>20:00 ~ 21:00</td>
+        <td>{{ startTime.time2 }}</td>
       </tr>
     </tbody>
   </table>
@@ -57,7 +57,7 @@
   <q-dialog
     class="award-modal hongbaoyu-modal"
     width="100%"
-    v-model="privilegeClaimedModalVisible"
+    v-model="isClaimModal"
     no-backdrop-dismiss
     no-esc-dismiss
   >
@@ -74,23 +74,26 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted, ref } from "vue";
+import { defineProps, onMounted, ref ,reactive} from "vue";
 import { eventapi } from "boot/axios";
 import { userStore } from "src/stores";
 
 const store = userStore();
-const privilegeClaimedModalVisible = ref(false);
 const promoNotReady = ref(false);
 const bonusOpened = ref(false);
 const winAmount = ref(0);
 const isClaimModal = ref(false);
 const loadingClaim = ref(false);
-const props = defineProps(["promoCode"]);
+const props = defineProps(["promoCode", "params"]);
 const promoCode = ref(props.promoCode);
+
+const startTime= reactive({
+  time1: "16:00 ~ 17:00",
+  time2: "18:00 ~ 19:00"
+})
 
 const getPromotion = () => {
   loadingClaim.value = true;
-  // privilegeClaimedModalVisible.value = true; // remove this line
   eventapi
     .get(`/redPacketVip/claim?promoCode=${promoCode.value}`)
     .then((res) => {
@@ -102,6 +105,7 @@ const getPromotion = () => {
 
         bonusOpened.value = true;
         store.getBalance();
+
       } else {
         $q.notify({
           color: "negative",
@@ -125,7 +129,6 @@ const getPromotionPrize = () => {
   isClaimModal.value = false;
   bonusOpened.value = false;
 
-  privilegeClaimedModalVisible.value = false;
 };
 
 const promotionListing = ref();
@@ -161,6 +164,15 @@ const getPromotionListing = () => {
 };
 onMounted(() => {
   getPromotionListing();
+
+  const params= props.params ? JSON.parse(props.params) : "";
+  if(params?.time1){
+    startTime.time1= params.time1;
+  }
+  if(params?.time2){
+    startTime.time2= params.time2;
+  }
+
 });
 </script>
 
@@ -221,6 +233,9 @@ onMounted(() => {
       }
 
       .content-table {
+        max-height: 180px;
+        overflow-y: hidden;
+        display: block;
         width: 100%;
         font-size: 14px;
         color: #7a8eb9;
@@ -337,7 +352,7 @@ onMounted(() => {
     margin-top: 48%;
     left: -10px;
     color: #f23b1d;
-    font-size: 20px;
+    font-size: 35px;
     font-weight: bold;
   }
 

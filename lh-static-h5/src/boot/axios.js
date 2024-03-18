@@ -1,10 +1,11 @@
 import { boot, store } from "quasar/wrappers";
 import { createPinia } from "pinia";
-import { Loading, Notify, SessionStorage, Dialog } from "quasar";
+import { Loading, Notify, SessionStorage, Dialog, Platform } from "quasar";
 import { ResponseCode } from "../api/response";
 import LocalStorage from "boot/local-storage";
 import axios from "axios";
 import { getRndInteger } from "boot/utils";
+import * as _ from "lodash"
 
 const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
@@ -14,6 +15,45 @@ const crtArray = Object.values(process.env.CR_API);
 var rstApi = getInitApi(rstArray, "LH_H5_RST_URL");
 var crtApi = getInitApi(crtArray, "LH_H5_CRT_URL");
 var evtApi = getInitApi(evtArray, "LH_H5_EVT_URL");
+
+if((
+  window.location.pathname === "/vip" ||
+  window.location.pathname === "/promotion" ||
+  window.location.pathname === "/deposit" ||
+  window.location.pathname === "/invitefriend" ||
+  window.location.pathname === "/privilege/invite"
+)){
+
+  //IOS
+  if( window.webkit
+    && window.webkit.messageHandlers
+    && window.webkit.messageHandlers.notifyApp ){
+    window.webkit.messageHandlers.notifyApp.postMessage("LH_IOS");
+  }
+  //ANDROID
+  if( window["WebScript"]){
+    window["WebScript"].notifyApp("LH_ANDROID");
+  }
+
+  window.addEventListener('message', function(event) {
+    console.log(event.data);
+    if(event?.type ==='sendWebMessage' && event.data !== undefined){
+      alert("SUCCESS 2")
+      // alert(event.data);
+
+      const returnJson =event.data;
+      if(returnJson?.rest){
+        api.defaults.baseURL= returnJson?.rest;
+      }
+      if(returnJson?.promo){
+        eventapi.defaults.baseURL= returnJson?.promo;
+      }
+      if(returnJson?.cashier){
+        cashier.defaults.baseURL= returnJson?.cashier;
+      }
+    }
+  });
+}
 
 const api = axios.create({ baseURL: rstApi });
 const cashier = axios.create({ baseURL: crtApi });
@@ -120,6 +160,7 @@ export default boot(({ app, router }) => {
           SessionStorage.remove("TOKEN");
           LocalStorage.remove("TOKEN");
           document.location.href = "app://login";
+          return;
         }
         if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
           return Dialog.create({
@@ -133,7 +174,10 @@ export default boot(({ app, router }) => {
             router.push("/login");
           });
         }
-        if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED) {
+        if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
+          res.code === ResponseCode.ERROR_NAME_EXIST ||
+          res.code === ResponseCode.ERROR_TOKEN_MISSED
+        ) {
           SessionStorage.remove("TOKEN");
           LocalStorage.remove("TOKEN");
           window.location.href = "/";

@@ -24,7 +24,7 @@
           <div
             class="promo"
           >
-            <img v-if="item.promotionIcon" :src="`${imgURL}label/${item.promotionIcon}`">
+            <img v-if="item.promotionIcon" :src="`${imgURL}${item.promotionIcon}`">
           </div>
           <div class="payment-method-wrapper">
             <div

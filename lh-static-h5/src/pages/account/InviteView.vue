@@ -17,7 +17,7 @@
           <div class="share-link-section">
             <span class="qr-title">推广链接</span>
             <div class="share-link-div">
-              <a :href="selfTgurl" target="_blank" id="selfTgurl">{{ selfTgurl }}</a>
+              <div id="selfTgurl">{{ selfTgurl }}</div>
               <q-btn class="copy-btn common-sm-btn" @click="copyText(selfTgurl)">复制</q-btn>
             </div>
           </div>

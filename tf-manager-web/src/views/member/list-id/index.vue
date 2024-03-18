@@ -509,7 +509,7 @@
         @selection-change="handleSelectionChange"
         :empty-text="t('fields.noData')"
       >
-        <el-table-column type="selection" width="55" />
+        <el-table-column type="selection" width="50" />
         <el-table-column
           prop="loginName"
           :label="t('fields.loginName')"
@@ -526,7 +526,7 @@
             </router-link>
           </template>
         </el-table-column>
-        <el-table-column prop="vipName" :label="t('menu.VIP')" width="200" />
+        <el-table-column prop="vipName" :label="t('menu.VIP')" width="50" />
         <el-table-column
           prop="realName"
           :label="t('fields.realName')"
@@ -554,7 +554,7 @@
         <el-table-column
           prop="referrerName"
           :label="t('fields.upLineLoginName')"
-          width="150"
+          width="140"
         >
           <template #default="scope">
             <span v-if="scope.row.referrerName === null">-</span>
@@ -573,7 +573,7 @@
             <span v-formatter="{data: scope.row.balance, type: 'money'}" />
           </template>
         </el-table-column>
-        <el-table-column prop="regTime" :label="t('fields.registerTime')">
+        <el-table-column prop="regTime" :label="t('fields.registerTime')" width="90">
           <template #default="scope">
             <span v-if="scope.row.regTime === null">-</span>
             <span
@@ -586,7 +586,7 @@
             />
           </template>
         </el-table-column>
-        <el-table-column prop="totalDeposit" :label="t('fields.totalDeposit')">
+        <el-table-column prop="totalDeposit" :label="t('fields.totalDeposit')" width="110">
           <template #default="scope">
             $
             <span
@@ -597,6 +597,7 @@
         <el-table-column
           prop="totalWithdraw"
           :label="t('fields.totalWithdraw')"
+          width="110"
         >
           <template #default="scope">
             $
@@ -608,7 +609,6 @@
         <el-table-column
           prop="financialLevel"
           :label="t('fields.financialLevel')"
-          width="150"
         >
           <template #default="scope">
             <span v-if="scope.row.financialLevel === null">-</span>
@@ -617,7 +617,7 @@
             </span>
           </template>
         </el-table-column>
-        <el-table-column prop="status" :label="t('fields.status')" width="150">
+        <el-table-column prop="status" :label="t('fields.status')" width="100">
           <template #default="scope">
             <el-tag
               v-if="scope.row.status === 'NORMAL'"
@@ -641,7 +641,7 @@
         <el-table-column
           prop="memberType"
           :label="t('fields.memberType')"
-          width="150"
+          width="100"
         >
           <template #default="scope">
             <el-tag
@@ -674,13 +674,13 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="site" :label="t('fields.site')" width="150">
+        <el-table-column prop="site" :label="t('fields.site')" width="100">
           <template #default="scope">
             <span v-if="scope.row.site === null">-</span>
             <span v-if="scope.row.site !== null">{{ scope.row.site }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="lastLoginTime" :label="t('fields.lastLogin')">
+        <el-table-column prop="lastLoginTime" :label="t('fields.lastLogin')" width="90">
           <template #default="scope">
             <span v-if="scope.row.lastLoginTime === null">-</span>
             <span

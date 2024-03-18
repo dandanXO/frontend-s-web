@@ -206,6 +206,9 @@ export default defineComponent({
 .swiper-slide {
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
+  img {
+    width: 100%;
+  }
 }
 
 .swiper-slide-active {

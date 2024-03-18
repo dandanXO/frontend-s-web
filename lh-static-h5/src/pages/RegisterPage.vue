@@ -12,11 +12,12 @@
           standout
           clearable
           v-model="regForm.loginName"
-          placeholder="6-11个字符，包含大小写字母"
+          placeholder="6-12个字符，包含大小写字母"
           lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || '请输入用户名',
-            (val) => (val && val.length >= 6 && val.length <= 12) || '用户名个数必须在6和12之间'
+            (val) => (val && val.length >= 6 && val.length <= 12) || '用户名个数必须在6和12之间',
+            validLoginName
           ]"
           color="white"
         >
@@ -229,8 +230,23 @@
           rounded
           standout
           clearable
-          v-model="regForm.referrer"
+          v-model="regForm.codeAffiliate"
           placeholder="如不是合营玩家不用填写"
+        >
+          <template v-slot:prepend>
+            <img src="../assets/images/login/veri-icon.png" width="24" />
+          </template>
+        </q-input>
+        <q-input
+          v-else
+          ref="affiliateCodeRef"
+          rounded
+          standout
+          clearable
+          v-model="regForm.codeAffiliate"
+          placeholder="如不是合营玩家不用填写"
+          readonly
+          disable
         >
           <template v-slot:prepend>
             <img src="../assets/images/login/veri-icon.png" width="24" />
@@ -289,7 +305,7 @@ import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "v
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
+// import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "stores/index";
 import qs from "qs";
 
@@ -374,7 +390,6 @@ export default defineComponent({
     const getReferralCode = () => {
       const refCode = sessionStorage.getItem("REFERRAL_CODE");
       if (refCode) {
-        hasAffiliate.value = true;
         regForm.referrer = refCode;
       }
     };
@@ -431,16 +446,9 @@ export default defineComponent({
         $q.loading.hide();
       } else {
         var qs = require("qs");
-        const fpPromise = FingerprintJS.load();
+        const sidParam = store.visitorId;
+
         (async () => {
-          const fp = await fpPromise;
-          const result = await fp.get();
-          const excludes = { value: ["timezone", "timeZoneOffset"] };
-          const allComponents = { ...result.components };
-          excludes.value.forEach((element) => {
-            delete allComponents[element];
-          });
-          const sidParam = FingerprintJS.hashComponents(allComponents);
           regForm.sid = sidParam;
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
           if ("standalone" in window.navigator && window.navigator.standalone) {
@@ -541,6 +549,11 @@ export default defineComponent({
       }
     };
 
+    const validLoginName = () => {
+      const namePattern = /^[a-zA-Z0-9_#+-]+$/;
+      return namePattern.test(regForm.loginName) || "用户名不允许使用特殊字符";
+    }
+
     const onCaptchaSubmit = () => {
       if (!regForm.telephone) {
         $q.notify({
@@ -611,7 +624,8 @@ export default defineComponent({
       openPhoneVeriDialog,
       phoneVerificationRef,
       isValidCnPhone,
-      hasAffiliate
+      hasAffiliate,
+      validLoginName
     };
   }
 });

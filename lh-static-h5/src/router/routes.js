@@ -257,6 +257,17 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/invitefriend",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/account/InviteView.vue")
+      }
+    ],
+    meta: { requiresAuth: true, isApp: true }
+  },
+  {
     path: "/account/announcement",
     component: () => import("layouts/MainLayout.vue"),
     children: [

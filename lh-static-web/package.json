@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@fingerprintjs/fingerprintjs": "^3.4.0",
+    "@fingerprintjs/fingerprintjs-pro-vue-v3": "^1.4.0",
     "animate.css": "^4.1.1",
     "ant-design-vue": "^2.2.8",
     "aos": "^3.0.0-beta.6",
@@ -22,6 +23,7 @@
     "cross-env": "^7.0.3",
     "dotenv-cli": "^7.0.0",
     "element-plus": "^2.5.5",
+    "fingerprintjs": "^0.5.3",
     "gsap": "^3.12.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
