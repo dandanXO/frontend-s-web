@@ -1,8 +1,4 @@
 <template>
-  <!-- <pre>token: {{ extensionToken }}</pre>
-  <pre>state: {{ extensionState }}</pre>
-  <pre>path: {{ currentPath }}</pre>
-  <pre>store: {{ store }}</pre> -->
   <div class="promo-container">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
@@ -93,6 +89,7 @@
                   cny2024: selectedPromo.promoCode === 'dy2-cny2024-promo',
                   hongbaoyu: selectedPromo.promoCode === 'hongbaoyu',
                   cnystepgame: selectedPromo.promoCode === 'dy2-cny-step-game',
+                  dy2gamesteps: selectedPromo.promoCode === 'dy2-game-steps',
                   cs2: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024'
                 }"
               >
@@ -100,7 +97,11 @@
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
-                  v-if="selectedPromo.promoType && selectedPromo.promoCode !== 'dy2-cny-step-game'"
+                  v-if="
+                    selectedPromo.promoType &&
+                    selectedPromo.promoCode !== 'dy2-cny-step-game' &&
+                    selectedPromo.promoCode !== 'dy2-game-steps'
+                  "
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
@@ -253,7 +254,7 @@ export default defineComponent({
     };
     const isSpecialPromo= ref(false);
     const showPromoDetails = (promo) => {
-      if(promo.promoCode==='dy2-cny-step-game'){
+      if(promo.promoCode === 'dy2-cny-step-game' || promo.promoCode === 'dy2-game-steps'){
         isSpecialPromo.value= true;
       }else{
         isSpecialPromo.value= false;
@@ -730,6 +731,16 @@ export default defineComponent({
           }
         }
 
+        &.dy2gamesteps {
+          margin: 0px;
+          width: 100%;
+          gap: 0px;
+
+          .hot-promo {
+            border-radius: 0px;
+          }
+        }
+
         &.cny2024 {
           width: 100%;
         }
@@ -737,14 +748,13 @@ export default defineComponent({
           margin: 0px;
           width: 100%;
           gap: 0px;
-    padding: 10px;
-            background: url(../assets/images/promotion/hotpromo/cs2/bg.png)no-repeat center center;
+          padding: 10px;
+          background: url(../assets/images/promotion/hotpromo/cs2/bg.png) no-repeat center center;
           p {
             padding: 25px;
             color: #7f4c00;
             font-family: Microsoft Yahei UI;
             max-width: 100%;
-
           }
         }
 

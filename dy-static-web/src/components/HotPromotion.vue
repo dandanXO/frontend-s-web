@@ -1,5 +1,5 @@
 <template>
-  <div class="hot-promo" :class="list.redirectUrl === 'dy2-step-game' && 'flat-border-radius'">
+  <div class="hot-promo" :class="list.redirectUrl === 'dy2-game-steps' && 'flat-border-radius'">
     <ClaimPromo
       v-if="isCommonPromo"
       :promo-id="list.id"
@@ -45,7 +45,7 @@
     ></CnyStepGame2024Promo>
 
     <Dy2StepGamePromo
-      v-if="list.redirectUrl === 'dy2-step-game' && !isCommonPromo && store.token"
+      v-if="list.redirectUrl === 'dy2-game-steps' && !isCommonPromo && store.token"
       :pageContent="list.pageContent"
     ></Dy2StepGamePromo>
 
@@ -274,7 +274,7 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-cny2024-promo" ||
       this.list.redirectUrl === "dy2-bb-dacha-2024" ||
       this.list.redirectUrl === "dy2-cny-step-game" ||
-      this.list.redirectUrl === "dy2-step-game" ||
+      this.list.redirectUrl === "dy2-game-steps" ||
       this.list.redirectUrl === "dy2-cs2-copenhagen-major-2024" ||
       this.list.redirectUrl === "dy2-spin-wheel"
     ) {
