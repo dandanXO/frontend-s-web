@@ -287,8 +287,16 @@
         height="600"
         size="small"
         :resizable="true"
-        :data="memberPage.records"
-        v-loading="memberPage.loading"
+        :data="
+          currentPageType === 'newRegister'
+            ? memberPage.records
+            : allMemberPage.records
+        "
+        v-loading="
+          currentPageType === 'newRegister'
+            ? memberPage.loading
+            : allMemberPage.loading
+        "
         row-key="id"
         :empty-text="t('fields.noData')"
       >
@@ -400,11 +408,29 @@
       </el-table>
       <el-pagination
         class="pagination"
-        @current-change="changePage"
+        @current-change="changePage($event, currentPageType)"
         layout="prev, pager, next"
-        :page-size="memberRequest.size"
-        :page-count="memberPage.pages"
-        :current-page="memberRequest.current"
+        :page-size="
+          currentPageType === 'main'
+            ? memberRequest.size
+            : currentPageType === 'newRegister'
+              ? memberRequest.size
+              : allMemberRequest.size
+        "
+        :page-count="
+          currentPageType === 'main'
+            ? request.pages
+            : currentPageType === 'newRegister'
+              ? memberPage.pages
+              : allMemberPage.pages
+        "
+        :current-page="
+          currentPageType === 'main'
+            ? request.current
+            : currentPageType === 'newRegister'
+              ? memberPage.current
+              : allMemberPage.current
+        "
       />
     </el-dialog>
   </div>
@@ -427,9 +453,7 @@ const siteList = reactive({
   list: [],
 })
 
-const newMembers = reactive({
-  list: [],
-})
+let currentPageType = ref('main')
 
 const shortcuts = getShortcuts(t)
 const uiControl = reactive({
@@ -449,7 +473,7 @@ const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
 
 const request = reactive({
-  size: 20,
+  size: 2,
   current: 1,
   siteId: null,
   recordTime: [defaultStartDate, defaultEndDate],
@@ -459,7 +483,13 @@ const request = reactive({
 })
 
 const memberRequest = reactive({
-  size: 10,
+  size: 2,
+  current: 1,
+  siteId: null,
+})
+
+const allMemberRequest = reactive({
+  size: 2,
   current: 1,
   siteId: null,
 })
@@ -502,6 +532,14 @@ const memberPage = reactive({
   pages: 0,
   records: [],
   loading: false,
+  affiliateId: null,
+})
+
+const allMemberPage = reactive({
+  pages: 0,
+  records: [],
+  loading: false,
+  affiliateId: null,
 })
 
 function checkQuery() {
@@ -524,6 +562,7 @@ async function loadRecord() {
   page.loading = true
   const query = checkQuery()
   const { data: ret } = await getAffiliateSummary(query)
+  currentPageType = 'main'
   page.pages = ret.pages
   page.records = ret.records
   page.total = ret.total
@@ -533,9 +572,11 @@ async function loadRecord() {
 function showDialog(type, affiliateId) {
   if (type === 'MEMBER') {
     // newMembers.list = members
+    currentPageType = 'newRegister'
     loadNewMember(affiliateId)
     uiControl.dialogTitle = t('fields.newMember')
   } else if (type === 'ALLMEMBER') {
+    currentPageType = 'allMembers'
     loadAllMember(affiliateId)
     uiControl.dialogTitle = t('fields.allmembers')
   }
@@ -583,15 +624,17 @@ async function loadNewMember(affiliateId) {
   query.affiliateId = affiliateId
 
   const { data: ret } = await getAffiliateSummaryNewMember(query)
+  currentPageType = 'newRegister'
   memberPage.pages = ret.pages
   memberPage.records = ret.records
   memberPage.loading = false
+  memberPage.affiliateId = affiliateId
 }
 
 async function loadAllMember(affiliateId) {
-  memberPage.loading = true
-  memberRequest.siteId = request.siteId
-  const requestCopy = { ...memberRequest }
+  allMemberPage.loading = true
+  allMemberRequest.siteId = request.siteId
+  const requestCopy = { ...allMemberRequest }
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
     if (value) {
@@ -601,14 +644,26 @@ async function loadAllMember(affiliateId) {
   query.affiliateId = affiliateId
 
   const { data: ret } = await getAffiliateSummaryNewMember(query)
-  memberPage.pages = ret.pages
-  memberPage.records = ret.records
-  memberPage.loading = false
+  currentPageType = 'allMembers'
+
+  allMemberPage.pages = ret.pages
+  allMemberPage.records = ret.records
+  allMemberPage.loading = false
+  allMemberPage.affiliateId = affiliateId
 }
 
-function changePage(page) {
-  memberRequest.current = page
-  loadNewMember(newMembers.list)
+function changePage(page, pageType) {
+  if (pageType === 'main') {
+    request.current = page
+  } else if (pageType === 'newRegister') {
+    memberRequest.current = page
+    loadNewMember(memberPage.affiliateId)
+  } else if (pageType === 'allMembers') {
+    allMemberRequest.current = page
+    loadAllMember(allMemberPage.affiliateId)
+  }
+  // memberRequest.current = page
+  // loadNewMember(newMembers.list)
 }
 
 onMounted(async () => {
