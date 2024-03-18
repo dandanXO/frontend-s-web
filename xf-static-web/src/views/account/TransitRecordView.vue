@@ -393,6 +393,11 @@
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
+                <template v-if="tbl.dataIndex === 'betTime'" #default="scope">
+                  <div style="display: flex; align-items: center">
+                    <span>{{ getFormatBetTime(scope.row.betTime) }}</span>
+                  </div>
+                </template>
                 <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{ scope.row.recordTime }}</span>
@@ -1185,6 +1190,10 @@ export default defineComponent({
       reminderForm.photos = `${imgURL}/order/1/${linkId}`
     }
 
+    const getFormatBetTime = (betTime) => {
+      return moment(betTime).format("YYYY-MM-DD HH:mm:ss");
+    }
+
     const getPlatform = (platformName) => {
       if (!platformName) {
         return ''
@@ -1481,7 +1490,8 @@ export default defineComponent({
       formRef,
       getTransferChangeType,
       getPlatform,
-      imgURL
+      imgURL,
+      getFormatBetTime
     };
   }
 });

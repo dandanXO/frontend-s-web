@@ -15,6 +15,9 @@
     <el-tab-pane :label="t('fields.moneyChange')" name="member-money-change">
       <MemberMoneyChange :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
+    <el-tab-pane :label="t('fields.betRecords')" name="member-bet-record">
+      <MemberBetRecordTab :mbr-id="id" :time-zone="timeZone" />
+    </el-tab-pane>
     <el-tab-pane :label="t('fields.deposit')" name="deposit-info">
       <DepositInfoTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
@@ -35,9 +38,6 @@
     </el-tab-pane>
     <el-tab-pane :label="t('fields.riskControl')" name="risk-info">
       <RiskInfoTab :mbr-id="id" :time-zone="timeZone" />
-    </el-tab-pane>
-    <el-tab-pane :label="t('fields.betRecords')" name="member-bet-record">
-      <MemberBetRecordTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
     <el-tab-pane
       :label="t('fields.referredFriends')"

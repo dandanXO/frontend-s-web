@@ -139,7 +139,15 @@ export default route(function (/* { store, ssrContext } */) {
       ui.isAffiliateB = true;
       console.log("jo98.cc");
 
-      fbq("init", "873960514528284");
+      fbq("init", "426253023210597");
+
+      fbq("track", "PageView");
+      fbq("track", "ViewContent");
+    } else if (window.location.href.indexOf("jo77.cc") > -1) {
+      ui.isAffiliateB = true;
+      console.log("jo77.cc");
+
+      fbq("init", "CNRDC33C77U4A9P32PIG");
 
       fbq("track", "PageView");
       fbq("track", "ViewContent");

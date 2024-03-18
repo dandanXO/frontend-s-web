@@ -777,6 +777,7 @@ const request = reactive({
   thirdPartyName: null,
   paymentType: null,
   siteId: null,
+  clientType: null,
   sort: 1,
 })
 
