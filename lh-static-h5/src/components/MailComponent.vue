@@ -42,7 +42,7 @@
               @click="toggleMail(det)"
             >
               <div class="title-div" :class="`${det.readTime && det.sendTime ? '' : 'unread'}`">
-                <div>
+                <div class="title-wrapper">
                   <q-checkbox
                     v-if="allowSelectMultiple"
                     rounded
@@ -53,13 +53,12 @@
                     color="#0089ED"
                   />
                   <q-chip size="sm" label="已读" v-if="det.readTime && det.sendTime" />
-                  标题：
-                  {{ det.title }}
-                </div>
-
-                <div class="right-title">
-                  <RiArrowUpSLine v-if="isSelectedMail === det.id" />
-                  <RiArrowDownSLine v-if="isSelectedMail !== det.id" />
+                  <div class="title-text" :title="det.title">标题：{{ det.title }}</div>
+                  <div v-if="det.readTime" class="read-time" :title="`已读: ${formatReadtime(det.readTime)}`"><i>{{ formatReadtime(det.readTime) }}</i></div>
+                  <div class="right-title">
+                    <RiArrowUpSLine v-if="isSelectedMail === det.id" />
+                    <RiArrowDownSLine v-if="isSelectedMail !== det.id" />
+                  </div>
                 </div>
               </div>
               <div class="mailcontents" v-if="isSelectedMail === det.id">
@@ -466,6 +465,9 @@ export default defineComponent({
       humanDatetime(ts) {
         return moment(ts).format("YYYY-MM-DD HH:mm:ss");
       },
+      formatReadtime(ts) {
+        return moment(ts).format("MM-DD");
+      },
       onLoad,
       truncatedList,
       comList,
@@ -519,6 +521,26 @@ export default defineComponent({
     font-size: 1.1rem;
     color: $font-1;
     word-break: break-all;
+
+    .title-wrapper {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      
+      .title-text {
+        text-align: left;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        flex: 1;
+      }
+
+      .read-time {
+        font-size: 0.8rem;
+        font-weight: 400;
+        margin: 0 10px;
+      }
+    }
 
     &.unread {
       font-weight: bold;
