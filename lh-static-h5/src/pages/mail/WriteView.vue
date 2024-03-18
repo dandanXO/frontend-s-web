@@ -31,13 +31,13 @@
           <q-input
             :rules="[
               (val) => (val && val.length > 0) || '请输入标题',
-              (val) => (val && val.length < 255) || '标题长度为255以下.'
+              (val) => (val && val.length <= 200) || '标题长度为200或以下.'
             ]"
             ref="titleRef"
             name="title"
             counter
             bottom-slots
-            maxlength="255"
+            maxlength="200"
             v-model="mailDetailList.title"
             class="textarea-input"
             filled
