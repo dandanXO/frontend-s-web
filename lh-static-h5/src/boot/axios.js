@@ -21,19 +21,20 @@ if((
   window.location.pathname === "/vip"
 )){
 
+  //IOS
   if( window.webkit
     && window.webkit.messageHandlers
     && window.webkit.messageHandlers.notifyApp ){
-    window.webkit.messageHandlers.notifyApp.postMessage("Test123123");
+    window.webkit.messageHandlers.notifyApp.postMessage("LH_IOS");
   }
+  //ANDROID
   if( window["WebScript"]){
-    console.log("TIS")
-    window["WebScript"].notifyApp("Android 33");
+    window["WebScript"].notifyApp("LH_ANDROID");
   }
 
-  window.addEventListener('sendWebMessage', function(event) {
-    console.log("RECEIVE FROM JAVA");
+  window.addEventListener('message', function(event) {
       console.log(event.data);
+      alert("SUCCESS!")
       alert(event.data);
   });
 
