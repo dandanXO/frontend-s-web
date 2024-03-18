@@ -182,15 +182,6 @@
         </q-btn>
       </div>
 
-      <!--      @click.stop.prevent="-->
-      <!--      openWindow(-->
-      <!--      `https://csweb01.amv4xjcbd.com/?partnerCode=LHCS&lang=zh-CN&way=${regDevice}&token=${store.token}`,-->
-      <!--      'Chat Server',-->
-      <!--      350,-->
-      <!--      650-->
-      <!--      )-->
-      <!--      "-->
-
       <div class="contact-info">
         <div class="title-wrapper">
           <div class="section-title">联系我们</div>
