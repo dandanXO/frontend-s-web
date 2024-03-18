@@ -1929,6 +1929,7 @@ export default {
     validateHostRequired: 'Host is required',
     validatePortRequired: 'Port is required',
     validateSignNameRequired: 'Sign Name is required',
+    validateSearchCondition: 'Enter at least one query condition',
     validateSecretIdRequired: 'Secret ID is required',
     validateSecretKeyRequired: 'Secret Key is required',
     validateAppIdRequired: 'Application ID is required',
