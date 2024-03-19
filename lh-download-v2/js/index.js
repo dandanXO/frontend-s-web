@@ -1,4 +1,7 @@
 $(document).ready(function (e) {
+    var isTestFlight = false;
+
+    isURLSchemeSupported("itms-beta");
     detectIfSafari();
     getApiUrl();
 
@@ -75,8 +78,10 @@ $(document).ready(function (e) {
         setTimeout(function() {
             document.body.removeChild(iframe);
             if (success) {
+                isTestFlight = true;
                 return success;
             } else {
+                isTestFlight= false;
                 return false;
             }
         }, 1000);
@@ -86,9 +91,7 @@ $(document).ready(function (e) {
         // debugger;
         var clickBtn = document.getElementById("click-btn");
         clickBtn.onclick = async function () {
-            if (isURLSchemeSupported("itms-beta")) {
-
-
+            if (isTestFlight === true) {
                 var apiUrl = 'https://tfwkal.nc547frt0an.com/getTfData'
                 try {
                     const response = await fetch(apiUrl, {
