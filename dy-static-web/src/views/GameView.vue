@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="casino-container"
-    :style="'background-image: url(https://8fzka.latinovelas.com/resources/dy/style/img/slots/bg.jpg)'"
-  >
+  <div class="casino-container">
     <div class="recreation-money" id="numBox">LOADING...</div>
     <!-- <router-link to="/promotion"> -->
     <!-- <div
@@ -388,7 +385,7 @@ export default defineComponent({
 
 .casino-container {
   color: #ffffff;
-  // background: url("../assets/images/common/bg.jpg");
+  background: url("../assets/game/recreation_bg.jpg");
   background-repeat: no-repeat;
   background-position: center 0px;
   .recreation-money {
