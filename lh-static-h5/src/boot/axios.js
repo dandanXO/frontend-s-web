@@ -49,8 +49,6 @@ if((
       const returnJson =event.data.data;
       if(returnJson?.rstDomain){
         api.defaults.baseURL= returnJson?.rstDomain;
-        alert("rstDomain");
-        alert(api.defaults.baseURL);
       }
       if(returnJson?.actDomain){
         eventapi.defaults.baseURL= returnJson?.actDomain;
@@ -107,6 +105,12 @@ export default boot(({ app, router }) => {
       eventapi.defaults.headers["token"] = store.token;
     }
     config.headers["Authorization"] = process.env.SITE;
+
+    if(
+      window.location.pathname === "/vip"){
+      console.log(config.baseURL + config.url);
+      alert(config.baseURL + config.url);
+    }
 
     if (config.data) {
       config.data = config.data;
