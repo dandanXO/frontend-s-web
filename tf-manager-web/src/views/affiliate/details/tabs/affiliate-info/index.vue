@@ -491,7 +491,7 @@
           <span v-if="memberDetail.risk !== null">{{ memberDetail.risk }}</span>
           <span v-if="memberDetail.risk === null">-</span>
           <span class="level-color" :style="{backgroundColor: memberDetail.riskColor}" />
-          <el-button type="info" size="mini" style="float: right;" v-permission="['sys:member:update:risk']"
+          <el-button type="info" size="mini" style="float: right;" v-permission="['sys:affiliate:update:risk']"
                      @click="showDialog('UPDATE_RISK')" :disabled="riskList.list.length === 0"
           >
             {{ t('fields.update') }}

@@ -601,7 +601,7 @@ onMounted(() => {
   background: url(../../../assets/images/promo/hotpromo/cs2/dialogbg.png) no-repeat center top;
   // width: 90vw;
   // max-width: 500px;
-  width: 330px;
+  width: 350px;
   height: 300px;
   background-size: contain;
   display: flex;

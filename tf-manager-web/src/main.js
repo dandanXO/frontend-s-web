@@ -25,31 +25,39 @@ const currentHost = window.location.host
 let baseApi;
 let baseWss;
 
+let siteId;
+
 console.log(currentHost)
 switch (currentHost) {
   case process.env.VUE_APP_IND2_HOST:
     baseApi = process.env.VUE_APP_IND2_API;
     baseWss = process.env.VUE_APP_IND2_SOCKET;
+    siteId = 'ind';
     break;
   case process.env.VUE_APP_IND_HOST:
     baseApi = process.env.VUE_APP_IND_API;
     baseWss = process.env.VUE_APP_IND_SOCKET;
+    siteId = 'ind';
     break;
   case process.env.VUE_APP_LH_HOST:
     baseApi = process.env.VUE_APP_LH_API;
     baseWss = process.env.VUE_APP_LH_SOCKET;
+    siteId = 'lh';
     break;
   case process.env.VUE_APP_TH_HOST:
     baseApi = process.env.VUE_APP_TH_API;
     baseWss = process.env.VUE_APP_TH_SOCKET;
+    siteId = 'th';
     break;
   case process.env.VUE_APP_DY_HOST:
     baseApi = process.env.VUE_APP_DY_API;
     baseWss = process.env.VUE_APP_DY_SOCKET;
+    siteId = 'dy';
     break;
   default:
     baseApi = process.env.VUE_APP_BASE_API;
     baseWss = process.env.VUE_APP_SOCKET;
+    siteId = 'lh';
     break;
 }
 
@@ -74,6 +82,39 @@ if (baseApi.indexOf(",") > -1) {
   app.config.globalProperties.$baseWss = baseWss;
 
   sessionStorage.setItem("baseApi", baseApi);
+}
+
+if (siteId !== 'lh') {
+  var link = document.querySelector("link[rel~='icon']");
+  var title = document.querySelector("title");
+  if (!link) {
+    link = document.createElement('link');
+    link.rel = 'icon';
+    document.head.appendChild(link);
+  }
+  if (!title) {
+    title = document.createElement('title');
+    document.head.appendChild(title);
+  }
+  if (siteId === 'dy') {
+    link.href = '/dy-favicon.ico';
+    title.innerText = '东赢后台';
+  } else if (siteId === 'xf') {
+    link.href = '/xf-favicon.ico';
+    title.innerText = '兴发后台';
+  } else if (siteId === 'th') {
+    link.href = '/th-favicon.ico';
+    title.innerText = 'Jolly88';
+  } else if (siteId === 'ind') {
+    link.href = '/ind-favicon.ico';
+    title.innerText = '55Ace';
+  } else if (siteId === 'lh') {
+    link.href = '/favicon.ico';
+    title.innerText = '雷火后台';
+  } else {
+    link.href = '/favicon.ico';
+    title.innerText = 'TF88';
+  }
 }
 
 function putBaseUrl(url, index) {

@@ -136,8 +136,8 @@ export default defineComponent({
       { code:"ALL", img: 'all', label: '全站优惠' },
       { code: "ESPORT", img: 'esport', label: '电竞优惠'},
       { code: "SPORT", img: 'sport', label: '体育优惠'},
-      // { code: "POKER", img: 'poker', label: '棋牌'},
       { code: "LIVE CASINO", img: 'live', label: '真人优惠'},
+      { code: "POKER", img: 'poker', label: '棋牌优惠'},
       // { code: "FISH", img: 'fish', label: '捕鱼'},
       { code: "OTHERS", img: 'slot', label: '其他优惠'},
     ]);
@@ -213,7 +213,7 @@ export default defineComponent({
         if(type ==='OTHERS'){
           filteredArray.value = promoState.promoList.filter(function(promo) {
             const promoTypes = promo.promoType.toLowerCase().split(",");
-            return promoTypes.includes("slot game") || promoTypes.includes("welcome") || promoTypes.includes("fish") || promoTypes.includes("poker");
+            return promoTypes.includes("slot game") || promoTypes.includes("welcome") || promoTypes.includes("fish");
           });
           // console.log(filteredArray.value);
         }else{
@@ -304,12 +304,12 @@ export default defineComponent({
   min-height: 600px;
 
   .all-promotions {
-    background: url(../assets/promo/bg-top2.jpg) no-repeat center top;
+    background: url(../assets/promo/bg-top3.jpg) no-repeat center top;
     width: 100%;
     background-size: 100% auto;
     padding: 50px;
     position: relative;
-    padding-top: max(300px, 22vw);
+    padding-top: max(110px, 16vw);
     background-color: #f3f7fd;
   }
   .promo-view-container {

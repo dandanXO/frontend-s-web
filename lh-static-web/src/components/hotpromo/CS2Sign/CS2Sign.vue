@@ -231,6 +231,11 @@ const openBox = (item) => {
       // Open Dialog
       openModal("amt", res.data);
       init();
+    } else {
+      ElMessage.error({
+        type: "error",
+        message: res.message
+      });
     }
   });
   setTimeout(() => {
@@ -448,7 +453,7 @@ onMounted(() => {
         transition: transform 0.3s ease;
 
         &.active {
-          transform: scale3d(1.1, 1.1, 1.1);
+          transform: scale3d(1.2, 1.2, 1.2);
         }
       }
 

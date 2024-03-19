@@ -46,6 +46,10 @@ module.exports = configure(function (ctx) {
         build: {
             vueRouterMode: "history", // available values: 'hash', 'history'
 
+            postcss: {
+              // tell Quasar to use the PostCSS config from the external file
+              configFile: true,
+            },
             // transpile: false,
             // publicPath: '/',
 
@@ -97,7 +101,18 @@ module.exports = configure(function (ctx) {
             // components: [],
             // components: ["QPageSticky"],
             // directives: ["BackToTop"],
-
+            // components: [
+            //   'QBtn',
+            //   'QCheckbox',
+            //   'QIcon',
+            //   'QDialog',
+            //   'QCardActions',
+            //   'QCardSection',
+            //   'QDrawer',
+            //   'QHeader',
+            //   'QFooter',
+            //   // Add other components you use here
+            // ],
             // Quasar plugins
             plugins: ["LocalStorage", "SessionStorage", "Notify", "Loading", "Dialog"]
         },

@@ -54,7 +54,10 @@
                       <el-checkbox v-model="selectedIds[item.id]" size="large" />
                     </div>
                     <div v-if="item.readTime" class="read-badge">已读</div>
-                    <div :class="`title-text ${item.readTime ? '' : 'unread'}`">标题：{{ item.title }}</div>
+                    <div class="title-wrapper">
+                      <div :class="`title-text ${item.readTime ? '' : 'unread'}`" :title="item.title">标题：{{ item.title }}</div>
+                      <div v-if="item.sendTime" class="send-time" :title="`发送时间: ${moment(item.sendTime).format('YYYY-MM-DD HH:mm:ss')}`"><i>{{ moment(item.sendTime).format('MM-DD') }}</i></div>
+                    </div>
                   </template>
                   <div>
                     <div>正文：{{ item.content }}</div>
@@ -110,10 +113,10 @@ const showMailId = ref();
 const activeNames= ref();
 
 const mailboxMessageTypeData = ref([
-  { num: 1, type: "NOTIFICATION", name: "通知" },
   { num: 2, type: "ACTIVITY", name: "活动" },
   { num: 3, type: "ANNOUNCEMENT", name: "公告" },
   { num: 4, type: "PAYMENT", name: "充提" },
+  { num: 1, type: "NOTIFICATION", name: "通知" },
   { num: 5, type: "ALL", name: "全部" }
 ]);
 const mailboxMessageType = ref(mailboxMessageTypeData.value[0].type);
@@ -127,7 +130,8 @@ const changeMailboxType = (nk) => {
     mailboxMessageType.value = nk.props.name;
   }
 
-  loadPersonalMailbox();
+  // reset to page 1 when change tab
+  changePage(1);
 };
 
 const handleChange= () => {
@@ -521,6 +525,7 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .mail-content {
+  overflow-wrap: break-word;
   .mailbox-checkbox {
     display: flex;
     align-items: center;
@@ -662,5 +667,25 @@ onMounted(() => {
   font-size: 10px;
   line-height: 16px;
   margin-right: 10px;
+}
+
+.title-wrapper {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  
+  .title-text {
+    text-align: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .send-time {
+    font-size: 0.8rem;
+    font-weight: 400;
+    margin: 0 10px;
+  }
 }
 </style>

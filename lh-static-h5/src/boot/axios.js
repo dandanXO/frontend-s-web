@@ -12,42 +12,48 @@ const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
 
 
-// window.location.pathname === "/promotion" ||
-// window.location.pathname === "/deposit" ||
-// window.location.pathname === "/invitefriend" ||  window.location.pathname === "/invitefriend" ||
-// window.location.pathname === "/privilege/invite" ||
-//
+var rstApi = getInitApi(rstArray, "LH_H5_RST_URL");
+var crtApi = getInitApi(crtArray, "LH_H5_CRT_URL");
+var evtApi = getInitApi(evtArray, "LH_H5_EVT_URL");
+
 if((
-  window.location.pathname === "/vip"
+  window.location.pathname === "/vip" ||
+  window.location.pathname === "/promotion" ||
+  window.location.pathname === "/deposit" ||
+  window.location.pathname === "/invitefriend" ||
+  window.location.pathname === "/privilege/invite"
 )){
 
+  //IOS
   if( window.webkit
     && window.webkit.messageHandlers
     && window.webkit.messageHandlers.notifyApp ){
-    window.webkit.messageHandlers.notifyApp.postMessage("Test123123");
+    window.webkit.messageHandlers.notifyApp.postMessage("LH_IOS");
   }
+  //ANDROID
   if( window["WebScript"]){
-    console.log("TIS")
-    window["WebScript"].notifyApp("Android 33");
+    window["WebScript"].notifyApp("LH_ANDROID");
   }
 
-  window.addEventListener('sendWebMessage', function(event) {
-    console.log("RECEIVE FROM JAVA");
-      console.log(event.data);
-      alert(event.data);
+  window.addEventListener('message', function(event) {
+    console.log(event.data);
+    if(event.data.data !== undefined){
+      alert("SUCCESS 2")
+      // {"actDomain":"https://przvnboftl.anpoxuaq9ae.com:9972","crDomain":"https://m.lh330696.com:9971","rstDomain":"https://apodnbo0tl.anipoius54d.com:9972"}
+
+      const returnJson =event.data.data;
+      if(returnJson?.rstDomain){
+        api.defaults.baseURL= returnJson?.rstDomain;
+      }
+      if(returnJson?.actDomain){
+        eventapi.defaults.baseURL= returnJson?.actDomain;
+      }
+      if(returnJson?.crDomain){
+        cashier.defaults.baseURL= returnJson?.crDomain;
+      }
+    }
   });
-
-  var rstApi = getInitApi(rstArray, "LH_H5_RST_URL");
-  var crtApi = getInitApi(crtArray, "LH_H5_CRT_URL");
-  var evtApi = getInitApi(evtArray, "LH_H5_EVT_URL");
-
-
-}else{
-  var rstApi = getInitApi(rstArray, "LH_H5_RST_URL");
-  var crtApi = getInitApi(crtArray, "LH_H5_CRT_URL");
-  var evtApi = getInitApi(evtArray, "LH_H5_EVT_URL");
 }
-
 
 const api = axios.create({ baseURL: rstApi });
 const cashier = axios.create({ baseURL: crtApi });
@@ -145,7 +151,6 @@ export default boot(({ app, router }) => {
             window.location.pathname === "/deposit" ||
             window.location.pathname === "/invitefriend" ||
             window.location.pathname === "/vip" ||
-            window.location.pathname === "/invitefriend" ||
             window.location.pathname === "/privilege/invite") &&
           (res.code === ResponseCode.ERROR_TOKEN_MISSED ||
             res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||

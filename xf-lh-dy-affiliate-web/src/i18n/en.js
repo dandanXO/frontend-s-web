@@ -431,6 +431,10 @@ export default {
     totalDepositMemberCount: 'Total Member Deposit Count',
     orderBy: 'Order By',
     sortType: 'Sort Type',
+    exclusiveDomain: 'Exclusive Domain Name',
+    pcWay: 'PC',
+    mobileWay: 'Mobile',
+    forgetPassword: 'Forget Password',
   },
   message: {
     adjustSuccess: 'Adjust Success',

@@ -1,6 +1,6 @@
 import { RiTextWrap } from 'vue-remix-icons'; import { RiFileExcel2Fill } from 'vue-remix-icons';
 <template>
-  <div><img src="../../../assets/images/promo/hotpromo/feedbackaward/step-feedback-award.png" /></div>
+  <div><img src="../../../assets/images/promo/hotpromo/feedbackaward/step-feedback-steps.png" /></div>
 </template>
 
 <!-- <style lang="scss" scoped>

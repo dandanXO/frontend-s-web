@@ -10,9 +10,9 @@
         <img src="../assets/images/affiliate/official-partner.png" width="285">
       </div>
       <div class="buttons">
-        <a :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')">加入我们</a>
-        <a class="outline" :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')">登录</a>
-        <a class="outline" @click.stop.prevent="store.openLiveChat()">
+        <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">加入我们</a>
+        <a class="outline" :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">登录</a>
+        <a class="outline" :href="affiliateUrl + 'login?view=2&agent=' + (affCode ? affCode : '')" target="_blank">
           联系我们
         </a>
       </div>
@@ -27,7 +27,7 @@
             <div class="affiliate-terms">分红条款</div>
             <ul>
               <li>月充值金额≥200元为活跃玩家,当月需要至少五个活跃会员才能结算佣金。</li>
-              <li>当月的佣金分佣发放时间为下个月的五号到十号会结算完毕。</li>
+              <li>当月的佣金分佣发放时间为下个月的五号到十号会结算完毕.</li>
               <li>佣金有系统直接发放到代理账户，无需流水，绑定银行卡后即可申请提款。</li>
               <li>代理佣金计算方式：<br>
                 <span class="highlight">[（投注输赢额-优惠100%）-（存款+提款）*1.6%-平台费*8%]*佣金比例</span>
@@ -188,7 +188,7 @@
         </div>
       </div>
       <div>
-        <a :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' +
+        <a :href="affiliateUrl + 'login?agent=' +
           (affCode ? affCode : '')
           " class="agent-reg-btn">立即申请代理</a>
       </div>
@@ -197,14 +197,15 @@
   </div>
 </template>
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 // import { useI18n } from "vue-i18n";
 import { userStore } from "@/store";
 import { getDevice } from "@/utils/utils";
 
 export default defineComponent({
   setup() {
-    // const { t } = useI18n();
+    const affiliateUrl = ref('https://lh1-affiliate.phoicynxeey.com/lh/');
+
     const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
       var left = (screen.width - popupWinWidth) * 2;
       var top = (screen.height - popupWinHeight) / 4;
@@ -269,6 +270,7 @@ export default defineComponent({
       regDevice,
       store,
       openWindow,
+      affiliateUrl
     };
   },
 });

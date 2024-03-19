@@ -797,6 +797,23 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.clientType')" prop="clientType">
+          <el-select
+            v-model="request.clientType"
+            size="small"
+            :placeholder="t('fields.clientType')"
+            class="filter-item"
+            style="width: 250px;"
+            default-first-option
+          >
+            <el-option
+              v-for="item in uiControl.clientType"
+              :key="item.key"
+              :label="item.displayName"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.totalTime')" prop="totalTime">
           <el-select
             v-model="request.totalTime"
@@ -847,6 +864,7 @@ import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/date
 import { getSiteListSimple } from "@/api/site";
 import { TENANT } from "@/store/modules/user/action-types";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+
 const { t } = useI18n();
 const store = useStore()
 const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
@@ -893,6 +911,12 @@ const uiControl = reactive({
     { key: 5, displayName: 'More than 15 minutes', value: '>900' },
     { key: 6, displayName: 'More than 20 minutes', value: '>1200' },
     { key: 7, displayName: 'More than 30 minutes', value: '>1800' },
+  ],
+  clientType: [
+    { key: 1, displayName: 'WEB', value: 'WEB' },
+    { key: 2, displayName: 'H5', value: 'H5' },
+    { key: 3, displayName: 'IOS', value: 'IOS' },
+    { key: 4, displayName: 'ANDROID', value: 'ANDROID' },
   ],
   statusList: [
     { key: 0, displayName: t('withdrawStatus.ALL') },
@@ -967,6 +991,7 @@ const request = reactive({
   name: null,
   code: null,
   siteId: null,
+  clientType: null,
   sort: 1,
 })
 
@@ -987,10 +1012,10 @@ const searchFormRule = reactive({
 function disabledDate(time) {
   return (
     time.getTime() <
-      moment(new Date())
-        .subtract(2, 'months')
-        .startOf('month')
-        .format('x') || time.getTime() > new Date().getTime()
+    moment(new Date())
+      .subtract(2, 'months')
+      .startOf('month')
+      .format('x') || time.getTime() > new Date().getTime()
   )
 }
 

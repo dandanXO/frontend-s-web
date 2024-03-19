@@ -994,157 +994,157 @@ onUnmounted(() => {
 
 <style lang="scss">
 // dialog styling
-.game-dialog {
-  // background-color: #ffeacf;
-  border-radius: 12px;
+// .game-dialog {
+//   // background-color: #ffeacf;
+//   border-radius: 12px;
 
-  .dialog-header {
-    display: flex;
-    justify-content: center;
-    top: 40px;
-    position: relative;
-    width: 100%;
-    height: 100px;
+//   .dialog-header {
+//     display: flex;
+//     justify-content: center;
+//     top: 40px;
+//     position: relative;
+//     width: 100%;
+//     height: 100px;
 
-    .dialog-close {
-      position: absolute;
-      right: 8px;
-      bottom: 28px;
-      width: 32px;
-      height: 32px;
+//     .dialog-close {
+//       position: absolute;
+//       right: 8px;
+//       bottom: 28px;
+//       width: 32px;
+//       height: 32px;
 
-      .close-btn {
-        width: 32px;
-        height: 32px;
-        background: #b0031d;
-        color: #fdcf35;
-        border: 1px solid #fdcf35;
-      }
-    }
+//       .close-btn {
+//         width: 32px;
+//         height: 32px;
+//         background: #b0031d;
+//         color: #fdcf35;
+//         border: 1px solid #fdcf35;
+//       }
+//     }
 
-    img {
-      //   position: absolute;
-      //   top: 0px;
-      //   left: 15vw;
-      //   width: 70vw;
-      aspect-ratio: 340/111;
-      display: block;
-    }
-  }
+//     img {
+//       //   position: absolute;
+//       //   top: 0px;
+//       //   left: 15vw;
+//       //   width: 70vw;
+//       aspect-ratio: 340/111;
+//       display: block;
+//     }
+//   }
 
-  .dialog-html {
-    width: 100%;
-    height: 100%;
-    max-height: 100% !important;
-    position: relative;
-  }
+//   .dialog-html {
+//     width: 100%;
+//     height: 100%;
+//     max-height: 100% !important;
+//     position: relative;
+//   }
 
-  .dialog-body {
-    color: #000000;
-    font-size: 16px;
-    background: #ffeacf;
-    border-radius: 20px;
-    width: calc(100% - 30px);
-    padding: 20px 10px 30px;
-    //max-height: calc(100vh - 240px);
-    min-height: calc(85vh);
-    margin: auto;
+//   .dialog-body {
+//     color: #000000;
+//     font-size: 16px;
+//     background: #ffeacf;
+//     border-radius: 20px;
+//     width: calc(100% - 30px);
+//     padding: 20px 10px 30px;
+//     //max-height: calc(100vh - 240px);
+//     min-height: calc(85vh);
+//     margin: auto;
 
-    &.end-step {
-      min-height: 0;
-    }
+//     &.end-step {
+//       min-height: 0;
+//     }
 
-    ol {
-      margin-top: 0px;
+//     ol {
+//       margin-top: 0px;
 
-      li {
-        //position: relative;
-        margin-bottom: 10px;
-      }
-    }
+//       li {
+//         //position: relative;
+//         margin-bottom: 10px;
+//       }
+//     }
 
-    .dialog-list {
-      overflow: scroll;
-      width: 100%;
-      margin-top: 10px;
-    }
+//     .dialog-list {
+//       overflow: scroll;
+//       width: 100%;
+//       margin-top: 10px;
+//     }
 
-    &.won-bonus-body {
-      background-image: url("../../../assets/images/promotion/hotpromo/cnystepgame2024/won-bonus.png");
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      //height: 600px;
-      width: calc(100% - 40px);
-      min-height: auto;
-      margin: 0 auto;
-      aspect-ratio: 10/12;
-    }
+//     &.won-bonus-body {
+//       background-image: url("../../../assets/images/promotion/hotpromo/cnystepgame2024/won-bonus.png");
+//       background-repeat: no-repeat;
+//       background-size: 100% 100%;
+//       //height: 600px;
+//       width: calc(100% - 40px);
+//       min-height: auto;
+//       margin: 0 auto;
+//       aspect-ratio: 10/12;
+//     }
 
-    .won-txt {
-      font-size: 30px;
-      padding-top: 10px;
-      color: #000;
-      text-align: center;
-      text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      font-weight: 700;
+//     .won-txt {
+//       font-size: 30px;
+//       padding-top: 10px;
+//       color: #000;
+//       text-align: center;
+//       text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+//       font-weight: 700;
 
-      span {
-        font-size: 150%;
-        color: #bc0629;
-      }
-    }
+//       span {
+//         font-size: 150%;
+//         color: #bc0629;
+//       }
+//     }
 
-    .q-table td {
-      padding: 5px 6px;
-    }
+//     .q-table td {
+//       padding: 5px 6px;
+//     }
 
-    .game-btn {
-      position: relative;
-      background-size: 100% 100%;
-      background-position: center center;
-      background-repeat: no-repeat;
-      width: 150px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 14px;
-      color: #ffffff;
-      font-weight: 700;
-      line-height: 0;
-      padding-bottom: 5px;
-      aspect-ratio: 183/54;
-      height: 45px;
-      background-color: transparent;
-      border: 0;
-      background-image: url("../../../assets/images/promotion/hotpromo/cnystepgame2024/game-btn-01.png");
-      margin: 12px auto 0;
+//     .game-btn {
+//       position: relative;
+//       background-size: 100% 100%;
+//       background-position: center center;
+//       background-repeat: no-repeat;
+//       width: 150px;
+//       display: flex;
+//       justify-content: center;
+//       align-items: center;
+//       font-size: 14px;
+//       color: #ffffff;
+//       font-weight: 700;
+//       line-height: 0;
+//       padding-bottom: 5px;
+//       aspect-ratio: 183/54;
+//       height: 45px;
+//       background-color: transparent;
+//       border: 0;
+//       background-image: url("../../../assets/images/promotion/hotpromo/cnystepgame2024/game-btn-01.png");
+//       margin: 12px auto 0;
 
-      &:hover {
-        filter: brightness(0.8);
-        cursor: pointer;
-      }
+//       &:hover {
+//         filter: brightness(0.8);
+//         cursor: pointer;
+//       }
 
-      &.disabled,
-      &[disabled] {
-        filter: brightness(0.4);
-        cursor: auto;
-      }
-    }
-  }
+//       &.disabled,
+//       &[disabled] {
+//         filter: brightness(0.4);
+//         cursor: auto;
+//       }
+//     }
+//   }
 
-  .el-dialog__headerbtn {
-    top: -20px !important;
-    right: -20px !important;
+//   .el-dialog__headerbtn {
+//     top: -20px !important;
+//     right: -20px !important;
 
-    .el-dialog__close {
-      background: #b0031d;
-      border-radius: 50%;
-      border: 2px solid #fdcf35;
+//     .el-dialog__close {
+//       background: #b0031d;
+//       border-radius: 50%;
+//       border: 2px solid #fdcf35;
 
-      color: #fdcf35 !important;
-      height: 40px !important;
-      width: 40px !important;
-    }
-  }
-}
+//       color: #fdcf35 !important;
+//       height: 40px !important;
+//       width: 40px !important;
+//     }
+//   }
+// }
 </style>

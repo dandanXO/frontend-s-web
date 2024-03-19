@@ -35,7 +35,8 @@
                     obj === 'commitDate' ||
                     obj === 'feedbackTime' ||
                     obj === 'recordTime' ||
-                    obj === 'transferDate'
+                    obj === 'transferDate' || 
+                    (obj === 'betTime' && recordType === 'bethistory')
                   "
                 >
                   {{ humanDatetime(det[obj]) }}

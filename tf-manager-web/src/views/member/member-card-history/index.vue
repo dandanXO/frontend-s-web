@@ -12,10 +12,8 @@
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
           style="width: 220px; margin-left:5px"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
-          @change="handleCalendarChange"
         />
 
         <el-input
@@ -94,6 +92,7 @@
           size="mini"
           type="success"
           @click="loadBankCardHistory()"
+          :disabled="page.loading"
         >
           {{ t('fields.search') }}
         </el-button>
@@ -258,27 +257,6 @@ const request = reactive({
   cardType: null,
 })
 
-function disabledDate(time) {
-  return (
-    time.getTime() <=
-      moment(new Date())
-        .subtract(1, 'years')
-        .format('x') || time.getTime() > new Date().getTime()
-  )
-}
-
-function handleCalendarChange(event) {
-  var date1 = new Date(event[0])
-  var date2 = new Date(event[1])
-  if (date1 !== null && date2 !== null) {
-    var dayDifference = Math.abs(date1.getTime() - date2.getTime()) / (1000 * 60 * 60 * 24)
-    if (dayDifference > 90) {
-      request.cardTime = [defaultStartDate, defaultEndDate]
-      ElMessage({ message: t('message.selectDateNotMoreThan3Month'), type: "error" })
-    }
-  }
-}
-
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD')
 }
@@ -294,6 +272,10 @@ function resetQuery() {
 }
 
 async function loadBankCardHistory() {
+  if (!(request.loginName || request.realName || request.cardNo)) {
+    ElMessage({ message: t('message.validateSearchCondition'), type: "error" })
+    return false
+  }
   page.loading = true
   const requestCopy = { ...request }
   const query = {}
@@ -331,7 +313,6 @@ async function loadSites() {
 
 onMounted(async () => {
   await loadSites()
-
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
@@ -340,11 +321,8 @@ onMounted(async () => {
   } else {
     request.siteId = 1
   }
-
   request.bindType = bindType.list[0].value
   request.cardType = cardType.list[0].value
-
-  await loadBankCardHistory()
 })
 </script>
 

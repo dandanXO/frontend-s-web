@@ -26,7 +26,7 @@
     <Cny2024Promo v-if="list.redirectUrl === 'lh1-cny2024-promo' && !isCommonPromo && store.token" />
     <div style="text-align: center" v-if="list.redirectUrl === 'lh1-feedback-award' && !isCommonPromo && store.token">
       <img
-        style="max-width: 1200px; width: 100%; margin: 10px auto"
+        style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
         src="../assets/images/promotion/hotpromo/lhfeedback/feedback.png"
       />
     </div>

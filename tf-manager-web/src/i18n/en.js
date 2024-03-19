@@ -140,7 +140,7 @@ export default {
       TRANSFER_OUT: 'Transfer Out',
       AFFILIATE_SETTLEMENT: 'Affiliate Settlement',
       AFFILIATE_DEPOSIT: 'Transfer from Balance',
-      AFFILIATE_COMMISSION: 'Transfer from Commission Balance'
+      AFFILIATE_COMMISSION: 'Transfer from Commission Balance',
     },
   },
   status: {
@@ -271,6 +271,7 @@ export default {
   },
   distributeStatus: {
     PENDING: 'Pending',
+    IN_PROGRESS: 'Distributing',
     DISTRIBUTED: 'Distributed',
     CANCEL: 'Cancel',
   },
@@ -347,6 +348,7 @@ export default {
     daily: 'Daily',
     newbie: 'Newbie',
     limit: 'Limit',
+    featured: 'Featured',
   },
   messageType: {
     NOTIFICATION: 'Notification',
@@ -480,6 +482,7 @@ export default {
     allprofit: 'All Profit',
     allreviewstatus: 'All Review Status',
     allrisklevel: 'All Risk Level',
+    allmembers: 'All Members',
     allmembertype: 'All Member Type',
     announcementType: 'Announcement Type',
     answer: 'Answer',
@@ -554,6 +557,7 @@ export default {
     callbackUrl: 'Callback URL',
     cancel: 'Cancel',
     cancelBbDacha: 'Cancel BB Dacha',
+    cancelBySearch: 'Cancel By Query',
     cancelDeposit: 'Cancel Deposit',
     cancelGameMatch: 'Cancel Game Match',
     cancelGift: 'Cancel Gift Redemption',
@@ -984,7 +988,7 @@ export default {
     nextLevelPoint: 'Next Level Point',
     no: 'No',
     noData: 'No Data',
-    noDeposit: '无存款',
+    noDeposit: 'No Deposit',
     noLimit: 'No Limit',
     noOfDeduction: 'Number of Deduction',
     noOfDepositTimes: 'Number of Deposit Times',
@@ -1549,6 +1553,8 @@ export default {
       'Confirm that you want to cancel this BB Dacha, the operation cannot be undone',
     confirmCancelQuiz:
       'Confirm that you want to cancel this quiz, the operation cannot be undone',
+    confirmCancelRebate:
+      'Confirm that you want to cancel the rebate records, the operation cannot be undone',
     confirmCopy: 'Do you want to copy from ',
     confirmCopyTo: ' to ',
     confirmDelete:
@@ -1602,9 +1608,11 @@ export default {
     logoutPlayerSuccess: 'Logout Player Success',
     maxGreaterThanMin: 'Maximum must be greater than minimum',
     memberNotInSite: 'Member could not be found in this site',
-    memberFreeGameLogin: 'Login name, separate with commas if there is more than one name (maximum 200 names)',
+    memberFreeGameLogin:
+      'Login name, separate with commas if there is more than one name (maximum 200 names)',
     memberFreeGameRound: 'Free game round',
-    memberFreeGameIds: 'Game IDs can be used, separated by commas if there is more than one; the maximum length (including commas) is 200',
+    memberFreeGameIds:
+      'Game IDs can be used, separated by commas if there is more than one; the maximum length (including commas) is 200',
     multipleQuerySeparatedBySpace:
       'Multiple query conditions are separated by spaces',
     multiwheelprizeform: 'Insert 0 as Grand Prize',
@@ -1616,7 +1624,8 @@ export default {
     promoDistributionSuccess: 'Promo Distribution Success',
     redeemCashSuccess: 'Redeem Cash Success',
     reenterPassword: 'Please re-enter the password',
-    rebateSuccess: 'VIP Rebate distribution in process, please refresh and check on the records later.',
+    rebateSuccess:
+      'VIP Rebate distribution in process, please refresh and check on the records later.',
     registerSuccess: 'Register Success',
     referSuccess: 'Distribute Refer Friend Promo Success',
     replySuccess: 'Reply Success',
@@ -1920,6 +1929,7 @@ export default {
     validateHostRequired: 'Host is required',
     validatePortRequired: 'Port is required',
     validateSignNameRequired: 'Sign Name is required',
+    validateSearchCondition: 'Enter at least one query condition',
     validateSecretIdRequired: 'Secret ID is required',
     validateSecretKeyRequired: 'Secret Key is required',
     validateAppIdRequired: 'Application ID is required',
@@ -2133,11 +2143,13 @@ export default {
     'Channel Summary': 'Channel Summary',
     'Adjustment Reason': 'Adjustment Reason',
     'User Login Log': 'User Login Log',
-    'User Action Log': 'User Action Log',
-    'Event Treasure Key': 'Event Treasure Key Record',
-    'Event Check In Record': 'Event Check In Record',
     'Online Stats': 'Online Stats',
     'Promotion Activity': 'Promotion Activity',
+    'Platform Competition': 'Platform Competition',
+    'Platform Competition Code': 'Platform Competition Code',
+    'Event Treasure Key': 'Event Treasure Key Record',
+    'Event Check In Record': 'Event Check In Record',
+    'User Action Log': 'User Action Log',
     'Competition Management': 'Competition Management',
     'Competition List': 'Competition List',
     'Competition Code': 'Competition Code',

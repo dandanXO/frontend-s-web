@@ -7,6 +7,7 @@
     :pagination="{clickable: true}"
     :mousewheel="true"
     :autoHeight="true"
+    @swiper="onSwiper"
   >
     <SwiperSlide>
       <LoginRegisterPage siteId="7" />
@@ -43,6 +44,7 @@ import 'swiper/swiper-bundle.css'
 import CustomerServicePage from '@/components/customer-service'
 import LoginRegisterPage from '@/components/login-register'
 import SupportPage from '@/components/support-page'
+import { useRoute } from 'vue-router'
 // extra components
 SwiperCore.use([Mousewheel, Pagination, Navigation, Scrollbar])
 export default defineComponent({
@@ -55,12 +57,22 @@ export default defineComponent({
     Scrollbar,
     CustomerServicePage,
     SupportPage,
-    LoginRegisterPage
+    LoginRegisterPage,
   },
   setup() {
+    const route = useRoute()
     const isMobileView = ref(false)
-    const onSwiper = swiper => {
+    const refSwiper = ref()
+    const onSwiper = (swiper) => {
       console.log(swiper)
+      refSwiper.value = swiper;
+
+      if (route.query?.view) {
+        // alert(route.query?.view);
+        setTimeout(() => {
+          refSwiper.value.slideTo(1);
+        }, 0)
+      }
     }
     const onSlideChange = () => {}
     onMounted(() => {
@@ -80,7 +92,7 @@ export default defineComponent({
       } else {
         isMobileView.value = true
       }
-    };
+    }
     onBeforeUnmount(() => {
       // Remove the event listener before the component is unmounted
       window.removeEventListener('resize', handleResize)
@@ -92,13 +104,13 @@ export default defineComponent({
       onSlideChange,
       swiperKey,
       isMobileView,
+      refSwiper
     }
   },
 })
 </script>
 
 <style lang="scss" scoped>
-
 .swiper-slide {
   max-height: 100vh;
 }
