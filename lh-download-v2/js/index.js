@@ -1,7 +1,7 @@
 $(document).ready(function (e) {
     var isTestFlight = false;
 
-    isURLSchemeSupported("itms-beta");
+    // isURLSchemeSupported("itms-beta");
     detectIfSafari();
     getApiUrl();
 
@@ -91,7 +91,7 @@ $(document).ready(function (e) {
         // debugger;
         var clickBtn = document.getElementById("click-btn");
         clickBtn.onclick = async function () {
-            if (isTestFlight === true) {
+            // if (isTestFlight === true) {
                 var apiUrl = 'https://tfwkal.nc547frt0an.com/getTfData'
                 try {
                     const response = await fetch(apiUrl, {
@@ -111,9 +111,9 @@ $(document).ready(function (e) {
                 } catch (error) {
                     console.log(error)
                 }
-            }else{
-                alert("请先安装TestFlight")
-            }
+            // }else{
+            //     alert("请先安装TestFlight")
+            // }
         }
     }
 })
