@@ -162,6 +162,17 @@ const routes = [
     ]
   },
   {
+    path: "/viptest",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "viptest",
+        component: () => import("pages/games/VIPView.vue")
+      }
+    ]
+  },
+  {
     path: "/affiliate",
     component: () => import("layouts/MainLayout.vue"),
     children: [
