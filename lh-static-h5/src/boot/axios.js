@@ -37,19 +37,19 @@ if((
 
   window.addEventListener('message', function(event) {
     console.log(event.data);
-    if(event?.type ==='sendWebMessage' && event.data !== undefined){
+    if(event.data.data !== undefined){
       alert("SUCCESS 2")
-      // alert(event.data);
+      // {"actDomain":"https://przvnboftl.anpoxuaq9ae.com:9972","crDomain":"https://m.lh330696.com:9971","rstDomain":"https://apodnbo0tl.anipoius54d.com:9972"}
 
-      const returnJson =event.data;
-      if(returnJson?.rest){
-        api.defaults.baseURL= returnJson?.rest;
+      const returnJson =event.data.data;
+      if(returnJson?.rstDomain){
+        api.defaults.baseURL= returnJson?.rstDomain;
       }
-      if(returnJson?.promo){
-        eventapi.defaults.baseURL= returnJson?.promo;
+      if(returnJson?.actDomain){
+        eventapi.defaults.baseURL= returnJson?.actDomain;
       }
-      if(returnJson?.cashier){
-        cashier.defaults.baseURL= returnJson?.cashier;
+      if(returnJson?.crDomain){
+        cashier.defaults.baseURL= returnJson?.crDomain;
       }
     }
   });
