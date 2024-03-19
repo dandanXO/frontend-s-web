@@ -56,18 +56,21 @@
         window["WebScript"].notifyApp("LH_ANDROID");
       }
 
+      // window.localStorage.setItem('https://123123.com', "LH_H5_RST_URL");
       window.addEventListener('message', function(event) {
         if(event.data.data !== undefined){
+          alert("SUCCESS");
           // {"actDomain":"https://przvnboftl.anpoxuaq9ae.com:9972","crDomain":"https://m.lh330696.com:9971","rstDomain":"https://apodnbo0tl.anipoius54d.com:9972"}
           const returnJson =event.data.data;
           if(returnJson?.rstDomain){
-            localStorage.setItem(returnJson?.rstDomain, "LH_H5_RST_URL");
+            alert("SAVE");
+            window.localStorage.setItem( "LH_H5_RST_URL", returnJson?.rstDomain);
           }
           if(returnJson?.actDomain){
-            localStorage.setItem(returnJson?.actDomain, "LH_H5_EVT_URL");
+            window.localStorage.setItem("LH_H5_EVT_URL", returnJson?.actDomain);
           }
           if(returnJson?.crDomain){
-            localStorage.setItem(returnJson?.crDomain, "LH_H5_CRT_URL");
+            window.localStorage.setItem( "LH_H5_CRT_URL", returnJson?.crDomain);
           }
         }
       });
