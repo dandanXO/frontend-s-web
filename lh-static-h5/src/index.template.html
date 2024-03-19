@@ -38,16 +38,39 @@
 
   <script type="text/javascript">
     //Call a Message to Parent (If App.)
+    if( window.location.pathname === "/vip" ||
+      window.location.pathname === "/viptest" ||
+      window.location.pathname === "/promotion" ||
+      window.location.pathname === "/deposit" ||
+      window.location.pathname === "/invitefriend" ||
+      window.location.pathname === "/privilege/invite"){
 
-    //IOS
-    if( window.webkit
-      && window.webkit.messageHandlers
-      && window.webkit.messageHandlers.notifyApp ){
-      window.webkit.messageHandlers.notifyApp.postMessage("LH_IOS");
-    }
-    //ANDROID
-    if( window["WebScript"]){
-      window["WebScript"].notifyApp("LH_ANDROID");
+      //IOS
+      if( window.webkit
+        && window.webkit.messageHandlers
+        && window.webkit.messageHandlers.notifyApp ){
+        window.webkit.messageHandlers.notifyApp.postMessage("LH_IOS");
+      }
+      //ANDROID
+      if( window["WebScript"]){
+        window["WebScript"].notifyApp("LH_ANDROID");
+      }
+
+      window.addEventListener('message', function(event) {
+        if(event.data.data !== undefined){
+          // {"actDomain":"https://przvnboftl.anpoxuaq9ae.com:9972","crDomain":"https://m.lh330696.com:9971","rstDomain":"https://apodnbo0tl.anipoius54d.com:9972"}
+          const returnJson =event.data.data;
+          if(returnJson?.rstDomain){
+            localStorage.setItem(returnJson?.rstDomain, "LH_H5_RST_URL");
+          }
+          if(returnJson?.actDomain){
+            localStorage.setItem(returnJson?.actDomain, "LH_H5_EVT_URL");
+          }
+          if(returnJson?.crDomain){
+            localStorage.setItem(returnJson?.crDomain, "LH_H5_CRT_URL");
+          }
+        }
+      });
     }
   </script>
 </head>
