@@ -1884,11 +1884,13 @@ export default defineComponent({
   height: auto;
   border-radius: 16px;
   aspect-ratio: 1000/400;
+  min-height: 130px;
 
   .q-panel > div {
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: cover;
+    background-size: 100% 100%;
+    min-height: 130px;
   }
 
   .q-carousel__navigation--bottom {
@@ -2306,6 +2308,7 @@ export default defineComponent({
         background-position: top center;
         background-repeat: no-repeat;
         aspect-ratio: 819/295;
+        min-height: 120px;
         position: relative;
         overflow: hidden;
         display: grid;

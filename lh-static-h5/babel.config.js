@@ -14,7 +14,7 @@ module.exports = api => {
         {
           targets: {
             android: "7.0",
-            browsers: ["last 10 versions", "ie >= 9", "iOS >= 12"]
+            browsers: ["last 10 versions", "ie >= 9", "iOS >= 12", "safari >= 12"]
           },
         }
       ]
