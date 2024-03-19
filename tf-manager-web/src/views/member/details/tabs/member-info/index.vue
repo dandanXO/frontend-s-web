@@ -952,9 +952,7 @@ export default defineComponent({
     const userType = reactive({
       list: [
         { key: 1, name: t('types.NORMAL'), value: "NORMAL" },
-        { key: 2, name: t('types.TEST'), value: "TEST" },
-        { key: 3, name: t('types.AFFILIATE'), value: "AFFILIATE" },
-        { key: 4, name: t('types.OUTSIDE'), value: "OUTSIDE" }
+        { key: 2, name: t('types.TEST'), value: "TEST" }
       ]
     });
 
