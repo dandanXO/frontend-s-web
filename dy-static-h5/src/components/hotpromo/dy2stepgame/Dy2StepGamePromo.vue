@@ -1,11 +1,18 @@
 <template>
-  <div class="stepgame-wrapper" id="id-stepgame-wrapper">
+  <div class="stepgame-wrapper" id="id-stepgame-wrapper" :class="'step-' + stageValue.value">
     <div class="stepgame-container" id="id-stepgame-container">
-      <!--      <div class="head-title">-->
-      <!--        <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/top-title.png" />-->
-      <!--      </div>-->
-
       <div class="game-container" id="id-game-container">
+        <div class="game-header">
+          <img
+            src="../../../assets/images/promotion/hotpromo/dy2-step-game/game-header-01.png"
+            v-if="stageValue.value === 1"
+          />
+
+          <img
+            src="../../../assets/images/promotion/hotpromo/dy2-step-game/game-header-02.png"
+            v-if="stageValue.value === 2"
+          />
+        </div>
         <div class="game-item-container">
           <div
             class="game-item-player"
@@ -15,7 +22,14 @@
               'grid-column': playerPosition.column
             }"
           >
-            <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/player-pin.png" />
+            <img
+              src="../../../assets/images/promotion/hotpromo/dy2-step-game/player-pin.png"
+              v-if="stageValue.value === 1"
+            />
+            <img
+              src="../../../assets/images/promotion/hotpromo/dy2-step-game/player-pin-2.png"
+              v-if="stageValue.value === 2"
+            />
           </div>
           <template v-for="(position, step) in stepPositionMapping" :key="step">
             <template
@@ -37,7 +51,7 @@
                 <span>
                   <img
                     :src="
-                      require(`../../../assets/images/promotion/hotpromo/cnystepgame2024/game-btn-reward-${step}.png`)
+                      require(`../../../assets/images/promotion/hotpromo/dy2-step-game/game-btn-reward-${step}.png`)
                     "
                   />
                 </span>
@@ -63,24 +77,25 @@
     </div>
 
     <div class="game-btns-container">
-      <button class="game-btn game-btn--01" :disabled="isBtnLoading" @click="handleSpin">
-        转盘次数 ({{ spinLeft }})
-      </button>
+      <button class="game-btn game-btn--01" @click="router.push('/finance/deposit')">去存款</button>
+      <button class="game-btn game-btn--02" :disabled="isBtnLoading" @click="handleSpin">开始闯关</button>
     </div>
 
+    <div class="game-spin-left">可转动次数：{{ spinLeft }}</div>
+
     <div class="game-spin-wheel-container">
-      <div class="game-spin-wheel-frame">
-        <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/spin-wheel-frame.png" />
-      </div>
+      <!-- <div class="game-spin-wheel-frame">
+        <img src="../../../assets/images/promotion/hotpromo/dy2-step-game/spin-wheel-frame.png" />
+      </div> -->
       <div class="game-spin-wheel">
         <div class="spin-wheel-shadow" :class="smoothSpinOn && 'shadow-spin'"></div>
         <div class="spin-wheel-board" :class="smoothSpinOn && 'smooth-spin'">
           <div style="transition: 1s all" :class="`spin-to-${spinToNum}`">
-            <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/spin-wheel-board.png" />
+            <img src="../../../assets/images/promotion/hotpromo/dy2-step-game/spin-wheel-board.png" />
           </div>
         </div>
         <div class="spin-wheel-pin">
-          <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/spin-wheel-pin.png" />
+          <img src="../../../assets/images/promotion/hotpromo/dy2-step-game/spin-wheel-pin.png" />
         </div>
       </div>
     </div>
@@ -88,10 +103,10 @@
 
   <div class="game-side-btns-container">
     <div class="game-side-btn" @click="gameRulesDialog = true">
-      <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/side-btn-01.png" />
+      <img src="../../../assets/images/promotion/hotpromo/dy2-step-game/side-btn-01.png" />
     </div>
     <div class="game-side-btn" @click="openRecordDialog()">
-      <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/side-btn-02.png" />
+      <img src="../../../assets/images/promotion/hotpromo/dy2-step-game/side-btn-02.png" />
     </div>
   </div>
 
@@ -99,8 +114,7 @@
   <q-dialog v-model="gameRulesDialog" width="500px" align-center class="game-dialog">
     <div class="dialog-html">
       <div class="dialog-header">
-        <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/game-head-title-02.png" />
-
+        <div class="game-header-title">活动规则</div>
         <div class="dialog-close">
           <q-btn
             @click="gameRecordsDialog = false"
@@ -114,30 +128,7 @@
         </div>
       </div>
       <div class="dialog-body">
-        <div class="dialog-list">
-          <ol>
-            <li>本活动全体用户皆可参与，参与前需完善个人资料，绑定手机号码及银行卡。</li>
-            <li>本活动共仅能通关一次，每个阶段每个档位奖励仅能领取一次。</li>
-            <li>
-              本活动转盘当日任意存款即可获得转动3次转盘机会超出免费次数每存款200元即可活动一次转动转盘机会，每日最高可获得转动20次转盘机会。
-            </li>
-            <li>本活动转盘数字定义:抽中正数即往前进相应步数，抽中0保持原关卡不动，抽中负数即往后退相应步数。</li>
-            <li>
-              本活动获取关卡奖励需到达指定关卡。
-              例：用户从第12关出发，抽中6即往前进6步，到达关卡18，只能领取关卡18的奖励，不能领取关卡8的奖励。
-            </li>
-            <li>本活动所得彩金将实时派发至用户【中心钱包】，彩金仅需完成1倍流水即可提交出款申请。</li>
-            <li>
-              本活动仅对已结算并产生输赢结果的有效投注进行计算，任何走水、串关、特殊投注、取消的赛事不计算有效投注。
-            </li>
-            <li>本活动与其它优惠活动共享。（特殊活动除外）</li>
-            <li>同一姓名、手机号、银行卡号、邮箱地址等信息的用户账号，仅可参与一次，若有违规者，将不享受此优惠。</li>
-            <li>
-              任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单。
-            </li>
-            <li>为避免文字理解差异，本活动最终解释权归东赢电竞所有。</li>
-          </ol>
-        </div>
+        <div class="dialog-list" v-html="pageContent"></div>
       </div>
     </div>
   </q-dialog>
@@ -145,7 +136,7 @@
   <q-dialog v-model="gameRecordsDialog" width="500px" align-center class="game-dialog">
     <div class="dialog-html">
       <div class="dialog-header">
-        <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/game-head-title-03.png" />
+        <div class="game-header-title">转动记录</div>
         <div class="dialog-close">
           <q-btn
             @click="gameRecordsDialog = false"
@@ -189,7 +180,7 @@
   <q-dialog v-model="wonBonusDialog" width="500px" align-center class="game-dialog">
     <div class="dialog-html">
       <div class="dialog-header">
-        <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/game-head-title-04.png" />
+        <div class="game-header-title">中奖啦</div>
         <div class="dialog-close">
           <q-btn
             @click="wonBonusDialog = false"
@@ -215,7 +206,7 @@
   <q-dialog v-model="endStepDialog" width="500px" align-center class="game-dialog">
     <div class="dialog-html">
       <div class="dialog-header">
-        <img src="../../../assets/images/promotion/hotpromo/cnystepgame2024/game-head-title-01.png" />
+        <div class="game-header-title">完成啦</div>
         <div class="dialog-close">
           <q-btn
             @click="endStepDialog = false"
@@ -240,24 +231,22 @@
 </template>
 
 <script setup>
-import { ref, computed, onUnmounted, onMounted, reactive } from "vue";
+import { ref, computed, onUnmounted, onMounted, reactive, defineProps } from "vue";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { getCurrentStepInit, submitGameStep, getStepRecords } from "../../../api/index/promo";
 import moment from "moment";
 
+defineProps(["pageContent"]);
+
 const store = userStore();
 const router = useRouter();
-
 const gameRulesDialog = ref(false);
 const gameRecordsDialog = ref(false);
-
 const wonBonusDialog = ref(false);
 const endStepDialog = ref(false);
 const wonBonus = ref(0);
-
 const isBtnLoading = ref(false);
-
 const smoothSpinOn = ref(false);
 const spinToNum = ref(0);
 
@@ -420,58 +409,58 @@ const stepPositionMapping = {
   5: { row: 1, column: 6 },
   6: { row: 1, column: 7 },
   7: { row: 2, column: 7 },
-  8: { row: 2, column: 6 },
-  9: { row: 2, column: 5 },
-  10: { row: 2, column: 4 },
-  11: { row: 2, column: 3 },
-  12: { row: 2, column: 2 },
-  13: { row: 2, column: 1 },
+  8: { row: 3, column: 7 },
+  9: { row: 3, column: 6 },
+  10: { row: 3, column: 5 },
+  11: { row: 3, column: 4 },
+  12: { row: 3, column: 3 },
+  13: { row: 3, column: 2 },
   14: { row: 3, column: 1 },
-  15: { row: 3, column: 2 },
-  16: { row: 3, column: 3 },
-  17: { row: 3, column: 4 },
-  18: { row: 3, column: 5 },
-  19: { row: 3, column: 6 },
-  20: { row: 3, column: 7 },
-  21: { row: 4, column: 7 },
-  22: { row: 4, column: 6 },
-  23: { row: 4, column: 5 },
-  24: { row: 4, column: 4 },
-  25: { row: 4, column: 3 },
-  26: { row: 4, column: 2 },
-  27: { row: 4, column: 1 },
-  28: { row: 5, column: 1 },
-  29: { row: 5, column: 2 },
-  30: { row: 5, column: 3 },
-  31: { row: 5, column: 4 },
-  32: { row: 5, column: 5 },
-  33: { row: 5, column: 6 },
-  34: { row: 5, column: 7 },
-  35: { row: 6, column: 7 },
-  36: { row: 6, column: 6 },
-  37: { row: 6, column: 5 },
-  38: { row: 6, column: 4 },
-  39: { row: 6, column: 3 },
-  40: { row: 6, column: 2 },
-  41: { row: 6, column: 1 },
-  42: { row: 7, column: 1 },
-  43: { row: 7, column: 2 },
-  44: { row: 7, column: 3 },
-  45: { row: 7, column: 4 },
-  46: { row: 7, column: 5 },
-  47: { row: 7, column: 6 },
-  48: { row: 7, column: 7 },
-  49: { row: 8, column: 7 },
-  50: { row: 8, column: 6 },
-  51: { row: 8, column: 5 },
-  52: { row: 8, column: 4 },
-  53: { row: 8, column: 3 },
-  54: { row: 8, column: 2 },
-  55: { row: 8, column: 1 },
-  56: { row: 9, column: 1 },
-  57: { row: 9, column: 2 },
-  58: { row: 9, column: 3 },
-  59: { row: 9, column: 4 }
+  15: { row: 4, column: 1 },
+  16: { row: 5, column: 1 },
+  17: { row: 5, column: 2 },
+  18: { row: 5, column: 3 },
+  19: { row: 5, column: 4 },
+  20: { row: 5, column: 5 },
+  21: { row: 5, column: 6 },
+  22: { row: 5, column: 7 },
+  23: { row: 6, column: 7 },
+  24: { row: 7, column: 7 },
+  25: { row: 7, column: 6 },
+  26: { row: 7, column: 5 },
+  27: { row: 7, column: 4 },
+  28: { row: 7, column: 3 },
+  29: { row: 7, column: 2 },
+  30: { row: 7, column: 1 },
+  31: { row: 8, column: 1 },
+  32: { row: 9, column: 1 },
+  33: { row: 9, column: 2 },
+  34: { row: 9, column: 3 },
+  35: { row: 9, column: 4 },
+  36: { row: 9, column: 5 },
+  37: { row: 9, column: 6 },
+  38: { row: 9, column: 7 },
+  39: { row: 10, column: 7 },
+  40: { row: 11, column: 7 },
+  41: { row: 11, column: 6 },
+  42: { row: 11, column: 5 },
+  43: { row: 11, column: 4 },
+  44: { row: 11, column: 3 },
+  45: { row: 11, column: 2 },
+  46: { row: 11, column: 1 },
+  47: { row: 12, column: 1 },
+  48: { row: 13, column: 1 },
+  49: { row: 13, column: 2 },
+  50: { row: 13, column: 3 },
+  51: { row: 13, column: 4 },
+  52: { row: 13, column: 5 },
+  53: { row: 13, column: 6 },
+  54: { row: 13, column: 7 },
+  55: { row: 14, column: 7 },
+  56: { row: 15, column: 7 },
+  57: { row: 15, column: 6 },
+  58: { row: 15, column: 5 },
+  59: { row: 15, column: 4 }
 };
 
 const playerPosition = computed(() => {
@@ -589,7 +578,7 @@ const resizeGame = () => {
     gameEle.style.transformOrigin = "left top";
     gameEle.style.transform = `scale(${scaleVar})`;
 
-    var marginTopVar = 105 * scaleVar;
+    var marginTopVar = 170 * scaleVar;
     gameEle.style.marginTop = `${marginTopVar}px`;
 
     var ptTopVar = 110 * scaleVar;
@@ -597,12 +586,12 @@ const resizeGame = () => {
 
     var wrapperEle = document.getElementById("id-stepgame-wrapper");
     var containerEle = document.getElementById("id-stepgame-container");
-    if (currentWidth < 410) {
-      // var pdTopVar = 0 * scaleVar;
-      wrapperEle.style.paddingBottom = `0px`;
-    } else {
-      wrapperEle.style.paddingBottom = `110px`;
-    }
+    // if (currentWidth > 410) {
+    //   // var pdTopVar = 0 * scaleVar;
+    //   wrapperEle.style.paddingBottom = `100px`;
+    // } else {
+    //   wrapperEle.style.paddingBottom = `0px`;
+    // }
     // if (currentWidth < 400) {
     //   var mbVar = 500 - currentWidth;
     //   containerEle.style.marginBottom = `-${mbVar}px`;
@@ -625,13 +614,33 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 .stepgame-wrapper {
-  background-image: url("../../../assets/images/promotion/hotpromo/cnystepgame2024/h5-bg.png");
+  background-image: url("../../../assets/images/promotion/hotpromo/dy2-step-game/stepgame-bg.png");
   padding: 1px 1px 0px;
   background-size: 100% auto;
   background-position: top center;
   background-repeat: no-repeat;
-  background-color: #fedcbd;
-  padding-bottom: 105px;
+  // background-attachment: fixed;
+  background-color: #042212;
+
+  &.step-2 {
+    background-image: url("../../../assets/images/promotion/hotpromo/dy2-step-game/stepgame2-bg.png");
+
+    .game-container {
+      border: 2px solid #f9dd94;
+    }
+
+    .game-item-number {
+      background: #fffba0;
+
+      &:nth-child(even) {
+        background: #ffb763;
+      }
+
+      &--start {
+        background: #ff5620 !important;
+      }
+    }
+  }
 
   .stepgame-container {
     width: 500px;
@@ -656,12 +665,20 @@ onUnmounted(() => {
     display: flex;
     justify-content: center;
     position: relative;
-    background: linear-gradient(180deg, #fff0dc 0%, #ffa781 100%);
+    background: rgba(8, 9, 43, 0.6);
     width: calc(100% - 28px);
     margin: auto;
     margin-top: 115px;
-    padding: 14px 12px 100px;
+    padding: 50px 12px 200px;
     border-radius: 20px;
+  }
+
+  .game-header {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
   }
 
   .game-head-title {
@@ -720,10 +737,11 @@ onUnmounted(() => {
         top: 0px;
         width: 150px;
         height: 150px;
+        z-index: 20;
       }
 
       .spin-wheel-shadow {
-        background-image: url("../../../assets/images/promotion/hotpromo/cnystepgame2024/spin-wheel-shadow.png");
+        background-image: url("../../../assets/images/promotion/hotpromo/dy2-step-game/spin-wheel-shadow.png");
         background-size: 100% 100%;
         background-position: center center;
         height: 200px;
@@ -735,22 +753,37 @@ onUnmounted(() => {
     }
   }
 
+  .game-spin-left {
+    position: fixed;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    color: #7a80a1;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 1);
+    font-weight: bold;
+    bottom: 70px;
+    margin: auto;
+    width: 100%;
+  }
+
   .game-btns-container {
     position: fixed;
     display: flex;
     justify-content: center;
-    bottom: 70px;
+    bottom: 80px;
     z-index: 25;
-    right: 50%;
-    width: 150px;
-    margin-right: -75px;
+    width: 100%;
+    max-width: 500px;
+    gap: 150px;
+    margin-left: auto;
+    margin-right: auto;
 
     .game-btn {
       position: relative;
       background-size: 100% 100%;
       background-position: center center;
       background-repeat: no-repeat;
-      width: 150px;
+      width: 120px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -771,16 +804,16 @@ onUnmounted(() => {
 
       &.disabled,
       &[disabled] {
-        filter: brightness(0.4);
+        filter: brightness(0.8);
         cursor: auto;
       }
 
       &--01 {
-        background-image: url("../../../assets/images/promotion/hotpromo/cnystepgame2024/game-btn-01.png");
+        background-image: url("../../../assets/images/promotion/hotpromo/dy2-step-game/game-btn-01.png");
       }
 
       &--02 {
-        background-image: url("../../../assets/images/promotion/hotpromo/cnystepgame2024/game-btn-02.png");
+        background-image: url("../../../assets/images/promotion/hotpromo/dy2-step-game/game-btn-02.png");
       }
 
       .game-spin-left {
@@ -826,7 +859,7 @@ onUnmounted(() => {
   .game-item-number {
     height: 65px;
     width: 65px;
-    background: #fff0f0;
+    background: #a0ddff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -835,7 +868,7 @@ onUnmounted(() => {
     color: #000000;
 
     &:nth-child(even) {
-      background: #ffc3c2;
+      background: #63c7ff;
     }
 
     &--reward {
@@ -850,7 +883,7 @@ onUnmounted(() => {
     }
 
     &--start {
-      background: #fa4b48 !important;
+      background: #2087ff !important;
       font-weight: 700;
       color: #ffffff;
       border-radius: 12px;
@@ -994,157 +1027,173 @@ onUnmounted(() => {
 
 <style lang="scss">
 // dialog styling
-// .game-dialog {
-//   // background-color: #ffeacf;
-//   border-radius: 12px;
+.game-dialog {
+  // background-color: #ffeacf;
+  border-radius: 12px;
 
-//   .dialog-header {
-//     display: flex;
-//     justify-content: center;
-//     top: 40px;
-//     position: relative;
-//     width: 100%;
-//     height: 100px;
+  .dialog-header {
+    display: flex;
+    justify-content: center;
+    top: 40px;
+    position: relative;
+    width: 100%;
+    // height: 100px;
 
-//     .dialog-close {
-//       position: absolute;
-//       right: 8px;
-//       bottom: 28px;
-//       width: 32px;
-//       height: 32px;
+    .game-header-title {
+      background-image: url("../../../assets/images/promotion/hotpromo/dy2-step-game/game-header-frame.png");
+      background-size: 100% 100%;
+      width: 240px;
+      height: 70px;
+      padding-bottom: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 1px;
+    }
 
-//       .close-btn {
-//         width: 32px;
-//         height: 32px;
-//         background: #b0031d;
-//         color: #fdcf35;
-//         border: 1px solid #fdcf35;
-//       }
-//     }
+    .dialog-close {
+      position: absolute;
+      right: 8px;
+      bottom: 28px;
+      width: 32px;
+      height: 32px;
 
-//     img {
-//       //   position: absolute;
-//       //   top: 0px;
-//       //   left: 15vw;
-//       //   width: 70vw;
-//       aspect-ratio: 340/111;
-//       display: block;
-//     }
-//   }
+      .close-btn {
+        width: 32px;
+        height: 32px;
+        background: #ccc;
+        color: #ffffff;
+        border: 2px solid #ffffff;
+      }
+    }
 
-//   .dialog-html {
-//     width: 100%;
-//     height: 100%;
-//     max-height: 100% !important;
-//     position: relative;
-//   }
+    img {
+      //   position: absolute;
+      //   top: 0px;
+      //   left: 15vw;
+      //   width: 70vw;
+      // aspect-ratio: 340/111;
+      display: block;
+      width: 70%;
+    }
+  }
 
-//   .dialog-body {
-//     color: #000000;
-//     font-size: 16px;
-//     background: #ffeacf;
-//     border-radius: 20px;
-//     width: calc(100% - 30px);
-//     padding: 20px 10px 30px;
-//     //max-height: calc(100vh - 240px);
-//     min-height: calc(85vh);
-//     margin: auto;
+  .dialog-html {
+    width: 100%;
+    height: 100%;
+    max-height: 100% !important;
+    position: relative;
+  }
 
-//     &.end-step {
-//       min-height: 0;
-//     }
+  .dialog-body {
+    color: #000000;
+    font-size: 16px;
+    // background: #ffeacf;
+    background: linear-gradient(180deg, #ffffff 0%, #c6e8fb 100%);
+    border-radius: 20px;
+    width: calc(100% - 30px);
+    padding: 40px 10px 30px;
+    //max-height: calc(100vh - 240px);
+    min-height: calc(85vh);
+    margin: 0 auto 20px;
 
-//     ol {
-//       margin-top: 0px;
+    &.end-step {
+      min-height: 0;
+    }
 
-//       li {
-//         //position: relative;
-//         margin-bottom: 10px;
-//       }
-//     }
+    ol {
+      margin-top: 0px;
 
-//     .dialog-list {
-//       overflow: scroll;
-//       width: 100%;
-//       margin-top: 10px;
-//     }
+      li {
+        //position: relative;
+        margin-bottom: 10px;
+      }
+    }
 
-//     &.won-bonus-body {
-//       background-image: url("../../../assets/images/promotion/hotpromo/cnystepgame2024/won-bonus.png");
-//       background-repeat: no-repeat;
-//       background-size: 100% 100%;
-//       //height: 600px;
-//       width: calc(100% - 40px);
-//       min-height: auto;
-//       margin: 0 auto;
-//       aspect-ratio: 10/12;
-//     }
+    .dialog-list {
+      overflow: scroll;
+      width: 100%;
+      margin-top: 10px;
+    }
 
-//     .won-txt {
-//       font-size: 30px;
-//       padding-top: 10px;
-//       color: #000;
-//       text-align: center;
-//       text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-//       font-weight: 700;
+    &.won-bonus-body {
+      background-image: url("../../../assets/images/promotion/hotpromo/dy2-step-game/won-bonus.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      //height: 600px;
+      width: calc(100% - 40px);
+      min-height: auto;
+      margin: 0 auto;
+      aspect-ratio: 10/12;
+    }
 
-//       span {
-//         font-size: 150%;
-//         color: #bc0629;
-//       }
-//     }
+    .won-txt {
+      font-size: 30px;
+      padding-top: 10px;
+      color: #000;
+      text-align: center;
+      text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      font-weight: 700;
 
-//     .q-table td {
-//       padding: 5px 6px;
-//     }
+      span {
+        font-size: 150%;
+        color: #bc0629;
+      }
+    }
 
-//     .game-btn {
-//       position: relative;
-//       background-size: 100% 100%;
-//       background-position: center center;
-//       background-repeat: no-repeat;
-//       width: 150px;
-//       display: flex;
-//       justify-content: center;
-//       align-items: center;
-//       font-size: 14px;
-//       color: #ffffff;
-//       font-weight: 700;
-//       line-height: 0;
-//       padding-bottom: 5px;
-//       aspect-ratio: 183/54;
-//       height: 45px;
-//       background-color: transparent;
-//       border: 0;
-//       background-image: url("../../../assets/images/promotion/hotpromo/cnystepgame2024/game-btn-01.png");
-//       margin: 12px auto 0;
+    .q-table td {
+      padding: 5px 6px;
+    }
 
-//       &:hover {
-//         filter: brightness(0.8);
-//         cursor: pointer;
-//       }
+    .game-btn {
+      position: relative;
+      background-size: 100% 100%;
+      background-position: center center;
+      background-repeat: no-repeat;
+      width: 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      color: #ffffff;
+      font-weight: 700;
+      line-height: 0;
+      padding-bottom: 5px;
+      aspect-ratio: 183/54;
+      height: 45px;
+      background-color: transparent;
+      border: 0;
+      background-image: url("../../../assets/images/promotion/hotpromo/dy2-step-game/game-btn-01.png");
+      margin: 12px auto 0;
 
-//       &.disabled,
-//       &[disabled] {
-//         filter: brightness(0.4);
-//         cursor: auto;
-//       }
-//     }
-//   }
+      &:hover {
+        filter: brightness(0.8);
+        cursor: pointer;
+      }
 
-//   .el-dialog__headerbtn {
-//     top: -20px !important;
-//     right: -20px !important;
+      &.disabled,
+      &[disabled] {
+        filter: brightness(0.4);
+        cursor: auto;
+      }
+    }
+  }
 
-//     .el-dialog__close {
-//       background: #b0031d;
-//       border-radius: 50%;
-//       border: 2px solid #fdcf35;
+  .el-dialog__headerbtn {
+    top: -20px !important;
+    right: -20px !important;
 
-//       color: #fdcf35 !important;
-//       height: 40px !important;
-//       width: 40px !important;
-//     }
-//   }
-// }
+    .el-dialog__close {
+      background: #00000033;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+
+      color: #ffffff !important;
+      height: 40px !important;
+      width: 40px !important;
+    }
+  }
+}
 </style>
