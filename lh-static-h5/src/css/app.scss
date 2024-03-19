@@ -136,6 +136,14 @@ body.platform-ios .q-dialog__inner--minimized > div {
   max-height: calc(100% - 108px);
 }
 
+body.platform-ios{
+  .home-game-section .game-right-platform .platform-block{
+    min-height: 130px;
+  }
+
+
+}
+
 body .q-header {
   padding: 3px 10px 8px;
   padding-top: calc(3px + env(safe-area-inset-top, 0));
