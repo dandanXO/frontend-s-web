@@ -11,7 +11,6 @@ const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
 
-
 var rstApi = getInitApi(rstArray, "LH_H5_RST_URL");
 var crtApi = getInitApi(crtArray, "LH_H5_CRT_URL");
 var evtApi = getInitApi(evtArray, "LH_H5_EVT_URL");
@@ -20,33 +19,12 @@ const api = axios.create({ baseURL: rstApi });
 const cashier = axios.create({ baseURL: crtApi });
 const eventapi = axios.create({ baseURL: evtApi });
 
-
-if((
-  window.location.pathname === "/vip" ||
-  window.location.pathname === "/viptest" ||
-  window.location.pathname === "/promotion" ||
-  window.location.pathname === "/deposit" ||
-  window.location.pathname === "/invitefriend" ||
-  window.location.pathname === "/privilege/invite"
-)){
-
-  //IOS
-  if( window.webkit
-    && window.webkit.messageHandlers
-    && window.webkit.messageHandlers.notifyApp ){
-    window.webkit.messageHandlers.notifyApp.postMessage("LH_IOS");
-  }
-  //ANDROID
-  if( window["WebScript"]){
-    window["WebScript"].notifyApp("LH_ANDROID");
-  }
-
+if(isInApp()){
   window.addEventListener('message', function(event) {
     // console.log(event.data);
     if(event.data.data !== undefined){
       // alert("SUCCESS 2")
       // {"actDomain":"https://przvnboftl.anpoxuaq9ae.com:9972","crDomain":"https://m.lh330696.com:9971","rstDomain":"https://apodnbo0tl.anipoius54d.com:9972"}
-
       const returnJson =event.data.data;
       if(returnJson?.rstDomain){
         api.defaults.baseURL= returnJson?.rstDomain;
@@ -96,6 +74,18 @@ function getInitApi(apiLinks, urlLsName) {
     });
     return initApi;
   }
+}
+
+function isInApp(){
+  if( window.location.pathname === "/vip" ||
+    window.location.pathname === "/viptest" ||
+    window.location.pathname === "/promotion" ||
+    window.location.pathname === "/deposit" ||
+    window.location.pathname === "/invitefriend" ||
+    window.location.pathname === "/privilege/invite"){
+    return true;
+  }
+  return false;
 }
 
 export default boot(({ app, router }) => {
