@@ -1594,7 +1594,7 @@ export default defineComponent({
         //   version: "1.0.1"
         // };
         // alert(info.version);
-        var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
+        var current_version = parseInt(info.version.replace(/\./g, "") + info.build);
         // info.version && info.build
         const appType = "ALL";
         const device = Platform.is.android ? "ANDROID" : "IOS";
@@ -1602,7 +1602,7 @@ export default defineComponent({
         // console.log(res);
         if (res.code === 0) {
           var version_info = res.data.version;
-          var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
+          var latest_ver_no = parseInt(version_info.replace(/\./g, ""));
           download_url.value = res.data.url;
 
           // alert(latest_ver_no);
