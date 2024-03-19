@@ -16,6 +16,11 @@ var rstApi = getInitApi(rstArray, "LH_H5_RST_URL");
 var crtApi = getInitApi(crtArray, "LH_H5_CRT_URL");
 var evtApi = getInitApi(evtArray, "LH_H5_EVT_URL");
 
+const api = axios.create({ baseURL: rstApi });
+const cashier = axios.create({ baseURL: crtApi });
+const eventapi = axios.create({ baseURL: evtApi });
+
+
 if((
   window.location.pathname === "/vip" ||
   window.location.pathname === "/promotion" ||
@@ -36,14 +41,16 @@ if((
   }
 
   window.addEventListener('message', function(event) {
-    console.log(event.data);
+    // console.log(event.data);
     if(event.data.data !== undefined){
-      alert("SUCCESS 2")
+      // alert("SUCCESS 2")
       // {"actDomain":"https://przvnboftl.anpoxuaq9ae.com:9972","crDomain":"https://m.lh330696.com:9971","rstDomain":"https://apodnbo0tl.anipoius54d.com:9972"}
 
       const returnJson =event.data.data;
       if(returnJson?.rstDomain){
         api.defaults.baseURL= returnJson?.rstDomain;
+        alert("rstDomain");
+        alert(api.defaults.baseURL);
       }
       if(returnJson?.actDomain){
         eventapi.defaults.baseURL= returnJson?.actDomain;
@@ -54,10 +61,6 @@ if((
     }
   });
 }
-
-const api = axios.create({ baseURL: rstApi });
-const cashier = axios.create({ baseURL: crtApi });
-const eventapi = axios.create({ baseURL: evtApi });
 
 function getInitApi(apiLinks, urlLsName) {
   var successRstUrl = localStorage.getItem(urlLsName);
