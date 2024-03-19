@@ -1,5 +1,5 @@
 <template>
-  <div class="stepgame-wrapper" :class="'step-' + stageValue">
+  <div class="stepgame-wrapper" :class="'step-' + currentStage">
     <div class="stepgame-container">
       <div class="head-title">
         <img src="../../../assets/images/promotion/hotpromo/dy2-step-game/head-title-01.png" />
@@ -9,12 +9,12 @@
         <div class="game-header">
           <img
             src="../../../assets/images/promotion/hotpromo/dy2-step-game/game-header-01.png"
-            v-if="stageValue === 1"
+            v-if="currentStage === 1"
           />
 
           <img
             src="../../../assets/images/promotion/hotpromo/dy2-step-game/game-header-02.png"
-            v-if="stageValue === 2"
+            v-if="currentStage === 2"
           />
         </div>
 
@@ -37,10 +37,13 @@
               'grid-column': playerPosition.column
             }"
           >
-            <img src="../../../assets/images/promotion/hotpromo/dy2-step-game/player-pin.png" v-if="stageValue === 1" />
+            <img
+              src="../../../assets/images/promotion/hotpromo/dy2-step-game/player-pin.png"
+              v-if="currentStage === 1"
+            />
             <img
               src="../../../assets/images/promotion/hotpromo/dy2-step-game/player-pin-2.png"
-              v-if="stageValue === 2"
+              v-if="currentStage === 2"
             />
           </div>
           <template v-for="(position, step) in stepPositionMapping" :key="step">
@@ -254,6 +257,10 @@ const handleSpin = () => {
         handleSmoothSpin(res.data.steps, res.data.currentPlace);
         wonBonus.value = res.data.bonus;
         stepEndPlace.value = res.data.endPlace;
+        if (stepCurrentPlace.value === stepEndPlace.value) {
+          console.log("end");
+          currentStage.value = currentStage.value + 1;
+        }
       } else {
         isBtnLoading.value = false;
       }
