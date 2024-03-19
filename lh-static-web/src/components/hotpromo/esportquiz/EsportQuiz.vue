@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="dialog-footer">
-      <el-button type="primary" @click="onChoiceSubmit('first')">提交</el-button>
+      <el-button type="primary standard-button btn-color-blue submit-btn" @click="onChoiceSubmit('first')">提交</el-button>
     </div>
   </el-dialog>
 
@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="dialog-footer">
-      <el-button type="primary" @click="onChoiceSubmit('second')">提交</el-button>
+      <el-button type="primary standard-button btn-color-blue submit-btn" @click="onChoiceSubmit('second')">提交</el-button>
     </div>
   </el-dialog>
 
@@ -46,7 +46,7 @@
       </div>
     </div>
     <div class="dialog-footer">
-      <el-button type="primary" class="common-btn" @click="onChoiceSubmit('third')">提交</el-button>
+      <el-button type="primary standard-button btn-color-blue submit-btn" class="common-btn" @click="onChoiceSubmit('third')">提交</el-button>
     </div>
   </el-dialog>
 
@@ -58,15 +58,94 @@
         </div>
         <div class="prize-quiz-jc-txt" id="pool">$ {{ matchInfo.poolAmount }}</div>
       </div>
-      <img
+      <img v-if="uiIsShowStatus.questionBox"
+        src="../../../assets/images/promotion/hotpromo/esportquiz/separator-start-ans.png"
+        style="display: flex; align-self: center; width: 60%; margin: 0 auto"
+      />
+      <img v-else
         src="../../../assets/images/promotion/hotpromo/esportquiz/union.png"
         style="display: flex; align-self: center; width: 60%; margin: 0 auto 30px"
       />
-      <div class="prize-quiz-main">
+      <div v-if="uiIsShowStatus.questionBox" :class="`questions-box `">
+        <div class="title" id="title">
+          {{ matchInfo.quizTitle }}
+        </div>
+        <div class="questions-container">
+          <div class="questions-item-box">
+            <div class="item-question">第一题</div>
+            <div class="question-options-box">
+              <div class="question-row">{{ matchInfo.questionOne }}</div>
+              <button
+                class="btn-answer standard-button btn-color-blue"
+                data-question-id="2"
+                data-question-type="select"
+                id="firstQuestion"
+                @click="onFirstQuestionClick(true)"
+              >
+                {{ firstChoiceRef ? "重新选择" : "选择" }}
+              </button>
+              <div class="ans-row">
+                <div>我的答案：</div>
+                <div class="ans">{{ firstChoiceRef }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="questions-item-box">
+            <div class="item-question">第二题</div>
+            <div class="question-options-box">
+              <div class="question-row">{{ matchInfo.questionTwo }}</div>
+              <button
+                class="btn-answer standard-button btn-color-blue"
+                data-question-id="2"
+                data-question-type="select"
+                id="secondQuestion"
+                @click="onSecondQuestionClick(true)"
+              >
+              {{ secondChoiceRef ? "重新选择" : "选择" }}
+              </button>
+              <div class="ans-row">
+                <div>我的答案：</div>
+                <div class="ans">{{ secondChoiceRef }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="questions-item-box">
+            <div class="item-question">第三题</div>
+            <div class="question-options-box">
+              <div class="question-row">{{ matchInfo.questionThree }}</div>
+              <button
+                class="btn-answer standard-button btn-color-blue"
+                data-question-id="2"
+                data-question-type="select"
+                id="thirdQuestion"
+                @click="onThirdQuestionClick(true)"
+              >
+                {{ thirdChoiceRef ? "重新选择" : "选择" }}
+              </button>
+              <div class="ans-row">
+                <div>我的答案：</div>
+                <div class="ans">{{ thirdChoiceRef }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="btn-answer standard-button btn-color-blue submit-btn"
+          style="margin-top: 50px"
+          :class="submittedFormStatus && 'submitted-ans'"
+          data-question-id="1"
+          data-question-type="select"
+          id="submitBtn"
+          @click="onSubmitClick()"
+        >
+          提交答案
+        </div>
+      </div>
+      <div v-else class="prize-quiz-main">
         <div class="title" id="title">
           {{ matchInfo.quizTitle || "答题区" }}
         </div>
-        <div :class="`start-answer-box ${uiIsShowStatus.startAnswerBox ? '' : 'hide'}`">
+        <div :class="`start-answer-box`">
           <div class="flex-div">
             <div class="team-div">
               <div class="team-logo" v-if="matchInfo?.homeTeamIcon">
@@ -90,66 +169,6 @@
                 <img :src="imgURL + `promo/` + matchInfo.awayTeamIcon" />
               </div>
               <div>{{ matchInfo.awayTeam }}</div>
-            </div>
-          </div>
-
-        </div>
-        <div :class="`questions-box ${uiIsShowStatus.questionBox ? 'show' : ''}`">
-          <div class="questions-container">
-            <div class="questions-item-box">
-              <div class="item-question">第一题:{{ matchInfo.questionOne }}</div>
-              <div class="question-options-box">
-                答案：
-                <button
-                  class="btn-answer"
-                  data-question-id="2"
-                  data-question-type="select"
-                  id="firstQuestion"
-                  @click="onFirstQuestionClick(true)"
-                >
-                  {{ firstChoiceRef || "选择答案" }}
-                </button>
-              </div>
-            </div>
-            <div class="questions-item-box">
-              <div class="item-question">第二题:{{ matchInfo.questionTwo }}</div>
-              <div class="question-options-box">
-                答案：
-                <button
-                  class="btn-answer"
-                  data-question-id="2"
-                  data-question-type="select"
-                  id="secondQuestion"
-                  @click="onSecondQuestionClick(true)"
-                >
-                  {{ secondChoiceRef || "选择答案" }}
-                </button>
-              </div>
-              <div
-                class="btn-answer"
-                :class="submittedFormStatus && 'submitted-ans'"
-                data-question-id="1"
-                data-question-type="select"
-                id="submitBtn"
-                @click="onSubmitClick()"
-              >
-                提交答案
-              </div>
-            </div>
-            <div class="questions-item-box">
-              <div class="item-question">第三题:{{ matchInfo.questionThree }}</div>
-              <div class="question-options-box">
-                答案：
-                <button
-                  class="btn-answer"
-                  data-question-id="2"
-                  data-question-type="select"
-                  id="thirdQuestion"
-                  @click="onThirdQuestionClick(true)"
-                >
-                  {{ thirdChoiceRef || "选择答案" }}
-                </button>
-              </div>
             </div>
           </div>
         </div>
@@ -582,7 +601,7 @@ const submittedFormStatus = ref(false);
       // background-color: #e4f6ff;
       box-shadow: 0px 5px 10px 0px rgba(12, 3, 7, 0.2);
       border-radius: 40px;
-      min-height: 315px;
+      // min-height: 315px;
 
       background: url("../../../assets/images/promotion/hotpromo/esportquiz/answer.png") center no-repeat;
 
@@ -827,6 +846,111 @@ const submittedFormStatus = ref(false);
   }
 }
 
+
+.questions-box {
+  display: block;
+
+  .title {
+    color: #4C4C6C;
+    font-size: 40px;
+    text-align: center;
+    padding: 30px 0px;
+  }
+
+  .questions-container {
+    display: flex;
+    justify-content: space-between;
+
+    .questions-item-box {
+      width: 270px;
+      letter-spacing: 0;
+
+      .item-question {
+        height: 42px;
+        font-weight: bold;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(180deg, #2095FF 0%, rgba(217, 217, 217, 0) 100%);
+        border-bottom: 3px solid #fff;
+        border-radius: 20px 20px 0px 0px;
+        color: #fff;
+      }
+
+      .question-options-box {
+        color: #87898a;
+        background: linear-gradient(0deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
+        border-radius: 0px 0px 20px 20px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+        font-weight: 700;
+
+        .question-row {
+          color: #4C4C6C;
+          font-weight: 700;
+        }
+
+        .ans-row {
+          color: #7A8EB9;
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+
+          .ans {
+            color: #4C4C6C;
+          }
+        }
+
+        .question-fill-input {
+          border: 1px solid #0094ff;
+          border-radius: 6px;
+          background-color: transparent;
+          color: #87898a;
+          padding: 5px;
+        }
+
+        .item-option > label {
+          font-weight: 400;
+        }
+      }
+
+      .btn-answer {
+        width: 180px;
+        height: 40px;
+        font-size: 16px;
+        color: #fff;
+        line-height: 40px;
+        text-align: center;
+        cursor: pointer;
+        border: none;
+        margin: auto;
+
+        &.submitted-ans {
+          filter: brightness(0.8);
+          cursor: not-allowed;
+          pointer-events: all !important;
+        }
+
+        &:hover{
+          opacity: 0.9;
+        }
+
+        &:active{
+          filter: brightness(0.9);
+          transform: translate(0px, 1px);
+        }
+
+      }
+    }
+  }
+}
+
 .question-select-box {
   width: 360px;
   margin: 40px auto;
@@ -847,20 +971,20 @@ const submittedFormStatus = ref(false);
   }
 
   .question-select-option {
-    background-color: #e4f6ff;
-    border-radius: 6px;
+    background-color: #E7F3FF;
+    border-radius: 15px;
     margin-bottom: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 15px;
     cursor: pointer;
-    width: 120px;
+    width: 170px;
     color: #87898a;
 
     &.active {
       color: #fff;
-      background-color: #0094ff;
+      background-color: #3981FF;
     }
   }
 }
@@ -872,9 +996,24 @@ const submittedFormStatus = ref(false);
   color: #bacef1;
 }
 
-.dialog-footer {
+.submit-btn {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 350px;
+  height: 40px;
+  margin: 0px auto;
+  font-size: 16px;
+  color: #fff;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  border-radius: 20px;
+
+  &.submitted-ans {
+    background: #CBDEFE;
+    box-shadow: none;
+    cursor: not-allowed;
+    pointer-events: all !important;
+  }
 }
 </style>
