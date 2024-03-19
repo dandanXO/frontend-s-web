@@ -48,11 +48,14 @@ const onResponse = (response) => {
     res = JSON.parse(response.data);
   }
   if (res.code !== ResponseCode.SUCCESS) {
+    // debugger;
     if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
       ElMessage({
         message: "Duplicated login.",
         type: "error"
       });
+      const store = useStore()
+      store.dispatch(UserActionTypes.ACTION_LOGOUT);
       location.reload();
     } else if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
       res.code === ResponseCode.ERROR_TOKEN_MISSED ||
@@ -63,6 +66,8 @@ const onResponse = (response) => {
         message: "Please re-login. Code: " + res.code,
         type: "error"
       });
+      const store = useStore()
+      store.dispatch(UserActionTypes.ACTION_LOGOUT);
       location.reload();
     } else {
       // const router = useRouter()
