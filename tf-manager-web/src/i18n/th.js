@@ -608,6 +608,8 @@ export default {
     freezeMember: 'สมาชิกที่ีถูกระงับ',
     freezeType: 'ประเภทการระงับ',
     frequency: 'ความถี่',
+    fromWallet: 'Adjust from main wallet',
+    fromCommission: 'Adjust from commission',
     ftd: 'FTD',
     ftdAverage: 'ค่าเฉลี่ยการเติมเงินครั้งแรก',
     ftdAmount: 'จำนวนเงินของการเติมเงินครั้งแรก',
@@ -1200,6 +1202,7 @@ export default {
     logoutPlayerSuccess: 'ความสำเร็จของผู้เล่นออกจากระบบ',
     maxGreaterThanMin: 'ค่าสูงสุดต้องมากกว่าค่าต่ำสุด',
     memberNotInSite: 'ไม่พบสมาชิกในเว็บไซต์นี้',
+    affiliateNotInSite: 'ไม่พบสมาชิกในเว็บไซต์นี้',
     memberFreeGameLogin:
       'บัญชีผู้เล่น คั่นด้วยเครื่องหมายจุลภาคหากมีมากกว่าหนึ่งบัญชี (สูงสุด 200 บัญชี)',
     memberFreeGameRound: 'รอบเกมฟรี',
@@ -1491,6 +1494,7 @@ export default {
     'Member Rollover Record': 'บันทึกการโรลโอเวอร์ของสมาชิก',
     'Member Distribute Privilege': 'สมาชิกที่ได้รับสิทธิพิเศษ',
     Affiliate: 'พันธมิตร',
+    'Affiliate Amount Adjust': 'ปรับจำนวนให่สมาชิก',
     'Affiliate Summary': 'สรุปพันธมิตร',
     'Affiliate Monthly Settlement': 'สรุปการชำระรายเดือนของพันธมิตร',
     'Affiliate Monthly Settlement Detail':
