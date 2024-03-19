@@ -23,6 +23,7 @@ const eventapi = axios.create({ baseURL: evtApi });
 
 if((
   window.location.pathname === "/vip" ||
+  window.location.pathname === "/viptest" ||
   window.location.pathname === "/promotion" ||
   window.location.pathname === "/deposit" ||
   window.location.pathname === "/invitefriend" ||
@@ -107,9 +108,9 @@ export default boot(({ app, router }) => {
     config.headers["Authorization"] = process.env.SITE;
 
     if(
-      window.location.pathname === "/vip"){
-      // console.log(config.baseURL + config.url);
-      // alert(config.baseURL + config.url);
+      window.location.pathname === "/viptest"){
+      console.log(config.baseURL + config.url);
+      alert(config.baseURL + config.url);
     }
 
     if (config.data) {
