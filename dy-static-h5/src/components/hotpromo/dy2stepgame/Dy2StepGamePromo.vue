@@ -520,7 +520,7 @@ const handlePlayerStep = (targetStep) => {
         }, 500);
       }
 
-      if (currentStep === stepEndPlace.value && currentStage.value === 1) {
+      if (currentStep === stepEndPlace.value) {
         setTimeout(() => {
           endStepDialog.value = true;
           gamePlayerStep.value = 0;
