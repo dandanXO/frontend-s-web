@@ -108,8 +108,8 @@ export default boot(({ app, router }) => {
 
     if(
       window.location.pathname === "/vip"){
-      console.log(config.baseURL + config.url);
-      alert(config.baseURL + config.url);
+      // console.log(config.baseURL + config.url);
+      // alert(config.baseURL + config.url);
     }
 
     if (config.data) {
