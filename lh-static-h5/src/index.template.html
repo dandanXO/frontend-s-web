@@ -35,6 +35,21 @@
     // Now you can use globalThis safely
     // console.log(globalThis);
   </script>
+
+  <script type="text/javascript">
+    //Call a Message to Parent (If App.)
+
+    //IOS
+    if( window.webkit
+      && window.webkit.messageHandlers
+      && window.webkit.messageHandlers.notifyApp ){
+      window.webkit.messageHandlers.notifyApp.postMessage("LH_IOS");
+    }
+    //ANDROID
+    if( window["WebScript"]){
+      window["WebScript"].notifyApp("LH_ANDROID");
+    }
+  </script>
 </head>
 <body>
 <!-- DO NOT touch the following DIV -->
