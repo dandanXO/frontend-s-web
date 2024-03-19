@@ -104,15 +104,9 @@
           <div class="game-spin-left-details">可用转动次数：{{ spinLeft }}次</div>
 
           <div class="game-spin-btns-container">
-            <div class="game-pointer" :disabled="isBtnLoading" @click="handleSpin">
-              <img src="../../../assets/images/promotion/hotpromo/dy2-step-game/btn-play.png" />
-            </div>
-            <div class="game-pointer">
-              <img src="../../../assets/images/promotion/hotpromo/dy2-step-game/btn-deposit.png" />
-            </div>
+            <button class="game-pointer game-pointer--02" :disabled="isBtnLoading" @click="handleSpin">开始闯关</button>
+            <button class="game-pointer game-pointer--01" @click="router.push('/center/deposit')">去存款</button>
           </div>
-
-          <div @click="stageValue = 2" style="margin-top: 24px; color: #ffffff; cursor: pointer">stageValue to 2</div>
         </div>
       </div>
     </div>
@@ -130,14 +124,14 @@
   <!-- game dialogs start -->
   <el-dialog v-model="gameRulesDialog" width="1000px" align-center :close-on-click-modal="false" class="game-dialog">
     <div class="dialog-header">
-      <img src="../../../assets/images/promotion/hotpromo/dy2-step-game/game-head-title-02.png" />
+      <div class="game-header-title">活动规则</div>
     </div>
     <div class="dialog-body" v-html="pageContent"></div>
   </el-dialog>
 
   <el-dialog v-model="gameRecordsDialog" width="1000px" align-center :close-on-click-modal="false" class="game-dialog">
     <div class="dialog-header">
-      <img src="../../../assets/images/promotion/hotpromo/dy2-step-game/game-head-title-03.png" />
+      <div class="game-header-title">转动记录</div>
     </div>
     <div class="dialog-body step-history-body">
       <el-select v-model="stageValue" size="large" style="width: 120px; margin-bottom: 12px">
@@ -168,7 +162,7 @@
 
   <el-dialog v-model="wonBonusDialog" width="1000px" align-center :close-on-click-modal="false" class="game-dialog">
     <div class="dialog-header">
-      <img src="../../../assets/images/promotion/hotpromo/dy2-step-game/game-head-title-04.png" />
+      <div class="game-header-title">中奖啦</div>
     </div>
     <div class="dialog-body won-bonus-body">
       <div class="won-txt">
@@ -181,7 +175,7 @@
 
   <el-dialog v-model="endStepDialog" width="1000px" align-center :close-on-click-modal="false" class="game-dialog">
     <div class="dialog-header">
-      <img src="../../../assets/images/promotion/hotpromo/dy2-step-game/game-head-title-01.png" />
+      <div class="game-header-title">完成啦</div>
     </div>
     <div class="dialog-body">
       <div class="won-txt notoppadding">恭喜您完成了这个游戏！</div>
@@ -203,28 +197,21 @@ defineProps(["pageContent"]);
 
 const store = userStore();
 const router = useRouter();
-
 const gameRulesDialog = ref(false);
 const gameRecordsDialog = ref(false);
 const wonBonusDialog = ref(false);
 const endStepDialog = ref(false);
-
 const isBtnLoading = ref(false);
-
 const smoothSpinOn = ref(false);
 const spinToNum = ref(0);
-
 const wonBonus = ref(0);
-
 const stepData = ref();
 const spinLeft = ref(0);
 const stepCurrentPlace = ref(0);
 const stepEndPlace = ref(0);
 const claimedBonus = ref([]);
 const currentStage = ref(0);
-
 const spinnedStepData = ref();
-
 const stageValue = ref(1);
 const stageOptions = ref([]);
 
@@ -622,8 +609,25 @@ onUnmounted(() => {
 
       .game-pointer {
         cursor: pointer;
+        height: 50px;
+        width: 170px;
+        color: #ffffff;
+        font-weight: 700;
+        background-size: 100% 100%;
+        font-size: 20px;
+        line-height: 1;
+        border-radius: 12px;
+
         &:hover {
           filter: brightness(0.8);
+        }
+
+        &--01 {
+          background-image: url("../../../assets/images/promotion/hotpromo/dy2-step-game/game-btn-01.png");
+        }
+
+        &--02 {
+          background-image: url("../../../assets/images/promotion/hotpromo/dy2-step-game/game-btn-02.png");
         }
       }
 
@@ -943,13 +947,28 @@ onUnmounted(() => {
 <style lang="scss">
 // dialog styling
 .game-dialog {
-  background-color: #ffeacf;
+  background: linear-gradient(180deg, #ffffff 0%, #c6e8fb 100%);
   border-radius: 12px;
 
   .dialog-header {
     display: flex;
     justify-content: center;
     margin-top: -95px;
+
+    .game-header-title {
+      background-image: url("../../../assets/images/promotion/hotpromo/dy2-step-game/game-header-frame.png");
+      background-size: 100% 100%;
+      width: 390px;
+      height: 100px;
+      padding-bottom: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 1px;
+      font-size: 22px;
+    }
 
     img {
       width: 350px;
@@ -1009,11 +1028,11 @@ onUnmounted(() => {
     right: -20px !important;
 
     .el-dialog__close {
-      background: #b0031d;
+      background: #ccc;
       border-radius: 50%;
-      border: 2px solid #fdcf35;
+      border: 2px solid #ffffff;
 
-      color: #fdcf35 !important;
+      color: #ffffff !important;
       height: 40px !important;
       width: 40px !important;
     }
