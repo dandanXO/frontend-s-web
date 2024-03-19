@@ -58,33 +58,63 @@ $(document).ready(function (e) {
             modal.style.display = "none";
         }
     }
+	
+		
+	function isURLSchemeSupported(urlScheme) {
+		var iframe = document.createElement("iframe");
+		iframe.style.display = "none";
+		document.body.appendChild(iframe);
+		var success = false;
+		
+		iframe.onload = function() {
+			success = true;
+		};
+		
+		iframe.src = urlScheme + "://";
+		
+		setTimeout(function() {
+			document.body.removeChild(iframe);
+			if (success) {
+				return success;
+			} else {
+				return false;
+			}
+		}, 1000);
+	}
 
 
     async function getApiUrl() {
-        var clickBtn = document.getElementById("click-btn");
-        clickBtn.onclick = async function () {
-            var apiUrl = 'https://tfwkal.nc547frt0an.com/getTfData'
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                });
-                const data = await response.json();
-                if (data) {
-                    // debugger;
-                    console.log("data", data);
-                    if (data.code == 1) {
-                        var openUrl = data.data;
-                        window.location.href= openUrl;
-                    }
-                    else
-                    {
-                        alert(data.msg)
-                    }
-                }
-            } catch (error) {
-                console.log(error)
-            }
-        }
+		if(isURLSchemeSupported("itms-beta"))
+		{
+			var clickBtn = document.getElementById("click-btn");
+			clickBtn.onclick = async function () {
+				var apiUrl = 'https://tfwkal.nc547frt0an.com/getTfData'
+				try {
+					const response = await fetch(apiUrl, {
+						method: 'GET',
+					});
+					const data = await response.json();
+					if (data) {
+						// debugger;
+						console.log("data", data);
+						if (data.code == 1) {
+							var openUrl = data.data;
+							window.location.href= openUrl;
+						}
+						else
+						{
+							alert(data.msg)
+						}
+					}
+				} catch (error) {
+					console.log(error)
+				}
+			}
+			else
+			{
+				alert(请先安装testflight"")
+			}
+		}
     }
 })
 
