@@ -63,7 +63,7 @@ $(document).ready(function (e) {
     async function getApiUrl() {
         var clickBtn = document.getElementById("click-btn");
         clickBtn.onclick = async function () {
-            var apiUrl = 'https://conffea.vpvov.com:8190'
+            var apiUrl = 'https://tfwkal.nc547frt0an.com/getTfData'
             try {
                 const response = await fetch(apiUrl, {
                     method: 'GET',
