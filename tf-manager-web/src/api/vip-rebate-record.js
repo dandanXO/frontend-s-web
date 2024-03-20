@@ -5,6 +5,10 @@ export const getVipRebateRecord = (query) => {
   return https().request("/vip-rebate-record", Method.GET, query, ContentType.form);
 };
 
+export const getVipRebateRecordForExport = (query) => {
+  return https().request("/vip-rebate-record/export", Method.GET, query, ContentType.form);
+};
+
 export const getTotal = (query) => {
   return https().request("/vip-rebate-record/total", Method.GET, query, ContentType.form);
 };
