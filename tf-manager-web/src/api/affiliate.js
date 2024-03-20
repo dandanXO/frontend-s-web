@@ -28,3 +28,7 @@ export const getMemberBank = (id, query) => {
 export const getMemberBankLog = (id, query) => {
   return https().request(`/affiliate/${id}/memberBankCardRecord`, Method.GET, query, ContentType.form);
 };
+
+export const getAffiliateBalanceByWalletOrCommission = (loginName, siteId, mainWallet) => {
+  return https().request(`/affiliate/getAffiliateBalanceByWalletOrCommission`, Method.GET, { loginName: loginName, siteId: siteId, mainWallet: mainWallet }, ContentType.form);
+};
