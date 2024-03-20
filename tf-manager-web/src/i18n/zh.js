@@ -1394,6 +1394,7 @@ export default {
     upLineLoginName: '上级用户名',
     upload: '上传',
     upperName: '所属上级',
+    usdtControl: 'USDT提款限制',
     username: '用户名',
     userType: '用户类型',
     validate: '验证',

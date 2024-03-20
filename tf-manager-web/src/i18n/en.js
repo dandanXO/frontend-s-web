@@ -1388,6 +1388,7 @@ export default {
     upLineLoginName: 'Upline Login Name',
     upload: 'Upload',
     upperName: 'Upper Name',
+    usdtControl: 'USDT Withdrawal Control',
     username: 'Username',
     userType: 'User Type',
     validate: 'Validate',
