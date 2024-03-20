@@ -970,7 +970,7 @@ const submittedFormStatus = ref(false);
 
 .question-select-box {
   width: 360px;
-  margin: 40px auto;
+  margin: 30px auto 10px;
   font-size: 14px;
   color: #bacef1;
   display: flex;
@@ -1017,14 +1017,14 @@ const submittedFormStatus = ref(false);
   display: flex;
   width: 300px;
   height: 45px;
-  margin: 0px auto;
+  margin: 20px auto;
   font-size: 16px;
   color: #fff;
   line-height: 40px;
   text-align: center;
   cursor: pointer;
   border: none;
-  border-radius: 20px;
+  border-radius: 100px;
 
   &.submitted-ans {
     background: #CBDEFE;
