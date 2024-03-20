@@ -955,8 +955,8 @@ export default defineComponent({
       onClickImage: e => {
         if (state.coordinates.length < 5) {
           var image = document.getElementById('imageRef')
-          var x = e.pageX - image.getBoundingClientRect().x
-          var y = e.pageY - image.getBoundingClientRect().y
+          var x = e.clientX - image.getBoundingClientRect().x
+          var y = e.clientY - image.getBoundingClientRect().y
           var storeX = x
           var storeY = y
           if (image.getBoundingClientRect().x !== 200) {
