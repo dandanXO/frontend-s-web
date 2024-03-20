@@ -511,6 +511,10 @@ function onChoiceSubmit(key) {
 }
 
 function onSubmitClick() {
+  if(submittedFormStatus.value) {
+    return;
+  }
+
   const { answerOne, answerTwo, answerThree, quizId, quizTitle } = quizSubmitInfo;
   if (answerOne == "" || answerTwo == -1 || answerThree == -1) {
     ElMessage.error("请完成3个答案再提交！");
