@@ -314,6 +314,8 @@
           </template>
           <span v-if="affiliateDetail.loginName !== null">{{ affiliateDetail.loginName }}</span>
           <span v-if="affiliateDetail.loginName === null">-</span>
+
+          <span class="level-color" :style="{backgroundColor: affiliateDetail.riskColor}" />
         </el-descriptions-item>
         <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context">
           <template #label>
