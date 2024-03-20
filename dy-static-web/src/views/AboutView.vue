@@ -16,7 +16,7 @@
             </p>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="财务帮助" name="finance">
+        <!-- <el-tab-pane label="财务帮助" name="finance">
           <div class="help-content">
             <div class="about-title">财务帮助</div>
             <div class="content-title">存款帮助</div>
@@ -83,7 +83,7 @@
               </p>
             </div>
           </div>
-        </el-tab-pane>
+        </el-tab-pane> -->
         <el-tab-pane label="隐私条款" name="privacy">
           <div class="help-content">
             <div class="about-title">隐私条款</div>
