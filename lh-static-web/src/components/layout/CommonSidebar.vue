@@ -13,7 +13,7 @@
       </div>
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-mail-icon.png" />
-        <span style="margin-left: 5px">cs@e8007.com</span>
+        <span style="margin-left: 5px">cs@lh8080.com</span>
       </div>
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-phone-icon.png" />
