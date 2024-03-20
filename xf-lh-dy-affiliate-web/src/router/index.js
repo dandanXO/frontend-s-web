@@ -267,6 +267,14 @@ export const constantRoutes = [
           title: 'contact-us',
         },
       },
+      {
+        path: 'google-authenticator',
+        component: () => import('../views/personal/google-auth/index.vue'),
+        name: 'Google Authenticator',
+        meta: {
+          title: 'google-auth',
+        },
+      },
     ],
   },
   {
