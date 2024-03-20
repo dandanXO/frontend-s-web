@@ -797,9 +797,8 @@ function distributeRebate() {
     }
   ).then(async () => {
     const query = checkQuery();
-    await distribute(query);
+    distribute(query);
     ElMessage({ message: t('message.rebateSuccess'), type: "success" });
-    loadVipRebateRecords();
   });
 }
 

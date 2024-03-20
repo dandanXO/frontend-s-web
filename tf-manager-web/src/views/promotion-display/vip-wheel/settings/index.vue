@@ -26,7 +26,7 @@
     <el-row>
       <el-form-item :label="t('fields.depositPerSpin')" prop="depositPerSpin">
         <el-input v-if="hasPermission(['sys:vip-wheel:update'])" v-model="form.depositPerSpin" style="width: 350px;" />
-        <span v-else>{{ form.dailyMax }}</span>
+        <span v-else>{{ form.depositPerSpin }}</span>
       </el-form-item>
     </el-row>
     <el-row>
@@ -175,7 +175,6 @@ async function loadVipWheelConfig() {
         }
       }
     })
-    console.log(param.value.length)
     if (param.value.length === 0) {
       addParam();
     }
@@ -186,7 +185,6 @@ function edit() {
   formRef.value.validate(async (valid) => {
     if (valid) {
       const params = constructParam();
-      console.log(params)
       await updateVipWheelParam(request.siteId, params);
       await loadVipWheelConfig();
       ElMessage({ message: t('message.editSuccess'), type: "success" });
