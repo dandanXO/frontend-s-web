@@ -96,3 +96,15 @@ export const assignTag = (affId, memberId, tags) => {
 export const assignRemark = (affId, memberId, remark) => {
   return https().request(`/downline/${affId}/assignRemark/${memberId}?_method=PUT`, Method.POST, { remark: remark }, ContentType.form);
 };
+
+export const getAuthenticator = (id, siteId) => {
+  return https().request(`/affiliate/${id}/hasGoogleAuthenticator`, Method.GET, { siteId: siteId }, ContentType.form);
+};
+
+export const validPwd2GoogleKey = (id, siteId, password) => {
+  return https().request(`/affiliate/${id}/validPwd2GoogleKey`, Method.GET, { siteId: siteId, password: password }, ContentType.form);
+}
+
+export const bindGoogleKey = (id, siteId, code) => {
+  return https().request(`/affiliate/${id}/bindGoogleKey?_method=PUT`, Method.POST, { siteId: siteId, code: code }, ContentType.form);
+}
