@@ -828,6 +828,8 @@ export default {
     unfreezeMember: 'Unfreeze Member',
     freezeType: 'Freeze Type',
     frequency: 'Frequency',
+    fromWallet: 'Adjust from main wallet',
+    fromCommission: 'Adjust from commission',
     ftd: 'FTD',
     ftdAverage: 'FTD Average',
     ftdAmount: 'FTD Amount',
@@ -1613,6 +1615,7 @@ export default {
     logoutPlayerSuccess: 'Logout Player Success',
     maxGreaterThanMin: 'Maximum must be greater than minimum',
     memberNotInSite: 'Member could not be found in this site',
+    affiliateNotInSite: 'Member could not be found in this site',
     memberFreeGameLogin:
       'Login name, separate with commas if there is more than one name (maximum 200 names)',
     memberFreeGameRound: 'Free game round',
@@ -1982,6 +1985,7 @@ export default {
     'Member Distribute Privilege': 'Member Distribute Privilege',
     'Member Profit Ranking': 'Profit Ranking',
     Affiliate: 'Affiliate',
+    'Affiliate Amount Adjust': 'Affiliate Amount Adjust',
     'Affiliate Summary': 'Affiliate Summary',
     'Affiliate Monthly Settlement': 'Affiliate Monthly Settlement',
     'Affiliate Monthly Settlement Detail':
