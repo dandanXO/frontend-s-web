@@ -1,5 +1,9 @@
 <template>
-  <el-dialog width="500px" v-model="isFirstQuestionClicked" :close-on-click-modal="false" title="提交答案">
+  <el-dialog width="500px" v-model="isFirstQuestionClicked" :close-on-click-modal="false" title="">
+    <div class="header">
+      <div class="title">提交答案</div>
+      <div class="close-btn" @click="isFirstQuestionClicked = false"><el-icon size="24" color="#e1e1e1"><CircleCloseFilled /></el-icon></div>
+    </div>
     <div class="question-select-box">
       <div
         v-for="(e, i) in matchInfo.choiceOne"
@@ -16,7 +20,11 @@
     </div>
   </el-dialog>
 
-  <el-dialog width="500px" v-model="isSecondQuestionClicked" :close-on-click-modal="false" title="提交答案">
+  <el-dialog width="500px" v-model="isSecondQuestionClicked" :close-on-click-modal="false" title="">
+    <div class="header">
+      <div class="title">提交答案</div>
+      <div class="close-btn" @click="isSecondQuestionClicked = false"><el-icon size="24" color="#e1e1e1"><CircleCloseFilled /></el-icon></div>
+    </div>
     <div class="question-select-box">
       <div
         v-for="(e, i) in matchInfo.choiceTwo"
@@ -33,7 +41,11 @@
     </div>
   </el-dialog>
 
-  <el-dialog width="500px" v-model="isThirdQuestionClicked" :close-on-click-modal="false" title="提交答案">
+  <el-dialog width="500px" v-model="isThirdQuestionClicked" :close-on-click-modal="false" title="">
+    <div class="header">
+      <div class="title">提交答案</div>
+      <div class="close-btn" @click="isThirdQuestionClicked = false"><el-icon size="24" color="#e1e1e1"><CircleCloseFilled /></el-icon></div>
+    </div>
     <div class="question-select-box">
       <div
         v-for="(e, i) in matchInfo.choiceThree"
@@ -229,6 +241,7 @@ import {
   submitMemberSportMatchQuiz
 } from "@/api/index/promo";
 import moment from "moment";
+import { CircleCloseFilled } from '@element-plus/icons-vue'
 
 const store = userStore();
 const imgURL = process.env.VUE_APP_IMAGE_CDN + "/";
@@ -1002,8 +1015,8 @@ const submittedFormStatus = ref(false);
 
 .submit-btn {
   display: flex;
-  width: 350px;
-  height: 40px;
+  width: 300px;
+  height: 45px;
   margin: 0px auto;
   font-size: 16px;
   color: #fff;
@@ -1018,6 +1031,21 @@ const submittedFormStatus = ref(false);
     box-shadow: none;
     cursor: not-allowed;
     pointer-events: all !important;
+  }
+}
+
+.header {
+  color: #424F72;
+  font-size: 1.25rem;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  
+  .close-btn {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
   }
 }
 </style>
