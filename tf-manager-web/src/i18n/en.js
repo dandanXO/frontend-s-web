@@ -677,6 +677,7 @@ export default {
     defaultVip: 'Default VIP',
     defaultAgentVip: 'Default Affiliate VIP',
     delete: 'Delete',
+    runAtOnce: 'runAtOnce',
     deleteRole: 'Delete Role',
     deliver: 'Deliver',
     delivered: 'Delivered',
@@ -1558,6 +1559,8 @@ export default {
     confirmCopyTo: ' to ',
     confirmDelete:
       'Confirm that you want to delete these data, the operation cannot be undone',
+    confirmRunAtOnce:
+      'Confirm that you want to execute this execute job now (Even if it\'s closed)',
     confirmDelivered:
       'Confirm that this gift is delivered, the operation cannot be undone',
     confirmEndMatch:
@@ -1580,6 +1583,7 @@ export default {
     copyToClipboard: ' has been copied to clipboard.',
     copySuccess: 'Copy Success',
     deleteSuccess: 'Delete Success',
+    runAtOnceSuccess: 'Run job Success',
     depositSuccess: 'Deposit Success',
     editAmountSuccess: 'Edit Amount Success',
     editRemarkSuccess: 'Edit Remark Success',
