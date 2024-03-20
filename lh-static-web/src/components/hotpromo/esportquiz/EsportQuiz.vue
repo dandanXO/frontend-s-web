@@ -997,7 +997,8 @@ const submittedFormStatus = ref(false);
     padding: 15px;
     cursor: pointer;
     width: 170px;
-    color: #87898a;
+    color: #424F72;
+    font-size: 12px;
 
     &.active {
       color: #fff;

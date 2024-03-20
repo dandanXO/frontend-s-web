@@ -912,7 +912,8 @@ const getMatchTimeOnly = (matchTime) => {
     padding: 15px;
     cursor: pointer;
     width: 120px;
-    color: #87898a;
+    color: #424F72;
+    font-size: 12px;
 
     &.active {
       color: #fff;
