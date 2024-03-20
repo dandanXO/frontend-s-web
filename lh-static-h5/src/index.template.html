@@ -36,7 +36,7 @@
     // console.log(globalThis);
   </script>
 
-  <script type="text/javascript">
+  <!-- <script type="text/javascript">
     //Call a Message to Parent (If App.)
     if( window.location.pathname === "/vip" ||
       window.location.pathname === "/viptest" ||
@@ -64,10 +64,10 @@
           if(returnJson?.rstDomain){
             window.localStorage.setItem( "LH_H5_RST_URL", returnJson?.rstDomain);
 
-            document.addEventListener("DOMContentLoaded", function() {
-              var bodyElement = document.body;
-              bodyElement.classList.add("body-applinks");
-            });
+            // document.addEventListener("DOMContentLoaded", function() {
+            //   var bodyElement = document.body;
+            //   bodyElement.classList.add("body-applinks");
+            // });
           }
           if(returnJson?.actDomain){
             window.localStorage.setItem("LH_H5_EVT_URL", returnJson?.actDomain);
@@ -78,7 +78,7 @@
         }
       });
     }
-  </script>
+  </script> -->
 </head>
 <body>
 <!-- DO NOT touch the following DIV -->
