@@ -1568,7 +1568,7 @@ export default {
     confirmCopyTo: '复制至',
     confirmDelete: '请确认是否要删除这些数据, 此操作不可撤销',
     confirmDelivered: '请确认该礼品是否已送达, 此操作不可撤销',
-    confirmRunAtOnce: '请确认是否立即执行这个任务',
+    confirmRunAtOnce: '请确认是否立即执行这个任务(即使任务处于未开启状态)',
     confirmEndMatch: '请确认是否结束该赛事, 此操作不可撤销',
     confirmRebate: '请确认是否发放所有返水奖金, 此操作不可撤销',
     confirmRedeem: '请确认是否发折现该礼品 此操作不可撤销',
