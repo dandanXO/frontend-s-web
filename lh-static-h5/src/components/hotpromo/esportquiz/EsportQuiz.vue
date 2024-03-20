@@ -839,7 +839,7 @@ const getMatchTimeOnly = (matchTime) => {
         justify-content: center;
         align-items: center; 
 
-        background: linear-gradient(0deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
+        background: linear-gradient(0deg, #FFFFFF 0%, #eaf3fced 100%);
 
         .question-ans {
           display: flex;
