@@ -810,7 +810,7 @@ const getMatchTimeOnly = (matchTime) => {
       .item-title {
         font-size: 12px;
         color: #ffffff;
-        background: linear-gradient(180deg, #2095FF 0%, rgba(217, 217, 217, 0) 100%);
+        background: linear-gradient(180deg, #2095FF 0%, #7ebdf7 100%);
         border-bottom: 3px solid #fff;
         // background: #2095ff;
         display: flex;
