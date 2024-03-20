@@ -140,8 +140,22 @@ body.platform-ios{
   .home-game-section .game-right-platform .platform-block{
     min-height: 130px;
   }
+}
 
-
+body.body-applinks{
+  .q-page-container{
+    &::before{
+      position:absolute;
+      left: 0px;
+      right:0px;
+      width: 5px;
+      height:5px;
+      border-radius: 50%;
+      content: "";
+      background-color: green;
+      z-index: 99;
+    }
+  }
 }
 
 body .q-header {

@@ -85,8 +85,8 @@
 
       <div class="prize-quiz-main" :class="`${uiIsShowStatus.startAnswerBox ? '' : 'hide'}`">
         <div class="title" id="title">
-          <!-- {{ matchInfo.quizTitle || "答题区" }} -->
-          {{ getMatchDateOnly(matchInfo.matchTime) }}
+          {{ matchInfo.quizTitle || "答题区" }}
+          <!-- {{ getMatchDateOnly(matchInfo.matchTime) }} -->
         </div>
         <div class="start-answer-box">
           <div class="team-content">
@@ -97,8 +97,8 @@
           </div>
 
           <div class="team-action">
-            <div>{{ matchInfo.quizTitle }}</div>
-            <div class="team-match-time">{{ getMatchTimeOnly(matchInfo.matchTime) }}</div>
+            <!-- <div>{{ matchInfo.quizTitle }}</div> -->
+            <div class="team-match-time">{{ matchInfo.matchTime }}</div>
 
             <div class="btn-start-ans">
               <q-btn color="brightbtn" label="开始答题" @click="onBtnStartAnswerClick()" />
@@ -119,63 +119,62 @@
           <div class="questions-container">
             <div class="questions-item-box">
               <div class="item-title">第一题</div>
-              <div class="item-question">{{ matchInfo.questionOne }}</div>
               <div class="question-options-box">
-                <div class="question-ans">
-                  我的答案：
-                  <span>{{ firstChoiceRef ? firstChoiceRef : "" }}</span>
-                </div>
-
+                <div class="item-question">{{ matchInfo.questionOne }}</div>
                 <q-btn
-                  color="lightbtn"
+                  color="brightbtn"
                   class="btn-answer"
                   data-question-id="2"
                   data-question-type="select"
                   id="firstQuestion"
                   @click="onFirstQuestionClick(true)"
                 >
-                  {{ firstChoiceRef ? "重新选择" : "选择答案" }}
+                  {{ firstChoiceRef ? "重新选择" : "选择" }}
                 </q-btn>
+                <div class="question-ans">
+                  我的答案：
+                  <span>{{ firstChoiceRef ? firstChoiceRef : "" }}</span>
+                </div>
               </div>
             </div>
             <div class="questions-item-box">
               <div class="item-title">第二题</div>
-              <div class="item-question">{{ matchInfo.questionTwo }}</div>
               <div class="question-options-box">
-                <div class="question-ans">
-                  我的答案：
-                  <span>{{ secondChoiceRef ? secondChoiceRef : "" }}</span>
-                </div>
+                <div class="item-question">{{ matchInfo.questionTwo }}</div>
                 <q-btn
-                  color="lightbtn"
+                  color="brightbtn"
                   class="btn-answer"
                   data-question-id="2"
                   data-question-type="select"
                   id="secondQuestion"
                   @click="onSecondQuestionClick(true)"
                 >
-                  {{ secondChoiceRef ? "重新选择" : "选择答案" }}
+                  {{ secondChoiceRef ? "重新选择" : "选择" }}
                 </q-btn>
+                <div class="question-ans">
+                  我的答案：
+                  <span>{{ secondChoiceRef ? secondChoiceRef : "" }}</span>
+                </div>
               </div>
             </div>
             <div class="questions-item-box">
               <div class="item-title">第三题</div>
-              <div class="item-question">{{ matchInfo.questionThree }}</div>
               <div class="question-options-box">
-                <div class="question-ans">
-                  我的答案：
-                  <span>{{ thirdChoiceRef ? thirdChoiceRef : "" }}</span>
-                </div>
+                <div class="item-question">{{ matchInfo.questionThree }}</div>
                 <q-btn
-                  color="lightbtn"
+                  color="brightbtn"
                   class="btn-answer"
                   data-question-id="2"
                   data-question-type="select"
                   id="thirdQuestion"
                   @click="onThirdQuestionClick(true)"
                 >
-                  {{ thirdChoiceRef ? "重新选择" : "选择答案" }}
+                  {{ thirdChoiceRef ? "重新选择" : "选择" }}
                 </q-btn>
+                <div class="question-ans">
+                  我的答案：
+                  <span>{{ thirdChoiceRef ? thirdChoiceRef : "" }}</span>
+                </div>
               </div>
             </div>
 
@@ -633,6 +632,7 @@ const getMatchTimeOnly = (matchTime) => {
         display: flex;
         width: 100%;
         justify-content: center;
+        background: radial-gradient(#F8FBFF, #CADFFF);
 
         .book-img {
           text-align: center;
@@ -668,9 +668,9 @@ const getMatchTimeOnly = (matchTime) => {
         }
 
         .team-match-time {
-          color: #518bf7;
+          color: #424F72;
           font-weight: 700;
-          font-size: 18px;
+          font-size: 14px;
           line-height: 1;
           margin-bottom: 12px;
         }
@@ -702,9 +702,15 @@ const getMatchTimeOnly = (matchTime) => {
 
         display: flex;
         justify-content: center;
+        align-items: center;
         background: #e7f3ff;
         color: #4c4c6c;
         line-height: 1;
+
+        height: 40px;
+        background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+        color: #FFFFFF;
+        border-bottom: 2px solid #fff;
       }
     }
 
@@ -799,17 +805,19 @@ const getMatchTimeOnly = (matchTime) => {
       margin-bottom: 16px;
       border-radius: 20px;
       // border: 3px solid #fff;
-      background: radial-gradient(177.6% 177.6% at 50% 50%, #fff 0%, rgba(255, 255, 255, 0) 100%);
       overflow: hidden;
 
       .item-title {
         font-size: 12px;
         color: #ffffff;
-        background: linear-gradient(180deg, #2396ff 0%, #88c2f6 100%);
+        background: linear-gradient(180deg, #2095FF 0%, rgba(217, 217, 217, 0) 100%);
+        border-bottom: 3px solid #fff;
         // background: #2095ff;
         display: flex;
+        align-items: center;
         justify-content: center;
         padding: 6px;
+        height: 42px;
       }
 
       .item-question {
@@ -827,12 +835,21 @@ const getMatchTimeOnly = (matchTime) => {
         color: #87898a;
         overflow: hidden;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center; 
+
+        background: linear-gradient(0deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
 
         .question-ans {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          padding: 10px;
+
           span {
-            color: #3981ff;
+            font-weight: 700;
+            color: #4c4c6c;
           }
         }
 
@@ -886,8 +903,8 @@ const getMatchTimeOnly = (matchTime) => {
   }
 
   .question-select-option {
-    background-color: #e4f6ff;
-    border-radius: 6px;
+    background-color: #E7F3FF;
+    border-radius: 10px;
     margin-bottom: 24px;
     display: flex;
     align-items: center;
@@ -895,11 +912,12 @@ const getMatchTimeOnly = (matchTime) => {
     padding: 15px;
     cursor: pointer;
     width: 120px;
-    color: #87898a;
+    color: #424F72;
+    font-size: 12px;
 
     &.active {
       color: #fff;
-      background-color: #0094ff;
+      background-color: #3981FF;
     }
   }
 }
@@ -934,7 +952,6 @@ const getMatchTimeOnly = (matchTime) => {
     color: white;
     padding: 8px 15px;
     border-radius: 4px;
-    width: 50%;
     text-align: center;
   }
 }
@@ -970,9 +987,10 @@ const getMatchTimeOnly = (matchTime) => {
 }
 
 .dialog-content {
-  background-image: url(../../../assets/images/promo/hotpromo/esportquiz/question-dialog-bg.png);
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
+  border-radius: 20px;
+  // background-image: url(../../../assets/images/promo/hotpromo/esportquiz/question-dialog-bg.png);
+  // background-position: center center;
+  // background-size: cover;
+  // background-repeat: no-repeat;
 }
 </style>

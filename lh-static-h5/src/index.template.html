@@ -63,6 +63,11 @@
           const returnJson =event.data.data;
           if(returnJson?.rstDomain){
             window.localStorage.setItem( "LH_H5_RST_URL", returnJson?.rstDomain);
+
+            document.addEventListener("DOMContentLoaded", function() {
+              var bodyElement = document.body;
+              bodyElement.classList.add("body-applinks");
+            });
           }
           if(returnJson?.actDomain){
             window.localStorage.setItem("LH_H5_EVT_URL", returnJson?.actDomain);
