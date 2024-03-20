@@ -889,7 +889,7 @@ const submittedFormStatus = ref(false);
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(180deg, #2095FF 0%, rgba(217, 217, 217, 0) 100%);
+        background: linear-gradient(180deg, #2095FF 0%, #7ebdf7 100%);
         border-bottom: 3px solid #fff;
         border-radius: 20px 20px 0px 0px;
         color: #fff;
@@ -897,7 +897,7 @@ const submittedFormStatus = ref(false);
 
       .question-options-box {
         color: #87898a;
-        background: linear-gradient(0deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
+        background: linear-gradient(0deg, #FFFFFF 0%, #eaf3fced 100%);
         border-radius: 0px 0px 20px 20px;
 
         display: flex;
