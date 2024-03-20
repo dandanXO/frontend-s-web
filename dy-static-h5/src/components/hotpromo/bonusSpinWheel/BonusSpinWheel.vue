@@ -1,11 +1,11 @@
 <template>
   <div class="container">
       <div class="eventdetails">
-        <div class="evt time"> 
+        <div class="evt time">
           <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/time.png" />
           2024年03月08日起
         </div>
-        <div class="evt person"> 
+        <div class="evt person">
           <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/person.png" />
           全体会员
         </div>
@@ -125,7 +125,7 @@ const spin = (prizeIndex, stopCallback) => {
 
 const getRecords = () => {
   eventapi
-    .get("/vipWheel/records")
+    .get("/betWheel/records")
     .then((res) => {
       if (res.code == 0) {
         winnersList.value = res.data;
@@ -205,7 +205,7 @@ const spinWheel = () => {
   }
 
   eventapi
-    .post("/vipWheel/spin")
+    .post("/betWheel/spin")
     .then((res) => {
       if (res.code == 0) {
         const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === res.data.bonus);
@@ -224,7 +224,7 @@ const spinWheel = () => {
 
 const initSpinWheel = () => {
   eventapi
-    .get("/vipWheel/init")
+    .get("/betWheel/init")
     .then((res) => {
       if (res.code == 0) {
         remainingDraws.value = res.data.availableSpin;
@@ -551,7 +551,7 @@ onMounted(() => {
       max-width: 1200px;
       margin: 50px auto 0;
     //   margin-bottom: 150px;
-  
+
     .promo-info-banner {
       background-size: 100% 100%;
       width: 100%;
@@ -566,7 +566,7 @@ onMounted(() => {
       position:relative;
 
     }
-  
+
     .promo-info-header {
         margin-top: -60px;
       font-size: 23px;
@@ -579,13 +579,13 @@ onMounted(() => {
       margin: -60px auto 0;
       background: url(./../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-header.png)no-repeat center center;
       background-size: contain;
-      
+
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     }
-  
+
 
   .promo-info-content {
     height: 100%;
@@ -631,12 +631,12 @@ onMounted(() => {
             font-weight: 700;
             color: #8E0000;
         }
-  
+
         .winner-loginName {
             font-weight: 700;
             color: #8E0000;
         }
-  
+
         .winner-prize {
             font-weight: 700;
             color: #E80000;
