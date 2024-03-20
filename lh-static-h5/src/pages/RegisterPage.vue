@@ -252,25 +252,34 @@
             <img src="../assets/images/login/veri-icon.png" width="24" />
           </template>
         </q-input>
+      </div>
 
-        <div class="row justify-between items-center">
-          <q-btn
-            @click.prevent="onSubmit"
-            type="submit"
-            class="q-mt-lg common-large-btn"
-            label="注册"
-            width="100%"
-            color="brightbtn"
-            style="width: 100%"
-            rounded
-          />
-        </div>
+      <div class="bottom-btn-list">
+        <q-btn
+          @click.prevent="onSubmit"
+          type="submit"
+          class="q-mt-lg common-large-btn"
+          label="注册"
+          width="100%"
+          color="brightbtn"
+          style="width: 100%"
+          rounded
+        />
+      </div>
+
+      <div class="text-center q-mt-md">
+        我已有账号，
+        <router-link class="login-text" to="/login">立即登录</router-link>
+      </div>
+
+      <div class="text-center q-mt-md q-pb-lg">
+        <router-link class="cs-web-id" id="cs-web-id" to="/liveChat">联系客服</router-link>
       </div>
     </q-form>
 
-    <div class="login-bottom-div">
+    <!-- <div class="login-bottom-div">
       <img src="../assets/images/login/register-banner.png" />
-    </div>
+    </div> -->
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss no-esc-dismiss>
@@ -318,7 +327,7 @@ export default defineComponent({
     });
     onActivated(() => {
       getCode();
-    })
+    });
     const store = userStore();
     const verificationImg = ref("");
     const isValidName = () => {
@@ -552,7 +561,7 @@ export default defineComponent({
     const validLoginName = () => {
       const namePattern = /^[a-zA-Z0-9_#+-]+$/;
       return namePattern.test(regForm.loginName) || "用户名不允许使用特殊字符";
-    }
+    };
 
     const onCaptchaSubmit = () => {
       if (!regForm.telephone) {
@@ -643,6 +652,7 @@ function charType(num) {
   return 8;
 }
 </script>
+
 <style lang="scss">
 .verification {
   display: flex;
@@ -696,9 +706,10 @@ function charType(num) {
 
 .login-container {
   position: relative;
-  background: url(../assets/images/login/login-bg.jpg) no-repeat center center;
+  background: url(../assets/images/login/login-bg.jpg) no-repeat top center;
   background-size: cover;
   height: 100%;
+  min-height: calc(100vh - 61px);
   padding: 12px 0px 0px;
 
   .login-form-container {
@@ -743,6 +754,10 @@ function charType(num) {
   font-size: 1rem;
 }
 
+.login-text {
+  color: $primary;
+}
+
 .login-bottom-div {
   width: 100%;
   margin-top: 10px;
@@ -750,5 +765,17 @@ function charType(num) {
   img {
     width: 100%;
   }
+}
+
+.bottom-btn-list {
+  margin: 10px auto;
+  width: $box-width;
+  // padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.bottom-btn {
+  width: 100%;
+  margin: 10px auto 10px;
 }
 </style>
