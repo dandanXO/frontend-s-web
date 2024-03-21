@@ -357,7 +357,7 @@
       </el-table-column>
       <el-table-column prop="title" :label="t('fields.title')" />
       <el-table-column prop="content" :label="t('fields.content')" />
-<!--      <el-table-column prop="receiveType" :label="t('fields.receiveType')" />-->
+      <el-table-column prop="recipient" :label="t('fields.recipient')" />
       <el-table-column prop="sendTime" :label="t('fields.sendTime')">
         <template #default="scope">
           <span v-if="scope.row.sendTime === null">-</span>
