@@ -1,7 +1,7 @@
 <template>
   <div class="roles-main">
     <div class="header-container">
-      <div class="search" v-if="hasRole(['ADMIN'])">
+      <div class="search">
         <el-select
           v-model="request.siteId"
           size="small"
@@ -17,6 +17,12 @@
             :value="item.id"
           />
         </el-select>
+        <el-input
+          v-model="request.loginName"
+          size="small"
+          style="width: 200px; margin-left: 10px;"
+          :placeholder="t('fields.loginName')"
+        />
         <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadMemberRebateRules()">
           {{ t('fields.search') }}
         </el-button>
@@ -213,6 +219,7 @@ const page = reactive({
 });
 const request = reactive({
   siteId: null,
+  loginName: null,
   size: 30,
   current: 1
 });
@@ -264,6 +271,7 @@ async function loadMemberRebateRules() {
 
 function resetQuery() {
   request.siteId = site.value ? site.value.id : null;
+  request.loginName = null;
 }
 
 function showDialog(type) {
