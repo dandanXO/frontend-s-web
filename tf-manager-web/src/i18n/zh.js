@@ -370,7 +370,7 @@ export default {
   },
   sortType: {
     ASC: '升序',
-    DESC: '降序'
+    DESC: '降序',
   },
   fields: {
     account: '账号',
@@ -938,6 +938,7 @@ export default {
     memberBankCard: '会员银行卡',
     memberBankCardRecord: '会员银行卡记录',
     memberBetRecord: '会员投注记录',
+    memberBetRecordByPlatform: '会员平台下注',
     memberCommission: '会员分红',
     memberConsolidateReport: '会员报表总览',
     memberDetailDeposit: '总充值金额',
@@ -1310,11 +1311,13 @@ export default {
     totalBalance: '总余额',
     totalBet: '总投注',
     totalBetAmount: '总投注额',
+    totalBetCount: '投注笔数',
     totalBetMemberCount: '总下注人数',
     totalBetRecords: '总投注记录',
     totalBonus: '总奖金',
     totalCommission: '总分红',
     totalCommissionProfit: '佣金',
+    totalCompanyProfit: '实际盈利',
     totalDeductAmount: '总扣除金额',
     totalDeposit: '总存款',
     totalDepositAmount: '存款总额',

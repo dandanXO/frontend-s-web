@@ -55,11 +55,14 @@
     >
       <DailyReportTab :mbr-id="id" :site-id="siteId" />
     </el-tab-pane>
-    <el-tab-pane
-      :label="t('menu.Member Platform')"
-      name="member-platform"
-    >
+    <el-tab-pane :label="t('menu.Member Platform')" name="member-platform">
       <MemberPlatformTab :mbr-id="id" :site-id="siteId" />
+    </el-tab-pane>
+    <el-tab-pane
+      :label="t('fields.memberBetRecordByPlatform')"
+      name="member-bet-record-by-platform"
+    >
+      <MemberBetRecordByPlatformTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -78,6 +81,7 @@ import MemberMoneyChange from './tabs/member-money-change/index.vue'
 import MemberBankTab from './tabs/member-bank/index.vue'
 import RiskInfoTab from './tabs/risk-info/index.vue'
 import MemberBetRecordTab from './tabs/member-bet-record/index.vue'
+import MemberBetRecordByPlatformTab from './tabs/member-bet-record-by-platform/index.vue'
 import MemberReferFriendTab from './tabs/member-refer-friend/index.vue'
 import MemberRolloverRecord from './tabs/member-rollover-record/index.vue'
 import DailyReportTab from './tabs/daily-report/index.vue'
@@ -102,6 +106,7 @@ export default defineComponent({
     MemberRolloverRecord,
     DailyReportTab,
     MemberPlatformTab,
+    MemberBetRecordByPlatformTab,
   },
   async setup() {
     const { t } = useI18n()
