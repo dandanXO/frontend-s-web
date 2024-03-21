@@ -11,11 +11,16 @@
         <div class="maintenance-box" v-if="nav.underMaintenance === true">
           <p>维护中</p>
           <p v-if="nav.maintenanceStartTime && nav.maintenanceEndTime" class="small-size">
-            维护时间: {{ moment(nav.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}-
-            {{ moment(nav.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+            维护时间:
+            <span>
+              {{ moment(nav.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+              <br />
+              ~
+              <br />
+              {{ moment(nav.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+            </span>
           </p>
         </div>
-
         <img :src="require('../../assets/fishing/header_fish_' + nav.image + '.png')" style="height: 40px" />
         <p class="platform-title">{{ nav.code }}捕鱼</p>
         <div class="platform-img" :class="'fish-' + nav.image"></div>

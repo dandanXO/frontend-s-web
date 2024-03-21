@@ -10,6 +10,7 @@
         全体会员
       </div>
     </div>
+    <!-- <div class="evt-top-header">投注真人场馆与棋牌场馆即可获得转动机会</div> -->
     <div class="cny-spin-wheel-wrapper">
       <div class="container">
         <div class="spin-wheel-container">
@@ -269,6 +270,18 @@ onMounted(() => {
   //   margin-bottom: 80px;
   text-align: center;
   margin-top: -110px;
+}
+
+.evt-top-header {
+  background: url(../../../assets/images/promotion/hotpromo/bonus-spinwheel/top-header.png) no-repeat center center;
+  background-size: auto 100%;
+  display: flex;
+  height: 70px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  color: #fff;
+  font-weight: bold;
 }
 
 .eventdetails {
