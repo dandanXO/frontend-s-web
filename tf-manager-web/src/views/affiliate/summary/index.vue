@@ -283,6 +283,26 @@
       append-to-body
       width="1200px"
     >
+      <div>
+        <div class="search">
+          <el-input
+            v-model="request.loginName"
+            style="width: 200px"
+            size="small"
+            maxlength="50"
+            placeholder="testing"
+          />
+          <el-button
+            style="margin-left: 20px"
+            icon="el-icon-search"
+            size="mini"
+            type="success"
+            @click="loadAllMember(currentAffiliateId)"
+          >
+            {{ t('fields.search') }}
+          </el-button>
+        </div>
+      </div>
       <el-table
         height="600"
         size="small"
@@ -454,6 +474,7 @@ const siteList = reactive({
 })
 
 let currentPageType = ref('main')
+let currentAffiliateId = ref(null)
 
 const shortcuts = getShortcuts(t)
 const uiControl = reactive({
@@ -574,10 +595,12 @@ function showDialog(type, affiliateId) {
     // newMembers.list = members
     currentPageType = 'newRegister'
     loadNewMember(affiliateId)
+    currentAffiliateId = affiliateId
     uiControl.dialogTitle = t('fields.newMember')
   } else if (type === 'ALLMEMBER') {
     currentPageType = 'allMembers'
     loadAllMember(affiliateId)
+    currentAffiliateId = affiliateId
     uiControl.dialogTitle = t('fields.allmembers')
   }
   uiControl.dialogType = type
@@ -622,6 +645,7 @@ async function loadNewMember(affiliateId) {
   //   }
   // }
   query.affiliateId = affiliateId
+  query.loginName = request.loginName
 
   const { data: ret } = await getAffiliateSummaryNewMember(query)
   currentPageType = 'newRegister'
@@ -642,6 +666,7 @@ async function loadAllMember(affiliateId) {
     }
   })
   query.affiliateId = affiliateId
+  query.loginName = request.loginName
 
   const { data: ret } = await getAffiliateSummaryNewMember(query)
   currentPageType = 'allMembers'
