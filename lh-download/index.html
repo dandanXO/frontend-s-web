@@ -66,6 +66,7 @@
     <img id="tips" src="img/wxtips_android.png" alt="" style="width:100%;height:auto;">
 </div>
 
+
 <script>
     var dateTime = "2024-01-10 7.30pm";
     var andList = [
@@ -86,16 +87,34 @@
     var iosDownload = [];
     var androidDownload = [];
     var host = window.location.host;
+	const dataUrl='https://tfwkal.nc547frt0an.com'
+	var liveUrl1 = "";
+	var liveUrl2 = "";
 
     getApiUrl();
+	getCustomerUrl();
 
     $('#dy_customer').click(() => {
-        window.open("https://csweb01.c8nhwrqx4.com/?partnerCode=LHCS&way=H5&lang=zh-CN")
+		window.open(liveUrl1)
     })
+	
+	  async function getCustomerUrl() {
+        try {
+            const response = await fetch(dataUrl+`/getCustomerService`);
+            const data = await response.json();
+            if (data&&data.code === 0) {
+                liveUrl1 = data.data.liveUrl1;
+				liveUrl2 = data.data.liveUrl2;
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     async function getApiUrl() {
         try {
-            const response = await fetch(`https://ak4wc.ala8tehrnu.com/app/getDownloadPage?siteCode=lh1`);
+            const response = await fetch(dataUrl+`/getDownData`);
             const data = await response.json();
 
             $("#before-load").hide();
