@@ -499,6 +499,7 @@ export default {
     appVersion: 'App版本',
     applying: '申请中',
     approve: '批准',
+    approveBy: '批准人',
     assigned: '已分配',
     assignment: '分配',
     auditTime: '审计时间',

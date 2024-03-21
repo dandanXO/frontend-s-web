@@ -334,6 +334,7 @@ export default {
     announcementType: 'ประเภทประกาศ',
     applying: 'ส่งดำเนินการ',
     approve: 'อนุมัติ',
+    approveBy: 'อนุญาตโดย',
     assigned: 'ที่ได้รับมอบหมาย',
     assignment: 'งานที่มอบหมาย',
     auditTime: 'เวลาตรวจสอบ',

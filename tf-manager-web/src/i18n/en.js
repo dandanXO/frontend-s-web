@@ -493,6 +493,7 @@ export default {
     appVersion: 'App Version',
     applying: 'Applying',
     approve: 'Approve',
+    approveBy: 'Approve By',
     assigned: 'Assigned',
     assignment: 'Assignment',
     auditTime: 'Audit Time',
