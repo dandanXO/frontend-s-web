@@ -1,51 +1,54 @@
 <template>
   <div>
-      <div class="eventdetails">
-    <div class="evt time"> 
-      <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/time.png" />
-      2024年03月08日起
+    <div class="eventdetails">
+      <div class="evt time">
+        <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/time.png" />
+        2024年03月08日起
+      </div>
+      <div class="evt person">
+        <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/person.png" />
+        全体会员
+      </div>
     </div>
-    <div class="evt person"> 
-      <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/person.png" />
-      全体会员
-    </div>
-  </div>
-  <div class="cny-spin-wheel-wrapper">
-    <div class="container">
-      <div class="spin-wheel-container">
-        <div
-          :class="`draw-btn click-pointer ${remainingDraws <= 0 || spinButtonDisable ? 'disabled' : ''}`"
-          @click="spinWheel"
-        >
-          <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/click-spin-btn.png" />
-        </div>
-        <div class="wheel-stage">
-                <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-wheel-stage.png" />
-            </div>
-        <!-- <div class="cny-hat">
+    <!-- <div class="evt-top-header">投注真人场馆与棋牌场馆即可获得转动机会</div> -->
+    <div class="cny-spin-wheel-wrapper">
+      <div class="container">
+        <div class="spin-wheel-container">
+          <div
+            :class="`draw-btn click-pointer ${remainingDraws <= 0 || spinButtonDisable ? 'disabled' : ''}`"
+            @click="spinWheel"
+          >
+            <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/click-spin-btn.png" />
+          </div>
+          <div class="wheel-stage">
+            <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-wheel-stage.png" />
+          </div>
+          <!-- <div class="cny-hat">
           <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-wheel-cny-hat.png" />
         </div> -->
-        <div class="spin-wheel-board">
-          <div class="spin-wheel-frame">
-            <div id="spin-wheel-id" class="spin-wheel">
-              <img
-                id="spin-wheel-bg"
-                class="wheel-bg"
-                src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-wheel-bg.png"
-              />
-              <div id="spin-wheel-number" class="spin-wheel-number" style="display: none"></div>
+          <div class="spin-wheel-board">
+            <div class="spin-wheel-frame">
+              <div id="spin-wheel-id" class="spin-wheel">
+                <img
+                  id="spin-wheel-bg"
+                  class="wheel-bg"
+                  src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-wheel-bg.png"
+                />
+                <div id="spin-wheel-number" class="spin-wheel-number" style="display: none"></div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="remaining-draw-wrapper">
+        <div class="remaining-draw-wrapper">
           <p class="remaining-draw-text">
             剩余抽奖次数：
             <span id="remaning-draw-amt">{{ remainingDraws }}</span>
           </p>
+
+          <p class="remaining-tips">系统每30~40分钟刷新一次数据，注单结算后40分钟内派发您的转盘次数</p>
         </div>
-  
+
         <div class="promo-info-container">
           <div class="promo-info-banner">
             <div class="promo-info-header"></div>
@@ -61,21 +64,22 @@
             </div>
           </div>
         </div>
+      </div>
     </div>
   </div>
-</div>
-  
+
   <el-dialog v-model="showPrizePopup" class="prizePopupContainer">
-      <div class="wrapper">
-        <!-- <div class="popup-header bold-text golden-text">恭喜!</div> -->
-        <div class="content">
-            <div class="bold-text">
+    <div class="wrapper">
+      <!-- <div class="popup-header bold-text golden-text">恭喜!</div> -->
+      <div class="content">
+        <div class="bold-text">
           <div class="darkred-text">恭喜获得</div>
-          <div class="red-text">{{ prizePopupBonusAmt }}元彩金</div></div>
-          <div class="action-btn" @click="showPrizePopup = false"></div>
+          <div class="red-text">{{ prizePopupBonusAmt }}元彩金</div>
         </div>
+        <div class="action-btn" @click="showPrizePopup = false"></div>
       </div>
-    </el-dialog>
+    </div>
+  </el-dialog>
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
@@ -268,20 +272,32 @@ onMounted(() => {
   margin-top: -110px;
 }
 
+.evt-top-header {
+  background: url(../../../assets/images/promotion/hotpromo/bonus-spinwheel/top-header.png) no-repeat center center;
+  background-size: auto 100%;
+  display: flex;
+  height: 70px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  color: #fff;
+  font-weight: bold;
+}
+
 .eventdetails {
-    width: 80%;
-    display: flex;
-    justify-content: space-evenly;
-    gap: 400px;
-    align-items: center;
-    margin: 30px auto;
+  width: 80%;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 400px;
+  align-items: center;
+  margin: 30px auto;
   .evt {
-    background: url(../../../assets/images/promotion/hotpromo/bonus-spinwheel/evtbg.png)no-repeat center center;
+    background: url(../../../assets/images/promotion/hotpromo/bonus-spinwheel/evtbg.png) no-repeat center center;
     background-size: cover;
     padding: 5px 0 25px;
     width: 100%;
     display: flex;
-  flex-direction: column;
+    flex-direction: column;
     color: #ffffff;
     font-weight: bold;
     justify-content: center;
@@ -393,13 +409,13 @@ onMounted(() => {
 }
 
 .wheel-stage {
-    width: 1250px;
-    height: auto;
-    z-index: 20;
-    position: absolute;
-    top: 10%;
-    left: 50%;
-    transform: translate(-50%, 60%);
+  width: 1250px;
+  height: auto;
+  z-index: 20;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, 60%);
   img {
     width: 100%;
   }
@@ -454,20 +470,19 @@ onMounted(() => {
   background-size: 100% 100%;
   box-shadow: none;
 
-
   .el-dialog__header {
-        .el-dialog__headerbtn {
-            top: 50px;
-            width: 45px;
-            height: 45px;
-            right: -8px;
-            opacity: 0;
-        }
+    .el-dialog__headerbtn {
+      top: 50px;
+      width: 45px;
+      height: 45px;
+      right: -8px;
+      opacity: 0;
     }
-    .el-dialog__body {
-      background: none;
-    }
-  
+  }
+  .el-dialog__body {
+    background: none;
+  }
+
   .wrapper {
     display: flex;
     flex-direction: column;
@@ -482,9 +497,9 @@ onMounted(() => {
       letter-spacing: 1px;
       text-align: center;
       color: #530102;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
 
     .golden-text {
@@ -495,15 +510,14 @@ onMounted(() => {
       background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-      .darkred-text {
-        color: #8C3B00;
-        font-size: 20px;
-      }
-      .red-text {
-        color: #FF0000;
-        font-size: 28px;
-
-      }
+    .darkred-text {
+      color: #8c3b00;
+      font-size: 20px;
+    }
+    .red-text {
+      color: #ff0000;
+      font-size: 28px;
+    }
 
     .popup-header {
       letter-spacing: normal;
@@ -514,83 +528,87 @@ onMounted(() => {
       align-items: center;
     }
 
-    
     .content {
-        height: 270px;
+      height: 270px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px;
+      margin-right: 30px;
+
+      .action-btn {
+        background: url("./../../../assets/images/promotion/hotpromo/bonus-spinwheel/prize-popup-action-btn.png")
+          no-repeat center center;
+        background-size: 100% 100%;
+        width: 80%;
+        height: 100%;
+        max-height: 80px;
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
-        padding: 30px;
-        margin-right: 30px;
-  
-        .action-btn {
-          background: url("./../../../assets/images/promotion/hotpromo/bonus-spinwheel/prize-popup-action-btn.png")no-repeat center center;
-          background-size: 100% 100%;
-          width: 80%;
-          height: 100%;
-          max-height: 80px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          color: #ffffff;
-          font-size: 30px;
-          font-weight: bold;
-          cursor: pointer;
-          background-size: contain;
-        }
+        color: #ffffff;
+        font-size: 30px;
+        font-weight: bold;
+        cursor: pointer;
+        background-size: contain;
       }
+    }
   }
 }
 
 .remaining-draw-wrapper {
   .remaining-draw-text {
-    color: #B9827A;
-;
+    color: #b9827a;
+
     font-size: 25px;
     margin: 60px auto 10px;
     text-align: center;
     width: 300px;
   }
+
+  .remaining-tips {
+    text-align: center;
+    color: #505050;
+  }
 }
 
 .promo-info-container {
-    display: grid;
-    border: 1px solid #3F8CFF;
-    border-radius: 15px;
-    padding: 10px;
-      max-width: 1200px;
-      margin: 100px auto 0;
-    //   margin-bottom: 150px;
-  
-    .promo-info-banner {
-      background-size: 100% 100%;
-      width: 100%;
-      height: 330px;
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
+  display: grid;
+  border: 1px solid #3f8cff;
+  border-radius: 15px;
+  padding: 10px;
+  max-width: 1200px;
+  margin: 100px auto 0;
+  //   margin-bottom: 150px;
+
+  .promo-info-banner {
+    background-size: 100% 100%;
+    width: 100%;
+    height: 330px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     border-radius: 15px;
     background: linear-gradient(45deg, #e2f7fcbd, #fad1d7bd);
-      position:relative;
-
-    }
+    position: relative;
+  }
   .promo-info-header {
-        margin-top: -60px;
-      font-size: 23px;
-      font-weight: 700;
-      line-height: 30px;
-      text-align: center;
-      color: #ffffff;
-      padding: 60px 30px;
-      background: url(../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-header.png)no-repeat center center;
-      
+    margin-top: -60px;
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 30px;
+    text-align: center;
+    color: #ffffff;
+    padding: 60px 30px;
+    background: url(../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-header.png) no-repeat center center;
+
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    }
+  }
 
   .promo-info-content {
     height: 100%;
@@ -611,43 +629,43 @@ onMounted(() => {
       }
     }
     .nowinners-list {
-        font-size: 24px;
-        color:#B9827A;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
+      font-size: 24px;
+      color: #b9827a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .winners-list-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      padding: 10px;
+      font-size: 18px;
+
+      &:not(:last-child) {
+        border-bottom: 0.58px dotted #53010233;
       }
-  
-      .winners-list-item {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        text-align: center;
-        justify-content: center;
-        align-items: center;
-        font-weight: bold;
-        padding: 10px;
-        font-size: 18px;
-  
-        &:not(:last-child) {
-          border-bottom: 0.58px dotted #53010233;
-        }
-        .winner-date {
-            font-weight: 700;
-            color: #8E0000;
-        }
-  
-        .winner-loginName {
-            font-weight: 700;
-            color: #8E0000;
-        }
-  
-        .winner-prize {
-            font-weight: 700;
-            color: #E80000;
-        }
+      .winner-date {
+        font-weight: 700;
+        color: #8e0000;
       }
+
+      .winner-loginName {
+        font-weight: 700;
+        color: #8e0000;
+      }
+
+      .winner-prize {
+        font-weight: 700;
+        color: #e80000;
+      }
+    }
   }
 }
 </style>

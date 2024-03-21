@@ -564,7 +564,7 @@
         </el-table-column>
         <el-table-column
           prop="approveBy"
-          :label="t('fields.createBy')"
+          :label="t('fields.approveBy')"
           width="160"
         >
           <template #default="scope">
