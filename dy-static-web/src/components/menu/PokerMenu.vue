@@ -11,10 +11,17 @@
         <div class="maintenance-box" v-if="nav.underMaintenance === true">
           <p>维护中</p>
           <p v-if="nav.maintenanceStartTime && nav.maintenanceEndTime" class="small-size">
-            维护时间: {{ moment(nav.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}-
-            {{ moment(nav.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+            维护时间:
+            <span>
+              {{ moment(nav.maintenanceStartTime).format("YYYY/MM/DD HH:mm:ss A") }}
+              <br />
+              ~
+              <br />
+              {{ moment(nav.maintenanceEndTime).format("YYYY/MM/DD HH:mm:ss A") }}
+            </span>
           </p>
         </div>
+        
         <div class="imgbox" :style="`background-position-x: ${nav.percentage}`"></div>
         <div class="contents">
           <p class="platform-title">{{ nav.label }}棋牌</p>
