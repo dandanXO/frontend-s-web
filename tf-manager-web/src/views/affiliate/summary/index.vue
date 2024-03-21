@@ -290,14 +290,18 @@
             style="width: 200px"
             size="small"
             maxlength="50"
-            placeholder="testing"
+            :placeholder="t('fields.loginName')"
           />
           <el-button
             style="margin-left: 20px"
             icon="el-icon-search"
             size="mini"
             type="success"
-            @click="loadAllMember(currentAffiliateId)"
+            @click="
+              currentPageType === 'newRegister'
+                ? loadNewMember(currentAffiliateId)
+                : loadAllMember(currentAffiliateId)
+            "
           >
             {{ t('fields.search') }}
           </el-button>
