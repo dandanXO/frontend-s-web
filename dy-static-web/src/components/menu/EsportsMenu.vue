@@ -6,7 +6,7 @@
         :key="nav.code"
         @click="$emit('loadModal', nav.label, 'onlyPlatform', nav.code)"
       >
-        <div class="platform-box" :class="nav.underMaintenance === false ? 'maintenance' : ''">
+        <div class="platform-box" :class="nav.underMaintenance === true ? 'maintenance' : ''">
           <div class="maintenance-box" v-if="nav.underMaintenance === true">
             <p>维护中</p>
             <p v-if="nav.maintenanceStartTime && nav.maintenanceEndTime" class="small-size">
