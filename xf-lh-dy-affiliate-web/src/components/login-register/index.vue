@@ -311,6 +311,14 @@
     @close="onCloseDialog"
     :title="$t('common.verification_title') + words.join(' , ')"
   >
+    <template #title>
+      <span class="verification-title">
+        {{ $t('common.verification_title') }}
+      </span>
+      <span style="font-weight: bold;">
+        {{ words.join(' , ') }}
+      </span>
+    </template>
     <div
       id="loadDiv"
       v-loading="dialogLoading"
@@ -1707,6 +1715,22 @@ a {
 @media (max-width: 768px) {
   .dialog400 {
     width: 80%;
+  }
+  .el-dialog {
+    --el-dialog-padding-primary: 10px;
+
+    .el-button {
+      margin-top: 10px !important;
+      margin-bottom: -10px;
+    }
+
+    .el-dialog__header {
+      margin: 10px 0;
+    }
+  }
+
+  .verification-title {
+    font-size: 0.8rem;
   }
 }
 </style>

@@ -42,6 +42,7 @@ export default {
     memberRequest: '会员要求',
     others: '其他',
     TEST: '测试',
+    PROMO_TEST: '活动测试',
     AFFILIATE: '代理',
     OUTSIDE: '三方',
   },
