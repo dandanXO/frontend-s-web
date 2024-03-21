@@ -363,7 +363,7 @@ export default {
   },
   sortType: {
     ASC: 'Ascending',
-    DESC: 'Descending'
+    DESC: 'Descending',
   },
   fields: {
     account: 'Account',
@@ -931,6 +931,7 @@ export default {
     memberBankCard: 'Member Bank Card',
     memberBankCardRecord: 'Member Bank Card Record',
     memberBetRecord: 'Member Bet Record',
+    memberBetRecordByPlatform: 'Member Platform Bet Record',
     memberCommission: 'Member Commission',
     memberConsolidateReport: 'Member Consolidate Report',
     memberDetailDeposit: 'Total Deposit Amount',
@@ -1302,11 +1303,13 @@ export default {
     totalBalance: 'Total Balance',
     totalBet: 'Total Bet',
     totalBetAmount: 'Total Bet Amount',
+    totalBetCount: 'Total Bet Count',
     totalBetMemberCount: 'Total Member Bet Count',
     totalBetRecords: 'Total Bet Records',
     totalBonus: 'Total Bonus',
     totalCommission: 'Total Commission',
     totalCommissionProfit: 'Total Commission Profit',
+    totalCompanyProfit: 'Total Company Profit',
     totalDeductAmount: 'Total Deduct Amount',
     totalDeposit: 'Total Deposit',
     totalDepositAmount: 'Total Deposit Amount',
@@ -1569,7 +1572,7 @@ export default {
     confirmDelete:
       'Confirm that you want to delete these data, the operation cannot be undone',
     confirmRunAtOnce:
-      'Confirm that you want to execute this execute job now (Even if it\'s closed)',
+      "Confirm that you want to execute this execute job now (Even if it's closed)",
     confirmDelivered:
       'Confirm that this gift is delivered, the operation cannot be undone',
     confirmEndMatch:
