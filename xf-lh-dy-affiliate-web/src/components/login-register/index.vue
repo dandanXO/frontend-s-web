@@ -313,7 +313,6 @@
   >
     <div
       id="loadDiv"
-      style="display: flex; flex-direction: column; margin-top: -30px"
       v-loading="dialogLoading"
     >
       <el-image
@@ -964,10 +963,10 @@ export default defineComponent({
             storeY = (y / image.offsetHeight) * 100
           }
           state.coordinates.push({
-            displayLeft: image.getBoundingClientRect().x + x - 12,
-            displayTop: image.getBoundingClientRect().y + y - 12,
-            left: x,
-            top: y,
+            displayLeft: e.pageX - 12,
+            displayTop: e.pageY - 12,
+            left: e.pageX - image.getBoundingClientRect().x,
+            top: e.pageY - image.getBoundingClientRect().y,
             x: storeX,
             y: storeY,
           })
@@ -1697,5 +1696,17 @@ a {
 .dialog400 {
   width: 100%;
   max-width: 400px;
+
+  #loadDiv {
+    display: flex;
+    flex-direction: column;
+    margin-top: -30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dialog400 {
+    width: 80%;
+  }
 }
 </style>
