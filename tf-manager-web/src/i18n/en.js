@@ -42,6 +42,7 @@ export default {
     memberRequest: 'Member Request',
     others: 'Others',
     TEST: 'TEST',
+    PROMO_TEST: 'PROMO TEST',
     AFFILIATE: 'AFFILIATE',
     OUTSIDE: 'OUTSIDE',
   },
