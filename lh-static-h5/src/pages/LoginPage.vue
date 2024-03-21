@@ -9,9 +9,6 @@
     <div class="logo">
       <img @click="backHome" src="../assets/images/login/logo-login.png" />
     </div>
-    <div class="login-h2">
-      <img src="../assets/images/login/login-h2.png" />
-    </div>
 
     <!--    <q-tabs v-model="tab" active-color="white" indicator-color="bright" align="justify">-->
     <!--      <q-tab name="login" label="登录" />-->
@@ -21,7 +18,7 @@
       <div class="login-form-container">
         <div v-if="!loginType" class="">
           <q-label>
-            用户名:
+            请输入用户名:
             <em>*</em>
           </q-label>
           <q-input
@@ -30,8 +27,11 @@
             clearable
             ref="loginNameRef"
             v-model="loginForm.loginName"
-            placeholder="请输入用户名"
-            :rules="[(val) => (val && val.length > 0) || '请输入用户名',(val) => (val && val.length >= 6 && val.length <= 12) || '长度要在 6-12 之间']"
+            placeholder="用户名"
+            :rules="[
+              (val) => (val && val.length > 0) || '请输入用户名',
+              (val) => (val && val.length >= 6 && val.length <= 12) || '长度要在 6-12 之间'
+            ]"
             color="white"
             label-color="secondary"
             autocomplete="username"
@@ -42,7 +42,7 @@
           </q-input>
 
           <q-label>
-            用户密码:
+            请输入密码:
             <em>*</em>
           </q-label>
           <q-input
@@ -51,7 +51,7 @@
             standout
             clearable
             v-model="loginForm.password"
-            placeholder="请输入密码"
+            placeholder="用户密码"
             :type="isPwd ? 'password' : 'text'"
             :rules="[(val) => (val && val.length > 0) || '请输入用户密码']"
             color="white"
@@ -72,7 +72,7 @@
           </q-input>
 
           <q-label>
-            验证码:
+            请输入验证码:
             <em>*</em>
           </q-label>
           <q-input
@@ -83,7 +83,7 @@
             type="text"
             maxlength="4"
             v-model="loginForm.captchaCode"
-            placeholder="请输入验证码"
+            placeholder="验证码"
             :rules="[
               (val) => (val && val.length > 0) || '请输入验证码',
               (val) => (val && val.length > 3 && val.length < 5) || '验证码长度为4个'
@@ -191,14 +191,14 @@
           <q-btn class="common-large-white-btn bottom-btn" label="注册" rounded />
         </router-link>
       </div>
-      <div class="text-center">
+      <div class="text-center q-pb-lg">
         <router-link class="cs-web-id" id="cs-web-id" to="/liveChat">联系客服</router-link>
       </div>
     </q-form>
 
-    <div class="login-bottom-div">
+    <!-- <div class="login-bottom-div">
       <img src="../assets/images/login/login-banner.png" />
-    </div>
+    </div> -->
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
@@ -373,7 +373,6 @@ export default defineComponent({
       const sidParam = store.visitorId;
 
       (async () => {
-
         if (loginType.value === false) {
           loginNameRef.value.validate();
           passwordRef.value.validate();
@@ -427,18 +426,18 @@ export default defineComponent({
           if (telephoneRef.value.hasError || phoneVerificationRef.value.hasError) {
             $q.loading.hide();
           } else {
-          if (!phoneLoginForm.smsCodeId) {
-            $q.notify({
-              color: "negative",
-              position: "top",
-              message: '请验证手机码',
-              icon: "report_problem"
+            if (!phoneLoginForm.smsCodeId) {
+              $q.notify({
+                color: "negative",
+                position: "top",
+                message: "请验证手机码",
+                icon: "report_problem"
+              });
+              return;
+            }
+            $q.loading.show({
+              message: "登录中"
             });
-            return
-          }
-          $q.loading.show({
-            message: "登录中"
-          });
             store
               .memberLoginviaPhone({
                 phoneNumber: phoneLoginForm.phoneNumber,
@@ -520,12 +519,15 @@ export default defineComponent({
   }
 });
 </script>
+
 <style scoped lang="scss">
 .login-container {
   position: relative;
-  background: url(../assets/images/login/login-bg.jpg) no-repeat center center;
-  background-size: cover;
+  background: url(../assets/images/login/login-bg.png) no-repeat top center;
+  background-size: 100% auto;
+  background-color: #ffffff;
   height: 100%;
+  min-height: 100vh;
 
   .back-left {
     position: absolute;
@@ -545,9 +547,9 @@ export default defineComponent({
 
   .logo {
     margin: 0 auto;
-    padding: 35px 0 8px;
+    padding: 40px 0 40px;
     display: flex;
-    width: 115px;
+    width: 135px;
 
     img {
       width: 100%;

@@ -1,16 +1,16 @@
 <template>
-  <div class="stepgame-wrapper" id="id-stepgame-wrapper" :class="'step-' + stageValue.value">
+  <div class="stepgame-wrapper" id="id-stepgame-wrapper" :class="'step-' + currentStage">
     <div class="stepgame-container" id="id-stepgame-container">
       <div class="game-container" id="id-game-container">
         <div class="game-header">
           <img
             src="../../../assets/images/promotion/hotpromo/dy2-step-game/game-header-01.png"
-            v-if="stageValue.value === 1"
+            v-if="currentStage === 1"
           />
 
           <img
             src="../../../assets/images/promotion/hotpromo/dy2-step-game/game-header-02.png"
-            v-if="stageValue.value === 2"
+            v-if="currentStage === 2"
           />
         </div>
         <div class="game-item-container">
@@ -24,11 +24,11 @@
           >
             <img
               src="../../../assets/images/promotion/hotpromo/dy2-step-game/player-pin.png"
-              v-if="stageValue.value === 1"
+              v-if="currentStage === 1"
             />
             <img
               src="../../../assets/images/promotion/hotpromo/dy2-step-game/player-pin-2.png"
-              v-if="stageValue.value === 2"
+              v-if="currentStage === 2"
             />
           </div>
           <template v-for="(position, step) in stepPositionMapping" :key="step">
@@ -309,6 +309,11 @@ const handleSpin = () => {
         handleSmoothSpin(res.data.steps, res.data.currentPlace);
         wonBonus.value = res.data.bonus;
         stepEndPlace.value = res.data.endPlace;
+
+        if (stepCurrentPlace.value === stepEndPlace.value) {
+          console.log("end");
+          currentStage.value = currentStage.value + 1;
+        }
       } else {
         isBtnLoading.value = false;
       }
@@ -515,7 +520,7 @@ const handlePlayerStep = (targetStep) => {
         }, 500);
       }
 
-      if (currentStep === stepEndPlace.value && currentStage.value === 1) {
+      if (currentStep === stepEndPlace.value) {
         setTimeout(() => {
           endStepDialog.value = true;
           gamePlayerStep.value = 0;

@@ -233,6 +233,7 @@
       >
         <template #default="scope">
           <el-image
+            v-if="scope.row.photos.endsWith('.png') || scope.row.photos.endsWith('.jpeg') || scope.row.photos.endsWith('.jpg')"
             hide-on-click-modal
             style="width: 30px; height: 30px; border: 1px solid grey"
             :src="scope.row.photos"
