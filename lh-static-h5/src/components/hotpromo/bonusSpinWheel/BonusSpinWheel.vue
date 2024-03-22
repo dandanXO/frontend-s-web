@@ -1,5 +1,7 @@
 <template>
   <div class="container">
+    <div class="evt-top-header">投注真人场馆与棋牌场馆即可获得转动机会</div>
+
     <div class="spin-wheel-container">
       <div
         :class="`draw-btn click-pointer ${remainingDraws <= 0 || spinButtonDisable ? 'disabled' : ''}`"
@@ -7,12 +9,12 @@
       >
         <img src="./../../../assets/images/promo/hotpromo/bonus-spinwheel/click-spin-btn.png" />
       </div>
-      <div class="top-btn">
+      <div class="wheel-top-btn">
         <img src="./../../../assets/images/promo/hotpromo/bonus-spinwheel/click-spin-top.png" />
       </div>
-        <div class="wheel-stage">
-            <img src="./../../../assets/images/promo/hotpromo/bonus-spinwheel/spin-wheel-stg.png" />
-        </div>
+      <div class="wheel-stage">
+        <img src="./../../../assets/images/promo/hotpromo/bonus-spinwheel/spin-wheel-stg.png" />
+      </div>
       <div class="spin-wheel-board">
         <div class="spin-wheel-frame">
           <div id="spin-wheel-id" class="spin-wheel">
@@ -54,12 +56,12 @@
   <q-dialog v-model="showPrizePopup">
     <div class="prizePopupContainer">
       <div class="wrapper">
-        <div class="close" @click="showPrizePopup = false "></div>
+        <div class="close" @click="showPrizePopup = false"></div>
         <div class="content">
-            <div class="bold-text">
-          <div class="darkred-text">恭喜获得</div>
-          <div class="red-text">{{ prizePopupBonusAmt }}元彩金</div>
-        </div>
+          <div class="bold-text">
+            <div class="darkred-text">恭喜获得</div>
+            <div class="red-text">{{ prizePopupBonusAmt }}元彩金</div>
+          </div>
           <div class="action-btn" @click="showPrizePopup = false"></div>
         </div>
       </div>
@@ -75,7 +77,7 @@ const TOTAL_ITEMS = 8;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
-const SPIN_WHEEL_PRIZES = [8, 1888, 18, 188, 88, 588, 58, 888];
+const SPIN_WHEEL_PRIZES = [1888,-1, 8, 18, 88, 188, 588, 888];
 
 // spin wheel element refs
 const spinBoardRef = ref();
@@ -117,16 +119,16 @@ const spin = (prizeIndex, stopCallback) => {
 
 const getRecords = () => {
   eventapi
-    .get("/vipWheel/records")
+    .get("/betWheel/records")
     .then((res) => {
       if (res.code == 0) {
         winnersList.value = res.data;
       }
     })
     .catch((err) => {
-      console.log('here', err)
+      console.log("here", err);
     });
-}
+};
 
 const stopSpin = (prizeIndex, stopCallback) => {
   // call api
@@ -197,10 +199,14 @@ const spinWheel = () => {
   }
 
   eventapi
-    .post("/vipWheel/spin")
+    .post("/betWheel/spin")
     .then((res) => {
       if (res.code == 0) {
-        const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === res.data.bonus);
+        var bonusIndex = res.data.bonus;
+        if(res.data.type === 'CONSOLATION'){
+          bonusIndex = -1;
+        }
+        const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
 
         spin(prizeIndex, () => {
           showPrizePopup.value = true;
@@ -210,21 +216,19 @@ const spinWheel = () => {
       }
     })
     .catch((err) => {
-      console.log(err)
+      console.log(err);
     });
 };
 
 const initSpinWheel = () => {
-  eventapi
-    .get("/vipWheel/init")
-    .then((res) => {
-      if (res.code == 0) {
-        remainingDraws.value = res.data.availableSpin;
-      }
-    })
+  eventapi.get("/betWheel/init").then((res) => {
+    if (res.code == 0) {
+      remainingDraws.value = res.data.availableSpin;
+    }
+  });
 
   getRecords();
-}
+};
 
 onMounted(() => {
   // calc no of spin wheel items and potential stops
@@ -244,7 +248,7 @@ onMounted(() => {
 <style lang="scss">
 .spin-wheel-container {
   position: relative;
-  margin: 55px 0px;
+  margin: 25px 0px 55px;
   text-align: center;
 }
 
@@ -253,8 +257,8 @@ onMounted(() => {
   width: 330px;
   height: 330px;
   margin: 0 auto;
-    background: url(../../../assets/images/promo/hotpromo/bonus-spinwheel/spin-wheel-frame.png)no-repeat center center;
-    background-size: 115%;
+  background: url(../../../assets/images/promo/hotpromo/bonus-spinwheel/spin-wheel-frame.png) no-repeat center center;
+  background-size: 115%;
 }
 
 .wheel-frame {
@@ -308,14 +312,14 @@ onMounted(() => {
   width: 100%;
   height: 100%;
 }
-.top-btn {
-    width: 20px;
-    position: absolute;
-    top: 25px;
-    left: 0;
-    right: 0;
-    margin: auto;
-    z-index: 25;
+.wheel-top-btn {
+  width: 20px;
+  position: absolute;
+  top: 25px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 25;
 }
 .draw-btn {
   width: 100px;
@@ -358,8 +362,8 @@ onMounted(() => {
   height: auto;
   z-index: 20;
   position: absolute;
-    bottom: 95px;
-    left: 53%;
+  bottom: 95px;
+  left: 53%;
   transform: translate(-50%, 50%);
 
   img {
@@ -426,12 +430,11 @@ onMounted(() => {
     background-size: 100% 100%;
     position: relative;
     .close {
-      
-    position: absolute;
-    right: 0;
-    top: 38px;
-    width: 20px;
-    height: 20px;
+      position: absolute;
+      right: 0;
+      top: 38px;
+      width: 20px;
+      height: 20px;
     }
 
     .bold-text {
@@ -451,21 +454,19 @@ onMounted(() => {
       background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-      .darkred-text {
-        color: #8C3B00;
-        font-size: 20px;
-      }
-      .red-text {
-        color: #FF0000;
-        font-size: 28px;
+    .darkred-text {
+      color: #8c3b00;
+      font-size: 20px;
+    }
+    .red-text {
+      color: #ff0000;
+      font-size: 28px;
+    }
 
-      }
-  
-
-    .win-text{
+    .win-text {
       font-size: 28px;
       letter-spacing: 2px;
-       background: linear-gradient(360deg, #FFC700 9.54%, #FFF500 86.08%);
+      background: linear-gradient(360deg, #ffc700 9.54%, #fff500 86.08%);
       background-clip: text;
       -webkit-text-fill-color: transparent;
       filter: drop-shadow(1px 1px #00000050);
@@ -490,7 +491,8 @@ onMounted(() => {
       margin-right: 10px;
 
       .action-btn {
-        background: url("./../../../assets/images/promo/hotpromo/bonus-spinwheel/prize-popup-action-btn.png")no-repeat center center;
+        background: url("./../../../assets/images/promo/hotpromo/bonus-spinwheel/prize-popup-action-btn.png") no-repeat
+          center center;
         background-size: contain;
         width: 100%;
         height: 100%;
@@ -498,7 +500,7 @@ onMounted(() => {
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #FFFFFF;
+        color: #ffffff;
         font-size: 16px;
         font-weight: bold;
         cursor: pointer;
@@ -509,7 +511,7 @@ onMounted(() => {
 
 .remaining-draw-wrapper {
   .remaining-draw-text {
-    color: #7A8EB9;
+    color: #7a8eb9;
     font-size: 20px;
     margin: 10px auto 40px;
     text-align: center;
@@ -519,49 +521,61 @@ onMounted(() => {
   }
 }
 
-  .promo-info-container {
-    display: grid;
-    border: 1px solid #3F8CFF;
-    border-radius: 15px;
-    padding: 10px;
-      max-width: 1200px;
-      margin: 50px auto 0;
-    //   margin-bottom: 150px;
-  
-    .promo-info-banner {
-      background-size: 100% 100%;
-      width: 100%;
-      height: 200px;
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 20px;
-    border-radius: 15px;
-      background: #3F8CFF0D;
-      position:relative;
+.evt-top-header {
+  background: url("./../../../assets/images/promo/hotpromo/bonus-spinwheel/top-header.png") no-repeat center center;
+  background-size: 100% auto;
+  display: flex;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  max-width: 400px;
+  margin: 0 auto 24px;
+}
 
-    }
-  
-    .promo-info-header {
-        margin-top: -60px;
-      font-size: 23px;
-      font-weight: 700;
-      line-height: 30px;
-      text-align: center;
-      color: #ffffff;
-      padding: 60px 30px;
-      width: 300px;
-      margin: -60px auto 0;
-      background: url(./../../../assets/images/promo/hotpromo/bonus-spinwheel/spin-header.png)no-repeat center center;
-      background-size: contain;
-      
+.promo-info-container {
+  display: grid;
+  border: 1px solid #3f8cff;
+  border-radius: 15px;
+  padding: 10px;
+  max-width: 1200px;
+  margin: 50px auto 0;
+  //   margin-bottom: 150px;
+
+  .promo-info-banner {
+    background-size: 100% 100%;
+    width: 100%;
+    height: 200px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+    border-radius: 15px;
+    background: #3f8cff0d;
+    position: relative;
+  }
+
+  .promo-info-header {
+    margin-top: -60px;
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 30px;
+    text-align: center;
+    color: #ffffff;
+    padding: 60px 30px;
+    width: 300px;
+    margin: -60px auto 0;
+    background: url(./../../../assets/images/promo/hotpromo/bonus-spinwheel/spin-header.png) no-repeat center center;
+    background-size: contain;
+
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    }
-  
+  }
 
   .promo-info-content {
     height: 100%;
@@ -586,11 +600,11 @@ onMounted(() => {
       height: 100%;
       justify-content: center;
       align-items: center;
-      color:#7A8EB9;
-    font-size: 16px;
+      color: #7a8eb9;
+      font-size: 16px;
     }
     .winners-list-item {
-    font-size: 12px;
+      font-size: 12px;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       justify-content: center;
@@ -604,20 +618,19 @@ onMounted(() => {
       }
 
       .winner-date {
-            font-weight: 700;
-            color: #7A8EB9;
-        }
-  
-        .winner-loginName {
-            font-weight: 700;
-            color: #7A8EB9;
-        }
-  
-        .winner-prize {
-            font-weight: 700;
-            color: #3F8CFF;
-;
-        }
+        font-weight: 700;
+        color: #7a8eb9;
+      }
+
+      .winner-loginName {
+        font-weight: 700;
+        color: #7a8eb9;
+      }
+
+      .winner-prize {
+        font-weight: 700;
+        color: #3f8cff;
+      }
     }
   }
 }

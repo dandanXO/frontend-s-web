@@ -279,7 +279,11 @@ async function showReadFeedback(feedback) {
     if (form.replyTitle || form.replyContent) {
       uiControl.formDisabled = true
     } else {
-      form.replyTitle = "RE: " + form.title
+      if (request.siteId === 1 || request.siteId === 6 || request.siteId === 7) {
+        form.replyTitle = '回复: ' + form.title;
+      } else {
+        form.replyTitle = "RE: " + form.title
+      }
       uiControl.formDisabled = false
     }
   });
@@ -297,7 +301,6 @@ function submitReply() {
 }
 
 async function loadFeedbackTypesBySiteId() {
-  console.log(request.siteId)
   if (request.siteId) {
     const { data: adjustType } = await getConfigList("feedback_type", request.siteId);
     uiControl.feedbackTypes = adjustType;

@@ -5,7 +5,7 @@
         class="platform-box"
         v-for="nav in filteredNavigations"
         :key="nav.code"
-        :class="nav.underMaintenance === false ? 'maintenance' : ''"
+        :class="nav.underMaintenance === true ? 'maintenance' : ''"
       >
         <div class="maintenance-box" v-if="nav.underMaintenance === true">
           <p>维护中</p>

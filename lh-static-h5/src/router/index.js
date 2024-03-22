@@ -43,6 +43,7 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/invitefriend" ||
       to.path === "/vip" ||
       to.path === "/viptest" ||
+      to.path === "/deposittest" ||
       to.path === "/privilege/invite" ||
       to.path === "/maintenance"
     ) {
@@ -59,6 +60,7 @@ export default route(function (/* { store, ssrContext } */) {
     if (
       to.path === "/promotion" ||
       to.path === "/deposit" ||
+      to.path === "/deposittest" ||
       to.path === "/invitefriend" ||
       to.path === "/vip" ||
       to.path === "/viptest" ||

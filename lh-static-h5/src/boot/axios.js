@@ -62,6 +62,7 @@ function isInApp(){
     window.location.pathname === "/viptest" ||
     window.location.pathname === "/promotion" ||
     window.location.pathname === "/deposit" ||
+    window.location.pathname === "/deposittest" ||
     window.location.pathname === "/invitefriend" ||
     window.location.pathname === "/privilege/invite"){
     return true;
@@ -79,6 +80,7 @@ export default boot(({ app, router }) => {
     config.headers["Authorization"] = process.env.SITE;
 
     if(
+      window.location.pathname === "/deposittest" ||
       window.location.pathname === "/viptest"){
       console.log(config.baseURL + config.url);
       alert(config.baseURL + config.url);

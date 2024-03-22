@@ -126,6 +126,11 @@
           </el-form-item>
         </el-row>
         <el-row>
+          <el-form-item :label="t('fields.extraParam')" prop="extraParam">
+            <el-input v-model="form.extraParam" :rows="2" type="textarea" style="width: 600px;" />
+          </el-form-item>
+        </el-row>
+        <el-row>
           <el-form-item :label="t('fields.className')" prop="className">
             <el-input v-model="form.className" style="width: 320px;" />
           </el-form-item>
@@ -329,6 +334,7 @@ const form = reactive({
   mallCode: null,
   mallKey: null,
   mallExtraKey: null,
+  extraParam: null,
   className: null,
   requestUrl: null,
   callbackUrl: null,

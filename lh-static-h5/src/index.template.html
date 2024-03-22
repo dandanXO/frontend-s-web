@@ -36,14 +36,17 @@
     // console.log(globalThis);
   </script>
 
-  <!-- <script type="text/javascript">
+   <script type="text/javascript">
     //Call a Message to Parent (If App.)
-    if( window.location.pathname === "/vip" ||
+    if(
+      // window.location.pathname === "/vip" ||
+      // window.location.pathname === "/promotion" ||
+      // window.location.pathname === "/deposit" ||
+      // window.location.pathname === "/invitefriend" ||
+      // window.location.pathname === "/privilege/invite" ||
       window.location.pathname === "/viptest" ||
-      window.location.pathname === "/promotion" ||
-      window.location.pathname === "/deposit" ||
-      window.location.pathname === "/invitefriend" ||
-      window.location.pathname === "/privilege/invite"){
+     window.location.pathname === "/deposittest"
+    ){
 
       //IOS
       if( window.webkit
@@ -62,23 +65,23 @@
           // {"actDomain":"https://przvnboftl.anpoxuaq9ae.com:9972","crDomain":"https://m.lh330696.com:9971","rstDomain":"https://apodnbo0tl.anipoius54d.com:9972"}
           const returnJson =event.data.data;
           if(returnJson?.rstDomain){
-            window.localStorage.setItem( "LH_H5_RST_URL", returnJson?.rstDomain);
+            window.localStorage.setItem("LH_H5_RST_URL", returnJson?.rstDomain);
 
-            // document.addEventListener("DOMContentLoaded", function() {
-            //   var bodyElement = document.body;
-            //   bodyElement.classList.add("body-applinks");
-            // });
+            document.addEventListener("DOMContentLoaded", function() {
+              var bodyElement = document.body;
+              bodyElement.classList.add("body-applinks");
+            });
           }
           if(returnJson?.actDomain){
             window.localStorage.setItem("LH_H5_EVT_URL", returnJson?.actDomain);
           }
           if(returnJson?.crDomain){
-            window.localStorage.setItem( "LH_H5_CRT_URL", returnJson?.crDomain);
+            window.localStorage.setItem("LH_H5_CRT_URL", returnJson?.crDomain);
           }
         }
       });
     }
-  </script> -->
+  </script>
 </head>
 <body>
 <!-- DO NOT touch the following DIV -->
