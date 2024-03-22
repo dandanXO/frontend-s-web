@@ -112,13 +112,27 @@
           min-width="100"
         >
           <template #default="scope">
-            $
             <span
-              v-formatter="{
-                data: scope.row.totalCompanyProfit,
-                type: 'money',
-              }"
-            />
+              v-if="scope.row.totalCompanyProfit < 0"
+              style="color:red"
+            >
+              $
+              <span
+                v-formatter="{
+                  data: scope.row.totalCompanyProfit,
+                  type: 'money',
+                }"
+              />
+            </span>
+            <span v-else>
+              $
+              <span
+                v-formatter="{
+                  data: scope.row.totalCompanyProfit,
+                  type: 'money',
+                }"
+              />
+            </span>
           </template>
         </el-table-column>
       </el-table>
@@ -306,6 +320,10 @@ async function loadMemberBetRecords(frombutton) {
   query.pagingState = page.pagingState
 
   const { data: ret } = await getMemberBetRecordByPlatformList(query)
+  ret.records.forEach(rec => {
+    rec.totalCompanyProfit = rec.totalPayout - rec.totalBet;
+  });
+
   const { data: ret1 } = await getMemberBetRecordByPlatformListTotal(query)
   page.pages = ret.pages
   page.records = ret.records
@@ -317,7 +335,7 @@ async function loadMemberBetRecords(frombutton) {
     total.totalValidBet = ret1.totalValidBet
     total.totalBetCount = ret1.totalBetCount
     total.totalPayout = ret1.totalPayout
-    total.totalCompanyProfit = ret1.totalCompanyProfit
+    total.totalCompanyProfit = ret1.totalPayout - ret1.totalBet
   } else {
     total.totalBet = 0
     total.totalValidBet = 0
