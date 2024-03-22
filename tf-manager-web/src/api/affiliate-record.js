@@ -9,6 +9,10 @@ export const getAffiliateSummary = (query) => {
   return https().request("/affiliateRecord/summary", Method.GET, query, ContentType.form);
 };
 
+export const getAffiliateChildSummary = (query) => {
+  return https().request("/affiliateRecord/summaryChild", Method.GET, query, ContentType.form);
+};
+
 export const getAffiliateSummaryNewMember = (query) => {
   return https().request("/affiliateRecord/summary/newMember", Method.GET, query, ContentType.form);
 };
