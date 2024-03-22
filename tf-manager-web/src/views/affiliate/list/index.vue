@@ -579,10 +579,6 @@
           align="center"
           fixed="right"
           width="240"
-          v-if="
-            !hasRole(['SUB_TENANT']) &&
-              hasPermission(['sys:affiliate:update:approval'])
-          "
         >
           <template #default="scope">
             <el-button
@@ -644,7 +640,7 @@ import {
 import { updateRisk } from "../../../api/member";
 import { getSiteListSimple } from '../../../api/site'
 import { selectList } from "../../../api/risk-level";
-import { hasPermission, hasRole } from '../../../utils/util'
+import { hasPermission } from '../../../utils/util'
 import { notEmpty } from '../../../utils/common'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
