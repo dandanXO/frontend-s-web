@@ -86,7 +86,7 @@
         row-key="affiliateId"
         :load="loadChildren"
         lazy
-        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+        :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
         :empty-text="t('fields.noData')"
         highlight-current-row
       >
@@ -118,7 +118,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{ data: scope.row.depositAmount, type: 'money' }"
+              v-formatter="{data: scope.row.depositAmount, type: 'money'}"
             />
           </template>
         </el-table-column>
@@ -131,7 +131,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{ data: scope.row.withdrawAmount, type: 'money' }"
+              v-formatter="{data: scope.row.withdrawAmount, type: 'money'}"
             />
           </template>
         </el-table-column>
@@ -143,7 +143,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{ data: scope.row.bonus, type: 'money' }" />
+            <span v-formatter="{data: scope.row.bonus, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column
@@ -154,7 +154,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{ data: scope.row.rebate, type: 'money' }" />
+            <span v-formatter="{data: scope.row.rebate, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column
@@ -165,7 +165,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{ data: scope.row.bet, type: 'money' }" />
+            <span v-formatter="{data: scope.row.bet, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column
@@ -176,7 +176,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{ data: scope.row.adjustment, type: 'money' }" />
+            <span v-formatter="{data: scope.row.adjustment, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column
@@ -187,7 +187,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{ data: scope.row.payout, type: 'money' }" />
+            <span v-formatter="{data: scope.row.payout, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column
@@ -199,7 +199,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{ data: scope.row.platformFee, type: 'money' }"
+              v-formatter="{data: scope.row.platformFee, type: 'money'}"
             />
           </template>
         </el-table-column>
@@ -211,13 +211,13 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{ data: scope.row.paymentFee, type: 'money' }" />
+            <span v-formatter="{data: scope.row.paymentFee, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column prop="ngr" label="NGR" align="center" width="120">
           <template #default="scope">
             $
-            <span v-formatter="{ data: scope.row.ngr, type: 'money' }" />
+            <span v-formatter="{data: scope.row.ngr, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column
@@ -383,7 +383,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{ data: scope.row.depositAmount, type: 'money' }"
+              v-formatter="{data: scope.row.depositAmount, type: 'money'}"
             />
           </template>
         </el-table-column>
@@ -396,7 +396,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{ data: scope.row.withdrawAmount, type: 'money' }"
+              v-formatter="{data: scope.row.withdrawAmount, type: 'money'}"
             />
           </template>
         </el-table-column>
@@ -408,7 +408,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{ data: scope.row.bonus, type: 'money' }" />
+            <span v-formatter="{data: scope.row.bonus, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column
@@ -419,7 +419,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{ data: scope.row.bet, type: 'money' }" />
+            <span v-formatter="{data: scope.row.bet, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column
@@ -430,7 +430,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{ data: scope.row.adjustment, type: 'money' }" />
+            <span v-formatter="{data: scope.row.adjustment, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column
@@ -441,7 +441,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{ data: scope.row.payout, type: 'money' }" />
+            <span v-formatter="{data: scope.row.payout, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column
@@ -469,22 +469,22 @@
           currentPageType === 'main'
             ? memberRequest.size
             : currentPageType === 'newRegister'
-            ? memberRequest.size
-            : allMemberRequest.size
+              ? memberRequest.size
+              : allMemberRequest.size
         "
         :page-count="
           currentPageType === 'main'
             ? request.pages
             : currentPageType === 'newRegister'
-            ? memberPage.pages
-            : allMemberPage.pages
+              ? memberPage.pages
+              : allMemberPage.pages
         "
         :current-page="
           currentPageType === 'main'
             ? request.current
             : currentPageType === 'newRegister'
-            ? memberPage.current
-            : allMemberPage.current
+              ? memberPage.current
+              : allMemberPage.current
         "
       />
     </el-dialog>
