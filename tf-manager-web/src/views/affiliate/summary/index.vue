@@ -86,7 +86,7 @@
         row-key="affiliateId"
         :load="loadChildren"
         lazy
-        :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
         :empty-text="t('fields.noData')"
         highlight-current-row
       >
@@ -118,7 +118,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{data: scope.row.depositAmount, type: 'money'}"
+              v-formatter="{ data: scope.row.depositAmount, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -131,7 +131,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{data: scope.row.withdrawAmount, type: 'money'}"
+              v-formatter="{ data: scope.row.withdrawAmount, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -143,7 +143,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.bonus, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.bonus, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -154,7 +154,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.rebate, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.rebate, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -165,7 +165,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.bet, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.bet, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -176,7 +176,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.adjustment, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.adjustment, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -187,7 +187,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.payout, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.payout, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -199,7 +199,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{data: scope.row.platformFee, type: 'money'}"
+              v-formatter="{ data: scope.row.platformFee, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -211,13 +211,13 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.paymentFee, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.paymentFee, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column prop="ngr" label="NGR" align="center" width="120">
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.ngr, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.ngr, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -288,12 +288,41 @@
       <div>
         <div class="search">
           <el-input
-            v-model="request.loginName"
+            v-model="popUpRequest.loginName"
             style="width: 200px"
             size="small"
             maxlength="50"
             :placeholder="t('fields.loginName')"
           />
+          <el-date-picker
+            v-model="popUpRequest.recordTime"
+            format="DD/MM/YYYY"
+            value-format="YYYY-MM-DD"
+            size="small"
+            type="daterange"
+            range-separator=":"
+            :start-placeholder="t('fields.startDate')"
+            :end-placeholder="t('fields.endDate')"
+            style="width: 300px; margin-left: 10px"
+            :shortcuts="shortcuts"
+            :disabled-date="disabledDate"
+            :editable="false"
+            :clearable="false"
+          />
+          <el-select
+            v-model="popUpRequest.memberType"
+            size="small"
+            :placeholder="t('fields.memberType')"
+            class="filter-item"
+            style="width: 200px; margin-left: 10px;"
+          >
+            <el-option
+              v-for="item in uiControl.memberType"
+              :key="item.key"
+              :label="item.displayName"
+              :value="item.value"
+            />
+          </el-select>
           <el-button
             style="margin-left: 20px"
             icon="el-icon-search"
@@ -354,7 +383,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{data: scope.row.depositAmount, type: 'money'}"
+              v-formatter="{ data: scope.row.depositAmount, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -367,7 +396,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{data: scope.row.withdrawAmount, type: 'money'}"
+              v-formatter="{ data: scope.row.withdrawAmount, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -379,7 +408,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.bonus, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.bonus, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -390,7 +419,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.bet, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.bet, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -401,7 +430,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.adjustment, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.adjustment, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -412,7 +441,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.payout, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.payout, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -440,22 +469,22 @@
           currentPageType === 'main'
             ? memberRequest.size
             : currentPageType === 'newRegister'
-              ? memberRequest.size
-              : allMemberRequest.size
+            ? memberRequest.size
+            : allMemberRequest.size
         "
         :page-count="
           currentPageType === 'main'
             ? request.pages
             : currentPageType === 'newRegister'
-              ? memberPage.pages
-              : allMemberPage.pages
+            ? memberPage.pages
+            : allMemberPage.pages
         "
         :current-page="
           currentPageType === 'main'
             ? request.current
             : currentPageType === 'newRegister'
-              ? memberPage.current
-              : allMemberPage.current
+            ? memberPage.current
+            : allMemberPage.current
         "
       />
     </el-dialog>
@@ -489,6 +518,18 @@ const uiControl = reactive({
   progressBarVisible: false,
   dialogTitle: '',
   dialogType: 'MEMBER',
+  memberType: [
+    {
+      key: 'NORMAL',
+      displayName: 'NORMAL',
+      value: 'NORMAL',
+    },
+    {
+      key: 'AFFILIATE',
+      displayName: 'AFFILIATE',
+      value: 'AFFILIATE',
+    },
+  ],
 })
 const site = ref(null)
 const startDate = new Date()
@@ -508,6 +549,12 @@ const request = reactive({
   loginName: null,
   affiliateCode: null,
   activeMember: 0,
+})
+
+const popUpRequest = reactive({
+  loginName: null,
+  recordTime: request.recordTime,
+  memberType: null,
 })
 
 const memberRequest = reactive({
@@ -599,7 +646,7 @@ async function loadRecord() {
 
 async function loadChildren(tree, treeNode, resolve) {
   const query = {}
-  console.log('load children')
+
   query.recordTime = tree.recordTime
   query.parentAffiliateId = tree.affiliateId
   query.siteId = request.siteId
@@ -635,9 +682,9 @@ async function loadNewMember(affiliateId) {
     }
   })
 
-  if (request.recordTime !== null) {
-    if (request.recordTime.length === 2) {
-      query.recordTime = JSON.parse(JSON.stringify(request.recordTime))
+  if (popUpRequest.recordTime !== null) {
+    if (popUpRequest.recordTime.length === 2) {
+      query.recordTime = JSON.parse(JSON.stringify(popUpRequest.recordTime))
 
       query.recordTime[0] = moment(query.recordTime[0]).format(
         'YYYY-MM-DD 00:00:00'
@@ -648,7 +695,7 @@ async function loadNewMember(affiliateId) {
 
       query.recordTime = query.recordTime.join(',')
     } else {
-      query.recordTime = moment(request.recordTime[0]).format(
+      query.recordTime = moment(popUpRequest.recordTime[0]).format(
         'YYYY-MM-DD 00:00:00'
       )
     }
@@ -662,7 +709,8 @@ async function loadNewMember(affiliateId) {
   //   }
   // }
   query.affiliateId = affiliateId
-  query.loginName = request.loginName
+  query.loginName = popUpRequest.loginName
+  query.memberType = popUpRequest.memberType
 
   const { data: ret } = await getAffiliateSummaryNewMember(query)
   currentPageType = 'newRegister'
@@ -683,7 +731,27 @@ async function loadAllMember(affiliateId) {
     }
   })
   query.affiliateId = affiliateId
-  query.loginName = request.loginName
+  query.loginName = popUpRequest.loginName
+  query.memberType = popUpRequest.memberType
+
+  if (popUpRequest.recordTime !== null) {
+    if (popUpRequest.recordTime.length === 2) {
+      query.recordTime = JSON.parse(JSON.stringify(popUpRequest.recordTime))
+
+      query.recordTime[0] = moment(query.recordTime[0]).format(
+        'YYYY-MM-DD 00:00:00'
+      )
+      query.recordTime[1] = moment(query.recordTime[1]).format(
+        'YYYY-MM-DD 23:59:59'
+      )
+
+      query.recordTime = query.recordTime.join(',')
+    } else {
+      query.recordTime = moment(popUpRequest.recordTime[0]).format(
+        'YYYY-MM-DD 00:00:00'
+      )
+    }
+  }
 
   const { data: ret } = await getAffiliateSummaryNewMember(query)
   currentPageType = 'allMembers'
