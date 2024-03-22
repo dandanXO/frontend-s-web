@@ -157,8 +157,11 @@
         <span style="margin-left: 30px">
           {{ t('fields.totalCompanyProfit') }}
         </span>
-        <span style="margin-left: 10px">$</span>
-        <span v-formatter="{data: total.totalCompanyProfit, type: 'money'}" />
+        <span
+          v-if="total.totalCompanyProfit < 0"
+          style="color:red"
+        ><span style="margin-left: 10px">$</span><span v-formatter="{data: total.totalCompanyProfit, type: 'money'}" /></span>
+        <span v-else><span style="margin-left: 10px">$</span><span v-formatter="{data: total.totalCompanyProfit, type: 'money'}" /></span>
       </div>
       <el-pagination
         class="pagination"

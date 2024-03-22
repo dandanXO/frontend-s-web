@@ -1311,7 +1311,7 @@ export default {
     totalBonus: 'Total Bonus',
     totalCommission: 'Total Commission',
     totalCommissionProfit: 'Total Commission Profit',
-    totalCompanyProfit: 'Total Company Profit',
+    totalCompanyProfit: 'Total Member Profit',
     totalDeductAmount: 'Total Deduct Amount',
     totalDeposit: 'Total Deposit',
     totalDepositAmount: 'Total Deposit Amount',
