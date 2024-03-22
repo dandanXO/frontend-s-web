@@ -625,6 +625,17 @@ const routes = [
     meta: { requiresAuth: false, isApp: true }
   },
   {
+    path: "/deposittest",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/finance/DepositView.vue")
+      }
+    ],
+    meta: { requiresAuth: false, isApp: true }
+  },
+  {
     path: "/invitefriend",
     component: () => import("layouts/MainLayout.vue"),
     children: [

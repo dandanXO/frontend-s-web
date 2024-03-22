@@ -9,7 +9,7 @@
       >
         <img src="./../../../assets/images/promo/hotpromo/bonus-spinwheel/click-spin-btn.png" />
       </div>
-      <div class="top-btn">
+      <div class="wheel-top-btn">
         <img src="./../../../assets/images/promo/hotpromo/bonus-spinwheel/click-spin-top.png" />
       </div>
       <div class="wheel-stage">
@@ -308,7 +308,7 @@ onMounted(() => {
   width: 100%;
   height: 100%;
 }
-.top-btn {
+.wheel-top-btn {
   width: 20px;
   position: absolute;
   top: 25px;
