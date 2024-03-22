@@ -34,6 +34,8 @@
         剩余抽奖次数：
         <span id="remaning-draw-amt">{{ remainingDraws }}</span>
       </p>
+
+      <p class="remaining-tips" style="text-align: center;">系统每30~40分钟刷新一次数据，注单结算后40分钟内派发您的转盘次数</p>
     </div>
 
     <div class="promo-info-container">
@@ -42,7 +44,7 @@
         <div class="promo-info-content">
           <div v-if="winnersList.length > 0" class="winners-list">
             <div class="winners-list-item" v-for="(item, index) in winnersList" :key="index">
-              <div class="winner-date">{{ item.date }}</div>
+              <div class="winner-date">{{ item.recordTime }}</div>
               <div class="winner-loginName">恭喜 {{ item.loginName }}</div>
               <div class="winner-prize">{{ item.bonus }}</div>
             </div>
@@ -513,7 +515,7 @@ onMounted(() => {
   .remaining-draw-text {
     color: #7a8eb9;
     font-size: 20px;
-    margin: 10px auto 40px;
+    margin: 10px auto 15px;
     text-align: center;
     width: 300px;
     position: relative;
