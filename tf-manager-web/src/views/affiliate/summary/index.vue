@@ -553,7 +553,7 @@ const request = reactive({
 
 const popUpRequest = reactive({
   loginName: null,
-  recordTime: request.recordTime,
+  recordTime: [...request.recordTime],
   memberType: null,
 })
 
