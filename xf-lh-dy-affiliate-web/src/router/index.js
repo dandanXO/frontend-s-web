@@ -44,6 +44,18 @@ export const constantRoutes = [
     component: () => import(/* webpackChunkName: "registerAffiliate" */"../views/ind/register/index.vue")
   },
   {
+    path: "/vi/login",
+    name: "VNM Login",
+    meta: { hidden: true },
+    component: () => import(/* webpackChunkName: "loginAffiliate" */"../views/vi/login/index.vue")
+  },
+  {
+    path: "/vi/register",
+    name: "VNM Register",
+    meta: { hidden: true },
+    component: () => import(/* webpackChunkName: "registerAffiliate" */"../views/vi/register/index.vue")
+  },
+  {
     path: "/lh/login",
     name: "LH Login",
     meta: { hidden: true },

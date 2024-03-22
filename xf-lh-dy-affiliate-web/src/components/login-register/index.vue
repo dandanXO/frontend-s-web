@@ -539,6 +539,7 @@ import dyLogo from '@/assets/images/dy/logowhitee.png'
 import xfLogo from '@/assets/images/xf/logowhitee.png'
 import indLogo from '@/assets/images/ind/ind-logo.png'
 import lhLogo from '@/assets/images/lh/logo.png'
+import viLogo from '@/assets/images/vi/vilogo.svg'
 import { getVerificationImage } from '@/api/verification'
 import {
   getVerificationCode,
@@ -1176,6 +1177,13 @@ export default defineComponent({
         currentSite.value.logo = lhLogo
         state.loginForm.site = 'LH1'
         setLanguage('zh')
+      }
+      if (props.siteId === '4') {
+        currentSite.value.firstLiner = 'Start From TFGaming'
+        currentSite.value.secondLiner = 'Become a legend<br>Or become the eulogist of legend?'
+        currentSite.value.logo = viLogo
+        state.loginForm.site = 'VNM'
+        setLanguage('vi')
       }
     }
     onMounted(() => {
