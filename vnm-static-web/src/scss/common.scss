@@ -26,8 +26,20 @@
   font-display: swap;
 }
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap");
 
 body {
+  .roboto {
+    font-family: "Roboto";
+    .profile-actions {
+      .action-btn {
+        font-size: 0.35rem;
+      }
+    }
+  }
+  .poppins {
+    font-family: "Poppins";
+  }
   padding: 0;
   margin: 0;
   font-size: 16px;

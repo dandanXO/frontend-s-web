@@ -1,6 +1,7 @@
 <template>
   <div class="about-container">
-    <el-tabs v-model="activeTab" tab-position="left" @tab-click="updateTab">
+    <el-card body-style="border-radius: 20px;">
+      <el-tabs v-model="activeTab" tab-position="left" @tab-click="updateTab">
       <el-tab-pane v-for="(e, i) in tabInfo" :key="`aboutus-${i}`" :label="e.label" :name="e.id">
         <template #label>
           <img v-if="activeTab === e.id" class="icon-selected-img" src="../assets/about/tab_selected.png" />
@@ -14,30 +15,35 @@
         </div>
       </el-tab-pane>
     </el-tabs>
+    </el-card>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 import AboutUs from "../components/about/AboutUs.vue";
 import AboutInfo from "../components/about/AboutInfo.vue";
 import AboutLaw from "../components/about/AboutLaw.vue";
 import AboutRule from "../components/about/AboutRule.vue";
-import AboutPay from "../components/about/AboutPay.vue";
-import AboutAgent from "../components/about/AboutAgent.vue";
 import AboutBlame from "../components/about/AboutBlame.vue";
 
 const activeTab = ref("aboutus");
-
+const { t } = useI18n();
 const tabInfo = ref([
-  { id: "aboutus", label: "关于我们", component: AboutUs },
-  { id: "info", label: "资料收集", component: AboutInfo },
-  { id: "law", label: "法律依据", component: AboutLaw },
-  { id: "rule", label: "竞猜规则", component: AboutRule },
-  { id: "pay", label: "补偿", component: AboutPay },
-  { id: "agent", label: "加盟代理", component: AboutAgent },
-  { id: "blame", label: "博彩责任", component: AboutBlame }
+  { id: "aboutus", label: t('about.aboutus'), component: AboutUs},
+  { id: "info", label: t('about.collectInformation'), component: AboutInfo },
+  { id: "law", label: t('about.legalBasis'), component: AboutLaw},
+  { id: "rule", label: t('about.bettingRules'), component: AboutRule},
+  { id: "blame", label: t('about.blame'), component: AboutBlame},
+  // { id: "aboutus", label: "关于我们", component: AboutUs },
+  // { id: "info", label: "资料收集", component: AboutInfo },
+  // { id: "law", label: "法律依据", component: AboutLaw },
+  // { id: "rule", label: "竞猜规则", component: AboutRule },
+  // { id: "pay", label: "补偿", component: AboutPay },
+  // { id: "agent", label: "加盟代理", component: AboutAgent },
+  // { id: "blame", label: "博彩责任", component: AboutBlame }
 ]);
 
 const route = useRoute();
@@ -74,6 +80,8 @@ onMounted(() => {
   padding: 10px 0;
   height: 100%;
   min-height: 1240px;
+  max-width: $maxwidth;
+  border-radius: 20px;
 
   .icon-selected-img {
     position: absolute;
@@ -103,7 +111,7 @@ onMounted(() => {
 
     .title {
       color: #424f72;
-      font-family: Microsoft YaHei;
+      ;
       font-size: 1.125rem;
       font-weight: 700;
       line-height: normal;

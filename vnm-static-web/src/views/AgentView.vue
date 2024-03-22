@@ -2,112 +2,111 @@
   <div class="wrapper">
     <div class="affiliate">
       <div class="affiliate-title">
-        <img src="../assets/images/affiliate/title.png" width="688">
+      <img src="../assets/logo.svg" style="width: 200px;">
+        {{ $t('affiliate.englishText') }}
       </div>
       <div class="affiliate-desc">
-        <img src="../assets/images/affiliate/professional-team.png" width="256">
-        <img src="../assets/images/affiliate/best-quality-service.png" width="256">
-        <img src="../assets/images/affiliate/official-partner.png" width="285">
+        <img src="../assets/images/affiliate/professional-team.png" height="55">
+        <img src="../assets/images/affiliate/best-quality-service.png" height="55">
+        <img src="../assets/images/affiliate/official-partner.png" height="55">
       </div>
       <div class="buttons">
-        <a :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')">加入我们</a>
-        <a class="outline" :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')">登录</a>
+        <a :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')">{{ $t('affiliate.joinus') }}</a>
+        <a class="outline" :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')">{{ $t('affiliate.login') }}</a>
         <a class="outline" @click.stop.prevent="store.openLiveChat()">
-          联系我们
+          {{ $t('affiliate.contactus') }}
         </a>
       </div>
       <div class="affiliate-join">
-        <img src="../assets/images/affiliate/join.png" width="696">
+        <img :src="require(`../assets/images/affiliate/join-${languageVal}.png`)" width="696">
       </div>
 
       <div class="affiliate-program">
         <div class="affiliate-subgroup agent-content-item">
           <div class="affiliate-sub">
-            <div class="affiliate-subtitle">电竞佣金方案</div>
-            <div class="affiliate-terms">分红条款</div>
+            <div class="affiliate-subtitle">{{ $t('affiliate.eSportsCommissionProgram') }}</div>
+            <div class="affiliate-terms">{{ $t('affiliate.bonusTerms') }}</div>
             <ul>
-              <li>月充值金额≥200元为活跃玩家,当月需要至少五个活跃会员才能结算佣金。</li>
-              <li>当月的佣金分佣发放时间为下个月的五号到十号会结算完毕。</li>
-              <li>佣金有系统直接发放到代理账户，无需流水，绑定银行卡后即可申请提款。</li>
-              <li>代理佣金计算方式：<br>
-                <span class="highlight">[（投注输赢额-优惠100%）-（存款+提款）*1.6%-平台费*8%]*佣金比例</span>
-              </li>
-              <li>代理推广每月至少需要新注册活跃会员达到3名，如无达到将视为无推广雷火平台，佣金减半，如果三个月累计新注册活跃会员未达到十位将会停用代理账户等待代理重新联系网站开启。</li>
+              <li>{{ $t('affiliate.activePlayerRequirement') }}</li>
+              <li>{{ $t('affiliate.commissionIssuance') }}</li>
+              <li>{{ $t('affiliate.directCommissionIssuance') }}</li>
+              <li>{{ $t('affiliate.commissionCalculation') }}</li>
+              <li>{{ $t('affiliate.promotionRequirement') }}</li>
             </ul>
           </div>
           <div class="affiliate-sub">
-            <div class="affiliate-subtitle">佣金如何计划</div>
+            <div class="affiliate-subtitle">{{ $t('affiliate.CommissionPlan') }}</div>
             <table>
               <tbody>
                 <tr>
-                  <th>代理</th>
-                  <th>盈利</th>
-                  <th>有效活跃会员</th>
-                  <th>佣金比例</th>
+                  <th style="text-align: left; padding-left: 10px;">{{ $t('affiliate.agent') }}</th>
+                  <th style="text-align: left; padding-left: 10px;">{{ $t('affiliate.profit') }}</th>
+                  <th>{{ $t('affiliate.activePlayers') }}</th>
+                  <th>{{ $t('affiliate.commissionRate') }}</th>
                 </tr>
                 <tr>
-                  <td>铜牌</td>
-                  <td>＜10W</td>
+                  <td style="text-align: left; padding-left: 10px;">{{ $t('affiliate.bronze') }}</td>
+                  <td style="text-align: left; padding-left: 10px;">＜10W</td>
                   <td>5</td>
                   <td>35%</td>
                 </tr>
                 <tr>
-                  <td>银牌</td>
-                  <td>10W-30W</td>
+                  <td style="text-align: left; padding-left: 10px;">{{ $t('affiliate.silver') }}</td>
+                  <td style="text-align: left; padding-left: 10px;">10W-30W</td>
                   <td>10</td>
                   <td>40%</td>
                 </tr>
                 <tr>
-                  <td>金牌</td>
-                  <td>30W-60W</td>
+                  <td style="text-align: left; padding-left: 10px;">{{ $t('affiliate.gold') }}</td>
+                  <td style="text-align: left; padding-left: 10px;">30W-60W</td>
                   <td>25</td>
                   <td>45%</td>
                 </tr>
                 <tr>
-                  <td>钻石</td>
-                  <td>60W-100W</td>
+                  <td style="text-align: left; padding-left: 10px;">{{ $t('affiliate.diamond') }}</td>
+                  <td style="text-align: left; padding-left: 10px;">60W-100W</td>
                   <td>50</td>
                   <td>50%</td>
                 </tr>
                 <tr>
-                  <td>皇冠</td>
-                  <td>＞100W</td>
+                  <td style="text-align: left; padding-left: 10px;">{{ $t('affiliate.crown') }}</td>
+                  <td style="text-align: left; padding-left: 10px;">＞100W</td>
                   <td>80</td>
                   <td>55%</td>
                 </tr>
               </tbody>
             </table>
-            <div class="agent-stress-tip">备注：盈利=线下会员在所有场馆的总输赢减去会员申请的所有优惠 </div>
+            <div class="agent-stress-tip">{{ $t('affiliate.profitExplanation') }}</div>
           </div>
         </div>
         <div class="affiliate-subgroup agent-content-item">
           <div class="affiliate-sub">
-            <div class="affiliate-subtitle">计算公式</div>
+            <div class="affiliate-subtitle">{{ $t('affiliate.CalculationFormula') }}</div>
             <div class="agent-demo">
               <div class="agent-demo-bg">
-                <div class="agent-demo-example-text">例子1： 存款1000元 提款0元 优惠申请100元</div>
+                <div class="agent-demo-example-text">{{ $t('affiliate.example') }} 1: {{ $t('affiliate.deposit1000') }}</div>
                 <div class="agent-demo-btm">
                   <div class="agent-demo-table">
                     <div class="agent-demo-table-tr">
-                      <div class="txt-left">平台输赢</div>
+                      <div class="txt-left">{{ $t('affiliate.platformWinLoss') }}</div>
                       <div class="txt-right">1100</div>
                     </div>
                   </div>
                   <div class="agent-demo-table">
                     <div class="agent-demo-table-tr">
-                      <div class="txt-left">扣除申请优惠</div>
+                      <div class="txt-left">{{ $t('affiliate.deductPromotion') }}</div>
                       <div class="txt-right">-100</div>
                     </div>
                   </div>
                   <div class="agent-demo-table">
                     <div class="agent-demo-table-tr">
-                      <div class="txt-left">扣除存提手续费1.6%</div>
+                      <div class="txt-left">{{ $t('affiliate.deductDepositWithdrawalFee') }}</div>
                       <div class="txt-right">-16</div>
                     </div>
                   </div>
                   <div class="agent-demo-table">
                     <div class="agent-demo-table-tr">
-                      <div class="txt-left">平台服务费</div>
+                      <div class="txt-left">{{ $t('affiliate.platformServiceFee') }}</div>
                       <div class="txt-right">88</div>
                     </div>
                   </div>
@@ -115,49 +114,49 @@
                 <div class="agent-demo-btm">
                   <div class="agent-demo-table">
                     <div class="agent-demo-table-tr">
-                      <div class="txt-left">盈利</div>
+                      <div class="txt-left">{{ $t('affiliate.profit') }}</div>
                       <div class="txt-right">896</div>
                     </div>
                   </div>
                   <div class="agent-demo-table">
                     <div class="agent-demo-table-tr">
-                      <div class="txt-left">乘以佣金比例</div>
+                      <div class="txt-left">{{ $t('affiliate.multiplyCommissionRate') }}</div>
                       <div class="txt-right">*35%</div>
                     </div>
                   </div>
                 </div>
                 <div class="agent-demo-table">
                   <div class="agent-demo-table-tr">
-                    <div class="txt-left">代理佣金</div>
+                    <div class="txt-left">{{$t('affiliate.agentCommission')}}</div>
                   <div class="txt-right">313.6</div>
                 </div>
               </div>
             </div>
 
             <div class="agent-demo-bg">
-              <div class="agent-demo-example-text">例子2：存款130000元 提款10000元 优惠申请2000元 余额500</div>
+              <div class="agent-demo-example-text">{{ $t('affiliate.example') }} 2 :{{ $t('affiliate.deposit130000')}}</div>
               <div class="agent-demo-btm">
                 <div class="agent-demo-table">
                   <div class="agent-demo-table-tr">
-                    <div class="txt-left">平台输赢</div>
-                    <div class="txt-right">122000</div>
+                    <div class="txt-left">{{$t('affiliate.platformWinLoss')}}</div>
+                <div class="txt-right">122000</div>
                   </div>
                 </div>
                 <div class="agent-demo-table">
                   <div class="agent-demo-table-tr">
-                    <div class="txt-left">扣除申请优惠</div>
+                    <div class="txt-left">{{$t('affiliate.deductPromotion')}}</div>
                     <div class="txt-right">-2000</div>
                   </div>
                 </div>
                 <div class="agent-demo-table">
                   <div class="agent-demo-table-tr">
-                    <div class="txt-left">扣除存提手续费1.6%</div>
+                    <div class="txt-left">{{$t('affiliate.deductDepositWithdrawalFee')}}1.6%</div>
                     <div class="txt-right">-2240</div>
                   </div>
                 </div>
                 <div class="agent-demo-table">
                   <div class="agent-demo-table-tr">
-                    <div class="txt-left">平台服务费</div>
+                    <div class="txt-left">{{$t('affiliate.platformServiceFee')}}</div>
                     <div class="txt-right">9760</div>
                   </div>
                 </div>
@@ -165,45 +164,50 @@
               <div class="agent-demo-btm">
                 <div class="agent-demo-table">
                   <div class="agent-demo-table-tr">
-                    <div class="txt-left">盈利</div>
+                    <div class="txt-left">{{$t('affiliate.profit')}}</div>
                     <div class="txt-right">108000</div>
                   </div>
                 </div>
                 <div class="agent-demo-table">
                   <div class="agent-demo-table-tr">
-                    <div class="txt-left">乘以佣金比例</div>
+                    <div class="txt-left">{{$t('affiliate.multiplyCommissionRate')}}</div>
                     <div class="txt-right">*40%</div>
                   </div>
                 </div>
               </div>
               <div class="agent-demo-table">
                 <div class="agent-demo-table-tr">
-                  <div class="txt-left">代理佣金</div>
+                  <div class="txt-left">{{$t('affiliate.agentCommission')}}</div>
                   <div class="txt-right">43200</div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="agent-stress-tip agent-margintop-normal">备注：存提手续费=存款加上提款总额的1.6%</div>
+          <div class="agent-stress-tip agent-margintop-normal">{{ $t('affiliate.transactionFeeNote') }}</div>
         </div>
       </div>
       <div>
         <a :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' +
           (affCode ? affCode : '')
-          " class="agent-reg-btn">立即申请代理</a>
+          " class="agent-reg-btn">{{ $t('affiliate.applyAgentNow') }}</a>
       </div>
     </div>
     </div>
   </div>
 </template>
 <script>
+import { i18nStore } from '@/store/language'
 import { defineComponent } from "vue";
 // import { useI18n } from "vue-i18n";
 import { userStore } from "@/store";
 import { getDevice } from "@/utils/utils";
 
+import { storeToRefs } from "pinia";  
+
 export default defineComponent({
   setup() {
+    const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
     // const { t } = useI18n();
     const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
       var left = (screen.width - popupWinWidth) * 2;
@@ -268,7 +272,7 @@ export default defineComponent({
       affCode,
       regDevice,
       store,
-      openWindow,
+      openWindow,languageVal
     };
   },
 });
@@ -284,20 +288,33 @@ export default defineComponent({
     background-position: top center;
     background-size: 100%;
     margin: 0 auto;
-    padding: 200px 20px 160px;
+    padding: 100px 20px 160px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap: 100px;
+    gap: 60px;
 
+    .affiliate-title {
+      gap: 10px;
+      display: flex;
+      flex-direction: column;
+      color: #424F72;
+      font-family: Poppins;
+      font-size: 40.79px;
+      font-weight: 700;
+      line-height: 70px;
+      text-align: left;
+      justify-content: center;
+      align-items: center;
+    }
     .affiliate-desc {
       display: flex;
       gap: 50px;
     }
     .buttons {
       display: flex;
-      gap: 50px;
+      gap: 30px;
       margin: 0 auto;
       justify-content: center;
       align-items: center;
@@ -310,6 +327,7 @@ export default defineComponent({
         line-height: 60px;
         color: #fff;
         font-size: 16px;
+        font-weight: bold;
         cursor: pointer;
         width: 100%;
         padding: 0px 50px;

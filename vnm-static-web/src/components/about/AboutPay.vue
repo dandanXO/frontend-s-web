@@ -23,7 +23,7 @@
   .info-section {
     margin: 20px 0 0 0;
     color: #424f72;
-    font-family: Microsoft YaHei;
+    ;
     font-weight: 700;
     line-height: 193.482%;
 

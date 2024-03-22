@@ -496,7 +496,7 @@ body {
   text-align: center;
   padding-top: 7rem;
   font-size: 3.5rem;
-  font-family: Microsoft YaHei;
+  ;
   font-weight: 700;
   background: #fffcc6;
   background: linear-gradient(180deg, #fffcc6 50%, #ffc760);
