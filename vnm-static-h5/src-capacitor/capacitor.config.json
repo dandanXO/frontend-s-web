@@ -1,0 +1,7 @@
+{
+  "appId": "com.lh.client",
+  "appName": "雷火",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}
