@@ -10,10 +10,10 @@
     @swiper="onSwiper"
   >
     <SwiperSlide>
-      <LoginRegisterPage siteId="4" />
+      <LoginRegisterPage siteId="8" />
     </SwiperSlide>
     <!--    <SwiperSlide>-->
-    <!--      <CustomerServicePage siteId="7" />-->
+    <!--      <CustomerServicePage siteId="8" />-->
     <!--    </SwiperSlide>-->
     <!--    <SwiperSlide>-->
     <!--      <SupportPage />-->
@@ -24,8 +24,8 @@
     <Scrollbar />
   </Swiper>
   <div v-if="isMobileView">
-    <LoginRegisterPage siteId="4" />
-    <CustomerServicePage siteId="4" />
+    <LoginRegisterPage siteId="8" />
+    <CustomerServicePage siteId="8" />
     <SupportPage />
   </div>
 </template>

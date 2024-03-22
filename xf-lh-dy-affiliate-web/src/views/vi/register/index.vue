@@ -396,7 +396,7 @@ export default defineComponent({
         });
       },
       handleRegister: () => {
-        state.loginForm.siteId = 4;
+        state.loginForm.siteId = 8;
         (loginFormRef.value).validate(async (valid) => {
           if (valid) {
             if (step.value === 1) {
