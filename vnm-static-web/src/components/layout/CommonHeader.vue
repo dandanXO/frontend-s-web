@@ -117,33 +117,35 @@
               </div>
             </span>
             <template #dropdown>
-              <el-dropdown-menu class="profile-info-dropdown-content">
+              <el-dropdown-menu style="min-width: 180px; display: flex;
+              flex-direction: column;
+              align-items: flex-start" class="profile-info-dropdown-content">
                 <el-dropdown-item command="personal">
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
                     <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
-                    <span>个人信息</span>
+                    <span>{{$t('menu.personalInfo')}}</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="deposit">
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
                     <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
-                    <span>充值中心</span>
+                    <span>{{$t('menu.deposit')}}</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="transfer">
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
                     <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
-                    <span>快速转账</span>
+                    <span>{{$t('menu.transfer')}}</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="promotion">
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
                     <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
-                    <span>优惠领取</span>
+                    <span>{{$t('menu.promotion')}}</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="logout">
-                  <button class="standard-button btn-color-white" style="color: #468cff">退出登录</button>
+                  <button class="standard-button btn-color-white" style="color: #468cff">{{$t('menu.logout')}}</button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>

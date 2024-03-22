@@ -1,12 +1,34 @@
 <template>
   <div class="about-info">
-    <div class="info-section">
-      <div class="desc">我们希望我们的用户在雷火享受到乐趣</div>
-      <div class="desc">博彩是娱乐的一种形式，同时不应该给您财务和感情生活带来负担</div>
-      <div class="desc">借钱来玩，花费超出预算或挪用其他用途的金钱不仅是不明智的</div>
-      <div class="desc">而且会给您和您身边的人带来严重的问题</div>
-      <div class="desc">我们希望您在雷火享受到乐趣，因此请负责任地投注并玩得开心！</div>
+    <div class="inner">
+    <p>{{ $t('about.intro') }}</p>
+    <ul>
+        <li>{{ $t('about.questions.question1') }}</li>
+        <li>{{ $t('about.questions.question2') }}</li>
+        <li>{{ $t('about.questions.question3') }}</li>
+        <li>{{ $t('about.questions.question4') }}</li>
+        <li>{{ $t('about.questions.question5') }}</li>
+        <li>{{ $t('about.questions.question6') }}</li>
+        <li>{{ $t('about.questions.question7') }}</li>
+        <li>{{ $t('about.questions.question8') }}</li>
+        <li>{{ $t('about.questions.question9') }}</li>
+        <li>{{ $t('about.questions.question10') }}</li>
+    </ul>
+    <p>{{ $t('about.signsOfGambling') }}</p>
+    <span class="content">{{ $t('about.adviceTitle') }}</span>
+    <ul class="bullet-ul">
+        <li>{{ $t('about.advice1') }}</li>
+        <li>{{ $t('about.advice2') }}</li>
+        <li>{{ $t('about.advice3') }}</li>
+        <li>{{ $t('about.advice4') }}</li>
+        <li>{{ $t('about.advice5') }}</li>
+    </ul>
+    <span class="content">{{ $t('about.tf88SupportTitle') }}</span>
+    <p>{{ $t('about.tf88SupportContent') }}</p>
+    <div class="note" style="color: orange; font-size: 16px;">
+        {{ $t('about.ageRestriction') }}
     </div>
+</div>
   </div>
 </template>
 
@@ -17,7 +39,7 @@
   .info-section {
     margin: 20px 0 0 0;
     color: #424f72;
-    font-family: Microsoft YaHei;
+    ;
     font-weight: 700;
     line-height: 193.482%;
 

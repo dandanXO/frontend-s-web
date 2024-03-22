@@ -73,7 +73,7 @@ defineProps(["title", "subtitle"]);
     text-align: center;
     text-transform: uppercase;
     color: #858585;
-    font-family: Microsoft YaHei;
+    ;
     font-size: 1.17363rem;
     font-weight: 400;
     line-height: normal;

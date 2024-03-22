@@ -1,5 +1,5 @@
 <template>
-  <router-view />
+  <router-view :class="{'roboto': languageVal === 'vi', 'poppins': languageVal === 'en' }" />
 </template>
 
 <script>
@@ -8,8 +8,13 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { memberAccessLog } from "@/api/index/login";
 import axios from "axios";
 
+
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from 'pinia'
 export default defineComponent({
   setup() {
+    const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
     const onlineStatTimeout = ref();
     const onlineStatInterval = ref();
 
@@ -71,6 +76,9 @@ export default defineComponent({
       clearTimeout(onlineStatTimeout);
       clearInterval(onlineStatInterval);
     })
+    return {
+      languageVal
+    }
   },
 });
 </script>
