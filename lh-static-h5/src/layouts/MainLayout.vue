@@ -46,7 +46,7 @@
       </q-scroll-area>
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container :class="isLowSafari ? 'is-low-safari' : ''">
       <router-view v-slot="{ Component }">
         <KeepAlive :max="8" :exclude="excludeAliveComponents">
           <component :is="Component" />
@@ -116,6 +116,8 @@ export default defineComponent({
     const hasDrawer = ref(false);
     const hasShadow = ref(false);
     const leftDrawerOpen = ref(false);
+
+    const isLowSafari = ref(false);
 
     const logout = () => {
       store.memberLogout().then(() => {
@@ -411,7 +413,32 @@ export default defineComponent({
 
     onMounted(() => {
       checkRoute();
+
+      if (isSafari12OrLower()) {
+        isLowSafari.value= true;
+      } else {
+        isLowSafari.value= false
+      }
     });
+
+    function isSafari12OrLower() {
+      var safariVersion = getSafariVersion();
+      return safariVersion > 0 && safariVersion <= 12;
+    }
+
+    function getSafariVersion() {
+      var ua = navigator.userAgent.toLowerCase();
+      if (ua.indexOf('safari') !== -1) {
+        if (ua.indexOf('version') !== -1) {
+          return parseInt(ua.split('version/')[1].split(' ')[0]);
+        } else {
+          return parseInt(ua.split('safari/')[1].split(' ')[0]);
+        }
+      }
+      return -1; // 非 Safari 浏览器
+    }
+
+
     return {
       tab: ref("home"),
       leftDrawerOpen,
@@ -443,7 +470,8 @@ export default defineComponent({
         "BindBankCard",
         "BindCryptoView",
         "BindEWalletView"
-      ]
+      ],
+      isLowSafari
     };
   }
 });

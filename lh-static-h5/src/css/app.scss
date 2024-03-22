@@ -79,6 +79,53 @@ a:focus {
   // margin-bottom: calc(70px + env(safe-area-inset-top) + env(safe-area-inset-bottom)) !important;
 }
 
+.q-page-container {
+  &.is-low-safari {
+    //background-color: lightblue;
+    .game-right-platform {
+      .game-lists {
+        min-height: 520px;
+      }
+      #live-lists{
+        min-height: 900px;
+      }
+      #fishing-lists{
+        min-height: 130px;
+      }
+      #lottery-lists{
+        min-height: 130px;
+      }
+    }
+
+    .login-container .logo img{
+      height: 66px;
+      width: 135px;
+    }
+
+    .acct-nav .acct-menu{
+      height: 230px;
+    }
+
+    .affiliate-container .ambassador .ambassador-img{
+      height: 140px;
+    }
+    .download-top-container .download-top-box{
+      flex-wrap: nowrap;;
+    }
+    .bank-detail-container .bank-detail-wrapper .bank-card .left-container .bank-name img{
+      width: 30px;
+      height: 30px;
+    }
+    .q-carousel.home{
+      min-height: 150px;
+
+      .q-panel > div {
+        min-height: 150px;
+      }
+    }
+  }
+}
+
 .q-scrollarea__content {
   width: 100%;
   height: 100%;
