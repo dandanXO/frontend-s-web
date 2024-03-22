@@ -84,6 +84,8 @@
         :data="page.records"
         v-loading="page.loading"
         row-key="affiliateId"
+        :load="loadChildren"
+        lazy
         :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
         :empty-text="t('fields.noData')"
         highlight-current-row
@@ -466,6 +468,7 @@ import { hasRole, hasPermission } from '../../../utils/util'
 import moment from 'moment'
 import {
   getAffiliateSummary,
+  getAffiliateChildSummary,
   getAffiliateSummaryNewMember,
 } from '../../../api/affiliate-record'
 import { getSiteListSimple } from '../../../api/site'
@@ -592,6 +595,16 @@ async function loadRecord() {
   page.records = ret.records
   page.total = ret.total
   page.loading = false
+}
+
+async function loadChildren(tree, treeNode, resolve) {
+  const query = {}
+  console.log('load children')
+  query.recordTime = tree.recordTime
+  query.parentAffiliateId = tree.affiliateId
+  query.siteId = request.siteId
+  const { data: children } = await getAffiliateChildSummary(query)
+  resolve(children)
 }
 
 function showDialog(type, affiliateId) {
