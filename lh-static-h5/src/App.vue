@@ -13,12 +13,14 @@ import { userStore } from "src/stores";
 import axios from "axios";
 import { cached } from "boot/cache";
 import { getVisitorId } from "boot/utils";
+import { useUI } from "stores/ui";
 
 export default defineComponent({
   name: "App",
   setup() {
     var qs = require("qs");
     const store = userStore();
+    const ui = useUI();
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(false);
     const onlineStatTimeout = ref();
@@ -66,6 +68,8 @@ export default defineComponent({
 
           // debugger;
           CSAUrl = urlData.hostname;
+          ui.CSAUrl= urlData.hostname;
+
           initCsWeb();
           console.log(CSAUrl);
         })
