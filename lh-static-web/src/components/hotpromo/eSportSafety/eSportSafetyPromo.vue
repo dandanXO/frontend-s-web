@@ -475,7 +475,7 @@ onMounted(() => {
     justify-content: space-around;
     align-items: center;
     background: url(../../../assets/images/promotion/hotpromo/esportSafety/vsbg.png) no-repeat center center;
-    background-size: 105%;
+    background-size: 105% 100%;
     .info-team {
       display: flex;
       flex-direction: column;
