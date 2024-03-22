@@ -20,7 +20,9 @@ export default {
     "transactionRecord": "Lịch sử giao dịch",
     "personalInfo": "Thông tin cá nhân",
     "mailbox": "Hòm thư",
-    logout: "Đăng xuất"
+    logout: "Đăng xuất",
+    futureGaming: 'Tương lai của trò chơi đã đến. Các trò chơi tuyệt vời trên tất cả các thiết bị.',
+    scanToDownload: 'Quét để tải ứng dụng'
   },
     "account": {
       "welcome": "Chào mừng",

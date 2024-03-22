@@ -20,7 +20,9 @@ export default {
     transactionRecord: 'Transaction record',
     personalInfo: 'Personal information',
     mailbox: 'Mailbox',
-    logout: 'Logout'
+    logout: 'Logout',
+    futureGaming: 'The future of gaming is here.Great games on all devices.TF88 App',
+    scanToDownload: 'Scan to download the APP'
   },
   account: {
     welcome: 'Welcome',
