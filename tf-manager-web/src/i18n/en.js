@@ -933,7 +933,7 @@ export default {
     memberBankCard: 'Member Bank Card',
     memberBankCardRecord: 'Member Bank Card Record',
     memberBetRecord: 'Member Bet Record',
-    memberBetRecordByPlatform: 'Member Platform Bet Record',
+    memberBetRecordByPlatform: 'Platform Bet Summary',
     memberCommission: 'Member Commission',
     memberConsolidateReport: 'Member Consolidate Report',
     memberDetailDeposit: 'Total Deposit Amount',
