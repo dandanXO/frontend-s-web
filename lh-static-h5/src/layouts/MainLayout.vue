@@ -58,28 +58,28 @@
         <q-route-tab to="/" name="home" exact>
           <img class="inactive" src="../assets/images/footer/home-icon.svg" />
           <img class="hover" src="../assets/images/footer/home-icon-active.svg" />
-          首页
+          <span>首页</span>
         </q-route-tab>
         <q-route-tab to="/account/transfer" name="transfer">
           <img class="inactive" src="../assets/images/footer/withdraw-icon.svg" />
           <img class="hover" src="../assets/images/footer/withdraw-icon-active.svg" />
-          账户
+          <span>账户</span>
         </q-route-tab>
         <q-route-tab to="/promo" name="promo">
           <img class="inactive" src="../assets/images/footer/promo-icon.svg" />
           <img class="hover" src="../assets/images/footer/promo-icon-active.svg" />
-          优惠
+          <span>优惠</span>
         </q-route-tab>
         <q-route-tab class="cs-web-id" to="/liveChat" id="cs-web-id" name="live">
           <img class="inactive" src="../assets/images/footer/chat-icon.svg" />
           <img class="hover" src="../assets/images/footer/chat-icon-active.svg" />
-          客服
+          <span>客服</span>
         </q-route-tab>
 
         <q-route-tab to="/account" name="account">
           <img class="inactive" src="../assets/images/footer/account-icon.svg" />
           <img class="hover" src="../assets/images/footer/account-icon-active.svg" />
-          我的
+          <span>我的</span>
         </q-route-tab>
       </q-tabs>
     </q-footer>
