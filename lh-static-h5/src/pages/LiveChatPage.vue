@@ -10,15 +10,46 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, onActivated, onMounted, ref } from "vue";
 import { useQuasar, Platform } from "quasar"
 import { userStore } from "stores/index"
+import { useUI } from "stores/ui";
 
 export default defineComponent({
   setup() {
     const $q = useQuasar();
     const store = userStore();
+    const ui= useUI()
     const regDevice = store.getDeviceType();
+
+    onMounted(() => {
+      if (isSafari12OrLower()) {
+        // alert("TIS")
+        const newWin = window.open(`/`, "_self");
+        if(newWin){
+          newWin.location.href = `https://${ui.CSAUrl}?partnerCode=LHCS&lang=zh-CN`;
+        }
+      }
+    })
+
+    function isSafari12OrLower() {
+      var safariVersion = getSafariVersion();
+      return safariVersion > 0 && safariVersion <= 12;
+    }
+
+    function getSafariVersion() {
+      var ua = navigator.userAgent.toLowerCase();
+      if (ua.indexOf('safari') !== -1) {
+        if (ua.indexOf('version') !== -1) {
+          return parseInt(ua.split('version/')[1].split(' ')[0]);
+        } else {
+          return parseInt(ua.split('safari/')[1].split(' ')[0]);
+        }
+      }
+      return -1; // 非 Safari 浏览器
+    }
+
+
     return {
       regDevice,
       store
