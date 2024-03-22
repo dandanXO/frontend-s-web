@@ -609,7 +609,7 @@
             <el-button
               size="mini"
               type="success"
-              v-permission="['sys:affiliate:update:change:risk']"
+              v-permission="['sys:affiliate:update:risk']"
               @click="showDialog('RISK', scope.row)"
             >
               {{ t('fields.riskLevel') }}
