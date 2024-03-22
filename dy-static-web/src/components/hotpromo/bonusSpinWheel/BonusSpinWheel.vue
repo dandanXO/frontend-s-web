@@ -94,7 +94,7 @@ const TOTAL_ITEMS = 8;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
-const SPIN_WHEEL_PRIZES = [8, 1888, 18, 188, 88, 588, 58, 888];
+const SPIN_WHEEL_PRIZES = [1888, -1, 8, 18, 88, 188, 588, 888];
 
 // spin wheel element refs
 const spinBoardRef = ref();
@@ -197,7 +197,11 @@ const spinWheel = () => {
   getSpinWheelPrize()
     .then((res) => {
       if (res.code == 0) {
-        const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === res.data.bonus);
+        var bonusIndex = res.data.bonus;
+        if (res.data.type === "CONSOLATION") {
+          bonusIndex = -1;
+        }
+        const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
 
         spin(prizeIndex, () => {
           showPrizePopup.value = true;
