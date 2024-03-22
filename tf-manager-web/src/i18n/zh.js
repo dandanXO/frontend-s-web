@@ -1317,7 +1317,7 @@ export default {
     totalBonus: '总奖金',
     totalCommission: '总分红',
     totalCommissionProfit: '佣金',
-    totalCompanyProfit: '公司实际盈利',
+    totalCompanyProfit: '会员实际盈利',
     totalDeductAmount: '总扣除金额',
     totalDeposit: '总存款',
     totalDepositAmount: '存款总额',
