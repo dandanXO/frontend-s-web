@@ -10,9 +10,16 @@ const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
 const crArray = process.env.VUE_APP_CR_API.split(",");
 
-var rstApi = getInitApi(rstArray, "LH_WEB_RST_URL");
-var crtApi = getInitApi(crArray, "LH_WEB_CRT_URL");
-var evtApi = getInitApi(evtArray, "LH_WEB_EVT_URL");
+const isGlobalLH = window.location.hostname.indexOf("lh318") > -1;
+if (isGlobalLH) {
+  var rstApi = "https://aptvpnubglgl.conoibue6er.com";
+  var evtApi = "https://przl4oufglgl.anpoxuaq9ae.com";
+  var crtApi = "https://caxlzwt2glgl.inc8ozys5we.com";
+} else {
+  var rstApi = getInitApi(rstArray, "LH_WEB_RST_URL");
+  var crtApi = getInitApi(crArray, "LH_WEB_CRT_URL");
+  var evtApi = getInitApi(evtArray, "LH_WEB_EVT_URL");
+}
 
 function getInitApi(apiLinks, urlLsName) {
   var successRstUrl = localStorage.getItem(urlLsName);

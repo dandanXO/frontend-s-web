@@ -11,9 +11,16 @@ const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
 
-var rstApi = getInitApi(rstArray, "LH_H5_RST_URL");
-var evtApi = getInitApi(evtArray, "LH_H5_EVT_URL");
-var crtApi = getInitApi(crtArray, "LH_H5_CRT_URL");
+const isGlobalLH = window.location.hostname.indexOf("lh318") > -1;
+if (isGlobalLH) {
+  var rstApi = "https://apc2ttgdgl.grsib6dfily.com";
+  var evtApi = "https://pr5z5egdgl.grsib6dfily.com";
+  var crtApi = "https://cad5kegdgl.grsib6dfily.com";
+} else {
+  var rstApi = getInitApi(rstArray, "LH_H5_RST_URL");
+  var evtApi = getInitApi(evtArray, "LH_H5_EVT_URL");
+  var crtApi = getInitApi(crtArray, "LH_H5_CRT_URL");
+}
 
 const api = axios.create({ baseURL: rstApi });
 const cashier = axios.create({ baseURL: crtApi });
