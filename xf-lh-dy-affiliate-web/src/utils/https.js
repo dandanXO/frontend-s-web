@@ -109,6 +109,7 @@ const https = (api) => {
   const thaiHost = "affiliate-web.monemental.com"
   const indHost = "ind-nfaet6t.exerpsison.com"
   const lhHost = "lh1-affiliate.phoicynxeey.com"
+  const lh2Host = "lh1-affiliate.lhf2ifpudro.com"
   const isAff = api === 'affiliate'
   const isCr = api === 'cashier'
   let apiUrl = process.env.VUE_APP_RST_API
@@ -123,6 +124,10 @@ const https = (api) => {
 
     case lhHost:
       apiUrl = isAff ? process.env.VUE_APP_LH_RST_API : (isCr ? process.env.VUE_APP_LH_CR_API : process.env.VUE_APP_LH_BASE_API)
+      break
+
+    case lh2Host:
+      apiUrl = isAff ? process.env.VUE_APP_LH2_RST_API : (isCr ? process.env.VUE_APP_LH2_CR_API : process.env.VUE_APP_LH2_BASE_API)
       break
 
     default:
