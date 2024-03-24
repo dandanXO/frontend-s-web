@@ -244,9 +244,9 @@ export default defineComponent({
         if(res.code === 0) {
           promoState.promoList.push(...res.data);
           res.data.forEach(element => {
-            if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-              promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-            } else {
+            // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+            //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+            // } else {
               if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3') {
                 if (element.redirectUrl === 'lh1-invite') {
                   showPromoDetails(element)
@@ -260,7 +260,7 @@ export default defineComponent({
               if (element.redirectUrl === route.query.name) {
                 showPromoDetails(element)
               }
-            }
+            // }
           });
         }
       }).catch((e) => { console.log("error", e); });
