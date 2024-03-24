@@ -89,6 +89,7 @@
               (val) => (val && val.length > 0) || '请输入提款金额',
               (val) => val >= selectedWithdrawalMethod.withdrawMin || '请输入正确的提款金额',
               (val) => val <= selectedWithdrawalMethod.withdrawMax || '请输入正确的提款金额',
+              (val) => (val && /^\d+$/.test(val))  || '提款金额不能有小数',
               isValidUSDTAmt,
             ]"
             clearable
