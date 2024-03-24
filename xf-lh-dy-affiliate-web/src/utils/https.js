@@ -113,8 +113,6 @@ const https = (api) => {
   const isAff = api === 'affiliate'
   const isCr = api === 'cashier'
   let apiUrl = process.env.VUE_APP_RST_API;
-  console.log("Check Addr");
-  console.log(currentHost);
   switch (currentHost) {
     case thaiHost:
       apiUrl = isAff ? process.env.VUE_APP_TH_RST_API : (isCr ? process.env.VUE_APP_TH_CR_API : process.env.VUE_APP_TH_BASE_API)
@@ -124,12 +122,12 @@ const https = (api) => {
       apiUrl = isAff ? process.env.VUE_APP_IND_RST_API : (isCr ? process.env.VUE_APP_IND_CR_API : process.env.VUE_APP_IND_BASE_API)
       break
 
-    case lh2Host:
-      apiUrl = isAff ? process.env.VUE_APP_LH2_RST_API : (isCr ? process.env.VUE_APP_LH2_CR_API : process.env.VUE_APP_LH2_BASE_API)
-      break
-
     case lhHost:
       apiUrl = isAff ? process.env.VUE_APP_LH_RST_API : (isCr ? process.env.VUE_APP_LH_CR_API : process.env.VUE_APP_LH_BASE_API)
+      break
+
+    case lh2Host:
+      apiUrl = isAff ? process.env.VUE_APP_LH2_RST_API : (isCr ? process.env.VUE_APP_LH2_CR_API : process.env.VUE_APP_LH2_BASE_API)
       break
 
     default:
