@@ -48,11 +48,14 @@ const onResponse = (response) => {
     res = JSON.parse(response.data);
   }
   if (res.code !== ResponseCode.SUCCESS) {
+    // debugger;
     if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
       ElMessage({
         message: "Duplicated login.",
         type: "error"
       });
+      const store = useStore()
+      store.dispatch(UserActionTypes.ACTION_LOGOUT);
       location.reload();
     } else if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
       res.code === ResponseCode.ERROR_TOKEN_MISSED ||
@@ -63,6 +66,8 @@ const onResponse = (response) => {
         message: "Please re-login. Code: " + res.code,
         type: "error"
       });
+      const store = useStore()
+      store.dispatch(UserActionTypes.ACTION_LOGOUT);
       location.reload();
     } else {
       // const router = useRouter()
@@ -104,6 +109,7 @@ const https = (api) => {
   const thaiHost = "affiliate-web.monemental.com"
   const indHost = "ind-nfaet6t.exerpsison.com"
   const lhHost = "lh1-affiliate.phoicynxeey.com"
+  const lh2Host = "lh1-affiliate.lhf2ifpudro.com"
   const isAff = api === 'affiliate'
   const isCr = api === 'cashier'
   let apiUrl = process.env.VUE_APP_RST_API
@@ -118,6 +124,10 @@ const https = (api) => {
 
     case lhHost:
       apiUrl = isAff ? process.env.VUE_APP_LH_RST_API : (isCr ? process.env.VUE_APP_LH_CR_API : process.env.VUE_APP_LH_BASE_API)
+      break
+
+    case lh2Host:
+      apiUrl = isAff ? process.env.VUE_APP_LH2_RST_API : (isCr ? process.env.VUE_APP_LH2_CR_API : process.env.VUE_APP_LH2_BASE_API)
       break
 
     default:

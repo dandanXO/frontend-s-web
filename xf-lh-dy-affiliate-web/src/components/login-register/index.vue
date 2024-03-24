@@ -1,6 +1,10 @@
 <template>
-  <div class="firstPage"
-       :class="[props.siteId !== '5' ? '' : 'ind-firstPage', props.siteId !== '7' ? '' : 'lh']"
+  <div
+    class="firstPage"
+    :class="[
+      props.siteId !== '5' ? '' : 'ind-firstPage',
+      props.siteId !== '7' ? '' : 'lh',
+    ]"
   >
     <div class="inner">
       <div class="loginPage">
@@ -14,7 +18,9 @@
         <div class="right">
           <div class="bg">
             <div class="top">
-              <div class="log">{{ isReg ? $t('common.signup') : $t('common.login') }}</div>
+              <div class="log">
+                {{ isReg ? $t('common.signup') : $t('common.login') }}
+              </div>
               <!--              <div class="topright" v-if="props.siteId !== '5'">-->
               <!--                <span class="noaccabs">-->
               <!--                  {{ isReg ? '已经有账号? ' : '没有帐户？' }}-->
@@ -37,7 +43,9 @@
                   <el-input
                     ref="userNameRef"
                     v-model="loginForm.userName"
-                    :placeholder="currentSite.lang === 'EN' ? 'Username' : '用户名'"
+                    :placeholder="
+                      currentSite.lang === 'EN' ? 'Username' : '用户名'
+                    "
                     name="username"
                     type="text"
                     tabindex="1"
@@ -57,7 +65,9 @@
                       ref="passwordRef"
                       v-model="loginForm.password"
                       :type="passwordType"
-                      :placeholder="currentSite.lang === 'EN' ? 'Password' : '密码'"
+                      :placeholder="
+                        currentSite.lang === 'EN' ? 'Password' : '密码'
+                      "
                       name="password"
                       tabindex="2"
                       autocomplete="no-fill"
@@ -67,7 +77,13 @@
                     />
                   </el-form-item>
                 </el-tooltip>
-
+                <div style="margin:20px 0px">
+                  <el-link type="primary" @click="forgetPasswordDialog">
+                    {{
+                      currentSite.lang === 'EN' ? 'Forget Password' : '忘记密码'
+                    }}
+                  </el-link>
+                </div>
                 <div class="flex-c-center-div">
                   <el-button
                     class="common-btn"
@@ -87,11 +103,11 @@
                   </el-button>
                 </div>
 
-                <div v-if="props.siteId !== '5' " class="flex-c-center-div">
+                <div v-if="props.siteId !== '5'" class="flex-c-center-div">
                   <div class="contact-div" @click="swipeToContactUs">
-                    {{ $t('common.contact_us') }}</div>
+                    {{ $t('common.contact_us') }}
+                  </div>
                 </div>
-
               </el-form>
               <el-form
                 v-if="isReg"
@@ -106,7 +122,11 @@
                     <el-input
                       ref="userNameRef"
                       v-model="regForm.userName"
-                      :placeholder="currentSite.lang === 'EN' ? 'Affiliate Account' : '合营账户'"
+                      :placeholder="
+                        currentSite.lang === 'EN'
+                          ? 'Affiliate Account'
+                          : '合营账户'
+                      "
                       name="userName"
                       type="text"
                       tabindex="1"
@@ -125,7 +145,9 @@
                         ref="passwordRef"
                         v-model="regForm.password"
                         :type="passwordType"
-                        :placeholder="currentSite.lang === 'EN' ? 'Password' : '密码'"
+                        :placeholder="
+                          currentSite.lang === 'EN' ? 'Password' : '密码'
+                        "
                         name="password"
                         tabindex="2"
                         autocomplete="on"
@@ -146,7 +168,11 @@
                         ref="confirmPwdRef"
                         v-model="regForm.confirmPwd"
                         :type="passwordType"
-                        :placeholder="currentSite.lang === 'EN' ? 'Confirm Password' : '密码确认'"
+                        :placeholder="
+                          currentSite.lang === 'EN'
+                            ? 'Confirm Password'
+                            : '密码确认'
+                        "
                         name="password"
                         tabindex="3"
                         autocomplete="on"
@@ -189,9 +215,10 @@
                       {{ $t('common.back_login') }}
                     </el-button>
                   </div>
-                  <div v-if="props.siteId !== '5' " class="flex-c-center-div">
+                  <div v-if="props.siteId !== '5'" class="flex-c-center-div">
                     <div class="contact-div" @click="swipeToContactUs">
-                      {{ $t('common.contact_us') }}</div>
+                      {{ $t('common.contact_us') }}
+                    </div>
                   </div>
                 </div>
                 <!--div v-if="step === 2">
@@ -284,9 +311,16 @@
     @close="onCloseDialog"
     :title="$t('common.verification_title') + words.join(' , ')"
   >
+    <template #title>
+      <span class="verification-title">
+        {{ $t('common.verification_title') }}
+      </span>
+      <span style="font-weight: bold;">
+        {{ words.join(' , ') }}
+      </span>
+    </template>
     <div
       id="loadDiv"
-      style="display: flex; flex-direction: column; margin-top: -30px"
       v-loading="dialogLoading"
     >
       <el-image
@@ -353,6 +387,139 @@
       {{ index + 1 }}
     </div>
   </div>
+  <el-dialog
+    v-model="showPasswordDialog"
+    :title="t('fields.forgetPassword')"
+  >
+    <el-steps :active="passwordStep" align-center>
+      <el-step :title="t('forgetPassword.verifyAuth')" />
+      <el-step :title="t('forgetPassword.verifyQues')" />
+      <el-step :title="t('forgetPassword.resetPassword')" />
+    </el-steps>
+    <div class="auth-container" v-if="passwordStep === 1">
+      <div class="auth-title">{{ $t('forgetPassword.messageAuth') }}</div>
+      <el-form
+        ref="googleAuthFormRef"
+        :model="googleAuthForm"
+        :rules="googleAuthRules"
+        class="login-form"
+        autocomplete="no-fill"
+        label-width="100px"
+      >
+        <el-form-item prop="loginName" :label="t('fields.loginName')">
+          <el-input
+            v-model="googleAuthForm.loginName"
+            :placeholder="t('fields.loginName')"
+            name="loginName"
+            type="text"
+            autocomplete="no-fill"
+          />
+        </el-form-item>
+        <el-form-item prop="code" :label="t('google.auth_code')">
+          <el-input
+            v-model="googleAuthForm.code"
+            :placeholder="t('google.auth_code')"
+            name="code"
+            maxlength="6"
+            @keypress="restrictIntegerInput($event)"
+          />
+        </el-form-item>
+        <div class="flex-c-center-div">
+          <el-button
+            class="common-btn"
+            type="danger"
+            @click="submitVerifyGoogle"
+          >
+            {{ $t('forgetPassword.verify') }}
+          </el-button>
+        </div>
+      </el-form>
+    </div>
+    <div class="auth-container" v-if="passwordStep === 2">
+      <el-form
+        ref="quesAuthFormRef"
+        :model="quesAuthForm"
+        :rules="quesAuthRules"
+        class="login-form"
+        autocomplete="no-fill"
+        label-position="top"
+      >
+        <div class="auth-title">{{ $t('forgetPassword.messageQues') }}</div>
+        <div>
+          <span>{{ securityQuestion.question[securityQuestion.currentIndex] }}</span>
+          <el-link
+            icon="el-icon-refresh"
+            :underline="false"
+            style="margin:20px"
+            @click="nextQuestion()"
+          />
+        </div>
+        <el-form-item prop="answer">
+          <el-input
+            v-model="quesAuthForm.answer"
+            :placeholder="t('forgetPassword.answer')"
+            name="answer"
+            type="text"
+            autocomplete="no-fill"
+          />
+        </el-form-item>
+        <div class="flex-c-center-div">
+          <el-button
+            class="common-btn"
+            type="danger"
+            @click="submitVerifyQues"
+          >
+            {{ $t('forgetPassword.submit') }}
+          </el-button>
+        </div>
+      </el-form>
+    </div>
+    <div class="auth-container" v-if="passwordStep === 3">
+      <el-form
+        ref="resetFormRef"
+        :model="resetForm"
+        :rules="resetRules"
+        class="login-form"
+        autocomplete="no-fill"
+        label-width="100px"
+      >
+        <div class="auth-title">{{ $t('forgetPassword.messageReset') }}</div>
+        <el-form-item prop="password" :label="t('fields.newPassword')">
+          <el-input
+            v-model="resetForm.password"
+            :placeholder="t('fields.newPassword')"
+            name="password"
+            :type="passwordType"
+            tabindex="2"
+            autocomplete="on"
+            @keyup="checkCapslock"
+            @blur="capsTooltip = false"
+          />
+        </el-form-item>
+        <el-form-item prop="confirmPassword" :label="t('fields.confirmNewPassword')">
+          <el-input
+            v-model="resetForm.confirmPassword"
+            :placeholder="t('fields.confirmNewPassword')"
+            name="confirmPassword"
+            :type="passwordType"
+            tabindex="2"
+            autocomplete="on"
+            @keyup="checkCapslock"
+            @blur="capsTooltip = false"
+          />
+        </el-form-item>
+        <div class="flex-c-center-div">
+          <el-button
+            class="common-btn"
+            type="danger"
+            @click="submitResetPassword"
+          >
+            {{ $t('forgetPassword.reset') }}
+          </el-button>
+        </div>
+      </el-form>
+    </div>
+  </el-dialog>
 </template>
 <script>
 import {
@@ -367,28 +534,44 @@ import {
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { UserActionTypes } from '@/store/modules/user/action-types'
-import { ElNotification } from 'element-plus'
+import { ElNotification, ElMessage } from 'element-plus'
 import dyLogo from '@/assets/images/dy/logowhitee.png'
 import xfLogo from '@/assets/images/xf/logowhitee.png'
 import indLogo from '@/assets/images/ind/ind-logo.png'
 import lhLogo from '@/assets/images/lh/logo.png'
+import viLogo from '@/assets/images/vi/vilogo.svg'
 import { getVerificationImage } from '@/api/verification'
-import { getVerificationCode } from '@/api/user'
-import { useI18n } from "vue-i18n";
-import { i18nStore } from "@/store/language";
+import {
+  getVerificationCode,
+  verifyGoogleAuthentication,
+  getSecurityQuestionsList,
+  verifySecurityQuestions,
+  resetLoginPassword,
+} from '@/api/user'
+import { useI18n } from 'vue-i18n'
+import { i18nStore } from '@/store/language'
 
 export default defineComponent({
   props: {
     siteId: {
       type: [String, Number], // Specify the allowed types for the prop
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
     const validatePass2 = async (r, v) => {
       if (v === '') {
         return Promise.reject(new Error('密码确认不能为空'))
       } else if (v !== state.regForm.password) {
+        return Promise.reject(new Error('与登录密码不一致'))
+      } else {
+        return Promise.resolve()
+      }
+    }
+    const validateResetPass2 = async (r, v) => {
+      if (v === '') {
+        return Promise.reject(new Error('密码确认不能为空'))
+      } else if (v !== state.resetForm.password) {
         return Promise.reject(new Error('与登录密码不一致'))
       } else {
         return Promise.resolve()
@@ -438,6 +621,10 @@ export default defineComponent({
     const { t } = useI18n()
     const hasAffiliate = ref(false)
     const step = ref(1)
+    const passwordStep = ref(1)
+    const googleAuthFormRef = ref(null)
+    const quesAuthFormRef = ref(null)
+    const resetFormRef = ref(null)
     const state = reactive({
       loginForm: {
         userName: '',
@@ -456,9 +643,9 @@ export default defineComponent({
           {
             required: true,
             pattern: /^[a-zA-Z1-9][a-zA-Z0-9]*$/,
-            message: "代理账号只能有数字或字母组成",
-            trigger: "blur"
-          }
+            message: '代理账号只能有数字或字母组成',
+            trigger: 'blur',
+          },
         ],
         password: [
           {
@@ -568,6 +755,70 @@ export default defineComponent({
           },
         ],
       },
+      googleAuthForm: {
+        loginName: '',
+        code: '',
+      },
+      googleAuthRules: {
+        loginName: [
+          {
+            required: true,
+            message: t('message.requiredLoginName'),
+            trigger: 'blur',
+          },
+          {
+            required: true,
+            pattern: /^[a-zA-Z1-9][a-zA-Z0-9]*$/,
+            message: '代理账号只能有数字或字母组成',
+            trigger: 'blur',
+          },
+        ],
+        code: [
+          {
+            required: true,
+            message: t('google.google_auth_code'),
+            trigger: 'blur',
+          },
+        ],
+      },
+      quesAuthForm: {
+        answer: '',
+        questionNumber: '',
+      },
+      quesAuthRules: {
+        answer: [
+          {
+            required: true,
+            message: t('message.requiredAnswer'),
+            trigger: 'blur',
+          }
+        ]
+      },
+      resetForm: {
+        password: '',
+        confirmPassword: '',
+      },
+      resetRules: {
+        password: [
+          {
+            required: true,
+            message: '登录密码不能为空',
+            trigger: 'blur',
+          },
+          {
+            min: 6,
+            max: 12,
+            message: '由6-12位数字或字母组成',
+            trigger: 'blur',
+          },
+        ],
+        confirmPassword: [
+          {
+            validator: validateResetPass2,
+            trigger: 'blur',
+          },
+        ],
+      },
       passwordType: 'password',
       showDialog: false,
       capsTooltip: false,
@@ -581,6 +832,12 @@ export default defineComponent({
       imageOffSetWidth: 200,
       imageOffSetHeight: 100,
       resultDisplay: 'none',
+      showPasswordDialog: false,
+      securityQuestion: {
+        question: [],
+        currentIndex: 0,
+      },
+      twoFaCode: '',
     })
     function disabledDate(time) {
       return time.getTime() > new Date().getTime()
@@ -706,8 +963,8 @@ export default defineComponent({
       onClickImage: e => {
         if (state.coordinates.length < 5) {
           var image = document.getElementById('imageRef')
-          var x = e.pageX - image.getBoundingClientRect().x
-          var y = e.pageY - image.getBoundingClientRect().y
+          var x = e.clientX - image.getBoundingClientRect().x
+          var y = e.clientY - image.getBoundingClientRect().y
           var storeX = x
           var storeY = y
           if (image.getBoundingClientRect().x !== 200) {
@@ -715,10 +972,10 @@ export default defineComponent({
             storeY = (y / image.offsetHeight) * 100
           }
           state.coordinates.push({
-            displayLeft: image.getBoundingClientRect().x + x - 12,
-            displayTop: image.getBoundingClientRect().y + y - 12,
-            left: x,
-            top: y,
+            displayLeft: e.pageX - 12,
+            displayTop: e.pageY - 12,
+            left: e.pageX - image.getBoundingClientRect().x,
+            top: e.pageY - image.getBoundingClientRect().y,
             x: storeX,
             y: storeY,
           })
@@ -779,6 +1036,70 @@ export default defineComponent({
         })
         state.dialogLoading = false
       },
+      forgetPasswordDialog: () => {
+        passwordStep.value = 1
+        state.googleAuthForm.loginName = ''
+        state.googleAuthForm.code = ''
+        state.quesAuthForm.answer = ''
+        state.quesAuthForm.questionNumber = ''
+        state.resetForm.password = ''
+        state.resetForm.confirmPassword = ''
+        state.showPasswordDialog = true
+      },
+      restrictIntegerInput: (event) => {
+        var charCode = event.which ? event.which : event.keyCode
+        if (charCode < 48 || charCode > 57 || charCode === 46) {
+          event.preventDefault()
+        }
+      },
+      submitVerifyGoogle: () => {
+        googleAuthFormRef.value.validate(async valid => {
+          if (valid) {
+            const { data: ret } = await verifyGoogleAuthentication(state.googleAuthForm.loginName, props.siteId, state.googleAuthForm.code)
+            const { data: ret1 } = await getSecurityQuestionsList(state.googleAuthForm.loginName, props.siteId)
+            state.twoFaCode = ret
+            if (ret1 === null || ret1 === undefined) {
+              ElMessage.error(t('forgetPassword.noSecurityQuestionSet'))
+            }
+            state.securityQuestion.question.push(ret1.questionOne)
+            state.securityQuestion.question.push(ret1.questionTwo)
+            state.securityQuestion.question.push(ret1.questionThree)
+            passwordStep.value = 2
+          }
+        })
+      },
+      nextQuestion: () => {
+        state.securityQuestion.currentIndex = state.securityQuestion.currentIndex === 2 ? 0 : state.securityQuestion.currentIndex + 1
+      },
+      submitVerifyQues: () => {
+        quesAuthFormRef.value.validate(async valid => {
+          if (valid) {
+            const { data: ret } = await verifySecurityQuestions(
+              state.googleAuthForm.loginName,
+              props.siteId,
+              state.quesAuthForm.answer,
+              state.securityQuestion.currentIndex + 1,
+              state.twoFaCode
+            )
+            state.twoFaCode = ret
+            passwordStep.value = 3
+          }
+        })
+      },
+      submitResetPassword: () => {
+        resetFormRef.value.validate(async valid => {
+          if (valid) {
+            await resetLoginPassword(
+              state.googleAuthForm.loginName,
+              props.siteId,
+              state.resetForm.password,
+              state.twoFaCode
+            )
+            ElMessage.success(t('forgetPassword.resetSuccess'))
+            state.showPasswordDialog = false
+          }
+        })
+      }
     })
 
     function getOtherQuery(query) {
@@ -818,43 +1139,51 @@ export default defineComponent({
     )
 
     const swipeToContactUs = () => {
-      var myElement = document.getElementById('login-swiper');
-      console.log(myElement);
+      var myElement = document.getElementById('login-swiper')
+      console.log(myElement)
       myElement.swiper.slideTo(1)
     }
 
-    const currentSite = ref({});
-    const i18nStoreLanguage = i18nStore();
-    const { setLanguage } = i18nStoreLanguage;
+    const currentSite = ref({})
+    const i18nStoreLanguage = i18nStore()
+    const { setLanguage } = i18nStoreLanguage
     const populateCurrentSiteData = () => {
       if (props.siteId === '6') {
         currentSite.value.firstLiner = '从东赢开始'
         currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
         currentSite.value.logo = dyLogo
         state.loginForm.site = 'DY2'
-        setLanguage('zh');
+        setLanguage('zh')
       }
       if (props.siteId === '1') {
         currentSite.value.firstLiner = '从兴发开始'
         currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
         currentSite.value.logo = xfLogo
         state.loginForm.site = 'XF1'
-        setLanguage('zh');
+        setLanguage('zh')
       }
       if (props.siteId === '5') {
         currentSite.value.firstLiner = 'Starts from 55ACE'
-        currentSite.value.secondLiner = 'Become a legend<br>Or become the eulogist of legend?'
+        currentSite.value.secondLiner =
+          'Become a legend<br>Or become the eulogist of legend?'
         currentSite.value.logo = indLogo
-        state.loginForm.site = 'IND';
+        state.loginForm.site = 'IND'
         currentSite.value.lang = 'EN'
-        setLanguage('en');
+        setLanguage('en')
       }
       if (props.siteId === '7') {
         currentSite.value.firstLiner = '从雷火开始'
         currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
         currentSite.value.logo = lhLogo
         state.loginForm.site = 'LH1'
-        setLanguage('zh');
+        setLanguage('zh')
+      }
+      if (props.siteId === '4') {
+        currentSite.value.firstLiner = 'Start From TFGaming'
+        currentSite.value.secondLiner = 'Become a legend<br>Or become the eulogist of legend?'
+        currentSite.value.logo = viLogo
+        state.loginForm.site = 'VNM'
+        setLanguage('vi')
       }
     }
     onMounted(() => {
@@ -901,7 +1230,11 @@ export default defineComponent({
       currentSite,
       props,
       t,
-      swipeToContactUs
+      swipeToContactUs,
+      passwordStep,
+      googleAuthFormRef,
+      quesAuthFormRef,
+      resetFormRef,
     }
   },
 })
@@ -930,20 +1263,19 @@ a {
     opacity: 1;
   }
 
-  &.default-btn{
+  &.default-btn {
     background-color: transparent;
     border: 1px solid #458bff;
     color: #458bff;
   }
 
-  &:hover{
+  &:hover {
     opacity: 0.9;
   }
-  &:active{
+  &:active {
     filter: brightness(0.85);
-    transform: translate(0px , 1px);
+    transform: translate(0px, 1px);
   }
-
 }
 :deep(.el-input-group__append) {
   background-color: #ffffff;
@@ -1069,7 +1401,8 @@ a {
     center;
   background-size: cover;
   &.lh {
-    background: url('../../assets/images/login/lh-bg.jpg') no-repeat center center;
+    background: url('../../assets/images/login/lh-bg.jpg') no-repeat center
+      center;
   }
   .inner {
     max-width: 1200px;
@@ -1104,12 +1437,17 @@ a {
       }
       .first-liner {
         margin-bottom: 3rem;
-        background: linear-gradient(180deg, #F6D99E 13.1%, #FFE3BD 50.03%, #FBBD68 79.37%);
-        text-shadow: 0px 4px 4px 0px #1C1614;
+        background: linear-gradient(
+          180deg,
+          #f6d99e 13.1%,
+          #ffe3bd 50.03%,
+          #fbbd68 79.37%
+        );
+        text-shadow: 0px 4px 4px 0px #1c1614;
         font-size: 5rem;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        filter: drop-shadow(0px 4px 4px #1C1614);
+        filter: drop-shadow(0px 4px 4px #1c1614);
         font-family: fzh;
       }
       .second-liner {
@@ -1170,7 +1508,7 @@ a {
     }
   }
 
-  &.ind-firstPage{
+  &.ind-firstPage {
     background: url('../../assets/images/ind/ind-bg.png') no-repeat center;
     height: 100vh;
     .logo {
@@ -1180,50 +1518,58 @@ a {
       width: 207px;
     }
 
-    .loginPage .left .first-liner{
+    .loginPage .left .first-liner {
       max-width: 750px;
       width: 750px;
     }
 
-    .loginPage .left .second-liner{
+    .loginPage .left .second-liner {
       max-width: 600px;
       width: 600px;
     }
 
-    .inner{
-     max-width: 1300px;
+    .inner {
+      max-width: 1300px;
     }
 
-    .common-btn{
-      background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%);
+    .common-btn {
+      background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
       color: #fff;
     }
-
   }
-
 }
 
-.flex-c-center-div{
-  display:flex;
+.flex-c-center-div {
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
   margin-bottom: 10px;
-  text-align:center;
+  text-align: center;
 
-  .contact-div{
+  .contact-div {
     margin-top: 10px;
     width: 50%;
     padding: 10px 20px 0px;
     cursor: pointer;
 
-    &:hover{
+    &:hover {
       opacity: 0.9;
     }
-    &:active{
-      filter:brightness(0.85);
+    &:active {
+      filter: brightness(0.85);
       transform: translate(0px, 1px);
     }
+  }
+}
+
+.auth-container {
+  margin: 20px;
+
+  .auth-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 30px 0 15px 0;
   }
 }
 
@@ -1285,7 +1631,7 @@ a {
       width: 120px;
     }
 
-    &.ind-firstPage{
+    &.ind-firstPage {
       .logo {
         position: absolute;
         left: 20px;
@@ -1293,29 +1639,26 @@ a {
         width: 150px;
       }
 
-      .loginPage{
+      .loginPage {
         padding-top: 30px;
       }
-      .loginPage .left{
+      .loginPage .left {
         width: calc(100% - 20px);
-
       }
-      .loginPage .left .first-liner{
+      .loginPage .left .first-liner {
         max-width: none;
         width: 100%;
       }
 
-      .loginPage .left .second-liner{
+      .loginPage .left .second-liner {
         max-width: none;
         width: 100%;
       }
 
-      .common-btn{
-        background: linear-gradient(180deg, #8B36F8 0%, #334AD6 100%);
+      .common-btn {
+        background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
       }
-
     }
-
   }
   .wrapper {
     .affiliate {
@@ -1368,5 +1711,34 @@ a {
 <style lang="scss">
 .dialog400 {
   width: 100%;
+  max-width: 400px;
+
+  #loadDiv {
+    display: flex;
+    flex-direction: column;
+    margin-top: -30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dialog400 {
+    width: 80%;
+  }
+  .el-dialog {
+    --el-dialog-padding-primary: 10px;
+
+    .el-button {
+      margin-top: 10px !important;
+      margin-bottom: -10px;
+    }
+
+    .el-dialog__header {
+      margin: 10px 0;
+    }
+  }
+
+  .verification-title {
+    font-size: 0.8rem;
+  }
 }
 </style>

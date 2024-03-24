@@ -17,6 +17,10 @@ export const deleteJob = async (ids) => {
   await https().request(`/jobs?_method=DELETE`, Method.POST, { ids: ids.join(",") }, ContentType.form);
 };
 
+export const runJobNow = async (id) => {
+  await https().request(`/jobs/run/${id}`, Method.POST);
+};
+
 export const stopJob = async (id) => {
   await https().request(`/jobs/${id}/state?_method=PUT`, Method.POST, { state: 0 }, ContentType.form);
 };

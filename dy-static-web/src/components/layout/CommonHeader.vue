@@ -1951,7 +1951,7 @@ export default defineComponent({
 
     const phoneLogin = () => {
       loadingBtn.value = true;
-      
+
       (async () => {
         const sidParam = store.visitorId;
 
@@ -2812,6 +2812,11 @@ body {
 
       .small-size {
         font-size: 16px;
+
+        span {
+          display: block;
+          line-height: 1;
+        }
       }
     }
 

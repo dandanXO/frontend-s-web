@@ -137,6 +137,16 @@
             style="width: 350px;"
           />
         </el-form-item>
+        <el-form-item :label="t('fields.usdtControl')" prop="usdtControl">
+          <el-switch
+            v-model="form.usdtControl"
+            active-value="1"
+            inactive-value="0"
+            active-color="#409EFF"
+            inactive-color="#F56C6C"
+            style="width: 350px;"
+          />
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -249,7 +259,8 @@ const form = reactive({
   dayWithdrawMax: null,
   dayWithdrawCount: null,
   nextLevel: null,
-  nextLevelPoint: null
+  nextLevelPoint: null,
+  usdtControl: 1
 });
 
 const list = reactive({
@@ -345,6 +356,7 @@ function showEdit(financial) {
     if (financial.nextLevelPoint === 0) {
       form.nextLevelPoint = null;
     }
+    form.usdtControl = form.usdtControl.toString()
     const newRecord = list.nextLevel.filter((element) => {
       return element.name !== form.name && element.siteId === form.siteId
     });

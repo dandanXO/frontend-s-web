@@ -153,13 +153,16 @@ export default route(function (/* { store, ssrContext } */) {
       window.location.href.indexOf("https://jo77.cc") > -1 ||
       window.location.href.indexOf("https://www.jo77.cc") > -1
     ) {
-      ui.isAffiliateB = true;
+      ui.isAffiliateC = true;
       console.log("IS https://jo77.cc");
-
+      /*
       fbq("init", "CNRDC33C77U4A9P32PIG");
 
       fbq("track", "PageView");
       fbq("track", "ViewContent");
+      */
+      ttq.load('CNRDC33C77U4A9P32PIG');
+      ttq.page();
     } else if (ui.isAffiliateB) {
       console.log("Slot-Win .cc");
 

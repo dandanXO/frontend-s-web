@@ -62,7 +62,8 @@
         <el-link type="primary" @click="showEdit(scope.row)" style="margin-right: 10px">{{ t('fields.edit') }}</el-link>
         <el-link v-if="scope.row.state === 0" type="success" @click="runScheduleJob(scope.row.id)" style="margin-right: 10px">{{ t('fields.run') }}</el-link>
         <el-link v-if="scope.row.state === 1" type="warning" @click="stopScheduleJob(scope.row.id)" style="margin-right: 10px">{{ t('fields.pause') }}</el-link>
-        <el-link type="danger" @click="removeJob(scope.row)">{{ t('fields.delete') }}</el-link>
+        <el-link type="danger" @click="removeJob(scope.row)" style="margin-right: 10px">{{ t('fields.delete') }}</el-link>
+        <el-link type="success" @click="runAtOnce(scope.row)">{{ t('fields.runAtOnce') }}</el-link>
       </template>
     </el-table-column>
   </el-table>
@@ -148,7 +149,7 @@
 import { onMounted, reactive, ref, nextTick } from "vue";
 import { required } from "../../../utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { createJob, getAllJob, updateJob, deleteJob, runJob, stopJob } from "../../../api/schedule";
+import { createJob, getAllJob, updateJob, deleteJob, runJob, stopJob, runJobNow } from "../../../api/schedule";
 import { useI18n } from "vue-i18n";
 import moment from "moment";
 
@@ -327,6 +328,20 @@ async function removeJob(job) {
     }
     await loadJobs();
     ElMessage({ message: t('message.deleteSuccess'), type: "success" });
+  });
+}
+
+async function runAtOnce(job) {
+  ElMessageBox.confirm(
+    t('message.confirmRunAtOnce'),
+    {
+      confirmButtonText: t('fields.confirm'),
+      cancelButtonText: t('fields.cancel'),
+      type: "warning"
+    }
+  ).then(async () => {
+    await runJobNow([job.id]);
+    ElMessage({ message: t('message.runAtOnceSuccess'), type: "success" });
   });
 }
 

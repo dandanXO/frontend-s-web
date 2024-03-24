@@ -98,7 +98,7 @@
             size="mini"
             type="warning"
             v-permission="['sys:vip-rebate-record:export']"
-            @click="exportExcel"
+            @click="requestExportExcel"
           >{{ t('fields.exportToExcel') }}
           </el-button>
           <el-button
@@ -269,23 +269,21 @@
     </el-card>
   </div>
 
-  <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.progressBarVisible" append-to-body width="500px"
-             :close-on-click-modal="false" :close-on-press-escape="false"
+  <el-dialog
+    :title="t('fields.exportToExcel')"
+    v-model="uiControl.messageVisible"
+    append-to-body
+    width="500px"
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
   >
-    <el-progress :text-inside="true" :stroke-width="26" :percentage="exportPercentage"
-                 :color="uiControl.colors" v-if="exportPercentage !== 100"
-    />
-    <el-result
-      icon="success"
-      :title="t('fields.successfullyExport')"
-      v-if="exportPercentage === 100"
-    />
-    <div class="dialog-footer">
-      <el-button type="primary" :disabled="exportPercentage !== 100"
-                 @click="uiControl.progressBarVisible = false"
-      >{{ t('fields.done') }}
-      </el-button>
-    </div>
+    <span>{{ t('message.requestExportToExcelDone1') }}</span>
+    <router-link :to="`/site-management/download-manager`">
+      <el-link type="primary">
+        {{ t('menu.DownloadManager') }}
+      </el-link>
+    </router-link>
+    <span>{{ t('message.requestExportToExcelDone2') }}</span>
   </el-dialog>
 
   <el-dialog
@@ -490,7 +488,7 @@ import { useI18n } from "vue-i18n";
 import { getSiteListSimple } from '../../../api/site';
 import { useStore } from '../../../store';
 import { TENANT } from '../../../store/modules/user/action-types';
-import { adjustAmount, distribute, getTotal, getVipRebateRecord, batchCancel, cancelByQuery } from '../../../api/vip-rebate-record';
+import { adjustAmount, distribute, getTotal, getVipRebateRecord, getVipRebateRecordForExport, batchCancel, cancelByQuery } from '../../../api/vip-rebate-record';
 import { required } from '../../../utils/validate';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { getVipRebateRecordDetails } from '../../../api/vip-rebate-record-detail';
@@ -511,13 +509,12 @@ const platform = reactive({
   list: []
 })
 let timeZone = null;
-const exportPercentage = ref(0);
 const uiControl = reactive({
   dialogTitle: "",
   dialogType: "",
   dialogVisible: false,
   dialogWidth: '580px',
-  progressBarVisible: false,
+  messageVisible: false,
   gameType: [
     { key: 1, displayName: "SLOT", value: "SLOT" },
     { key: 2, displayName: "LIVE", value: "LIVE" },
@@ -535,14 +532,6 @@ const uiControl = reactive({
   ],
   importDialogVisible: false
 });
-
-const EXPORT_HEADER = [t('fields.loginName'), t('fields.vipLevel'), t('fields.platform'), t('fields.gameType'), t('fields.betAmount'),
-  t('fields.amount'), t('fields.rebatePercentage'), t('fields.maxRebate'), t('fields.status'), t('fields.rebateDistributeTime'),
-  t('fields.distributeBy'), t('fields.distributeTime'), t('fields.updateBy'), t('fields.updateTime')];
-
-const EXPORT_TH_HEADER = [t('fields.loginName'), t('fields.vipLevel'), t('fields.platform'), t('fields.gameType'), t('fields.betAmount'),
-  t('fields.amount'), t('fields.status'), t('fields.rebateDistributeTime'),
-  t('fields.distributeBy'), t('fields.distributeTime'), t('fields.updateBy'), t('fields.updateTime')];
 
 const EXPORT_CANCEL_REBATE_LIST_HEADER = [
   'Login Name',
@@ -732,59 +721,14 @@ async function adjust() {
   });
 }
 
-async function exportExcel() {
-  uiControl.progressBarVisible = true;
-  const query = checkQuery();
-  query.current = 1;
-  const { data: ret } = await getVipRebateRecord(query);
-  const exportData = [request.siteId !== 3 ? EXPORT_HEADER : EXPORT_TH_HEADER];
-  const maxLength = [];
-
-  pushRecordToData(ret.records, exportData);
-  exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
-  query.current = ret.current;
-
-  while (query.current < ret.pages) {
-    query.current += 1;
-    const { data: ret } = await getVipRebateRecord(query);
-    pushRecordToData(ret.records, exportData);
-    exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
+async function requestExportExcel() {
+  const query = checkQuery()
+  query.requestBy = store.state.user.name
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+  const { data: ret } = await getVipRebateRecordForExport(query)
+  if (ret) {
+    uiControl.messageVisible = true
   }
-  const ws = XLSX.utils.aoa_to_sheet(exportData);
-  exportData.map(data => {
-    Object.keys(data).map(key => {
-      const value = data[key];
-
-      maxLength[key] = typeof value === 'number'
-        ? (maxLength[key] >= 10 ? maxLength[key] : 10)
-        : (maxLength[key] >= value.length + 2 ? maxLength[key] : value.length + 2);
-    });
-  });
-  const wsCols = maxLength.map(w => { return { width: w } });
-  ws['!cols'] = wsCols;
-  const wb = XLSX.utils.book_new();
-  wb.SheetNames.push('VIP_Rebate_Record');
-  wb.Sheets.VIP_Rebate_Record = ws;
-  XLSX.writeFile(wb, "vip_rebate_record.xlsx");
-  exportPercentage.value = 100;
-}
-
-function pushRecordToData(records, exportData) {
-  records.forEach(item => {
-    delete item.id;
-    delete item.memberId;
-    delete item.vipId;
-    if (request.siteId === 3) {
-      delete item.maxRebate;
-      delete item.rebatePercentage;
-    }
-  })
-  const data = records.map(record => {
-    record.status = t('distributeStatus.' + record.status);
-    record.gameType = t('gameType.' + record.gameType);
-    return Object.values(record).map(item => !item || item === '' ? '-' : item)
-  });
-  exportData.push(...data);
 }
 
 function distributeRebate() {
@@ -795,11 +739,10 @@ function distributeRebate() {
       cancelButtonText: t('fields.cancel'),
       type: "warning"
     }
-  ).then(async () => {
+  ).then(() => {
     const query = checkQuery();
-    await distribute(query);
+    distribute(query);
     ElMessage({ message: t('message.rebateSuccess'), type: "success" });
-    loadVipRebateRecords();
   });
 }
 

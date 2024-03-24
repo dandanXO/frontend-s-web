@@ -209,6 +209,7 @@
         >
           <el-radio v-model="importForm.mainWallet" label="true" style="width: 175px;">{{ t('fields.fromWallet') }}</el-radio>
           <el-radio v-model="importForm.mainWallet" label="false" style="width: 175px;">{{ t('fields.fromCommission') }}</el-radio>
+
         </el-form-item>
         <el-form-item :label="t('fields.remark')" prop="remark">
           <el-input

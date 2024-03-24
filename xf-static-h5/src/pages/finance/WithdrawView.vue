@@ -108,10 +108,13 @@
               (val) =>
                 val <= selectedWithdrawalMethod.withdrawMax ||
                 '请输入正确的提款金额',
+              (val) =>
+                (val && /^\d+$/.test(val))  ||
+                '提款金额不能有小数',
               !isUSDT
                 ? (val) =>
                     (!isUSDT && /^([1-9][0-9]*)$/.test(val)) || '金额应为正数'
-                : true
+                : true,
             ]"
             clearable
           >

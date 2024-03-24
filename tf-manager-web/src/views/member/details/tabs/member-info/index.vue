@@ -312,8 +312,10 @@
               {{ t('fields.affiliateName') }}
             </div>
           </template>
-          <span v-if="affiliateDetail.loginName !== null">{{ affiliateDetail.loginName }}</span>
+          <span v-if="affiliateDetail.loginName !== null">{{ affiliateDetail.loginName }}</span> <!-- :style="[{color: affiliateDetail.riskColor}]" -->
           <span v-if="affiliateDetail.loginName === null">-</span>
+
+          <span class="level-color" :style="{backgroundColor: affiliateDetail.riskColor}" />
         </el-descriptions-item>
         <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context">
           <template #label>
@@ -953,8 +955,7 @@ export default defineComponent({
       list: [
         { key: 1, name: t('types.NORMAL'), value: "NORMAL" },
         { key: 2, name: t('types.TEST'), value: "TEST" },
-        { key: 3, name: t('types.AFFILIATE'), value: "AFFILIATE" },
-        { key: 4, name: t('types.OUTSIDE'), value: "OUTSIDE" }
+        { key: 3, name: t('types.PROMO_TEST'), value: "PROMO_TEST" }
       ]
     });
 

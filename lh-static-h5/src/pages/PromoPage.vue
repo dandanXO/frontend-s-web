@@ -106,6 +106,36 @@
                       <!-- </div> -->
                     </a>
                   </div>
+
+                  <div class="promo-item" v-if="tab.name === 'daily' && promo.labelType === 4">
+                    <a @click="showPromoDetails(promo)">
+                      <div>
+                        <div class="promo-label">
+                          <div class="promo-ribbon" v-if="promo.labelType !== 2">
+                            {{ getPromoLabel(promo.labelType) }}
+                          </div>
+                          <div
+                            class="promo-item-date"
+                            v-if="parsedParam(promo.param).date"
+                            v-html="parsedParam(promo.param).date"
+                          />
+                        </div>
+                        <div class="promo-item-title">{{ promo.title }}</div>
+                        <div
+                          class="promo-item-deal"
+                          v-if="parsedParam(promo.param).sub"
+                          v-html="parsedParam(promo.param).sub"
+                        />
+                        <div>
+                          <q-btn label="查看详情" dense color="brightbtn" class="promo-item-btn" />
+                        </div>
+
+                        <div class="promo-item-side-img">
+                          <img :src="imgURL + promo.mobileImgUrl" />
+                        </div>
+                      </div>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -194,6 +224,7 @@ export default defineComponent({
       { code: "ESPORTS", img: "esport", label: "电竞" },
       { code: "SPORTS", img: "sport", label: "体育" },
       { code: "POKER", img: "poker", label: "棋牌" },
+      { code: "DAILY", img: "daily", label: "日常" },
       { name: "SLOT GAME", label: "老虎机" },
       // {name: "slot", label: '老虎机'},
       { name: "LIVE CASINO", label: "真人" },
@@ -223,6 +254,7 @@ export default defineComponent({
       // {name: "fish", label: '捕鱼'},
       { name: "live casino", label: "真人" },
       { name: "poker", label: "棋牌" },
+      { name: "daily", label: "日常" },
       { name: "others", label: "其它" }
     ];
 
@@ -828,6 +860,7 @@ export default defineComponent({
     .q-tab {
       color: $font-1;
       font-size: 1rem;
+      padding: 0 8px;
     }
 
     .q-tab__label {

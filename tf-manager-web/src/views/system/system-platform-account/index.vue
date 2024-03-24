@@ -264,34 +264,34 @@
     >
       <el-table-column prop="platformName" :label="t('fields.platformName')" width="150" />
       <el-table-column prop="name" :label="t('fields.name')" width="150" />
-      <el-table-column prop="nextActivationTime" :label="t('fields.nextActivationTime')" width="180">
-        <template #default="scope">
-          <span v-if="scope.row.nextActivationTime === null">-</span>
-          <span
-            v-if="scope.row.nextActivationTime !== null"
-            v-formatter="{data: scope.row.nextActivationTime, timeZone: scope.row.timeZone, type: 'date'}"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column prop="nextGetBetStartTime" :label="t('fields.nextGetBetStartTime')" width="200">
-        <template #default="scope">
-          <span v-if="scope.row.nextGetBetStartTime === null">-</span>
-          <span
-            v-if="scope.row.nextGetBetStartTime !== null"
-            v-formatter="{data: scope.row.nextGetBetStartTime, timeZone: scope.row.timeZone, type: 'date'}"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column prop="nextGetBetEndTime" :label="t('fields.nextGetBetEndTime')" width="200">
-        <template #default="scope">
-          <span v-if="scope.row.nextGetBetEndTime === null">-</span>
-          <span
-            v-if="scope.row.nextGetBetEndTime !== null"
-            v-formatter="{data: scope.row.nextGetBetEndTime, timeZone: scope.row.timeZone, type: 'date'}"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column prop="nextGetBetPage" :label="t('fields.nextGetBetPage')" width="150" />
+      <!--      <el-table-column prop="nextActivationTime" :label="t('fields.nextActivationTime')" width="180">-->
+      <!--        <template #default="scope">-->
+      <!--          <span v-if="scope.row.nextActivationTime === null">-</span>-->
+      <!--          <span-->
+      <!--            v-if="scope.row.nextActivationTime !== null"-->
+      <!--            v-formatter="{data: scope.row.nextActivationTime, timeZone: scope.row.timeZone, type: 'date'}"-->
+      <!--          />-->
+      <!--        </template>-->
+      <!--      </el-table-column>-->
+      <!--      <el-table-column prop="nextGetBetStartTime" :label="t('fields.nextGetBetStartTime')" width="200">-->
+      <!--        <template #default="scope">-->
+      <!--          <span v-if="scope.row.nextGetBetStartTime === null">-</span>-->
+      <!--          <span-->
+      <!--            v-if="scope.row.nextGetBetStartTime !== null"-->
+      <!--            v-formatter="{data: scope.row.nextGetBetStartTime, timeZone: scope.row.timeZone, type: 'date'}"-->
+      <!--          />-->
+      <!--        </template>-->
+      <!--      </el-table-column>-->
+      <!--      <el-table-column prop="nextGetBetEndTime" :label="t('fields.nextGetBetEndTime')" width="200">-->
+      <!--        <template #default="scope">-->
+      <!--          <span v-if="scope.row.nextGetBetEndTime === null">-</span>-->
+      <!--          <span-->
+      <!--            v-if="scope.row.nextGetBetEndTime !== null"-->
+      <!--            v-formatter="{data: scope.row.nextGetBetEndTime, timeZone: scope.row.timeZone, type: 'date'}"-->
+      <!--          />-->
+      <!--        </template>-->
+      <!--      </el-table-column>-->
+      <!--      <el-table-column prop="nextGetBetPage" :label="t('fields.nextGetBetPage')" width="150" />-->
       <el-table-column prop="walletType" :label="t('fields.walletType')" width="150" />
       <el-table-column prop="status" :label="t('fields.status')" width="120">
         <template #default="scope">

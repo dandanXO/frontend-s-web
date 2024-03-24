@@ -409,7 +409,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
                 window.open(response.data, "_blank");
               }
             } else if (platformCode === "PG") {
-              srcData = srcData.replaceAll(/\\\"/g, '"').replaceAll(/\n/g, "");
+              srcData = srcData.replace(/\\\"/g, '"').replace(/\n/g, "");
               src.value = srcData;
               visible.value = true;
             } else if (platformCode === "SABA") {

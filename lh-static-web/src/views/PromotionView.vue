@@ -3,7 +3,7 @@
     <div class="all-promotions" v-if="!isPromoDetail">
       <div class="promo-main-container">
         <div class="promo-type-wrapper">
-          <div style="position:sticky; top: 0;">
+          <div style="position: sticky; top: 0">
             <div class="type-list">
               <img src="../assets/promo/menu-title.png" />
               <div
@@ -57,9 +57,7 @@
     </div>
     <div v-else class="selected-promo">
       <div class="selected-promo-wrapper">
-        <div class="banner-container"
-          v-if="selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl"
-        >
+        <div class="banner-container" v-if="selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl">
           <div class="promo-bg isDesktop">
             <img
               :src="
@@ -101,8 +99,16 @@
           >
             <div v-html="selectedPromo.pageContent"></div>
           </div>
-          <div v-if="['lh-cs2-copenhagen-major-2024'].includes(selectedPromo.redirectUrl)" class="corner-decor" style="position:absolute;left:0px;bottom:0px;">
-            <img width="125px" v-if="selectedPromo.redirectUrl === 'lh-cs2-copenhagen-major-2024'" src="../assets/images/promotion/hotpromo/cs2/bottombg.png" />
+          <div
+            v-if="['lh-cs2-copenhagen-major-2024'].includes(selectedPromo.redirectUrl)"
+            class="corner-decor"
+            style="position: absolute; left: 0px; bottom: 0px"
+          >
+            <img
+              width="125px"
+              v-if="selectedPromo.redirectUrl === 'lh-cs2-copenhagen-major-2024'"
+              src="../assets/images/promotion/hotpromo/cs2/bottombg.png"
+            />
           </div>
         </div>
       </div>
@@ -139,6 +145,7 @@ export default defineComponent({
       { code: "LIVE CASINO", img: 'live', label: '真人优惠'},
       { code: "POKER", img: 'poker', label: '棋牌优惠'},
       // { code: "FISH", img: 'fish', label: '捕鱼'},
+      { code: "DAILY", img: 'daily', label: '日常优惠'},
       { code: "OTHERS", img: 'slot', label: '其他优惠'},
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
@@ -216,7 +223,12 @@ export default defineComponent({
             return promoTypes.includes("slot game") || promoTypes.includes("welcome") || promoTypes.includes("fish");
           });
           // console.log(filteredArray.value);
-        }else{
+        } else if (type === 'DAILY') {
+          filteredArray.value = promoState.promoList.filter(function(promo) {
+            const labelType = promo.labelType;
+            return labelType === 4;
+          });
+        } else {
           filteredArray.value = promoState.promoList.filter(function(promo) {
             return promo.promoType.toLowerCase().split(',').includes(type.toLowerCase());
           });
@@ -226,6 +238,7 @@ export default defineComponent({
         filteredArray.value = promoState.promoList
       }
     };
+
     const loadAll = () => {
       loadPromo().then((res) => {
         if(res.code === 0) {
@@ -708,7 +721,7 @@ export default defineComponent({
         background-position: top center;
         gap: 20px;
         background-repeat: no-repeat;
-        
+
         &:has(.corner-decor) {
           position: relative;
         }

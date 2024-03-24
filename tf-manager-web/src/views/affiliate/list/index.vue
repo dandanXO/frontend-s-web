@@ -351,6 +351,52 @@
             </el-button>
           </div>
         </el-form>
+        <el-form
+          v-if="uiControl.dialogType === 'RISK'"
+          ref="updateRiskForm"
+          :model="riskForm"
+          :inline="true"
+          size="small"
+          label-width="150px"
+        >
+          <el-form-item :label="t('fields.riskLevel')" prop="risk">
+            <el-select
+              v-model="riskForm.risk"
+              size="small"
+              :placeholder="t('fields.riskLevel')"
+              class="filter-item"
+              style="width: 315px;"
+              default-first-option
+              @change="populateRiskColor"
+              @focus="loadRiskLevels"
+            >
+              <el-option
+                v-for="item in riskList.list"
+                :key="item.id"
+                :label="item.levelName"
+                :value="item.id"
+              />
+            </el-select>
+            <span
+              class="level-color"
+              :style="{backgroundColor: selectedRiskColor.levelColor}"
+            />
+          </el-form-item>
+          <div class="dialog-footer">
+            <el-input
+              v-model="riskForm.id"
+              style="width: 350px;"
+              maxlength="50"
+              type="hidden"
+            />
+            <el-button @click="uiControl.dialogVisible = false">
+              {{ t('fields.cancel') }}
+            </el-button>
+            <el-button type="primary" @click="performUpdate()">
+              {{ t('fields.confirm') }}
+            </el-button>
+          </div>
+        </el-form>
       </el-dialog>
       <el-table
         :data="page.records"
@@ -518,7 +564,7 @@
         </el-table-column>
         <el-table-column
           prop="approveBy"
-          :label="t('fields.createBy')"
+          :label="t('fields.approveBy')"
           width="160"
         >
           <template #default="scope">
@@ -532,11 +578,7 @@
           :label="t('fields.operate')"
           align="center"
           fixed="right"
-          width="120"
-          v-if="
-            !hasRole(['SUB_TENANT']) &&
-              hasPermission(['sys:affiliate:update:approval'])
-          "
+          width="240"
         >
           <template #default="scope">
             <el-button
@@ -558,6 +600,15 @@
               @click="showDialog('DISABLE', scope.row)"
             >
               {{ t('fields.disable') }}
+            </el-button>
+
+            <el-button
+              size="mini"
+              type="success"
+              v-permission="['sys:affiliate:update:risk']"
+              @click="showDialog('RISK', scope.row)"
+            >
+              {{ t('fields.riskLevel') }}
             </el-button>
           </template>
         </el-table-column>
@@ -586,8 +637,10 @@ import {
   listApproveAffiliate,
   listDisableAffiliate,
 } from '../../../api/member-affiliate'
+import { updateRisk } from "../../../api/member";
 import { getSiteListSimple } from '../../../api/site'
-import { hasPermission, hasRole } from '../../../utils/util'
+import { selectList } from "../../../api/risk-level";
+import { hasPermission } from '../../../utils/util'
 import { notEmpty } from '../../../utils/common'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
@@ -601,10 +654,19 @@ const LOGIN_USER_NAME = computed(() => store.state.user.name)
 const site = ref(null)
 const memberForm = ref(null)
 const freezeMemberForm = ref(null)
+const updateRiskForm = ref(null);
 const table = ref(null)
 const siteList = reactive({
   list: [],
 })
+const riskList = reactive({
+  list: []
+});
+
+const selectedRiskColor = reactive({
+  levelColor: null,
+});
+
 let timeZone = null
 const freezeType = reactive({
   list: [
@@ -710,6 +772,10 @@ const freezeForm = reactive({
   remark: null,
   site: null,
 })
+
+const riskForm = reactive({
+  risk: null
+});
 
 const validatePassword = (rule, value, callback) => {
   if (value !== '' && form.reEnterPassword !== '') {
@@ -895,6 +961,20 @@ function showDialog(type, affiliate) {
     freezeForm.freezeType = freezeType.list[0].value
     freezeForm.reason = freezeReason.list[0].value
     uiControl.dialogTitle = t('fields.disableAffiliate')
+  } else if (type === 'RISK') {
+    if (updateRiskForm.value) {
+      updateRiskForm.value.resetFields();
+    }
+    riskForm.id = affiliate.id
+    if (affiliate.riskLevel) {
+      const risk = riskList.list.find(r => r.levelName === affiliate.riskLevel);
+      riskForm.risk = risk.id;
+      selectedRiskColor.levelColor = risk.levelColor;
+    } else {
+      riskForm.risk = riskList.list[0].id;
+      selectedRiskColor.levelColor = riskList.list[0].levelColor;
+    }
+    uiControl.dialogTitle = t('fields.updateRiskLevel');
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
@@ -913,10 +993,34 @@ function addAffiliate() {
   })
 }
 
+async function performUpdate() {
+  console.log(riskForm.id)
+  updateRiskForm.value.validate(async (valid) => {
+    if (valid) {
+      await updateRisk(riskForm.id, riskForm.risk, request.siteId);
+      uiControl.dialogVisible = false;
+      ElMessage({ message: t('message.updateRiskLevelSuccess'), type: "success" });
+      if (page.records.length !== 0) {
+        await loadAffiliates()
+      }
+    }
+  });
+}
+
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
 }
+
+const loadRiskLevels = async () => {
+  const { data: risk } = await selectList({ siteId: request.siteId });
+  riskList.list = risk;
+};
+
+const populateRiskColor = () => {
+  const risk = riskList.list.find(r => r.id === riskForm.risk);
+  selectedRiskColor.levelColor = risk.levelColor;
+};
 
 async function approve(affiliate) {
   await listApproveAffiliate(affiliate.id, LOGIN_USER_NAME.value)
@@ -944,6 +1048,8 @@ onMounted(async () => {
     )
     request.siteId = site.value.id
   }
+
+  await loadRiskLevels();
 })
 </script>
 
@@ -980,5 +1086,13 @@ onMounted(async () => {
   td:first-child {
     padding-left: 23px;
   }
+}
+
+.level-color {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 5px;
 }
 </style>

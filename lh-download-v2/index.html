@@ -24,6 +24,8 @@
 <div class="download" style="display: block;">
 
     <div class="download_bg" style="height: auto">
+        <img src="./assets/images/logo-gold.png" style="width:66%;margin: 0px auto; max-width: 400px;" />
+        <div id="desc" style="display:none;color:#fff;">安装新APP，必须先卸载旧版本</div>
 
         <div style="width:100%; text-align: center;padding:20px 0px 10px;font-size:18px;font-weight: bold;"
              id="before-load">加载中。。。
@@ -182,6 +184,8 @@
     }
 
     function showIOS() {
+        $('#desc').show();
+
         for (var i = 0; i < iosList.length; i++) {
             $(".swiper-wrapper").append(
                 '<div class="swiper-slide"><img src="' +
@@ -192,15 +196,7 @@
 
         var iosHTMl = '';
         var websiteHtml = '';
-        var safariHTml= `
-                        <div class="download_btn" id="btn_99">
-            <a
-                id="download_99"
-                href="/ios.html"
-            >特殊链接</a
-            >
-        </div>
-`;
+    
         iosDownload.forEach((list, index) => {
             for (const key in list) {
                 if (list.hasOwnProperty(key)) {
@@ -233,7 +229,7 @@
                 }
             }
 
-            $("#ios-lists").html(iosHTMl + websiteHtml + safariHTml)
+            $("#ios-lists").html(iosHTMl + websiteHtml)
         })
 
     }

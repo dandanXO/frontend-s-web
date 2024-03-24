@@ -84,6 +84,8 @@
         :data="page.records"
         v-loading="page.loading"
         row-key="affiliateId"
+        :load="loadChildren"
+        lazy
         :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
         :empty-text="t('fields.noData')"
         highlight-current-row
@@ -283,6 +285,59 @@
       append-to-body
       width="1200px"
     >
+      <div>
+        <div class="search">
+          <el-input
+            v-model="popUpRequest.loginName"
+            style="width: 200px"
+            size="small"
+            maxlength="50"
+            :placeholder="t('fields.loginName')"
+          />
+          <el-date-picker
+            v-model="popUpRequest.recordTime"
+            format="DD/MM/YYYY"
+            value-format="YYYY-MM-DD"
+            size="small"
+            type="daterange"
+            range-separator=":"
+            :start-placeholder="t('fields.startDate')"
+            :end-placeholder="t('fields.endDate')"
+            style="width: 300px; margin-left: 10px"
+            :shortcuts="shortcuts"
+            :disabled-date="disabledDate"
+            :editable="false"
+            :clearable="false"
+          />
+          <el-select
+            v-model="popUpRequest.memberType"
+            size="small"
+            :placeholder="t('fields.memberType')"
+            class="filter-item"
+            style="width: 200px; margin-left: 10px;"
+          >
+            <el-option
+              v-for="item in uiControl.memberType"
+              :key="item.key"
+              :label="item.displayName"
+              :value="item.value"
+            />
+          </el-select>
+          <el-button
+            style="margin-left: 20px"
+            icon="el-icon-search"
+            size="mini"
+            type="success"
+            @click="
+              currentPageType === 'newRegister'
+                ? loadNewMember(currentAffiliateId)
+                : loadAllMember(currentAffiliateId)
+            "
+          >
+            {{ t('fields.search') }}
+          </el-button>
+        </div>
+      </div>
       <el-table
         height="600"
         size="small"
@@ -442,6 +497,7 @@ import { hasRole, hasPermission } from '../../../utils/util'
 import moment from 'moment'
 import {
   getAffiliateSummary,
+  getAffiliateChildSummary,
   getAffiliateSummaryNewMember,
 } from '../../../api/affiliate-record'
 import { getSiteListSimple } from '../../../api/site'
@@ -454,6 +510,7 @@ const siteList = reactive({
 })
 
 let currentPageType = ref('main')
+let currentAffiliateId = ref(null)
 
 const shortcuts = getShortcuts(t)
 const uiControl = reactive({
@@ -461,6 +518,18 @@ const uiControl = reactive({
   progressBarVisible: false,
   dialogTitle: '',
   dialogType: 'MEMBER',
+  memberType: [
+    {
+      key: 'NORMAL',
+      displayName: 'NORMAL',
+      value: 'NORMAL',
+    },
+    {
+      key: 'AFFILIATE',
+      displayName: 'AFFILIATE',
+      value: 'AFFILIATE',
+    },
+  ],
 })
 const site = ref(null)
 const startDate = new Date()
@@ -480,6 +549,12 @@ const request = reactive({
   loginName: null,
   affiliateCode: null,
   activeMember: 0,
+})
+
+const popUpRequest = reactive({
+  loginName: null,
+  recordTime: [...request.recordTime],
+  memberType: null,
 })
 
 const memberRequest = reactive({
@@ -569,15 +644,27 @@ async function loadRecord() {
   page.loading = false
 }
 
+async function loadChildren(tree, treeNode, resolve) {
+  const query = {}
+
+  query.recordTime = tree.recordTime
+  query.parentAffiliateId = tree.affiliateId
+  query.siteId = request.siteId
+  const { data: children } = await getAffiliateChildSummary(query)
+  resolve(children)
+}
+
 function showDialog(type, affiliateId) {
   if (type === 'MEMBER') {
     // newMembers.list = members
     currentPageType = 'newRegister'
     loadNewMember(affiliateId)
+    currentAffiliateId = affiliateId
     uiControl.dialogTitle = t('fields.newMember')
   } else if (type === 'ALLMEMBER') {
     currentPageType = 'allMembers'
     loadAllMember(affiliateId)
+    currentAffiliateId = affiliateId
     uiControl.dialogTitle = t('fields.allmembers')
   }
   uiControl.dialogType = type
@@ -595,9 +682,9 @@ async function loadNewMember(affiliateId) {
     }
   })
 
-  if (request.recordTime !== null) {
-    if (request.recordTime.length === 2) {
-      query.recordTime = JSON.parse(JSON.stringify(request.recordTime))
+  if (popUpRequest.recordTime !== null) {
+    if (popUpRequest.recordTime.length === 2) {
+      query.recordTime = JSON.parse(JSON.stringify(popUpRequest.recordTime))
 
       query.recordTime[0] = moment(query.recordTime[0]).format(
         'YYYY-MM-DD 00:00:00'
@@ -608,7 +695,7 @@ async function loadNewMember(affiliateId) {
 
       query.recordTime = query.recordTime.join(',')
     } else {
-      query.recordTime = moment(request.recordTime[0]).format(
+      query.recordTime = moment(popUpRequest.recordTime[0]).format(
         'YYYY-MM-DD 00:00:00'
       )
     }
@@ -622,6 +709,8 @@ async function loadNewMember(affiliateId) {
   //   }
   // }
   query.affiliateId = affiliateId
+  query.loginName = popUpRequest.loginName
+  query.memberType = popUpRequest.memberType
 
   const { data: ret } = await getAffiliateSummaryNewMember(query)
   currentPageType = 'newRegister'
@@ -642,6 +731,27 @@ async function loadAllMember(affiliateId) {
     }
   })
   query.affiliateId = affiliateId
+  query.loginName = popUpRequest.loginName
+  query.memberType = popUpRequest.memberType
+
+  if (popUpRequest.recordTime !== null) {
+    if (popUpRequest.recordTime.length === 2) {
+      query.recordTime = JSON.parse(JSON.stringify(popUpRequest.recordTime))
+
+      query.recordTime[0] = moment(query.recordTime[0]).format(
+        'YYYY-MM-DD 00:00:00'
+      )
+      query.recordTime[1] = moment(query.recordTime[1]).format(
+        'YYYY-MM-DD 23:59:59'
+      )
+
+      query.recordTime = query.recordTime.join(',')
+    } else {
+      query.recordTime = moment(popUpRequest.recordTime[0]).format(
+        'YYYY-MM-DD 00:00:00'
+      )
+    }
+  }
 
   const { data: ret } = await getAffiliateSummaryNewMember(query)
   currentPageType = 'allMembers'
