@@ -793,6 +793,8 @@ export default defineComponent({
           return (val.length > 33 && val.length < 35) || '长度应为34个字符'
         } else if(selectedCode === 'OKPAY') {
           return (val.length > 15 && val.length < 17) || '长度应为16个字符'
+        } else if(selectedCode === 'SZPAY') {
+          return (val.length > 10 && val.length < 12) || '长度应为11个字符'
         }
       } else {
         var selectedBankCode = null

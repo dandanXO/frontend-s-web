@@ -320,6 +320,9 @@ export default defineComponent({
         } else if (selectedCode === "OKPAY") {
           min = 16;
           max = 16;
+        } else if (selectedCode === "SZPAY") {
+          min = 11;
+          max = 11;
         }
       }
       if (v === "") {
