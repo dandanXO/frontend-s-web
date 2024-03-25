@@ -26,7 +26,7 @@ const onClickClaimNow = () => {
 }
 
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .row {
     display: flex;
     justify-content: space-evenly;
