@@ -840,8 +840,8 @@ onUnmounted(() => {
 
     img {
       display: block;
-      top: -40px;
-      right: 3px;
+      top: -28px;
+      right: 0px;
       position: absolute;
     }
   }

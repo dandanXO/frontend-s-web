@@ -152,14 +152,14 @@
               <div
                 class="inner"
                 :class="{
-                  lhstepgame: selectedPromo.promoCode === 'lh-step-game'
+                  lhstepgame: selectedPromo.promoCode === 'lh1-game-steps'
                 }"
               >
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
-                  v-if="selectedPromo.promoType && selectedPromo.promoCode !== 'lh-step-game'"
+                  v-if="selectedPromo.promoType && selectedPromo.promoCode !== 'lh1-game-steps'"
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
@@ -291,7 +291,7 @@ export default defineComponent({
     };
     const isSpecialPromo= ref(false);
     const showPromoDetails = (promo) => {
-      if(promo.promoCode === 'lh-step-game'){
+      if(promo.promoCode === 'lh1-game-steps'){
         isSpecialPromo.value= true;
       }else{
         isSpecialPromo.value= false;

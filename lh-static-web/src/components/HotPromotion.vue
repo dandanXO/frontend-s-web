@@ -1,5 +1,5 @@
 <template>
-  <div class="hot-promo" :class="list.redirectUrl === 'lh-step-game' && 'flat-border-radius'">
+  <div class="hot-promo" :class="list.redirectUrl === 'lh1-game-steps' && 'flat-border-radius'">
     <ClaimPromo v-if="isCommonPromo" :promo-id="list.id" :loading-claim="loadingClaim" @daily-slot="handleSlot()" />
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-tiger-card'" />
     <DragonCardPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-dragon-card'" :promo-code="list.promoCode" />
@@ -47,10 +47,8 @@
       v-if="list.redirectUrl === 'lh-cs2-copenhagen-major-2024' && !isCommonPromo && store.token"
       :promo-code="list.promoCode"
     />
-
-    <!-- lh-step-game -->
     <LhStepGamePromo
-      v-if="list.redirectUrl === 'lh-step-game' && !isCommonPromo && store.token"
+      v-if="list.redirectUrl === 'lh1-game-steps' && !isCommonPromo && store.token"
       :pageContent="list.pageContent"
     ></LhStepGamePromo>
 
@@ -411,7 +409,7 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-upgrade-hongbao" ||
       this.list.redirectUrl === "lh-cs2-copenhagen-major-2024" ||
       this.list.redirectUrl === "lh1-spin-wheel" ||
-      this.list.redirectUrl === "lh-step-game"
+      this.list.redirectUrl === "lh1-game-steps"
     ) {
       this.isCommonPromo = false;
     } else {

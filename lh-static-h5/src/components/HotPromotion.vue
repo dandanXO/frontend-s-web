@@ -83,9 +83,8 @@
     <CnyStepGame2024Promo
       v-if="list.redirectUrl === 'lh1-cny-step-game' && !isCommonPromo && store.token"
     ></CnyStepGame2024Promo>
-    <!-- lh-step-game -->
     <LhStepGamePromo
-      v-if="list.redirectUrl === 'lh-step-game' && !isCommonPromo && store.token"
+      v-if="list.redirectUrl === 'lh1-game-steps' && !isCommonPromo && store.token"
       :pageContent="list.pageContent"
     ></LhStepGamePromo>
     <CS2Sign
@@ -267,7 +266,7 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-lpl-game" ||
       this.list.redirectUrl === "lh-cs2-copenhagen-major-2024" ||
       this.list.redirectUrl === "lh1-spin-wheel" ||
-      this.list.redirectUrl === "lh-step-game"
+      this.list.redirectUrl === "lh1-game-steps"
     ) {
       this.isCommonPromo = false;
     } else {

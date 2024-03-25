@@ -186,6 +186,7 @@ import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 import { getCurrentStepInit, submitGameStep, getStepRecords } from "@/api/index/promo";
 import { ArrowDown } from "@element-plus/icons-vue";
+import { ElMessage } from "element-plus";
 
 defineProps(["pageContent"]);
 
@@ -254,6 +255,7 @@ const handleSpin = () => {
         }
       } else {
         isBtnLoading.value = false;
+        ElMessage.error(res.message);
       }
     })
     .catch((error) => {
@@ -770,7 +772,7 @@ onUnmounted(() => {
     img {
       display: block;
       top: -60px;
-      right: -5px;
+      right: -15px;
       position: absolute;
     }
   }
