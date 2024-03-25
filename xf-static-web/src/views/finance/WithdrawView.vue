@@ -172,7 +172,7 @@
           <div
             style="margin: 15px 0px; color: #ff7f10"
             v-if="
-              ['KDPAY', 'OKPAY', 'EBPAY'].includes(
+              ['KDPAY', 'OKPAY', 'EBPAY', 'SZPAY'].includes(
                 selectedWithdrawalMethod.code
               )
             "
@@ -419,7 +419,7 @@ export default defineComponent({
       withdrawInfo.withdrawCode = method.code;
       activeItem.value = index;
       isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
-      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY');
+      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY') || withdrawInfo.withdrawCode.includes('SZPAY');
       isALIPAY.value = withdrawInfo.withdrawCode.includes('ALIPAY')
       loadCards()
     }

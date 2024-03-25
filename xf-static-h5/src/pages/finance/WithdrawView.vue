@@ -211,7 +211,7 @@
                 :label="tutorialLabel()"
               />
             </div>
-            <div class="q-mt-md text-orange" v-if="['KDPAY', 'EBPAY', 'OKPAY'].includes(selectedWithdrawalMethod.code)">
+            <div class="q-mt-md text-orange" v-if="['KDPAY', 'EBPAY', 'OKPAY', 'SZPAY'].includes(selectedWithdrawalMethod.code)">
               <span>*特别说明：提款钱包和游戏账号的姓名务必一致</span>
             </div>
           </div>
@@ -396,7 +396,7 @@ export default defineComponent({
       selectedWithdrawalMethod.value = method;
       withdrawInfo.withdrawCode = method.code;
       isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
-      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY')
+      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY')|| withdrawInfo.withdrawCode.includes('SZPAY')
       isALIPAY.value = withdrawInfo.withdrawCode.includes('ALIPAY')
       activeItem.value = index;
       loadCards();
