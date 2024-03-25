@@ -302,7 +302,7 @@ export default defineComponent({
     background-size: 100% auto;
     padding: 50px;
     position: relative;
-    padding-top: max(300px, 22vw);
+    padding-top: max(300px, 20vw);
     background-color: #f3f7fd;
   }
   .promo-view-container {
@@ -502,7 +502,7 @@ export default defineComponent({
             .label {
               z-index: 0;
               color: #468cff;
-              font-size: 23px;
+              font-size: 16px;
             }
 
             &:before {

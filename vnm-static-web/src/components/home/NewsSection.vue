@@ -17,7 +17,7 @@
                                 <div class="news-content">
                                     Rồng hổ TF88 là một trò chơi casino trực tuyến được rất nhiều anh em Việt Nam yêu thích. Sở hữu luật chơi đơn giản, cửa đặt cược tỷ lệ thắng cao, cùng với đó là hàng ngàn chương trình khuyến mãi hấp dẫn tạo điều kiện thuận lợi cho người chơi tham gia. Mời anh em cùng tham khảo những kinh nghiệm chơi Rồng hổ hiệu quả nhất hiện nay nhé!
                                 </div>
-                                 <button class="standard-button btn-color-blue">More details</button>
+                                 <button class="standard-button btn-color-blue">{{ $t('home.moreDetails') }}</button>
                             </div>
                         </div>
                     </div>    

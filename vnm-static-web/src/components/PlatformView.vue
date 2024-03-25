@@ -4,7 +4,7 @@
       :class="(platformType === 'slot') ? 'slot-container' : ''"
     >
       <div class="platform-container-slot" v-if="platformType === 'slot'">
-        <img src="../assets/slot/slot-top-bg.png">
+        <img :src="require(`../assets/slot/slot-top-bg-${languageVal}.png`)">
       </div>
       <div class="platform-container-inner" v-if="platformType !== 'slot'">
         <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
@@ -131,7 +131,7 @@
               class="search-input"
               v-model="gamePage.searchKey"
               @input="searchList()"
-              placeholder="输入查找游戏名"
+              :placeholder="$t('common.search')"
               clearable
               @clear="searchList()"
             >
@@ -226,6 +226,10 @@ import { RiHeartLine, RiHeartFill } from "vue-remix-icons";
 import GameModal from "@/components/modal/GameModal";
 import moment from "moment/moment";
 
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from 'pinia'
+const i18nStoreLanguage = i18nStore()
+const { languageVal } = storeToRefs(i18nStoreLanguage)
 const platformGame = ref(null);
 const route = useRoute();
 const router = useRouter();

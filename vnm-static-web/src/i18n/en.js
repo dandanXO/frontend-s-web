@@ -21,8 +21,6 @@ export default {
     personalInfo: 'Personal information',
     mailbox: 'Mailbox',
     logout: 'Logout',
-    futureGaming: 'The future of gaming is here.Great games on all devices.TF88 App',
-    scanToDownload: 'Scan to download the APP'
   },
   account: {
     welcome: 'Welcome',
@@ -82,7 +80,10 @@ export default {
     productServicePt1: 'Best in the world',
     productServicePt2: 'The most abundant products',
     productServicePt3: 'Diverse selection',
-
+    futureGaming: 'The future of gaming is here.Great games on all devices.TF88 App',
+    scanToDownload: 'Scan to download the APP',
+    moreDetails:'More details',
+    announcementList: 'Announcement List'
   },
   personal: {
     personalInfo: 'Personal information',
@@ -99,7 +100,9 @@ export default {
     oldPwd: 'Old Password',
     newPwd: 'New Password',
     confirmPwd: 'Confirm Password',
-
+    oldWithdrawPwd: 'Old Withdraw Password',
+    newWithdrawPwd: 'New Withdraw Password',
+    confirmWithdrawmPwd: 'Confirm Withdraw Password',
   },
   placeholder: {
     realName: 'Please enter Real Name',
@@ -110,6 +113,9 @@ export default {
     oldPwd: 'Please enter  Old Password',
     newPwd: 'Please enter New Password',
     confirmPwd: 'Please enter Confirm Password',
+    oldWithdrawPwd: 'Please enter Old Withdraw Password',
+    newWithdrawPwd: 'Please enter New Withdraw Password',
+    confirmWithdrawPwd: 'Please enter Confirm Withdraw Password',
     title: 'Please enter title',
     content: 'Please enter content',
     usernamereq: 'Please enter username',
@@ -187,7 +193,9 @@ export default {
     withdrawalToday: 'Withdrawal Today',
     remaining: 'Remaining',
     times: 'times',
-    withdrawPwd: 'Withdraw Password'
+    withdrawPwd: 'Withdraw Password',
+    realNameNotEmpty: 'Real name cannot be empty',
+    beforeBindVerifyPhone: 'Before binding the bank card, please verify your phone number.'
   },
   referTerms: {
     promotionStart: "Promotion starts from 00:00:00 on 01/06/2022 (GMT+8)",

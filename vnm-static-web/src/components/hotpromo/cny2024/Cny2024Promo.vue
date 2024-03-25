@@ -262,7 +262,6 @@ const goToHongbaoyu = async () => {
   background: #f3f4f6;
   border-radius: 0.375rem;
   cursor: pointer;
-  font-family: Microsoft Yahei UI;
   font-size: 20px;
   font-weight: 700;
   padding: 40px 70px;
