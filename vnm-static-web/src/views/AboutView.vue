@@ -37,13 +37,6 @@ const tabInfo = ref([
   { id: "law", label: t('about.legalBasis'), component: AboutLaw},
   { id: "rule", label: t('about.bettingRules'), component: AboutRule},
   { id: "blame", label: t('about.blame'), component: AboutBlame},
-  // { id: "aboutus", label: "关于我们", component: AboutUs },
-  // { id: "info", label: "资料收集", component: AboutInfo },
-  // { id: "law", label: "法律依据", component: AboutLaw },
-  // { id: "rule", label: "竞猜规则", component: AboutRule },
-  // { id: "pay", label: "补偿", component: AboutPay },
-  // { id: "agent", label: "加盟代理", component: AboutAgent },
-  // { id: "blame", label: "博彩责任", component: AboutBlame }
 ]);
 
 const route = useRoute();
@@ -69,6 +62,13 @@ watch(
 
 onMounted(() => {
   if (route.query.id) activeTab.value = route.query.id;
+  tabInfo.value = [
+    { id: "aboutus", label: t('about.aboutus'), component: AboutUs},
+    { id: "info", label: t('about.collectInformation'), component: AboutInfo },
+    { id: "law", label: t('about.legalBasis'), component: AboutLaw},
+    { id: "rule", label: t('about.bettingRules'), component: AboutRule},
+    { id: "blame", label: t('about.blame'), component: AboutBlame}
+  ]
 });
 </script>
 

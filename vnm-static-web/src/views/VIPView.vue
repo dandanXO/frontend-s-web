@@ -48,7 +48,7 @@
             <div
               :class="`vipLevelReachStatus ${getVipLevelProgress(vip) === 100 && !!vipLevel ? 'vipLevelReached' : ''}`"
             >
-              <span>{{ getVipLevelProgress(vip) === 100 && !!vipLevel ? "已达到" : "未达到" }}</span>
+              <span>{{ getVipLevelProgress(vip) === 100 && !!vipLevel ? "Achieved" : "Unachieved" }}</span>
             </div>
           </div>
           <router-link
@@ -270,14 +270,17 @@
     </div>
 
     <div class="terms-conditions">
-      <div class="section-title">规则与条款</div>
+      <div class="section-title">{{ $t('vip.vipTerms') }}</div>
       <img
         class="terms-conditions-title-separator"
         :src="require('../assets/vip/terms-condition-title-separator.png')"
       />
       <ol class="terms">
-        <li v-for="(term, i) in currentDisplayTerms" :key="i" class="term">
+        <!-- <li v-for="(term, i) in currentDisplayTerms" :key="i" class="term">
           {{ term.text }}
+        </li> -->
+        <li class="term" v-for="term in 9">
+          {{ $t(`vip.tnc${term}`)}}
         </li>
       </ol>
     </div>
@@ -758,7 +761,7 @@ $border-settings: 1px solid #e5e7eb;
       margin-left: 2px;
       z-index: 1;
       text-align: left;
-      height: 47px;
+      height: 75px;
 
       &.vipLevelReached {
         background: url("../assets/vip/badge/vip-level-banner-status-ribbon-achieved.png") no-repeat left center;
@@ -948,7 +951,7 @@ $border-settings: 1px solid #e5e7eb;
     .terms {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      // align-items: center;
       font-size: 16px;
       font-weight: 400;
       line-height: 30px;
