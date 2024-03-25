@@ -81,12 +81,13 @@
               size="small"
               highlight-current-row
               v-loading="page.loading"
+              style="width: 100%"
     >
-      <el-table-column prop="site" :label="t('fields.site')" width="150" />
-      <el-table-column prop="affiliateName" :label="t('fields.loginName')" width="150" />
-      <el-table-column prop="start" :label="t('fields.startTime')" width="150" />
-      <el-table-column prop="end" :label="t('fields.endTime')" width="150" />
-      <el-table-column prop="status" :label="t('fields.status')" width="150">
+      <el-table-column prop="site" :label="t('fields.site')" :min-width="20" />
+      <el-table-column prop="affiliateName" :label="t('fields.loginName')" :min-width="20" />
+      <el-table-column prop="start" :label="t('fields.startTime')" :min-width="20" />
+      <el-table-column prop="end" :label="t('fields.endTime')" :min-width="20" />
+      <el-table-column prop="status" :label="t('fields.status')" :min-width="20">
         <template #default="scope">
           <el-tag v-if="scope.row.status === 'WAIT'" size="mini">
             {{ scope.row.status }}
@@ -195,9 +196,7 @@ function showDialog(type) {
       affiliateCommissionForm.value.resetFields();
     }
     form.siteId = siteList.list[0].id;
-    uiControl.dialogTitle = t('fields.addAffiliateCommission');
-  } else if (type === "EDIT") {
-    uiControl.dialogTitle = t('fields.editAffiliateCommission');
+    uiControl.dialogTitle = t('fields.add');
   }
   uiControl.dialogType = type;
   uiControl.dialogVisible = true;
