@@ -228,3 +228,8 @@ export function piggyBankClaim() {
 export function bonusClaimSlotsRefund() {
   return server.EVENT.put('/bonus/claim/vnm-slots-refund');
 }
+
+// poker cashback
+export function bonusClaimPokerRefund() {
+  return server.EVENT.put('/bonus/claim/vnm-poker-refund');
+}
