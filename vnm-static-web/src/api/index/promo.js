@@ -223,3 +223,8 @@ export function piggyBankGetLottery() {
 export function piggyBankClaim() {
   return server.EVENT.put('/piggy-bank/claim');
 }
+
+// slot netloss
+export function bonusClaimSlotsRefund() {
+  return server.EVENT.put('/bonus/claim/vnm-slots-refund');
+}
