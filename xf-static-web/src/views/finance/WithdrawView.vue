@@ -41,19 +41,10 @@
           </div>
         </el-form-item>
 
-        <el-form-item
-          class="helptxt"
-          prop="amount"
-          label="提款金额"
-          name="amount"
-        >
+        <el-form-item class="helptxt" prop="amount" label="提款金额" name="amount">
           <el-row :gutter="10">
             <el-col :span="12">
-              <el-input
-                class="form-input"
-                v-model="withdrawInfo.amount"
-                placeholder="提款金额"
-              >
+              <el-input class="form-input" v-model="withdrawInfo.amount" placeholder="提款金额">
                 <template #append>{{ store.currency.label }}</template>
               </el-input>
             </el-col>
@@ -85,12 +76,7 @@
         <el-row>
           <el-col>
             <div
-              v-if="
-                !isEWALLET &&
-                !isUSDT &&
-                !isALIPAY &&
-                selectedWithdrawalMethod.tips
-              "
+              v-if="!isEWALLET && !isUSDT && !isALIPAY && selectedWithdrawalMethod.tips"
               class="selected-tip"
               v-html="selectedWithdrawalMethod.tips"
             ></div>
@@ -99,11 +85,7 @@
             </div>
           </el-col>
         </el-row>
-        <el-form-item
-          v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
-          class="helptxt"
-          label="实时汇率"
-        >
+        <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="实时汇率">
           <span style="color: #9bffd1">
             1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
             {{ store.currency.label }}
@@ -123,9 +105,7 @@
           ]"
         >
           <el-select
-            @click="
-              withdrawState.bankCardList.length === 0 ? checkBankCards() : ''
-            "
+            @click="withdrawState.bankCardList.length === 0 ? checkBankCards() : ''"
             v-model="withdrawInfo.cardId"
             :placeholder="`请选择${cardLabel()}`"
             style="width: 300px"
@@ -140,30 +120,17 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item
-          v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
-          class="helptxt"
-          label="预计到账"
-        >
+        <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="预计到账">
           <div style="color: #9bffd1">
             {{
-              selectedWithdrawalMethod &&
-              withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
+              selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
                 ? "0.00"
-                : (
-                    withdrawInfo.amount /
-                      selectedWithdrawalMethod.exchangeRate -
-                    1
-                  ).toFixed(2)
+                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2)
             }}
             USDT
           </div>
         </el-form-item>
-        <div
-          v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
-          class=""
-          style="color: #9bffd1"
-        >
+        <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="" style="color: #9bffd1">
           *特别说明：三方自动收取提币 1.00 USDT 手续费！
         </div>
 
@@ -171,27 +138,18 @@
         <div style="margin-left: 150px" v-else-if="isEWALLET">
           <div
             style="margin: 15px 0px; color: #ff7f10"
-            v-if="
-              ['KDPAY', 'OKPAY', 'EBPAY', 'SZPAY'].includes(
-                selectedWithdrawalMethod.code
-              )
-            "
+            v-if="['KDPAY', 'OKPAY', 'EBPAY', 'SZPAY'].includes(selectedWithdrawalMethod.code)"
           >
             *特别说明：提款钱包和游戏账号的姓名务必一致
           </div>
           <el-button
             class="common-btn"
+            v-if="selectedWithdrawalMethod.code !== 'SZPAY'"
             @click="openEWalletTutorial(selectedWithdrawalMethod.code)"
           >
-            <span v-if="selectedWithdrawalMethod.code === 'KDPAY'">
-              K豆教程视频
-            </span>
-            <span v-else-if="selectedWithdrawalMethod.code === 'EBPAY'">
-              EB使用教程
-            </span>
-            <span v-else-if="selectedWithdrawalMethod.code === 'OKPAY'">
-              OK教程视频
-            </span>
+            <span v-if="selectedWithdrawalMethod.code === 'KDPAY'">K豆教程视频</span>
+            <span v-else-if="selectedWithdrawalMethod.code === 'EBPAY'">EB使用教程</span>
+            <span v-else-if="selectedWithdrawalMethod.code === 'OKPAY'">OK教程视频</span>
           </el-button>
         </div>
 
@@ -202,12 +160,7 @@
         ></div> -->
 
         <div class="flex-box flex-justify-center">
-          <el-button
-            :loading="loadingBtn"
-            size="large"
-            class="common-btn withdraw-btn"
-            @click="submitWithraw"
-          >
+          <el-button :loading="loadingBtn" size="large" class="common-btn withdraw-btn" @click="submitWithraw">
             确定
           </el-button>
         </div>
@@ -546,8 +499,7 @@ export default defineComponent({
       &.active {
         color: #ffffff;
         // background: #ffffff;
-        background-image: linear-gradient(90deg, #0ca9bc 0, #0a5e89 100%),
-          linear-gradient(#45fdfb, #45fdfb);
+        background-image: linear-gradient(90deg, #0ca9bc 0, #0a5e89 100%), linear-gradient(#45fdfb, #45fdfb);
         border: 0;
         padding-left: 0px;
         &::after {
