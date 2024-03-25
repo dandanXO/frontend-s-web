@@ -207,6 +207,10 @@
       </el-table>
       <div style="text-align: right;margin-top:10px;">
         <span style="margin-right:20px;">
+          {{ t('fields.totalSuccessWithdraw') }}: {{ page.totalSuccess }}</span>
+        <span style="margin-right:20px;">
+          {{ t('fields.totalSuccessWithdrawAmount') }}: {{ page.totalSuccessWithdrawAmount }}</span>
+        <span style="margin-right:20px;">
           {{ t('fields.totalNoOfWithdrawals') }}: {{ page.total }}
         </span>
         <span>{{ t('fields.totalWithdrawnAmount') }}: {{ page.totalWithdrawAmount }}</span>
@@ -332,6 +336,7 @@
 import { onMounted, defineProps, reactive } from 'vue'
 import moment from 'moment'
 import {
+  getMemberWithdrawSuccessRecord,
   getMemberWithdrawRecord,
   getMemberWithdrawRecordTotalAmount,
 } from '../../../../../api/member'
@@ -374,6 +379,8 @@ const page = reactive({
   total: 0,
   loading: false,
   totalWithdrawAmount: 0,
+  totalSuccess: 0,
+  totalSuccessWithdrawAmount: 0,
 })
 
 const uiControl = reactive({
@@ -452,6 +459,9 @@ async function loadWithdrwalInfo() {
     )
     page.totalWithdrawAmount = amount
   }
+  const { data: success } = await getMemberWithdrawSuccessRecord(props.mbrId, query);
+  page.totalSuccessWithdrawAmount = success.totalAmount
+  page.totalSuccess = success.totalCount
   page.loading = false
 }
 
