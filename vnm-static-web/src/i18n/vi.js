@@ -413,5 +413,17 @@ about: {
   "tf88SupportContent": "Là một trong những nền tảng game hàng đầu tại Việt Nam và châu Á. Chúng tôi đảm bảo các nguyên tắc tiêu cực của phòng ngừa và kiểm soát khi đặt cược trên tất cả các bên bao gồm cả nhà cung cấp và các cơ quan quản lý nền tảng. Ngoài ra, đội ngũ của TF88 luôn được trang bị đủ kiến thức và kỹ năng về cá cược có trách nhiệm sẵn sàng hỗ trợ bạn bất cứ lúc nào.",
   "ageRestriction": "TF88 CẤM TẤT CẢ CÁC NGƯỜI CHƠI DƯỚI 18 TUỔI TRUY CẬP, THAM GIA CÁ CƯỢC TRÊN NỀN TẢNG CỦA CHÚNG TÔI"
 
+  },
+  vip: {
+    vipTerms: "ĐIỀU KHOẢN VÀ ĐIỀU KIỆN",
+    tnc1: "Chương trình áp dụng cho tất cả thành viên có tài khoản VNDP hợp lệ tại TF88. Chương trình dựa trên tổng số tiền cược hợp lệ hàng tháng của thành viên tính từ 00:00:00 ngày đầu tiên của tháng đến 23:59:59 ngày cuối cùng của tháng (GMT +8).",
+    tnc2: "Hệ thống sẽ tự động nâng cấp độ VIP của tất cả thành viên sau 12:00:00 (GMT +8) vào ngày đầu tiên của tháng mới, điều kiện là tổng tiền cược hợp lệ của thành viên phải đủ điều kiện để thăng cấp VIP tương ứng. Việc thăng hạng sẽ không cần tuân thủ theo từng cấp bậc VIP.",
+    tnc3: "Tiền Thưởng Nâng Cấp: sau khi thành viên được nâng cấp độ VIP mới, thành viên có thể bấm nút NHẬN trên trang VIP. Số tiền thưởng sẽ được dựa vào cấp độ VIP tương ứng và tiền thưởng cần trải qua 1 vòng cược trước khi rút.",
+    tnc4: "Tiền Thưởng Nâng Cấp sẽ không thể nhận đồng thời với Tiền Thưởng Hàng Tháng. Nếu thành viên được thăng hạng VIP trong tháng này, thì thành viên sẽ được nhận Tiền Thưởng Nâng Cấp. Hệ thống sẽ xét duyệt Tiền Thưởng Hàng Tháng cho các tài khoản chưa được thăng hạng VIP trong tháng này và có đạt đủ yêu cầu duy trì cấp độ VIP.",
+    tnc5: "Tiền Thưởng Hàng Tháng: Thành viên cần đạt được các yêu cầu duy trì của cấp độ VIP hiện tại trước khi nhận thưởng. (VD: Nếu thành viên đang ở VIP3, thì trong tháng cần đạt tối thiểu 600,000 VNDP tổng cược trong tháng). Sau khi đủ điều kiện thành viên có thể bấm nút NHẬN trên trang VIP vào ngày đầu tháng. Số tiền thưởng dựa vào cấp độ VIP tương ứng và tiền thưởng cần trải qua 3 vòng cược trước khi rút.",
+    tnc6: "Tiền thưởng nâng cấp: thành viên cần bấm \NHẬN\ trên trang VIP sau khi thành viên đã nâng cấp lên cấp độ mới vào ngày đầu tiên của tháng, Mỗi thành viên chỉ có thể nhận được 1 lần thưởng nâng cấp cho mỗi cấp độ. (tiền thưởng nâng cấp cần trải qua 1 vòng cược trước khi rút tiền.)",
+    tnc7: "Tiền thưởng hoàn trả: Thành viên được nâng cấp mức tiền thưởng hoàn trả tương ứng với cấp độ VIP hiện có. Tiền thưởng hoàn trả tại sản phẩm Casino trực tuyến, quay hũ sẽ không nhận được quá 50,000 VNDP mỗi ngày và không giới hạn tại các sản phẩm khác.",
+    tnc8: "Tất cả các cược hòa, cược HỦY, cược 2 bên, cược Châu Âu chấp dưới 1.75, cược Châu Á dưới 0.75, Number Game, Thể thao ảo, Giải đặc biệt RNG lũy tiến, Xèng RNG lũy tiến sẽ không được tính doanh thu cược cho chương trình này. Điều kiện & điều khoản chung của khuyến mãi được áp dụng.",
+    tnc9: "TF88 có quyền sửa đổi, từ chối hoặc hủy bỏ chương trình thành viên VIP này bất kỳ lúc nào mà không cần thông báo trước."
   }
 }
