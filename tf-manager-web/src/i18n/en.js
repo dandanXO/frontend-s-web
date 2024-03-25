@@ -2177,6 +2177,7 @@ export default {
     'Competition Management': 'Competition Management',
     'Competition List': 'Competition List',
     'Competition Code': 'Competition Code',
+    'Affiliate Recalculate': 'Affiliate Recalculate',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
