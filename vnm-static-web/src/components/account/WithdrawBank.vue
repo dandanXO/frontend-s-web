@@ -563,10 +563,10 @@ export default defineComponent({
     const bankCardModal = () => {
       store.getMemberInfo().then(() => {
         if (!store.realName || store.realName == "") {
-          ElMessage.error("真实姓名不可为空");
+          ElMessage.error($t('withdraw.realNameNotEmpty'));
           return;
         } else if (!store.phone || store.phone == "") {
-          ElMessage.error("绑定银行卡前，请先验证手机号。");
+          ElMessage.error($t('withdraw.beforeBindVerifyPhone'));
           return;
         } else {
           bankCardInfo.bankId = undefined;

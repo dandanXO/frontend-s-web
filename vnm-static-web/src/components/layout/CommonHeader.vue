@@ -1,6 +1,7 @@
 <template>
   <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
+      <div class="side left"><img src="../../assets/home/header_side.png"></div>
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
           <img class="logo" src="../../assets/logo.svg" />
@@ -84,7 +85,9 @@
             <a class="header-btn btn-color-white">注册</a>
           </router-link> -->
           <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">{{ $t('common.login') }}</a>
-          <a class="header-btn btn-color-white" @click="registerDialogVisible = true">{{ $t('common.register') }}</a>
+          <a class="header-btn btn-color-white" @click="registerDialogVisible = true">{{ $t('common.register') }}
+            <img src="../../assets/home/regbtn_side.png">
+          </a>
         </div>
 
         <div v-if="store.token" class="profile-actions">
@@ -190,6 +193,8 @@
           </div>
         </div> -->
       </div>
+      
+      <div class="side right"><img src="../../assets/home/header_side.png"></div>
     </div>
 
     <!-- <el-dialog
@@ -1746,6 +1751,20 @@ body {
   transition: all 0.3s ease;
 
   .top-nav-wrapper {
+    .side {
+      
+    position: absolute;
+    top: 0;
+    &.left {
+
+      left: -50px;
+    }
+    &.right {
+
+      right: -50px;
+    transform: rotateY(180deg);
+    }
+    }
     padding: 10px;
     background: $color-white;
 
@@ -2502,6 +2521,13 @@ body {
     background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
     box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
     color: $font-1;
+    position: relative;
+    img {
+      position: absolute;
+      right: -10px;
+      top: -20px;
+
+    }
   }
 }
 
@@ -2527,7 +2553,7 @@ body {
     width: 100%;
     padding: 0px 6px 0px 8px;
     z-index: 2;
-    color: #565c84;
+    color: #000000;
     letter-spacing: 1px;
     text-align: center;
     font-family: PingFang SC;

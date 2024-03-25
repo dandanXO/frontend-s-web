@@ -20,9 +20,7 @@ export default {
     "transactionRecord": "Lịch sử giao dịch",
     "personalInfo": "Thông tin cá nhân",
     "mailbox": "Hòm thư",
-    logout: "Đăng xuất",
-    futureGaming: 'Tương lai của trò chơi đã đến. Các trò chơi tuyệt vời trên tất cả các thiết bị.',
-    scanToDownload: 'Quét để tải ứng dụng'
+    logout: "Đăng xuất"
   },
     "account": {
       "welcome": "Chào mừng",
@@ -79,7 +77,11 @@ export default {
       "productService": "Dịch vụ sản phẩm",
       "productServicePt1": "Tốt nhất thế giới",
       "productServicePt2": "Sản phẩm đa dạng nhất",
-      "productServicePt3": "Lựa chọn đa dạng"
+      "productServicePt3": "Lựa chọn đa dạng",
+      futureGaming: 'Tương lai của trò chơi đã đến. Các trò chơi tuyệt vời trên tất cả các thiết bị.',
+      scanToDownload: 'Quét để tải ứng dụng',
+      moreDetails:'Chi tiết thêm',
+      announcementList: 'Danh sách thông báo'
     },
     "personal": {
       "personalInfo": "Thông tin cá nhân",
@@ -95,7 +97,10 @@ export default {
       "submit": "Gửi",
       "oldPwd": "Mật khẩu cũ",
       "newPwd": "Mật khẩu mới",
-      "confirmPwd": "Xác nhận mật khẩu"
+      "confirmPwd": "Xác nhận mật khẩu",
+      oldWithdrawPwd: 'Mật khẩu Rút tiền cũ',
+      newWithdrawPwd: 'Mật khẩu Rút tiền mới',
+      confirmWithdrawPwd: 'Xác nhận Mật khẩu Rút tiền',
     },
     "placeholder": {
       "realName": "Vui lòng nhập tên thật",
@@ -106,6 +111,9 @@ export default {
       "oldPwd": "Vui lòng nhập mật khẩu cũ",
       "newPwd": "Vui lòng nhập mật khẩu mới",
       "confirmPwd": "Vui lòng xác nhận mật khẩu",
+      oldWithdrawPwd: 'Vui lòng nhập Mật khẩu Rút tiền cũ',
+      newWithdrawPwd: 'Vui lòng nhập Mật khẩu Rút tiền mới',
+      confirmWithdrawPwd: 'Vui lòng nhập Xác nhận Mật khẩu Rút tiền',
       "title": "Vui lòng nhập tiêu đề",
       "content": "Vui lòng nhập nội dung",
       "usernamereq": "Vui lòng nhập tên người dùng",
@@ -179,7 +187,9 @@ export default {
     "withdrawalToday": "Rút tiền hôm nay",
     "remaining": "Còn lại",
     "times": "lần",
-    "withdrawPwd": "Mật khẩu rút tiền"
+    "withdrawPwd": "Mật khẩu rút tiền",
+    realNameNotEmpty: 'Tên thật không được để trống.',
+    beforeBindVerifyPhone: 'Trước khi ràng buộc thẻ ngân hàng, vui lòng xác minh số điện thoại của bạn.'
   },
   "referTerms": {
     "promotionStart": "Khuyến mãi bắt đầu từ 00:00:00 ngày 01/06/2022 (GMT+8)",

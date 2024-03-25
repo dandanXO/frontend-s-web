@@ -961,7 +961,6 @@ $transition_timer: 0.5s;
 
           .desc {
             color: #3063ab;
-            font-family: Microsoft YaHei;
             font-size: 0.83838rem;
             font-weight: 400;
             line-height: 1.46719rem;
@@ -1029,7 +1028,7 @@ $transition_timer: 0.5s;
               .game-provider-text {
                 color: #A5C0E4;
                 text-align: center;
-                font-family: Microsoft YaHei;
+                font-family: 
                 font-size: 0.73363rem;
                 font-weight: 400;
                 line-height: 1.46719rem;
@@ -1072,7 +1071,7 @@ $transition_timer: 0.5s;
             border-radius: 1.875rem;
             background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
             box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
-            font-family: Microsoft YaHei;
+            font-family: 
             font-size: 1.15281rem;
             font-weight: 400;
             line-height: 2.5rem;
