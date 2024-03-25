@@ -1264,6 +1264,7 @@ export default {
     sureWinMinSpin: 'Sure Win Min Spin',
     suspend: 'Suspend',
     switch: 'Switch',
+    szCnyControl: 'SZCny Withdrawal Control',
     switchPayment: 'Switch Payment',
     systemPayment: 'System Payment',
     targetType: 'Target Type',

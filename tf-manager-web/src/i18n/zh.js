@@ -1272,6 +1272,7 @@ export default {
     switch: '转换',
     switchPayment: '支付转换',
     systemPayment: '系统支付',
+    szCnyControl: '数字人民币提款限制',
     targetType: '操作目标类型',
     targetId: '操作编号',
     targetName: '操作名称',
