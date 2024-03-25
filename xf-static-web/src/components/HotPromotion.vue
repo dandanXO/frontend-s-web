@@ -11,6 +11,7 @@
     <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
     <CnySpinWheelPromo v-if="list.redirectUrl === 'cny-spinwheel' && !isCommonPromo" />
+    <BonusSpinWheel v-if="list.redirectUrl === 'bonus-spinwheel' && !isCommonPromo && store.token" />
     <div v-if="list.redirectUrl === 'fucaiiphone' && !isCommonPromo && store.token" class="promo-4">
       <div class="tabs">
         <el-tabs v-model="activeKey" type="card">
@@ -166,6 +167,7 @@ import HongBaoYu2024Promo from "../components/hotpromo/hongbaoyu/HongBaoYu2024.v
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import CnySpinWheelPromo from "../components/hotpromo/cnySpinWheel/CnySpinWheel.vue";
+import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -182,7 +184,8 @@ export default defineComponent({
     HongBaoYu2024Promo,
     InviteFriendPromo,
     WelcomeTaskPromo,
-    CnySpinWheelPromo
+    CnySpinWheelPromo,
+    BonusSpinWheel
     // DailyBonus
   },
   props: {
@@ -430,6 +433,7 @@ export default defineComponent({
       this.list.redirectUrl === "welcomenewuser" ||
       this.list.redirectUrl === "fucaiiphone" ||
       this.list.redirectUrl === "cny-spinwheel" ||
+      this.list.redirectUrl === "bonus-spinwheel" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;
