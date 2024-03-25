@@ -176,3 +176,11 @@ export const forceLogout = (id, siteId) => {
 export const requestExportSiteMember = (query) => {
   return https().request("/member/export", Method.GET, query, ContentType.form);
 };
+
+export const getMemberDepositSuccessRecord = (id, query) => {
+  return https().request(`/member/${id}/depositSuccessRecord`, Method.GET, query, ContentType.form);
+};
+
+export const getMemberWithdrawSuccessRecord = (id, query) => {
+  return https().request(`/member/${id}/withdrawSuccessRecord`, Method.GET, query, ContentType.form);
+};

@@ -203,6 +203,8 @@
         </el-table-column>
       </el-table>
       <div style="text-align: right;margin-top:10px;">
+        <span style="margin-right:20px;">{{ t('fields.totalSuccessDeposit') }}: {{ page.totalSuccess }}</span>
+        <span style="margin-right:20px;">{{ t('fields.totalSuccessDepositAmount') }}: {{ page.totalSuccessDepositAmount }}</span>
         <span style="margin-right:20px;">{{ t('fields.totalNoOfDeposits') }}: {{ page.total }}</span>
         <span>{{ t('fields.totalDepositedAmount') }}: {{ page.totalDepositAmount }}</span>
       </div>
@@ -224,7 +226,7 @@
 <script setup>
 import { onMounted, defineProps, reactive } from 'vue';
 import moment from 'moment';
-import { getMemberDepositRecord, getMemberDepositRecordTotalAmount } from '../../../../../api/member';
+import { getMemberDepositRecord, getMemberDepositRecordTotalAmount, getMemberDepositSuccessRecord } from '../../../../../api/member';
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
@@ -270,7 +272,9 @@ const page = reactive({
   records: [],
   total: 0,
   loading: false,
-  totalDepositAmount: 0
+  totalDepositAmount: 0,
+  totalSuccessDepositAmount: 0,
+  totalSuccess: 0
 })
 const sort = column => {
   request.orderBy = column.prop
@@ -310,6 +314,9 @@ async function loadDepositInfo() {
     const { data: amount } = await getMemberDepositRecordTotalAmount(props.mbrId, query);
     page.totalDepositAmount = amount;
   }
+  const { data: success } = await getMemberDepositSuccessRecord(props.mbrId, query);
+  page.totalSuccessDepositAmount = success.totalAmount
+  page.totalSuccess = success.totalCount
   page.loading = false;
 }
 
