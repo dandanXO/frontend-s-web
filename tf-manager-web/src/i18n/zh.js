@@ -2146,6 +2146,7 @@ export default {
     'Competition Management': '赛事管理',
     'Competition List': '赛事列表',
     'Competition Code': '赛事代码',
+    'Affiliate Recalculate': '代理重算',
   },
   google: {
     google_auth_menu: '谷歌验证',
