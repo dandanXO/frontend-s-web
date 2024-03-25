@@ -58,7 +58,7 @@
         <div class="middle-row">
           <div class="sign-container">
             <div v-for="(day, i) in dayList" :key="i" class="item" :class="{ isDotted: !day.claimed && !day.toClaim }">
-              <div class="signday">连续签到{{ day.no }}天</div>
+              <div class="signday">累计签到{{ day.no }}天</div>
               <img
                 :style="i < 1 ? 'mix-blend-mode: luminosity;' : ''"
                 :src="require(`../../../assets/images/promotion/hotpromo/cs2/car${i + 1}.png`)"
