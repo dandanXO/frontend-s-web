@@ -316,6 +316,7 @@ $node-color: #33bcd4;
         & > div {
           font-size: 12px;
           color: #ffffff;
+          white-space: nowrap;
         }
         img {
           //width: 15px;
