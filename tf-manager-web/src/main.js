@@ -54,6 +54,11 @@ switch (currentHost) {
     baseWss = process.env.VUE_APP_DY_SOCKET;
     siteId = 'dy';
     break;
+  case process.env.VUE_APP_VNM_HOST:
+    baseApi = process.env.VUE_APP_VNM_API;
+    baseWss = process.env.VUE_APP_VNM_SOCKET;
+    siteId = 'vnm';
+    break;
   default:
     baseApi = process.env.VUE_APP_BASE_API;
     baseWss = process.env.VUE_APP_SOCKET;
@@ -111,6 +116,9 @@ if (siteId !== 'lh') {
   } else if (siteId === 'lh') {
     link.href = '/favicon.ico';
     title.innerText = '雷火后台';
+  } else if (siteId === 'vnm') {
+    link.href = '/favicon.ico';
+    title.innerText = 'TF88';
   } else {
     link.href = '/favicon.ico';
     title.innerText = 'TF88';
