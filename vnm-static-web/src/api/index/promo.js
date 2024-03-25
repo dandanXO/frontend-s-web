@@ -214,3 +214,12 @@ export function claimDailyRainItem(item) {
 export function getDailyRainListing(item) {
   return server.EVENT.get(`/redPacketVip/list?promoCode=${item}`);
 }
+
+// penny bank
+export function piggyBankGetLottery() {
+  return server.EVENT.post('/piggy-bank/getLottery');
+}
+
+export function piggyBankClaim() {
+  return server.EVENT.put('/piggy-bank/claim');
+}
