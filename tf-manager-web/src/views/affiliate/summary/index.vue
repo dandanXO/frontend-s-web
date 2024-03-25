@@ -336,6 +336,9 @@
           >
             {{ t('fields.search') }}
           </el-button>
+          <el-button size="mini" @click="resetPopupQuery()">
+            {{ t('fields.reset') }}
+          </el-button>
         </div>
       </div>
       <el-table
@@ -553,7 +556,7 @@ const request = reactive({
 
 const popUpRequest = reactive({
   loginName: null,
-  recordTime: [...request.recordTime],
+  recordTime: null,
   memberType: null,
 })
 
@@ -594,6 +597,12 @@ function resetQuery() {
   request.affiliateCode = null
   request.activeMember = 0
   request.siteId = site.value ? site.value.id : siteList.list[0].id
+}
+
+function resetPopupQuery() {
+  popUpRequest.loginName = null
+  popUpRequest.recordTime = null
+  popUpRequest.memberType = null
 }
 
 const page = reactive({
