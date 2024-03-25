@@ -73,6 +73,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { eventapi } from "src/boot/axios";
+import { useQuasar} from "quasar";
+
+const $q = useQuasar();
 
 // spin wheel constants
 const TOTAL_ITEMS = 8;
