@@ -204,7 +204,7 @@
             </div>
           </div>
           <div v-else-if="isEWALLET">
-            <div class="q-mt-md q-mb-md text-center">
+            <div class="q-mt-md q-mb-md text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">>
               <q-btn
                 style="border: 1px solid #33bcd4; color: #33bcd4"
                 @click="openEWalletTutorial(selectedWithdrawalMethod.code)"
