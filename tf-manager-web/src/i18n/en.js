@@ -1971,6 +1971,7 @@ export default {
     validateCompetitionNameRequired: 'Competition Name is required',
     validateCompetitionTimeRequired: 'Competition Time is required',
     validateKeyQuantityRequired: 'Key quantity is required',
+    validateMonthRequired: 'Year/Month is required',
   },
   menu: {
     undefined: '',

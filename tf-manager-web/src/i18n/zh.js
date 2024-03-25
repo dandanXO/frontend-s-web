@@ -1940,6 +1940,7 @@ export default {
     validateCompetitionNameRequired: '赛事名称必填',
     validateCompetitionTimeRequired: '赛事时间必填',
     validateKeyQuantityRequired: '钥匙数量必填',
+    validateMonthRequired: '年/月必填',
   },
   menu: {
     undefined: '',
