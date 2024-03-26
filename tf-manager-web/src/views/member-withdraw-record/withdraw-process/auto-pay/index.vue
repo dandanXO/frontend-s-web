@@ -671,6 +671,7 @@ async function loadRecord() {
     }
   }
   query.memberType = "NORMAL,TEST,OUTSIDE";
+  query.siteId = request.siteId;
   const { data: ret } = await getMemberWithdrawRecordAutopay(query)
   page.pages = ret.pages
   ret.records.forEach(data => {
@@ -711,13 +712,13 @@ async function loadSites() {
 }
 
 async function toPay() {
-  await fromAutopayToPay(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
+  await fromAutopayToPay(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
   await loadRecord()
   ElMessage({ message: t('message.updateToPaySuccess'), type: 'success' })
 }
 
 async function toSuccess(memberWithdrawRecord) {
-  await fromAutopayToSuccess(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate)
+  await fromAutopayToSuccess(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
   await loadRecord()
   ElMessage({ message: t('message.autopaySuccess'), type: 'success' })
 }
@@ -751,6 +752,7 @@ async function fail() {
         failForm.reasonType,
         failForm.failReason,
         failForm.withdrawDate,
+        request.siteId
       )
       uiControl.dialogVisible = false
       clickedFail.value = false

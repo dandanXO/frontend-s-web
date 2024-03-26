@@ -813,12 +813,12 @@ async function loadBanks() {
 }
 
 async function loadBankCards(id, wd) {
-  const { data: bankCard } = await getWithdrawBankCard(id, wd)
+  const { data: bankCard } = await getWithdrawBankCard(id, wd, request.siteId)
   bankCardList.list = bankCard
 }
 
 async function loadWithdrawPlatforms(id, wd) {
-  const { data: wp } = await getWithdrawPlatformList(id, wd)
+  const { data: wp } = await getWithdrawPlatformList(id, wd, request.siteId)
   withdrawPlatformList.list = wp
 }
 
@@ -879,7 +879,7 @@ async function loadSites() {
 }
 
 async function toBeforePaid() {
-  await fromAffiliatePayToBeforePaid(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
+  await fromAffiliatePayToBeforePaid(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
   await loadRecord()
   ElMessage({ message: t('message.updateToBeforePaidSuccess'), type: 'success' })
 }
@@ -945,10 +945,10 @@ function copy(text, field) {
 async function success() {
   clicked.pay = true
   if (uiControl.dialogType === 'PAY') {
-    await fromAffiliatePayToSuccess(payForm.id, payForm.bankCard, payForm.withdrawDate)
+    await fromAffiliatePayToSuccess(payForm.id, payForm.bankCard, payForm.withdrawDate, request.siteId)
     ElMessage({ message: t('message.paySuccess'), type: 'success' })
   } else if (uiControl.dialogType === 'AUTOPAY') {
-    await fromAffiliatePayToAutopay(payForm.id, payForm.withdrawPlatformId, payForm.withdrawDate)
+    await fromAffiliatePayToAutopay(payForm.id, payForm.withdrawPlatformId, payForm.withdrawDate, request.siteId)
     ElMessage({ message: t('message.autopaySuccess'), type: 'success' })
   }
   uiControl.dialogVisible = false
@@ -960,7 +960,7 @@ async function fail() {
   toFailForm.value.validate(async valid => {
     if (valid) {
       clicked.fail = true
-      await fromAffiliatePayToFail(failForm.id, failForm.reasonType, failForm.failReason, failForm.withdrawDate)
+      await fromAffiliatePayToFail(failForm.id, failForm.reasonType, failForm.failReason, failForm.withdrawDate, request.siteId)
       uiControl.dialogVisible = false
       clicked.fail = false
       await loadRecord()

@@ -734,6 +734,7 @@ async function fail() {
         failForm.reasonType,
         failForm.failReason,
         failForm.withdrawDate,
+        request.siteId
       )
       uiControl.dialogVisible = false
       clickedFail.value = false

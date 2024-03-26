@@ -559,9 +559,9 @@ async function loadSites() {
 
 async function toApply(memberWithdrawRecord) {
   if (memberWithdrawRecord) {
-    await fromAffiliatePendingToApply([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate }])
+    await fromAffiliatePendingToApply([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate, siteId: memberWithdrawRecord.siteId }])
   } else {
-    await fromAffiliatePendingToApply(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
+    await fromAffiliatePendingToApply(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
   }
   await loadRecord()
   ElMessage({ message: t('message.updateToApplySuccess'), type: 'success' })
