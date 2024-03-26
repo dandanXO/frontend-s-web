@@ -336,7 +336,7 @@ export default defineComponent({
         }
       }
       if (v === '') {
-        return Promise.reject('请输入卡号');
+        return Promise.reject('请绑定手机号');
       } else if (/\s/.test(v)) {
         return Promise.reject('不能包含空格');
       } else if (v.length < min || v.length > max) {

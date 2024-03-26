@@ -441,7 +441,7 @@ export default defineComponent({
         }
       }
       if (v === '') {
-        return Promise.reject('请输入卡号');
+        return Promise.reject('请绑定手机号');
       } else if (v.length < min || v.length > max) {
         if (min === max) {
           return Promise.reject('长度应为 ' + min);
