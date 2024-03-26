@@ -1751,10 +1751,12 @@ body {
   transition: all 0.3s ease;
 
   .top-nav-wrapper {
+    overflow: hidden;
     .side {
       
     position: absolute;
     top: 0;
+    z-index: 0;
     &.left {
 
       left: -50px;
@@ -1780,6 +1782,8 @@ body {
       align-items: center;
       gap: 15px;
 
+      z-index: 1;
+    position: relative;
       &.logged-in-nav {
         max-width: 1400px;
       }

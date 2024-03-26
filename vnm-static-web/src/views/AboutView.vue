@@ -62,13 +62,6 @@ watch(
 
 onMounted(() => {
   if (route.query.id) activeTab.value = route.query.id;
-  tabInfo.value = [
-    { id: "aboutus", label: t('about.aboutus'), component: AboutUs},
-    { id: "info", label: t('about.collectInformation'), component: AboutInfo },
-    { id: "law", label: t('about.legalBasis'), component: AboutLaw},
-    { id: "rule", label: t('about.bettingRules'), component: AboutRule},
-    { id: "blame", label: t('about.blame'), component: AboutBlame}
-  ]
 });
 </script>
 
