@@ -271,7 +271,7 @@ onMounted(() => {});
               position: relative;
 
               .circle {
-                width: 7.5rem;
+                width: 5.5rem;
               }
 
               .icon {

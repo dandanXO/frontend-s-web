@@ -1249,6 +1249,8 @@ export default {
     subSiteCount: '子站点数量',
     subtotal: '小计',
     success: '成功',
+    successRate: '笔数成功率',
+    successAmounntRate: '金额成功率',
     successfullyExport: '成功导出',
     summaryAdjustment: '账户调整',
     summaryBonus: '红利',
@@ -1272,6 +1274,7 @@ export default {
     switch: '转换',
     switchPayment: '支付转换',
     systemPayment: '系统支付',
+    szCnyControl: '数字人民币提款限制',
     targetType: '操作目标类型',
     targetId: '操作编号',
     targetName: '操作名称',
@@ -1939,6 +1942,7 @@ export default {
     validateCompetitionNameRequired: '赛事名称必填',
     validateCompetitionTimeRequired: '赛事时间必填',
     validateKeyQuantityRequired: '钥匙数量必填',
+    validateMonthRequired: '年/月必填',
   },
   menu: {
     undefined: '',
@@ -2146,6 +2150,7 @@ export default {
     'Competition Management': '赛事管理',
     'Competition List': '赛事列表',
     'Competition Code': '赛事代码',
+    'Affiliate Recalculate': '代理重算',
   },
   google: {
     google_auth_menu: '谷歌验证',

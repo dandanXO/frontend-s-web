@@ -21,8 +21,6 @@ export default {
     personalInfo: 'Personal information',
     mailbox: 'Mailbox',
     logout: 'Logout',
-    futureGaming: 'The future of gaming is here.Great games on all devices.TF88 App',
-    scanToDownload: 'Scan to download the APP'
   },
   account: {
     welcome: 'Welcome',
@@ -82,7 +80,10 @@ export default {
     productServicePt1: 'Best in the world',
     productServicePt2: 'The most abundant products',
     productServicePt3: 'Diverse selection',
-
+    futureGaming: 'The future of gaming is here.Great games on all devices.TF88 App',
+    scanToDownload: 'Scan to download the APP',
+    moreDetails:'More details',
+    announcementList: 'Announcement List'
   },
   personal: {
     personalInfo: 'Personal information',
@@ -99,7 +100,9 @@ export default {
     oldPwd: 'Old Password',
     newPwd: 'New Password',
     confirmPwd: 'Confirm Password',
-
+    oldWithdrawPwd: 'Old Withdraw Password',
+    newWithdrawPwd: 'New Withdraw Password',
+    confirmWithdrawmPwd: 'Confirm Withdraw Password',
   },
   placeholder: {
     realName: 'Please enter Real Name',
@@ -110,6 +113,9 @@ export default {
     oldPwd: 'Please enter  Old Password',
     newPwd: 'Please enter New Password',
     confirmPwd: 'Please enter Confirm Password',
+    oldWithdrawPwd: 'Please enter Old Withdraw Password',
+    newWithdrawPwd: 'Please enter New Withdraw Password',
+    confirmWithdrawPwd: 'Please enter Confirm Withdraw Password',
     title: 'Please enter title',
     content: 'Please enter content',
     usernamereq: 'Please enter username',
@@ -187,7 +193,9 @@ export default {
     withdrawalToday: 'Withdrawal Today',
     remaining: 'Remaining',
     times: 'times',
-    withdrawPwd: 'Withdraw Password'
+    withdrawPwd: 'Withdraw Password',
+    realNameNotEmpty: 'Real name cannot be empty',
+    beforeBindVerifyPhone: 'Before binding the bank card, please verify your phone number.'
   },
   referTerms: {
     promotionStart: "Promotion starts from 00:00:00 on 01/06/2022 (GMT+8)",
@@ -416,9 +424,49 @@ about: {
     "tf88SupportTitle": "Help from TF88 responsible bets",
     "tf88SupportContent": "As one of the leading game platforms in Vietnam, and Asia. We ensure negative principles of prevention and containment when betting on all parties including providers and platform regulators. In addition, TF88's team is always equipped with enough knowledge and skills about responsible betting ready to support you at any time.",
     "ageRestriction": "TF88 PROHIBITS ALL PLAYERS UNDER THE AGE OF 18 FROM ACCESSING, PARTICIPATING IN BETTING ON OUR PLATFORM"
-
-
- 
+  },
+  vip: {
+    vipTerms: "Terms & Conditions",
+    tnc1: "The program applies to all members who have a valid VNDP account at TF88. The program is based on the player's total monthly valid bet from 00:00:00 first day of month to 23:59:59 last day of month (GMT +8).",
+    tnc2: "The system will automatically upgrade the VIP level of all members after 12:00:00 (GMT +8) on the first day of the new month, provided that the member's total valid bet must be qualified to advance to the corresponding VIP level. The promotion will not need to comply with each VIP rank.",
+    tnc3: "Upgrade Bonus: after the member is upgraded to a new VIP level, the member can click the GET button on the VIP page. The amount of the bonus will be based on the corresponding VIP level and the bonus needs to go through 1 betting round before withdrawing.",
+    tnc4: "The Upgrade Bonus cannot be claimed at the same time as the Monthly Bonus. If member is promoted to VIP this month, member will receive Upgrade Bonus. The system will review the Monthly Bonus for accounts that have not been promoted to VIP this month and have met the requirements to maintain the VIP level.",
+    tnc5: "Monthly Bonus: Members need to meet the maintenance requirements of the current VIP level before receiving the bonus. (Example: If the member is in VIP3, then in the month need to reach at least 600,000 VNDP total bet in the month). After qualifying, members can click the GET button on the VIP page on the first day of the month. The amount of the bonus is based on the corresponding VIP level and the bonus needs to go through 3 betting rounds before withdrawing.",
+    tnc6: "Birthday bonus: In the month of birthday, member can contact Customer Service to be verified and receive bonus corresponding to member's current VIP level. Note: all verification information with Customer Service is absolutely confidential and safe.",
+    tnc7: "Rebate Bonus: Members are upgraded to the rebate bonus level corresponding to the existing VIP level. The rebate bonus at Online Casino products, spinning jars will not exceed 50,000 VNDP per day and is not limited to other products.",
+    tnc8: "All draw bets, CANCEL bets, 2-way bets, European handicap under 1.75, Asian bets under 0.75, Number Game, Fantasy Sports, Progressive RNG Jackpot, Progressive RNG Slots will not be counted. bet revenue for this program. General terms & conditions of the promotion apply.",
+    tnc9: "TF88 reserves the right to modify, refuse or cancel this VIP membership program at any time without prior notice.",
+    accumulatedDeposit: "VIP Level Upgrade Required",
+    vipProgram: "VIP Program",
+    exclusivePromotions: "EXCLUSIVE PROMTIONS AND BENEFITS",
+    accumulatedDeposit: "Accumulated deposit",
+    proceedToDeposit: "Proceed to deposit",
+    claim: "Claim",
+    claimed: "Claimed",
+    achieved: "Acheived",
+    unachieved: "Unachieved",
+    freeBonus: "Free Bonus",
+    welcomeBonus: "Welcome Bonus",
+    monthlyBonus: "Monthly Bonus",
+    "birthdayBonus": "Birthday Bonus",
+    "rabateBonus": "Rabate Bonus",
+    "sportRebate": "Sport Rebate",
+    "esportRebate": "Esport Rebate",
+    "liveCasinoRebate": "Live Casino Rebate",
+    "pokerRebate": "Poker Rebate",
+    "slotRebate": "Slot Rebate",
+    "lotteryRebate": "Lottery Rebate",
+    "monthlyReload": "Monthly Reload",
+    "monthlyReloadPercent": "% of Monthly reload",
+    "minDeposit": "Minimum Deposit",
+    "maxBonus": "Maximum Bonus",
+    "returnOver": "Return Over",
+    "betLimit": "Bet Limit",
+    "standard": "Standard",
+    "highLimit": "High Limit",
+    "priorityPaymentMethod": "Priority Payment Method",
+    "customerCare": "24/7 VIP Customer Care Team",
+    "invitationExclusive": "Invitation to Exclusive Events"
 
   }
 }

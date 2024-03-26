@@ -42,32 +42,12 @@
           </div>
 
           <div class="flex-box cards">
-            <div
-              v-for="b in bc.cardNumber.split()"
-              :key="b"
-              class="card-num-box"
-            >
+            <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">
               {{ b.slice(0, 4) }}
             </div>
-            <div
-              v-for="b in bc.cardNumber.split()"
-              :key="b"
-              class="card-num-box"
-            >
-              ****
-            </div>
-            <div
-              v-for="b in bc.cardNumber.split()"
-              :key="b"
-              class="card-num-box"
-            >
-              ****
-            </div>
-            <div
-              v-for="b in bc.cardNumber.split()"
-              :key="b"
-              class="card-num-box"
-            >
+            <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">****</div>
+            <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">****</div>
+            <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">
               {{ b.slice(b.length - 4, b.length) }}
             </div>
           </div>
@@ -106,9 +86,7 @@
               />
             </el-form-item>
             <el-form-item>
-              <el-button class="common-btn" @click="searchRecord()">
-                搜索
-              </el-button>
+              <el-button class="common-btn" @click="searchRecord()">搜索</el-button>
             </el-form-item>
           </div>
         </el-form>
@@ -120,18 +98,8 @@
           :row-key="(record) => record.bankName"
         ></el-table> -->
 
-        <el-table
-          :data="dataSource"
-          style="width: 100%"
-          empty-text="暂无数据"
-          v-loading="tblLoading"
-        >
-          <el-table-column
-            v-for="tbl in columns"
-            :key="tbl.key"
-            :prop="tbl.dataIndex"
-            :label="tbl.title"
-          >
+        <el-table :data="dataSource" style="width: 100%" empty-text="暂无数据" v-loading="tblLoading">
+          <el-table-column v-for="tbl in columns" :key="tbl.key" :prop="tbl.dataIndex" :label="tbl.title">
             <template #default="scope">
               <template v-if="tbl.dataIndex === 'bankName'">
                 {{ getOptionLabel(scope.row.bankName) }}
@@ -161,36 +129,13 @@
         />
       </div>
     </div>
-    <el-dialog
-      class="bankModal"
-      width="500"
-      v-model="bankCardModalState.visible"
-      :footer="null"
-      title="绑定银行卡"
-    >
-      <el-form
-        ref="bankCardFormRef"
-        :model="bankCardInfo"
-        :rules="bankCardRules"
-      >
-        <el-form-item
-          prop="bankId"
-          :rules="[{ required: true, message: '请选择银行', trigger: 'blur' }]"
-        >
+    <el-dialog class="bankModal" width="500" v-model="bankCardModalState.visible" :footer="null" title="绑定银行卡">
+      <el-form ref="bankCardFormRef" :model="bankCardInfo" :rules="bankCardRules">
+        <el-form-item prop="bankId" :rules="[{ required: true, message: '请选择银行', trigger: 'blur' }]">
           <el-row :gutter="20">
             <el-col :span="6">
-              <el-select
-                placeholder="类型"
-                v-model="selectedBankType"
-                style="width: 100%"
-                @change="selectBankType"
-              >
-                <el-option
-                  v-for="bank in bankTypes"
-                  :key="bank.value"
-                  :value="bank.value"
-                  :label="bank.text"
-                >
+              <el-select placeholder="类型" v-model="selectedBankType" style="width: 100%" @change="selectBankType">
+                <el-option v-for="bank in bankTypes" :key="bank.value" :value="bank.value" :label="bank.text">
                   {{ bank.text }}
                 </el-option>
               </el-select>
@@ -202,22 +147,10 @@
                 :placeholder="'选择' + chooseCard()"
                 style="width: 100%"
               >
-                <el-option
-                  v-for="b in banksList"
-                  :key="b.id"
-                  :label="getOptionLabel(b.name)"
-                  :value="b.id"
-                >
-                  <el-row
-                    style="align-items: center"
-                    v-if="b.bankIcon"
-                    :gutter="10"
-                  >
+                <el-option v-for="b in banksList" :key="b.id" :label="getOptionLabel(b.name)" :value="b.id">
+                  <el-row style="align-items: center" v-if="b.bankIcon" :gutter="10">
                     <el-col :span="3">
-                      <img
-                        style="max-height: 25px; display: block; margin: 5px"
-                        :src="imgURL + b.bankIcon"
-                      />
+                      <img style="max-height: 25px; display: block; margin: 5px" :src="imgURL + b.bankIcon" />
                     </el-col>
                     <el-col :span="21">
                       {{ getOptionLabel(b.name) }}
@@ -232,28 +165,16 @@
           <el-input disabled v-model="bankCardInfo.cardAccount" />
         </el-form-item>
         <el-form-item prop="cardNumber" name="cardNumber">
-          <el-input
-            v-model="bankCardInfo.cardNumber"
-            :placeholder="numAddress()"
-          />
+          <el-input v-model="bankCardInfo.cardNumber" :placeholder="numAddress()" />
         </el-form-item>
-        <el-form-item
-          prop="cardAddress"
-          name="cardAddress"
-          v-if="!isUSDT && !isEWALLET && !isALIPAY"
-        >
+        <el-form-item prop="cardAddress" name="cardAddress" v-if="!isUSDT && !isEWALLET && !isALIPAY">
           <el-input
             v-model="bankCardInfo.cardAddress"
             placeholder="开户行地址"
-            :rules="[
-              { required: true, message: '请输入开户行地址', trigger: 'blur' }
-            ]"
+            :rules="[{ required: true, message: '请输入开户行地址', trigger: 'blur' }]"
           />
         </el-form-item>
-        <div
-          style="margin: 10px 15px 15px 15px; color: #ff7f10"
-          v-if="selectedBankType === 'e-Wallet'"
-        >
+        <div style="margin: 10px 15px 15px 15px; color: #ff7f10" v-if="selectedBankType === 'e-Wallet'">
           *特别说明：提款钱包和游戏账号的姓名务必一致
         </div>
 
@@ -266,9 +187,7 @@
               readonly
               :value="personalState.memberInfo.telephone"
             />
-            <el-button class="common-btn" @click="openCaptchaForm()">
-              获取验证码
-            </el-button>
+            <el-button class="common-btn" @click="openCaptchaForm()">获取验证码</el-button>
           </el-space>
         </el-form-item>
 
@@ -282,26 +201,12 @@
         </el-form-item>
 
         <el-form-item class="txt-center" v-if="isSendOtp">
-          <el-button class="txt-center common-btn" @click="submitBankCard">
-            提交
-          </el-button>
+          <el-button class="txt-center common-btn" @click="submitBankCard">提交</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
-    <el-dialog
-      v-model="phoneCaptchaDialogVisible"
-      title="验证码"
-      width="50%"
-      align-center
-      style="max-width: 500px"
-    >
-      <el-button
-        size="large"
-        color="#3bafda"
-        class="common-btn"
-        style="margin-left: 100px"
-        @click="sendOtp"
-      >
+    <el-dialog v-model="phoneCaptchaDialogVisible" title="验证码" width="50%" align-center style="max-width: 500px">
+      <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px" @click="sendOtp">
         提交
       </el-button>
     </el-dialog>
@@ -315,42 +220,18 @@
       :close-on-click-modal="false"
       @keydown.enter.prevent
     >
-      <el-form
-        ref="captchaRef"
-        :rules="captchaRules"
-        :model="captchaForm"
-        label-width="100"
-        label-suffix=":"
-      >
+      <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="100" label-suffix=":">
         <el-form-item tabindex="3" label="验证码" prop="captchaCode">
-          <el-row
-            :gutter="10"
-            style="justify-content: center; align-items: center"
-          >
+          <el-row :gutter="10" style="justify-content: center; align-items: center">
             <el-col :span="12">
-              <el-input
-                v-model="captchaForm.captchaCode"
-                label="验证码"
-                placeholder="验证码"
-                @keyup.enter="sendOtp"
-              />
+              <el-input v-model="captchaForm.captchaCode" label="验证码" placeholder="验证码" @keyup.enter="sendOtp" />
             </el-col>
             <el-col :span="12">
-              <img
-                style="width: 50%; margin-top: 6px"
-                :src="verificationImg"
-                @click="getCode"
-              />
+              <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
             </el-col>
           </el-row>
         </el-form-item>
-        <el-button
-          size="large"
-          color="#3bafda"
-          class="common-btn"
-          style="margin-left: 100px"
-          @click="sendOtp"
-        >
+        <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px" @click="sendOtp">
           发送
         </el-button>
       </el-form>
@@ -411,10 +292,10 @@ export default defineComponent({
       var min = 6;
       var max = 12;
       if (selectedBankType.value === 'Bank') {
-        var selectedBankCode = null
+        var selectedBankCode = null;
         banksList.value.forEach(bank => {
           if (bank.id === bankCardInfo.bankId) {
-            selectedBankCode = bank.code
+            selectedBankCode = bank.code;
           }
         });
         if (selectedBankCode === 'alipay') {
@@ -434,28 +315,30 @@ export default defineComponent({
       } else if (selectedBankType.value === 'e-Wallet') {
         min = 34;
         max = 34;
-        var selectedCode = null
+        var selectedCode = null;
         banksList.value.forEach(bank => {
           if (bank.id === bankCardInfo.bankId) {
-            selectedCode = bank.code
+            selectedCode = bank.code;
           }
         });
         if (selectedCode === 'KDPAY') {
           min = 34;
           max = 34;
-        } else if(selectedCode === 'EBPAY') {
+        } else if (selectedCode === 'EBPAY') {
           min = 34;
           max = 34;
-        } else if(selectedCode === 'OKPAY') {
+        } else if (selectedCode === 'OKPAY') {
           min = 16;
           max = 16;
-        } else if(selectedCode === 'SZPAY') {
+        } else if (selectedCode === 'SZPAY') {
           min = 11;
           max = 11;
         }
       }
       if (v === '') {
         return Promise.reject('请输入卡号');
+      } else if (/\s/.test(v)) {
+        return Promise.reject('不能包含空格');
       } else if (v.length < min || v.length > max) {
         if (min === max) {
           return Promise.reject('长度应为 ' + min);
@@ -466,6 +349,7 @@ export default defineComponent({
         return Promise.resolve();
       }
     };
+
     const tblLoading = ref(false);
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/payment/';
     const isCardActive = ref();
@@ -1105,11 +989,7 @@ body {
   width: 100%;
 }
 
-:deep(
-    .ant-select-single:not(.ant-select-customize-input)
-      .ant-select-selector
-      .ant-select-selection-search-input
-  ) {
+:deep(.ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input) {
   height: 40px;
 }
 
@@ -1268,11 +1148,7 @@ body {
       content: "";
       width: 50%;
       height: 100%;
-      background: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.3) 100%
-      );
+      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%);
       border-radius: 10px;
       transform: skewX(320deg);
     }

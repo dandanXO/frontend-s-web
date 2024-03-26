@@ -75,8 +75,25 @@
         >
           {{ t('fields.deduct') }}
         </el-button>
+        <el-button
+          size="mini"
+          type="primary"
+          @click="requestExportExcel"
+        >{{ t('fields.requestExportToExcel') }}
+        </el-button>
       </div>
     </div>
+    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
+               :close-on-click-modal="false" :close-on-press-escape="false"
+    >
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.DownloadManager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
+    </el-dialog>
     <el-dialog
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
@@ -245,6 +262,7 @@ import {
   deductTreasureKey,
   listTreasureKeyRecord,
   getMemberKey,
+  requestExportTreasureKey,
 } from '../../../api/privi-treasure-key-record'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
@@ -461,6 +479,14 @@ function restrictIntegerInput(event) {
 async function loadSites() {
   const { data: ret } = await getSiteListSimple()
   sites.list = ret
+}
+
+async function requestExportExcel() {
+  const query = checkQuery();
+  const { data: ret } = await requestExportTreasureKey(query);
+  if (ret) {
+    uiControl.messageVisible = true;
+  }
 }
 
 onMounted(async () => {

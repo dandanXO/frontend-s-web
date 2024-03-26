@@ -149,7 +149,7 @@
 <!--          </div>-->
           <div v-else-if="isEWALLET">
             <div class="q-mt-sm text-neontb">*特别说明：提款钱包和游戏账号的姓名务必一致</div>
-            <div class="q-mt-sm q-mb-sm text-center">
+            <div class="q-mt-sm q-mb-sm text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
               <q-btn
                 style="border: 1px solid #33bcd4; color: #33bcd4"
                 @click="openEWalletTutorial(selectedWithdrawalMethod.code)"

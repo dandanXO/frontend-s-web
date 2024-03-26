@@ -448,6 +448,17 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="profit"
+          :label="t('fields.totalProfit')"
+          align="center"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span v-formatter="{data: scope.row.profit, type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="regTime"
           :label="t('fields.registerTime')"
           align="center"

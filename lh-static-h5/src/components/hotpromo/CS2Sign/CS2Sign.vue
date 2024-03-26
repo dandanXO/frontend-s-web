@@ -45,7 +45,7 @@
     </div>
     <div class="section second">
       <div class="title"><img src="../../../assets/images/promo/hotpromo/cs2/fuli2.png" /></div>
-      <div class="tips">活动期间，连续投注 CS2Major 2024赛事≥1000元则视为签到成功，根据对应连续签到天数开启宝箱</div>
+      <div class="tips">活动期间，连续投注 CS2Major 2024赛事≥1000元则视为签到成功，根据对应累计的签到天数开启宝箱</div>
       <div class="content">
         <div class="top-row">
           <div class="lft">
@@ -57,7 +57,7 @@
         <div class="middle-row">
           <div class="sign-container">
             <div v-for="(day, i) in dayList" :key="i" class="item" :class="{ isDotted: !day.claimed && !day.toClaim }">
-              <div class="signday">连续签到{{ day.no }}天</div>
+              <div class="signday">累计签到{{ day.no }}天</div>
               <img
                 :style="i < 1 ? 'mix-blend-mode: luminosity;' : ''"
                 :src="require(`../../../assets/images/promo/hotpromo/cs2/car${i + 1}.png`)"

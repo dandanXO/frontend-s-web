@@ -53,12 +53,12 @@
             </router-link>
           </div>
         <ul>
-          <li><router-link to="/about?id=info">About TFgaming</router-link></li>
-          <li><router-link to="/about?id=law">Collect Information</router-link></li>
-          <li><router-link to="/about?id=aboutus">Legal Basis</router-link></li>
-          <li><router-link to="/about?id=rule">Betting Rules</router-link></li>
-          <li><a :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')">Affiliates</a></li>
-          <li><router-link to="/about?id=pay">Gambling Responsibly</router-link></li>
+          <li><router-link to="/about?id=info">{{ $t('about.aboutus') }}</router-link></li>
+          <li><router-link to="/about?id=law">{{ $t('about.collectInformation') }}</router-link></li>
+          <li><router-link to="/about?id=aboutus">{{ $t('about.legalBasis') }}</router-link></li>
+          <li><router-link to="/about?id=rule">{{ $t('about.bettingRules') }}</router-link></li>
+          <li><a :href="'https://www.4luckypartner.com/?langge=' + languageVal + '&agent=' + (affCode ? affCode : '')">Affiliates</a></li>
+          <li><router-link to="/about?id=blame">{{ $t('about.blame') }}</router-link></li>
         </ul>
         <!-- <div class="tagline">雷火是全球领先的合法博彩公司，拥有菲律宾政府PAGCOR 所颁发的离岸博彩许可证，并受其监管</div> -->
       </div>

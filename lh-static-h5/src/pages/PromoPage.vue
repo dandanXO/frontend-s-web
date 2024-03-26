@@ -142,19 +142,24 @@
           </div>
           <div v-else class="selected-promo">
             <div class="selected-promo-wrapper">
-              <div class="banner-container" v-if="selectedPromo?.mobileBannerUrl">
+              <div class="banner-container" v-if="selectedPromo?.mobileBannerUrl && !isSpecialPromo">
                 <img
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
                   style="display: block; width: 100%"
                 />
               </div>
-              <div class="inner">
+              <div
+                class="inner"
+                :class="{
+                  lhstepgame: selectedPromo.promoCode === 'lh1-game-steps'
+                }"
+              >
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
-                  v-if="selectedPromo.promoType"
+                  v-if="selectedPromo.promoType && selectedPromo.promoCode !== 'lh1-game-steps'"
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
@@ -284,7 +289,14 @@ export default defineComponent({
           }
         });
     };
+    const isSpecialPromo= ref(false);
     const showPromoDetails = (promo) => {
+      if(promo.promoCode === 'lh1-game-steps'){
+        isSpecialPromo.value= true;
+      }else{
+        isSpecialPromo.value= false;
+      }
+
       // extension
       if (extensionState.value) {
         if (promo.redirectUrl.includes("page-vip")) {
@@ -449,7 +461,8 @@ export default defineComponent({
       currentPath,
       extensionState,
       extensionToken,
-      isFetchingPromo
+      isFetchingPromo,
+      isSpecialPromo
       // routeQuery
     };
   }
@@ -775,6 +788,16 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
+        &.lhstepgame {
+          margin: 0px;
+          width: 100%;
+          gap: 0px;
+
+          .hot-promo {
+            border-radius: 0px;
+          }
+        }
 
         img {
           margin-bottom: 5px;

@@ -147,6 +147,16 @@
             style="width: 350px;"
           />
         </el-form-item>
+        <el-form-item :label="t('fields.szCnyControl')" prop="szCnyControl">
+          <el-switch
+            v-model="form.szCnyControl"
+            active-value="1"
+            inactive-value="0"
+            active-color="#409EFF"
+            inactive-color="#F56C6C"
+            style="width: 350px;"
+          />
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -260,7 +270,8 @@ const form = reactive({
   dayWithdrawCount: null,
   nextLevel: null,
   nextLevelPoint: null,
-  usdtControl: 1
+  usdtControl: 1,
+  szCnyControl: 1
 });
 
 const list = reactive({
@@ -357,6 +368,7 @@ function showEdit(financial) {
       form.nextLevelPoint = null;
     }
     form.usdtControl = form.usdtControl.toString()
+    form.szCnyControl = form.szCnyControl.toString()
     const newRecord = list.nextLevel.filter((element) => {
       return element.name !== form.name && element.siteId === form.siteId
     });

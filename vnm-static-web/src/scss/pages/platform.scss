@@ -10,7 +10,7 @@
 
 .platform-container-slot {
   overflow: hidden;
-  height: 310px;
+  height: 360px;
   display: flex;
   width: 100%;
   justify-content: center;
@@ -128,7 +128,7 @@
         margin-top: 1rem;
         max-width: 32rem;
         min-width: 45px;
-        height: 50px;
+        min-height: 80px;
       }
 
       .platform-pattern-row {
@@ -159,10 +159,13 @@
           font-weight: bold;
 
           .list-item-btn {
-            background: linear-gradient(180deg, #c5ebff -11.46%, #4f88df 100%);
+            border: 0;
+            background: linear-gradient(180deg, #7ed5ff, #0e7dff);
+            padding: 0.35rem;
+            box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.3);
 
             & > span {
-              background: linear-gradient(180deg, #2eadee 0%, #a1c4fc 100%);
+              background: none;
             }
           }
 
@@ -175,10 +178,13 @@
           font-weight: bold;
 
           .list-item-btn {
-            background: linear-gradient(180deg, #c5ebff -11.46%, #4f88df 100%);
+            border: 0;
+            background: linear-gradient(180deg, #7ed5ff, #0e7dff);
+            padding: 0.35rem;
+            box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.3);
 
             & > span {
-              background: linear-gradient(180deg, #2eadee 0%, #a1c4fc 100%);
+              background: none;
             }
           }
 
@@ -188,6 +194,8 @@
         }
 
         .list-item-btn {
+          background: linear-gradient(180deg, #dcebff, #f4f4f4);
+          border: 1px solid #0e7dff;
           height: 4rem;
           width: 4rem;
           display: flex;
@@ -197,21 +205,19 @@
           padding: 0.2rem;
           position: relative;
           box-sizing: border-box;
-          // box-shadow: 0px 10px 10px 0px transparent;
-          transition: 0.3s all;
+          box-shadow: 0 10px 10px 0 transparent;
+          transition: all 0.3s;
           cursor: pointer;
-          background: linear-gradient(180deg, #fcfcfc -11.46%, #3a6aac 100%);
 
           & > span {
-            background: linear-gradient(180deg, #c3e8fa 0%, #a1c4fc 100%);
-
+            // background: linear-gradient(180deg, #dcebff, #f4f4f4);
             width: 100%;
             height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             border-radius: 15%;
-            transition: 0.3s all;
+            transition: all 0.3s;
 
             img {
               display: block;

@@ -16,7 +16,7 @@
                 <span class="type">{{ vip.vipTitle }}</span>
               </div>
               <div class="description">
-                累计存款:
+                {{ $t('vip.accumulatedDeposit') }}:
                 <span style="color: #424f72">{{ vip.upgrade }}</span>
               </div>
               <!-- vip progress bar start -->
@@ -36,7 +36,7 @@
               <!-- vip progress bar end -->
               <div
                 style="color: #cfb282; font-size: 18px; position: absolute; bottom: 25px; left: 0; right: 0"
-                v-if="vipLevel + 1 === Number(vip.vipLevel)"
+                v-if="vipLevel + 1 === Number(vip.vipLevel) && store.token"
               >
                 {{
                   Number(currentDepositAmt)
@@ -48,7 +48,7 @@
             <div
               :class="`vipLevelReachStatus ${getVipLevelProgress(vip) === 100 && !!vipLevel ? 'vipLevelReached' : ''}`"
             >
-              <span>{{ getVipLevelProgress(vip) === 100 && !!vipLevel ? "已达到" : "未达到" }}</span>
+              <span>{{ getVipLevelProgress(vip) === 100 && !!vipLevel ? $t('vip.achieved') : $t('vip.unachieved') }}</span>
             </div>
           </div>
           <router-link
@@ -56,16 +56,16 @@
             class="vipLevelButton"
             v-if="vip.depositPromoAvailable && !vip.unavailable && !vip.claimed"
           >
-            前往存款
+            {{ $t('vip.proceedToDeposit') }}
           </router-link>
           <div
             @click="claimVIPLevelItem(vip)"
             class="vipLevelButton"
             v-if="vip.promoAvailable && !vip.unavailable && !vip.claimed"
           >
-            领取VIP等级奖励
+            {{$t('vip.claimVIP')}}
           </div>
-          <div class="vipLevelButton claimed" v-if="vip.claimed && !vip.unavailable">领取成功</div>
+          <div class="vipLevelButton claimed" v-if="vip.claimed && !vip.unavailable">{{ $t('vip.claimed') }}</div>
         </div>
       </Slide>
       <template #addons>
@@ -75,209 +75,249 @@
 
     <div class="vip-program">
       <div class="buttons">
-        <div class="common-btn" :class="{ active: showRebate }" @click="onShowRebateClick(true)">升级细则</div>
-        <div class="common-btn" :class="{ active: !showRebate }" @click="onShowRebateClick(false)">VIP特权</div>
+        <div class="common-btn" :class="{ active: showRebate }" @click="onShowRebateClick(true)">{{ $t('vip.vipProgram') }}</div>
+        <div class="common-btn" :class="{ active: !showRebate }" @click="onShowRebateClick(false)">{{ $t('vip.exclusivePromotions') }}</div>
       </div>
-      <div v-if="showRebate">
-        <table>
-          <thead>
-            <tr>
-              <th colspan="2">级别</th>
-              <th>升级要求累积存款</th>
-              <th>等级优惠</th>
-              <th>流水要求</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td rowspan="2" width="100">青铜</td>
-              <td width="100">青铜Ⅱ</td>
-              <td width="260">一笔存款</td>
-              <td width="384" id="vipPromoInfo2">网站首存优惠</td>
-              <td width="252">无</td>
-            </tr>
-            <tr>
-              <td>青铜Ⅰ</td>
-              <td>3,000</td>
-              <td id="vipPromoInfo3">存款最少20元可申请一次晋级奖金88元</td>
-              <td>电竞/体育10倍 老虎机12倍 真人18倍</td>
-            </tr>
-            <tr>
-              <td rowspan="3">白银</td>
-              <td>白银Ⅲ</td>
-              <td>30,000</td>
-              <td id="vipPromoInfo4">
-                存款最少100元可申请每月一次再存20% 最高奖金1888元
-                <span style="color: #B8945D;">（仅限白银Ⅲ申请）</span>
-              </td>
-              <td>电竞/体育 15倍 老虎机12倍 真人18倍</td>
-            </tr>
-            <tr>
-              <td>白银Ⅱ</td>
-              <td>80,000</td>
-              <td id="vipPromoInfo5" class="showTips4">存款最少20元可申请一次晋级奖金188元</td>
-              <td class="showTips4">电竞/体育 5倍 老虎机12倍 真人18倍</td>
-              <!-- <td colspan="2" class="hideTips4">
-                <div class="vip-btn disable">未符合</div>
-              </td> -->
-            </tr>
-            <tr>
-              <td>白银Ⅰ</td>
-              <td>200,000</td>
-              <td id="vipPromoInfo6" class="showTips5">存款最少20元可申请一次晋级奖金388元</td>
-              <td class="showTips5">电竞/体育 5倍 老虎机12倍 真人18倍</td>
-              <!-- <td colspan="2" class="hideTips5">
-                <div class="vip-btn disable">未符合</div>
-              </td> -->
-            </tr>
-            <tr>
-              <td rowspan="3">黄金</td>
-              <td>黄金Ⅲ</td>
-              <td>400,000</td>
-              <td id="vipPromoInfo7" class="showTips6">存款最少200元可申请一次再存30%最高奖金1888元</td>
-              <td class="showTips6">电竞/体育 15倍 老虎机12倍 真人18倍</td>
-              <!-- <td colspan="2" class="hideTips6">
-                <div class="vip-btn disable">未符合</div>
-              </td> -->
-            </tr>
-            <tr>
-              <td>黄金Ⅱ</td>
-              <td>600,000</td>
-              <td id="vipPromoInfo8" class="showTips7">存款最少20元可申请一次晋级奖金888元</td>
-              <td class="showTips7">电竞/体育 5倍 老虎机12倍 真人18倍</td>
-              <!-- <td colspan="2" class="hideTips7">
-                <div class="vip-btn disable">未符合</div>
-              </td> -->
-            </tr>
-            <tr>
-              <td>黄金Ⅰ</td>
-              <td>1,000,000</td>
-              <td id="vipPromoInfo9" class="showTips8">存款最少500元可申请每月一次再存35% 最高奖金8888元</td>
-              <td class="showTips8">电竞/体育 15倍 老虎机12倍 真人18倍</td>
-              <!-- <td colspan="2" class="hideTips8">
-                <div class="vip-btn disable">未符合</div>
-              </td> -->
-            </tr>
-            <tr>
-              <td rowspan="2">铂金</td>
-              <td>铂金Ⅱ</td>
-              <td>2,000,000</td>
-              <td id="vipPromoInfo10" class="showTips9">存款最少20元可申请一次晋级奖金1888元</td>
-              <td class="showTips9">电竞/体育 8倍 老虎机12倍 真人18倍</td>
-              <!-- <td colspan="2" class="hideTips9">
-                <div class="vip-btn disable">未符合</div>
-              </td> -->
-            </tr>
-            <tr>
-              <td>铂金Ⅰ</td>
-              <td>4,000,000</td>
-              <td id="vipPromoInfo11" class="showTips10">存款最少500元可申请一次再存40%最高奖金18888元</td>
-              <td class="showTips10">电竞/体育 15倍 老虎机12倍 真人18倍</td>
-              <!-- <td colspan="2" class="hideTips10">
-                <div class="vip-btn disable">未符合</div>
-              </td> -->
-            </tr>
-            <tr>
-              <td rowspan="1">钻石</td>
-              <td>钻石</td>
-              <td>8,000,000</td>
-              <td id="vipPromoInfo12" class="showTips11">存款最少20元可申请一次晋级奖金8888元</td>
-              <td class="showTips11">电竞/体育10倍 老虎机12倍 真人18倍</td>
-              <!-- <td colspan="2" class="hideTips11">
-                <div class="vip-btn disable">未符合</div>
-              </td> -->
-            </tr>
-            <tr>
-              <td rowspan="1">最强王者</td>
-              <td>王者</td>
-              <td>12,000,000</td>
-              <td id="vipPromoInfo13" class="showTips12">存款最少20元可申请一次晋级奖金18888元</td>
-              <td class="showTips12">电竞/体育10倍 老虎机12倍 真人18倍</td>
-              <!-- <td colspan="2" class="hideTips12">
-                <div class="vip-btn disable">未符合</div>
-              </td> -->
-            </tr>
-          </tbody>
-        </table>
+      <div v-if="showRebate"><div class="vip-table" id="left">
+            <table>
+                <tbody>
+                <tr>
+                    
+                    <td></td>
+                    <td>IRON</td>
+                    <td>BRONZE</td>
+                    <td>SILVER</td>
+                    <td>GOLD</td>
+                    <td>PLATINUM</td>
+                    <td>DIAMOND</td>
+                    <td>CRYSTAL</td>
+                </tr>
+                </tbody>
+            </table>
+            <div>
+            <div class="tbl-title free">{{ $t('vip.freeBonus')}}</div>
+
+            <table class="free">
+                <tbody>
+                <tr>
+                    <td>{{ $t('vip.welcomeBonus')}}</td>
+                    <td></td>
+                    <td></td>
+                    <td>888</td>
+                    <td>1,888</td>
+                    <td>3,888</td>
+                    <td>5,888</td>
+                    <td>10,888</td>
+                </tr>
+                <tr>
+                    <td>{{ $t('vip.monthlyBonus')}}</td>
+                    <td></td>
+                    <td></td>
+                    <td>588</td>
+                    <td>888</td>
+                    <td>1,888</td>
+                    <td>3,888</td>
+                    <td>5,888</td>
+                </tr>
+
+                <tr>
+                    <td>{{ $t('vip.birthdayBonus')}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>888</td>
+                    <td>2,888</td>
+                    <td>5,888</td>
+                    <td>8,888</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+
+            <div class="tbl-title rebate">{{ $t('vip.rabateBonus')}}</div>
+
+            <table class="rebate">
+                <tbody>
+                <tr>
+                    <td>{{ $t('vip.sportRebate')}}</td>
+                    <td>0.30%</td>
+                    <td>0.38%</td>
+                    <td>0.48%</td>
+                    <td>0.58%</td>
+                    <td>0.68%</td>
+                    <td>0.78%</td>
+                    <td>0.88%</td>
+                </tr>
+                <tr>
+                    <td>{{ $t('vip.esportRebate')}}</td>
+                    <td>0.40%</td>
+                    <td>0.48%</td>
+                    <td>0.58%</td>
+                    <td>0.68%</td>
+                    <td>0.78%</td>
+                    <td>0.88%</td>
+                    <td>1.00%</td>
+                </tr>
+
+                <tr>
+                    <td>{{ $t('vip.liveCasinoRebate')}}</td>
+                    <td>0.40%</td>
+                    <td>0.45%</td>
+                    <td>0.50%</td>
+                    <td>0.55%</td>
+                    <td>0.60%</td>
+                    <td>0.70%</td>
+                    <td>0.80%</td>
+                </tr>
+                <tr>
+                    <td>{{ $t('vip.pokerRebate')}}</td>
+                    <td>0.40%</td>
+                    <td>0.48%</td>
+                    <td>0.58%</td>
+                    <td>0.68%</td>
+                    <td>0.78%</td>
+                    <td>0.88%</td>
+                    <td>1.00%</td>
+                </tr>
+                <tr>
+                    <td>{{ $t('vip.slotRebate')}}</td>
+                    <td>0.60%</td>
+                    <td>0.70%</td>
+                    <td>0.80%</td>
+                    <td>1.00%</td>
+                    <td>1.20%</td>
+                    <td>1.60%</td>
+                    <td>2.00%</td>
+                </tr>
+
+                <tr>
+                    <td>{{ $t('vip.lotteryRebate')}}</td>
+                    <td>0.30%</td>
+                    <td>0.30%</td>
+                    <td>0.40%</td>
+                    <td>0.40%</td>
+                    <td>0.50%</td>
+                    <td>0.50%</td>
+                    <td>0.60%</td>
+                </tr></tbody>
+            </table>
+        </div>
+
+        <div>
+            <div class="tbl-title monthly">{{ $t('vip.monthlyReload')}}</div>
+
+            <table class="monthly">
+                <tbody>
+                <tr>
+                    <td>{{ $t('vip.monthlyReloadPercent')}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>30%</td>
+                    <td>30%</td>
+                    <td>30%</td>
+                </tr>
+                <tr>
+                    <td>{{ $t('vip.minDeposit')}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>3,500</td>
+                    <td>3,500</td>
+                    <td>3,500</td>
+                </tr>
+                <tr>
+                    <td>{{ $t('vip.maxBonus')}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>5,888</td>
+                    <td>8,888</td>
+                    <td>12,888</td>
+                </tr>
+                <tr>
+                    <td>{{ $t('vip.returnOver')}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>15</td>
+                    <td>15</td>
+                    <td>15</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
       </div>
       <div v-else>
-        <table style="margin-top: 50px">
-          <tbody>
-            <tr>
-              <th width="137">等级</th>
-              <th width="137">青铜</th>
-              <th width="137">白银</th>
-              <th width="137">黄金</th>
-              <th width="137">铂金</th>
-              <th width="137">钻石</th>
-              <th width="137">最强王者</th>
-              <th width="137">反水限额</th>
-            </tr>
-            <tr>
-              <td>电竞</td>
-              <td>0.4%</td>
-              <td>0.45%</td>
-              <td>0.5%</td>
-              <td>0.55%</td>
-              <td>0.6%</td>
-              <td>0.8%</td>
-              <td rowspan="2">无上限</td>
-            </tr>
-            <tr>
-              <td>体育</td>
-              <td>0.4%</td>
-              <td>0.45%</td>
-              <td>0.5%</td>
-              <td>0.55%</td>
-              <td>0.6%</td>
-              <td>0.8%</td>
-            </tr>
-            <tr>
-              <td>真人</td>
-              <td>0.4%</td>
-              <td>0.45%</td>
-              <td>0.5%</td>
-              <td>0.55%</td>
-              <td>0.6%</td>
-              <td>0.8%</td>
-              <td>88888元</td>
-            </tr>
-            <tr>
-              <td>棋牌</td>
-              <td>0.4%</td>
-              <td>0.45%</td>
-              <td>0.5%</td>
-              <td>0.6%</td>
-              <td>0.8%</td>
-              <td>1.0%</td>
-              <td>8888元</td>
-            </tr>
-            <tr>
-              <td>老虎机</td>
-              <td>0.6%</td>
-              <td>0.8%</td>
-              <td>1.0%</td>
-              <td>1.2%</td>
-              <td>1.6%</td>
-              <td>2.0%</td>
-              <td>无上限</td>
-            </tr>
-          </tbody>
-        </table>
+        <table class="promo">
+                <tbody>
+                
+                <tr>
+                    <td>{{ $t('vip.betLimit')}}</td>
+                    <td> {{ $t('vip.standard')}}</td>
+                    <td> {{ $t('vip.standard')}}</td>
+                    <td> {{ $t('vip.standard')}}</td>
+                    <td> {{ $t('vip.standard')}}</td>
+                    <td> {{ $t('vip.highLimit')}}</td>
+                    <td>{{ $t('vip.highLimit')}} </td>
+                    <td>{{ $t('vip.highLimit')}}</td>
+                </tr>
+
+                <tr>
+                    <td> {{ $t('vip.priorityPaymentMethod')}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>✓</td>
+                    <td>✓</td>
+                    <td>✓</td>
+                </tr>
+                <tr>
+                    <td> {{ $t('vip.customerCare')}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>✓</td>
+                    <td>✓</td>
+                </tr>
+                <tr>
+                    <td> {{ $t('vip.invitationExclusive')}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>✓</td>
+                </tr>
+                </tbody>
+            </table>
       </div>
       <div class="left" />
       <div class="right" />
     </div>
 
     <div class="terms-conditions">
-      <div class="section-title">规则与条款</div>
+      <div class="section-title">{{ $t('vip.vipTerms') }}</div>
       <img
         class="terms-conditions-title-separator"
         :src="require('../assets/vip/terms-condition-title-separator.png')"
       />
       <ol class="terms">
-        <li v-for="(term, i) in currentDisplayTerms" :key="i" class="term">
+        <!-- <li v-for="(term, i) in currentDisplayTerms" :key="i" class="term">
           {{ term.text }}
+        </li> -->
+        <li class="term" v-for="term in 9">
+          {{ $t(`vip.tnc${term}`)}}
         </li>
       </ol>
     </div>
@@ -373,67 +413,67 @@ export default defineComponent({
         });
     };
 
-    const terms = [
-      {
-        text: `所有雷火电竞会员存款达到相应VIP等级要求即可享有特定免费奖金、存送奖金或其他奖励，存送奖金只需完成（存款+奖金）*相应流水倍数即可提款。`
-      },
-      {
-        text: `达到相应等级要求的会员可以点击"待领取"，领取免费奖金或存款选择相对应的存送优惠即可。`
-      },
-      {
-        text: `各等级所对应的优惠所要求的流水有所不同，会员需要达到相应流水方可申请提款。`
-      },
-      {
-        text: `此优惠促销只适用于拥有一个独立账户的玩家。住址、电子邮箱地址﹑电话号码﹑支付方式（相同借记卡/信用卡/银行账户号码）IP地址，同一网络环境等将可以作为判定是否独立玩家的条件。对于发现任何有违背、欺骗、或利用规则和条款进行非法获利的会员，雷火电竞保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。`
-      },
-      {
-        text: `在某些未知因素超出可控范围的情况下，雷火电竞保留可单方面执行的决定权，并承诺会在这类紧急问题发生时解释给客户原因并听取客户反馈与客户沟通协商解决。`
-      },
-      {
-        text: `雷火电竞保留对本次活动的修订、终止和最终解释权，超出本网站控制外的技术错误，雷火电竞将不承担任何责任。`
-      },
-      {
-        text: `雷火电竞有权延长，缩短，终止，或者修改此活动！此活动最终解释权归雷火电竞所有。`
-      }
-    ];
+    // const terms = [
+    //   {
+    //     text: `所有雷火电竞会员存款达到相应VIP等级要求即可享有特定免费奖金、存送奖金或其他奖励，存送奖金只需完成（存款+奖金）*相应流水倍数即可提款。`
+    //   },
+    //   {
+    //     text: `达到相应等级要求的会员可以点击"待领取"，领取免费奖金或存款选择相对应的存送优惠即可。`
+    //   },
+    //   {
+    //     text: `各等级所对应的优惠所要求的流水有所不同，会员需要达到相应流水方可申请提款。`
+    //   },
+    //   {
+    //     text: `此优惠促销只适用于拥有一个独立账户的玩家。住址、电子邮箱地址﹑电话号码﹑支付方式（相同借记卡/信用卡/银行账户号码）IP地址，同一网络环境等将可以作为判定是否独立玩家的条件。对于发现任何有违背、欺骗、或利用规则和条款进行非法获利的会员，雷火电竞保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。`
+    //   },
+    //   {
+    //     text: `在某些未知因素超出可控范围的情况下，雷火电竞保留可单方面执行的决定权，并承诺会在这类紧急问题发生时解释给客户原因并听取客户反馈与客户沟通协商解决。`
+    //   },
+    //   {
+    //     text: `雷火电竞保留对本次活动的修订、终止和最终解释权，超出本网站控制外的技术错误，雷火电竞将不承担任何责任。`
+    //   },
+    //   {
+    //     text: `雷火电竞有权延长，缩短，终止，或者修改此活动！此活动最终解释权归雷火电竞所有。`
+    //   }
+    // ];
 
-    const vipTerms = [
-      {
-        text: `所有雷火电竞会员存款达到相应VIP等级要求即可享有特定免费奖金、存送奖金或其他奖励，存送奖金只需完成（存款+奖金）*相应流水倍数即可提款。`
-      },
-      {
-        text: `达到相应等级要求的会员可以点击"待领取"，领取免费奖金或存款选择相对应的存送优惠即可。`
-      },
-      {
-        text: `各等级所对应的优惠所要求的流水有所不同，会员需要达到相应流水方可申请提款。`
-      },
-      {
-        text: `此优惠促销只适用于拥有一个独立账户的玩家。住址、电子邮箱地址﹑电话号码﹑支付方式（相同借记卡/信用卡/银行账户号码）IP地址，同一网络环境等将可以作为判定是否独立玩家的条件。对于发现任何有违背、欺骗、或利用规则和条款进行非法获利的会员，雷火电竞保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。`
-      },
-      {
-        text: `在某些未知因素超出可控范围的情况下，雷火电竞保留可单方面执行的决定权，并承诺会在这类紧急问题发生时解释给客户原因并听取客户反馈与客户沟通协商解决。`
-      },
-      {
-        text: `雷火电竞保留对本次活动的修订、终止和最终解释权，超出本网站控制外的技术错误，雷火电竞将不承担任何责任。`
-      },
-      {
-        text: `雷火电竞有权延长，缩短，终止，或者修改此活动！此活动最终解释权归雷火电竞所有。`
-      }
-    ];
+    // const vipTerms = [
+    //   {
+    //     text: `所有雷火电竞会员存款达到相应VIP等级要求即可享有特定免费奖金、存送奖金或其他奖励，存送奖金只需完成（存款+奖金）*相应流水倍数即可提款。`
+    //   },
+    //   {
+    //     text: `达到相应等级要求的会员可以点击"待领取"，领取免费奖金或存款选择相对应的存送优惠即可。`
+    //   },
+    //   {
+    //     text: `各等级所对应的优惠所要求的流水有所不同，会员需要达到相应流水方可申请提款。`
+    //   },
+    //   {
+    //     text: `此优惠促销只适用于拥有一个独立账户的玩家。住址、电子邮箱地址﹑电话号码﹑支付方式（相同借记卡/信用卡/银行账户号码）IP地址，同一网络环境等将可以作为判定是否独立玩家的条件。对于发现任何有违背、欺骗、或利用规则和条款进行非法获利的会员，雷火电竞保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。`
+    //   },
+    //   {
+    //     text: `在某些未知因素超出可控范围的情况下，雷火电竞保留可单方面执行的决定权，并承诺会在这类紧急问题发生时解释给客户原因并听取客户反馈与客户沟通协商解决。`
+    //   },
+    //   {
+    //     text: `雷火电竞保留对本次活动的修订、终止和最终解释权，超出本网站控制外的技术错误，雷火电竞将不承担任何责任。`
+    //   },
+    //   {
+    //     text: `雷火电竞有权延长，缩短，终止，或者修改此活动！此活动最终解释权归雷火电竞所有。`
+    //   }
+    // ];
 
     const showRebate = ref(true);
-    const currentDisplayTerms = ref(vipTerms);
+    // const currentDisplayTerms = ref(vipTerms);
     const onShowRebateClick = (flag) => {
       showRebate.value = flag;
-      if (showRebate.value) currentDisplayTerms.value = terms;
-      else currentDisplayTerms.value = vipTerms;
+      // if (showRebate.value) currentDisplayTerms.value = terms;
+      // else currentDisplayTerms.value = vipTerms;
     };
 
     const vipItems = reactive([
       {
         vipLevel: "1",
-        upgrade: "一笔存款",
-        vipTitle: "青铜2",
+        upgrade: "3 time deposit",
+        vipTitle: "IRON",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,
@@ -441,8 +481,8 @@ export default defineComponent({
       },
       {
         vipLevel: "2",
-        upgrade: "3,000",
-        vipTitle: "青铜1",
+        upgrade: "380,000",
+        vipTitle: "BRONZE",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,
@@ -450,8 +490,8 @@ export default defineComponent({
       },
       {
         vipLevel: "3",
-        upgrade: "30,000",
-        vipTitle: "白银3",
+        upgrade: "1,000,000",
+        vipTitle: "SILVER",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,
@@ -459,8 +499,8 @@ export default defineComponent({
       },
       {
         vipLevel: "4",
-        upgrade: "80,000",
-        vipTitle: "白银2",
+        upgrade: "3,000,000",
+        vipTitle: "GOLD",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,
@@ -468,8 +508,8 @@ export default defineComponent({
       },
       {
         vipLevel: "5",
-        upgrade: "200,000",
-        vipTitle: "白银1",
+        upgrade: "9,000,000",
+        vipTitle: "PLATINUM",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,
@@ -477,8 +517,8 @@ export default defineComponent({
       },
       {
         vipLevel: "6",
-        upgrade: "400,000",
-        vipTitle: "黄金3",
+        upgrade: "20,000,000",
+        vipTitle: "DIAMOND",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,
@@ -486,58 +526,58 @@ export default defineComponent({
       },
       {
         vipLevel: "7",
-        upgrade: "600,000",
-        vipTitle: "黄金2",
+        upgrade: "50,000,000",
+        vipTitle: "CRYSTAL",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,
         claimed: false
       },
-      {
-        vipLevel: "8",
-        upgrade: "1,000,000",
-        vipTitle: "黄金1",
-        depositPromoAvailable: false,
-        promoAvailable: false,
-        unavailable: false,
-        claimed: false
-      },
-      {
-        vipLevel: "9",
-        upgrade: "2,000,000",
-        vipTitle: "铂金2",
-        depositPromoAvailable: false,
-        promoAvailable: false,
-        unavailable: false,
-        claimed: false
-      },
-      {
-        vipLevel: "10",
-        upgrade: "4,000,000",
-        vipTitle: "铂金1",
-        depositPromoAvailable: false,
-        promoAvailable: false,
-        unavailable: false,
-        claimed: false
-      },
-      {
-        vipLevel: "11",
-        upgrade: "8,000,000",
-        vipTitle: "钻石",
-        depositPromoAvailable: false,
-        promoAvailable: false,
-        unavailable: false,
-        claimed: false
-      },
-      {
-        vipLevel: "12",
-        upgrade: "12,000,000",
-        vipTitle: "王者",
-        depositPromoAvailable: false,
-        promoAvailable: false,
-        unavailable: false,
-        claimed: false
-      }
+      // {
+      //   vipLevel: "8",
+      //   upgrade: "1,000,000",
+      //   vipTitle: "黄金1",
+      //   depositPromoAvailable: false,
+      //   promoAvailable: false,
+      //   unavailable: false,
+      //   claimed: false
+      // },
+      // {
+      //   vipLevel: "9",
+      //   upgrade: "2,000,000",
+      //   vipTitle: "铂金2",
+      //   depositPromoAvailable: false,
+      //   promoAvailable: false,
+      //   unavailable: false,
+      //   claimed: false
+      // },
+      // {
+      //   vipLevel: "10",
+      //   upgrade: "4,000,000",
+      //   vipTitle: "铂金1",
+      //   depositPromoAvailable: false,
+      //   promoAvailable: false,
+      //   unavailable: false,
+      //   claimed: false
+      // },
+      // {
+      //   vipLevel: "11",
+      //   upgrade: "8,000,000",
+      //   vipTitle: "钻石",
+      //   depositPromoAvailable: false,
+      //   promoAvailable: false,
+      //   unavailable: false,
+      //   claimed: false
+      // },
+      // {
+      //   vipLevel: "12",
+      //   upgrade: "12,000,000",
+      //   vipTitle: "王者",
+      //   depositPromoAvailable: false,
+      //   promoAvailable: false,
+      //   unavailable: false,
+      //   claimed: false
+      // }
     ]);
     const initVIPTable = () => {
       if (store.token) {
@@ -607,7 +647,7 @@ export default defineComponent({
     return {
       showRebate,
       onShowRebateClick,
-      terms,
+      // terms,
       vipItems,
       vipLevel,
       getVipLevelProgress,
@@ -618,12 +658,13 @@ export default defineComponent({
       loadingBClaim,
       amount,
       privilegeClaimedModalVisible,
-      currentDisplayTerms,
-      vipTerms,
+      // currentDisplayTerms,
+      // vipTerms,
       claimVIPLevelItem,
       currentSlide,
       slideTo,
-      currentDepositAmt
+      currentDepositAmt,
+      store
     };
   }
 });
@@ -758,7 +799,7 @@ $border-settings: 1px solid #e5e7eb;
       margin-left: 2px;
       z-index: 1;
       text-align: left;
-      height: 47px;
+      height: 75px;
 
       &.vipLevelReached {
         background: url("../assets/vip/badge/vip-level-banner-status-ribbon-achieved.png") no-repeat left center;
@@ -802,7 +843,7 @@ $border-settings: 1px solid #e5e7eb;
 
       .description {
         color: #7a80a1;
-        font-size: 17.987px;
+        font-size: 13.987px;
         font-style: normal;
         font-weight: 400;
         line-height: normal;
@@ -851,12 +892,18 @@ $border-settings: 1px solid #e5e7eb;
       }
     }
   }
-
   .vip-program {
     margin: 50px auto;
     max-width: 1300px;
     width: 95%;
 
+    .tbl-title {
+        padding: 10px;
+        font-weight: bold;
+        color: #000000;
+      &.free {
+      }
+    }
     table {
       width: 100%;
       table-layout: fixed;
@@ -872,6 +919,9 @@ $border-settings: 1px solid #e5e7eb;
       td {
         color: #111827;
         border-right: $border-settings;
+        img { 
+          width: 20px;
+        }
 
         &:has(.disable) {
           background-color: #e7e7e7;
@@ -948,7 +998,7 @@ $border-settings: 1px solid #e5e7eb;
     .terms {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      // align-items: center;
       font-size: 16px;
       font-weight: 400;
       line-height: 30px;

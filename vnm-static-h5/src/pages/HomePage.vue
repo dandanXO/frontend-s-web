@@ -94,8 +94,6 @@
       :img-src="imgURL + banner.mobileImageUrl"
       @click="gotoPromo(banner)"
     />
-    <!-- :img-src="require(`../assets/images/home/${banner.mobileImageUrl}`)" -->
-    <!-- :img-src="imgURL + banner.mobileImageUrl" -->
   </q-carousel>
 
   <div class="mid-announcement-section">
@@ -842,24 +840,8 @@ export default defineComponent({
         .get("/promo/banner?category=HOME")
         .then((res) => {
           if (res.code === 0) {
-            // banners.value = res.data;
-
-            banners.value = [
-              {
-                promoPageId: null,
-                desktopImageUrl: "7/032e4d81-78ab-44e5-86e2-eb1aab6d01fa.jpg",
-                mobileImageUrl: "home-banner2.jpg",
-                redirectUrl: "lh1-quiz",
-                category: "HOME"
-              },
-              {
-                promoPageId: null,
-                desktopImageUrl: "7/4457a090-76a1-4d8c-995c-8abae1de30cf.jpg",
-                mobileImageUrl: "home-banner1.jpg",
-                redirectUrl: "chunjisai",
-                category: "HOME"
-              }
-            ];
+            console.log("banner?");
+            banners.value = res.data;
           } else {
           }
         })

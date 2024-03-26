@@ -1243,6 +1243,8 @@ export default {
     subSiteCount: 'Sub Site Count',
     subtotal: 'Subtotal',
     success: 'Success',
+    successRate: 'Transaction success rate',
+    successAmounntRate: 'Amount success rate',
     successfullyExport: 'Successfully Export',
     summaryAdjustment: 'Adjustment',
     summaryBonus: 'Bonus',
@@ -1264,6 +1266,7 @@ export default {
     sureWinMinSpin: 'Sure Win Min Spin',
     suspend: 'Suspend',
     switch: 'Switch',
+    szCnyControl: 'SZCny Withdrawal Control',
     switchPayment: 'Switch Payment',
     systemPayment: 'System Payment',
     targetType: 'Target Type',
@@ -1970,6 +1973,7 @@ export default {
     validateCompetitionNameRequired: 'Competition Name is required',
     validateCompetitionTimeRequired: 'Competition Time is required',
     validateKeyQuantityRequired: 'Key quantity is required',
+    validateMonthRequired: 'Year/Month is required',
   },
   menu: {
     undefined: '',
@@ -2177,6 +2181,7 @@ export default {
     'Competition Management': 'Competition Management',
     'Competition List': 'Competition List',
     'Competition Code': 'Competition Code',
+    'Affiliate Recalculate': 'Affiliate Recalculate',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
