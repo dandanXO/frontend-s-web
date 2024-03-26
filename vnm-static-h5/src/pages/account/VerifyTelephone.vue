@@ -92,6 +92,7 @@ import moment from "moment";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import {userStore} from "src/stores";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "PersonalView",
@@ -99,6 +100,7 @@ export default defineComponent({
     // const isCardActive = ref();
     const qs = require("qs");
     const $q = useQuasar();
+    const { t } = useI18n();
     const router = useRouter();
     const searchForm = reactive({
       start: "",
@@ -191,7 +193,7 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: $t('lang.personal_verification_successful'),
+              message: t('lang.personal_verification_successful'),
               icon: "check_circle_outline"
             });
             store.phoneVerified = true;
@@ -235,10 +237,10 @@ export default defineComponent({
     };
 
     const isValidPhone = () => {
-      const phonePattern = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
+      const phonePattern = /^(0[1-9]|84[1-9])(\d{8,9})$/;
       const {phone} = formDetails;
 
-      const result = '' === phone ? $t('lang.personal_mobilenumber_verify') : !phonePattern.test(phone) ? $t('lang.personal_mobilenumber_val') : true;
+      const result = '' === phone ? t('lang.personal_mobilenumber_verify') : !phonePattern.test(phone) ? t('lang.personal_mobilenumber_val') : true;
 
       return result;
     }

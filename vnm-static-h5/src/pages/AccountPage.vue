@@ -329,13 +329,13 @@
   >
     <q-card style="width: 100%" class="modalcontent">
       <div class="headers">
-        <div class="titles">系统提示</div>
+        <div class="titles">{{ $t("lang.logout_title") }}</div>
         <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
       </div>
-      <div class="contents">确认要退出登录吗？</div>
+      <div class="contents">{{ $t("lang.logout_desc") }}</div>
       <div class="btnsreas">
-        <div class="confirmsbtns common-md-btn" @click="logout">确定</div>
-        <div class="cacnels common-md-white-btn" @click="isLogoutModal = false">取消</div>
+        <div class="confirmsbtns common-md-btn btn-standard-height" @click="logout">{{ $t("lang.logout_confirm") }}</div>
+        <div class="cacnels common-md-white-btn btn-standard-height" @click="isLogoutModal = false">{{ $t("lang.logout_cancel") }}</div>
       </div>
     </q-card>
   </q-dialog>
