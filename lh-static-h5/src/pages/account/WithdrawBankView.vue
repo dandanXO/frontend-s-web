@@ -274,7 +274,7 @@ const unbindCardLabel = () => {
 let bankCardList = reactive({ BANK: [], CRYPTO: [], EWALLET: [], ALIPAY: [] });
 const loadCards = () => {
   api
-    .get("/session/bankCard")
+    .get("/session/allBankCard")
     .then((res) => {
       if (res.code === 0) {
         // Empty each array in bankCardList

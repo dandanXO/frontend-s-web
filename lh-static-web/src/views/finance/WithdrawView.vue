@@ -578,7 +578,7 @@ export default defineComponent({
         // padding: 8px 20px;
         // background: #ffffff;
         // border: 1px solid #ced4da;
-        max-width: 2.3rem;
+        max-width: 3rem;
         width: 100%;
         height: auto;
         margin-bottom: 0;
