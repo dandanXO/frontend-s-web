@@ -379,3 +379,10 @@ deploy-lh-landing:
   variables:
     PROJECT: lh-landing
 
+#===============================================================================================
+
+deploy-lh-cesu:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-cesu
+
