@@ -1,25 +1,16 @@
 <template>
-  <div class="cny-spin-wheel-container">
-    <img src="./../../../assets/images/promotion/hotpromo/cny-spinwheel/banner.png" />
+  <div class="bonus-spin-wheel-container">
+    <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/banner.png" />
     <div class="spin-wheel-container">
-      <div :class="`draw-btn click-pointer ${remainingDraws <= 0 || spinButtonDisable ? 'disabled' : ''}`" @click="spinWheel">
-        <img src="./../../../assets/images/promotion/hotpromo/cny-spinwheel/click-spin-btn.png" />
+      <div :class="`draw-btn click-pointer ${remainingDraws <= 0 || spinButtonDisable ? 'disabled' : ''}`"
+        @click="spinWheel">
+        <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/click-spin-btn.png" />
       </div>
-      <div class="wheel-stage">
-        <img src="./../../../assets/images/promotion/hotpromo/cny-spinwheel/spin-wheel-stage.png" />
-      </div>
-      <div class="cny-hat">
-        <img src="./../../../assets/images/promotion/hotpromo/cny-spinwheel/spin-wheel-cny-hat.png" />
-      </div>
-
       <div class="spin-wheel-board">
         <div class="spin-wheel-frame">
           <div id="spin-wheel-id" class="spin-wheel">
-            <img
-              id="spin-wheel-bg"
-              class="wheel-bg"
-              src="./../../../assets/images/promotion/hotpromo/cny-spinwheel/spin-wheel-bg.png"
-            />
+            <img id="spin-wheel-bg" class="wheel-bg"
+              src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-wheel-bg.png" />
             <div id="spin-wheel-number" class="spin-wheel-number" style="display: none"></div>
           </div>
         </div>
@@ -27,24 +18,13 @@
     </div>
 
     <div class="remaining-draw-wrapper">
-      <p class="remaining-draw-text">
+      <div class="remaining-draw-text">
         剩余抽奖次数：
         <span id="remaning-draw-amt">{{ remainingDraws }}</span>
-      </p>
+      </div>
     </div>
 
     <div class="promo-info-container">
-      <div class="promo-info-banner">
-        <div class="promo-info-header">中奖名单</div>
-        <div class="promo-info-content">
-          <div class="winners-list">
-            <div class="winners-list-item" v-for="(item, index) in winnersList" :key="index">
-              <div class="winner-username">恭喜 {{ item.loginName }}</div>
-              <div class="winner-prize">抽中 {{ item.bonus }} 礼金</div>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="promo-info-banner">
         <div class="promo-info-header">活动说明</div>
         <div class="promo-info-content">
@@ -62,25 +42,34 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <q-dialog v-model="showPrizePopup">
-    <div class="prizePopupContainer">
-      <div class="wrapper">
-        <div class="popup-header bold-text golden-text">恭喜!</div>
-        <div class="content">
-          <div class="flex-center row">
-            <div class="bold-text">您获得&nbsp;</div>
-            <div class="bold-text win-text">{{ prizePopupBonusAmt }}</div>
-            <div class="bold-text">&nbsp;元</div>
+      <div class="promo-info-banner">
+        <div class="promo-info-header">中奖名单</div>
+        <div class="promo-info-content">
+          <div class="winners-list">
+            <div class="winners-list-item" v-for="(item, index) in winnersList" :key="index">
+              <div class="winner-username">恭喜 {{ item.loginName }}</div>
+              <div class="winner-prize">抽中 {{ item.bonus }} 礼金</div>
+            </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-          <div class="action-btn" @click="showPrizePopup = false">立即领取</div>
+  <q-dialog v-model="showPrizePopup">
+    <div class="bonus-spinwheel-prize-popup-container">
+      <div class="wrapper">
+        <div class="close" @click="showPrizePopup = false"></div>
+        <div class="content">
+          <div class="bold-text">
+            <div class="darkred-text">恭喜获得</div>
+            <div class="red-text">{{ prizePopupBonusAmt }}元彩金</div>
+          </div>
+          <div class="action-btn" @click="showPrizePopup = false"></div>
         </div>
       </div>
     </div>
   </q-dialog>
-  </div>
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
@@ -91,7 +80,7 @@ const TOTAL_ITEMS = 8;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
-const SPIN_WHEEL_PRIZES = [8, 1888, 18, 188, 88, 588, 58, 888];
+const SPIN_WHEEL_PRIZES = [1888, -1, 8, 18, 88, 188, 588, 888];
 
 // spin wheel element refs
 const spinBoardRef = ref();
@@ -102,7 +91,7 @@ const spinButtonDisable = ref(false);
 const degreesToStopAt = ref([]);
 const showPrizePopup = ref(false);
 const prizePopupBonusAmt = ref();
-const remainingDraws = ref();
+const remainingDraws = ref(0);
 const winnersList = ref([]);
 
 let finalDegree = 0;
@@ -140,9 +129,9 @@ const getRecords = () => {
       }
     })
     .catch((err) => {
-      console.log('here', err)
+      console.log("here", err);
     });
-}
+};
 
 const stopSpin = (prizeIndex, stopCallback) => {
   // call api
@@ -198,6 +187,14 @@ const reset = () => {
 };
 
 const spinWheel = () => {
+  // const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === -1);
+  // spin(prizeIndex, () => {
+  //   showPrizePopup.value = true;
+  //   prizePopupBonusAmt.value = 33;
+  //   remainingDraws.value = 9;
+  // });
+  // return;
+
   if (spinButtonDisable.value === true) {
     return;
   }
@@ -216,7 +213,11 @@ const spinWheel = () => {
     .post("/vipWheel/spin")
     .then((res) => {
       if (res.code == 0) {
-        const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === res.data.bonus);
+        var bonusIndex = res.data.bonus;
+        if (res.data.type === 'CONSOLATION') {
+          bonusIndex = -1;
+        }
+        const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
 
         spin(prizeIndex, () => {
           showPrizePopup.value = true;
@@ -226,21 +227,19 @@ const spinWheel = () => {
       }
     })
     .catch((err) => {
-      console.log(err)
+      console.log(err);
     });
 };
 
 const initSpinWheel = () => {
-  eventapi
-    .get("/vipWheel/init")
-    .then((res) => {
-      if (res.code == 0) {
-        remainingDraws.value = res.data.availableSpin;
-      }
-    })
+  eventapi.get("/vipWheel/init").then((res) => {
+    if (res.code == 0) {
+      remainingDraws.value = res.data.availableSpin;
+    }
+  });
 
   getRecords();
-}
+};
 
 onMounted(() => {
   // calc no of spin wheel items and potential stops
@@ -258,10 +257,9 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-.cny-spin-wheel-container {
-  .spin-wheel-container {
+.spin-wheel-container {
   position: relative;
-  margin: 55px 0px;
+  margin: 25px 0px 55px;
   text-align: center;
 }
 
@@ -270,6 +268,8 @@ onMounted(() => {
   width: 330px;
   height: 330px;
   margin: 0 auto;
+  background: url(../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-wheel-frame.png) no-repeat center center;
+  background-size: 100%;
 }
 
 .wheel-frame {
@@ -295,17 +295,13 @@ onMounted(() => {
 .spin-wheel {
   position: absolute;
   z-index: 2;
-  top: 0px;
-  left: 0px;
-  width: 330px;
-  height: 330px;
+  top: 20px;
+  left: 20px;
+  width: 290px;
+  height: 290px;
 }
 
 .wheel-bg {
-  width: 100%;
-  height: 100%;
-}
-.spin-wheel-cny-hat {
   width: 100%;
   height: 100%;
 }
@@ -336,6 +332,7 @@ onMounted(() => {
 
   &.disabled {
     filter: brightness(0.85);
+    opacity: 1 !important;
   }
 }
 
@@ -346,7 +343,7 @@ onMounted(() => {
 
 .click-pointer:hover,
 .history-btn {
-  filter: brightness(1.2);
+  filter: brightness(1);
 }
 
 .history-btn:active {
@@ -359,34 +356,6 @@ onMounted(() => {
   filter: brightness(0.9);
 }
 
-.wheel-stage {
-  width: 100%;
-  height: auto;
-  z-index: 20;
-  position: absolute;
-  bottom: 0px;
-  left: 50%;
-  transform: translate(-50%, 50%);
-
-  img {
-    width: 100%;
-  }
-}
-
-.cny-hat {
-  width: 120px;
-  height: auto;
-  z-index: 22;
-  position: absolute;
-  top: -45px;
-  left: 50%;
-  transform: translate(-50%, 0%);
-
-  img {
-    width: 100%;
-  }
-}
-
 .draw-btn img {
   width: 100%;
 }
@@ -394,7 +363,6 @@ onMounted(() => {
 .spin-wheel-board {
   position: relative;
   z-index: 20;
-  background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/tree-branches.png") no-repeat top center;
   background-size: contain;
 }
 
@@ -417,7 +385,7 @@ onMounted(() => {
   background: #555;
 }
 
-.prizePopupContainer {
+.bonus-spinwheel-prize-popup-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -425,12 +393,21 @@ onMounted(() => {
   .wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    width: 300px;
-    height: 345px;
+    justify-content: flex-start;
+    width: 600px;
+    height: 300px;
     gap: 0px;
-    background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/prize-popup.png");
+    background: url("./../../../assets/images/promotion/hotpromo/bonus-spinwheel/prize-popup.png");
     background-size: 100% 100%;
+    position: relative;
+
+    .close {
+      position: absolute;
+      right: 0;
+      top: 38px;
+      width: 20px;
+      height: 20px;
+    }
 
     .bold-text {
       font-family: sans-serif;
@@ -450,10 +427,20 @@ onMounted(() => {
       -webkit-text-fill-color: transparent;
     }
 
-    .win-text{
+    .darkred-text {
+      color: #8c3b00;
+      font-size: 20px;
+    }
+
+    .red-text {
+      color: #ff0000;
+      font-size: 28px;
+    }
+
+    .win-text {
       font-size: 28px;
       letter-spacing: 2px;
-       background: linear-gradient(360deg, #FFC700 9.54%, #FFF500 86.08%);
+      background: linear-gradient(360deg, #ffc700 9.54%, #fff500 86.08%);
       background-clip: text;
       -webkit-text-fill-color: transparent;
       filter: drop-shadow(1px 1px #00000050);
@@ -469,23 +456,24 @@ onMounted(() => {
     }
 
     .content {
-      height: 220px;
+      height: 260px;
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
+      justify-content: space-between;
       align-items: center;
       padding: 20px;
+      margin-left: 10px;
 
       .action-btn {
-        background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/prize-popup-action-btn.png");
-        background-size: 100% 100%;
-        width: 80%;
+        background: url("./../../../assets/images/promotion/hotpromo/bonus-spinwheel/prize-popup-action-btn.png") no-repeat center center;
+        background-size: contain;
+        width: 100%;
         height: 100%;
-        max-height: 50px;
+        max-height: 90px;
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #FFFFFF;
+        color: #ffffff;
         font-size: 16px;
         font-weight: bold;
         cursor: pointer;
@@ -495,91 +483,102 @@ onMounted(() => {
 }
 
 .remaining-draw-wrapper {
-  .remaining-draw-text {
-    color: #fff;
-    font-size: 20px;
-    margin: 10px auto 40px;
-    text-align: center;
-    width: 300px;
-    position: relative;
-    z-index: 23;
-  }
-}
-
-.promo-info-container {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  justify-content: center;
+  background: url("./../../../assets/images/promotion/hotpromo/bonus-spinwheel/remaining-spins-bg.png") no-repeat center center;
+  aspect-ratio: 387/136;
+  display: flex;
   align-items: center;
-  gap: 20px;
-  padding: 20px 0px 0px;
-  margin-top: -50px;
-  margin-bottom: 0px;
+  width: 387px;
+  height: 136px;
+  color: #480F12;
+  font-family: 'Microsoft YaHei UI';
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 31.92px;
+  letter-spacing: 0.05em;
+  margin: 0 auto;
 
-  .promo-info-banner {
-    background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/promo-info-banner.png");
-    background-size: 100% 100%;
-    width: 100%;
-    max-width: 340px;
-    height: 285px;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 20px;
-    z-index: 23;
+  .remaining-draw-text {
+    color: #480F12;
+    margin: 0 auto;
   }
+}
 
-  .promo-info-header {
-    font-size: 23px;
-    font-weight: 700;
-    line-height: 30px;
-    text-align: center;
-    color: #ffffff;
-    padding: 25px 25px;
-  }
+.bonus-spin-wheel-container {
+  .promo-info-container {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
 
-  .promo-info-content {
-    height: 100%;
-    max-height: 140px;
-    overflow-y: auto;
-
-    .event-info-item {
-      display: grid;
-      grid-template-columns: 100px 1fr;
-      justify-content: center;
-      align-items: center;
-      padding: 7px;
-      color: #530102;
-
-      .event-info-title {
-        font-weight: bold;
-      }
+    .promo-info-banner {
+      background: url("./../../../assets/images/promotion/hotpromo/bonus-spinwheel/promo-info-banner.png") no-repeat center center;
+      background-size: 100% 100%;
+      width: 450px;
+      height: 370px;
+      aspect-ratio: 646/404;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px;
     }
 
-    .winners-list-item {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      justify-content: center;
-      align-items: center;
-      font-weight: bold;
-      padding: 7px;
+    .promo-info-header {
+      font-size: 23px;
+      font-weight: 700;
+      line-height: 30px;
+      text-align: center;
+      color: #ffffff;
+      padding: 15px 30px;
+    }
 
-      &:not(:last-child) {
-        border-bottom: 0.58px dotted #53010233;
+    .promo-info-content {
+      height: 100%;
+      max-height: 300px;
+      overflow-y: auto;
+      font-family: Microsoft YaHei UI;
+      font-size: 20px;
+      line-height: 26.6px;
+      letter-spacing: 0.05em;
+      text-align: left;
+      margin: 0px 20px 50px;
+
+
+      .event-info-item {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        justify-content: center;
+        align-items: center;
+        padding: 15px;
+        color: #FFF9DB;
+
+        .event-info-title {
+          font-weight: bold;
+        }
       }
 
-      .winner-username {
-        color: #53010299;
-      }
-
-      .winner-prize {
-        color: #530102;
+      .winners-list-item {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        justify-content: center;
+        align-items: center;
         font-weight: bold;
+        padding: 10px;
+
+        &:not(:last-child) {
+          border-bottom: 0.58px dashed #FFFFFF33;
+        }
+
+        .winner-username {
+          color: #FFFFFF99;
+        }
+
+        .winner-prize {
+          color: #FFF9DB;
+          font-weight: bold;
+        }
       }
     }
   }
 }
-}
-
 </style>
