@@ -513,7 +513,7 @@ onMounted(() => {
     .promo-info-banner {
       background: url("./../../../assets/images/promotion/hotpromo/bonus-spinwheel/promo-info-banner.png") no-repeat center center;
       background-size: 100% 100%;
-      width: 450px;
+      width: 350px;
       height: 370px;
       aspect-ratio: 646/404;
       margin: auto;
@@ -524,7 +524,7 @@ onMounted(() => {
     }
 
     .promo-info-header {
-      font-size: 23px;
+      font-size: 20px;
       font-weight: 700;
       line-height: 30px;
       text-align: center;
@@ -537,7 +537,7 @@ onMounted(() => {
       max-height: 300px;
       overflow-y: auto;
       font-family: Microsoft YaHei UI;
-      font-size: 20px;
+      font-size: 16px;
       line-height: 26.6px;
       letter-spacing: 0.05em;
       text-align: left;
