@@ -71,12 +71,6 @@
               style="display: block; width: 100%"
             />
           </template>
-          <template v-else-if="selectedPromo.promoCode === 'bonus-spinwheel'">
-            <img
-              src="../assets/images/promotion/hotpromo/bonus-spinwheel/banner.png"
-              style="display: block; width: 100%"
-            />
-          </template>
           <template v-else>
             <div
               class="promo-bg isDesktop"
@@ -600,11 +594,10 @@ export default defineComponent({
 
     .selected-promo-wrapper {
       &.bg__cny-spinwheel {
-        background-image: url("../assets/images/promotion/hotpromo/cny-spinwheel/cny-spinwheel-bg.jpg");
+        background-image: url("../assets/images/promotion/hotpromo/bonus-spinwheel/bg.jpg");
         background-size: 100% 100%;
         background-repeat: no-repeat;
         background-position: top center;
-        background-color: #a1211d;
         padding-bottom: 0px;
 
         .inner {
@@ -635,54 +628,6 @@ export default defineComponent({
         .hongbaoyu-modal {
           .el-dialog__header .el-dialog__headerbtn {
             display: none !important;
-          }
-        }
-
-        .banner-container {
-          min-height: 0 !important;
-
-          .promo-bg {
-            &.isDesktop {
-              display: none !important;
-              height: 0px !important;
-            }
-
-            &.isMobile {
-              display: none !important;
-              height: 0px !important;
-            }
-          }
-        }
-      }
-
-      &.bg__bonus-spinwheel {
-        background-image: url("../assets/images/promotion/hotpromo/bonus-spinwheel/bg.jpg");
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-position: top center;
-        padding-bottom: 0px;
-
-        .inner {
-          height: 100%;
-          justify-content: space-between;
-          max-width: none;
-          width: 100%;
-          margin: 0 auto;
-        }
-
-        .hot-promo {
-          width: 95%;
-          max-width: 1400px;
-          margin: 0 auto 10px;
-        }
-
-        .promo-view-container {
-          max-width: none !important;
-          width: 100% !important;
-
-          >div {
-            max-width: 1400px;
-            margin: 0 auto;
           }
         }
 

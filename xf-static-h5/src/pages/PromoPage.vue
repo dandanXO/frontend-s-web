@@ -224,7 +224,7 @@ export default defineComponent({
           })
     }
     const showPromoDetails = (promo) => {
-      if (promo.promoCode === "cny-hongbaoyu" || promo.promoCode === "cny-spinwheel" || promo.promoCode === "bonus-spinwheel" || promo.redirectUrl === "cny-hongbaoyu") {
+      if (promo.promoCode === "cny-hongbaoyu" || promo.promoCode === "cny-spinwheel" || promo.redirectUrl === "cny-hongbaoyu") {
         isSpecialPromo.value = true
       } else {
         isSpecialPromo.value = false
@@ -593,20 +593,6 @@ export default defineComponent({
 
     .selected-promo-wrapper {
       &.bg__cny-spinwheel {
-        background-image: url("../assets/images/promotion/hotpromo/cny-spinwheel/cny-spinwheel-bg.jpg");
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-position: top center;
-        background-color: #a1211d;
-
-        .welcome{
-          width: calc(100% - 30px);
-          margin:0 auto;
-          padding-bottom: 60px;
-        }
-      }
-
-      &.bg__bonus-spinwheel {
         background-image: url("../assets/images/promotion/hotpromo/bonus-spinwheel/bg.jpg");
         background-size: 100% 100%;
         background-repeat: no-repeat;

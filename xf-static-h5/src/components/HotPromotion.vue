@@ -1,5 +1,5 @@
 <template>
-  <div :class="list.redirectUrl === 'cny-spinwheel' || list.redirectUrl === 'bonus-spinwheel' ? '' : 'hot-promo'">
+  <div :class="list.redirectUrl === 'cny-spinwheel' ? '' : 'hot-promo'">
     <ClaimPromo
       v-if="isCommonPromo && store.hasToken()"
       :promo-id="list.id"
@@ -17,8 +17,7 @@
         (list.redirectUrl === 'invitefriend')
       "
     />
-    <CnySpinWheelPromo v-if="list.redirectUrl === 'cny-spinwheel' && !isCommonPromo" />
-    <BonusSpinWheelPromo v-if="list.redirectUrl === 'bonus-spinwheel' && !isCommonPromo" />
+    <BonusSpinWheelPromo v-if="list.redirectUrl === 'cny-spinwheel' && !isCommonPromo" />
     <HongBaoYu2024Promo
       :promo-code="list.promoCode"
       v-if="!isCommonPromo && list.redirectUrl === 'cny-hongbaoyu'"
@@ -201,7 +200,7 @@ import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import HongBaoYu2024Promo from "../components/hotpromo/hongbaoyu/HongBaoYu2024.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import PrivilegeInvite from "../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue";
-import CnySpinWheelPromo from "../components/hotpromo/cnySpinWheel/CnySpinWheel.vue";
+// import CnySpinWheelPromo from "../components/hotpromo/cnySpinWheel/CnySpinWheel.vue";
 import BonusSpinWheelPromo from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
 
 
@@ -217,7 +216,7 @@ export default defineComponent({
     HongBaoYu2024Promo,
     WelcomeTaskPromo,
     PrivilegeInvite,
-    CnySpinWheelPromo,
+    // CnySpinWheelPromo,
     BonusSpinWheelPromo
   },
   props: {
@@ -277,7 +276,6 @@ export default defineComponent({
       this.list.redirectUrl === "welcomenewuser" ||
       this.list.redirectUrl === "fucaiiphone" ||
       this.list.redirectUrl === "cny-spinwheel" ||
-      this.list.redirectUrl === "bonus-spinwheel" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;
