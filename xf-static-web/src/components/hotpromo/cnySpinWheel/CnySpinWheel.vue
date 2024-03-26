@@ -245,6 +245,77 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+.prizePopupContainer {
+    width: 480px;
+    height: 500px;
+    background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/prize-popup.png");
+    background-size: 100% 100%;
+    box-shadow: none;
+
+    .el-dialog__body {
+      background: none;
+    }
+
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      height: 470px;
+      gap: 0px;
+
+      .bold-text {
+        font-family: sans-serif;
+        font-size: 35px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-align: center;
+        color: #530102;
+      }
+
+      .golden-text {
+        font-size: 55px;
+        letter-spacing: 2px;
+        background: linear-gradient(94.81deg, #f6ff8c 7.45%, #ffba88 95.9%),
+          linear-gradient(360deg, #ff932f 9.54%, #fffca9 86.08%);
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .popup-header {
+        letter-spacing: normal;
+        font-size: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .content {
+        height: 260px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        padding: 30px;
+
+        .action-btn {
+          background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/prize-popup-action-btn.png");
+          background-size: 100% 100%;
+          width: 80%;
+          height: 100%;
+          max-height: 65px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #ffffff;
+          font-size: 30px;
+          font-weight: bold;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  
 .cny-spin-wheel-wrapper {
   //   background: salmon;
   padding-top: 110px;
@@ -423,76 +494,6 @@ onMounted(() => {
     background: #555;
   }
 
-  .prizePopupContainer {
-    width: 480px;
-    height: 500px;
-    background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/prize-popup.png");
-    background-size: 100% 100%;
-    box-shadow: none;
-
-    .el-dialog__body {
-      background: none;
-    }
-
-    .wrapper {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      height: 470px;
-      gap: 0px;
-
-      .bold-text {
-        font-family: sans-serif;
-        font-size: 35px;
-        font-weight: 700;
-        letter-spacing: 1px;
-        text-align: center;
-        color: #530102;
-      }
-
-      .golden-text {
-        font-size: 55px;
-        letter-spacing: 2px;
-        background: linear-gradient(94.81deg, #f6ff8c 7.45%, #ffba88 95.9%),
-          linear-gradient(360deg, #ff932f 9.54%, #fffca9 86.08%);
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
-      .popup-header {
-        letter-spacing: normal;
-        font-size: 30px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .content {
-        height: 260px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-        padding: 30px;
-
-        .action-btn {
-          background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/prize-popup-action-btn.png");
-          background-size: 100% 100%;
-          width: 80%;
-          height: 100%;
-          max-height: 65px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          color: #ffffff;
-          font-size: 30px;
-          font-weight: bold;
-          cursor: pointer;
-        }
-      }
-    }
-  }
 
   .remaining-draw-wrapper {
     .remaining-draw-text {
