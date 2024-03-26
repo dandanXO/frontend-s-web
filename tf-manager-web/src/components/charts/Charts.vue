@@ -1,5 +1,5 @@
 <template>
-  <div ref="container" :style="{height: height, width: width}" />
+  <div ref="container" :style="{height: height, width: width}" @click="$emit('clicked', chart.selected)" />
 </template>
 
 <script setup>
@@ -36,6 +36,8 @@ const props = defineProps({
 })
 const { options } = toRefs(props)
 const container = ref(null)
+// eslint-disable-next-line no-undef,no-unused-vars
+const emit = defineEmits(['clicked'])
 
 /*
 line graph does not show tooltip
@@ -53,6 +55,19 @@ onMounted(() => {
   window.addEventListener('resize', function() {
     chart.resize();
   });
+  chart.getZr().on('click', function(event) {
+    if (event.target == null) {
+      chart.selected = null
+    }
+  });
+  chart.on('click', 'series', function(params) {
+    if (params.name) {
+      chart.selected = {
+        name: params.name,
+        value: params.value
+      }
+    }
+  });
 })
 
 // 监听options发生变化时，重新给echarts设置传入的options
@@ -63,6 +78,7 @@ watch(
   },
   { deep: true }
 )
+
 </script>
 <style scoped>
 .container {
