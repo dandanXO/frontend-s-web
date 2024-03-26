@@ -277,11 +277,15 @@ svg {
   }
 }
 
+.btn-standard-height {
+  min-height: 52px;
+}
+
 .common-md-white-btn {
   background-color: transparent;
   background-image: url("../assets/images/common/common-md-white-btn.png");
   background-size: 100% 100%;
-  aspect-ratio: 286/96;
+  // aspect-ratio: 286/96;
   font-size: 1.2rem;
   width: 115px;
   color: $font-1;

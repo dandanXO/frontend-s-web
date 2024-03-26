@@ -24,9 +24,9 @@
         hide-bottom-space
         filled
         v-model="formDetail.realName"
-        placeholder="姓名"
+        :placeholder="$t('lang.personal_realname')"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入姓名', isValidName]"
+        :rules="[(val) => (val && val.length > 0) || $t('lang.personal_realname_val')]"
         label-color="secondary"
         color="secondary"
         :readonly="personalState.memberInfo.realName ? true : false"
@@ -49,7 +49,7 @@
         v-model="formDetail.birthday"
         readonly
         mask="date"
-        :rules="[(val) => (val && val.length > 0) || '请输入生日']"
+        :rules="[(val) => (val && val.length > 0) || $t('lang.personal_birthday_val')]"
         @click="toggleShowPopup"
       >
         <template v-slot:prepend>
@@ -429,7 +429,7 @@ export default defineComponent({
       const reg = /^\d+$/;
       const {phone} = formDetail;
 
-      const result = '' === phone ? '请验证您的电话号码' : !reg.test(phone) ? '电话号码只允许使用数字' : true;
+      const result = '' === phone ? t('lang.personal_mobilenumber_verify') : !reg.test(phone) ? t('lang.personal_mobilenumber_allownumsonly') : true;
 
       return result
     }
