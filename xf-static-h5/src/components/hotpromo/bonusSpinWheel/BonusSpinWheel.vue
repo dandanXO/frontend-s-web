@@ -80,7 +80,7 @@ const TOTAL_ITEMS = 8;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
-const SPIN_WHEEL_PRIZES = [1888, -1, 8, 18, 88, 188, 588, 888];
+const SPIN_WHEEL_PRIZES = [1888, 18, 188, 88, 588, 58, 888, 8];
 
 // spin wheel element refs
 const spinBoardRef = ref();
