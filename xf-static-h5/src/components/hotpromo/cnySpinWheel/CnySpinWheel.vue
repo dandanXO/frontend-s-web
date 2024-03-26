@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="cny-spin-wheel-container">
     <img src="./../../../assets/images/promotion/hotpromo/cny-spinwheel/banner.png" />
     <div class="spin-wheel-container">
       <div :class="`draw-btn click-pointer ${remainingDraws <= 0 || spinButtonDisable ? 'disabled' : ''}`" @click="spinWheel">
@@ -63,9 +63,8 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <q-dialog v-model="showPrizePopup">
+    <q-dialog v-model="showPrizePopup">
     <div class="prizePopupContainer">
       <div class="wrapper">
         <div class="popup-header bold-text golden-text">恭喜!</div>
@@ -81,10 +80,12 @@
       </div>
     </div>
   </q-dialog>
+  </div>
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
 import { eventapi } from "src/boot/axios";
+import {useQuasar} from "quasar";
 
 // spin wheel constants
 const TOTAL_ITEMS = 8;
@@ -109,6 +110,8 @@ let finalDegree = 0;
 let speed = 1;
 var spinSchedule;
 var degree;
+
+const $q = useQuasar();
 
 const spin = (prizeIndex, stopCallback) => {
   spinButtonDisable.value = true;
@@ -258,7 +261,86 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-.spin-wheel-container {
+
+.prizePopupContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 300px;
+    height: 345px;
+    gap: 0px;
+    background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/prize-popup.png");
+    background-size: 100% 100%;
+
+    .bold-text {
+      font-family: sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-align: center;
+      color: #530102;
+    }
+
+    .golden-text {
+      font-size: 25px;
+      letter-spacing: 2px;
+      background: linear-gradient(94.81deg, #f6ff8c 7.45%, #ffba88 95.9%),
+        linear-gradient(360deg, #ff932f 9.54%, #fffca9 86.08%);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .win-text{
+      font-size: 28px;
+      letter-spacing: 2px;
+       background: linear-gradient(360deg, #FFC700 9.54%, #FFF500 86.08%);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(1px 1px #00000050);
+    }
+
+    .popup-header {
+      letter-spacing: normal;
+      font-size: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .content {
+      height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      padding: 20px;
+
+      .action-btn {
+        background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/prize-popup-action-btn.png");
+        background-size: 100% 100%;
+        width: 80%;
+        height: 100%;
+        max-height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #FFFFFF;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.cny-spin-wheel-container {
+  .spin-wheel-container {
   position: relative;
   margin: 55px 0px;
   text-align: center;
@@ -416,83 +498,6 @@ onMounted(() => {
   background: #555;
 }
 
-.prizePopupContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    width: 300px;
-    height: 345px;
-    gap: 0px;
-    background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/prize-popup.png");
-    background-size: 100% 100%;
-
-    .bold-text {
-      font-family: sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-align: center;
-      color: #530102;
-    }
-
-    .golden-text {
-      font-size: 25px;
-      letter-spacing: 2px;
-      background: linear-gradient(94.81deg, #f6ff8c 7.45%, #ffba88 95.9%),
-        linear-gradient(360deg, #ff932f 9.54%, #fffca9 86.08%);
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .win-text{
-      font-size: 28px;
-      letter-spacing: 2px;
-       background: linear-gradient(360deg, #FFC700 9.54%, #FFF500 86.08%);
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(1px 1px #00000050);
-    }
-
-    .popup-header {
-      letter-spacing: normal;
-      font-size: 25px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .content {
-      height: 220px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-      padding: 20px;
-
-      .action-btn {
-        background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/prize-popup-action-btn.png");
-        background-size: 100% 100%;
-        width: 80%;
-        height: 100%;
-        max-height: 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #FFFFFF;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-      }
-    }
-  }
-}
-
 .remaining-draw-wrapper {
   .remaining-draw-text {
     color: #fff;
@@ -579,4 +584,6 @@ onMounted(() => {
     }
   }
 }
+}
+
 </style>

@@ -290,7 +290,6 @@ const onClaimBtnClicked = (isBtnOne) => {
   border-radius: 0.375rem;
   cursor: pointer;
   padding: 40px;
-  font-family: Microsoft Yahei UI;
   font-size: 20px;
   font-weight: 700;
   padding: 20px 70px;

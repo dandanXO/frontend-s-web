@@ -11,8 +11,8 @@
         <img src="../assets/images/affiliate/official-partner.png" height="55">
       </div>
       <div class="buttons">
-        <a :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')">{{ $t('affiliate.joinus') }}</a>
-        <a class="outline" :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')">{{ $t('affiliate.login') }}</a>
+        <a :href="'https://www.4luckypartner.com/?langge=' + languageVal + '&agent=' + (affCode ? affCode : '')">{{ $t('affiliate.joinus') }}</a>
+        <a class="outline" :href="'https://www.4luckypartner.com/?langge=' + languageVal + '&agent=' + (affCode ? affCode : '')">{{ $t('affiliate.login') }}</a>
         <a class="outline" @click.stop.prevent="store.openLiveChat()">
           {{ $t('affiliate.contactus') }}
         </a>
@@ -187,7 +187,7 @@
         </div>
       </div>
       <div>
-        <a :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' +
+        <a :href="'https://www.4luckypartner.com/?langge=' + languageVal + '&agent=' +
           (affCode ? affCode : '')
           " class="agent-reg-btn">{{ $t('affiliate.applyAgentNow') }}</a>
       </div>
@@ -300,7 +300,7 @@ export default defineComponent({
       display: flex;
       flex-direction: column;
       color: #424F72;
-      font-family: Poppins;
+      // font-family: Poppins;
       font-size: 40.79px;
       font-weight: 700;
       line-height: 70px;
@@ -362,7 +362,7 @@ export default defineComponent({
           display: flex;
         }
         .game-title {
-          font-family: Wave;
+          // font-family: Wave;
           color: #ffd200;
         }
       }

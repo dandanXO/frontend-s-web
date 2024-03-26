@@ -209,15 +209,15 @@
         <div class="update-pwd-container">
 
             <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">
-              <el-form-item ref="refOldPassword" label="旧密码" name="oldPassword" prop="oldPassword">
-                <el-input style="width:200px;" type="password" v-model="updatePwdInfo.oldPassword" :placeholder="'请输入旧密码'" clearable show-password />
+              <el-form-item ref="refOldPassword" :label="$t('personal.oldPwd')" name="oldPassword" prop="oldPassword">
+                <el-input style="width:200px;" type="password" v-model="updatePwdInfo.oldPassword" :placeholder="$t('placeholder.oldPwd')" clearable show-password />
               </el-form-item>
 
-              <el-form-item ref="refPassword" label="新密码" name="password" prop="password">
-                <el-input style="width:200px;" type="password" v-model="updatePwdInfo.password" :placeholder="'请输入新密码'" clearable show-password />
+              <el-form-item ref="refPassword" :label="$t('personal.newPwd')" name="password" prop="password">
+                <el-input style="width:200px;" type="password" v-model="updatePwdInfo.password" :placeholder="$t('placeholder.newPwd')" clearable show-password />
               </el-form-item>
-              <el-form-item ref="refConfirmPassword" label="确认密码" name="confirmPassword" prop="confirmPassword">
-                <el-input style="width:200px;" type="password" v-model="updatePwdInfo.confirmPassword" :placeholder="'请再次输入新密码'" clearable show-password />
+              <el-form-item ref="refConfirmPassword" :label="$t('personal.confirmPwd')" name="confirmPassword" prop="confirmPassword">
+                <el-input style="width:200px;" type="password" v-model="updatePwdInfo.confirmPassword" :placeholder="$t('placeholder.confirmPwd')" clearable show-password />
               </el-form-item>
               <div class="txt-center btn-container">
                 <button
@@ -244,15 +244,15 @@
       <el-tab-pane :label="$t('personal.chgWithdrawPwd')" name="chgWithdrawPwd">
         <div class="update-pwd-container">
             <el-form ref="updateWithdrawPwdFormRef" :hideRequiredMark="true" :model="updateWithdrawPwdInfo" :rules="updateWithdrawPwdRules">
-              <el-form-item ref="refWithdrawOldPassword" label="旧密码" name="oldPassword" prop="oldPassword">
-                <el-input style="width:200px;" type="password" v-model="updateWithdrawPwdInfo.oldPassword" :placeholder="'请输入旧密码'" clearable show-password />
+              <el-form-item ref="refWithdrawOldPassword" :label="$t('personal.oldWithdrawPwd')"  name="oldPassword" prop="oldPassword">
+                <el-input style="width:200px;" type="password" v-model="updateWithdrawPwdInfo.oldPassword" :placeholder="$t('placeholder.oldWithdrawPwd')" clearable show-password />
               </el-form-item>
 
-              <el-form-item ref="refWithdrawPassword" label="新密码" name="password" prop="password">
-                <el-input style="width:200px;" type="password" v-model="updateWithdrawPwdInfo.password" :placeholder="'请输入新密码'" clearable show-password />
+              <el-form-item ref="refWithdrawPassword" :label="$t('personal.newWithdrawPwd')" name="password" prop="password">
+                <el-input style="width:200px;" type="password" v-model="updateWithdrawPwdInfo.password" :placeholder="$t('placeholder.newWithdrawPwd')" clearable show-password />
               </el-form-item>
-              <el-form-item ref="refWithdrawConfirmPassword" label="确认密码" name="confirmPassword" prop="confirmPassword">
-                <el-input style="width:200px;" type="password" v-model="updateWithdrawPwdInfo.confirmPassword" :placeholder="'请再次输入新密码'" clearable show-password />
+              <el-form-item ref="refWithdrawConfirmPassword" :label="$t('personal.confirmWithdrawPwd')"  name="confirmPassword" prop="confirmPassword">
+                <el-input style="width:200px;" type="password" v-model="updateWithdrawPwdInfo.confirmPassword" :placeholder="$t('placeholder.confirmWithdrawPwd')" clearable show-password />
               </el-form-item>
               <div class="txt-center btn-container">
                 <button

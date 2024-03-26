@@ -152,7 +152,8 @@
           </div>
           <div v-else-if="isEWALLET">
             <span class="tip-text">*特别说明：提款钱包和游戏账号的姓名务必一致</span>
-            <div class="q-mt-md q-mb-md text-center">
+            <div class="q-mt-md q-mb-md text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
+              >
               <q-btn
                 style="border: 1px solid #000000; color: #000000"
                 @click="openEWalletTutorial(selectedWithdrawalMethod.code)"
@@ -337,7 +338,7 @@ export default defineComponent({
       withdrawInfo.withdrawCode = method.code;
       console.log("WITHDRAW CODE:" + withdrawInfo.withdrawCode)
       isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
-      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY')
+      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY') || withdrawInfo.withdrawCode.includes('SZPAY')
       isALIPAY.value = withdrawInfo.withdrawCode.includes('ALIPAY')
       activeItem.value = index;
       loadCards();

@@ -59,7 +59,7 @@ export default defineComponent({
           params: {
             way: "web",
             sid: sidParam,
-            siteCode: "lh1"
+            siteCode: "vnm"
           }
         });
       }

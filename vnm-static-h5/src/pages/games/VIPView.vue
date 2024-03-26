@@ -34,18 +34,22 @@
               alt=""
             />
             <span class="vip-card-common-text">
-              {{ vip.progressBarVal === 100 || vipLevel >= vip.level ? "已达到" : "未达到" }}
+              {{
+                vip.progressBarVal === 100 || vipLevel >= vip.level
+                  ? $t("lang.vip_achieved")
+                  : $t("lang.vip_unachieved")
+              }}
             </span>
           </div>
           <div class="vip-card-info">
-            <div class="level">
+            <div class="level q-mb-md q-mt-md">
               <div class="vip-level">VIP{{ vipIndex + 1 }}</div>
               <div class="vip-card-common-text">{{ vip.title }}</div>
             </div>
-            <div class="amount">
+            <!-- <div class="amount">
               <div class="vip-card-common-text">累计存款：</div>
               <div class="vip-card-common-text amount-text">{{ vip.amount }}</div>
-            </div>
+            </div> -->
             <div class="progress">
               <q-linear-progress
                 reverse
@@ -68,19 +72,46 @@
 
     <q-card class="level-promo-container">
       <q-card-section class="level-promo-header">
-        <div class="level-promo-title">等级优惠</div>
+        <div class="level-promo-title">{{ $t("lang.free_bonus") }}</div>
       </q-card-section>
 
       <q-separator></q-separator>
       <q-card-section class="level-promo-body">
-        <div class="promo">
-          <div class="common-text">{{ `VIP${claimDesc.vip + 1}优惠` }}</div>
-          <div class="common-text">{{ claimDesc.benefit }}</div>
+        <div class="vip-promo-bonus">
+          <div class="common-text">
+            <!-- {{ `VIP${claimDesc.vip + 1}优惠` }} -->
+            {{ $t("lang.upgrade_bonus") }}
+          </div>
+          <div class="common-amount">
+            <!-- {{ claimDesc.benefit }} -->
+            5,888
+          </div>
+          <div class="common-btn">
+            <q-btn class="btn-main" no-caps>{{ $t("lang.vip_claim") }}</q-btn>
+          </div>
         </div>
-        <div class="turnover">
+        <div class="vip-promo-bonus">
+          <div class="common-text">
+            {{ $t("lang.upgrade_bonus") }}
+          </div>
+          <div class="common-amount">5,888</div>
+          <div class="common-btn">
+            <q-btn class="btn-main" no-caps>{{ $t("lang.vip_claim") }}</q-btn>
+          </div>
+        </div>
+        <div class="vip-promo-bonus">
+          <div class="common-text">
+            {{ $t("lang.upgrade_bonus") }}
+          </div>
+          <div class="common-amount">5,888</div>
+          <div class="common-btn">
+            <q-btn class="btn-main" no-caps>{{ $t("lang.vip_claim") }}</q-btn>
+          </div>
+        </div>
+        <!-- <div class="turnover">
           <div class="common-text">流水要求</div>
           <div class="common-text">{{ claimDesc.turnover }}</div>
-        </div>
+        </div> -->
         <div
           class="claim-btn-container"
           @click="claimDesc.availableBtn ? claim() : null"
@@ -104,9 +135,45 @@
       </q-card-section>
     </q-card>
 
+    <q-card class="level-promo-container">
+      <q-card-section class="level-promo-header">
+        <div class="level-promo-title">{{ $t("lang.rebate_bonus") }}</div>
+      </q-card-section>
+
+      <q-separator></q-separator>
+      <q-card-section class="return-promo-body">
+        <div class="return-grid">
+          <div class="return-item">
+            <div class="item-percent">0.78%</div>
+            <div class="item-desc">{{ $t("lang.vip_sport_rebate") }}</div>
+          </div>
+          <div class="return-item">
+            <div class="item-percent">0.88%</div>
+            <div class="item-desc">{{ $t("lang.vip_esport_rebate") }}</div>
+          </div>
+          <div class="return-item">
+            <div class="item-percent">0.70%</div>
+            <div class="item-desc">{{ $t("lang.vip_livecasino_rebate") }}</div>
+          </div>
+          <div class="return-item">
+            <div class="item-percent">0.88%</div>
+            <div class="item-desc">{{ $t("lang.vip_poker_rebate") }}</div>
+          </div>
+          <div class="return-item">
+            <div class="item-percent">1.60%</div>
+            <div class="item-desc">{{ $t("lang.vip_slot_rebate") }}</div>
+          </div>
+          <div class="return-item">
+            <div class="item-percent">0.50%</div>
+            <div class="item-desc">{{ $t("lang.vip_lottery_rebate") }}</div>
+          </div>
+        </div>
+      </q-card-section>
+    </q-card>
+
     <div class="vip-detail-container">
       <!-- cannot flip cuz the border design will be upside down -->
-      <q-tabs v-model="tab" dense align="center" narrow-indicator active-class="active-tab" class="vip-detail-tab">
+      <!-- <q-tabs v-model="tab" dense align="center" narrow-indicator active-class="active-tab" class="vip-detail-tab">
         <q-tab name="rules" :ripple="false">
           <div class="vip-rules-btn-container">
             <img
@@ -129,9 +196,9 @@
             <span class="common-text">VIP特权</span>
           </div>
         </q-tab>
-      </q-tabs>
+      </q-tabs> -->
 
-      <q-tab-panels v-model="tab" class="rules-content">
+      <q-tab-panels v-model="tab" class="rules-content q-mt-md">
         <q-tab-panel name="rules">
           <q-table
             flat
@@ -142,36 +209,23 @@
             :rows-per-page-options="[0]"
           >
             <template v-slot:header="props">
-              <q-tr :props="props">
-                <q-th
-                  v-for="(col, colIndex) in props.cols"
-                  :key="col.name"
-                  :props="props"
-                  :colspan="`${colIndex === 0 ? 3 : 1}`"
-                >
+              <!-- <q-tr :props="props">
+                <q-th v-for="col in props.cols" :key="col.name" :props="props">
                   {{ col.label }}
                 </q-th>
+              </q-tr> -->
+              <q-tr :props="props">
+                <q-th rowspan="2">{{ $t("lang.vip_level") }}</q-th>
+                <q-th colspan="2">{{ $t("lang.vip_monthly_reload") }}</q-th>
+              </q-tr>
+              <q-tr>
+                <q-th style="background: #e7f3ff">{{ $t("lang.vip_percent_monthlyreload") }}</q-th>
+                <q-th style="background: #e7f3ff">{{ $t("lang.vip_min_deposit") }}</q-th>
               </q-tr>
             </template>
-
             <template v-slot:body="props">
               <q-tr :props="props">
-                <q-td
-                  v-if="props.row.threshold"
-                  auto-width
-                  :rowspan="props.row.rowspan"
-                  class="common-text text-center"
-                >
-                  {{ props.row.threshold }}
-                </q-td>
-
-                <q-td
-                  v-for="(col, colIndex) in props.cols"
-                  :key="col.name"
-                  :props="props"
-                  :colspan="`${colIndex === 0 ? 2 : 1}`"
-                  class="common-text"
-                >
+                <q-td v-for="col in props.cols" :key="col.name" :props="props" class="common-text">
                   {{ col.value }}
                 </q-td>
               </q-tr>
@@ -189,31 +243,27 @@
           ></q-table>
         </q-tab-panel>
       </q-tab-panels>
+
+      <div class="q-mt-md vip-tips">{{ $t("lang.vip_notes") }}</div>
     </div>
 
     <div class="tnc-container">
       <div class="tnc-title">
         <img class="tnc-img" src="../../assets/images/vip/title-bg.png" alt="" />
-        <span class="common-text">规则与条款</span>
+        <span class="common-text">{{ $t("lang.vip_terms_title") }}</span>
       </div>
 
       <div class="tnc-note">
         <ul class="common-text">
-          <li>
-            所有雷火电竞会员存款达到相应VIP等级要求即可享有特定免费奖金、存送奖金或其他奖励，存送奖金只需完成（存款+奖金）*相应流水倍数即可提款。
-          </li>
-          <li>达到相应等级要求的会员可以点击"待领取"，领取免费奖金或存款选择相对应的存送优惠即可。</li>
-          <li>各等级所对应的优惠所要求的流水有所不同，会员需要达到相应流水方可申请提款。</li>
-          <li>
-            此优惠促销只适用于拥有一个独立账户的玩家。住址、电子邮箱地址﹑电话号码﹑支付方式（相同借记卡/信用卡/银行账户号码）IP地址，同一网络环境等将可以作为判定是否独立玩家的条件。对于发现任何有违背、欺骗、或利用规则和条款进行非法获利的会员，雷火电竞保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。
-          </li>
-          <li>
-            在某些未知因素超出可控范围的情况下，雷火电竞保留可单方面执行的决定权，并承诺会在这类紧急问题发生时解释给客户原因并听取客户反馈与客户沟通协商解决。
-          </li>
-          <li>
-            雷火电竞保留对本次活动的修订、终止和最终解释权，超出本网站控制外的技术错误，雷火电竞将不承担任何责任。
-          </li>
-          <li>雷火电竞有权延长，缩短，终止，或者修改此活动！此活动最终解释权归雷火电竞所有。</li>
+          <li>{{ $t("lang.vip_terms_para_01") }}</li>
+          <li>{{ $t("lang.vip_terms_para_02") }}</li>
+          <li>{{ $t("lang.vip_terms_para_03") }}</li>
+          <li>{{ $t("lang.vip_terms_para_04") }}</li>
+          <li>{{ $t("lang.vip_terms_para_05") }}</li>
+          <li>{{ $t("lang.vip_terms_para_06") }}</li>
+          <li>{{ $t("lang.vip_terms_para_07") }}</li>
+          <li>{{ $t("lang.vip_terms_para_08") }}</li>
+          <li>{{ $t("lang.vip_terms_para_09") }}</li>
         </ul>
       </div>
     </div>
@@ -226,28 +276,25 @@ import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
 var qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
 const router = useRouter();
+const { t } = useI18n();
 
 const tab = ref("rules");
 
 const slide = ref(0);
 const vipItems = ref([
-  { level: "1", title: "青铜2", amount: "一笔存款" },
-  { level: "2", title: "青铜1", amount: "3,000" },
-  { level: "3", title: "白银3", amount: "30,000" },
-  { level: "4", title: "白银2", amount: "80,000" },
-  { level: "5", title: "白银1", amount: "200,000" },
-  { level: "6", title: "黄金3", amount: "400,000" },
-  { level: "7", title: "黄金2", amount: "600,000" },
-  { level: "8", title: "黄金1", amount: "1,000,000" },
-  { level: "9", title: "铂金2", amount: "2,000,000" },
-  { level: "10", title: "铂金1", amount: "4,000,000" },
-  { level: "11", title: "钻石", amount: "8,000,000" },
-  { level: "12", title: "王者", amount: "12,000,000" }
+  { level: "1", title: t("lang.vip_iron"), amount: "一笔存款" },
+  { level: "2", title: t("lang.vip_bronze"), amount: "3,000" },
+  { level: "3", title: t("lang.vip_silver"), amount: "30,000" },
+  { level: "4", title: t("lang.vip_gold"), amount: "80,000" },
+  { level: "5", title: t("lang.vip_platinum"), amount: "200,000" },
+  { level: "6", title: t("lang.vip_diamond"), amount: "400,000" },
+  { level: "7", title: t("lang.vip_crystal"), amount: "600,000" }
 ]);
 
 const vipClaimItems = [
@@ -457,72 +504,64 @@ const columns = [
   {
     name: "level",
     required: true,
-    label: "等级",
+    label: t("lang.vip_level"),
     align: "center",
     field: (row) => row.name
   },
-  { name: "amount", label: "升级要求累计存款", field: "amount", align: "center" }
+  // { name: "amount", label: t("lang.vip_monthly_reload"), field: "amount", align: "center" },
+  {
+    name: "monthly_reload",
+    align: "center",
+    field: (row) => row.monthly_reload
+  },
+  {
+    name: "min_deposit",
+    align: "center",
+    field: (row) => row.min_deposit
+  }
 ];
 const rows = [
   {
-    name: "青铜 II",
+    name: "VIP1",
     amount: "一笔存款",
-    threshold: "青铜",
-    rowspan: "2"
+    monthly_reload: "0",
+    min_deposit: "0"
   },
   {
-    name: "青铜 I",
-    amount: "3,000"
+    name: "VIP2",
+    amount: "3,000",
+    monthly_reload: "0",
+    min_deposit: "0"
   },
   {
-    name: "白银 III",
+    name: "VIP3",
     amount: "30,000",
-    threshold: "白银",
-    rowspan: "3"
+    monthly_reload: "0",
+    min_deposit: "0"
   },
   {
-    name: "白银 II",
-    amount: "80,000"
+    name: "VIP4",
+    amount: "80,000",
+    monthly_reload: "0",
+    min_deposit: "0"
   },
   {
-    name: "白银 I",
-    amount: "200,000"
+    name: "VIP5",
+    amount: "200,000",
+    monthly_reload: "30%",
+    min_deposit: "3,500"
   },
   {
-    name: "黄金 III",
+    name: "VIP6",
     amount: "400,000",
-    threshold: "黄金",
-    rowspan: "3"
+    monthly_reload: "30%",
+    min_deposit: "3,500"
   },
   {
-    name: "黄金 II",
-    amount: "600,000"
-  },
-  {
-    name: "黄金 I",
-    amount: "1,000,000"
-  },
-  {
-    name: "铂金 II",
-    amount: "2,000,000",
-    threshold: "铂金",
-    rowspan: "2"
-  },
-  {
-    name: "铂金 I",
-    amount: "4,000,000"
-  },
-  {
-    name: "钻石",
-    amount: "8,000,000",
-    threshold: "钻石",
-    rowspan: "1"
-  },
-  {
-    name: "王者",
-    amount: "12,000,000",
-    threshold: "最强王者",
-    rowspan: "1"
+    name: "VIP7",
+    amount: "600,000",
+    monthly_reload: "30%",
+    min_deposit: "3,500"
   }
 ];
 
@@ -690,7 +729,8 @@ onActivated(() => {
       justify-content: center;
 
       img {
-        width: 17vw;
+        height: 20px;
+        width: 120px;
       }
 
       span {
@@ -760,7 +800,7 @@ onActivated(() => {
     border-radius: 1.25rem;
     background: #fcfdfe;
     box-shadow: 0px -4px 8px 0px #c3d4e6 inset, 0px 4px 0px 0px #a7c2dd;
-
+    margin-top: 12px;
     .level-promo-header {
       background: $lightblue;
 
@@ -773,6 +813,10 @@ onActivated(() => {
       }
     }
 
+    .return-promo-body {
+      padding: 1rem;
+    }
+
     .level-promo-body {
       padding: 1rem 2rem;
       display: flex;
@@ -783,6 +827,37 @@ onActivated(() => {
       .turnover {
         display: flex;
         gap: 2.5rem;
+      }
+    }
+
+    .return-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      row-gap: 12px;
+      column-gap: 6px;
+    }
+    .return-item {
+      border-radius: 20px;
+
+      .item-percent {
+        background: #e7f3ff;
+        border-radius: 24px;
+        display: flex;
+        justify-content: center;
+        padding: 6px;
+        color: #468cff;
+        font-weight: bold;
+        font-size: 12px;
+      }
+
+      .item-desc {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        line-height: 1.4;
+        font-size: 11px;
+        color: #7a80a1;
+        margin-top: 2px;
       }
     }
 
@@ -872,6 +947,7 @@ onActivated(() => {
           font-weight: 600;
           color: $font-2;
           border-bottom-width: 0;
+          white-space: wrap;
         }
       }
       thead > :first-child {
@@ -926,6 +1002,16 @@ onActivated(() => {
     box-shadow: 0px 4.58px 4.58px 0px #bbdcff inset, 0px -3.664px 3.664px 0px #a2bff4 inset;
   }
 
+  .vip-promo-bonus {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .vip-tips {
+    color: #ff0000;
+  }
+
   .common-text {
     font-size: 1rem;
     font-weight: 400;
@@ -933,6 +1019,34 @@ onActivated(() => {
 
     &:first-child {
       min-width: 60px;
+    }
+  }
+
+  .common-amount {
+    color: #468cff;
+    font-weight: bold;
+  }
+
+  .common-btn {
+    .btn-main {
+      background-image: url("../../assets/images/account/account-btn.png");
+      background-size: 100% 100%;
+      color: #fff;
+      min-width: 60px;
+      padding-left: 12px;
+      padding-right: 12px;
+      text-align: center;
+      white-space: nowrap;
+      font-size: 1rem;
+      // aspect-ratio: 122/68;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      background-color: transparent;
+      &:before {
+        box-shadow: none;
+      }
     }
   }
 

@@ -238,6 +238,7 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import { RiLink, RiLinkUnlink } from "vue-remix-icons";
 import {
   loadBanks,
+  loadAllBankCards,
   loadBankCards,
   loadUnbindRecord,
   addBankCard,
@@ -320,6 +321,9 @@ export default defineComponent({
         } else if (selectedCode === "OKPAY") {
           min = 16;
           max = 16;
+        } else if (selectedCode === "SZPAY") {
+          min = 11;
+          max = 11;
         }
       }
       if (v === "") {
@@ -525,7 +529,7 @@ export default defineComponent({
     };
     const loadCards = () => {
       personalState.bankCardList = [];
-      loadBankCards().then((response) => {
+      loadAllBankCards().then((response) => {
         if (response.code === 0) {
           personalState.bankCardList.push(...response.data);
         } else {
