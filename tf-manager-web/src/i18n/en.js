@@ -1243,6 +1243,8 @@ export default {
     subSiteCount: 'Sub Site Count',
     subtotal: 'Subtotal',
     success: 'Success',
+    successRate: 'Transaction success rate',
+    successAmounntRate: 'Amount success rate',
     successfullyExport: 'Successfully Export',
     summaryAdjustment: 'Adjustment',
     summaryBonus: 'Bonus',
