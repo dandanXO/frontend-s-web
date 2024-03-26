@@ -214,9 +214,7 @@ const spinWheel = () => {
     .then((res) => {
       if (res.code == 0) {
         var bonusIndex = res.data.bonus;
-        if (res.data.type === 'CONSOLATION') {
-          bonusIndex = -1;
-        }
+        
         const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
 
         spin(prizeIndex, () => {
