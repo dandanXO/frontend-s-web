@@ -929,7 +929,7 @@ export default defineComponent({
         val => validateBankLength(val)
       ],
       cardNumberRules: [
-        val => (val && val.length > 0) || '请输入卡号',
+        val => (val && val.length > 0) || selectedCode ==='SZPAY'? '请绑定手机号' : '请输入卡号',
         val => validateBankLength(val)
       ],
       cardAccountRules: [
