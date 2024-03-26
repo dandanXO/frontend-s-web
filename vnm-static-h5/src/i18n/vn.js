@@ -186,6 +186,7 @@ export default {
 
     // deposit
     deposit_tipstitle: "Mẹo",
+    deposit_tiptologin: "Để đảm bảo an toàn cho quỹ, bạn cần xác minh số điện thoại di động trước khi nạp tiền",
     deposit_tipdesc:
       "Để đảm bảo an toàn cho số tiền, bạn cần xác minh số điện thoại di động của mình trước khi nạp tiền",
     deposit_tiptorealname: "Vui lòng thêm họ và tên cho tài khoản người chơi",
@@ -200,6 +201,7 @@ export default {
     deposit_please_enter_deposit: "Vui lòng nhập số tiền nạp",
     deposit_loadingdatapleasewait: "Đang tải dữ liệu... Vui lòng đợi...",
     deposit_confirm: "Xác nhận",
+    deposit_select_amount: "Chọn số lượng",
 
     // withdraw
     withdraw_amount: "Số tiền",
