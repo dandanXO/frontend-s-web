@@ -85,6 +85,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { eventapi } from "src/boot/axios";
+import {useQuasar} from "quasar";
 
 // spin wheel constants
 const TOTAL_ITEMS = 8;
@@ -109,6 +110,8 @@ let finalDegree = 0;
 let speed = 1;
 var spinSchedule;
 var degree;
+
+const $q = useQuasar();
 
 const spin = (prizeIndex, stopCallback) => {
   spinButtonDisable.value = true;
