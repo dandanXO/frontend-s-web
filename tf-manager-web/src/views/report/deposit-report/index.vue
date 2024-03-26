@@ -562,7 +562,7 @@ onMounted(async () => {
 }
 </style>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .member-label {
   width: 150px;
 
