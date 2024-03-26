@@ -257,6 +257,104 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+.bonus-spinwheel-prize-popup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 600px;
+    height: 300px;
+    gap: 0px;
+    background: url("./../../../assets/images/promotion/hotpromo/bonus-spinwheel/prize-popup.png");
+    background-size: 100% 100%;
+    position: relative;
+
+    .close {
+      position: absolute;
+      right: 0;
+      top: 38px;
+      width: 20px;
+      height: 20px;
+    }
+
+    .bold-text {
+      font-family: sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-align: center;
+      color: #530102;
+    }
+
+    .golden-text {
+      font-size: 25px;
+      letter-spacing: 2px;
+      background: linear-gradient(94.81deg, #f6ff8c 7.45%, #ffba88 95.9%),
+        linear-gradient(360deg, #ff932f 9.54%, #fffca9 86.08%);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .darkred-text {
+      color: #8c3b00;
+      font-size: 20px;
+    }
+
+    .red-text {
+      color: #ff0000;
+      font-size: 28px;
+    }
+
+    .win-text {
+      font-size: 28px;
+      letter-spacing: 2px;
+      background: linear-gradient(360deg, #ffc700 9.54%, #fff500 86.08%);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(1px 1px #00000050);
+    }
+
+    .popup-header {
+      letter-spacing: normal;
+      font-size: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .content {
+      height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      margin-left: 10px;
+
+      .action-btn {
+        background: url("./../../../assets/images/promotion/hotpromo/bonus-spinwheel/prize-popup-action-btn.png") no-repeat center center;
+        background-size: contain;
+        width: 100%;
+        height: 100%;
+        max-height: 90px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    }
+  }
+}
+</style>
+<style lang="scss" scoped>
 .spin-wheel-container {
   position: relative;
   margin: 25px 0px 55px;
@@ -383,103 +481,6 @@ onMounted(() => {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
-}
-
-.bonus-spinwheel-prize-popup-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    width: 600px;
-    height: 300px;
-    gap: 0px;
-    background: url("./../../../assets/images/promotion/hotpromo/bonus-spinwheel/prize-popup.png");
-    background-size: 100% 100%;
-    position: relative;
-
-    .close {
-      position: absolute;
-      right: 0;
-      top: 38px;
-      width: 20px;
-      height: 20px;
-    }
-
-    .bold-text {
-      font-family: sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-align: center;
-      color: #530102;
-    }
-
-    .golden-text {
-      font-size: 25px;
-      letter-spacing: 2px;
-      background: linear-gradient(94.81deg, #f6ff8c 7.45%, #ffba88 95.9%),
-        linear-gradient(360deg, #ff932f 9.54%, #fffca9 86.08%);
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .darkred-text {
-      color: #8c3b00;
-      font-size: 20px;
-    }
-
-    .red-text {
-      color: #ff0000;
-      font-size: 28px;
-    }
-
-    .win-text {
-      font-size: 28px;
-      letter-spacing: 2px;
-      background: linear-gradient(360deg, #ffc700 9.54%, #fff500 86.08%);
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(1px 1px #00000050);
-    }
-
-    .popup-header {
-      letter-spacing: normal;
-      font-size: 25px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .content {
-      height: 260px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-      margin-left: 10px;
-
-      .action-btn {
-        background: url("./../../../assets/images/promotion/hotpromo/bonus-spinwheel/prize-popup-action-btn.png") no-repeat center center;
-        background-size: contain;
-        width: 100%;
-        height: 100%;
-        max-height: 90px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #ffffff;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-      }
-    }
-  }
 }
 
 .remaining-draw-wrapper {
