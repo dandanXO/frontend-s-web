@@ -266,11 +266,11 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    width: 600px;
-    height: 300px;
+    min-width: 400px;
+    min-height: 290px;
     gap: 0px;
-    background: url("./../../../assets/images/promotion/hotpromo/bonus-spinwheel/prize-popup.png");
-    background-size: 100% 100%;
+    background: url("./../../../assets/images/promotion/hotpromo/bonus-spinwheel/prize-popup.png") no-repeat center center;
+    background-size: 400px 290px;
     position: relative;
 
     .close {
@@ -328,7 +328,7 @@ onMounted(() => {
     }
 
     .content {
-      height: 260px;
+      height: 225px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
