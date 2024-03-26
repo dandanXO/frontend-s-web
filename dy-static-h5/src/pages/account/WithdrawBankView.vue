@@ -337,7 +337,7 @@
 </template>
 
 <script lang="js">
-import {defineComponent, reactive, ref, onMounted, createVNode} from "vue";
+import {defineComponent, reactive, ref, onMounted, computed} from "vue";
 // import { Modal, message } from "ant-design-vue";
 // import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
 import {RiSpamLine, RiLink} from "vue-remix-icons";
@@ -880,6 +880,25 @@ export default defineComponent({
         getInnerCode();
       })
     }
+    const cardNumberRules = computed(() => {
+      var selectedCode = null
+      banksList.value.forEach(bank => {
+        if (bank.id === bankCardInfo.bankId) {
+          selectedCode = bank.code
+        }
+      });
+      if (selectedCode === 'SZPAY') {
+        return [
+          val => (val && val.length > 0) || '请绑定手机号',
+          val => validateBankLength(val)
+        ];
+      } else {
+        return [
+          val => (val && val.length > 0) || '请输入卡号',
+          val => validateBankLength(val)
+        ];
+      }
+    });
 
 
     return {
@@ -928,10 +947,7 @@ export default defineComponent({
       cardCryptoRules: [
         val => validateBankLength(val)
       ],
-      cardNumberRules: [
-        val => (val && val.length > 0) || selectedCode ==='SZPAY'? '请绑定手机号' : '请输入卡号',
-        val => validateBankLength(val)
-      ],
+      cardNumberRules,
       cardAccountRules: [
         val => (val && val.length > 0) || '请输入银行卡号',
       ],
