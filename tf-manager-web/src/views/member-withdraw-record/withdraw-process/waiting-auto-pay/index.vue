@@ -697,9 +697,9 @@ async function loadSites() {
 
 async function toApply(memberWithdrawRecord) {
   if (memberWithdrawRecord) {
-    await fromWaitingAutoPayToApply([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate }])
+    await fromWaitingAutoPayToApply([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate, siteId: memberWithdrawRecord.siteId }])
   } else {
-    await fromWaitingAutoPayToApply(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
+    await fromWaitingAutoPayToApply(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
   }
   await loadRecord()
   ElMessage({ message: t('message.updateToApplySuccess'), type: 'success' })
