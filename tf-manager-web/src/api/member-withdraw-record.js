@@ -113,20 +113,20 @@ export const fromAffiliateCheckingToApply = async (ids) => {
   await https().httpClient.post('/memberWithdrawRecord/affiliateCheckingToApply?_method=PUT', JSON.stringify(ids), { headers: { "Content-Type": "application/json" } });
 };
 
-export const fromCheckingToBeforePaid = (id, wd) => {
-  return https().request(`/memberWithdrawRecord/${id}/checkingToBeforePaid?_method=PUT`, Method.POST, { withdrawDate: wd }, ContentType.form);
+export const fromCheckingToBeforePaid = (id, wd, siteId) => {
+  return https().request(`/memberWithdrawRecord/${id}/checkingToBeforePaid?_method=PUT`, Method.POST, { withdrawDate: wd, siteId: siteId }, ContentType.form);
 };
 
-export const fromAffiliateCheckingToBeforePaid = (id, wd) => {
-  return https().request(`/memberWithdrawRecord/${id}/affiliateCheckingToBeforePaid?_method=PUT`, Method.POST, { withdrawDate: wd }, ContentType.form);
+export const fromAffiliateCheckingToBeforePaid = (id, wd, siteId) => {
+  return https().request(`/memberWithdrawRecord/${id}/affiliateCheckingToBeforePaid?_method=PUT`, Method.POST, { withdrawDate: wd, siteId: siteId }, ContentType.form);
 };
 
-export const fromCheckingToFail = (id, cancelType, remark, wd) => {
-  return https().request(`/memberWithdrawRecord/${id}/checkingToFail?_method=PUT`, Method.POST, { cancelType: cancelType, remark: remark, withdrawDate: wd }, ContentType.form);
+export const fromCheckingToFail = (id, cancelType, remark, wd, siteId) => {
+  return https().request(`/memberWithdrawRecord/${id}/checkingToFail?_method=PUT`, Method.POST, { cancelType: cancelType, remark: remark, withdrawDate: wd, siteId: siteId }, ContentType.form);
 };
 
-export const fromAffiliateCheckingToFail = (id, cancelType, remark, wd) => {
-  return https().request(`/memberWithdrawRecord/${id}/affiliateCheckingToFail?_method=PUT`, Method.POST, { cancelType: cancelType, remark: remark, withdrawDate: wd }, ContentType.form);
+export const fromAffiliateCheckingToFail = (id, cancelType, remark, wd, siteId) => {
+  return https().request(`/memberWithdrawRecord/${id}/affiliateCheckingToFail?_method=PUT`, Method.POST, { cancelType: cancelType, remark: remark, withdrawDate: wd, siteId: siteId }, ContentType.form);
 };
 
 export const fromToFail = async (ids) => {
@@ -161,44 +161,44 @@ export const fromAffiliatePayToBeforePaid = async (ids) => {
   await https().httpClient.post('/memberWithdrawRecord/affiliatePayToBeforePaid?_method=PUT', JSON.stringify(ids), { headers: { "Content-Type": "application/json" } });
 };
 
-export const fromPayToSuccess = (id, paymentCard, wd) => {
-  return https().request(`/memberWithdrawRecord/${id}/payToSuccess?_method=PUT`, Method.POST, { paymentCard: paymentCard, withdrawDate: wd }, ContentType.form);
+export const fromPayToSuccess = (id, paymentCard, wd, siteId) => {
+  return https().request(`/memberWithdrawRecord/${id}/payToSuccess?_method=PUT`, Method.POST, { paymentCard: paymentCard, withdrawDate: wd, siteId: siteId }, ContentType.form);
 };
 
-export const fromAffiliatePayToSuccess = (id, paymentCard, wd) => {
-  return https().request(`/memberWithdrawRecord/${id}/affiliatePayToSuccess?_method=PUT`, Method.POST, { paymentCard: paymentCard, withdrawDate: wd }, ContentType.form);
+export const fromAffiliatePayToSuccess = (id, paymentCard, wd, siteId) => {
+  return https().request(`/memberWithdrawRecord/${id}/affiliatePayToSuccess?_method=PUT`, Method.POST, { paymentCard: paymentCard, withdrawDate: wd, siteId: siteId }, ContentType.form);
 };
 
-export const fromPayToFail = (id, cancelType, remark, wd) => {
-  return https().request(`/memberWithdrawRecord/${id}/payToFail?_method=PUT`, Method.POST, { cancelType: cancelType, remark: remark, withdrawDate: wd }, ContentType.form);
+export const fromPayToFail = (id, cancelType, remark, wd, siteId) => {
+  return https().request(`/memberWithdrawRecord/${id}/payToFail?_method=PUT`, Method.POST, { cancelType: cancelType, remark: remark, withdrawDate: wd, siteId: siteId }, ContentType.form);
 };
 
-export const fromAffiliatePayToFail = (id, cancelType, remark, wd) => {
-  return https().request(`/memberWithdrawRecord/${id}/affiliatePayToFail?_method=PUT`, Method.POST, { cancelType: cancelType, remark: remark, withdrawDate: wd }, ContentType.form);
+export const fromAffiliatePayToFail = (id, cancelType, remark, wd, siteId) => {
+  return https().request(`/memberWithdrawRecord/${id}/affiliatePayToFail?_method=PUT`, Method.POST, { cancelType: cancelType, remark: remark, withdrawDate: wd, siteId: siteId }, ContentType.form);
 };
 
-export const fromApplyToAutopay = (id, withdrawPlatformId, wd) => {
-  return https().request(`/memberWithdrawRecord/${id}/applyToAutopay?_method=PUT`, Method.POST, { withdrawPlatformId: withdrawPlatformId, withdrawDate: wd }, ContentType.form);
+export const fromApplyToAutopay = (id, withdrawPlatformId, wd, siteId) => {
+  return https().request(`/memberWithdrawRecord/${id}/applyToAutopay?_method=PUT`, Method.POST, { withdrawPlatformId: withdrawPlatformId, withdrawDate: wd, siteId: siteId }, ContentType.form);
 };
 
-export const autoWithdrawToFail = (id, wd) => {
-  return https().request(`/memberWithdrawRecord/${id}/autoWithdrawToFail?_method=PUT`, Method.POST, { withdrawDate: wd }, ContentType.form);
+export const autoWithdrawToFail = (id, wd, siteId) => {
+  return https().request(`/memberWithdrawRecord/${id}/autoWithdrawToFail?_method=PUT`, Method.POST, { withdrawDate: wd, siteId: siteId }, ContentType.form);
 };
 
-export const autoWithdrawToSuccess = (id, wd) => {
-  return https().request(`/memberWithdrawRecord/${id}/autoWithdrawToSuccess?_method=PUT`, Method.POST, { withdrawDate: wd }, ContentType.form);
+export const autoWithdrawToSuccess = (id, wd, siteId) => {
+  return https().request(`/memberWithdrawRecord/${id}/autoWithdrawToSuccess?_method=PUT`, Method.POST, { withdrawDate: wd, siteId: siteId }, ContentType.form);
 };
 
 export const getMemberWithdrawRecordApplySimple = (memberWithdrawRecord) => {
   return https().request("/memberWithdrawRecord/getSimpleApply", Method.GET, memberWithdrawRecord, ContentType.form);
 };
 
-export const fromPayToAutopay = (id, withdrawPlatformId, wd) => {
-  return https().request(`/memberWithdrawRecord/${id}/payToAutopay?_method=PUT`, Method.POST, { withdrawPlatformId: withdrawPlatformId, withdrawDate: wd }, ContentType.form);
+export const fromPayToAutopay = (id, withdrawPlatformId, wd, siteId) => {
+  return https().request(`/memberWithdrawRecord/${id}/payToAutopay?_method=PUT`, Method.POST, { withdrawPlatformId: withdrawPlatformId, withdrawDate: wd, siteId: siteId }, ContentType.form);
 };
 
-export const fromAffiliatePayToAutopay = (id, withdrawPlatformId, wd) => {
-  return https().request(`/memberWithdrawRecord/${id}/affiliatePayToAutopay?_method=PUT`, Method.POST, { withdrawPlatformId: withdrawPlatformId, withdrawDate: wd }, ContentType.form);
+export const fromAffiliatePayToAutopay = (id, withdrawPlatformId, wd, siteId) => {
+  return https().request(`/memberWithdrawRecord/${id}/affiliatePayToAutopay?_method=PUT`, Method.POST, { withdrawPlatformId: withdrawPlatformId, withdrawDate: wd, siteId: siteId }, ContentType.form);
 };
 
 export const fromAutopayToPay = async (ids) => {
@@ -209,20 +209,20 @@ export const fromAffiliateAutopayToPay = async (ids) => {
   await https().httpClient.post('/memberWithdrawRecord/affiliateAutopayToPay?_method=PUT', JSON.stringify(ids), { headers: { "Content-Type": "application/json" } });
 };
 
-export const fromAutopayToFail = (id, cancelType, remark, wd) => {
-  return https().request(`/memberWithdrawRecord/${id}/autopayToFail?_method=PUT`, Method.POST, { cancelType: cancelType, remark: remark, withdrawDate: wd }, ContentType.form);
+export const fromAutopayToFail = (id, cancelType, remark, wd, siteId) => {
+  return https().request(`/memberWithdrawRecord/${id}/autopayToFail?_method=PUT`, Method.POST, { cancelType: cancelType, remark: remark, withdrawDate: wd, siteId: siteId }, ContentType.form);
 };
 
-export const fromAffiliateAutopayToFail = (id, cancelType, remark, wd) => {
-  return https().request(`/memberWithdrawRecord/${id}/affiliateAutopayToFail?_method=PUT`, Method.POST, { cancelType: cancelType, remark: remark, withdrawDate: wd }, ContentType.form);
+export const fromAffiliateAutopayToFail = (id, cancelType, remark, wd, siteId) => {
+  return https().request(`/memberWithdrawRecord/${id}/affiliateAutopayToFail?_method=PUT`, Method.POST, { cancelType: cancelType, remark: remark, withdrawDate: wd, siteId: siteId }, ContentType.form);
 };
 
-export const fromAutopayToSuccess = (id, wd) => {
-  return https().request(`/memberWithdrawRecord/${id}/autopayToSuccess?_method=PUT`, Method.POST, { withdrawDate: wd }, ContentType.form);
+export const fromAutopayToSuccess = (id, wd, siteId) => {
+  return https().request(`/memberWithdrawRecord/${id}/autopayToSuccess?_method=PUT`, Method.POST, { withdrawDate: wd, siteId: siteId }, ContentType.form);
 };
 
-export const fromAffiliateAutopayToSuccess = (id, wd) => {
-  return https().request(`/memberWithdrawRecord/${id}/affiliateAutopayToSuccess?_method=PUT`, Method.POST, { withdrawDate: wd }, ContentType.form);
+export const fromAffiliateAutopayToSuccess = (id, wd, siteId) => {
+  return https().request(`/memberWithdrawRecord/${id}/affiliateAutopayToSuccess?_method=PUT`, Method.POST, { withdrawDate: wd, siteId: siteId }, ContentType.form);
 };
 
 export const getMemberWithdrawRecord = (memberWithdrawRecord) => {
@@ -237,8 +237,8 @@ export const getTotalWithdrawAmount = (query) => {
   return https().request("/memberWithdrawRecord/totalWithdrawAmount", Method.GET, query, ContentType.form);
 };
 
-export const getWithdrawPlatformList = (id, wd) => {
-  return https().request("/memberWithdrawRecord/getAutoPay", Method.GET, { id: id, withdrawDate: wd }, ContentType.form);
+export const getWithdrawPlatformList = (id, wd, siteId) => {
+  return https().request("/memberWithdrawRecord/getAutoPay", Method.GET, { id: id, withdrawDate: wd, siteId: siteId }, ContentType.form);
 };
 
 export const getExportWithdrawRecord = (query) => {
