@@ -544,7 +544,7 @@ export default defineComponent({
                       content_type: "product"
                     },
                     {
-                      event_id: "CompleteRegistration001"
+                      event_id: new Date().getTime()
                     }
                   );
                 }
