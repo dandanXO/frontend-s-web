@@ -144,7 +144,7 @@
     :title="uiControl.dialogTitle"
     v-model="uiControl.dialogVisible"
     append-to-body
-    width="700px"
+    width="900px"
   >
     <el-tabs v-if="scheduleForm.id !== null">
       <el-tab-pane :label="t('fields.job')">
@@ -315,7 +315,21 @@
             width="180"
           />
           <el-table-column prop="jobName" :label="t('fields.jobName')" />
-          <el-table-column prop="status" :label="t('fields.status')" />
+          <el-table-column
+            prop="status"
+            width="100"
+            :label="t('fields.status')"
+          >
+            <template #default="scope">
+              <span>
+                {{
+                  scope.row.status === 1
+                    ? t('fields.success')
+                    : t('fields.fail')
+                }}
+              </span>
+            </template>
+          </el-table-column>
           <el-table-column
             prop="description"
             :label="t('fields.description')"
