@@ -702,6 +702,8 @@ async function loadNewMember(affiliateId) {
     }
   })
 
+  popUpRequest.recordTime = request.recordTime
+
   if (popUpRequest.recordTime !== null) {
     if (popUpRequest.recordTime.length === 2) {
       query.recordTime = JSON.parse(JSON.stringify(popUpRequest.recordTime))
