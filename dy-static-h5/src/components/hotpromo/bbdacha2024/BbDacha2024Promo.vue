@@ -109,17 +109,17 @@
               <tr>
                 <td>≥2</td>
                 <td>0.5%</td>
-                <td>58</td>
+                <td>88</td>
               </tr>
               <tr>
                 <td>≥3</td>
                 <td>0.8%</td>
-                <td>88</td>
+                <td>188</td>
               </tr>
               <tr>
                 <td>≥5</td>
                 <td>1.0%</td>
-                <td>188</td>
+                <td>388</td>
               </tr>
             </tbody>
           </table>
@@ -317,7 +317,7 @@ const openTableRecordDialog = () => {
     if (bbDachaRecordsCount.code === 0) {
       recordsCount.value = bbDachaRecordsCount.data;
     }
-    
+
     tableRecordDialog.value = true
   });
 }
