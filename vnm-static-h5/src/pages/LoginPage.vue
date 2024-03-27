@@ -459,13 +459,13 @@ export default defineComponent({
               $q.notify({
                 color: "negative",
                 position: "top",
-                message: "请验证手机码",
+                message: t("lang.personal_mobilenumber_verify"),
                 icon: "report_problem"
               });
               return;
             }
             $q.loading.show({
-              message: "登录中"
+              message: t("lang.logging_in")
             });
             store
               .memberLoginviaPhone({

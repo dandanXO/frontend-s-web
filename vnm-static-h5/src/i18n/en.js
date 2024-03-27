@@ -106,6 +106,7 @@ export default {
     please_enter_new_password: "Please enter new password",
     password_length_is_6_to_12: "Password length is 6 to 12",
     password_security_level_must_be_at_least_good: "Password security level must be at least as good",
+    password_reset_complete: "Password reset complete",
 
     // change password
     chgpwd_password: "Password",
@@ -481,6 +482,7 @@ export default {
     receive_by_phone: "Receive account by phone",
     email_address: "Email",
     enter_your_email: "Please enter your email address.",
+    email_valid: "Please enter valid email",
     send: "Send",
     an_otp_has_been_sent_to_email: "An OTP code has been sent to your email.",
     an_otp_has_been_sent_to_phone: "An OTP code has been sent to your phone.",
@@ -494,6 +496,7 @@ export default {
     verification_code_send: "Send the verification code",
     verification_code: "Verification code",
     verification_code_empty: "Please enter the SMS verification code",
+    verification_code_sending: "Sending verification code...",
     return_to_login: "Return to Login",
     verifying: "Verifying",
     receive_a_daily_bonus_share_qr_code_with_friends:
