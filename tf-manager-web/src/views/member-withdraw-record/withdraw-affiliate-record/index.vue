@@ -1185,7 +1185,7 @@ async function toFail(val) {
 async function toConfirm(val) {
   const chooseRecord = []
   chooseRecord.push(val)
-  await fromAffiliateToConfirm(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate,siteId: a.siteId })))
+  await fromAffiliateToConfirm(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
   await loadRecord()
 }
 

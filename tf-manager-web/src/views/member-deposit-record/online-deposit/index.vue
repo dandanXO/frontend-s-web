@@ -281,18 +281,21 @@ const suppForm = reactive({
   depositDate: null,
   serialNumber: null,
   thirdSerialNumber: null,
-  remark: null
+  remark: null,
+  siteId: null,
 });
 
 const cancelForm = reactive({
   id: null,
   depositDate: null,
-  remark: null
+  remark: null,
+  siteId: null,
 });
 
 const editForm = reactive({
   id: null,
-  amount: null
+  amount: null,
+  siteId: null,
 })
 
 const suppFormRule = reactive({
@@ -364,6 +367,7 @@ async function showDialog(type, row) {
     if (supplementForm.value) {
       supplementForm.value.resetFields();
     }
+    suppForm.siteId = request.siteId;
     suppForm.id = row.id;
     suppForm.depositDate = row.depositDate;
     suppForm.serialNumber = row.serialNumber;
@@ -372,6 +376,7 @@ async function showDialog(type, row) {
     if (cancelDepositForm.value) {
       cancelDepositForm.value.resetFields();
     }
+    cancelForm.siteId = request.siteId;
     cancelForm.id = row.id;
     cancelForm.depositDate = row.depositDate;
     uiControl.dialogTitle = t('fields.cancelDeposit');
@@ -379,6 +384,7 @@ async function showDialog(type, row) {
     if (editAmountForm.value) {
       editAmountForm.value.resetFields();
     }
+    editForm.siteId = request.siteId;
     editForm.id = row.id;
     editForm.depositDate = row.depositDate;
     uiControl.dialogTitle = t('fields.editAmount');
