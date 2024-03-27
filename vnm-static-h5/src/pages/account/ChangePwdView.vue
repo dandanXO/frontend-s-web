@@ -201,6 +201,7 @@
           <q-btn
             type="submit"
             class="common-large-btn"
+            no-caps
             :label="$t('lang.chgpwd_confirm')"
             width="100%"
             style="width: 100%"

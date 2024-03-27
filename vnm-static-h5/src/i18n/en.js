@@ -73,6 +73,8 @@ export default {
     password_weak: "Weak",
     password_good: "Good",
     password_strong: "Strong",
+    phone_login: "Phone login",
+    username_login: "Username login",
 
     // logout
     logout_title: "System hint",
@@ -209,6 +211,7 @@ export default {
     deposit_please_enter_deposit: "Please enter deposit amount",
     deposit_loadingdatapleasewait: "Loading data... Please wait...",
     deposit_confirm: "Confirm",
+    deposit_select_amount: "Select amount",
 
     // withdraw
     withdraw_amount: "Amount",
@@ -484,9 +487,13 @@ export default {
     one_time_otp: "One Time OTP",
     otp_cannot_be_empty: "OTP cannot be empty.",
     new_password: "New Password",
-    enter_new_password: "Please enter new password.",
+    enter_new_password: "Please enter new password",
     captcha_code: "Captcha Code",
-    enter_captcha_code: "Please enter captcha code.",
+    enter_captcha_code: "Please enter captcha code",
+    captcha_refresh: "Click to refresh captcha code",
+    verification_code_send: "Send the verification code",
+    verification_code: "Verification code",
+    verification_code_empty: "Please enter the SMS verification code",
     return_to_login: "Return to Login",
     verifying: "Verifying",
     receive_a_daily_bonus_share_qr_code_with_friends:

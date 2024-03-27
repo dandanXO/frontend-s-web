@@ -59,9 +59,9 @@ export default {
     length_between_6_12: "Chiều dài nên từ 6-12",
     please_type_the_password: "Xin vui lòng nhập mật khẩu",
     password: "mật khẩu",
-    please_type_the_confirm_password: "Please type the confirm password",
-    confirm_password: "Confirm password",
-    password_not_same: "Password not same",
+    please_type_the_confirm_password: "Vui lòng nhập lại mật khẩu",
+    confirm_password: "Xác nhận mật khẩu",
+    password_not_same: "Mật khẩu không khớp",
     please_enter_verification_code: "vui lòng nhập mã xác nhận",
     verification_code: "nhập mã xác nhận",
     length_is_4: "Chiều dài phải là 4",
@@ -73,6 +73,8 @@ export default {
     password_weak: "Yếu",
     password_good: "Tốt",
     password_strong: "Mạnh",
+    phone_login: "Đăng nhập bằng số điện thoại",
+    username_login: "Đăng nhập bằng tên người dùng",
 
     // logout
     logout_title: "Thông báo hệ thống",
@@ -481,6 +483,10 @@ export default {
     enter_new_password: "Nhập mật khẩu mới",
     captcha_code: "Mã captcha",
     enter_captcha_code: "Nhập mã captcha",
+    captcha_refresh: "Nhấn vào để làm mới mã captcha",
+    verification_code_send: "Gửi mã xác minh",
+    verification_code: "Mã xác minh",
+    verification_code_empty: "Vui lòng nhập mã xác minh qua tin nhắn SMS",
     return_to_login: "Quay lại đăng nhập",
     verifying: "Đang xác minh",
     receive_a_daily_bonus_share_qr_code_with_friends:
