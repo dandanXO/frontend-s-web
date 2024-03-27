@@ -1192,10 +1192,10 @@ const betPagination = reactive({
       };
       confirmationOfWithdrawalReceived(obj).then((res) => {
         if (res.code === 0) {
-          ElMessageBox.alert("已经确认到账", {
+          ElMessageBox.alert(t('error.depositConfirmed'), {
             // if you want to disable its autofocus
             // autofocus: false,
-            title: "系统提示",
+            title: t('common.systemError'),
             center: true,
             confirmButtonText: t('common.confirm'),
             showClose: false,

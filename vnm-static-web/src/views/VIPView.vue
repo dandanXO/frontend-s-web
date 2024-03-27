@@ -35,7 +35,7 @@
               </div>
               <!-- vip progress bar end -->
               <div
-                style="color: #cfb282; font-size: 18px; position: absolute; bottom: 25px; left: 0; right: 0"
+                style="color: #cfb282; font-size: 18px; position: absolute; bottom: 4px; left: 0; right: 0"
                 v-if="vipLevel + 1 === Number(vip.vipLevel) && store.token"
               >
                 {{

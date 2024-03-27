@@ -39,7 +39,7 @@
         </div>
       </div> -->
       <div>
-        <span class="bottom-button" @click="showDrawer">存款</span>
+        <span class="bottom-button" @click="showDrawer">{{ $t('deposit.depositMoney') }}</span>
       </div>
 
       <span class="copy-button" @click="copyTo" @blur="changeText">{{ copyText }}</span>
@@ -53,7 +53,7 @@
       :style="{ position: 'absolute', overflow: 'hidden' }"
       @close="onClose"
       :closable="true"
-      title="快速存款"
+      :title="$t('deposit.quickDeposit')"
     >
       <!-- <template #extra>
         <el-button style="margin-right: 8px" @click="onClose">Cancel</el-button>
@@ -143,7 +143,7 @@ const showDrawer = () => {
   quickTransferTab.value = false;
   drawerVisible.value = true;
 };
-const copyText = ref("复制网址");
+const copyText = ref(t('deposit.copyWebsite'));
 let intervalId = null;
 const copyTo = () => {
   // copyToClipboard(src.value);
@@ -152,7 +152,7 @@ const copyTo = () => {
   // copyText.value = '复制网址';
 
   navigator.clipboard.writeText(src.value);
-  copyText.value = "已复制";
+  copyText.value = t('deposit.copied');
 
   // Clear previous interval if any
   if (intervalId) {
@@ -161,7 +161,7 @@ const copyTo = () => {
 
   // Set a new interval to change the text back after 5 seconds
   intervalId = setInterval(() => {
-    copyText.value = "复制网址";
+    copyText.value = t('deposit.copyWebsite');
     clearInterval(intervalId);
     intervalId = null;
   }, 2000); // 5000 milliseconds = 5 seconds

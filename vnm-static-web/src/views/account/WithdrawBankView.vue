@@ -581,7 +581,7 @@ export default defineComponent({
 
     const checkBankCards = () => {
       ElMessageBox.alert(
-          '请先绑定银行卡', "系统提示",
+        t('error.bankCardFirst'), t('common.systemError'),
           {
             showClose: false,
             showCancelButton: false,

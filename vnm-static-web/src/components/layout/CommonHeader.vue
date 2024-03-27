@@ -124,25 +124,25 @@
               flex-direction: column;
               align-items: flex-start" class="profile-info-dropdown-content">
                 <el-dropdown-item command="personal">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
                     <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
                     <span>{{$t('menu.personalInfo')}}</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="deposit">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
                     <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
                     <span>{{$t('menu.deposit')}}</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="transfer">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
                     <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
                     <span>{{$t('menu.transfer')}}</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="promotion">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
                     <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
                     <span>{{$t('menu.promotion')}}</span>
                   </div>
@@ -380,16 +380,16 @@
       style="max-width: 1080px"
       @close="store.forgetPassDialogVisible = false"
     >
-      <div class="acc-dialog-container">
+      <div class="acc-dialog-container" :style="`background-image: url(${require(`../../assets/home/acc-dialog-bg-${languageVal}.png`)})`">
         <div class="acc-dialog-left">
           <!-- <div class="acc-dialog-img">
             <img src="../../assets/home/acc-dialog-img.png" />
           </div> -->
         </div>
         <div class="acc-dialog-right">
-          <div class="acc-dialog-homelogo">
+          <!-- <div class="acc-dialog-homelogo">
             <img src="../../assets/logo.svg" width="150" />
-          </div>
+          </div> -->
           <div class="acc-dialog-content">
             <ForgotPwdDialog @close-dialog="forgetPassDialogVisible = false" @open-login-dialog="openLoginDialog" />
           </div>
@@ -399,7 +399,7 @@
 
     <el-dialog class="noPadding" v-model="noticeDialogVisible" width="1280px" align-center style="max-width: 600px">
       <div class="noticedialog">
-        <div class="title">系统提示</div>
+        <div class="title">{{ $t('common.systemError') }}</div>
         <div class="contents">
           尊敬的雷火会员：
           为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！雷火娱乐
@@ -413,10 +413,10 @@
 
     <el-dialog class="" v-model="logoutDialogVisible" width="600px" align-center>
       <div class="noticedialog">
-        <div class="title">您确定要退出吗？</div>
+        <div class="title">{{$t('common.areyousure')}}</div>
         <div class="standard-button-container">
-          <button class="standard-button btn-color-white" @click="logoutDialogVisible = false">取消</button>
-          <button class="standard-button btn-color-blue" @click="onLogout()">确认</button>
+          <button class="standard-button btn-color-white" @click="logoutDialogVisible = false">{{$t('common.cancel')}}</button>
+          <button class="standard-button btn-color-blue" @click="onLogout()">{{$t('common.confirm')}}</button>
         </div>
       </div>
     </el-dialog>
@@ -1515,11 +1515,13 @@ body {
   //   border: 0;
   // }
 
-  // .el-dropdown-menu__item {
-  //   min-width: 130px;
-  //   color: #a8b5c3;
-  //   gap: 8px;
-  // }
+  .el-dropdown-menu__item {
+    // min-width: 130px;
+    // color: #a8b5c3;
+    // gap: 8px;
+    width: 100%;
+    justify-content: center;
+  }
 
   // .el-dropdown-menu__item:not(.is-disabled):focus {
   //   background: #3a4550;
@@ -1602,6 +1604,7 @@ body {
       }
 
       .amount {
+        font-family: 'Roboto';
         margin-right: 0.5rem;
         white-space: nowrap;
       }
@@ -1624,6 +1627,7 @@ body {
     font-size: 0.75rem;
     color: $font-1;
     cursor: pointer;
+    text-align: center;
 
     &:hover {
       color: $link-active;
@@ -1751,19 +1755,17 @@ body {
   transition: all 0.3s ease;
 
   .top-nav-wrapper {
-    overflow: hidden;
     .side {
       
     position: absolute;
     top: 0;
-    z-index: 0;
     &.left {
 
-      left: -50px;
+      left: 0px;
     }
     &.right {
 
-      right: -50px;
+      right: 0px;
     transform: rotateY(180deg);
     }
     }
@@ -1782,8 +1784,6 @@ body {
       align-items: center;
       gap: 15px;
 
-      z-index: 1;
-    position: relative;
       &.logged-in-nav {
         max-width: 1400px;
       }

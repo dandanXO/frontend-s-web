@@ -106,7 +106,8 @@ import { sendSms } from "@/api/personal/personal";
 import AccountLogin from "@/components/auth/AccountLogin.vue";
 import { ElMessage } from "element-plus";
 import { useRoute, useRouter } from "vue-router";
-
+import { useI18n } from "vue-i18n";
+const { t } = useI18n()
 const captchaRules = {
   captchaCode: [
     {
@@ -126,11 +127,11 @@ const captchaRules = {
 const isValidPhone = (r, v) => {
   const phonePattern = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
   if (!v) {
-    return Promise.reject("请输入电话号码");
+    return Promise.reject(t('placeholder.mobileNo'));
   } else if (phonePattern.test(v)) {
-    return Promise.resolve();
+    return Promise.resolve(t('placeholder.validMobileNo'));
   } else {
-    return Promise.reject("请输入有效的电话号码");
+    return Promise.reject();
   }
 };
 
@@ -138,7 +139,7 @@ const mobileLoginRules = {
   phoneNumber: [
     {
       required: true,
-      message: "请输入手机号码",
+      message:t('placeholder.mobileNo'),
       trigger: "blur"
     },
     {
@@ -149,13 +150,13 @@ const mobileLoginRules = {
   code: [
     {
       required: true,
-      message: "请输入验证码",
+      message: t('placeholder.captcha'),
       trigger: "blur"
     },
     {
       min: 6,
       max: 6,
-      message: "长度为 6",
+      message: t('placeholder.min6'),
       trigger: "blur"
     }
   ]
@@ -207,7 +208,7 @@ const sendOtp = async () => {
         loginForm.smsCodeId = response.data.codeId;
         ElMessage({
           type: "success",
-          message: "发送手机验证码成功"
+          message: t('placeholder.verificationSuccess')
         });
         captchaDialogVisible.value = false;
         getCode();

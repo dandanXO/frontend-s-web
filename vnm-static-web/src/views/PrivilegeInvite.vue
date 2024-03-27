@@ -407,7 +407,7 @@ export default defineComponent({
 
     const toggleCheckRecordModal = (toggleStatus) => {
       if (!store.hasToken()) {
-        ElMessageBox.alert(t('common.loginbeforeAction'), t('common.systemError'), {
+        ElMessageBox.alert(t('error.loginbeforeAction'), t('common.systemError'), {
           autofocus: false,
           center: true,
           confirmButtonText: t('common.confirm'),
