@@ -237,7 +237,7 @@
 </template>
 
 <script lang="js">
-import {defineComponent, reactive, ref, onMounted} from "vue";
+import {defineComponent, reactive, ref, onMounted, watch} from "vue";
 import {getVerificationCode} from "@/api/index/login";
 // import { Modal, message } from "ant-design-vue";
 import {ElMessage, ElMessageBox} from "element-plus";
@@ -541,6 +541,7 @@ export default defineComponent({
       // telephone: "",
       // smsCode: "",
       // smsCodeId: ""
+      currencyId: ""
     });
     const bankName = ref()
     const banksList = ref([])
@@ -855,6 +856,17 @@ export default defineComponent({
         return '银行卡号'
       }
     }
+
+    watch(
+      () => bankCardInfo.bankId,
+      (newVal, oldVal) => {
+        const selectedBank = banksList.value.find((bank) => bank.id === newVal);
+        if (selectedBank) {
+          bankCardInfo.currencyId = selectedBank.currencyIds;
+        }
+      }
+    );
+
     return {
       searchForm,
       columns,

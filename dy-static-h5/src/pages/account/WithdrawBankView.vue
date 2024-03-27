@@ -337,7 +337,7 @@
 </template>
 
 <script lang="js">
-import {defineComponent, reactive, ref, onMounted, computed} from "vue";
+import {defineComponent, reactive, ref, onMounted, computed, watch} from "vue";
 // import { Modal, message } from "ant-design-vue";
 // import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
 import {RiSpamLine, RiLink} from "vue-remix-icons";
@@ -484,7 +484,8 @@ export default defineComponent({
       cardAddress: "",
       telephone: "",
       smsCode: "",
-      smsCodeId: ""
+      smsCodeId: "",
+      currencyId: "",
     });
     const router = useRouter();
     const bankName = ref();
@@ -518,6 +519,7 @@ export default defineComponent({
           bankCardInfo.telephone = store.phone;
           bankCardInfo.smsCodeId = "";
           bankCardInfo.smsCode = "";
+          bankCardInfo.currencyId = "";
 
           bankCardModalState.visible = true;
           if (bankCardModalState.banks.length === 0) {
@@ -900,6 +902,15 @@ export default defineComponent({
       }
     });
 
+    watch(
+      () => bankCardInfo.bankId,
+      (newVal, oldVal) => {
+        const selectedBank = banksList.value.find((bank) => bank.id === newVal);
+        if (selectedBank) {
+          bankCardInfo.currencyId = selectedBank.currencyIds;
+        }
+      }
+    );
 
     return {
       searchForm,
