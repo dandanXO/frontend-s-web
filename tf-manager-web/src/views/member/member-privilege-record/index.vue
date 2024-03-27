@@ -84,7 +84,7 @@
         <el-button
           size="mini"
           type="primary"
-          v-permission="['sys:member:export']"
+          v-permission="['sys:report:privilege:record:export']"
           @click="requestExportExcel"
         >{{ t('fields.requestExportToExcel') }}
         </el-button>
