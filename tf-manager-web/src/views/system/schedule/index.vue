@@ -191,8 +191,8 @@
                 >
                   <el-option
                     v-for="spItem in list.sitePlatforms"
-                    :key="spItem.id"
-                    :value="spItem.id"
+                    :key="spItem.platformAccountId"
+                    :value="spItem.platformAccountId"
                     :label="spItem.platformAccountName"
                   />
                 </el-select>
@@ -382,8 +382,8 @@
             >
               <el-option
                 v-for="spItem in list.sitePlatforms"
-                :key="spItem.id"
-                :value="spItem.id"
+                :key="spItem.platformAccountId"
+                :value="spItem.platformAccountId"
                 :label="spItem.platformAccountName"
               />
             </el-select>
