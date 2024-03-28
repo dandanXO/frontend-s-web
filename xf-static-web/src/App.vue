@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted } from "vue";
+import { defineComponent, onMounted, onUnmounted, ref } from "vue";
 // import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { memberAccessLog } from "@/api/index/login";
 import { userStore } from "@/store";
@@ -11,6 +11,10 @@ import { getVisitorId } from "@/utils/utils";
 
 export default defineComponent({
   setup() {
+    const onlineStatTimeout = ref();
+    const onlineStatInterval = ref();
+    const store = userStore();
+
     const checkSID = () => {
       const store = userStore();
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
@@ -31,9 +35,33 @@ export default defineComponent({
         });
       })();
     };
+
+    const getOnlineStatApi = async () => {
+      const sidParam = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+      store.visitorId = sidParam;
+
+      if (sidParam) {
+        const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
+          params: {
+            way: "web",
+            sid: sidParam,
+            siteCode: "xf1"
+          }
+        });
+      }
+    };
+
     onMounted(() => {
       checkSID();
+
+      setTimeout(getOnlineStatApi, 2000);
+      setInterval(getOnlineStatApi, 60000);
     });
+
+    onUnmounted(() => {
+      clearTimeout(onlineStatTimeout);
+      clearInterval(onlineStatInterval);
+    })
   }
 });
 </script>
