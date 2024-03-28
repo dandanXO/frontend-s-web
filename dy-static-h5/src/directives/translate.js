@@ -130,6 +130,8 @@ export const translateRecord = (rec, type = "") => {
       return "XIN电子";
     }
     return "AG真人"; // AG
+  } else if (rec === "AGF") {
+    return "AG捕鱼"; // AG
   } else if (rec === "BBINDY") {
     return "BBIN真人"; // BBINDY
   } else if (rec === "KY") {

@@ -2879,6 +2879,10 @@ body {
       background-image: url("../../assets/fishing/ag_fish_king.png");
     }
 
+    &.fish-agf {
+      background-image: url("../../assets/fishing/agf_fish_king.png");
+    }
+
     &.fish-sg {
       background-image: url("../../assets/fishing/sg_fish_king.png");
     }

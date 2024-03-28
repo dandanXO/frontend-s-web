@@ -1312,7 +1312,7 @@
                         </div>
                       </div>
                     </template>
-                    <template v-else-if="fish.code === 'AG' && fish.name === 'AG'">
+                    <template v-else-if="fish.code === 'AGF' && fish.name === 'AGF'">
                       <div class="game-board" @click="playGame(fish.name, fish.code, '6')">
                         <div
                           class="game-bg"
@@ -1998,7 +1998,7 @@ export default defineComponent({
                 hotgames.value.push(slotObj);
               }
             }
-            if (platTypes.indexOf("FISH") > -1 && element.code !== "AGF") {
+            if (platTypes.indexOf("FISH") > -1) {
               var fishObj = Object.assign({}, element);
               fishObj.title = fishObj.name + " 捕鱼";
               fishObj.icon = "fish";
