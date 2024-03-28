@@ -329,6 +329,6 @@ export const fishingPlatforms = [
     image: "ag",
     message: "最受欢迎的AG捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
     caption: "",
-    gameCode: "6"
+    gameCode: "HMPL"
   }
 ];
