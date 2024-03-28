@@ -8,6 +8,7 @@ import { defineComponent, onMounted, onUnmounted, ref } from "vue";
 import { memberAccessLog } from "@/api/index/login";
 import { userStore } from "@/store";
 import { getVisitorId } from "@/utils/utils";
+import axios from "axios";
 
 export default defineComponent({
   setup() {

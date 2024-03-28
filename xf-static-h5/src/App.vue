@@ -7,6 +7,7 @@ import { defineComponent, onMounted } from "vue";
 import { useQuasar } from "quasar";
 // import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
+import axios from "axios";
 import CsClient from "csweb-client";
 // import CsClient from "boot/client";
 import { userStore } from "src/stores";
@@ -103,7 +104,7 @@ export default defineComponent({
     };
 
     const getOnlineStatApi = async () => {
-      // console.log("Ok Online.");
+      console.log("Ok Online.");
       const sidParam = store.visitorId;
       const way = "h5";
 
@@ -122,6 +123,7 @@ export default defineComponent({
       checkSID();
       // initCsWeb();
       getCSA();
+
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);
