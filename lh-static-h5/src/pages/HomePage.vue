@@ -1487,7 +1487,7 @@ export default defineComponent({
               }
 
               if (fishObj.code === "AGF") {
-                fishObj.gameCode = 6;
+                fishObj.gameCode = "HMPL";
               }
 
               fishing.value.push(fishObj);
