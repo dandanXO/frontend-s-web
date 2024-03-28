@@ -33,7 +33,7 @@
                       <el-button v-if="loginCountdown === 0" @click="openCaptchaForm('LOGIN')"
                                  size="small" color="#3bafda" style="width:100%;min-height:30px; font-size:12px;"
                                  class="blue-bg">
-                        获取验证码
+                        {{ $t('personal.getVerificationCode') }}
                       </el-button>
                       <el-button v-else disabled size="small" class="blue-bg">
                         已发送（倒数{{ loginCountdown }}秒）
@@ -341,6 +341,7 @@ onMounted(() => {
 
   .form-field-icon {
     margin: auto;
+    height: 30px;
   }
 }
 

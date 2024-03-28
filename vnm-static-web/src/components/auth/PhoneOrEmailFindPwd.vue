@@ -191,9 +191,9 @@ let validatePassStrength = (r, v) => {
 
 let validatePass2 = async (r, v) => {
   if (v === "") {
-    return Promise.reject("请重新输入密码");
+    return Promise.reject(t('placeholder.passwordAgain'));
   } else if (v !== forgotPwdPostVerifyForm.password) {
-    return Promise.reject("密码不同");
+    return Promise.reject(t('placeholder.passwordDifferent'));
   } else {
     return Promise.resolve();
   }
@@ -201,7 +201,7 @@ let validatePass2 = async (r, v) => {
 
 let validatePass = async (r, v) => {
   if (v === "") {
-    return Promise.reject("请输入密码");
+    return Promise.reject(t('placeholder.passwordreq'));
   } else {
     return validatePassStrength(r, v);
   }
@@ -399,6 +399,7 @@ const submitPostVerifyForm = () => {
 
   .form-field-icon {
     margin: auto;
+    height: 30px;
   }
 }
 

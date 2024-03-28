@@ -254,7 +254,7 @@
               :value="personalState.memberInfo.telephone"
           />
           <el-button class="common-btn" @click="openCaptchaForm()">
-            获取验证码
+            {{ $t('personal.getVerificationCode') }}
           </el-button></el-space>
         </el-form-item>
 

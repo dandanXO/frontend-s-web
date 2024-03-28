@@ -1,7 +1,7 @@
 <template>
   <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
-      <div class="side left"><img src="../../assets/home/header_side.png"></div>
+      <!-- <div class="side left"><img src="../../assets/home/header_side.png"></div> -->
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
           <img class="logo" src="../../assets/logo.svg" />
@@ -194,7 +194,7 @@
         </div> -->
       </div>
       
-      <div class="side right"><img src="../../assets/home/header_side.png"></div>
+      <!-- <div class="side right"><img src="../../assets/home/header_side.png"></div> -->
     </div>
 
     <!-- <el-dialog
@@ -348,7 +348,7 @@
 
     <el-dialog
       v-model="captchaDialogVisible"
-      title="验证码"
+      :title="$t('personal.captcha')"
       width="50%"
       align-center
       style="max-width: 500px"
@@ -356,10 +356,10 @@
       @keydown.enter.prevent
     >
       <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="100" label-suffix=":">
-        <el-form-item tabindex="3" label="验证码" prop="captchaCode">
+        <el-form-item tabindex="3" :label="$t('personal.captcha')" prop="captchaCode">
           <el-row :gutter="10" style="justify-content: center; align-items: center">
             <el-col :span="12">
-              <el-input v-model="captchaForm.captchaCode" label="验证码" placeholder="验证码" @keyup.enter="sendOtp" />
+              <el-input v-model="captchaForm.captchaCode" :label="$t('personal.captcha')" :placeholder="$t('personal.captcha')" @keyup.enter="sendOtp" />
             </el-col>
             <el-col :span="12">
               <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
@@ -367,7 +367,7 @@
           </el-row>
         </el-form-item>
         <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px" @click="sendOtp">
-          发送
+          {{ $t('common.send') }}
         </el-button>
       </el-form>
     </el-dialog>
@@ -401,13 +401,13 @@
       <div class="noticedialog">
         <div class="title">{{ $t('common.systemError') }}</div>
         <div class="contents">
-          尊敬的雷火会员：
+          <!-- 尊敬的雷火会员：
           为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！雷火娱乐
           2022/10/13
           尊敬的雷火会员：为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！雷火娱乐
-          2022/10/13
+          2022/10/13 -->
         </div>
-        <el-button class="common-btn" @click="noticeDialogVisible = false">确认</el-button>
+        <el-button class="common-btn" @click="noticeDialogVisible = false">{{$t('common.confirm')}}</el-button>
       </div>
     </el-dialog>
 
@@ -655,9 +655,9 @@ export default defineComponent({
     };
     let validatePass2 = async (r, v) => {
       if (v === "") {
-        return Promise.reject("请重新输入密码");
+        return Promise.reject(t('placeholder.passwordAgain'));
       } else if (v !== regForm.password) {
-        return Promise.reject("密码不同");
+        return Promise.reject(t('placeholder.passwordDifferent'));
       } else {
         return Promise.resolve();
       }
@@ -665,9 +665,9 @@ export default defineComponent({
     let validatePhoneNumber = async (r, v) => {
       var reg = /^\d+$/;
       if (v === "") {
-        return Promise.reject("请验证您的电话号码");
+        return Promise.reject(t('placeholder.verifyPhone'));
       } else if (!reg.test(v)) {
-        return Promise.reject("电话号码只允许使用数字");
+        return Promise.reject(t('placeholder.onlyNumber'));
       } else {
         return Promise.resolve();
       }

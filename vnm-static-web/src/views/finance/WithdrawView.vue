@@ -19,7 +19,7 @@
         <div class="withdraw-tip">* 若提款失败请查看站内信提示的失败原因！</div>
       </div>
     </div> -->
-    <el-radio-group v-model="activeItem" size="small">
+    <el-radio-group style="margin-bottom: 20px;" v-model="activeItem" size="small">
       <el-radio-button @change="selectMethod(method, method.name)" v-for="method in withdrawalMethods" :key="method.name" :value="method.name">
         {{ method.name }}
       </el-radio-button>
@@ -27,10 +27,11 @@
     <el-card :class="{'selected': withdrawInfo.cardId === b.id}" v-if="withdrawState.bankCardList.length > 0" v-for="(b, i) in withdrawState.bankCardList" :key="i" @click="withdrawInfo.cardId = b.id" class="bank-card">
           <div class="bank-card-contents">
             <div class="bankName">{{ b.bankName }}</div>
-            <div class="name">codytsst01</div>
-            <div class="cardNumber">5555 5555 5555 5555 555 5</div>
+            <div class="name">{{ b.cardAccount }}</div>
+            <div class="cardNumber">{{ b.cardNumber }}</div>
           </div>
-          <img class="bank-card-img" src="../../assets/images/account/bank_icon.png">
+          <!-- <img class="bank-card-img" src="../../assets/images/account/bank_icon.png"> -->
+            <img class="bank-card-img" :src="imgURL + selectedWithdrawalMethod.icon" />
         </el-card>
     <div class="withdraw-form">
       <el-form
@@ -148,7 +149,7 @@
         <el-form-item :label="$t('withdraw.withdrawPwd')">
           <el-row :gutter="10" style="align-items: center; width: 54%">
           <el-col :span="24">
-            <el-input v-model="withdrawInfo.withdrawPassword" :placeholder="$t('withdraw.withdrawPwd')" />
+            <el-input type="password" show-password v-model="withdrawInfo.withdrawPassword" :placeholder="$t('withdraw.withdrawPwd')" />
           </el-col></el-row>
         </el-form-item>
         <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" :label="$t('withdraw.expectedAmount')">
@@ -158,7 +159,7 @@
                 ? "0.00"
                 : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2)
             }}
-            USDT
+            {{ $t('withdraw.usdt') }}
           </span>
         </el-form-item>
         <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="" style="color: #17cd27">
@@ -250,6 +251,14 @@ export default defineComponent({
     });
     const submitWithdraw = () => {
       loadingBtn.value = true;
+      if (withdrawInfo.cardId === null) {
+      loadingBtn.value = false;
+        ElMessage({
+          message: t('placeholder.selectBankCard'),
+          type: "warning"
+        });
+        return
+      }
       formRef.value
         .validate()
         .then(() => {
@@ -257,12 +266,15 @@ export default defineComponent({
             if (response.code === 0) {
               store.getBalance();
               ElMessage({
-                message: "成功",
+                message: t('common.success'),
                 type: "success"
               });
               getWithdrawalMethods();
               loadCards();
             } else {
+              if (response.code === 12100) {
+                response.message = t('common.withdrawDoesNotMatch')
+              }
               ElMessage.error({
                 type: "error",
                 message: response.message
@@ -392,7 +404,7 @@ export default defineComponent({
       if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
         if (v < selectedWithdrawalMethod.value.withdrawMin || v > selectedWithdrawalMethod.value.withdrawMax) {
           return Promise.reject(
-            t('withdraw.depositAmountRange') +
+            t('withdraw.depositAmountRange') + " " +
             selectedWithdrawalMethod.value.withdrawMin +
             " - " +
             selectedWithdrawalMethod.value.withdrawMax
@@ -508,6 +520,10 @@ export default defineComponent({
   background: linear-gradient(98.09deg, #f0f7ff -1.13%, #e7f3ff 97.1%);
   border: 2px solid transparent;
   cursor: pointer;
+  
+  .bank-card-img {
+        width: 40px;
+      }
   &.selected {
     border: 2px solid #468CFF;
   }
@@ -541,6 +557,7 @@ export default defineComponent({
         font-weight: 400;
         line-height: 19.6px;
         text-align: left;
+    word-break: break-word;
       }
     }
   }

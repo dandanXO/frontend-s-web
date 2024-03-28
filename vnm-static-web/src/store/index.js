@@ -24,7 +24,7 @@ export const userStore = defineStore("userStore", {
       balance: 0,
       vip: "",
       evip: "",
-      currency: { value: "₫", label: "VNDP" },
+      currency: { value: "VNDP", label: "VNDP" },
       loginPageVisible: false,
       regPageVisible: false,
       currentDeposit: "0.0000",

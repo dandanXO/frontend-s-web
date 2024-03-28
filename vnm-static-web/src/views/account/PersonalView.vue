@@ -212,14 +212,14 @@
 
             <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">
               <el-form-item ref="refOldPassword" :label="$t('personal.oldPwd')" name="oldPassword" prop="oldPassword">
-                <el-input style="width:200px;" type="password" v-model="updatePwdInfo.oldPassword" :placeholder="$t('placeholder.oldPwd')" clearable show-password />
+                <el-input type="password" v-model="updatePwdInfo.oldPassword" :placeholder="$t('placeholder.oldPwd')" clearable show-password />
               </el-form-item>
 
               <el-form-item ref="refPassword" :label="$t('personal.newPwd')" name="password" prop="password">
-                <el-input style="width:200px;" type="password" v-model="updatePwdInfo.password" :placeholder="$t('placeholder.newPwd')" clearable show-password />
+                <el-input type="password" v-model="updatePwdInfo.password" :placeholder="$t('placeholder.newPwd')" clearable show-password />
               </el-form-item>
               <el-form-item ref="refConfirmPassword" :label="$t('personal.confirmPwd')" name="confirmPassword" prop="confirmPassword">
-                <el-input style="width:200px;" type="password" v-model="updatePwdInfo.confirmPassword" :placeholder="$t('placeholder.confirmPwd')" clearable show-password />
+                <el-input type="password" v-model="updatePwdInfo.confirmPassword" :placeholder="$t('placeholder.confirmPwd')" clearable show-password />
               </el-form-item>
               <div class="txt-center btn-container">
                 <button
@@ -246,15 +246,15 @@
       <el-tab-pane :label="$t('personal.chgWithdrawPwd')" name="chgWithdrawPwd">
         <div class="update-pwd-container">
             <el-form ref="updateWithdrawPwdFormRef" :hideRequiredMark="true" :model="updateWithdrawPwdInfo" :rules="updateWithdrawPwdRules">
-              <el-form-item ref="refWithdrawOldPassword" :label="$t('personal.oldWithdrawPwd')"  name="oldPassword" prop="oldPassword">
-                <el-input style="width:200px;" type="password" v-model="updateWithdrawPwdInfo.oldPassword" :placeholder="$t('placeholder.oldWithdrawPwd')" clearable show-password />
+              <el-form-item v-if="personalState.memberInfo.registeredWithdrawPassword" ref="refWithdrawOldPassword" :label="$t('personal.oldWithdrawPwd')"  name="oldPassword" prop="oldPassword">
+                <el-input type="password" v-model="updateWithdrawPwdInfo.oldPassword" :placeholder="$t('placeholder.oldWithdrawPwd')" clearable show-password />
               </el-form-item>
 
               <el-form-item ref="refWithdrawPassword" :label="$t('personal.newWithdrawPwd')" name="password" prop="password">
-                <el-input style="width:200px;" type="password" v-model="updateWithdrawPwdInfo.password" :placeholder="$t('placeholder.newWithdrawPwd')" clearable show-password />
+                <el-input type="password" v-model="updateWithdrawPwdInfo.password" :placeholder="$t('placeholder.newWithdrawPwd')" clearable show-password />
               </el-form-item>
               <el-form-item ref="refWithdrawConfirmPassword" :label="$t('personal.confirmWithdrawPwd')"  name="confirmPassword" prop="confirmPassword">
-                <el-input style="width:200px;" type="password" v-model="updateWithdrawPwdInfo.confirmPassword" :placeholder="$t('placeholder.confirmWithdrawPwd')" clearable show-password />
+                <el-input type="password" v-model="updateWithdrawPwdInfo.confirmPassword" :placeholder="$t('placeholder.confirmWithdrawPwd')" clearable show-password />
               </el-form-item>
               <div class="txt-center btn-container">
                 <button
@@ -886,7 +886,7 @@ export default defineComponent({
             if (response.code === 0) {
               // message.success("success");
               ElMessage({
-                message: t('common.success'),
+                message: t('common.updateSuccess'),
                 type: 'success',
               })
               clearPwd();
@@ -920,7 +920,7 @@ export default defineComponent({
         },
         {
           min: 6,
-          max: 12,
+          max: 11,
           message: t('placeholder.between612'),
           trigger: "blur"
         }
@@ -933,7 +933,7 @@ export default defineComponent({
         },
         {
           min: 6,
-          max: 12,
+          max: 11,
           message: t('placeholder.between612'),
           trigger: "blur"
         }
@@ -946,7 +946,7 @@ export default defineComponent({
         },
         {
           min: 6,
-          max: 12,
+          max: 11,
           message: t('placeholder.between612'),
           trigger: "blur"
         },
@@ -991,7 +991,7 @@ export default defineComponent({
             if (response.code === 0) {
               // message.success("success");
               ElMessage({
-                message: t('common.success'),
+                message: t('common.updateSuccess'),
                 type: 'success',
               })
               clearPwd();
@@ -1015,17 +1015,19 @@ export default defineComponent({
         return Promise.resolve();
       }
     }
+    const validateRequireWithdrawPwd = () => {
+    }
 
     const updateWithdrawPwdRules = {
       oldPassword: [
         {
-          required: personalState.memberInfo.registeredWithdrawPassword !== false ? true : false,
+          required: true,
           message: t('personal.oldWithdrawPwd'),
           trigger: "blur"
         },
         {
           min: 6,
-          max: 12,
+          max: 11,
           message: t('placeholder.between612'),
           trigger: "blur"
         }
@@ -1038,7 +1040,7 @@ export default defineComponent({
         },
         {
           min: 6,
-          max: 12,
+          max: 11,
           message: t('placeholder.beetween612'),
           trigger: "blur"
         }
@@ -1051,7 +1053,7 @@ export default defineComponent({
         },
         {
           min: 6,
-          max: 12,
+          max: 11,
           message: t('placeholder.between612'),
           trigger: "blur"
         },
@@ -1078,7 +1080,7 @@ export default defineComponent({
           updateAccount(toRaw(updateFormDetails)).then((ret) => {
             if (ret.code === 0) {
               ElMessage({
-                message: '提交成功',
+                message: t('common.submitSuccess'),
                 type: 'success',
               })
               loadInfo();
@@ -1170,7 +1172,6 @@ export default defineComponent({
     justify-content: flex-start;
     align-items: flex-start;
 }
-
 .basic-info-cell {     
   &.content {
     width: 650px;
@@ -1318,5 +1319,32 @@ export default defineComponent({
   justify-content: flex-start;
   gap: 12px;
   margin-top: 10px;
+}
+</style>
+<style lang="scss">
+
+.account-content-wrapper {
+
+  .el-form-item {
+
+flex-direction: column;
+align-items: flex-start;
+width: 100%;
+}
+.el-form-item__content {
+width: 100%;
+max-width: 650px;
+.el-input__wrapper {
+padding: 10px 20px;
+}
+}
+.el-dialog {
+  .el-form-item {
+  flex-direction: row;
+  }
+  .el-input__wrapper {
+    padding: 5px 10px;
+  }
+}
 }
 </style>
