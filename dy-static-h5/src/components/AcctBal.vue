@@ -164,7 +164,8 @@ const platformNames = {
   TCG: "TCG彩票",
   SGWin: "双赢彩票",
   PT: "PT电子",
-  PG: "PG电子"
+  PG: "PG电子",
+  AGF: "AG捕鱼"
 };
 const loadBalance = () => {
   isLoadingBalance.value = true;
