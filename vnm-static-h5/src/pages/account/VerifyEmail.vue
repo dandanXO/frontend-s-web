@@ -21,7 +21,7 @@
             :label="
               showVerifyBtn && otpCountdownCount <= 0
                 ? $t('lang.personal_sendotp')
-                : `${$t('lang.personal_sentotp_countdown')}${otpCountdownCount}`
+                : `${$t('lang.personal_sentotp_countdown')} ${otpCountdownCount}`
             "
             @click="openVerificationDialog()"
             style="white-space: nowrap"
