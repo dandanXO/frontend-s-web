@@ -36,7 +36,13 @@ export default {
     login: 'Login',
     register: 'Register',
     realName: 'Real Name',
-    alreadyAccount: 'Already have an account'
+    alreadyAccount: 'Already have an account',
+    rememberMe: 'Remember me',
+    email: 'Email',
+    backtoLogin: 'Back to Login',
+    findPasswordPhone: 'Passworod By Phone',
+    findPasswordEmail: 'Password By Email',
+    findAccountEmail: 'Account By Email'
 
   },
   common: {
@@ -51,6 +57,8 @@ export default {
     copy: 'Copy',
     copied: 'Copied',
     confirm: 'Confirm',
+    cancel: 'Cancel',
+    areyousure: 'Are you sure?',
     noRecordFound: 'No record found',
     startDate: 'Start Date',
     endDate: 'End Date',
@@ -60,9 +68,10 @@ export default {
     viewnow: 'View Now',
     playnow: 'Play Now',
     systemError: 'System error',
-    loginbeforeAction: 'Kindly login before making any actions',
-    safetyBeforePhone: 'For safety, please verify your phone number before deposit.',
-    bindRealName: 'You have not update your real name, kindly update it.'
+    bankName: 'Bank Name',
+    bankAcc: 'Bank Account',
+    backCard: 'Account number',
+    depositAmount: 'amount'
   },
   home: {
     appDownload: 'APP Download',
@@ -90,6 +99,7 @@ export default {
     bank: 'Bank',
     chgPwd: 'Change Password',
     chgWithdrawPwd: 'Change withdrawal password',
+    confirmWithdrawPwd: 'Confirm withdrawal password',
     realName: 'Real Name',
     birthday: 'Birthday',
     zalo: 'Zalo',
@@ -103,6 +113,13 @@ export default {
     oldWithdrawPwd: 'Old Withdraw Password',
     newWithdrawPwd: 'New Withdraw Password',
     confirmWithdrawmPwd: 'Confirm Withdraw Password',
+    securityVerification: 'Security Verification',
+    phoneVerification: 'Phone Verification',
+    captcha: 'Captcha',
+    email: 'Email',
+    "countDown": `seconds remaining`,
+    verificationCode: "Verification Code",
+    getVerificationCode: 'Get verification code'
   },
   placeholder: {
     realName: 'Please enter Real Name',
@@ -110,7 +127,7 @@ export default {
     zalo: 'Please enter Zalo',
     email: 'Please enter Email',
     mobileNo: 'Please enter Mobile Number',
-    oldPwd: 'Please enter  Old Password',
+    oldPwd: 'Please enter Old Password',
     newPwd: 'Please enter New Password',
     confirmPwd: 'Please enter Confirm Password',
     oldWithdrawPwd: 'Please enter Old Withdraw Password',
@@ -123,8 +140,21 @@ export default {
     username: 'Username should be 6-12 characters',
     password: 'Password should be 6-12 characters',
     captchareq: 'Please enter captcha code',
-    captcha: 'Captcha code should be 4 characters'
-    
+    captcha: 'Captcha code should be 4 characters',
+    verificationCode: "Please enter verification code",
+    min4: 'Verification code should be 4 characters',
+    emailFormat: 'Please enter a valid email',
+    between612: 'Length should be between 6 - 12 characters',
+    noMatch: 'Confirmation password does not match the new password',
+    verifyPhone: 'Please verify mobile number',
+    onlyNumber: 'Only numbers allowed',
+    phoneVerification: 'Please enter phone verification',
+    min6: 'Length should be 6 characters',
+    lessthan50: 'Length should be 50 characters',
+    amount: 'Please enter the amount',
+    wholeNumber: "The amount should be a positive number",
+    verificationSuccess: "Verification code sent to your phone successfully",
+    validMobileNo: "Please enter a valid phone number",
   },
   refer: {
     specifiedLink: 'Your Specified Refer A Friend Link',
@@ -195,7 +225,10 @@ export default {
     times: 'times',
     withdrawPwd: 'Withdraw Password',
     realNameNotEmpty: 'Real name cannot be empty',
-    beforeBindVerifyPhone: 'Before binding the bank card, please verify your phone number.'
+    beforeBindVerifyPhone: 'Before binding the bank card, please verify your phone number.',
+  expectedAmount: 'Expected amount',
+  "depositAmountRange": "Deposit amount should be between",
+  exchangeRateExample: "*Special Note: A withdrawal fee of 1.00 USDT will be automatically charged by the third party!"
   },
   referTerms: {
     promotionStart: "Promotion starts from 00:00:00 on 01/06/2022 (GMT+8)",
@@ -224,8 +257,16 @@ deposit: {
   maxAmt: 'Max amount one time',
   bank: 'Bank',
   selectBank: 'Select a bank',
-  napas: 'Support cross bank transfer NAPAS 24/7'
-
+  napas: 'Support cross bank transfer NAPAS 24/7',
+  depositMoney: "Deposit",
+  copyWebsite: 'Copy Website',
+  copied: 'Copied',
+  quickDeposit: 'Quick Deposit',
+  realTimeExchangeRate: 'Real Time Exchange Rate',
+  inputUSDT: 'Input USDT',
+  chooseAmt: 'Choose Amount',
+  note: 'Please note:',
+  notept1: 'The transaction unit in the game is TF VNDP, 1 VNDP = 1000VND'
 },
 transfer:  {
   transfer: 'Transfer',
@@ -277,7 +318,7 @@ transit: {
   feedbackTime: 'Feedback Time',
 },
 affiliate: {
-  englishText: "English Text",
+  englishText: "Affiliate",
   joinus: "Join Us",
   login: "Login",
   contactus: "Contact Us",
@@ -467,6 +508,69 @@ about: {
     "priorityPaymentMethod": "Priority Payment Method",
     "customerCare": "24/7 VIP Customer Care Team",
     "invitationExclusive": "Invitation to Exclusive Events"
-
+  },
+  app: {
+    sports: "Access to massive sports events and top-tier esports competitions.",
+    live: "Enjoy real entertainment, participate in lottery betting, and engage in electronic gaming, among other activities. The latest and most comprehensive entertainment options are available at your fingertips.",
+    hot: "Stay tuned with real-time live streaming, ensuring you never miss out on popular activities.",
+    h5: "H5 Web",
+    app: "TF88 App",
+    mobileAccess: "Mobile Access",
+    scanDownload: "Scan QR to download"
+  },
+  "welcome": {
+    "compatibleDevices": "Perfectly Compatible with Secure Devices",
+    "technologyLead": "Leihuo leads the market with outstanding technology. Independently develop a full set of terminal applications, allowing you to enjoy Web, H5, and iOS, Android native apps, smooth games, and more. Let you master it! Intimate service, 7x24 online customer service accompanies you all year round.",
+    "mobileUsers": "Mobile users scan QR code to download",
+    "instantDeposit": "Players who deposit immediately after registration can get up to 84%",
+    "yourFirstDeposit": "Your first deposit will activate the following offers:",
+    "firstDepositBonus": "\"Esports/Sports/Live/Chess\" First deposit get 68%",
+    "completeBeginnerTasks": "Complete beginner tasks and receive 228 Leihuo coins!",
+    "dailyCashback": "Daily full-site cashback, up to 2.0% without limit!",
+    "dailyInsuranceBets": "Esports/Sports daily insurance bets ensure you make a profit without losing!",
+    "popularEsportsEvents": "The Most Comprehensive Popular Esports Events",
+    "moreGames": "and many more games",
+    "proceedNow": "Proceed Now",
+    depositNow: "Deposit Now",
+    congrats: "Congratulations! Your account has been created.",
+    webapp: "Web App",
+    esportapp: "Esports App"
+  },
+  error: {
+    "bankCardFirst": "Please bind your bank card first",
+    "bindUSDT": "Please bind your USDT wallet first",
+    "bindEWallet": "Please bind your e-wallet first",
+    "loginbeforeAction": "Kindly login before making any actions",
+    "safetyBeforePhone": "For safety, please verify your phone number before depositing",
+    "bindRealName": "You have not updated your real name, kindly update it",
+    "depositConfirmed": "Deposit confirmed"
+  },
+  "sports": {
+    "saba": "Saba Sports is a leading sports betting platform in Asia, offering over 20,000 events per month throughout the season. With a professional team of approximately 700 traders conducting odds trading, providing attractive and real-time odds!",
+    "sbo": "SBOBET Sports is a trusted leading provider of betting odds in the region, with a wide coverage network across Asian countries. Supporting hundreds of betting types and thousands of events per year. Live broadcasts of accurate match odds to passionate players.",
+    "cmd": "Our motto is customer delight. By offering most game options and corresponding markets, CMD368 aims to provide top-notch gaming service and experience and provide the best odds."
+  },
+  "lottery": {
+    "loto": "Lottery at TF88 offers attractive odds and diverse betting options, with fast payouts after the draw.",
+    "gpi": "Lottery at TF88 offers attractive odds and diverse betting options, with fast payouts after the draw.",
+    "tcg": "Lottery at TF88 offers attractive odds and diverse betting options, with fast payouts after the draw."
+  },
+  "livecasino": {
+    "ag": "Live Casino AG introduces the world's first 6-card poker pre-deal, VIP tables, squeeze baccarat, smart control baccarat, and other interactive baccarat games. Compatible with multiple terminals allowing you to enjoy uninterrupted gaming.",
+    "we": "Play and Win with WE Since its establishment in 2012, WE has been committed to creating an exciting and innovative mobile entertainment platform, providing not only professional technical support and stable high-end equipment, but also supporting multiple platforms, with many international licenses, providing players with a reliable entertainment environment. In addition, hundreds of professionally trained dealers and simulated casino environments further enhance players' enjoyment of entertainment.",
+    "evo": "Evolution Gaming is a highly sophisticated online card dealing platform with a range of products from Millionaire Chess to Blackjack, Roulette, Three Card Poker, Casino Hold'em, Ultimate Texas Hold'em, Caribbean Stud Poker with elegant European-style. Experience Evo Palace in the palm of your hand.",
+    "wm": "For over 20 years, he has devoted himself to research and development of technology and systems, and has been recognized by those who have entered the finals or international awards of the industry. In recent years, WM Video has actively participated in international events and sponsored some world-famous events, including Formula racing, football events, etc., while actively calling for strong support for charity organizations, sparing no effort to invest in various international issues, and providing the industry with a diverse and broader perspective.",
+    "ae": "AE Casino, the most potential live action video in Asia, focuses on providing customers with high-quality and safe game products. It offers many live video games such as Baccarat, Speed Baccarat, Gongmi Baccarat, Colourful Baccarat, Dragon Tiger, Sic Bo, Roulette, Niu Niu, Fried Golden Flower, etc., and fully supports PC, H5, APP. Simple and easy-to-operate interface, multi-platform, no need to download, fun anytime, anywhere!",
+    "dg": "Hundreds of professionally trained dealers at DG Casino will give you a better than land-based casino experience when playing here. With high-quality stable equipment and professional technical support to ensure the platform operates smoothly and brings players a great experience as if they were at a real casino. Moreover, DG also supports multi-platform access, so no matter where players are, they can enjoy games passionately anytime, anywhere, and most importantly, win."
+  },
+  "poker": {
+    "v8": "Leading technology in Asia",
+    "km": "The leading provider of 3D games, play Bau Cua, Xoc Dia at Kingmaker now!",
+    "kp": "Texas Hold'em, Dragon Tiger Fight and many other Poker genres as you choose",
+    "gpi": "LEG Corporation is expanding its investment in developing LEG Poker",
+    "rich88": "Rich88 offers 3D games with attractive odds, Blackjack, Xoc Dia, Sicbo..."
+  },
+  "cockfight": {
+    "ws168": "World class cockfighting online"
   }
 }

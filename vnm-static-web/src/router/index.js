@@ -195,16 +195,18 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     if (to.meta.requiresAuth) {
-      ElMessageBox.alert("账号已在其他设备登录，请登录后再操作", "系统提示", {
-        // if you want to disable its autofocus
-        // autofocus: false,
-        center: true,
-        confirmButtonText: 'Confirm',
-        showClose: false,
-        buttonSize: "large"
-      }).then(() => {
-        store.loginPageVisible = true;
-      });
+      // ElMessageBox.alert("账号已在其他设备登录，请登录后再操作", $t('common.systemError'), {
+      //   // if you want to disable its autofocus
+      //   // autofocus: false,
+      //   center: true,
+      //   confirmButtonText: 'Confirm',
+      //   showClose: false,
+      //   buttonSize: "large"
+      // }).then(() => {
+      //   store.loginPageVisible = true;
+      // });
+      
+      store.loginPageVisible = true;
       next({ query: { redirect: to.path } });
     } else {
       next();

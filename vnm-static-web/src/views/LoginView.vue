@@ -94,18 +94,20 @@ import { sendSms } from "@/api/personal/personal";
 import AccountLogin from "@/components/auth/AccountLogin.vue";
 import { ElMessage } from "element-plus";
 import { useRoute, useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const captchaRules = {
   captchaCode: [
     {
       required: true,
-      message: "请输入验证码",
+      message: t('placeholder.captchaReq'),
       trigger: "blur"
     },
     {
       min: 4,
       max: 4,
-      message: "长度为 4",
+      message: t('placeholder.min4'),
       trigger: "blur"
     }
   ]
@@ -115,11 +117,11 @@ const captchaRules = {
 const isValidPhone = (r, v) => {
   const phonePattern = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
   if (!v) {
-    return Promise.reject("请输入电话号码");
+    return Promise.reject(t('placeholder.mobileNo'));
   } else if (phonePattern.test(v)) {
     return Promise.resolve();
   } else {
-    return Promise.reject("请输入有效的电话号码");
+    return Promise.reject(t('placeholder.validMobileNo'));
   }
 };
 
@@ -128,7 +130,7 @@ const mobileLoginRules = {
   phoneNumber: [
     {
       required: true,
-      message: "请输入手机号码",
+      message: t('placeholder.mobileNo'),
       trigger: "blur"
     },
     {
@@ -139,13 +141,13 @@ const mobileLoginRules = {
   code:[
     {
       required: true,
-      message: "请输入验证码",
+      message: t('placeholder.captchaReq'),
       trigger: "blur"
     },
     {
       min: 6,
       max: 6,
-      message: "长度为 6",
+      message: t('placeholder.min6'),
       trigger: "blur"
     }
   ]

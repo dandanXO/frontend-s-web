@@ -7,13 +7,13 @@
             <div class="card-bg">
 
                 <el-tabs>
-                    <el-tab-pane label="手机找回密码">
+                    <el-tab-pane :label="$t('login.findPasswordPhone')">
                         <PhoneOrEmailFindPwd type="phone" />
                     </el-tab-pane>
-                    <el-tab-pane label="邮箱找回密码">
+                    <el-tab-pane :label="$t('login.findPasswordEmail')">
                         <PhoneOrEmailFindPwd type="email" />
                     </el-tab-pane>
-                    <el-tab-pane label="邮箱找回账号">
+                    <el-tab-pane :label="$t('login.findAccountEmail')">
                         <EmailFindPwd />
                     </el-tab-pane>
                 </el-tabs>

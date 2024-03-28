@@ -14,8 +14,11 @@ import { ref } from "vue";
 import PlatformView from "@/components/PlatformView";
 import { slotPlatforms } from "@/shared/platformArray";
 
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
+
 const platformType = ref("slot");
 const platformGameType = ref("SLOT");
-const platformName = ref("SLOTS");
+const platformName = ref(t('menu.slot'));
 const platformPattern = ref(true);
 </script>

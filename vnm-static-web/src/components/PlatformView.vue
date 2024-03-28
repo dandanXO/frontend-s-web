@@ -1,12 +1,12 @@
 <template>
-  <div class="platform-section" :style="{ 'background-size':'cover', 'background-image': platformType !== 'slot' ? 'url(' + require('../assets/' + platformType + '/' + platformType + '-bg.png') + ')' : 'none' }">
+  <div class="platform-section" :style="{ 'background-size':'cover', 'background-image':( platformType !== 'slot' && platformType !== 'fishing') ? 'url(' + require('../assets/' + platformType + '/' + platformType + '-bg.png') + ')' : 'none' }">
     <div class="platform-container"
-      :class="(platformType === 'slot') ? 'slot-container' : ''"
+      :class="(platformType === 'slot' || platformType === 'fishing') ? 'slot-container' : ''"
     >
-      <div class="platform-container-slot" v-if="platformType === 'slot'">
+      <div class="platform-container-slot" v-if="platformType === 'slot' || platformType === 'fishing'">
         <img :src="require(`../assets/slot/slot-top-bg-${languageVal}.png`)">
       </div>
-      <div class="platform-container-inner" v-if="platformType !== 'slot'">
+      <div class="platform-container-inner" v-if="platformType !== 'slot' && platformType !== 'fishing'">
         <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
         <template v-for="(item, index) in platformsListDisplay" :key="index">
           <template v-if="selectedPlat === item.code">
@@ -26,7 +26,8 @@
                 <div class="platform-subtitle">{{ platformName }}</div>
               </div>
 
-              <div class="platform-txt-box" data-aos="fade-left" data-aos-delay="200" v-html="item.message"></div>
+              <div v-if="languageVal === 'en'" class="platform-txt-box" data-aos="fade-left" data-aos-delay="200" v-html="item.message"></div>
+              <div v-if="languageVal === 'vi'" class="platform-txt-box" data-aos="fade-left" data-aos-delay="200" v-html="item.vimessage"></div>
 
               <div class="platform-pattern-row" data-aos="fade-left" data-aos-delay="300" v-if="platformPattern">
                 <img :src="require('../assets/' + platformType + '/' + platformType + '-pattern.png')" />
@@ -69,7 +70,7 @@
               <!--            data-aos="fade-in"-->
               <!--            data-aos-delay="300"-->
               <!--            data-aos-duration="500"-->
-              <div class="platform-play-btn" v-if="platformType !== 'slot'">
+              <div class="platform-play-btn" v-if="platformType !== 'slot' || platformType !== 'fishing'">
                 <div class="btn-blue" @click="openGame(item, item.code, item.gameCode)"
                      :class="item.underMaintenance === true ? 'btn-maintenance' : ''"
                 >
@@ -337,7 +338,7 @@ const switchPlat = (plat) => {
 };
 
 const getPlatGameList = () => {
-  if (props.platformGameType === "SLOT") {
+  if (props.platformGameType === "SLOT" || props.platformGameType === "FISH") {
     getPlatformList()
       .then((data) => {
         platformsListDisplay.value = data.filter((element) => element.gameType.includes(props.platformGameType));
@@ -370,7 +371,7 @@ const searchList = () => {
   // }
 };
 const loadGameList = () => {
-  if (props.platformGameType === "SLOT") {
+  if (props.platformGameType === "SLOT" || props.platformGameType === "FISH") {
     getPlatformGames(activePlat.value.id, props.platformGameType)
       .then((data) => {
         data.forEach((element) => {

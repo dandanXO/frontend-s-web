@@ -42,7 +42,7 @@
                             { required: true, message: $t('placeholder.realName') }
                           ]"
                         >
-                          <el-input v-model="updateFormDetails.realName" placeholder="姓名" />
+                          <el-input v-model="updateFormDetails.realName" :placeholder="$t('personal.realName')" />
                         </el-form-item>
                       </div>
                     </div>
@@ -58,7 +58,7 @@
                       {{ personalState.memberInfo.birthday }}
                     </div>
 
-                    <div v-else class="basic-info-cell content">
+                    <div v-else class="basic-info-cell content">    
                       <div class="datewsend" v-if="isEdit">
                         <el-form-item
                           name="birthday"
@@ -73,6 +73,8 @@
                           />
                         </el-form-item>
                       </div>
+                                        
+                      <div class="basic-info-cell contentwtxt" style="min-height: 40px;" v-else></div>
                     </div>
                   </div>
                 </div>
@@ -312,7 +314,7 @@
       v-model="updateSecurityModalVisible"
       :footer="null"
       width="500px"
-      title="安全验证"
+      :title="$t('personal.securityVerification')"
       align-center
       :close-on-click-modal="false"
       :close-on-press-escape="false"
@@ -324,13 +326,13 @@
         :rules="updateSecurityVerifiedRules"
       >
         <el-form-item ref="emailAddress" prop="emailAddress">
-          <el-input v-model="updateSecurityVerified.emailAddress" placeholder="邮箱" />
+          <el-input v-model="updateSecurityVerified.emailAddress" :placeholder="$t('personal.email')" />
         </el-form-item>
         <el-form-item class="half" ref="verificationCode" prop="verificationCode">
           <el-space>
             <el-input
               v-model="updateSecurityVerified.verificationCode"
-              :placeholder="'验证码'"
+              :placeholder="$t('personal.verificationCode')"
               @keyup.enter="submitUpdateSecurity"
             />
             <el-button
@@ -339,12 +341,12 @@
               class="common-btn verification-btn"
               @click="openVerificationModal"
             >
-              <span v-if="disableSendVerificationButton">已发送（倒数{{ countDown }}秒)</span>
+              <span v-if="disableSendVerificationButton">{{ countDown + '' + $t('personal.countDown') }}</span>
               <span v-else>{{ $t('common.sendVerificationCode') }}</span>
             </el-button>
           </el-space>
         </el-form-item>
-        <el-button :loading="loadingSecurityBtn" class="standard-btn verification-btn" @click="submitUpdateSecurity">
+        <el-button :loading="loadingSecurityBtn" class="common-btn verification-btn" @click="submitUpdateSecurity">
           
           {{ $t('common.submit') }}
         </el-button>
@@ -354,7 +356,7 @@
     <el-dialog
       wrap-class-name="securityModal"
       v-model="verificationModalVisible"
-      title="验证码"
+      :title="$t('personal.captcha')"
       width="500px"
       align-center
       :close-on-click-modal="false"
@@ -362,7 +364,7 @@
       @keydown.enter.prevent
     >
       <el-form ref="captchaUpdateRef" :model="updateSecurityVerified">
-        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: t('placeholder.captcha') }]">
+        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: $t('placeholder.captcha') }]">
           <el-space>
             <el-input
               @keyup.enter="verifyVerificationCode"
@@ -372,7 +374,7 @@
             />
 
             <div class="verification" @click="getCode()">
-              <img style="width: 80%; margin-top: 6px" :src="verificationImg" />
+              <img :src="verificationImg" />
             </div>
           </el-space>
         </el-form-item>
@@ -385,7 +387,7 @@
       v-model="updatePhoneModalVisible"
       :footer="null"
       width="500px"
-      title="手机验证"
+      :title="$t('personal.phoneVerification')"
       align-center
       :close-on-click-modal="false"
       :close-on-press-escape="false"
@@ -397,18 +399,18 @@
         :rules="updatePhoneVerifiedRules"
       >
         <el-form-item ref="phone" prop="phone">
-          <el-input v-model="updatePhoneVerified.phone" placeholder="手机号码" />
+          <el-input v-model="updatePhoneVerified.phone" :placeholder="$t('personal.mobileNo')" />
         </el-form-item>
         <el-form-item class="half" ref="verificationCode" prop="verificationCode">
           <el-space>
-            <el-input v-model="updatePhoneVerified.verificationCode" :placeholder="'验证码'" />
+            <el-input v-model="updatePhoneVerified.verificationCode" :placeholder="$t('personal.verificationCode')" />
             <el-button
               :disabled="disableSendPhoneButton"
               size="small"
               class="common-btn verification-btn"
               @click="openPhoneVerificationModal"
             >
-              <span v-if="disableSendPhoneButton">{{ $t('common.sendVerificationCode') }}已发送（倒数{{ countDown }}秒)</span>
+              <span v-if="disableSendPhoneButton">{{ countDown + '' + $t('personal.countDown') }}</span>
               <span v-else>{{ $t('common.sendVerificationCode') }}</span>
             </el-button>
           </el-space>
@@ -422,20 +424,20 @@
     <el-dialog
       wrap-class-name="phoneModal"
       v-model="verificationPhoneModalVisible"
-      title="验证码"
+      :title="$t('personal.captcha')"
       width="500px"
       align-center
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
       <el-form ref="captchaUpdateRef" :model="updatePhoneVerified">
-        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: '请输入验证码' }]">
+        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: $t('placeholder.captcha') }]">
           <el-space>
             <el-input
               @keypress.enter.prevent="verifyPhoneVerificationCode"
               v-model="updatePhoneVerified.captchaCode"
               :maxlength="4"
-              placeholder="验证码"
+              :placeholder="$t('personal.captcha')"
             />
 
             <div class="verification" @click="getCode()">
@@ -444,7 +446,7 @@
           </el-space>
         </el-form-item>
       </el-form>
-      <el-button class="common-btn" @click="verifyPhoneVerificationCode" :loading="isPhoneSending">验证</el-button>
+      <el-button class="standard-button btn-color-blue" @click="verifyPhoneVerificationCode" :loading="isPhoneSending">{{$t('common.verify')}}</el-button>
     </el-dialog>
   </div>
 
@@ -469,6 +471,7 @@ import { getVerificationCode } from "@/api/index/login";
 import moment from "moment";
 import { lsGet, lsStore, lsRemove, getTimeout } from '@/utils/utils'
 import WithdrawBank from "@/components/account/WithdrawBank.vue";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "PersonalView",
@@ -476,6 +479,7 @@ export default defineComponent({
     WithdrawBank
   },
   setup() {
+    const { t } = useI18n();
     const selectedTab = 'personal'
     // Send Verification Code
     const emailKey = `emailKey`
@@ -596,7 +600,7 @@ export default defineComponent({
 
         }).catch((err) => {
             ElMessage({
-              message: '请输入有效的邮件',
+              message: t('placeholder.emailFormat'),
               type: 'error',
             })
         })
@@ -695,7 +699,7 @@ export default defineComponent({
 
         }).catch((err) => {
             ElMessage({
-              message: '请输入有效的电话号码',
+              message: t('placeholder.mobileNo'),
               type: 'error',
             })
         })
@@ -807,24 +811,24 @@ export default defineComponent({
       emailAddress: [
         {
           required: true,
-          message: "请输入邮箱地址",
+          message: t('placeholder.email'),
           trigger: "blur",
         },
         {
           type: "email",
-          message: "邮箱地址不符合",
+          message: t('placeholder.emailFormat'),
           trigger: "blur",
         },
       ],
       verificationCode: [
         {
           required: true,
-          message: "请输入验证码",
+          message: t('placeholder.verificationCode'),
           trigger: "blur",
         },
         {
           min: 4,
-          message: "长度应为 4",
+          message: t('placeholder.min4'),
           trigger: "blur",
         },
       ],
@@ -834,19 +838,19 @@ export default defineComponent({
       phone: [
         {
           required: true,
-          message: "请输入电话号码",
+          message: t('placeholder.mobileNo'),
           trigger: "blur",
         },
       ],
       verificationCode: [
         {
           required: true,
-          message: "请输入验证码",
+          message: t('placeholder.verificationCode'),
           trigger: "blur",
         },
         {
           min: 4,
-          message: "长度应为 4",
+          message: t('placeholder.min4'),
           trigger: "blur",
         },
       ],
@@ -882,7 +886,7 @@ export default defineComponent({
             if (response.code === 0) {
               // message.success("success");
               ElMessage({
-                message: '成功',
+                message: t('common.success'),
                 type: 'success',
               })
               clearPwd();
@@ -911,39 +915,39 @@ export default defineComponent({
       oldPassword: [
         {
           required: true,
-          message: "请输入旧密码",
+          message: t('placeholder.oldPwd'),
           trigger: "blur"
         },
         {
           min: 6,
           max: 12,
-          message: "长度应为 6 到 12 数字",
+          message: t('placeholder.between612'),
           trigger: "blur"
         }
       ],
       password: [
         {
           required: true,
-          message: "请输入新密码",
+          message: t('placeholder.newPwd'),
           trigger: "blur"
         },
         {
           min: 6,
           max: 12,
-          message: "长度应为 6 到 12 数字",
+          message: t('placeholder.between612'),
           trigger: "blur"
         }
       ],
       confirmPassword: [
         {
           required: true,
-          message: "请输入确认密码",
+          message: t('placeholder.confirmPwd'),
           trigger: "blur"
         },
         {
           min: 6,
           max: 12,
-          message: "长度应为 6 到 12 数字",
+          message: t('placeholder.between612'),
           trigger: "blur"
         },
         {
@@ -1006,7 +1010,7 @@ export default defineComponent({
 
     const validateWithdrawPwd = async (r,v) => {
       if(updateWithdrawPwdInfo.confirmPassword !== updateWithdrawPwdInfo.password){
-        return Promise.reject("确认密码与新密码不符合");
+        return Promise.reject(t('placeholder.noMatch'));
       } else {
         return Promise.resolve();
       }
@@ -1016,39 +1020,39 @@ export default defineComponent({
       oldPassword: [
         {
           required: personalState.memberInfo.registeredWithdrawPassword !== false ? true : false,
-          message: "请输入旧密码",
+          message: t('personal.oldWithdrawPwd'),
           trigger: "blur"
         },
         {
           min: 6,
           max: 12,
-          message: "长度应为 6 到 12 数字",
+          message: t('placeholder.between612'),
           trigger: "blur"
         }
       ],
       password: [
         {
           required: true,
-          message: "请输入新密码",
+          message: t('personal.newWithdrawPwd'),
           trigger: "blur"
         },
         {
           min: 6,
           max: 12,
-          message: "长度应为 6 到 12 数字",
+          message: t('placeholder.beetween612'),
           trigger: "blur"
         }
       ],
       confirmPassword: [
         {
           required: true,
-          message: "请输入确认密码",
+          message: t('personal.confirmWithdrawPwd'),
           trigger: "blur"
         },
         {
           min: 6,
           max: 12,
-          message: "长度应为 6 到 12 数字",
+          message: t('placeholder.between612'),
           trigger: "blur"
         },
         {

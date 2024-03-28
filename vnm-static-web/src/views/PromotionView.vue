@@ -164,7 +164,7 @@ export default defineComponent({
     const showPromoDetails = (promo) => {
 
       if (!store.token) {
-          ElMessageBox.alert(t('common.loginbeforeAction'), t('common.systemError'), {
+          ElMessageBox.alert(t('error.loginbeforeAction'), t('common.systemError'), {
               // if you want to disable its autofocus
               // autofocus: false,sd
               center: true,
@@ -302,7 +302,7 @@ export default defineComponent({
     background-size: 100% auto;
     padding: 50px;
     position: relative;
-    padding-top: max(300px, 20vw);
+    padding-top: max(270px, 15vw);
     background-color: #f3f7fd;
   }
   .promo-view-container {
@@ -405,7 +405,7 @@ export default defineComponent({
     .promo-main-container {
       width: 100%;
       // max-width: $maxwidth;
-      max-width: 1200px;
+    max-width: 1050px;
       margin: 0 auto;
       padding: 10px 0;
       display: flex;

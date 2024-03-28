@@ -194,7 +194,7 @@
         </el-form-item>
 
         <el-form-item class="txt-center" v-if="isSendOtp">
-          <el-button class="txt-center common-btn" @click="submitBankCard">提交</el-button>
+          <el-button class="txt-center common-btn" @click="submitBankCard">{{ $t('common.submit') }}</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -490,7 +490,7 @@ export default defineComponent({
 
     const checkBankCards = () => {
       ElMessageBox.alert(
-        "请先绑定银行卡", "系统提示",
+        t('error.bankCardFirst'), t('common.systemError'),
         {
           showClose: false,
           showCancelButton: false,
@@ -563,10 +563,10 @@ export default defineComponent({
     const bankCardModal = () => {
       store.getMemberInfo().then(() => {
         if (!store.realName || store.realName == "") {
-          ElMessage.error($t('withdraw.realNameNotEmpty'));
+          ElMessage.error(t('withdraw.realNameNotEmpty'));
           return;
         } else if (!store.phone || store.phone == "") {
-          ElMessage.error($t('withdraw.beforeBindVerifyPhone'));
+          ElMessage.error(t('withdraw.beforeBindVerifyPhone'));
           return;
         } else {
           bankCardInfo.bankId = undefined;
