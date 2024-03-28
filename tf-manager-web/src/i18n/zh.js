@@ -2154,6 +2154,8 @@ export default {
     'Competition List': '赛事列表',
     'Competition Code': '赛事代码',
     'Affiliate Recalculate': '代理重算',
+    Utils: '工具',
+    'Ip Location': 'Ip查询',
   },
   google: {
     google_auth_menu: '谷歌验证',
