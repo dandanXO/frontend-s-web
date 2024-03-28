@@ -200,6 +200,7 @@ $node-color: #468cff;
   margin-bottom: 15px;
   width: 100%;
   grid-template-columns: repeat(5, 1fr);
+  padding-right: 15px;
 
   .payment-method-item {
     text-align: center;
@@ -409,7 +410,7 @@ $node-color: #468cff;
         border: 0;
         background-color: transparent;
         max-width: 60px;
-        width: 60px;
+        width: 100%;
       }
       ::after {
         position: relative;
