@@ -22,7 +22,8 @@
           </p>
         </div>
         <img :src="require('../../assets/fishing/header_fish_' + nav.image + '.png')" style="height: 40px" />
-        <p class="platform-title">{{ nav.code }}捕鱼</p>
+        <p v-if="nav.code === 'AGF'" class="platform-title">AG捕鱼</p>
+        <p v-else class="platform-title">{{ nav.code }}捕鱼</p>
         <div class="platform-img" :class="'fish-' + nav.image"></div>
       </div>
     </div>
