@@ -19,15 +19,12 @@
         <div class="withdraw-tip">* 若提款失败请查看站内信提示的失败原因！</div>
       </div>
     </div> -->
-    <el-tabs v-model="selectedWithdrawalMethod.name">
-      <el-tab-pane v-for="(method, i) in withdrawalMethods" :name="method.name" :label="method.name">
-        <div style="visibility: hidden; display: none;">
-        {{ selectedWithdrawalMethod }}
-        {{ withdrawState.bankCardList = [{
-          bankName: 'nameofbank',
-          id: '1'
-        }] }}</div>
-        <el-card :class="{'selected': withdrawInfo.cardId === b.id}" v-if="withdrawState.bankCardList.length > 0" v-for="(b, i) in withdrawState.bankCardList" :key="i" @click="withdrawInfo.cardId = b.id" class="bank-card">
+    <el-radio-group v-model="activeItem" size="small">
+      <el-radio-button @change="selectMethod(method, method.name)" v-for="method in withdrawalMethods" :key="method.name" :value="method.name">
+        {{ method.name }}
+      </el-radio-button>
+    </el-radio-group>
+    <el-card :class="{'selected': withdrawInfo.cardId === b.id}" v-if="withdrawState.bankCardList.length > 0" v-for="(b, i) in withdrawState.bankCardList" :key="i" @click="withdrawInfo.cardId = b.id" class="bank-card">
           <div class="bank-card-contents">
             <div class="bankName">{{ b.bankName }}</div>
             <div class="name">codytsst01</div>
@@ -35,13 +32,11 @@
           </div>
           <img class="bank-card-img" src="../../assets/images/account/bank_icon.png">
         </el-card>
-      </el-tab-pane>
-    </el-tabs>
     <div class="withdraw-form">
       <el-form
         ref="formRef"
-        label-width="150px"
-        label-position="left"
+        label-width="200px"
+        label-position="top"
         label-suffix=":"
         :model="withdrawInfo"
         :rules="withdrawRules"
@@ -111,7 +106,7 @@
             </div>
           </el-col>
         </el-row>
-        <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="实时汇率">
+        <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" :label="$t('deposit.realTimeExchangeRate')">
           <span style="color: #17cd27">
             1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }} {{ store.currency.label }}
           </span>
@@ -156,7 +151,7 @@
             <el-input v-model="withdrawInfo.withdrawPassword" :placeholder="$t('withdraw.withdrawPwd')" />
           </el-col></el-row>
         </el-form-item>
-        <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="预计到账">
+        <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" :label="$t('withdraw.expectedAmount')">
           <span style="color: #17cd27">
             {{
               selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
@@ -167,7 +162,7 @@
           </span>
         </el-form-item>
         <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="" style="color: #17cd27">
-          *特别说明：三方自动收取提币 1.00 USDT 手续费！
+          {{ $t('withdraw.exchangeRateExample') }}
         </div>
 
         <!-- K豆教程视频 -->
@@ -287,12 +282,12 @@ export default defineComponent({
       amount: [
         {
           required: true,
-          message: "请输入金额",
+          message: t('placeholder.amount'),
           trigger: "blur"
         },
         {
           pattern: "^([1-9][0-9]*)$",
-          message: "金额应为正数",
+          message: t('placeholder.wholeNumber'),
           trigger: "change"
         },
         {
@@ -305,7 +300,7 @@ export default defineComponent({
 
       if (isUSDT.value) {
         ElMessageBox.alert(
-          "请先绑定虚拟币钱包", "系统提示",
+          t('error.bindUSDT'), t('common.systemError'),
           {
             showClose: false,
             showCancelButton: false,
@@ -323,7 +318,7 @@ export default defineComponent({
           });
       } else if (isEWALLET.value) {
         ElMessageBox.alert(
-          "请先绑定电子钱包", "系统提示",
+          t('error.bindEWallet'), t('common.systemError'),
           {
             showClose: false,
             showCancelButton: false,
@@ -341,7 +336,7 @@ export default defineComponent({
           });
       } else {
         ElMessageBox.alert(
-          "请先绑定银行卡", "系统提示",
+          t('error.bankCardFirst'), t('common.systemError'),
           {
             showClose: false,
             showCancelButton: false,
@@ -397,7 +392,7 @@ export default defineComponent({
       if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
         if (v < selectedWithdrawalMethod.value.withdrawMin || v > selectedWithdrawalMethod.value.withdrawMax) {
           return Promise.reject(
-            "存入金额介于 " +
+            t('withdraw.depositAmountRange') +
             selectedWithdrawalMethod.value.withdrawMin +
             " - " +
             selectedWithdrawalMethod.value.withdrawMax
@@ -426,7 +421,7 @@ export default defineComponent({
         if (response.code === 0) {
           withdrawalMethods.value = response.data;
           if (withdrawalMethods.value.length) {
-            selectMethod(withdrawalMethods.value[0], 0);
+            selectMethod(withdrawalMethods.value[0], withdrawalMethods.value[0].name);
           }
         } else {
           ElMessage.error({
@@ -517,7 +512,7 @@ export default defineComponent({
     border: 2px solid #468CFF;
   }
   :deep(.el-card__body) {
-    font-family: Poppins;
+    // font-family: Poppins;
     text-align: left;
     display: flex;
     gap: 10px;

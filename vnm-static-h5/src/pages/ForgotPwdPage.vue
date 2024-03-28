@@ -57,6 +57,7 @@
             color="white"
             label-color="secondary"
             autocomplete="username"
+            type="number"
           >
             <template v-slot:prepend>
               <div style="width: 24px; display: flex; align-items: center">
@@ -298,6 +299,7 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { SessionStorage } from "quasar";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "LoginPage",
@@ -307,6 +309,7 @@ export default defineComponent({
 
       isEmailSent.value = false;
     });
+    const { t } = useI18n();
     const verificationImg = ref("");
     const passwordFormPhone = reactive({
       codeId: "",
@@ -362,7 +365,7 @@ export default defineComponent({
     const isValidEmail = () => {
       const emailPattern =
         /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
-      return emailPattern.test(passwordFormEmail.email) || "请输入有效电子邮件";
+      return emailPattern.test(passwordFormEmail.email) || t('lang.email_valid');
     };
     var qs = require("qs");
     const route = useRoute();
@@ -372,7 +375,7 @@ export default defineComponent({
     const onSubmitForgotPwd = (method) => {
       if (method === "email") {
         $q.loading.show({
-          message: "发送验证码中..."
+          message: t("lang.verification_code_sending")
         });
         api
           .post("/otp/sendForgetPasswordEmail", qs.stringify(passwordFormEmail))
@@ -396,7 +399,7 @@ export default defineComponent({
         getCode();
       } else if (method === "phone") {
         $q.loading.show({
-          message: "发送验证码中..."
+          message: t("lang.verification_code_sending")
         });
         api
           .post("/otp/sendForgetPasswordPhone", qs.stringify(passwordFormPhone))
@@ -467,7 +470,7 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: "密码修改成功",
+                  message: t("lang.password_reset_complete"),
                   icon: "check_circle_outline"
                 });
 

@@ -275,6 +275,8 @@ const getGameName = (gameName) => {
       return "PG电子";
     case "AG":
       return "AG真人, XIN电子";
+    case "AGF":
+      return "AG捕鱼";
     case "ALLBET":
       return "ALLBET真人";
     case "GFLC":

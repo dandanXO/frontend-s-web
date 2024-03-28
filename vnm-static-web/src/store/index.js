@@ -136,6 +136,7 @@ export const userStore = defineStore("userStore", {
 
           window.open(
             // `https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=WEB&lang=zh-CN&token=${this.token}`,
+            `https://csweb01.amv4xjcbd.com/?partnerId=7&way=WEB&lang=${this.locale}&token=${this.token}`,
             `${lineUrl}&token=${this.token}`,
             "Chat Server",
             "resizable=yes, width=" + 800 + ", height=" + 880 + ", top=" + top + ", left=" + left

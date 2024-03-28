@@ -134,6 +134,9 @@ const menuItems = ref([
       svg {
         color: #ffffff;
       }
+      .amount {
+        font-family: 'Roboto';
+      }
     }
 
     .profile-actions {

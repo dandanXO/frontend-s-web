@@ -268,7 +268,7 @@ $node-color: #4873f1;
 .node {
   .methodtitle {
 
-    font-family: Poppins;
+    // font-family: Poppins;
   font-size: 18px;
   font-weight: 400;
   line-height: 27px;

@@ -349,7 +349,7 @@ svg {
   background-size: 100% 100%;
   aspect-ratio: 190/96;
   font-size: 1.2rem;
-  width: 95px;
+  min-width: 95px;
   color: $white;
   border-radius: 10px;
 

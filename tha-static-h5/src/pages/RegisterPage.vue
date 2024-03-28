@@ -390,7 +390,7 @@ export default defineComponent({
 
     const getTelephoneVerificationImgCode = () => {
       api
-        .get("/member/verificationCode")
+        .get("/member/verificationEasyCode")
         .then((res) => {
           const response = res.data;
           if (response.code === 0) {
@@ -544,7 +544,7 @@ export default defineComponent({
                       content_type: "product"
                     },
                     {
-                      event_id: "CompleteRegistration001"
+                      event_id: new Date().getTime()
                     }
                   );
                 }

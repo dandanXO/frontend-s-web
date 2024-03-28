@@ -1328,6 +1328,8 @@ export default defineComponent({
       }
       if (platformName === "AG") {
         return "AG真人、XIN电子"; // AG
+      } else if (platformName === "AGF") {
+        return "AG捕鱼"; // AGF
       } else if (platformName === "BBINDY") {
         return "BBIN真人"; // BBINDY
       } else if (platformName === "KY") {

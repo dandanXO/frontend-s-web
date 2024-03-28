@@ -117,15 +117,15 @@
 
         <div v-if="loginType">
           <q-label>
-            电话号码:
+            {{ $t("lang.please_enter_phone_number") }}
             <em>*</em>
           </q-label>
           <q-input
             hide-bottom-space
             ref="telephoneRef"
             v-model="phoneLoginForm.phoneNumber"
-            label="电话号码"
-            :rules="[(val) => (val && val.length > 0) || '请输入电话号码', isValidCnPhone]"
+            :placeholder="$t('lang.phone_number')"
+            :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_phone_number')]"
             color="white"
             :readonly="phoneLoginForm.smsCodeId ? true : false"
             clearable
@@ -138,7 +138,7 @@
             </template>
           </q-input>
           <q-label>
-            短信验证码:
+            {{ $t("lang.verification_code_send") }}
             <em>*</em>
           </q-label>
           <q-input
@@ -147,9 +147,9 @@
             hide-bottom-space
             type="text"
             v-model="phoneLoginForm.code"
-            label="短信验证码"
+            :placeholder="$t('lang.verification_code')"
             clearable
-            :rules="[(val) => (val && val.length > 3) || '请输入短信验证码']"
+            :rules="[(val) => (val && val.length > 3) || $t('lang.verification_code_empty')]"
             color="white"
             rounded
             standout
@@ -158,7 +158,7 @@
               <q-btn
                 size="md"
                 color="brightbtn"
-                label="发送验证码"
+                :label="$t('lang.verification_code_send')"
                 @click="toggleInnerCode"
                 style="white-space: nowrap"
               />
@@ -182,11 +182,11 @@
             />
           </div>
 
-          <!-- <div class="login-via-phone-div">
+          <div class="login-via-phone-div">
             <span @click="loginType = !loginType">
-              {{ loginType ? "用户名登录" : "手机号登录" }}
+              {{ loginType ? $t("lang.username_login") : $t("lang.phone_login") }}
             </span>
-          </div> -->
+          </div>
 
           <div class="text-center">
             <router-link class="forget-pwd-tip" to="/forgot-password">{{ $t("lang.forgot_password") }}</router-link>
@@ -223,24 +223,24 @@
     <q-card width="100%">
       <q-card-section class="q-pa-md bg-brightbtn text-white">
         <q-toolbar>
-          <q-toolbar-title>验证码</q-toolbar-title>
+          <q-toolbar-title>{{ $t("lang.captcha_code") }}</q-toolbar-title>
           <q-btn flat v-close-popup round dense icon="close" />
         </q-toolbar>
       </q-card-section>
       <div class="q-px-lg q-pt-sm q-pb-lg">
         <q-card-section class="q-mb-md q-pa-md">
-          <q-input v-model="innerCaptchaRef" placeholder="验证码">
+          <q-input v-model="innerCaptchaRef" :placeholder="$t('lang.enter_captcha_code')">
             <template v-slot:append>
               <img
                 :src="phoneVerificationImg"
-                title="点击刷新验证码"
+                :title="$('lang.captcha_refresh')"
                 style="margin-top: 6px; cursor: pointer"
                 @click="getInnerCode"
               />
             </template>
           </q-input>
         </q-card-section>
-        <q-btn @click="sendOtpSms" label="发送验证码" color="brightbtn" />
+        <q-btn @click="sendOtpSms" :label="$t('lang.verification_code_send')" color="brightbtn" />
       </div>
     </q-card>
   </q-dialog>
@@ -459,13 +459,13 @@ export default defineComponent({
               $q.notify({
                 color: "negative",
                 position: "top",
-                message: "请验证手机码",
+                message: t("lang.personal_mobilenumber_verify"),
                 icon: "report_problem"
               });
               return;
             }
             $q.loading.show({
-              message: "登录中"
+              message: t("lang.logging_in")
             });
             store
               .memberLoginviaPhone({

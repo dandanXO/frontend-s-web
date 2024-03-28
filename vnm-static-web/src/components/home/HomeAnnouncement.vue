@@ -1,5 +1,6 @@
 <template>
   <el-dialog
+  align-center
     v-model="isStationNotice"
     :maskClosable="false"
     :footer="null"

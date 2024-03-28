@@ -161,7 +161,7 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("track", "PageView");
       fbq("track", "ViewContent");
       */
-      ttq.load('CNRDC33C77U4A9P32PIG');
+      ttq.load('CO1VAVRC77U685I8CO4G');
       ttq.page();
     } else if (ui.isAffiliateB) {
       console.log("Slot-Win .cc");

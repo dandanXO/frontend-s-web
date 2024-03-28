@@ -69,7 +69,7 @@
         <q-select
           v-else
           ref="depositAmtRef"
-          label="选择金额"
+          :label="$t('lang.deposit_select_amount')"
           name="localAmount"
           class="deposit-selection"
           filled

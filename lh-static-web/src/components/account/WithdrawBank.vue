@@ -155,7 +155,7 @@
           <el-input disabled v-model="bankCardInfo.cardAccount" />
         </el-form-item>
         <el-form-item prop="cardNumber" name="cardNumber">
-          <el-input v-model="bankCardInfo.cardNumber" :placeholder="numAddress()" />
+          <el-input v-model="bankCardInfo.cardNumber" :placeholder="numAddress()" :type="isSZPAY ? 'number' : ''" />
         </el-form-item>
         <el-form-item prop="cardAddress" name="cardAddress" v-if="!isUSDT && !isEWALLET && !isALIPAY">
           <el-input
@@ -331,7 +331,7 @@ export default defineComponent({
       }
       if (v === "") {
         if (selectedCode === 'SZPAY') {
-        return Promise.reject('请绑定手机号');
+        return Promise.reject('请输入数字人民币使用的手机号');
         } else{
           return Promise.reject('请输入卡号');
         }
@@ -361,6 +361,7 @@ export default defineComponent({
     const isEWALLET = ref(false);
     const isALIPAY = ref(false);
     const store = userStore();
+    const isSZPAY = ref(false);
     const searchForm = reactive({
       startDate: "",
       endDate: "",
@@ -876,8 +877,10 @@ export default defineComponent({
     const numAddress = () => {
       if (isUSDT.value) {
         return "钱包地址";
-      } else if (isEWALLET.value) {
-        return "电子钱包";
+      } else if (isEWALLET.value && !isSZPAY.value) {
+        return '电子钱包'
+      } else if (isEWALLET.value && isSZPAY.value) {
+        return '数字人民币使用的手机号'
       } else {
         return "银行卡号";
       }
@@ -886,9 +889,13 @@ export default defineComponent({
     watch(
       () => bankCardInfo.bankId,
       (newVal, oldVal) => {
+        isSZPAY.value = false;
         const selectedBank = banksList.value.find((bank) => bank.id === newVal);
         if (selectedBank) {
           bankCardInfo.currencyId = selectedBank.currencyIds;
+          if (selectedBank.code === 'SZPAY') {
+            isSZPAY.value = true;
+          }
         }
       }
     );
@@ -936,7 +943,8 @@ export default defineComponent({
       checkBankCards,
       chooseCard,
       numAddress,
-      checkType
+      checkType,
+      isSZPAY
     };
   }
 });

@@ -191,7 +191,7 @@ export default defineComponent({
         img {
           height: 35px;
       // filter: grayscale(1);
-    filter: brightness(0.7);
+    filter: brightness(0.5);
     mix-blend-mode: luminosity;
       &:hover {
         mix-blend-mode: normal;

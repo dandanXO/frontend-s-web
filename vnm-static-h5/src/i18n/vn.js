@@ -59,9 +59,9 @@ export default {
     length_between_6_12: "Chiều dài nên từ 6-12",
     please_type_the_password: "Xin vui lòng nhập mật khẩu",
     password: "mật khẩu",
-    please_type_the_confirm_password: "Please type the confirm password",
-    confirm_password: "Confirm password",
-    password_not_same: "Password not same",
+    please_type_the_confirm_password: "Vui lòng nhập lại mật khẩu",
+    confirm_password: "Xác nhận mật khẩu",
+    password_not_same: "Mật khẩu không khớp",
     please_enter_verification_code: "vui lòng nhập mã xác nhận",
     verification_code: "nhập mã xác nhận",
     length_is_4: "Chiều dài phải là 4",
@@ -73,6 +73,9 @@ export default {
     password_weak: "Yếu",
     password_good: "Tốt",
     password_strong: "Mạnh",
+    phone_login: "Đăng nhập bằng số điện thoại",
+    username_login: "Đăng nhập bằng tên người dùng",
+    logging_in: "Đăng nhập",
 
     // logout
     logout_title: "Thông báo hệ thống",
@@ -90,20 +93,21 @@ export default {
     referral_hints: "Nếu bạn không phải là người chơi cộng tác, bạn không cần điền vào biểu mẫu.",
 
     // forgot password
-    sms_retrieval: "SMS retrieval",
-    email_retrieval: "Email retrieval",
-    please_enter_phone_number: "Please enter phone number",
-    phone_number: "Phone number",
-    change_password_btn: "Change password",
-    please_enter_email: "Please enter email",
+    sms_retrieval: "Truy xuất qua SMS",
+    email_retrieval: "Truy xuất qua Email",
+    please_enter_phone_number: "Vui lòng nhập số điện thoại",
+    phone_number: "Số điện thoại",
+    change_password_btn: "Đổi mật khẩu",
+    please_enter_email: "Vui lòng nhập email",
     email: "Email",
-    email_sent_txt: "OTP has been sent to your email, please enter OTP and new password.",
-    otp_code: "OTP code",
-    please_enter_otp: "Please enter OTP code",
-    new_password: "New Password",
-    please_enter_new_password: "Please enter new password",
-    password_length_is_6_to_12: "Password length is 6 to 12",
-    password_security_level_must_be_at_least_good: "Password security level must be at least as good",
+    email_sent_txt: "OTP đã được gửi đến email của bạn, vui lòng nhập OTP và mật khẩu mới.",
+    otp_code: "Mã OTP",
+    please_enter_otp: "Vui lòng nhập mã OTP",
+    new_password: "Mật khẩu mới",
+    please_enter_new_password: "Vui lòng nhập mật khẩu mới",
+    password_length_is_6_to_12: "Độ dài mật khẩu từ 6 đến 12 ký tự",
+    password_security_level_must_be_at_least_good: "Mức độ bảo mật mật khẩu phải ít nhất là tốt",
+    password_reset_complete: "Đặt lại mật khẩu hoàn tất",
 
     // change password
     chgpwd_password: "Mật khẩu",
@@ -162,6 +166,15 @@ export default {
     personal_verification_successful: "Xác minh thành công",
 
     // share
+    share_promoshare: "Quảng bá và chia sẻ",
+    share_promodesc:
+      "Nếu người dùng bạn mời qua liên kết quảng bá đăng ký và nạp tiền, bạn sẽ nhận được phần thưởng tích lũy tối đa là 2,000VND.",
+    share_sponsoredlinks: "Liên kết tài trợ",
+    share_copy: "Sao chép",
+    share_qrcode: "Mã QR",
+    share_accumulated_registration: "Đăng ký tích lũy",
+    share_accumulated_recharge: "Nạp tiền tích lũy",
+    share_persons: "Người",
 
     // transfer
     transfer_transfer: "Chuyển khoản",
@@ -186,6 +199,7 @@ export default {
 
     // deposit
     deposit_tipstitle: "Mẹo",
+    deposit_tiptologin: "Để đảm bảo an toàn cho quỹ, bạn cần xác minh số điện thoại di động trước khi nạp tiền",
     deposit_tipdesc:
       "Để đảm bảo an toàn cho số tiền, bạn cần xác minh số điện thoại di động của mình trước khi nạp tiền",
     deposit_tiptorealname: "Vui lòng thêm họ và tên cho tài khoản người chơi",
@@ -200,6 +214,7 @@ export default {
     deposit_please_enter_deposit: "Vui lòng nhập số tiền nạp",
     deposit_loadingdatapleasewait: "Đang tải dữ liệu... Vui lòng đợi...",
     deposit_confirm: "Xác nhận",
+    deposit_select_amount: "Chọn số lượng",
 
     // withdraw
     withdraw_amount: "Số tiền",
@@ -470,6 +485,7 @@ export default {
     receive_by_phone: "Nhận bằng điện thoại",
     email_address: "Địa chỉ email",
     enter_your_email: "Nhập địa chỉ email của bạn",
+    email_valid: "Vui lòng nhập email hợp lệ",
     send: "Gửi",
     an_otp_has_been_sent_to_email: "Mã OTP đã được gửi đến email của bạn. Vui lòng nhập mã OTP và mật khẩu mới",
     an_otp_has_been_sent_to_phone: "Mã OTP đã được gửi đến số điện thoại của bạn",
@@ -479,6 +495,11 @@ export default {
     enter_new_password: "Nhập mật khẩu mới",
     captcha_code: "Mã captcha",
     enter_captcha_code: "Nhập mã captcha",
+    captcha_refresh: "Nhấn vào để làm mới mã captcha",
+    verification_code_send: "Gửi mã xác minh",
+    verification_code: "Mã xác minh",
+    verification_code_empty: "Vui lòng nhập mã xác minh qua tin nhắn SMS",
+    verification_code_sending: "Đang gửi mã xác minh...",
     return_to_login: "Quay lại đăng nhập",
     verifying: "Đang xác minh",
     receive_a_daily_bonus_share_qr_code_with_friends:
