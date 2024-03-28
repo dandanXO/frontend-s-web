@@ -75,20 +75,24 @@
     <div class="bind-wrapper">
       <q-form class="bind-item q-my-sm">
         <q-label>
-          电子钱包
+          <template v-if="isSZPAY">数字人民币使用的手机号</template>
+          <template v-else>电子钱包</template>
           <em>*</em>
         </q-label>
         <q-input
           ref="cardNumberRef"
-          type="text"
           standout
           v-model="bankCardInfo.cardNumber"
           class="q-pb-xs"
           hide-bottom-space
-          label="请输入电子钱包"
-          lazy-rules
+          :label="isSZPAY ? '请输入数字人民币使用的手机号' : '请输入电子钱包'"
           clearable
-          :rules="[(val) => (val && val.length > 0) || '请输入电子钱包', validateBankLength, validateEWalletNumber]"
+          :type="isSZPAY ? 'number' : 'text'"
+          :rules="[
+            (val) => (val && val.length > 0) || (isSZPAY ? '请输入数字人民币使用的手机号' : '请输入电子钱包'),
+            validateBankLength,
+            validateEWalletNumber
+          ]"
         ></q-input>
 
         <q-label>
@@ -207,6 +211,7 @@ const qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
 const router = useRouter();
+const isSZPAY = ref(false);
 
 const imgURL = process.env.IMAGE_CDN + "/payment/";
 
@@ -222,7 +227,7 @@ const bankCardInfo = reactive({
   telephone: store.phone,
   smsCode: "",
   smsCodeId: "",
-  currencyId: "",
+  currencyId: ""
 });
 
 const validateBankLength = (val) => {
@@ -411,9 +416,13 @@ const handleEnterKey = () => {
 watch(
   () => bankCardInfo.bankId,
   (newVal, oldVal) => {
+    isSZPAY.value = false;
     const selectedBank = bankList.value.find((bank) => bank.id === newVal);
     if (selectedBank) {
       bankCardInfo.currencyId = selectedBank.currencyIds;
+      if (selectedBank.code === "SZPAY") {
+        isSZPAY.value = true;
+      }
     }
   }
 );
