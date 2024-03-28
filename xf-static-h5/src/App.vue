@@ -101,10 +101,30 @@ export default defineComponent({
         }
       });
     };
+
+    const getOnlineStatApi = async () => {
+      // console.log("Ok Online.");
+      const sidParam = store.visitorId;
+      const way = "h5";
+
+      if (sidParam) {
+        const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
+          params: {
+            way: way,
+            sid: sidParam,
+            siteCode: "xf1"
+          }
+        });
+      }
+    };
+
     onMounted(() => {
       checkSID();
       // initCsWeb();
       getCSA();
+
+      setTimeout(getOnlineStatApi, 2000);
+      setInterval(getOnlineStatApi, 60000);
     });
   }
 });
