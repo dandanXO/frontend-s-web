@@ -482,7 +482,7 @@
         <template v-for="(item, index) in fishing" :key="index">
           <div
             class="platform-block"
-            @click="playGame(item.gameName, item.code, 7202)"
+            @click="playGame(item.gameName, item.code, item.gameCode)"
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
             <MaintenanceBox :item="item" :moment="moment(item.maintenanceStartTime)" />
@@ -1482,11 +1482,8 @@ export default defineComponent({
               fishObj.icon = "fish";
               fishObj.subtitle = "捕鱼游戏";
 
-              console.log("fishObj.code = " + fishObj.code);
-              console.log("fishObj.title = " + fishObj.title);
-
               if (fishObj.code === "GPS") {
-                fishObj.gameCode = 7202;
+                fishObj.gameCode = "7202";
               } else if (fishObj.code === "AGF") {
                 fishObj.gameCode = "HMPL";
               }
