@@ -1476,7 +1476,7 @@ export default defineComponent({
               ui.slotLists.push(slotItem);
               slot.value.push(slotObj);
             }
-            if (platTypes.indexOf("FISH") > -1 && element.code !== "AGF") {
+            if (platTypes.indexOf("FISH") > -1) {
               var fishObj = Object.assign({}, element);
               fishObj.title = translateRecord(fishObj.name);
               fishObj.icon = "fish";
@@ -1484,6 +1484,10 @@ export default defineComponent({
 
               if (fishObj.code === "GPS") {
                 fishObj.gameCode = 7202;
+              }
+
+              if (fishObj.code === "AGF") {
+                fishObj.gameCode = 6;
               }
 
               fishing.value.push(fishObj);
