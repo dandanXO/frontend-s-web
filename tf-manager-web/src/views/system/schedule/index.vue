@@ -614,6 +614,15 @@ function showDialog(type) {
     param.value = []
     addParam()
     scheduleForm.id = null
+    scheduleForm.jobName = null
+    scheduleForm.beanName = null
+    scheduleForm.params = null
+    scheduleForm.jsonParams = null
+    scheduleForm.cronExpression = null
+    scheduleForm.state = 2
+    scheduleForm.stopAfterFailure = true
+    scheduleForm.description = ''
+    scheduleForm.sites = null
     uiControl.dialogTitle = t('fields.addJob')
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editJob')
