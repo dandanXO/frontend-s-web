@@ -648,7 +648,7 @@ export default defineComponent({
 
     const getInnerCode = () => {
       api
-        .get("/member/verificationCode")
+        .get("/member/verificationEasyCode")
         .then((response) => {
           if (response.data.code === 0) {
             phoneVerificationImg.value =
