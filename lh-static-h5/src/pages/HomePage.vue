@@ -1482,11 +1482,12 @@ export default defineComponent({
               fishObj.icon = "fish";
               fishObj.subtitle = "捕鱼游戏";
 
+              console.log("fishObj.code = " + fishObj.code);
+              console.log("fishObj.title = " + fishObj.title);
+
               if (fishObj.code === "GPS") {
                 fishObj.gameCode = 7202;
-              }
-
-              if (fishObj.code === "AGF") {
+              } else if (fishObj.code === "AGF") {
                 fishObj.gameCode = "HMPL";
               }
 
