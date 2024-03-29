@@ -32,13 +32,13 @@
         </el-form-item>
     </div>
 
-    <el-dialog v-model="captchaDialogVisible" title="验证码" width="50%" align-center style="max-width: 500px"
+    <el-dialog v-model="captchaDialogVisible" :title="$t('personal.captcha')" width="50%" align-center style="max-width: 500px"
         :close-on-click-modal="false" @keydown.enter.prevent>
         <div class="light-bg form-field">
             <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
-            <el-form-item tabindex="3" label="验证码" prop="captchaCode">
+            <el-form-item tabindex="3" :label="$t('personal.captcha')" prop="captchaCode">
                 <div style="display:flex;width:100%;">
-                    <el-input v-model="props.form.captchaCode" label="验证码" placeholder="验证码"
+                    <el-input v-model="props.form.captchaCode" :label="$t('personal.captcha')" :placeholder="$t('personal.captcha')"
                         @keyup.enter="props.onClickConfirm" />
                     <img style="width:150px;" :src="verificationImg" @click="getCode" />
                 </div>
@@ -46,7 +46,7 @@
         </div>
 
         <el-button size="large" class="blue-bg primary-btn" @click="props.onClickConfirm">
-            发送
+            {{ $t(('common.send'))}}
         </el-button>
     </el-dialog>
 </template>
@@ -130,6 +130,7 @@ defineExpose({
     margin-top: 40px;
     .form-field-icon {
         margin: auto;
+    height: 30px;
     }
 }
 

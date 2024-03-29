@@ -90,7 +90,10 @@ const onResponse = (response) => {
       return response.data;
     }
     if (res.code === ResponseCode.ERROR_AMOUNT_PRIVILEGE_DEPOSIT) {
-      res.message = "优惠存款金额不符合规则";
+      res.message = 'Số tiền gửi tiết kiệm cho khuyến mãi không phù hợp với quy định'
+      return res;
+    }
+    if (res.code === ResponseCode.ERROR_WITHDRAW_PASSWORD_NOT_MATCH) {
       return res;
     }
     if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {

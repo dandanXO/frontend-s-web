@@ -144,11 +144,11 @@
             </el-button>
           </div>
 
-          <!-- <el-form-item v-if="selectedPayType" class="tip">
+          <el-form-item v-if="selectedPayType" class="tip">
             <span class="account-tip-text" style="margin-bottom: 10px; display: block; width: 100%;">
               <div v-html="activeMethod.msg"></div>
             </span>
-          </el-form-item> -->
+          </el-form-item>
 
           <!-- <div class="txt-center">
             <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">
@@ -163,12 +163,12 @@
         v-model="isDeposited"
         :maskClosable="false"
         :closable="false"
-        title="已存款"
+        :title="$t('deposit.deposited')"
       >
-        您将被重定向到您的银行页面以完成存款。<br /><br />
+      {{ $t('deposit.redirected') }}<br /><br />
 
-        如果成功，您将在此页面上收到通知。<br /><br />
-        <el-button class="common-btn" @click="clearInfo">理解</el-button>
+      {{ $t('deposit.successful') }}<br /><br />
+        <el-button class="common-btn" @click="clearInfo">{{ $t('common.understand') }}</el-button>
       </el-dialog>
     </div>
   </div>
@@ -556,6 +556,9 @@ function doDeposit(data) {
       });
       loadingBtn.value = false;
     } else {
+      if(d.code === 11004) {
+        d.message = t('common.privilegeDeposit')
+      }
       ElMessage.error(d.message);
     }
   }).catch((err) => {

@@ -43,7 +43,7 @@
       </el-form-item>
     </div>
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/name-icon.png" />
+      <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
       <el-form-item :label="$t('login.realName')" prop="realName">
         <el-input
           class="wTip"
@@ -58,27 +58,59 @@
         </el-input>
       </el-form-item>
     </div>
-    <!-- <div class="light-bg form-field">
+    <div class="light-bg form-field">
+      <img class="form-field-icon" src="@/assets/home/auth/email-icon.png" />
+      <el-form-item :label="$t('login.email')" prop="email">
+        <el-input
+          class="wTip"
+          v-model="regForm.email"
+          :placeholder="$t('login.email')"
+          :rules="[
+            { required: true, message: t('placeholder.email') },
+          ]"
+          clearable
+        >
+          <template #append></template>
+        </el-input>
+      </el-form-item>
+    </div>
+    <div class="light-bg form-field">
+      <img class="form-field-icon" src="@/assets/home/auth/phone-icon.png" />
+      <el-form-item :label="$t('login.mobileNo')" prop="telephone">
+        <el-input
+          class="wTip"
+          v-model="regForm.telephone"
+          :placeholder="$t('login.mobileNo')"
+          :rules="[
+            { required: true, message: t('placeholder.mobileNo') },
+          ]"
+          clearable
+        >
+          <template #append></template>
+        </el-input>
+      </el-form-item>
+    </div>
+    <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/referral-icon.png" />
-      <el-form-item label="推荐码" prop="codeAffiliate">
+      <el-form-item :label="t('login.codeAffiliate')" prop="codeAffiliate">
         <el-input
           v-if="!hasAffiliate"
           class="half"
           v-model="regForm.codeAffiliate"
-          placeholder="如果没有 无需填写"
+          :placeholder="t('login.codeAffiliate')"
           clearable
         />
         <el-input
           v-else
           class="half"
           v-model="regForm.codeAffiliate"
-          placeholder="如果没有 无需填写"
+          :placeholder="t('login.codeAffiliate')"
           readonly
           disabled
           clearable
         />
       </el-form-item>
-    </div> -->
+    </div>
 
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
@@ -246,7 +278,7 @@ const regRules = {
   loginName: [
     {
       min: 6,
-      max: 12,
+      max: 11,
       message: t('placeholder.between612'),
       trigger: "blur"
     },
@@ -258,7 +290,7 @@ const regRules = {
   password: [
     {
       min: 6,
-      max: 12,
+      max: 11,
       message: t('placeholder.between612'),
       trigger: "blur"
     },
@@ -270,7 +302,7 @@ const regRules = {
   confirmPwd: [
     {
       min: 6,
-      max: 12,
+      max: 11,
       message: t('placeholder.between612'),
       trigger: "blur"
     },
@@ -477,6 +509,7 @@ onMounted(() => {
   width: 100%;
   .form-field-icon {
     margin: auto;
+    height: 30px;
   }
 }
 

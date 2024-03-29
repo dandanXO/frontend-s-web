@@ -42,7 +42,7 @@
             <RiLinkUnlink />
           </div>
         </div>
-        <div class="bank-card-item" @click="bankCardModal('bank')">
+        <div class="bank-card-item add" @click="bankCardModal('bank')">
           <RiLink />
           <span class="lock-card-txt">{{ $t('withdraw.addBankCard') }}</span>
         </div>
@@ -126,18 +126,18 @@
       <el-form ref="bankCardFormRef" :model="bankCardInfo" :rules="bankCardRules">
         <el-form-item prop="bankId" :rules="[{ required: true, message: $t('placeholder.selectBank'), trigger: 'blur' }]">
           <el-row :gutter="20">
-            <el-col :span="6">
+            <el-col :span="9">
               <el-select :placeholder="$t('withdraw.type')" v-model="selectedBankType" style="width: 100%" @change="selectBankType">
                 <el-option v-for="bank in bankTypes" :key="bank.value" :value="bank.value" :label="bank.text">
                   {{ bank.text }}
                 </el-option>
               </el-select>
             </el-col>
-            <el-col :span="18">
+            <el-col :span="15">
               <el-select
                 class="select"
                 v-model="bankCardInfo.bankId"
-                :placeholder="$t('withdraw.choose') + chooseCard()"
+                :placeholder="$t('withdraw.choose') + ' ' + chooseCard()"
                 style="width: 100%"
               >
                 <el-option v-for="b in banksList" :key="b.id" :label="getOptionLabel(b.name)" :value="b.id">
@@ -163,8 +163,8 @@
         <el-form-item prop="cardAddress" name="cardAddress" v-if="!isUSDT && !isEWALLET && !isALIPAY">
           <el-input
             v-model="bankCardInfo.cardAddress"
-            placeholder="开户行地址"
-            :rules="[{ required: true, message: '请输入开户行地址', trigger: 'blur' }]"
+            :placeholder="$t('withdraw.bankBranchAddress')"
+            :rules="[{ required: true, message: $t('placeholder.bankBranchAddress'), trigger: 'blur' }]"
           />
         </el-form-item>
 <!--        <el-form-item>-->
@@ -186,10 +186,10 @@
             class="half"
             :readonly="!isSendOtp"
             v-model="bankCardInfo.smsCode"
-            placeholder="输入短信验证码"
+            :placeholder="$t('withdraw.smsCodeRequired')"
             @keyup.enter="submitBankCard"
           />
-            <el-button class="common-btn" @click="openCaptchaForm()">获取验证码</el-button>
+            <el-button class="common-btn" @click="openCaptchaForm()">{{$t('personal.getVerificationCode')}}</el-button>
           </el-space>
         </el-form-item>
 
@@ -198,15 +198,15 @@
         </el-form-item>
       </el-form>
     </el-dialog>
-    <el-dialog v-model="phoneCaptchaDialogVisible" title="验证码" width="50%" align-center style="max-width: 500px">
+    <el-dialog v-model="phoneCaptchaDialogVisible" :title="$t('personal.captcha')" width="50%" align-center style="max-width: 500px">
       <el-button size="large" color="#3bafda" class="common-btn" style="width:100%;" @click="sendOtp">
-        提交
+        {{$t('common.submit')}}
       </el-button>
     </el-dialog>
 
     <el-dialog
       v-model="captchaDialogVisible"
-      title="验证码"
+      :title="$t('personal.captcha')"
       width="50%"
       align-center
       style="max-width: 500px"
@@ -214,10 +214,10 @@
       @keydown.enter.prevent
     >
       <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="100" label-suffix=":">
-        <el-form-item tabindex="3" label="验证码" prop="captchaCode" :rules="[{ required: true, message: '请输入验证码', trigger: 'blur' }]" >
+        <el-form-item tabindex="3" :label="$t('personal.captcha')" prop="captchaCode" :rules="[{ required: true, message: $t('placeholder.captchareq'), trigger: 'blur' }]" >
           <el-row :gutter="10" style="justify-content: center; align-items: center">
             <el-col :span="12">
-              <el-input v-model="captchaForm.captchaCode" label="验证码" placeholder="验证码" @keyup.enter="sendOtp" />
+              <el-input v-model="captchaForm.captchaCode" :label="$t('personal.captcha')" :placeholder="$t('personal.captcha')" @keyup.enter="sendOtp" />
             </el-col>
             <el-col :span="12">
               <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
@@ -225,7 +225,7 @@
           </el-row>
         </el-form-item>
         <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px" @click="sendOtp">
-          发送
+          {{ $t('common.send') }}
         </el-button>
       </el-form>
     </el-dialog>
@@ -267,17 +267,17 @@ export default defineComponent({
     let validateEmptyCardNo = async (r, v) => {
       if (selectedBankType.value === "Bank") {
         if (v === "") {
-          return Promise.reject("请输入银卡号");
+          return Promise.reject(t('withdraw.inputAccNumber'));
         } else if (/^\d+$/.test(v) === false) {
-          return Promise.reject("银行卡号只能包含数字");
+          return Promise.reject(t('withdraw.onlyNumber'));
         } else {
           return Promise.resolve();
         }
       } else if (selectedBankType.value === "Crypto") {
         if (v === "") {
-          return Promise.reject("请输入虚拟钱包账号");
+          return Promise.reject(t('withdraw.enterWalletNumber'));
         } else if (/^[A-Za-z0-9]*$/.test(v) === false) {
-          return Promise.reject("虚拟钱包账号只能包含数字及英文字母");
+          return Promise.reject(t('withdraw.virtualWallet'));
         } else {
           return Promise.resolve();
         }
@@ -299,7 +299,7 @@ export default defineComponent({
           max = 20;
         } else {
           if (!/^\d+$/.test(v)) {
-            return Promise.reject("请输入数字");
+            return Promise.reject(t('withdraw.enterDigits'));
           }
           min = 16;
           max = 19;
@@ -329,12 +329,12 @@ export default defineComponent({
         }
       }
       if (v === "") {
-        return Promise.reject("请输入卡号");
+        return Promise.reject(t('withdraw.inputAccNumber'));
       } else if (v.length < min || v.length > max) {
         if (min === max) {
-          return Promise.reject("长度应为 " + min);
+          return Promise.reject(t('withdraw.lengthShouldBe') + " " + min);
         } else {
-          return Promise.reject("长度应为 " + min + "-" + max);
+          return Promise.reject(t('withdraw.lengthShouldBe') + " " + min + "-" + max);
         }
       } else {
         return Promise.resolve();
@@ -342,9 +342,9 @@ export default defineComponent({
     };
     const checkType = (type) => {
       if (type === 'BANK') {
-        return '银行卡'
+        return t('withdraw.bank')
       } else if (type === 'CRYPTO') {
-        return '数字货币'
+        return t('withdraw.usdt')
       } else if (type === 'EWALLET') {
         return '电子钱包'
       }
@@ -400,10 +400,12 @@ export default defineComponent({
       pageSize: 5,
       pageCount: 1
     }]);
-    const bankTypes = [{ value: "Bank", text: "银行卡" }, { value: "Crypto", text: "数字货币" }, {
-      value: "e-Wallet",
-      text: "电子钱包"
-    }];
+    const bankTypes = [{ value: "Bank", text: t('withdraw.bank') }, { value: "Crypto", text: t('withdraw.usdt') }
+    // , {
+    //   value: "e-Wallet",
+    //   text: "电子钱包"
+    // }
+  ];
     const personalState = reactive({
       memberInfo: {},
       bankCardList: []
@@ -412,7 +414,7 @@ export default defineComponent({
     const searchRecord = () => {
       if(!searchForm.startDate || !searchForm.endDate){
         ElMessage({
-          message: "请选择日期",
+          message: t('common.startEndDate'),
           type: "error"
         });
         return;
@@ -631,6 +633,14 @@ export default defineComponent({
     const isSendOtp = ref(false);
 
     const sendOtp = async () => {
+      if (captchaForm.captchaCode.length < 4) {
+        
+        ElMessage({
+          type: "error",
+          message: t('placeholder.captcha')
+        });
+        return
+      }
       const smsDetail = {
         // telephone: bankCardInfo.telephone,
         captchaCode: captchaForm.captchaCode,
@@ -645,7 +655,7 @@ export default defineComponent({
 
             ElMessage({
               type: "success",
-              message: `发送手机验证码成功`
+              message: t('withdraw.verifyCodeSuccess')
             });
             captchaDialogVisible.value = false;
           } else {
@@ -717,7 +727,7 @@ export default defineComponent({
           addBankCard(bankCardInfo).then((response) => {
             if (response.code === 0) {
               ElMessage({
-                message: "成功",
+                message: t('common.success'),
                 type: "success"
               });
               bankCardModalState.visible = false;
@@ -754,7 +764,7 @@ export default defineComponent({
       cardAddress: [
         {
           required: true,
-          message: "请输入开户行地址",
+          message: t('withdraw.inputBankBranch'),
           trigger: "blur"
         }
       ]
@@ -783,7 +793,7 @@ export default defineComponent({
       captchaCode: [
         {
           required: true,
-          validator: "请输入验证码",
+          validator: t('placeholder.captcha'),
           trigger: "blur"
         }
       ]
@@ -791,14 +801,14 @@ export default defineComponent({
     const unbindBankCard = (card) => {
 
       ElMessageBox.prompt(
-        `请输入解绑${getOptionLabel(card.bankName)}的${card.bankType === "CRYPTO" || card.bankType === "EWALLET" ? "钱包地址" : "卡号"}`,
-        "确认解绑",
+        `${t('withdraw.enterUnbind')}${getOptionLabel(card.bankName)}${t('withdraw.of')}${card.bankType === "CRYPTO" || card.bankType === "EWALLET" ? "钱包地址" : t('withdraw.accountNo')}`,
+        t('withdraw.confirmUnbind'),
         {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+          confirmButtonText: t('common.confirm'),
+          cancelButtonText:  t('common.cancel'),
           cancelButtonClass: "cancel-btn",
           type: "warning",
-          inputErrorMessage: "请输入正确的卡号" // Error message to display if input is invalid
+          inputErrorMessage: t('withdraw.confirmCorrectNumber') // Error message to display if input is invalid
         }
       )
         .then((inputValue) => {
@@ -807,7 +817,7 @@ export default defineComponent({
               if (res.code === 0) {
                 ElMessage({
                   type: "success",
-                  message: "解绑完成"
+                  message: t('common.unbindSuccessful')
                 });
                 // loadCards();
                 searchRecord();
@@ -828,14 +838,14 @@ export default defineComponent({
           } else {
             ElMessage({
               type: "error",
-              message: "卡号不匹配，请重新输入"
+              message: t('withdraw.incorrectAccNumber')
             });
           }
         })
         .catch(() => {
           ElMessage({
             type: "info",
-            message: "删除取消"
+            message:t('withdraw.cancelUnbind')
           });
         });
     };
@@ -851,7 +861,7 @@ export default defineComponent({
     const chooseCard = () => {
       isALIPAY.value = false;
       if (isUSDT.value) {
-        return "虚拟币";
+        return t('withdraw.usdt');
       } else if (isEWALLET.value) {
         return "电子钱包";
       } else {
@@ -862,17 +872,17 @@ export default defineComponent({
             }
           }
         });
-        return "银行";
+        return t('withdraw.bank');
       }
     };
 
     const numAddress = () => {
       if (isUSDT.value) {
-        return "钱包地址";
+        return t('withdraw.usdtAddress');
       } else if (isEWALLET.value) {
         return "电子钱包";
       } else {
-        return "银行卡号";
+        return t('withdraw.accountNo');
       }
     };
     return {
@@ -1064,17 +1074,21 @@ body {
     height: 120px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     border-radius: 10px;
     position: relative;
     flex-wrap: wrap;
+    &.add {
+    justify-content: center;
+    }
 
     .card-details {
       display: flex;
       gap: 16px;
-      margin-right: auto;
       margin-left: 16px;
       margin-top: 12px;
+      margin-right: 16px;
+      align-items: flex-start;
 
       .card-bank-icon {
         img {
@@ -1086,8 +1100,7 @@ body {
       .card-name {
         .card-bank-name {
           font-weight: 600;
-          font-size: 1rem;
-
+          font-size: .8rem;
           &.txt-blue {
             color: $font-blue;
           }
@@ -1248,7 +1261,7 @@ body {
 .left {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-end;
   gap: 20px;
   margin: 20px 0;
 }

@@ -77,7 +77,7 @@ const loginRules = {
     },
     {
       min: 6,
-      max: 12,
+      max: 11,
       message: t('placeholder.username'),
       trigger: "blur"
     }
@@ -238,6 +238,7 @@ onMounted(() => {
 
   .form-field-icon {
     margin: auto;
+    height: 30px;
   }
 }
 :deep(.el-form-item--large .el-form-item__label) {

@@ -364,6 +364,7 @@ onMounted(() => {
 
   .form-field-icon {
     margin: auto;
+    height: 30px;
   }
 }
 
