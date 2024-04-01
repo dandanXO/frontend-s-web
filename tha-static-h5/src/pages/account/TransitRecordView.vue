@@ -688,6 +688,7 @@ export default defineComponent({
       totalBet: 0,
       totalPayout: 0
     })
+    const $q = useQuasar();
     const searchForm = reactive({
       turnover: {
         startDate: "",
@@ -1039,31 +1040,31 @@ export default defineComponent({
       };
 
       api
-          .post("/session/withdraw/confirm", qs.stringify(obj))
-          .then((response) => {
-            // Handle the response
-            if (response.data.code === 0) {
-              isConfirmWithdraw.value = false;
+        .post("/session/withdraw/confirm", qs.stringify(obj))
+        .then((response) => {
+          // Handle the response
+          if (response.data.code === 0) {
+            isConfirmWithdraw.value = false;
 
-              $q.notify({
-                color: "positive",
-                position: "top",
-                message: "已经确认到账",
-                icon: "check_circle_outline"
-              });
-              removeSessionKeys("/session/member/withdraw");
-              searchRecord();
-            }
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: "已经确认到账",
+              icon: "check_circle_outline"
+            });
+            removeSessionKeys("/session/member/withdraw");
+            searchRecord();
+          }
 
-            // setTimeout(() => {
-            //   window.location.reload();
-            // }, 1000);
-          })
+          // setTimeout(() => {
+          //   window.location.reload();
+          // }, 1000);
+        })
 
-          .catch((error) => {
-            // Handle the error
-            console.error(error);
-          });
+        .catch((error) => {
+          // Handle the error
+          console.error(error);
+        });
     };
 
     const submitReminder = () => {
@@ -1092,11 +1093,11 @@ export default defineComponent({
           }
         })
       }
+    }
 
-      watch(recordActive, (currentValue, oldValue) => {
+    watch(recordActive, (currentValue, oldValue) => {
       searchRecord()
     });
-    const $q = useQuasar()
 
     const recordUrl = {
       deposit: "/session/member/deposit",
