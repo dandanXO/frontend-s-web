@@ -68,7 +68,7 @@ $(document).ready(function (e) {
 				const response = await fetch(apiUrl, {
 					method: 'GET',
 				});
-				 data = await response.json();
+				const data = await response.json();
 				if (data) {
 					// debugger;
 					console.log("data", data);
