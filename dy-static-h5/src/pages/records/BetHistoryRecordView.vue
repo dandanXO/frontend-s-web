@@ -285,6 +285,11 @@ onMounted(async () => {
 });
 </script>
 <style lang="scss">
+.payout-total {
+  margin-left: 24px;
+  margin-right: 12px;
+}
+
 .flex-div {
   display: flex;
   align-items: center;
@@ -293,6 +298,19 @@ onMounted(async () => {
   span {
     font-size: 14px;
     padding-left: 5px;
+    min-width: 50px;
+
+    &:nth-child(3) {
+      margin-left: 10px;
+    }
+
+    &.select-stage {
+      min-width: 80px;
+    }
   }
+}
+
+.payout-total {
+  width: 240px;
 }
 </style>
