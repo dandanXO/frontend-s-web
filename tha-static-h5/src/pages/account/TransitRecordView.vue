@@ -1067,6 +1067,16 @@ export default defineComponent({
     };
 
     const submitReminder = () => {
+      console.log(reminderForm)
+
+      if (!reminderForm.photos) {
+        $q.notify({
+          type: "negative",
+          position: "top",
+          message: t('lang.please_upload_file'),
+          icon: "report_problem"
+        });
+      } else {
       api.post("/session/saveFinanceFeedback", qs.stringify(reminderForm)).then((res) => {
         const ret = res.data
         if (ret.code === 0) {

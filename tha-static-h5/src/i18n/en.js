@@ -403,6 +403,7 @@ export default {
     bank: "Bank",
     upload_img: "Upload",
     upload_successfully: "Upload Successfully.",
+    please_upload_file: "Please upload file",
     failed_upload_size_dont_meet_requirement:
       "Upload failed. Image size doesn't meet the specified requirements. Please upload the image again.",
     card_added: "Card added.",
