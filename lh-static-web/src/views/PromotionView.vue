@@ -1,6 +1,6 @@
 <template>
   <div class="promo-container">
-    <div class="promo-banner">
+    <div class="promo-banner" v-if="!isPromoDetail">
       <div class="promo-banner-image">
         <img src="../assets/promo/top-promo-banner.jpg" />
         <div class="countdown-day">
@@ -179,7 +179,7 @@ export default defineComponent({
     const route = useRoute();
     const router = useRouter();
 
-    const countDay= ref(0);
+    const countDay= ref(5);
     const euroCupStartDate = moment("2024-06-15");
     countDay.value= euroCupStartDate.diff(moment(),'days');
     if( countDay.value <= 0 ){
@@ -380,7 +380,7 @@ export default defineComponent({
     // background-size: 100% auto;
     // padding-top: max(110px, 16vw);
     width: 100%;
-    padding: 50px;
+    padding: 30px 50px 50px;
     position: relative;
     background-color: #f3f7fd;
   }
