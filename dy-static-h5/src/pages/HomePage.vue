@@ -1293,7 +1293,7 @@
                         ></div>
 
                         <div class="game-title">
-                          <h3>{{ fish.name }}</h3>
+                          <h3>{{ fish.title }}</h3>
                           <span>捕鱼游戏</span>
                         </div>
 
@@ -1330,7 +1330,7 @@
                         ></div>
 
                         <div class="game-title">
-                          <h3>{{ fish.name }}</h3>
+                          <h3>{{ fish.title }}</h3>
                           <span>捕鱼游戏</span>
                         </div>
 
@@ -1367,7 +1367,7 @@
                         ></div>
 
                         <div class="game-title">
-                          <h3>{{ fish.name }}</h3>
+                          <h3>{{ fish.title }}</h3>
                           <span>捕鱼游戏</span>
                         </div>
 
@@ -2000,9 +2000,14 @@ export default defineComponent({
             }
             if (platTypes.indexOf("FISH") > -1) {
               var fishObj = Object.assign({}, element);
-              fishObj.title = fishObj.name + " 捕鱼";
+              // fishObj.title = fishObj.name + " 捕鱼";
+              fishObj.title = fishObj.name;
               fishObj.icon = "fish";
               fishObj.subtitle = "捕鱼游戏";
+
+              if (fishObj.code === "AGF") {
+                fishObj.title = "AG捕鱼";
+              }
 
               if (fishObj.code !== "AG") {
                 fishing.value.push(fishObj);
