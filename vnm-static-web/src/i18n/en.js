@@ -43,9 +43,9 @@ export default {
     alreadyAccount: 'Already have an account',
     rememberMe: 'Remember me',
     backtoLogin: 'Back to Login',
-    findPasswordPhone: 'Passworod By Phone',
-    findPasswordEmail: 'Password By Email',
-    findAccountEmail: 'Account By Email'
+    findPasswordPhone: 'Recover password by phone number',
+    findPasswordEmail: 'Recover password by Email',
+    findAccountEmail: 'Recover account via Email'
 
   },
   common: {
@@ -133,7 +133,7 @@ export default {
     birthday: 'Please enter Birthday',
     zalo: 'Please enter Zalo',
     email: 'Please enter Email',
-    mobileNo: 'Please enter Mobile Number',
+    mobileNo: 'Please enter your phone number',
     oldPwd: 'Please enter Old Password',
     newPwd: 'Please enter New Password',
     confirmPwd: 'Please enter Confirm Password',

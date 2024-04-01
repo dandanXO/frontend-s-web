@@ -42,9 +42,9 @@ export default {
     codeAffiliate:'Mã giới thiệu',
     verificationCode: 'Mã xác minh',
     backtoLogin: 'Quay lại đăng nhập',
-    findPasswordPhone: 'Mật khẩu qua điện thoại',
-    findPasswordEmail: 'Mật khẩu qua email',
-    findAccountEmail: 'Tài khoản qua email'
+    findPasswordPhone: 'Lấy lại mật khẩu bằng số điện thoại ',
+    findPasswordEmail: 'Lấy lại mật khẩu bằng Email',
+    findAccountEmail: 'Lấy tài khoản qua Email'
   },
   "common": {
     "login": "Đăng nhập",
@@ -131,7 +131,7 @@ export default {
     "birthday": "Vui lòng nhập ngày sinh",
     "zalo": "Vui lòng nhập Zalo",
     "email": "Vui lòng nhập Email",
-    "mobileNo": "Vui lòng nhập Số điện thoại di động",
+    "mobileNo": "Vui lòng nhập số điện thoại của bạn",
     "oldPwd": "Vui lòng nhập mật khẩu cũ",
     "newPwd": "Vui lòng nhập mật khẩu mới",
     "confirmPwd": "Vui lòng xác nhận mật khẩu",
@@ -148,7 +148,7 @@ export default {
     passwordAgain: 'Vui lòng nhập lại mật khẩu',
     "captchareq": "Vui lòng nhập mã captcha",
     "captcha": "Mã captcha phải có 4 ký tự",
-    verificationCode: "Vui lòng nhập mã xác minh",
+    verificationCode: "Vui lòng nhập mã xác nhận",
     min4: "Mã xác minh phải có 4 ký tự",
     "emailFormat": "Vui lòng nhập một địa chỉ email hợp lệ",
     between612: 'Độ dài phải từ 6 đến 11 ký tự',
