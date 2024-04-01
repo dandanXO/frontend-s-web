@@ -217,7 +217,7 @@ const spinWheel = () => {
     .then((res) => {
       if (res.code == 0) {
         var bonusIndex = res.data.bonus;
-        
+
         const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
 
         spin(prizeIndex, () => {
@@ -358,7 +358,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .spin-wheel-container {
   position: relative;
-  margin: 25px 0px 55px;
+  margin: 0px 0px 55px;
   text-align: center;
 }
 
