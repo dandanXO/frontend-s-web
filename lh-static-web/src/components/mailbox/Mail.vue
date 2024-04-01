@@ -6,8 +6,7 @@
             <span class="send-time">{{ props.mail?.sendTime }}</span>
         </div>
         <el-divider/>
-        <div class="mail-content">
-            {{ props.mail?.content }}
+        <div class="mail-content" v-html="props.mail?.content.replace(/\n/g, '<br/>')">
         </div>
     </div>
 </template>
