@@ -198,10 +198,10 @@
       </q-form>
     </div>
   </q-page>
-  <q-dialog width="100%" class="modal-common-div" label="信息" v-model="isShowAnnouncementDialog" full-width>
+  <q-dialog width="100%" class="modal-common-div" v-model="isShowAnnouncementDialog" full-width>
     <q-card class="q-pa-md modal-content">
       <div class="headers">
-        <div class="titles">信息</div>
+        <div class="titles">{{ $t("lang.transfer_announcementhead") }}</div>
         <!-- <q-btn class="color-font-1" flat v-close-popup round dense icon="close" /> -->
       </div>
       <div class="contents" v-for="(announcement, i) in announcementList" :key="i">
@@ -231,7 +231,7 @@ const transferTo = ref("");
 const platforms = reactive([]);
 const amountRef = ref();
 const transferFormRef = ref();
-const announcementList = ref(["除了以下平台需要转账，其它游戏平台都无需转账即可游戏 "]);
+const announcementList = ref([t("lang.transfer_announcement")]);
 const transferInfo = ref({
   amount: 0
 });

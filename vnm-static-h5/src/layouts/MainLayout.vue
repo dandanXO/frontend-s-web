@@ -28,6 +28,10 @@
           dense
           icon="menu"
         />
+
+        <div class="header-lang">
+          <LangOptions />
+        </div>
       </q-card-section>
     </q-header>
 
@@ -92,12 +96,13 @@ import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 import { translateRecord } from "src/directives/translate";
 import { useI18n } from "vue-i18n";
+import LangOptions from "components/LangOptions";
 
 export default defineComponent({
   name: "MainLayout",
 
   components: {
-    // RiArrowDropLeftLine
+    LangOptions
   },
 
   setup() {
@@ -439,7 +444,8 @@ export default defineComponent({
         "BindBankCard",
         "BindCryptoView",
         "BindEWalletView"
-      ]
+      ],
+      LangOptions
     };
   }
 });
@@ -485,5 +491,11 @@ svg path {
   img {
     width: 100%;
   }
+}
+
+.header-lang {
+  position: absolute;
+  top: 8px;
+  right: 12px;
 }
 </style>
