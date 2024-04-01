@@ -75,7 +75,7 @@
                       </div>
 
                       <div :class="`mailbox-content-wrapper ${m.isOpen ? 'open' : ''}`">
-                        <div class="mailbox-content" v-html="m.content || '加载中...'"></div>
+                        <div class="mailbox-content" v-html="m.content.replace(/\n/g, '<br/>') || '加载中...'"></div>
                         <div class="mailbox-date">
                           <el-icon>
                             <Calendar />

@@ -3,7 +3,7 @@
     <div class="eventdetails">
       <div class="evt time">
         <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/time.png" />
-        2024年03月08日起
+        2024年04月01日起
       </div>
       <div class="evt person">
         <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/person.png" />
@@ -55,7 +55,7 @@
             <div class="promo-info-content">
               <div v-if="winnersList.length > 0" class="winners-list">
                 <div class="winners-list-item" v-for="(item, index) in winnersList" :key="index">
-                  <div class="winner-date">{{ moment(item.recordTime).format('YYYY-MM-DD') }}</div>
+                  <div class="winner-date">{{ moment(item.recordTime).format("YYYY-MM-DD") }}</div>
                   <div class="winner-loginName">恭喜 {{ item.loginName }}</div>
                   <div class="winner-prize">{{ item.bonus }}</div>
                 </div>
@@ -86,7 +86,7 @@ import { ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import { getRecords, getSpinWheelPrize, initSpinWheelData } from "@/api/promotion/cnySpinWheel";
-import moment from 'moment';
+import moment from "moment";
 
 const store = userStore();
 

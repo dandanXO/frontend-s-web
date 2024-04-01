@@ -52,9 +52,11 @@
               </div>
             </div>
           </div>
-          <div class="text-grey mailcontents" :style="`height: ${isSelectedMail === det.title ? 'auto' : '0px'}`">
-            {{ det.content }}
-          </div>
+          <div
+            class="text-grey mailcontents"
+            :style="`height: ${isSelectedMail === det.title ? 'auto' : '0px'}`"
+            v-html="det.content.replace(/\n/g, '<br/>')"
+          ></div>
           <div v-if="mailType === 'outbox'" class="buttons">
             <q-btn outline label="催单" size="sm" color="bright" class="q-mr-sm" />
             <q-btn outline label="复制" size="sm" color="bright" />
