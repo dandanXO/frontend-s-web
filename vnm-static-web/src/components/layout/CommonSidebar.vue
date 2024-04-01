@@ -9,17 +9,25 @@
         @click.stop.prevent="store.openLiveChat()"
       >
         <img src="../../assets/images/home/sticky-sidebar-headphone-icon.png" />
-        <span>{{ $t('stickySidebar.customerService') }}</span>
+        <span>CSKH 24/7</span>
       </div>
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-mail-icon.png" />
-        <span style="margin-left: 5px">{{ $t('stickySidebar.email') }}</span>
+        <span style="margin-left: 5px">vnsupport@tf88.com</span>
       </div>
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-phone-icon.png" />
         <span style="margin-left: 5px"
-        ><span class="customer_phone">{{ $t('stickySidebar.phoneNumber') }}</span></span
+        ><span class="customer_phone">+84945 091 999</span></span
         >
+      </div>
+      <div class="additional-info-item">
+        <img src="../../assets/images/home/sticky-sidebar-zalo-icon.png" />
+        <span style="margin-left: 5px"> +63967 254 1561</span>
+      </div>
+      <div class="additional-info-item">
+        <img src="../../assets/images/home/sticky-sidebar-telegram-icon.png" />
+        <span style="margin-left: 5px">@TF88_CS</span>
       </div>
     </div>
     <div class="sticky-sidebar-items">
@@ -95,7 +103,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   padding: 20px 0px;
   background: #fff;
   height: min-content;
@@ -104,6 +112,8 @@ export default defineComponent({
   .additional-info-item {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+    width: 100%;
     color: #424F72;
     gap: 10px;
     cursor: pointer;

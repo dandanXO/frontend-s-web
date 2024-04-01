@@ -213,7 +213,9 @@ export default {
     "outbox": "Hộp thư đi",
     "write": "Viết",
     "title": "Tiêu đề",
-    "content": "Nội dung"
+    "content": "Nội dung",
+    isRead: 'Đã đọc',
+    unread: 'Chưa đọc'
   },
   "withdraw": {
     "withdraw": "Rút tiền",
@@ -316,7 +318,7 @@ export default {
   "transit": {
     "transitRecord": "Lịch sử giao dịch",
     "deposit": "Nạp tiền",
-    "turnover": "Doanh số",
+    "turnover": "Sao kê",
     "withdraw": "Rút tiền",
     "transfer": "Chuyển khoản",
     "rebates": "Hoàn trả",
@@ -606,12 +608,10 @@ export default {
     ws168: "World class cockfighting online"
   },
   "stickySidebar": {
-    "customerService": "Dịch vụ khách hàng",
-    "email": "cs@e8007.com",
-    "phoneNumber": "+85281701071",
-    "hotPromotions": "Ưu đãi nóng hổi",
-    "appDownload": "Tải ứng dụng",
-    "backToTop": "Quay về đầu trang"
+    "customerService": "CSKH",
+    "hotPromotions": "KM HOT",
+    "appDownload": "Tải APP",
+    "backToTop": "TOP"
   }
 
 }

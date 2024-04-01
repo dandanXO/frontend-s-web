@@ -217,7 +217,9 @@ export default {
     outbox: 'Outbox',
     write: 'Write',
     title: 'Title',
-    content: 'Content'
+    content: 'Content',
+    isRead: 'Read',
+    unread: 'Unread'
   },
   withdraw: {
     withdraw: 'Withdraw',
@@ -613,11 +615,9 @@ about: {
     "ws168": "World class cockfighting online"
   },
   "stickySidebar": {
-    "customerService": "Customer Service",
-    "email": "cs@e8007.com",
-    "phoneNumber": "+85281701071",
-    "hotPromotions": "Hot Promotions",
-    "appDownload": "App Download",
-    "backToTop": "Back to Top"
+    "customerService": "CSKH",
+    "hotPromotions": "KM HOT",
+    "appDownload": "APP",
+    "backToTop": "TOP"
   }
 }

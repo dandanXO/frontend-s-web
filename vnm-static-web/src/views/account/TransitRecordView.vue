@@ -256,7 +256,7 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane name="transfer" :label="$t('transit.transfer')">
+        <!-- <el-tab-pane name="transfer" :label="$t('transit.transfer')">
           <div>
             <el-form layout="inline" :model="searchForm.transfer">
               <div class="left">
@@ -327,7 +327,7 @@
               :page-size="searchForm[recordActive].size"
             />
           </div>
-        </el-tab-pane>
+        </el-tab-pane> -->
         <el-tab-pane name="rebates" :label="$t('transit.rebates')">
           <div>
             <el-form layout="inline" :model="searchForm.rebates">

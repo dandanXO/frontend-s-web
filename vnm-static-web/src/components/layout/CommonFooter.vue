@@ -53,9 +53,9 @@
             </router-link>
           </div>
         <ul>
-          <li><router-link to="/about?id=info">{{ $t('about.aboutus') }}</router-link></li>
-          <li><router-link to="/about?id=law">{{ $t('about.collectInformation') }}</router-link></li>
-          <li><router-link to="/about?id=aboutus">{{ $t('about.legalBasis') }}</router-link></li>
+          <li><router-link to="/about?id=aboutus">{{ $t('about.aboutus') }}</router-link></li>
+          <li><router-link to="/about?id=info">{{ $t('about.collectInformation') }}</router-link></li>
+          <li><router-link to="/about?id=law">{{ $t('about.legalBasis') }}</router-link></li>
           <li><router-link to="/about?id=rule">{{ $t('about.bettingRules') }}</router-link></li>
           <li><a :href="'https://www.4luckypartner.com/?langge=' + languageVal + '&agent=' + (affCode ? affCode : '')">Affiliates</a></li>
           <li><router-link to="/about?id=blame">{{ $t('about.blame') }}</router-link></li>
