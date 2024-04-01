@@ -245,6 +245,8 @@ button {
     width: 80%;
 }
 
+
+
 .step-1-modal-action-wrapper {
     display: flex;
     flex-direction: column;
@@ -286,3 +288,4 @@ button {
     background: url(../assets/images/step-1-modal-btn.png);
     background-size: 100% 100%;
 }
+
