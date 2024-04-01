@@ -1,12 +1,5 @@
 <template>
-  <q-file
-    name="upload_img"
-    v-model="file"
-    class="q-pt-md"
-    filled
-    :label="$t('lang.upload_img')"
-    color="white"
-  >
+  <q-file name="upload_img" v-model="file" class="q-pt-md" filled :label="$t('lang.upload_img')" color="white">
     <template v-slot:prepend>
       <q-icon name="cloud_upload" />
     </template>
@@ -21,15 +14,25 @@
 import { ref, defineComponent, watch } from "vue";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
-import {useI18n} from "vue-i18n";
+import { useI18n } from "vue-i18n";
+import { getRndInteger } from "boot/utils";
 
 export default defineComponent({
   emits: ["photoResponse"],
   name: "UploadExample",
   setup: (props, { emit }) => {
     const store = userStore();
-    const {t}= useI18n();
-    const action = `${process.env.UPLOAD_IMG_API}/upload?token=${store.token}`;
+    const { t } = useI18n();
+
+    var rstArray = process.env.RST_API;
+    if (typeof rstArray === "string" || rstArray instanceof String) {
+      var rstApi = rstArray;
+    } else {
+      var apiLists = Object.values(rstArray);
+      var rstApi = apiLists[getRndInteger(0, apiLists.length)];
+    }
+
+    const action = rstApi + "/session/image/uploadOrder?token=" + store.token;
     const $q = useQuasar();
     const file = ref();
     watch(file, (newValue, oldValue) => {
@@ -39,28 +42,30 @@ export default defineComponent({
       if (uploadedItem) {
         const formData = new FormData();
         formData.append("file", file.value);
+        formData.append("includeDir", true);
+
         try {
-          const response = await fetch(
-            `${process.env.UPLOAD_IMG_API}/upload?token=${store.token}`,
-            {
-              method: "POST",
-              body: formData,
+          const response = await fetch(`${rstApi}/session/image/uploadOrder`, {
+            method: "POST",
+            body: formData,
+            headers: {
+              token: `${store.token}`
             }
-          );
+          });
           const data = await response.json();
-          if (data.status === "success") {
+          if (data.code === 0) {
             emit("photoResponse", data.data);
             $q.notify({
               type: "positive",
               position: "top",
-              message: `${file.value.name}` + t('lang.upload_successfully'),
+              message: `${file.value.name}` + t("lang.upload_successfully"),
               icon: "check_circle_outline"
             });
           } else {
             $q.notify({
               type: "negative",
               position: "top",
-              message: t('lang.failed_upload_size_dont_meet_requirement'),
+              message: t("lang.failed_upload_size_dont_meet_requirement"),
               icon: "report_problem"
             });
             file.value = null;
@@ -75,10 +80,10 @@ export default defineComponent({
       file,
       action,
       // handleChange,
-      uploadFile,
+      uploadFile
       // uploadedCallBack,
     };
-  },
+  }
 });
 </script>
 
