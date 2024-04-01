@@ -41,7 +41,7 @@ export default defineComponent({
     const uploadFile = async (uploadedItem) => {
       if (uploadedItem) {
         const formData = new FormData();
-        formData.append("file", file.value);
+        formData.append("files", file.value);
         formData.append("includeDir", true);
 
         try {
