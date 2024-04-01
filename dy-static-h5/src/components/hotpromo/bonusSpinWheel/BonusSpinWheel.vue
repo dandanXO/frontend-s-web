@@ -56,7 +56,7 @@
         <div class="promo-info-content">
           <div v-if="winnersList.length > 0" class="winners-list">
             <div class="winners-list-item" v-for="(item, index) in winnersList" :key="index">
-              <div class="winner-date">{{ item.recordTime }}</div>
+              <div class="winner-date">{{ moment(item.recordTime).format('YYYY-MM-DD') }}</div>
               <div class="winner-loginName">恭喜 {{ item.loginName }}</div>
               <div class="winner-prize">{{ item.bonus }}</div>
             </div>
@@ -85,6 +85,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { eventapi } from "src/boot/axios";
+import moment from 'moment';
 
 // spin wheel constants
 const TOTAL_ITEMS = 8;
