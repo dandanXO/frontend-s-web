@@ -300,10 +300,10 @@ const verifyDepositAmount = ref([
   (val) => (val && /^\d+$/.test(val)) || t("lang.deposit_cantcontaindecimals"),
   (val) =>
     val > calculatedMinDeposit.value - 1 ||
-    "存款应介于 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
+    t("lang.deposit_between") + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
   (val) =>
     val < activeMethod.value.depositMax + 1 ||
-    "存款应介于 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
+    t("lang.deposit_between") + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
 ]);
 
 const form = reactive({

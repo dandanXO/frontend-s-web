@@ -62,6 +62,12 @@ export default {
     please_type_the_confirm_password: "Please type the confirm password",
     confirm_password: "Confirm password",
     password_not_same: "Password not same",
+    please_enter_mobile_number: "Please enter mobile number",
+    mobile_number: "Mobile number",
+    mobile_number_valid: "Please enter valid mobile number",
+    please_enter_email: "Please enter email",
+    email: "Email",
+    email_valid: "Please enter valid email",
     please_enter_verification_code: "Please enter verification code",
     verification_code: "Verification code",
     length_is_4: "Length should be 4",
@@ -75,6 +81,7 @@ export default {
     password_strong: "Strong",
     phone_login: "Phone login",
     username_login: "Username login",
+    logging_in: "Logging in",
 
     // logout
     logout_title: "System hint",
@@ -90,10 +97,16 @@ export default {
     please_enter_the_referral_code: "Please enter the referral code",
     referral_code: "Referral code",
     referral_hints: "If you are not a co-op player, you do not need to fill in referral code.",
+    already_have_acc: "Already have account?",
+    login_here: "Login here",
+    registration_hints: "Registration means you have agreed and complied",
+    user_registration_protocol: "User Registration protocol",
 
     // forgot password
     sms_retrieval: "SMS retrieval",
     email_retrieval: "Email retrieval",
+    recover_password_by_phone_number: "Recover password by phone number",
+    recover_password_by_email: "Recover password by Email",
     please_enter_phone_number: "Please enter phone number",
     phone_number: "Phone number",
     change_password_btn: "Change password",
@@ -167,7 +180,7 @@ export default {
     // share
     share_promoshare: "Promote and share",
     share_promodesc:
-      "If users you invite through the promotional link register and deposit, you will receive a maximum cumulative reward of 2,000VND.",
+      "If users you invite through the promotional link register and deposit, you will receive a maximum cumulative reward of 2,000VNDP.",
     share_sponsoredlinks: "Sponsored links",
     share_copy: "Copy",
     share_qrcode: "QR Code",
@@ -179,6 +192,9 @@ export default {
     transfer_transfer: "Transfer",
     transfer_deposit: "Deposit",
     transfer_withdraw: "Withdraw",
+    transfer_announcementhead: "Note",
+    transfer_announcement:
+      "In addition to the game platforms below that need to transfer points, other game platforms directly place bets",
 
     // account balance
     acct_mainaccount: "Main Account",
@@ -213,6 +229,9 @@ export default {
     deposit_loadingdatapleasewait: "Loading data... Please wait...",
     deposit_confirm: "Confirm",
     deposit_select_amount: "Select amount",
+    deposit_between: "Deposit should be between ",
+    deposit_bank: "Bank",
+    deposit_insert_bank: "Please insert bank",
 
     // withdraw
     withdraw_amount: "Amount",
@@ -221,8 +240,35 @@ export default {
     withdraw_tipdesc: "To ensure the safety of funds, you need to verify your mobile phone number before depositing",
     withdraw_proceedverify: "Proceed to verify",
     withdraw_please_enter_withdraw_amount: "Please enter the withdrawal amount",
+    withdraw_password: "Withdraw password",
+    withdraw_please_enter_withdraw_password: "Please enter the withdrawal password",
     withdraw_please_enter_correct_withdraw_amount: "Please enter the correct withdraw amount",
     withdraw_confirm: "Confirm",
+    withdraw_singlewithdrawal: "Single withdrawal",
+    withdraw_withdrawtoday: "Withdraw money today",
+    withdraw_remaining: "Remaining",
+    withdraw_times: "Times",
+    withdraw_realtimeexchangerates: "Real Time Exchange Rates",
+    withdraw_estimatedarrival: "Estimated arrival",
+    withdraw_usdtspecialnote:
+      "*Special note: The third party automatically charges a handling fee of 1.00 USDT for withdrawing coins!",
+    withdraw_ewalletspecialnote:
+      "*Special note: The names of the withdrawal wallet and the game account must be consistent.",
+    withdraw_choose: "Choose",
+    withdraw_pleasechoose: "Please choose",
+    withdraw_nonavailable: "None available",
+    withdraw_virtualwallet: "Virtual wallet",
+    withdraw_ewallet: "E-wallet",
+    withdraw_bankcard: "Bank card",
+    withdraw_crypto: "Crypto",
+    withdraw_add: "Add",
+    withdraw_bind: "Bind",
+
+    // bank details
+    please_enter_unbind_bank_card: "Please enter the unbind bank card number",
+    add_bank_card: "Add bank card",
+    add_virtual_wallet: "Add virtual wallet",
+    add_ewallet: "Add eWallet",
 
     // mine
     version_no: "Version",
@@ -623,6 +669,7 @@ export default {
     branch_not_required: "Branch (not required)",
     cancel: "Cancel",
     confirm: "Confirm",
+    incorrect: "Incorrect",
     security_check: "Security Check",
     fish2_list: "Aviator",
     lottery_list: "Lottery",

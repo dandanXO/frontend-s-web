@@ -237,7 +237,7 @@ export default defineComponent({
     };
 
     const isValidPhone = () => {
-      const phonePattern = /^(0[1-9]|84[1-9])(\d{8,9})$/;
+      const phonePattern = /^(0[1-9]|[1-9])(\d{8,9})$/;
       const {phone} = formDetails;
 
       const result = '' === phone ? t('lang.personal_mobilenumber_verify') : !phonePattern.test(phone) ? t('lang.personal_mobilenumber_val') : true;

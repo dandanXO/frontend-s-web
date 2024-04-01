@@ -3,11 +3,11 @@
     <template v-if="!isEmailSent">
       <div class="fgtpwd-tabs-div">
         <div class="fgtpwd-item" @click="goToTab('tabSms')" :class="fgtpwdTab === 'tabSms' ? 'is-active' : ''">
-          <span>{{ $t("lang.sms_retrieval") }}</span>
+          <span>{{ $t("lang.recover_password_by_phone_number") }}</span>
         </div>
 
         <div class="fgtpwd-item" @click="goToTab('tabEmail')" :class="fgtpwdTab === 'tabEmail' ? 'is-active' : ''">
-          <span>{{ $t("lang.email_retrieval") }}</span>
+          <span>{{ $t("lang.recover_password_by_email") }}</span>
         </div>
       </div>
 

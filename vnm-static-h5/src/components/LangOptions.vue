@@ -75,3 +75,15 @@ const langOptions = [
   }
 }
 </style>
+
+<style lang="scss">
+.q-select__dialog {
+  label {
+    img {
+      width: 30px;
+      height: 30px;
+    }
+    display: none;
+  }
+}
+</style>

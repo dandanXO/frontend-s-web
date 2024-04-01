@@ -219,9 +219,9 @@ export default defineComponent({
 
       } else {
         // non extension
-        if (!store.token) {
-          isDisplayLogin.value = true;
-        } else {
+        // if (!store.token) {
+          // isDisplayLogin.value = true;
+        // } else {
 
           if (promo.redirectUrl.includes("page-vip")) {
             router.push("/account/vip?from=promo");
@@ -234,7 +234,7 @@ export default defineComponent({
             isPromoDetail.value = true;
             selectedPromo.value = promo;
           }
-        }
+        // }
       }
     };
 

@@ -255,6 +255,7 @@ import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import LangOptions from "components/LangOptions";
 import qs from "qs";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "LoginPage",
@@ -262,6 +263,7 @@ export default defineComponent({
     LangOptions
   },
   setup() {
+    const { t } = useI18n();
     const tab = ref("login");
     const loginType = ref(false);
     const store = userStore();
@@ -407,7 +409,7 @@ export default defineComponent({
           passwordRef.value.validate();
           verificationRef.value.validate();
           $q.loading.show({
-            message: "登录中"
+            message: t("lang.logging_in")
           });
           if (loginNameRef.value.hasError || passwordRef.value.hasError || verificationRef.value.hasError) {
             $q.loading.hide();
