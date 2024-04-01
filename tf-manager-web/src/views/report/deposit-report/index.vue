@@ -338,7 +338,7 @@ const page1 = reactive({
 })
 
 const request = reactive({
-  size: 30,
+  size: 100,
   current: 1,
   name: null,
   recordTime: [defaultStartDate, defaultEndDate],
