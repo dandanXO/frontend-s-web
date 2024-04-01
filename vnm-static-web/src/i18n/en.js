@@ -359,7 +359,8 @@ transit: {
   feedbackTime: 'Feedback Time',
 },
 affiliate: {
-  englishText: "Affiliate",
+  affiliate: "Affiliates",
+  englishText: "Chơi Có Trách Nhiệm",
   joinus: "Join Us",
   login: "Login",
   contactus: "Contact Us",
@@ -402,7 +403,7 @@ affiliate: {
   applyAgentNow: "Apply for Agent Now"
 },
 about: {
-    aboutus: "About TF88",
+    aboutus: "About TFgaming",
     welcome: "Welcome to TF88 Gaming! We are one of the leading online gambling providers in Vietnam, with a mission to give our customers great entertainment and the opportunity to earn lots of bonuses.",
     "product": "PRODUCT",
     "productDescription": "TF88 offers a wide range of online gambling products including online casino, sportsbook, slots, e-sports and lotteries... With these diverse products, we believe that customers will have plenty of opportunities to find games that suit your interests and entertainment needs.",

@@ -395,7 +395,8 @@ export default {
     "applyAgentNow": "Đăng ký làm đại lý ngay"
   },
   about: {
-    "aboutus": "Sơ lược về TF88",
+    affiliate: "Đại Lý",
+    "aboutus": "Về TFGaming",
     "welcome": "Chào mừng bạn đến với TF88 Gaming! Chúng tôi là một trong những nhà cung cấp cá cược trực tuyến hàng đầu tại Việt Nam, với sứ mệnh mang đến cho khách hàng giải trí tuyệt vời và cơ hội kiếm được nhiều phần thưởng.",
     "product": "SẢN PHẨM",
     "productDescription": "TF88 cung cấp một loạt các sản phẩm cá cược trực tuyến bao gồm sòng bạc trực tuyến, sổ sách thể thao, máy đánh bạc, e-sports và xổ số... Với những sản phẩm đa dạng này, chúng tôi tin rằng khách hàng sẽ có nhiều cơ hội để tìm thấy trò chơi phù hợp với sở thích và nhu cầu giải trí của mình.",
@@ -407,7 +408,7 @@ export default {
     "promotionDescription": "Chúng tôi hiểu rằng tỷ lệ cược không luôn đúng như bạn mong muốn, đó là lý do tại sao TF88 đã tạo ra nhiều chương trình khuyến mãi để đảm bảo bạn luôn nhận được ưu đãi tốt nhất trên mỗi cược. Chúng tôi luôn tìm cách tạo ra môi trường chơi game tốt nhất cho khách hàng của mình.",
     "license": "GIẤY PHÉP",
     "licenseDescription": "TF88 được cấp phép bởi North Cagayan (NCGAC) dưới sự điều hành của chính phủ Philippin. Công ty có trụ sở tại Manila, Philippin.",
-    "collectInformation": "Thu thập thông tin",
+    "collectInformation": "Thu Thập Thông Tin",
     "policyMessage": "Trong quá trình thăm quan, hệ thống và trình duyệt của bạn có thể truyền thông tin đến máy chủ của chúng tôi, thông tin này được dùng để thu thập và giúp TF88 luôn cải thiện chất lượng để bạn có trải nghiệm tốt hơn.",
     "personalInformation": "Thông tin cá nhân của bạn khi đăng ký bao gồm: Họ và tên đầy đủ, email, số điện thoại, ngày sinh và các thông tin khác để TF88 hoàn thiện thông tin của bạn cho quản lý tài khoản.",
     "processingPurposes": "Thông tin của bạn sẽ được xử lý cho nhiều mục đích, bao gồm:",
@@ -428,7 +429,7 @@ export default {
     "dataSecurity": "Bảo mật dữ liệu",
     "dataSecurityAssurance": "Đối với mọi dữ liệu và thông tin liên quan đến công ty, yêu cầu bảo mật khi xử lý.",
     // Legal Basis
-    "legalBasis": "Cơ sở pháp lý",
+    "legalBasis": "Cơ Sở Pháp Lý",
     "generalTermsMessage": "Dưới đây là các điều khoản chung để sử dụng TF88. Bằng cách đăng ký tài khoản, bạn đồng ý tuân thủ các điều khoản chung của chúng tôi. Tất cả các hoạt động trong tài khoản của khách truy cập trên trang web đều phải tuân theo và được giám sát bởi các điều khoản sau:",
     "ageRequirement": "Thành viên phải ít nhất 18 tuổi và có khả năng trí tuệ để chịu trách nhiệm về hành động của họ.",
     "singleAccount": "Mỗi khách hàng chỉ được mở một tài khoản trên trang web TF88. Chúng tôi có thể đóng bất kỳ tài khoản bổ sung nào được mở và mọi khoản tiền còn lại trong tài khoản sẽ được xử lý theo quyết định duy nhất của TF88.",
@@ -443,7 +444,7 @@ export default {
     "suspensionPolicyMessage": "Nếu TF88 nghi ngờ rằng một khách hàng không tuân thủ các quy định trên, chúng tôi có quyền đình chỉ tài khoản để xử lý theo quy định.",
 
     // Betting Rules 
-    "bettingRules": "Quy tắc cược",
+    "bettingRules": "Quy Tắc Đặt Cược",
     "familyRestriction": "Mọi người cùng gia đình, cùng địa chỉ nhà, cùng số điện thoại, số tài khoản ngân hàng hoặc địa chỉ IP trên internet sẽ không được tham gia vào các chương trình khuyến mãi của TF88.",
     "entertainmentPurpose": "Tất cả các chương trình khuyến mãi tại TF88 chỉ dành cho mục đích giải trí, TF88 có quyền hạn chế quyền tham gia của khách hàng vào bất kỳ chương trình khuyến mãi nào.",
     "modifyPromotion": "TF88 có quyền thay đổi, sửa đổi hoặc chấm dứt Chương trình khuyến mãi, hoặc một phần của nó, vào bất kỳ thời điểm nào và mà không cần thông báo trước.",

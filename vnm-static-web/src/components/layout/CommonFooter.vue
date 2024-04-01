@@ -57,7 +57,7 @@
           <li><router-link to="/about?id=info">{{ $t('about.collectInformation') }}</router-link></li>
           <li><router-link to="/about?id=law">{{ $t('about.legalBasis') }}</router-link></li>
           <li><router-link to="/about?id=rule">{{ $t('about.bettingRules') }}</router-link></li>
-          <li><a :href="'https://www.4luckypartner.com/?langge=' + languageVal + '&agent=' + (affCode ? affCode : '')">Affiliates</a></li>
+          <li><a :href="'https://www.4luckypartner.com/?langge=' + languageVal + '&agent=' + (affCode ? affCode : '')">{{ $t('about.affiliate') }} </a></li>
           <li><router-link to="/about?id=blame">{{ $t('about.blame') }}</router-link></li>
         </ul>
         <!-- <div class="tagline">雷火是全球领先的合法博彩公司，拥有菲律宾政府PAGCOR 所颁发的离岸博彩许可证，并受其监管</div> -->
