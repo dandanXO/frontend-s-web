@@ -331,6 +331,7 @@ import { userStore } from "@/store";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 // import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "VIPView",
@@ -340,6 +341,7 @@ export default defineComponent({
     Navigation
   },
   setup() {
+    const { t } = useI18n();
     const store = userStore();
     const amount = ref("$0");
     const privilegeClaimedModalVisible = ref(false);
@@ -472,7 +474,7 @@ export default defineComponent({
     const vipItems = reactive([
       {
         vipLevel: "1",
-        upgrade: "3 time deposit",
+        upgrade: t('vip.3timedeposit'),
         vipTitle: "IRON",
         depositPromoAvailable: false,
         promoAvailable: false,
