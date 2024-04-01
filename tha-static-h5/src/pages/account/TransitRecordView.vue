@@ -688,6 +688,7 @@ export default defineComponent({
       totalBet: 0,
       totalPayout: 0
     })
+    const $q = useQuasar();
     const searchForm = reactive({
       turnover: {
         startDate: "",
@@ -1039,54 +1040,64 @@ export default defineComponent({
       };
 
       api
-          .post("/session/withdraw/confirm", qs.stringify(obj))
-          .then((response) => {
-            // Handle the response
-            if (response.data.code === 0) {
-              isConfirmWithdraw.value = false;
+        .post("/session/withdraw/confirm", qs.stringify(obj))
+        .then((response) => {
+          // Handle the response
+          if (response.data.code === 0) {
+            isConfirmWithdraw.value = false;
 
-              $q.notify({
-                color: "positive",
-                position: "top",
-                message: "已经确认到账",
-                icon: "check_circle_outline"
-              });
-              removeSessionKeys("/session/member/withdraw");
-              searchRecord();
-            }
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: "已经确认到账",
+              icon: "check_circle_outline"
+            });
+            removeSessionKeys("/session/member/withdraw");
+            searchRecord();
+          }
 
-            // setTimeout(() => {
-            //   window.location.reload();
-            // }, 1000);
-          })
+          // setTimeout(() => {
+          //   window.location.reload();
+          // }, 1000);
+        })
 
-          .catch((error) => {
-            // Handle the error
-            console.error(error);
-          });
+        .catch((error) => {
+          // Handle the error
+          console.error(error);
+        });
     };
 
     const submitReminder = () => {
-      api.post("/session/saveFinanceFeedback", qs.stringify(reminderForm)).then((res) => {
-        const ret = res.data
-        if (ret.code === 0) {
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: t('lang.success'),
-            icon: "check_circle_outline"
-          });
-          reminderDialog.value = false;
-          reminderForm.value = {}
-          uploadFileRef.value = {};
-        }
-      })
+      console.log(reminderForm)
+
+      if (!reminderForm.photos) {
+        $q.notify({
+          type: "negative",
+          position: "top",
+          message: t('lang.please_upload_file'),
+          icon: "report_problem"
+        });
+      } else {
+        api.post("/session/saveFinanceFeedback", qs.stringify(reminderForm)).then((res) => {
+          const ret = res.data
+          if (ret.code === 0) {
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: t('lang.success'),
+              icon: "check_circle_outline"
+            });
+            reminderDialog.value = false;
+            reminderForm.value = {}
+            uploadFileRef.value = {};
+          }
+        })
+      }
     }
 
     watch(recordActive, (currentValue, oldValue) => {
       searchRecord()
     });
-    const $q = useQuasar()
 
     const recordUrl = {
       deposit: "/session/member/deposit",
