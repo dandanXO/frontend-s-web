@@ -103,12 +103,12 @@
             </div>
             {{ $t('menu.withdraw') }}
           </router-link>
-          <router-link to="/center/transfer" class="action-btn">
+          <!-- <router-link to="/center/transfer" class="action-btn">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-transfer.png" />
             </div>
             {{ $t('menu.transfer') }}
-          </router-link>
+          </router-link> -->
         </div>
 
         <div class="profile-info" v-if="store.token">
@@ -135,12 +135,12 @@
                     <span>{{$t('menu.deposit')}}</span>
                   </div>
                 </el-dropdown-item>
-                <el-dropdown-item command="transfer">
+                <!-- <el-dropdown-item command="transfer">
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
                     <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
                     <span>{{$t('menu.transfer')}}</span>
                   </div>
-                </el-dropdown-item>
+                </el-dropdown-item> -->
                 <el-dropdown-item command="promotion">
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
                     <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
@@ -1785,7 +1785,7 @@ body {
       gap: 15px;
 
       &.logged-in-nav {
-        max-width: 1400px;
+    max-width: 1530px;
       }
 
       .logospon {
@@ -1896,6 +1896,8 @@ body {
           > div {
             max-width: $maxwidth;
             margin: 0 auto;
+            width: 100%;
+            flex-wrap: wrap;
           }
         }
       }

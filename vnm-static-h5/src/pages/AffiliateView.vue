@@ -376,9 +376,12 @@ const rows = [
     display: flex;
     justify-content: center;
     padding: 0 1rem;
+    align-items: center;
 
     .ambassador-img {
       width: 50%;
+      height: 100%;
+      display: block;
     }
 
     .btn-wrapper {

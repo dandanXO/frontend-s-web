@@ -1,7 +1,7 @@
 <template>
   <div class="account-box account-contents">
     <div class="menu-title-container">
-      <div class="menu-title">Personal Information</div>
+      <div class="menu-title">{{ $t('personal.personalInfo') }}</div>
     </div>
     <el-tabs v-model="selectedTab">
       <el-tab-pane :label="$t('personal.personalInfo')" name="personal">

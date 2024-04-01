@@ -518,7 +518,7 @@ export default defineComponent({
       {
         vipLevel: "6",
         upgrade: "20,000,000",
-        vipTitle: "DIAMOND",
+        vipTitle: "RUBY",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,
@@ -527,7 +527,7 @@ export default defineComponent({
       {
         vipLevel: "7",
         upgrade: "50,000,000",
-        vipTitle: "CRYSTAL",
+        vipTitle: "DIAMOND",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,

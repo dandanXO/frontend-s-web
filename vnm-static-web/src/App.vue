@@ -1,5 +1,9 @@
 <template>
-  <router-view :class="{'roboto': languageVal === 'vi', 'poppins': languageVal === 'en' }" />
+  
+  <el-config-provider :locale="languageVal === 'vi' ? vi : en">
+    <router-view :class="{'roboto': languageVal === 'vi', 'poppins': languageVal === 'en' }" />
+  </el-config-provider>
+  
 </template>
 
 <script>
@@ -7,11 +11,17 @@ import { defineComponent, onMounted, onUnmounted, ref } from "vue";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { memberAccessLog } from "@/api/index/login";
 import axios from "axios";
+import { ElConfigProvider } from 'element-plus'
 
+import vi from 'element-plus/dist/locale/vi.mjs'
+import en from 'element-plus/dist/locale/en.mjs'
 
 import { i18nStore } from '@/store/language'
 import { storeToRefs } from 'pinia'
 export default defineComponent({
+  components: {
+    ElConfigProvider,
+  },
   setup() {
     const i18nStoreLanguage = i18nStore()
     const { languageVal } = storeToRefs(i18nStoreLanguage)
@@ -77,7 +87,9 @@ export default defineComponent({
       clearInterval(onlineStatInterval);
     })
     return {
-      languageVal
+      languageVal,
+      vi,
+      en
     }
   },
 });

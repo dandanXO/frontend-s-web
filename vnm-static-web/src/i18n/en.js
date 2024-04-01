@@ -217,7 +217,9 @@ export default {
     outbox: 'Outbox',
     write: 'Write',
     title: 'Title',
-    content: 'Content'
+    content: 'Content',
+    isRead: 'Read',
+    unread: 'Unread'
   },
   withdraw: {
     withdraw: 'Withdraw',
@@ -357,7 +359,8 @@ transit: {
   feedbackTime: 'Feedback Time',
 },
 affiliate: {
-  englishText: "Affiliate",
+  affiliate: "Affiliates",
+  englishText: "Chơi Có Trách Nhiệm",
   joinus: "Join Us",
   login: "Login",
   contactus: "Contact Us",
@@ -400,7 +403,7 @@ affiliate: {
   applyAgentNow: "Apply for Agent Now"
 },
 about: {
-    aboutus: "About TF88",
+    aboutus: "About TFgaming",
     welcome: "Welcome to TF88 Gaming! We are one of the leading online gambling providers in Vietnam, with a mission to give our customers great entertainment and the opportunity to earn lots of bonuses.",
     "product": "PRODUCT",
     "productDescription": "TF88 offers a wide range of online gambling products including online casino, sportsbook, slots, e-sports and lotteries... With these diverse products, we believe that customers will have plenty of opportunities to find games that suit your interests and entertainment needs.",
@@ -613,11 +616,9 @@ about: {
     "ws168": "World class cockfighting online"
   },
   "stickySidebar": {
-    "customerService": "Customer Service",
-    "email": "cs@e8007.com",
-    "phoneNumber": "+85281701071",
-    "hotPromotions": "Hot Promotions",
-    "appDownload": "App Download",
-    "backToTop": "Back to Top"
+    "customerService": "CSKH",
+    "hotPromotions": "KM HOT",
+    "appDownload": "APP",
+    "backToTop": "TOP"
   }
 }

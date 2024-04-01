@@ -111,6 +111,8 @@ import { loadPromoBanner } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { useI18n } from "vue-i18n";
+const i18nStoreLanguage = i18nStore()
+const { languageVal } = storeToRefs(i18nStoreLanguage)
 import HotPromotion from '@/components/HotPromotion'
 export default defineComponent({
   name: "PromoView",
@@ -269,6 +271,18 @@ export default defineComponent({
     onMounted(() => {
       // loadBanner();
       loadAll();
+    });
+
+    watch(languageVal, (newValue, oldValue) => {
+      promoTypes.value = [
+        { code:"ALL", img: 'all', label: t('promo.all') },
+        { code: "SPORT", img: 'sport', label:  t('promo.sports')},
+        { code: "POKER", img: 'poker', label: t('promo.poker')},
+        { code: "LIVE CASINO", img: 'live', label: t('promo.casino')},
+        { code: "SLOT", img: 'slot', label: t('promo.slot')},
+        { code: "FISH", img: 'fish', label: t('promo.fish')},
+        { code: "LOTTERY", img: 'lottery', label: t('promo.lottery')},
+      ];
     });
 
     // watch(() => route.query.name, () => {
