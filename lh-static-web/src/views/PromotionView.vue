@@ -1,5 +1,14 @@
 <template>
   <div class="promo-container">
+    <div class="promo-banner">
+      <div class="promo-banner-image">
+        <img src="../assets/promo/top-promo-banner.jpg" />
+        <div class="countdown-day">
+          <span>{{ countDay }}</span>
+        </div>
+      </div>
+    </div>
+
     <div class="all-promotions" v-if="!isPromoDetail">
       <div class="promo-main-container">
         <div class="promo-type-wrapper">
@@ -132,6 +141,7 @@ import { loadPromo } from "@/api/index/promo.js";
 import { loadPromoBanner } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { ElMessage, ElMessageBox } from "element-plus";
+import moment from "moment";
 
 import HotPromotion from '@/components/HotPromotion'
 export default defineComponent({
@@ -168,6 +178,14 @@ export default defineComponent({
     const selectedPromo = ref({});
     const route = useRoute();
     const router = useRouter();
+
+    const countDay= ref(0);
+    const euroCupStartDate = moment("2024-06-15");
+    countDay.value= euroCupStartDate.diff(moment(),'days');
+    if( countDay.value <= 0 ){
+      countDay.value = 0;
+    }
+
     // watch(() => route.query, () => {
     //   if (route.query === null) {
     //    isPromoDetail.value = false
@@ -316,7 +334,8 @@ export default defineComponent({
       selectedPromo,
       banner,
       imgURL,
-      getPromoLabel
+      getPromoLabel,
+      countDay
     }
   },
 });
@@ -326,13 +345,43 @@ export default defineComponent({
 .promo-container {
   min-height: 600px;
 
+  .promo-banner {
+    background:#f3f7fd;
+    width:100%;
+    display:flex;
+    justify-content:center;
+
+    .promo-banner-image {
+      position: relative;
+
+      .countdown-day{
+        position:absolute;
+        font-size: 140px;
+        font-weight:bold;
+        color: blue;
+        background: linear-gradient(180deg, #73B2FF 31.25%, #3981FF 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-text-stroke-width: 0.1px;
+        -webkit-text-stroke-color: white;
+        top: 150px;
+        left: 700px;
+        height: 140px;
+        width: 150px;
+        line-height: 140px;
+        text-align: center;
+      }
+    }
+  }
+
   .all-promotions {
-    background: url(../assets/promo/bg-top3.jpg) no-repeat center top;
+    // background: url(../assets/promo/top-promo-banner.jpg) no-repeat center top;
+    // background-size: 100% auto;
+    // padding-top: max(110px, 16vw);
     width: 100%;
-    background-size: 100% auto;
     padding: 50px;
     position: relative;
-    padding-top: max(110px, 16vw);
     background-color: #f3f7fd;
   }
   .promo-view-container {
