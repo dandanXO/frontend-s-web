@@ -105,7 +105,7 @@ const contactlist = ref([
     }]
   },
   {
-    icon: 'cpaopao',
+    icon: 'bubble-logo',
     type: '泡泡',
     link: 'LH10086',
     btns: [{
