@@ -64,9 +64,9 @@ export default defineComponent({
         icon: "db",
         label: "熊猫",
         slogan: "最强滚球 超高水位",
-        percentage: "-960px;"
+        percentage: "-800px;"
       },
-      { code: "SABA", icon: "saba", label: "沙巴", slogan: "最佳水位 最强赛事", percentage: "-300px;" }
+      { code: "SABA", icon: "saba", label: "沙巴", slogan: "最佳水位 最强赛事", percentage: "-260px;" }
       // { code: "CR", icon: "xf", label: "CR", slogan: "崭新玩法 感受精彩", percentage: "-560px;" },
     ];
 

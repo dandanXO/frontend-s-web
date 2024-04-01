@@ -70,14 +70,14 @@ export default defineComponent({
           "全球首家一体化娱乐原生APP，尽显流畅、完美操作。海量体育、电竞顶尖赛事，真人娱乐、彩票投注及电子游艺等，最新最全娱乐项目尽在掌中体验扫码下载，即刻拥有！",
         link: "/games/im-sport.html"
       },
-      // {
-      //   code: "PM",
-      //   name: "熊猫体育",
-      //   image: "db",
-      //   message:
-      //     "最专业的盘口趋势分析，及时掌握最全面的热点赛事、体育资讯，多种投注型，让您乐享其中。",
-      //   link: "/games/pm-sport.html"
-      // }
+      {
+        code: "PM",
+        name: "熊猫体育",
+        image: "db",
+        message:
+          "最专业的盘口趋势分析，及时掌握最全面的热点赛事、体育资讯，多种投注型，让您乐享其中。",
+        link: "/games/pm-sport.html"
+      },
       {
         code: "SABA",
         name: "SABA",
