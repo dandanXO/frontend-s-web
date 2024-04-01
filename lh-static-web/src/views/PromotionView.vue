@@ -1,11 +1,15 @@
 <template>
   <div class="promo-container">
-    <div class="all-promotions" v-if="!isPromoDetail">
-      <div class="countdown-day">
-        <span>{{ countDay }}</span>
+    <div class="promo-banner">
+      <div class="promo-banner-image">
+        <img src="../assets/promo/top-promo-banner.jpg" />
+        <div class="countdown-day">
+          <span>{{ countDay }}</span>
+        </div>
       </div>
+    </div>
 
-
+    <div class="all-promotions" v-if="!isPromoDetail">
       <div class="promo-main-container">
         <div class="promo-type-wrapper">
           <div style="position: sticky; top: 0">
@@ -341,32 +345,44 @@ export default defineComponent({
 .promo-container {
   min-height: 600px;
 
+  .promo-banner {
+    background:#f3f7fd;
+    width:100%;
+    display:flex;
+    justify-content:center;
+
+    .promo-banner-image {
+      position: relative;
+
+      .countdown-day{
+        position:absolute;
+        font-size: 140px;
+        font-weight:bold;
+        color: blue;
+        background: linear-gradient(180deg, #73B2FF 31.25%, #3981FF 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-text-stroke-width: 0.1px;
+        -webkit-text-stroke-color: white;
+        top: 150px;
+        left: 700px;
+        height: 140px;
+        width: 150px;
+        line-height: 140px;
+        text-align: center;
+      }
+    }
+  }
+
   .all-promotions {
-    background: url(../assets/promo/top-promo-banner.jpg) no-repeat center top;
+    // background: url(../assets/promo/top-promo-banner.jpg) no-repeat center top;
+    // background-size: 100% auto;
+    // padding-top: max(110px, 16vw);
     width: 100%;
-    background-size: 100% auto;
     padding: 50px;
     position: relative;
-    padding-top: max(110px, 16vw);
     background-color: #f3f7fd;
-
-    .countdown-day{
-      position:absolute;
-      font-size: 140px;
-      font-weight:bold;
-      color: blue;
-      background: linear-gradient(180deg, #73B2FF 31.25%, #3981FF 100%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -webkit-text-stroke-width: 0.1px;
-      -webkit-text-stroke-color: white;
-      top: max(2.5%, 113px);
-      left: calc(36.5%);
-      height: 140px;
-      width: 150px;
-      line-height: 140px;
-    }
   }
   .promo-view-container {
     line-height: 30px;
