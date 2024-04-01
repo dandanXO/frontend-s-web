@@ -2310,7 +2310,6 @@ export default defineComponent({
         background-position: top center;
         background-repeat: no-repeat;
         aspect-ratio: 819/295;
-        min-height: 120px;
         position: relative;
         overflow: hidden;
         display: grid;
