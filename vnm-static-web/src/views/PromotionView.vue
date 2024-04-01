@@ -80,6 +80,7 @@
               : 'background-image: url(' + require(`../assets/promo/web-bg.jpg`) + '\''
           "
         >
+          <h2 class="text-center">{{selectedPromo.title}}</h2>
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
             <HotPromotion :list="selectedPromo" />
           </div>
@@ -128,11 +129,11 @@ export default defineComponent({
     const promoTypes = ref([
       { code:"ALL", img: 'all', label: t('promo.all') },
       { code: "SPORT", img: 'sport', label:  t('promo.sports')},
-      { code: "POKER", img: 'poker', label: t('promo.poker')},
       { code: "LIVE CASINO", img: 'live', label: t('promo.casino')},
       { code: "SLOT", img: 'slot', label: t('promo.slot')},
-      { code: "FISH", img: 'fish', label: t('promo.fish')},
+      { code: "POKER", img: 'poker', label: t('promo.poker')},
       { code: "LOTTERY", img: 'lottery', label: t('promo.lottery')},
+      { code: "FISH", img: 'fish', label: t('promo.fish')},
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);

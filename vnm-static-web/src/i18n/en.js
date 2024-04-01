@@ -42,7 +42,6 @@ export default {
     verificationCode: 'Verification Code',
     alreadyAccount: 'Already have an account',
     rememberMe: 'Remember me',
-    email: 'Email',
     backtoLogin: 'Back to Login',
     findPasswordPhone: 'Passworod By Phone',
     findPasswordEmail: 'Password By Email',
@@ -125,7 +124,6 @@ export default {
     securityVerification: 'Security Verification',
     phoneVerification: 'Phone Verification',
     captcha: 'Captcha',
-    email: 'Email',
     "countDown": `seconds remaining`,
     verificationCode: "Verification Code",
     getVerificationCode: 'Get verification code'
@@ -194,7 +192,6 @@ export default {
     list_of_winning_members: 'Winner list',
     username: 'Username',
     fill_up_record_time: 'Fill up record time',
-    choose_lucky_number: 'Choose lucky number',
     view_myself_record: 'View myself record',
     check: 'Check',
     no_data: 'No data, please check other day',
@@ -209,7 +206,10 @@ export default {
     check_in_detail_for_this_month: 'Check-in detail for this month',
     check_in_now: 'Check-in now',
     times: 'times',
-    selectDate: 'Select date'
+    selectDate: 'Select date',
+    btn_lottery_now: "Lottery Now",
+    btn_claim_now: "Claim Now",
+    net_work_bonus: "Net loss bonus"
     // vi-daily-checkin end
   },
   mail: {

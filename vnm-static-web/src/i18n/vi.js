@@ -202,7 +202,10 @@ export default {
     "check_in_detail_for_this_month": "Chi tiết đăng ký trong tháng này",
     "check_in_now": "Đăng ký ngay",
     "times": "lần",
-    "selectDate": "Chọn ngày"
+    "selectDate": "Chọn ngày",
+    btn_lottery_now: "Mở thưởng ngay",
+    btn_claim_now: "Yêu cầu ngay",
+    net_work_bonus: "Tiền thưởng"
     // vi-daily-checkin end
   },
   "mail": {

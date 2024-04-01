@@ -3,17 +3,19 @@
         <img src="../../../assets/images/promotion/hotpromo/slot-netloss/slot-netloss-coins.png" />
         <div class="col">
             <div class="row">
-                <div>Net loss bonus</div>
+                <div>{{ t('promo.net_work_bonus') }}</div>
                 <el-input />
             </div>
-            <div class="btn-color-blue standard-button action-btn" @click="onClickClaimNow">Claim Now</div>
+            <div class="btn-color-blue standard-button action-btn" @click="onClickClaimNow">{{ t('promo.btn_claim_now') }}</div>
         </div>
     </div>
 </template>
 
 <script setup>
 import { bonusClaimSlotsRefund } from '../../../api/index/promo';
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const onClickClaimNow = () => {
     bonusClaimSlotsRefund().then((res) => {
 
