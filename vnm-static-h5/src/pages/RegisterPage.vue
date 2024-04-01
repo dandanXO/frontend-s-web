@@ -112,7 +112,7 @@
           </template>
         </q-input>
 
-        <!-- <q-label>
+        <q-label>
           {{ $t("lang.please_enter_your_real_name") }}
           <em>*</em>
         </q-label>
@@ -122,80 +122,59 @@
           standout
           clearable
           v-model="regForm.realName"
-          :placeholder="$t('lang.real_name_hints')"
+          :placeholder="$t('lang.real_name')"
           lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_enter_your_real_name'),
-            (val) => (val && val.length >= 2) || $t('lang.real_name_validation'),
-            isValidName
+            (val) => (val && val.length >= 2) || $t('lang.real_name_validation')
           ]"
           color="white"
         >
           <template v-slot:prepend>
             <img src="../assets/images/login/user-icon.png" width="24" />
           </template>
-        </q-input> -->
+        </q-input>
 
-        <!-- <q-input
-        ref="telRef"
-        hide-bottom-space
-        v-model="regForm.telephone"
-        label="电话号码"
-        lazy-rules
-        maxlength="11"
-        clearable
-        :rules="[
-          (val) => (val && val.length > 7) || '请输入有效的电话号码',
-          isValidCnPhone
-        ]"
-        color="white"
-      >
-        <template v-slot:prepend>
-          <q-icon color="bright" name="smartphone" />
-        </template>
-        <template v-slot:append>
-          <q-btn
-            label="获取验证码"
-            color="brightbtn"
-            @click="openPhoneVeriDialog()"
-          />
-        </template>
-      </q-input> -->
+        <div class="q-mb-md" style="font-size: 11px; color: #cccccc">{{ $t("lang.real_name_hints") }}</div>
 
-        <!--        <q-input-->
-        <!--          v-show="regForm.smsCodeId"-->
-        <!--          ref="phoneVerificationRef"-->
-        <!--          hide-bottom-space-->
-        <!--          type="text"-->
-        <!--          v-model="regForm.smsCode"-->
-        <!--          label="手机验证码"-->
-        <!--          lazy-rules-->
-        <!--          color="white"-->
-        <!--          maxlength="6"-->
-        <!--          :rules="[(val) => (val && val.length > 3) || '请输入手机验证码']"-->
-        <!--        >-->
-        <!--          <template v-slot:prepend>-->
-        <!--            <q-icon color="bright" name="shield" />-->
-        <!--          </template>-->
-        <!--        </q-input>-->
+        <q-label>
+          {{ $t("lang.please_enter_mobile_number") }}
+        </q-label>
+        <q-input
+          ref="telRef"
+          standout
+          rounded
+          v-model="regForm.telephone"
+          :placeholder="$t('lang.mobile_number')"
+          maxlength="11"
+          clearable
+          type="number"
+          :rules="[(val) => (val && val.length > 7) || $t('lang.mobile_number_valid')]"
+          color="white"
+        >
+          <template v-slot:prepend>
+            <q-icon color="bright" name="smartphone" style="font-size: 24px" />
+          </template>
+        </q-input>
 
-        <!--    <q-input-->
-        <!--      ref="emailRef"-->
-        <!--      type="email"-->
-        <!--      hide-bottom-space-->
-        <!--      v-model="regForm.email"-->
-        <!--      label="电子邮件"-->
-        <!--      lazy-rules-->
-        <!--      :rules="[-->
-        <!--        (val) => (val && val.length > 0) || '请输入电子邮件',-->
-        <!--        isValidEmail-->
-        <!--      ]"-->
-        <!--      color="white"-->
-        <!--    >-->
-        <!--      <template v-slot:prepend>-->
-        <!--        <q-icon color="bright" name="mail_outline"/>-->
-        <!--      </template>-->
-        <!--    </q-input>-->
+        <q-label>
+          {{ $t("lang.please_enter_email") }}
+        </q-label>
+        <q-input
+          ref="emailRef"
+          standout
+          rounded
+          type="email"
+          v-model="regForm.email"
+          :placeholder="$t('lang.email')"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || $t('lang.email_valid'), isValidEmail]"
+          color="white"
+        >
+          <template v-slot:prepend>
+            <q-icon color="bright" name="mail_outline" style="font-size: 24px" />
+          </template>
+        </q-input>
 
         <q-label>
           {{ $t("lang.please_enter_verification_code") }}
@@ -253,8 +232,22 @@
             rounded
           />
         </div>
+
+        <div class="text-center q-mt-md q-pb-xs">
+          {{ $t("lang.registration_hints") }}
+          <router-link to="/login" style="white-space: nowrap">
+            {{ $t("lang.user_registration_protocol") }}
+          </router-link>
+        </div>
       </div>
     </q-form>
+
+    <div class="text-center q-mt-md q-pb-lg">
+      {{ $t("lang.already_have_acc") }}
+      <router-link to="/login">
+        {{ $t("lang.login_here") }}
+      </router-link>
+    </div>
 
     <!-- <div class="login-bottom-div"> -->
     <!-- <img src="../assets/images/login/register-banner.png" /> -->
@@ -296,6 +289,7 @@ import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "stores/index";
 import qs from "qs";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -307,6 +301,7 @@ export default defineComponent({
     onActivated(() => {
       getCode();
     });
+    const { t } = useI18n();
     const store = userStore();
     const verificationImg = ref("");
     const isValidName = () => {
@@ -395,6 +390,7 @@ export default defineComponent({
     // const telRef = ref();
     const emailRef = ref();
     const verificationRef = ref();
+    const affiliateCodeRef = ref();
     const phoneVerificationRef = ref();
     const $q = useQuasar();
     const route = useRoute();
@@ -403,7 +399,7 @@ export default defineComponent({
     const isValidEmail = () => {
       const emailPattern =
         /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
-      return emailPattern.test(regForm.email) || "请输入有效电子邮件";
+      return emailPattern.test(regForm.email) || t("lang.email_valid");
     };
 
     const isValidCnPhone = () => {
@@ -600,6 +596,7 @@ export default defineComponent({
       // telRef,
       emailRef,
       verificationRef,
+      affiliateCodeRef,
       onSubmit,
       isValidEmail,
       isPwd: ref(true),

@@ -658,7 +658,8 @@ export default defineComponent({
 
           &.isDesktop {
             display: block;
-            height: 430px;
+            min-height: 430px;
+            aspect-ratio: 1920/500;
           }
 
           &.isMobile {

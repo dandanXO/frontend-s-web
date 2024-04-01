@@ -840,9 +840,7 @@ export default defineComponent({
         .get("/promo/banner?category=HOME")
         .then((res) => {
           if (res.code === 0) {
-            console.log("banner?");
             banners.value = res.data;
-          } else {
           }
         })
         .catch(() => {});
@@ -1453,7 +1451,8 @@ export default defineComponent({
       }
 
       img {
-        width: 2rem;
+        display: block;
+        height: 2rem;
       }
     }
   }
@@ -1836,18 +1835,6 @@ export default defineComponent({
         }
       }
     }
-  }
-}
-</style>
-
-<style lang="scss">
-.q-select__dialog {
-  label {
-    img {
-      width: 30px;
-      height: 30px;
-    }
-    display: none;
   }
 }
 </style>
