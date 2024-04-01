@@ -1077,23 +1077,23 @@ export default defineComponent({
           icon: "report_problem"
         });
       } else {
-      api.post("/session/saveFinanceFeedback", qs.stringify(reminderForm)).then((res) => {
-        const ret = res.data
-        if (ret.code === 0) {
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: t('lang.success'),
-            icon: "check_circle_outline"
-          });
-          reminderDialog.value = false;
-          reminderForm.value = {}
-          uploadFileRef.value = {};
-        }
-      })
-    }
+        api.post("/session/saveFinanceFeedback", qs.stringify(reminderForm)).then((res) => {
+          const ret = res.data
+          if (ret.code === 0) {
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: t('lang.success'),
+              icon: "check_circle_outline"
+            });
+            reminderDialog.value = false;
+            reminderForm.value = {}
+            uploadFileRef.value = {};
+          }
+        })
+      }
 
-    watch(recordActive, (currentValue, oldValue) => {
+      watch(recordActive, (currentValue, oldValue) => {
       searchRecord()
     });
     const $q = useQuasar()
