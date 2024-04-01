@@ -241,13 +241,13 @@ export default defineComponent({
         if (res.code === 0) {
           promoState.promoList.push(...res.data);
           res.data.forEach(element => {
-            if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-              promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-            } else {
+            // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+            //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+            // } else {
               if (element.redirectUrl === route.query.name) {
                 showPromoDetails(element);
               }
-            }
+            // }
           });
         }
       }).catch((e) => {
@@ -594,11 +594,10 @@ export default defineComponent({
 
     .selected-promo-wrapper {
       &.bg__cny-spinwheel {
-        background-image: url("../assets/images/promotion/hotpromo/cny-spinwheel/cny-spinwheel-bg.jpg");
+        background-image: url("../assets/images/promotion/hotpromo/bonus-spinwheel/bg.jpg");
         background-size: 100% 100%;
         background-repeat: no-repeat;
         background-position: top center;
-        background-color: #a1211d;
         padding-bottom: 0px;
 
         .inner {

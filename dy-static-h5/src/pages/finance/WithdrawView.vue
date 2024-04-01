@@ -91,6 +91,7 @@
               (val) => (val && val.length > 0) || '请输入提款金额',
               (val) => val >= selectedWithdrawalMethod.withdrawMin || '请输入正确的提款金额',
               (val) => val <= selectedWithdrawalMethod.withdrawMax || '请输入正确的提款金额',
+              (val) => (val && /^\d+$/.test(val)) || '提款金额不能有小数',
               !isUSDT ? (val) => (!isUSDT && /^([1-9][0-9]*)$/.test(val)) || '金额应为正数' : true
             ]"
             clearable
@@ -151,7 +152,8 @@
           </div>
           <div v-else-if="isEWALLET">
             <span class="tip-text">*特别说明：提款钱包和游戏账号的姓名务必一致</span>
-            <div class="q-mt-md q-mb-md text-center">
+            <div class="q-mt-md q-mb-md text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
+              >
               <q-btn
                 style="border: 1px solid #000000; color: #000000"
                 @click="openEWalletTutorial(selectedWithdrawalMethod.code)"
@@ -336,7 +338,7 @@ export default defineComponent({
       withdrawInfo.withdrawCode = method.code;
       console.log("WITHDRAW CODE:" + withdrawInfo.withdrawCode)
       isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
-      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY')
+      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY') || withdrawInfo.withdrawCode.includes('SZPAY')
       isALIPAY.value = withdrawInfo.withdrawCode.includes('ALIPAY')
       activeItem.value = index;
       loadCards();

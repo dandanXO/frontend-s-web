@@ -5,7 +5,7 @@
     <div class="account-title-container" v-else>
       <span class="account-title">{{ name }}</span>
     </div>
-    <div class="node-content payment-method-wrapper" :style="gridColAmount">
+    <div class="node-content payment-method-wrapper">
       <div
         class="node-item payment-method-item"
         :id="level + '_' + i"
@@ -75,7 +75,7 @@ export default defineComponent({
     },
     gridcol: {
       type: Number,
-      default: 4
+      default: 5
     }
   },
   data() {
@@ -90,7 +90,7 @@ export default defineComponent({
       payMethods: reactive([]),
       nodeKey: 0,
       imgURL,
-      gridColAmount: "grid-template-columns: repeat(" + this.gridcol + ", 1fr);"
+      gridColAmount: "grid-template-columns: repeat(5 , 1fr);"
     };
   },
   computed() {},
@@ -199,6 +199,8 @@ $node-color: #468cff;
   display: grid;
   margin-bottom: 15px;
   width: 100%;
+  grid-template-columns: repeat(5, 1fr);
+  padding-right: 15px;
 
   .payment-method-item {
     text-align: center;
@@ -355,16 +357,18 @@ $node-color: #468cff;
         align-items: center;
         justify-content: center;
         box-shadow: inset 0 0 8px 0 #a9c9ea;
-        width: 5.5rem;
-        height: 5rem;
+        width: 4rem;
+        height: 4rem;
         margin-bottom: 5px;
         border: 2px solid $secondary;
         border-radius: 10px;
+        padding: 4px 4px;
 
         img {
           background-color: transparent;
           margin-bottom: 0;
-          padding: 12px 14px;
+          padding: 0;
+          display: block;
           width: 100%;
           height: auto;
         }
@@ -405,8 +409,8 @@ $node-color: #468cff;
         padding: 0;
         border: 0;
         background-color: transparent;
-        max-width: 64px;
-        width: 64px;
+        max-width: 60px;
+        width: 100%;
       }
       ::after {
         position: relative;
@@ -439,7 +443,13 @@ $node-color: #468cff;
     top: -10px;
   }
   .node .node-content .node-text .node-txt-img img {
-    padding: 5px 10px;
+    // padding: 5px 10px;
+  }
+}
+
+@media (max-width: 355px) {
+  .payment-method-wrapper {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 

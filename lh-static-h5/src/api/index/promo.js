@@ -102,12 +102,18 @@ export function getCurrentStepInit() {
   return eventapi.get(`/game-steps/initiate`, {});
 }
 
-export function submitGameStep() {
-  return eventapi.post(`/game-steps/step`);
+export function submitGameStep(param) {
+  const { stage } = param;
+  return eventapi.post(
+    `/game-steps/step`,
+    qs.stringify({
+      stage: stage
+    })
+  );
 }
 
-export function getStepRecords(current) {
-  return eventapi.get(`/game-steps/records?size=10&current=${current}`, {});
+export function getStepRecords(current, currentStage) {
+  return eventapi.get(`/game-steps/records?size=10&current=${current}&stage=${currentStage}`, {});
 }
 
 // 意见反馈

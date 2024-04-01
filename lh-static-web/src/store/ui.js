@@ -6,7 +6,8 @@ export const uiStore = defineStore("ui-store", {
             title: "",
             footer: true,
             orientation: 'landscape',
-            downloadUrl: ""
+            downloadUrl: "",
+            innerWidth : window.innerWidth
         };
     },
     actions: {

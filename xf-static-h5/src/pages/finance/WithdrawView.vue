@@ -108,10 +108,13 @@
               (val) =>
                 val <= selectedWithdrawalMethod.withdrawMax ||
                 '请输入正确的提款金额',
+              (val) =>
+                (val && /^\d+$/.test(val))  ||
+                '提款金额不能有小数',
               !isUSDT
                 ? (val) =>
                     (!isUSDT && /^([1-9][0-9]*)$/.test(val)) || '金额应为正数'
-                : true
+                : true,
             ]"
             clearable
           >
@@ -201,14 +204,14 @@
             </div>
           </div>
           <div v-else-if="isEWALLET">
-            <div class="q-mt-md q-mb-md text-center">
+            <div class="q-mt-md q-mb-md text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">>
               <q-btn
                 style="border: 1px solid #33bcd4; color: #33bcd4"
                 @click="openEWalletTutorial(selectedWithdrawalMethod.code)"
                 :label="tutorialLabel()"
               />
             </div>
-            <div class="q-mt-md text-orange" v-if="['KDPAY', 'EBPAY', 'OKPAY'].includes(selectedWithdrawalMethod.code)">
+            <div class="q-mt-md text-orange" v-if="['KDPAY', 'EBPAY', 'OKPAY', 'SZPAY'].includes(selectedWithdrawalMethod.code)">
               <span>*特别说明：提款钱包和游戏账号的姓名务必一致</span>
             </div>
           </div>
@@ -393,7 +396,7 @@ export default defineComponent({
       selectedWithdrawalMethod.value = method;
       withdrawInfo.withdrawCode = method.code;
       isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
-      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY')
+      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY')|| withdrawInfo.withdrawCode.includes('SZPAY')
       isALIPAY.value = withdrawInfo.withdrawCode.includes('ALIPAY')
       activeItem.value = index;
       loadCards();

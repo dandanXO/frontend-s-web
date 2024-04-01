@@ -709,13 +709,13 @@ async function loadSites() {
 }
 
 async function toPay() {
-  await fromAffiliateAutopayToPay(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
+  await fromAffiliateAutopayToPay(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
   await loadRecord()
   ElMessage({ message: t('message.updateToPaySuccess'), type: 'success' })
 }
 
 async function toSuccess(memberWithdrawRecord) {
-  await fromAffiliateAutopayToSuccess(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate)
+  await fromAffiliateAutopayToSuccess(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
   await loadRecord()
   ElMessage({ message: t('message.autopaySuccess'), type: 'success' })
 }
@@ -748,7 +748,8 @@ async function fail() {
         failForm.id,
         failForm.reasonType,
         failForm.failReason,
-        failForm.withdrawDate
+        failForm.withdrawDate,
+        request.siteId
       )
       uiControl.dialogVisible = false
       clickedFail.value = false

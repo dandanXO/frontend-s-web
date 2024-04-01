@@ -245,6 +245,77 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+.prizePopupContainer {
+    width: 480px;
+    height: 500px;
+    background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/prize-popup.png");
+    background-size: 100% 100%;
+    box-shadow: none;
+
+    .el-dialog__body {
+      background: none;
+    }
+
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      height: 470px;
+      gap: 0px;
+
+      .bold-text {
+        font-family: sans-serif;
+        font-size: 35px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-align: center;
+        color: #530102;
+      }
+
+      .golden-text {
+        font-size: 55px;
+        letter-spacing: 2px;
+        background: linear-gradient(94.81deg, #f6ff8c 7.45%, #ffba88 95.9%),
+          linear-gradient(360deg, #ff932f 9.54%, #fffca9 86.08%);
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .popup-header {
+        letter-spacing: normal;
+        font-size: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .content {
+        height: 260px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        padding: 30px;
+
+        .action-btn {
+          background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/prize-popup-action-btn.png");
+          background-size: 100% 100%;
+          width: 80%;
+          height: 100%;
+          max-height: 65px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #ffffff;
+          font-size: 30px;
+          font-weight: bold;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  
 .cny-spin-wheel-wrapper {
   //   background: salmon;
   padding-top: 110px;
@@ -259,318 +330,248 @@ onMounted(() => {
   //       width: 100%;
   //     }
   //   }
-}
 
-.spin-wheel-container {
-  position: relative;
-  //   margin-bottom: 80px;
-  text-align: center;
-  margin-top: -110px;
-}
-
-.spin-wheel-frame {
-  position: relative;
-  width: 675px;
-  height: 675px;
-  margin: 0 auto;
-}
-
-.wheel-frame {
-  position: relative;
-  z-index: 3;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  width: 100%;
-  height: 100%;
-}
-
-.chosen-color-bg {
-  position: absolute;
-  z-index: 3;
-  top: -0px;
-  left: 50%;
-  transform: translate(-50%, 0);
-  width: 230px;
-}
-
-.spin-wheel {
-  position: absolute;
-  z-index: 2;
-  top: 0px;
-  left: 0px;
-  width: 675px;
-  height: 675px;
-}
-
-.wheel-bg {
-  width: 100%;
-  height: 100%;
-}
-
-.wheel-stage {
-  width: 100%;
-  height: 100%;
-}
-
-.spin-wheel-cny-hat {
-  width: 100%;
-  height: 100%;
-}
-
-.spin-wheel-number {
-  position: absolute;
-  z-index: 5;
-  top: 0px;
-  left: 0px;
-  width: 550px;
-  height: 550px;
-}
-
-.spin-wheel-number img {
-  width: 100%;
-  height: 100%;
-}
-
-.draw-btn {
-  width: 195px;
-  height: auto;
-  aspect-ratio: 206/220;
-  z-index: 25;
-  position: absolute;
-  top: calc(50%);
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  &.disabled {
-    filter: brightness(0.85);
+  .spin-wheel-container {
+    position: relative;
+    //   margin-bottom: 80px;
+    text-align: center;
+    margin-top: -110px;
   }
-}
 
-.click-pointer,
-.history-btn {
-  cursor: pointer;
-}
+  .spin-wheel-frame {
+    position: relative;
+    width: 675px;
+    height: 675px;
+    margin: 0 auto;
+  }
 
-.click-pointer:hover,
-.history-btn {
-  filter: brightness(1.2);
-}
+  .wheel-frame {
+    position: relative;
+    z-index: 3;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 100%;
+  }
 
-.history-btn:active {
-  transform: translate(0px, 1px);
-  filter: brightness(0.9);
-}
+  .chosen-color-bg {
+    position: absolute;
+    z-index: 3;
+    top: -0px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 230px;
+  }
 
-.click-pointer:active {
-  transform: translate(-50%, calc(-50% + 1px));
-  filter: brightness(0.9);
-}
+  .spin-wheel {
+    position: absolute;
+    z-index: 2;
+    top: 0px;
+    left: 0px;
+    width: 675px;
+    height: 675px;
+  }
 
-.wheel-stage {
-  width: 730px;
-  height: auto;
-  z-index: 20;
-  position: absolute;
-  top: calc(50%);
-  left: 50%;
-  transform: translate(-50%, 60%);
+  .wheel-bg {
+    width: 100%;
+    height: 100%;
+  }
 
-  img {
+  .wheel-stage {
+    width: 100%;
+    height: 100%;
+  }
+
+  .spin-wheel-cny-hat {
+    width: 100%;
+    height: 100%;
+  }
+
+  .spin-wheel-number {
+    position: absolute;
+    z-index: 5;
+    top: 0px;
+    left: 0px;
+    width: 550px;
+    height: 550px;
+  }
+
+  .spin-wheel-number img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .draw-btn {
+    width: 195px;
+    height: auto;
+    aspect-ratio: 206/220;
+    z-index: 25;
+    position: absolute;
+    top: calc(50%);
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &.disabled {
+      filter: brightness(0.85);
+    }
+  }
+
+  .click-pointer,
+  .history-btn {
+    cursor: pointer;
+  }
+
+  .click-pointer:hover,
+  .history-btn {
+    filter: brightness(1.2);
+  }
+
+  .history-btn:active {
+    transform: translate(0px, 1px);
+    filter: brightness(0.9);
+  }
+
+  .click-pointer:active {
+    transform: translate(-50%, calc(-50% + 1px));
+    filter: brightness(0.9);
+  }
+
+  .wheel-stage {
+    width: 730px;
+    height: auto;
+    z-index: 20;
+    position: absolute;
+    top: calc(50%);
+    left: 50%;
+    transform: translate(-50%, 60%);
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .cny-hat {
+    width: 200px;
+    height: auto;
+    z-index: 22;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .draw-btn img {
     width: 100%;
   }
-}
 
-.cny-hat {
-  width: 200px;
-  height: auto;
-  z-index: 22;
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, 0);
-
-  img {
-    width: 100%;
-  }
-}
-
-.draw-btn img {
-  width: 100%;
-}
-
-.spin-wheel-board {
-  position: relative;
-  z-index: 20;
-}
-
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #888;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-.prizePopupContainer {
-  width: 480px;
-  height: 500px;
-  background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/prize-popup.png");
-  background-size: 100% 100%;
-  box-shadow: none;
-
-  .el-dialog__body {
-    background: none;
+  .spin-wheel-board {
+    position: relative;
+    z-index: 20;
   }
 
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: 470px;
-    gap: 0px;
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
 
-    .bold-text {
-      font-family: sans-serif;
-      font-size: 35px;
-      font-weight: 700;
-      letter-spacing: 1px;
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+
+  .remaining-draw-wrapper {
+    .remaining-draw-text {
+      color: #e6d796;
+      font-size: 25px;
+      margin: 60px auto 10px;
       text-align: center;
-      color: #530102;
+      width: 300px;
     }
+  }
 
-    .golden-text {
-      font-size: 55px;
-      letter-spacing: 2px;
-      background: linear-gradient(94.81deg, #f6ff8c 7.45%, #ffba88 95.9%),
-        linear-gradient(360deg, #ff932f 9.54%, #fffca9 86.08%);
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+  .promo-info-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+    margin-top: -70px;
+    //   margin-bottom: 150px;
 
-    .popup-header {
-      letter-spacing: normal;
-      font-size: 30px;
+    .promo-info-banner {
+      background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/promo-info-banner.png");
+      background-size: 100% 100%;
+      width: 400px;
+      height: 383px;
+      margin: auto;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      justify-content: flex-end;
+      padding: 20px;
     }
 
-    .content {
-      height: 260px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-      padding: 30px;
+    .promo-info-header {
+      font-size: 23px;
+      font-weight: 700;
+      line-height: 30px;
+      text-align: center;
+      color: #ffffff;
+      padding: 38px 30px;
+    }
 
-      .action-btn {
-        background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/prize-popup-action-btn.png");
-        background-size: 100% 100%;
-        width: 80%;
-        height: 100%;
-        max-height: 65px;
-        display: flex;
+    .promo-info-content {
+      height: 100%;
+      max-height: 220px;
+      overflow-y: auto;
+
+      .event-info-item {
+        display: grid;
+        grid-template-columns: 100px 1fr;
         justify-content: center;
         align-items: center;
-        color: #ffffff;
-        font-size: 30px;
-        font-weight: bold;
-        cursor: pointer;
-      }
-    }
-  }
-}
-
-.remaining-draw-wrapper {
-  .remaining-draw-text {
-    color: #e6d796;
-    font-size: 25px;
-    margin: 60px auto 10px;
-    text-align: center;
-    width: 300px;
-  }
-}
-
-.promo-info-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-content: center;
-  align-items: center;
-  margin-top: -70px;
-  //   margin-bottom: 150px;
-
-  .promo-info-banner {
-    background: url("./../../../assets/images/promotion/hotpromo/cny-spinwheel/promo-info-banner.png");
-    background-size: 100% 100%;
-    width: 400px;
-    height: 383px;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 20px;
-  }
-
-  .promo-info-header {
-    font-size: 23px;
-    font-weight: 700;
-    line-height: 30px;
-    text-align: center;
-    color: #ffffff;
-    padding: 38px 30px;
-  }
-
-  .promo-info-content {
-    height: 100%;
-    max-height: 220px;
-    overflow-y: auto;
-
-    .event-info-item {
-      display: grid;
-      grid-template-columns: 100px 1fr;
-      justify-content: center;
-      align-items: center;
-      padding: 7px;
-      color: #530102;
-
-      .event-info-title {
-        font-weight: bold;
-      }
-    }
-
-    .winners-list-item {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      justify-content: center;
-      align-items: center;
-      font-weight: bold;
-      padding: 7px;
-
-      &:not(:last-child) {
-        border-bottom: 0.58px dotted #53010233;
-      }
-
-      .winner-username {
-        color: #53010299;
-      }
-
-      .winner-prize {
+        padding: 7px;
         color: #530102;
+
+        .event-info-title {
+          font-weight: bold;
+        }
+      }
+
+      .winners-list-item {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        justify-content: center;
+        align-items: center;
         font-weight: bold;
+        padding: 7px;
+
+        &:not(:last-child) {
+          border-bottom: 0.58px dotted #53010233;
+        }
+
+        .winner-username {
+          color: #53010299;
+        }
+
+        .winner-prize {
+          color: #530102;
+          font-weight: bold;
+        }
       }
     }
   }

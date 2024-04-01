@@ -552,18 +552,18 @@ async function loadRecord() {
 }
 
 async function loadWithdrawPlatforms(id, wd) {
-  const { data: wp } = await getWithdrawPlatformList(id, wd)
+  const { data: wp } = await getWithdrawPlatformList(id, wd, request.siteId)
   withdrawPlatformList.list = wp
 }
 
 async function toCheck(memberWithdrawRecord) {
   if (memberWithdrawRecord) {
     await loadWithdrawPlatforms(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate)
-    await fromApplyToAutopay(memberWithdrawRecord.id, withdrawPlatformList.list[0].id, memberWithdrawRecord.withdrawDate)
+    await fromApplyToAutopay(memberWithdrawRecord.id, withdrawPlatformList.list[0].id, memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
   } else {
     await loadWithdrawPlatforms(chooseRecord[0].id, chooseRecord[0].withdrawDate);
     await Promise.all(chooseRecord.map(async (a) => {
-      await fromApplyToAutopay(a.id, withdrawPlatformList.list[0].id, a.withdrawDate);
+      await fromApplyToAutopay(a.id, withdrawPlatformList.list[0].id, a.withdrawDate, a.siteId);
     }));
   }
   await loadRecord()
@@ -573,7 +573,7 @@ async function toCheck(memberWithdrawRecord) {
 }
 
 async function toFail(memberWithdrawRecord) {
-  await autoWithdrawToFail(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate)
+  await autoWithdrawToFail(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
   await loadRecord()
   ElMessage({ message: t('message.updateToFailSuccess'), type: 'success' })
 }

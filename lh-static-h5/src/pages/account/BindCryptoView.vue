@@ -181,7 +181,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted } from "vue";
+import { reactive, ref, onMounted, watch } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
@@ -218,7 +218,8 @@ const bankCardInfo = reactive({
   cardAddress: "",
   telephone: store.phone,
   smsCode: "",
-  smsCodeId: ""
+  smsCodeId: "",
+  currencyId: ""
 });
 
 const validateBankLength = (val) => {
@@ -391,6 +392,16 @@ const handleEnterKey = () => {
     openPhoneVeriDialog();
   }
 };
+
+watch(
+  () => bankCardInfo.bankId,
+  (newVal, oldVal) => {
+    const selectedBank = bankList.value.find((bank) => bank.id === newVal);
+    if (selectedBank) {
+      bankCardInfo.currencyId = selectedBank.currencyIds;
+    }
+  }
+);
 
 onMounted(() => {
   loadBankCards();

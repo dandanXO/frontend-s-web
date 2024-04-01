@@ -472,7 +472,7 @@ export default defineComponent({
     const activeTab = ref("phone");
     const getCode = () => {
       api
-          .get("/member/verificationCode")
+          .get("/member/verificationEasyCode")
           .then((res) => {
             const response = res.data;
             if (response.code === 0) {

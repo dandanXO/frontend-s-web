@@ -191,7 +191,8 @@ export default defineComponent({
     "LEG": "乐游棋牌",
     "PT": "PT电子",
     "BBINDY": "BBIN真人",
-    "RG": "RG电竞"
+    "RG": "RG电竞",
+    "AGF": "AG捕鱼"
   };
 
     const transferOutAllModal = () => {

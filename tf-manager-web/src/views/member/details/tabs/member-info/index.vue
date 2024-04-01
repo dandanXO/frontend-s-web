@@ -529,7 +529,7 @@
           border
         >
           <el-descriptions-item v-for="(value, key, index) in platformWallet" label-align="left" :key="index"
-                                label-class-name="member-label"
+                                label-class-name="member-platform-label"
                                 :label="key"
           >
             <div class="platform-balance" v-loading="loading.balance[key]">
@@ -1684,6 +1684,14 @@ export default defineComponent({
 .member-label {
   width: 150px;
 
+  div {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.member-platform-label {
+  width: 10%;
   div {
     display: flex;
     align-items: center;

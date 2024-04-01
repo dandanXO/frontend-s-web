@@ -204,6 +204,19 @@
         min-width="100"
       />
       <el-table-column
+        prop="ftdAmount"
+        :label="t('fields.ftdAmount')"
+        align="center"
+        min-width="100"
+      >
+        <template #default="scope">
+          $
+          <span
+            v-formatter="{data: scope.row.ftdAmount, type: 'money'}"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
         prop="depositAmount"
         :label="t('fields.depositAmount')"
         align="center"

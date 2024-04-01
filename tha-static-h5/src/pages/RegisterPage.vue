@@ -390,7 +390,7 @@ export default defineComponent({
 
     const getTelephoneVerificationImgCode = () => {
       api
-        .get("/member/verificationCode")
+        .get("/member/verificationEasyCode")
         .then((res) => {
           const response = res.data;
           if (response.code === 0) {
@@ -537,14 +537,16 @@ export default defineComponent({
                   });
                 }
                 //Submit tiktok register Event.
-                if(ui.isAffiliateC){
-                  ttq.track("CompleteRegistration",{
-                    currency: vueI18n.global.locale.value,
-                    value: 0.0,
-                    content_type: 'product',
-                  },{
-                    event_id:'CompleteRegistration001'
-                  })
+                if (ui.isAffiliateC) {
+                  ttq.track(
+                    "CompleteRegistration",
+                    {
+                      content_type: "product"
+                    },
+                    {
+                      event_id: new Date().getTime()
+                    }
+                  );
                 }
 
                 router.push("/login");

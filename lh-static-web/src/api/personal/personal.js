@@ -61,6 +61,10 @@ export function loadBankCards() {
   return server.REST.get("/session/bankCard");
 }
 
+export function loadAllBankCards() {
+  return server.REST.get("/session/allBankCard");
+}
+
 export function loadUnbindRecord(params) {
   return server.REST.get("/session/unbindLog", { params: params });
 }

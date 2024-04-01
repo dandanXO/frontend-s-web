@@ -41,7 +41,6 @@ const LocalStorage = {
     },
     pull(keyName, defaultValue = null) {
         let data = this.get(keyName, defaultValue);
-        console.log("Pull Data:" + data);
 
         ls.remove(keyName);
 

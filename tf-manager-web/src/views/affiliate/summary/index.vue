@@ -336,6 +336,9 @@
           >
             {{ t('fields.search') }}
           </el-button>
+          <el-button size="mini" @click="resetPopupQuery()">
+            {{ t('fields.reset') }}
+          </el-button>
         </div>
       </div>
       <el-table
@@ -442,6 +445,17 @@
           <template #default="scope">
             $
             <span v-formatter="{data: scope.row.payout, type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="profit"
+          :label="t('fields.totalProfit')"
+          align="center"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span v-formatter="{data: scope.row.profit, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column
@@ -553,7 +567,7 @@ const request = reactive({
 
 const popUpRequest = reactive({
   loginName: null,
-  recordTime: request.recordTime,
+  recordTime: null,
   memberType: null,
 })
 
@@ -594,6 +608,12 @@ function resetQuery() {
   request.affiliateCode = null
   request.activeMember = 0
   request.siteId = site.value ? site.value.id : siteList.list[0].id
+}
+
+function resetPopupQuery() {
+  popUpRequest.loginName = null
+  popUpRequest.recordTime = null
+  popUpRequest.memberType = null
 }
 
 const page = reactive({
@@ -681,6 +701,8 @@ async function loadNewMember(affiliateId) {
       query[key] = value
     }
   })
+
+  popUpRequest.recordTime = request.recordTime
 
   if (popUpRequest.recordTime !== null) {
     if (popUpRequest.recordTime.length === 2) {

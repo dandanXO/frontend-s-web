@@ -1164,28 +1164,28 @@ async function advancedSearch() {
 async function toApply(val) {
   const chooseRecord = []
   chooseRecord.push(val)
-  await fromAffiliateCheckingToApply(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
+  await fromAffiliateCheckingToApply(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
   await loadRecord()
 }
 
 async function toBeforePaid(val) {
   const chooseRecord = []
   chooseRecord.push(val)
-  await fromAffiliatePayToBeforePaid(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
+  await fromAffiliatePayToBeforePaid(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
   await loadRecord()
 }
 
 async function toFail(val) {
   const chooseRecord = []
   chooseRecord.push(val)
-  await fromAffiliateToFail(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
+  await fromAffiliateToFail(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
   await loadRecord()
 }
 
 async function toConfirm(val) {
   const chooseRecord = []
   chooseRecord.push(val)
-  await fromAffiliateToConfirm(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
+  await fromAffiliateToConfirm(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
   await loadRecord()
 }
 

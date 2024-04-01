@@ -57,7 +57,13 @@
     </div>
     <div v-else class="selected-promo">
       <div class="selected-promo-wrapper">
-        <div class="banner-container" v-if="selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl">
+        <div
+          class="banner-container"
+          v-if="
+            (selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl) &&
+            selectedPromo.promoCode !== 'lh1-game-steps'
+          "
+        >
           <div class="promo-bg isDesktop">
             <img
               :src="
@@ -82,6 +88,9 @@
               ? `background-image: url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
               : 'background-image: url(' + require(`../assets/promo/web-bg.jpg`) + '\''
           "
+          :class="{
+            fullwidth: selectedPromo.promoCode === 'lh1-game-steps'
+          }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
             <HotPromotion :list="selectedPromo" />
@@ -244,9 +253,9 @@ export default defineComponent({
         if(res.code === 0) {
           promoState.promoList.push(...res.data);
           res.data.forEach(element => {
-            if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-              promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-            } else {
+            // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+            //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+            // } else {
               if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3') {
                 if (element.redirectUrl === 'lh1-invite') {
                   showPromoDetails(element)
@@ -260,7 +269,7 @@ export default defineComponent({
               if (element.redirectUrl === route.query.name) {
                 showPromoDetails(element)
               }
-            }
+            // }
           });
         }
       }).catch((e) => { console.log("error", e); });
@@ -312,6 +321,7 @@ export default defineComponent({
   },
 });
 </script>
+
 <style lang="scss">
 .promo-container {
   min-height: 600px;
@@ -721,6 +731,17 @@ export default defineComponent({
         background-position: top center;
         gap: 20px;
         background-repeat: no-repeat;
+
+        &.fullwidth {
+          width: 100%;
+          max-width: 100%;
+          margin: 0;
+          padding: 0;
+
+          .promo-view-container {
+            display: none;
+          }
+        }
 
         &:has(.corner-decor) {
           position: relative;
