@@ -84,7 +84,7 @@ export default {
     logging_in: "Đăng nhập",
 
     // logout
-    logout_title: "Thông báo hệ thống",
+    logout_title: "Thông báo",
     logout_desc: "Bạn có chắc chắn muốn đăng xuất không?",
     logout_confirm: "Xác nhận",
     logout_cancel: "Hủy",
@@ -269,7 +269,7 @@ export default {
 
     // mine
     version_no: "Phiên bản",
-    central_wallet: "Ví trung tâm",
+    central_wallet: "Số dư",
     loading: "Đang tải...",
     deposit_btn: "Nạp tiền",
     withdraw_btn: "Rút tiền",
@@ -417,6 +417,66 @@ export default {
     direct_browser_access: "Truy cập trực tiếp từ trình duyệt",
 
     // affiliate
+    affiliate_title: "Chương trình liên kết",
+    affiliate_professionalteam: "Đội ngũ Chuyên nghiệp",
+    affiliate_bestqualityservice: "Dịch vụ Chất lượng Nhất",
+    affiliate_vgofficialpartner: "Đối tác Chính thức VG",
+    affiliate_joinus: "Tham gia với chúng tôi",
+    affiliate_login: "Đăng nhập",
+    affiliate_contactus: "Liên hệ với chúng tôi",
+    affiliate_01_head_title: "Kế hoạch hoa hồng Esports",
+    affiliate_01_sub_title: "Điều khoản cổ tức",
+    affiliate_01_para_01:
+      "Người chơi có số tiền nạp hàng tháng > 200 VNDP được coi là người chơi hoạt động, và cần ít nhất năm thành viên hoạt động trong tháng đó để thanh toán hoa hồng.",
+    affiliate_01_para_02:
+      "Thời gian phân phối hoa hồng cho tháng hiện tại sẽ từ ngày 5 đến ngày 10 của tháng sau khi hoàn tất thanh toán.",
+    affiliate_01_para_03:
+      "Cổ tức được phân phối trực tiếp vào tài khoản đại lý thông qua hệ thống, không cần giao dịch, và bạn có thể đăng ký rút tiền sau khi ràng buộc thẻ ngân hàng của mình.",
+    affiliate_01_para_04a: "Phương pháp tính hoa hồng đại lý:",
+    affiliate_01_para_04b:
+      "'(Số tiền thắng cược và thua cược - Giảm giá 100%) - (Nạp tiền + Rút tiền) * 1.6% - Phí của Nền tảng * 8%' * Tỷ lệ hoa hồng",
+    affiliate_01_para_05:
+      "Phí quảng cáo đại lý yêu cầu ít nhất 3 thành viên mới đăng ký hoạt động mỗi tháng. Nếu không, sẽ được coi là một nền tảng Leihuo không quảng cáo, và hoa hồng sẽ bị giảm một nửa. Nếu số lượng thành viên mới đăng ký hoạt động tích lũy trong ba tháng không đạt mười, tài khoản đại lý sẽ bị ngưng hoạt động và chờ. Đại lý liên hệ lại với trang web mở.",
+    affiliate_02_head_title: "Lịch trình hoa hồng được lên kế hoạch như thế nào",
+    affiliate_02_note:
+      "Lưu ý: Lợi nhuận = tổng số tiền thắng và thua của các thành viên ngoại tuyến tại tất cả các địa điểm trừ đi tất cả các chiết khấu được áp dụng bởi các thành viên",
+    affiliate_rank: "Xếp hạng",
+    affiliate_profit: "Lợi nhuận",
+    affiliate_activemember: "Thành viên hoạt động hợp lệ",
+    affiliate_commission: "Hoa hồng",
+    affiliate_bronze: "Đồng",
+    affiliate_silver: "Bạc",
+    affiliate_gold: "Vàng",
+    affiliate_diamond: "Kim cương",
+    affiliate_crown: "Vương miện",
+    affiliate_03_head_title: "Lịch trình hoa hồng được lên kế hoạch như thế nào",
+    affiliate_example_01: "Ví dụ 1: Nạp 1,000 VNDP, rút 0 VNDP, áp dụng giảm giá 100 VNDP",
+    affiliate_example_01_text_01: "Nền tảng thắng hoặc thua",
+    affiliate_example_01_text_02: "Áp dụng giảm giá",
+    affiliate_example_01_text_03: "Trừ phí nạp và rút 1.6%",
+    affiliate_example_01_text_04: "Phí dịch vụ của Nền tảng",
+    affiliate_example_01_text_05: "Lợi nhuận",
+    affiliate_example_01_text_06: "Nhân với tỷ lệ hoa hồng",
+    affiliate_example_01_text_07: "Hoa hồng đại lý",
+    affiliate_03_note: "Lưu ý: Phí nạp và rút tiền = 1.6% của tổng số tiền nạp và rút",
+    affiliate_example_02:
+      "Ví dụ 1: Nạp 130,000 nhân dân tệ, rút 10,000 nhân dân tệ, áp dụng giảm giá 2,000 nhân dân tệ, còn lại 500",
+    affiliate_example_02_text_01: "Nền tảng thắng hoặc thua",
+    affiliate_example_02_text_02: "Áp dụng giảm giá",
+    affiliate_example_02_text_03: "Trừ phí nạp và rút 1.6%",
+    affiliate_example_02_text_04: "Phí dịch vụ của Nền tảng",
+    affiliate_example_02_text_05: "Lợi nhuận",
+    affiliate_example_02_text_06: "Nhân với tỷ lệ hoa hồng",
+    affiliate_example_02_text_07: "Hoa hồng đại lý",
+    affiliate_apply_agency: "Đăng ký đại lý ngay",
+    affiliate_online_cs: "Dịch vụ khách hàng trực tuyến 24 giờ",
+    affiliate_jointemail: "Email phòng hợp tác",
+    affiliate_jointskype: "Skype phòng hợp tác",
+    affiliate_jointletstalk: "Letstalk phòng hợp tác",
+    affiliate_jointtelegram: "Telegram phòng hợp tác",
+    affiliate_jointbubble: "Bubble phòng hợp tác",
+    affiliate_clicktocontact: "Nhấp vào biểu tượng để liên hệ, vui lòng cung cấp tên người dùng khi liên hệ",
+
     affiliate_program: "Chương trình đối tác",
     the_most_professional_team: "Đội ngũ chuyên nghiệp nhất",
     excellent_service: "Dịch vụ xuất sắc",
@@ -519,6 +579,7 @@ export default {
     invalid_phone_num: "Chỉ cho phép số",
     loading: "Đang tải",
     register_successful: "Đăng ký thành công",
+    no_special_characters: "Tên người dùng phải là sự kết hợp của chữ cái và số",
     length_between_6_12: "Độ dài phải từ 6 đến 12 ký tự",
     length_between_34_37: "Độ dài phải từ 34 đến 37 ký tự",
     receive_by_email: "Nhận bằng email",

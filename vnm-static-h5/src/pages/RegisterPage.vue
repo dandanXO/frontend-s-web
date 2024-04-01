@@ -16,7 +16,8 @@
           lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_enter_username'),
-            (val) => (val && val.length >= 6 && val.length <= 12) || $t('lang.length_between_6_12')
+            (val) => (val && val.length >= 6 && val.length <= 12) || $t('lang.length_between_6_12'),
+            (val) => /^[a-zA-Z0-9]*$/.test(val) || $t('lang.no_special_characters')
           ]"
           color="white"
         >
