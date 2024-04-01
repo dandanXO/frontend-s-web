@@ -1267,8 +1267,10 @@ export default defineComponent({
       })
     }
 
+    const imgURL = process.env.IMAGE_CDN;
     const getImageLink = (linkId) => {
-      reminderForm.photos = `https://fxlmnp.wallykrooger.com/photo/${linkId}`
+      // reminderForm.photos = linkId;
+      reminderForm.photos = `${imgURL}/${linkId}`;
     }
 
     const removeSessionKeys = (prefix) => {
