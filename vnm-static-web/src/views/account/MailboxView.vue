@@ -211,7 +211,8 @@ import moment from "moment";
 
 import { i18nStore } from '@/store/language'
 import { storeToRefs } from 'pinia'
-
+import { userStore } from "@/store";
+const store = userStore();
 const i18nStoreLanguage = i18nStore()
     const { languageVal } = storeToRefs(i18nStoreLanguage)
 const openMsg = (m) => {
