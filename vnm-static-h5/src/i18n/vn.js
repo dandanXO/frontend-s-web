@@ -161,6 +161,7 @@ export default {
     personal_username: "Tên tài khoản",
     personal_realname: "Họ Tên",
     personal_realname_val: "Vui lòng nhập Họ Tên",
+    personal_realname_valid: "Vui lòng nhập tên thật hợp lệ",
     personal_birthday: "Ngày sinh",
     personal_birthday_val: "Vui lòng nhập ngày sinh",
     personal_confirm: "Xác nhận",
