@@ -135,6 +135,37 @@
         </div>
       </template>
 
+
+      <InputRowGrid>
+        <template #fields>
+          <InputField :label="`Withdrawal Amount (${convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin)} -
+          ${ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) } RS)`">
+            <template #input>
+              <q-input
+                type="number"
+                ref="amountRef"
+                outlined
+                clearable
+                placeholder="Withdraw Amount"
+                v-model="withdrawInfo.amount"
+                :rules="[
+                  (val) => !!val || 'Please Enter Withdraw Amount',
+                  (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
+                  (val) => val < withdrawalMethods[withdrawalDialogTab].withdrawableBalance || `Withdraw Amount Insufficient`,
+                  (val) =>
+                    (val >= withdrawalMethods[withdrawalDialogTab].withdrawMin &&
+                      val <= withdrawalMethods[withdrawalDialogTab].withdrawMax) ||
+                    `Withdraw Amount Must In Between ${withdrawalMethods[withdrawalDialogTab].withdrawMin} - ${withdrawalMethods[withdrawalDialogTab].withdrawMax}`
+                ]"
+                lazy-rules
+                hide-bottom-space
+              ></q-input>
+            </template>
+          </InputField>
+        </template>
+      </InputRowGrid>
+      
+      <!--
       <div class="top-wrapper">
         <div class="title">
           Withdrawal Amount ({{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin) }} -
@@ -164,6 +195,7 @@
           hide-bottom-space
         ></q-input>
       </div>
+      -->
 
       <div class="bot-wrapper">
         <div class="info">
@@ -188,7 +220,8 @@
     </div>
 
     <template v-if="bankCardList.length > 0">
-      <div :class="`btn-submit`" @click="submitWithdraw">
+      <PrimaryButton :label="'Submit'" :onClick="submitWithdraw" :loading="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable" />
+      <!-- <div :class="`btn-submit`" @click="submitWithdraw">
         <q-spinner
           v-if="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
           color="white"
@@ -196,10 +229,11 @@
           :thickness="2"
         ></q-spinner>
         <template v-else>Submit</template>
-      </div>
+      </div> -->
     </template>
     <template v-else>
-      <div :class="`btn-submit`" @click="submitWithdrawBank">
+      <PrimaryButton :label="'Submit'" :onClick="submitWithdrawBank" :loading="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable" />
+      <!-- <div :class="`btn-submit`" @click="submitWithdrawBank">
         <q-spinner
           v-if="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
           color="white"
@@ -207,7 +241,7 @@
           :thickness="2"
         ></q-spinner>
         <template v-else>Submit</template>
-      </div>
+      </div> -->
     </template>
 
     <div class="bottom-tnc q-mt-md">
@@ -231,6 +265,9 @@ import { useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { convertToCommaAmount } from "src/boot/utils";
+import PrimaryButton from '../../components/auth/PrimaryButton.vue';
+import InputRowGrid from "src/components/auth/InputRowGrid.vue";
+import InputField from "src/components/auth/InputField.vue";
 
 // withdraw component
 const qs = require("qs");
@@ -564,7 +601,7 @@ const isValidCardAddress = () => {
     align-items: center;
     justify-content: space-around;
     border-radius: 0.625rem;
-    background: #1d2635;
+    background: #2E303466;
 
     text-align: center;
     font-family: "Manrope", sans-serif;

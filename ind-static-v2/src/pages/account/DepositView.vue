@@ -152,10 +152,11 @@
     </div>
 
     <div class="q-mt-lg">
-      <div :class="`btn-submit`" @click="confirmDeposit">
+      <PrimaryButton :label="'Submit'" :loading="isLoadingInitPay || btnLoading" :onClick="confirmDeposit" />
+      <!-- <div :class="`btn-submit`" @click="confirmDeposit">
         <q-spinner v-if="isLoadingInitPay || btnLoading" color="white" size="2em" :thickness="2"></q-spinner>
         <template v-else>Submit</template>
-      </div>
+      </div> -->
     </div>
 
     <div class="q-mt-lg" style="color: #576373" v-if="activeMethod.privilegeId">
@@ -210,6 +211,7 @@ import { useRouter } from "vue-router";
 import { convertToCommaAmount } from "src/boot/utils";
 import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
+import PrimaryButton from "src/components/auth/PrimaryButton.vue";
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -775,7 +777,7 @@ onMounted(() => {
       aspect-ratio: 106/64;
 
       &.active {
-        background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+        background: #00B900;
       }
     }
 

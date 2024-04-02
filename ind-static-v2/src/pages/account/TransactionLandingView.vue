@@ -2,7 +2,7 @@
   <div class="transaction-landing">
     <q-tabs v-model="activeKey" class="deposit-tabs" color="black" no-caps indicator-color="transparent">
       <q-route-tab to="/deposit" name="deposit" label="Deposit"></q-route-tab>
-      <q-route-tab to="/withdraw" name="withdraw" label="Withdraw"></q-route-tab>
+      <q-route-tab to="/withdraw" name="withdraw" label="Withdraw" :class="activeKey === 'withdraw' ? 'flip' : ''"></q-route-tab>
     </q-tabs>
 
     <q-tab-panels v-model="activeKey" class="deposit-panels">
@@ -42,27 +42,37 @@ watch(
 
 <style scoped lang="scss">
 .transaction-landing {
-  background: #101114;
+  // background: #101114;
   .deposit-tabs {
     font-family: "Manrope", sans-serif;
-
     width: 90%;
     margin: 0 auto;
     border-radius: 0.5rem;
-    background: #1b2232;
+    margin: 20px auto 0px;
+    // background: #1b2232;
+
+    background: url(../../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
+    background-size: 100% 100%;
 
     :deep(.q-tab) {
       color: #5c6c86;
-      background: #101114;
+      // background: #101114;
       border-radius: 0.375rem;
-      margin: 2.5px;
+      // margin: 2.5px;
     }
 
     :deep(.q-tab--active) {
       color: white;
       background: #5c46e7;
+      background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
+      background-size: 100% 100%;
 
       box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+
+      &.flip {
+        background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-right.png) no-repeat center center;
+        background-size: 100% 100%;
+      }
 
       .q-tab__label {
         font-weight: bold;
@@ -71,7 +81,7 @@ watch(
   }
 
   .deposit-panels {
-    background: #101114;
+    background: transparent;
   }
 }
 </style>
