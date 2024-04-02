@@ -1,6 +1,6 @@
 <template>
   <div class="personal-account">
-    <div class="web">{{ $t("lang.personal_exclusiveurl") }}: {{ personalState.memberInfo.evip }}</div>
+<!--    <div class="web">{{ $t("lang.personal_exclusiveurl") }}: {{ personalState.memberInfo.evip }}</div>-->
     <q-form ref="profileFormRef">
       <q-input
         standout

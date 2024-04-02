@@ -1,6 +1,6 @@
 <template>
   <div class="personal-account">
-    <div class="web">{{ $t("lang.personal_exclusiveurl") }}: {{ store.evip }}</div>
+<!--    <div class="web">{{ $t("lang.personal_exclusiveurl") }}: {{ store.evip }}</div>-->
     <q-form ref="profileFormRef">
       <div class="flex items-center no-wrap">
         <q-input
@@ -46,7 +46,7 @@
       ></q-input>
 
       <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn size="md" color="brightbtn" @click="submitUpdateSecurity()" :label="$t('lang.personal_verify')" />
+        <q-btn size="md" color="brightbtn" @click="submitUpdateSecurity()" :label="$t('lang.personal_submit_btn')" />
       </div>
     </q-form>
   </div>

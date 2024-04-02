@@ -2,7 +2,7 @@
   <div>
     <q-inner-loading :showing="loading">
       <q-spinner-gears size="50px" color="brightbtn" />
-      <div class="label" style="color: #fff">加载中</div>
+      <div class="label" style="color: #fff">{{ t('lang.loading') }}</div>
     </q-inner-loading>
 
     <div v-if="!loading">
@@ -83,7 +83,7 @@
             <div class="row justify-center q-my-md" v-if="!isEnded">
               <q-spinner-dots color="white" size="40px" />
             </div>
-            <span style="padding: 4px 0px; line-height: 36px" v-if="isEnded">没有更多数据了</span>
+            <span style="padding: 4px 0px; line-height: 36px" v-if="isEnded">{{ t('lang.no_more_data_le') }}</span>
           </div>
         </template>
       </q-infinite-scroll>
@@ -152,6 +152,7 @@ import { api } from "boot/axios";
 import { SessionStorage, useQuasar } from "quasar";
 import { translateRecord } from "../directives/translate.js";
 import * as _ from "lodash";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   props: {
@@ -197,6 +198,7 @@ export default defineComponent({
     const qs = require("qs");
     const isConfirmWithdraw = ref(false);
     const passDet = ref(null);
+    const {t} =useI18n();
 
     const clearTable = () => {
       truncatedList.value = [];
@@ -390,7 +392,8 @@ export default defineComponent({
       submitReminder,
       reminderDialog,
       reminderForm,
-      getImageLink
+      getImageLink,
+      t
     };
   }
 });
