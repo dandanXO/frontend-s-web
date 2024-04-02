@@ -110,6 +110,7 @@ export default {
     email_retrieval: "Email retrieval",
     recover_password_by_phone_number: "Recover password by phone number",
     recover_password_by_email: "Recover password by Email",
+    recover_account_by_email: "Recover account by Email",
     please_enter_phone_number: "Please enter phone number",
     phone_number: "Phone number",
     change_password_btn: "Change password",
@@ -123,6 +124,7 @@ export default {
     password_length_is_6_to_12: "Password length is 6 to 12",
     password_security_level_must_be_at_least_good: "Password security level must be at least as good",
     password_reset_complete: "Password reset complete",
+    account_sent_to_email: "Username has sent to your email",
 
     // change password
     chgpwd_password: "Password",
@@ -147,6 +149,7 @@ export default {
     chgpwd_forgot_withdraw_password: "Forgot withdraw password?",
     chgpwd_otp_code: "OTP Code",
     chgpwd_please_insert_otp_code: "Please insert OTP code",
+    chgpwd_otp_changed_successful: "OTP changed successfully!",
 
     // system hint
     system_hint: "System Hint",
@@ -945,6 +948,11 @@ export default {
     mail_nodata: "No data",
     mail_nodatayet: "No more data yet",
     mail_loading: "Loading",
+    mail_notification: "Notification",
+    mail_activity: "Activity",
+    mail_announcement: "Announcement",
+    mail_payment: "Payment",
+    mail_all: "All",
 
     // compose
     compose_title: "Title",

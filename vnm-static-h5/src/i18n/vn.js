@@ -108,6 +108,9 @@ export default {
     // forgot password
     sms_retrieval: "Truy xuất qua SMS",
     email_retrieval: "Truy xuất qua Email",
+    recover_password_by_phone_number: "Khôi phục mật khẩu bằng số điện thoại",
+    recover_password_by_email: "Khôi phục mật khẩu bằng Email",
+    recover_account_by_email: "Khôi phục tài khoản bằng Email",
     please_enter_phone_number: "Vui lòng nhập số điện thoại",
     phone_number: "Số điện thoại",
     change_password_btn: "Đổi mật khẩu",
@@ -121,6 +124,7 @@ export default {
     password_length_is_6_to_12: "Độ dài mật khẩu từ 6 đến 12 ký tự",
     password_security_level_must_be_at_least_good: "Mức độ bảo mật mật khẩu phải ít nhất là tốt",
     password_reset_complete: "Đặt lại mật khẩu hoàn tất",
+    account_sent_to_email: "Tên người dùng đã được gửi đến email của bạn",
 
     // change password
     chgpwd_password: "Mật khẩu",
@@ -145,6 +149,7 @@ export default {
     chgpwd_forgot_withdraw_password: "Quên mật khẩu rút tiền?",
     chgpwd_otp_code: "Mã OTP",
     chgpwd_please_insert_otp_code: "Vui lòng nhập mã OTP",
+    chgpwd_otp_changed_successful: "Thay đổi OTP thành công!",
 
     // system hint
     system_hint: "Gợi ý hệ thống",
@@ -944,6 +949,11 @@ export default {
     mail_nodata: "Không có dữ liệu",
     mail_nodatayet: "Chưa có dữ liệu mới",
     mail_loading: "Đang tải",
+    mail_notification: "Thông báo",
+    mail_activity: "Hoạt động",
+    mail_announcement: "Thông báo",
+    mail_payment: "Thanh toán",
+    mail_all: "Tất cả",
 
     // compose
     compose_title: "Tiêu đề",

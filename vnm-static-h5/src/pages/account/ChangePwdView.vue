@@ -397,6 +397,24 @@ export default defineComponent({
         code: formChgWithdrawPwd.otpCode,
         codeId: secondCodeId.value,
       }))
+      .then((response) => {
+        if (response.code === 0) {
+          $q.notify({
+          color: "positive",
+          position: "top",
+          message: e.message,
+          icon: "report_problem"
+        });
+        }
+      })
+      .catch((e) => {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: e.message,
+          icon: "report_problem"
+        });
+      });
     }
 
     onMounted(() => {

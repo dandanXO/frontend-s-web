@@ -116,6 +116,7 @@ import { RiArrowDownSLine, RiArrowUpSLine } from "vue-remix-icons";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import qs from "qs";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   components: {
@@ -150,18 +151,20 @@ export default defineComponent({
   },
   emits: ["readMsg"],
   setup(props, context) {
+    const { t } = useI18n();
     const mailboxMessageTypeData = ref([
-      { num: 1, type: "NOTIFICATION", name: "通知" },
-      { num: 2, type: "ACTIVITY", name: "活动" },
-      { num: 3, type: "ANNOUNCEMENT", name: "公告" },
-      { num: 4, type: "PAYMENT", name: "充提" },
-      { num: 5, type: "ALL", name: "全部" }
+      { num: 1, type: "NOTIFICATION", name: t("lang.mail_notification") },
+      { num: 2, type: "ACTIVITY", name: t("lang.mail_activity") },
+      { num: 3, type: "ANNOUNCEMENT", name: t("lang.mail_announcement") },
+      { num: 4, type: "PAYMENT", name: t("lang.mail_payment") },
+      { num: 5, type: "ALL", name: t("lang.mail_all") }
     ]);
     const mailboxMessageTab = ref(mailboxMessageTypeData.value[0].type);
     if (props.type === "outbox") {
       mailboxMessageTab.value = mailboxMessageTypeData.value[4].type;
     }
     const $q = useQuasar();
+
     const isDeleteMailModal = ref(false);
     const truncatedList = ref([]);
     const truncatedListByType = computed(() => {
