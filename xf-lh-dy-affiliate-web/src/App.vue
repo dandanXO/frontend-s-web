@@ -35,6 +35,7 @@ onMounted(() => {
 
   // change path according to hostname
   console.log(window.location.href)
+  // debugger;
   if (window.location.pathname === '/login') {
     if (window.location.host.indexOf('xf') > -1) {
       window.location.pathname = '/xf/login'
@@ -47,6 +48,8 @@ onMounted(() => {
     } else {
       window.location.pathname = '/dy/login'
     }
+  }else if (window.location.host.indexOf('vnm') > -1) {
+    window.location.pathname = '/vi/login'
   }
 });
 
