@@ -891,7 +891,7 @@ export default defineComponent({
               })
               clearPwd();
             } else {
-              ElMessage.error(response.message)
+              ElMessage.error(t(`response.${response.code}`))
             }
           }).catch((error) => {
             console.log(error.message);
@@ -905,7 +905,7 @@ export default defineComponent({
 
     const validatePwd = async (r,v) => {
       if(updatePwdInfo.confirmPassword !== updatePwdInfo.password){
-        return Promise.reject("确认密码与新密码不符合");
+        return Promise.reject(t('personal.common_and_new_password_not_match'));
       } else {
         return Promise.resolve();
       }
@@ -996,7 +996,7 @@ export default defineComponent({
               })
               clearPwd();
             } else {
-              ElMessage.error(response.message)
+              ElMessage.error(t(`response.${response.code}`))
             }
           }).catch((error) => {
             console.log(error.message);

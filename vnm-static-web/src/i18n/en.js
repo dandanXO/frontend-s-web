@@ -126,7 +126,8 @@ export default {
     captcha: 'Captcha',
     "countDown": `seconds remaining`,
     verificationCode: "Verification Code",
-    getVerificationCode: 'Get verification code'
+    getVerificationCode: 'Get verification code',
+    common_and_new_password_not_match: "Confirm password does not match the new password"
   },
   placeholder: {
     realName: 'Please enter Real Name',
@@ -345,13 +346,11 @@ transit: {
   recordTime: 'Record time',
   withdrawAmount: 'Withdraw Amount',
   withdrawDate: 'Withdraw Date',
-  operation: 'Operation',
   type: 'Type',
   gameType: 'Game Type',
   gamePlatform:'Game Platform',
   time: 'Time',
   privilegeName: 'Privilege Name',
-  recordTime: 'Record Time',
   bet: 'Bet',
   payout: 'Payout',
   orderNo: 'Order No.',
@@ -382,11 +381,8 @@ affiliate: {
   lessThanW: "<10W",
   percent: "%",
   silver: "Silver",
-  WtoW: "10W-30W",
   gold: "Gold",
-  WtoW: "30W-60W",
   diamond: "Diamond",
-  WtoW: "60W-100W",
   crown: "Crown",
   aboveW: ">100W",
   profitExplanation: "Profit Explanation: Profit = Total win/loss of offline members in all venues minus all discounts applied by members.",
@@ -396,7 +392,6 @@ affiliate: {
   deductPromotion: "Deduct Promotion",
   deductDepositWithdrawalFee: "Deduct Deposit/Withdrawal Fee",
   platformServiceFee: "Platform Service Fee",
-  profit: "Profit",
   multiplyCommissionRate: "Multiply by Commission Rate",
   agentCommission: "Agent Commission",
   transactionFeeNote: "Note: Transaction fee = 1.6% of total deposit and withdrawal amount",
@@ -441,7 +436,7 @@ about: {
     "generalTermsMessage": "Below are general terms and conditions for using TF88. By registering for an account, you agree to abide by our general terms. All activity in a visitor's account on the website is subject to and monitored by the following terms:",
     "ageRequirement": "Members must be at least 18 years old and have the intellectual capacity to take responsibility for their own actions.",
     "singleAccount": "Each customer can only open one account on TF88's website. We may close any additional accounts opened and any remaining funds in the account will be handled at TF88's sole discretion.",
-    "personalInformation": "Customers provide personal information when registering for an account and need to ensure that their provided information is correctly updated on the Website. If there is a mistake in the registration information, TF88 disclaims related liability. We ensure that customer information is safe and secure.",
+    "personalInformation2": "Customers provide personal information when registering for an account and need to ensure that their provided information is correctly updated on the Website. If there is a mistake in the registration information, TF88 disclaims related liability. We ensure that customer information is safe and secure.",
     "checkAccountBalance": "The customer must regularly check the account balance, when there is any deviation, the customer is responsible for immediately reporting to Online Support to check and verify the account.",
     "accountSecurity": "Customers must ensure the security of their account information, when customers disclose information to others, any disputes or conflicts later TF88 is not responsible.",
     "depositInstructions": "Customers who need to deposit money need to comply with the information and instructions on the Web site, TF88 is not responsible for all transactions that are not made according to instructions.",
@@ -454,7 +449,7 @@ about: {
     // Betting Rules 
     bettingRules: "Betting Rules",
     "familyRestriction": "People in the same family, same home address, same phone number, bank account number or IP address on the internet will not be able to participate in TF88 promotions.",
-    "entertainmentPurpose": "All promotions at TF88 are for entertainment purposes only, TF88 reserves the right to limit customers' right to participate in any promotions.",
+    "entertainmentPurpose2": "All promotions at TF88 are for entertainment purposes only, TF88 reserves the right to limit customers' right to participate in any promotions.",
     "modifyPromotion": "TF88 reserves the right to change, modify or terminate the Promotion, or part thereof, at any time and without prior notice.",
     "singleDeposit": "Each deposit can only participate in one Promotion.",
     "refundBasedOnBetTurnover": "The refund will be based on the total amount of valid bets (bet turnover) of the member in each product according to each market, each match and each membership level as follows:",
@@ -620,4 +615,10 @@ about: {
     "appDownload": "APP",
     "backToTop": "TOP"
   },
+  "response" :{
+    15202: "The new password cannot be the same as the old password.",
+    15201: "Old password is incorrect.",
+    12101: "The new withdraw password cannot be the same as the old withdraw password",
+    12100: "Old Withdraw password does not match."
+  }
 }

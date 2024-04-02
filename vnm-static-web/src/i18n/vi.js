@@ -121,10 +121,10 @@ export default {
     "securityVerification": "Xác minh bảo mật",
     phoneVerification: 'Xác minh Số điện thoại',
     "captcha": "Mã xác minh",
-    "email": "Email",
     "countDown": 'giây còn lại',
     verificationCode: "Mã Xác Minh",
-    getVerificationCode: 'Nhận mã xác nhận'
+    getVerificationCode: 'Nhận mã xác nhận',
+    common_and_new_password_not_match: "Xác nhận mật khẩu chưa chính xác."
   },
   "placeholder": {
     "realName": "Vui lòng nhập tên thật",
@@ -374,11 +374,8 @@ export default {
     "bronze": "Đồng",
     "lessThanW": "<10W",
     "silver": "Bạc",
-    "WtoW": "10W-30W",
     "gold": "Vàng",
-    "WtoW": "30W-60W",
     "diamond": "Kim cương",
-    "WtoW": "60W-100W",
     "crown": "Vương miện",
     "aboveW": ">100W",
     "profitExplanation": "Giải thích lợi nhuận",
@@ -388,7 +385,6 @@ export default {
     "deductPromotion": "Khấu trừ khuyến mãi",
     "deductDepositWithdrawalFee": "Khấu trừ phí nạp/rút",
     "platformServiceFee": "Phí dịch vụ nền tảng",
-    "profit": "Lợi nhuận",
     "multiplyCommissionRate": "Nhân với tỷ lệ hoa hồng",
     "agentCommission": "Hoa hồng đại lý",
     "transactionFeeNote": "Ghi chú phí giao dịch",
@@ -433,7 +429,7 @@ export default {
     "generalTermsMessage": "Dưới đây là các điều khoản chung để sử dụng TF88. Bằng cách đăng ký tài khoản, bạn đồng ý tuân thủ các điều khoản chung của chúng tôi. Tất cả các hoạt động trong tài khoản của khách truy cập trên trang web đều phải tuân theo và được giám sát bởi các điều khoản sau:",
     "ageRequirement": "Thành viên phải ít nhất 18 tuổi và có khả năng trí tuệ để chịu trách nhiệm về hành động của họ.",
     "singleAccount": "Mỗi khách hàng chỉ được mở một tài khoản trên trang web TF88. Chúng tôi có thể đóng bất kỳ tài khoản bổ sung nào được mở và mọi khoản tiền còn lại trong tài khoản sẽ được xử lý theo quyết định duy nhất của TF88.",
-    "personalInformation": "Khách hàng cung cấp thông tin cá nhân khi đăng ký tài khoản và cần đảm bảo rằng thông tin được cung cấp của họ được cập nhật đúng cách trên trang web. Nếu có sai sót trong thông tin đăng ký, TF88 không chịu trách nhiệm liên quan. Chúng tôi đảm bảo rằng thông tin của khách hàng được bảo mật và an toàn.",
+    "personalInformation2": "Khách hàng cung cấp thông tin cá nhân khi đăng ký tài khoản và cần đảm bảo rằng thông tin được cung cấp của họ được cập nhật đúng cách trên trang web. Nếu có sai sót trong thông tin đăng ký, TF88 không chịu trách nhiệm liên quan. Chúng tôi đảm bảo rằng thông tin của khách hàng được bảo mật và an toàn.",
     "checkAccountBalance": "Khách hàng phải thường xuyên kiểm tra số dư tài khoản, khi có bất kỳ sai lệch nào, khách hàng phải chịu trách nhiệm báo cáo ngay cho Hỗ trợ Trực tuyến để kiểm tra và xác minh tài khoản.",
     "accountSecurity": "Khách hàng phải đảm bảo an ninh thông tin tài khoản của họ, khi khách hàng tiết lộ thông tin cho người khác, mọi tranh chấp hoặc xung đột sau này TF88 sẽ không chịu trách nhiệm.",
     "depositInstructions": "Khách hàng cần nạp tiền phải tuân thủ thông tin và hướng dẫn trên trang web, TF88 không chịu trách nhiệm đối với tất cả các giao dịch không được thực hiện theo hướng dẫn.",
@@ -446,7 +442,7 @@ export default {
     // Betting Rules 
     "bettingRules": "Quy Tắc Đặt Cược",
     "familyRestriction": "Mọi người cùng gia đình, cùng địa chỉ nhà, cùng số điện thoại, số tài khoản ngân hàng hoặc địa chỉ IP trên internet sẽ không được tham gia vào các chương trình khuyến mãi của TF88.",
-    "entertainmentPurpose": "Tất cả các chương trình khuyến mãi tại TF88 chỉ dành cho mục đích giải trí, TF88 có quyền hạn chế quyền tham gia của khách hàng vào bất kỳ chương trình khuyến mãi nào.",
+    "entertainmentPurpose2": "Tất cả các chương trình khuyến mãi tại TF88 chỉ dành cho mục đích giải trí, TF88 có quyền hạn chế quyền tham gia của khách hàng vào bất kỳ chương trình khuyến mãi nào.",
     "modifyPromotion": "TF88 có quyền thay đổi, sửa đổi hoặc chấm dứt Chương trình khuyến mãi, hoặc một phần của nó, vào bất kỳ thời điểm nào và mà không cần thông báo trước.",
     "singleDeposit": "Mỗi lần nạp tiền chỉ có thể tham gia một Chương trình khuyến mãi.",
     "refundBasedOnBetTurnover": "Hoàn tiền sẽ dựa trên tổng số tiền cược hợp lệ (tổng số lượt cược) của thành viên trong mỗi sản phẩm theo từng thị trường, từng trận đấu và từng cấp độ thành viên như sau:",
@@ -615,5 +611,10 @@ export default {
     "appDownload": "Tải APP",
     "backToTop": "TOP"
   },
-
+  "response" :{
+    15202: "Mật khẩu mới không thể giống với mật khẩu cũ.",
+    15201: "Mật khẩu cũ chưa chính xác.",
+    12101: "Mật khẩu rút tiền mới không thể giống với mật khẩu rút tiền cũ.",
+    12100: "Mật khẩu rút tiền cũ chưa chính xác."
+  }
 }
