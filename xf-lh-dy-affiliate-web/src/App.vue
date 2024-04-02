@@ -21,7 +21,7 @@ onMounted(() => {
     link.href = '/dy-favicon.ico';
   }else if(window.location.pathname.indexOf("xf") > -1){
     link.href = '/xf-favicon.ico';
-  }else if(window.location.pathname.indexOf("vi") > -1){
+  }else if(window.location.pathname.indexOf("vnm") > -1){
     link.href = '/vi-favicon.ico';
   }else if(window.location.pathname.indexOf("my") > -1){
     link.href = '/my-favicon.ico';
@@ -42,7 +42,7 @@ onMounted(() => {
       window.location.pathname = '/ind/login'
     } else if (window.location.host.indexOf('lh1') > -1) {
       window.location.pathname = '/lh/login'
-    }else if (window.location.host.indexOf('vi') > -1) {
+    }else if (window.location.host.indexOf('vnm') > -1) {
       window.location.pathname = '/vi/login'
     } else {
       window.location.pathname = '/dy/login'
