@@ -348,10 +348,10 @@ export default {
     // promo -- vi-poker-cashback
     vipoker_claim_now: "Yêu cầu ngay",
     vipoker_submit_successfully: "Đã gửi thành công",
-    vipoker_netlossbonus: "tiền thưởng lỗ ròng",
+    vipoker_netlossbonus: "Tiền thưởng",
 
     // promo -- vi-penny-bank
-    vipenny_lottery_now: "Lottery ngay",
+    vipenny_lottery_now: "Mở thưởng ngay",
     vipenny_claim_now: "Yêu cầu ngay",
 
     // promo -- vnm-iphone

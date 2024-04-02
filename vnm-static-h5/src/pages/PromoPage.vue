@@ -168,11 +168,11 @@ export default defineComponent({
     const tabItems = [
 
       { name: "all", label: t("lang.type_all") },
-      { name: "esport", label: t("lang.type_esport") },
       { name: "sport", label: t("lang.type_sport") },
-      // {name: "slot game", label: '老虎机'},
-      // {name: "fish", label: '捕鱼'},
       { name: "live casino", label: t("lang.type_livecasino") },
+      {name: "slot game", label: t("lang.type_slot") },
+      // { name: "esport", label: t("lang.type_esport") },
+      // {name: "fish", label: '捕鱼'},
       { name: "others", label: t("lang.type_others") }
     ];
 
