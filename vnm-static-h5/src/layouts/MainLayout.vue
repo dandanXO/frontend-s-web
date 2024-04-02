@@ -69,7 +69,7 @@
           <img class="hover" src="../assets/images/footer/promo-icon-active.svg" />
           {{ $t("lang.promo") }}
         </q-route-tab>
-        <q-route-tab to="/account/transfer" name="transfer">
+        <q-route-tab to="/finance/deposit" name="deposit">
           <img class="inactive" src="../assets/images/footer/withdraw-icon.svg" />
           <img class="hover" src="../assets/images/footer/withdraw-icon-active.svg" />
           {{ $t("lang.account") }}

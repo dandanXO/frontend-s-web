@@ -1,18 +1,17 @@
 <template>
-<q-page>
-<!--    <iframe-->
-<!--    :src="'https://csweb01.v6kthwlug.com/?partnerCode=XFCS&lang=zh-CN&way=' + regDevice + '&token=' + store.token"-->
-<!--    title="description"-->
-<!--  ></iframe>-->
-  <!-- <div class="iFrameFull">
-  </div> -->
-</q-page>
+  <q-page>
+    <iframe
+      :src="'https://csweb01.v6kthwlug.com/?partnerCode=XFCS&lang=zh-CN&way=' + regDevice + '&token=' + store.token"
+      title="description"
+    ></iframe>
+    <div class="iFrameFull"></div>
+  </q-page>
 </template>
 
 <script>
 import { defineComponent, ref } from "vue";
-import { useQuasar, Platform } from "quasar"
-import { userStore } from "stores/index"
+import { useQuasar, Platform } from "quasar";
+import { userStore } from "stores/index";
 
 export default defineComponent({
   setup() {
@@ -22,7 +21,7 @@ export default defineComponent({
     return {
       regDevice,
       store
-    }
+    };
   }
 });
 </script>
@@ -33,7 +32,6 @@ export default defineComponent({
   padding-bottom: env(safe-area-inset-top, 59px); */
   /* height: calc(100vh - (env(safe-area-inset-top, 44px) + env(safe-area-inset-bottom, 59px) + 100px));
   padding-bottom: 44px + env(safe-area-inset-top, 44px); */
-
 }
 iframe {
   width: 100%;
