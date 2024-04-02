@@ -108,6 +108,9 @@ export default {
     // forgot password
     sms_retrieval: "Truy xuất qua SMS",
     email_retrieval: "Truy xuất qua Email",
+    recover_password_by_phone_number: "Khôi phục mật khẩu bằng số điện thoại",
+    recover_password_by_email: "Khôi phục mật khẩu bằng Email",
+    recover_account_by_email: "Khôi phục tài khoản bằng Email",
     please_enter_phone_number: "Vui lòng nhập số điện thoại",
     phone_number: "Số điện thoại",
     change_password_btn: "Đổi mật khẩu",
@@ -121,6 +124,7 @@ export default {
     password_length_is_6_to_12: "Độ dài mật khẩu từ 6 đến 12 ký tự",
     password_security_level_must_be_at_least_good: "Mức độ bảo mật mật khẩu phải ít nhất là tốt",
     password_reset_complete: "Đặt lại mật khẩu hoàn tất",
+    account_sent_to_email: "Tên người dùng đã được gửi đến email của bạn",
 
     // change password
     chgpwd_password: "Mật khẩu",
@@ -142,6 +146,10 @@ export default {
     chgpwd_confirm_withdraw_password_not_match: "Xác nhận mật khẩu rút tiền không khớp với mật khẩu rút tiền mới",
     chgpwd_password_updated_successfully: "Đã cập nhật mật khẩu thành công",
     chgpwd_withdraw_password_updated_successfully: "Đã cập nhật mật khẩu rút tiền thành công",
+    chgpwd_forgot_withdraw_password: "Quên mật khẩu rút tiền?",
+    chgpwd_otp_code: "Mã OTP",
+    chgpwd_please_insert_otp_code: "Vui lòng nhập mã OTP",
+    chgpwd_otp_changed_successful: "Thay đổi OTP thành công!",
 
     // system hint
     system_hint: "Gợi ý hệ thống",
@@ -150,29 +158,30 @@ export default {
 
     // personal | verify
     personal_exclusiveurl: "URL riêng",
-    personal_username: "Tên người dùng",
-    personal_realname: "Tên thật",
-    personal_realname_val: "Vui lòng nhập tên thật",
+    personal_username: "Tên tài khoản",
+    personal_realname: "Họ Tên",
+    personal_realname_val: "Vui lòng nhập Họ Tên",
     personal_birthday: "Ngày sinh",
     personal_birthday_val: "Vui lòng nhập ngày sinh",
     personal_confirm: "Xác nhận",
     personal_close: "Đóng",
-    personal_mobilenumber: "Số điện thoại di động",
-    personal_mobilenumber_val: "Vui lòng nhập số điện thoại di động hợp lệ",
+    personal_mobilenumber: "Số điện thoại",
+    personal_mobilenumber_val: "Vui lòng nhập số điện thoại",
     personal_mobilenumber_verify: "Vui lòng xác minh số điện thoại di động của bạn",
     personal_mobilenumber_allownumsonly: "Số điện thoại chỉ cho phép chữ số",
     personal_email: "Email",
-    personal_email_val: "Vui lòng nhập email",
+    personal_email_val: "Vui lòng nhập Email",
     personal_email_empty: "Email không thể để trống",
     personal_emailotp: "Email OTP",
     personal_emailotp_val: "Vui lòng nhập mã OTP từ email",
-    personal_emailotp_sent: "Mã OTP đã được gửi đến email của bạn",
+    personal_emailotp_sent: "Gửi mã thành công",
     personal_submit: "Gửi",
+    personal_submit_btn: "Xác nhận",
     personal_registerperiod: "Thời gian đăng ký",
     personal_verify: "Xác minh",
     personal_sendotp: "Gửi OTP",
     personal_sentotp_countdown: "Đã gửi và đếm ngược trong",
-    personal_mobileotp: "Mobile OTP",
+    personal_mobileotp: "Mã OTP",
     personal_mobileotp_val: "Vui lòng nhập mã OTP",
     personal_verification: "Mã xác minh",
     personal_verification_refresh: "Nhấn để làm mới mã xác minh",
@@ -188,6 +197,36 @@ export default {
     share_accumulated_registration: "Đăng ký tích lũy",
     share_accumulated_recharge: "Nạp tiền tích lũy",
     share_persons: "Người",
+    share_invitefriends: "Mời Bạn Bè",
+    share_table_header_01: "Chuyển Ví",
+    share_table_header_02: "Thời gian đăng ký",
+    share_table_header_03: "Bắt đầu đặt cược",
+    share_table_header_04: "trạng thái",
+    share_table_content_empty: "Không tìm được lịch sử khớp",
+    share_tnc: "Điều Khoản Và Điều Kiện",
+    share_tnc_para_01: "Khuyến mãi bắt đầu từ 00:00:00 ngày 01/06/2022 (GMT +8)",
+    share_tnc_para_02:
+      "Chỉ cần giới thiệu thêm bạn tham gia tại TF88, bạn sẽ nhận được 300VNDP trên mỗi một người giới thiệu thành công. Người chơi mà thành viên giới thiệu cũng sẽ nhận được tiền thưởng chào mừng là 150VNDP.",
+    share_tnc_para_03: "Để đủ điều kiện nhận tiền thưởng, thành viên cần đáp ứng các điều kiện sau đây",
+    share_tnc_para_03_a: "Thành viên giới thiệu (Khách hàng)",
+    share_tnc_para_03_a_i: "Tổng tiền cược hợp lệ tối thiểu từ 8.000 VNDP trở lên",
+    share_tnc_para_03_b: "Thành viên được giới thiệu (Bạn của bạn):",
+    share_tnc_para_03_b_i:
+      "Đăng ký tài khoản trong thời gian khuyến mãi thông qua liên kết giới thiệu bạn bè được chỉ định",
+    share_tnc_para_03_b_ii: "Chưa từng đăng ký tại TF88 và không có bất kỳ tài khoản nào khác tại TF88",
+    share_tnc_para_03_b_iii:
+      "Phải có giao dịch gửi tiền đầu tiên thành công và có tổng số tiền cược hợp lệ tích lũy tối thiểu 4.000VNDP trong vòng 20 ngày kể từ ngày đăng ký tài khoản",
+    share_tnc_para_04:
+      'Thành viên có thể giới thiệu bạn bè bằng cách vào mục "Thông tin cá nhân - Mời bạn bè" khi thành viên có tổng số tiền cược hợp lệ là 8.000VNDP. Sau đó thành viên có thể gửi liên kết giới thiệu của mình cho bạn bè để đăng ký tài khoản thông qua liên kết này.',
+    share_tnc_para_05:
+      "Việc xét duyệt chương trình khuyến mãi sẽ được thực hiện hàng tuần. Sau khi xác minh xong, phần thưởng giới thiệu sẽ tự động cập nhật vào tài khoản của thành viên giới thiệu và thành viên được giới thiệu vào khoảng 6 giờ tối (GMT + 8) vào Thứ Hai hàng tuần.",
+    share_tnc_para_06: "Thành viên nhận khuyến mãi cần hoàn thành 5 vòng cược của khuyến mãi trước khi rút tiền.",
+    share_tnc_para_07:
+      "All draw bets, CANCEL bets, 2 sided bets, Europe Handicap bets with odds under 1.75, Asian Handicap under 0.75, Fantasy Sports, Horse Racing, Number Game, will not be applied to this promotion.",
+    share_tnc_para_08:
+      "TF88 có quyền chỉnh sửa, từ chối hoặc hủy bỏ chương trình Khuyến mãi này mà không cần báo trước.",
+    share_tnc_para_09: "Chương trình có thể áp dụng cùng lúc với tất cả các Khuyến mãi tại TF88.",
+    share_tnc_para_10: "Điều khoản & Điều kiện khuyến mãi chung được áp dụng.",
 
     // transfer
     transfer_transfer: "Chuyển khoản",
@@ -267,7 +306,7 @@ export default {
     // bank details
     please_enter_unbind_bank_card: "Vui lòng nhập số thẻ ngân hàng cần hủy liên kết",
     add_bank_card: "Thêm thẻ ngân hàng",
-    add_virtual_wallet: "Thêm ví ảo",
+    add_virtual_wallet: "Thêm địa chỉ ví điện tử",
     add_ewallet: "Thêm ví điện tử",
 
     // mine
@@ -584,7 +623,6 @@ export default {
     already_a_member_signin_now: "Bạn đã là thành viên chưa? Đăng nhập ngay",
     invalid_email: "Email không hợp lệ",
     invalid_phone_num: "Chỉ cho phép số",
-    loading: "Đang tải",
     register_successful: "Đăng ký thành công",
     no_special_characters: "Tên người dùng phải là sự kết hợp của chữ cái và số",
     length_between_6_11: "Độ dài phải từ 6 đến 11 ký tự",
@@ -909,7 +947,13 @@ export default {
     mail_feedback: "Feedback",
     mail_compose: "Soạn thư",
     mail_nodata: "Không có dữ liệu",
-mail_nodatayet: "Chưa có dữ liệu mới",
+    mail_nodatayet: "Chưa có dữ liệu mới",
+    mail_loading: "Đang tải",
+    mail_notification: "Thông báo",
+    mail_activity: "Hoạt động",
+    mail_announcement: "Thông báo",
+    mail_payment: "Thanh toán",
+    mail_all: "Tất cả",
 
     // compose
     compose_title: "Tiêu đề",
@@ -969,8 +1013,16 @@ mail_nodatayet: "Chưa có dữ liệu mới",
     page_accountchangerecords: "Lịch sử chuyển tiền",
     page_referfriendsrecords: "Lịch sử mời bạn bè",
     page_rescuefundrecords: "Lịch sử quỹ cứu trợ",
-    page_reminderrecords: "Lịch sử nhắc nhở",
-    page_register: "Đăng ký"
+    page_register: "Đăng ký",
+
+    menu_deposit: "Nạp tiền",
+    menu_withdraw: "Rút tiền",
+    menu_moneychange: "Sao kê",
+    menu_promo: "Khuyến mãi",
+    menu_transaction: "Số tiền cược",
+    menu_reminder: "Reminder",
+    menu_rebate: "Hoàn trả",
+    no_more_data_le: "Không tìm thấy thông tin"
   },
   error: {
     101: "Không tìm thấy nền tảng",

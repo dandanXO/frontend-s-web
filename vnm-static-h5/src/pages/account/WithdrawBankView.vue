@@ -44,10 +44,10 @@
           <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
           <span>+{{ $t("lang.add_virtual_wallet") }}</span>
         </div>
-        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/ewallet')">
-          <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
-          <span>+{{ $t("lang.add_ewallet") }}</span>
-        </div>
+<!--        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/ewallet')">-->
+<!--          <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />-->
+<!--          <span>+{{ $t("lang.add_ewallet") }}</span>-->
+<!--        </div>-->
         <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/alipay')">
           <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
           <span>+添加支付宝</span>
@@ -319,7 +319,7 @@ onActivated(() => {
       border-radius: 10px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       flex-wrap: wrap;
       margin: 0 auto 14px;
       padding: 1.25rem;
@@ -329,7 +329,7 @@ onActivated(() => {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 47.5%;
+        width: 60.5%;
 
         .bank-bind-img {
           margin-left: auto;

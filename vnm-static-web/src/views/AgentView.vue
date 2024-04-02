@@ -3,7 +3,7 @@
     <div class="affiliate">
       <div class="affiliate-title">
       <img src="../assets/logo.svg" style="width: 200px;">
-        {{ $t('affiliate.englishText') }}
+        <span v-html="$t('affiliate.englishText')"></span>
       </div>
       <div class="affiliate-desc">
         <img src="../assets/images/affiliate/professional-team.png" height="55">
@@ -25,7 +25,7 @@
         <div class="affiliate-subgroup agent-content-item">
           <div class="affiliate-sub">
             <div class="affiliate-subtitle">{{ $t('affiliate.eSportsCommissionProgram') }}</div>
-            <div class="affiliate-terms">{{ $t('affiliate.bonusTerms') }}</div>
+            <!-- <div class="affiliate-terms">{{ $t('affiliate.bonusTerms') }}</div> -->
             <ul>
               <li>{{ $t('affiliate.activePlayerRequirement') }}</li>
               <li>{{ $t('affiliate.commissionIssuance') }}</li>
@@ -303,8 +303,8 @@ export default defineComponent({
       // font-family: Poppins;
       font-size: 40.79px;
       font-weight: 700;
-      line-height: 70px;
-      text-align: left;
+      line-height: 50px;
+      text-align: center;
       justify-content: center;
       align-items: center;
     }

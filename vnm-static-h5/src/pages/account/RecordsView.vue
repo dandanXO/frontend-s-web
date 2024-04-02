@@ -13,53 +13,40 @@
 </template>
 <script setup>
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 
+const {t} = useI18n();
 const transitList = ref([
   {
     code: "deposit",
     icon: "deposit",
-    name: "存款记录"
+    name: t('lang.menu_deposit')
   },
   {
     code: "withdraw",
     icon: "withdraw",
-    name: "提款记录"
-  },
-  {
-    code: "transfer",
-    icon: "transfer",
-    name: "转账记录"
+    name: t('lang.menu_withdraw')
   },
   {
     code: "moneyChange",
     icon: "transfer",
-    name: "账变记录"
+    name: t('lang.menu_moneychange')
   },
   {
     code: "promo",
     icon: "deposit",
-    name: "优惠记录"
+    name: t('lang.menu_promo')
   },
   {
     code: "bet",
     icon: "change",
-    name: "投注记录"
+    name: t('lang.menu_transaction')
   },
   {
     code: "financeFeedback",
     icon: "help",
-    name: "催单记录"
+    name: t('lang.menu_reminder')
   }
-  // {
-  //   code: 'recommend',
-  //   icon: 'recommend',
-  //   name: '推荐好友记录'
-  // },
-  // {
-  //   code: 'betRecord',
-  //   icon: 'help',
-  //   name: '投注记录'
-  // },
 ]);
 </script>
 <style scoped lang="scss">

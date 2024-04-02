@@ -67,6 +67,8 @@
                 />
               </div>
               <div class="inner">
+                <h2>{{selectedPromo.title}}</h2>
+
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
                 </div>
@@ -695,6 +697,13 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
+        h2{
+          font-size: 18px;
+          font-weight: bold;
+          margin: 5px auto 6px;
+          line-height: 20px;
+        }
 
         img {
           margin-bottom: 5px;

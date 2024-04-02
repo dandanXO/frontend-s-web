@@ -256,24 +256,27 @@
               <el-form-item ref="refWithdrawConfirmPassword" :label="$t('personal.confirmWithdrawPwd')"  name="confirmPassword" prop="confirmPassword">
                 <el-input type="password" v-model="updateWithdrawPwdInfo.confirmPassword" :placeholder="$t('placeholder.confirmWithdrawPwd')" clearable show-password />
               </el-form-item>
-              <div class="txt-center btn-container">
-                <button
-                  :loading="loadingWdPwBtn"
-                  class="standard-button btn-color-white"
-                  type="button"
-                  @click="clearWithdrawPwd"
-                >
-                  {{ $t('personal.clear') }}
-                </button>
+              <div class="withdrawBottom">
+                <div class="txt-center btn-container">
+                  <button
+                    :loading="loadingWdPwBtn"
+                    class="standard-button btn-color-white"
+                    type="button"
+                    @click="clearWithdrawPwd"
+                  >
+                    {{ $t('personal.clear') }}
+                  </button>
 
-                <button
-                  :loading="loadingWdPwBtn"
-                  class="standard-button btn-color-blue"
-                  type="button"
-                  @click="submitUpdateWithdrawPwd"
-                >
-                  {{ $t('personal.submit') }}
-                </button>
+                  <button
+                    :loading="loadingWdPwBtn"
+                    class="standard-button btn-color-blue"
+                    type="button"
+                    @click="submitUpdateWithdrawPwd"
+                  >
+                    {{ $t('personal.submit') }}
+                  </button>
+                </div>
+                <div class="link" @click="getOTPtoSend">Quên mật khẩu rút tiền?</div>
               </div>
             </el-form>
           </div>
@@ -1164,6 +1167,13 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+.withdrawBottom { 
+  display: flex; justify-content: space-between; align-items: center; max-width: 620px;
+  .link {
+    color:#468cff;
+    cursor: pointer;
+  }
+}
 .el-form--inline .el-form-item {
     display: inline-flex;
     vertical-align: middle;
@@ -1318,7 +1328,6 @@ export default defineComponent({
   display: flex;
   justify-content: flex-start;
   gap: 12px;
-  margin-top: 10px;
 }
 </style>
 <style lang="scss">

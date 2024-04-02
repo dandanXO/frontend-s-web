@@ -184,7 +184,7 @@
           </div>
         </router-link>
 
-        <router-link to="/account/inbox">
+        <router-link to="/account/letters">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-notice-icon.png" />
             <div class="acct-nav-label">
