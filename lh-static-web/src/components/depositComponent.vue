@@ -266,8 +266,7 @@ const rules = {
       trigger: "blur"
     },
     {
-      pattern: /^[1-9]\d*$/,
-      message: "金额应为正数",
+      validator: verifyDepositDecimal,
       trigger: "change"
     },
     {
@@ -561,6 +560,19 @@ function doDeposit(data) {
   });
   loadingBtn.value = false;
 
+}
+
+async function verifyDepositDecimal(r,v){
+  if (isUSDT.value) {
+    return Promise.resolve();
+  } else {
+    var decimalPattern = /^[1-9]\d*$/;
+    if(v.match(decimalPattern) !== null){
+      return Promise.resolve();
+    }else{
+      return Promise.reject("金额因为正数");
+    }
+  }
 }
 
 async function verifyDepositAmount(r, v) {
@@ -923,7 +935,7 @@ onMounted(() => {
 }
 
 .btn-confirm {
-  margin-left: 90px; 
+  margin-left: 90px;
   margin-bottom: 10px;
 }
 </style>
