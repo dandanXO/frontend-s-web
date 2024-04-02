@@ -34,7 +34,10 @@ onMounted(() => {
   }
 
   // change path according to hostname
-  console.log(window.location.href)
+  console.log("PATH Name");
+  console.log(window.location.href);
+  console.log(window.location.pathname);
+  // debugger;
   if (window.location.pathname === '/login') {
     if (window.location.host.indexOf('xf') > -1) {
       window.location.pathname = '/xf/login'
