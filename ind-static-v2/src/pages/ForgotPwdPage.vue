@@ -1,10 +1,10 @@
 <template>
   <div class="forgot-password-container">
-    <div class="back-left">
+    <!-- <div class="back-left">
       <router-link :to="'/login'">
         <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
       </router-link>
-    </div>
+    </div> -->
     <!--
       <div class="text-blue-grey">
       Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.

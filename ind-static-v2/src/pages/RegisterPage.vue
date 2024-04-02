@@ -1,10 +1,10 @@
 <template>
   <div class="register-container">
-    <div class="back-left">
+    <!-- <div class="back-left">
       <router-link :to="'/landing'">
         <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
       </router-link>
-    </div>
+    </div> -->
 
     <div class="register-form-logo-img">
       <img src="../assets/images/auth/auth-logo.png" />
