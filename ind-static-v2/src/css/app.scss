@@ -256,12 +256,14 @@ body.body--dark .q-footer {
   height: 86px;
 
   .q-tabs__content {
-    background-image: url(../assets/images/index/bottom-nav-bg.png);
-    background-repeat: no-repeat;
-    background-size: 120% 110px;
-    background-position: top center;
+    // background-image: url(../assets/images/index/bottom-nav-bg.png);
+    // background-repeat: no-repeat;
+    // background-size: 120% 110px;
+    // background-position: top center;
+    background-color: #171717;
     padding-bottom: 4px;
     padding-top: 16px;
+    border-radius: 40px 40px 0px 0px;
   }
 }
 .q-footer .q-tab {
@@ -300,6 +302,13 @@ body.body--dark .q-footer {
   }
   &--active {
     color: #ffffff;
+
+    .footer-label {
+      background: linear-gradient(251.03deg, #DFDF0C 7.46%, #7EDB5C 91.87%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
     // font-weight: bold;
     img {
       &.inactive {
