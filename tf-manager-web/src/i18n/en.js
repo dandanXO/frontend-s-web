@@ -366,6 +366,17 @@ export default {
     ASC: 'Ascending',
     DESC: 'Descending',
   },
+  promoType: {
+    WELCOME: 'WELCOME',
+    SPORT: 'SPORT',
+    ESPORT: 'ESPORT',
+    FISH: 'FISH',
+    LIVECASINO: 'LIVE CASINO',
+    SLOTGAME: 'SLOT GAME',
+    POKER: 'POKER',
+    DAILY: 'DAILY',
+    OTHER: 'OTHER',
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
