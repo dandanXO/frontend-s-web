@@ -87,7 +87,7 @@
         <div class="loading-container" v-else>
           <q-inner-loading :showing="loading">
             <q-spinner-gears size="50px" color="brand" />
-            <div class="label">加载中</div>
+            <div class="label">{{ $t("lang.mail_loading") }}</div>
           </q-inner-loading>
         </div>
       </q-tab-panel>

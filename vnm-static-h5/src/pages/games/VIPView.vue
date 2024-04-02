@@ -138,27 +138,27 @@
           <q-card-section class="return-promo-body">
             <div class="return-grid">
               <div class="return-item">
-                <div class="item-percent">0.78%</div>
+                <div class="item-percent">{{ vip.rebateSport }}</div>
                 <div class="item-desc">{{ $t("lang.vip_sport_rebate") }}</div>
               </div>
               <div class="return-item">
-                <div class="item-percent">0.88%</div>
+                <div class="item-percent">{{ vip.rebateEsports }}</div>
                 <div class="item-desc">{{ $t("lang.vip_esport_rebate") }}</div>
               </div>
               <div class="return-item">
-                <div class="item-percent">0.70%</div>
+                <div class="item-percent">{{ vip.rebateLive }}</div>
                 <div class="item-desc">{{ $t("lang.vip_livecasino_rebate") }}</div>
               </div>
               <div class="return-item">
-                <div class="item-percent">0.88%</div>
+                <div class="item-percent">{{ vip.rebatePoker }}</div>
                 <div class="item-desc">{{ $t("lang.vip_poker_rebate") }}</div>
               </div>
               <div class="return-item">
-                <div class="item-percent">1.60%</div>
+                <div class="item-percent">{{ vip.rebateSlot }}</div>
                 <div class="item-desc">{{ $t("lang.vip_slot_rebate") }}</div>
               </div>
               <div class="return-item">
-                <div class="item-percent">0.50%</div>
+                <div class="item-percent">{{ vip.rebateLottery }}</div>
                 <div class="item-desc">{{ $t("lang.vip_lottery_rebate") }}</div>
               </div>
             </div>
@@ -809,6 +809,7 @@ onActivated(() => {
 
     .card-img {
       width: 100%;
+      min-height: 140px;
     }
 
     .status {

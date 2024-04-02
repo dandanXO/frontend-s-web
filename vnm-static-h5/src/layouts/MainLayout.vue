@@ -267,17 +267,17 @@ export default defineComponent({
         } else if (route.path === "/account/letters") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = t("lang.page_feedback");
+          pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/inbox") {
-          prevPage.value = "account";
+          prevPage.value = "account/letters";
           hasPage.value = true;
           pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/outbox") {
-          prevPage.value = "account/inbox";
+          prevPage.value = "account/letters";
           hasPage.value = true;
           pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/write") {
-          prevPage.value = "account/inbox";
+          prevPage.value = "account/letters";
           hasPage.value = true;
           pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/feedback") {

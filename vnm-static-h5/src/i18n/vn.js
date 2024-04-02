@@ -142,6 +142,9 @@ export default {
     chgpwd_confirm_withdraw_password_not_match: "Xác nhận mật khẩu rút tiền không khớp với mật khẩu rút tiền mới",
     chgpwd_password_updated_successfully: "Đã cập nhật mật khẩu thành công",
     chgpwd_withdraw_password_updated_successfully: "Đã cập nhật mật khẩu rút tiền thành công",
+    chgpwd_forgot_withdraw_password: "Quên mật khẩu rút tiền?",
+    chgpwd_otp_code: "Mã OTP",
+    chgpwd_please_insert_otp_code: "Vui lòng nhập mã OTP",
 
     // system hint
     system_hint: "Gợi ý hệ thống",
@@ -188,6 +191,36 @@ export default {
     share_accumulated_registration: "Đăng ký tích lũy",
     share_accumulated_recharge: "Nạp tiền tích lũy",
     share_persons: "Người",
+    share_invitefriends: "Mời Bạn Bè",
+    share_table_header_01: "Chuyển Ví",
+    share_table_header_02: "Thời gian đăng ký",
+    share_table_header_03: "Bắt đầu đặt cược",
+    share_table_header_04: "trạng thái",
+    share_table_content_empty: "Không tìm được lịch sử khớp",
+    share_tnc: "Điều Khoản Và Điều Kiện",
+    share_tnc_para_01: "Khuyến mãi bắt đầu từ 00:00:00 ngày 01/06/2022 (GMT +8)",
+    share_tnc_para_02:
+      "Chỉ cần giới thiệu thêm bạn tham gia tại TF88, bạn sẽ nhận được 300VNDP trên mỗi một người giới thiệu thành công. Người chơi mà thành viên giới thiệu cũng sẽ nhận được tiền thưởng chào mừng là 150VNDP.",
+    share_tnc_para_03: "Để đủ điều kiện nhận tiền thưởng, thành viên cần đáp ứng các điều kiện sau đây",
+    share_tnc_para_03_a: "Thành viên giới thiệu (Khách hàng)",
+    share_tnc_para_03_a_i: "Tổng tiền cược hợp lệ tối thiểu từ 8.000 VNDP trở lên",
+    share_tnc_para_03_b: "Thành viên được giới thiệu (Bạn của bạn):",
+    share_tnc_para_03_b_i:
+      "Đăng ký tài khoản trong thời gian khuyến mãi thông qua liên kết giới thiệu bạn bè được chỉ định",
+    share_tnc_para_03_b_ii: "Chưa từng đăng ký tại TF88 và không có bất kỳ tài khoản nào khác tại TF88",
+    share_tnc_para_03_b_iii:
+      "Phải có giao dịch gửi tiền đầu tiên thành công và có tổng số tiền cược hợp lệ tích lũy tối thiểu 4.000VNDP trong vòng 20 ngày kể từ ngày đăng ký tài khoản",
+    share_tnc_para_04:
+      'Thành viên có thể giới thiệu bạn bè bằng cách vào mục "Thông tin cá nhân - Mời bạn bè" khi thành viên có tổng số tiền cược hợp lệ là 8.000VNDP. Sau đó thành viên có thể gửi liên kết giới thiệu của mình cho bạn bè để đăng ký tài khoản thông qua liên kết này.',
+    share_tnc_para_05:
+      "Việc xét duyệt chương trình khuyến mãi sẽ được thực hiện hàng tuần. Sau khi xác minh xong, phần thưởng giới thiệu sẽ tự động cập nhật vào tài khoản của thành viên giới thiệu và thành viên được giới thiệu vào khoảng 6 giờ tối (GMT + 8) vào Thứ Hai hàng tuần.",
+    share_tnc_para_06: "Thành viên nhận khuyến mãi cần hoàn thành 5 vòng cược của khuyến mãi trước khi rút tiền.",
+    share_tnc_para_07:
+      "All draw bets, CANCEL bets, 2 sided bets, Europe Handicap bets with odds under 1.75, Asian Handicap under 0.75, Fantasy Sports, Horse Racing, Number Game, will not be applied to this promotion.",
+    share_tnc_para_08:
+      "TF88 có quyền chỉnh sửa, từ chối hoặc hủy bỏ chương trình Khuyến mãi này mà không cần báo trước.",
+    share_tnc_para_09: "Chương trình có thể áp dụng cùng lúc với tất cả các Khuyến mãi tại TF88.",
+    share_tnc_para_10: "Điều khoản & Điều kiện khuyến mãi chung được áp dụng.",
 
     // transfer
     transfer_transfer: "Chuyển khoản",
@@ -909,7 +942,8 @@ export default {
     mail_feedback: "Feedback",
     mail_compose: "Soạn thư",
     mail_nodata: "Không có dữ liệu",
-mail_nodatayet: "Chưa có dữ liệu mới",
+    mail_nodatayet: "Chưa có dữ liệu mới",
+    mail_loading: "Đang tải",
 
     // compose
     compose_title: "Tiêu đề",
