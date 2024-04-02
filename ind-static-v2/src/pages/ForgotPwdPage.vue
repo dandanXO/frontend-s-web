@@ -292,7 +292,7 @@ const newConfirmPwdVModel = ref();
 //   return emailPattern.test(passwordForm.email) || "Please Enter A Valid Email Address";
 // };
 
-const isRequestSent = ref(true);
+const isRequestSent = ref(false);
 // const onSubmitForgotPwd = () => {
 //   loginNameRef.value.validate();
 //   emailRef.value.validate();
