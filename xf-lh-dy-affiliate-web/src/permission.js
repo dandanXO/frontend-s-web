@@ -31,11 +31,16 @@ router.beforeEach(async (to, _, next) => {
       if (currentHost === thaiHost) {
         next(`/th/login?redirect=${to.path}`);
       } else {
+        console.log("IS this")
         console.log(siteCode)
         if (siteCode === 'lh1') {
           next(`/lh/login?redirect=${to.path}`)
         } else if (siteCode === 'dy2') {
           next(`/dy/login?redirect=${to.path}`)
+        } else if (siteCode === 'ind') {
+          next(`/ind/login?redirect=${to.path}`)
+        } else if (siteCode === 'vnm') {
+          next(`/vi/login?redirect=${to.path}`)
         } else {
           next(`/login?redirect=${to.path}`);
         }

@@ -34,9 +34,7 @@ onMounted(() => {
   }
 
   // change path according to hostname
-  console.log("PATH Name");
   console.log(window.location.host);
-  console.log(window.location.pathname);
   // debugger;
   if (window.location.pathname === '/login') {
     console.log("Nside Login.")
