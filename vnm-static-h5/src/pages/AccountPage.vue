@@ -94,7 +94,7 @@
 
             <q-btn :label="$t('lang.withdraw_btn')" no-caps class="btn-main btn-pointer" @click="openWithdraw" />
 
-            <q-btn :label="$t('lang.transfer_btn')" no-caps class="btn-main btn-pointer" @click="openTransfer" />
+            <!-- <q-btn :label="$t('lang.transfer_btn')" no-caps class="btn-main btn-pointer" @click="openTransfer" /> -->
           </div>
         </q-card-section>
 
@@ -725,7 +725,7 @@ export default defineComponent({
 
   .btm-sect-btns {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     width: 100%;
   }
 

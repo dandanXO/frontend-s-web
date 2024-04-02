@@ -123,10 +123,10 @@
         <img src="../assets/images/home/withdraw-mid.png" />
         <div class="">{{ $t("lang.withdraw") }}</div>
       </router-link>
-      <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
+      <!-- <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/transfer-mid.png" />
         <div class="">{{ $t("lang.transfer") }}</div>
-      </router-link>
+      </router-link> -->
       <router-link to="/account/vip?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/vip-mid.png" />
         <div class="">{{ $t("lang.vip") }}</div>
@@ -1436,7 +1436,7 @@ export default defineComponent({
     flex: 4;
     padding-left: 8px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     gap: 4px;
 
     .men {

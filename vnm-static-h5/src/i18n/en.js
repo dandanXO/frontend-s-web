@@ -160,6 +160,7 @@ export default {
     personal_username: "Username",
     personal_realname: "Real name",
     personal_realname_val: "Please enter your real name",
+    personal_realname_valid: "Please enter valid real name",
     personal_birthday: "Birthday",
     personal_birthday_val: "Please enter birthday",
     personal_confirm: "Confirm",

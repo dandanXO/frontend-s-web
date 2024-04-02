@@ -225,7 +225,7 @@
             </q-input>
           </template>
 
-          <div class="forget-pwd-tip" @click="openCaptchaDialog()" v-if="memberEmail !== null">
+          <div class="forget-pwd-tip" @click="openCaptchaDialog()" v-if="memberEmail !== null && secondCodeId == null">
             {{ $t("lang.chgpwd_forgot_withdraw_password") }}
           </div>
         </div>

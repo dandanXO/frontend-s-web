@@ -125,7 +125,8 @@
           lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_enter_your_real_name'),
-            (val) => (val && val.length >= 2) || $t('lang.real_name_validation')
+            (val) => (val && val.length >= 2) || $t('lang.real_name_validation'),
+            (val) => isValidRealName(val)
           ]"
           color="white"
         >
@@ -406,6 +407,11 @@ export default defineComponent({
       return phonePattern.test(regForm.telephone) || "请输入有效的电话号码";
     };
 
+    const isValidRealName = (val) => {
+      const phonePattern = /^[a-zA-Z\s]+$/;
+      return phonePattern.test(regForm.realName) || t("lang.personal_realname_valid");
+    }
+
     const router = useRouter();
     const onSubmit = () => {
       loginNameRef.value.validate();
@@ -607,6 +613,7 @@ export default defineComponent({
       showCaptchaDialog,
       onCaptchaSubmit,
       innerCaptchaRef,
+      isValidRealName,
       phoneVerificationImg,
       openPhoneVeriDialog,
       phoneVerificationRef,
