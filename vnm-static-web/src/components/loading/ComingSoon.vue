@@ -1,10 +1,10 @@
 <template>
   <div class="loading">
-    <img src="../../assets/logo-1.png" alt="logo" />
+    <img src="../../assets/logo.svg" alt="logo" />
     <!-- <ul>
       <li v-for="v in 5" :key="v"></li>
     </ul> -->
-     <span class="txt">即将到来...</span>
+     <span class="txt">Coming Soon...</span>
   </div>
 </template>
 
