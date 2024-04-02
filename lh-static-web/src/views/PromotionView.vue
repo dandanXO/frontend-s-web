@@ -165,7 +165,7 @@ export default defineComponent({
       { code: "POKER", img: 'poker', label: '棋牌优惠'},
       // { code: "FISH", img: 'fish', label: '捕鱼'},
       { code: "DAILY", img: 'daily', label: '日常优惠'},
-      { code: "OTHERS", img: 'slot', label: '其他优惠'},
+      { code: "OTHER", img: 'slot', label: '其他优惠'},
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
@@ -244,23 +244,9 @@ export default defineComponent({
 
       promoTabActive.value = type;
       if (type !== "ALL") {
-        if(type ==='OTHERS'){
-          filteredArray.value = promoState.promoList.filter(function(promo) {
-            const promoTypes = promo.promoType.toLowerCase().split(",");
-            return promoTypes.includes("slot game") || promoTypes.includes("welcome") || promoTypes.includes("fish");
-          });
-          // console.log(filteredArray.value);
-        } else if (type === 'DAILY') {
-          filteredArray.value = promoState.promoList.filter(function(promo) {
-            const labelType = promo.labelType;
-            return labelType === 4;
-          });
-        } else {
           filteredArray.value = promoState.promoList.filter(function(promo) {
             return promo.promoType.toLowerCase().split(',').includes(type.toLowerCase());
           });
-        }
-
       } else {
         filteredArray.value = promoState.promoList
       }
