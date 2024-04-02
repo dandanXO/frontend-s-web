@@ -359,11 +359,11 @@ transit: {
 },
 affiliate: {
   affiliate: "Affiliates",
-  englishText: "Chơi Có Trách Nhiệm",
+  englishText: "THUNDERFIRE <br> Affiliate Program",
   joinus: "Join Us",
   login: "Login",
   contactus: "Contact Us",
-  eSportsCommissionProgram: "eSports Commission Program",
+  eSportsCommissionProgram: "Terms & Conditions",
   bonusTerms: "Bonus Terms",
   activePlayerRequirement: "Monthly recharge amount ≥ 200 yuan to be considered an active player. At least five active members are required in the month to settle commissions.",
   commissionIssuance: "Commission issuance for the current month will be settled between the 5th and 10th of the following month.",

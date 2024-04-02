@@ -46,7 +46,8 @@
     gap: 100px;
     grid-template-columns: 52% 48%;
     min-height: 675px;
-    overflow: visible;
+    // overflow: visible;
+    overflow: hidden;
 
     .platform-item {
       min-width: 320px;

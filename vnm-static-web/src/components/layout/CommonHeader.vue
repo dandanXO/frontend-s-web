@@ -4,7 +4,7 @@
       <!-- <div class="side left"><img src="../../assets/home/header_side.png"></div> -->
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
-          <img class="logo" src="../../assets/logo.svg" />
+          <img class="logo" src="../../assets/logo-bebest.svg" />
         </router-link>
         <div class="navigations">
           <template v-for="nav in navigations" :key="nav.name">
