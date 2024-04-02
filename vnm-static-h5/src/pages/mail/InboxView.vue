@@ -1,70 +1,113 @@
 <template>
-  <div class="table-record">
-    <MailComponent :loading="visible" :list="mailData" @readMsg="readMsg" type="index" />
-  </div>
+  <q-page>
+    <div class="transit-buttons">
+      <router-link class="btn" v-for="(trans, i) in transitList" :key="i" :to="`/account/${trans.code}`">
+        <!-- <img :src="require(`../../assets/images/inbox/${trans.icon}-icon.png`)" /> -->
+        {{ trans.name }}
+        <div class="right">
+          <img src="../../assets/images/inbox/account-right-icon.svg" />
+        </div>
+      </router-link>
+    </div>
+  </q-page>
 </template>
 <script lang="js">
 import {defineComponent, onMounted, ref} from "vue";
-import {api} from "boot/axios";
-import MailComponent from "../../components/MailComponent.vue";
-
+import {userStore} from "../../stores/index";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
+  name: "MailBoxPage",
   components: {
-    MailComponent
   },
   setup() {
-    const visible = ref(true);
-    const mailData = ref([]);
-    const mailboxData = ref({
-      type: null,
-      orderBy: "sendTime"
-    })
-    const loadInbox = () => {
-      api.get("/session/inbox", {
-        params: {
-          type: mailboxData.value.type,
-          orderBy: mailboxData.value.orderBy
-        }
-      }).then((response) => {
-        if (response.code === 0) {
-          mailData.value = response.data.records
-          visible.value = false
-        }
-      }).catch((error) => {
-        console.log("error", error);
-      });
-    }
+    const { t } = useI18n();
+    const store = userStore();
+    const transitList = ref([
+      // {
+      //   code: "inbox",
+      //   icon: "inbox",
+      //   name: "收件箱"
+      // },
+      {
+        code: "write",
+        icon: "write",
+        name: t("lang.mail_mailbox")
+      },
+      {
+        code: "outbox",
+        icon: "outbox",
+        name: t("lang.mail_outbox")
+      },
+      // {
+      //   code: "feedback",
+      //   icon: "feedback",
+      //   name: t("lang.mail_feedback")
+      // },
+      {
+        code: "write",
+        icon: "write",
+        name: t("lang.mail_compose")
+      },
 
-    const readMsg = (msgId) => {
-      // console.log("re3ead");
-      // let data = {
-      //   messageId: msgId
-      // }
-      // api.post('/session/message/accountMessage/read', data).then((res) => {
-      //
-      // })
-    }
+    ]);
+
     onMounted(() => {
-      loadInbox()
+      // store.getUnreadTotal();
     })
 
     return {
-      visible,
-      mailData,
-      readMsg
-    }
+      store,
+      transitList
+    };
+
   }
 });
-
 </script>
 <style scoped lang="scss">
-.table-record {
-  width: 100%;
-  gap: 10px;
+.transit-buttons {
+  padding: 10px 0px;
+  display: flex;
+  flex-direction: column;
+  width: $box-width;
+  margin: 10px auto 30px;
+  gap: 0px;
+  background: $white;
+  border-radius: 10px;
+  box-shadow: $shadow-bg;
 
-  .label {
-    color: #bacef1;
+  .btn {
+    color: $font-1;
+    text-decoration: none;
+    position: relative;
+    padding: 15px 24px;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #ecedf0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+
+    &:active {
+      filter: brightness(0.85);
+      background-color: $secondary;
+    }
+
+    img {
+      width: 25px;
+    }
+
+    .right {
+      position: absolute;
+      right: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 10px;
+      }
+    }
   }
 }
 </style>

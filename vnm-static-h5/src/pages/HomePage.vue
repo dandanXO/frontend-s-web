@@ -906,6 +906,9 @@ export default defineComponent({
             }
             if (platTypes.indexOf("LIVE") > -1) {
               var liveObj = Object.assign({}, element);
+              if (liveObj.name === "AE") {
+                liveObj.name = "Sexy";
+              }
               liveObj.title_vn = liveObj.name + " Live Casino";
               liveObj.title_en = liveObj.name + " Live Casino";
               liveObj.icon = "live";
