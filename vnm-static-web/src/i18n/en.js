@@ -519,10 +519,9 @@ about: {
     tnc7: "Rebate Bonus: Members are upgraded to the rebate bonus level corresponding to the existing VIP level. The rebate bonus at Online Casino products, spinning jars will not exceed 50,000 VNDP per day and is not limited to other products.",
     tnc8: "All draw bets, CANCEL bets, 2-way bets, European handicap under 1.75, Asian bets under 0.75, Number Game, Fantasy Sports, Progressive RNG Jackpot, Progressive RNG Slots will not be counted. bet revenue for this program. General terms & conditions of the promotion apply.",
     tnc9: "TF88 reserves the right to modify, refuse or cancel this VIP membership program at any time without prior notice.",
-    accumulatedDeposit: "VIP Level Upgrade Required",
     vipProgram: "VIP Program",
     exclusivePromotions: "EXCLUSIVE PROMTIONS AND BENEFITS",
-    accumulatedDeposit: "Accumulated deposit",
+    "3timedeposit": "3 time deposit",
     proceedToDeposit: "Proceed to deposit",
     claim: "Claim",
     claimed: "Claimed",
@@ -620,5 +619,5 @@ about: {
     "hotPromotions": "KM HOT",
     "appDownload": "APP",
     "backToTop": "TOP"
-  }
+  },
 }

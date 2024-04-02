@@ -16,7 +16,7 @@
           lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_enter_username'),
-            (val) => (val && val.length >= 6 && val.length <= 12) || $t('lang.length_between_6_12'),
+            (val) => (val && val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11'),
             (val) => /^[a-zA-Z0-9]*$/.test(val) || $t('lang.no_special_characters')
           ]"
           color="white"
@@ -34,14 +34,13 @@
           ref="pwdRef"
           rounded
           standout
-          clearable
           v-model="regForm.password"
           :placeholder="$t('lang.password')"
           lazy-rules
           :type="isPwd ? 'password' : 'text'"
           :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_type_the_password'),
-            (val) => (val.length > 5 && val.length <= 12) || $t('lang.length_between_6_12')
+            (val) => (val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11')
           ]"
           color="white"
         >
@@ -88,7 +87,6 @@
           ref="confirmPwdRef"
           rounded
           standout
-          clearable
           :type="isCfmPwd ? 'password' : 'text'"
           v-model="regForm.confirmPwd"
           :placeholder="$t('lang.confirm_password')"
@@ -96,7 +94,7 @@
           :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_type_the_confirm_password'),
             (val) => val === regForm.password || $t('lang.password_not_same'),
-            (val) => (val.length > 5 && val.length <= 12) || $t('lang.length_between_6_12')
+            (val) => (val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11')
           ]"
           color="white"
         >

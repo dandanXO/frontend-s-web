@@ -35,7 +35,6 @@
           <span>{{ $t("lang.personal_realname") }}</span>
         </template>
       </q-input>
-
       <q-input
         ref="birthdayRef"
         standout
@@ -400,7 +399,7 @@ export default defineComponent({
           $q.notify({
             color: "positive",
             position: "top",
-            message: "更新成功",
+            message: t("lang.msg_update_successful"),
             icon: "check_circle_outline"
           });
 

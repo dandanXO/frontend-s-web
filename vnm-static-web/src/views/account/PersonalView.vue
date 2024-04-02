@@ -1041,7 +1041,7 @@ export default defineComponent({
         {
           min: 6,
           max: 11,
-          message: t('placeholder.beetween612'),
+          message: t('placeholder.between612'),
           trigger: "blur"
         }
       ],

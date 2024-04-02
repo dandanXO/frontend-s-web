@@ -51,6 +51,9 @@ export default {
     menu_fishing: "Bắn Cá",
     menu_cockfighting: "ĐÁ GÀ",
 
+    // notify msg
+    msg_update_successful: "Cập nhật thành công",
+
     // login page
     login_title: "Bạn đã sẵn sàng",
     login_desc: "để chiến thắng cùng",
@@ -333,8 +336,12 @@ export default {
     rebate_bonus: "Tiền thưởng hoàn trả",
     upgrade_bonus: "Tiền thưởng nâng cấp",
     return_bonus: "Tiền thưởng hoàn lại",
+    vip_welcome_bonus: "THƯỞNG NÂNG CẤP",
+    vip_monthly_bonus: "THƯỞNG HÀNG THÁNG",
+    vip_birthday_bonus: "MỪNG SINH NHẬT",
     vip_request: "Yêu cầu",
     vip_claim: "Yêu cầu",
+    vip_contactcs: "Liên hệ CSKH",
     level: "Cấp độ",
     upgrade: "Nâng cấp",
     vip_level: "Cấp độ",
@@ -346,8 +353,8 @@ export default {
     vip_silver: "Bạc",
     vip_gold: "Vàng",
     vip_platinum: "Bạch kim",
+    vip_ruby: "Hồng ngọc",
     vip_diamond: "Kim cương",
-    vip_crystal: "Pha lê",
     vip_percent_monthlyreload: "% của nạp tiền hàng tháng",
     vip_min_deposit: "Gửi tiền tối thiểu",
     vip_terms_title: "Quy tắc và Điều khoản",
@@ -580,7 +587,7 @@ export default {
     loading: "Đang tải",
     register_successful: "Đăng ký thành công",
     no_special_characters: "Tên người dùng phải là sự kết hợp của chữ cái và số",
-    length_between_6_12: "Độ dài phải từ 6 đến 12 ký tự",
+    length_between_6_11: "Độ dài phải từ 6 đến 11 ký tự",
     length_between_34_37: "Độ dài phải từ 34 đến 37 ký tự",
     receive_by_email: "Nhận bằng email",
     receive_by_phone: "Nhận bằng điện thoại",

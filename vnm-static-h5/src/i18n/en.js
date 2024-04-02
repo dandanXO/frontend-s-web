@@ -51,6 +51,9 @@ export default {
     menu_fishing: "Fishing",
     menu_cockfighting: "Cock Fighting",
 
+    // notify msg
+    msg_update_successful: "Update successful",
+
     // login page
     login_title: "Are you ready",
     login_desc: "to win with",
@@ -193,8 +196,7 @@ export default {
     transfer_deposit: "Deposit",
     transfer_withdraw: "Withdraw",
     transfer_announcementhead: "Note",
-    transfer_announcement:
-      "In addition to the game platforms below that need to transfer points, other game platforms directly place bets",
+    transfer_announcement: "Only below platforms need to transfer, other sites can bet directly",
 
     // account balance
     acct_mainaccount: "Main Account",
@@ -337,8 +339,12 @@ export default {
     rebate_bonus: "Rebate bonus",
     upgrade_bonus: "Upgrade bonus",
     return_bonus: "Return bonus",
+    vip_welcome_bonus: "Welcome bonus",
+    vip_monthly_bonus: "Monthly bonus",
+    vip_birthday_bonus: "Birthday bonus",
     vip_request: "Request",
     vip_claim: "Claim",
+    vip_contactcs: "Contact CS",
     level: "Level",
     upgrade: "Upgrade",
     vip_level: "Level",
@@ -350,8 +356,8 @@ export default {
     vip_silver: "Silver",
     vip_gold: "Gold",
     vip_platinum: "Platinum",
+    vip_ruby: "Ruby",
     vip_diamond: "Diamond",
-    vip_crystal: "Crystal",
     vip_percent_monthlyreload: "% of Monthly reload",
     vip_min_deposit: "Minimum deposit",
     vip_terms_title: "Terms & Conditions",
@@ -583,7 +589,7 @@ export default {
     loading: "Loading...",
     register_successful: "Registered Successfully.",
     no_special_characters: "Username must be a combination of alphabets and numbers",
-    length_between_6_12: "Length should be between 6 - 12.",
+    length_between_6_11: "Length should be between 6 - 11.",
     length_between_34_37: "Length should be between 34 - 37.",
     receive_by_email: "Receive account by email",
     receive_by_phone: "Receive account by phone",
