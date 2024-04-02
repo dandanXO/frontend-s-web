@@ -46,7 +46,7 @@ onMounted(() => {
       window.location.pathname = '/ind/login'
     } else if (window.location.host.indexOf('lh1') > -1) {
       window.location.pathname = '/lh/login'
-    }else if (window.location.host.indexOf('vnm') > -1) {
+    }else if (window.location.host.indexOf('vnm') > -1 || window.location.hostname.indexOf("vnm-") > -1 || window.location.href.includes('vnm-')) {
       window.location.pathname = '/vi/login'
     } else {
       window.location.pathname = '/dy/login'
