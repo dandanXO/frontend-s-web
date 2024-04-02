@@ -273,13 +273,13 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/outbox") {
-          prevPage.value = "account/letters";
+          prevPage.value = "account/inbox";
           hasPage.value = true;
-          pageName.value = t("lang.page_myfeedback");
+          pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/write") {
-          prevPage.value = "account/letters";
+          prevPage.value = "account/inbox";
           hasPage.value = true;
-          pageName.value = t("lang.page_feedback");
+          pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/feedback") {
           prevPage.value = "account/letters";
           hasPage.value = true;

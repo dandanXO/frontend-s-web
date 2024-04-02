@@ -3,7 +3,7 @@ import { getRndInteger } from "@/utils/utils";
 import { ElMessage } from "element-plus";
 import { stringify } from "qs";
 import { userStore } from "@/store";
-// import i18n from "../i18n/index";
+import i18n from "../i18n/index";
 import { ResponseCode, SkipErrorCode } from "@/api/response";
 
 const rstArray = process.env.VUE_APP_RST_API.split(",");
@@ -127,9 +127,8 @@ const onResponse = (response) => {
 
 const onResponseError = (error) => {
   // message.error(error.message);
-
   ElMessage({
-    message: error.message,
+    message: i18n.global.t('response.' + error.code) || error.message,
     type: "warning"
   });
   return Promise.reject(error);

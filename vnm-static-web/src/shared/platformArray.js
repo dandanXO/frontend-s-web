@@ -38,10 +38,10 @@ export const liveCasinoPlatforms = [
   },
   {
     code: "AE",
-    name: "AE",
+    name: "Sexy",
     image: "ae",
-    message: "AE Casino, the most potential live action video in Asia, focuses on providing customers with high-quality and safe game products. It offers many live video games such as Baccarat, Speed Baccarat, Gongmi Baccarat, Colourful Baccarat, Dragon Tiger, Sic Bo, Roulette, Niu Niu, Fried Golden Flower, etc., and fully supports PC, H5, APP. Simple and easy-to-operate interface, multi-platform, no need to download, fun anytime, anywhere!",
-    vimessage: "AE Casino, video hành động trực tiếp tiềm năng nhất châu Á, tập trung vào việc cung cấp cho khách hàng các sản phẩm trò chơi chất lượng cao và an toàn. Nó cung cấp nhiều trò chơi video trực tiếp như Baccarat, Speed ​​Baccarat, Gongmi Baccarat, Colourful Baccarat, Dragon Tiger, Sic Bo, Roulette, Niu Niu, Fried Golden Flower, v.v. và hỗ trợ đầy đủ PC, H5, APP. Giao diện đơn giản và dễ vận hành, đa nền tảng, không cần tải xuống, vui vẻ mọi lúc, mọi nơi!",
+    message: "Sexy Casino, the most potential live action video in Asia, focuses on providing customers with high-quality and safe game products. It offers many live video games such as Baccarat, Speed Baccarat, Gongmi Baccarat, Colourful Baccarat, Dragon Tiger, Sic Bo, Roulette, Niu Niu, Fried Golden Flower, etc., and fully supports PC, H5, APP. Simple and easy-to-operate interface, multi-platform, no need to download, fun anytime, anywhere!",
+    vimessage: "Sexy Casino, video hành động trực tiếp tiềm năng nhất châu Á, tập trung vào việc cung cấp cho khách hàng các sản phẩm trò chơi chất lượng cao và an toàn. Nó cung cấp nhiều trò chơi video trực tiếp như Baccarat, Speed ​​Baccarat, Gongmi Baccarat, Colourful Baccarat, Dragon Tiger, Sic Bo, Roulette, Niu Niu, Fried Golden Flower, v.v. và hỗ trợ đầy đủ PC, H5, APP. Giao diện đơn giản và dễ vận hành, đa nền tảng, không cần tải xuống, vui vẻ mọi lúc, mọi nơi!",
    caption: "",
     gameCode: ""
   },
@@ -94,7 +94,7 @@ export const eSportsPlatforms = [
     name: "TF GAMING",
     image: "lh",
     message: "TFGaming platform with hundreds of well-trained professional dealers, bring you just like real casino experience. We adopt state of the art equipment, and provide professional technical support",
-    vimessage: "TF Gaming",
+    vimessage: "TFGaming Nền tảng với hàng trăm nhà cái chuyên nghiệp được đào tạo tốt, mang đến cho bạn trải nghiệm như ở casino thật. Chúng tôi áp dụng thiết bị tiên tiến và cung cấp hỗ trợ kỹ thuật chuyên nghiệp.",
     caption: "亚洲先驱 实时滚球",
     gameCode: ""
   },
@@ -137,7 +137,6 @@ export const slotPlatforms = [
   {
     code: "AG",
     name: "XIN",
-    name: "XIN电子",
     image: "ag",
     message: "坚持创新、打造精品,最缤纷的电子游艺画面，最刺激的游戏体验，各类老虎机应有尽有，彩池大奖由您触发! ",
     caption: "",

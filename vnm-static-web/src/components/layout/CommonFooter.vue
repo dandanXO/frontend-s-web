@@ -99,7 +99,7 @@
           <img src="../../assets/footer/payment/ACB.png" />
           <img src="../../assets/footer/payment/momo.png" />
           <img src="../../assets/footer/payment/ZaloPay.png" />
-          <img src="../../assets/footer/payment/ViettelPay.png" />
+          <img src="../../assets/footer/payment/ViettelPayRed.png" />
           <img src="../../assets/footer/payment/tether-logo.png" />
         </div>
       </div>

@@ -53,7 +53,7 @@
                     color="#0089ED"
                   />
                   <q-chip size="sm" label="已读" v-if="det.readTime && det.sendTime" />
-                  标题：
+                  {{ $t("lang.compose_title") }}：
                   {{ det.title }}
                 </div>
 
@@ -78,7 +78,7 @@
                 </div>
               </div>
               <div v-else class="q-pa-md" style="text-align: center">
-                {{ truncatedList.length === 0 ? "暂无数据" : "暂无更多数据了" }}
+                {{ truncatedList.length === 0 ? $t("lang.mail_nodata") : $t("lang.mail_nodatayet") }}
               </div>
             </template>
           </q-infinite-scroll>

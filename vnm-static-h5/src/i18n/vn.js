@@ -903,6 +903,26 @@ export default {
     participate: "Tham gia",
     sent_success: "Gửi thành công",
 
+    // mailbox
+    mail_mailbox: "Hộp thư",
+    mail_outbox: "Hộp thư đi",
+    mail_feedback: "Feedback",
+    mail_compose: "Soạn thư",
+    mail_nodata: "Không có dữ liệu",
+mail_nodatayet: "Chưa có dữ liệu mới",
+
+    // compose
+    compose_title: "Tiêu đề",
+    compose_pleaseinserttitle: "Vui lòng nhập tiêu đề",
+    compose_titlelength: "Độ dài tiêu đề phải là 255 hoặc ít hơn",
+    compose_content: "Nội dung",
+    compose_pleaseinsertcontent: "Vui lòng nhập nội dung",
+    compose_contentlength: "Độ dài nội dung ít hơn 500 ký tự",
+    compose_send: "Gửi",
+    compose_msgsent: "Tin nhắn đã được gửi",
+    compose_msgsubmitsuccess: "Đã gửi thành công!",
+    compose_confirm: "Xác nhận",
+
     // page name
     page_game: "Trò chơi",
     page_vip: "VIP",

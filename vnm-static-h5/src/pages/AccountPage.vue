@@ -970,6 +970,7 @@ export default defineComponent({
         .acct-nav-label {
           // white-space: nowrap;
           color: $font-1;
+          font-size: 12px;
         }
 
         img {

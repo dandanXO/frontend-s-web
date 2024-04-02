@@ -64,7 +64,7 @@ export default {
     password: "Password",
     please_type_the_confirm_password: "Please type the confirm password",
     confirm_password: "Confirm password",
-    password_not_same: "Password not same",
+    password_not_same: "Confirmation password does not match the new password",
     please_enter_mobile_number: "Please enter mobile number",
     mobile_number: "Mobile number",
     mobile_number_valid: "Please enter valid mobile number",
@@ -905,6 +905,26 @@ export default {
     participate: "Participate",
     sent_success: "Sent Successfully",
 
+    // mailbox
+    mail_mailbox: "Mailbox",
+    mail_outbox: "Outbox",
+    mail_feedback: "Feedback",
+    mail_compose: "Compose",
+    mail_nodata: "No data",
+    mail_nodatayet: "No more data yet",
+
+    // compose
+    compose_title: "Title",
+    compose_pleaseinserttitle: "Please insert title",
+    compose_titlelength: "Title length must be 255 or less",
+    compose_content: "Content",
+    compose_pleaseinsertcontent: "Please insert content",
+    compose_contentlength: "Content length is less than 500 characters",
+    compose_send: "Send",
+    compose_msgsent: "Message has been sent",
+    compose_msgsubmitsuccess: "Submitted successfully!",
+    compose_confirm: "Confirm",
+
     // page name
     page_game: "Games",
     page_vip: "VIP",
@@ -929,7 +949,7 @@ export default {
     page_invitefriends: "Invite Friends",
     page_systemannouncement: "System Announcement",
     page_feedback: "Feedback",
-    page_messagenotification: "Message Notification",
+    page_messagenotification: "Message",
     page_myfeedback: "My Feedback",
     page_feedback: "Feedback",
     page_questionnaire: "Questionnaire",

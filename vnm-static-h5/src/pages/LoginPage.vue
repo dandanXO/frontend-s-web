@@ -233,14 +233,14 @@
             <template v-slot:append>
               <img
                 :src="phoneVerificationImg"
-                :title="$('lang.captcha_refresh')"
+                :title="$t('lang.captcha_refresh')"
                 style="margin-top: 6px; cursor: pointer"
                 @click="getInnerCode"
               />
             </template>
           </q-input>
         </q-card-section>
-        <q-btn @click="sendOtpSms" :label="$t('lang.verification_code_send')" color="brightbtn" />
+        <q-btn @click="sendOtpSms" no-caps :label="$t('lang.verification_code_send')" color="brightbtn" />
       </div>
     </q-card>
   </q-dialog>
