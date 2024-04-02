@@ -88,7 +88,7 @@
           <router-link class="form-text" to="/forgot-password">Forgot Password</router-link>
         </div>
 
-        <div>
+        <div style="margin-top: 30px;">
           <PrimaryButton :onClick="onSubmit" :label="'Login'" />
         </div>
 

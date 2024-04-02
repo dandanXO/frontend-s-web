@@ -94,7 +94,7 @@
               </template>
             </InputField>
 
-            <div>
+            <div style="margin-top: 30px;">
               <PrimaryButton :onClick="onSubmitForgotPwd" :label="'Submit'" />
             </div>
 

@@ -159,7 +159,7 @@
           </q-checkbox>
         </div>
 
-        <div>
+        <div style="margin-top: 30px;">
           <PrimaryButton :onClick="onSubmit" :label="'Register'" :disabled="!isAgreeReg" :loading="isLoading" />
         </div>
 

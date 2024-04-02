@@ -1,14 +1,9 @@
 <template>
   <div style="height: 56px" v-if="topDownload"></div>
-  <div style="height: 80px"></div>
+  <div style="height: 60px"></div>
 
   <div class="top-download" v-if="topDownload">
     <div class="download-container">
-      <!-- <div class="download-icon"><img src="../assets/images/index/download/top-download-icon.png" /></div>
-      <div class="download-rating">
-        <div class="rate-exp">Best experience!</div>
-        <div class="rate-stars"><img src="../assets/images/index/download/top-download-stars.png" /></div>
-      </div> -->
 
       <div class="download-btn">
         <a :href="topDownloadUrl">
@@ -27,7 +22,7 @@
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-wrapper-extra">
         <div class="logo-img">
-          <img src="../assets/logo.png" @click="onClickLogo" />
+          <img src="../assets/images/auth/auth-logo-text-only.png" @click="onClickLogo" />
         </div>
       </div>
       <div class="profile-wrapper" v-if="store.hasToken()">
@@ -140,8 +135,8 @@
         </q-btn-dropdown>
       </div>
       <div class="profile-wrapper" v-else>
-        <q-btn class="btn-style-purple" no-caps @click="router.push('/register')">Register</q-btn>
-        <q-btn no-caps @click="goLogin()">Login</q-btn>
+        <PrimaryButton :isSmall="true" :label="'Register'" :onClick="() => router.push('/register')"/>
+        <q-btn no-caps unelevated click="goLogin()">Login</q-btn>
       </div>
     </div>
   </div>
@@ -154,6 +149,7 @@ import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, isAndroid } from "src/boot/utils";
 import { api } from "boot/axios";
+import PrimaryButton from "./auth/PrimaryButton.vue";
 
 const props = defineProps(["homeProfile"]);
 const emits = defineEmits(["closeslot"]);
@@ -291,9 +287,9 @@ onMounted(() => {
   max-width: 500px;
   margin: auto;
   width: 100%;
-  height: 86px; /* adjust the height as needed */
-  padding: 8px 16px 28px;
-  background: linear-gradient(180deg, #0c2962 0%, #01030d 100%);
+  height: 55px; /* adjust the height as needed */
+  padding: 12px 16px 28px;
+  background: linear-gradient(rgba(131, 131, 131, 0.2117647059), rgba(131, 131, 131, 0.2117647059));
   z-index: 98;
 
   .download-container {
@@ -357,7 +353,7 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   position: relative;
-  background: linear-gradient(180deg, #2d0f54 0%, #101114 100%);
+  // background: linear-gradient(180deg, #2d0f54 0%, #101114 100%);
   box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
   overflow-x: hidden;
   position: fixed;
