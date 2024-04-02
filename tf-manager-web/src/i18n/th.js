@@ -237,6 +237,17 @@ export default {
     follow: 'ก่อนที่จะติดตาม',
     new: 'อัพเดตประเภทเกม',
   },
+  promoType: {
+    WELCOME: 'ยินดีต้อนรับ',
+    SPORT: 'กีฬา',
+    ESPORT: 'อีสปอร์ต',
+    FISH: 'ตกปลา',
+    LIVECASINO: 'สด',
+    SLOTGAME: 'สล็อต',
+    POKER: 'โป๊กเกอร์',
+    DAILY: 'รายวัน',
+    OTHER: 'อื่นๆ',
+  },
   fields: {
     account: 'บัญชี',
     accountHolder: 'ผู้ถือบัญชี',

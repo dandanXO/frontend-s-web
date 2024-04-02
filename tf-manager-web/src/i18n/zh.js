@@ -372,6 +372,17 @@ export default {
     ASC: '升序',
     DESC: '降序',
   },
+  promoType: {
+    WELCOME: '欢迎',
+    SPORT: '体育',
+    ESPORT: '电竞',
+    FISH: '捕鱼',
+    LIVECASINO: '真人',
+    SLOTGAME: '电子',
+    POKER: '棋牌',
+    DAILY: '日常',
+    OTHER: '其他',
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
