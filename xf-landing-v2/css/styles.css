@@ -5,7 +5,7 @@ body {
   margin: 0%;
   font-size: 1rem;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #080a16;
+  background-color: #CB1C0C;
 }
 
 img {
@@ -28,16 +28,10 @@ a:hover {
   display: none;
 }
 
-.main-wrapper {
-  background-image: url(../img/bg-mobile.png);
-  background-position: top center;
-  background-size: 100% auto;
-  background-repeat: no-repeat;
-  min-height: 100vh;
-}
+
 
 .top-wrapper {
-  padding: 0px 16px 20px;
+  padding: 420px 16px 20px;
   position:relative;
 }
 
@@ -62,16 +56,24 @@ a:hover {
   max-width: 300px;
 }
 
+.main-wrapper {
+  margin:0 auto;
+  max-width: 500px;
+  background-color: #CB1C0C;
+  min-height: 100vh;
+
+  background-image: url("../images/top-image.png");
+  background-size: contain;
+  background-position: top center;
+  background-repeat: no-repeat;
+}
+
 .top-image-board{
   max-width: 500px;
   position:relative;
   z-index:1;
   margin: 0 auto;
 
-  background-image: url("../images/top-image.png");
-  background-size: contain;
-  background-position: bottom center;
-  background-repeat: no-repeat;
   /*height: 400px;*/
   width: 100%;
   aspect-ratio: 5/4;
@@ -120,7 +122,6 @@ a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
   margin-top: 30px;
   margin-bottom: 30px;
@@ -184,7 +185,7 @@ a:hover {
 }
 
 .nav-bottom {
-  background-color: #1e0d0b;
+  background-color: #CB1C0C;
   width: 100%;
   position: fixed;
   bottom: 0;
@@ -241,8 +242,10 @@ a:hover {
   height: 40px;
   background-image: url(../images/listing-diuv.png);
   display:flex;
+  background-repeat: no-repeat;
   align-items: center;
   justify-content: center;
+  margin-top: 0px;
 }
 
 .listing-img{
@@ -341,6 +344,7 @@ a:hover {
   width: 100%;
   max-width: 500px;
   margin: 10px auto 5px;
+  border-radius: 20px;
 }
 
 .voxis-info{
@@ -362,9 +366,9 @@ a:hover {
 
 .top-board{
   border-radius: 12px 12px 0px 0px;
-  height: 60px;
   background: linear-gradient(180deg, #FD6026 0%, #FFBB7D 100%);
 
+  height: 60px;
   display:flex;
   align-items: center;
   justify-content: center;
@@ -377,9 +381,10 @@ a:hover {
 }
 .top-board h2{
   color: #fff;
+  font-size: 22px;
 }
 .top-board span{
-  color: #fff;
+  color:  #fff;
   min-width: 80px;
   font-size: 18px;
   text-decoration: underline;
@@ -389,7 +394,6 @@ a:hover {
   border-radius: 0px 0px 12px 12px;
   width:100%;
   background: linear-gradient(180deg, #F1E4BD 37.28%, #FFF7DF 100%);
-
   display:flex;
   align-items: center;
   justify-content: space-evenly;
@@ -462,7 +466,7 @@ a:hover {
   }
 
   .top-wrapper {
-    padding-bottom: 70px;
+    padding-bottom: 50px;
   }
 
 }
@@ -470,6 +474,16 @@ a:hover {
 @media screen and (max-width: 550px) {
   .qq-section{
     flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 475px){
+  .top-wrapper{
+   padding-top: 85%;
+  }
+
+  .top-board h2{
+    font-size: 17px;
   }
 }
 
