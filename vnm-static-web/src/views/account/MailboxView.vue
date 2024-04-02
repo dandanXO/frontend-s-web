@@ -67,6 +67,7 @@
             "
             v-else
           >
+          {{ $t('common.noRecordFound') }}
           </div>
         </el-tab-pane>
         <el-tab-pane key="sent" name="sent" :label="$t('mail.outbox')">

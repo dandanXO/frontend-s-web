@@ -70,6 +70,7 @@
         <div class="icon chrome" @mouseover="isChrome = true" @mouseout="isChrome = false" :class="{hovering: isChrome}"></div>
         <div class="brush"><RiStarFill /><i class="remixicon-star-s-fill" style="font-size: 22px;"></i>一键收藏网站</div>
       </div> -->
+          <div class="title">{{ $t('about.partner') }}</div>
         <div class="top-ft-rgt">
           <img src="../../assets/footer/games/AG.png" />
           <img src="../../assets/footer/games/CMD368.png" />
@@ -87,8 +88,9 @@
           <img src="../../assets/footer/games/PP.png" />
           <img src="../../assets/footer/games/V8.png" />
         </div>
+          <div class="title">{{$t('about.paymentMethod')}}</div>
         <div class="top-ft-rgt">
-          <img src="../../assets/footer/payment/VCB.png" />
+          <!-- <img src="../../assets/footer/payment/VCB.png" />
           <img src="../../assets/footer/payment/Sacombank.png" />
           <img src="../../assets/footer/payment/MB.png" />
           <img src="../../assets/footer/payment/Exim.png" />
@@ -96,7 +98,7 @@
           <img src="../../assets/footer/payment/Techcombank.png" />
           <img src="../../assets/footer/payment/VP.png" />
           <img src="../../assets/footer/payment/BIDV.png" />
-          <img src="../../assets/footer/payment/ACB.png" />
+          <img src="../../assets/footer/payment/ACB.png" /> -->
           <img src="../../assets/footer/payment/momo.png" />
           <img src="../../assets/footer/payment/ZaloPay.png" />
           <img src="../../assets/footer/payment/ViettelPayRed.png" />
@@ -113,9 +115,13 @@ import { defineComponent, ref } from "vue";
 import { userStore } from "@/store";
 import { ElMessage, ElMessageBox } from "element-plus";
 
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from 'pinia'
 export default defineComponent({
   components: {},
   setup() {
+    const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
     const isFireFox = ref(false);
     const isChrome = ref(false);
     const store = userStore();
@@ -128,7 +134,8 @@ export default defineComponent({
       isChrome,
       store,
       openRegPage,
-      affCode
+      affCode,
+      languageVal
     };
   }
 });
@@ -152,11 +159,11 @@ export default defineComponent({
       justify-content: center;
       padding: 10px 0;
       align-items: flex-start;
-      flex-direction: column;
-      width: 1350px;
+      width: 100%;
+      max-width: 1350px;
       .top-ft-left {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         padding: 10px;
         .icon {
@@ -179,17 +186,24 @@ export default defineComponent({
           }
         }
       }
+      .title {
+        color: #A4AABB;
+        text-decoration: none;
+        font-size: 15px;
+        display: block;
+      }
       .top-ft-rgt {
         .s1 {
           color: #ffffff;
           font-size: 16px;
         }
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
-        gap: 40px;
+        gap: 20px;
+        flex-wrap: wrap;
         img {
-          height: 35px;
+          height: 25px;
       // filter: grayscale(1);
     filter: brightness(0.5);
     mix-blend-mode: luminosity;

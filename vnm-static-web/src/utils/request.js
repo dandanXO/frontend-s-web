@@ -84,18 +84,15 @@ const onResponse = (response) => {
   //   return response.data;
   // }
   const store = userStore();
-
   if (res.code !== ResponseCode.SUCCESS) {
     if (SkipErrorCode(res.code)) {
       return response.data;
     }
     if (res.code === ResponseCode.ERROR_AMOUNT_PRIVILEGE_DEPOSIT) {
-      res.message = 'Số tiền gửi tiết kiệm cho khuyến mãi không phù hợp với quy định'
+      res.message = i18n.global.t('response.' + res.code) || res.message
       return res;
     }
-    if (res.code === ResponseCode.ERROR_WITHDRAW_PASSWORD_NOT_MATCH) {
-      return res;
-    }
+    
     if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
       store.token = null;
       location.reload();
@@ -119,6 +116,7 @@ const onResponse = (response) => {
       // ElMessage.error(res.message);
     }
     // throw new Error(res.message || "Error");
+      res.message = i18n.global.t('response.' + res.code) || res.message
       return res
   } else {
     return response.data;

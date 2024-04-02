@@ -246,7 +246,7 @@
       <el-tab-pane :label="$t('personal.chgWithdrawPwd')" name="chgWithdrawPwd">
         <div class="update-pwd-container">
             <el-form ref="updateWithdrawPwdFormRef" :hideRequiredMark="true" :model="updateWithdrawPwdInfo" :rules="updateWithdrawPwdRules">
-              <el-form-item v-if="personalState.memberInfo.registeredWithdrawPassword" ref="refWithdrawOldPassword" :label="$t('personal.oldWithdrawPwd')"  name="oldPassword" prop="oldPassword">
+              <el-form-item v-if="personalState.memberInfo.registeredWithdrawPassword && !receivedVerificationCode" ref="refWithdrawOldPassword" :label="$t('personal.oldWithdrawPwd')"  name="oldPassword" prop="oldPassword">
                 <el-input type="password" v-model="updateWithdrawPwdInfo.oldPassword" :placeholder="$t('placeholder.oldWithdrawPwd')" clearable show-password />
               </el-form-item>
 
@@ -256,6 +256,10 @@
               <el-form-item ref="refWithdrawConfirmPassword" :label="$t('personal.confirmWithdrawPwd')"  name="confirmPassword" prop="confirmPassword">
                 <el-input type="password" v-model="updateWithdrawPwdInfo.confirmPassword" :placeholder="$t('placeholder.confirmWithdrawPwd')" clearable show-password />
               </el-form-item>
+              <el-form-item v-if="receivedVerificationCode" ref="refWithdrawVerificationCode" :label="$t('personal.verificationCode')"  name="code" prop="code">
+                <el-input v-model="updateWithdrawPwdInfo.code" :placeholder="$t('placeholder.verificationCode')" />
+              </el-form-item>
+              
               <div class="withdrawBottom">
                 <div class="txt-center btn-container">
                   <button
@@ -271,12 +275,12 @@
                     :loading="loadingWdPwBtn"
                     class="standard-button btn-color-blue"
                     type="button"
-                    @click="submitUpdateWithdrawPwd"
+                    @click="receivedVerificationCode ? codeChangeWithdrawPwd() : submitUpdateWithdrawPwd()"
                   >
                     {{ $t('personal.submit') }}
                   </button>
                 </div>
-                <div class="link" @click="getOTPtoSend">Quên mật khẩu rút tiền?</div>
+                <div v-if="!receivedVerificationCode" class="link" @click="sendOTPEmail">{{ $t('personal.forgetWithdrawPassword') }}</div>
               </div>
             </el-form>
           </div>
@@ -455,8 +459,8 @@
 
 </template>
 
-<script lang="js">
-import { defineComponent, reactive, ref, onMounted, toRaw } from "vue";
+<script setup lang="js">
+import { reactive, ref, onMounted, toRaw } from "vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import { getDevice } from "@/utils/utils";
@@ -468,22 +472,16 @@ import {
   sendEmail,
   verifyEmail,
   sendSms,
-  verifySms
+  verifySms,
+  verifyOtpAndChangePassword
 } from "@/api/personal/personal";
 import { getVerificationCode } from "@/api/index/login";
 import moment from "moment";
 import { lsGet, lsStore, lsRemove, getTimeout } from '@/utils/utils'
 import WithdrawBank from "@/components/account/WithdrawBank.vue";
 import { useI18n } from "vue-i18n";
-
-export default defineComponent({
-  name: "PersonalView",
-  components: {
-    WithdrawBank
-  },
-  setup() {
     const { t } = useI18n();
-    const selectedTab = 'personal'
+    const selectedTab = ref('personal')
     // Send Verification Code
     const emailKey = `emailKey`
     const phoneKey = `phoneKey`
@@ -961,20 +959,12 @@ export default defineComponent({
       ]
     };
 
-
-    //update withdrawa  pwd
-    const updateWithdrawPwdModalVisible = ref(false);
     const updateWithdrawPwdFormRef = ref();
     const updateWithdrawPwdInfo = reactive({
       oldPassword: "",
       password: "",
       confirmPassword: ""
     });
-    const updateWithdrawPwdModal = () => {
-      updateWithdrawPwdInfo.oldPassword = "";
-      updateWithdrawPwdInfo.password = "";
-      updateWithdrawPwdModalVisible.value = true;
-    };
 
     const refWithdrawOldPassword= ref();
     const refWithdrawPassword= ref();
@@ -982,6 +972,7 @@ export default defineComponent({
       updateWithdrawPwdInfo.oldPassword = "";
       updateWithdrawPwdInfo.password= "";
       updateWithdrawPwdInfo.confirmPassword= "";
+      updateWithdrawPwdInfo.code = "";
     }
 
     const submitUpdateWithdrawPwd = () => {
@@ -997,7 +988,39 @@ export default defineComponent({
                 message: t('common.updateSuccess'),
                 type: 'success',
               })
-              clearPwd();
+              clearWithdrawPwd();
+            } else {
+              ElMessage.error(response.message);
+            }
+          }).catch((error) => {
+            console.log(error.message);
+            // message.error(error.message, 4)
+          });
+        }).catch((error) => {
+          console.log("error", error);
+      });
+      loadingWdPwBtn.value = false
+    };
+    const codeChangeWithdrawPwd = () => {
+      
+      loadingWdPwBtn.value = true
+      updateWithdrawPwdFormRef.value
+        .validate()
+        .then(() => {
+          const obj = {
+            password: updateWithdrawPwdInfo.password,
+            email: personalState.memberInfo.email,
+            code: updateWithdrawPwdInfo.code,
+          }
+          verifyOtpAndChangePassword(obj).then((response) => {
+            if (response.code === 0) {
+              // message.success("success");
+              ElMessage({
+                message: t('common.updateSuccess'),
+                type: 'success',
+              })
+              receivedVerificationCode.value = false;
+              clearWithdrawPwd();
             } else {
               ElMessage.error(t(`response.${response.code}`))
             }
@@ -1008,8 +1031,8 @@ export default defineComponent({
         }).catch((error) => {
           console.log("error", error);
       });
-      loadingPwBtn.value = false
-    };
+      loadingWdPwBtn.value = false
+    }
 
     const validateWithdrawPwd = async (r,v) => {
       if(updateWithdrawPwdInfo.confirmPassword !== updateWithdrawPwdInfo.password){
@@ -1098,72 +1121,51 @@ export default defineComponent({
 
       loadingBtn.value = false
     }
+    const receivedVerificationCode = ref(false);
+    // Define a reactive variable to track the countdown timer
+    const countdownValue = ref(0);
+    let countdownInterval;
 
-    return {
-      personalState,
-      updateSecurityFormRef,
-      updateSecurityVerified,
-      updateSecurityModal,
-      updateSecurityModalVisible,
-      updateSecurityVerifiedRules,
-      submitUpdateSecurity,
-      updatePhoneFormRef,
-      updatePhoneVerified,
-      updatePhoneModal,
-      updatePhoneModalVisible,
-      updatePhoneVerifiedRules,
-      verificationPhoneModalVisible,
-      submitUpdatePhone,
-      updatePwdFormRef,
-      updatePwdInfo,
-      updatePwdModal,
-      updatePwdModalVisible,
-      updatePwdRules,
-      submitUpdatePwd,
-      clearPwd,
-      loadInfo,
-      refOldPassword,
-      refPassword,
-      isEdit,
-      updateFormDetails,
-      updateState,
-      getVerificationCode,
-      verificationModalVisible,
-      openVerificationModal,
-      openPhoneVerificationModal,
-      verificationImg,
-      getCode,
-      verifyVerificationCode,
-      verifyPhoneVerificationCode,
-      isEmailSending,
-      isPhoneSending,
-      updateFormRef,
-      store,
-      regDevice,
-      openWindow,
-      captchaUpdateRef,
-      loadingBtn,
-      loadingPwBtn,
-      loadingWdPwBtn,
-      loadingSecurityBtn,
-      loadingPhoneBtn,
-      disableSendVerificationButton,
-      disableSendPhoneButton,
-      countDown,
-      countDownPhone,
-      selectedTab,
-      updateWithdrawPwdFormRef,
-      updateWithdrawPwdInfo,
-      updateWithdrawPwdModal,
-      updateWithdrawPwdModalVisible,
-      updateWithdrawPwdRules,
-      submitUpdateWithdrawPwd,
-      clearWithdrawPwd,
-      refWithdrawOldPassword,
-      refWithdrawPassword,
+    // Function to send OTP email
+    const sendOTPEmail = () => {
+      if (!personalState.memberInfo.email) {
+        ElMessage.warning(t('common.bindEmailFirst'));
+        selectedTab.value = 'personal'
+        return
+      }
+      // Check if countdown timer is still running
+      if (countdownValue.value === 0) {
+        // If countdown timer has finished, reset the timer and send the email
+        const obj = {
+          email: personalState.memberInfo.email
+        } 
+        sendEmail(obj).then((res) => {
+          if (res.code === 0) {
+            receivedVerificationCode.value = true;
+            ElMessage.success({
+              type: "success",
+              message: t('common.emailSent')
+            });
+            // Start the countdown timer again after sending the email
+            countdownValue.value = 60;
+            countdownInterval = setInterval(() => {
+              countdownValue.value -= 1;
+              if (countdownValue.value === 0) {
+                clearInterval(countdownInterval);
+              }
+            }, 1000);
+          } else {
+            ElMessage.error(res.message);
+          }
+        });
+      } else {
+        // If countdown timer is still running, show a message to try again later
+        ElMessage.warning({
+          type: "warning",
+          message: t('common.tryAgain', { countDown: countdownValue.value })
+        });
+      }
     };
-  }
-});
 </script>
 
 <style scoped lang="scss">

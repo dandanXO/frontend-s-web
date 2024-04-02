@@ -1089,7 +1089,7 @@ export default defineComponent({
                 if (regResult === 0) {
                   ElMessage({
                     type: "success",
-                    message: "注册成功"
+                    message: t('login.registerSuccess')
                   });
                   store.autoLogin(response.data);
                   registerDialogVisible.value = false;

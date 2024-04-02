@@ -581,7 +581,7 @@ export default defineComponent({
 
     const checkBankCards = () => {
       ElMessageBox.alert(
-        t('error.bankCardFirst'), t('common.systemError'),
+        t('bankError.bankCardFirst'), t('common.systemError'),
           {
             showClose: false,
             showCancelButton: false,
