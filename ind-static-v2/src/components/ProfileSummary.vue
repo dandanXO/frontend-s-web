@@ -136,7 +136,7 @@
       </div>
       <div class="profile-wrapper" v-else>
         <PrimaryButton :isSmall="true" :label="'Register'" :onClick="() => router.push('/register')"/>
-        <q-btn no-caps unelevated click="goLogin()">Login</q-btn>
+        <q-btn no-caps unelevated @click="goLogin">Login</q-btn>
       </div>
     </div>
   </div>
