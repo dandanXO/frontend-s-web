@@ -1,6 +1,6 @@
 <template>
   <div style="height: 56px" v-if="topDownload"></div>
-  <div style="height: 60px"></div>
+  <div style="height: 80px"></div>
 
   <div class="top-download" v-if="topDownload">
     <div class="download-container">
@@ -475,8 +475,8 @@ onMounted(() => {
     .profile-balance {
       position: relative;
       // background: rgba(255, 255, 255, 0.24);
-      background: rgba(103, 38, 154, 0.9);
-      border-radius: 24px;
+      background: #192633;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -485,13 +485,14 @@ onMounted(() => {
       padding-bottom: 2px;
       min-width: 130px;
       width: 100%;
-      height: 28px;
+      height: 35px;
       padding-left: 12px;
       padding-right: 8px;
 
       font-size: 14px;
-      color: rgba(255, 255, 255, 0.7);
+      color: #fff;
       font-weight: bold;
+      border: 1px solid #2C323B;
 
       &:active {
         filter: brightness(0.75);
@@ -577,12 +578,14 @@ onMounted(() => {
 
 .btn-refresh {
   position: absolute;
-  top: 0;
   right: 10px;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .style-blue-btn {
   background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+  background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
   border-radius: 5px;
 }
 

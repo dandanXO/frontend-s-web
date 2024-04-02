@@ -26,7 +26,7 @@
     </div>
 
     <div class="mid-setting-section">
-      <q-item-section class="acct-nav">
+      <div class="acct-nav">
         <h2>Other Services</h2>
         <div class="acct-menu" id="id-acct-menu">
           <router-link to="/account/profile">
@@ -66,7 +66,7 @@
             <div class="acct-nav-label">Message</div>
           </router-link>
         </div>
-      </q-item-section>
+      </div>
 
       <q-card class="card-account-banner" v-if="btm_banners.length > 0">
         <q-card-section>
@@ -183,17 +183,14 @@ const logout = () => {
 
 <style scoped lang="scss">
 .top-setting-section {
-  width: 100%;
   position: relative;
-  background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
-  border-radius: 20px 20px 0px 0px;
-  padding: 25px 0px 40px;
-  margin-bottom: -30px;
+  background: #2e30344f;
+  border-radius: 4px;
+  margin: 20px;
 
   .top-section-inner {
-    width: 95%;
+    width: 100%;
     margin: 0px auto;
-    padding: 0px 5px;
 
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -211,7 +208,6 @@ const logout = () => {
       flex-direction: column;
       gap: 5px;
       text-align: center;
-      width: 100px;
       align-items: center;
       justify-content: flex-start;
       margin: 0 auto;
@@ -233,7 +229,7 @@ const logout = () => {
       .acct-nav-item {
         border-radius: 50%;
         aspect-ratio: 1/1;
-        padding: 12px;
+        padding: 8px;
         height: 50px;
         width: 80px;
         cursor: pointer;
@@ -255,32 +251,26 @@ const logout = () => {
 }
 
 .mid-setting-section {
-  background-color: #303954;
-  width: 100%;
   position: relative;
-  border-radius: 20px 20px 0px 0px;
-  padding: 20px 0px;
 
   h2 {
     line-height: 26px;
     color: #fff;
     font-size: 20px;
-    margin: 0px 0px 10px 28px;
     // width: calc(330px + 100px);
     text-transform: uppercase;
+
+    font-family: 'Poppins';
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: -0.0008em;
+
   }
 }
 
 .acct-nav {
-  width: 95%;
-  margin: 10px auto;
-  padding: 5px;
-  gap: 10px;
-
-  a {
-    padding: 5px;
-    display: block;
-  }
+  margin: 20px;
 
   .acct-title {
     display: flex;
@@ -301,6 +291,8 @@ const logout = () => {
   }
 
   .acct-menu {
+    background: #2e30344f;
+    border-radius: 4px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
@@ -309,7 +301,6 @@ const logout = () => {
     row-gap: 10px;
     height: auto;
     width: 100%;
-    margin-bottom: 0px;
 
     &.shorter-menu {
       grid-template-rows: repeat(2, 1fr);
@@ -320,9 +311,8 @@ const logout = () => {
       font-size: 14px;
       display: flex;
       flex-direction: column;
-      gap: 5px;
-      padding: 8px 3px;
-      width: 100px;
+      gap: 0px;
+      width: 100%;
       text-align: center;
       align-items: center;
       justify-content: flex-start;
@@ -334,17 +324,16 @@ const logout = () => {
       }
 
       .acct-nav-label {
-        padding-top: 6px;
-        color: #ffffff90;
+        color: #fff;
         font-size: 14px;
         white-space: normal;
       }
 
       .acct-nav-item {
-        background-color: #b9c8ff26;
+        // background-color: #b9c8ff26;
         border-radius: 50%;
         aspect-ratio: 1/1;
-        padding: 12px;
+        padding: 5px;
         height: 56px;
         width: 56px;
         cursor: pointer;
@@ -379,12 +368,14 @@ const logout = () => {
 }
 
 .acct-logout {
-  background-image: url("../assets/images/account/logout-btn.png");
-  background-repeat: no-repeat;
+  height: 60px;
+  background: #2e30344f;
+  // background-image: url("../assets/images/account/logout-btn.png");
+  // background-repeat: no-repeat;
   width: calc(95% - 20px);
   margin: 20px auto;
-  aspect-ratio: 335/40;
-  background-size: 100% 100%;
+  // aspect-ratio: 335/40;
+  // background-size: 100% 100%;
   display: flex;
   justify-content: center;
   align-items: center;
