@@ -95,8 +95,8 @@
     </div> -->
 
     <swiper
-      :slidesPerView="4.5"
-      :spaceBetween="10"
+      :slidesPerView="5.5"
+      :spaceBetween="5"
       :scrollbar="{
         hide: true
       }"
