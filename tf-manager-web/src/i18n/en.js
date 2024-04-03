@@ -1130,6 +1130,8 @@ export default {
     rebateDistributeTime: 'Rebate Distribute Time',
     rebateLevel: 'Rebate Level',
     rebatePercentage: 'Rebate %',
+    regEndDate: 'Register End Date',
+    regStartDate: 'Register Start Date',
     redPacketMinDayDeposit: 'Min Day Deposit Amount for Red Packet Rain',
     redPacketMinTotalDeposit: 'Min Total Deposit Amount for Red Packet Rain',
     rule: 'Rule',

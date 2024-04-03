@@ -850,6 +850,8 @@ export default {
     rebate: 'ส่วนลด',
     rebateDistributeTime: 'ระยะเวลาการกระจายส่วนลด',
     rebatePercentage: 'ส่วนลด เป็นเปอร์เซ็น',
+    regEndDate: 'เวลาสิ้นสุดการลงทะเบียน',
+    regStartDate: 'เวลาเริ่มลงทะเบียน',
     maxRebate: 'เงินคืนสูงสุด',
     rebateAmount: 'จำนวนเงินคืน',
     receiveTime: 'เวลารับ',
