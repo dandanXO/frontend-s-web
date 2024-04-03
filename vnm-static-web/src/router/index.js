@@ -69,11 +69,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "Game" */ "../views/LotteryView.vue")
       },
       {
-        path: "/lottery/SGWin",
-        name: "SGWin",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/lottery/SgwinView.vue")
-      },
-      {
         path: "/poker",
         name: "poker",
         component: () => import(/* webpackChunkName: "Game" */ "../views/PokerView.vue")
@@ -104,11 +99,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "Game" */ "../views/AppView.vue")
       },
       {
-        path: "/sponsor",
-        name: "sponsor",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/SponsorView.vue")
-      },
-      {
         path: "/vip",
         name: "vip",
         component: () => import(/* webpackChunkName: "Game" */ "../views/VIPView.vue")
@@ -122,11 +112,6 @@ const routes = [
         path: "/refer/:referralCode",
         name: "referCode",
         component: () => {}
-      },
-      {
-        path: "/privilege/invite",
-        name: "invite",
-        component: () => import("../views/PrivilegeInvite.vue")
       },
       {
         path: "/center",
