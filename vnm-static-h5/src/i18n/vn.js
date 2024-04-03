@@ -107,6 +107,7 @@ export default {
     login_here: "Đăng nhập tại đây",
     registration_hints: "Đăng ký tức bạn đã đồng ý và tuân thủ",
     user_registration_protocol: "Thoản thuận đăng ký tài khoản",
+    register_success: "Đăng ký thành công",
 
     // forgot password
     sms_retrieval: "Truy xuất qua SMS",

@@ -473,7 +473,7 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: "注册成功",
+                  message: t('lang.register_success'),
                   icon: "check_circle_outline"
                 });
                 store.autoLogin(res.data);

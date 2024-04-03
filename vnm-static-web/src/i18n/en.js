@@ -245,7 +245,8 @@ export default {
     selectDate: 'Select date',
     btn_lottery_now: "Lottery Now",
     btn_claim_now: "Claim Now",
-    net_work_bonus: "Net loss bonus"
+    net_work_bonus: "Net loss bonus",
+    bonus: "Bonus",
     // vi-daily-checkin end
   },
   mail: {
@@ -816,6 +817,8 @@ about: {
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
     35011: "35011 Member cannot receive this privilege.",
-    12100: "Old Withdraw password does not match."
+    12100: "Old Withdraw password does not match.",
+    45000: "Minimum withdrawal amount not reached",
+    45001: "Random bonus has been claimed today."
   }
 }

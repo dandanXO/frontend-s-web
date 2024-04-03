@@ -36,11 +36,11 @@ const getLists = () => {
       icon: "withdraw",
       name: t('lang.menu_withdraw')
     },
-    // {
-    //   code: "promo",
-    //   icon: "deposit",
-    //   name: t('lang.menu_promo')
-    // },
+    {
+      code: "promo",
+      icon: "deposit",
+      name: t('lang.menu_promo')
+    },
     // {
     //   code: "rebate",
     //   icon: "deposit",

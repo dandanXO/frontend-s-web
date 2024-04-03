@@ -80,7 +80,7 @@
                 </div>
                 <div class="info-tbl-col">
                   <div class="tbl-row">
-                    <div class="basic-info-cell title">{{ $t('personal.mobileNo') }}</div>
+                    <div v-if="personalState.memberInfo.telephone" class="basic-info-cell title">{{ $t('personal.mobileNo') }}</div>
                     <div v-if="personalState.memberInfo.telephone" class="basic-info-cell contentwtxt" style="display:flex;justify-content: space-between;align-items: center;">
                       {{ personalState.memberInfo.telephone }}
 
@@ -148,7 +148,7 @@
               </div> -->
 
               <div class="tbl-row">
-                <div class="basic-info-cell title">{{$t('personal.email')}}</div>
+                <div v-if="personalState.memberInfo.email" class="basic-info-cell title">{{$t('personal.email')}}</div>
                 <div v-if="personalState.memberInfo.email" class="basic-info-cell contentwtxt" style="display:flex;justify-content: space-between;align-items: center;">
                   {{ personalState.memberInfo.email }}
 
@@ -969,6 +969,7 @@ import { useI18n } from "vue-i18n";
       confirmPassword: ""
     });
 
+    const emailCodeId= ref();
     const refWithdrawOldPassword= ref();
     const refWithdrawPassword= ref();
     const clearWithdrawPwd = () =>{
@@ -1013,8 +1014,8 @@ import { useI18n } from "vue-i18n";
         .then(() => {
           const obj = {
             password: updateWithdrawPwdInfo.password,
-            email: personalState.memberInfo.email,
             code: updateWithdrawPwdInfo.code,
+            codeId: emailCodeId.value
           }
           verifyOtpAndChangePassword(obj).then((response) => {
             if (response.code === 0) {
@@ -1146,6 +1147,7 @@ import { useI18n } from "vue-i18n";
         sendEmail(obj).then((res) => {
           if (res.code === 0) {
             receivedVerificationCode.value = true;
+            emailCodeId.value= res.data.codeId;
             ElMessage.success({
               type: "success",
               message: t('common.emailSent')
