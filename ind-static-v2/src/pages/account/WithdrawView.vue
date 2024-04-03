@@ -670,14 +670,14 @@ const isValidCardAddress = () => {
       .bank-card-item {
         padding: 3px;
         border-radius: 1.25rem;
-        background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+        background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
         position: relative;
         transition: 0.3s all;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #150025;
+        color: #fff;
 
         .card-label {
           font-size: 1rem;

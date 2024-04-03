@@ -28,7 +28,7 @@
     <div class="deposit-item-container q-mt-sm">
       <template v-for="(item, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
-          <q-badge v-if="activeMethod.privilegeId" color="orange" floating rounded>+{{ item.hotLabel }}</q-badge>
+          <q-badge v-if="activeMethod.privilegeId" color="green" floating rounded>+{{ item.hotLabel }}</q-badge>
           <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
           <div :class="['deposit-svg', item.isActive && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -853,7 +853,7 @@ onMounted(() => {
     // aspect-ratio: 77/38;
 
     &.active {
-      background: #5c46e7;
+      background: #00AE00;
       box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
     }
 
@@ -881,7 +881,7 @@ onMounted(() => {
     display: none;
 
     svg {
-      background: #5c46e7;
+      background: #00AE00;
       border-radius: 3px;
     }
 
