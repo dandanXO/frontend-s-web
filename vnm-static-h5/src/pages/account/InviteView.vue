@@ -40,6 +40,7 @@
             <li v-html="$t('lang.share_tnc_para_03_a')" />
             <ol type="i">
               <li v-html="$t('lang.share_tnc_para_03_a_i')" />
+              <li v-html="$t('lang.share_tnc_para_03_a_ii')" />
             </ol>
             <li v-html="$t('lang.share_tnc_para_03_b')" />
             <ol type="i">
@@ -350,6 +351,7 @@ export default defineComponent({
     display: block;
     // margin-bottom: 15px;
     border: 1px solid #aaa;
+    word-break: break-all;
   }
 
   #qr-code {

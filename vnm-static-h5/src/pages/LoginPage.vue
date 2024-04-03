@@ -121,7 +121,6 @@
             <em>*</em>
           </q-label>
           <q-input
-            hide-bottom-space
             ref="telephoneRef"
             v-model="phoneLoginForm.phoneNumber"
             :placeholder="$t('lang.phone_number')"
@@ -131,6 +130,7 @@
             clearable
             autocomplete="username"
             rounded
+            type="number"
             standout
           >
             <template v-slot:prepend>
@@ -138,13 +138,12 @@
             </template>
           </q-input>
           <q-label>
-            {{ $t("lang.verification_code_send") }}
+            {{ $t("lang.verification_code") }}
             <em>*</em>
           </q-label>
           <q-input
             @pressEnter="alert('ah')"
             ref="phoneVerificationRef"
-            hide-bottom-space
             type="text"
             v-model="phoneLoginForm.code"
             :placeholder="$t('lang.verification_code')"

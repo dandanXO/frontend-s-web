@@ -608,7 +608,7 @@ export default defineComponent({
 }
 .withdrawalmethod {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   text-align: center;
   overflow-x: unset;
   padding: 0px 5px;
