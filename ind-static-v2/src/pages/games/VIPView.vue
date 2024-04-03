@@ -882,22 +882,25 @@ const swipeRight = () => {
     margin-top: 5px;
     padding: 1px;
 
+    .right {
+      color: white;
+      background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-right.png) no-repeat center center;
+      background-size: 0;
+    }
+
+    .left {
+      color: white;
+      background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
+      background-size: 0;
+    }
+
     :deep(.q-tab__label) {
       font-weight: 400;
     }
 
     :deep(.q-tab--active) {
       color: white;
-      
-      &.right {
-        background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-right.png) no-repeat center center;
-        background-size: 100% 100%;
-      }
-
-      &.left {
-        background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
-        background-size: 100% 100%;
-      }
+      background-size: 100% 100%;
     }
 
     :deep(.q-tab--active .q-tab__label) {

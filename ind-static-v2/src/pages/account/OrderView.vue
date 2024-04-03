@@ -272,22 +272,25 @@ onActivated(() => {
   margin: 10px auto;
   aspect-ratio: 335/32;
 
+  .right {
+    color: white;
+    background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-right.png) no-repeat center center;
+    background-size: 0;
+  }
+
+  .left {
+    color: white;
+    background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
+    background-size: 0;
+  }
+
   :deep(.q-tab__label) {
     font-weight: 700;
   }
 
   :deep(.q-tab--active) {
     color: #fff;
-    
-    &.right {
-      background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-right.png) no-repeat center center;
-      background-size: 100% 100%;
-    }
-
-    &.left {
-      background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
-      background-size: 100% 100%;
-    }
+    background-size: 100% 100%;
   }
 }
 
