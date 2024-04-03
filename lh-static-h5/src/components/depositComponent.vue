@@ -757,7 +757,7 @@ onMounted(() => {
 }
 
 .q-select__dialog .q-field__control {
-  background: #4fb2ff !important;
+  background: #fff !important;
 }
 
 .deposit-field {
@@ -774,6 +774,9 @@ onMounted(() => {
 }
 
 .deposit-selection {
+  &.q-field--labeled{
+    color: #fff;
+  }
   &.q-field {
     border-radius: 10px;
     box-shadow: $shadow-bg;

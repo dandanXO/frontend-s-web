@@ -362,7 +362,8 @@ $node-color: #4ab6fd;
 
     .promo {
       position: absolute;
-      right: -10px;
+      right: 50%;
+      transform: translate(50%, 0);
       top: -10px;
       background-repeat: no-repeat;
       background-size: 100%;
