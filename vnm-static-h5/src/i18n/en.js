@@ -159,6 +159,7 @@ export default {
     system_cancel: "Cancel",
     system_operation_success: "The operation is successful, please check the mobile phone verification code!",
     system_verify_failed: "Verification failed, please refresh",
+    system_loginnow: "Login now",
 
     // personal | verify
     personal_exclusiveurl: "Exclusive URL",
@@ -1268,6 +1269,8 @@ export default {
     35008: "You do not have this privilege",
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
-    35011: "35011 Member cannot receive this privilege."
+    35011: "35011 Member cannot receive this privilege.",
+    45000: "Not reaching the minimum withdrawal amount",
+    45001: "Received random bonus today"
   }
 };
