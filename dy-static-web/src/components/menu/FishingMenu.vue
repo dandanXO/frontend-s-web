@@ -23,6 +23,7 @@
         </div>
         <img :src="require('../../assets/fishing/header_fish_' + nav.image + '.png')" style="height: 40px" />
         <p v-if="nav.code === 'AGF'" class="platform-title">AG捕鱼</p>
+        <p v-else-if="nav.code === 'PMFISH'" class="platform-title">DB捕鱼</p>
         <p v-else class="platform-title">{{ nav.code }}捕鱼</p>
         <div class="platform-img" :class="'fish-' + nav.image"></div>
       </div>
@@ -61,6 +62,14 @@ export default defineComponent({
         image: "ag",
         message:
           "最受欢迎的AG捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。"
+      },
+      {
+        gameCode: "",
+        name: "DB多宝捕鱼",
+        code: "PMFISH",
+        image: "db",
+        message:
+            "最受欢迎的DB多宝捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。"
       }
       // {
       //     gameCode: 'F-SF01',

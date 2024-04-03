@@ -1349,6 +1349,44 @@
                         </div>
                       </div>
                     </template>
+
+                    <template v-else-if="fish.code === 'PMFISH' && fish.name === 'PMFISH'">
+                      <div class="game-board" @click="playGame(fish.name, fish.code, '')">
+                        <div
+                          class="game-bg"
+                          :style="{
+                            backgroundImage: (() => {
+                              try {
+                                return `url(${require(`../assets/index/${fish.icon}/slide-${
+                                  fish.icon
+                                }-${fish.name.toLowerCase()}.png`)})`;
+                              } catch (e) {
+                                return '';
+                              }
+                            })()
+                          }"
+                        ></div>
+
+                        <div class="game-title">
+                          <h3>{{ fish.title }}</h3>
+                          <span>捕鱼游戏</span>
+                        </div>
+
+                        <div class="maintenance-box" v-if="fish.underMaintenance">
+                          <p>维护中</p>
+                          <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
+                            <div class="small-size q-mt-md">维护时间:</div>
+                            <p class="small-size">
+                              {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                            <p class="small-size">-</p>
+                            <p class="small-size">
+                              {{ moment(fish.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                          </template>
+                        </div>
+                      </div>
+                    </template>
                     <template v-else>
                       <div class="game-board" @click="playGame(fish.name, fish.code, fish.code)">
                         <div

@@ -18,10 +18,12 @@
         <div class="game-content" data-aos="zoom-in" data-aos-duration="700">
           <div class="fish5"></div>
           <div class="fish1"></div>
+          <div class="fish6"></div>
         </div>
         <div class="game-btn" data-aos="zoom-in" data-aos-duration="700">
           <button class="btn fish-begin" @click="openGame('GPS捕鱼', 'GPS', '7202')"></button>
           <button class="btn fish-begin" @click="openGame('AG捕鱼', 'AGF', 'HMPL')"></button>
+          <button class="btn fish-begin" @click="openGame('DB多宝捕鱼', 'PMFISH', '')"></button>
         </div>
       </div>
     </div>
@@ -113,6 +115,14 @@ export default defineComponent({
         image: "ag",
         message:
             "最受欢迎的AG捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
+      },
+      {
+        gameCode: "",
+        name: "DB多宝捕鱼",
+        code: "PMFISH",
+        image: "db",
+        message:
+            "最受欢迎的DB多宝捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
       }
       // {
       //   gameCode: "F-SF01",
@@ -217,6 +227,14 @@ export default defineComponent({
   background-image: url(../assets/fishing/fish-5.png);
   width: 295px;
   height: 293px;
+  background-repeat: no-repeat;
+  background-position: center top;
+}
+
+.fish6 {
+  background-image: url(../assets/fishing/fish-6.png);
+  width: 281px;
+  height: 327px;
   background-repeat: no-repeat;
   background-position: center top;
 }
