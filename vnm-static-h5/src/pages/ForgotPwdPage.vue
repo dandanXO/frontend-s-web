@@ -28,7 +28,7 @@
       <q-form v-if="!isEmailSent" class="q-mt-xs">
         <template v-if="fgtpwdTab === 'tabSms'">
           <q-label>
-            {{ $t("lang.please_enter_username") }}
+            {{ $t("lang.username") }}
             <em>*</em>
           </q-label>
           <q-input
@@ -48,7 +48,7 @@
           </q-input>
 
           <q-label>
-            {{ $t("lang.please_enter_phone_number") }}
+            {{ $t("lang.phone_number") }}
             <em>*</em>
           </q-label>
           <q-input
@@ -73,7 +73,7 @@
           </q-input>
 
           <q-label>
-            {{ $t("lang.please_enter_verification_code") }}
+            {{ $t("lang.verification_code") }}
             <em>*</em>
           </q-label>
           <q-input
@@ -115,7 +115,7 @@
 
         <template v-if="fgtpwdTab === 'tabEmail'">
           <q-label>
-            {{ $t("lang.please_enter_username") }}
+            {{ $t("lang.username") }}
             <em>*</em>
           </q-label>
           <q-input
@@ -135,7 +135,7 @@
           </q-input>
 
           <q-label>
-            {{ $t("lang.please_enter_email") }}
+            {{ $t("lang.email") }}
             <em>*</em>
           </q-label>
           <q-input
@@ -157,7 +157,7 @@
           </q-input>
 
           <q-label>
-            {{ $t("lang.please_enter_verification_code") }}
+            {{ $t("lang.verification_code") }}
             <em>*</em>
           </q-label>
           <q-input
@@ -199,7 +199,7 @@
 
         <template v-if="fgtpwdTab === 'tabAcc'">
           <q-label>
-            {{ $t("lang.please_enter_email") }}
+            {{ $t("lang.email") }}
             <em>*</em>
           </q-label>
           <q-input
@@ -220,7 +220,7 @@
           </q-input>
 
           <q-label>
-            {{ $t("lang.please_enter_verification_code") }}
+            {{ $t("lang.verification_code") }}
             <em>*</em>
           </q-label>
           <q-input

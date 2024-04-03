@@ -14,7 +14,7 @@
   <div v-if="isH5 && topBoxVisible" class="download-top-container">
     <div class="download-top-box">
       <q-icon name="close" @click="closeTopBox" />
-      <img class="headicon" src="../assets/logo-1.png" alt="download-logo" />
+      <img class="headicon" src="../assets/logo-web.svg" alt="download-logo" />
       <div class="download-txt-container">
         <span class="download-title">{{ $t("lang.app_download_title") }}</span>
         <span>{{ $t("lang.app_download_desc") }}</span>
@@ -36,7 +36,7 @@
 
   <div class="home-header">
     <div class="header-left" @click="router.push('/')">
-      <img alt="logo" src="../assets/logo-1.png" />
+      <img alt="logo" src="../assets/logo-web.svg" />
     </div>
     <div class="header-middle" v-if="!store.token">
       <q-btn rounded no-caps color="brightbtn" @click="router.push('/login')">

@@ -212,11 +212,18 @@
               </q-tr> -->
               <q-tr :props="props">
                 <q-th rowspan="2">{{ $t("lang.vip_level") }}</q-th>
-                <q-th colspan="2">{{ $t("lang.vip_monthly_reload") }}</q-th>
+                <q-th colspan="4">{{ $t("lang.vip_monthly_reload") }}</q-th>
+                <q-th colspan="4">{{ $t("lang.vip_exclusive_promotions") }}</q-th>
               </q-tr>
               <q-tr>
                 <q-th style="background: #e7f3ff">{{ $t("lang.vip_percent_monthlyreload") }}</q-th>
                 <q-th style="background: #e7f3ff">{{ $t("lang.vip_min_deposit") }}</q-th>
+                <q-th style="background: #e7f3ff">{{ $t("lang.vip_max_bonus") }}</q-th>
+                <q-th style="background: #e7f3ff">{{ $t("lang.vip_return_over") }}</q-th>
+                <q-th style="background: #e7f3ff">{{ $t("lang.vip_bet_limit") }}</q-th>
+                <q-th style="background: #e7f3ff">{{ $t("lang.vip_priority_payment_method") }}</q-th>
+                <q-th style="background: #e7f3ff">{{ $t("lang.vip_24_7_cc_team") }}</q-th>
+                <q-th style="background: #e7f3ff">{{ $t("lang.vip_invitation_to_ee") }}</q-th>
               </q-tr>
             </template>
             <template v-slot:body="props">
@@ -605,6 +612,36 @@ const columns = [
     name: "min_deposit",
     align: "center",
     field: (row) => row.min_deposit
+  },
+  {
+    name: "max_bonus",
+    align: "center",
+    field: (row) => row.max_bonus
+  },
+  {
+    name: "return_over",
+    align: "center",
+    field: (row) => row.return_over
+  },
+  {
+    name: "bet_limit",
+    align: "center",
+    field: (row) => row.bet_limit
+  },
+  {
+    name: "priority_payment_method",
+    align: "center",
+    field: (row) => row.priority_payment_method
+  },
+  {
+    name: "v24_7_cc_team",
+    align: "center",
+    field: (row) => row.v24_7_cc_team
+  },
+  {
+    name: "invitation_to_ee",
+    align: "center",
+    field: (row) => row.invitation_to_ee
   }
 ];
 const rows = [
@@ -612,43 +649,85 @@ const rows = [
     name: "VIP1",
     amount: "一笔存款",
     monthly_reload: "0",
-    min_deposit: "0"
+    min_deposit: "0",
+    max_bonus: "0",
+    return_over: "0",
+    bet_limit: t("lang.vip_bet_limit_standard"),
+    priority_payment_method: "",
+    v24_7_cc_team: "",
+    invitation_to_ee: ""
   },
   {
     name: "VIP2",
     amount: "3,000",
     monthly_reload: "0",
-    min_deposit: "0"
+    min_deposit: "0",
+    max_bonus: "0",
+    return_over: "0",
+    bet_limit: t("lang.vip_bet_limit_standard"),
+    priority_payment_method: "",
+    v24_7_cc_team: "",
+    invitation_to_ee: ""
   },
   {
     name: "VIP3",
     amount: "30,000",
     monthly_reload: "0",
-    min_deposit: "0"
+    min_deposit: "0",
+    max_bonus: "0",
+    return_over: "0",
+    bet_limit: t("lang.vip_bet_limit_standard"),
+    priority_payment_method: "",
+    v24_7_cc_team: "",
+    invitation_to_ee: ""
   },
   {
     name: "VIP4",
     amount: "80,000",
     monthly_reload: "0",
-    min_deposit: "0"
+    min_deposit: "0",
+    max_bonus: "0",
+    return_over: "0",
+    bet_limit: t("lang.vip_bet_limit_standard"),
+    priority_payment_method: "",
+    v24_7_cc_team: "",
+    invitation_to_ee: ""
   },
   {
     name: "VIP5",
     amount: "200,000",
     monthly_reload: "30%",
-    min_deposit: "3,500"
+    min_deposit: "3,500",
+    max_bonus: "5,888",
+    return_over: "15",
+    bet_limit: t("lang.vip_bet_limit_highlimit"),
+    priority_payment_method: "✓",
+    v24_7_cc_team: "",
+    invitation_to_ee: ""
   },
   {
     name: "VIP6",
     amount: "400,000",
     monthly_reload: "30%",
-    min_deposit: "3,500"
+    min_deposit: "3,500",
+    max_bonus: "8,888",
+    return_over: "15",
+    bet_limit: t("lang.vip_bet_limit_highlimit"),
+    priority_payment_method: "✓",
+    v24_7_cc_team: "✓",
+    invitation_to_ee: ""
   },
   {
     name: "VIP7",
     amount: "600,000",
     monthly_reload: "30%",
-    min_deposit: "3,500"
+    min_deposit: "3,500",
+    max_bonus: "12,888",
+    return_over: "15",
+    bet_limit: t("lang.vip_bet_limit_highlimit"),
+    priority_payment_method: "✓",
+    v24_7_cc_team: "✓",
+    invitation_to_ee: "✓"
   }
 ];
 

@@ -3,7 +3,7 @@
     <q-form class="rounded-borders" @submit="onSubmit">
       <div class="login-form-container">
         <q-label>
-          {{ $t("lang.please_enter_username") }}
+          {{ $t("lang.username") }}
           <em>*</em>
         </q-label>
         <q-input
@@ -27,7 +27,7 @@
         </q-input>
 
         <q-label>
-          {{ $t("lang.please_type_the_password") }}
+          {{ $t("lang.password") }}
           <em>*</em>
         </q-label>
         <q-input
@@ -80,7 +80,7 @@
         </div>
 
         <q-label>
-          {{ $t("lang.please_type_the_confirm_password") }}
+          {{ $t("lang.confirm_password") }}
           <em>*</em>
         </q-label>
         <q-input
@@ -112,7 +112,7 @@
         </q-input>
 
         <q-label>
-          {{ $t("lang.please_enter_your_real_name") }}
+          {{ $t("lang.real_name") }}
           <em>*</em>
         </q-label>
         <q-input
@@ -138,7 +138,7 @@
         <div class="q-mb-md" style="font-size: 11px; color: #cccccc">{{ $t("lang.real_name_hints") }}</div>
 
         <q-label>
-          {{ $t("lang.please_enter_mobile_number") }}
+          {{ $t("lang.mobile_number") }}
         </q-label>
         <q-input
           ref="telRef"
@@ -158,7 +158,7 @@
         </q-input>
 
         <q-label>
-          {{ $t("lang.please_enter_email") }}
+          {{ $t("lang.email") }}
         </q-label>
         <q-input
           ref="emailRef"
@@ -177,7 +177,7 @@
         </q-input>
 
         <q-label>
-          {{ $t("lang.please_enter_verification_code") }}
+          {{ $t("lang.verification_code") }}
           <em>*</em>
         </q-label>
         <q-input
@@ -203,7 +203,7 @@
           </template>
         </q-input>
 
-        <q-label>{{ $t("lang.please_enter_the_referral_code") }}</q-label>
+        <q-label>{{ $t("lang.referral_code") }}</q-label>
         <q-input
           v-if="!hasAffiliate"
           ref="affiliateCodeRef"

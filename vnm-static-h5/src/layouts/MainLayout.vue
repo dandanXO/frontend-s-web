@@ -3,7 +3,7 @@
     <q-header v-if="hasPage" :class="hasShadow ? 'with-shadow' : ''">
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
-          <router-link to="/"><img src="../assets/logo-1.png" alt="logo" /></router-link>
+          <router-link to="/"><img src="../assets/logo-web.svg" alt="logo" /></router-link>
         </div>
         <q-card-actions v-if="!store.hasToken()">
           <q-btn glossy color="brand" to="/login">登录</q-btn>
@@ -15,7 +15,7 @@
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
-        <router-link :to="prevPage ? '/' + prevPage : '/'">
+        <router-link :to="prevPage ? '/' + prevPage : '/'" class="back-btn-top">
           <img class="back-icon" src="../assets/images/common/left-back-icon.svg" />
         </router-link>
         {{ pageName }}
@@ -208,6 +208,8 @@ export default defineComponent({
           if (route.query.name) {
             hasPage.value = true;
             prevPage.value = "promo";
+          } else {
+            prevPage.value = "/";
           }
         } else if (route.path === "/finance/deposit") {
           prevPage.value = "account";
