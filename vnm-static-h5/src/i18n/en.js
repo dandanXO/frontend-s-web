@@ -509,6 +509,8 @@ export default {
     dv_bank_card_no: "Bank card number",
     dv_deposit_amount: "Deposit amount",
     dv_submit: "Submit",
+    dv_copy: "Copy",
+    dv_copied: "Copied",
 
     // affiliate
     affiliate_title: "Affiliate program",
@@ -1058,9 +1060,9 @@ export default {
     page_withdrawalrecords: "Withdrawal Records",
     page_transferrecords: "Transfer Records",
     page_promotions: "Promotions",
-    page_betrecords: "Bet Records",
+    page_betrecords: "Bet History Records",
     page_reminderrecords: "Reminder Records",
-    page_accountchangerecords: "Account Change Records",
+    page_accountchangerecords: "Turn Over Records",
     page_referfriendsrecords: "Refer Friends Records",
     page_rescuefundrecords: "Rescue Fund Records",
     page_register: "Register",

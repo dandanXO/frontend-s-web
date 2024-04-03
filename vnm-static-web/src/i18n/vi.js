@@ -82,6 +82,7 @@ export default {
     "emailSent": "Mã xác minh đã được gửi đến email của bạn",
     "tryAgain": "Thử lại sau {countDown} giây",
     bindEmailFirst: "Vui lòng gắn kết email của bạn trước",
+    success: "Gửi thành công"
   },
   "home": {
     "appDownload": "Tải ứng dụng",

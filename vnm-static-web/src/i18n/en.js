@@ -83,7 +83,8 @@ export default {
     privilegeDeposit: 'The deposit amount for the promotion does not meet the rules',
     emailSent: 'Verification code has been sent to your email',
     tryAgain: 'Try again in {countDown} seconds',
-    bindEmailFirst: 'Kindly bind your email first'
+    bindEmailFirst: 'Kindly bind your email first',
+    success: 'Successful',
   },
   home: {
     appDownload: 'APP Download',
