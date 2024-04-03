@@ -13,6 +13,10 @@ export const updateRedPacketRain = (rain) => {
   return https().request("/privilege/red-packet-rain?_method=PUT", Method.POST, rain, ContentType.json);
 };
 
+export const getWays = () => {
+  return https().request("/privilege/ways", Method.GET);
+};
+
 export const getRedPacketRain = (query, id) => {
   return https().request("/privilege/red-packet-rain/list?privilegeId=" + id, Method.GET, query, ContentType.form);
 };
