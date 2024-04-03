@@ -27,7 +27,7 @@
               </div>
             </div>
             <div class="amt">
-              {{ !isLoadingBalance ? "VNDP" + mainWallet : $t("lang.loading") }}
+              {{ !isLoadingBalance ? "VNDP " + mainWallet : $t("lang.loading") }}
             </div>
           </div>
         </q-card-section>

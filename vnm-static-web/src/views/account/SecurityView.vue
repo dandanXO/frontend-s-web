@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div className="menu-title-container">
-      <span className="menu-title">{{ "account.security.title" }}</span>
+    <div class="menu-title-container">
+      <span class="menu-title">{{ "account.security.title" }}</span>
     </div>
     <div>
       <div class="flex-box flex-align-center security-wrapper">

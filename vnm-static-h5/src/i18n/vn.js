@@ -508,6 +508,15 @@ export default {
     download_app: "Tải ứng dụng",
     direct_browser_access: "Truy cập trực tiếp từ trình duyệt",
 
+    // displayview
+    dv_bank_name: "Tên ngân hàng",
+    dv_bank_acc: "Số tài khoản ngân hàng",
+    dv_bank_card_no: "Số thẻ ngân hàng",
+    dv_deposit_amount: "Số tiền nạp",
+    dv_submit: "Gửi",
+    dv_copy: "Sao chép",
+    dv_copied: "Đã sao chép",
+
     // affiliate
     affiliate_title: "Chương trình liên kết",
     affiliate_professionalteam: "Đội ngũ Chuyên nghiệp",
@@ -1153,7 +1162,23 @@ export default {
     str_esports: "Thể Thao Điện Tử",
     str_poker: "POKER",
     str_lottery: "Xổ Số",
-    str_adjust: "Điều Chỉnh"
+    str_adjust: "Điều Chỉnh",
+    str_reminder: "Yêu cầu",
+    str_copy: "Sao chép",
+    str_deposit_serialnumber: "Số Serial Nạp Tiền",
+    str_serial_number: "Số Serial",
+    str_confirmwithdraw: "Xác Nhận Rút Tiền",
+    str_remark: "Ghi chú",
+    strsystem_message: "Thông Báo Hệ Thống",
+    str_confirm: "Xác Nhận",
+    confirm_withdrawal_sucess: "Xác nhận rút tiền thành công",
+    success_copied: "Đã sao chép!",
+    already_have_3_reminder: "Bạn đã có 3 yêu cầu",
+    please_upload_image: "Vui lòng tải lên hình ảnh",
+    require_success_submit: "Yêu cầu đã được gửi thành công",
+    upload_success: "Tải lên thành công.",
+    upload_fail_please_try: "Tải lên thất bại. Vui lòng thử lại sau.",
+    upload_image: "Tải Ảnh Lên"
   },
   error: {
     101: "Không tìm thấy nền tảng",

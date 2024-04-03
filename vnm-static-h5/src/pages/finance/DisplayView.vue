@@ -2,28 +2,28 @@
   <div v-if="submitMessage.length > 0" class="inner-cont">
     <div class="submit-message">
       <div class="linebox">
-        <span>银行名称：</span>
+        <span>{{ $t("lang.dv_bank_name") }}：</span>
         <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
         <button @blur="blurCode" @click="copyMessage('0')" class="common-btn">
           {{ copybtntxt0 }}
         </button>
       </div>
       <div class="linebox">
-        <span>银行账号：</span>
+        <span>{{ $t("lang.dv_bank_acc") }}：</span>
         <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
         <button @blur="blurCode" @click="copyMessage('1')" class="common-btn">
           {{ copybtntxt1 }}
         </button>
       </div>
       <div class="linebox">
-        <span>银行卡号：</span>
+        <span>{{ $t("lang.dv_bank_card_no") }}：</span>
         <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
         <button @blur="blurCode" @click="copyMessage('2')" class="common-btn">
           {{ copybtntxt2 }}
         </button>
       </div>
       <div class="linebox">
-        <span>存款金额：</span>
+        <span>{{ $t("lang.dv_deposit_amount") }}：</span>
         <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
         <button @blur="blurCode" @click="copyMessage('3')" class="common-btn">
           {{ copybtntxt3 }}
@@ -32,29 +32,22 @@
     </div>
   </div>
   <div v-else id="renderArea">
-    <form ref="formRef" method="post"
-          :target="targetType"
-          style="display: none;"
-    >
-      <input
-          type="text"
-          v-for="input in data"
-          :key="input"
-          :value="input.value"
-          :name="input.name"
-      />
-      <button type="submit" id="submitBtn">提交</button>
+    <form ref="formRef" method="post" :target="targetType" style="display: none">
+      <input type="text" v-for="input in data" :key="input" :value="input.value" :name="input.name" />
+      <button type="submit" id="submitBtn">{{ $t("lang.dv_submit") }}</button>
     </form>
   </div>
 </template>
 
 <script setup>
-import {ref, onMounted, reactive, nextTick} from "vue";
-import {isEmpty} from "boot/utils";
-import {useRoute} from "vue-router";
-import {userStore} from "src/stores";
+import { ref, onMounted, reactive, nextTick } from "vue";
+import { isEmpty } from "boot/utils";
+import { useRoute } from "vue-router";
+import { userStore } from "src/stores";
+import { useI18n } from "vue-i18n";
 
 const store = userStore();
+const { t } = useI18n();
 const route = useRoute();
 const request = ref({});
 const formRef = ref();
@@ -64,10 +57,10 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
-const copybtntxt0 = ref("复制");
-const copybtntxt1 = ref("复制");
-const copybtntxt2 = ref("复制");
-const copybtntxt3 = ref("复制");
+const copybtntxt0 = ref(t("lang.dv_copy"));
+const copybtntxt1 = ref(t("lang.dv_copy"));
+const copybtntxt2 = ref(t("lang.dv_copy"));
+const copybtntxt3 = ref(t("lang.dv_copy"));
 const copyMessage = (position) => {
   let copyText = null;
   copyText = eval(`subMsg${position}.value.innerText`);
@@ -83,7 +76,7 @@ const copyMessage = (position) => {
   // Remove the temporary textarea element
   document.body.removeChild(tempTextarea);
   const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
-  copybtntxt[position].value = "已复制";
+  copybtntxt[position].value = t("lang.dv_copied");
   // copyText.select()
   // document.execCommand("copy")
   // copybtntxt0.value = 'คัดลอกแล้ว'
@@ -92,7 +85,7 @@ const copyMessage = (position) => {
 const blurCode = () => {
   const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
   copybtntxt.forEach((element) => {
-    element.value = "复制";
+    element.value = t("lang.dv_copy");
   });
 };
 
@@ -101,9 +94,9 @@ const targetType = ref("");
 function getRequest(url) {
   if (isEmpty(url)) {
     // console.log(route.fullPath);
-    if (store.getDeviceType() == 'IOS' || store.getDeviceType() == 'ANDROID' || store.isMobileSafari() == true) {
+    if (store.getDeviceType() == "IOS" || store.getDeviceType() == "ANDROID" || store.isMobileSafari() == true) {
       url = route.fullPath;
-      if (store.getDeviceType() == 'IOS' || store.isMobileSafari() == true) {
+      if (store.getDeviceType() == "IOS" || store.isMobileSafari() == true) {
         targetType.value = "_self";
       } else {
         targetType.value = "_blank";
@@ -115,7 +108,7 @@ function getRequest(url) {
   }
   let theRequest = {};
   if (url.indexOf("?") != -1) {
-    var spliturl= url.split("?");
+    var spliturl = url.split("?");
     url = spliturl[1];
   }
   let strs = url.split("&");

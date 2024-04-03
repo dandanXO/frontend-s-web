@@ -1,49 +1,12 @@
 <template>
   <div class="hot-promo">
     <ClaimPromo v-if="isCommonPromo" :promo-id="list.id" :loading-claim="loadingClaim" @daily-slot="handleSlot()" />
-    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-tiger-card'" />
-    <DragonCardPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-dragon-card'" :promo-code="list.promoCode" />
     <!-- <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-s13-vote'" /> -->
-    <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-goldenegg' && store.token" />
-    <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-hongbaoyu' && store.token" />
-    <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-welcomenewuser' && store.token" />
-    <InviteFriendPromo v-if="list.redirectUrl === 'lh1-invitefriend' && !isCommonPromo" />
-    <EsportSafetyPromo v-if="list.redirectUrl === 'lh1-esport-safety' && !isCommonPromo" />
-    <SportSafetyPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-sport-safety'" />
-    <PredictionMatchPromo v-if="list.redirectUrl === 'lh1-s13-vote' && !isCommonPromo" />
     <DailyLoginPromo v-if="list.redirectUrl === 'vi-daily-checkin' && !isCommonPromo" />
     <PennyBank v-if="list.redirectUrl === 'vi-penny-bank' && !isCommonPromo" />
     <SlotNetloss v-if="list.redirectUrl === 'vi-slot-netloss' && !isCommonPromo" />
     <PokerCashback v-if="list.redirectUrl === 'vi-poker-cashback' && !isCommonPromo" />
-    <NbaGamePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-nba-safety'" />
-    <EsportQuiz v-if="list.redirectUrl === 'lh1-quiz' && !isCommonPromo" />
     <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone' && !isCommonPromo && store.token" />
-    <GiftPromo v-if="list.redirectUrl === 'lh1-gift' && !isCommonPromo && store.token" />
-    <Gift8Promo v-if="list.redirectUrl === 'lh1-gift8' && !isCommonPromo && store.token" />
-    <UpgradeHongBao v-if="list.redirectUrl === 'lh1-upgrade-hongbaoz' && !isCommonPromo && store.token" />
-    <HongBaoYu2024 v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo && store.token" :promo-code="list.promoCode" :params="list.param" />
-
-    <AsianCup2024 v-if="list.redirectUrl === 'lh1-promo-application-A' && !isCommonPromo && store.token" />
-    <BasketballHot v-if="list.redirectUrl === 'lh1-promo-basketball' && !isCommonPromo && store.token" />
-    <LPLSummer v-if="list.redirectUrl === 'lh1-lpl-game' && !isCommonPromo && store.token" />
-    <Cny2024Promo v-if="list.redirectUrl === 'lh1-cny2024-promo' && !isCommonPromo && store.token" />
-    <div style="text-align: center" v-if="list.redirectUrl === 'lh1-feedback-award' && !isCommonPromo && store.token">
-      <img
-        style="max-width: 1200px; width: 100%; margin: 10px auto"
-        src="../assets/images/promotion/hotpromo/lhfeedback/feedback.png"
-      />
-    </div>
-    <BbDacha2024Promo
-      v-if="list.redirectUrl === 'lh1-match-vote' && !isCommonPromo && store.token"
-    ></BbDacha2024Promo>
-    <!-- <VIPUpgradePromo v-if="list.redirectUrl === 'lh1-vip-upgrade-bonus' && !isCommonPromo && store.token" />
-    <ReferBonusPromo v-if="list.redirectUrl === 'lh1-refer-bonus' && !isCommonPromo && store.token" /> -->
-    <PrivilegeInvite v-if="list.redirectUrl === 'lh1-invite' && !isCommonPromo && store.token" />
-    <FootballFight v-if="list.redirectUrl === 'lh1-football-fight' && !isCommonPromo && store.token" />
-
-    <CnyStepGame2024Promo
-      v-if="list.redirectUrl === 'lh1-cny-step-game' && !isCommonPromo && store.token"
-    ></CnyStepGame2024Promo>
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -63,32 +26,8 @@
 import { defineComponent } from "vue";
 import { claimBonusItem, submitLuckyNumber, luckyNumberList, winnerList } from "@/api/index/promo";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
-import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
-import DragonCardPromo from "../components/hotpromo/dragoncard/dragonCardPromo.vue";
-import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
-import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
-import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
-import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
-import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
-import EsportSafetyPromo from "../components/hotpromo/eSportSafety/eSportSafetyPromo.vue";
-import SportSafetyPromo from "../components/hotpromo/sportSafety/sportSafetyPromo.vue";
-import PredictionMatchPromo from "../components/hotpromo/PredictionMatch/PredictionMatchPromo.vue";
 import DailyLoginPromo from "../components/hotpromo/DailyLogin/DailyLoginPromo.vue";
-import NbaGamePromo from "../components/hotpromo/nbagame/nbaGamePromo.vue";
-import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
-import PrivilegeInvite from "../components/hotpromo/privilegeInvite/PrivilegeInvite.vue";
-import FootballFight from "../components/hotpromo/footballfight/FootballFight.vue";
-import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
-import Gift8Promo from "../components/hotpromo/gift8/Gift8Promo.vue";
-import UpgradeHongBao from "../components/hotpromo/upgradeHongBao/UpgradeHongBao.vue";
-import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue";
-import AsianCup2024 from "../components/hotpromo/asian-cup-2024/AsianCup2024.vue";
-import BasketballHot from "../components/hotpromo/basketball-hot/BasketballHot.vue";
-import LPLSummer from "../components/hotpromo/lpl-summer/LPLSummer.vue";
-import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
-import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
-import CnyStepGame2024Promo from "../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue";
 import PennyBank from "../components/hotpromo/penny-bank/PennyBank.vue";
 import SlotNetloss from "../components/hotpromo/slot-netloss/SlotNetloss.vue";
 import PokerCashback from "../components/hotpromo/poker-cashback/PokerCashback.vue";
@@ -102,32 +41,8 @@ export default defineComponent({
   // setup: (props, { emit }) => {},
   components: {
     ClaimPromo,
-    TigerCardPromo,
-    PrizePoolVotePromo,
-    GoldenEggPromo,
-    HongBaoYuPromo,
-    InviteFriendPromo,
-    WelcomeTaskPromo,
-    EsportSafetyPromo,
-    SportSafetyPromo,
-    PredictionMatchPromo,
     DailyLoginPromo,
-    NbaGamePromo,
-    EsportQuiz,
     LotteryPromo,
-    PrivilegeInvite,
-    FootballFight,
-    GiftPromo,
-    Gift8Promo,
-    AsianCup2024,
-    BasketballHot,
-    LPLSummer,
-    Cny2024Promo,
-    BbDacha2024Promo,
-    CnyStepGame2024Promo,
-    UpgradeHongBao,
-    HongBaoYu2024,
-    DragonCardPromo,
     PennyBank,
     SlotNetloss,
     PokerCashback
@@ -372,36 +287,11 @@ export default defineComponent({
 
     // List for non common promo
     if (
-      this.list.redirectUrl === "lh1-tiger-card" ||
-      this.list.redirectUrl === "lh1-dragon-card" ||
-      this.list.redirectUrl === "lh1-goldenegg" ||
-      this.list.redirectUrl === "lh1-hongbaoyu" ||
-      this.list.redirectUrl === "lh1-invite" ||
-      this.list.redirectUrl === "lh1-football-fight" ||
-      this.list.redirectUrl === "lh1-welcomenewuser" ||
       this.list.redirectUrl === "vnm-iphone" ||
-      this.list.redirectUrl === "lh1-esport-safety" ||
-      this.list.redirectUrl === "lh1-sport-safety" ||
-      this.list.redirectUrl === "lh1-s13-vote" ||
       this.list.redirectUrl === "vi-daily-checkin" ||
       this.list.redirectUrl === "vi-penny-bank" ||
       this.list.redirectUrl === "vi-slot-netloss" ||
-      this.list.redirectUrl === "vi-poker-cashback" ||
-      this.list.redirectUrl === "lh1-nba-safety" ||
-      this.list.redirectUrl === "lh1-quiz" ||
-      this.list.redirectUrl === "lh1-gift" ||
-      this.list.redirectUrl === "lh1-gift8" ||
-      this.list.redirectUrl === "lh1-promo-application-A" ||
-      this.list.redirectUrl === "lh1-promo-basketball" ||
-      this.list.redirectUrl === "lh1-lpl-game" ||
-      this.list.redirectUrl === "lh1-refer" ||
-      this.list.redirectUrl === "lh1-vip-upgrade-bonus" ||
-      this.list.redirectUrl === "lh1-refer-bonus" ||
-      this.list.redirectUrl === "lh1-cny2024-promo" ||
-      this.list.redirectUrl === "lh1-match-vote" ||
-      this.list.redirectUrl === "lh1-cny-step-game" ||
-      this.list.redirectUrl === "lh1-feedback-award" ||
-      this.list.redirectUrl === "lh1-upgrade-hongbao"
+      this.list.redirectUrl === "vi-poker-cashback"
     ) {
       this.isCommonPromo = false;
     } else {
