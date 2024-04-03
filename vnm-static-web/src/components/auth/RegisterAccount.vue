@@ -43,19 +43,14 @@
       </el-form-item>
     </div>
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/name-icon.png" />
+      <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
       <el-form-item :label="$t('login.realName')" prop="realName">
         <el-input
           class="wTip"
           v-model="regForm.realName"
           :placeholder="$t('login.realName')"
           :rules="[
-            { required: true, message: '姓名必须与提款银行卡账号姓名一致' },
-            {
-              pattern: '^([\u4e00-\u9fa5]*)$',
-              message: '请输入中文字符',
-              trigger: 'change'
-            }
+            { required: true, message: t('placeholder.realName') },
           ]"
           clearable
         >
@@ -63,27 +58,59 @@
         </el-input>
       </el-form-item>
     </div>
-    <!-- <div class="light-bg form-field">
+    <div class="light-bg form-field">
+      <img class="form-field-icon" src="@/assets/home/auth/email-icon.png" />
+      <el-form-item :label="$t('login.email')" prop="email">
+        <el-input
+          class="wTip"
+          v-model="regForm.email"
+          :placeholder="$t('login.email')"
+          :rules="[
+            { required: true, message: t('placeholder.email') },
+          ]"
+          clearable
+        >
+          <template #append></template>
+        </el-input>
+      </el-form-item>
+    </div>
+    <div class="light-bg form-field">
+      <img class="form-field-icon" src="@/assets/home/auth/phone-icon.png" />
+      <el-form-item :label="$t('login.mobileNo')" prop="telephone">
+        <el-input
+          class="wTip"
+          v-model="regForm.telephone"
+          :placeholder="$t('login.mobileNo')"
+          :rules="[
+            { required: true, message: t('placeholder.mobileNo') },
+          ]"
+          clearable
+        >
+          <template #append></template>
+        </el-input>
+      </el-form-item>
+    </div>
+    <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/referral-icon.png" />
-      <el-form-item label="推荐码" prop="codeAffiliate">
+      <el-form-item :label="t('login.codeAffiliate')" prop="codeAffiliate">
         <el-input
           v-if="!hasAffiliate"
           class="half"
           v-model="regForm.codeAffiliate"
-          placeholder="如果没有 无需填写"
+          :placeholder="t('login.codeAffiliate')"
           clearable
         />
         <el-input
           v-else
           class="half"
           v-model="regForm.codeAffiliate"
-          placeholder="如果没有 无需填写"
+          :placeholder="t('login.codeAffiliate')"
           readonly
           disabled
           clearable
         />
       </el-form-item>
-    </div> -->
+    </div>
 
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
@@ -169,9 +196,7 @@ const checkRealName = (v) => {
 
 let validateName = async (r, v) => {
   if (v === "") {
-    return Promise.reject("请输入登录名");
-  } else if (!checkName(v)) {
-    return Promise.reject("不允许使用特殊字符");
+    return Promise.reject(t('placeholder.username'));
   } else {
     return Promise.resolve();
   }
@@ -180,9 +205,9 @@ let validateName = async (r, v) => {
 let validatePhoneNumber = async (r, v) => {
   var reg = /^\d+$/;
   if (v === "") {
-    return Promise.reject("请验证您的电话号码");
+    return Promise.reject(t('placeholder.verifyPhone'));
   } else if (!reg.test(v)) {
-    return Promise.reject("电话号码只允许使用数字");
+    return Promise.reject(t('placeholder.onlyNumber'));
   } else {
     return Promise.resolve();
   }
@@ -190,9 +215,7 @@ let validatePhoneNumber = async (r, v) => {
 
 let validateRealName = async (r, v) => {
   if (v === "") {
-    return Promise.reject("请输入登姓名");
-  } else if (!checkRealName(v)) {
-    return Promise.reject("请输入中文字符");
+    return Promise.reject(t('placeholder.realName'));
   } else {
     return Promise.resolve();
   }
@@ -222,9 +245,9 @@ let validatePassStrength = (r, v) => {
 
 let validatePass2 = async (r, v) => {
   if (v === "") {
-    return Promise.reject("请重新输入密码");
+    return Promise.reject(t('placeholder.confirmPwd'));
   } else if (v !== regForm.password) {
-    return Promise.reject("密码不同");
+    return Promise.reject(t('placeholder.noMatch'));
   } else {
     return Promise.resolve();
   }
@@ -232,7 +255,7 @@ let validatePass2 = async (r, v) => {
 
 let validatePass = async (r, v) => {
   if (v === "") {
-    return Promise.reject("请输入密码");
+    return Promise.reject(t('placeholder.password'));
   } else {
     return validatePassStrength(r, v);
   }
@@ -240,13 +263,13 @@ let validatePass = async (r, v) => {
 
 const regRules = {
   realName: [
-    {
-      required: false,
-      min: 2,
-      max: 12,
-      message: "长度应为 2 至 12",
-      trigger: "blur"
-    },
+    // {
+    //   required: false,
+    //   min: 2,
+    //   max: 12,
+    //   message: "长度应为 2 至 12",
+    //   trigger: "blur"
+    // },
     {
       validator: validateRealName,
       trigger: "change"
@@ -255,8 +278,8 @@ const regRules = {
   loginName: [
     {
       min: 6,
-      max: 12,
-      message: "长度应为 6 至 12",
+      max: 11,
+      message: t('placeholder.between612'),
       trigger: "blur"
     },
     {
@@ -267,8 +290,8 @@ const regRules = {
   password: [
     {
       min: 6,
-      max: 12,
-      message: "长度应为 6 至 12",
+      max: 11,
+      message: t('placeholder.between612'),
       trigger: "blur"
     },
     {
@@ -279,8 +302,8 @@ const regRules = {
   confirmPwd: [
     {
       min: 6,
-      max: 12,
-      message: "长度应为 6 至 12",
+      max: 11,
+      message: t('placeholder.between612'),
       trigger: "blur"
     },
     {
@@ -297,43 +320,43 @@ const regRules = {
   smsCode: [
     {
       required: true,
-      message: "请输入手机验证码",
+      message: t('placeholder.phoneVerification'),
       trigger: "blur"
     },
     {
       min: 6,
       max: 6,
-      message: "长度应为 6",
+      message: t('placeholder.min6'),
       trigger: "blur"
     }
   ],
   email: [
     {
       required: true,
-      message: "请输入您的邮箱",
+      message: t('placeholder.email'),
       trigger: "blur"
     },
     {
       type: "email",
-      message: "电子邮件地址无效",
+      message: t('placeholder.emailFormat'),
       trigger: "blur"
     },
     {
       max: 50,
-      message: "长度应小于 50",
+      message: t('placeholder.lessthan50'),
       trigger: "blur"
     }
   ],
   captchaCode: [
     {
       required: true,
-      message: "需要验证码",
+      message: t('placeholder.captchareq'),
       trigger: "blur"
     },
     {
       min: 4,
       max: 4,
-      message: "长度应为 4",
+      message: t('placeholder.captcha'),
       trigger: "change"
     }
   ]
@@ -394,7 +417,7 @@ const submitRegisterForm = async (elForm) => {
               if (regResult === 0) {
                 ElMessage({
                   type: "success",
-                  message: "注册成功"
+                  message: t('login.registerSuccess')
                 });
                 store.autoLogin(response.data);
                 emits("close-dialog");
@@ -486,6 +509,7 @@ onMounted(() => {
   width: 100%;
   .form-field-icon {
     margin: auto;
+    height: 30px;
   }
 }
 

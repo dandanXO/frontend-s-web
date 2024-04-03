@@ -1178,7 +1178,7 @@ export default defineComponent({
         state.loginForm.site = 'LH1'
         setLanguage('zh')
       }
-      if (props.siteId === '4') {
+      if (props.siteId === '8') {
         currentSite.value.firstLiner = 'Start From TFGaming'
         currentSite.value.secondLiner = 'Become a legend<br>Or become the eulogist of legend?'
         currentSite.value.logo = viLogo

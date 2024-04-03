@@ -1,6 +1,6 @@
 <template>
   <div class="personal-account">
-    <div class="web">{{ $t("lang.personal_exclusiveurl") }}: {{ personalState.memberInfo.evip }}</div>
+<!--    <div class="web">{{ $t("lang.personal_exclusiveurl") }}: {{ personalState.memberInfo.evip }}</div>-->
     <q-form ref="profileFormRef">
       <q-input
         standout
@@ -35,7 +35,6 @@
           <span>{{ $t("lang.personal_realname") }}</span>
         </template>
       </q-input>
-
       <q-input
         ref="birthdayRef"
         standout
@@ -400,7 +399,7 @@ export default defineComponent({
           $q.notify({
             color: "positive",
             position: "top",
-            message: "更新成功",
+            message: t("lang.msg_update_successful"),
             icon: "check_circle_outline"
           });
 

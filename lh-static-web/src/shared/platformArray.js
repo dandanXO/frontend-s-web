@@ -324,10 +324,18 @@ export const fishingPlatforms = [
     gameCode: 7202
   },
   {
-    code: "AG",
+    code: "AGF",
     cnname: "AG捕鱼王",
-    image: "",
-    message: "",
+    image: "ag",
+    message: "最受欢迎的AG捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
+    caption: "",
+    gameCode: "HMPL"
+  },
+  {
+    code: "PMFISH",
+    cnname: "DB多宝捕鱼",
+    image: "db",
+    message: "最受欢迎的DB多宝捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
     caption: "",
     gameCode: ""
   }

@@ -299,7 +299,8 @@ $node-color: #4873f1;
         img {
           background-color: #f7f7f7;
           box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
-          max-width: 2.3rem;
+          // max-width: 2.3rem;
+          width: 100%;
           // max-width: 1.5rem;
           margin-bottom: 0;
         }
@@ -366,7 +367,7 @@ $node-color: #4873f1;
         border-radius: 3px;
 
         img {
-          max-width: 2.3rem;
+          // max-width: 2.3rem;
           width: 100%;
           height: auto;
           // max-width: 1.5rem;

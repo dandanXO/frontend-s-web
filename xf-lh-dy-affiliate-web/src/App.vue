@@ -34,15 +34,17 @@ onMounted(() => {
   }
 
   // change path according to hostname
-  console.log(window.location.href)
+  console.log(window.location.host);
+  // debugger;
   if (window.location.pathname === '/login') {
+    console.log("Nside Login.")
     if (window.location.host.indexOf('xf') > -1) {
       window.location.pathname = '/xf/login'
     } else if (window.location.host.indexOf('ind') > -1 || window.location.hostname.indexOf("ind-") > -1 || window.location.href.includes('ind-')) {
       window.location.pathname = '/ind/login'
     } else if (window.location.host.indexOf('lh1') > -1) {
       window.location.pathname = '/lh/login'
-    }else if (window.location.host.indexOf('vi') > -1) {
+    }else if (window.location.host.indexOf('vnm') > -1 || window.location.hostname.indexOf("vnm-") > -1 || window.location.href.includes('vnm-')) {
       window.location.pathname = '/vi/login'
     } else {
       window.location.pathname = '/dy/login'

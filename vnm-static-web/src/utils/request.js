@@ -3,7 +3,7 @@ import { getRndInteger } from "@/utils/utils";
 import { ElMessage } from "element-plus";
 import { stringify } from "qs";
 import { userStore } from "@/store";
-// import i18n from "../i18n/index";
+import i18n from "../i18n/index";
 import { ResponseCode, SkipErrorCode } from "@/api/response";
 
 const rstArray = process.env.VUE_APP_RST_API.split(",");
@@ -84,15 +84,15 @@ const onResponse = (response) => {
   //   return response.data;
   // }
   const store = userStore();
-
   if (res.code !== ResponseCode.SUCCESS) {
     if (SkipErrorCode(res.code)) {
       return response.data;
     }
     if (res.code === ResponseCode.ERROR_AMOUNT_PRIVILEGE_DEPOSIT) {
-      res.message = "优惠存款金额不符合规则";
+      res.message = i18n.global.t('response.' + res.code) || res.message
       return res;
     }
+    
     if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
       store.token = null;
       location.reload();
@@ -116,6 +116,7 @@ const onResponse = (response) => {
       // ElMessage.error(res.message);
     }
     // throw new Error(res.message || "Error");
+      res.message = i18n.global.t('response.' + res.code) || res.message
       return res
   } else {
     return response.data;
@@ -124,9 +125,8 @@ const onResponse = (response) => {
 
 const onResponseError = (error) => {
   // message.error(error.message);
-
   ElMessage({
-    message: error.message,
+    message: i18n.global.t('response.' + error.code) || error.message,
     type: "warning"
   });
   return Promise.reject(error);

@@ -35,7 +35,7 @@
               </div>
               <!-- vip progress bar end -->
               <div
-                style="color: #cfb282; font-size: 18px; position: absolute; bottom: 25px; left: 0; right: 0"
+                style="color: #cfb282; font-size: 18px; position: absolute; bottom: 4px; left: 0; right: 0"
                 v-if="vipLevel + 1 === Number(vip.vipLevel) && store.token"
               >
                 {{
@@ -331,6 +331,7 @@ import { userStore } from "@/store";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 // import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "VIPView",
@@ -340,6 +341,7 @@ export default defineComponent({
     Navigation
   },
   setup() {
+    const { t } = useI18n();
     const store = userStore();
     const amount = ref("$0");
     const privilegeClaimedModalVisible = ref(false);
@@ -472,7 +474,7 @@ export default defineComponent({
     const vipItems = reactive([
       {
         vipLevel: "1",
-        upgrade: "3 time deposit",
+        upgrade: t('vip.3timedeposit'),
         vipTitle: "IRON",
         depositPromoAvailable: false,
         promoAvailable: false,
@@ -518,7 +520,7 @@ export default defineComponent({
       {
         vipLevel: "6",
         upgrade: "20,000,000",
-        vipTitle: "DIAMOND",
+        vipTitle: "RUBY",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,
@@ -527,7 +529,7 @@ export default defineComponent({
       {
         vipLevel: "7",
         upgrade: "50,000,000",
-        vipTitle: "CRYSTAL",
+        vipTitle: "DIAMOND",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,

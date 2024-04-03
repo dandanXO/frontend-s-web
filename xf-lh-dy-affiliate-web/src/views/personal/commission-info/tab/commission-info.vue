@@ -11,7 +11,7 @@
       <thead>
         <th scope="col">级别</th>
         <th scope="col">公司本月总输赢</th>
-        <th scope="col">活跃数最低要求</th>
+        <th scope="col">新增/ 活跃数量最低要求</th>
         <th scope="col">佣金比例</th>
       </thead>
       <tbody>

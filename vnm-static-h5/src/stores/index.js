@@ -31,7 +31,7 @@ export const userStore = defineStore("userStore", {
       token: getStoreToken(),
       vip: "",
       evip: "",
-      currency: { value: "₫", label: "VNDP" },
+      currency: { value: "VNDP", label: "VNDP" },
       personalAddress: "",
       unreadInboxMail: 0,
       phoneVerified: false,

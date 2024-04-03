@@ -259,6 +259,8 @@ const getGameName = (gameName) => {
       return "SW电子";
     case "GPS":
       return "GPS捕鱼";
+    case "PMFISH":
+      return "DB捕鱼";
     case "IA":
       return "小艾电竞 ";
     case "DT":
@@ -275,6 +277,8 @@ const getGameName = (gameName) => {
       return "PG电子";
     case "AG":
       return "AG真人, XIN电子";
+    case "AGF":
+      return "AG捕鱼";
     case "ALLBET":
       return "ALLBET真人";
     case "GFLC":

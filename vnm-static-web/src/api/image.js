@@ -8,7 +8,7 @@ export const uploadImage = (formData) => {
         token: `${userStore().token}`
     },
   };
-  var rstUrl = localStorage.getItem("LH_WEB_RST_URL");
+  var rstUrl = localStorage.getItem("VNM_WEB_RST_URL");
   if(!rstUrl){
     rstUrl = process.env.VUE_APP_RST_API.split(",")[0];
   }

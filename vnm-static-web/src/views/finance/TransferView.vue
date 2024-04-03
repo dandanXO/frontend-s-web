@@ -383,12 +383,12 @@ export default defineComponent({
       amount: [
         {
           required: true,
-          message: "请输入金额",
+          message: t('placeholder.amount'),
           trigger: "blur"
         },
         {
           pattern: "^([1-9][0-9]*)$",
-          message: "金额应为正数",
+          message: t('placeholder.wholeNumber'),
           trigger: "change"
         },
       ]
@@ -590,6 +590,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
       display: flex;
       align-items: center;
       gap: 10px;
+      font-family: 'Roboto';
 
       .balance-refresh {
         display: flex;

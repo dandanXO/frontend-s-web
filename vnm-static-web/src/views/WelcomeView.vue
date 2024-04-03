@@ -2,13 +2,13 @@
     <div class="welcome-page-container">
         <div class="center">
             <div class="logo">
-                <img src="@/assets/home/auth/welcome-congrats.png" />
+                {{ $t('welcome.congrats') }}
             </div>
             <div class="welcome-slides">
                 <div class="welcome-slide card-bg">
-                    <div class="slide-title">完美兼容安全设备</div>
+                    <div class="slide-title">{{ $t('welcome.compatibleDevices') }}</div>
                     <img class="banner" src="../assets/home/auth/welcome-4-types-icon.png" />
-                    <div>雷火用引领市场的卓越技术，自主研发了全套 终端应用，让您畅享Web、H5、更有iOS、Android原生App,流畅游戏，让您尽在掌握！贴心服务，7x24在线客服全年伴您左右。</div>
+                    <div>{{ $t('welcome.technologyLead') }}</div>
                     <img class="supported-platforms-img" src="../assets/home/auth/welcome-supported-platforms.png" />
                     <div class="qr-codes">
                         <template v-for="(det, idx) in platforms" :key="idx">
@@ -17,33 +17,31 @@
                                 <div class="label-desc-wrapper">
                                     <span class="label">{{ det.name }}</span>
                                     <a v-if="det.mobile" :href="det.mobile" target="_blank">{{ det.mobile }}</a>
-                                    <span v-else>手机用户扫码下载</span>
+                                    <!-- <span v-else>{{ $t('welcome.mobileUsers') }}</span> -->
                                 </div>
                             </div>
                         </template>
                     </div>
                 </div>
                 <div class="welcome-slide center-slide card-bg">
-                    <img class="ribbon" src="../assets/home/auth/welcome-slide-ribbon.png" />
-                    <div class="slide-title">注册后即刻存款的玩家高达</div>
+                    <!-- <img class="ribbon" src="../assets/home/auth/welcome-slide-ribbon.png" /> -->
+                    <div class="slide-title">{{ $t('welcome.instantDeposit') }}</div>
                     <img class="banner" src="../assets/home/auth/welcome-84-percent-icon.png" />
                     <div class="grey-card-bg">
-                        <div class="list">您的首次存款，将激活以下优惠：</div>
-                        <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>「电竞/体育/真人/棋牌」 <span class="highlighted">首存即送68% </span></div>
-                        <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>「完成新手任务」 <span class="highlighted">领取228雷火币！</span></div>
-                        <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>「每日全场返水」 <span class="highlighted">最高可返2.0% 无上限！</span></div>
-                        <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>「电竞/体育」 <span class="highlighted">每日保险投注 让您稳赚不赔！</span></div>
-
-                        
+                        <div class="list">{{ $t('welcome.yourFirstDeposit') }}</div>
+                        <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>{{ $t('welcome.firstDepositBonus') }}</div>
+                        <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>{{ $t('welcome.completeBeginnerTasks') }}</div>
+                        <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>{{ $t('welcome.dailyCashback') }}</div>
+                        <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>{{ $t('welcome.dailyInsuranceBets') }}</div>
                     </div>
-                    <router-link to="/center/deposit" class="blue-bg deposit-btn">立即存款</router-link>
+                    <router-link to="/center/deposit" class="blue-bg deposit-btn">{{ $t('welcome.depositNow') }}</router-link>
                 </div>
                 <div class="welcome-slide card-bg">
-                    <div class="slide-title">最全的热门电竞赛事</div>
+                    <div class="slide-title">{{ $t('welcome.popularEsportsEvents') }}</div>
                     <img class="banner" src="../assets/home/auth/welcome-17-types-icon.png" />
                     <img class="hot-games-img" src="../assets/home/auth/welcome-hot-games.png" />
-                    <div style="margin:15px 10px 5px;">...等多款游戏</div>
-                    <router-link to="/esports"  class="blue-bg proceed-btn">立即前往</router-link>
+                    <div style="margin:15px 10px 5px;">...{{ $t('welcome.moreGames') }}</div>
+                    <router-link to="/esports"  class="blue-bg proceed-btn">{{ $t('welcome.proceedNow') }}</router-link>
                 </div>
             </div>
         </div>
@@ -53,16 +51,18 @@
 <script setup>
 import { ref } from "vue";
 import VueQRCodeComponent from 'vue-qrcode-component';
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 
 const platforms = ref([
     {
     code: "QZ",
-    name: "全站APP",
+    name: t('welcome.webapp'),
     link: "https://m.e8386.com",
     },
     {
     code: "DJ",
-    name: "电竞APP",
+    name: t('welcome.esportapp'),
     link: "https://m.e8386.com",
     }
 ]);
@@ -176,6 +176,7 @@ const platforms = ref([
             align-items: center;
             gap: 10px;
             padding: 5px 0px;
+            white-space: pre-wrap;
         }
 
         .banner {
@@ -223,6 +224,13 @@ const platforms = ref([
     background: url("@/assets/home/auth/login-page-bg.jpg") no-repeat center center;
     background-size: cover;
     display: flex;
+    .logo {
+        font-size: 30px;
+        font-weight: bold;
+    background: linear-gradient(#47a9ff 50%, #de62f9);
+    -webkit-background-clip: text;
+    color: transparent;
+    }
 }
 
 .center {
@@ -233,7 +241,7 @@ const platforms = ref([
     gap: 30px;
     margin: 5% auto;
     width: 100%;
-    max-width: 600px;
+    max-width: 900px;
 }
 
 .logo img {

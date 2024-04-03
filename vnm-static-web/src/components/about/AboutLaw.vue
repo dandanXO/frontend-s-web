@@ -5,7 +5,7 @@
                   <p>{{ $t('about.generalTermsMessage') }}</p>
                   <li>{{ $t('about.ageRequirement') }}</li>
                   <li>{{ $t('about.singleAccount') }}</li>
-                  <li>{{ $t('about.personalInformation') }}</li>
+                  <li>{{ $t('about.personalInformation2') }}</li>
                   <li>{{ $t('about.checkAccountBalance') }}</li>
                   <li>{{ $t('about.accountSecurity') }}</li>
                   <li>{{ $t('about.depositInstructions') }}</li>

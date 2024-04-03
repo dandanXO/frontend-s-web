@@ -1,7 +1,7 @@
 <template>
   <div class="account-box account-contents">
     <div class="menu-title-container">
-      <div class="menu-title">Personal Information</div>
+      <div class="menu-title">{{ $t('personal.personalInfo') }}</div>
     </div>
     <el-tabs v-model="selectedTab">
       <el-tab-pane :label="$t('personal.personalInfo')" name="personal">
@@ -42,7 +42,7 @@
                             { required: true, message: $t('placeholder.realName') }
                           ]"
                         >
-                          <el-input v-model="updateFormDetails.realName" placeholder="姓名" />
+                          <el-input v-model="updateFormDetails.realName" :placeholder="$t('personal.realName')" />
                         </el-form-item>
                       </div>
                     </div>
@@ -58,7 +58,7 @@
                       {{ personalState.memberInfo.birthday }}
                     </div>
 
-                    <div v-else class="basic-info-cell content">
+                    <div v-else class="basic-info-cell content">    
                       <div class="datewsend" v-if="isEdit">
                         <el-form-item
                           name="birthday"
@@ -73,6 +73,8 @@
                           />
                         </el-form-item>
                       </div>
+                                        
+                      <div class="basic-info-cell contentwtxt" style="min-height: 40px;" v-else></div>
                     </div>
                   </div>
                 </div>
@@ -210,14 +212,14 @@
 
             <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">
               <el-form-item ref="refOldPassword" :label="$t('personal.oldPwd')" name="oldPassword" prop="oldPassword">
-                <el-input style="width:200px;" type="password" v-model="updatePwdInfo.oldPassword" :placeholder="$t('placeholder.oldPwd')" clearable show-password />
+                <el-input type="password" v-model="updatePwdInfo.oldPassword" :placeholder="$t('placeholder.oldPwd')" clearable show-password />
               </el-form-item>
 
               <el-form-item ref="refPassword" :label="$t('personal.newPwd')" name="password" prop="password">
-                <el-input style="width:200px;" type="password" v-model="updatePwdInfo.password" :placeholder="$t('placeholder.newPwd')" clearable show-password />
+                <el-input type="password" v-model="updatePwdInfo.password" :placeholder="$t('placeholder.newPwd')" clearable show-password />
               </el-form-item>
               <el-form-item ref="refConfirmPassword" :label="$t('personal.confirmPwd')" name="confirmPassword" prop="confirmPassword">
-                <el-input style="width:200px;" type="password" v-model="updatePwdInfo.confirmPassword" :placeholder="$t('placeholder.confirmPwd')" clearable show-password />
+                <el-input type="password" v-model="updatePwdInfo.confirmPassword" :placeholder="$t('placeholder.confirmPwd')" clearable show-password />
               </el-form-item>
               <div class="txt-center btn-container">
                 <button
@@ -244,34 +246,41 @@
       <el-tab-pane :label="$t('personal.chgWithdrawPwd')" name="chgWithdrawPwd">
         <div class="update-pwd-container">
             <el-form ref="updateWithdrawPwdFormRef" :hideRequiredMark="true" :model="updateWithdrawPwdInfo" :rules="updateWithdrawPwdRules">
-              <el-form-item ref="refWithdrawOldPassword" :label="$t('personal.oldWithdrawPwd')"  name="oldPassword" prop="oldPassword">
-                <el-input style="width:200px;" type="password" v-model="updateWithdrawPwdInfo.oldPassword" :placeholder="$t('placeholder.oldWithdrawPwd')" clearable show-password />
+              <el-form-item v-if="personalState.memberInfo.registeredWithdrawPassword && !receivedVerificationCode" ref="refWithdrawOldPassword" :label="$t('personal.oldWithdrawPwd')"  name="oldPassword" prop="oldPassword">
+                <el-input type="password" v-model="updateWithdrawPwdInfo.oldPassword" :placeholder="$t('placeholder.oldWithdrawPwd')" clearable show-password />
               </el-form-item>
 
               <el-form-item ref="refWithdrawPassword" :label="$t('personal.newWithdrawPwd')" name="password" prop="password">
-                <el-input style="width:200px;" type="password" v-model="updateWithdrawPwdInfo.password" :placeholder="$t('placeholder.newWithdrawPwd')" clearable show-password />
+                <el-input type="password" v-model="updateWithdrawPwdInfo.password" :placeholder="$t('placeholder.newWithdrawPwd')" clearable show-password />
               </el-form-item>
               <el-form-item ref="refWithdrawConfirmPassword" :label="$t('personal.confirmWithdrawPwd')"  name="confirmPassword" prop="confirmPassword">
-                <el-input style="width:200px;" type="password" v-model="updateWithdrawPwdInfo.confirmPassword" :placeholder="$t('placeholder.confirmWithdrawPwd')" clearable show-password />
+                <el-input type="password" v-model="updateWithdrawPwdInfo.confirmPassword" :placeholder="$t('placeholder.confirmWithdrawPwd')" clearable show-password />
               </el-form-item>
-              <div class="txt-center btn-container">
-                <button
-                  :loading="loadingWdPwBtn"
-                  class="standard-button btn-color-white"
-                  type="button"
-                  @click="clearWithdrawPwd"
-                >
-                  {{ $t('personal.clear') }}
-                </button>
+              <el-form-item v-if="receivedVerificationCode" ref="refWithdrawVerificationCode" :label="$t('personal.verificationCode')"  name="code" prop="code">
+                <el-input v-model="updateWithdrawPwdInfo.code" :placeholder="$t('placeholder.verificationCode')" />
+              </el-form-item>
+              
+              <div class="withdrawBottom">
+                <div class="txt-center btn-container">
+                  <button
+                    :loading="loadingWdPwBtn"
+                    class="standard-button btn-color-white"
+                    type="button"
+                    @click="clearWithdrawPwd"
+                  >
+                    {{ $t('personal.clear') }}
+                  </button>
 
-                <button
-                  :loading="loadingWdPwBtn"
-                  class="standard-button btn-color-blue"
-                  type="button"
-                  @click="submitUpdateWithdrawPwd"
-                >
-                  {{ $t('personal.submit') }}
-                </button>
+                  <button
+                    :loading="loadingWdPwBtn"
+                    class="standard-button btn-color-blue"
+                    type="button"
+                    @click="receivedVerificationCode ? codeChangeWithdrawPwd() : submitUpdateWithdrawPwd()"
+                  >
+                    {{ $t('personal.submit') }}
+                  </button>
+                </div>
+                <div v-if="!receivedVerificationCode" class="link" @click="sendOTPEmail">{{ $t('personal.forgetWithdrawPassword') }}</div>
               </div>
             </el-form>
           </div>
@@ -312,7 +321,7 @@
       v-model="updateSecurityModalVisible"
       :footer="null"
       width="500px"
-      title="安全验证"
+      :title="$t('personal.securityVerification')"
       align-center
       :close-on-click-modal="false"
       :close-on-press-escape="false"
@@ -324,13 +333,13 @@
         :rules="updateSecurityVerifiedRules"
       >
         <el-form-item ref="emailAddress" prop="emailAddress">
-          <el-input v-model="updateSecurityVerified.emailAddress" placeholder="邮箱" />
+          <el-input v-model="updateSecurityVerified.emailAddress" :placeholder="$t('personal.email')" />
         </el-form-item>
         <el-form-item class="half" ref="verificationCode" prop="verificationCode">
           <el-space>
             <el-input
               v-model="updateSecurityVerified.verificationCode"
-              :placeholder="'验证码'"
+              :placeholder="$t('personal.verificationCode')"
               @keyup.enter="submitUpdateSecurity"
             />
             <el-button
@@ -339,12 +348,12 @@
               class="common-btn verification-btn"
               @click="openVerificationModal"
             >
-              <span v-if="disableSendVerificationButton">已发送（倒数{{ countDown }}秒)</span>
+              <span v-if="disableSendVerificationButton">{{ countDown + '' + $t('personal.countDown') }}</span>
               <span v-else>{{ $t('common.sendVerificationCode') }}</span>
             </el-button>
           </el-space>
         </el-form-item>
-        <el-button :loading="loadingSecurityBtn" class="standard-btn verification-btn" @click="submitUpdateSecurity">
+        <el-button :loading="loadingSecurityBtn" class="common-btn verification-btn" @click="submitUpdateSecurity">
           
           {{ $t('common.submit') }}
         </el-button>
@@ -354,7 +363,7 @@
     <el-dialog
       wrap-class-name="securityModal"
       v-model="verificationModalVisible"
-      title="验证码"
+      :title="$t('personal.captcha')"
       width="500px"
       align-center
       :close-on-click-modal="false"
@@ -362,7 +371,7 @@
       @keydown.enter.prevent
     >
       <el-form ref="captchaUpdateRef" :model="updateSecurityVerified">
-        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: t('placeholder.captcha') }]">
+        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: $t('placeholder.captcha') }]">
           <el-space>
             <el-input
               @keyup.enter="verifyVerificationCode"
@@ -372,7 +381,7 @@
             />
 
             <div class="verification" @click="getCode()">
-              <img style="width: 80%; margin-top: 6px" :src="verificationImg" />
+              <img :src="verificationImg" />
             </div>
           </el-space>
         </el-form-item>
@@ -385,7 +394,7 @@
       v-model="updatePhoneModalVisible"
       :footer="null"
       width="500px"
-      title="手机验证"
+      :title="$t('personal.phoneVerification')"
       align-center
       :close-on-click-modal="false"
       :close-on-press-escape="false"
@@ -397,18 +406,18 @@
         :rules="updatePhoneVerifiedRules"
       >
         <el-form-item ref="phone" prop="phone">
-          <el-input v-model="updatePhoneVerified.phone" placeholder="手机号码" />
+          <el-input v-model="updatePhoneVerified.phone" :placeholder="$t('personal.mobileNo')" />
         </el-form-item>
         <el-form-item class="half" ref="verificationCode" prop="verificationCode">
           <el-space>
-            <el-input v-model="updatePhoneVerified.verificationCode" :placeholder="'验证码'" />
+            <el-input v-model="updatePhoneVerified.verificationCode" :placeholder="$t('personal.verificationCode')" />
             <el-button
               :disabled="disableSendPhoneButton"
               size="small"
               class="common-btn verification-btn"
               @click="openPhoneVerificationModal"
             >
-              <span v-if="disableSendPhoneButton">{{ $t('common.sendVerificationCode') }}已发送（倒数{{ countDown }}秒)</span>
+              <span v-if="disableSendPhoneButton">{{ countDown + '' + $t('personal.countDown') }}</span>
               <span v-else>{{ $t('common.sendVerificationCode') }}</span>
             </el-button>
           </el-space>
@@ -422,20 +431,20 @@
     <el-dialog
       wrap-class-name="phoneModal"
       v-model="verificationPhoneModalVisible"
-      title="验证码"
+      :title="$t('personal.captcha')"
       width="500px"
       align-center
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
       <el-form ref="captchaUpdateRef" :model="updatePhoneVerified">
-        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: '请输入验证码' }]">
+        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: $t('placeholder.captcha') }]">
           <el-space>
             <el-input
               @keypress.enter.prevent="verifyPhoneVerificationCode"
               v-model="updatePhoneVerified.captchaCode"
               :maxlength="4"
-              placeholder="验证码"
+              :placeholder="$t('personal.captcha')"
             />
 
             <div class="verification" @click="getCode()">
@@ -444,14 +453,14 @@
           </el-space>
         </el-form-item>
       </el-form>
-      <el-button class="common-btn" @click="verifyPhoneVerificationCode" :loading="isPhoneSending">验证</el-button>
+      <el-button class="standard-button btn-color-blue" @click="verifyPhoneVerificationCode" :loading="isPhoneSending">{{$t('common.verify')}}</el-button>
     </el-dialog>
   </div>
 
 </template>
 
-<script lang="js">
-import { defineComponent, reactive, ref, onMounted, toRaw } from "vue";
+<script setup lang="js">
+import { reactive, ref, onMounted, toRaw } from "vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import { getDevice } from "@/utils/utils";
@@ -463,20 +472,16 @@ import {
   sendEmail,
   verifyEmail,
   sendSms,
-  verifySms
+  verifySms,
+  verifyOtpAndChangePassword
 } from "@/api/personal/personal";
 import { getVerificationCode } from "@/api/index/login";
 import moment from "moment";
 import { lsGet, lsStore, lsRemove, getTimeout } from '@/utils/utils'
 import WithdrawBank from "@/components/account/WithdrawBank.vue";
-
-export default defineComponent({
-  name: "PersonalView",
-  components: {
-    WithdrawBank
-  },
-  setup() {
-    const selectedTab = 'personal'
+import { useI18n } from "vue-i18n";
+    const { t } = useI18n();
+    const selectedTab = ref('personal')
     // Send Verification Code
     const emailKey = `emailKey`
     const phoneKey = `phoneKey`
@@ -596,7 +601,7 @@ export default defineComponent({
 
         }).catch((err) => {
             ElMessage({
-              message: '请输入有效的邮件',
+              message: t('placeholder.emailFormat'),
               type: 'error',
             })
         })
@@ -695,7 +700,7 @@ export default defineComponent({
 
         }).catch((err) => {
             ElMessage({
-              message: '请输入有效的电话号码',
+              message: t('placeholder.mobileNo'),
               type: 'error',
             })
         })
@@ -807,24 +812,24 @@ export default defineComponent({
       emailAddress: [
         {
           required: true,
-          message: "请输入邮箱地址",
+          message: t('placeholder.email'),
           trigger: "blur",
         },
         {
           type: "email",
-          message: "邮箱地址不符合",
+          message: t('placeholder.emailFormat'),
           trigger: "blur",
         },
       ],
       verificationCode: [
         {
           required: true,
-          message: "请输入验证码",
+          message: t('placeholder.verificationCode'),
           trigger: "blur",
         },
         {
           min: 4,
-          message: "长度应为 4",
+          message: t('placeholder.min4'),
           trigger: "blur",
         },
       ],
@@ -834,19 +839,19 @@ export default defineComponent({
       phone: [
         {
           required: true,
-          message: "请输入电话号码",
+          message: t('placeholder.mobileNo'),
           trigger: "blur",
         },
       ],
       verificationCode: [
         {
           required: true,
-          message: "请输入验证码",
+          message: t('placeholder.verificationCode'),
           trigger: "blur",
         },
         {
           min: 4,
-          message: "长度应为 4",
+          message: t('placeholder.min4'),
           trigger: "blur",
         },
       ],
@@ -882,12 +887,12 @@ export default defineComponent({
             if (response.code === 0) {
               // message.success("success");
               ElMessage({
-                message: '成功',
+                message: t('common.updateSuccess'),
                 type: 'success',
               })
               clearPwd();
             } else {
-              ElMessage.error(response.message)
+              ElMessage.error(t(`response.${response.code}`))
             }
           }).catch((error) => {
             console.log(error.message);
@@ -901,7 +906,7 @@ export default defineComponent({
 
     const validatePwd = async (r,v) => {
       if(updatePwdInfo.confirmPassword !== updatePwdInfo.password){
-        return Promise.reject("确认密码与新密码不符合");
+        return Promise.reject(t('personal.common_and_new_password_not_match'));
       } else {
         return Promise.resolve();
       }
@@ -911,39 +916,39 @@ export default defineComponent({
       oldPassword: [
         {
           required: true,
-          message: "请输入旧密码",
+          message: t('placeholder.oldPwd'),
           trigger: "blur"
         },
         {
           min: 6,
-          max: 12,
-          message: "长度应为 6 到 12 数字",
+          max: 11,
+          message: t('placeholder.between612'),
           trigger: "blur"
         }
       ],
       password: [
         {
           required: true,
-          message: "请输入新密码",
+          message: t('placeholder.newPwd'),
           trigger: "blur"
         },
         {
           min: 6,
-          max: 12,
-          message: "长度应为 6 到 12 数字",
+          max: 11,
+          message: t('placeholder.between612'),
           trigger: "blur"
         }
       ],
       confirmPassword: [
         {
           required: true,
-          message: "请输入确认密码",
+          message: t('placeholder.confirmPwd'),
           trigger: "blur"
         },
         {
           min: 6,
-          max: 12,
-          message: "长度应为 6 到 12 数字",
+          max: 11,
+          message: t('placeholder.between612'),
           trigger: "blur"
         },
         {
@@ -954,20 +959,12 @@ export default defineComponent({
       ]
     };
 
-
-    //update withdrawa  pwd
-    const updateWithdrawPwdModalVisible = ref(false);
     const updateWithdrawPwdFormRef = ref();
     const updateWithdrawPwdInfo = reactive({
       oldPassword: "",
       password: "",
       confirmPassword: ""
     });
-    const updateWithdrawPwdModal = () => {
-      updateWithdrawPwdInfo.oldPassword = "";
-      updateWithdrawPwdInfo.password = "";
-      updateWithdrawPwdModalVisible.value = true;
-    };
 
     const refWithdrawOldPassword= ref();
     const refWithdrawPassword= ref();
@@ -975,6 +972,7 @@ export default defineComponent({
       updateWithdrawPwdInfo.oldPassword = "";
       updateWithdrawPwdInfo.password= "";
       updateWithdrawPwdInfo.confirmPassword= "";
+      updateWithdrawPwdInfo.code = "";
     }
 
     const submitUpdateWithdrawPwd = () => {
@@ -987,12 +985,12 @@ export default defineComponent({
             if (response.code === 0) {
               // message.success("success");
               ElMessage({
-                message: t('common.success'),
+                message: t('common.updateSuccess'),
                 type: 'success',
               })
-              clearPwd();
+              clearWithdrawPwd();
             } else {
-              ElMessage.error(response.message)
+              ElMessage.error(response.message);
             }
           }).catch((error) => {
             console.log(error.message);
@@ -1001,54 +999,88 @@ export default defineComponent({
         }).catch((error) => {
           console.log("error", error);
       });
-      loadingPwBtn.value = false
+      loadingWdPwBtn.value = false
     };
+    const codeChangeWithdrawPwd = () => {
+      
+      loadingWdPwBtn.value = true
+      updateWithdrawPwdFormRef.value
+        .validate()
+        .then(() => {
+          const obj = {
+            password: updateWithdrawPwdInfo.password,
+            email: personalState.memberInfo.email,
+            code: updateWithdrawPwdInfo.code,
+          }
+          verifyOtpAndChangePassword(obj).then((response) => {
+            if (response.code === 0) {
+              // message.success("success");
+              ElMessage({
+                message: t('common.updateSuccess'),
+                type: 'success',
+              })
+              receivedVerificationCode.value = false;
+              clearWithdrawPwd();
+            } else {
+              ElMessage.error(t(`response.${response.code}`))
+            }
+          }).catch((error) => {
+            console.log(error.message);
+            // message.error(error.message, 4)
+          });
+        }).catch((error) => {
+          console.log("error", error);
+      });
+      loadingWdPwBtn.value = false
+    }
 
     const validateWithdrawPwd = async (r,v) => {
       if(updateWithdrawPwdInfo.confirmPassword !== updateWithdrawPwdInfo.password){
-        return Promise.reject("确认密码与新密码不符合");
+        return Promise.reject(t('placeholder.noMatch'));
       } else {
         return Promise.resolve();
       }
+    }
+    const validateRequireWithdrawPwd = () => {
     }
 
     const updateWithdrawPwdRules = {
       oldPassword: [
         {
-          required: personalState.memberInfo.registeredWithdrawPassword !== false ? true : false,
-          message: "请输入旧密码",
+          required: true,
+          message: t('personal.oldWithdrawPwd'),
           trigger: "blur"
         },
         {
           min: 6,
-          max: 12,
-          message: "长度应为 6 到 12 数字",
+          max: 11,
+          message: t('placeholder.between612'),
           trigger: "blur"
         }
       ],
       password: [
         {
           required: true,
-          message: "请输入新密码",
+          message: t('personal.newWithdrawPwd'),
           trigger: "blur"
         },
         {
           min: 6,
-          max: 12,
-          message: "长度应为 6 到 12 数字",
+          max: 11,
+          message: t('placeholder.between612'),
           trigger: "blur"
         }
       ],
       confirmPassword: [
         {
           required: true,
-          message: "请输入确认密码",
+          message: t('personal.confirmWithdrawPwd'),
           trigger: "blur"
         },
         {
           min: 6,
-          max: 12,
-          message: "长度应为 6 到 12 数字",
+          max: 11,
+          message: t('placeholder.between612'),
           trigger: "blur"
         },
         {
@@ -1074,7 +1106,7 @@ export default defineComponent({
           updateAccount(toRaw(updateFormDetails)).then((ret) => {
             if (ret.code === 0) {
               ElMessage({
-                message: '提交成功',
+                message: t('common.submitSuccess'),
                 type: 'success',
               })
               loadInfo();
@@ -1089,75 +1121,61 @@ export default defineComponent({
 
       loadingBtn.value = false
     }
+    const receivedVerificationCode = ref(false);
+    // Define a reactive variable to track the countdown timer
+    const countdownValue = ref(0);
+    let countdownInterval;
 
-    return {
-      personalState,
-      updateSecurityFormRef,
-      updateSecurityVerified,
-      updateSecurityModal,
-      updateSecurityModalVisible,
-      updateSecurityVerifiedRules,
-      submitUpdateSecurity,
-      updatePhoneFormRef,
-      updatePhoneVerified,
-      updatePhoneModal,
-      updatePhoneModalVisible,
-      updatePhoneVerifiedRules,
-      verificationPhoneModalVisible,
-      submitUpdatePhone,
-      updatePwdFormRef,
-      updatePwdInfo,
-      updatePwdModal,
-      updatePwdModalVisible,
-      updatePwdRules,
-      submitUpdatePwd,
-      clearPwd,
-      loadInfo,
-      refOldPassword,
-      refPassword,
-      isEdit,
-      updateFormDetails,
-      updateState,
-      getVerificationCode,
-      verificationModalVisible,
-      openVerificationModal,
-      openPhoneVerificationModal,
-      verificationImg,
-      getCode,
-      verifyVerificationCode,
-      verifyPhoneVerificationCode,
-      isEmailSending,
-      isPhoneSending,
-      updateFormRef,
-      store,
-      regDevice,
-      openWindow,
-      captchaUpdateRef,
-      loadingBtn,
-      loadingPwBtn,
-      loadingWdPwBtn,
-      loadingSecurityBtn,
-      loadingPhoneBtn,
-      disableSendVerificationButton,
-      disableSendPhoneButton,
-      countDown,
-      countDownPhone,
-      selectedTab,
-      updateWithdrawPwdFormRef,
-      updateWithdrawPwdInfo,
-      updateWithdrawPwdModal,
-      updateWithdrawPwdModalVisible,
-      updateWithdrawPwdRules,
-      submitUpdateWithdrawPwd,
-      clearWithdrawPwd,
-      refWithdrawOldPassword,
-      refWithdrawPassword,
+    // Function to send OTP email
+    const sendOTPEmail = () => {
+      if (!personalState.memberInfo.email) {
+        ElMessage.warning(t('common.bindEmailFirst'));
+        selectedTab.value = 'personal'
+        return
+      }
+      // Check if countdown timer is still running
+      if (countdownValue.value === 0) {
+        // If countdown timer has finished, reset the timer and send the email
+        const obj = {
+          email: personalState.memberInfo.email
+        } 
+        sendEmail(obj).then((res) => {
+          if (res.code === 0) {
+            receivedVerificationCode.value = true;
+            ElMessage.success({
+              type: "success",
+              message: t('common.emailSent')
+            });
+            // Start the countdown timer again after sending the email
+            countdownValue.value = 60;
+            countdownInterval = setInterval(() => {
+              countdownValue.value -= 1;
+              if (countdownValue.value === 0) {
+                clearInterval(countdownInterval);
+              }
+            }, 1000);
+          } else {
+            ElMessage.error(res.message);
+          }
+        });
+      } else {
+        // If countdown timer is still running, show a message to try again later
+        ElMessage.warning({
+          type: "warning",
+          message: t('common.tryAgain', { countDown: countdownValue.value })
+        });
+      }
     };
-  }
-});
 </script>
 
 <style scoped lang="scss">
+.withdrawBottom { 
+  display: flex; justify-content: space-between; align-items: center; max-width: 620px;
+  .link {
+    color:#468cff;
+    cursor: pointer;
+  }
+}
 .el-form--inline .el-form-item {
     display: inline-flex;
     vertical-align: middle;
@@ -1166,7 +1184,6 @@ export default defineComponent({
     justify-content: flex-start;
     align-items: flex-start;
 }
-
 .basic-info-cell {     
   &.content {
     width: 650px;
@@ -1313,6 +1330,32 @@ export default defineComponent({
   display: flex;
   justify-content: flex-start;
   gap: 12px;
-  margin-top: 10px;
+}
+</style>
+<style lang="scss">
+
+.account-content-wrapper {
+
+  .el-form-item {
+
+flex-direction: column;
+align-items: flex-start;
+width: 100%;
+}
+.el-form-item__content {
+width: 100%;
+max-width: 650px;
+.el-input__wrapper {
+padding: 10px 20px;
+}
+}
+.el-dialog {
+  .el-form-item {
+  flex-direction: row;
+  }
+  .el-input__wrapper {
+    padding: 5px 10px;
+  }
+}
 }
 </style>

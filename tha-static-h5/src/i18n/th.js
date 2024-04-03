@@ -405,6 +405,7 @@ export default {
     bank: "ธนาคาร",
     upload_img: "โหลดรูปภาพ",
     upload_successfully: "อัพโหลดเรียบร้อยแล้ว",
+    please_upload_file: "กรุณาอัพโหลดไฟล์",
     failed_upload_size_dont_meet_requirement: "การอัพโหลดล้มเหลว ขนาดภาพไม่ตรงที่กำหนด โปรดอัปโหลดรูปภาพในภายหลัง",
     card_added: "เพิ่มการ์ดแล้ว",
     number_sent: "ส่งหมายเลข",

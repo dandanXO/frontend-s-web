@@ -254,7 +254,7 @@
               :value="personalState.memberInfo.telephone"
           />
           <el-button class="common-btn" @click="openCaptchaForm()">
-            获取验证码
+            {{ $t('personal.getVerificationCode') }}
           </el-button></el-space>
         </el-form-item>
 
@@ -581,7 +581,7 @@ export default defineComponent({
 
     const checkBankCards = () => {
       ElMessageBox.alert(
-          '请先绑定银行卡', "系统提示",
+        t('bankError.bankCardFirst'), t('common.systemError'),
           {
             showClose: false,
             showCancelButton: false,

@@ -193,7 +193,11 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   transferInfo.value.platform = platformCode;
   logoShow.value = true;
   src.value = "";
-  title.value = gameName;
+  if (gameName === "AGF") {
+    title.value = "AG捕鱼";
+  } else {
+    title.value = gameName;
+  }
   const store = userStore();
   if (store.memberType !== "TEST" && gameType === "TEST") {
     visibleComingSoon.value = true;

@@ -8,7 +8,7 @@
   >
     <q-card style="width: 100%" class="modalcontent">
       <div class="headers">
-        <div class="titles">请输入解绑银行卡号</div>
+        <div class="titles">{{ $t("lang.please_enter_unbind_bank_card") }}</div>
         <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
       </div>
       <q-form class="unbind-form">
@@ -21,13 +21,14 @@
           :label="unbindCardLabel()"
           :rules="[
             (val) =>
-              (val && val.length > 10 && val == selectedUnbindBankCard.cardNumber) || unbindCardLabel() + '不正确'
+              (val && val.length > 10 && val == selectedUnbindBankCard.cardNumber) ||
+              unbindCardLabel() + $t('lang.incorrect')
           ]"
         />
       </q-form>
       <div class="btnsreas">
-        <div class="confirmsbtns common-md-btn" @click="unbindBankCard()">确定</div>
-        <q-btn class="cacnels common-md-white-btn" v-close-popup>取消</q-btn>
+        <div class="confirmsbtns common-md-btn" @click="unbindBankCard()">{{ $t("lang.confirm") }}</div>
+        <q-btn class="cacnels common-md-white-btn" v-close-popup>{{ $t("lang.cancel") }}</q-btn>
       </div>
     </q-card>
   </q-dialog>
@@ -37,16 +38,16 @@
       <div class="bank-bind-item q-my-sm">
         <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/bank-card')">
           <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
-          <span>+添加银行卡</span>
+          <span>+{{ $t("lang.add_bank_card") }}</span>
         </div>
         <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/crypto')">
           <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
-          <span>+添加虚拟币账户</span>
+          <span>+{{ $t("lang.add_virtual_wallet") }}</span>
         </div>
-        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/ewallet')">
-          <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
-          <span>+添加电子钱包</span>
-        </div>
+<!--        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/ewallet')">-->
+<!--          <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />-->
+<!--          <span>+{{ $t("lang.add_ewallet") }}</span>-->
+<!--        </div>-->
         <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/alipay')">
           <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
           <span>+添加支付宝</span>
@@ -318,7 +319,7 @@ onActivated(() => {
       border-radius: 10px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       flex-wrap: wrap;
       margin: 0 auto 14px;
       padding: 1.25rem;
@@ -328,7 +329,7 @@ onActivated(() => {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 47.5%;
+        width: 60.5%;
 
         .bank-bind-img {
           margin-left: auto;

@@ -184,6 +184,7 @@
             :label="cardLabel()"
             :rules="isCrypto || isEWALLET ? cardCryptoRules : cardNumberRules"
             ref="cardNumberRef"
+            :type="isSZPAY ? 'number' : 'text'"
             color="dyblue"
           />
 
@@ -491,6 +492,7 @@ export default defineComponent({
     const bankName = ref();
     const banksList = ref([]);
     const isVirtual = ref(false)
+    const isSZPAY = ref(false);
     const bankCardModal = (type) => {
       isSendOtp.value = false;
       isNoCard.value = false;
@@ -639,8 +641,10 @@ export default defineComponent({
     const cardLabel = () => {
       if (isCrypto.value) {
         return '钱包地址'
-      } else if (isEWALLET.value) {
+      } else if (isEWALLET.value && !isSZPAY.value) {
         return '电子钱包'
+      } else if (isEWALLET.value && isSZPAY.value) {
+        return '数字人民币使用的手机号'
       } else {
         return '银行卡号'
       }
@@ -782,6 +786,9 @@ export default defineComponent({
         } else if(selectedCode === 'OKPAY') {
           return (val.length > 15 && val.length < 17) || '长度应为16个字符'
         } else if(selectedCode === 'SZPAY') {
+          if (!/^\d+$/.test(val)) {
+            return '请输入数字人民币使用的手机号'
+          }
           return (val.length > 10 && val.length < 12) || '长度应为11个字符'
         }
       } else {
@@ -905,9 +912,13 @@ export default defineComponent({
     watch(
       () => bankCardInfo.bankId,
       (newVal, oldVal) => {
+        isSZPAY.value = false;
         const selectedBank = banksList.value.find((bank) => bank.id === newVal);
         if (selectedBank) {
           bankCardInfo.currencyId = selectedBank.currencyIds;
+          if (selectedBank.code === "SZPAY") {
+            isSZPAY.value = true;
+          }
         }
       }
     );
@@ -973,7 +984,8 @@ export default defineComponent({
       cardLabel,
       unbindCardEnter,
       unbindCardLabel,
-      isSendOtp
+      isSendOtp,
+      isSZPAY
     };
   }
 });

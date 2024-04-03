@@ -1,13 +1,14 @@
 <template>
   <el-tabs>
-    <el-tab-pane label="手机找回密码">
+    
+    <el-tab-pane :label="$t('login.findPasswordPhone')">
       <PhoneOrEmailFindPwd type="phone" @close-dialog="closeDialog" @open-login-dialog="openLoginDialog" />
     </el-tab-pane>
-    <el-tab-pane label="邮箱找回密码">
+    <el-tab-pane :label="$t('login.findPasswordEmail')">
       <PhoneOrEmailFindPwd type="email" @close-dialog="closeDialog" @open-login-dialog="openLoginDialog" />
     </el-tab-pane>
-    <el-tab-pane label="邮箱找回账号">
-      <EmailFindPwd @close-dialog="closeDialog" @open-login-dialog="openLoginDialog" />
+    <el-tab-pane :label="$t('login.findAccountEmail')">
+      <EmailFindPwd @close-dialog="closeDialog" @open-login-dialog="openLoginDialog" />              
     </el-tab-pane>
   </el-tabs>
 </template>

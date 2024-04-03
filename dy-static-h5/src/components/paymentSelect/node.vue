@@ -192,7 +192,7 @@ $node-color: #4ab6fd;
   // flex-wrap: wrap;
   // justify-content: space-evenly;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   margin-bottom: 20px;
 
   .payment-method-item {
@@ -322,9 +322,10 @@ $node-color: #4ab6fd;
         border-radius: 4px;
 
         img {
-          background-color: #fff;
+          background-color: transparent;
           margin-bottom: 0;
-          padding: 5px 10px;
+          padding: 5px;
+          display: block;
           width: 100%;
           height: auto;
         }
@@ -382,6 +383,9 @@ $node-color: #4ab6fd;
   }
 }
 
-@media (max-width: 380px) {
+@media (max-width: 390px) {
+  .payment-method-wrapper {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 </style>

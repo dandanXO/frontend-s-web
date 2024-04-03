@@ -1,27 +1,24 @@
 <template>
   <div class="affiliate-container">
-    <div class="page-title">雷火合营计划</div>
+    <div class="page-title">{{ $t("lang.affiliate_title") }}</div>
 
     <div class="branding">
       <div class="branding-wrapper">
         <img class="hand-img" src="../assets/images/affiliate/hand.png" alt="" />
         <div class="desc-container">
-          <div class="title">最专业的团队</div>
-          <div class="desc">Professional Team</div>
+          <div class="title">{{ $t("lang.affiliate_professionalteam") }}</div>
         </div>
       </div>
       <div class="branding-wrapper">
         <img class="headset-img" src="../assets/images/affiliate/headset.png" alt="" />
         <div class="desc-container">
-          <div class="title">最优质的服务</div>
-          <div class="desc">Best Quality Service</div>
+          <div class="title">{{ $t("lang.affiliate_bestqualityservice") }}</div>
         </div>
       </div>
       <div class="branding-wrapper">
         <img class="vg-img" src="../assets/images/affiliate/vg.png" alt="" />
         <div class="desc-container">
-          <div class="title">VG战队官方合作伙伴</div>
-          <div class="desc">VG Official Partner</div>
+          <div class="title">{{ $t("lang.affiliate_vgofficialpartner") }}</div>
         </div>
       </div>
     </div>
@@ -31,13 +28,20 @@
       <div class="btn-wrapper">
         <q-btn
           :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')"
-          label="加入我们"
+          :label="$t('lang.affiliate_joinus')"
+          no-caps
           size="md"
           class="join-btn"
         >
           <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
-        <q-btn :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')" label="登录" size="md" class="login-btn">
+        <q-btn
+          :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')"
+          :label="$t('lang.affiliate_login')"
+          no-caps
+          size="md"
+          class="login-btn"
+        >
           <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
 
@@ -50,7 +54,8 @@
               650
             )
           "
-          label="联系我们"
+          :label="$t('lang.affiliate_contactus')"
+          no-caps
           size="md"
           class="contact-btn"
         >
@@ -60,26 +65,24 @@
     </div>
 
     <div class="esport-commission">
-      <div class="section-title">电竞佣金方案</div>
-      <div class="subtitle">分红条款</div>
+      <div class="section-title">{{ $t("lang.affiliate_01_head_title") }}</div>
+      <div class="subtitle">{{ $t("lang.affiliate_01_sub_title") }}</div>
       <ul>
-        <li>月充值金额>200元为活跃玩家，当月需要至少五个活跃会员才能结算佣金。</li>
-        <li>当月的佣金分佣发放时间为下个月的五号到十号回结算完毕。</li>
-        <li>分红有系统直接发放到代理账户，无需流水，绑定银行卡后即可申请提款。</li>
+        <li>{{ $t("lang.affiliate_01_para_01") }}</li>
+        <li>{{ $t("lang.affiliate_01_para_02") }}</li>
+        <li>{{ $t("lang.affiliate_01_para_03") }}</li>
         <li>
-          代理佣金计算方式：
+          {{ $t("lang.affiliate_01_para_04a") }}
           <ul>
-            <li>「（投注输赢额-优惠100%）-（存款+提款）*1.6%-平台费*8%」*佣金比例</li>
+            <li>{{ $t("lang.affiliate_01_para_04b") }}</li>
           </ul>
         </li>
-        <li>
-          代理推广费每月至少需要新注册活跃会员达到3名，如无达到将视为无推广雷火平台，佣金减半，如果三个月累计新注册活跃会员未达到十位将会停用代理账户等待代理重新联系网站开启。
-        </li>
+        <li>{{ $t("lang.affiliate_01_para_05") }}</li>
       </ul>
     </div>
 
     <div class="table-commission">
-      <div class="section-title">佣金如何计划</div>
+      <div class="section-title">{{ $t("lang.affiliate_02_head_title") }}</div>
       <q-table
         flat
         :hide-pagination="true"
@@ -88,85 +91,85 @@
         row-key="name"
         :rows-per-page-options="[0]"
       ></q-table>
-      <div class="red-note">备注：盈利=线下会员在所有场馆的总输赢减去会员申请的所有优惠</div>
+      <div class="red-note">{{ $t("lang.affiliate_02_note") }}</div>
 
-      <div class="section-title">佣金如何计划</div>
+      <div class="section-title">{{ $t("lang.affiliate_03_head_title") }}</div>
       <div class="sample-container">
         <q-card-section>
-          <div>例子1:存款1000元 提款0元 优惠申请100元</div>
+          <div>{{ $t("lang.affiliate_example_01") }}</div>
           <div class="cell-wrapper">
-            <div>平台输赢</div>
+            <div>{{ $t("lang.affiliate_example_01_text_01") }}</div>
             <div>1100</div>
           </div>
           <div class="cell-wrapper">
-            <div>扣除申请优惠</div>
+            <div>{{ $t("lang.affiliate_example_01_text_02") }}</div>
             <div>-100</div>
           </div>
           <div class="cell-wrapper">
-            <div>扣除存提手续费1.6%</div>
+            <div>{{ $t("lang.affiliate_example_01_text_03") }}</div>
             <div>-16</div>
           </div>
           <div class="cell-wrapper">
-            <div>平台服务费</div>
+            <div>{{ $t("lang.affiliate_example_01_text_04") }}</div>
             <div>88</div>
           </div>
         </q-card-section>
         <q-separator></q-separator>
         <q-card-section>
           <div class="cell-wrapper">
-            <div>盈利</div>
+            <div>{{ $t("lang.affiliate_example_01_text_05") }}</div>
             <div>898</div>
           </div>
           <div class="cell-wrapper">
-            <div>乘以佣金比例</div>
+            <div>{{ $t("lang.affiliate_example_01_text_06") }}</div>
             <div>*35%</div>
           </div>
         </q-card-section>
         <q-separator></q-separator>
         <q-card-section>
           <div class="cell-wrapper">
-            <div>代理佣金</div>
+            <div>{{ $t("lang.affiliate_example_01_text_07") }}</div>
             <div>313.6</div>
           </div>
         </q-card-section>
       </div>
-      <div class="red-note">备注：存提手续费=存款加上提款总额的1.6%</div>
+      <div class="red-note">{{ $t("lang.affiliate_03_note") }}</div>
 
       <div class="sample-container">
         <q-card-section>
-          <div>例子1:存款130000元 提款10000元 优惠申请2000元 余额500</div>
+          <div>{{ $t("lang.affiliate_example_02") }}</div>
           <div class="cell-wrapper">
-            <div>平台输赢</div>
+            <div>{{ $t("lang.affiliate_example_02_text_01") }}</div>
             <div>122000</div>
           </div>
           <div class="cell-wrapper">
-            <div>扣除申请优惠</div>
+            <div>{{ $t("lang.affiliate_example_02_text_02") }}</div>
             <div>-2000</div>
           </div>
           <div class="cell-wrapper">
-            <div>扣除存提手续费1.6%</div>
+            <div>{{ $t("lang.affiliate_example_02_text_03") }}</div>
             <div>-2240</div>
           </div>
           <div class="cell-wrapper">
-            <div>平台服务费</div>
+            <div>{{ $t("lang.affiliate_example_02_text_04") }}</div>
             <div>9760</div>
           </div>
         </q-card-section>
         <q-separator></q-separator>
         <q-card-section>
           <div class="cell-wrapper">
-            <div>盈利</div>
+            <div>{{ $t("lang.affiliate_example_02_text_05") }}</div>
             <div>108,000</div>
           </div>
           <div class="cell-wrapper">
-            <div>乘以佣金比例</div>
+            <div>{{ $t("lang.affiliate_example_02_text_06") }}</div>
             <div>*40%</div>
           </div>
         </q-card-section>
         <q-separator></q-separator>
         <q-card-section>
           <div class="cell-wrapper">
-            <div>代理佣金</div>
+            <div>{{ $t("lang.affiliate_example_02_text_07") }}</div>
             <div>43200</div>
           </div>
         </q-card-section>
@@ -175,7 +178,13 @@
 
     <div class="contact-us">
       <div class="register-btn-wrapper">
-        <q-btn :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')" label="立即申请代理" size="lg" class="register-btn">
+        <q-btn
+          :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')"
+          :label="$t('lang.affiliate_apply_agency')"
+          size="lg"
+          no-caps
+          class="register-btn"
+        >
           <img class="mask-img" src="../assets/images/affiliate/register-btn-icon.png" alt="" />
           <img class="mask-img2" src="../assets/images/affiliate/register-btn-icon2.png" alt="" />
         </q-btn>
@@ -183,42 +192,44 @@
 
       <div class="contact-info">
         <div class="title-wrapper">
-          <div class="section-title">联系我们</div>
+          <div class="section-title">{{ $t("lang.affiliate_contactus") }}</div>
           <div class="two-four-hour-wrapper">
             <img class="two-four-mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
             <img class="two-four-mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
-            <div class="two-four-content"
-                 @click.stop.prevent="
-            openWindow(
-              `https://csweb01.amv4xjcbd.com/?partnerCode=LHCS&lang=zh-CN&way=${regDevice}&token=${store.token}`,
-              'Chat Server',
-              350,
-              650
-            )
-          ">
+            <div
+              class="two-four-content"
+              @click.stop.prevent="
+                openWindow(
+                  `https://csweb01.amv4xjcbd.com/?partnerCode=LHCS&lang=zh-CN&way=${regDevice}&token=${store.token}`,
+                  'Chat Server',
+                  350,
+                  650
+                )
+              "
+            >
               <img class="two-four-img" src="../assets/images/affiliate/headset-white.png" alt="" />
-              <span class="two-four-text">24小时在线客服</span>
+              <span class="two-four-text">{{ $t("lang.affiliate_online_cs") }}</span>
             </div>
           </div>
         </div>
         <div class="contact-wrapper">
-          <div class="contact-method">合营部电邮</div>
+          <div class="contact-method">{{ $t("lang.affiliate_jointemail") }}</div>
           <div class="contact-id">affiliate@e8007.com</div>
         </div>
         <div class="contact-wrapper">
-          <div class="contact-method">合营部skype</div>
-          <div class="contact-id">live:.cd.ff6111f0549375a8 (点击图标以联系，联系时请提供用户名)</div>
+          <div class="contact-method">{{ $t("lang.affiliate_jointskype") }}</div>
+          <div class="contact-id">live:.cd.ff6111f0549375a8 ({{ $t("lang.affiliate_clicktocontact") }})</div>
         </div>
         <div class="contact-wrapper">
-          <div class="contact-method">合营部letstalk</div>
+          <div class="contact-method">{{ $t("lang.affiliate_jointletstalk") }}</div>
           <div class="contact-id">t403523198</div>
         </div>
         <div class="contact-wrapper">
-          <div class="contact-method">合营部Telegram</div>
+          <div class="contact-method">{{ $t("lang.affiliate_jointtelegram") }}</div>
           <div class="contact-id">LH18668</div>
         </div>
         <div class="contact-wrapper">
-          <div class="contact-method">合营部泡泡</div>
+          <div class="contact-method">{{ $t("lang.affiliate_jointbubble") }}</div>
           <div class="contact-id">LH10086</div>
         </div>
       </div>
@@ -227,8 +238,10 @@
 </template>
 
 <script setup>
+import lang from "src/boot/lang";
 import { userStore } from "../stores/index";
 import { Platform } from "quasar";
+import { useI18n } from "vue-i18n";
 
 const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
   const left = (screen.width - popupWinWidth) * 2;
@@ -243,46 +256,47 @@ const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
 const affCode = sessionStorage.getItem("AFFILIATE_CODE");
 const regDevice = Platform.is.mobile ? "H5" : "WEB";
 const store = userStore();
+const { t } = useI18n();
 
 const columns = [
   {
     name: "agent",
     required: true,
-    label: "代理",
+    label: t("lang.affiliate_rank"),
     align: "center",
     field: (row) => row.name
   },
-  { name: "profit", label: "盈利", field: "profit", align: "center" },
-  { name: "activeMember", label: "有效活跃会员", field: "activeMember", align: "center" },
-  { name: "commission", label: "佣金比例", field: "commission", align: "center" }
+  { name: "profit", label: t("lang.affiliate_profit"), field: "profit", align: "center" },
+  { name: "activeMember", label: t("lang.affiliate_activemember"), field: "activeMember", align: "center" },
+  { name: "commission", label: t("lang.affiliate_commission"), field: "commission", align: "center" }
 ];
 const rows = [
   {
-    name: "铜牌",
+    name: t("lang.affiliate_bronze"),
     profit: "<10W",
     activeMember: "5",
     commission: "35%"
   },
   {
-    name: "银牌",
+    name: t("lang.affiliate_silver"),
     profit: "10W-30W",
     activeMember: "10",
     commission: "40%"
   },
   {
-    name: "金牌",
+    name: t("lang.affiliate_gold"),
     profit: "30W-60W",
     activeMember: "25",
     commission: "45%"
   },
   {
-    name: "钻石",
+    name: t("lang.affiliate_diamond"),
     profit: "60W-100W",
     activeMember: "50",
     commission: "50%"
   },
   {
-    name: "皇冠",
+    name: t("lang.affiliate_crown"),
     profit: ">100W",
     activeMember: "80",
     commission: "55%"
@@ -362,9 +376,12 @@ const rows = [
     display: flex;
     justify-content: center;
     padding: 0 1rem;
+    align-items: center;
 
     .ambassador-img {
       width: 50%;
+      height: 100%;
+      display: block;
     }
 
     .btn-wrapper {
@@ -537,14 +554,14 @@ const rows = [
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 7rem;
+          // width: 7rem;
           border-radius: 0.25rem;
           overflow: hidden;
           background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
           box-shadow: 0px 2.7097px 2.7097px 0px #93c7ff inset, 0px -2.16776px 2.16776px 0px #275ec1 inset;
 
           .two-four-mask {
-            height: 1.5rem;
+            height: 2.5rem;
           }
 
           .two-four-content {

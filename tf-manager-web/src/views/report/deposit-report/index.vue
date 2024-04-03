@@ -75,7 +75,6 @@
             label-align="left"
             label-class-name="member-label"
             class-name="member-context"
-            style="width: 50%;"
           >
             <template #label>
               <div> {{ t('dashboard.totalTransaction') }} </div>
@@ -339,7 +338,7 @@ const page1 = reactive({
 })
 
 const request = reactive({
-  size: 30,
+  size: 100,
   current: 1,
   name: null,
   recordTime: [defaultStartDate, defaultEndDate],
@@ -682,5 +681,11 @@ onMounted(async () => {
 .refresh-platform-btn {
   margin-left: 5px;
   display: inline-block;
+}
+</style>
+
+<style lang="scss">
+.member-label {
+  width: 15% !important;
 }
 </style>

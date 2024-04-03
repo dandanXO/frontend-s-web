@@ -1,6 +1,6 @@
 <template>
   <div class="personal-account">
-    <div class="web">{{ $t("lang.personal_exclusiveurl") }}: {{ personalState.memberInfo.evip }}</div>
+<!--    <div class="web">{{ $t("lang.personal_exclusiveurl") }}: {{ personalState.memberInfo.evip }}</div>-->
     <q-form ref="profileFormRef">
       <div class="flex items-center no-wrap">
         <q-input
@@ -44,7 +44,7 @@
       ></q-input>
 
       <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn size="md" color="brightbtn" @click="submitUpdateSecurity()" :label="$t('lang.personal_verify')" />
+        <q-btn size="md" color="brightbtn" @click="submitUpdateSecurity()" :label="$t('lang.personal_submit_btn')" />
       </div>
     </q-form>
   </div>
@@ -91,6 +91,7 @@ import {api} from "boot/axios";
 import {useRoute, useRouter} from "vue-router";
 import {useQuasar} from "quasar";
 import {userStore} from "src/stores";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "PersonalView",
@@ -98,6 +99,7 @@ export default defineComponent({
     // const isCardActive = ref();
     const qs = require("qs");
     const router = useRouter();
+    const { t } = useI18n();
     const $q = useQuasar();
     const searchForm = reactive({
       start: "",
@@ -188,7 +190,7 @@ export default defineComponent({
           $q.notify({
             color: "positive",
             position: "top",
-            message: $t('lang.personal_emailotp_sent'),
+            message: t('lang.personal_emailotp_sent'),
             icon: "check_circle_outline"
           });
           canEdit.value = true;
@@ -226,7 +228,7 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: $t('lang.personal_verification_successful'),
+              message: t('lang.personal_verification_successful'),
               icon: "check_circle_outline"
             });
             store.emailVerified = true;
@@ -300,7 +302,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: $t('lang.personal_email_empty'),
+          message: t('lang.personal_email_empty'),
           icon: "report_problem"
         });
         getCode();
@@ -314,7 +316,7 @@ export default defineComponent({
       }))
           .then(res => {
             getCode();
-            let message = res.message || $t('lang.personal_emailotp_sent'),
+            let message = res.message || t('lang.personal_emailotp_sent'),
                 color = 'positive'
 
             if (res.code === 0) {

@@ -27,7 +27,7 @@
               </div>
             </div>
             <div class="amt">
-              {{ !isLoadingBalance ? "₫" + mainWallet : $t("lang.loading") }}
+              {{ !isLoadingBalance ? "VNDP" + mainWallet : $t("lang.loading") }}
             </div>
           </div>
         </q-card-section>
@@ -94,7 +94,7 @@
 
             <q-btn :label="$t('lang.withdraw_btn')" no-caps class="btn-main btn-pointer" @click="openWithdraw" />
 
-            <q-btn :label="$t('lang.transfer_btn')" no-caps class="btn-main btn-pointer" @click="openTransfer" />
+            <!-- <q-btn :label="$t('lang.transfer_btn')" no-caps class="btn-main btn-pointer" @click="openTransfer" /> -->
           </div>
         </q-card-section>
 
@@ -184,7 +184,7 @@
           </div>
         </router-link>
 
-        <router-link to="/account/inbox">
+        <router-link to="/account/letters">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-notice-icon.png" />
             <div class="acct-nav-label">
@@ -202,14 +202,14 @@
           </div>
         </router-link>
 
-        <router-link to="/account/letters">
+        <!-- <router-link to="/account/letters">
           <div class="acct-nav-item">
             <img src="../assets/images/account/user-feedbakc-icon.png" />
             <div class="acct-nav-label">
               {{ $t("lang.mine_feedback") }}
             </div>
           </div>
-        </router-link>
+        </router-link> -->
 
         <router-link to="/account/changePwd">
           <div class="acct-nav-item">
@@ -220,14 +220,14 @@
           </div>
         </router-link>
 
-        <!-- <router-link to="/affiliate"> -->
-        <!-- <div class="acct-nav-item"> -->
-        <!-- <img src="../assets/images/account/account-affiliate-icon.png" /> -->
-        <!-- <div class="acct-nav-label"> -->
-        <!-- {{ $t("lang.mine_apply_for_partnership") }} -->
-        <!-- </div> -->
-        <!-- </div> -->
-        <!-- </router-link> -->
+        <router-link to="/affiliate">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-affiliate-icon.png" />
+            <div class="acct-nav-label">
+              {{ $t("lang.mine_apply_for_partnership") }}
+            </div>
+          </div>
+        </router-link>
 
         <!-- <router-link to="/promo?redirect=account"> -->
         <!-- <div class="acct-nav-item"> -->
@@ -334,8 +334,12 @@
       </div>
       <div class="contents">{{ $t("lang.logout_desc") }}</div>
       <div class="btnsreas">
-        <div class="confirmsbtns common-md-btn btn-standard-height" @click="logout">{{ $t("lang.logout_confirm") }}</div>
-        <div class="cacnels common-md-white-btn btn-standard-height" @click="isLogoutModal = false">{{ $t("lang.logout_cancel") }}</div>
+        <div class="confirmsbtns common-md-btn btn-standard-height" @click="logout">
+          {{ $t("lang.logout_confirm") }}
+        </div>
+        <div class="cacnels common-md-white-btn btn-standard-height" @click="isLogoutModal = false">
+          {{ $t("lang.logout_cancel") }}
+        </div>
       </div>
     </q-card>
   </q-dialog>
@@ -721,7 +725,7 @@ export default defineComponent({
 
   .btm-sect-btns {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     width: 100%;
   }
 
@@ -966,6 +970,7 @@ export default defineComponent({
         .acct-nav-label {
           // white-space: nowrap;
           color: $font-1;
+          font-size: 12px;
         }
 
         img {

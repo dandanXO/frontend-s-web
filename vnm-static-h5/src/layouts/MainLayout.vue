@@ -28,6 +28,10 @@
           dense
           icon="menu"
         />
+
+        <div class="header-lang">
+          <LangOptions />
+        </div>
       </q-card-section>
     </q-header>
 
@@ -65,7 +69,7 @@
           <img class="hover" src="../assets/images/footer/promo-icon-active.svg" />
           {{ $t("lang.promo") }}
         </q-route-tab>
-        <q-route-tab to="/account/transfer" name="transfer">
+        <q-route-tab to="/finance/deposit" name="deposit">
           <img class="inactive" src="../assets/images/footer/withdraw-icon.svg" />
           <img class="hover" src="../assets/images/footer/withdraw-icon-active.svg" />
           {{ $t("lang.account") }}
@@ -92,12 +96,13 @@ import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 import { translateRecord } from "src/directives/translate";
 import { useI18n } from "vue-i18n";
+import LangOptions from "components/LangOptions";
 
 export default defineComponent({
   name: "MainLayout",
 
   components: {
-    // RiArrowDropLeftLine
+    LangOptions
   },
 
   setup() {
@@ -262,19 +267,19 @@ export default defineComponent({
         } else if (route.path === "/account/letters") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = t("lang.page_feedback");
+          pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/inbox") {
-          prevPage.value = "account";
+          prevPage.value = "account/letters";
           hasPage.value = true;
           pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/outbox") {
           prevPage.value = "account/letters";
           hasPage.value = true;
-          pageName.value = t("lang.page_myfeedback");
+          pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/write") {
           prevPage.value = "account/letters";
           hasPage.value = true;
-          pageName.value = t("lang.page_feedback");
+          pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/feedback") {
           prevPage.value = "account/letters";
           hasPage.value = true;
@@ -439,7 +444,8 @@ export default defineComponent({
         "BindBankCard",
         "BindCryptoView",
         "BindEWalletView"
-      ]
+      ],
+      LangOptions
     };
   }
 });
@@ -485,5 +491,11 @@ svg path {
   img {
     width: 100%;
   }
+}
+
+.header-lang {
+  position: absolute;
+  top: 8px;
+  right: 12px;
 }
 </style>

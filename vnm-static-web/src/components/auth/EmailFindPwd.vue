@@ -1,20 +1,19 @@
 <template>
-  <el-form ref="forgotPwdFormRef" :rules="loginRules" :model="forgotPwdForm" label-width="90" size="large">
+  <el-form ref="forgotPwdFormRef" :rules="loginRules" :model="forgotPwdForm" label-width="200" size="large">
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
-      <el-form-item label="注册邮箱" prop="email">
-        <el-input v-model="forgotPwdForm.email" placeholder="输入注册邮箱" />
+      <el-form-item :label="$t('login.email')" prop="email">
+        <el-input v-model="forgotPwdForm.email" :placeholder="$t('placeholder.email')" />
       </el-form-item>
     </div>
 
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
-      <el-form-item label="验证码" prop="captchaCode">
+      <el-form-item :label="$t('login.captcha')" prop="captchaCode">
         <div style="display: flex; width: 100%">
           <el-input
             v-model="forgotPwdForm.captchaCode"
-            label="验证码"
-            placeholder="验证码"
+            :placeholder="$t('login.captcha')"
             @keyup.enter="submitForm"
           ></el-input>
           <img style="width: 90px" :src="verificationImg" @click="getCode" />
@@ -22,10 +21,10 @@
       </el-form-item>
     </div>
 
-    <el-button :loading="loadingBtn" size="large" class="blue-bg primary-btn" @click="submitForm">提交</el-button>
+    <el-button :loading="loadingBtn" size="large" class="blue-bg primary-btn" @click="submitForm">{{ $t('common.submit') }}</el-button>
   </el-form>
 
-  <div style="text-align: center; margin-top: 20px"><a @click="openLoginDialog">返回登入页面</a></div>
+  <div style="text-align: center; margin-top: 20px"><a @click="openLoginDialog">{{ $t('login.backtoLogin') }}</a></div>
 </template>
 
 <script setup>
@@ -33,9 +32,10 @@ import { ref, onMounted, reactive, defineEmits } from "vue";
 import { getVerificationCode } from "@/api/index/login";
 import { findAccount } from "@/api/index/forgotPwd";
 import { ElMessage } from "element-plus";
+import { useI18n } from "vue-i18n";
 
 const emits = defineEmits(["open-login-dialog, close-dialog"]);
-
+const { t } = useI18n()
 const openLoginDialog = () => {
   emits("open-login-dialog");
 };
@@ -44,30 +44,30 @@ const loginRules = {
   email: [
     {
       required: true,
-      message: "请输入您的邮箱",
+      message: t('placeholder.email'),
       trigger: "blur"
     },
     {
       type: "email",
-      message: "电子邮件地址无效",
+      message: t('placeholder.emailFormat'),
       trigger: "blur"
     },
     {
       max: 50,
-      message: "长度应小于 50",
+      message: t('placeholder.lessthan50'),
       trigger: "blur"
     }
   ],
   captchaCode: [
     {
       required: true,
-      message: "请输入验证码",
+      message: t('placeholder.captchareq'),
       trigger: "blur"
     },
     {
       min: 4,
       max: 4,
-      message: "长度为 4",
+      message: t('placeholder.captcha'),
       trigger: "blur"
     }
   ]
@@ -148,9 +148,11 @@ onMounted(() => {
   gap: 10px;
   position: relative;
   width: 100%;
+  margin-top: 40px;
 
   .form-field-icon {
     margin: auto;
+    height: 30px;
   }
 }
 

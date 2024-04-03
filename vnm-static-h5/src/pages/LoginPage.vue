@@ -233,14 +233,14 @@
             <template v-slot:append>
               <img
                 :src="phoneVerificationImg"
-                :title="$('lang.captcha_refresh')"
+                :title="$t('lang.captcha_refresh')"
                 style="margin-top: 6px; cursor: pointer"
                 @click="getInnerCode"
               />
             </template>
           </q-input>
         </q-card-section>
-        <q-btn @click="sendOtpSms" :label="$t('lang.verification_code_send')" color="brightbtn" />
+        <q-btn @click="sendOtpSms" no-caps :label="$t('lang.verification_code_send')" color="brightbtn" />
       </div>
     </q-card>
   </q-dialog>
@@ -255,6 +255,7 @@ import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import LangOptions from "components/LangOptions";
 import qs from "qs";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "LoginPage",
@@ -262,6 +263,7 @@ export default defineComponent({
     LangOptions
   },
   setup() {
+    const { t } = useI18n();
     const tab = ref("login");
     const loginType = ref(false);
     const store = userStore();
@@ -407,7 +409,7 @@ export default defineComponent({
           passwordRef.value.validate();
           verificationRef.value.validate();
           $q.loading.show({
-            message: "登录中"
+            message: t("lang.logging_in")
           });
           if (loginNameRef.value.hasError || passwordRef.value.hasError || verificationRef.value.hasError) {
             $q.loading.hide();

@@ -60,7 +60,7 @@
                     </div>
                   </template>
                   <div>
-                    <div>正文：{{ item.content }}</div>
+                    <div>正文：<div v-html="item.content.replace(/\n/g, '<br/>')"></div></div>
                   </div>
                 </el-collapse-item>
               </el-collapse>

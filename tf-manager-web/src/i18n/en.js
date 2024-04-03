@@ -366,6 +366,17 @@ export default {
     ASC: 'Ascending',
     DESC: 'Descending',
   },
+  promoType: {
+    WELCOME: 'WELCOME',
+    SPORT: 'SPORT',
+    ESPORT: 'ESPORT',
+    FISH: 'FISH',
+    LIVECASINO: 'LIVE CASINO',
+    SLOTGAME: 'SLOT GAME',
+    POKER: 'POKER',
+    DAILY: 'DAILY',
+    OTHER: 'OTHER',
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -2185,6 +2196,8 @@ export default {
     'Competition List': 'Competition List',
     'Competition Code': 'Competition Code',
     'Affiliate Recalculate': 'Affiliate Recalculate',
+    Utils: 'Utils',
+    'Ip Location': 'Ip Location',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

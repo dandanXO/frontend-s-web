@@ -123,10 +123,10 @@
         <img src="../assets/images/home/withdraw-mid.png" />
         <div class="">{{ $t("lang.withdraw") }}</div>
       </router-link>
-      <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
+      <!-- <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/transfer-mid.png" />
         <div class="">{{ $t("lang.transfer") }}</div>
-      </router-link>
+      </router-link> -->
       <router-link to="/account/vip?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/vip-mid.png" />
         <div class="">{{ $t("lang.vip") }}</div>
@@ -840,9 +840,7 @@ export default defineComponent({
         .get("/promo/banner?category=HOME")
         .then((res) => {
           if (res.code === 0) {
-            console.log("banner?");
             banners.value = res.data;
-          } else {
           }
         })
         .catch(() => {});
@@ -908,6 +906,9 @@ export default defineComponent({
             }
             if (platTypes.indexOf("LIVE") > -1) {
               var liveObj = Object.assign({}, element);
+              if (liveObj.name === "AE") {
+                liveObj.name = "Sexy";
+              }
               liveObj.title_vn = liveObj.name + " Live Casino";
               liveObj.title_en = liveObj.name + " Live Casino";
               liveObj.icon = "live";
@@ -1435,7 +1436,7 @@ export default defineComponent({
     flex: 4;
     padding-left: 8px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     gap: 4px;
 
     .men {
@@ -1453,7 +1454,8 @@ export default defineComponent({
       }
 
       img {
-        width: 2rem;
+        display: block;
+        height: 2rem;
       }
     }
   }
@@ -1836,18 +1838,6 @@ export default defineComponent({
         }
       }
     }
-  }
-}
-</style>
-
-<style lang="scss">
-.q-select__dialog {
-  label {
-    img {
-      width: 30px;
-      height: 30px;
-    }
-    display: none;
   }
 }
 </style>

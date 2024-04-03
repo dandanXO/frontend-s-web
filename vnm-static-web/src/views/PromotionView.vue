@@ -80,6 +80,7 @@
               : 'background-image: url(' + require(`../assets/promo/web-bg.jpg`) + '\''
           "
         >
+          <h2 class="text-center">{{selectedPromo.title}}</h2>
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
             <HotPromotion :list="selectedPromo" />
           </div>
@@ -110,6 +111,10 @@ import { loadPromoBanner } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { useI18n } from "vue-i18n";
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from 'pinia'
+const i18nStoreLanguage = i18nStore()
+const { languageVal } = storeToRefs(i18nStoreLanguage)
 import HotPromotion from '@/components/HotPromotion'
 export default defineComponent({
   name: "PromoView",
@@ -128,16 +133,16 @@ export default defineComponent({
     const promoTypes = ref([
       { code:"ALL", img: 'all', label: t('promo.all') },
       { code: "SPORT", img: 'sport', label:  t('promo.sports')},
-      { code: "POKER", img: 'poker', label: t('promo.poker')},
       { code: "LIVE CASINO", img: 'live', label: t('promo.casino')},
       { code: "SLOT", img: 'slot', label: t('promo.slot')},
-      { code: "FISH", img: 'fish', label: t('promo.fish')},
+      { code: "POKER", img: 'poker', label: t('promo.poker')},
       { code: "LOTTERY", img: 'lottery', label: t('promo.lottery')},
+      { code: "FISH", img: 'fish', label: t('promo.fish')},
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
     const isPromoDetail = computed(() => {
-      if(route.query && route.query?.name && store.token){
+      if(route.query && route.query?.name ){
         return true;
       }
       return false;
@@ -162,21 +167,20 @@ export default defineComponent({
       })
     }
     const showPromoDetails = (promo) => {
-
-      if (!store.token) {
-          ElMessageBox.alert(t('common.loginbeforeAction'), t('common.systemError'), {
-              // if you want to disable its autofocus
-              // autofocus: false,sd
-              center: true,
-              confirmButtonText: t('common.confirm'),
-              showClose: false,
-              buttonSize: 'large'
-          }).then(() => {
-            // router.push('/login');
-              store.loginPageVisible = true
-          })
-          return
-      } else {
+      // if (!store.token) {
+      //     ElMessageBox.alert(t('bankError.loginbeforeAction'), t('common.systemError'), {
+      //         // if you want to disable its autofocus
+      //         // autofocus: false,sd
+      //         center: true,
+      //         confirmButtonText: t('common.confirm'),
+      //         showClose: false,
+      //         buttonSize: 'large'
+      //     }).then(() => {
+      //       // router.push('/login');
+      //         store.loginPageVisible = true
+      //     })
+      //     return
+      // } else {
         if (promo.redirectUrl.includes("page-vip")) {
           router.push("/vip");
         } else if (promo.redirectUrl.includes("lh1-invite")) {
@@ -191,7 +195,7 @@ export default defineComponent({
           // isPromoDetail.value = true;
           selectedPromo.value = promo
         }
-      }
+      // }
     }
 
     const scrollToTop = () => {
@@ -270,6 +274,18 @@ export default defineComponent({
       loadAll();
     });
 
+    watch(languageVal, (newValue, oldValue) => {
+      promoTypes.value = [
+        { code:"ALL", img: 'all', label: t('promo.all') },
+        { code: "SPORT", img: 'sport', label:  t('promo.sports')},
+        { code: "POKER", img: 'poker', label: t('promo.poker')},
+        { code: "LIVE CASINO", img: 'live', label: t('promo.casino')},
+        { code: "SLOT", img: 'slot', label: t('promo.slot')},
+        { code: "FISH", img: 'fish', label: t('promo.fish')},
+        { code: "LOTTERY", img: 'lottery', label: t('promo.lottery')},
+      ];
+    });
+
     // watch(() => route.query.name, () => {
     //   if (!route.query.name) {
     //     isPromoDetail.value = false
@@ -287,7 +303,8 @@ export default defineComponent({
       selectedPromo,
       banner,
       imgURL,
-      getPromoLabel
+      getPromoLabel,
+      languageVal
     }
   },
 });
@@ -302,7 +319,7 @@ export default defineComponent({
     background-size: 100% auto;
     padding: 50px;
     position: relative;
-    padding-top: max(300px, 20vw);
+    padding-top: max(270px, 15vw);
     background-color: #f3f7fd;
   }
   .promo-view-container {
@@ -405,7 +422,7 @@ export default defineComponent({
     .promo-main-container {
       width: 100%;
       // max-width: $maxwidth;
-      max-width: 1200px;
+    max-width: 1050px;
       margin: 0 auto;
       padding: 10px 0;
       display: flex;
@@ -677,7 +694,7 @@ export default defineComponent({
               justify-content: center;
               align-items: center;
               gap: 30px;
-              height: 320px;
+              height: 250px;
               .promo-content {
                 height: 100%;
                 &.isDesktop {

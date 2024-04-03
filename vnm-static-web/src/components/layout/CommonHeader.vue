@@ -1,10 +1,10 @@
 <template>
   <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
-      <div class="side left"><img src="../../assets/home/header_side.png"></div>
+      <!-- <div class="side left"><img src="../../assets/home/header_side.png"></div> -->
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
-          <img class="logo" src="../../assets/logo.svg" />
+          <img class="logo" src="../../assets/logo-bebest.svg" />
         </router-link>
         <div class="navigations">
           <template v-for="nav in navigations" :key="nav.name">
@@ -103,12 +103,12 @@
             </div>
             {{ $t('menu.withdraw') }}
           </router-link>
-          <router-link to="/center/transfer" class="action-btn">
+          <!-- <router-link to="/center/transfer" class="action-btn">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-transfer.png" />
             </div>
             {{ $t('menu.transfer') }}
-          </router-link>
+          </router-link> -->
         </div>
 
         <div class="profile-info" v-if="store.token">
@@ -124,25 +124,25 @@
               flex-direction: column;
               align-items: flex-start" class="profile-info-dropdown-content">
                 <el-dropdown-item command="personal">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
                     <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
                     <span>{{$t('menu.personalInfo')}}</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="deposit">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
                     <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
                     <span>{{$t('menu.deposit')}}</span>
                   </div>
                 </el-dropdown-item>
-                <el-dropdown-item command="transfer">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
+                <!-- <el-dropdown-item command="transfer">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
                     <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
                     <span>{{$t('menu.transfer')}}</span>
                   </div>
-                </el-dropdown-item>
+                </el-dropdown-item> -->
                 <el-dropdown-item command="promotion">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
                     <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
                     <span>{{$t('menu.promotion')}}</span>
                   </div>
@@ -194,7 +194,7 @@
         </div> -->
       </div>
       
-      <div class="side right"><img src="../../assets/home/header_side.png"></div>
+      <!-- <div class="side right"><img src="../../assets/home/header_side.png"></div> -->
     </div>
 
     <!-- <el-dialog
@@ -348,7 +348,7 @@
 
     <el-dialog
       v-model="captchaDialogVisible"
-      title="验证码"
+      :title="$t('personal.captcha')"
       width="50%"
       align-center
       style="max-width: 500px"
@@ -356,10 +356,10 @@
       @keydown.enter.prevent
     >
       <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="100" label-suffix=":">
-        <el-form-item tabindex="3" label="验证码" prop="captchaCode">
+        <el-form-item tabindex="3" :label="$t('personal.captcha')" prop="captchaCode">
           <el-row :gutter="10" style="justify-content: center; align-items: center">
             <el-col :span="12">
-              <el-input v-model="captchaForm.captchaCode" label="验证码" placeholder="验证码" @keyup.enter="sendOtp" />
+              <el-input v-model="captchaForm.captchaCode" :label="$t('personal.captcha')" :placeholder="$t('personal.captcha')" @keyup.enter="sendOtp" />
             </el-col>
             <el-col :span="12">
               <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
@@ -367,7 +367,7 @@
           </el-row>
         </el-form-item>
         <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px" @click="sendOtp">
-          发送
+          {{ $t('common.send') }}
         </el-button>
       </el-form>
     </el-dialog>
@@ -380,16 +380,16 @@
       style="max-width: 1080px"
       @close="store.forgetPassDialogVisible = false"
     >
-      <div class="acc-dialog-container">
+      <div class="acc-dialog-container" :style="`background-image: url(${require(`../../assets/home/acc-dialog-bg-${languageVal}.png`)})`">
         <div class="acc-dialog-left">
           <!-- <div class="acc-dialog-img">
             <img src="../../assets/home/acc-dialog-img.png" />
           </div> -->
         </div>
         <div class="acc-dialog-right">
-          <div class="acc-dialog-homelogo">
+          <!-- <div class="acc-dialog-homelogo">
             <img src="../../assets/logo.svg" width="150" />
-          </div>
+          </div> -->
           <div class="acc-dialog-content">
             <ForgotPwdDialog @close-dialog="forgetPassDialogVisible = false" @open-login-dialog="openLoginDialog" />
           </div>
@@ -399,24 +399,24 @@
 
     <el-dialog class="noPadding" v-model="noticeDialogVisible" width="1280px" align-center style="max-width: 600px">
       <div class="noticedialog">
-        <div class="title">系统提示</div>
+        <div class="title">{{ $t('common.systemError') }}</div>
         <div class="contents">
-          尊敬的雷火会员：
+          <!-- 尊敬的雷火会员：
           为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！雷火娱乐
           2022/10/13
           尊敬的雷火会员：为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！雷火娱乐
-          2022/10/13
+          2022/10/13 -->
         </div>
-        <el-button class="common-btn" @click="noticeDialogVisible = false">确认</el-button>
+        <el-button class="common-btn" @click="noticeDialogVisible = false">{{$t('common.confirm')}}</el-button>
       </div>
     </el-dialog>
 
     <el-dialog class="" v-model="logoutDialogVisible" width="600px" align-center>
       <div class="noticedialog">
-        <div class="title">您确定要退出吗？</div>
+        <div class="title">{{$t('common.areyousure')}}</div>
         <div class="standard-button-container">
-          <button class="standard-button btn-color-white" @click="logoutDialogVisible = false">取消</button>
-          <button class="standard-button btn-color-blue" @click="onLogout()">确认</button>
+          <button class="standard-button btn-color-white" @click="logoutDialogVisible = false">{{$t('common.cancel')}}</button>
+          <button class="standard-button btn-color-blue" @click="onLogout()">{{$t('common.confirm')}}</button>
         </div>
       </div>
     </el-dialog>
@@ -655,9 +655,9 @@ export default defineComponent({
     };
     let validatePass2 = async (r, v) => {
       if (v === "") {
-        return Promise.reject("请重新输入密码");
+        return Promise.reject(t('placeholder.passwordAgain'));
       } else if (v !== regForm.password) {
-        return Promise.reject("密码不同");
+        return Promise.reject(t('placeholder.passwordDifferent'));
       } else {
         return Promise.resolve();
       }
@@ -665,9 +665,9 @@ export default defineComponent({
     let validatePhoneNumber = async (r, v) => {
       var reg = /^\d+$/;
       if (v === "") {
-        return Promise.reject("请验证您的电话号码");
+        return Promise.reject(t('placeholder.verifyPhone'));
       } else if (!reg.test(v)) {
-        return Promise.reject("电话号码只允许使用数字");
+        return Promise.reject(t('placeholder.onlyNumber'));
       } else {
         return Promise.resolve();
       }
@@ -1089,7 +1089,7 @@ export default defineComponent({
                 if (regResult === 0) {
                   ElMessage({
                     type: "success",
-                    message: "注册成功"
+                    message: t('login.registerSuccess')
                   });
                   store.autoLogin(response.data);
                   registerDialogVisible.value = false;
@@ -1515,11 +1515,13 @@ body {
   //   border: 0;
   // }
 
-  // .el-dropdown-menu__item {
-  //   min-width: 130px;
-  //   color: #a8b5c3;
-  //   gap: 8px;
-  // }
+  .el-dropdown-menu__item {
+    // min-width: 130px;
+    // color: #a8b5c3;
+    // gap: 8px;
+    width: 100%;
+    justify-content: center;
+  }
 
   // .el-dropdown-menu__item:not(.is-disabled):focus {
   //   background: #3a4550;
@@ -1602,6 +1604,7 @@ body {
       }
 
       .amount {
+        font-family: 'Roboto';
         margin-right: 0.5rem;
         white-space: nowrap;
       }
@@ -1624,6 +1627,7 @@ body {
     font-size: 0.75rem;
     color: $font-1;
     cursor: pointer;
+    text-align: center;
 
     &:hover {
       color: $link-active;
@@ -1751,19 +1755,17 @@ body {
   transition: all 0.3s ease;
 
   .top-nav-wrapper {
-    overflow: hidden;
     .side {
       
     position: absolute;
     top: 0;
-    z-index: 0;
     &.left {
 
-      left: -50px;
+      left: 0px;
     }
     &.right {
 
-      right: -50px;
+      right: 0px;
     transform: rotateY(180deg);
     }
     }
@@ -1782,10 +1784,8 @@ body {
       align-items: center;
       gap: 15px;
 
-      z-index: 1;
-    position: relative;
       &.logged-in-nav {
-        max-width: 1400px;
+    max-width: 1530px;
       }
 
       .logospon {
@@ -1896,6 +1896,8 @@ body {
           > div {
             max-width: $maxwidth;
             margin: 0 auto;
+            width: 100%;
+            flex-wrap: wrap;
           }
         }
       }

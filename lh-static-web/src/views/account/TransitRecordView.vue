@@ -1328,6 +1328,8 @@ export default defineComponent({
       }
       if (platformName === "AG") {
         return "AG真人、XIN电子"; // AG
+      } else if (platformName === "AGF") {
+        return "AG捕鱼"; // AGF
       } else if (platformName === "BBINDY") {
         return "BBIN真人"; // BBINDY
       } else if (platformName === "KY") {
@@ -1338,26 +1340,18 @@ export default defineComponent({
         return "大唐棋牌"; // DT
       } else if (platformName === "TCG") {
         return "TCG彩票"; // TCG
-      } else if (platformName === "BBINDY") {
-        return "BBIN真人"; // BBINDY
       } else if (platformName === "PINNACLE") {
         return "平博体育"; // BBINDY
       } else if (platformName === "EBET") {
         return "WE真人"; // EBET
       } else if (platformName === "ALLBET") {
         return "欧博真人"; // EBET
-      } else if (platformName === "KY") {
-        return "开元棋牌"; // KY
-      } else if (platformName === "DT") {
-        return "大唐棋牌"; // DT
       } else if (platformName === "LEG") {
         return "乐游棋牌"; // KY
       } else if (platformName === "GLFC") {
         return "高登棋牌"; // DT
       } else if (platformName === "GFLC") {
         return "高登棋牌"; // DT
-      } else if (platformName === "TCG") {
-        return "TCG彩票"; // TCG
       } else if (platformName === "PT") {
         return "PT电子"; // PTDY
       } else if (platformName === "PG") {
@@ -1370,8 +1364,6 @@ export default defineComponent({
         return "BG真人"; // PGDY
       } else if (platformName === "Evo") {
         return "Evo真人"; // PGDY
-      } else if (platformName === "BBINDY") {
-        return "BBIN真人"; // PGDY
       } else if (platformName === "BBIN") {
         return "BBIN真人"; // PGDY
       } else if (platformName === "WE") {
@@ -1380,6 +1372,8 @@ export default defineComponent({
         return "DB真人"; // PGDY
       } else if (platformName === "PM") {
         return "熊猫体育"; // PGDY
+      } else if (platformName === "PMFISH") {
+        return "DB多宝捕鱼";
       } else if (platformName === "RG") {
         return "RG电竞";
       } else if (platformName === "IM") {
