@@ -6,11 +6,11 @@ import LocalStorage from "boot/local-storage";
 import i18n from "../i18n/index";
 import axios from "axios";
 import { getRndInteger } from "boot/utils";
+import { t } from "./lang";
 
 const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
-
 
 var rstApi = getInitApi(rstArray, "VNM_H5_RST_URL");
 var crtApi = getInitApi(crtArray, "VNM_H5_CRT_URL");
@@ -126,16 +126,17 @@ export default boot(({ app, router }) => {
         if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
           return Dialog.create({
             class: "login-card",
-            title: "请登录",
-            message: "请登录后操作",
-            cancel: { color: "negative", label: "取消" },
-            ok: { color: "brightbtn", label: "去登录" },
+            title: t("lang.system_hint"),
+            message: t("lang.system_please_login"),
+            cancel: { color: "negative", label: t("lang.system_cancel") },
+            ok: { color: "brightbtn", label: t("lang.system_loginnow") },
             padding: "20px"
           }).onOk(() => {
             router.push("/login");
           });
         }
-        if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
+        if (
+          res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
           res.code === ResponseCode.ERROR_NAME_EXIST ||
           res.code === ResponseCode.ERROR_TOKEN_MISSED
         ) {
@@ -153,7 +154,8 @@ export default boot(({ app, router }) => {
           timeout: 1000,
           position: "top",
           // message: res.message || "错误"
-          message: i18n.global.t('error.' + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error"
+          message:
+            i18n.global.t("error." + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error"
         });
       }
       throw new Error(res.message || "错误");

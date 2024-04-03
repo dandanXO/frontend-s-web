@@ -33,6 +33,14 @@ export function submitMemberSportMatchQuiz(param) {
   );
 }
 
+export function submitPiggyBankLottery() {
+  return eventapi.post(`/piggy-bank/getLottery`);
+}
+
+export function submitPiggyBankClaim() {
+  return eventapi.put(`/piggy-bank/claim`);
+}
+
 export function submitLuckyNumber(item) {
   return eventapi.post(
     `/privi/lotteryNumber`,
@@ -53,14 +61,12 @@ export function submitNewLossBonus(item) {
   );
 }
 
-export function submitSlotNewLossBonus(item) {
-  return eventapi.post(
-    `/privi/lotteryNumber`,
-    qs.stringify({
-      number: item,
-      promoCode: "lh1-lottery"
-    })
-  );
+export function submitPokerNewLossBonus() {
+  return eventapi.put(`/bonus/claim/vnm-poker-refund`);
+}
+
+export function submitSlotNewLossBonus() {
+  return eventapi.put(`/bonus/claim/vnm-slots-refund`);
 }
 
 export function luckyNumberList(queryItems, memberId) {

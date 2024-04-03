@@ -8,8 +8,8 @@
         color="brightbtn"
         style="width: 100%; max-width: 200px"
         no-caps
-        :loading="newLossBonusBtnLoading"
-        @click="chooseNewLossBonus()"
+        :loading="btnLoading"
+        @click="postPiggyBankLottery()"
         :label="$t('lang.vipenny_lottery_now')"
       />
     </div>
@@ -19,15 +19,15 @@
     <div class="coin">
       <img src="../../../assets/images/promo/hotpromo/vipennybank/penny-pig.png" />
 
-      <div class="piggy-amount">0 VNDP</div>
+      <div class="piggy-amount" v-if="lotteryAmount > 0">{{ lotteryAmount }} VNDP</div>
     </div>
     <div class="input">
       <q-btn
         color="brightbtn"
         style="width: 100%; max-width: 200px"
         no-caps
-        :loading="newLossBonusBtnLoading"
-        @click="chooseNewLossBonus()"
+        :loading="btnLoading"
+        @click="putPiggyBankClaim()"
         :label="$t('lang.vipenny_claim_now')"
       />
     </div>
@@ -36,17 +36,19 @@
 
 <script setup>
 import { ref, reactive, computed } from "vue";
-import { submitNewLossBonus } from "../../../api/index/promo";
+import { submitPiggyBankLottery, submitPiggyBankClaim } from "../../../api/index/promo";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const newLossBonus = ref(null);
-const newLossBonusBtnLoading = ref(false);
+const btnLoading = ref(false);
+const lotteryAmount = ref(0);
 
-function chooseNewLossBonus() {
-  newLossBonusBtnLoading.value = true;
+// piggy-bank/getLottery
+const postPiggyBankLottery = () => {
+  btnLoading.value = true;
 
-  submitNewLossBonus(newLossBonus.value)
+  submitPiggyBankLottery()
     .then((res) => {
       if (res.code === 0) {
         $q.notify({
@@ -55,21 +57,36 @@ function chooseNewLossBonus() {
           message: t("lang.vipoker_submit_successfully"),
           icon: "check_circle_outline"
         });
-        newLossBonus.value = null;
-      } else {
+
+        lotteryAmount.value = res.data.amount;
+      }
+    })
+    .catch(() => {})
+    .then(() => {
+      btnLoading.value = false;
+    });
+};
+
+// piggy-bank/claim
+const putPiggyBankClaim = () => {
+  btnLoading.value = true;
+
+  submitPiggyBankClaim()
+    .then((res) => {
+      if (res.code === 0) {
         $q.notify({
-          color: "negative",
+          type: "positive",
           position: "top",
-          message: res.message,
-          icon: "report_problem"
+          message: t("lang.vipoker_submit_successfully"),
+          icon: "check_circle_outline"
         });
       }
     })
     .catch(() => {})
     .then(() => {
-      newLossBonusBtnLoading.value = false;
+      btnLoading.value = false;
     });
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -91,7 +108,7 @@ function chooseNewLossBonus() {
     .piggy-amount {
       position: absolute;
       text-align: center;
-      bottom: 10px;
+      bottom: 45px;
       left: 50%;
       transform: translateX(-50%);
       font-weight: bold;

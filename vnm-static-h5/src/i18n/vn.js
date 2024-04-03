@@ -161,6 +161,7 @@ export default {
     system_cancel: "Hủy",
     system_operation_success: "Thao tác thành công, vui lòng kiểm tra mã xác minh trên điện thoại di động!",
     system_verify_failed: "Xác minh không thành công, vui lòng làm mới trang",
+    system_loginnow: "Đăng nhập ngay",
 
     // personal | verify
     personal_exclusiveurl: "URL riêng",
@@ -1271,6 +1272,8 @@ export default {
     35007: "IP này đã nhận quyền lợi",
     35008: "Bạn không có quyền lợi này",
     35009: "Quyền lợi sẽ có hiệu lực ngay",
-    35010: "35010 Thành viên không thể nhận quy"
+    35010: "35010 Thành viên không thể nhận quy",
+    45000: "Không đạt số tiền rút tối thiểu",
+    45001: "Nhận được tiền thưởng ngẫu nhiên ngày hôm nay"
   }
 };
