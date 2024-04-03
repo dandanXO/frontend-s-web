@@ -421,6 +421,13 @@ const openMsg = (m) => {
 <style scoped lang="scss">
 .account-container {
   .account-content-wrapper {
+
+    .el-form-item {
+      flex-direction: row;
+    }
+    .el-form-item__content {
+      max-width: unset;
+    }
     .account-content.mail {
       min-height: 740px;
       margin-bottom: 0;

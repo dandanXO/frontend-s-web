@@ -570,7 +570,7 @@ const onSubmit = (e) => {
         .then((response) => {
           if (response.code === 0) {
             ElMessage({
-              message: "提交成功",
+              message: t('common.submitSuccess'),
               type: "success"
             });
             loadPersonalMailbox();

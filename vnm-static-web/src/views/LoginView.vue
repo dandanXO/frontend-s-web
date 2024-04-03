@@ -201,7 +201,7 @@ const sendOtp = async () => {
           loginForm.smsCodeId = response.data.codeId;
           ElMessage({
             type: "success",
-            message: "发送手机验证码成功"
+            message: t('common.sendPhoneVerificationSuccess')
           });
           captchaDialogVisible.value = false;
           getCode();

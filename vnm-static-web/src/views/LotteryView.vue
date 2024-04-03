@@ -13,11 +13,8 @@ import { ref } from "vue";
 import PlatformView from "@/components/PlatformView";
 import { lotteryPlatforms } from "@/shared/platformArray";
 
-import { useI18n } from "vue-i18n";
-const { t } = useI18n();
-
 const platformType = ref("lottery");
 const platformGameType = ref("LOTTERY");
-const platformName = ref(t('menu.lottery'));
+const platformName = ref('lottery');
 const platformPattern = ref(true);
 </script>
