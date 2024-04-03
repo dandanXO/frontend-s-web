@@ -149,7 +149,7 @@ export default defineComponent({
 
       if (!allowFileType.find(ftype => ftype.includes(files.type))) {
         ElMessage({
-          message: '上传限制',
+          message: t('account.upload_fail_please_try'),
           type: 'error',
         })
       } else {
@@ -173,7 +173,7 @@ export default defineComponent({
           }
         } else {
           ElMessage({
-            message: '上传失败. 上传限制，请稍后再试',
+            message: t('account.upload_fail_please_try'),
             type: 'error',
           })
         }
