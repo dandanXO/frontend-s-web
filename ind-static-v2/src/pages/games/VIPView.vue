@@ -878,12 +878,12 @@ const swipeRight = () => {
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    background: #101114;
     color: #5c6c86;
   }
 
   .vip-promo-tab-toggle {
-    background-color: #1b2232;
+    background: url(../../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
+    background-size: 100% 100%;
     border-radius: 8px;
     margin-bottom: 4px;
     margin-top: 5px;
@@ -894,10 +894,9 @@ const swipeRight = () => {
     }
 
     :deep(.q-tab--active) {
-      color: #fff;
-      background: linear-gradient(0deg, #5c46e7, #5c46e7), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-      box-shadow: 0px 1px 2px 0px #0000000d;
-      border: 1px solid #5c46e7;
+      color: white;
+      background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-right.png) no-repeat center center;
+      background-size: 100% 100%;
     }
 
     :deep(.q-tab--active .q-tab__label) {

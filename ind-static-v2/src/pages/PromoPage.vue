@@ -530,26 +530,27 @@ export default defineComponent({
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    background: #101114;
     color: #5c6c86;
     font-weight: 400;
   }
 
   .vip-promo-tab-toggle {
-    background-color: #1b2232;
+    background: url(../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
+    background-size: 100% 100%;
     border-radius: 8px;
     margin-bottom: 4px;
     margin-top: 5px;
     padding: 1px;
+    
 
     :deep(.q-tab__label) {
       font-weight: 400;
     }
 
     :deep(.q-tab--active) {
-      color: #fff;
-      background: linear-gradient(0deg, #5c46e7, #5c46e7), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-      box-shadow: 0px 1px 2px 0px #0000000d;
+      color: white;
+      background: url(../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
+      background-size: 100% 100%;
     }
 
     :deep(.q-tab--active .q-tab__label) {
@@ -727,7 +728,7 @@ export default defineComponent({
           transition: 0.4s ease-in;
           margin-bottom: 20px;
           overflow: hidden;
-          padding-top: 40px;
+          // padding-top: 40px;
           border-radius: 17px;
           background: #4f366c;
           box-shadow: 0px 7.5px 20px 0px #1411321a;
@@ -802,12 +803,16 @@ export default defineComponent({
               position: absolute;
               width: 100%;
               z-index: 2;
-              top: 0;
+              bottom: 0px;
               height: 40px;
               overflow: hidden;
               line-height: 40px;
               padding: 0 100px 0 10px;
               font-weight: 500;
+              background: linear-gradient(356.25deg, rgba(0, 0, 0, 0.6) -0.21%, rgba(0, 0, 0, 0.6) 93.65%);
+              font-family: Poppins;
+              font-size: 15.3px;
+              font-weight: 700;
 
               // &:before {
               //   background: #043d4f;
