@@ -1,8 +1,8 @@
 <template>
   <div class="transaction-landing">
     <q-tabs v-model="activeKey" class="deposit-tabs" color="black" no-caps indicator-color="transparent">
-      <q-route-tab to="/deposit" name="deposit" label="Deposit"></q-route-tab>
-      <q-route-tab to="/withdraw" name="withdraw" label="Withdraw" :class="activeKey === 'withdraw' ? 'flip' : ''"></q-route-tab>
+      <q-route-tab class="left" to="/deposit" name="deposit" label="Deposit"></q-route-tab>
+      <q-route-tab class="right" to="/withdraw" name="withdraw" label="Withdraw"></q-route-tab>
     </q-tabs>
 
     <q-tab-panels v-model="activeKey" class="deposit-panels">
@@ -63,16 +63,18 @@ watch(
 
     :deep(.q-tab--active) {
       color: white;
-      background: #5c46e7;
-      background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
-      background-size: 100% 100%;
-
-      box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
-
-      &.flip {
+      
+      &.right {
         background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-right.png) no-repeat center center;
         background-size: 100% 100%;
       }
+
+      &.left {
+        background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
+        background-size: 100% 100%;
+      }
+
+      box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
 
       .q-tab__label {
         font-weight: bold;

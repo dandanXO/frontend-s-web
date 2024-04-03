@@ -10,8 +10,8 @@
       indicator-color="transparent"
       align="justify"
     >
-      <q-tab name="promo" label="Promo" />
-      <q-tab name="vip" label="VIP" />
+      <q-tab class="left" name="promo" label="Promo" />
+      <q-tab class="right" name="vip" label="VIP" />
     </q-tabs>
   </div>
 
@@ -33,8 +33,8 @@
                 <defs>
                   <!-- Linear Gradient -->
                   <linearGradient id="myGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" style="stop-color: #8b36f8; stop-opacity: 1" />
-                    <stop offset="100%" style="stop-color: #334ad6; stop-opacity: 1" />
+                    <stop offset="0%" style="stop-color: #fff; stop-opacity: 1" />
+                    <stop offset="100%" style="stop-color: #fff; stop-opacity: 1" />
                   </linearGradient>
                 </defs>
                 <text class="svgText" x="10" y="45" fill="url(#myGradient)">VIP{{ vip.vipLevel }}</text>
@@ -888,8 +888,16 @@ const swipeRight = () => {
 
     :deep(.q-tab--active) {
       color: white;
-      background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-right.png) no-repeat center center;
-      background-size: 100% 100%;
+      
+      &.right {
+        background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-right.png) no-repeat center center;
+        background-size: 100% 100%;
+      }
+
+      &.left {
+        background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
+        background-size: 100% 100%;
+      }
     }
 
     :deep(.q-tab--active .q-tab__label) {
@@ -1036,13 +1044,13 @@ const swipeRight = () => {
       right: 6%;
 
       .progress-bar-endpoint-label {
-        color: #333;
+        color: #fff;
       }
 
       .progress-bar-outer-bar {
-        border: 1px solid #fff;
+        // border: 1px solid #fff;
         border-radius: 16px;
-        background: #fff;
+        background: #FFFFFF4D;
         width: 100%;
         overflow: hidden;
         position: relative;
@@ -1062,7 +1070,8 @@ const swipeRight = () => {
       .progress-bar-inner-bar {
         color: #fff;
         border-radius: 16px;
-        background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+        // background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
+        background: #fff;
         height: 12px;
       }
     }
@@ -1076,10 +1085,10 @@ const swipeRight = () => {
       font-size: 1.2em;
       left: 25px;
       top: 55%;
-      color: #424f72;
+      color: #fff;
 
       span {
-        color: #7a80a1;
+        color: #fff;
       }
     }
   }
