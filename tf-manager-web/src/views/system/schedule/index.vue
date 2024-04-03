@@ -156,6 +156,21 @@
           size="small"
           label-width="150px"
         >
+          <el-form-item :label="t('fields.jobType')" prop="jobType">
+            <el-select
+              v-model="scheduleForm.jobType"
+              :placeholder="t('fields.pleaseChoose')"
+              style="width: 350px;"
+              @change="handleChangeJobType()"
+            >
+              <el-option
+                v-for="item in uiControl.jobTypes"
+                :key="item.key"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
           <el-form-item :label="t('fields.jobName')" prop="jobName">
             <el-input v-model="scheduleForm.jobName" style="width: 350px;" />
           </el-form-item>
@@ -347,6 +362,21 @@
       size="small"
       label-width="150px"
     >
+      <el-form-item :label="t('fields.jobType')" prop="jobType">
+        <el-select
+          v-model="scheduleForm.jobType"
+          :placeholder="t('fields.pleaseChoose')"
+          @change="handleChangeJobType()"
+          style="width: 350px;"
+        >
+          <el-option
+            v-for="item in uiControl.jobTypes"
+            :key="item.key"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item :label="t('fields.jobName')" prop="jobName">
         <el-input v-model="scheduleForm.jobName" style="width: 350px;" />
       </el-form-item>
@@ -535,6 +565,10 @@ const uiControl = reactive({
     { key: false, value: 'NO' },
   ],
   showParamFormat: 'key-value',
+  jobTypes: [
+    { key: 'NORMAL', displayName: 'Normal', value: 'NORMAL' },
+    { key: 'BET_RECORDS', displayName: 'Bet Records', value: 'BET_RECORDS' },
+  ],
 })
 const request = reactive({
   size: 30,
@@ -557,6 +591,7 @@ const scheduleForm = reactive({
   stopAfterFailure: true,
   description: '',
   sites: null,
+  jobType: null,
 })
 
 const formRules = reactive({
@@ -599,6 +634,17 @@ function handleChangeSites() {
   scheduleForm.sites = selected.sites.join(',')
 }
 
+function handleChangeJobType() {
+  if (scheduleForm.jobType === 'BET_RECORDS') {
+    // populate default param
+    populateParam()
+    console.log('bet records')
+  } else {
+    console.log('normal')
+  }
+  console.log('scheduleForm.jobType : ', scheduleForm.jobType)
+}
+
 async function loadJobs() {
   const { data: ret } = await getAllJob(request)
   page.pages = ret.pages
@@ -623,6 +669,7 @@ function showDialog(type) {
     scheduleForm.stopAfterFailure = true
     scheduleForm.description = ''
     scheduleForm.sites = null
+    scheduleForm.jobType = null
     uiControl.dialogTitle = t('fields.addJob')
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editJob')
@@ -670,7 +717,7 @@ function showEdit(job) {
       )
     }
 
-    if (scheduleForm.beanName === 'gameBetRecordFetchTask') {
+    if (scheduleForm.jobType === 'BET_RECORDS') {
       loadSitePlatforms()
     }
 
@@ -766,7 +813,7 @@ function submit() {
 async function populateParam() {
   if (
     uiControl.dialogType === 'CREATE' &&
-    scheduleForm.beanName === 'gameBetRecordFetchTask'
+    scheduleForm.jobType === 'BET_RECORDS'
   ) {
     param.value = [
       { key: 'platformAccountId', value: '' },
@@ -819,7 +866,7 @@ function constructParam() {
 
 function disableKey(key) {
   return (
-    scheduleForm.beanName === 'gameBetRecordFetchTask' &&
+    scheduleForm.jobType === 'BET_RECORDS' &&
     (key === 'barrierCondition' ||
       key === 'maxPeriod' ||
       key === 'minInterval' ||
