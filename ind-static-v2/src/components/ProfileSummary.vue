@@ -413,7 +413,7 @@ onMounted(() => {
       position: absolute;
       right: 0px;
       top: 0px;
-      background: #8952ff;
+      background: #00AE00;
       border-radius: 100px;
       padding: 0px 3px;
       z-index: 1;
@@ -608,7 +608,7 @@ onMounted(() => {
 }
 
 .message-amt {
-  background-color: #8952ff;
+  background-color: #00AE00;
   border-radius: 30px;
   width: 20px;
   height: 20px;

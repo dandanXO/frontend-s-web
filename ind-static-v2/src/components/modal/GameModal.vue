@@ -476,7 +476,7 @@ defineExpose({
   background: #1d1d27;
 
   .topActions {
-    background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
+    // background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
     box-shadow: 0px 3 7px 0px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;

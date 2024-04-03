@@ -408,7 +408,7 @@ onActivated(() => {
   .q-dialog__inner > .q-card {
     padding: 2.4rem 1.5rem;
     border-radius: 12px;
-    background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+    // background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
     //background-image: url("../../assets/images/index/modal-bg.png");
     background-size: 100% 100%;
     width: 90%;

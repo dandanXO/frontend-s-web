@@ -291,6 +291,7 @@ const logout = () => {
   }
 
   .acct-menu {
+    padding: 10px;
     background: #2e30344f;
     border-radius: 4px;
     display: grid;

@@ -36,7 +36,7 @@
           min-height: 3px;
           width: 33px;
           padding: 0;
-          background-color: #661ebf;
+          background-color: #7EDB5C;
         "
       />
       <q-btn
