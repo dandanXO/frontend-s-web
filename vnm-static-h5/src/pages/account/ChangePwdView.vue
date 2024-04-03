@@ -392,7 +392,6 @@ export default defineComponent({
     const verifyOtpAndChangePassword = () => {
       api.post(`/session/verifyOtpAndChangePassword`, qs.stringify({
         password: formChgWithdrawPwd.password,
-        email: memberEmail.value,
         code: formChgWithdrawPwd.otpCode,
         codeId: secondCodeId.value,
       }))
