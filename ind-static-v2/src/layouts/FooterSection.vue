@@ -1,6 +1,6 @@
 <template>
     <q-footer v-if="ui.footer" :style="ui.bottomInsetHeight > 0 ? `bottom: ${ui.bottomInsetHeight}px;` : ''" elevated>
-      <q-tabs v-model="tab" no-caps :breakpoint="0" align="justify">
+      <q-tabs v-model="tab" no-caps :breakpoint="0" align="justify" indicator-color="green" narrow-indicator>
         <q-route-tab to="/home" name="home" exact :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/home-icon.png" />
           <img class="hover" src="../assets/images/index/menu/home-icon-hover.png" />
@@ -11,8 +11,8 @@
           <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.png" />
           <span class="footer-label">Promo</span>
         </q-route-tab>
-        <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" :ripple="false">
-          <img src="../assets/images/index/menu/deposit-icon.png" />
+        <q-route-tab class="center-menu" :to="`/deposit?from=${route.path}`" name="deposit" :ripple="false">
+          <img  src="../assets/images/index/menu/deposit-icon.png" />
           <span class="footer-label">Deposit</span>
         </q-route-tab>
         <q-route-tab to="/earn-money" name="earn-money" :ripple="false">
@@ -41,4 +41,23 @@ const tab = ref("home");
 </script>
 
 <style lang="scss" scoped>
+
+:deep(.q-tab--active) {
+  position: relative;
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 92px;
+    height: 92px;
+    top: 50%;
+    pointer-events: none;
+    left: 50%;
+    margin-top: -10px;
+    transform: translate(-50%, -50%);
+    background-size: contain;
+    background-image: url("../assets/images/account/shadow2-bg.png");
+  }
+}
 </style>
