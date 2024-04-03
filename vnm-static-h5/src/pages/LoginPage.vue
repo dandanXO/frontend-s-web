@@ -181,11 +181,11 @@
             />
           </div>
 
-          <div class="login-via-phone-div">
+          <!-- <div class="login-via-phone-div">
             <span @click="loginType = !loginType">
               {{ loginType ? $t("lang.username_login") : $t("lang.phone_login") }}
             </span>
-          </div>
+          </div> -->
 
           <div class="text-center">
             <router-link class="forget-pwd-tip" to="/forgot-password">{{ $t("lang.forgot_password") }}</router-link>
