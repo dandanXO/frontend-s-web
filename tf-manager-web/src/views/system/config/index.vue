@@ -725,6 +725,7 @@ async function loadConfigs() {
       config.code !== 's3_url' &&
       config.code !== 'withdraw_tips'
   )
+
   configs.customList = configs.customList.sort((a, b) => {
     if (a.configGroup < b.configGroup) {
       return -1
@@ -738,6 +739,7 @@ async function loadConfigs() {
       }
     }
   })
+
   // group customList items by configGroup and store in customGroup as {group: configGroup, items: [customList]}
   configs.customGroup = []
   let group = null
@@ -751,7 +753,12 @@ async function loadConfigs() {
       items = []
     }
     items.push(configs.customList[index])
+    // handle last group
+    if (index === configs.customList.length - 1) {
+      configs.customGroup.push({ group, items })
+    }
   }
+
   // sort configs.customGroup.items by order index
   for (let index = 0; index < configs.customGroup.length; index++) {
     configs.customGroup[index].items = configs.customGroup[index].items.sort(
