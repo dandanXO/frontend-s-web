@@ -94,6 +94,10 @@ export function sendEmail(emailInfo) {
   return server.REST.post("/otp/sendNewEmail", emailInfo);
 }
 
+export function verifyOtpAndChangePassword(withdrawPwdInfo) {
+  return server.REST.post("/verifyOtpAndChangePassword", withdrawPwdInfo);
+}
+
 export function verifyEmail(emailInfo) {
   return server.REST.post("/session/verifyAndUpdateEmail", emailInfo);
 }

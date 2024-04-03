@@ -67,6 +67,8 @@
                 />
               </div>
               <div class="inner">
+                <h2>{{selectedPromo.title}}</h2>
+
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
                 </div>
@@ -166,11 +168,11 @@ export default defineComponent({
     const tabItems = [
 
       { name: "all", label: t("lang.type_all") },
-      { name: "esport", label: t("lang.type_esport") },
       { name: "sport", label: t("lang.type_sport") },
-      // {name: "slot game", label: '老虎机'},
-      // {name: "fish", label: '捕鱼'},
       { name: "live casino", label: t("lang.type_livecasino") },
+      {name: "slot game", label: t("lang.type_slot") },
+      // { name: "esport", label: t("lang.type_esport") },
+      // {name: "fish", label: '捕鱼'},
       { name: "others", label: t("lang.type_others") }
     ];
 
@@ -219,9 +221,9 @@ export default defineComponent({
 
       } else {
         // non extension
-        if (!store.token) {
-          isDisplayLogin.value = true;
-        } else {
+        // if (!store.token) {
+          // isDisplayLogin.value = true;
+        // } else {
 
           if (promo.redirectUrl.includes("page-vip")) {
             router.push("/account/vip?from=promo");
@@ -234,7 +236,7 @@ export default defineComponent({
             isPromoDetail.value = true;
             selectedPromo.value = promo;
           }
-        }
+        // }
       }
     };
 
@@ -695,6 +697,13 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
+        h2{
+          font-size: 18px;
+          font-weight: bold;
+          margin: 5px auto 6px;
+          line-height: 20px;
+        }
 
         img {
           margin-bottom: 5px;

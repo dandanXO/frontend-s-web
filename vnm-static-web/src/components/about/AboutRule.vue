@@ -3,7 +3,7 @@
     <div class="inner">
     <ul>
         <li>{{ $t('about.familyRestriction') }}</li>
-        <li>{{ $t('about.entertainmentPurpose') }}</li>
+        <li>{{ $t('about.entertainmentPurpose2') }}</li>
         <li>{{ $t('about.modifyPromotion') }}</li>
         <li>{{ $t('about.singleDeposit') }}</li>
         <li>

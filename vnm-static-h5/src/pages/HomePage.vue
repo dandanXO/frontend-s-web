@@ -14,7 +14,7 @@
   <div v-if="isH5 && topBoxVisible" class="download-top-container">
     <div class="download-top-box">
       <q-icon name="close" @click="closeTopBox" />
-      <img class="headicon" src="../assets/logo-1.png" alt="download-logo" />
+      <img class="headicon" src="../assets/logo-web.svg" alt="download-logo" />
       <div class="download-txt-container">
         <span class="download-title">{{ $t("lang.app_download_title") }}</span>
         <span>{{ $t("lang.app_download_desc") }}</span>
@@ -36,7 +36,7 @@
 
   <div class="home-header">
     <div class="header-left" @click="router.push('/')">
-      <img alt="logo" src="../assets/logo-1.png" />
+      <img alt="logo" src="../assets/logo-web.svg" />
     </div>
     <div class="header-middle" v-if="!store.token">
       <q-btn rounded no-caps color="brightbtn" @click="router.push('/login')">
@@ -123,10 +123,10 @@
         <img src="../assets/images/home/withdraw-mid.png" />
         <div class="">{{ $t("lang.withdraw") }}</div>
       </router-link>
-      <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
+      <!-- <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/transfer-mid.png" />
         <div class="">{{ $t("lang.transfer") }}</div>
-      </router-link>
+      </router-link> -->
       <router-link to="/account/vip?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/vip-mid.png" />
         <div class="">{{ $t("lang.vip") }}</div>
@@ -156,16 +156,6 @@
         <span :class="tab === 'live' && 'active'">{{ $t("lang.menu_livecasino") }}</span>
       </div>
 
-      <div @click="selectTab('poker')" class="game-platform btn-pointer" id="poker-platform">
-        <template v-if="tab === 'poker'">
-          <img src="../assets/images/home/games/poker-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/poker-icon.png" />
-        </template>
-        <span :class="tab === 'poker' && 'active'">{{ $t("lang.menu_poker") }}</span>
-      </div>
-
       <div @click="selectTab('slot')" class="game-platform btn-pointer" id="slot-platform">
         <template v-if="tab === 'slot'">
           <img src="../assets/images/home/games/slot-icon-active.png" />
@@ -176,14 +166,14 @@
         <span :class="tab === 'slot' && 'active'">{{ $t("lang.menu_slots") }}</span>
       </div>
 
-      <div @click="selectTab('lottery')" class="game-platform btn-pointer" id="lottery-platform">
-        <template v-if="tab === 'lottery'">
-          <img src="../assets/images/home/games/lottery-icon-active.png" />
+      <div @click="selectTab('poker')" class="game-platform btn-pointer" id="poker-platform">
+        <template v-if="tab === 'poker'">
+          <img src="../assets/images/home/games/poker-icon-active.png" />
         </template>
         <template v-else>
-          <img src="../assets/images/home/games/lottery-icon.png" />
+          <img src="../assets/images/home/games/poker-icon.png" />
         </template>
-        <span :class="tab === 'lottery' && 'active'">{{ $t("lang.menu_lottery") }}</span>
+        <span :class="tab === 'poker' && 'active'">{{ $t("lang.menu_poker") }}</span>
       </div>
 
       <div @click="selectTab('esport')" class="game-platform btn-pointer" id="esport-platform">
@@ -194,6 +184,16 @@
           <img src="../assets/images/home/games/esport-icon.png" />
         </template>
         <span :class="tab === 'esport' && 'active'">{{ $t("lang.menu_esports") }}</span>
+      </div>
+
+      <div @click="selectTab('lottery')" class="game-platform btn-pointer" id="lottery-platform">
+        <template v-if="tab === 'lottery'">
+          <img src="../assets/images/home/games/lottery-icon-active.png" />
+        </template>
+        <template v-else>
+          <img src="../assets/images/home/games/lottery-icon.png" />
+        </template>
+        <span :class="tab === 'lottery' && 'active'">{{ $t("lang.menu_lottery") }}</span>
       </div>
 
       <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
@@ -291,31 +291,6 @@
         </template>
       </div>
 
-      <div class="game-lists fade-in-image" id="poker-lists">
-        <template v-for="(item, index) in poker" :key="index">
-          <div
-            class="platform-block"
-            @click="playGame(item.gameName, item.code, item.gameCode)"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-              }"
-            >
-              <div class="platform-content">
-                <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </div>
-
       <div class="game-lists fade-in-image" id="slot-lists">
         <template v-for="(item, index) in slot" :key="index">
           <div
@@ -341,8 +316,8 @@
         </template>
       </div>
 
-      <div class="game-lists fade-in-image" id="lottery-lists">
-        <template v-for="(item, index) in lottery" :key="index">
+      <div class="game-lists fade-in-image" id="poker-lists">
+        <template v-for="(item, index) in poker" :key="index">
           <div
             class="platform-block"
             @click="playGame(item.gameName, item.code, item.gameCode)"
@@ -368,6 +343,31 @@
 
       <div class="game-lists fade-in-image" id="esport-lists">
         <template v-for="(item, index) in esport" :key="index">
+          <div
+            class="platform-block"
+            @click="playGame(item.gameName, item.code, item.gameCode)"
+            :class="item.underMaintenance === true ? 'maintenance' : ''"
+          >
+            <MaintenanceBox :item="item" />
+
+            <div
+              class="platform-img-frame"
+              :style="{
+                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
+              }"
+            >
+              <div class="platform-content">
+                <div class="platform-title">
+                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <div class="game-lists fade-in-image" id="lottery-lists">
+        <template v-for="(item, index) in lottery" :key="index">
           <div
             class="platform-block"
             @click="playGame(item.gameName, item.code, item.gameCode)"
@@ -672,6 +672,9 @@ export default defineComponent({
       if (tab === "slot") {
         scrollToSlide("slot-lists");
       }
+      if (tab === "esport") {
+        scrollToSlide("esport-lists");
+      }
       if (tab === "fishing") {
         scrollToSlide("fishing-lists");
       }
@@ -840,9 +843,7 @@ export default defineComponent({
         .get("/promo/banner?category=HOME")
         .then((res) => {
           if (res.code === 0) {
-            console.log("banner?");
             banners.value = res.data;
-          } else {
           }
         })
         .catch(() => {});
@@ -908,6 +909,9 @@ export default defineComponent({
             }
             if (platTypes.indexOf("LIVE") > -1) {
               var liveObj = Object.assign({}, element);
+              if (liveObj.name === "AE") {
+                liveObj.name = "Sexy";
+              }
               liveObj.title_vn = liveObj.name + " Live Casino";
               liveObj.title_en = liveObj.name + " Live Casino";
               liveObj.icon = "live";
@@ -924,6 +928,9 @@ export default defineComponent({
               var slotObj = Object.assign({}, element);
               if (slotObj.name === "JiliGames") {
                 slotObj.name = "Jili";
+              }
+              if (slotObj.name === "AG") {
+                slotObj.name = "XIN";
               }
               slotObj.title_vn = slotObj.name + " Slots";
               slotObj.title_en = slotObj.name + " Slot";
@@ -955,6 +962,9 @@ export default defineComponent({
               pokerObj.title_vn = pokerObj.name + " Poker";
               pokerObj.title_en = pokerObj.name + " Poker";
               pokerObj.icon = "poker";
+              if (pokerObj.code === "GPI") {
+                pokerObj.gameCode = "poker";
+              }
               poker.value.push(pokerObj);
             }
             if (platTypes.indexOf("LOTTERY") > -1) {
@@ -962,6 +972,9 @@ export default defineComponent({
               lottObj.title_vn = "Xổ Số " + lottObj.name;
               lottObj.title_en = "Lottery " + lottObj.name;
               lottObj.icon = "lottery";
+              if (lottObj.code === "GPI") {
+                lottObj.gameCode = "thailottery";
+              }
               lottery.value.push(lottObj);
             }
           });
@@ -1405,7 +1418,7 @@ export default defineComponent({
   width: $box-width;
   margin: 0 auto;
   gap: 10px;
-  padding: 10px 10px 0px;
+  padding: 10px 0px 0px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1433,8 +1446,9 @@ export default defineComponent({
 
   .menulist {
     flex: 4;
-    padding-left: 8px;
+    // padding-left: 8px;
     display: flex;
+    // justify-content: space-evenly;
     justify-content: space-between;
     gap: 4px;
 
@@ -1453,7 +1467,8 @@ export default defineComponent({
       }
 
       img {
-        width: 2rem;
+        display: block;
+        height: 2rem;
       }
     }
   }
@@ -1727,6 +1742,7 @@ export default defineComponent({
         overflow: hidden;
         display: grid;
         grid-template-columns: 50% 50%;
+        box-shadow: -1px 5px 11px rgb(0 0 0 / 10%);
 
         .platform-content {
           width: 100%;
@@ -1836,18 +1852,6 @@ export default defineComponent({
         }
       }
     }
-  }
-}
-</style>
-
-<style lang="scss">
-.q-select__dialog {
-  label {
-    img {
-      width: 30px;
-      height: 30px;
-    }
-    display: none;
   }
 }
 </style>

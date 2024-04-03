@@ -2895,6 +2895,10 @@ body {
       background-image: url("../../assets/fishing/gps_fish_king.png");
     }
 
+    &.fish-db {
+      background-image: url("../../assets/fishing/pmfish_fish_king.png");
+    }
+
     &.live-ag {
       background-image: url("../../assets/live/live_ag.png");
     }

@@ -1,9 +1,9 @@
 <template>
   <div class="table-record">
     <div class="flex-div">
-      <span>选择平台：</span>
+      <span class="select-stage">选择平台：</span>
       <q-select
-        allowClear
+        clearable
         rounded
         outlined
         dense
@@ -12,9 +12,50 @@
         v-model="platform"
         :options="platformsList"
         placeholder="选择平台"
+        map-options
+        @clear="platform = ''"
         @update:model-value="searchRecord"
       ></q-select>
+
+      <div class="payout-total">
+        <div>总投注: {{ totalBetRecord.totalBet }}</div>
+        <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
+      </div>
     </div>
+    <div class="flex-div">
+      <span>开始：</span>
+      <q-input rounded outlined dense v-model="startDate">
+        <template v-slot:append>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+              <q-date v-model="startDate" mask="YYYY-MM-DD" @update:model-value="searchRecord">
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="关闭" color="primary" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
+      <span>结束：</span>
+      <q-input rounded outlined dense v-model="endDate">
+        <template v-slot:append>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+              <q-date v-model="endDate" mask="YYYY-MM-DD" @update:model-value="searchRecord">
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="关闭" color="primary" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
+    </div>
+    <!--    <div class="select-btn">-->
+    <!--      <q-btn class="common-large-btn" label="点击选择平台" @click="showSelection" />-->
+    <!--    </div>-->
+
     <RecordComponent
       ref="recordRef"
       recordType="bethistory"
@@ -26,110 +67,117 @@
     />
   </div>
 </template>
-<script lang="js">
-import {defineComponent, onActivated, onMounted, ref} from "vue";
-import RecordComponent from "../../components/RecordComponent.vue";
+
+<script setup>
+import { onMounted, ref, reactive, onActivated } from "vue";
 import { api } from "boot/axios";
-import moment from "moment/moment";
+import { cached } from "boot/cache";
 import { userStore } from "src/stores";
-import {cached} from "boot/cache";
-import * as _ from "lodash"
-import {translateRecord} from "src/directives/translate";
+import moment from "moment/moment";
+import RecordComponent from "../../components/RecordComponent.vue";
+import * as _ from "lodash";
 
+const store = userStore();
+const visible = ref(true);
+const tableData = ref([]);
 
-export default defineComponent({
-  name: "BetHistoryRecordView",
-  components: {
-    RecordComponent
-  },
-  setup() {
+const searchRecord = () => {
+  tableData.value = [];
+  isEnded.value = false;
+  recordRef.value.clearTable();
+  loadDepositTable(true);
+};
 
-    const store = userStore();
-    const visible = ref(true);
-    const tableData = ref([]);
+const isEnded = ref(false);
 
-    const isEnded = ref(false);
+var apiUrl= "/session/member/gameBetRecord";
 
-    var apiUrl= "/session/member/gameBetRecord";
+var endDate = reactive(moment().format("YYYY-MM-DD"));
+var startDate = reactive(moment().add(-7, "days").format("YYYY-MM-DD"));
+var current = ref(1);
+var maxPage = ref(0);
 
-    var endDate = moment().format("YYYY-MM-DD");
-    var startDate = moment().add(-7, "days").format("YYYY-MM-DD");
-    var current = ref(1);
-    var maxPage = ref(0);
+const platformsList = ref([]);
+const platform = ref("");
+const recordRef = ref();
+const totalBetRecord = reactive({
+  totalBet: 0,
+  totalPayout: 0
+});
+const loadNewData = () => {
+  if (maxPage.value > current.value) {
+    current.value++;
+  } else {
+    current.value = 1;
+    // endDate = moment(startDate).add(-1, "days").format("YYYY-MM-DD");
+    // console.log(endDate);
 
-    const platformsList = ref([]);
-    const platform = ref("");
-    const recordRef = ref();
+    // startDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
+    // console.log(startDate);
 
-    const loadNewData = () => {
-      if(maxPage.value > current.value){
-        current.value++;
-      }else {
-        current.value= 1;
-        endDate = moment(startDate).add(-1, "days").format("YYYY-MM-DD");
-        console.log(endDate);
+    // const startMonth = moment(startDate).format("MM");
+    // const endMonth = moment(endDate).format("MM");
+    // if (startMonth !== endMonth) {
+    //   // If startDate and endDate are in the same month, take the latest month's data
+    //   const latestMonthEnd = moment(endDate).endOf("month").format("YYYY-MM-DD");
+    //   startDate = moment(latestMonthEnd).startOf("month").format("YYYY-MM-DD");
+    // }
 
-        startDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
-        console.log(startDate);
+    // if (endDate <= moment().add(-29, "days").format("YYYY-MM-DD")) {
+    //   console.log("mor than 3 months");
+    //   isEnded.value = true;
+    //   return;
+    // }
+    isEnded.value = true;
+    return;
+  }
+  loadDepositTable(false);
+};
 
-        const startMonth = moment(startDate).format("MM");
-        const endMonth = moment(endDate).format("MM");
-        if (startMonth !== endMonth) {
-          // If startDate and endDate are in the same month, take the latest month's data
-          const latestMonthEnd = moment(endDate).endOf("month").format("YYYY-MM-DD");
-          startDate = moment(latestMonthEnd).startOf("month").format("YYYY-MM-DD");
-        }
+const loadDepositTable = (isNew) => {
+  if (isNew) {
+    visible.value = true;
+  }
 
-        if (endDate <= moment().add(-29, "days").format("YYYY-MM-DD")) {
-          console.log("mor than 3 months");
-          isEnded.value = true;
-          return;
-        }
-      }
-      loadDepositTable(false);
-    };
+  var platformName = platform.value ? (platform.value.value === "BBINDY" ? "BBIN" : platform.value.value) : "";
+  let paramData = {
+    "startDate": startDate,
+    "endDate": endDate,
+    "platform": platformName,
+    "memberId": store.id,
+    "size": 20,
+    "current": current.value
+  };
 
-    const loadDepositTable = (isNew = true) => {
+  api.get(apiUrl, {
+      params: paramData
+    }
+  ).then((res) => {
+      maxPage.value = res.data.pages;
+      totalBetRecord.totalBet = res.data.sums.totalBet;
+      totalBetRecord.totalPayout = res.data.sums.totalPayout;
+      tableData.value.push(...res.data.records);
+    })
+    .finally(() => {
       if (isNew) {
-        visible.value = true;
+        visible.value = false;
       }
+    });
 
-      var platformName = platform.value ? platform.value.value : "";
+  const obj = {
+    memberId: store.id,
+    platform: platformName,
+    startDate: startDate,
+    endDate: endDate
+  };
+};
 
+const getGameName = (gameName) => {
+  if (!gameName) {
+    return ''
+  }
 
-      console.log(startDate);
-      console.log(endDate);
-
-      let paramData = {
-        "startDate": startDate,
-        "endDate": endDate,
-        "platform": platformName,
-        "memberId": store.id,
-        "size": 20,
-        "current": current.value
-      };
-
-      api.get(apiUrl, {
-          params: paramData
-        }
-      ).then((res) => {
-        maxPage.value = res.data.pages;
-        tableData.value.push(...res.data.records);
-        // console.log("TableData");
-        // console.log(tableData.value);
-      }).finally(() => {
-        if (isNew) {
-          visible.value = false;
-        }
-      });
-    };
-
-    const getGameName = (gameName) => {
-      if (!gameName) {
-        return ''
-      }
-
-      switch (gameName) {
+  switch (gameName) {
         case 'IMES':
           return 'IM电竞';
         case 'TCG':
@@ -146,6 +194,8 @@ export default defineComponent({
           return 'SW电子';
         case 'GPS':
           return 'GPS捕鱼';
+        case 'PMFISH':
+          return 'DB捕鱼';
         case 'IA':
           return '小艾电竞 ';
         case 'DT':
@@ -172,97 +222,76 @@ export default defineComponent({
       }
     }
 
-    const loadPlatformLists = () => {
-      cached.get("PLATFORMS", () => api.get("/platform").then((response) => {
-        return response
-      })).then((data) => {
-        console.log(data);
-        _.each(data, function (item, index) {
-          var option = {
-            label: getGameName(item.name),
-            value: item.name,
-          }
-          platformsList.value.push(option);
-        })
-        console.log(platformsList.value);
+const loadPlatformLists = () => {
+  platformsList.value = [];
+  cached
+    .get("LOGGEDPLATFORMS", () =>
+      api.get("/session/loggedInPlatform").then((response) => {
+        return response;
+      })
+    )
+    .then((data) => {
+      platformsList.value.push({
+        label: "全部平台",
+        value: ""
       });
-    }
 
-    const searchRecord = () => {
-      // console.log("searchRecord");
-      recordRef.value.clearTable();
-      isEnded.value = false;
-      tableData.value= [];
-
-      current.value= 1;
-      endDate = moment().format("YYYY-MM-DD");
-      startDate = moment().add(-7, "days").format("YYYY-MM-DD");
-      const startMonth = moment(startDate).format("MM");
-      const endMonth = moment(endDate).format("MM");
-      if (startMonth !== endMonth) {
-        // If startDate and endDate are in the same month, take the latest month's data
-        const latestMonthEnd = moment(endDate).endOf("month").format("YYYY-MM-DD");
-        startDate = moment(latestMonthEnd).startOf("month").format("YYYY-MM-DD");
-      }
-
-      loadDepositTable(true);
-    }
-
-
-    const tableHeaders = [
-      {
-        key: "betTime",
-        label: "游戏时间"
-      },
-      {
-        key: "platform",
-        label: "游戏平台"
-      },
-      {
-        key: "bet",
-        label: "投注"
-      },
-      {
-        key: "payout",
-        label: "派彩"
-      },
-      {
-        key: "gameType",
-        label: "游戏类型"
-      },
-      {
-        key: "betStatus",
-        label: "投注状态"
-      }
-    ];
-    onMounted(async () => {
-      await loadPlatformLists();
-
-      const startMonth = moment(startDate).format("MM");
-      const endMonth = moment(endDate).format("MM");
-      if (startMonth !== endMonth) {
-        // If startDate and endDate are in the same month, take the latest month's data
-        const latestMonthEnd = moment(endDate).endOf("month").format("YYYY-MM-DD");
-        startDate = moment(latestMonthEnd).startOf("month").format("YYYY-MM-DD");
-      }
-      await loadDepositTable();
+      _.each(data, function(item, index) {
+        var option = {
+          label: getGameName(item.name),
+          value: item.code
+        };
+        platformsList.value.push(option);
+      });
     });
+};
 
-    return {
-      tableData,
-      visible,
-      tableHeaders,
-      loadNewData,
-      isEnded,
-      platformsList,
-      platform,
-      searchRecord,
-      recordRef
-    };
+const tableHeaders = [
+  {
+    key: "betTime",
+    label: "游戏时间"
+  },
+  {
+    key: "platform",
+    label: "游戏平台"
+  },
+  {
+    key: "bet",
+    label: "投注"
+  },
+  {
+    key: "payout",
+    label: "派彩"
+  },
+  {
+    key: "gameType",
+    label: "游戏类型"
+  },
+  {
+    key: "status",
+    label: "投注状态"
   }
+];
+
+onMounted(async () => {
+  await loadPlatformLists();
+
+  const startMonth = moment(startDate).format("MM");
+  const endMonth = moment(endDate).format("MM");
+  if (startMonth !== endMonth) {
+    // If startDate and endDate are in the same month, take the latest month's data
+    const latestMonthEnd = moment(endDate).endOf("month").format("YYYY-MM-DD");
+    startDate = moment(latestMonthEnd).startOf("month").format("YYYY-MM-DD");
+  }
+  await loadDepositTable(true);
 });
 </script>
 <style lang="scss">
+.payout-total {
+  margin-left: 24px;
+  margin-right: 12px;
+}
+
 .flex-div {
   display: flex;
   align-items: center;
@@ -271,6 +300,19 @@ export default defineComponent({
   span {
     font-size: 14px;
     padding-left: 5px;
+    min-width: 50px;
+
+    &:nth-child(3) {
+      margin-left: 10px;
+    }
+
+    &.select-stage {
+      min-width: 80px;
+    }
   }
+}
+
+.payout-total {
+  width: 240px;
 }
 </style>

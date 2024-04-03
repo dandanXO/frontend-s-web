@@ -346,7 +346,7 @@ $node-color: #468cff;
 
       .txt-title {
         // font-size: 11px !important;
-        white-space: nowrap;
+        // white-space: nowrap;
       }
 
       .node-txt-img {

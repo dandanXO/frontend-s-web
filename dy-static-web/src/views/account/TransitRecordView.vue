@@ -396,6 +396,11 @@
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
+                <template v-if="tbl.dataIndex === 'betTime'" #default="scope">
+                  <div style="display: flex; align-items: center">
+                    <span>{{ getFormatBetTime(scope.row.betTime)}}</span>
+                  </div>
+                </template>
                 <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{ scope.row.recordTime }}</span>
@@ -1000,6 +1005,10 @@ export default defineComponent({
             pagination.pagingState = response.data.pagingState;
           }
           const dataSource = dataState[recordActive.value];
+
+          totalBetRecord.totalBet = response.data?.sums?.totalBet
+          totalBetRecord.totalPayout = response.data?.sums?.totalPayout
+
           //clear array and then push new record
           dataSource.splice(0);
           dataSource.push(...response.data.records);
@@ -1095,12 +1104,12 @@ export default defineComponent({
         startDate: searchForm.gameBetRecord.startDate,
         endDate: searchForm.gameBetRecord.endDate,
       }
-      gameBetRecordTotal(obj).then((ret) => {
-        if (ret.code === 0) {
-          totalBetRecord.totalBet = ret.data.totalBet
-          totalBetRecord.totalPayout = ret.data.totalPayout
-        }
-      })
+      // gameBetRecordTotal(obj).then((ret) => {
+      //   if (ret.code === 0) {
+      //     totalBetRecord.totalBet = ret.data.totalBet
+      //     totalBetRecord.totalPayout = ret.data.totalPayout
+      //   }
+      // })
 
     };
     const selectedBetRecord = ref({})
@@ -1407,6 +1416,11 @@ export default defineComponent({
         return depositType
       }
     }
+
+    const getFormatBetTime = (betTime) => {
+      return moment(betTime).format("YYYY-MM-DD HH:mm:ss");
+    }
+
     const getGameType = (gameType) => {
       if (!gameType) {
         return ''
@@ -1472,6 +1486,8 @@ export default defineComponent({
           return 'SW电子';
         case 'GPS':
           return 'GPS捕鱼';
+        case 'PMFISH':
+          return 'DB捕鱼';
         case 'IA':
           return '小艾电竞 ';
         case 'DT':
@@ -1544,7 +1560,8 @@ export default defineComponent({
       getTransferChangeType,
       getPlatform,
       imgURL,
-      getGameName
+      getGameName,
+      getFormatBetTime
     };
   }
 });

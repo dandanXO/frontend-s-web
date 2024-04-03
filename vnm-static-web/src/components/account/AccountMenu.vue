@@ -9,7 +9,7 @@
           <span>{{$t('account.mainWallet')}}:</span>
           <span class="amount">
             <span v-if="isLoadingBalance">{{$t('common.loading')}}...</span>
-            <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ store.balance }}</span>
+            <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ displayBalance(store.balance) }}</span>
           </span>
           <el-icon>
             <RiRefreshLine color="#468CFF" />
@@ -28,12 +28,12 @@
             </div>
             {{ $t('menu.withdraw') }}
           </router-link>
-          <router-link to="/center/transfer" class="action-btn">
+          <!-- <router-link to="/center/transfer" class="action-btn">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-transfer.png" />
             </div>
             {{ $t('menu.transfer') }}
-          </router-link>
+          </router-link> -->
         </div>
       </div>
     </div>
@@ -53,12 +53,17 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { userStore } from "@/store";
 import {
   RiRefreshLine,
 } from 'vue-remix-icons';
 import { useI18n } from "vue-i18n";
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from 'pinia'
+import { displayBalance } from "@/utils/utils";
+const i18nStoreLanguage = i18nStore()
+const { languageVal } = storeToRefs(i18nStoreLanguage)
 const { t } = useI18n();
 const store = userStore();
 const isLoadingBalance = ref(false);
@@ -80,6 +85,16 @@ const vip = computed(() => {
   return store.vip;
 });
 
+  watch(languageVal, (newValue, oldValue) => {
+    
+    menuItems.value = [
+        { route: "/center/share", label: t('menu.referFriend'), icon: "share" },
+        { route: "/center/transit-record", label: t('menu.transactionRecord'), icon: "transitrecord" },
+        { route: "/center/personal", label: t('menu.personalInfo'), icon: "personal" },
+        { route: "/center/mailbox", label: t('menu.mailbox'), icon: "inbox" },
+      ]
+  });
+  
 const menuItems = ref([
   { route: "/center/share", label: t('menu.referFriend'), icon: "share" },
   // { route: "/center/deposit", label: "充值中心", icon: "transitrecord" },

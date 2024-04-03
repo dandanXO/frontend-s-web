@@ -3,6 +3,108 @@
     <img src="../../../assets/images/promo/hotpromo/bbdacha2024/head-title-01.png" />
   </div>
 
+
+  <div class="tabs-container">
+    <!-- <q-tabs v-model="activeKey">
+      <q-tab name="tabOne" label="活动一" />
+      <q-tab name="tabTwo" label="活动二" />
+    </q-tabs> -->
+
+    <q-tab-panels v-model="activeKey">
+      <q-tab-panel name="tabOne">
+        <div class="table-container">
+          <p class="q-mt-md text-bold" style="text-align: center">
+            活动期间，每轮中超竞猜正确次数≥2场可获每轮总存款的对应存款反比奖金。
+          </p>
+
+          <table class="promo-table">
+            <thead>
+              <tr>
+                <th>竞猜正确场次</th>
+                <th>存款反比</th>
+                <th>彩金上限</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>≥2</td>
+                <td>0.5%</td>
+                <td>88</td>
+              </tr>
+              <tr>
+                <td>≥3</td>
+                <td>0.8%</td>
+                <td>188</td>
+              </tr>
+              <tr>
+                <td>≥5</td>
+                <td>1.0%</td>
+                <td>388</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </q-tab-panel>
+    </q-tab-panels>
+
+    <q-tab-panels v-model="activeKey">
+      <q-tab-panel name="tabTwo">
+        <div class="table-container">
+          <p class="q-mt-md text-bold" style="text-align: center">
+            活动期间，BB别墅冬季杯赛事结束后累计竞猜正确次数≥10次且投注BB别墅杯累计有效投注≥3000元，即可领取对应彩金。
+          </p>
+
+          <table class="promo-table">
+            <thead>
+              <tr>
+                <th>累计竞猜正确次数</th>
+                <th>BB别墅杯累计投注金额</th>
+                <th>彩金</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>≥10</td>
+                <td>≥10,000</td>
+                <td>88</td>
+              </tr>
+              <tr>
+                <td>≥15</td>
+                <td>≥50,000</td>
+                <td>288</td>
+              </tr>
+              <tr>
+                <td>≥20</td>
+                <td>≥100,000</td>
+                <td>688</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="head-title">
+          <img src="../../../assets/images/promo/hotpromo/bbdacha2024/head-title-02.png" />
+        </div>
+
+        <div class="rules-container">
+          <ol class="rules-content">
+            <li>
+              活动期间，中国超级联赛每一轮竞猜正确场次≥2次可获每轮开始与结束时间总存款的对应反比，彩金与次日24小时内派发，彩金仅需3倍流水即可提款；
+            </li>
+            <li>活动期间，请在指定比赛开赛前竞猜，若超出开赛时间则视为放弃竞猜；</li>
+            <li>
+              活动期间会员竞猜正确场次≥2次且会员当日未存款，次日清零重新计算，若会员彩金金额超出彩金上限金额则按彩金上限派发奖金；
+            </li>
+            <li>
+              每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将在任何时候保留可以全部停止、取消优惠或索回已支付全部优惠的权利；
+            </li>
+            <li>为避免文字理解差异，本站保留该活动的最终解释权；</li>
+          </ol>
+        </div>
+      </q-tab-panel>
+    </q-tab-panels>
+  </div>
+
   <div class="competition-container">
     <p v-if="isLoaded && upcomingData.length === 0" class="text-center">目前没有赛事。</p>
     <div
@@ -84,47 +186,7 @@
 
     <div class="tips-record" @click="tableRecordDialog = true">【投票记录】</div>
   </div>
-
-  <div class="tabs-container">
-    <!-- <q-tabs v-model="activeKey">
-      <q-tab name="tabOne" label="活动一" />
-      <q-tab name="tabTwo" label="活动二" />
-    </q-tabs> -->
-
-    <q-tab-panels v-model="activeKey">
-      <q-tab-panel name="tabOne">
-        <div class="table-container">
-          <p class="q-mt-md text-bold" style="text-align: center">
-            活动期间，每轮中超竞猜正确次数≥2场可获每轮总存款的对应存款反比奖金。
-          </p>
-
-          <table class="promo-table">
-            <thead>
-              <tr>
-                <th>竞猜正确场次</th>
-                <th>存款反比</th>
-                <th>彩金上限</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>≥2</td>
-                <td>0.5%</td>
-                <td>88</td>
-              </tr>
-              <tr>
-                <td>≥3</td>
-                <td>0.8%</td>
-                <td>188</td>
-              </tr>
-              <tr>
-                <td>≥5</td>
-                <td>1.0%</td>
-                <td>388</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  
 
         <div class="head-title q-mt-lg">
           <img src="../../../assets/images/promo/hotpromo/bbdacha2024/head-title-02.png" />
@@ -145,67 +207,6 @@
             <li>为避免文字理解差异，本站保留该活动的最终解释权；</li>
           </ol>
         </div>
-      </q-tab-panel>
-    </q-tab-panels>
-
-    <q-tab-panels v-model="activeKey">
-      <q-tab-panel name="tabTwo">
-        <div class="table-container">
-          <p class="q-mt-md text-bold" style="text-align: center">
-            活动期间，BB别墅冬季杯赛事结束后累计竞猜正确次数≥10次且投注BB别墅杯累计有效投注≥3000元，即可领取对应彩金。
-          </p>
-
-          <table class="promo-table">
-            <thead>
-              <tr>
-                <th>累计竞猜正确次数</th>
-                <th>BB别墅杯累计投注金额</th>
-                <th>彩金</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>≥10</td>
-                <td>≥10,000</td>
-                <td>88</td>
-              </tr>
-              <tr>
-                <td>≥15</td>
-                <td>≥50,000</td>
-                <td>288</td>
-              </tr>
-              <tr>
-                <td>≥20</td>
-                <td>≥100,000</td>
-                <td>688</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="head-title">
-          <img src="../../../assets/images/promo/hotpromo/bbdacha2024/head-title-02.png" />
-        </div>
-
-        <div class="rules-container">
-          <ol class="rules-content">
-            <li>
-              活动期间，中国超级联赛每一轮竞猜正确场次≥2次可获每轮开始与结束时间总存款的对应反比，彩金与次日24小时内派发，彩金仅需3倍流水即可提款；
-            </li>
-            <li>活动期间，请在指定比赛开赛前竞猜，若超出开赛时间则视为放弃竞猜；</li>
-            <li>
-              活动期间会员竞猜正确场次≥2次且会员当日未存款，次日清零重新计算，若会员彩金金额超出彩金上限金额则按彩金上限派发奖金；
-            </li>
-            <li>
-              每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将在任何时候保留可以全部停止、取消优惠或索回已支付全部优惠的权利；
-            </li>
-            <li>为避免文字理解差异，本站保留该活动的最终解释权；</li>
-          </ol>
-        </div>
-      </q-tab-panel>
-    </q-tab-panels>
-  </div>
-
   <q-dialog v-model="tableRecordDialog" full-width>
     <div class="record-dialog-container">
       <div class="record-header-container">

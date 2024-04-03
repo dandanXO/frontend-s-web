@@ -10,7 +10,7 @@ html {
 // app global css in SCSS form
 body {
   background: $white;
-  font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Poppins", "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #q-app {
@@ -105,6 +105,14 @@ a:focus {
     left: 0;
     padding: 0;
 
+    &.back-btn-top {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     .back-icon {
       display: block;
       width: 12px;
@@ -189,6 +197,7 @@ svg {
   background: $white;
   color: $font-1;
   font-size: 1rem;
+  flex: 1;
 
   img {
     width: 2rem;

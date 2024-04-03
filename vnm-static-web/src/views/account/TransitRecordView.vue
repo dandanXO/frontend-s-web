@@ -256,7 +256,7 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane name="transfer" :label="$t('transit.transfer')">
+        <!-- <el-tab-pane name="transfer" :label="$t('transit.transfer')">
           <div>
             <el-form layout="inline" :model="searchForm.transfer">
               <div class="left">
@@ -327,7 +327,7 @@
               :page-size="searchForm[recordActive].size"
             />
           </div>
-        </el-tab-pane>
+        </el-tab-pane> -->
         <el-tab-pane name="rebates" :label="$t('transit.rebates')">
           <div>
             <el-form layout="inline" :model="searchForm.rebates">
@@ -1192,7 +1192,7 @@ const betPagination = reactive({
       };
       confirmationOfWithdrawalReceived(obj).then((res) => {
         if (res.code === 0) {
-          ElMessageBox.alert(t('error.depositConfirmed'), {
+          ElMessageBox.alert(t('bankError.depositConfirmed'), {
             // if you want to disable its autofocus
             // autofocus: false,
             title: t('common.systemError'),
@@ -1264,17 +1264,17 @@ const betPagination = reactive({
         return "";
       }
       if (turnoverType === "WITHDRAW_FAIL") {
-        return "提款失败"; // Fail Withdrawal
+        return t('status.withdrawFailed'); // Fail Withdrawal
       } else if (turnoverType === "WITHDRAW") {
-        return "提款"; // Withdraw
+        return t('status.withdraw'); // Withdraw
       } else if (turnoverType === "PROMO") {
-        return "优惠"; // 优惠
+        return t('status.promotion'); // 优惠
       } else if (turnoverType === "DEPOSIT") {
-        return "存款"; // 存款
+        return t('status.deposit'); // 存款
       } else if (turnoverType === "TRANSFER") {
-        return "转账"; // 转账
+        return t('status.transfer'); // 转账
       } else if (turnoverType === "ADJUST") {
-        return "账变"; // 账变
+        return t('status.adjustment'); // 账变
       } else {
         return turnoverType;
       }
@@ -1284,43 +1284,43 @@ const betPagination = reactive({
         return "";
       }
       if (transferType === "APPLY") {
-        return "申请中"; //Applying
+        return t('status.applying') //Applying
       } else if (transferType === "FAIL") {
-        return "失败"; // Failed
+        return t('status.failed') // Failed
       } else if (transferType === "SUCCESS") {
-        return "成功"; // Success
+        return t('status.success'); // Success
       } else if (transferType === "STEP_1" || transferType === "PENDING") {
-        return "审核中"; //Under review
+        return t('status.underReview'); //Under review
       } else if (transferType === "STEP_2") {
-        return "待支付"; // To be paid
+        return t('status.toBePaid'); // To be paid
       } else if (transferType === "STEP_3") {
-        return "支付中"; // Payment on going
+        return t('status.normalPayment'); // Payment on going
       } else if (transferType === "STEP_4") {
-        return "自动支付"; // Automatic Payment
+        return t('status.automaticPayment'); // Automatic Payment
       } else if (transferType === "STEP_5") {
-        return "暂不处理"; // Suspend
+        return t('status.suspend'); // Suspend
       } else if (transferType === "AUTOPAY") {
-        return "自动支付"; // Automatic Payment
+        return t('status.automaticPayment');; // Automatic Payment
       } else if (transferType === "WAITING_CALLBACK") {
-        return "自动支付中"; // Waiting Callback
+        return t('status.automaticPaymentInProgress'); // Waiting Callback
       } else if (transferType === "SENDING") {
-        return "发送中"; // Sending
+        return t('status.sending') // Sending
       } else if (transferType === "SUPPLEMENT_SUCCESS") {
-        return "成功"; // Supplement Success
+        return t('status.success'); // Supplement Success
       } else if (transferType === "CLOSED") {
-        return "关闭"; // Closed
+        return t('status.closed'); // Closed
       } else if (transferType === "WITHDRAW_FAIL") {
-        return "提款失败"; // Fail Withdrawal
-      } else if (transferType === "WITHDRAW") {
-        return "提款"; // Withdraw
-      } else if (transferType === "PROMO") {
-        return "优惠"; // 优惠
-      } else if (transferType === "DEPOSIT") {
-        return "存款"; // 存款
-      } else if (transferType === "TRANSFER") {
-        return "转账"; // 转账
-      } else if (transferType === "ADJUST") {
-        return "账变"; // 账变
+        return t('status.withdrawFailed'); // Fail Withdrawal
+      } else if (turnoverType === "WITHDRAW") {
+        return t('status.withdraw'); // Withdraw
+      } else if (turnoverType === "PROMO") {
+        return t('status.promotion'); // 优惠
+      } else if (turnoverType === "DEPOSIT") {
+        return t('status.deposit'); // 存款
+      } else if (turnoverType === "TRANSFER") {
+        return t('status.transfer'); // 转账
+      } else if (turnoverType === "ADJUST") {
+        return t('status.adjustment'); // 账变
       } else {
         return transferType;
       }
@@ -1331,11 +1331,11 @@ const betPagination = reactive({
         return "";
       }
       if (transferChangeType === "WITHDRAW") {
-        return "转出"; // Withdraw
+        return t('status.withdraw'); // Withdraw
       } else if (transferChangeType === "WITHDRAW_FAIL") {
-        return "失败"; // Withdraw
+        return t('status.withdrawFailed'); // Withdraw
       }else if (transferChangeType === "DEPOSIT") {
-        return "转入"; // DEPOSIT
+        return t('status.deposit'); // DEPOSIT
       } else {
         return transferChangeType;
       }
@@ -1427,16 +1427,16 @@ const betPagination = reactive({
         return "";
       }
       if(type === 'WITHDRAW_FAIL'){
-       return "转账失败";
+       return t('status.withdrawFailed');
       }
       if (subType === "DEPOSIT") {
-        return "转进"; // 转进
-      } else if (subType === "WITHDRAW") {
-        return "转出"; // 转出
+        return t('status.deposit'); // 转进
+      } else if (subType === "TRANSFER") {
+        return t('status.transfer'); // 转出
       } else if (type === "WITHDRAW") {
-        return "转出"; // 转出
+        return t('status.withdraw'); // 转出
       } else if (type === "DEPOSIT") {
-        return "转进"; // 转出
+        return t('status.deposit');; // 转出
       }else {
         return subType;
       }
@@ -1444,25 +1444,25 @@ const betPagination = reactive({
 
     const getWithdrawStatus = (withdrawStatus) => {
       if (withdrawStatus === "APPLY") {
-        return "申请中"; //Applying
+        return t('status.applying'); //Applying
       } else if (withdrawStatus === "FAIL") {
-        return "失败"; // Failed
+        return t('status.failed'); // Failed
       } else if (withdrawStatus === "SUCCESS") {
-        return "成功"; // Success
+        return t('status.success'); // Success
       } else if (withdrawStatus === "STEP_1" || withdrawStatus === "PENDING") {
-        return "审核中"; //Under review
+        return t('status.underReview');; //Under review
       } else if (withdrawStatus === "STEP_2") {
-        return "待支付"; // To be paid
+        return t('status.toBePaid'); // To be paid
       } else if (withdrawStatus === "STEP_3") {
-        return "支付中"; // Payment on going
+        return t('status.normalPayment');// Payment on going
       } else if (withdrawStatus === "STEP_4") {
-        return "自动支付"; // Automatic Payment
+        return t('status.automaticPayment');; // Automatic Payment
       } else if (withdrawStatus === "STEP_5") {
-        return "暂不处理"; // Suspend
+        return t('status.suspend'); // Suspend
       } else if (withdrawStatus === "AUTOPAY") {
-        return "自动支付"; // Automatic Payment
+        return t('status.automaticPayment'); // Automatic Payment
       } else if (withdrawStatus === "WAITING_CALLBACK") {
-        return "自动支付中"; // Waiting Callback
+        return t('status.automaticPaymentInProgress'); // Waiting Callback
       } else {
         return withdrawStatus;
       }
@@ -1472,13 +1472,13 @@ const betPagination = reactive({
         return "";
       }
       if (depositStatus === "PENDING") {
-        return "支付中"; // Pending
+        return t('status.normalPayment'); // Pending
       } else if (depositStatus === "SUCCESS") {
-        return "成功"; // Success
+        return t('status.success'); // Success
       } else if (depositStatus === "SUPPLEMENT_SUCCESS") {
-        return "成功"; // Supplement Success
+        return t('status.success'); // Supplement Success
       } else if (depositStatus === "CLOSED") {
-        return "关闭"; // Closed
+        return t('status.closed'); // Closed
       } else {
         return depositStatus;
       }
@@ -1488,19 +1488,19 @@ const betPagination = reactive({
         return "";
       }
       if (depositType === "BANK") {
-        return "VIP转卡"; // VIP转卡
+        return t('status.bank'); // VIP转卡
       } else if (depositType === "USDTERC") {
-        return "USDT ERC"; // USDT ERC
+        return t('status.usdterc'); // USDT ERC
       } else if (depositType === "USDTTRC") {
-        return "USDT TRC"; // USDT TRC
+        return t('status.usdttrc'); // USDT TRC
       } else if (depositType === "OFFLINE") {
-        return "线下转卡"; // 线下转卡
+        return t('status.offline'); // 线下转卡
       } else if (depositType === "UNION") {
         return "银联快捷"; // 银联快捷
       } else if (depositType === "QUICKPAYMENT") {
         return "小额转卡"; // 小额转卡
       } else if (depositType === "SPECIALPAY") {
-        return "网银转账"; // 网银转账
+        return t('status.bank'); // 网银转账
       } else if (depositType === "ALIPAY") {
         return "支付宝转卡"; // 支付宝转卡
       } else if (depositType === "ALIPAYCODE") {
@@ -1518,13 +1518,13 @@ const betPagination = reactive({
       } else if (depositType === "SZPAY") {
         return "数字人民币"; // 数字人民币
       } else if (depositType === "CARDPAY") {
-        return "点卡支付"; // 点卡支付
+        return t('status.scratch_card'); // 点卡支付
       } else if (depositType === "ONLINECODE") {
         return "云闪付"; // 云闪付
       } else if (depositType === "DYPAY") {
-        return "抖音"; // 抖音
+        return t('status.tiktok'); // 抖音
       } else if (depositType === "AUTOPAY") {
-        return "自动支付"; // 自动支付
+        return t('status.automatic_paying'); // 自动支付
       } else {
         return depositType;
       }
@@ -1534,19 +1534,19 @@ const betPagination = reactive({
         return "";
       }
       if (gameType === "SLOT") {
-        return "电子"; // Slot
+        return t('menu.slot'); // Slot
       } else if (gameType === "LIVE") {
-        return "真人"; // Live
+        return t('menu.liveCasino'); // Live
       } else if (gameType === "FISH") {
-        return "捕鱼"; // Fish
+        return t('menu.fishing'); // Fish
       } else if (gameType === "SPORT") {
-        return "体育"; // Sport
+        return t('menu.sports'); // Sport
       } else if (gameType === "ESPORT") {
-        return "电竞"; // E-Sport
+        return t('menu.esports'); // E-Sport
       } else if (gameType === "POKER") {
-        return "棋牌"; // Poker
+        return t('menu.poker'); // Poker
       } else if (gameType === "LOTTERY") {
-        return "彩票"; // Lottery
+        return t('menu.lottery'); // Lottery
       } else {
         return gameType;
       }
@@ -1557,17 +1557,17 @@ const betPagination = reactive({
         return "";
       }
       if (betStatus === "BET") {
-        return "投注"; // Bet
+        return t('status.bet'); // Bet
       } else if (betStatus === "SETTLE") {
-        return "结算"; // Settle
+        return t('status.settlement'); // Settle
       } else if (betStatus === "SETTLED") {
-        return "已结算"; // Bet & Settled
+        return t('status.settled'); // Bet & Settled
       }else if (betStatus === "BET_N_SETTLE") {
-        return "投注并结算"; // Bet & Settled
+        return t('status.betAndClosed'); // Bet & Settled
       } else if (betStatus === "CANCEL") {
-        return "取消"; // Cancel
+        return t('status.cancel'); // Cancel
       } else if (betStatus === "PATCH") {
-        return "修补"; // Patch
+        return t('status.fixed'); // Patch
       } else {
         return betStatus;
       }
@@ -1589,9 +1589,9 @@ const betPagination = reactive({
       chgDate,
       checkType(ts) {
         if (ts === 1) {
-          return "Deposit";
+          return t('status.deposit');
         } else {
-          return "Withdraw";
+          return t('status.withdraw');
         }
       },
       getPlatList,

@@ -35,11 +35,7 @@
                   <div
                     class="promo-item"
                     v-if="
-                      promo.promoType.toLowerCase().split(',').includes(tab.name) ||
-                      (tab.name === 'others' &&
-                        (promo.promoType.toLowerCase().split(',').includes('slot game') ||
-                          promo.promoType.toLowerCase().split(',').includes('welcome') ||
-                          promo.promoType.toLowerCase().split(',').includes('fish')))
+                      promo.promoType.toLowerCase().split(',').includes(tab.name)
                     "
                   >
                     <a @click="showPromoDetails(promo)">
@@ -107,35 +103,35 @@
                     </a>
                   </div>
 
-                  <div class="promo-item" v-if="tab.name === 'daily' && promo.labelType === 4">
-                    <a @click="showPromoDetails(promo)">
-                      <div>
-                        <div class="promo-label">
-                          <div class="promo-ribbon" v-if="promo.labelType !== 2">
-                            {{ getPromoLabel(promo.labelType) }}
-                          </div>
-                          <div
-                            class="promo-item-date"
-                            v-if="parsedParam(promo.param).date"
-                            v-html="parsedParam(promo.param).date"
-                          />
-                        </div>
-                        <div class="promo-item-title">{{ promo.title }}</div>
-                        <div
-                          class="promo-item-deal"
-                          v-if="parsedParam(promo.param).sub"
-                          v-html="parsedParam(promo.param).sub"
-                        />
-                        <div>
-                          <q-btn label="查看详情" dense color="brightbtn" class="promo-item-btn" />
-                        </div>
+<!--                  <div class="promo-item" v-if="tab.name === 'daily' && promo.labelType === 4">-->
+<!--                    <a @click="showPromoDetails(promo)">-->
+<!--                      <div>-->
+<!--                        <div class="promo-label">-->
+<!--                          <div class="promo-ribbon" v-if="promo.labelType !== 2">-->
+<!--                            {{ getPromoLabel(promo.labelType) }}-->
+<!--                          </div>-->
+<!--                          <div-->
+<!--                            class="promo-item-date"-->
+<!--                            v-if="parsedParam(promo.param).date"-->
+<!--                            v-html="parsedParam(promo.param).date"-->
+<!--                          />-->
+<!--                        </div>-->
+<!--                        <div class="promo-item-title">{{ promo.title }}</div>-->
+<!--                        <div-->
+<!--                          class="promo-item-deal"-->
+<!--                          v-if="parsedParam(promo.param).sub"-->
+<!--                          v-html="parsedParam(promo.param).sub"-->
+<!--                        />-->
+<!--                        <div>-->
+<!--                          <q-btn label="查看详情" dense color="brightbtn" class="promo-item-btn" />-->
+<!--                        </div>-->
 
-                        <div class="promo-item-side-img">
-                          <img :src="imgURL + promo.mobileImgUrl" />
-                        </div>
-                      </div>
-                    </a>
-                  </div>
+<!--                        <div class="promo-item-side-img">-->
+<!--                          <img :src="imgURL + promo.mobileImgUrl" />-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </a>-->
+<!--                  </div>-->
                 </div>
               </div>
             </div>
@@ -260,7 +256,7 @@ export default defineComponent({
       { name: "live casino", label: "真人" },
       { name: "poker", label: "棋牌" },
       { name: "daily", label: "日常" },
-      { name: "others", label: "其它" }
+      { name: "other", label: "其它" }
     ];
 
     watch(() => route.query, () => {

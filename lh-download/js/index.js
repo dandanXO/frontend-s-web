@@ -59,10 +59,7 @@ $(document).ready(function (e) {
         }
     }
 	
-		
 	
-
-
     async function getApiUrl() {
 			var clickBtn = document.getElementById("click-btn");
 			clickBtn.onclick = async function () {
@@ -71,12 +68,14 @@ $(document).ready(function (e) {
 				const response = await fetch(apiUrl, {
 					method: 'GET',
 				});
-				const data = await response.json();
+				 data = await response.json();
 				if (data) {
 					// debugger;
 					console.log("data", data);
 					if (data.code == 1) {
+						 document.getElementById('custom-modal').style.display = 'block';
 						var openUrl = data.data;
+						//alert("即将跳转至Testflight安装，如长时间未跳转和未出现跳转提示，请检查是否已经安装Testflight")
 						window.location.href= openUrl;
 					}
 					else

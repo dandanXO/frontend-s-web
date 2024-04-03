@@ -67,7 +67,7 @@
         <div class="banner-container" v-if="selectedPromo.redirectUrl !== 'cny-hongbaoyu'">
           <template v-if="selectedPromo.promoCode === 'cny-spinwheel'">
             <img
-              src="../assets/images/promotion/hotpromo/cny-spinwheel/banner.png"
+              src="../assets/images/promotion/hotpromo/bonus-spinwheel/banner1.png"
               style="display: block; width: 100%"
             />
           </template>
@@ -658,7 +658,8 @@ export default defineComponent({
 
           &.isDesktop {
             display: block;
-            height: 430px;
+            min-height: 430px;
+            aspect-ratio: 1920/500;
           }
 
           &.isMobile {

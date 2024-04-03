@@ -21,6 +21,27 @@ export const getDevice = () => {
   return isMobile() ? "MOBILE" : "WEB";
 };
 
+export const displayBalance = (balance) => {
+
+  let numberStr = balance.toString();
+
+  // Initialize an empty string to store the formatted number
+  let formattedNumber = '';
+
+  // Iterate through the string in reverse order
+  for (let i = numberStr.length - 1, j = 0; i >= 0; i--, j++) {
+    // Append the character to the formatted number string
+    formattedNumber = numberStr[i] + formattedNumber;
+
+    // Add a comma after every third digit, except for the last digit
+    if ((j + 1) % 3 === 0 && j !== numberStr.length - 1) {
+      formattedNumber = ',' + formattedNumber;
+    }
+  }
+
+  return formattedNumber;
+};
+
 export function isEmpty(obj) {
   if (typeof obj == "undefined" || obj == null || obj == "") {
     return true;

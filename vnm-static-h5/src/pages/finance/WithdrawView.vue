@@ -1,5 +1,17 @@
 <template>
   <q-page>
+    <div class="account-tabs-div">
+      <router-link to="/finance/deposit?redirect=/finance/withdraw">
+        <div class="account-item">
+          <span>{{ $t("lang.transfer_deposit") }}</span>
+        </div>
+      </router-link>
+      <div>
+        <div class="account-item is-active">
+          <span>{{ $t("lang.transfer_withdraw") }}</span>
+        </div>
+      </div>
+    </div>
     <div class="withdraw-section q-pa-md q-mx-sm q-my-md">
       <div class="account-content last">
         <div class="withdrawalmethod">
@@ -26,18 +38,22 @@
             v-model="withdrawInfo.cardId"
             option-value="id"
             emit-value
-            :label="'选择' + chooseLabel()"
+            :label="$t('lang.withdraw_choose') + ' ' + chooseLabel()"
             class="withdraw-selection q-mt-sm q-mb-sm"
             :options="withdrawState.bankCardList"
             map-options
-            :rules="[(val) => !!val || '请选择' + chooseLabel()]"
+            :rules="[(val) => !!val || $t('lang.withdraw_pleasechoose') + ' ' + chooseLabel()]"
           >
             <template v-slot:no-option>
               <q-item>
                 <q-item-section class="text-grey">
-                  {{ "没有可用的" + chooseCard() }}
+                  {{ $t("lang.withdraw_nonavailable") + " " + chooseCard() }}
                   <router-link class="text-bright" to="/account/withdraw">
-                    {{ isUSDT || isEWALLET ? "加" + chooseCard() : "绑定" + chooseCard() }}
+                    {{
+                      isUSDT || isEWALLET
+                        ? $t("lang.withdraw_add") + " " + chooseCard()
+                        : $t("lang.withdraw_bind") + " " + chooseCard()
+                    }}
                   </router-link>
                 </q-item-section>
               </q-item>
@@ -82,15 +98,16 @@
           <q-input
             hide-bottom-space
             ref="amountRef"
+            type="number"
             v-model="withdrawInfo.amount"
             :label="$t('lang.withdraw_amount')"
-            class="withdraw-field"
+            class="withdraw-field q-mt-sm q-mb-sm"
             :rules="[
-              (val) => (val && val.length > 0) || $('lang.withdraw_please_enter_withdraw_amount'),
+              (val) => (val && val.length > 0) || $t('lang.withdraw_please_enter_withdraw_amount'),
               (val) =>
-                val >= selectedWithdrawalMethod.withdrawMin || $('lang.withdraw_please_enter_correct_withdraw_amount'),
+                val >= selectedWithdrawalMethod.withdrawMin || $t('lang.withdraw_please_enter_correct_withdraw_amount'),
               (val) =>
-                val <= selectedWithdrawalMethod.withdrawMax || $('lang.withdraw_please_enter_correct_withdraw_amount'),
+                val <= selectedWithdrawalMethod.withdrawMax || $t('lang.withdraw_please_enter_correct_withdraw_amount'),
               isValidUSDTAmt
             ]"
             clearable
@@ -111,6 +128,17 @@
               </span>
             </template>
           </q-input>
+
+          <q-input
+            hide-bottom-space
+            ref="withdrawPwdRef"
+            v-model="withdrawInfo.withdrawPassword"
+            :label="$t('lang.withdraw_password')"
+            class="withdraw-field"
+            type="password"
+            :rules="[(val) => (val && val.length > 0) || $t('lang.withdraw_please_enter_withdraw_password')]"
+            clearable
+          ></q-input>
           <div
             class="q-mt-sm q-mb-sm text-grey text-bold q-pb-sm"
             style="border-bottom: 1px solid #434343"
@@ -118,43 +146,52 @@
           >
             <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
               {{
-                "单笔提款: " +
+                $t("lang.withdraw_singlewithdrawal") +
+                ": " +
                 selectedWithdrawalMethod.withdrawMin +
-                "RMB - " +
+                "VNDP - " +
                 selectedWithdrawalMethod.withdrawMax +
-                "RMB"
+                "VNDP"
               }}
               <br />
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
-              {{ "今日提款: " + selectedWithdrawalMethod.withdrawMaxAmount + "RMB" }}
+              {{ $t("lang.withdraw_withdrawtoday") + ": " + selectedWithdrawalMethod.withdrawMaxAmount + "VNDP" }}
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
-              {{ " 剩余: " + selectedWithdrawalMethod.withdrawMaxTimes + " 次" }}
+              <br />
+              {{
+                " " +
+                $t("lang.withdraw_remaining") +
+                ": " +
+                selectedWithdrawalMethod.withdrawMaxTimes +
+                " " +
+                $t("lang.withdraw_times")
+              }}
             </template>
           </div>
           <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
             <div class="q-my-sm" style="display: flex; justify-content: center; align-items: center">
-              <span style="flex: 1">实时汇率：</span>
+              <span style="flex: 2">{{ $t("lang.withdraw_realtimeexchangerates") }}:</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
                 {{ store.currency.value }}
               </span>
             </div>
             <div class="q-mt-sm" style="display: flex; justify-content: center; align-items: center">
-              <span style="flex: 1">预计到帐：</span>
+              <span style="flex: 1">{{ $t("lang.withdraw_estimatedarrival") }}：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 {{ (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate).toFixed(2) }}
                 USDT
               </span>
             </div>
-            <div class="q-mt-sm text-neontb">*特别说明：三方自动收取提币 1.00 USDT 手续费！</div>
+            <div class="q-mt-sm text-neontb">{{ $t("lang.withdraw_usdtspecialnote") }}</div>
           </div>
           <!--          <div v-else-if="!isEWALLET && !isUSDT">-->
           <!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
           <!--          </div>-->
           <div v-else-if="isEWALLET">
-            <div class="q-mt-sm text-neontb">*特别说明：提款钱包和游戏账号的姓名务必一致</div>
+            <div class="q-mt-sm text-neontb">{{ $t("lang.withdraw_ewalletspecialnote") }}</div>
             <div class="q-mt-sm q-mb-sm text-center">
               <q-btn
                 style="border: 1px solid #33bcd4; color: #33bcd4"
@@ -207,15 +244,15 @@
     <q-dialog v-model="hasWithdrawCard" persistent>
       <q-card style="width: 100%; padding: 10px">
         <q-card-section class="q-mb-md">
-          <div class="text-h6 text-center">请先绑定银行卡</div>
+          <div class="text-h6 text-center">{{ $t("lang.msg_bind_card_first") }}</div>
         </q-card-section>
 
         <div class="flex flex-center">
           <router-link to="/account">
-            <q-btn class="q-mr-md" label="取消" />
+            <q-btn class="q-mr-md" :label="$t('lang.msg_cancel')" />
           </router-link>
           <router-link to="/account/withdraw">
-            <q-btn color="brightbtn" label="绑定" />
+            <q-btn color="brightbtn" :label="$t('lang.msg_bind')" />
           </router-link>
         </div>
       </q-card>
@@ -258,6 +295,7 @@ export default defineComponent({
     const $q = useQuasar();
     const imgURL = process.env.IMAGE_CDN;
     const amountRef = ref();
+    const withdrawPwdRef = ref();
     const cardRef = ref();
     const activeItem = ref(0);
     const withdrawFormRef = ref(null);
@@ -267,7 +305,8 @@ export default defineComponent({
     const qs = require("qs");
     const withdrawInfo = reactive({
       cardId: undefined,
-      amount: ""
+      amount: "",
+      withdrawPassword: ""
     });
     const isLoaded = ref(false);
     const hasWithdrawCard = computed(() => {
@@ -326,10 +365,11 @@ export default defineComponent({
     const submitWithdraw = () => {
       cardRef.value.validate();
       amountRef.value.validate();
+      withdrawPwdRef.value.validate();
       $q.loading.show({
-        message: "确认中。。。"
+        message: t('lang.msg_confirming')
       });
-      if (cardRef.value.hasError || amountRef.value.hasError) {
+      if (cardRef.value.hasError || amountRef.value.hasError || withdrawPwdRef.value.hasError) {
         $q.loading.hide();
       } else {
         api.post("/session/withdraw/", qs.stringify(withdrawInfo)).then((response) => {
@@ -337,12 +377,13 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: "提交成功",
+              message: t('lang.msg_submit_successful'),
               icon: "check_circle_outline"
             });
             getWithdrawalMethods();
 
             withdrawInfo.amount = "";
+            withdrawInfo.withdrawPassword = "";
             if (amountRef.value) {
               setTimeout(()=>{
                 amountRef.value.resetValidation();
@@ -453,11 +494,11 @@ export default defineComponent({
 
     const chooseLabel = () => {
       if (isUSDT.value) {
-        return '虚拟币'
+        return t('lang.withdraw_crypto')
       } else if (isEWALLET.value) {
-        return '电子钱包'
+        return t('lang.withdraw_ewallet')
       } else {
-        return '银行卡'
+        return t('lang.withdraw_bankcard')
       }
     }
 
@@ -471,11 +512,11 @@ export default defineComponent({
 
     const chooseCard = () => {
       if (isUSDT.value) {
-        return '虚拟钱包'
+        return t('lang.withdraw_virtualwallet')
       } else if (isEWALLET.value) {
-        return '电子钱包'
+        return t('lang.withdraw_ewallet')
       } else {
-        return '银行卡片'
+        return t('lang.withdraw_bankcard')
       }
     }
     const tutorialLabel = () => {
@@ -502,6 +543,7 @@ export default defineComponent({
     return {
       noDecimalRule: (val) => /^([1-9][0-9]*)$/.test(val) || '金额应为正数',
       amountRef,
+      withdrawPwdRef,
       cardRef,
       withdrawInfo,
       submitWithdraw,
@@ -654,5 +696,53 @@ export default defineComponent({
 
 .quick-withdraw-btn {
   width: 100%;
+}
+</style>
+
+<style lang="scss" scoped>
+.account-tabs-div {
+  cursor: pointer;
+  gap: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: $box-width;
+  padding: 1rem 0.9rem 1rem;
+  margin: 10px auto;
+  background: $white;
+  box-shadow: $shadow-bg;
+  border-radius: 10px;
+
+  .account-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("../../assets/images/download/inactive-tab-bg.png");
+    background-size: 100% 100%;
+    background-color: $secondary;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+
+    span {
+      color: $font-1;
+      font-size: 1rem;
+    }
+
+    &:active {
+      filter: brightness(0.9);
+      transform: translate(0px, 1px);
+    }
+
+    &.is-active {
+      background-image: url("../../assets/images/download/active-tab-bg.png");
+      background-size: 100% 100%;
+      background-color: $primary;
+
+      span {
+        color: #ffffff;
+        font-weight: bold;
+      }
+    }
+  }
 }
 </style>

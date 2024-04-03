@@ -4,7 +4,7 @@
       <!-- <div class="side left"><img src="../../assets/home/header_side.png"></div> -->
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
-          <img class="logo" src="../../assets/logo.svg" />
+          <img class="logo" src="../../assets/logo-bebest.svg" />
         </router-link>
         <div class="navigations">
           <template v-for="nav in navigations" :key="nav.name">
@@ -103,12 +103,12 @@
             </div>
             {{ $t('menu.withdraw') }}
           </router-link>
-          <router-link to="/center/transfer" class="action-btn">
+          <!-- <router-link to="/center/transfer" class="action-btn">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-transfer.png" />
             </div>
             {{ $t('menu.transfer') }}
-          </router-link>
+          </router-link> -->
         </div>
 
         <div class="profile-info" v-if="store.token">
@@ -135,12 +135,12 @@
                     <span>{{$t('menu.deposit')}}</span>
                   </div>
                 </el-dropdown-item>
-                <el-dropdown-item command="transfer">
+                <!-- <el-dropdown-item command="transfer">
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
                     <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
                     <span>{{$t('menu.transfer')}}</span>
                   </div>
-                </el-dropdown-item>
+                </el-dropdown-item> -->
                 <el-dropdown-item command="promotion">
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
                     <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
@@ -167,7 +167,7 @@
                 <span class="assets-text">{{$t('account.mainWallet')}}:</span>
                 <span class="amount">
                   <span v-if="isLoadingBalance">{{$t('common.loading')}}...</span>
-                  <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ store.balance }}</span>
+                  <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ displayBalance(store.balance) }}</span>
                 </span>
               </div>
               <el-icon>
@@ -438,6 +438,7 @@ import { getVerificationCode, register } from "@/api/index/login";
 import { findAccount } from "@/api/index/forgotPwd";
 import { sendSms } from "@/api/personal/personal";
 import { ElMessage } from "element-plus";
+import {displayBalance} from "@/utils/utils"
 import {
   RiRefreshLine
 } from "vue-remix-icons";
@@ -490,12 +491,12 @@ export default defineComponent({
     const { languageVal } = storeToRefs(i18nStoreLanguage)
     const navigations = computed(() => [
       { code: "home", name: t('menu.home'), enName: "Home", path: "/home" },
-      { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
       { code: "sports", name: t('menu.sports'), enName: "Sports", path: "/sports", submenu: true },
       { code: "live", name: t('menu.liveCasino'), enName: "Live", path: "/live-casino", submenu: true },
-      { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
       { code: "slot", name: t('menu.slot'), enName: "Slots", path: "/slot", submenu: true },
       { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true },
+      { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
+      { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
       { code: "fish", name: t('menu.fishing'), enName: "Fishing", path: "/fishing", submenu: true },
       { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
       { code: "Promotion", name: t('menu.promotion'), enName: "Promotion", path: "/promotion", submenu: false, hasicon: true },
@@ -1089,7 +1090,7 @@ export default defineComponent({
                 if (regResult === 0) {
                   ElMessage({
                     type: "success",
-                    message: "注册成功"
+                    message: t('login.registerSuccess')
                   });
                   store.autoLogin(response.data);
                   registerDialogVisible.value = false;
@@ -1459,6 +1460,7 @@ export default defineComponent({
       passRef,
       passRules,
       forgetPassRules,
+      displayBalance,
       submitForgetPass,
       pwdStrength,
       resetRegForm,
@@ -1785,7 +1787,7 @@ body {
       gap: 15px;
 
       &.logged-in-nav {
-        max-width: 1400px;
+    max-width: 1530px;
       }
 
       .logospon {
@@ -1896,6 +1898,8 @@ body {
           > div {
             max-width: $maxwidth;
             margin: 0 auto;
+            width: 100%;
+            flex-wrap: wrap;
           }
         }
       }

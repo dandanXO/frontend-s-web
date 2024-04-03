@@ -500,7 +500,7 @@ svg path {
 
 .footer-icon {
   //width: 22px;
-  width: 26px;
+  width: 30px;
   // filter: brightness(1.4);
   margin-bottom: 4px;
 }

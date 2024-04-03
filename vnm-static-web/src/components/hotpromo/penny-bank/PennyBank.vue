@@ -2,11 +2,11 @@
     <div class="row">
         <div class="col">
             <img width="300" height="280" src="../../../assets/images/promotion/hotpromo/penny-bank/penny-bank-redpacket.png" />
-            <div class="btn-color-blue standard-button action-btn" @click="onClickLotteryNow">lottery now</div>
+            <div class="btn-color-blue standard-button action-btn" @click="onClickLotteryNow">{{ t('promo.btn_lottery_now') }}</div>
         </div>
         <div class="col">
             <img width="300" height="280" src="../../../assets/images/promotion/hotpromo/penny-bank/penny-bank-pig.png" />
-            <div class="btn-color-blue standard-button action-btn" @click="onClickClaimNow">Claim Now</div>
+            <div class="btn-color-blue standard-button action-btn" @click="onClickClaimNow">{{ t('promo.btn_claim_now') }}</div>
         </div>
     </div>
 </template>
@@ -14,6 +14,9 @@
 <script setup>
 import { } from 'vue';
 import { piggyBankGetLottery, piggyBankClaim } from '../../../api/index/promo';
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const onClickLotteryNow = () => {
     piggyBankGetLottery().then((res) => {

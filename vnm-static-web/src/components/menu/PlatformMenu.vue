@@ -1,7 +1,7 @@
 <template>
   <div class="platform-menu-container">
     <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
-    <template v-for="(item, index) in platformsListDisplay.slice(0, numberToShow)" :key="index">
+    <template v-for="(item, index) in platformsListDisplay" :key="index">
       <!--      <router-link :to="`${props.platformName}?plat=${item.code}`">-->
       <div class="platform-menu-item" @click="gotoGame(item, platformType)"
            :class="item.underMaintenance === true ? 'maintenance' : ''">

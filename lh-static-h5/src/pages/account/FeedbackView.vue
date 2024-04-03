@@ -155,9 +155,8 @@
             </div>
             <div class="header-title-div" style="margin-top: 25px">
               <span class="span3">
-                此次问卷提供
-                <span class="span1" style="color: #468cff">18-188元</span>
-                建议金
+                根据您填写的内容随机为您派发
+                <span class="span1" style="color: #468cff">18-188</span>
               </span>
             </div>
             <div class="qr-code-div">

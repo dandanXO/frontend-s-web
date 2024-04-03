@@ -260,7 +260,7 @@ const submitForm = () => {
         sendForgetPasswordPhone(params)
           .then((res) => {
             if (res.code === 0) {
-              ElMessage.success("验证码已经发送到手机");
+              ElMessage.success(t('status.otp_success_send_phone'));
               forgotPwdPostVerifyForm.codeId = res.data.codeId;
               captchaVerifyRef.value.closeDialog();
               captchaVerifyRef.value.initCountdownTimer();
@@ -287,7 +287,7 @@ const submitForm = () => {
         sendForgetPasswordEmail(params)
           .then((res) => {
             if (res.code === 0) {
-              ElMessage.success("验证码已经发送到邮箱");
+              ElMessage.success(t('status.otp_success_send_email'));
               forgotPwdPostVerifyForm.codeId = res.data.codeId;
               captchaVerifyRef.value.closeDialog();
               captchaVerifyRef.value.initCountdownTimer();
@@ -331,7 +331,7 @@ const submitPostVerifyForm = () => {
         verifyForgetPasswordPhone(params)
           .then((res) => {
             if (res.code === 0) {
-              ElMessage.success("成功");
+              ElMessage.success(t('status.success'));
               openLoginDialog();
             } else {
               ElMessage.error({
@@ -354,7 +354,7 @@ const submitPostVerifyForm = () => {
         verifyForgetPasswordEmail(params)
           .then((res) => {
             if (res.code === 0) {
-              ElMessage.success("成功");
+              ElMessage.success(t('status.success'));
               openLoginDialog();
             } else {
               ElMessage.error({

@@ -67,109 +67,105 @@
             </div>
           </div>
         </div>
-      </q-carousel-slide>
-    </q-carousel>
 
-    <q-card class="level-promo-container">
-      <q-card-section class="level-promo-header">
-        <div class="level-promo-title">{{ $t("lang.free_bonus") }}</div>
-      </q-card-section>
+        <q-card class="level-promo-container">
+          <q-card-section class="level-promo-header">
+            <div class="level-promo-title">{{ $t("lang.free_bonus") }}</div>
+          </q-card-section>
 
-      <q-separator></q-separator>
-      <q-card-section class="level-promo-body">
-        <div class="vip-promo-bonus">
-          <div class="common-text">
-            <!-- {{ `VIP${claimDesc.vip + 1}优惠` }} -->
-            {{ $t("lang.upgrade_bonus") }}
-          </div>
-          <div class="common-amount">
-            <!-- {{ claimDesc.benefit }} -->
-            5,888
-          </div>
-          <div class="common-btn">
-            <q-btn class="btn-main" no-caps>{{ $t("lang.vip_claim") }}</q-btn>
-          </div>
-        </div>
-        <div class="vip-promo-bonus">
-          <div class="common-text">
-            {{ $t("lang.upgrade_bonus") }}
-          </div>
-          <div class="common-amount">5,888</div>
-          <div class="common-btn">
-            <q-btn class="btn-main" no-caps>{{ $t("lang.vip_claim") }}</q-btn>
-          </div>
-        </div>
-        <div class="vip-promo-bonus">
-          <div class="common-text">
-            {{ $t("lang.upgrade_bonus") }}
-          </div>
-          <div class="common-amount">5,888</div>
-          <div class="common-btn">
-            <q-btn class="btn-main" no-caps>{{ $t("lang.vip_claim") }}</q-btn>
-          </div>
-        </div>
-        <!-- <div class="turnover">
+          <q-separator></q-separator>
+          <q-card-section class="level-promo-body">
+            <div class="vip-promo-bonus">
+              <div class="common-text">
+                {{ $t("lang.vip_welcome_bonus") }}
+              </div>
+              <div class="common-amount">{{ vip.welcomeBonus }}</div>
+              <div class="common-btn" v-if="vip.welcomeBonus !== '-'">
+                <q-btn class="btn-main" no-caps>{{ $t("lang.vip_claim") }}</q-btn>
+              </div>
+            </div>
+            <div class="vip-promo-bonus">
+              <div class="common-text">
+                {{ $t("lang.vip_monthly_bonus") }}
+              </div>
+              <div class="common-amount">{{ vip.monthlyBonus }}</div>
+              <div class="common-btn" v-if="vip.monthlyBonus !== '-'">
+                <q-btn class="btn-main" no-caps>{{ $t("lang.vip_claim") }}</q-btn>
+              </div>
+            </div>
+            <div class="vip-promo-bonus">
+              <div class="common-text">
+                {{ $t("lang.vip_birthday_bonus") }}
+              </div>
+              <div class="common-amount">{{ vip.birthdayBonus }}</div>
+              <div class="common-btn" v-if="vip.birthdayBonus !== '-'">
+                <q-btn class="btn-main" no-caps>{{ $t("lang.vip_contactcs") }}</q-btn>
+              </div>
+            </div>
+            <!-- <div class="turnover">
           <div class="common-text">流水要求</div>
           <div class="common-text">{{ claimDesc.turnover }}</div>
         </div> -->
-        <div
-          class="claim-btn-container"
-          @click="claimDesc.availableBtn ? claim() : null"
-          v-if="claimDesc.availableBtn || claimDesc.claimedBtn"
-          :class="claimDesc.claimedBtn ? 'status-claimed' : ''"
-        >
-          <img class="claim-btn" src="../../assets/images/vip/claim-btn.png" alt="" />
-          <span class="common-text">
-            {{ claimDesc.claimedBtn ? "已领取" : "立即领取" }}
-          </span>
-        </div>
-        <!-- depositPromoBtn -->
-        <div
-          class="claim-btn-container"
-          @click="router.push('/finance/deposit?from=vip')"
-          v-if="claimDesc.depositPromoBtn"
-        >
-          <img class="claim-btn" src="../../assets/images/vip/claim-btn.png" alt="" />
-          <span class="common-text">前往存款</span>
-        </div>
-      </q-card-section>
-    </q-card>
+            <div
+              class="claim-btn-container"
+              @click="claimDesc.availableBtn ? claim() : null"
+              v-if="claimDesc.availableBtn || claimDesc.claimedBtn"
+              :class="claimDesc.claimedBtn ? 'status-claimed' : ''"
+            >
+              <img class="claim-btn" src="../../assets/images/vip/claim-btn.png" alt="" />
+              <span class="common-text">
+                {{ claimDesc.claimedBtn ? "已领取" : "立即领取" }}
+              </span>
+            </div>
+            <!-- depositPromoBtn -->
+            <div
+              class="claim-btn-container"
+              @click="router.push('/finance/deposit?from=vip')"
+              v-if="claimDesc.depositPromoBtn"
+            >
+              <img class="claim-btn" src="../../assets/images/vip/claim-btn.png" alt="" />
+              <span class="common-text">前往存款</span>
+            </div>
+          </q-card-section>
+        </q-card>
 
-    <q-card class="level-promo-container">
-      <q-card-section class="level-promo-header">
-        <div class="level-promo-title">{{ $t("lang.rebate_bonus") }}</div>
-      </q-card-section>
+        <q-card class="level-promo-container">
+          <q-card-section class="level-promo-header">
+            <div class="level-promo-title">{{ $t("lang.rebate_bonus") }}</div>
+          </q-card-section>
 
-      <q-separator></q-separator>
-      <q-card-section class="return-promo-body">
-        <div class="return-grid">
-          <div class="return-item">
-            <div class="item-percent">0.78%</div>
-            <div class="item-desc">{{ $t("lang.vip_sport_rebate") }}</div>
-          </div>
-          <div class="return-item">
-            <div class="item-percent">0.88%</div>
-            <div class="item-desc">{{ $t("lang.vip_esport_rebate") }}</div>
-          </div>
-          <div class="return-item">
-            <div class="item-percent">0.70%</div>
-            <div class="item-desc">{{ $t("lang.vip_livecasino_rebate") }}</div>
-          </div>
-          <div class="return-item">
-            <div class="item-percent">0.88%</div>
-            <div class="item-desc">{{ $t("lang.vip_poker_rebate") }}</div>
-          </div>
-          <div class="return-item">
-            <div class="item-percent">1.60%</div>
-            <div class="item-desc">{{ $t("lang.vip_slot_rebate") }}</div>
-          </div>
-          <div class="return-item">
-            <div class="item-percent">0.50%</div>
-            <div class="item-desc">{{ $t("lang.vip_lottery_rebate") }}</div>
-          </div>
-        </div>
-      </q-card-section>
-    </q-card>
+          <q-separator></q-separator>
+          <q-card-section class="return-promo-body">
+            <div class="return-grid">
+              <div class="return-item">
+                <div class="item-percent">{{ vip.rebateSport }}</div>
+                <div class="item-desc">{{ $t("lang.vip_sport_rebate") }}</div>
+              </div>
+              <div class="return-item">
+                <div class="item-percent">{{ vip.rebateEsports }}</div>
+                <div class="item-desc">{{ $t("lang.vip_esport_rebate") }}</div>
+              </div>
+              <div class="return-item">
+                <div class="item-percent">{{ vip.rebateLive }}</div>
+                <div class="item-desc">{{ $t("lang.vip_livecasino_rebate") }}</div>
+              </div>
+              <div class="return-item">
+                <div class="item-percent">{{ vip.rebatePoker }}</div>
+                <div class="item-desc">{{ $t("lang.vip_poker_rebate") }}</div>
+              </div>
+              <div class="return-item">
+                <div class="item-percent">{{ vip.rebateSlot }}</div>
+                <div class="item-desc">{{ $t("lang.vip_slot_rebate") }}</div>
+              </div>
+              <div class="return-item">
+                <div class="item-percent">{{ vip.rebateLottery }}</div>
+                <div class="item-desc">{{ $t("lang.vip_lottery_rebate") }}</div>
+              </div>
+            </div>
+          </q-card-section>
+        </q-card>
+      </q-carousel-slide>
+    </q-carousel>
 
     <div class="vip-detail-container">
       <!-- cannot flip cuz the border design will be upside down -->
@@ -216,11 +212,18 @@
               </q-tr> -->
               <q-tr :props="props">
                 <q-th rowspan="2">{{ $t("lang.vip_level") }}</q-th>
-                <q-th colspan="2">{{ $t("lang.vip_monthly_reload") }}</q-th>
+                <q-th colspan="4">{{ $t("lang.vip_monthly_reload") }}</q-th>
+                <q-th colspan="4">{{ $t("lang.vip_exclusive_promotions") }}</q-th>
               </q-tr>
               <q-tr>
                 <q-th style="background: #e7f3ff">{{ $t("lang.vip_percent_monthlyreload") }}</q-th>
                 <q-th style="background: #e7f3ff">{{ $t("lang.vip_min_deposit") }}</q-th>
+                <q-th style="background: #e7f3ff">{{ $t("lang.vip_max_bonus") }}</q-th>
+                <q-th style="background: #e7f3ff">{{ $t("lang.vip_return_over") }}</q-th>
+                <q-th style="background: #e7f3ff">{{ $t("lang.vip_bet_limit") }}</q-th>
+                <q-th style="background: #e7f3ff">{{ $t("lang.vip_priority_payment_method") }}</q-th>
+                <q-th style="background: #e7f3ff">{{ $t("lang.vip_24_7_cc_team") }}</q-th>
+                <q-th style="background: #e7f3ff">{{ $t("lang.vip_invitation_to_ee") }}</q-th>
               </q-tr>
             </template>
             <template v-slot:body="props">
@@ -288,13 +291,104 @@ const tab = ref("rules");
 
 const slide = ref(0);
 const vipItems = ref([
-  { level: "1", title: t("lang.vip_iron"), amount: "一笔存款" },
-  { level: "2", title: t("lang.vip_bronze"), amount: "3,000" },
-  { level: "3", title: t("lang.vip_silver"), amount: "30,000" },
-  { level: "4", title: t("lang.vip_gold"), amount: "80,000" },
-  { level: "5", title: t("lang.vip_platinum"), amount: "200,000" },
-  { level: "6", title: t("lang.vip_diamond"), amount: "400,000" },
-  { level: "7", title: t("lang.vip_crystal"), amount: "600,000" }
+  {
+    level: "1",
+    title: t("lang.vip_iron"),
+    welcomeBonus: "-",
+    monthlyBonus: "-",
+    birthdayBonus: "-",
+    amount: "一笔存款",
+    rebateSport: "0.30%",
+    rebateEsports: "0.40%",
+    rebateLive: "0.40%",
+    rebatePoker: "0.40%",
+    rebateSlot: "0.60%",
+    rebateLottery: "0.30%"
+  },
+  {
+    level: "2",
+    title: t("lang.vip_bronze"),
+    welcomeBonus: "-",
+    monthlyBonus: "-",
+    birthdayBonus: "-",
+    amount: "3,000",
+    rebateSport: "0.38%",
+    rebateEsports: "0.48%",
+    rebateLive: "0.45%",
+    rebatePoker: "0.48%",
+    rebateSlot: "0.70%",
+    rebateLottery: "0.30%"
+  },
+  {
+    level: "3",
+    title: t("lang.vip_silver"),
+    welcomeBonus: "888",
+    monthlyBonus: "588",
+    birthdayBonus: "-",
+    amount: "30,000",
+    rebateSport: "0.48%",
+    rebateEsports: "0.58%",
+    rebateLive: "0.50%",
+    rebatePoker: "0.58%",
+    rebateSlot: "0.80%",
+    rebateLottery: "0.40%"
+  },
+  {
+    level: "4",
+    title: t("lang.vip_gold"),
+    welcomeBonus: "1,888",
+    monthlyBonus: "888",
+    birthdayBonus: "888",
+    amount: "80,000",
+    rebateSport: "0.58%",
+    rebateEsports: "0.68%",
+    rebateLive: "0.55%",
+    rebatePoker: "0.68%",
+    rebateSlot: "1.00%",
+    rebateLottery: "0.40%"
+  },
+  {
+    level: "5",
+    title: t("lang.vip_platinum"),
+    welcomeBonus: "3,888",
+    monthlyBonus: "1,888",
+    birthdayBonus: "2,888",
+    amount: "200,000",
+    rebateSport: "0.68%",
+    rebateEsports: "0.78%",
+    rebateLive: "0.60%",
+    rebatePoker: "0.78%",
+    rebateSlot: "1.20%",
+    rebateLottery: "0.50%"
+  },
+  {
+    level: "6",
+    title: t("lang.vip_ruby"),
+    welcomeBonus: "5,888",
+    monthlyBonus: "3,888",
+    birthdayBonus: "5,888",
+    amount: "400,000",
+    rebateSport: "0.78%",
+    rebateEsports: "0.88%",
+    rebateLive: "0.70%",
+    rebatePoker: "0.88%",
+    rebateSlot: "1.60%",
+    rebateLottery: "0.50%"
+  },
+  {
+    level: "7",
+    title: t("lang.vip_diamond"),
+    welcomeBonus: "10,888",
+    monthlyBonus: "5,888",
+    birthdayBonus: "8,888",
+    amount: "600,000",
+    rebateSport: "0.88%",
+    rebateEsports: "1.00%",
+    rebateLive: "0.80%",
+    rebatePoker: "1.00%",
+    rebateSlot: "2.00%",
+    rebateLottery: "0.60%"
+  }
 ]);
 
 const vipClaimItems = [
@@ -518,6 +612,36 @@ const columns = [
     name: "min_deposit",
     align: "center",
     field: (row) => row.min_deposit
+  },
+  {
+    name: "max_bonus",
+    align: "center",
+    field: (row) => row.max_bonus
+  },
+  {
+    name: "return_over",
+    align: "center",
+    field: (row) => row.return_over
+  },
+  {
+    name: "bet_limit",
+    align: "center",
+    field: (row) => row.bet_limit
+  },
+  {
+    name: "priority_payment_method",
+    align: "center",
+    field: (row) => row.priority_payment_method
+  },
+  {
+    name: "v24_7_cc_team",
+    align: "center",
+    field: (row) => row.v24_7_cc_team
+  },
+  {
+    name: "invitation_to_ee",
+    align: "center",
+    field: (row) => row.invitation_to_ee
   }
 ];
 const rows = [
@@ -525,43 +649,85 @@ const rows = [
     name: "VIP1",
     amount: "一笔存款",
     monthly_reload: "0",
-    min_deposit: "0"
+    min_deposit: "0",
+    max_bonus: "0",
+    return_over: "0",
+    bet_limit: t("lang.vip_bet_limit_standard"),
+    priority_payment_method: "",
+    v24_7_cc_team: "",
+    invitation_to_ee: ""
   },
   {
     name: "VIP2",
     amount: "3,000",
     monthly_reload: "0",
-    min_deposit: "0"
+    min_deposit: "0",
+    max_bonus: "0",
+    return_over: "0",
+    bet_limit: t("lang.vip_bet_limit_standard"),
+    priority_payment_method: "",
+    v24_7_cc_team: "",
+    invitation_to_ee: ""
   },
   {
     name: "VIP3",
     amount: "30,000",
     monthly_reload: "0",
-    min_deposit: "0"
+    min_deposit: "0",
+    max_bonus: "0",
+    return_over: "0",
+    bet_limit: t("lang.vip_bet_limit_standard"),
+    priority_payment_method: "",
+    v24_7_cc_team: "",
+    invitation_to_ee: ""
   },
   {
     name: "VIP4",
     amount: "80,000",
     monthly_reload: "0",
-    min_deposit: "0"
+    min_deposit: "0",
+    max_bonus: "0",
+    return_over: "0",
+    bet_limit: t("lang.vip_bet_limit_standard"),
+    priority_payment_method: "",
+    v24_7_cc_team: "",
+    invitation_to_ee: ""
   },
   {
     name: "VIP5",
     amount: "200,000",
     monthly_reload: "30%",
-    min_deposit: "3,500"
+    min_deposit: "3,500",
+    max_bonus: "5,888",
+    return_over: "15",
+    bet_limit: t("lang.vip_bet_limit_highlimit"),
+    priority_payment_method: "✓",
+    v24_7_cc_team: "",
+    invitation_to_ee: ""
   },
   {
     name: "VIP6",
     amount: "400,000",
     monthly_reload: "30%",
-    min_deposit: "3,500"
+    min_deposit: "3,500",
+    max_bonus: "8,888",
+    return_over: "15",
+    bet_limit: t("lang.vip_bet_limit_highlimit"),
+    priority_payment_method: "✓",
+    v24_7_cc_team: "✓",
+    invitation_to_ee: ""
   },
   {
     name: "VIP7",
     amount: "600,000",
     monthly_reload: "30%",
-    min_deposit: "3,500"
+    min_deposit: "3,500",
+    max_bonus: "12,888",
+    return_over: "15",
+    bet_limit: t("lang.vip_bet_limit_highlimit"),
+    priority_payment_method: "✓",
+    v24_7_cc_team: "✓",
+    invitation_to_ee: "✓"
   }
 ];
 
@@ -696,9 +862,13 @@ onActivated(() => {
 
   .q-carousel__prev-arrow--horizontal {
     left: 0;
+    top: 70px;
+    bottom: auto;
   }
   .q-carousel__next-arrow--horizontal {
     right: 0;
+    top: 70px;
+    bottom: auto;
   }
 
   .q-panel {
@@ -718,6 +888,7 @@ onActivated(() => {
 
     .card-img {
       width: 100%;
+      min-height: 140px;
     }
 
     .status {
@@ -801,6 +972,10 @@ onActivated(() => {
     background: #fcfdfe;
     box-shadow: 0px -4px 8px 0px #c3d4e6 inset, 0px 4px 0px 0px #a7c2dd;
     margin-top: 12px;
+    margin-left: -60px;
+    margin-right: -60px;
+    width: calc(100% + 120px);
+
     .level-promo-header {
       background: $lightblue;
 
@@ -818,6 +993,8 @@ onActivated(() => {
     }
 
     .level-promo-body {
+      // margin-left:-60px;
+      // margin-right:-60px;
       padding: 1rem 2rem;
       display: flex;
       flex-direction: column;
@@ -1006,6 +1183,7 @@ onActivated(() => {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 20px;
   }
 
   .vip-tips {

@@ -3,7 +3,7 @@
     <q-header v-if="hasPage" :class="hasShadow ? 'with-shadow' : ''">
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
-          <router-link to="/"><img src="../assets/logo-1.png" alt="logo" /></router-link>
+          <router-link to="/"><img src="../assets/logo-web.svg" alt="logo" /></router-link>
         </div>
         <q-card-actions v-if="!store.hasToken()">
           <q-btn glossy color="brand" to="/login">登录</q-btn>
@@ -15,7 +15,7 @@
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
-        <router-link :to="prevPage ? '/' + prevPage : '/'">
+        <router-link :to="prevPage ? '/' + prevPage : '/'" class="back-btn-top">
           <img class="back-icon" src="../assets/images/common/left-back-icon.svg" />
         </router-link>
         {{ pageName }}
@@ -28,6 +28,10 @@
           dense
           icon="menu"
         />
+
+        <div class="header-lang">
+          <LangOptions />
+        </div>
       </q-card-section>
     </q-header>
 
@@ -65,7 +69,7 @@
           <img class="hover" src="../assets/images/footer/promo-icon-active.svg" />
           {{ $t("lang.promo") }}
         </q-route-tab>
-        <q-route-tab to="/account/transfer" name="transfer">
+        <q-route-tab to="/finance/deposit" name="deposit">
           <img class="inactive" src="../assets/images/footer/withdraw-icon.svg" />
           <img class="hover" src="../assets/images/footer/withdraw-icon-active.svg" />
           {{ $t("lang.account") }}
@@ -92,12 +96,13 @@ import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 import { translateRecord } from "src/directives/translate";
 import { useI18n } from "vue-i18n";
+import LangOptions from "components/LangOptions";
 
 export default defineComponent({
   name: "MainLayout",
 
   components: {
-    // RiArrowDropLeftLine
+    LangOptions
   },
 
   setup() {
@@ -203,6 +208,8 @@ export default defineComponent({
           if (route.query.name) {
             hasPage.value = true;
             prevPage.value = "promo";
+          } else {
+            prevPage.value = "/";
           }
         } else if (route.path === "/finance/deposit") {
           prevPage.value = "account";
@@ -262,19 +269,19 @@ export default defineComponent({
         } else if (route.path === "/account/letters") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = t("lang.page_feedback");
+          pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/inbox") {
-          prevPage.value = "account";
+          prevPage.value = "account/letters";
           hasPage.value = true;
           pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/outbox") {
           prevPage.value = "account/letters";
           hasPage.value = true;
-          pageName.value = t("lang.page_myfeedback");
+          pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/write") {
           prevPage.value = "account/letters";
           hasPage.value = true;
-          pageName.value = t("lang.page_feedback");
+          pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/feedback") {
           prevPage.value = "account/letters";
           hasPage.value = true;
@@ -439,7 +446,8 @@ export default defineComponent({
         "BindBankCard",
         "BindCryptoView",
         "BindEWalletView"
-      ]
+      ],
+      LangOptions
     };
   }
 });
@@ -485,5 +493,11 @@ svg path {
   img {
     width: 100%;
   }
+}
+
+.header-lang {
+  position: absolute;
+  top: 8px;
+  right: 12px;
 }
 </style>

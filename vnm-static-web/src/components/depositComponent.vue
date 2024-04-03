@@ -12,6 +12,8 @@
         <ul>
           <li>{{ $t('deposit.notept1') }}</li>
         </ul> 
+        
+        <div v-if="selectedPayType" v-html="activeMethod.msg"></div>
       </div>
       <div class="node-wrapper">
         <Node
@@ -144,11 +146,11 @@
             </el-button>
           </div>
 
-          <el-form-item v-if="selectedPayType" class="tip">
+          <!-- <el-form-item v-if="selectedPayType" class="tip">
             <span class="account-tip-text" style="margin-bottom: 10px; display: block; width: 100%;">
               <div v-html="activeMethod.msg"></div>
             </span>
-          </el-form-item>
+          </el-form-item> -->
 
           <!-- <div class="txt-center">
             <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">
@@ -419,7 +421,7 @@ function confirmDeposit() {
   if (store.token) {
     if (!store.phone) {
       ElMessageBox.confirm(
-        t('error.safetyBeforePhone'), t('common.systemError'),
+        t('bankError.safetyBeforePhone'), t('common.systemError'),
         {
           showClose: "false",
           cancelButtonClass: "cancel-btn",
@@ -439,7 +441,7 @@ function confirmDeposit() {
     }
     if (!store.realName) {
       ElMessageBox.confirm(
-        t('error.bindRealName'), t('common.systemError'),
+        t('bankError.bindRealName'), t('common.systemError'),
         {
           showClose: "false",
           cancelButtonClass: "cancel-btn",

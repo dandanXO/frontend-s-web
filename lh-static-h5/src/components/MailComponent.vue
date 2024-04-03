@@ -61,8 +61,8 @@
                   </div>
                 </div>
               </div>
-              <div class="mailcontents" v-if="isSelectedMail === det.id">
-                {{ det.content }}
+              <div class="mailcontents" v-if="isSelectedMail === det.id"
+                   v-html="det.content.replace(/\n/g, '<br/>')">
               </div>
               <div v-if="mailType === 'outbox'" class="buttons">
                 <q-btn outline label="催单" size="sm" color="bright" class="q-mr-sm" />
@@ -526,7 +526,7 @@ export default defineComponent({
       width: 100%;
       display: flex;
       align-items: center;
-      
+
       .title-text {
         text-align: left;
         text-overflow: ellipsis;

@@ -16,6 +16,7 @@ import RecordComponent from "../../components/RecordComponent.vue";
 import {api} from "boot/axios";
 import moment from "moment/moment";
 import {cached} from "boot/cache";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "PromoRecordView",
@@ -23,7 +24,7 @@ export default defineComponent({
     RecordComponent
   },
   setup() {
-
+    const {t} = useI18n();
     const visible = ref(true);
     const tableData = ref([]);
 
@@ -98,19 +99,19 @@ export default defineComponent({
     const tableHeaders = [
       {
         key: "serialNumber",
-        label: "编码"
+        label: t('lang.col_serialnumber')
       },
       {
         key: "privilegeName",
-        label: "优惠名"
+        label: t('lang.col_privilegename')
       },
       {
         key: "amount",
-        label: "金额"
+        label: t('lang.col_amount')
       },
       {
         key: "recordTime",
-        label: "记录时间"
+        label: t('lang.col_datetime')
       }
     ];
     onMounted(() => {
