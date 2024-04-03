@@ -208,6 +208,8 @@ export default defineComponent({
           if (route.query.name) {
             hasPage.value = true;
             prevPage.value = "promo";
+          } else {
+            prevPage.value = "/";
           }
         } else if (route.path === "/finance/deposit") {
           prevPage.value = "account";
