@@ -842,7 +842,7 @@
           <template v-if="isGameLoading">
             <div class="loader-container">
               <div>
-                <q-spinner color="yellow" size="10em" :thickness="10" />
+                <q-spinner color="green" size="10em" :thickness="10" />
               </div>
               <div>Loading... Please wait...</div>
             </div>
@@ -2393,6 +2393,7 @@ onMounted(() => {
   height: 76px;
   background: url("../assets/images/index/icon-cs.png") no-repeat center center;
   background-size: contain;
+  filter: hue-rotate(200deg);
 }
 
 .home-divider {

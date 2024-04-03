@@ -7,7 +7,7 @@
     <!-- <div class="iFrameFull">
   </div> -->
     <div class="loader-container">
-      <q-spinner color="yellow" size="10em" :thickness="10" />
+      <q-spinner color="green" size="10em" :thickness="10" />
     </div>
   </q-page>
 </template>

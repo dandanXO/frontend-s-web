@@ -729,7 +729,7 @@ export default defineComponent({
           overflow: hidden;
           // padding-top: 40px;
           border-radius: 17px;
-          background: #4f366c;
+          background: radial-gradient(68.92% 68.92% at 50% 50%, #1D341D 0%, #466A45 100%);
           box-shadow: 0px 7.5px 20px 0px #1411321a;
 
           img {

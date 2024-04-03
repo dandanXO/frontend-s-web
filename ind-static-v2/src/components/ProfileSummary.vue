@@ -81,7 +81,7 @@
             </div>
           </template>
 
-          <q-list style="background: #303954" dense unelevated flat class="dropdown-list">
+          <q-list style="background: #19242E" dense unelevated flat class="dropdown-list">
             <q-item clickable v-close-popup @click="onVipClick">
               <q-item-section avatar>
                 <q-avatar icon="diamond" />
@@ -564,7 +564,7 @@ onMounted(() => {
     padding-top: 3px;
     padding-bottom: 4px;
     z-index: 3;
-    color: #334ad6;
+    color: #00AE00;
     font-weight: 700;
     font-style: italic;
   }

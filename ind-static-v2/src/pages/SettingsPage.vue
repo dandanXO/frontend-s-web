@@ -393,20 +393,21 @@ const logout = () => {
 }
 
 .btn-cancel {
-  background: #ffffff20;
+  background: radial-gradient(68.92% 68.92% at 50% 50%, #1D341D 0%, #466A45 100%);
   font-weight: 700;
-  color: #dcdcdc;
-  border: 1px solid #ffffff80;
+  color: #fff;
+  border: 1px solid #5D8956;
   border-radius: 8px;
   width: 140px;
   height: 42px;
 }
 .btn-confirm {
-  background: linear-gradient(187.94deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
+  background: radial-gradient(68.92% 68.92% at 50% 50%, #00550E 0%, #57CD69 100%);
+  border: 1px solid #5D8956;
   font-weight: 700;
   width: 140px;
   height: 42px;
-  color: #5c46e7;
+  color: #fff;
   border-radius: 8px;
 }
 </style>
