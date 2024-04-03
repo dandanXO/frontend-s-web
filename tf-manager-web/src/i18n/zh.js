@@ -385,7 +385,7 @@ export default {
   },
   scheduleType: {
     NORMAL: '普通',
-    BET_RECORDS: '下注返回数据',
+    BET_RECORDS: '抓取下注记录',
   },
   fields: {
     account: '账号',
