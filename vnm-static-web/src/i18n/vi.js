@@ -648,12 +648,6 @@ export default {
     "appDownload": "Tải APP",
     "backToTop": "TOP"
   },
-  "response" :{
-    15202: "Mật khẩu mới không thể giống với mật khẩu cũ.",
-    15201: "Mật khẩu cũ chưa chính xác.",
-    12101: "Mật khẩu rút tiền mới không thể giống với mật khẩu rút tiền cũ.",
-    12100: "Mật khẩu rút tiền cũ chưa chính xác."
-  },
   status: {
     withdrawFailed: "Rút tiền thất bại",
     withdraw: "Rút tiền",
@@ -739,7 +733,7 @@ export default {
     10007: "Lỗi khi nhập phòng chơi",
     10008: "Lỗi",
     11003: "Nạp tiền không thành công",
-    12101: "Mật khẩu rút tiền không khớp",
+    12101: "Mật khẩu rút tiền mới không thể giống với mật khẩu rút tiền cũ.",
     13000: "Không tìm thấy tên miền",
     13001: "Không thể truy vấn thông tin cũ hơn 3 tháng",
     13002: "Phải trong vòng 7 ngày",
@@ -748,8 +742,8 @@ export default {
     14001: "Số điện thoại này đã được đăng ký",
     14002: "Email này đã được đăng ký",
     14003: "Không tìm thấy mã đại lý",
-    15201: "Mã cũ không chính xác",
-    15202: "Mã mới phải khớp với mã cũ",
+    15202: "Mật khẩu mới không thể giống với mật khẩu cũ.",
+    15201: "Mật khẩu cũ chưa chính xác.",
     21000: "Trò chơi này đã có trong danh sách trò chơi yêu thích của bạn.",
     24001: "Bản ghi điểm danh đã tồn tại.",
     24002: "Phát hiện cùng địa chỉ IP",
@@ -777,6 +771,7 @@ export default {
     35008: "Bạn không có đặc quyền này",
     35009: "Đặc quyền sẽ có hiệu lực sớm",
     35010: "Thành viên 35010 không thể nhận đặc quyền này",
-    35011: "Thành viên 35011 không thể nhận đặc quyền này."
+    35011: "Thành viên 35011 không thể nhận đặc quyền này.",
+    12100: "Mật khẩu rút tiền cũ chưa chính xác."
 }
 }

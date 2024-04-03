@@ -652,12 +652,6 @@ about: {
     "appDownload": "APP",
     "backToTop": "TOP"
   },
-  "response" :{
-    15202: "The new password cannot be the same as the old password.",
-    15201: "Old password is incorrect.",
-    12101: "The new withdraw password cannot be the same as the old withdraw password",
-    12100: "Old Withdraw password does not match."
-  },
   status: {
     withdrawFailed: "Withdraw failed",
     withdraw: "Withdraw",
@@ -691,7 +685,6 @@ about: {
     tiktok: "Tiktok",
     automatic_payment: "Automatic Paying"
   },
-  
   response: {
     101: "Platform not found",
     102: "Platform is closed",
@@ -744,7 +737,7 @@ about: {
     10007: "Error entering game room",
     10008: "Error",
     11003: "Deposit failed",
-    12101: "Withdraw password does not match",
+    12101: "The new withdraw password cannot be the same as the old withdraw password",
     13000: "Domain name not found",
     13001: "Cannot query information older than 3 months",
     13002: "Must be within 7 days",
@@ -753,8 +746,8 @@ about: {
     14001: "This phone number has already been registered",
     14002: "This email has already been registered",
     14003: "Affiliate code not found",
-    15201: "Incorrect old code",
-    15202: "New code must match old code",
+    15202: "The new password cannot be the same as the old password.",
+    15201: "Old password is incorrect.",
     21000: "This game is already in your favorite games list.",
     24001: "The attendance record already exists.",
     24002: "Detected same IP",
@@ -782,6 +775,7 @@ about: {
     35008: "You do not have this privilege",
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
-    35011: "35011 Member cannot receive this privilege."
+    35011: "35011 Member cannot receive this privilege.",
+    12100: "Old Withdraw password does not match."
   }
 }
