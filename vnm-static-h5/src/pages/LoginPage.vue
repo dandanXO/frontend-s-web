@@ -8,7 +8,7 @@
       </div>
 
       <div class="header-left" @click="router.push('/')">
-        <img alt="logo" src="../assets/logo-1.png" />
+        <img alt="logo" src="../assets/logo-web.svg" />
       </div>
 
       <div class="header-lang">
@@ -33,7 +33,7 @@
       <div class="login-form-container">
         <div v-if="!loginType" class="">
           <q-label>
-            {{ $t("lang.please_enter_username") }}
+            {{ $t("lang.username") }}
             <em>*</em>
           </q-label>
           <q-input
@@ -57,7 +57,7 @@
           </q-input>
 
           <q-label>
-            {{ $t("lang.please_type_the_password") }}
+            {{ $t("lang.password") }}
             <em>*</em>
           </q-label>
           <q-input
@@ -87,7 +87,7 @@
           </q-input>
 
           <q-label>
-            {{ $t("lang.please_enter_verification_code") }}
+            {{ $t("lang.verification_code") }}
             <em>*</em>
           </q-label>
           <q-input
@@ -117,7 +117,7 @@
 
         <div v-if="loginType">
           <q-label>
-            {{ $t("lang.please_enter_phone_number") }}
+            {{ $t("lang.phone_number") }}
             <em>*</em>
           </q-label>
           <q-input

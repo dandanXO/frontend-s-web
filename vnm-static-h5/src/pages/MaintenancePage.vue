@@ -5,7 +5,7 @@
     </div>
     <div class="maintenance-details">
       <div class="maintenance-logo">
-        <img src="../assets/logo-1.png" />
+        <img src="../assets/logo-web.svg" />
       </div>
       <div class="maintenance-title">目前我们的网站正在维护中...</div>
       <div class="maintenance-desc">

@@ -16,6 +16,7 @@ import RecordComponent from "../../components/RecordComponent.vue";
 import {api} from "boot/axios";
 import moment from "moment/moment";
 import {cached} from "boot/cache";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "PromoRecordView",
@@ -26,6 +27,7 @@ export default defineComponent({
 
     const visible = ref(true);
     const tableData = ref([]);
+    const {t} = useI18n();
 
     var apiUrl = "/session/member/privilege";
 
