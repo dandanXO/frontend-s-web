@@ -36,6 +36,7 @@ import variables from '@/styles/_variables.scss'
 import { useStore } from '@/store'
 import { useRoute } from 'vue-router'
 import { getMemberWithdrawRecordApplySimple, getMemberWithdrawRecordApply, getMemberWithdrawRecordBeforePaid, getMemberWithdrawRecordPay } from '../../../api/member-withdraw-record'
+import { getFinanceFeedbackCount } from '../../../api/finance-feedback'
 import moment from 'moment'
 import { hasPermission } from '../../../utils/util'
 
@@ -139,6 +140,16 @@ export default defineComponent({
       }
     };
 
+    const checkOutstandingFinancialFeedback = async() => {
+      const { data: ret } = await getFinanceFeedbackCount(store.state.user.siteName);
+      if (ret === 0) {
+        spliceSocket('FINANCE_FEEDBACK');
+        sessionStorage.setItem("FINANCE_FEEDBACK", 0);
+      } else {
+        sessionStorage.setItem("FINANCE_FEEDBACK", ret);
+      }
+    };
+
     onMounted(async() => {
       if (!hasPermission(["sys:withdraw:apply"]) && hasPermission(["sys:withdraw:simple:list"])) {
         await checkOutstandingAutoWithdraw();
@@ -151,6 +162,9 @@ export default defineComponent({
       }
       if (hasPermission(["sys:withdraw:pay"])) {
         await checkOutstandingPayment();
+      }
+      if (hasPermission(["sys:feedback:list"])) {
+        await checkOutstandingFinancialFeedback();
       }
       isMounted.value = true;
     });
