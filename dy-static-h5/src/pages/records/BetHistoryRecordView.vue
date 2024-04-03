@@ -194,6 +194,8 @@ const getGameName = (gameName) => {
           return 'SW电子';
         case 'GPS':
           return 'GPS捕鱼';
+        case 'PMFISH':
+          return 'DB捕鱼';
         case 'IA':
           return '小艾电竞 ';
         case 'DT':

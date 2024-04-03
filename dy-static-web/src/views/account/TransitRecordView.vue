@@ -1008,7 +1008,7 @@ export default defineComponent({
 
           totalBetRecord.totalBet = response.data?.sums?.totalBet
           totalBetRecord.totalPayout = response.data?.sums?.totalPayout
-          
+
           //clear array and then push new record
           dataSource.splice(0);
           dataSource.push(...response.data.records);
@@ -1486,6 +1486,8 @@ export default defineComponent({
           return 'SW电子';
         case 'GPS':
           return 'GPS捕鱼';
+        case 'PMFISH':
+          return 'DB捕鱼';
         case 'IA':
           return '小艾电竞 ';
         case 'DT':
