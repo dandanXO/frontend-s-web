@@ -120,7 +120,7 @@ export default defineComponent({
               />
     <el-button size="small" class="common-btn" 
                 @click="$refs.input.click()">
-      上传图片
+      {{ $t('account.upload_image') }}
     </el-button></el-space>
           <!-- <el-input v-model.number="ruleForm.icon" autocomplete="off" /> -->
 </template>
@@ -130,6 +130,7 @@ import {defineComponent, reactive} from "vue";
 
 import { uploadImage } from '@/api/image';
 import { ElMessage } from "element-plus";
+import { useI18n } from "vue-i18n";
 export default defineComponent({
   emits: ["photoResponse"],
   
@@ -137,6 +138,7 @@ export default defineComponent({
     const ruleForm = reactive({
       icon: null
     })
+    const { t } = useI18n();
     const clear = () => {
       ruleForm.icon = null
       emit("photoResponse", null);
