@@ -44,10 +44,10 @@
           <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
           <span>+{{ $t("lang.add_virtual_wallet") }}</span>
         </div>
-<!--        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/ewallet')">-->
-<!--          <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />-->
-<!--          <span>+{{ $t("lang.add_ewallet") }}</span>-->
-<!--        </div>-->
+        <!--        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/ewallet')">-->
+        <!--          <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />-->
+        <!--          <span>+{{ $t("lang.add_ewallet") }}</span>-->
+        <!--        </div>-->
         <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/alipay')">
           <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
           <span>+添加支付宝</span>
@@ -55,7 +55,7 @@
       </div>
 
       <div v-if="bankCardList[BANK_CARD].length" class="bank-detail-item q-my-sm" @click="onShowCardClick(BANK_CARD)">
-        <div class="bank-detail-type">银行卡</div>
+        <div class="bank-detail-type">{{ $t("lang.bd_bank_card") }}</div>
         <div :class="`bank-detail-arrow ${isCardVisible[BANK_CARD] ? 'rotate' : ''}`">></div>
       </div>
       <template v-if="isCardVisible[BANK_CARD]">
@@ -70,7 +70,7 @@
               <div>{{ bankCard.bankName }}</div>
             </div>
             <div class="bank-number-wrapper">
-              <div>卡号：</div>
+              <!-- <div>卡号：</div> -->
               <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
               <!-- <img
                 class="copy-btn"
@@ -79,12 +79,12 @@
               /> -->
             </div>
           </div>
-          <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>
+          <div class="right-container" @click="onUnbindClick(bankCard)">{{ $t("lang.bd_untie") }}</div>
         </div>
       </template>
 
       <div v-if="bankCardList[CRYPTO].length" class="bank-detail-item q-my-sm" @click="onShowCardClick(CRYPTO)">
-        <div class="bank-detail-type">虚拟账户</div>
+        <div class="bank-detail-type">{{ $t("lang.bd_virtual_account") }}</div>
         <div :class="`bank-detail-arrow ${isCardVisible[CRYPTO] ? 'rotate' : ''}`">></div>
       </div>
       <template v-if="isCardVisible[CRYPTO]">
@@ -99,7 +99,7 @@
               <div>{{ bankCard.bankName }}</div>
             </div>
             <div class="bank-number-wrapper">
-              <div>卡号：</div>
+              <!-- <div>卡号：</div> -->
               <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
               <!-- <img
                 class="copy-btn"
@@ -108,7 +108,7 @@
               /> -->
             </div>
           </div>
-          <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>
+          <div class="right-container" @click="onUnbindClick(bankCard)">{{ $t("lang.bd_untie") }}</div>
         </div>
       </template>
 

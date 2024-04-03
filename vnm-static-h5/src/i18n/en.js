@@ -166,6 +166,8 @@ export default {
     system_confirm: "Confirm",
     system_delete_all_msg: "Are you sure delete all?",
     system_cancel: "Cancel",
+    system_operation_success: "The operation is successful, please check the mobile phone verification code!",
+    system_verify_failed: "Verification failed, please refresh",
 
     // personal | verify
     personal_exclusiveurl: "Exclusive URL",
@@ -318,6 +320,29 @@ export default {
     add_bank_card: "Add bank card",
     add_virtual_wallet: "Add virtual wallet",
     add_ewallet: "Add eWallet",
+    bd_bank_card: "Bank card",
+    bd_untie: "Untie",
+    bd_virtual_account: "Virtual account",
+    bd_account_bank: "Account Bank",
+    bd_please_select: "Please select",
+    bd_bank_acc_number: "Bank Account Number",
+    bd_please_enter_bank_card: "Please enter bank card number",
+    bd_real_name: "Real Name",
+    bd_please_enter_real_name: "Please enter real name",
+    bd_acc_bank_address: "Account Bank Address",
+    bd_please_enter_acc_bank_address: "Please enter account bank address",
+    bd_phone_number: "Phone Number",
+    bd_please_enter_phone_number: "Please enter phone number",
+    bd_get_otp: "Get OTP",
+    bd_otp_code: "OTP Code",
+    bd_please_enter_otp: "Please enter OTP code",
+    bd_reminder_name_issue:
+      "Gentle reminder: If the cardholder’s name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
+    bd_submit: "Submit",
+    bd_please_enter_digit_only: "Please enter digit only",
+    bd_length_between_16_19: "Length should between 16-19",
+    bd_added_bank_card: "Added bank card",
+    bd_click_verification: "Please click to get the verification code and enter your registered mobile phone for verification",
 
     // mine
     version_no: "Version",
@@ -651,6 +676,7 @@ export default {
     enter_new_password: "Please enter new password",
     captcha_code: "Captcha Code",
     enter_captcha_code: "Please enter captcha code",
+    captcha_code_must_4: "Captcha code must be 4 characters",
     captcha_refresh: "Click to refresh captcha code",
     verification_code_send: "Send the verification code",
     verification_code: "Verification code",
@@ -1123,7 +1149,7 @@ export default {
     str_esports: "Esports",
     str_poker: "POKER",
     str_lottery: "Lottery",
-    str_adjust:"Adjust"
+    str_adjust: "Adjust"
   },
   error: {
     101: "Platform not found",
