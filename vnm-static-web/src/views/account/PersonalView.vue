@@ -80,7 +80,7 @@
                 </div>
                 <div class="info-tbl-col">
                   <div class="tbl-row">
-                    <div class="basic-info-cell title">{{ $t('personal.mobileNo') }}</div>
+                    <div v-if="personalState.memberInfo.telephone" class="basic-info-cell title">{{ $t('personal.mobileNo') }}</div>
                     <div v-if="personalState.memberInfo.telephone" class="basic-info-cell contentwtxt" style="display:flex;justify-content: space-between;align-items: center;">
                       {{ personalState.memberInfo.telephone }}
 
@@ -148,7 +148,7 @@
               </div> -->
 
               <div class="tbl-row">
-                <div class="basic-info-cell title">{{$t('personal.email')}}</div>
+                <div v-if="personalState.memberInfo.email" class="basic-info-cell title">{{$t('personal.email')}}</div>
                 <div v-if="personalState.memberInfo.email" class="basic-info-cell contentwtxt" style="display:flex;justify-content: space-between;align-items: center;">
                   {{ personalState.memberInfo.email }}
 

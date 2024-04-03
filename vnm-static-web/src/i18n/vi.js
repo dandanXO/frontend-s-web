@@ -239,7 +239,9 @@ export default {
     "selectDate": "Chọn ngày",
     btn_lottery_now: "Mở thưởng ngay",
     btn_claim_now: "Yêu cầu ngay",
-    net_work_bonus: "Tiền thưởng"
+    net_work_bonus: "Tiền thưởng",
+    
+    bonus: "Phần thưởng",
     // vi-daily-checkin end
   },
   "mail": {

@@ -245,7 +245,8 @@ export default {
     selectDate: 'Select date',
     btn_lottery_now: "Lottery Now",
     btn_claim_now: "Claim Now",
-    net_work_bonus: "Net loss bonus"
+    net_work_bonus: "Net loss bonus",
+    bonus: "Bonus",
     // vi-daily-checkin end
   },
   mail: {
