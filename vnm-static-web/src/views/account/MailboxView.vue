@@ -213,6 +213,9 @@ import moment from "moment";
 import { i18nStore } from '@/store/language'
 import { storeToRefs } from 'pinia'
 import { userStore } from "@/store";
+import { useI18n } from "vue-i18n";
+
+const {t} = useI18n()
 const store = userStore();
 const i18nStoreLanguage = i18nStore()
     const { languageVal } = storeToRefs(i18nStoreLanguage)
@@ -384,7 +387,7 @@ const openMsg = (m) => {
               .then((response) => {
                 if(response.code === 0) {
                     ElMessage({
-                      message: '成功',
+                      message: t('status.success'),
                       type: 'success',
                     })
 

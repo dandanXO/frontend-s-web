@@ -17,12 +17,14 @@ import moment from "moment";
 import {api} from "boot/axios";
 import {userStore} from "src/stores";
 import {cached} from "boot/cache";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   components: {
     RecordComponent
   },
   setup() {
+    const {t} = useI18n()
     const visible = ref(true);
     const tableData = ref([]);
 
@@ -85,7 +87,7 @@ export default defineComponent({
 
         // Check if records array is empty and stop processing if true
         if (res.records.length === 0) {
-          console.log("No records found. Ending function execution.");
+          // console.log("No records found. Ending function execution.");
           current.value = maxPage.value;
           if (isNew) {
             visible.value = false;
@@ -115,27 +117,27 @@ export default defineComponent({
     const tableHeaders = ([
       {
         key: "serialNumber",
-        label: "编码"
+        label: t('lang.col_serialnumber')
       },
       {
         key: "type",
-        label: "账变类型"
+        label: t('lang.col_turnovertype')
       },
       {
         key: "platformCode",
-        label: "平台"
+        label: t('lang.col_turnplatform')
       },
       {
         key: "amount",
-        label: "金额"
+        label: t('lang.col_amount')
       },
       {
         key: "subType",
-        label: "账变子类型"
+        label: t('lang.col_subtype')
       },
       {
         key: "recordTime",
-        label: "时间"
+        label:  t('lang.col_datetime')
       }
     ]);
     onMounted(() => {

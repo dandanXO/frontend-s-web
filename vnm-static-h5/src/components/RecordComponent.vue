@@ -52,11 +52,11 @@
                 (recordType === 'withdraw' && det.status === 'STEP_1')
               "
             >
-              <q-btn outline label="催单" @click="feedbackTrans(det)" size="sm" color="bright" class="q-mr-sm" />
+              <q-btn outline :label="$t('lang.str_reminder')" @click="feedbackTrans(det)" size="sm" color="bright" class="q-mr-sm" />
             </template>
 
             <template v-if="recordType === 'deposit'">
-              <q-btn outline label="复制" @click="copyText(det.serialNumber, '存款编码')" size="sm" color="bright" />
+              <q-btn outline :label="$t('lang.str_copy')" @click="copyText(det.serialNumber, $t('lang.str_deposit_serialnumber'))" size="sm" color="bright" />
             </template>
           </div>
 
@@ -68,9 +68,9 @@
                 det.confirmStatus === 0
               "
             >
-              <q-btn @click="openWithdrawConfirmDialog(det)" outline label="确认到账" size="sm" color="bright" />
+              <q-btn @click="openWithdrawConfirmDialog(det)" outline :label="$t('lang.str_confirmwithdraw')" size="sm" color="bright" />
             </template>
-            <q-btn outline label="复制" @click="copyText(det.serialNumber, '单号')" size="sm" color="bright" />
+            <q-btn outline :label="$t('lang.str_copy')" @click="copyText(det.serialNumber, $t('lang.str_serial_number'))" size="sm" color="bright" />
           </div>
         </q-card>
         <template v-slot:loading>
@@ -96,7 +96,7 @@
     <q-card class="reminder-dialog-card bg-white" style="width: 100%; padding: 0px 0px 20px">
       <q-card-section class="text-white">
         <q-toolbar>
-          <q-toolbar-title>催单</q-toolbar-title>
+          <q-toolbar-title>{{ $t('lang.str_reminder') }}</q-toolbar-title>
           <q-btn flat v-close-popup round dense icon="close" />
         </q-toolbar>
       </q-card-section>
@@ -112,12 +112,12 @@
           label-cols="5"
           class="reminder-dialog-form"
         >
-          <q-input label="存款编码" filled v-model="reminderForm.orderNo" padding="none" readonly disable />
+          <q-input :label="$t('lang.str_str_deposit_serialnumber')" filled v-model="reminderForm.orderNo" padding="none" readonly disable />
           <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" />
           <q-input
             type="textarea"
             v-model="reminderForm.memberRemark"
-            label="备注"
+            :label="$t('lang.str_remark')"
             filled
             autogrow
             color="white"
@@ -125,7 +125,7 @@
             :rows="2"
             :max-rows="5"
           />
-          <q-btn class="common-btn q-mt-md" color="brightbtn" label="提交" @click="submitReminder" />
+          <q-btn class="common-btn q-mt-md" color="brightbtn" :label="$t('lang.personal_submit')" @click="submitReminder" />
         </q-form>
       </q-card-section>
     </q-card>
@@ -134,13 +134,13 @@
   <q-dialog width="100%" v-model="isConfirmWithdraw">
     <q-card style="width: 100%; padding: 20px" class="bg-white text-black">
       <q-card-section class="q-mb-md">
-        系统提示
+        {{ $t('lang.strsystem_message') }}
         <br />
         <br />
-        确认到账
+        {{ $t('lang.str_confirmwithdraw') }}
       </q-card-section>
-      <q-btn @click="openWithdrawConfirm()" label="确认" color="brightbtn" style="margin-right: 8px" />
-      <q-btn @click="isConfirmWithdraw = false" label="取消" color="warning" />
+      <q-btn @click="openWithdrawConfirm()" :label="$t('lang.str_confirm')" color="brightbtn" style="margin-right: 8px" />
+      <q-btn @click="isConfirmWithdraw = false" :label="$t('lang.str_cancel')" color="warning" />
     </q-card>
   </q-dialog>
 </template>
@@ -246,7 +246,7 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: "已经确认到账",
+              message: t('lang.confirm_withdrawal_sucess'),
               icon: "check_circle_outline"
             });
             removeSessionKeys("/session/member/withdraw");
@@ -282,7 +282,7 @@ export default defineComponent({
         $q.notify({
           color: "positive",
           position: "top",
-          message: `${msgTitle}复制成功！`,
+          message: `${msgTitle}` + t('lang.success_copied'),
           icon: "check_circle_outline"
         });
       }, 100);
@@ -299,7 +299,7 @@ export default defineComponent({
         // console.log(res);
         if (res.code === 0) {
           if (res.data < 3) {
-            console.log("Ok here");
+            // console.log("Ok here");
             reminderDialog.value = true;
             reminderForm.orderNo = trans.serialNumber;
             reminderForm.memberRemark = null;
@@ -315,7 +315,7 @@ export default defineComponent({
             $q.notify({
               color: "negative",
               position: "top",
-              message: "已有3个正在催收催单。",
+              message: t('lang.already_have_3_reminder'),
               icon: "report_problem"
             });
           }
@@ -336,7 +336,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "bottom",
-          message: "请上传图片",
+          message: t('lang.please_upload_image'),
           icon: "report_problem"
         });
         return;
@@ -349,7 +349,7 @@ export default defineComponent({
           $q.notify({
             color: "positive",
             position: "top",
-            message: "催单提交成功！",
+            message: t('lang.require_success_submit'),
             icon: "check_circle_outline"
           });
           reminderDialog.value = false;

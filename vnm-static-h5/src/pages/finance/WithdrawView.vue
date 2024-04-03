@@ -98,6 +98,7 @@
           <q-input
             hide-bottom-space
             ref="amountRef"
+            type="number"
             v-model="withdrawInfo.amount"
             :label="$t('lang.withdraw_amount')"
             class="withdraw-field q-mt-sm q-mb-sm"
@@ -131,11 +132,11 @@
           <q-input
             hide-bottom-space
             ref="withdrawPwdRef"
-            v-model="withdrawInfo.withdrawPwd"
+            v-model="withdrawInfo.withdrawPassword"
             :label="$t('lang.withdraw_password')"
             class="withdraw-field"
             type="password"
-            :rules="[(val) => (val && val.length > 0) || $('lang.withdraw_please_enter_withdraw_password')]"
+            :rules="[(val) => (val && val.length > 0) || $t('lang.withdraw_please_enter_withdraw_password')]"
             clearable
           ></q-input>
           <div
@@ -243,15 +244,15 @@
     <q-dialog v-model="hasWithdrawCard" persistent>
       <q-card style="width: 100%; padding: 10px">
         <q-card-section class="q-mb-md">
-          <div class="text-h6 text-center">请先绑定银行卡</div>
+          <div class="text-h6 text-center">{{ $t("lang.msg_bind_card_first") }}</div>
         </q-card-section>
 
         <div class="flex flex-center">
           <router-link to="/account">
-            <q-btn class="q-mr-md" label="取消" />
+            <q-btn class="q-mr-md" :label="$t('lang.msg_cancel')" />
           </router-link>
           <router-link to="/account/withdraw">
-            <q-btn color="brightbtn" label="绑定" />
+            <q-btn color="brightbtn" :label="$t('lang.msg_bind')" />
           </router-link>
         </div>
       </q-card>
@@ -305,7 +306,7 @@ export default defineComponent({
     const withdrawInfo = reactive({
       cardId: undefined,
       amount: "",
-      withdrawPwd: ""
+      withdrawPassword: ""
     });
     const isLoaded = ref(false);
     const hasWithdrawCard = computed(() => {
@@ -366,7 +367,7 @@ export default defineComponent({
       amountRef.value.validate();
       withdrawPwdRef.value.validate();
       $q.loading.show({
-        message: "确认中。。。"
+        message: t('lang.msg_confirming')
       });
       if (cardRef.value.hasError || amountRef.value.hasError || withdrawPwdRef.value.hasError) {
         $q.loading.hide();
@@ -376,12 +377,13 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: "提交成功",
+              message: t('lang.msg_submit_successful'),
               icon: "check_circle_outline"
             });
             getWithdrawalMethods();
 
             withdrawInfo.amount = "";
+            withdrawInfo.withdrawPassword = "";
             if (amountRef.value) {
               setTimeout(()=>{
                 amountRef.value.resetValidation();

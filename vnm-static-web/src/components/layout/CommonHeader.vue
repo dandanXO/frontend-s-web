@@ -167,7 +167,7 @@
                 <span class="assets-text">{{$t('account.mainWallet')}}:</span>
                 <span class="amount">
                   <span v-if="isLoadingBalance">{{$t('common.loading')}}...</span>
-                  <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ store.balance }}</span>
+                  <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ displayBalance(store.balance) }}</span>
                 </span>
               </div>
               <el-icon>
@@ -438,6 +438,7 @@ import { getVerificationCode, register } from "@/api/index/login";
 import { findAccount } from "@/api/index/forgotPwd";
 import { sendSms } from "@/api/personal/personal";
 import { ElMessage } from "element-plus";
+import {displayBalance} from "@/utils/utils"
 import {
   RiRefreshLine
 } from "vue-remix-icons";
@@ -490,12 +491,12 @@ export default defineComponent({
     const { languageVal } = storeToRefs(i18nStoreLanguage)
     const navigations = computed(() => [
       { code: "home", name: t('menu.home'), enName: "Home", path: "/home" },
-      { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
       { code: "sports", name: t('menu.sports'), enName: "Sports", path: "/sports", submenu: true },
       { code: "live", name: t('menu.liveCasino'), enName: "Live", path: "/live-casino", submenu: true },
-      { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
       { code: "slot", name: t('menu.slot'), enName: "Slots", path: "/slot", submenu: true },
       { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true },
+      { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
+      { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
       { code: "fish", name: t('menu.fishing'), enName: "Fishing", path: "/fishing", submenu: true },
       { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
       { code: "Promotion", name: t('menu.promotion'), enName: "Promotion", path: "/promotion", submenu: false, hasicon: true },
@@ -1459,6 +1460,7 @@ export default defineComponent({
       passRef,
       passRules,
       forgetPassRules,
+      displayBalance,
       submitForgetPass,
       pwdStrength,
       resetRegForm,

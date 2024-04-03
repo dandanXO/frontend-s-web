@@ -1,7 +1,7 @@
 <template>
   <div class="table-record">
     <RecordComponent
-      recordType="reminder"
+      recordType="promo"
       :loading="visible"
       :list="tableData"
       :headers="tableHeaders"
@@ -11,23 +11,23 @@
   </div>
 </template>
 <script lang="js">
-import { defineComponent, onMounted, ref } from "vue";
+import {defineComponent, onMounted, ref} from "vue";
 import RecordComponent from "../../components/RecordComponent.vue";
-import { api } from "boot/axios";
+import {api} from "boot/axios";
 import moment from "moment/moment";
 import {cached} from "boot/cache";
-import { useI18n } from "vue-i18n";
 
 export default defineComponent({
+  name: "PromoRecordView",
   components: {
     RecordComponent
   },
   setup() {
-    const {t} = useI18n()
+
     const visible = ref(true);
     const tableData = ref([]);
 
-    var apiUrl = "/session/member/financeFeedback";
+    var apiUrl = "/session/member/privilege";
 
     const isEnded = ref(false);
     var endDate = moment().format("YYYY-MM-DD");
@@ -35,19 +35,20 @@ export default defineComponent({
     var current = ref(1);
     var maxPage = ref(0);
 
+
     const loadNewData = () => {
       if(maxPage.value > current.value){
         current.value++;
       }else {
         current.value = 1;
         endDate = moment(startDate).add(-1, "days").format("YYYY-MM-DD");
-        // console.log(endDate);
+        console.log(endDate);
 
         startDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
-        // console.log(startDate);
+        console.log(startDate);
 
         if (endDate <= moment().add(-29, "days").format("YYYY-MM-DD")) {
-          // console.log("mor than 3 months");
+          console.log("mor than 3 months");
           isEnded.value = true;
           return;
         }
@@ -59,8 +60,8 @@ export default defineComponent({
       if (isNew) {
         visible.value = true;
       }
-      // console.log(startDate);
-      // console.log(endDate);
+      console.log(startDate);
+      console.log(endDate);
 
       let paramData = {
         "startDate": startDate,
@@ -69,7 +70,7 @@ export default defineComponent({
         "current": current.value
       };
       var apiKey = apiUrl + "_" + startDate + "_" + endDate + "_" + current.value;
-      // console.log(apiKey);
+      console.log(apiKey);
 
       cached.get(apiKey, () => api.get(apiUrl, {
           params: paramData
@@ -77,6 +78,7 @@ export default defineComponent({
         {expired_value: 30}
       ).then((res) => {
         console.log(res);
+
         maxPage.value = res.pages;
 
         if (isNew) {
@@ -95,24 +97,20 @@ export default defineComponent({
 
     const tableHeaders = [
       {
-        key: "orderNo",
-        label: t('lang.col_orderno')
+        key: "serialNumber",
+        label: t('lang.col_serialnumber')
       },
       {
-        key: "status",
-        label: t('lang.col_status')
+        key: "privilegeName",
+        label: t('lang.col_privilegename')
       },
       {
-        key: "financeRemark",
-        label: t('lang.col_finacneremark')
+        key: "amount",
+        label: t('lang.col_amount')
       },
       {
-        key: "feedbackTime",
-        label: t('lang.col_feedbacktime')
-      },
-      {
-        key: "type",
-        label: t('lang.col_type')
+        key: "recordTime",
+        label: t('lang.col_datetime')
       }
     ];
     onMounted(() => {
@@ -123,7 +121,8 @@ export default defineComponent({
     return {
       tableData,
       visible,
-      tableHeaders, loadNewData,
+      tableHeaders,
+      loadNewData,
       isEnded
     };
   }

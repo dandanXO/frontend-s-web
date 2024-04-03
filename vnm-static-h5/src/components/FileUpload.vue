@@ -4,7 +4,7 @@
       v-model="file"
       class="q-pt-md"
       filled
-      label="上传图片"
+      :label="$t('lang.upload_image')"
       color="white"
   >
     <template v-slot:prepend>
@@ -22,12 +22,14 @@ import {ref, defineComponent, watch} from "vue";
 import {userStore} from "src/stores";
 import {useQuasar} from "quasar";
 import {getRndInteger} from "boot/utils";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   emits: ["photoResponse"],
   name: "UploadExample",
   setup: (props, {emit}) => {
     const store = userStore();
+    const {t} = useI18n()
 
     var rstArray = Object.values(process.env.RST_API);
     var rstApi = rstArray[getRndInteger(0, rstArray.length)];
@@ -60,14 +62,14 @@ export default defineComponent({
             $q.notify({
               type: "positive",
               position: "top",
-              message: `${file.value.name} 上传成功。`,
+              message: `${file.value.name} ` + t('lang.upload_success'),
               icon: "check_circle_outline"
             });
           } else {
             $q.notify({
               type: "negative",
               position: "top",
-              message: `${file.value.name} 上传失败。请稍后再试。`,
+              message: `${file.value.name} `  + t('lang.upload_fail_please_try'),
               icon: "report_problem"
             });
             file.value = null;
@@ -83,7 +85,7 @@ export default defineComponent({
       action,
       // handleChange,
       uploadFile,
-      // uploadedCallBack,
+      t
     };
   },
 });

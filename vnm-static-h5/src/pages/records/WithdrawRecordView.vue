@@ -16,13 +16,14 @@ import RecordComponent from "../../components/RecordComponent.vue";
 import {api} from "boot/axios";
 import moment from "moment";
 import {cached} from "boot/cache";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   components: {
     RecordComponent
   },
   setup() {
-
+    const {t} = useI18n()
     const visible = ref(true);
     const tableData = ref([]);
     const isEnded = ref(false);
@@ -97,15 +98,15 @@ export default defineComponent({
     const tableHeaders = ([
       {
         key: "serialNumber",
-        label: "单号"
+        label: t('lang.col_serialnumber')
       },
       {
         key: "withdrawAmount",
-        label: "提款数额"
+        label: t('lang.col_withdrawamount')
       },
       {
         key: "status",
-        label: "状态"
+        label: t('lang.col_status')
       },
       // {
       //   key: 'typeText',
@@ -113,7 +114,7 @@ export default defineComponent({
       // },
       {
         key: "withdrawDate",
-        label: "提款日期"
+        label: t('lang.col_withdrawdate')
       }
     ]);
     onMounted(() => {
