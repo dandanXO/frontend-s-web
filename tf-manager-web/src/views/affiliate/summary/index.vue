@@ -296,6 +296,7 @@
           />
           <el-date-picker
             v-model="popUpRequest.recordTime"
+            v-if="currentPageType === 'allMembers'"
             format="DD/MM/YYYY"
             value-format="YYYY-MM-DD"
             size="small"
@@ -303,6 +304,21 @@
             range-separator=":"
             :start-placeholder="t('fields.startDate')"
             :end-placeholder="t('fields.endDate')"
+            style="width: 300px; margin-left: 10px"
+            :shortcuts="shortcuts"
+            :disabled-date="disabledDate"
+            :editable="false"
+            :clearable="false"
+          />
+          <el-date-picker
+            v-model="popUpRequest.regTime"
+            format="DD/MM/YYYY"
+            value-format="YYYY-MM-DD"
+            size="small"
+            type="daterange"
+            range-separator=":"
+            :start-placeholder="t('fields.regStartDate')"
+            :end-placeholder="t('fields.regEndDate')"
             style="width: 300px; margin-left: 10px"
             :shortcuts="shortcuts"
             :disabled-date="disabledDate"
@@ -568,6 +584,7 @@ const request = reactive({
 const popUpRequest = reactive({
   loginName: null,
   recordTime: null,
+  regTime: null,
   memberType: null,
 })
 
@@ -613,6 +630,7 @@ function resetQuery() {
 function resetPopupQuery() {
   popUpRequest.loginName = null
   popUpRequest.recordTime = null
+  popUpRequest.regTime = null
   popUpRequest.memberType = null
 }
 
@@ -702,22 +720,18 @@ async function loadNewMember(affiliateId) {
     }
   })
 
-  popUpRequest.recordTime = request.recordTime
+  popUpRequest.regTime = request.recordTime
 
-  if (popUpRequest.recordTime !== null) {
-    if (popUpRequest.recordTime.length === 2) {
-      query.recordTime = JSON.parse(JSON.stringify(popUpRequest.recordTime))
+  if (popUpRequest.regTime !== null) {
+    if (popUpRequest.regTime.length === 2) {
+      query.regTime = JSON.parse(JSON.stringify(popUpRequest.regTime))
 
-      query.recordTime[0] = moment(query.recordTime[0]).format(
-        'YYYY-MM-DD 00:00:00'
-      )
-      query.recordTime[1] = moment(query.recordTime[1]).format(
-        'YYYY-MM-DD 23:59:59'
-      )
+      query.regTime[0] = moment(query.regTime[0]).format('YYYY-MM-DD 00:00:00')
+      query.regTime[1] = moment(query.regTime[1]).format('YYYY-MM-DD 23:59:59')
 
-      query.recordTime = query.recordTime.join(',')
+      query.regTime = query.regTime.join(',')
     } else {
-      query.recordTime = moment(popUpRequest.recordTime[0]).format(
+      query.regTime = moment(popUpRequest.regTime[0]).format(
         'YYYY-MM-DD 00:00:00'
       )
     }
@@ -755,6 +769,21 @@ async function loadAllMember(affiliateId) {
   query.affiliateId = affiliateId
   query.loginName = popUpRequest.loginName
   query.memberType = popUpRequest.memberType
+
+  if (popUpRequest.regTime !== null) {
+    if (popUpRequest.regTime.length === 2) {
+      query.regTime = JSON.parse(JSON.stringify(popUpRequest.regTime))
+
+      query.regTime[0] = moment(query.regTime[0]).format('YYYY-MM-DD 00:00:00')
+      query.regTime[1] = moment(query.regTime[1]).format('YYYY-MM-DD 23:59:59')
+
+      query.regTime = query.regTime.join(',')
+    } else {
+      query.regTime = moment(popUpRequest.regTime[0]).format(
+        'YYYY-MM-DD 00:00:00'
+      )
+    }
+  }
 
   if (popUpRequest.recordTime !== null) {
     if (popUpRequest.recordTime.length === 2) {

@@ -1136,6 +1136,8 @@ export default {
     rebateDistributeTime: '返水发放时间',
     rebateLevel: '返水等级',
     rebatePercentage: '返水比例 %',
+    regEndDate: '注册结束时间',
+    regStartDate: '注册开始时间',
     redPacketMinDayDeposit: '红包雨当日最小存款',
     redPacketMinTotalDeposit: '红包雨历史最小存款',
     rule: '规则',
