@@ -27,7 +27,7 @@
       <img class="ambassador-img" src="../assets/images/affiliate/ambassador.png" alt="" />
       <div class="btn-wrapper">
         <q-btn
-          :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')"
+          :href="'https://vnm-affiliate.th80to83w1.com/login?agent=' + (affCode ? affCode : '')"
           :label="$t('lang.affiliate_joinus')"
           no-caps
           size="md"
@@ -36,7 +36,7 @@
           <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
         <q-btn
-          :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')"
+          :href="'https://vnm-affiliate.th80to83w1.com/login?agent=' + (affCode ? affCode : '')"
           :label="$t('lang.affiliate_login')"
           no-caps
           size="md"
@@ -48,7 +48,7 @@
         <q-btn
           @click.stop.prevent="
             openWindow(
-              `https://csweb01.amv4xjcbd.com/?partnerCode=LHCS&lang=zh-CN&way=${regDevice}&token=${store.token}`,
+              `https://csweb01.amv4xjcbd.com/?partnerId=7&lang=zh-CN&way=${regDevice}&token=${store.token}`,
               'Chat Server',
               350,
               650
@@ -179,7 +179,7 @@
     <div class="contact-us">
       <div class="register-btn-wrapper">
         <q-btn
-          :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')"
+          :href="'https://vnm-affiliate.th80to83w1.com/login?agent=' + (affCode ? affCode : '')"
           :label="$t('lang.affiliate_apply_agency')"
           size="lg"
           no-caps
@@ -200,7 +200,7 @@
               class="two-four-content"
               @click.stop.prevent="
                 openWindow(
-                  `https://csweb01.amv4xjcbd.com/?partnerCode=LHCS&lang=zh-CN&way=${regDevice}&token=${store.token}`,
+                  `https://csweb01.amv4xjcbd.com/?partnerId=7&lang=zh-CN&way=${regDevice}&token=${store.token}`,
                   'Chat Server',
                   350,
                   650
