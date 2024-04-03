@@ -318,7 +318,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          :label="t('fields.totalCommissionProfit')"
+          :label="t('fields.netProfit')"
           align="left"
           min-width="140"
         >
