@@ -113,12 +113,13 @@ onActivated(() => {
   margin: 0;
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  background: #171e2b;
+  background: #2e30344f;
   position: relative;
   box-shadow: none;
 
   &:has(.new-message-ribbon) {
-    background: #2e30344f;
+    //background: #2e30344f;
+    border: 1px solid #00AE00
   }
 
   .new-message-ribbon {
