@@ -248,6 +248,10 @@ export default {
     DAILY: 'รายวัน',
     OTHER: 'อื่นๆ',
   },
+  scheduleType: {
+    NORMAL: 'โดยปกติ',
+    BET_RECORDS: 'ข้อมูลผลตอบแทนการเดิมพัน',
+  },
   fields: {
     account: 'บัญชี',
     accountHolder: 'ผู้ถือบัญชี',
@@ -649,6 +653,7 @@ export default {
     job: 'งาน',
     jobLog: 'รายการบันทึก',
     jobName: 'ชื่องาน',
+    jobType: 'ประเภทงาน',
     label: 'ฉลาก',
     lastLogin: 'เข้าสู่ระบบครั้งล่าสุด',
     lastLoginAddress: 'ที่อยู่เข้าสู่ระบบล่าสุด',
