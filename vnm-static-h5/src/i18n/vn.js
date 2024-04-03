@@ -338,7 +338,13 @@ export default {
     bd_please_enter_digit_only: "Vui lòng chỉ nhập số",
     bd_length_between_16_19: "Chiều dài nên từ 16-19",
     bd_added_bank_card: "Thẻ ngân hàng đã được thêm",
-    bd_click_verification: "Vui lòng nhấp để nhận mã xác minh và nhập số điện thoại di động đã đăng ký của bạn để xác minh",
+    bd_click_verification:
+      "Vui lòng nhấp để nhận mã xác minh và nhập số điện thoại di động đã đăng ký của bạn để xác minh",
+    bd_virtual_currency_account: "Tài khoản tiền tệ ảo",
+    bd_please_enter_virtual_currency_acc: "Vui lòng nhập tài khoản tiền tệ ảo",
+    bd_digital_currency: "Tiền tệ số",
+    bd_protocol: "Giao thức",
+    bd_length_between_34_36: "Chiều dài nên từ 34-36",
 
     // mine
     version_no: "Phiên bản",

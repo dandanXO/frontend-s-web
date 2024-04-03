@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <template v-if="props.type !== 'outbox'">
+    <!-- <template v-if="props.type !== 'outbox'">
       <q-tabs active-color="dark" indicator-color="bright" align="justify" v-model="mailboxMessageTab">
         <q-tab :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
           <div class="tab-flex">
@@ -9,7 +9,7 @@
           </div>
         </q-tab>
       </q-tabs>
-    </template>
+    </template> -->
 
     <q-tab-panels v-model="mailboxMessageTab" animated>
       <q-tab-panel :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
@@ -163,11 +163,11 @@ export default defineComponent({
   setup(props, context) {
     const { t } = useI18n();
     const mailboxMessageTypeData = ref([
+      { num: 5, type: "ALL", name: t("lang.mail_all") },
       { num: 1, type: "NOTIFICATION", name: t("lang.mail_notification") },
       { num: 2, type: "ACTIVITY", name: t("lang.mail_activity") },
       { num: 3, type: "ANNOUNCEMENT", name: t("lang.mail_announcement") },
-      { num: 4, type: "PAYMENT", name: t("lang.mail_payment") },
-      { num: 5, type: "ALL", name: t("lang.mail_all") }
+      { num: 4, type: "PAYMENT", name: t("lang.mail_payment") }
     ]);
     const mailboxMessageTab = ref(mailboxMessageTypeData.value[0].type);
     if (props.type === "outbox") {

@@ -342,7 +342,13 @@ export default {
     bd_please_enter_digit_only: "Please enter digit only",
     bd_length_between_16_19: "Length should between 16-19",
     bd_added_bank_card: "Added bank card",
-    bd_click_verification: "Please click to get the verification code and enter your registered mobile phone for verification",
+    bd_click_verification:
+      "Please click to get the verification code and enter your registered mobile phone for verification",
+    bd_virtual_currency_account: "Virtual Currency Account",
+    bd_please_enter_virtual_currency_acc: "Please enter virtual currency account",
+    bd_digital_currency: "Digital Currency",
+    bd_protocol: "Protocol",
+    bd_length_between_34_36: "Length should between 34-36",
 
     // mine
     version_no: "Version",
