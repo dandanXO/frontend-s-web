@@ -208,6 +208,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/account/records/rebate",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/records/RebatesRecordView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
     path: "/account/records/financeFeedBack",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/records/FeedbackRecordView.vue") }],

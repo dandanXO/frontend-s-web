@@ -16,12 +16,15 @@ import RecordComponent from "../../components/RecordComponent.vue";
 import { api } from "boot/axios";
 import moment from "moment/moment";
 import { cached, TIME_EXPIRED } from "boot/cache";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   components: {
     RecordComponent
   },
   setup() {
+
+    const {t} = useI18n()
 
     const visible = ref(true);
     const tableData = ref([]);
@@ -94,23 +97,23 @@ export default defineComponent({
     const tableHeaders = [
       {
         key: "depositAmount",
-        label: "金额"
+        label: t('lang.col_amount')
       },
       {
         key: "paymentType",
-        label: "存款类型"
+        label:  t('lang.col_deposittype')
       },
       {
         key: "status",
-        label: "存款状态"
+        label:  t('lang.col_status')
       },
       {
         key: "depositDate",
-        label: "到账时间"
+        label:  t('lang.col_depositdate')
       },
       {
         key: "serialNumber",
-        label: "存款编码"
+        label:  t('lang.col_serialnumber')
       }
     ];
     onMounted(() => {
