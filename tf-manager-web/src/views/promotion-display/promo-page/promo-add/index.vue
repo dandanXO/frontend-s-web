@@ -550,7 +550,8 @@ const promoTypes = [
   { typeName: 'SLOT GAME', value: 6, displayName: t('promoType.SLOTGAME') },
   { typeName: 'POKER', value: 7, displayName: t('promoType.POKER') },
   { typeName: 'DAILY', value: 8, displayName: t('promoType.DAILY') },
-  { typeName: 'OTHER', value: 9, displayName: t('promoType.OTHER') },
+  { typeName: 'FTD', value: 9, displayName: t('promoType.FTD') },
+  { typeName: 'OTHER', value: 10, displayName: t('promoType.OTHER') },
 ]
 
 function handleCheckedChangePromoType() {

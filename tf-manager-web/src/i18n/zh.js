@@ -381,6 +381,7 @@ export default {
     SLOTGAME: '电子',
     POKER: '棋牌',
     DAILY: '日常',
+    FTD: '首存',
     OTHER: '其他',
   },
   scheduleType: {
