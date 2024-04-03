@@ -568,7 +568,7 @@
 
                 <template v-if="tbl.dataIndex === 'type'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    <span>{{ scope.row.type === 1 ? "存款" : "提款" }}</span>
+                    <span>{{ scope.row.type === 1 ? $t('status.deposit') : $t('status.withdraw') }}</span>
                   </div>
                 </template>
               </el-table-column>
@@ -1270,7 +1270,7 @@ export default defineComponent({
       } else if (turnoverType === "PROMO") {
         return t('status.promotion'); // 优惠
       } else if (turnoverType === "DEPOSIT") {
-        return t('status.deposit'); // 存款
+        return t('status.deposit'); // 
       } else if (turnoverType === "TRANSFER") {
         return t('status.transfer'); // 转账
       } else if (turnoverType === "ADJUST") {
@@ -1316,7 +1316,7 @@ export default defineComponent({
       } else if (turnoverType === "PROMO") {
         return t('status.promotion'); // 优惠
       } else if (turnoverType === "DEPOSIT") {
-        return t('status.deposit'); // 存款
+        return t('status.deposit'); // 
       } else if (turnoverType === "TRANSFER") {
         return t('status.transfer'); // 转账
       } else if (turnoverType === "ADJUST") {
