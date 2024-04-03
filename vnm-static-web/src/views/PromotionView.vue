@@ -168,7 +168,7 @@ export default defineComponent({
     }
     const showPromoDetails = (promo) => {
       // if (!store.token) {
-      //     ElMessageBox.alert(t('error.loginbeforeAction'), t('common.systemError'), {
+      //     ElMessageBox.alert(t('bankError.loginbeforeAction'), t('common.systemError'), {
       //         // if you want to disable its autofocus
       //         // autofocus: false,sd
       //         center: true,
@@ -303,7 +303,8 @@ export default defineComponent({
       selectedPromo,
       banner,
       imgURL,
-      getPromoLabel
+      getPromoLabel,
+      languageVal
     }
   },
 });
@@ -693,7 +694,7 @@ export default defineComponent({
               justify-content: center;
               align-items: center;
               gap: 30px;
-              height: 320px;
+              height: 250px;
               .promo-content {
                 height: 100%;
                 &.isDesktop {

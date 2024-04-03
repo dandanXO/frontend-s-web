@@ -312,7 +312,7 @@ export default defineComponent({
 
       if (isUSDT.value) {
         ElMessageBox.alert(
-          t('error.bindUSDT'), t('common.systemError'),
+          t('bankError.bindUSDT'), t('common.systemError'),
           {
             showClose: false,
             showCancelButton: false,
@@ -330,7 +330,7 @@ export default defineComponent({
           });
       } else if (isEWALLET.value) {
         ElMessageBox.alert(
-          t('error.bindEWallet'), t('common.systemError'),
+          t('bankError.bindEWallet'), t('common.systemError'),
           {
             showClose: false,
             showCancelButton: false,
@@ -348,7 +348,7 @@ export default defineComponent({
           });
       } else {
         ElMessageBox.alert(
-          t('error.bankCardFirst'), t('common.systemError'),
+          t('bankError.bankCardFirst'), t('common.systemError'),
           {
             showClose: false,
             showCancelButton: false,

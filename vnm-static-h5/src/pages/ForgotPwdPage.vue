@@ -57,7 +57,9 @@
             clearable
             v-model="passwordFormPhone.phone"
             :placeholder="$t('lang.phone_number')"
-            :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_phone_number')]"
+            :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_phone_number'),
+              (val) => isValidVnmPhone(val)
+            ]"
             color="white"
             label-color="secondary"
             autocomplete="username"
@@ -434,6 +436,12 @@ export default defineComponent({
         /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
       return emailPattern.test(passwordFormEmail.email) || t("lang.email_valid");
     };
+    const isValidVnmPhone = (val) => {
+      const phonePattern =
+        /^0\d{9}$/;
+      return phonePattern.test(val) || t("lang.phone_not_valid");
+    }
+
     var qs = require("qs");
     const route = useRoute();
     const router = useRouter();
@@ -641,6 +649,7 @@ export default defineComponent({
       verificationImg,
       getCode,
       isValidEmail,
+      isValidVnmPhone,
       isEmailSent,
       onSubmitForgotPwd,
       onVerifyForgotPassword,

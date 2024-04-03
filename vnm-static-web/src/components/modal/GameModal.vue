@@ -272,7 +272,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
       }
     } else {
       // router.push("/login");
-      ElMessageBox.alert(t('error.loginbeforeAction'), t('common.systemError'), {
+      ElMessageBox.alert(t('bankError.loginbeforeAction'), t('common.systemError'), {
         // if you want to disable its autofocus
         // autofocus: false,
         center: true,
