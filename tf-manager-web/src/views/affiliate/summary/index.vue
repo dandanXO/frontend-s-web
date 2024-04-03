@@ -770,6 +770,8 @@ async function loadAllMember(affiliateId) {
   query.loginName = popUpRequest.loginName
   query.memberType = popUpRequest.memberType
 
+  popUpRequest.recordTime = request.recordTime
+
   if (popUpRequest.regTime !== null) {
     if (popUpRequest.regTime.length === 2) {
       query.regTime = JSON.parse(JSON.stringify(popUpRequest.regTime))
