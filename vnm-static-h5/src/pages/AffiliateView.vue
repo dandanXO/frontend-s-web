@@ -314,8 +314,9 @@ const rows = [
   .page-title {
     word-break: keep-all;
     text-align: center;
-    text-shadow: 0px 7.804098606109619px 7.804098606109619px rgba(0, 0, 0, 0.47),
-      3.9020493030548096px 3.9020493030548096px 0px #9da6d4;
+    text-shadow: 0px 5px 4px rgba(0, 0, 0, 0.47), 2px 2px 0px #9da6d4;
+    // text-shadow: 0px 7.804098606109619px 7.804098606109619px rgba(0, 0, 0, 0.47),
+    //   3.9020493030548096px 3.9020493030548096px 0px #9da6d4;
     font-family: FZTanHeiS-B-GB;
     font-size: 3.46239rem;
     font-weight: 400;
@@ -326,7 +327,7 @@ const rows = [
     -moz-background-clip: text;
     -moz-text-fill-color: transparent;
     -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: #b1e4ff;
+    -webkit-text-stroke-color: #88d0f7;
   }
 
   .branding {

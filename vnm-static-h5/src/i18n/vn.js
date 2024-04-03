@@ -52,6 +52,16 @@ export default {
 
     // notify msg
     msg_update_successful: "Cập nhật thành công",
+    msg_bind_card_first: "Vui lòng liên kết thẻ ngân hàng của bạn trước",
+    msg_cancel: "Hủy",
+    msg_bind: "Liên kết",
+    msg_submit_successful: "Đã gửi thành công",
+    msg_confirming: "Đang xác nhận...",
+    msg_readallselected: "Đọc các tin nhắn đã chọn",
+    msg_readallmsg: "Đã đọc tất cả tin nhắn",
+    msg_readmsg: "Đọc tin nhắn",
+    msg_deleteselected: "Xóa các tin nhắn đã chọn",
+    msg_deleteallmsg: "Xóa tất cả tin nhắn",
 
     // login page
     login_title: "Bạn đã sẵn sàng",
@@ -147,6 +157,8 @@ export default {
     system_hint: "Gợi ý hệ thống",
     system_please_login: "Vui lòng đăng nhập để tiếp tục",
     system_confirm: "Xác nhận",
+    system_delete_all_msg: "Bạn có chắc chắn muốn xóa tất cả không?",
+    system_cancel: "Hủy",
 
     // personal | verify
     personal_exclusiveurl: "URL riêng",
@@ -276,6 +288,7 @@ export default {
     withdraw_proceedverify: "Tiếp tục xác minh",
     withdraw_please_enter_withdraw_amount: "Vui lòng nhập số tiền muốn rút",
     withdraw_password: "Mật khẩu rút tiền",
+    withdraw_please_enter_withdraw_password: "Vui lòng nhập mật khẩu rút tiền",
     withdraw_please_enter_correct_withdraw_amount: "Vui lòng nhập số tiền rút chính xác",
     withdraw_confirm: "Xác nhận",
     withdraw_singlewithdrawal: "Hạn mức giao dịch",
@@ -284,7 +297,7 @@ export default {
     withdraw_times: "Lần",
     withdraw_realtimeexchangerates: "Tỷ giá trực tuyến",
     withdraw_estimatedarrival: "Dự kiến ​​đến",
-    withdraw_usdtspecialnote: "*Lưu ý đặc biệt: Bên thứ ba tự động tính phí xử lý là 1,00 USDT cho việc rút tiền coin!",
+    withdraw_usdtspecialnote: "*Lưu ý đặc biệt: Bên thứ ba tự động tính phí xử lý là 1.00 USDT cho việc rút tiền coin!",
     withdraw_ewalletspecialnote: "*Lưu ý đặc biệt: Tên của ví rút tiền và tài khoản game phải giống nhau.",
     withdraw_choose: "Chọn",
     withdraw_pleasechoose: "Vui lòng chọn",
@@ -946,6 +959,11 @@ export default {
     mail_announcement: "Thông báo",
     mail_payment: "Nạp Rút",
     mail_all: "Tất cả",
+    mail_allread: "Đã xem tất cả",
+    mail_deleteall: "Xóa hết tất cả",
+    mail_selectone: "Chọn thêm 1 mục",
+    mail_read: "Đã đọc",
+    mail_delete: "Xóa",
 
     // compose
     compose_title: "Tiêu đề",
@@ -1098,6 +1116,7 @@ export default {
     10007: "Lỗi trong quá trình tham gia trò chơi",
     10008: "Lỗi xảy ra",
     11003: "Nạp tiền không thành công",
+    12100: "Mật khẩu rút tiền không khớp",
     13000: "Không tìm thấy tên miền",
     13001: "Không thể truy vấn thông tin đã hết hạn 3 tháng",
     13002: "Không quá 7 ngày",
