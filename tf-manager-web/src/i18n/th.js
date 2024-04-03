@@ -246,6 +246,7 @@ export default {
     SLOTGAME: 'สล็อต',
     POKER: 'โป๊กเกอร์',
     DAILY: 'รายวัน',
+    FTD: 'FTD',
     OTHER: 'อื่นๆ',
   },
   scheduleType: {

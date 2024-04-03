@@ -375,6 +375,7 @@ export default {
     SLOTGAME: 'SLOT GAME',
     POKER: 'POKER',
     DAILY: 'DAILY',
+    FTD: 'FTD',
     OTHER: 'OTHER',
   },
   scheduleType: {
