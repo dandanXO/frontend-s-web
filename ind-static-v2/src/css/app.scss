@@ -13,7 +13,10 @@ body {
   letter-spacing: 1px;
 }
 #q-app {
-  // background-color: #101114;
+  background: #11131f;
+  background: url("../assets/images/index/auth-bg.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 .q-layout,
 .q-header,
@@ -66,10 +69,6 @@ body {
   height: 100%;
 }
 body.body--dark {
-  background: #11131f;
-  background: url("../assets/images/index/auth-bg.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
 }
 body.body--dark .q-header {
   background: transparent;
