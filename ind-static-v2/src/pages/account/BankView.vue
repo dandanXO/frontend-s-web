@@ -45,10 +45,29 @@
       <div
         v-for="(bc, bcIndex) in bankCardList"
         :key="bc.id"
-        :class="`bank-card-item ${isCardShown[bcIndex] ? 'card-show' : 'card-unshow'}`"
+        :class="`bank-card-item card-show`"
         @click="handleBankCardClick(bcIndex)"
       >
-        <div class="bank-card-add">
+        <div class="bank-card-credentials">
+          <div class="top">
+            <div class="bank-name">{{ bc.bankName }}</div>
+          </div>
+          <div class="bottom">
+            <div class="bank-card-num-wrapper">
+              <div class="bank-card-num">{{ bc.cardNumber }}</div>
+              <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(bc.cardNumber)" />
+            </div>
+            <div class="bank-card-address">IFSC: {{ bc.cardAddress }}</div>
+          </div>
+
+          <div class="card-update" @click.stop.prevent="onUpdateCardClick(bcIndex)">
+            <q-icon size="sm" name="settings" />
+          </div>
+          <div class="card-unlink" @click.stop.prevent="onUnbindClick(bcIndex)">
+            <q-icon size="sm" name="link_off" />
+          </div>
+        </div>
+        <div class="bank-card-add" style="display:none;">
           <!--
             <div class="card-icon">
               <img src="../../assets/images/account/bank-icon-bpi.png" alt="" />
@@ -210,7 +229,11 @@ onActivated(() => {
 
 <style lang="scss">
 .bank-card-container {
-  padding: 8px 1rem 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+
   .bank-card-item {
     padding: 3px;
     border-radius: 1.25rem;
@@ -218,10 +241,12 @@ onActivated(() => {
     transition: 0.3s all;
 
     &.card-unshow {
-      margin-bottom: -3.5rem;
-      border: 1px solid rgba(18, 0, 27, 0.1);
-      background: linear-gradient(180deg, #702fad 0%, #491960 100%), linear-gradient(180deg, #a95cec 0%, #795069 100%);
-      border-left-width: 2px;
+      // margin-bottom: -3.5rem;
+      // border: 1px solid rgba(18, 0, 27, 0.1);
+      // background: linear-gradient(180deg, #702fad 0%, #491960 100%), linear-gradient(180deg, #a95cec 0%, #795069 100%);
+      // border-left-width: 2px;
+      background: url(../../assets/images/account/bank-card-bg.png) no-repeat center center;
+      background-size: 100% 100%;
 
       .bank-card-add {
         display: flex;
@@ -252,9 +277,31 @@ onActivated(() => {
     }
 
     &.card-show {
-      margin-bottom: -2rem;
-      border: 2px solid #a73dff;
-      background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+      // margin-bottom: -2rem;
+      // border: 2px solid #a73dff;
+      // background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+      background: url(../../assets/images/account/bank-card-bg.png) no-repeat center center;
+      background-size: 100% 100%;
+
+      .bank-card-credentials {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 200px;
+        padding: 30px 20px 20px;
+
+        .bottom {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+
+          .bank-card-num-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+          }
+        }
+      }
 
       .bank-card-add {
         gap: 0.5rem;
@@ -263,16 +310,16 @@ onActivated(() => {
       .card-update,
       .card-unlink {
         position: absolute;
-        top: 1rem;
-        color: black;
+        top: 10px;
+        color: white;
       }
 
       .card-update {
-        left: 1rem;
+        left: 20px;
       }
 
       .card-unlink {
-        right: 1rem;
+        right: 20px;
       }
 
       .card-num-wrapper {
@@ -290,8 +337,9 @@ onActivated(() => {
     }
 
     &.bank-addcard {
-      border: 1px solid #a73dff;
-      background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+      // border: 1px solid #a73dff;
+      // background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+      background: #2e30344f;
 
       &:active {
         opacity: 0.9;
@@ -352,9 +400,9 @@ onActivated(() => {
   }
 
   .dialog-input {
-    border-radius: 8px;
-    background: #ffffff26;
-    color: #ffffff90;
+    // border-radius: 8px;
+    // background: #ffffff26;
+    // color: #ffffff90;
   }
 
   .q-dialog__inner > .q-card {
