@@ -17,7 +17,6 @@
 
   <div
     class="promo-container"
-    style="background: #090b19"
     v-touch-swipe.left="swipeLeft"
     v-touch-swipe.right="swipeRight"
   >

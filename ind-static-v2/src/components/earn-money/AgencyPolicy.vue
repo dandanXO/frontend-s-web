@@ -2,8 +2,8 @@
   <div class="agency-policy">
     <div class="agency-policy-main-img"><img src="../../assets/images/earn-money/about-bg.png" /></div>
 
-    <div class="title">Invite to Earn</div>
-    <div class="subtitle">Simply share your exclusive QR code</div>
+    <!-- <div class="title">Invite to Earn</div>
+    <div class="subtitle">Simply share your exclusive QR code</div> -->
     <div class="desc-wrapper">
       <img src="../../assets/images/earn-money/about-invite.svg" />
       <div>
@@ -508,7 +508,7 @@ const rows3 = [
   }
 
   .subtitle {
-    margin: 0 0 15px 0;
+    margin: 0 0 30px 0;
     font-size: 16px;
     letter-spacing: 0.5px;
     font-weight: 400;
@@ -516,12 +516,20 @@ const rows3 = [
 
   .desc-wrapper {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 15px;
     margin: 0 0 25px 0;
     letter-spacing: 0.5px;
+    background: #FFFFFF0D;
+    position: relative;
+    width: 100%;
+    border-radius: 10px;
+    padding: 40px 20px;
 
     img {
+      position: absolute;
+      left: 0px;
+      top: -20px;
       width: 56px;
       height: 56px;
     }
@@ -531,28 +539,29 @@ const rows3 = [
     margin-left: -16px;
     margin-right: -16px;
 
-    &:after {
-      content: "";
-      background: linear-gradient(to bottom, rgba(17, 19, 31, 0.9), rgba(255, 255, 255, 0));
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100px;
-      width: 100%;
-    }
+    // &:after {
+    //   content: "";
+    //   background: linear-gradient(to bottom, rgba(17, 19, 31, 0.9), rgba(255, 255, 255, 0));
+    //   position: absolute;
+    //   top: 0;
+    //   left: 0;
+    //   height: 100px;
+    //   width: 100%;
+    // }
   }
 
   .agency-policy-separator {
-    background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #5c46e7 0.01%, rgba(92, 70, 231, 0) 100%);
+    background: radial-gradient(46.11% 803.69% at 53.89% 50%, #019303 0%, rgba(1, 146, 4, 0) 100%);
     height: 2px;
   }
 
   .agency-policy-title {
     // background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #5c46e7 0.01%, rgba(92, 70, 231, 0) 100%);
-    background-image: url("../../assets/images/earn-money/agency-policy-label.png");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: 100% auto;
+    // background-image: url("../../assets/images/earn-money/agency-policy-label.png");
+    // background-repeat: no-repeat;
+    // background-position: center center;
+    // background-size: 100% auto;
+    background: radial-gradient(46.11% 803.69% at 53.89% 50%, #019303 0%, rgba(1, 146, 4, 0) 100%);
     font-size: 18px;
     font-weight: 500;
     text-align: center;
@@ -599,17 +608,17 @@ const rows3 = [
   }
   .table-container {
     :deep(thead) {
-      background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+      background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
     }
 
     :deep(tbody) {
-      background: #652c93;
+      background: #652c9315;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
       tr {
         &:nth-child(2n) {
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-          background: #502175;
+          background: #00ae000c;
         }
       }
     }

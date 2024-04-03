@@ -125,13 +125,13 @@ const swipeRight = () => {
     top: 68px;
     left: 0;
     z-index: 999;
-    background: #101115;
+    // background: #101115;
     width: 100%;
     padding-bottom: 6px;
     padding-top: 12px;
 
     :deep(.q-tabs__content) {
-      background: #422171;
+      background: #202B3B;
       border-radius: 12px;
       padding: 4px;
     }
@@ -143,10 +143,10 @@ const swipeRight = () => {
       border-radius: 8px;
       height: 55px;
       width: 25%;
-      background: #4f26a6;
+      // background: #4f26a6;
       font-size: 12px;
       font-weight: 500;
-      border: 2px solid #303030;
+      border: 0px solid #303030;
     }
 
     :deep(.q-tab__content) {
@@ -155,8 +155,8 @@ const swipeRight = () => {
 
     :deep(.q-tab--active) {
       color: white;
-      background: #5c46e7;
-      border: 2px solid #422171;
+      background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
+      // border: 2px solid #422171;
 
       svg {
         fill: white;
@@ -166,11 +166,13 @@ const swipeRight = () => {
 
   .earn-money-panels {
     // background: radial-gradient(25% 50% at 50% 50%, #e01b84 0%, rgba(27, 28, 36, 0) 100%);
-    background-image: url("../assets/images/earn-money/earn-money-bg.jpg");
     min-height: 80vh;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
+    // background-image: url("../assets/images/earn-money/earn-money-bg.jpg");
+    // background-repeat: no-repeat;
+    // background-size: cover;
+    // background-position: center center;
+
+    background: transparent;
   }
 
   svg {
