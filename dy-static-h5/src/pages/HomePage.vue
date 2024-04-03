@@ -2045,6 +2045,8 @@ export default defineComponent({
 
               if (fishObj.code === "AGF") {
                 fishObj.title = "AG捕鱼";
+              } else if (fishObj.code === "PMFISH"){
+                fishObj.title = "DB捕鱼";
               }
 
               if (fishObj.code !== "AG") {

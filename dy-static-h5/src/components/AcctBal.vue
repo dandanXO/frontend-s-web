@@ -165,7 +165,8 @@ const platformNames = {
   SGWin: "双赢彩票",
   PT: "PT电子",
   PG: "PG电子",
-  AGF: "AG捕鱼"
+  AGF: "AG捕鱼",
+  PMFISH: "DB捕鱼"
 };
 const loadBalance = () => {
   isLoadingBalance.value = true;

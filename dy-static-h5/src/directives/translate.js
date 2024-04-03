@@ -134,6 +134,8 @@ export const translateRecord = (rec, type = "") => {
     return "AG真人"; // AG
   } else if (rec === "AGF") {
     return "AG捕鱼"; // AG
+  } else if (rec === "PMFISH") {
+    return "DB捕鱼"; // PM
   } else if (rec === "BBINDY") {
     return "BBIN真人"; // BBINDY
   } else if (rec === "KY") {
