@@ -8,8 +8,8 @@
       indicator-color="transparent"
       align="justify"
     >
-      <q-tab name="withdrawal" label="Withdrawal" />
-      <q-tab name="recharge" label="Recharge" />
+      <q-tab class="left" name="withdrawal" label="Withdrawal" />
+      <q-tab class="right" name="recharge" label="Recharge" />
     </q-tabs>
 
     <LoadingComponent v-if="isLoading[orderOptionTab]"></LoadingComponent>
@@ -263,12 +263,13 @@ onActivated(() => {
 
 <style lang="scss" scoped>
 .order-option-tab {
-  background-color: #101114;
+  background: url(../../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
+  background-size: 100% 100%;
+
   border-radius: 8px;
   width: calc(100% - 20px);
   //margin-bottom: 10px;
-  margin: 0px auto 10px;
-  border: 1px solid #5c46e7;
+  margin: 10px auto;
   aspect-ratio: 335/32;
 
   :deep(.q-tab__label) {
@@ -276,11 +277,17 @@ onActivated(() => {
   }
 
   :deep(.q-tab--active) {
-    border-radius: 6px;
     color: #fff;
-    margin: 1px;
-    background: linear-gradient(0deg, #5c46e7, #5c46e7), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-      linear-gradient(0deg, #5c46e7, #5c46e7);
+    
+    &.right {
+      background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-right.png) no-repeat center center;
+      background-size: 100% 100%;
+    }
+
+    &.left {
+      background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
+      background-size: 100% 100%;
+    }
   }
 }
 

@@ -6,7 +6,39 @@
       <ProfileProgressBanner />
 
       <q-form ref="profileFormRef" class="pc-form">
-        <div class="pc-form-item" @click="openPersonalCenterDialog">
+          <InputRowGrid>
+            <template #fields>
+              <div class="pc-form-item" @click="openPersonalCenterDialog">
+                <InputField :label="'Full Name'">
+                  <template #input>
+                    <q-input
+                      v-model="formDetail.realName"
+                      outlined
+                      clearable
+                      hide-bottom-space
+                      readonly
+                    ></q-input>
+                  </template>
+                </InputField>
+              </div>
+
+              <div class="pc-form-item" @click="openPersonalCenterDialog">
+                <InputField :label="'Phone'">
+                  <template #input>
+                    <q-input
+                      v-model="formDetail.phone"
+                      outlined
+                      clearable
+                      hide-bottom-space
+                      readonly
+                    ></q-input>
+                  </template>
+                </InputField>
+              </div>
+            </template>
+          </InputRowGrid>
+
+          <!--
           <div class="pc-form-label">Full Name</div>
           <div class="pc-form-input">
             <q-input
@@ -37,6 +69,7 @@
             ></q-input>
           </div>
         </div>
+        -->
 
         <!-- <div class="pc-form-item" @click="openPersonalCenterDialog">
           <div class="pc-form-label">Email</div>
@@ -82,7 +115,8 @@
         </div>
 
         <div class="q-mt-md">
-          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">Sign Out</q-btn>
+          <PrimaryButton :label="'Sign Out'" :onClick="openConfirmSignOutDialog" />
+          <!-- <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">Sign Out</q-btn> -->
         </div>
 
         <!-- <div class="text-center q-mt-md" v-if="canEdit">
@@ -513,6 +547,9 @@ import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
+import InputRowGrid from "src/components/auth/InputRowGrid.vue";
+import InputField from "src/components/auth/InputField.vue";
+import PrimaryButton from "src/components/auth/PrimaryButton.vue";
 
 let slideList = ref(["Personal Center", "Discount", "Record", "Order", "Bank", "Message"]);
 let slideListPath = ref([
@@ -1193,7 +1230,7 @@ const openConfirmSignOutDialog = () => {
 }
 
 .progress-container {
-  background: linear-gradient(180deg, #d29e3a 0%, #d65033 100%);
+  // background: linear-gradient(180deg, #d29e3a 0%, #d65033 100%);
 }
 
 .infoboard-container {
@@ -1315,7 +1352,7 @@ const openConfirmSignOutDialog = () => {
 }
 
 .pc-tip-chg-pwd {
-  color: #a73dff;
+  color: #00AE00;
 }
 
 .pc-tip {
@@ -1334,15 +1371,15 @@ const openConfirmSignOutDialog = () => {
 }
 
 .btn-refresh {
-  background: #48325a;
+  background: #00AE001A;
   border-radius: 8px;
   font-weight: 400;
   margin-top: auto;
-  color: #ae6def;
+  color: #00AE00;
   padding: 10px 20px;
 
   :deep(.q-icon) {
-    color: #ae6def;
+    color: #00AE00;
   }
 }
 
