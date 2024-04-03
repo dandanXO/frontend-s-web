@@ -809,6 +809,8 @@ export default {
     35009: "Đặc quyền sẽ có hiệu lực sớm",
     35010: "Thành viên 35010 không thể nhận đặc quyền này",
     35011: "Thành viên 35011 không thể nhận đặc quyền này.",
-    12100: "Mật khẩu rút tiền cũ chưa chính xác."
+    12100: "Mật khẩu rút tiền cũ chưa chính xác.",
+    45000: "Chưa đạt đến số tiền tối thiểu để rút",
+    45001: "Hôm nay đã nhận được tiền thưởng ngẫu nhiên."
 }
 }

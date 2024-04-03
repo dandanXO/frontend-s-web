@@ -363,8 +363,7 @@ export default defineComponent({
     };
 
     const onCaptchaSubmit = () => {
-      api.post(`/otp/sendNewEmail`, qs.stringify({
-        email: memberEmail.value,
+      api.post(`/session/sendNewEmail`, qs.stringify({
         captchaCode: innerCaptchaRef.value,
         codeId: innerCaptchaCodeId.value
       }))
@@ -391,7 +390,7 @@ export default defineComponent({
     const secondCodeId = ref(null);
 
     const verifyOtpAndChangePassword = () => {
-      api.post(`/otp/verifyOtpAndChangePassword`, qs.stringify({
+      api.post(`/session/verifyOtpAndChangePassword`, qs.stringify({
         password: formChgWithdrawPwd.password,
         email: memberEmail.value,
         code: formChgWithdrawPwd.otpCode,
@@ -408,12 +407,7 @@ export default defineComponent({
         }
       })
       .catch((e) => {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: e.message,
-          icon: "report_problem"
-        });
+
       });
     }
 

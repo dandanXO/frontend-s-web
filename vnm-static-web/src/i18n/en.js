@@ -816,6 +816,8 @@ about: {
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
     35011: "35011 Member cannot receive this privilege.",
-    12100: "Old Withdraw password does not match."
+    12100: "Old Withdraw password does not match.",
+    45000: "Minimum withdrawal amount not reached",
+    45001: "Random bonus has been claimed today."
   }
 }
