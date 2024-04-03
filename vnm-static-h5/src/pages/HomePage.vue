@@ -1418,7 +1418,7 @@ export default defineComponent({
   width: $box-width;
   margin: 0 auto;
   gap: 10px;
-  padding: 10px 10px 0px;
+  padding: 10px 0px 0px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1446,9 +1446,10 @@ export default defineComponent({
 
   .menulist {
     flex: 4;
-    padding-left: 8px;
+    // padding-left: 8px;
     display: flex;
-    justify-content: space-evenly;
+    // justify-content: space-evenly;
+    justify-content: space-between;
     gap: 4px;
 
     .men {
@@ -1741,6 +1742,7 @@ export default defineComponent({
         overflow: hidden;
         display: grid;
         grid-template-columns: 50% 50%;
+        box-shadow: -1px 5px 11px rgb(0 0 0 / 10%);
 
         .platform-content {
           width: 100%;
