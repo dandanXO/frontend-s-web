@@ -377,6 +377,10 @@ export default {
     DAILY: 'DAILY',
     OTHER: 'OTHER',
   },
+  scheduleType: {
+    NORMAL: 'Normal',
+    BET_RECORDS: 'Bet Records',
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -886,6 +890,7 @@ export default {
     job: 'Job',
     jobLog: 'Job Log',
     jobName: 'Job Name',
+    jobType: 'Job Type',
     label: 'Label',
     lastDigit: 'Last Digit',
     lastDigitMinDayDeposit: 'Min Day Deposit Amount for Last Digit Red Packet',

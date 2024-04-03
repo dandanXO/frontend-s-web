@@ -566,8 +566,12 @@ const uiControl = reactive({
   ],
   showParamFormat: 'key-value',
   jobTypes: [
-    { key: 'NORMAL', displayName: 'Normal', value: 'NORMAL' },
-    { key: 'BET_RECORDS', displayName: 'Bet Records', value: 'BET_RECORDS' },
+    { key: 'NORMAL', label: t('scheduleType.NORMAL'), value: 'NORMAL' },
+    {
+      key: 'BET_RECORDS',
+      label: t('scheduleType.BET_RECORDS'),
+      value: 'BET_RECORDS',
+    },
   ],
 })
 const request = reactive({
@@ -638,11 +642,7 @@ function handleChangeJobType() {
   if (scheduleForm.jobType === 'BET_RECORDS') {
     // populate default param
     populateParam()
-    console.log('bet records')
-  } else {
-    console.log('normal')
   }
-  console.log('scheduleForm.jobType : ', scheduleForm.jobType)
 }
 
 async function loadJobs() {

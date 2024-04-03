@@ -383,6 +383,10 @@ export default {
     DAILY: '日常',
     OTHER: '其他',
   },
+  scheduleType: {
+    NORMAL: '普通',
+    BET_RECORDS: '下注返回数据',
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -892,6 +896,7 @@ export default {
     job: '任務',
     jobLog: '日志列表',
     jobName: '任务名称',
+    jobType: '任务类型',
     label: '标签',
     lastDigit: '尾数',
     lastDigitMinDayDeposit: '尾数红包当日最小存款',
