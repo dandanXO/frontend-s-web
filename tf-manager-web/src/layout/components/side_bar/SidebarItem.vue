@@ -63,6 +63,7 @@ import {
   getMemberWithdrawRecordBeforePaid,
   getMemberWithdrawRecordPay
 } from "../../../api/member-withdraw-record";
+import { getFinanceFeedbackCount } from '../../../api/finance-feedback'
 import { useI18n } from "vue-i18n";
 
 export default defineComponent({
@@ -97,6 +98,8 @@ export default defineComponent({
       beforePaid: 'To be paid',
       payment: 'Payment on going',
       autoWithdraw: 'AutoWithdraw Under review',
+      upperLevelDeposit: ['Deposit Management'],
+      financeFeedback: 'Finance Feedback',
     })
 
     const alwaysShowRootMenu = computed(() => {
@@ -194,6 +197,16 @@ export default defineComponent({
       }
     };
 
+    const checkOutstandingFinancialFeedback = async() => {
+      const { data: ret } = await getFinanceFeedbackCount(useStore().state.user.siteName);
+      if (ret === 0) {
+        spliceSocket('FINANCE_FEEDBACK');
+        sessionStorage.setItem("FINANCE_FEEDBACK", 0);
+      } else {
+        sessionStorage.setItem("FINANCE_FEEDBACK", ret);
+      }
+    };
+
     watch(() => useStore().state.socket.event, () => {
       const toRemove = useStore().state.socket.event.filter(e => e.event === 'REMOVE');
       if (toRemove) {
@@ -203,6 +216,8 @@ export default defineComponent({
           checkOutstandingWithdraw();
         } else if (toRemove.removeEvent === 'BEFORE_PAID') {
           checkOutstandingBeforePaid();
+        } else if (toRemove.removeEvent === 'FINANCE_FEEDBACK') {
+          checkOutstandingFinancialFeedback();
         }
       }
       checkTips();
@@ -214,6 +229,12 @@ export default defineComponent({
         if ((sessionStorage.getItem('PAYMENT') && parseInt(sessionStorage.getItem('PAYMENT')) !== 0) ||
           (sessionStorage.getItem('WITHDRAW') && parseInt(sessionStorage.getItem('WITHDRAW')) !== 0) ||
           (sessionStorage.getItem('BEFORE_PAID') && parseInt(sessionStorage.getItem('BEFORE_PAID')) !== 0)) {
+          hasTips.value = true;
+        } else {
+          hasTips.value = false;
+        }
+      } else if (menu.upperLevelDeposit.includes(menuItem)) {
+        if (sessionStorage.getItem('FINANCE_FEEDBACK') && parseInt(sessionStorage.getItem('FINANCE_FEEDBACK')) !== 0) {
           hasTips.value = true;
         } else {
           hasTips.value = false;
@@ -233,6 +254,12 @@ export default defineComponent({
           }
         } else if (menu.beforePaid === menuItem) {
           if (sessionStorage.getItem('BEFORE_PAID') && parseInt(sessionStorage.getItem('BEFORE_PAID')) !== 0) {
+            hasTips.value = true;
+          } else {
+            hasTips.value = false;
+          }
+        } else if (menu.financeFeedback === menuItem) {
+          if (sessionStorage.getItem('FINANCE_FEEDBACK') && parseInt(sessionStorage.getItem('FINANCE_FEEDBACK')) !== 0) {
             hasTips.value = true;
           } else {
             hasTips.value = false;
