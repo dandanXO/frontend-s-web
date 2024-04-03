@@ -645,7 +645,7 @@ export default {
     "webapp": "Web APP",
     "esportapp": "E-sport APP"
   },
-  error: {
+  bankError: {
     "bankCardFirst": "Vui lòng đăng ký thẻ ngân hàng trước",
     "bindUSDT": "Vui lòng đăng ký ví USDT trước",
     "bindEWallet": "Vui lòng đăng ký ví điện tử trước",
