@@ -15,7 +15,7 @@
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
-        <router-link :to="prevPage ? '/' + prevPage : '/'">
+        <router-link :to="prevPage ? '/' + prevPage : '/'" class="back-btn-top">
           <img class="back-icon" src="../assets/images/common/left-back-icon.svg" />
         </router-link>
         {{ pageName }}
