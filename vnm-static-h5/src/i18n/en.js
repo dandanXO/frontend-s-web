@@ -503,6 +503,13 @@ export default {
     download_app: "Download App",
     direct_browser_access: "Direct browser access",
 
+    // displayview
+    dv_bank_name: "Bank name",
+    dv_bank_acc: "Bank account",
+    dv_bank_card_no: "Bank card number",
+    dv_deposit_amount: "Deposit amount",
+    dv_submit: "Submit",
+
     // affiliate
     affiliate_title: "Affiliate program",
     affiliate_professionalteam: "Professional Team",

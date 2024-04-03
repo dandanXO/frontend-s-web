@@ -508,6 +508,15 @@ export default {
     download_app: "Tải ứng dụng",
     direct_browser_access: "Truy cập trực tiếp từ trình duyệt",
 
+    // displayview
+    dv_bank_name: "Tên ngân hàng",
+    dv_bank_acc: "Số tài khoản ngân hàng",
+    dv_bank_card_no: "Số thẻ ngân hàng",
+    dv_deposit_amount: "Số tiền nạp",
+    dv_submit: "Gửi",
+    dv_copy: "Sao chép",
+    dv_copied: "Đã sao chép",
+
     // affiliate
     affiliate_title: "Chương trình liên kết",
     affiliate_professionalteam: "Đội ngũ Chuyên nghiệp",
