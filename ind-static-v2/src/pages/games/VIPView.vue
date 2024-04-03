@@ -73,7 +73,6 @@
     </Carousel>
 
     <div v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
-      <hr class="separator-line" style="margin-bottom: 20px" />
 
       <div class="vip-rewards">
         <div class="vip-reward-item">
@@ -143,8 +142,6 @@
           </div>
         </div>
       </div>
-
-      <hr class="separator-line" style="margin-top: 20px" />
 
       <div class="header-wrapper">
         <div class="header">Monthly Cumulative Deposit An Upgrade Vip Level</div>
@@ -806,7 +803,7 @@ const swipeRight = () => {
   align-items: center;
 
   .vip-reward-item {
-    width: 107px;
+    width: 120px;
     height: 182px;
     background: url("../../assets/images/vip/vip-reward-unlock-bg.png") no-repeat center center;
     background-size: 100% 100%;
@@ -834,14 +831,14 @@ const swipeRight = () => {
       }
 
       .title {
-        color: #5c46e7;
+        color: #fff;
         font-size: 11px;
         height: 35px;
         line-height: 18px;
       }
 
       .reward-amt-wrapper {
-        background-color: #c9c8ff;
+        background: #FFFFFF1A;
         padding: 5px 15px;
         max-width: 100px;
         border-radius: 4px;
@@ -851,11 +848,7 @@ const swipeRight = () => {
         .reward-amt {
           line-height: 12px;
           word-wrap: break-word;
-          color: #8b36f8;
-          background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%), linear-gradient(0deg, #ffffff, #ffffff);
-          background-clip: text;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
+          color: #fff;
         }
       }
     }
@@ -1131,7 +1124,7 @@ const swipeRight = () => {
 
   .top-header {
     color: #f1f1f1;
-    background: linear-gradient(180deg, #41206f 0%, #1f2862 100%);
+    background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
   }
 
   .q-table__card {
@@ -1164,11 +1157,14 @@ const swipeRight = () => {
   }
   tbody > :nth-child(odd) {
     background: rgba(21, 0, 37, 0.2);
-    background: #652c93;
+    // background: #652c93;
+    background: #652c9315;
   }
   tbody > :nth-child(even) {
     background: rgba(21, 0, 37, 0.5);
-    background: #502175;
+    // background: #502175;
+    background: #00ae000c;
+
   }
 
   span.amt-text {
@@ -1202,7 +1198,7 @@ const swipeRight = () => {
 
   .hint-msg {
     border-radius: 8px;
-    background: linear-gradient(180deg, #2f1b4d 0%, #1a2045 100%);
+    background: #111215;
     padding: 10px;
     margin: 0 0 1.25rem 0;
     color: rgba(255, 255, 255, 0.7);
@@ -1221,10 +1217,7 @@ const swipeRight = () => {
       font-weight: 800;
       line-height: 32px;
       text-align: left;
-      background: linear-gradient(180deg, #d6b335 0%, #fff96b 50%, #f2ae01 100%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #fff;
     }
   }
 }
