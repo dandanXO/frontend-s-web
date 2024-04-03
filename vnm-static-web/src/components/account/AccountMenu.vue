@@ -9,7 +9,7 @@
           <span>{{$t('account.mainWallet')}}:</span>
           <span class="amount">
             <span v-if="isLoadingBalance">{{$t('common.loading')}}...</span>
-            <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ store.balance }}</span>
+            <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ displayBalance(store.balance) }}</span>
           </span>
           <el-icon>
             <RiRefreshLine color="#468CFF" />
@@ -61,6 +61,7 @@ import {
 import { useI18n } from "vue-i18n";
 import { i18nStore } from '@/store/language'
 import { storeToRefs } from 'pinia'
+import { displayBalance } from "@/utils/utils";
 const i18nStoreLanguage = i18nStore()
 const { languageVal } = storeToRefs(i18nStoreLanguage)
 const { t } = useI18n();

@@ -81,11 +81,20 @@
                 <div class="info-tbl-col">
                   <div class="tbl-row">
                     <div class="basic-info-cell title">{{ $t('personal.mobileNo') }}</div>
-                    <div v-if="personalState.memberInfo.telephone" class="basic-info-cell contentwtxt">
+                    <div v-if="personalState.memberInfo.telephone" class="basic-info-cell contentwtxt" style="display:flex;justify-content: space-between;align-items: center;">
                       {{ personalState.memberInfo.telephone }}
+
+                      <button
+                        class="standard-button btn-color-blue sm-btn"
+                        v-if="!personalState.memberInfo.phoneVerified"
+                        type="button"
+                        @click="updatePhoneModal"
+                      >
+                        {{ $t('common.verify') }}
+                      </button>
                     </div>
 
-                    <div v-else class="basic-info-cell contentwtxt">
+<!--                    <div v-else class="basic-info-cell contentwtxt">-->
                       <!-- <div class="datewsend" v-if="isEdit">
                     <el-form-item
                       name="phone"
@@ -100,15 +109,8 @@
                       />
                     </el-form-item>
                   </div> -->
-                      <button
-                        class="standard-button btn-color-blue sm-btn"
-                        v-if="!personalState.memberInfo.phoneVerified"
-                        type="button"
-                        @click="updatePhoneModal"
-                      >
-                       {{ $t('common.verify') }}
-                      </button>
-                    </div>
+
+<!--                    </div>-->
                   </div>
                 </div>
               </div>
@@ -147,10 +149,19 @@
 
               <div class="tbl-row">
                 <div class="basic-info-cell title">{{$t('personal.email')}}</div>
-                <div v-if="personalState.memberInfo.email" class="basic-info-cell contentwtxt">
+                <div v-if="personalState.memberInfo.email" class="basic-info-cell contentwtxt" style="display:flex;justify-content: space-between;align-items: center;">
                   {{ personalState.memberInfo.email }}
+
+                  <button
+                    class="standard-button btn-color-blue sm-btn"
+                    v-if="!personalState.memberInfo.emailVerified"
+                    type="button"
+                    @click="updateSecurityModal"
+                  >
+                    {{ $t('common.verify') }}
+                  </button>
                 </div>
-                <div v-else class="basic-info-cell contentwtxt">
+<!--                <div v-else class="basic-info-cell contentwtxt">-->
                   <!-- <div class="datewsend" v-if="isEdit">
                     <el-form-item
                       name="email"
@@ -166,15 +177,7 @@
                       />
                     </el-form-item>
                   </div> -->
-                  <button
-                    class="standard-button btn-color-blue sm-btn"
-                    v-if="!personalState.memberInfo.emailVerified"
-                    type="button"
-                    @click="updateSecurityModal"
-                  >
-                  {{ $t('common.verify') }}
-                  </button>
-                </div>
+<!--                </div>-->
               </div>
 
               <el-button
@@ -746,7 +749,7 @@ import { useI18n } from "vue-i18n";
           verificationPhoneModalVisible.value = false;
 
           ElMessage({
-            message: '成功',
+            message: t('status.success'),
             type: 'success',
           })
 
@@ -989,6 +992,7 @@ import { useI18n } from "vue-i18n";
                 type: 'success',
               })
               clearWithdrawPwd();
+              window.location.reload();
             } else {
               ElMessage.error(response.message);
             }

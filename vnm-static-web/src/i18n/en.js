@@ -683,7 +683,9 @@ about: {
     bank_transfer: "Bank",
     scratch_card: "Scratch card",
     tiktok: "Tiktok",
-    automatic_payment: "Automatic Paying"
+    automatic_payment: "Automatic Paying",
+    otp_success_send_email: "OTP Code has been sent to your email",
+    otp_success_send_phone: "OTP Code has been sent to your mobile number"
   },
   response: {
     101: "Platform not found",

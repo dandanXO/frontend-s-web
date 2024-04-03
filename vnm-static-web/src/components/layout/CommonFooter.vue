@@ -99,8 +99,10 @@
           <img src="../../assets/footer/payment/VP.png" />
           <img src="../../assets/footer/payment/BIDV.png" />
           <img src="../../assets/footer/payment/ACB.png" /> -->
+          <img src="../../assets/footer/payment/bank-logo.png" />
           <img src="../../assets/footer/payment/momo.png" />
           <img src="../../assets/footer/payment/ZaloPay.png" />
+          <img src="../../assets/footer/payment/scratch-card-logo.png" />
           <img src="../../assets/footer/payment/ViettelPayRed.png" />
           <img src="../../assets/footer/payment/tether-logo.png" />
         </div>
@@ -191,6 +193,7 @@ export default defineComponent({
         text-decoration: none;
         font-size: 15px;
         display: block;
+        white-space:nowrap;;
       }
       .top-ft-rgt {
         .s1 {

@@ -24,7 +24,7 @@ export default {
   },
   "account": {
     "welcome": "Chào mừng",
-    "mainWallet": "Số dư chính"
+    "mainWallet": "Số dư"
   },
   "login": {
     "username": "Tên tài khoản",
@@ -112,7 +112,6 @@ export default {
     "realName": "Họ và tên",
     "birthday": "Ngày sinh",
     "zalo": "Zalo",
-    "email": "Địa chỉ Email",
     "mobileNo": "Số điện thoại",
     "clear": "Xóa",
     "submit": "Gửi",
@@ -420,7 +419,6 @@ export default {
     "deductPromotion": "Khấu trừ khuyến mãi",
     "deductDepositWithdrawalFee": "Khấu trừ phí nạp/rút",
     "platformServiceFee": "Phí dịch vụ nền tảng",
-    "profit": "Lợi nhuận",
     "multiplyCommissionRate": "Nhân với tỷ lệ hoa hồng",
     "agentCommission": "Hoa hồng đại lý",
     "transactionFeeNote": "Ghi chú phí giao dịch",
@@ -679,7 +677,9 @@ export default {
     bank_transfer: "Thanh toán ngân hàng",
     scratch_card: "Thẻ cào",
     tiktok: "Tiktok",
-    automatic_payment: "Thanh toán tự động"
+    automatic_payment: "Thanh toán tự động",
+    otp_success_send_email: "OTP Code đã được gửi đến email của bạn",
+    otp_success_send_phone: "Mã OTP đã được gửi đến số điện thoại di động của bạn."
   },
   response: {
     101: "Không tìm thấy nền tảng",

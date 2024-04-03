@@ -89,8 +89,8 @@
                     <td>SILVER</td>
                     <td>GOLD</td>
                     <td>PLATINUM</td>
+                    <td>RUBY</td>
                     <td>DIAMOND</td>
-                    <td>CRYSTAL</td>
                 </tr>
                 </tbody>
             </table>
