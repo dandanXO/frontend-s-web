@@ -165,6 +165,8 @@ export default {
     getVerificationCode: 'Get verification code',
     common_and_new_password_not_match: "Confirm password does not match the new password",
     forgetWithdrawPassword: 'Forget withdraw password?',
+    bankCardReminder1: 'Linking NH account needs to be identical in account name and NH registered name. Any incorrect information entered will lead to the failure of the withdrawal of the delay in processing the bank. Please contact our customer service to promptly handle it. Sincerely thanks!',
+    bankCardReminder2: 'Please enter correct information with your name and account number on your NH card, to avoid mistakes when withdrawing! Thank you very much from TF88!'
   },
   placeholder: {
     realName: 'Please enter Real Name',
