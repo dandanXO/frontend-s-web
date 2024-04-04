@@ -415,6 +415,9 @@ export default {
     record_winner_list: "Danh sách người chiến thắng",
     record_lucky_number_of_win: "Số may mắn của người chiến thắng",
 
+    // slot
+    slot_search: "Tìm kiếm trò chơi",
+
     // vip
     free_bonus: "Tiền thưởng miễn phí",
     rebate_bonus: "Tiền thưởng hoàn trả",
@@ -1079,6 +1082,7 @@ export default {
     page_referfriendsrecords: "Lịch sử mời bạn bè",
     page_rescuefundrecords: "Lịch sử quỹ cứu trợ",
     page_register: "Đăng ký",
+    page_lobby: "Sảnh chờ",
 
     menu_deposit: "Nạp tiền",
     menu_withdraw: "Rút tiền",
@@ -1150,8 +1154,8 @@ export default {
     str_suspend: "Đơn đang chờ thẩm định",
     str_autopayment: "Đơn đang chờ thanh toán",
     str_viptransfer: "Thẻ chuyển VIP",
-    str_usdterc: "Ví điện tử loại ERC",
-    str_usdttrc: "Ví điện tử loại TRC",
+    str_usdterc: "Ví điện tử loại ERC20",
+    str_usdttrc: "Ví điện tử loại TRC20",
     str_offlinetransfer: "Chuyển Tiền Ngoại Tuyến",
     str_union: "UNION",
     str_quickpayment: "Thanh Toán Nhanh",

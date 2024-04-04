@@ -408,6 +408,9 @@ export default {
     record_winner_list: "Winner list",
     record_lucky_number_of_win: "Lucky number of win",
 
+    // slot
+    slot_search: "Search for games",
+
     // vip
     free_bonus: "Free bonus",
     rebate_bonus: "Rebate bonus",
@@ -1072,6 +1075,7 @@ export default {
     page_referfriendsrecords: "Refer Friends Records",
     page_rescuefundrecords: "Rescue Fund Records",
     page_register: "Register",
+    page_lobby: "Lobby",
 
     menu_deposit: "Deposit",
     menu_withdraw: "Withdraw",
@@ -1136,8 +1140,8 @@ export default {
     str_suspend: "Suspend",
     str_autopayment: "Automatic Paying",
     str_viptransfer: "VIP Transfer card",
-    str_usdterc: "USDT ERC",
-    str_usdttrc: "USDT TRC",
+    str_usdterc: "USDT ERC20",
+    str_usdttrc: "USDT TRC20",
     str_offlinetransfer: "Offline Transfer",
     str_union: "UNION",
     str_quickpayment: "Quick Payment",

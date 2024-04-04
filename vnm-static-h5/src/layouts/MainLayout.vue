@@ -158,7 +158,7 @@ export default defineComponent({
           if (route.query.platform) {
             var platformName =
               route.query.platform == "BBINDY" ? "BBIN" : translateRecord(route.query.platform, "slot");
-            pageName.value = `${platformName}游戏大厅`;
+            pageName.value = `${platformName} ${t('lang.page_lobby')}`;
           }
         } else if (route.path === "/fishing") {
           prevPage.value = "";
@@ -167,7 +167,7 @@ export default defineComponent({
           pageName.value = t("lang.page_game");
           if (route.query.platform) {
             var platformName = translateRecord(route.query.platform);
-            pageName.value = `${platformName}游戏大厅`;
+            pageName.value = `${platformName} ${t('lang.page_lobby')}`;
           }
         } else if (route.path === "/account/vip") {
           hasPage.value = true;
