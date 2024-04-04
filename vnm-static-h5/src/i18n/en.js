@@ -342,6 +342,9 @@ export default {
     bd_digital_currency: "Digital Currency",
     bd_protocol: "Protocol",
     bd_length_between_34_36: "Length should between 34-36",
+    bd_note: "Note",
+    bd_note_para_01: 'Linking NH account needs to be identical in account name and NH registered name. Any incorrect information entered will lead to the failure of the withdrawal of the delay in processing the bank. Please contact our customer service to promptly handle it. Sincerely thanks!"',
+    bd_note_para_02: "Please enter correct information with your name and account number on your NH card, to avoid mistakes when withdrawing! Thank you very much from TF88!",
 
     // mine
     version_no: "Version",
@@ -1133,6 +1136,8 @@ export default {
     str_suspend: "Suspend",
     str_autopayment: "Auto Payment",
     str_viptransfer: "VIP Transfer card",
+    str_usdterc: "USDT ERC",
+    str_usdttrc: "USDT TRC",
     str_offlinetransfer: "Offline Transfer",
     str_union: "UNION",
     str_quickpayment: "Quick Payment",

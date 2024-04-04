@@ -44,9 +44,9 @@ export const translateRecord = (rec, type = "") => {
   } else if (rec === "BANK") {
     return i18n.global.t('lang.str_viptransfer');
   } else if (rec === "USDTERC") {
-    return "USDT ERC"; // USDT ERC
+    return i18n.global.t('lang.str_usdterc'); // USDT ERC
   } else if (rec === "USDTTRC") {
-    return "USDT TRC"; // USDT TRC
+    return i18n.global.t('lang.str_usdttrc'); // USDT TRC
   } else if (rec === "OFFLINE") {
     return i18n.global.t('lang.str_offlinetransfer');
   } else if (rec === "UNION") {

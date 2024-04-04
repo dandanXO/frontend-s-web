@@ -348,6 +348,11 @@ export default {
     bd_digital_currency: "Tiền tệ số",
     bd_protocol: "Giao thức",
     bd_length_between_34_36: "Chiều dài nên từ 34-36",
+    bd_note: "Lưu ý",
+    bd_note_para_01:
+      'Liên kết tài khoản NH cần sự đồng nhất về Tên Tài khoàn và Tên đăng ký NH. Trường hợp điền sai thông tin dẫn đến Rút tiền thất bại hoặc NH xử lý chậm trễ, quý khách vui lòng liên hệ dịch vụ CSKH của chúng tôi để" kịp thời xử lý. Chân thành cảm ơn!',
+    bd_note_para_02:
+      "Vui lòng nhập thông tin chính xác với tên và số tài khoản trên thẻ NH, tránh sai sót gây tổn thất của quý khách khi rút tiền! TF88 xin chân thành cảm ơn!",
 
     // mine
     version_no: "Phiên bản",
@@ -1145,6 +1150,8 @@ export default {
     str_suspend: "Tạm Dừng",
     str_autopayment: "Thanh Toán Tự Động",
     str_viptransfer: "Thẻ chuyển VIP",
+    str_usdterc: "Ví điện tử loại ERC",
+    str_usdttrc: "Ví điện tử loại TRC",
     str_offlinetransfer: "Chuyển Tiền Ngoại Tuyến",
     str_union: "UNION",
     str_quickpayment: "Thanh Toán Nhanh",

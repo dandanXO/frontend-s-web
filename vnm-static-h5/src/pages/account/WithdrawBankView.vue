@@ -22,13 +22,15 @@
           :rules="[
             (val) =>
               (val && val.length > 10 && val == selectedUnbindBankCard.cardNumber) ||
-              unbindCardLabel() + $t('lang.incorrect')
+              unbindCardLabel() + ' ' + $t('lang.incorrect')
           ]"
         />
       </q-form>
       <div class="btnsreas">
-        <div class="confirmsbtns common-md-btn" @click="unbindBankCard()">{{ $t("lang.confirm") }}</div>
-        <q-btn class="cacnels common-md-white-btn" v-close-popup>{{ $t("lang.cancel") }}</q-btn>
+        <div class="confirmsbtns btn-standard-height common-md-btn" @click="unbindBankCard()">
+          {{ $t("lang.confirm") }}
+        </div>
+        <q-btn class="cacnels common-md-white-btn btn-standard-height" v-close-popup>{{ $t("lang.cancel") }}</q-btn>
       </div>
     </q-card>
   </q-dialog>
@@ -179,6 +181,7 @@ import { api } from "boot/axios";
 import { useQuasar, copyToClipboard } from "quasar";
 import { useRouter } from "vue-router";
 import * as _ from "lodash";
+import { useI18n } from "vue-i18n";
 
 // constants (the string synced w/ BE API bankType)
 const BANK_CARD = "BANK";
@@ -187,6 +190,7 @@ const EWALLET = "EWALLET";
 const ALIPAY = "ALIPAY";
 
 const $q = useQuasar();
+const { t } = useI18n();
 const router = useRouter();
 
 const imgURL = process.env.IMAGE_CDN + "/payment/";
@@ -258,8 +262,8 @@ const isAlipay = (bankID) => {
 const unbindCardLabel = () => {
   const { bankType, bankCode } = selectedUnbindBankCard.value;
   if (isAlipay(bankCode)) return "支付宝号";
-  else if (bankType === BANK_CARD) return "银行卡号";
-  else if (bankType === CRYPTO) return "钱包地址";
+  else if (bankType === BANK_CARD) return t("lang.bd_bank_card");
+  else if (bankType === CRYPTO) return t("lang.bd_virtual_account");
   else if (bankType === EWALLET) return "电子钱包";
 };
 
@@ -430,5 +434,9 @@ onActivated(() => {
     width: calc(100% - 16px);
     margin: auto;
   }
+}
+
+.titles {
+  line-height: 1.3;
 }
 </style>
