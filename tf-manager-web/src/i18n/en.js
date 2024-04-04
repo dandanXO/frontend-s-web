@@ -1288,6 +1288,7 @@ export default {
     sureWinMinSpin: 'Sure Win Min Spin',
     suspend: 'Suspend',
     switch: 'Switch',
+    sync: 'Sync',
     szCnyControl: 'SZCny Withdrawal Control',
     switchPayment: 'Switch Payment',
     systemPayment: 'System Payment',
@@ -1996,6 +1997,7 @@ export default {
     validateCompetitionTimeRequired: 'Competition Time is required',
     validateKeyQuantityRequired: 'Key quantity is required',
     validateMonthRequired: 'Year/Month is required',
+    syncMemberDetailSuccess: 'Sync Member Detail Success',
   },
   menu: {
     undefined: '',

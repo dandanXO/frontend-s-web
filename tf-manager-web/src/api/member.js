@@ -184,3 +184,7 @@ export const getMemberDepositSuccessRecord = (id, query) => {
 export const getMemberWithdrawSuccessRecord = (id, query) => {
   return https().request(`/member/${id}/withdrawSuccessRecord`, Method.GET, query, ContentType.form);
 };
+
+export const syncMemberDetail = (id, siteId) => {
+  return https().request(`/member/sync/${id}`, Method.GET, { siteId: siteId }, ContentType.form);
+};

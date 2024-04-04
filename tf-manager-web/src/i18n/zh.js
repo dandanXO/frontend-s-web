@@ -1294,6 +1294,7 @@ export default {
     sureWinMinSpin: '必中奖最低转盘次数',
     suspend: '中止',
     switch: '转换',
+    sync: '同步',
     switchPayment: '支付转换',
     systemPayment: '系统支付',
     szCnyControl: '数字人民币提款限制',
@@ -1965,6 +1966,7 @@ export default {
     validateCompetitionTimeRequired: '赛事时间必填',
     validateKeyQuantityRequired: '钥匙数量必填',
     validateMonthRequired: '年/月必填',
+    syncMemberDetailSuccess: '同步会员信息成功',
   },
   menu: {
     undefined: '',

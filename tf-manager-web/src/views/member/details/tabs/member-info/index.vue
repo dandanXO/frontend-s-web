@@ -26,6 +26,8 @@
                      style="float: right;" @click="logoutPlayer"
           >{{ t('fields.logoutPlayer') }}
           </el-button>
+          <el-button type="info" size="mini" style="float: right;margin-right:5px;" @click="syncMember">{{ t('fields.sync') }}
+          </el-button>
         </el-descriptions-item>
         <el-descriptions-item label-align="left" label-class-name="member-label" :class-name="memberDetail.dupName === 'red'?'member-context-red':'member-context'">
           <template #label>
@@ -872,7 +874,8 @@ import {
   updateMemberType,
   unlockMember,
   refreshBalance,
-  forceLogout
+  forceLogout,
+  syncMemberDetail
 } from "../../../../../api/member";
 import { getPlatformsBySite } from "../../../../../api/platform";
 import { selectIpLabelAll } from "../../../../../api/ip-label";
@@ -1532,6 +1535,11 @@ export default defineComponent({
       ElMessage({ message: t('message.logoutPlayerSuccess'), type: "success" });
     }
 
+    async function syncMember() {
+      await syncMemberDetail(props.mbrId, site.id);
+      ElMessage({ message: t('message.syncMemberDetailSuccess'), type: "success" });
+    }
+
     async function changeAffiliate() {
       await changeNewAffilaite(props.mbrId, affForm.affiliateCode, memberDetail.memberType);
       ElMessage({ message: t('message.changeAffiliateSuccess'), type: "success" });
@@ -1670,6 +1678,7 @@ export default defineComponent({
       unlock,
       t,
       logoutPlayer,
+      syncMember,
       affForm,
       affFormRules,
       changeAffiliate,

@@ -28,6 +28,8 @@
             {{ memberDetail.loginName }}
           </span>
           <span v-if="memberDetail.loginName === null">-</span>
+          <el-button type="info" size="mini" style="float: right;" @click="syncMember">{{ t('fields.sync') }}
+          </el-button>
         </el-descriptions-item>
         <el-descriptions-item
           label-align="left"
@@ -1320,7 +1322,7 @@ import {
   getMemberRealName,
   getMemberTelephone,
   getMemberStatus,
-  freezeMember, unfreezeMember, updateRisk
+  freezeMember, unfreezeMember, updateRisk, syncMemberDetail
 } from '../../../../../api/member'
 import { getFinancialLevels } from '../../../../../api/financial-level'
 import { getAffiliateRecord } from '../../../../../api/affiliate-record'
@@ -1830,6 +1832,11 @@ async function approve() {
   })
   uiControl.dialogVisible = false
   ElMessage({ message: t('message.affiliateApproved'), type: 'success' })
+}
+
+async function syncMember() {
+  await syncMemberDetail(props.affId, memberDetail.siteId);
+  ElMessage({ message: t('message.syncMemberDetailSuccess'), type: "success" });
 }
 
 function updateModel() {
