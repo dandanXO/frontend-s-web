@@ -1878,7 +1878,12 @@ onMounted(() => {
       margin-right: 10px;
       cursor: pointer;
       color: #bacef1;
-      font-weight: light;
+      font-family: 'Poppins';
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 18px;
+      text-align: left;
+
     }
   }
 
@@ -2845,6 +2850,10 @@ onMounted(() => {
   }
 
   .cat-icon {
+    height: 28px;
+    display: flex;
+    align-items: center;
+
     img {
       display: block;
       width: 100%;
@@ -2854,7 +2863,7 @@ onMounted(() => {
 
   .cat-title {
     font-size: 12px;
-    font-weight: bold;
+    font-weight: 600;
     color: #bfc3c9;
     font-family: "Poppins", sans-serif;
     letter-spacing: 0.5px;
