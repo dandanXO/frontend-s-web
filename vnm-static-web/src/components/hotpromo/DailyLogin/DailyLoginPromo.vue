@@ -91,7 +91,7 @@ const checkIn = (mth) => {
       mth.isCheckedIn = true;
       ElMessage({
         type: "success",
-        message: "领取成功"
+        message: t('common.claimedSuccess')
       });
       getCheckInDays(res.data)
     } else {

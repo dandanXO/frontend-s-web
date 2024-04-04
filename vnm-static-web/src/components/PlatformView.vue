@@ -21,9 +21,9 @@
             </div>
 
             <div class="platform-item">
-              <div class="platform-title-wrap" data-aos="fade-left" data-aos-delay="100">
                 <div class="platform-title"><img style="height: 60px;" :src="require('../assets/' + platformType + '/' + platformType + '-biglogo-' + item.code.toLowerCase() + '.png')" /></div>
-                <div class="platform-subtitle">{{ platformName }}</div>
+              <div class="platform-title-wrap" data-aos="fade-left" data-aos-delay="100">
+                <div class="platform-subtitle">{{ $t(`menu.${platformName}`) }}</div>
               </div>
 
               <div v-if="languageVal === 'en'" class="platform-txt-box" data-aos="fade-left" data-aos-delay="200" v-html="item.message"></div>

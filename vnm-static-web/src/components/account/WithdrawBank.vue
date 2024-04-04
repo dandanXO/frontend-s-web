@@ -123,6 +123,12 @@
       </div>
     </div>
     <el-dialog class="bankModal" width="500" v-model="bankCardModalState.visible" :footer="null" :title="$t('withdraw.bindCard')">
+      <div type="warning" class="account-tip-warning">
+        <ul>
+          <li>{{ $t('personal.bankCardReminder1') }}</li>
+          <li>{{ $t('personal.bankCardReminder2') }}</li>
+        </ul>
+      </div>
       <el-form ref="bankCardFormRef" :model="bankCardInfo" :rules="bankCardRules">
         <el-form-item prop="bankId" :rules="[{ required: true, message: $t('placeholder.selectBank'), trigger: 'blur' }]">
           <el-row :gutter="20">
@@ -1008,6 +1014,29 @@ body {
 
 .ant-space-item:nth-child(2) {
   flex: 4;
+}
+
+.account-tip-warning {
+  border: 1px solid #F8DD9A;
+  background: #FEF7E6; 
+  color: #FFC024;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  ul {
+    margin: 0;
+    padding: 0 0 0 21px;
+  }
+  svg {
+    height: 15px;
+    fill: #FFC024;
+    margin-right: 10px;
+  }
 }
 </style>
 

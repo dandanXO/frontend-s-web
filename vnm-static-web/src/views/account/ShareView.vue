@@ -42,12 +42,15 @@
                 <li style="list-style:lower-roman;">
                   {{ $t('referTerms.referrerConditions1')}}
                 </li>
+                <li style="list-style:lower-roman;">
+                  {{ $t('referTerms.referrerConditions2')}}
+                </li>
               </ul>
             </li>
             <li> {{ $t('referTerms.presenteeConditions')}}
               <ul>
                 <li style="list-style:lower-roman;">
-                  {{ $t('referTerms.presenteeConditions2')}}
+                  {{ $t('referTerms.presenteeConditions1')}}
                 </li>
                 <li style="list-style:lower-roman;">
                   {{ $t('referTerms.presenteeConditions2')}}
@@ -72,7 +75,7 @@
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted } from "vue";
+import { defineComponent, reactive, ref, watch, onMounted } from "vue";
 import { getReferralLink, getInviteFriendListCount } from "@/api/personal/share"
 import {
   RiFacebookCircleLine, RiWhatsappLine, RiTelegramLine, RiTwitterLine, RiInstagramLine,
@@ -84,12 +87,16 @@ import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import EmptyData from "@/components/emptyData.vue";
 
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from 'pinia'
 export default defineComponent({
   name: "ShareView",
   components: {
     RiFacebookCircleLine, RiWhatsappLine, RiTelegramLine, RiTwitterLine, RiInstagramLine, VueQRCodeComponent, UserFilled, Money, EmptyData
   },
   setup() {
+    const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
     const { t } = useI18n();
     const router = useRouter()
     const searchForm = reactive({
@@ -137,6 +144,9 @@ export default defineComponent({
     onMounted(() => {
       getReferral()
       getInviteCount()
+    })
+    watch(languageVal, (value, oldValue) => {
+      copybtntxt.value = t('common.copy')
     })
     return {
       searchForm,
