@@ -315,7 +315,7 @@ svg {
   background-image: url("../assets/images/common/common-md-btn.png");
   background-size: 100% 100%;
   // aspect-ratio: 286/96;
-  font-size: 1.2rem;
+  font-size: 1rem;
   // width: 95px;
   color: $white;
   border-radius: 10px;
@@ -468,8 +468,7 @@ svg {
       margin-left: auto;
     }
 
-    .black-titles,
-    .titles {
+    .black-titles {
       left: 50%;
       position: absolute;
       transform: translate(-50%, 0);
@@ -478,7 +477,7 @@ svg {
 
   .black-titles {
     color: $accent;
-    font-size: 1rem;
+    font-size: 1.3rem;
   }
 
   .contents {
