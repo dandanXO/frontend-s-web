@@ -48,6 +48,7 @@ export default {
     cannot_submit_new_reminder: "Unable to submit new reminder, there are still unresolved reminders.",
     quickpayment: "Quick Payment",
     livecasino: "Live Casino",
+    esport: "Esport",
     sport: "Sport",
     slot: "Slot",
     poker: "POKER",

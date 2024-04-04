@@ -123,14 +123,62 @@ export const translateRecord = (rec, type = "") => {
     return i18n.global.t('lang.str_transfer'); // Closed
   } else if (rec === "ADJUST") {
     return i18n.global.t('lang.str_adjust'); // Closed
-  } else if (rec === "MGP") {
-    return "MG"; // AG
-  } else if (rec === "AG") {
-    return "AG"; // AG
-  } else if (rec === "BBINDY" || rec === "BBIN") {
-    return "BBIN"; // BBINDY
-  } else if (rec === "EBET") {
-    return "WE"; // EBET
+  } if (rec === "AG") {
+    return "AG " + t('lang.livecasino') + ", XIN" + t('lang.slot'); // AG
+  }else if (rec === "GPI") {
+    return "GPI " + t('lang.slot') + ", GPI" + t('lang.lottery'); // AG
+  }  else if (rec === "BBINDY") {
+    return "BBIN"  + t('lang.livecasino');
+  } else if (rec === "KP") {
+    return "King Poker" ;
+  } else if (rec === "KM") {
+    return "King Maker";
+  } else if (rec === "V8") {
+    return "V8" + t('lang.poker');
+  } else if (rec === "TCG") {
+    return "TCG " + t('lang.lottery') ;
+  }else if (rec === "LOTTO") {
+    return "LOTTO " + t('lang.lottery') ;
+  }else if (rec === "MGP") {
+    return "MGP " + t('lang.slot') ;
+  }  else if (rec === "EBET") {
+    return "WE " + t('lang.livecasino');
+  } else if (rec === "PT") {
+    return "PT " + t('lang.slot');
+  } else if (rec === "PG") {
+    return "PG " + t('lang.slot');
+  } else if (rec === "SW") {
+    return "SW " + t('lang.slot');
+  } else if (rec === "SABA") {
+    return "SABA " + t('lang.sport');
+  }else if(rec === 'GFSBO'){
+    return "SBOBET " + t('lang.sport');
+  }else if(rec === 'CMD'){
+    return "CMD " + t('lang.sport');
+  } else if (rec === "BG") {
+    return "BG " + t('lang.livecasino');
+  } else if (rec === "Evo") {
+    return "Evo " + t('lang.livecasino');
+  } else if (rec === "BBINDY") {
+    return "BBIN " + t('lang.livecasino');
+  } else if (rec === "BBIN") {
+    return "BBIN " + t('lang.livecasino');
+  } else if (rec === "WE") {
+    return "WE " + t('lang.livecasino');
+  }else if (rec === "WM") {
+    return "WM " + t('lang.livecasino');
+  } else if (rec === "AE") {
+    return "Sexy " + t('lang.livecasino');
+  } else if (rec === "PMLIVE") {
+    return "DB " + t('lang.livecasino');
+  }else if (rec === "TFGaming") {
+    return "TFGaming " + t('lang.esport');
+  } else if (rec === "WS") {
+    return "WS168 " + t('lang.cockfight');
+  }else if (rec === "SP") {
+    return "SP " + t('lang.fishing');
+  }else if (rec === "JILI") {
+    return "JILI  " + t('lang.fishing');
   } else {
     return rec;
   }
