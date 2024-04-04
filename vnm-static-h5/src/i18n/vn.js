@@ -1256,6 +1256,7 @@ export default {
     10008: "Lỗi xảy ra",
     11003: "Nạp tiền không thành công",
     12100: "Mật khẩu rút tiền không khớp",
+    12101: "Mật khẩu rút tiền mới không thể giống với mật khẩu rút tiền cũ",
     13000: "Không tìm thấy tên miền",
     13001: "Không thể truy vấn thông tin đã hết hạn 3 tháng",
     13002: "Không quá 7 ngày",
