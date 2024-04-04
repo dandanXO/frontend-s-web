@@ -2,7 +2,7 @@
   <div class="earn">
     <div class="agency-policy-main-img"><img src="../../assets/images/earn-money/about-bg.png" /></div>
 
-    <div class="title">Invite to Earn</div>
+    <!-- <div class="title">Invite to Earn</div> -->
     <div class="desc-title-wrapper">
       <div class="number">1</div>
       <div class="desc-title">Share your referral link or QR code below</div>
@@ -28,16 +28,37 @@
     <div class="earn-title">My Referral Link</div>
     <div class="earn-separator"></div>
 
-    <div class="referral-link-wrapper">
+    <InputRowGrid>
+      <template #fields>
+        <InputField :label="'Recommended Link'">
+          <template #input>
+            <q-input
+              hide-bottom-space
+              v-model="selfTgurl"
+              label-color="brand"
+              outlined
+              color="white"
+            >
+              <template v-slot:append>
+                <q-icon class="copy-btn" name="content_copy" @click="copyShareLink(selfTgurl)" />
+              </template>
+            </q-input>
+          </template>
+        </InputField>
+      </template>
+    </InputRowGrid>
+
+    <!-- <div class="referral-link-wrapper">
       <q-icon size="xs" name="insert_link" />
       <div class="link">{{ selfTgurl }}</div>
       <q-icon class="copy-btn" name="content_copy" @click="copyShareLink(selfTgurl)" />
-    </div>
+    </div> -->
 
     <div class="qr-wrapper">
       <VueQRCodeComponent id="the-qrcode" :size="150" :text="selfTgurl" class="qr-code" />
 
-      <q-btn label="Save" :size="'150'" class="save-btn" @click="downloadQRImg()" />
+      <PrimaryButton :label="'Save'" :onClick="downloadQRImg" />
+      <!-- <q-btn label="Save" :size="'150'" class="save-btn" @click="downloadQRImg()" /> -->
     </div>
   </div>
 </template>
@@ -50,6 +71,9 @@ import { api } from "boot/axios";
 import VueQRCodeComponent from "vue-qrcode-component";
 import html2canvas from "html2canvas";
 import { Filesystem, Encoding, Directory } from "@capacitor/filesystem";
+import InputRowGrid from "../auth/InputRowGrid.vue";
+import InputField from "../auth/InputField.vue";
+import PrimaryButton from "../auth/PrimaryButton.vue";
 
 const $q = useQuasar();
 const store = userStore();
@@ -158,14 +182,11 @@ onMounted(() => {
       line-height: 30px;
       text-align: center;
       border-radius: 6.25rem;
-      background: rgba(252, 245, 104, 0.2);
+      background: #00AE0033;
     }
 
     .desc-title {
-      background: linear-gradient(180deg, #d6b335 0%, #fff96b 50%, #f2ae01 100%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #00AE00;
       font-weight: 700;
     }
   }
@@ -175,12 +196,12 @@ onMounted(() => {
   }
 
   .earn-separator {
-    background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #5c46e7 0.01%, rgba(92, 70, 231, 0) 100%);
+    background: radial-gradient(46.11% 803.69% at 53.89% 50%, #019303 0%, rgba(1, 146, 4, 0) 100%);
     height: 2px;
   }
 
   .earn-title {
-    background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #5c46e7 0.01%, rgba(92, 70, 231, 0) 100%);
+    background: radial-gradient(46.11% 803.69% at 53.89% 50%, #019303 0%, rgba(1, 146, 4, 0) 100%);
     font-size: 2rem;
     font-weight: 700;
     text-align: center;
@@ -275,12 +296,12 @@ onMounted(() => {
 
   .qr-wrapper {
     border-radius: 0rem 0rem 0.75rem 0.75rem;
-    background: #6759c0;
+    // background: #6759c0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 30px;
     padding: 25px;
 
     .qr-code {
@@ -304,11 +325,11 @@ onMounted(() => {
   margin-right: -16px;
 
   &:after {
-    content: "";
-    background: linear-gradient(to bottom, rgba(17, 19, 31, 0.9), rgba(255, 255, 255, 0));
-    position: absolute;
-    top: 0;
-    left: 0;
+    // content: "";
+    // background: linear-gradient(to bottom, rgba(17, 19, 31, 0.9), rgba(255, 255, 255, 0));
+    // position: absolute;
+    // top: 0;
+    // left: 0;
     height: 100px;
     width: 100%;
   }

@@ -36,7 +36,7 @@
           min-height: 3px;
           width: 33px;
           padding: 0;
-          background-color: #661ebf;
+          background-color: #7EDB5C;
         "
       />
       <q-btn
@@ -71,7 +71,7 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <RiVolumeUpLine style="fill: #5f4682; width: 24px; height: 24px" />
+          <RiVolumeUpLine style="fill: #fff; width: 24px; height: 24px" />
         </div>
         <div class="marquee-container">
           <marquee-text :repeat="5" :duration="announcementList.length * 120">
@@ -95,8 +95,8 @@
     </div> -->
 
     <swiper
-      :slidesPerView="4.5"
-      :spaceBetween="10"
+      :slidesPerView="5.5"
+      :spaceBetween="5"
       :scrollbar="{
         hide: true
       }"
@@ -138,7 +138,8 @@
       <template v-if="(category.title === 'Hot' && category.active) || (category.title === 'Lobby' && category.active)">
         <div class="games-selection-wrapper" id="hotgames">
           <div class="title-game">
-            <span class="txt-style">Hot Games</span>
+            <img src="../assets/images/index/hot-game-icon-label.png" />
+            <!-- <div class="txt-style">Hot Games</div> -->
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -257,7 +258,8 @@
       >
         <div class="games-selection-wrapper" id="live">
           <div class="title-game">
-            <span class="txt-style">Live Casino</span>
+            <img src="../assets/images/index/live-casino-icon-label.png" />
+            <!-- <span class="txt-style">Live Casino</span> -->
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -353,7 +355,8 @@
       >
         <div class="games-selection-wrapper" id="slotsgames">
           <div class="title-game">
-            <span class="txt-style">Slots Games</span>
+            <img src="../assets/images/index/slots-games-icon-label.png" />
+            <!-- <span class="txt-style">Slots Games</span> -->
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -451,7 +454,8 @@
       >
         <div class="games-selection-wrapper" id="fishing" v-if="category.title === 'Lobby' && category.active">
           <div class="title-game">
-            <span class="txt-style">Fishing</span>
+            <img src="../assets/images/index/fishing-icon-label.png" />
+            <!-- <span class="txt-style">Fishing</span> -->
           </div>
 
           <div class="platform-game-wrapper">
@@ -669,7 +673,8 @@
       >
         <div class="games-selection-wrapper" id="sport">
           <div class="title-game">
-            <span class="txt-style">Sports</span>
+            <img src="../assets/images/index/sport-icon-label.png" />
+            <!-- <span class="txt-style">Sports</span> -->
           </div>
           <div class="platform-game-container sport-platform">
             <template v-for="(item, index) in sport" :key="index">
@@ -837,7 +842,7 @@
           <template v-if="isGameLoading">
             <div class="loader-container">
               <div>
-                <q-spinner color="yellow" size="10em" :thickness="10" />
+                <q-spinner color="green" size="10em" :thickness="10" />
               </div>
               <div>Loading... Please wait...</div>
             </div>
@@ -1851,7 +1856,7 @@ onMounted(() => {
 
   .station-notice-wrapper {
     display: flex;
-    background: #2d0c5a;
+    background: #2E3037;
     gap: 10px;
     padding: 5px 10px;
     justify-content: center;
@@ -1873,7 +1878,12 @@ onMounted(() => {
       margin-right: 10px;
       cursor: pointer;
       color: #bacef1;
-      font-weight: light;
+      font-family: 'Poppins';
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 18px;
+      text-align: left;
+
     }
   }
 
@@ -2388,6 +2398,7 @@ onMounted(() => {
   height: 76px;
   background: url("../assets/images/index/icon-cs.png") no-repeat center center;
   background-size: contain;
+  filter: hue-rotate(200deg);
 }
 
 .home-divider {
@@ -2474,10 +2485,10 @@ onMounted(() => {
     display: flex;
     gap: 8px;
     align-items: center;
-    background-image: url("../assets/images/index/title-bg.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
+    // background-image: url("../assets/images/index/title-bg.png");
+    // background-repeat: no-repeat;
+    // background-size: cover;
+    // background-position: center center;
 
     .txt-style {
       font-family: "Dongle", sans-serif;
@@ -2810,13 +2821,15 @@ onMounted(() => {
 
 .cat-selection-item {
   background: #2b374a;
+  background: url(../assets/images/index/game-category-bg.png) no-repeat center center;
+  background-size: contain;
   // min-width: 80px;
   width: 80px;
-  height: 50px;
+  height: 70px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   border-radius: 8px;
   padding-top: 3px;
   transition: 0.3s all;
@@ -2824,6 +2837,8 @@ onMounted(() => {
 
   &.active {
     background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+    background: url(../assets/images/index/game-category-bg-active.png) no-repeat center center;
+    background-size: contain;
 
     .cat-title {
       color: #ffffff;
@@ -2835,6 +2850,10 @@ onMounted(() => {
   }
 
   .cat-icon {
+    height: 28px;
+    display: flex;
+    align-items: center;
+
     img {
       display: block;
       width: 100%;
@@ -2844,7 +2863,7 @@ onMounted(() => {
 
   .cat-title {
     font-size: 12px;
-    font-weight: bold;
+    font-weight: 600;
     color: #bfc3c9;
     font-family: "Poppins", sans-serif;
     letter-spacing: 0.5px;

@@ -5,7 +5,7 @@
         <div class="date-field">
           <q-input filled v-model="searchForm.startDate" readonly>
             <template v-slot:prepend>
-              <q-icon name="calendar_today" class="cursor-pointer text-purple-7">
+              <q-icon name="calendar_today" class="cursor-pointer text-green-7">
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                   <q-date v-model="searchForm.startDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
                     <div class="row items-center justify-end">
@@ -19,7 +19,7 @@
           <span>to</span>
           <q-input filled v-model="searchForm.endDate" readonly>
             <template v-slot:prepend>
-              <q-icon name="calendar_today" class="cursor-pointer text-purple-7">
+              <q-icon name="calendar_today" class="cursor-pointer text-green-7">
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                   <q-date v-model="searchForm.endDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
                     <div class="row items-center justify-end">
@@ -256,7 +256,7 @@ onActivated(() => {
 <style lang="scss">
 .search-container {
   border-radius: 0.5rem;
-  background: rgba(21, 0, 37, 0.2);
+  background: transparent;
   padding: 1rem;
   margin-top: 0;
 
@@ -276,7 +276,7 @@ onActivated(() => {
     }
 
     .q-field {
-      border: 1px solid #b478ff4d;
+      border: 1px solid #78ff814d;
       background: #28292b;
       padding: 4px 3px;
       border-radius: 8px;

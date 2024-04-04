@@ -1,33 +1,36 @@
 <template>
-  <div class="section-wrapper">
-    <div class="team-member-wrapper">
-      <div class="team-member-container" v-if="memberVIPData.totalMembers > 0">
-        <div class="member-imgs" :style="`width: ${40 + limitedMembers * 15}px`">
-          <q-avatar v-for="n in limitedMembers" :key="n" size="30px" class="overlapping" :style="`left: ${n * 15}px`">
-            <img :src="getRandomImageSource(n)" />
-          </q-avatar>
-        </div>
-        <div class="member-amt">{{ memberVIPData.totalMembers }}</div>
-      </div>
-    </div>
-
-    <div class="title-wrapper">
-      <div class="title-txt">My Team (Yesterday)</div>
-
-      <div class="subtitle-wrapper">
-        <div class="chart-cat">
-          <div class="square m"></div>
-          <div>Member</div>
-        </div>
-        <div class="chart-cat">
-          <div class="square ba"></div>
-          <div>Bet Amount</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="content-wrapper">
+    <div class="section-wrapper">
+      <div class="title-wrapper">
+        <div class="title-txt">My Team (Yesterday)</div>
+
+        <div class="subtitle-wrapper">
+          <div class="chart-cat">
+            <div class="square m"></div>
+            <div>Member</div>
+          </div>
+          <div class="chart-cat">
+            <div class="square ba"></div>
+            <div>Bet Amount</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-member-wrapper">
+          <div class="team-member-container" v-if="memberVIPData.totalMembers > 0">
+            <div class="member-imgs" :style="`width: ${40 + limitedMembers * 15}px`">
+              <q-avatar v-for="n in limitedMembers" :key="n" size="30px" class="overlapping" :style="`left: ${n * 15}px`">
+                <img :src="getRandomImageSource(n)" />
+              </q-avatar>
+            </div>
+          </div>
+
+          <div class="member-amt-wrapper">
+            <div class="member-amt">{{ memberVIPData.totalMembers }}</div>
+            <div class="member-amt-label">Member</div>
+          </div>
+        </div>
+    </div>
     <div class="progress-bar-wrapper">
       <q-linear-progress size="15px" :value="progressValueM" color="#EC77FF" class="progress-bar-M">
         <div class="linear-indicator linear-start">{{ memberVIPData.currentLevelMemberCount }}</div>
@@ -567,7 +570,6 @@ onMounted(() => {
     justify-content: space-between;
     align-items: center;
     height: 40px;
-    flex-wrap: wrap;
   }
   .title {
     color: #fff;
@@ -589,6 +591,7 @@ onMounted(() => {
     font-size: 0.9375rem;
     font-weight: 500;
     margin-left: auto;
+    white-space: nowrap;
 
     .subtitle {
       font-size: 12px;
@@ -618,10 +621,30 @@ onMounted(() => {
 
 .team-member-wrapper {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+
+  .member-amt-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    .member-amt {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 28px;
+    }
+
+    .member-amt-label {
+      color: #FFFFFF66;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 21px;
+    }
+  }
+  
   .team-member-container {
-    background: rgba(217, 217, 217, 0.2);
-    padding: 6px 8px;
     border-radius: 4px;
     position: relative;
     display: flex;
@@ -632,7 +655,6 @@ onMounted(() => {
       width: 60px;
       display: block;
       position: relative;
-      margin-left: -15px;
     }
 
     .member-amt {
@@ -655,7 +677,7 @@ onMounted(() => {
     .info-row {
       display: flex;
       gap: 15px;
-      background: linear-gradient(180deg, rgba(139, 54, 248, 0.4) 0%, rgba(51, 74, 214, 0.4) 100%);
+      background: linear-gradient(180deg, rgb(16 133 35 / 51%) 0%, rgb(39 83 39 / 53%) 100%);
       border-radius: 12px;
     }
 
@@ -719,6 +741,7 @@ onMounted(() => {
         margin-left: auto;
         margin-top: auto;
         padding-top: 12px;
+        color: #FFFFFFCC;
 
         &.font-smaller {
           font-size: 12px;
@@ -749,7 +772,8 @@ onMounted(() => {
 
       .info-txt {
         margin-top: 4px;
-        font-weight: 700;
+        font-size: 12px;
+        line-height: 18px;
       }
     }
   }
@@ -757,9 +781,10 @@ onMounted(() => {
 
 .content-wrapper {
   border-radius: 0.75rem;
-  background: #6759c0;
+  background: #ffffff0d;
+  border: 1px solid #FFFFFF0D;
   padding: 15px;
-  margin: 0;
+  margin-top: 15px;
 
   // top section
   .progress-bar-wrapper {
