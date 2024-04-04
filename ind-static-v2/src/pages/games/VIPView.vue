@@ -1052,7 +1052,7 @@ const swipeRight = () => {
 }
 
 .carousel__slide {
-  padding: 10px;
+  padding: 0px 10px 20px 10px;
 
   &.carousel__slide--next .vipitem,
   &.carousel__slide--prev .vipitem {
