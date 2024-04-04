@@ -1350,11 +1350,11 @@ export default defineComponent({
         return "";
       }
       if (platformName === "AG") {
-        return "AG" + t('account.livecasino') + ", XIN" + t('account.slot'); // AG
+        return "AG " + t('account.livecasino') + ", XIN" + t('account.slot'); // AG
       }else if (platformName === "GPI") {
-        return "GPI" + t('account.slot') + ", GPI" + t('account.lottery'); // AG
+        return "GPI " + t('account.slot') + ", GPI" + t('account.lottery'); // AG
       }  else if (platformName === "BBINDY") {
-        return "BBIN" + t('account.livecasino'); // BBINDY
+        return "BBIN"  + t('account.livecasino'); // BBINDY
       } else if (platformName === "KP") {
         return "King Poker" ; // KY
       } else if (platformName === "KM") {
@@ -1362,21 +1362,19 @@ export default defineComponent({
       } else if (platformName === "V8") {
         return "V8" + t('account.poker'); // DT
       } else if (platformName === "TCG") {
-        return "TCG" + t('account.lottery') ; // TCG
+        return "TCG " + t('account.lottery') ; // TCG
       }else if (platformName === "LOTTO") {
         return "LOTTO " + t('account.lottery') ; // TCG
       }else if (platformName === "MGP") {
         return "MGP " + t('account.slot') ; // TCG
-      }  else if (platformName === "BBINDY") {
-        return "BBIN" + t('account.livecasino');
       }  else if (platformName === "EBET") {
-        return "WE" + t('account.livecasino');
+        return "WE " + t('account.livecasino');
       } else if (platformName === "PT") {
-        return "PT" + t('account.slot'); // PTDY
+        return "PT " + t('account.slot'); // PTDY
       } else if (platformName === "PG") {
-        return "PG" + t('account.slot');// PGDY
+        return "PG " + t('account.slot');// PGDY
       } else if (platformName === "SW") {
-        return "SW" + t('account.slot'); // PGDY
+        return "SW " + t('account.slot'); // PGDY
       } else if (platformName === "SABA") {
         return "SABA " + t('account.sport'); // PGDY
       }else if(platformName === 'GFSBO'){
@@ -1384,25 +1382,25 @@ export default defineComponent({
       }else if(platformName === 'CMD'){
         return "CMD " + t('account.sport'); // PGDY
       } else if (platformName === "BG") {
-        return "BG" + t('account.livecasino');; // PGDY
+        return "BG " + t('account.livecasino');; // PGDY
       } else if (platformName === "Evo") {
-        return "Evo" + t('account.livecasino');; // PGDY
+        return "Evo " + t('account.livecasino');; // PGDY
       } else if (platformName === "BBINDY") {
-        return "BBIN" + t('account.livecasino');; // PGDY
+        return "BBIN " + t('account.livecasino');; // PGDY
       } else if (platformName === "BBIN") {
-        return "BBIN" + t('account.livecasino');; // PGDY
+        return "BBIN " + t('account.livecasino');; // PGDY
       } else if (platformName === "WE") {
-        return "WE" + t('account.livecasino');; // PGDY
+        return "WE " + t('account.livecasino');// PGDY
       }else if (platformName === "WM") {
-        return "WM" + t('account.livecasino');; // PGDY
+        return "WM " + t('account.livecasino'); // PGDY
       } else if (platformName === "AE") {
         return "Sexy " + t('account.livecasino');; // PGDY
       } else if (platformName === "PMLIVE") {
-        return "DB" + t('account.livecasino'); // PGDY
+        return "DB " + t('account.livecasino'); // PGDY
       }else if (platformName === "TFGaming") {
-        return "TFGaming";
+        return "TFGaming ";
       } else if (platformName === "WS") {
-        return "WS168" + t('account.cockfight');
+        return "WS168 " + t('account.cockfight');
       }else if (platformName === "SP") {
         return "SP " + t('account.fishing');
       }else if (platformName === "JILI") {
