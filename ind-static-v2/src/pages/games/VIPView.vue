@@ -939,6 +939,7 @@ const swipeRight = () => {
   }
 
   .vip-level-header {
+    font-family: 'Poppins';
     font-size: 3.2em;
     font-weight: 800;
     top: 25%;
