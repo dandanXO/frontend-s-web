@@ -264,7 +264,7 @@ export default {
   "withdraw": {
     "withdraw": "Rút tiền",
     "bankcard": "Rút tiền thẻ ngân hàng",
-    "addBankCard": "Thêm thẻ ngân hàng",
+    "addBankCard": "Thêm tài khoản",
     "bindCard": "Liên kết thẻ",
     "choose": "Chọn",
     "unbindBankCardRecords": "Ghi chú rút tiền không rõ",
