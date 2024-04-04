@@ -1111,7 +1111,7 @@ export default defineComponent({
 
 // join now
 .join-container {
-  background: #3b2e95;
+  background: #252B37;
   padding: 12px 12px;
   position: fixed;
   //top: calc(100vh - 127px);

@@ -801,6 +801,7 @@ const swipeRight = () => {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  gap: 5px;
 
   .vip-reward-item {
     width: 120px;
