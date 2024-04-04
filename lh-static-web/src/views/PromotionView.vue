@@ -159,6 +159,7 @@ export default defineComponent({
     });
     const promoTypes = ref([
       { code:"ALL", img: 'all', label: '全站优惠' },
+      { code: "FTD", img: 'deposit', label: '首存优惠'},
       { code: "ESPORT", img: 'esport', label: '电竞优惠'},
       { code: "SPORT", img: 'sport', label: '体育优惠'},
       { code: "LIVE CASINO", img: 'live', label: '真人优惠'},
@@ -166,6 +167,8 @@ export default defineComponent({
       // { code: "FISH", img: 'fish', label: '捕鱼'},
       { code: "DAILY", img: 'daily', label: '日常优惠'},
       { code: "OTHER", img: 'slot', label: '其他优惠'},
+
+
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);

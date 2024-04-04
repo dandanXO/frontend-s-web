@@ -249,6 +249,7 @@ export default defineComponent({
     const tabItems = [
 
       { name: "all", label: "全部优惠" },
+      { name: "ftd", label: "首存" },
       { name: "esport", label: "电竞" },
       { name: "sport", label: "体育" },
       // {name: "slot game", label: '老虎机'},
@@ -256,7 +257,8 @@ export default defineComponent({
       { name: "live casino", label: "真人" },
       { name: "poker", label: "棋牌" },
       { name: "daily", label: "日常" },
-      { name: "other", label: "其它" }
+      { name: "other", label: "其它" },
+
     ];
 
     watch(() => route.query, () => {
