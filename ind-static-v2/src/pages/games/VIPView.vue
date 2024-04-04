@@ -29,16 +29,16 @@
             <div :class="`vip-badge vip${vip.vipLevel}`"></div>
 
             <div class="vip-level-header">
-              <svg viewBox="0 0 450 70">
+              VIP{{ vip.vipLevel }}
+              <!-- <svg viewBox="0 0 450 70">
                 <defs>
-                  <!-- Linear Gradient -->
                   <linearGradient id="myGradient" x1="0%" y1="0%" x2="0%" y2="100%">
                     <stop offset="0%" style="stop-color: #fff; stop-opacity: 1" />
                     <stop offset="100%" style="stop-color: #fff; stop-opacity: 1" />
                   </linearGradient>
                 </defs>
                 <text class="svgText" x="10" y="45" fill="url(#myGradient)">VIP{{ vip.vipLevel }}</text>
-              </svg>
+              </svg> -->
             </div>
 
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
@@ -914,12 +914,47 @@ const swipeRight = () => {
   position: relative;
   display: flex;
   flex-direction: column-reverse;
-  background: url("../../assets/images/vip/badge/banner.png") no-repeat top center;
-  background-size: 100% 100%;
+  background: url("../../assets/images/vip/badge/banner-1.png") no-repeat bottom center;
+  background-size: 100% calc(100% - 35px);
   height: 170px;
   width: 100%;
   justify-content: flex-end;
   font-size: 12px;
+
+  &2 {
+    background: url("../../assets/images/vip/badge/banner-2.png") no-repeat bottom center;
+    background-size: 100% calc(100% - 35px);
+  }
+
+  &3 {
+    background: url("../../assets/images/vip/badge/banner-3.png") no-repeat bottom center;
+    background-size: 100% calc(100% - 35px);
+  }
+
+  &4 {
+    background: url("../../assets/images/vip/badge/banner-4.png") no-repeat bottom center;
+    background-size: 100% calc(100% - 35px);
+  }
+
+  &5 {
+    background: url("../../assets/images/vip/badge/banner-5.png") no-repeat bottom center;
+    background-size: 100% calc(100% - 35px);
+  }
+
+  &6 {
+    background: url("../../assets/images/vip/badge/banner-6.png") no-repeat bottom center;
+    background-size: 100% calc(100% - 35px);
+  }
+
+  &7 {
+    background: url("../../assets/images/vip/badge/banner-7.png") no-repeat bottom center;
+    background-size: 100% calc(100% - 35px);
+  }
+
+  &8, &9, &10, &11, &12 {
+    background: url("../../assets/images/vip/badge/banner-8.png") no-repeat bottom center;
+    background-size: 100% calc(100% - 35px);
+  }
 
   .vip-badge {
     display: flex;
@@ -927,102 +962,100 @@ const swipeRight = () => {
     align-items: center;
     z-index: 1;
     top: 0px;
-    left: 10px;
+    right: 10px;
     background-repeat: no-repeat;
     background-position: top left;
     background-size: contain;
-    width: 102px;
-    height: 100px;
+    width: 107px;
+    height: 96px;
     color: #fff;
     position: absolute;
 
-    background: url("../../assets/images/vip/badge/vip1.png") no-repeat top center;
+    background: url("../../assets/images/vip/badge/crown-badge-1.svg") no-repeat top center;
     background-size: 100% 100%;
 
     &.vip2 {
-      background: url("../../assets/images/vip/badge/vip2.png") no-repeat top center;
+      background: url("../../assets/images/vip/badge/crown-badge-2.svg") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip3 {
-      background: url("../../assets/images/vip/badge/vip3.png") no-repeat top center;
+      background: url("../../assets/images/vip/badge/crown-badge-3.svg") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip4 {
-      background: url("../../assets/images/vip/badge/vip4.png") no-repeat top center;
+      background: url("../../assets/images/vip/badge/crown-badge-4.svg") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip5 {
-      background: url("../../assets/images/vip/badge/vip5.png") no-repeat top center;
+      background: url("../../assets/images/vip/badge/crown-badge-5.svg") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip6 {
-      background: url("../../assets/images/vip/badge/vip6.png") no-repeat top center;
+      background: url("../../assets/images/vip/badge/crown-badge-6.svg") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip7 {
-      background: url("../../assets/images/vip/badge/vip7.png") no-repeat top center;
+      background: url("../../assets/images/vip/badge/crown-badge-7.svg") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip8 {
-      background: url("../../assets/images/vip/badge/vip8.png") no-repeat top center;
+      background: url("../../assets/images/vip/badge/crown-badge-8.svg") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip9 {
-      background: url("../../assets/images/vip/badge/vip9.png") no-repeat top center;
+      background: url("../../assets/images/vip/badge/crown-badge-9.svg") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip10 {
-      background: url("../../assets/images/vip/badge/vip10.png") no-repeat top center;
+      background: url("../../assets/images/vip/badge/crown-badge-10.svg") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip11 {
-      background: url("../../assets/images/vip/badge/vip11.png") no-repeat top center;
+      background: url("../../assets/images/vip/badge/crown-badge-11.svg") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip12 {
-      background: url("../../assets/images/vip/badge/vip12.png") no-repeat top center;
+      background: url("../../assets/images/vip/badge/crown-badge-12.svg") no-repeat top center;
       background-size: 100% 100%;
     }
   }
 
   .vip-level-header {
-    font-family: sans-serif;
     font-size: 3.2em;
     font-weight: 800;
-    -webkit-text-stroke: 2px #fff;
-    top: 28%;
-    right: 2%;
+    top: 25%;
+    left: 6%;
     z-index: 1;
     position: absolute;
-    color: #8b36f8;
+    color: #fff;
 
-    svg {
-      font-family: Arial;
-      font-size: 10rem;
-      font-weight: bold;
-      position: absolute;
-      width: 125px;
-      height: 70px;
-      right: 0px;
-      top: 0px;
-    }
+    // svg {
+    //   font-family: Arial;
+    //   font-size: 10rem;
+    //   font-weight: bold;
+    //   position: absolute;
+    //   width: 125px;
+    //   height: 70px;
+    //   right: 0px;
+    //   top: 0px;
+    // }
 
-    .svgText {
-      stroke: white;
-      stroke-width: 10px;
-      stroke-linejoin: round;
-      paint-order: stroke;
-    }
+    // .svgText {
+    //   stroke: white;
+    //   stroke-width: 10px;
+    //   stroke-linejoin: round;
+    //   paint-order: stroke;
+    // }
   }
 
   .vip-contents {
