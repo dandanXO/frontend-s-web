@@ -156,7 +156,7 @@
             <div class="header-title-div" style="margin-top: 25px">
               <span class="span3">
                 根据您填写的内容随机为您派发
-                <span class="span1" style="color: #468cff">18-188</span>
+                <span class="span1" style="color: #468cff">0-188元</span>
               </span>
             </div>
             <div class="qr-code-div">
