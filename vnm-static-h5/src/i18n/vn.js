@@ -1167,7 +1167,7 @@ export default {
     str_poker: "POKER",
     str_lottery: "Xổ Số",
     str_adjust: "Điều Chỉnh",
-    str_reminder: "Yêu cầu",
+    str_reminder: "Nhắc nhở",
     str_copy: "Sao chép",
     str_deposit_serialnumber: "Số Serial Nạp Tiền",
     str_serial_number: "Số Serial",

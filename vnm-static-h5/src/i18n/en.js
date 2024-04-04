@@ -106,6 +106,7 @@ export default {
     login_here: "Login here",
     registration_hints: "Registration means you have agreed and complied",
     user_registration_protocol: "User Registration protocol",
+    register_success: "",
 
     // forgot password
     sms_retrieval: "SMS retrieval",
@@ -1162,7 +1163,7 @@ export default {
     str_poker: "POKER",
     str_lottery: "Lottery",
     str_adjust: "Adjust",
-    str_reminder: "Require",
+    str_reminder: "Reminder",
     str_copy: "Copy",
     str_deposit_serialnumber: "Deposit Serial Number",
     str_serial_number: "Serial Number",
