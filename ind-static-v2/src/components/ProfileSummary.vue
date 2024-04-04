@@ -355,7 +355,7 @@ onMounted(() => {
   position: relative;
   // background: linear-gradient(180deg, #2d0f54 0%, #101114 100%);
   box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  overflow-x: hidden;
   position: fixed;
   top: 0;
   width: 100%;
@@ -405,8 +405,8 @@ onMounted(() => {
     align-items: center;
     justify-content: flex-end;
     gap: 12px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     margin-bottom: 4px;
     width: 100%;
     position: relative;
@@ -545,14 +545,14 @@ onMounted(() => {
   position: relative;
   margin-left: 20px;
   margin-bottom: 5px;
-  margin-top: -10px;
+  margin-top: -15px;
 
   img {
     display: block;
-    width: 100px;
+    width: 60px;
     position: absolute;
-    top: -17px;
-    left: -45px;
+    top: -2px;
+    left: -25px;
   }
 
   .vip-level {
