@@ -1,18 +1,8 @@
 <template>
   <div class="common-promo">
-    <img
-      :src="
-        require(`../../assets/images/promotion/hotpromo/${promoId}/icon.png`)
-      "
-    />
+    <img :src="require(`../../assets/images/promotion/hotpromo/common/icon.png`)" />
     <div class="contents">
-      <el-button
-        class="common-btn"
-        size="large"
-        :loading="loadingClaim"
-        @click="$emit('daily-slot')"
-        >领取</el-button
-      >
+      <el-button class="common-btn" size="large" :loading="loadingClaim" @click="$emit('daily-slot')">领取</el-button>
     </div>
   </div>
 </template>
@@ -23,18 +13,18 @@ export default defineComponent({
   props: {
     loadingClaim: {
       type: Boolean,
-      default: false,
+      default: false
     },
     promoId: {
       type: Number,
-      default: null,
-    },
+      default: null
+    }
   },
   emits: ["daily-slot"],
   setup() {
     onMounted(() => {});
     return {};
-  },
+  }
 });
 </script>
 <style scoped lang="scss">
