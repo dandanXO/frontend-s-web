@@ -25,6 +25,7 @@ export default {
   "account": {
     "welcome": "Chào mừng",
     "mainWallet": "Số dư",
+    reminder: "Hỗ trợ",
     require: "Hỗ trợ",
     str_copy: "Sao chép",
     str_deposit_serialnumber: "Số Serial Nạp Tiền",
@@ -694,7 +695,7 @@ export default {
     "backToTop": "TOP"
   },
   status: {
-    withdrawFailed: "Rút tiền thất bại",
+    withdrawFailed: "Lệnh rút tiền thất bại",
     withdraw: "Rút tiền",
     promotion: "Khuyến mãi",
     deposit: "Nạp tiền",
@@ -718,8 +719,8 @@ export default {
     cancel: "Bỏ hủy",
     fixed: "Sửa thêm",
     bank: "Thanh toán ngân hàng",
-    usdterc: "Ví điện tử loại ERC",
-    usdttrc: "Ví điện tử TRC",
+    usdterc: "Ví điện tử loại ERC20",
+    usdttrc: "Ví điện tử loại TRC20",
     offline: "Nạp tiền ngoại tuyến",
     bank_transfer: "Thanh toán ngân hàng",
     scratch_card: "Thẻ cào",

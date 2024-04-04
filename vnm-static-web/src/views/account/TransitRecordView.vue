@@ -1300,7 +1300,7 @@ export default defineComponent({
       } else if (transferType === "STEP_5") {
         return t('status.suspend'); // Suspend
       } else if (transferType === "AUTOPAY") {
-        return t('status.automaticPayment');; // Automatic Payment
+        return t('status.automaticPayment'); // Automatic Payment
       } else if (transferType === "WAITING_CALLBACK") {
         return t('status.automaticPaymentInProgress'); // Waiting Callback
       } else if (transferType === "SENDING") {
