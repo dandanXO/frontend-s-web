@@ -16,7 +16,11 @@ export default {
     submit: "提交",
     register_affi: "注册代理",
     back_login: "回到登录",
-    contact_us: "联系我们"
+    contact_us: "联系我们",
+    affiliateaccountcanonlycontainnumchar: "代理账号只能有数字或字母组成",
+    confirmpassword: "密码确认",
+    affiliateaccount: "合营账户",
+    forgetpass: "忘记密码"
   },
   depositStatus: {
     SUCCESS: '存款成功',

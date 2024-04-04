@@ -16,7 +16,11 @@ export default {
     submit: "Submit",
     register_affi: "Register Now",
     back_login: "Back Login",
-    contact_us: "Contact Us"
+    contact_us: "Contact Us",
+    affiliateaccountcanonlycontainnumchar: "Tài khoản liên kết chỉ có thể chứa số hoặc chữ cái.",
+    confirmpassword: "Xác nhận mật khẩu.",
+    affiliateaccount: "Tài khoản liên kết.",
+    forgetpass: "Quên mật khẩu."
   },
   depositStatus: {
     SUCCESS: 'Success',
