@@ -44,7 +44,7 @@
                     ref="userNameRef"
                     v-model="loginForm.userName"
                     :placeholder="
-                      currentSite.lang === 'EN' ? 'Username' : '用户名'
+                      $t('common.username')
                     "
                     name="username"
                     type="text"
@@ -66,7 +66,7 @@
                       v-model="loginForm.password"
                       :type="passwordType"
                       :placeholder="
-                        currentSite.lang === 'EN' ? 'Password' : '密码'
+                        $t('common.password')
                       "
                       name="password"
                       tabindex="2"
@@ -80,7 +80,7 @@
                 <div style="margin:20px 0px">
                   <el-link type="primary" @click="forgetPasswordDialog">
                     {{
-                      currentSite.lang === 'EN' ? 'Forget Password' : '忘记密码'
+                      $t('common.forgetpass')
                     }}
                   </el-link>
                 </div>
@@ -123,9 +123,7 @@
                       ref="userNameRef"
                       v-model="regForm.userName"
                       :placeholder="
-                        currentSite.lang === 'EN'
-                          ? 'Affiliate Account'
-                          : '合营账户'
+                        $t('common.affiliateaccount')
                       "
                       name="userName"
                       type="text"
@@ -146,7 +144,7 @@
                         v-model="regForm.password"
                         :type="passwordType"
                         :placeholder="
-                          currentSite.lang === 'EN' ? 'Password' : '密码'
+                          $t('common.password')
                         "
                         name="password"
                         tabindex="2"
@@ -169,9 +167,7 @@
                         v-model="regForm.confirmPwd"
                         :type="passwordType"
                         :placeholder="
-                          currentSite.lang === 'EN'
-                            ? 'Confirm Password'
-                            : '密码确认'
+                          $t('common.confirmpassword')
                         "
                         name="password"
                         tabindex="3"
@@ -643,7 +639,7 @@ export default defineComponent({
           {
             required: true,
             pattern: /^[a-zA-Z1-9][a-zA-Z0-9]*$/,
-            message: '代理账号只能有数字或字母组成',
+            message: t('common.affiliateaccountcanonlycontainnumchar'),
             trigger: 'blur',
           },
         ],

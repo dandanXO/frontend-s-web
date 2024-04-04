@@ -25,8 +25,8 @@
   </Swiper>
   <div v-if="isMobileView">
     <LoginRegisterPage siteId="8" />
-    <CustomerServicePage siteId="8" />
-    <SupportPage />
+    <!--    <CustomerServicePage siteId="8" />-->
+    <!--    <SupportPage />-->
   </div>
 </template>
 <script>
@@ -41,9 +41,9 @@ import SwiperCore, {
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/swiper-bundle.css'
-import CustomerServicePage from '@/components/customer-service'
+// import CustomerServicePage from '@/components/customer-service'
 import LoginRegisterPage from '@/components/login-register'
-import SupportPage from '@/components/support-page'
+// import SupportPage from '@/components/support-page'
 import { useRoute } from 'vue-router'
 // extra components
 SwiperCore.use([Mousewheel, Pagination, Navigation, Scrollbar])
@@ -55,8 +55,6 @@ export default defineComponent({
     Pagination,
     Mousewheel,
     Scrollbar,
-    CustomerServicePage,
-    SupportPage,
     LoginRegisterPage,
   },
   setup() {
