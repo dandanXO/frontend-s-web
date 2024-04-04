@@ -483,7 +483,7 @@ export default defineComponent({
       { code: "fish", name: "娱乐", enName: "Fishing", path: "/fishing", submenu: true },
       { code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: false, hasicon: true },
       { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true },
-      { code: "App", name: "APP", enName: "App", path: "/app", submenu: false, hasicon: true },
+      { code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true },
       { code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true }
     ]
   }),
