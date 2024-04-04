@@ -141,7 +141,7 @@ export default defineComponent({
     };
 
     const checkOutstandingFinancialFeedback = async() => {
-      const { data: ret } = await getFinanceFeedbackCount(store.state.user.siteName);
+      const { data: ret } = await getFinanceFeedbackCount();
       if (ret === 0) {
         spliceSocket('FINANCE_FEEDBACK');
         sessionStorage.setItem("FINANCE_FEEDBACK", 0);
