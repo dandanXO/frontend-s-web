@@ -15,16 +15,27 @@
 import { } from 'vue';
 import { piggyBankGetLottery, piggyBankClaim } from '../../../api/index/promo';
 import { useI18n } from "vue-i18n";
+import { ElMessage } from 'element-plus';
 
 const { t } = useI18n();
 
 const onClickLotteryNow = () => {
     piggyBankGetLottery().then((res) => {
+        if (res.code === 0) {
+
+        } else {
+            ElMessage.error(res.message)
+        }
     })
 }
 
 const onClickClaimNow = () => {
     piggyBankClaim().then((res) => {
+        if (res.code === 0) {
+
+        } else {
+            ElMessage.error(res.message)
+        }
     })
 }
 

@@ -91,11 +91,11 @@ export function deleteBankCard(cardId) {
 }
 
 export function sendEmail(emailInfo) {
-  return server.REST.post("/otp/sendNewEmail", emailInfo);
+  return server.REST.post("/session/sendNewEmail", emailInfo);
 }
 
 export function verifyOtpAndChangePassword(withdrawPwdInfo) {
-  return server.REST.post("/verifyOtpAndChangePassword", withdrawPwdInfo);
+  return server.REST.post("/session/verifyOtpAndChangePassword", withdrawPwdInfo);
 }
 
 export function verifyEmail(emailInfo) {

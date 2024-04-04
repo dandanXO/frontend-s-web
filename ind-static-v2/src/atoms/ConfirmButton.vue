@@ -29,7 +29,7 @@ const onBtnClick = () => {
   width: 100%;
   //height: 46px;
   aspect-ratio: 295/42;
-  background: linear-gradient(187.94deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
+  background: radial-gradient(68.92% 68.92% at 50% 50%, #00550E 0%, #57CD69 100%);
   border-radius: 8px;
   height: 56px;
 
@@ -47,7 +47,7 @@ const onBtnClick = () => {
     position: absolute;
     font-size: 1.25rem;
     font-weight: bold;
-    color: #5c46e7;
+    color: #fff;
   }
 
   .q-spinner {

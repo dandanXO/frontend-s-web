@@ -13,7 +13,7 @@
         <span class="img-item">
           <div class="inner-contents">
             <div class="amount">{{ amount }}</div>
-            <div class="bonus">奖金</div>
+            <div class="bonus">{{ $t('promo.bonus')}}</div>
           </div>
         </span>
         <img src="../assets/images/index/bonus.svg" />

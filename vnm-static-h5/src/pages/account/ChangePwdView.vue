@@ -346,7 +346,7 @@ export default defineComponent({
         .then((response) => {
           if (response.code === 0) {
             verificationImg.value =
-                "data:image/png;base64," + response.data.img;
+              "data:image/png;base64," + response.data.img;
             // updateSecurityVerified.codeId = response.data.id;
             // innerCaptchaRef.value = "";
             innerCaptchaCodeId.value = response.data.id;
@@ -363,27 +363,26 @@ export default defineComponent({
     };
 
     const onCaptchaSubmit = () => {
-      api.post(`/otp/sendNewEmail`, qs.stringify({
-        email: memberEmail.value,
+      api.post(`/session/sendNewEmail`, qs.stringify({
         captchaCode: innerCaptchaRef.value,
         codeId: innerCaptchaCodeId.value
       }))
-      .then(res => {
-        getCode();
-        let message = res.message || t('lang.personal_emailotp_sent'),
+        .then(res => {
+          getCode();
+          let message = res.message || t('lang.personal_emailotp_sent'),
             color = 'positive'
 
-        if (res.code === 0) {
-          showCaptchaDialog.value = false
-          secondCodeId.value = res.data.codeId;
-        } else
-        getCode();
+          if (res.code === 0) {
+            showCaptchaDialog.value = false
+            secondCodeId.value = res.data.codeId;
+          } else
+            getCode();
 
-        if (message)
-          $q.notify({message, color});
-        getCode();
-        console.log('onCaptchaSubmit', res)
-      })
+          if (message)
+            $q.notify({message, color});
+          getCode();
+          console.log('onCaptchaSubmit', res)
+        })
     }
 
     const innerCaptchaRef = ref();
@@ -391,30 +390,29 @@ export default defineComponent({
     const secondCodeId = ref(null);
 
     const verifyOtpAndChangePassword = () => {
-      api.post(`/otp/verifyOtpAndChangePassword`, qs.stringify({
+      api.post(`/session/verifyOtpAndChangePassword`, qs.stringify({
         password: formChgWithdrawPwd.password,
-        email: memberEmail.value,
         code: formChgWithdrawPwd.otpCode,
         codeId: secondCodeId.value,
       }))
-      .then((response) => {
-        if (response.code === 0) {
-          $q.notify({
-          color: "positive",
-          position: "top",
-          message: e.message,
-          icon: "report_problem"
+        .then((response) => {
+          if (response.code === 0) {
+            formChgWithdrawPwd.password = "";
+            formChgWithdrawPwd.confirmNewPwd = "";
+            formChgWithdrawPwd.otpCode= "";
+
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: t('lang.success'),
+              icon: "report_problem"
+            });
+
+          }
+        })
+        .catch((e) => {
+
         });
-        }
-      })
-      .catch((e) => {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: e.message,
-          icon: "report_problem"
-        });
-      });
     }
 
     onMounted(() => {
@@ -519,8 +517,8 @@ export default defineComponent({
             verifyOtpAndChangePassword();
           } else {
             api.post("/session/withdrawPassword", qs.stringify({
-            oldPassword: '',
-            password: formChgWithdrawPwd.password
+              oldPassword: '',
+              password: formChgWithdrawPwd.password
             })).then((response) => {
               if (response.code === 0) {
                 $q.notify({

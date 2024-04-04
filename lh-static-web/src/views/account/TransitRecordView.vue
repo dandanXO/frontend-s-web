@@ -1373,7 +1373,7 @@ export default defineComponent({
       } else if (platformName === "PM") {
         return "熊猫体育"; // PGDY
       } else if (platformName === "PMFISH") {
-        return "DB多宝捕鱼";
+        return "DB捕鱼";
       } else if (platformName === "RG") {
         return "RG电竞";
       } else if (platformName === "IM") {

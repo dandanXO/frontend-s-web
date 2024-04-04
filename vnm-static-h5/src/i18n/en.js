@@ -159,6 +159,7 @@ export default {
     system_cancel: "Cancel",
     system_operation_success: "The operation is successful, please check the mobile phone verification code!",
     system_verify_failed: "Verification failed, please refresh",
+    system_loginnow: "Login now",
 
     // personal | verify
     personal_exclusiveurl: "Exclusive URL",
@@ -208,27 +209,28 @@ export default {
     share_table_header_04: "Status",
     share_table_content_empty: "No matching history found",
     share_tnc: "Terms and Conditions",
-    share_tnc_para_01: "Promotion starts from 00:00:00 on June 1, 2022 (GMT +8)",
-    share_tnc_para_02:
-      "Simply refer a friend to join TF88, and you will receive 300VNDP for each successful referral. The player referred by the member will also receive a welcome bonus of 150VNDP.",
-    share_tnc_para_03: "To qualify for the bonus, members need to meet the following conditions",
-    share_tnc_para_03_a: "Referring Member (Customer)",
-    share_tnc_para_03_a_i: "Minimum total valid bet amount of 8,000 VNDP or more",
-    share_tnc_para_03_b: "Referred Member (Your friend):",
-    share_tnc_para_03_b_i: "Register an account during the promotion period through the designated referral link",
-    share_tnc_para_03_b_ii: "Have not registered with TF88 before and do not have any other account with TF88",
+    share_tnc_para_01: "Promotion starts from 00:00:00 on 01/06/2022 (GMT+8)",
+    share_tnc_para_02: "Simply refer customers to join at TF88 and you will receive a bonus of 300 VNDP each.",
+    share_tnc_para_03: "To be eligible to receive the bonus, you will need to meet some of the following conditions",
+    share_tnc_para_03_a: "Referrer (you):",
+    share_tnc_para_03_a_i: "Minimum total valid bet amount at least 10,000 VNDP",
+    share_tnc_para_03_a_ii: "Reach vip level 1 or higher",
+    share_tnc_para_03_b: "Presentee (your friend):",
+    share_tnc_para_03_b_i: "Sign up for an account during the promotion period via specified refer a friend link.",
+    share_tnc_para_03_b_ii: "Never registered at TF88 and do not have any other account at TF88.",
     share_tnc_para_03_b_iii:
-      "Must have a successful first deposit transaction and accumulate a minimum total valid bet amount of 4,000VNDP within 20 days from the date of account registration",
+      "Must have the first successful deposit transaction and have a cumulative valid bet of at least 4,000VNDP within 20 days from account registration",
     share_tnc_para_04:
-      'Members can refer friends by going to "Personal Information - Invite Friends" when the member has a total valid bet amount of 8,000VNDP. Then the member can send their referral link to friends to register an account through this link.',
+      'Members can get specified refer a friend link in "Personal Information-Refer a friend" You will then send the referral link to your friend for them to click and register an account with via the link. ',
     share_tnc_para_05:
-      "Promotion approval will be conducted weekly. After verification, the referral rewards will be automatically updated to the referring member's account and the referred member's account around 6 p.m. (GMT + 8) on every Monday.",
-    share_tnc_para_06: "Members receiving the promotion must complete 5 rounds of promotion bets before withdrawing.",
+      "The promotion review will be done every week. After the verification is completed, the referral bonus will be automatically credited to your account and the referred client is around 6pm (GMT+8) every Monday",
+    share_tnc_para_06:
+      "The bet amount that must be reached before withdrawal is equal to 5 times the value of the bonus received",
     share_tnc_para_07:
       "All draw bets, CANCEL bets, 2 sided bets, Europe Handicap bets with odds under 1.75, Asian Handicap under 0.75, Fantasy Sports, Horse Racing, Number Game, will not be applied to this promotion.",
-    share_tnc_para_08: "TF88 reserves the right to edit, refuse, or cancel this promotion without prior notice.",
-    share_tnc_para_09: "This promotion may be applied simultaneously with all promotions at TF88.",
-    share_tnc_para_10: "General promotion Terms & Conditions apply.",
+    share_tnc_para_08: "TF88 reserves the right to modify, refuse or cancel this Promotion without prior notice.",
+    share_tnc_para_09: "The program can be applied at the same time with all promotions at TF88.",
+    share_tnc_para_10: "General Promotion Terms &amp; Conditions apply.",
 
     // transfer
     transfer_transfer: "Transfer",
@@ -1129,6 +1131,7 @@ export default {
     str_automaticpayment: "Automatic Payment",
     str_suspend: "Suspend",
     str_autopayment: "Auto Payment",
+    str_viptransfer: "VIP Transfer card",
     str_offlinetransfer: "Offline Transfer",
     str_union: "UNION",
     str_quickpayment: "Quick Payment",
@@ -1266,6 +1269,8 @@ export default {
     35008: "You do not have this privilege",
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
-    35011: "35011 Member cannot receive this privilege."
+    35011: "35011 Member cannot receive this privilege.",
+    45000: "Not reaching the minimum withdrawal amount",
+    45001: "Received random bonus today"
   }
 };

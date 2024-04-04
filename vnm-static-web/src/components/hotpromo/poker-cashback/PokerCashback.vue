@@ -12,6 +12,7 @@
 </template>
 
 <script setup>
+import { ElMessage } from 'element-plus';
 import { bonusClaimSlotsRefund } from '../../../api/index/promo';
 import { useI18n } from "vue-i18n";
 
@@ -19,7 +20,11 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 const onClickClaimNow = () => {
     bonusClaimSlotsRefund().then((res) => {
-
+        if (res.code === 0) {
+            
+        } else {
+            ElMessage.error(res.message)
+        }
     })
 }
 </script>

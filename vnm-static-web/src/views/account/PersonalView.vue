@@ -81,7 +81,7 @@
                 <div class="info-tbl-col">
                   <div class="tbl-row">
                     <div class="basic-info-cell title">{{ $t('personal.mobileNo') }}</div>
-                    <div v-if="personalState.memberInfo.telephone" class="basic-info-cell contentwtxt" style="display:flex;justify-content: space-between;align-items: center;">
+                    <div class="basic-info-cell contentwtxt" style="display:flex;justify-content: space-between;align-items: center;">
                       {{ personalState.memberInfo.telephone }}
 
                       <button
@@ -149,7 +149,7 @@
 
               <div class="tbl-row">
                 <div class="basic-info-cell title">{{$t('personal.email')}}</div>
-                <div v-if="personalState.memberInfo.email" class="basic-info-cell contentwtxt" style="display:flex;justify-content: space-between;align-items: center;">
+                <div class="basic-info-cell contentwtxt" style="display:flex;justify-content: space-between;align-items: center;">
                   {{ personalState.memberInfo.email }}
 
                   <button
@@ -641,7 +641,7 @@ import { useI18n } from "vue-i18n";
           verificationModalVisible.value = false;
 
           ElMessage({
-            message: '成功',
+            message: t('common.success'),
             type: 'success',
           })
 
@@ -668,7 +668,7 @@ import { useI18n } from "vue-i18n";
             if (res.code === 0) {
 
               ElMessage({
-                message: '成功',
+                message: t('common.success'),
                 type: 'success',
               })
 
@@ -775,7 +775,7 @@ import { useI18n } from "vue-i18n";
           verifySms(verificationPhoneDetails.memberInfo).then((res) => {
             if (res.code === 0) {
               ElMessage({
-                message: '成功',
+                message: t('common.success'),
                 type: 'success',
               })
               updatePhoneModalVisible.value = false
@@ -969,6 +969,7 @@ import { useI18n } from "vue-i18n";
       confirmPassword: ""
     });
 
+    const emailCodeId= ref();
     const refWithdrawOldPassword= ref();
     const refWithdrawPassword= ref();
     const clearWithdrawPwd = () =>{
@@ -1013,8 +1014,8 @@ import { useI18n } from "vue-i18n";
         .then(() => {
           const obj = {
             password: updateWithdrawPwdInfo.password,
-            email: personalState.memberInfo.email,
             code: updateWithdrawPwdInfo.code,
+            codeId: emailCodeId.value
           }
           verifyOtpAndChangePassword(obj).then((response) => {
             if (response.code === 0) {
@@ -1146,6 +1147,7 @@ import { useI18n } from "vue-i18n";
         sendEmail(obj).then((res) => {
           if (res.code === 0) {
             receivedVerificationCode.value = true;
+            emailCodeId.value= res.data.codeId;
             ElMessage.success({
               type: "success",
               message: t('common.emailSent')

@@ -226,7 +226,7 @@
                 <template v-if="tbl.dataIndex === 'operation'" #default="scope">
                   <template v-if="scope.row.status === 'STEP_1'">
                     <div style="display: flex; align-items: center">
-                      <el-button size="small" class="common-btn" @click="openReminder(scope.row)">催单</el-button>
+                      <el-button size="small" class="common-btn" @click="openReminder(scope.row)">{{ $t('account.reminder') }}</el-button>
                     </div>
                   </template>
 
@@ -239,7 +239,7 @@
                   >
                     <div style="display: flex; align-items: center">
                       <el-button size="small" class="common-btn" @click="openWithdrawConfirm(scope.row)">
-                        确认到账
+                        {{ $t('account.confirm_deposit') }}
                       </el-button>
                     </div>
                   </template>
@@ -568,7 +568,7 @@
 
                 <template v-if="tbl.dataIndex === 'type'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    <span>{{ scope.row.type === 1 ? "存款" : "提款" }}</span>
+                    <span>{{ scope.row.type === 1 ? $t('status.deposit') : $t('status.withdraw') }}</span>
                   </div>
                 </template>
               </el-table-column>
@@ -616,7 +616,7 @@
 
       <el-dialog
         v-model="reminderDialog"
-        title="催单"
+        :title="$t('account.reminder')"
         width="50%"
         align-center
         style="max-width: 800px"
@@ -633,19 +633,19 @@
             label-suffix=":"
             style="width: 100%; max-width: 400px; margin: 0px auto 0px; padding-top: 50px; padding-bottom: 50px"
           >
-            <el-form-item tabindex="1" label="单号" prop="serialNumber">
-              <el-input v-model="reminderForm.orderNo" placeholder="单号" disabled />
+            <el-form-item tabindex="1" :label="$t('account.str_serial_number')" prop="serialNumber">
+              <el-input v-model="reminderForm.orderNo" :placeholder="$t('account.str_serial_number')" disabled />
             </el-form-item>
 
-            <el-form-item label="选择图片" prop="photos">
+            <el-form-item :label="$t('account.select_image')" prop="photos">
               <FileUpload @photo-response="getImageLink" ref="uploadFileRef" />
             </el-form-item>
 
-            <el-form-item label="备注" prop="remarks">
+            <el-form-item :label="$t('account.str_remark')" prop="remarks">
               <el-input
                 type="textarea"
                 v-model="reminderForm.memberRemark"
-                placeholder="备注"
+                :placeholder="$t('account.str_remark')"
                 :rows="2"
                 :autosize="{ minRows: 2, maxRows: 5 }"
               />
@@ -659,7 +659,7 @@
               :loading="loadingBtn"
               @click="submitReminder()"
             >
-              提交
+              {{ $t('account.submit') }}
             </el-button>
           </el-form>
         </span>
@@ -697,316 +697,316 @@ export default defineComponent({
 
     const { t } = useI18n();
 
-const loadingBtn = ref(false);
-const store = userStore();
-const uploadFileRef = ref();
-const recordActive = ref("deposit");
-const reminderForm = reactive({});
-const totalBetRecord = reactive({
-  totalBet: 0,
-  totalPayout: 0
-});
-const searchForm = reactive({
-  turnover: {
-    startDate: "",
-    endDate: "",
-    current: 1,
-    size: 10,
-    pagingState: null
-  },
-  rebates: {
-    startDate: "",
-    endDate: "",
-    current: 1,
-    size: 10
-  },
-  transfer: {
-    startDate: "",
-    endDate: "",
-    current: 1,
-    size: 10
-  },
-  withdraw: {
-    startDate: "",
-    endDate: "",
-    current: 1,
-    size: 10
-  },
-  deposit: {
-    startDate: "",
-    endDate: "",
-    current: 1,
-    size: 10
-  },
-  gameBetRecord: {
-    startDate: "",
-    endDate: "",
-    platform: "",
-    memberId: store.id,
-    current: 1,
-    size: 10,
-    pagingState: null
-  },
-  betRecord: {
-    platform: "",
-    gameType: "",
-    memberId: store.id,
-    current: 1,
-    size: 10
-  },
-  reminderRecord: {
-    startDate: "",
-    endDate: "",
-    current: 1,
-    size: 10
-  }
-});
-const dataState = reactive({
-  deposit: [],
-  rebates: [],
-  transfer: [],
-  withdraw: [],
-  turnover: [],
-  betRecord: [],
-  gameBetRecord: [],
-  reminderRecord: []
-});
-const commonColumns = [
-  {
-    title: t('transit.serialNo'),
-    dataIndex: "serialNumber",
-    key: "serialNumber"
-  }
-];
-const tableColumns = {
-  deposit: [
-    ...commonColumns,
-    {
-      title: t('transit.depositAmount'),
-      dataIndex: "depositAmount"
-    },
-    {
-      title: t('transit.status'),
-      dataIndex: "status"
-    },
-    {
-      title: t('transit.paymentType'),
-      dataIndex: "paymentType"
-    },
-    {
-      title: t('transit.depositDate'),
-      dataIndex: "depositDate",
-      slots: { customRender: "depositDate" }
-    },
-    {
-      title: t('transit.operation'),
-      dataIndex: "operation",
-      slots: { customRender: "operation" }
-    }
-  ],
-  withdraw: [
-    ...commonColumns,
-    {
-      title: t('transit.withdrawAmount'),
-      dataIndex: "withdrawAmount"
-    },
-    {
-      title: t('transit.status'),
-      dataIndex: "status"
-    },
-    {
-      title: t('transit.withdrawDate'),
-      dataIndex: "withdrawDate",
-      slots: { customRender: "withdrawDate" }
-    },
-    {
-      title: t('transit.operation'),
-      dataIndex: "operation",
-      slots: { customRender: "operation" }
-    }
-  ],
-  transfer: [
-    ...commonColumns,
-    {
-      title: t('transit.type'),
-      dataIndex: "type",
-      key: "type",
-      slots: { customRender: "type" }
-    },
-    {
-      title: t('transit.gamePlatform'),
-      dataIndex: "platform",
-      key: "platform"
-    },
-    {
-      title: t('transit.amount'),
-      dataIndex: "amount",
-      key: "withdrawAmount"
-    },
-    {
-      title: t('transit.status'),
-      dataIndex: "status",
-      key: "status",
-      slots: { customRender: "status" }
-    },
-    {
-      title: t('transit.time'),
-      dataIndex: "transferDate",
-      key: "transferDate",
-      slots: { customRender: "transferDate" }
-    }
-  ],
-  rebates: [
-    ...commonColumns,
-    {
-      title: t('transit.privilegeName'),
-      dataIndex: "privilegeName"
-    },
-    {
-      title: t('transit.amount'),
-      dataIndex: "amount"
-    },
-    {
-      title: t('transit.recordTime'),
-      dataIndex: "recordTime",
-      slots: { customRender: "recordTime" }
-    }
-  ],
-  turnover: [
-    ...commonColumns,
-    {
-      title: t('transit.subType'),
-      dataIndex: "subType"
-    },
-    {
-      title: t('transit.amount'),
-      dataIndex: "amount"
-    },
-    {
-      title: t('transit.platform'),
-      dataIndex: "platformCode"
-    },
-    {
-      title: t('transit.recordTime'),
-      dataIndex: "recordTime",
-      slots: { customRender: "recordTime" }
-    }
-  ],
-  gameBetRecord: [
-    {
-      title: t('transit.betTime'),
-      dataIndex: "betTime",
-      slots: { customRender: "betTime" }
-    },
-    {
-      title: t('transit.gamePlatform'),
-      dataIndex: "platform"
-    },
-    {
-      title: t('transit.bet'),
-      dataIndex: "bet"
-    },
-    {
-      title: t('transit.payout'),
-      dataIndex: "payout"
-    },
-    {
-      title: t('transit.gameType'),
-      dataIndex: "gameType"
-    },
-    {
-      title: t('transit.status'),
-      dataIndex: "status"
-    }
-  ],
-  betRecord: [
-    {
-      title: t('transit.betId'),
-      dataIndex: "betId"
-    },
-    {
-      title: t('transit.transactionId'),
-      dataIndex: "transactionId"
-    },
-    {
-      title: t('transit.gamePlatform'),
-      dataIndex: "platform"
-    },
-    {
-      title: t('transit.bet'),
-      dataIndex: "bet"
-    },
-    {
-      title: t('transit.payout'),
-      dataIndex: "payout"
-    },
-    {
-      title: t('transit.beforeBalance'),
-      dataIndex: "beforeBalance"
-    },
-    {
-      title: t('transit.afterBalance'),
-      dataIndex: "afterBalance"
-    },
-    {
-      title: t('transit.betStatus'),
-      dataIndex: "betStatus"
-    },
-    {
-      title: t('transit.gameType'),
-      dataIndex: "gameType"
-    },
-    {
-      title: t('transit.betTime'),
-      dataIndex: "betTime",
-      slots: { customRender: "betTime" }
-    },
-    {
-      title: t('transit.settleTime'),
-      dataIndex: "settleTime",
-      slots: { customRender: "settleTime" }
-    },
-    {
-      title: t('transit.result'),
-      dataIndex: "result"
-    },
-    {
-      title: t('transit.sportBetResult'),
-      dataIndex: "sportBetResult"
-    }
-  ],
-  reminderRecord: [
-    {
-      title: t('transit.orderNo'),
-      dataIndex: "orderNo"
-    },
-    {
-      title: t('transit.financeRemark'),
-      dataIndex: "financeRemark"
-    },
-    {
-      title: t('transit.feedbackTime'),
-      dataIndex: "feedbackTime",
-      slots: { customRender: "feedbackTime" }
-    },
-    {
-      title: t('transit.type'),
-      dataIndex: "type",
-      slots: { customRender: "type" }
-    }
-  ]
-};
-const loading = ref(false);
-const pagination = reactive({
-  pageSize: 20,
-  total: 0,
-  pagingState: ""
-});
-const betPagination = reactive({
-  pageSize: 20,
-  total: 0,
-  pagingState: ""
-});
+    const loadingBtn = ref(false);
+    const store = userStore();
+    const uploadFileRef = ref();
+    const recordActive = ref("deposit");
+    const reminderForm = reactive({});
+    const totalBetRecord = reactive({
+      totalBet: 0,
+      totalPayout: 0
+    });
+    const searchForm = reactive({
+      turnover: {
+        startDate: "",
+        endDate: "",
+        current: 1,
+        size: 10,
+        pagingState: null
+      },
+      rebates: {
+        startDate: "",
+        endDate: "",
+        current: 1,
+        size: 10
+      },
+      transfer: {
+        startDate: "",
+        endDate: "",
+        current: 1,
+        size: 10
+      },
+      withdraw: {
+        startDate: "",
+        endDate: "",
+        current: 1,
+        size: 10
+      },
+      deposit: {
+        startDate: "",
+        endDate: "",
+        current: 1,
+        size: 10
+      },
+      gameBetRecord: {
+        startDate: "",
+        endDate: "",
+        platform: "",
+        memberId: store.id,
+        current: 1,
+        size: 10,
+        pagingState: null
+      },
+      betRecord: {
+        platform: "",
+        gameType: "",
+        memberId: store.id,
+        current: 1,
+        size: 10
+      },
+      reminderRecord: {
+        startDate: "",
+        endDate: "",
+        current: 1,
+        size: 10
+      }
+    });
+    const dataState = reactive({
+      deposit: [],
+      rebates: [],
+      transfer: [],
+      withdraw: [],
+      turnover: [],
+      betRecord: [],
+      gameBetRecord: [],
+      reminderRecord: []
+    });
+    const commonColumns = [
+      {
+        title: t('transit.serialNo'),
+        dataIndex: "serialNumber",
+        key: "serialNumber"
+      }
+    ];
+    const tableColumns = {
+      deposit: [
+        ...commonColumns,
+        {
+          title: t('transit.depositAmount'),
+          dataIndex: "depositAmount"
+        },
+        {
+          title: t('transit.status'),
+          dataIndex: "status"
+        },
+        {
+          title: t('transit.paymentType'),
+          dataIndex: "paymentType"
+        },
+        {
+          title: t('transit.depositDate'),
+          dataIndex: "depositDate",
+          slots: { customRender: "depositDate" }
+        },
+        {
+          title: t('transit.operation'),
+          dataIndex: "operation",
+          slots: { customRender: "operation" }
+        }
+      ],
+      withdraw: [
+        ...commonColumns,
+        {
+          title: t('transit.withdrawAmount'),
+          dataIndex: "withdrawAmount"
+        },
+        {
+          title: t('transit.status'),
+          dataIndex: "status"
+        },
+        {
+          title: t('transit.withdrawDate'),
+          dataIndex: "withdrawDate",
+          slots: { customRender: "withdrawDate" }
+        },
+        {
+          title: t('transit.operation'),
+          dataIndex: "operation",
+          slots: { customRender: "operation" }
+        }
+      ],
+      transfer: [
+        ...commonColumns,
+        {
+          title: t('transit.type'),
+          dataIndex: "type",
+          key: "type",
+          slots: { customRender: "type" }
+        },
+        {
+          title: t('transit.gamePlatform'),
+          dataIndex: "platform",
+          key: "platform"
+        },
+        {
+          title: t('transit.amount'),
+          dataIndex: "amount",
+          key: "withdrawAmount"
+        },
+        {
+          title: t('transit.status'),
+          dataIndex: "status",
+          key: "status",
+          slots: { customRender: "status" }
+        },
+        {
+          title: t('transit.time'),
+          dataIndex: "transferDate",
+          key: "transferDate",
+          slots: { customRender: "transferDate" }
+        }
+      ],
+      rebates: [
+        ...commonColumns,
+        {
+          title: t('transit.privilegeName'),
+          dataIndex: "privilegeName"
+        },
+        {
+          title: t('transit.amount'),
+          dataIndex: "amount"
+        },
+        {
+          title: t('transit.recordTime'),
+          dataIndex: "recordTime",
+          slots: { customRender: "recordTime" }
+        }
+      ],
+      turnover: [
+        ...commonColumns,
+        {
+          title: t('transit.subType'),
+          dataIndex: "subType"
+        },
+        {
+          title: t('transit.amount'),
+          dataIndex: "amount"
+        },
+        {
+          title: t('transit.platform'),
+          dataIndex: "platformCode"
+        },
+        {
+          title: t('transit.recordTime'),
+          dataIndex: "recordTime",
+          slots: { customRender: "recordTime" }
+        }
+      ],
+      gameBetRecord: [
+        {
+          title: t('transit.betTime'),
+          dataIndex: "betTime",
+          slots: { customRender: "betTime" }
+        },
+        {
+          title: t('transit.gamePlatform'),
+          dataIndex: "platform"
+        },
+        {
+          title: t('transit.bet'),
+          dataIndex: "bet"
+        },
+        {
+          title: t('transit.payout'),
+          dataIndex: "payout"
+        },
+        {
+          title: t('transit.gameType'),
+          dataIndex: "gameType"
+        },
+        {
+          title: t('transit.status'),
+          dataIndex: "status"
+        }
+      ],
+      betRecord: [
+        {
+          title: t('transit.betId'),
+          dataIndex: "betId"
+        },
+        {
+          title: t('transit.transactionId'),
+          dataIndex: "transactionId"
+        },
+        {
+          title: t('transit.gamePlatform'),
+          dataIndex: "platform"
+        },
+        {
+          title: t('transit.bet'),
+          dataIndex: "bet"
+        },
+        {
+          title: t('transit.payout'),
+          dataIndex: "payout"
+        },
+        {
+          title: t('transit.beforeBalance'),
+          dataIndex: "beforeBalance"
+        },
+        {
+          title: t('transit.afterBalance'),
+          dataIndex: "afterBalance"
+        },
+        {
+          title: t('transit.betStatus'),
+          dataIndex: "betStatus"
+        },
+        {
+          title: t('transit.gameType'),
+          dataIndex: "gameType"
+        },
+        {
+          title: t('transit.betTime'),
+          dataIndex: "betTime",
+          slots: { customRender: "betTime" }
+        },
+        {
+          title: t('transit.settleTime'),
+          dataIndex: "settleTime",
+          slots: { customRender: "settleTime" }
+        },
+        {
+          title: t('transit.result'),
+          dataIndex: "result"
+        },
+        {
+          title: t('transit.sportBetResult'),
+          dataIndex: "sportBetResult"
+        }
+      ],
+      reminderRecord: [
+        {
+          title: t('transit.orderNo'),
+          dataIndex: "orderNo"
+        },
+        {
+          title: t('transit.financeRemark'),
+          dataIndex: "financeRemark"
+        },
+        {
+          title: t('transit.feedbackTime'),
+          dataIndex: "feedbackTime",
+          slots: { customRender: "feedbackTime" }
+        },
+        {
+          title: t('transit.type'),
+          dataIndex: "type",
+          slots: { customRender: "type" }
+        }
+      ]
+    };
+    const loading = ref(false);
+    const pagination = reactive({
+      pageSize: 20,
+      total: 0,
+      pagingState: ""
+    });
+    const betPagination = reactive({
+      pageSize: 20,
+      total: 0,
+      pagingState: ""
+    });
     const searchRecord = (tab) => {
       // console.log(tab)
       console.log(searchForm[recordActive.value])
@@ -1131,7 +1131,7 @@ const betPagination = reactive({
       const startMonth = new Date(searchForm[v].startDate).getMonth();
       const endMonth = new Date(searchForm[v].endDate).getMonth();
       if (startMonth !== endMonth) {
-        ElMessage.error("开始与结束月份必须一致");
+        ElMessage.error(t('account.start_date_end_date_must_same'));
       }
 
       getPlatformList().then((ret) => {
@@ -1178,7 +1178,7 @@ const betPagination = reactive({
               reminderForm.recordTime = moment(record.withdrawDate).format("YYYY-MM-DD HH:mm:ss");
             }
           } else {
-            ElMessage.error("无法提交新催单，目前尚有未处理的催单。");
+            ElMessage.error(t('account.cannot_submit_new_reminder'));
           }
         } else {
           ElMessage.error(res.message);
@@ -1212,13 +1212,13 @@ const betPagination = reactive({
       loadingBtn.value = true;
       if (!reminderForm.photos) {
         ElMessage.warning(
-          `请上传图片提交`
+          t("account.please_upload_image")
         );
       } else {
         console.log(reminderForm);
         saveFinanceFeedback(reminderForm).then((res) => {
           if (res.code === 0) {
-            ElMessage.success(`催单上传成功。`);
+            ElMessage.success(t('account.upload_success'));
             reminderDialog.value = false;
             formRef.value.resetFields();
             uploadFileRef.value.clear();
@@ -1270,7 +1270,7 @@ const betPagination = reactive({
       } else if (turnoverType === "PROMO") {
         return t('status.promotion'); // 优惠
       } else if (turnoverType === "DEPOSIT") {
-        return t('status.deposit'); // 存款
+        return t('status.deposit'); // 
       } else if (turnoverType === "TRANSFER") {
         return t('status.transfer'); // 转账
       } else if (turnoverType === "ADJUST") {
@@ -1316,7 +1316,7 @@ const betPagination = reactive({
       } else if (turnoverType === "PROMO") {
         return t('status.promotion'); // 优惠
       } else if (turnoverType === "DEPOSIT") {
-        return t('status.deposit'); // 存款
+        return t('status.deposit'); // 
       } else if (turnoverType === "TRANSFER") {
         return t('status.transfer'); // 转账
       } else if (turnoverType === "ADJUST") {
@@ -1350,72 +1350,62 @@ const betPagination = reactive({
         return "";
       }
       if (platformName === "AG") {
-        return "AG真人、XIN电子"; // AG
-      } else if (platformName === "BBINDY") {
-        return "BBIN真人"; // BBINDY
-      } else if (platformName === "KY") {
-        return "开元棋牌"; // KY
-      } else if (platformName === "KYDY") {
-        return "开元棋牌"; // KYDY
-      } else if (platformName === "DT") {
-        return "大唐棋牌"; // DT
+        return "AG " + t('account.livecasino') + ", XIN" + t('account.slot'); // AG
+      }else if (platformName === "GPI") {
+        return "GPI " + t('account.slot') + ", GPI" + t('account.lottery'); // AG
+      }  else if (platformName === "BBINDY") {
+        return "BBIN"  + t('account.livecasino'); // BBINDY
+      } else if (platformName === "KP") {
+        return "King Poker" ; // KY
+      } else if (platformName === "KM") {
+        return "King Maker"; // KYDY
+      } else if (platformName === "V8") {
+        return "V8" + t('account.poker'); // DT
       } else if (platformName === "TCG") {
-        return "TCG彩票"; // TCG
-      } else if (platformName === "BBINDY") {
-        return "BBIN真人"; // BBINDY
-      } else if (platformName === "PINNACLE") {
-        return "平博体育"; // BBINDY
-      } else if (platformName === "EBET") {
-        return "WE真人"; // EBET
-      } else if (platformName === "ALLBET") {
-        return "欧博真人"; // EBET
-      } else if (platformName === "KY") {
-        return "开元棋牌"; // KY
-      } else if (platformName === "DT") {
-        return "大唐棋牌"; // DT
-      } else if (platformName === "LEG") {
-        return "乐游棋牌"; // KY
-      } else if (platformName === "GLFC") {
-        return "高登棋牌"; // DT
-      } else if (platformName === "GFLC") {
-        return "高登棋牌"; // DT
-      } else if (platformName === "TCG") {
-        return "TCG彩票"; // TCG
+        return "TCG " + t('account.lottery') ; // TCG
+      }else if (platformName === "LOTTO") {
+        return "LOTTO " + t('account.lottery') ; // TCG
+      }else if (platformName === "MGP") {
+        return "MGP " + t('account.slot') ; // TCG
+      }  else if (platformName === "EBET") {
+        return "WE " + t('account.livecasino');
       } else if (platformName === "PT") {
-        return "PT电子"; // PTDY
+        return "PT " + t('account.slot'); // PTDY
       } else if (platformName === "PG") {
-        return "PG电子"; // PGDY
+        return "PG " + t('account.slot');// PGDY
       } else if (platformName === "SW") {
-        return "SW电子"; // PGDY
+        return "SW " + t('account.slot'); // PGDY
       } else if (platformName === "SABA") {
-        return "沙巴体育"; // PGDY
+        return "SABA " + t('account.sport'); // PGDY
+      }else if(platformName === 'GFSBO'){
+        return "SBOBET " + t('account.sport'); // PGDY
+      }else if(platformName === 'CMD'){
+        return "CMD " + t('account.sport'); // PGDY
       } else if (platformName === "BG") {
-        return "BG真人"; // PGDY
+        return "BG " + t('account.livecasino');; // PGDY
       } else if (platformName === "Evo") {
-        return "Evo真人"; // PGDY
+        return "Evo " + t('account.livecasino');; // PGDY
       } else if (platformName === "BBINDY") {
-        return "BBIN真人"; // PGDY
+        return "BBIN " + t('account.livecasino');; // PGDY
       } else if (platformName === "BBIN") {
-        return "BBIN真人"; // PGDY
+        return "BBIN " + t('account.livecasino');; // PGDY
       } else if (platformName === "WE") {
-        return "WE真人"; // PGDY
+        return "WE " + t('account.livecasino');// PGDY
+      }else if (platformName === "WM") {
+        return "WM " + t('account.livecasino'); // PGDY
+      } else if (platformName === "AE") {
+        return "Sexy " + t('account.livecasino');; // PGDY
       } else if (platformName === "PMLIVE") {
-        return "DB真人"; // PGDY
-      } else if (platformName === "PM") {
-        return "熊猫体育"; // PGDY
-      } else if (platformName === "RG") {
-        return "RG电竞";
-      } else if (platformName === "IM") {
-        return "IM体育";
-      } else if (platformName === "IA") {
-        return "IA电竞";
-      } else if (platformName === "TFGaming") {
-        return "雷火电竞";
-      } else if (platformName === "IMES") {
-        return "IM电竞";
-      } else if (platformName === "GPS") {
-        return "GPS决战中途岛";
-      } else {
+        return "DB " + t('account.livecasino'); // PGDY
+      }else if (platformName === "TFGaming") {
+        return "TFGaming ";
+      } else if (platformName === "WS") {
+        return "WS168 " + t('account.cockfight');
+      }else if (platformName === "SP") {
+        return "SP " + t('account.fishing');
+      }else if (platformName === "JILI") {
+        return "JILI  " + t('account.fishing');
+      }   else {
         return platformName;
       }
     };
@@ -1427,7 +1417,7 @@ const betPagination = reactive({
         return "";
       }
       if(type === 'WITHDRAW_FAIL'){
-       return t('status.withdrawFailed');
+        return t('status.withdrawFailed');
       }
       if (subType === "DEPOSIT") {
         return t('status.deposit'); // 转进
@@ -1496,31 +1486,29 @@ const betPagination = reactive({
       } else if (depositType === "OFFLINE") {
         return t('status.offline'); // 线下转卡
       } else if (depositType === "UNION") {
-        return "银联快捷"; // 银联快捷
+        return "UNION"; // 银联快捷
       } else if (depositType === "QUICKPAYMENT") {
-        return "小额转卡"; // 小额转卡
+        return t('account.quickpayment'); // 小额转卡
       } else if (depositType === "SPECIALPAY") {
         return t('status.bank'); // 网银转账
       } else if (depositType === "ALIPAY") {
-        return "支付宝转卡"; // 支付宝转卡
+        return "ALIPAY"; // 支付宝转卡
       } else if (depositType === "ALIPAYCODE") {
-        return "支付宝"; // 支付宝
+        return "ALIPAY"; // 支付宝
       } else if (depositType === "WECHATCODE") {
-        return "微信支付"; // 微信支付
+        return "WECHATPAY"; // 微信支付
       } else if (depositType === "QQCODE") {
-        return "QQ支付"; // QQ支付
+        return "QQCODE"; // QQ支付
       } else if (depositType === "KDPAY") {
-        return "K豆"; // K豆
+        return "KDPAY"; // K豆
       } else if (depositType === "DDPAY") {
-        return "钉钉"; // 钉钉
-      } else if (depositType === "HBPAY") {
-        return "和包"; // 和包
+        return "DDPAY"; // 钉钉
       } else if (depositType === "SZPAY") {
-        return "数字人民币"; // 数字人民币
+        return "SZPAY"; // 数字人民币
       } else if (depositType === "CARDPAY") {
         return t('status.scratch_card'); // 点卡支付
       } else if (depositType === "ONLINECODE") {
-        return "云闪付"; // 云闪付
+        return "ONLINECODE"; // 云闪付
       } else if (depositType === "DYPAY") {
         return t('status.tiktok'); // 抖音
       } else if (depositType === "AUTOPAY") {

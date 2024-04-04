@@ -57,7 +57,7 @@
           <li><router-link to="/about?id=info">{{ $t('about.collectInformation') }}</router-link></li>
           <li><router-link to="/about?id=law">{{ $t('about.legalBasis') }}</router-link></li>
           <li><router-link to="/about?id=rule">{{ $t('about.bettingRules') }}</router-link></li>
-          <li><a :href="'https://www.4luckypartner.com/?langge=' + languageVal + '&agent=' + (affCode ? affCode : '')">{{ $t('about.affiliate') }} </a></li>
+          <li><a :href="'https://vnm-affiliate.th80to83w1.com?agent=' + (affCode ? affCode : '')">{{ $t('about.affiliate') }} </a></li>
           <li><router-link to="/about?id=blame">{{ $t('about.blame') }}</router-link></li>
         </ul>
         <!-- <div class="tagline">雷火是全球领先的合法博彩公司，拥有菲律宾政府PAGCOR 所颁发的离岸博彩许可证，并受其监管</div> -->
@@ -70,6 +70,7 @@
         <div class="icon chrome" @mouseover="isChrome = true" @mouseout="isChrome = false" :class="{hovering: isChrome}"></div>
         <div class="brush"><RiStarFill /><i class="remixicon-star-s-fill" style="font-size: 22px;"></i>一键收藏网站</div>
       </div> -->
+      <div style="display: flex; flex-direction: column; gap: 10px;">
           <div class="title">{{ $t('about.partner') }}</div>
         <div class="top-ft-rgt">
           <img src="../../assets/footer/games/AG.png" />
@@ -88,6 +89,8 @@
           <img src="../../assets/footer/games/PP.png" />
           <img src="../../assets/footer/games/V8.png" />
         </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
           <div class="title">{{$t('about.paymentMethod')}}</div>
         <div class="top-ft-rgt">
           <!-- <img src="../../assets/footer/payment/VCB.png" />
@@ -105,7 +108,10 @@
           <img src="../../assets/footer/payment/scratch-card-logo.png" />
           <img src="../../assets/footer/payment/ViettelPayRed.png" />
           <img src="../../assets/footer/payment/tether-logo.png" />
+          <img src="../../assets/footer/payment/lotterycard.png" />
+          <img src="../../assets/footer/payment/bank-transfer.png" />
         </div>
+      </div>
       </div>
     </div>
   </footer>
@@ -157,12 +163,12 @@ export default defineComponent({
       border-top: 1px solid $font-1;
       margin: 0 auto;
       display: flex;
-      gap: 20px;
+      gap: 50px;
       justify-content: center;
       padding: 10px 0;
       align-items: flex-start;
       width: 100%;
-      max-width: 1350px;
+      max-width: $maxwidth;
       .top-ft-left {
         display: flex;
         justify-content: flex-start;

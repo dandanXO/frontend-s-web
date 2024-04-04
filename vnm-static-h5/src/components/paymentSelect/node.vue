@@ -5,7 +5,7 @@
     <div class="account-title-container" v-else>
       <span class="account-title">{{ name }}</span>
     </div>
-    <div class="node-content payment-method-wrapper" :style="gridColAmount">
+    <div class="node-content payment-method-wrapper">
       <div
         class="node-item payment-method-item"
         :id="level + '_' + i"
@@ -195,10 +195,11 @@ $node-color: #468cff;
 
 .payment-method-wrapper {
   // display: flex;
-  grid-gap: 15px;
+  grid-gap: 20px;
   display: grid;
   margin-bottom: 15px;
   width: 100%;
+  grid-template-columns: repeat(5, 1fr);
 
   .payment-method-item {
     text-align: center;
@@ -349,14 +350,18 @@ $node-color: #468cff;
         // white-space: nowrap;
       }
 
+      .overflow {
+        white-space: wrap;
+      }
+
       .node-txt-img {
         background-color: transparent;
         display: flex;
         align-items: center;
         justify-content: center;
         box-shadow: inset 0 0 8px 0 #a9c9ea;
-        width: 5.5rem;
-        height: 5rem;
+        width: 4rem;
+        height: 4rem;
         margin-bottom: 5px;
         border: 2px solid $secondary;
         border-radius: 10px;
@@ -364,7 +369,7 @@ $node-color: #468cff;
         img {
           background-color: transparent;
           margin-bottom: 0;
-          padding: 12px 14px;
+          padding: 5px;
           width: 100%;
           height: auto;
         }
@@ -422,6 +427,12 @@ $node-color: #468cff;
         margin: 0 -10px;
       }
     }
+  }
+}
+
+@media (max-width: 420px) {
+  .payment-method-wrapper {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 

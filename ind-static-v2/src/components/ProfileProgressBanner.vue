@@ -28,7 +28,7 @@
         size="15px"
         :value="progressBarRef"
         class="progress-bar"
-        color="white"
+        color="grey"
       ></q-linear-progress>
       <div class="win-gift-text">Deposit Monthly To Win Gifts</div>
     </div>
@@ -85,7 +85,7 @@ const profileImagePath = computed(() => {
   grid-gap: 10px;
   align-items: center;
   margin: 1.5rem 0 1rem 0;
-  background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+  // background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
   border-radius: 8px;
   min-height: 130px;
   padding: 14px;
@@ -126,7 +126,7 @@ const profileImagePath = computed(() => {
           padding-top: 2px;
           padding-bottom: 4px;
           z-index: 3;
-          color: #334ad6;
+          color: #00AE00;
           font-weight: bold;
         }
       }
@@ -154,9 +154,9 @@ const profileImagePath = computed(() => {
     }
 
     .progress-bar {
-      border: 1px solid #fed87d;
+      // border: 1px solid #fed87d;
       // background: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-      background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+      background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
       border-radius: 100px;
       color: #320b5b;
     }

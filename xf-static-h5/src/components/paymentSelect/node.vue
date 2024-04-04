@@ -282,7 +282,7 @@ $node-color: #33bcd4;
       padding: 0 0px;
       flex-direction: column;
       .account-title-container {
-        margin: 0;
+        margin: 0 0px 8px;
       }
       .payment-method-wrapper {
         gap: 5px;
@@ -391,7 +391,8 @@ $node-color: #33bcd4;
 
     .promo {
       position: absolute;
-      right: -5px;
+      right: 50%;
+      transform: translate(50%, 0);
       top: -8px;
       background-repeat: no-repeat;
       background-size: 100%;

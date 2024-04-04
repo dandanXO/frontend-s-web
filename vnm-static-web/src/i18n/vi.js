@@ -24,7 +24,37 @@ export default {
   },
   "account": {
     "welcome": "Chào mừng",
-    "mainWallet": "Số dư"
+    "mainWallet": "Số dư",
+    require: "Hỗ trợ",
+    str_copy: "Sao chép",
+    str_deposit_serialnumber: "Số Serial Nạp Tiền",
+    str_serial_number: "Số Serial",
+    str_confirmwithdraw: "Xác Nhận Rút Tiền",
+    str_remark: "Ghi chú",
+    strsystem_message: "Thông Báo Hệ Thống",
+    str_confirm: "Xác Nhận",
+    confirm_withdrawal_sucess: "Xác nhận rút tiền thành công",
+    success_copied: "Đã sao chép!",
+    already_have_3_reminder: "Bạn đã có 3 yêu cầu",
+    please_upload_image: "Vui lòng tải lên hình ảnh",
+    require_success_submit: "Yêu cầu đã được gửi thành công",
+    upload_success: "Tải lên thành công.",
+    upload_fail_please_try: "Tải lên thất bại. Vui lòng thử lại sau.",
+    upload_image: "Tải Ảnh Lên",
+    "submit": "Gửi",
+    "select_image": "Chọn Hình Ảnh",
+    "start_date_end_date_must_same": "Tháng bắt đầu và kết thúc phải giống nhau.",
+    "cannot_submit_new_reminder": "Không thể gửi lời nhắc mới, vẫn còn lời nhắc chưa giải quyết.",
+    "quickpayment": "Thanh Toán Nhanh",
+    "livecasino": "Sòng Bạc Trực Tiếp",
+    "sport": "Thể Thao",
+    "slot": "Nỗ Hủ",
+    "poker": "POKER",
+    "lottery": "Xổ Số",
+    fishing: "Bắn Cá",
+    cockfight: 'Đá Gà',
+    deposit_should_between: "Nạp tiền đặt cọc phải nằm trong khoảng từ ",
+    msg_deleted: "Tin nhắn đã bị xóa"
   },
   "login": {
     "username": "Tên tài khoản",
@@ -76,13 +106,15 @@ export default {
     depositAmount: 'Số tiền',
     submitSuccess: 'Chỉnh sửa thành công',
     updateSuccess: 'Cập nhật thành công',
+    claimedSuccess: 'Đã nhận thành công',
     send: 'Gửi',
     withdrawDoesNotMatch: 'Mật khẩu rút tiền không đúng',
     privilegeDeposit: 'Số tiền gửi tiết kiệm cho khuyến mãi không phù hợp với quy định',
     "emailSent": "Mã xác minh đã được gửi đến email của bạn",
     "tryAgain": "Thử lại sau {countDown} giây",
     bindEmailFirst: "Vui lòng gắn kết email của bạn trước",
-    success: "Gửi thành công"
+    success: "Gửi thành công",
+    sendPhoneVerificationSuccess: 'Gửi xác minh số điện thoại thành công',
   },
   "home": {
     "appDownload": "Tải ứng dụng",
@@ -131,6 +163,8 @@ export default {
     getVerificationCode: 'Nhận mã xác nhận',
     common_and_new_password_not_match: "Xác nhận mật khẩu chưa chính xác.",
     forgetWithdrawPassword: "Quên mật khẩu rút tiền?",
+    bankCardReminder1: 'Liên kết tài khoản NH cần sự đồng nhất về Tên Tài khoàn và Tên đăng ký NH. Trường hợp điền sai thông tin dẫn đến Rút tiền thất bại hoặc NH xử lý chậm trễ, quý khách vui lòng liên hệ dịch vụ CSKH của chúng tôi để kịp thời xử lý. Chân thành cảm ơn!',
+    bankCardReminder2: 'Vui lòng nhập thông tin chính xác với tên và số tài khoản trên thẻ NH, tránh sai sót gây tổn thất của quý khách khi rút tiền! TF88 xin chân thành cảm ơn!'
   },
   "placeholder": {
     "realName": "Vui lòng nhập tên thật",
@@ -211,7 +245,9 @@ export default {
     "selectDate": "Chọn ngày",
     btn_lottery_now: "Mở thưởng ngay",
     btn_claim_now: "Yêu cầu ngay",
-    net_work_bonus: "Tiền thưởng"
+    net_work_bonus: "Tiền thưởng",
+    
+    bonus: "Phần thưởng",
     // vi-daily-checkin end
   },
   "mail": {
@@ -272,22 +308,23 @@ export default {
     
   },
   "referTerms": {
-    "promotionStart": "Khuyến mãi bắt đầu từ 00:00:00 ngày 01/06/2022 (GMT+8)",
-    "referralBonus": "Chỉ cần giới thiệu khách hàng tham gia tại TF88 và bạn sẽ nhận được thưởng 300 VND mỗi lần. Khách hàng bạn giới thiệu cũng sẽ nhận được tiền thưởng chào mừng là 150 VND.",
-    "eligibilityConditions": "Để nhận được tiền thưởng, bạn cần đáp ứng một số điều kiện sau đây...",
-    "referrerConditions": "Người giới thiệu (bạn):",
-    "referrerConditions1": "Số lượng cược hợp lệ tối thiểu từ 8,000 VND trở lên...",
-    "presenteeConditions": "Người được giới thiệu (bạn bè của bạn):",
-    "presenteeConditions1": "Đăng ký tài khoản trong thời gian khuyến mãi thông qua đường link giới thiệu bạn bè chỉ định...",
-    "presenteeConditions2": "Chưa từng đăng ký tài khoản tại TF88 và không có bất kỳ tài khoản nào khác tại TF88",
-    "presenteeConditions3": "Phải thực hiện giao dịch gửi tiền thành công lần đầu và có tổng cược hợp lệ tích lũy ít nhất 4,000 VND trong vòng 20 ngày kể từ khi đăng ký tài khoản",
-    "specifiedLink": "Thành viên có thể nhận được đường link giới thiệu bạn bè chỉ định trong 'thông tin cá nhân - giới thiệu bạn bè' sau khi đạt đủ số lượng cược hợp lệ từ 8,000 VND trở lên. Bạn sẽ gửi đường link giới thiệu cho bạn bè của bạn để họ click và đăng ký tài khoản qua liên kết",
-    "promotionReview": "Việc xem xét chương trình khuyến mãi sẽ được thực hiện hàng tuần. Sau khi xác minh hoàn tất, tiền thưởng giới thiệu sẽ tự động được ghi vào tài khoản của bạn và khách hàng được giới thiệu vào khoảng 6 giờ chiều (GMT+8) mỗi thứ Hai",
-    "withdrawalConditions": "Số tiền cược cần phải đạt trước khi rút tiền bằng 5 lần giá trị tiền thưởng nhận được...",
-    "notApplied": "Tất cả các cược hòa, cược HỦY, cược hai bên, cược kèo Châu Âu với tỷ lệ dưới 1.75, kèo Châu Á dưới 0.75, Thể thao ảo, Đua ngựa, Trò chơi số, sẽ không được áp dụng trong chương trình khuyến mãi này.",
-    "rightsReserved": "TF88 có quyền sửa đổi, từ chối hoặc hủy bỏ Chương trình này mà không cần thông báo trước...",
-    "concurrentPromotions": "Chương trình có thể được áp dụng cùng lúc với tất cả các chương trình khuyến mãi tại TF88...",
-    "generalTerms": "Các Điều khoản & Điều kiện chung về Khuyến mãi áp dụng."
+    "promotionStart": "Khuyến mãi bắt đầu từ 00:00:00 ngày 01/06/2022 (GMT +8). ",
+    "referralBonus": "Chỉ cần giới thiệu thêm bạn tham gia tại TF88, bạn sẽ nhận được 300 VNDP trên mỗi một người giới thiệu thành công. ",
+    "eligibilityConditions": "Để đủ điều kiện nhận tiền thưởng, thành viên cần đáp ứng các điều kiện sau đây:",
+    "referrerConditions": "Thành viên giới thiệu (Khách hàng)",
+    "referrerConditions1": "Tổng tiền cược hợp lệ tối thiểu từ 10.000 VNDP trở lên",
+    "referrerConditions2": "Đạt cấp độ vip 1 trở lên",
+    "presenteeConditions": "Thành viên được giới thiệu(Bạn của bạn): ",
+    "presenteeConditions1": "Đăng ký tài khoản trong thời gian khuyến mãi thông qua liên kết giới thiệu bạn bè được chỉ định. ",
+    "presenteeConditions2": "Chưa từng đăng ký tại TF88 và không có bất kỳ tài khoản nào khác tại TF88. ",
+    "presenteeConditions3": "Phải có giao dịch gửi tiền đầu tiên thành công và có tổng số tiền cược hợp lệ tích lũy tối thiểu 4.000VNDP. ",
+    "specifiedLink": 'Thành viên đủ điều kiện có thể giới thiệu bạn bè bằng cách vào mục "Thông tin cá nhân - Mời bạn bè" . Sau đó thành viên có thể gửi liên kết giới thiệu của mình cho bạn bè để đăng ký tài khoản thông qua liên kết này. ',
+    "promotionReview": "Việc xét duyệt chương trình khuyến mãi sẽ được thực hiện hàng tuần. Sau khi xác minh xong, phần thưởng giới thiệu sẽ tự động cập nhật vào tài khoản của thành viên giới thiệu và thành viên được giới thiệu vào khoảng 6 giờ tối (GMT + 8) vào Thứ Hai hàng tuần. ",
+    "withdrawalConditions": "Thành viên nhận khuyến mãi cần hoàn thành 5 vòng cược của khuyến mãi trước khi rút tiền.",
+    "notApplied": "Tất cả cược HÒA, cược HỦY, cược 2 BÊN, kiểu cược Europe Handicap tỷ lệ dưới 1.75, Asian Handicap dưới 0.75, Thể thao ảo, Đua ngựa, Number Game, sẽ không được áp dụng cho chương trình này.",
+    "rightsReserved": "TF88 có quyền chỉnh sửa, từ chối hoặc hủy bỏ chương trình Khuyến mãi này mà không cần báo trước. ",
+    "concurrentPromotions": "Chương trình có thể áp dụng cùng lúc với tất cả các Khuyến mãi tại TF88. ",
+    "generalTerms": "Điều khoản & Điềukiện khuyến mãi chung được áp dụng."
   },
   "deposit": {
     "deposit": "Nạp tiền",
@@ -327,7 +364,7 @@ export default {
     "turnover": "Sao kê",
     "withdraw": "Rút tiền",
     "transfer": "Chuyển khoản",
-    "rebates": "Hoàn trả",
+    "rebates": "Khuyến mãi",
     "gameBetRecord": "Lịch sử đặt cược",
     "totalBet": "Tổng cược",
     "totalPayout": "Tổng thanh toán",
@@ -356,7 +393,15 @@ export default {
     "payout": "Thanh toán",
     "orderNo": "Số đơn hàng",
     "financeRemark": "Ghi chú tài chính",
-    "feedbackTime": "Thời gian phản hồi"
+    "feedbackTime": "Thời gian phản hồi",
+    require: 'Hỗ trợ',
+    pleaseUpdateAttachment: 'Vui lòng tải hình tập lệnh',
+    cannotSendRequire: 'Không tạo được lệnh hỗ trợ mới, Hiện vần còn lệnh hỗ trợ chưa được xử lý',
+    startEndMonthSame: 'Bắt đầu và kết thúc của tháng phải giống nhau',
+    received: 'Xác nhận đã nhận',
+    selectPicture: 'Chọn ảnh',
+    remark: 'Ghi chú',
+    requireSent: 'Lệnh nhắc nhở thành công',  
   },
   "affiliate": {
     "englishText": "Đại lý cấp cao",
@@ -604,7 +649,7 @@ export default {
     "webapp": "Web APP",
     "esportapp": "E-sport APP"
   },
-  error: {
+  bankError: {
     "bankCardFirst": "Vui lòng đăng ký thẻ ngân hàng trước",
     "bindUSDT": "Vui lòng đăng ký ví USDT trước",
     "bindEWallet": "Vui lòng đăng ký ví điện tử trước",
@@ -709,7 +754,7 @@ export default {
     905: "Không cung cấp tên thật",
     909: "Không tìm thấy số điện thoại",
     910: "Tên người dùng không khớp với số điện thoại",
-    1000: "Tên đăng nhập hoặc mật khẩu không chính xác",
+    1000: "Tên đăng nhập hoặc Mật khẩu không hợp lệ. Vui lòng thử lại!",
     1001: "Tài khoản đã đóng",
     1002: "Tài khoản dành cho đại lý",
     1004: "Tên người dùng chỉ được chứa số và chữ cái",
@@ -773,6 +818,8 @@ export default {
     35009: "Đặc quyền sẽ có hiệu lực sớm",
     35010: "Thành viên 35010 không thể nhận đặc quyền này",
     35011: "Thành viên 35011 không thể nhận đặc quyền này.",
-    12100: "Mật khẩu rút tiền cũ chưa chính xác."
+    12100: "Mật khẩu rút tiền cũ chưa chính xác.",
+    45000: "Chưa đạt đến số tiền tối thiểu để rút",
+    45001: "Hôm nay đã nhận được tiền thưởng ngẫu nhiên."
 }
 }

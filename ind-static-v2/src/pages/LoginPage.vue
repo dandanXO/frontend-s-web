@@ -1,124 +1,110 @@
 <template>
   <div class="login-container">
-    <div class="back-left">
+    <!-- <div class="back-left">
       <router-link :to="'/landing'">
         <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
       </router-link>
-    </div>
+    </div> -->
 
     <div class="login-form-logo-img">
-      <img src="../assets/55-ace-logo.png" />
+      <img src="../assets/images/auth/auth-logo.png" />
     </div>
 
-    <q-form ref="loginFormRef" @submit="onSubmit">
-      <div v-if="!loginType" class="login-form-grid">
-        <span class="login-form-field-label">Phone Number</span>
-        <q-input
-          type="tel"
-          pattern="\d*"
-          maxlength="10"
-          hide-bottom-space
-          ref="loginNameRef"
-          v-model="loginForm.loginName"
-          :rules="[
-            (val) => (val && val.length > 0) || 'Please insert Phone number',
-            (val) => (val && val.length === 10) || 'The phone number must have 10 digits'
-          ]"
-          label-color="brand"
-          autocomplete="username"
-          outlined
-          color="white"
-          class="landing-input login-form-field"
-        ></q-input>
+    <div class="login-form-wrapper">
+      <q-form ref="loginFormRef" @submit="onSubmit">
+        <InputRowGrid v-if="!loginType">
+          <template #fields>
+            <InputField :label="'Phone Number'">
+              <template #input>
+                <q-input
+                  type="tel"
+                  pattern="\d*"
+                  maxlength="10"
+                  hide-bottom-space
+                  ref="loginNameRef"
+                  v-model="loginForm.loginName"
+                  :rules="[
+                    (val) => (val && val.length > 0) || 'Please insert Phone number',
+                    (val) => (val && val.length === 10) || 'The phone number must have 10 digits'
+                  ]"
+                  label-color="brand"
+                  autocomplete="username"
+                  outlined
+                  color="white"
+                ></q-input>
+              </template>
+            </InputField>
 
-        <span class="login-form-field-label">Password</span>
-        <q-input
-          ref="passwordRef"
-          hide-bottom-space
-          v-model="loginForm.password"
-          :type="isPwd ? 'password' : 'text'"
-          :rules="[(val) => (val && val.length > 0) || 'Please insert password']"
-          label-color="brand"
-          autocomplete="current-password"
-          outlined
-          color="white"
-          class="landing-input login-form-field"
-        >
-          <template v-slot:append>
-            <q-icon
-              color="gray-3"
-              :name="isPwd ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isPwd = !isPwd"
-            />
+            <InputField :label="'Password'">
+              <template #input>
+                <q-input
+                  ref="passwordRef"
+                  hide-bottom-space
+                  v-model="loginForm.password"
+                  :type="isPwd ? 'password' : 'text'"
+                  :rules="[(val) => (val && val.length > 0) || 'Please insert password']"
+                  label-color="brand"
+                  autocomplete="current-password"
+                  outlined
+                  color="white"
+                >
+                  <template v-slot:append>
+                    <q-icon
+                      color="gray-3"
+                      :name="isPwd ? 'visibility_off' : 'visibility'"
+                      class="cursor-pointer"
+                      @click="isPwd = !isPwd"
+                    />
+                  </template>
+                </q-input>
+              </template>
+            </InputField>
+            
+            <!--        <q-input-->
+            <!--          ref="verificationRef"-->
+            <!--          hide-bottom-space-->
+            <!--          clearable-->
+            <!--          type="text"-->
+            <!--          v-model="loginForm.captchaCode"-->
+            <!--          label="Verification Code"-->
+            <!--          :rules="[-->
+            <!--            (val) => (val && val.length > 0) || 'Please insert verification code',-->
+            <!--            (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'-->
+            <!--          ]"-->
+            <!--          label-color="brand"-->
+            <!--          rounded-->
+            <!--          outlined-->
+            <!--          color="white"-->
+            <!--          class="landing-input"-->
+            <!--        >-->
+            <!--          <template v-slot:append>-->
+            <!--            <img :src="verificationImg" @click="getCode" />-->
+            <!--          </template>-->
+            <!--        </q-input>-->
           </template>
-        </q-input>
-        <!--        <q-input-->
-        <!--          ref="verificationRef"-->
-        <!--          hide-bottom-space-->
-        <!--          clearable-->
-        <!--          type="text"-->
-        <!--          v-model="loginForm.captchaCode"-->
-        <!--          label="Verification Code"-->
-        <!--          :rules="[-->
-        <!--            (val) => (val && val.length > 0) || 'Please insert verification code',-->
-        <!--            (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'-->
-        <!--          ]"-->
-        <!--          label-color="brand"-->
-        <!--          rounded-->
-        <!--          outlined-->
-        <!--          color="white"-->
-        <!--          class="landing-input"-->
-        <!--        >-->
-        <!--          <template v-slot:append>-->
-        <!--            <img :src="verificationImg" @click="getCode" />-->
-        <!--          </template>-->
-        <!--        </q-input>-->
-      </div>
+        </InputRowGrid>
 
-      <div class="forgot-password">
-        <router-link class="form-text" to="/forgot-password">Forgot Password</router-link>
-      </div>
-
-      <!--
-      <div class="row items-center justify-between q-mt-sm">
-        <div class="mui-row" :class="isCheckRmb ? 'checked' : ''">
-          <q-checkbox
-            rounded
-            v-model="isCheckRmb"
-            label="Remember Me"
-            size="md"
-            class="rmb-checked-box"
-            color="yellow"
-          />
+        <div class="forgot-password">
+          <router-link class="form-text" to="/forgot-password">Forgot Password</router-link>
         </div>
+
+        <div style="margin-top: 30px;">
+          <PrimaryButton :onClick="onSubmit" :label="'Login'" />
+        </div>
+
+        <!-- <div class="q-mt-sm">
+          <q-btn @click="goRegister()" rounded flat no-caps class="btn-purple" label="Register" />
+        </div> -->
+      </q-form>
+
+      <hr class="end-of-form-separator" />
+
+      <div class="create-account">
+        <span class="form-text">Not a member?</span>
+        &nbsp;
+        <router-link class="form-text" to="/register" style="color: #00AE00">Create account</router-link>
       </div>
-       -->
-
-      <div>
-        <q-btn @click.prevent="onSubmit" type="submit" class="login-btn" label="Login" rounded no-caps />
-      </div>
-
-      <!-- <div class="q-mt-sm">
-        <q-btn @click="goRegister()" rounded flat no-caps class="btn-purple" label="Register" />
-      </div> -->
-    </q-form>
-
-    <hr class="end-of-form-separator" />
-
-    <div class="create-account">
-      <span class="form-text">Not a member?</span>
-      &nbsp;
-      <router-link class="form-text" to="/register" style="color: #ae6def">Create account</router-link>
     </div>
-
-    <!--
-      <div class="tip-container">
-      <router-link class="landing-tip" to="/forgot-password">Forgot Password ?</router-link>
-
-      <router-link class="landing-tip" to="/register">Sign Up Now</router-link>
-    </div>
-    -->
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
@@ -158,10 +144,16 @@ import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import qs from "qs";
 import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
+import PrimaryButton from '../components/auth/PrimaryButton.vue';
+import InputField from '../components/auth/InputField.vue';
+import InputRowGrid from '../components/auth/InputRowGrid.vue';
 
 export default defineComponent({
   name: "LoginPage",
   components: {
+    PrimaryButton,
+    InputField,
+    InputRowGrid
     // RiArrowDropLeftLine
   },
   setup() {
@@ -535,7 +527,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .login-container {
   min-height: 100vh;
-  padding: 16px;
+  // padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -553,30 +545,21 @@ export default defineComponent({
 .login-form-logo-img {
   img {
     display: block;
-    width: 95%;
-    margin: 20px auto;
-    max-width: 200px;
+    width: 100%;
   }
 }
-.login-form-grid {
-  display: grid;
-  grid-auto-flow: row;
-  gap: 7px;
 
-  .login-form-field-label {
-    margin-top: 15px;
-  }
+.login-form-wrapper {
+  padding: 20px;
 }
-.login-btn {
-  background-color: #8b00ff;
-  width: 100%;
-  height: 56px;
-  border-radius: 4px;
-  margin-top: 30px;
-}
+
 .forgot-password {
   margin: 8px 0px 0px;
   text-align: right;
+  
+  .form-text {
+    color: #C1DFFC;
+  }
 }
 
 .end-of-form-separator {
@@ -591,48 +574,5 @@ export default defineComponent({
 .form-text {
   color: #b3b0b8;
   text-decoration: none;
-}
-
-.tip-container {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 24px;
-  padding-bottom: 24px;
-}
-
-.landing-tip {
-  color: #fae576;
-  text-decoration: none;
-  font-weight: 700;
-}
-
-.landing-input {
-  :deep(.q-field__control) {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  :deep(.q-field__control):before {
-    border-color: #1e1f24;
-    background-color: #1e1f24;
-    border-width: 2px;
-  }
-}
-
-.rmb-checked-box {
-  font-size: 14px;
-  color: #91829d;
-  margin-bottom: 8px;
-
-  :deep(.q-checkbox__bg) {
-    border-radius: 50%;
-  }
-  :deep(.q-checkbox__inner--truthy .q-checkbox__bg) {
-    background: linear-gradient(180deg, #fed87d 0%, #e6a60c 100%);
-
-    svg {
-      color: #000;
-      padding: 2px;
-    }
-  }
 }
 </style>

@@ -25,13 +25,13 @@
           <div v-if="!drawerVisible" class="wallet-container" @click="goToDeposit()">
             Add Cash &nbsp;
             <q-btn dense rounded class="wallet-btn">
-              <img src="../../assets/images/index/icon-wallet.png" />
+              <img src="../../assets/images/account/personal-svg.svg" />
             </q-btn>
           </div>
         </div>
 
         <div class="loader-container">
-          <div><q-spinner color="yellow" size="10em" :thickness="10" /></div>
+          <div><q-spinner color="green" size="10em" :thickness="10" /></div>
           <div>Loading... Please wait...</div>
         </div>
 
@@ -407,7 +407,7 @@ defineExpose({
 
 <style lang="scss">
 .gameDialog {
-  background-color: #4b027c;
+  // background-color: #4b027c;
 }
 
 #iphone-tips-close-button {
@@ -476,7 +476,7 @@ defineExpose({
   background: #1d1d27;
 
   .topActions {
-    background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
+    // background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
     box-shadow: 0px 3 7px 0px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
@@ -840,16 +840,18 @@ defineExpose({
   }
 
   .btn-cancel {
-    background: rgba(21, 0, 37, 0.5);
+    background: radial-gradient(68.92% 68.92% at 50% 50%, #1D341D 0%, #466A45 100%);
+    border: 1px solid #5D8956;
     font-weight: 700;
     color: #ffffff;
     border-radius: 8px;
   }
 
   .btn-confirm {
-    background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+    background: radial-gradient(68.92% 68.92% at 50% 50%, #00550E 0%, #57CD69 100%);
+    border: 1px solid #5D8956;
     font-weight: 700;
-    color: #150025;
+    color: #fff;
     border-radius: 8px;
   }
 }

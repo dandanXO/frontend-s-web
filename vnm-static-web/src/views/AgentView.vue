@@ -11,8 +11,8 @@
         <img src="../assets/images/affiliate/official-partner.png" height="55">
       </div>
       <div class="buttons">
-        <a :href="'https://www.4luckypartner.com/?langge=' + languageVal + '&agent=' + (affCode ? affCode : '')">{{ $t('affiliate.joinus') }}</a>
-        <a class="outline" :href="'https://www.4luckypartner.com/?langge=' + languageVal + '&agent=' + (affCode ? affCode : '')">{{ $t('affiliate.login') }}</a>
+        <a :href="'https://vnm-affiliate.th80to83w1.com?agent=' + (affCode ? affCode : '')">{{ $t('affiliate.joinus') }}</a>
+        <a class="outline" :href="'https://vnm-affiliate.th80to83w1.com?agent=' + (affCode ? affCode : '')">{{ $t('affiliate.login') }}</a>
         <a class="outline" @click.stop.prevent="store.openLiveChat()">
           {{ $t('affiliate.contactus') }}
         </a>
@@ -208,7 +208,7 @@
           </ul>
         </div></div>
       <div>
-        <a :href="'https://www.4luckypartner.com/?langge=' + languageVal + '&agent=' +
+        <a :href="'https://vnm-affiliate.th80to83w1.com?agent=' +
           (affCode ? affCode : '')
           " class="agent-reg-btn">{{ $t('affiliate.applyAgentNow') }}</a>
       </div>

@@ -24,7 +24,7 @@
 
 <script setup>
 import { ref, reactive, computed } from "vue";
-import { submitNewLossBonus } from "../../../api/index/promo";
+import { submitPokerNewLossBonus } from "../../../api/index/promo";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -34,7 +34,7 @@ const newLossBonusBtnLoading = ref(false);
 function chooseNewLossBonus() {
   newLossBonusBtnLoading.value = true;
 
-  submitNewLossBonus(newLossBonus.value)
+  submitPokerNewLossBonus(newLossBonus.value)
     .then((res) => {
       if (res.code === 0) {
         $q.notify({
