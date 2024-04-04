@@ -253,7 +253,7 @@ export const lotteryPlatforms = [
     message: "Lottery at TF88 offers attractive odds and diverse betting options, with fast payouts after the draw.",
     vimessage: "Xổ số tại TF88 có tỷ lệ cược hấp dẫn đa dạng về hình thức đặt cược, trả thưởng cực nhanh sau giờ quay.",
     caption: "",
-    gameCode: ""
+    gameCode: "thailottery"
   },
   {
     code: "LOTO",
