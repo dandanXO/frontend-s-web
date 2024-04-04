@@ -355,7 +355,7 @@ onMounted(() => {
   position: relative;
   // background: linear-gradient(180deg, #2d0f54 0%, #101114 100%);
   box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
-  overflow-x: hidden;
+  overflow: hidden;
   position: fixed;
   top: 0;
   width: 100%;
