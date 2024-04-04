@@ -191,34 +191,52 @@
     >
       <el-form ref="paramForm" :model="form" :rules="formRules" @submit.prevent>
         <el-form-item :label="t('fields.param')" prop="extraParams">
-          <div v-for="(item, index) in param" :key="index">
+          <el-switch
+            v-model="uiControl.showParamFormat"
+            class="mb-2"
+            inactive-text="Key Value"
+            active-text="Json"
+            inactive-value="key-value"
+            active-value="json"
+          />
+          <div v-if="uiControl.showParamFormat === 'key-value'">
+            <div v-for="(item, index) in param" :key="index">
+              <el-input
+                style="width: 170px; margin-top: 5px;"
+                v-model="item.key"
+              />
+              :
+              <el-input style="width: 170px " v-model="item.value" />
+              <el-button
+                v-if="index === param.length - 1"
+                icon="el-icon-plus"
+                size="mini"
+                type="primary"
+                style="margin-left: 20px"
+                @click="addParam()"
+                plain
+              >
+                {{ t('fields.add') }}
+              </el-button>
+              <el-button
+                icon="el-icon-remove"
+                size="mini"
+                type="danger"
+                style="margin-left: 20px"
+                @click="delParam(index)"
+                plain
+              >
+                {{ t('fields.delete') }}
+              </el-button>
+            </div>
+          </div>
+          <div v-else>
             <el-input
-              style="width: 170px; margin-top: 5px;"
-              v-model="item.key"
+              v-model="form.extraParams"
+              style="width: 350px"
+              autosize="true"
+              type="textarea"
             />
-            :
-            <el-input style="width: 170px " v-model="item.value" />
-            <el-button
-              v-if="index === param.length - 1"
-              icon="el-icon-plus"
-              size="mini"
-              type="primary"
-              style="margin-left: 20px"
-              @click="addParam()"
-              plain
-            >
-              {{ t('fields.add') }}
-            </el-button>
-            <el-button
-              icon="el-icon-remove"
-              size="mini"
-              type="danger"
-              style="margin-left: 20px"
-              @click="delParam(index)"
-              plain
-            >
-              {{ t('fields.delete') }}
-            </el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -260,6 +278,7 @@ const site = ref(null);
 const latestVersion = ref('-')
 const uiControl = reactive({
   dialogVisible: false,
+  showParamFormat: 'key-value',
 })
 const list = reactive({
   sites: [],
@@ -346,7 +365,13 @@ function delParam(index) {
 }
 
 async function submit() {
-  form.extraParams = constructParam()
+  if (uiControl.showParamFormat === 'key-value') {
+    form.extraParams = constructParam()
+  } else {
+    form.extraParams = JSON.stringify(
+      JSON.parse(form.extraParams)
+    )
+  }
   await editParam(form.id, form.extraParams)
   uiControl.dialogVisible = false
   await loadAffiliates()
