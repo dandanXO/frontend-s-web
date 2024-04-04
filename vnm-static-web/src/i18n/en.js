@@ -267,7 +267,7 @@ export default {
   withdraw: {
     withdraw: 'Withdraw',
     bankcard: 'Withdraw Bank card',
-    addBankCard: 'Add bank card',
+    addBankCard: 'Add new account',
     bindCard: 'Bind card',
     choose: 'Choose',
     unbindBankCardRecords: 'Unbind bank card records',

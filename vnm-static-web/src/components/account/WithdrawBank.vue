@@ -219,7 +219,7 @@
       :close-on-click-modal="false"
       @keydown.enter.prevent
     >
-      <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="100" label-suffix=":">
+      <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="160" label-suffix=":">
         <el-form-item tabindex="3" :label="$t('personal.captcha')" prop="captchaCode" :rules="[{ required: true, message: $t('placeholder.captchareq'), trigger: 'blur' }]" >
           <el-row :gutter="10" style="justify-content: center; align-items: center">
             <el-col :span="12">

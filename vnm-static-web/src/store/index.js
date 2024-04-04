@@ -30,8 +30,7 @@ export const userStore = defineStore("userStore", {
       currentDeposit: "0.0000",
       levelUpDeposit: "0",
       siteId: 7,
-      unreadTotal: 0,
-      locale: 'en'
+      unreadTotal: 0
     };
   },
   actions: {
@@ -133,10 +132,9 @@ export const userStore = defineStore("userStore", {
           } else {
             lineUrl = res.data.liveUrl2;
           }
-
           window.open(
             // `https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=WEB&lang=zh-CN&token=${this.token}`,
-            `https://csweb01.amv4xjcbd.com/?partnerId=7&way=WEB&lang=${this.locale}&token=${this.token}`,
+            `https://csweb01.amv4xjcbd.com/?partnerId=7&way=WEB&lang=${vueI18n.global.locale.value === 'vi'? 'vn' : vueI18n.global.locale.value}&token=${this.token}`,
             `${lineUrl}&token=${this.token}`,
             "Chat Server",
             "resizable=yes, width=" + 800 + ", height=" + 880 + ", top=" + top + ", left=" + left
@@ -152,6 +150,7 @@ export const userStore = defineStore("userStore", {
 export const i18nStore = defineStore("i18nStore", () => {
   const languageLocale = localStorage.getItem("languageLocale") || "en";
   const languageVal = ref(languageLocale);
+  
   function setLanguage(l) {
     languageVal.value = l;
     // when vue-i18n is being used with legacy: false, note that i18n.global.locale is a ref, so we must set it via .value:
