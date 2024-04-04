@@ -635,7 +635,7 @@ onMounted(() => {
 }
 
 .q-item__label {
-  color: #c5c7ff;
+  // color: #c5c7ff;
   font-weight: 500;
 }
 
