@@ -136,7 +136,7 @@
       </div>
       <div class="profile-wrapper" v-else>
         <PrimaryButton :isSmall="true" :label="'Register'" :onClick="() => router.push('/register')"/>
-        <q-btn no-caps unelevated @click="goLogin">Login</q-btn>
+        <q-btn no-caps unelevated @click="goLogin" style="color:#98A7B5">Login</q-btn>
       </div>
     </div>
   </div>
@@ -325,7 +325,7 @@ onMounted(() => {
     }
 
     .download-count {
-      color: #fe9a9a;
+      color: #97A6B4;
       font-size: 20px;
     }
 
