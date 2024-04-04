@@ -37,11 +37,9 @@
               <div
                 style="color: #cfb282; font-size: 18px; position: absolute; bottom: 4px; left: 0; right: 0"
                 v-if="vipLevel + 1 === Number(vip.vipLevel) && store.token"
-              >
+              > {{ store.currency.label }}
                 {{
-                  Number(currentDepositAmt)
-                    .toLocaleString("en-US", { style: "currency", currency: "CNY" })
-                    .replace("CN", "")
+                  Number(currentDepositAmt).toFixed(2)
                 }}
               </div>
             </div>

@@ -239,7 +239,7 @@
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted } from "vue";
+import { defineComponent, reactive, ref, watch, onMounted } from "vue";
 import { getVerificationCode } from "@/api/index/login";
 // import { Modal, message } from "ant-design-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -260,7 +260,9 @@ import { sendSessionSms } from "@/api/personal/personal";
 import { InfoFilled } from "@element-plus/icons-vue";
 import moment from "moment";
 import { useI18n } from "vue-i18n";
+import { i18nStore } from '@/store/language'
 import emptyData from "@/components/emptyData.vue";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
   name: "WithdrawBankView",
@@ -368,7 +370,7 @@ export default defineComponent({
       size: 10
     });
     const router = useRouter();
-    const columns = [
+    const columns = ref([
       {
         title: t('withdraw.bank'),
         dataIndex: "bankName",
@@ -394,7 +396,7 @@ export default defineComponent({
         key: "unbindTime",
         dataIndex: "unbindTime"
       }
-    ];
+    ]);
     const maskCardNumber = (cardNumber) => {
       const maskedDigits = cardNumber.slice(0, -4).replace(/[a-zA-Z0-9]/g, "*");
       const lastFourDigits = cardNumber.slice(-4);
@@ -420,7 +422,7 @@ export default defineComponent({
     const searchRecord = () => {
       if(!searchForm.startDate || !searchForm.endDate){
         ElMessage({
-          message: t('common.startEndDate'),
+          message: t('withdraw.startEndDate'),
           type: "error"
         });
         return;
@@ -891,6 +893,38 @@ export default defineComponent({
         return t('withdraw.accountNo');
       }
     };
+    const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
+    watch(languageVal, () => {
+      
+      columns.value = [
+      {
+        title: t('withdraw.bank'),
+        dataIndex: "bankName",
+        key: "bankName"
+      },
+      {
+        title: t('withdraw.cardNumber'),
+        dataIndex: "cardNumber",
+        key: "cardNumber"
+      },
+      {
+        title: t('withdraw.cardAddress'),
+        dataIndex: "cardAddress",
+        key: "cardAddress"
+      },
+      {
+        title: t('withdraw.bindTime'),
+        key: "bindTime",
+        dataIndex: "bindTime"
+      },
+      {
+        title: t('withdraw.unbindTime'),
+        key: "unbindTime",
+        dataIndex: "unbindTime"
+      }
+    ];
+    })
     return {
       searchForm,
       columns,
