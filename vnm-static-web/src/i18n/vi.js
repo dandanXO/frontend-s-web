@@ -25,6 +25,7 @@ export default {
   "account": {
     "welcome": "Chào mừng",
     "mainWallet": "Số dư",
+    reminder: "Hỗ trợ",
     require: "Hỗ trợ",
     str_copy: "Sao chép",
     str_deposit_serialnumber: "Số Serial Nạp Tiền",
@@ -694,7 +695,7 @@ export default {
     "backToTop": "TOP"
   },
   status: {
-    withdrawFailed: "Rút tiền thất bại",
+    withdrawFailed: "Lệnh rút tiền thất bại",
     withdraw: "Rút tiền",
     promotion: "Khuyến mãi",
     deposit: "Nạp tiền",
