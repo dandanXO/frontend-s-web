@@ -5,7 +5,7 @@
         <div class="appmeu-container">
           <div class="appmenu-img">
             <img
-              :src="require('../../assets/app/appmenu.png')"
+              :src="require('../../assets/app/appmenu-2.png')"
               alt=""
             />
           </div>
