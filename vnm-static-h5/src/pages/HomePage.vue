@@ -636,11 +636,12 @@ export default defineComponent({
 
           var checkItem1 = document.getElementById("sport-lists");
           var checkItem2 = document.getElementById("live-lists");
-          var checkItem3 = document.getElementById("poker-lists");
-          var checkItem4 = document.getElementById("lottery-lists");
-          var checkItem5 = document.getElementById("slot-lists");
-          var checkItem6 = document.getElementById("fishing-lists");
-          var checkItem7 = document.getElementById("cockfight-lists");
+          var checkItem3 = document.getElementById("slot-lists");
+          var checkItem4 = document.getElementById("poker-lists");
+          var checkItem5 = document.getElementById("esport-lists");
+          var checkItem6 = document.getElementById("lottery-lists");
+          var checkItem7 = document.getElementById("fishing-lists");
+          var checkItem8 = document.getElementById("cockfight-lists");
 
           var positionTop1 = checkItem1.getBoundingClientRect().top;
           var positionTop2 = checkItem2.getBoundingClientRect().top;
@@ -649,6 +650,7 @@ export default defineComponent({
           var positionTop5 = checkItem5.getBoundingClientRect().top;
           var positionTop6 = checkItem6.getBoundingClientRect().top;
           var positionTop7 = checkItem7.getBoundingClientRect().top;
+          var positionTop8 = checkItem8.getBoundingClientRect().top;
 
           var bodyElement = document.body;
           var bodyOffset = bodyElement.getBoundingClientRect();
@@ -656,14 +658,16 @@ export default defineComponent({
 
           if (windowHeight + 15 > bodyOffset.bottom) {
             tab.value = "cockfight";
-          } else if (0 > positionTop6 - 5 && positionTop7 >= blockHeight) {
+          } else if (0 > positionTop7 - 5 && positionTop8 >= blockHeight) {
             tab.value = "fishing";
-          } else if (0 > positionTop5 - 5 && positionTop6 >= blockHeight) {
-            tab.value = "slot";
-          } else if (0 > positionTop4 - 5 && positionTop5 >= blockHeight) {
+          }else if (0 > positionTop6 - 5 && positionTop7 >= blockHeight) {
             tab.value = "lottery";
-          } else if (0 > positionTop3 - 5 && positionTop4 >= blockHeight) {
+          } else if (0 > positionTop5 - 5 && positionTop6 >= blockHeight) {
+            tab.value = "esport";
+          } else if (0 > positionTop4 - 5 && positionTop5 >= blockHeight) {
             tab.value = "poker";
+          } else if (0 > positionTop3 - 5 && positionTop4 >= blockHeight) {
+            tab.value = "slot";
           } else if (0 > positionTop2 - 5 && positionTop3 >= blockHeight) {
             tab.value = "live";
           } else if (0 > positionTop1 - 5 && positionTop2 >= blockHeight) {
