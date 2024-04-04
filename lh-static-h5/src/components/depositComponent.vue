@@ -85,11 +85,7 @@
         </q-select>
 
         <div class="q-mt-sm q-mb-sm text-grey text-bold ">
-          最低金额:
-          {{ calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0 }}
-          <br />
-          最高金额:
-          {{
+          单笔存款：{{ calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0 }}  -   {{
             activeMethod.depositMax
               ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value)
               : " "
