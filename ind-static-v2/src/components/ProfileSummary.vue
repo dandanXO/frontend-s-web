@@ -385,6 +385,7 @@ onMounted(() => {
       width: 100%;
       gap: 0;
       justify-content: space-between;
+      align-items: center;
       padding: 0 12px;
       // overflow-y: hidden;
 
@@ -519,14 +520,13 @@ onMounted(() => {
   .profile-wrapper-extra {
     display: flex;
     align-items: center;
-    padding-top: 10px;
-    margin-bottom: auto;
     width: 100%;
   }
 
   .logo-img {
     width: 100%;
     margin: 0 auto;
+    display: flex;
 
     img {
       max-width: 100px;
