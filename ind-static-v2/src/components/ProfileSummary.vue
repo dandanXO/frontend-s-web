@@ -1,6 +1,6 @@
 <template>
   <div style="height: 56px" v-if="topDownload"></div>
-  <div style="height: 80px"></div>
+  <div style="height: 70px"></div>
 
   <div class="top-download" v-if="topDownload">
     <div class="download-container">
@@ -63,7 +63,7 @@
           <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
           <q-chip v-if="store.unreadInboxMail" class="notification" color="red" size="xs"></q-chip>
         </div> -->
-        <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown">
+        <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown" unelevated>
           <template v-slot:label>
             <div class="profile-pic">
               <div class="unread-total" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</div>
@@ -363,6 +363,7 @@ onMounted(() => {
   max-width: 500px;
   z-index: 999;
   transition: 0.3s all;
+  height: 70px;
 
   &.with-top-download {
     border-top-right-radius: 25px;
