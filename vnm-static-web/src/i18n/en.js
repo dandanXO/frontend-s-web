@@ -8,7 +8,7 @@ export default {
     slot: 'Slots',
     lottery: 'Lottery',
     fishing: 'Fishing',
-    cockfight: 'Cockfight',
+    cockfight: 'Cock fight',
     promotion: 'Promotion',
     agent: 'Agent',
     app: 'App',
@@ -54,7 +54,8 @@ export default {
     lottery: "Lottery",
     fishing: "Fishing",
     cockfight: 'Cockfight',
-
+    deposit_should_between: "Deposit amount should between ",
+    msg_deleted: "Message deleted"
   },
   login: {
     username: 'Username',
@@ -366,7 +367,7 @@ transit: {
   turnover: 'Turnover',
   withdraw: 'Withdraw',
   transfer: 'Transfer',
-  rebates: 'Rebates',
+  rebates: 'Promotion',
   gameBetRecord: 'Game bet record',
   totalBet: 'Total bet',
   totalPayout: 'Total payout',

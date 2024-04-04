@@ -53,6 +53,8 @@ export default {
     "lottery": "Xổ Số",
     fishing: "Bắn Cá",
     cockfight: 'Đá Gà',
+    deposit_should_between: "Nạp tiền đặt cọc phải nằm trong khoảng từ ",
+    msg_deleted: "Tin nhắn đã bị xóa"
   },
   "login": {
     "username": "Tên tài khoản",
@@ -362,7 +364,7 @@ export default {
     "turnover": "Sao kê",
     "withdraw": "Rút tiền",
     "transfer": "Chuyển khoản",
-    "rebates": "Hoàn trả",
+    "rebates": "Khuyến mãi",
     "gameBetRecord": "Lịch sử đặt cược",
     "totalBet": "Tổng cược",
     "totalPayout": "Tổng thanh toán",
