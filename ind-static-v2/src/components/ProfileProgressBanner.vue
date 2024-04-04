@@ -110,10 +110,10 @@ const profileImagePath = computed(() => {
 
         img {
           display: block;
-          width: 100px;
+          width: 60px;
           position: absolute;
-          top: -17px;
-          left: -45px;
+          top: -2px;
+          left: -25px;
         }
 
         .vip-level {
