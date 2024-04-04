@@ -145,7 +145,7 @@ export default route(function (/* { store, ssrContext } */) {
       ui.isAffiliateB = true;
       console.log("jo98.cc");
 
-      fbq("init", "400225719617152");
+      fbq("init", "2308413432696176");
 
       fbq("track", "PageView");
       fbq("track", "ViewContent");
@@ -161,7 +161,7 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("track", "PageView");
       fbq("track", "ViewContent");
       */
-      ttq.load('CO1VAVRC77U685I8CO4G');
+      ttq.load("CO1VAVRC77U685I8CO4G");
       ttq.page();
     } else if (ui.isAffiliateB) {
       console.log("Slot-Win .cc");

@@ -135,10 +135,22 @@
             v-model="withdrawInfo.withdrawPassword"
             :label="$t('lang.withdraw_password')"
             class="withdraw-field"
-            type="password"
+            :type="isPwd ? 'password' : 'text'"
             :rules="[(val) => (val && val.length > 0) || $t('lang.withdraw_please_enter_withdraw_password')]"
             clearable
-          ></q-input>
+          >
+            <template v-slot:prepend>
+              <img src="../../assets/images/login/password-icon.png" width="24" />
+            </template>
+            <template v-slot:append>
+              <q-icon
+                color="dark"
+                :name="isPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwd = !isPwd"
+              />
+            </template>
+          </q-input>
           <div
             class="q-mt-sm q-mb-sm text-grey text-bold q-pb-sm"
             style="border-bottom: 1px solid #434343"
@@ -570,7 +582,8 @@ export default defineComponent({
       tutorialLabel,
       isNewUser,
       checkNewUser,
-      isValidUSDTAmt
+      isValidUSDTAmt,
+      isPwd: ref(true),
     };
   }
 });
@@ -608,7 +621,7 @@ export default defineComponent({
 }
 .withdrawalmethod {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   text-align: center;
   overflow-x: unset;
   padding: 0px 5px;
@@ -634,7 +647,7 @@ export default defineComponent({
 
     img {
       width: 100%;
-      padding: 5px 10px;
+      padding: 5px;
     }
 
     &.active {
@@ -658,7 +671,8 @@ export default defineComponent({
 
     .type-name {
       line-height: 15px;
-      overflow-wrap: break-word;
+      // overflow-wrap: break-word;
+      white-space: nowrap;
     }
 
     .promo {

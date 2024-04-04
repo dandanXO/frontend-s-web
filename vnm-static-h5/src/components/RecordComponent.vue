@@ -112,7 +112,7 @@
           label-cols="5"
           class="reminder-dialog-form"
         >
-          <q-input :label="$t('lang.str_str_deposit_serialnumber')" filled v-model="reminderForm.orderNo" padding="none" readonly disable />
+          <q-input :label="$t('lang.str_deposit_serialnumber')" filled v-model="reminderForm.orderNo" padding="none" readonly disable />
           <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" />
           <q-input
             type="textarea"

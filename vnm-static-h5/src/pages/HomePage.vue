@@ -443,6 +443,24 @@
     </div>
   </div>
 
+  <div class="float-service" @click="toggleMenuFloat">
+    <div class="float-btn"><img src="../assets/images/home/floating-btn.png" width="20px" /></div>
+    <div class="float-menu" :class="isMenuFloat && 'show-menu'">
+      <router-link to="/liveChat" class="menu-item"><img src="../assets/images/home/float-cs-01.png" /></router-link>
+      <a href="mailto:vnsupport@tf88.com" class="menu-item"><img src="../assets/images/home/float-cs-02.png" /></a>
+      <a href="tel:+84945091999" class="menu-item"><img src="../assets/images/home/float-cs-03.png" /></a>
+      <a href="https://t.me/TF88_CS" target="_blank" class="menu-item">
+        <img src="../assets/images/home/float-cs-04.png" />
+      </a>
+      <a href="https://chat.zalo.me/?phone=+639672541561" target="_blank" class="menu-item">
+        <img src="../assets/images/home/float-cs-05.png" />
+      </a>
+      <a href="https://www.facebook.com/TF88vnofficial" target="_blank" class="menu-item">
+        <img src="../assets/images/home/float-cs-06.png" />
+      </a>
+    </div>
+  </div>
+
   <GameModal ref="allGames"></GameModal>
 
   <q-dialog
@@ -618,11 +636,12 @@ export default defineComponent({
 
           var checkItem1 = document.getElementById("sport-lists");
           var checkItem2 = document.getElementById("live-lists");
-          var checkItem3 = document.getElementById("poker-lists");
-          var checkItem4 = document.getElementById("lottery-lists");
-          var checkItem5 = document.getElementById("slot-lists");
-          var checkItem6 = document.getElementById("fishing-lists");
-          var checkItem7 = document.getElementById("cockfight-lists");
+          var checkItem3 = document.getElementById("slot-lists");
+          var checkItem4 = document.getElementById("poker-lists");
+          var checkItem5 = document.getElementById("esport-lists");
+          var checkItem6 = document.getElementById("lottery-lists");
+          var checkItem7 = document.getElementById("fishing-lists");
+          var checkItem8 = document.getElementById("cockfight-lists");
 
           var positionTop1 = checkItem1.getBoundingClientRect().top;
           var positionTop2 = checkItem2.getBoundingClientRect().top;
@@ -631,6 +650,7 @@ export default defineComponent({
           var positionTop5 = checkItem5.getBoundingClientRect().top;
           var positionTop6 = checkItem6.getBoundingClientRect().top;
           var positionTop7 = checkItem7.getBoundingClientRect().top;
+          var positionTop8 = checkItem8.getBoundingClientRect().top;
 
           var bodyElement = document.body;
           var bodyOffset = bodyElement.getBoundingClientRect();
@@ -638,14 +658,16 @@ export default defineComponent({
 
           if (windowHeight + 15 > bodyOffset.bottom) {
             tab.value = "cockfight";
-          } else if (0 > positionTop6 - 5 && positionTop7 >= blockHeight) {
+          } else if (0 > positionTop7 - 5 && positionTop8 >= blockHeight) {
             tab.value = "fishing";
-          } else if (0 > positionTop5 - 5 && positionTop6 >= blockHeight) {
-            tab.value = "slot";
-          } else if (0 > positionTop4 - 5 && positionTop5 >= blockHeight) {
+          }else if (0 > positionTop6 - 5 && positionTop7 >= blockHeight) {
             tab.value = "lottery";
-          } else if (0 > positionTop3 - 5 && positionTop4 >= blockHeight) {
+          } else if (0 > positionTop5 - 5 && positionTop6 >= blockHeight) {
+            tab.value = "esport";
+          } else if (0 > positionTop4 - 5 && positionTop5 >= blockHeight) {
             tab.value = "poker";
+          } else if (0 > positionTop3 - 5 && positionTop4 >= blockHeight) {
+            tab.value = "slot";
           } else if (0 > positionTop2 - 5 && positionTop3 >= blockHeight) {
             tab.value = "live";
           } else if (0 > positionTop1 - 5 && positionTop2 >= blockHeight) {
@@ -1138,6 +1160,12 @@ export default defineComponent({
 
     const imageLoading = ref(false);
 
+    const isMenuFloat = ref(false);
+
+    const toggleMenuFloat = () => {
+      isMenuFloat.value = !isMenuFloat.value;
+    };
+
     return {
       imageLoading,
       slide: ref(0),
@@ -1213,13 +1241,59 @@ export default defineComponent({
       moment,
       unreadInboxMail,
       getUnreadTotal,
-      topBoxVisible
+      topBoxVisible,
+      isMenuFloat,
+      toggleMenuFloat
     };
   }
 });
 </script>
 
 <style scoped lang="scss">
+.float-service {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  .float-btn {
+    margin-right: -5px;
+  }
+
+  .float-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0px -8px 8px 0px #c3d4e6 inset;
+    background: rgba(252, 253, 254, 0.3);
+    padding: 12px 6px;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    backdrop-filter: blur(5px);
+    margin-right: calc(-100% - 16px);
+    transition: 0.3s all;
+
+    &.show-menu {
+      margin-right: 0;
+    }
+
+    .menu-item {
+      padding: 8px;
+
+      img {
+        display: block;
+        width: 30px;
+        // width: 100%;
+        // max-width: 30px;
+      }
+    }
+  }
+}
+
 .q-page-container {
   min-height: 100vh;
 }

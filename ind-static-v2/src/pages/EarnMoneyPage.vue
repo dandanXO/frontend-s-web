@@ -130,6 +130,10 @@ const swipeRight = () => {
     padding-bottom: 6px;
     padding-top: 12px;
 
+    background: rgb(0 0 0 / 20%);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+
     :deep(.q-tabs__content) {
       background: #ffffff0d;
       border: 1px solid #FFFFFF0D;

@@ -1,6 +1,6 @@
 <template>
   <div style="height: 56px" v-if="topDownload"></div>
-  <div style="height: 80px"></div>
+  <div style="height: 70px"></div>
 
   <div class="top-download" v-if="topDownload">
     <div class="download-container">
@@ -63,7 +63,7 @@
           <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
           <q-chip v-if="store.unreadInboxMail" class="notification" color="red" size="xs"></q-chip>
         </div> -->
-        <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown">
+        <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown" unelevated>
           <template v-slot:label>
             <div class="profile-pic">
               <div class="unread-total" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</div>
@@ -136,7 +136,7 @@
       </div>
       <div class="profile-wrapper" v-else>
         <PrimaryButton :isSmall="true" :label="'Register'" :onClick="() => router.push('/register')"/>
-        <q-btn no-caps unelevated @click="goLogin">Login</q-btn>
+        <q-btn no-caps unelevated @click="goLogin" style="color:#98A7B5">Login</q-btn>
       </div>
     </div>
   </div>
@@ -325,7 +325,7 @@ onMounted(() => {
     }
 
     .download-count {
-      color: #fe9a9a;
+      color: #97A6B4;
       font-size: 20px;
     }
 
@@ -363,6 +363,11 @@ onMounted(() => {
   max-width: 500px;
   z-index: 999;
   transition: 0.3s all;
+  height: 70px;
+
+  background: rgb(0 0 0 / 20%);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
 
   &.with-top-download {
     border-top-right-radius: 25px;
@@ -404,8 +409,8 @@ onMounted(() => {
     align-items: center;
     justify-content: flex-end;
     gap: 12px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     margin-bottom: 4px;
     width: 100%;
     position: relative;
@@ -544,14 +549,14 @@ onMounted(() => {
   position: relative;
   margin-left: 20px;
   margin-bottom: 5px;
-  margin-top: -10px;
+  margin-top: -15px;
 
   img {
     display: block;
-    width: 100px;
+    width: 60px;
     position: absolute;
-    top: -17px;
-    left: -45px;
+    top: -2px;
+    left: -25px;
   }
 
   .vip-level {
@@ -578,7 +583,7 @@ onMounted(() => {
 
 .btn-refresh {
   position: absolute;
-  right: 10px;
+  right: 0px;
   top: 50%;
   transform: translate(-50%, -50%);
 }
@@ -634,7 +639,7 @@ onMounted(() => {
 }
 
 .q-item__label {
-  color: #c5c7ff;
+  // color: #c5c7ff;
   font-weight: 500;
 }
 

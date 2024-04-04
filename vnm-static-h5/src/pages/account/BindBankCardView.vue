@@ -77,6 +77,26 @@
     </q-card>
   </q-dialog>
 
+  <q-dialog class="modal-common-div" v-model="showBindBankNoteDialog">
+    <q-card style="width: 100%" class="modalcontent">
+      <div class="headers">
+        <div class="black-titles">{{ $t("lang.bd_note") }}</div>
+        <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
+      </div>
+
+      <!-- <div class="contents"> -->
+      <ol>
+        <li class="q-mb-md">{{ $t("lang.bd_note_para_01") }}</li>
+        <li>{{ $t("lang.bd_note_para_02") }}</li>
+      </ol>
+      <!-- </div> -->
+
+      <q-card-actions style="width: 100%" align="center" class="bg-white text-teal">
+        <q-btn class="common-md-btn" flat :label="$t('lang.system_confirm')" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+
   <q-page class="bind-container">
     <div class="bind-wrapper">
       <q-form class="bind-item q-my-sm">
@@ -271,7 +291,7 @@ const bankCardInfo = reactive({
 
 const validateBankLength = (val) => {
   if (!/^\d+$/.test(val)) return t("lang.bd_please_enter_digit_only");
-  return (val.length > 15 && val.length < 20) || t("lang.bd_length_between_16_19");
+  // return (val.length > 15 && val.length < 20) || t("lang.bd_length_between_16_19");
 };
 
 // NOTE: no chance to validate, e.g. member telephone = 44****77
@@ -435,6 +455,8 @@ const handleEnterKey = () => {
     openPhoneVeriDialog();
   }
 };
+
+const showBindBankNoteDialog = ref(true);
 
 onActivated(() => {
   loadBankCards();
