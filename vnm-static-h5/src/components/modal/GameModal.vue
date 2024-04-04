@@ -330,12 +330,12 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             })
             .catch((err) => {
               $q.loading.hide();
-              $q.notify({
-                color: "negative",
-                position: "top",
-                message: err.message,
-                icon: "report_problem"
-              });
+              // $q.notify({
+              //   color: "negative",
+              //   position: "top",
+              //   message: err.message,
+              //   icon: "report_problem"
+              // });
             });
           return;
         }
@@ -362,12 +362,12 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           })
           .catch((err) => {
             $q.loading.hide();
-            $q.notify({
-              color: "negative",
-              position: "top",
-              message: err.message,
-              icon: "report_problem"
-            });
+            // $q.notify({
+            //   color: "negative",
+            //   position: "top",
+            //   message: err.message,
+            //   icon: "report_problem"
+            // });
           });
       } else {
         if (platformCode === "platformType") {
@@ -428,12 +428,12 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           })
           .catch((err) => {
             $q.loading.hide();
-            $q.notify({
-              color: "negative",
-              position: "top",
-              message: err.message,
-              icon: "report_problem"
-            });
+            // $q.notify({
+            //   color: "negative",
+            //   position: "top",
+            //   message: err.message,
+            //   icon: "report_problem"
+            // });
           });
       }
     } else {

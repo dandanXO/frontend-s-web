@@ -13,7 +13,6 @@
           clearable
           v-model="regForm.loginName"
           :placeholder="$t('lang.username')"
-          lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_enter_username'),
             (val) => (val && val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11'),

@@ -286,7 +286,7 @@ export default defineComponent({
       }))
           .then(res => {
             getCode();
-            let message = res.message || '发送手机验证码成功',
+            let message = res.message || t('lang.personal_verification_successful'),
                 color = 'positive'
 
             if (res.code === 0) {

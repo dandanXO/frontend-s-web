@@ -61,7 +61,7 @@
               ></q-linear-progress>
               <div class="start-end">
                 <div class="vip-card-common-text">V{{ vipIndex }}</div>
-                <div class="vip-card-current-num" v-if="vipLevel === vipIndex">{{ currentDeposit }}</div>
+                <div class="vip-card-current-num" v-if="vipLevel === vipIndex">VNDP {{ currentDeposit }}</div>
                 <div class="vip-card-common-text">V{{ vipIndex + 1 }}</div>
               </div>
             </div>

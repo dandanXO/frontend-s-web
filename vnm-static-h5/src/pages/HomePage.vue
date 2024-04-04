@@ -395,7 +395,7 @@
         <template v-for="(item, index) in fishing" :key="index">
           <div
             class="platform-block"
-            @click="playGame(item.gameName, item.code, 7202)"
+            @click="router.push({ path: '/fishing', query: { platform: item.code } })"
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
             <MaintenanceBox :item="item" />
@@ -660,7 +660,7 @@ export default defineComponent({
             tab.value = "cockfight";
           } else if (0 > positionTop7 - 5 && positionTop8 >= blockHeight) {
             tab.value = "fishing";
-          }else if (0 > positionTop6 - 5 && positionTop7 >= blockHeight) {
+          } else if (0 > positionTop6 - 5 && positionTop7 >= blockHeight) {
             tab.value = "lottery";
           } else if (0 > positionTop5 - 5 && positionTop6 >= blockHeight) {
             tab.value = "esport";
