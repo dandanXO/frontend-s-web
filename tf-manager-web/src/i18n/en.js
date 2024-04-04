@@ -1571,6 +1571,11 @@ export default {
     keyQuantityAfter: 'Key Quantity After',
     checkInDate: 'Check In Date',
     consecutiveDay: 'Consecutive Day Count',
+    summoner: 'Summoner',
+    memberSummon: 'Member Summoned',
+    summonBonus: 'Summon Bonus',
+    depositBonus: 'Deposit Bonus',
+    depositDayCount: 'Day Count',
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
@@ -2208,6 +2213,7 @@ export default {
     'Affiliate Recalculate': 'Affiliate Recalculate',
     Utils: 'Utils',
     'Ip Location': 'Ip Location',
+    'Member Summon Reward Record': 'Member Summon Reward Record',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

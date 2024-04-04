@@ -1576,6 +1576,11 @@ export default {
     keyQuantityAfter: '之后钥匙数量',
     checkInDate: '签到日期',
     consecutiveDay: '连续签到天数',
+    summoner: '唤醒人',
+    memberSummon: '被唤醒人',
+    summonBonus: '唤醒彩金',
+    depositBonus: '存款彩金',
+    depositDayCount: '存款天数',
   },
   message: {
     addRemarkSuccess: '新增备注成功',
@@ -2177,6 +2182,7 @@ export default {
     'Affiliate Recalculate': '代理重算',
     Utils: '工具',
     'Ip Location': 'Ip查询',
+    'Member Summon Reward Record': '精英召唤活动记录',
   },
   google: {
     google_auth_menu: '谷歌验证',
