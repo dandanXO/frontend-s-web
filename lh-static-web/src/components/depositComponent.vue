@@ -58,10 +58,8 @@
               </el-select>
             </el-form-item>
             <div class="account-tip">
-              最低存款: {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }} {{ isUSDT ? "USDT" : store.currency.label
-              }}
-              <br />
-              最高存款: {{
+              单笔存款：{{ calculatedMinDeposit ? calculatedMinDeposit : 0 }} {{ isUSDT ? "USDT" : store.currency.label
+              }}  -   {{
                 activeMethod.depositMax ? activeMethod.depositMax : "No Limit"
               }} {{ isUSDT ? "USDT" : store.currency.label }}
             </div>
@@ -681,6 +679,7 @@ onMounted(() => {
 .account-tip {
   display: flex;
   align-items: flex-start;
+  margin-bottom: 18px;
 }
 
 // .deposit {
