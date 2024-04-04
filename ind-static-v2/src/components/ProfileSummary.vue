@@ -365,6 +365,10 @@ onMounted(() => {
   transition: 0.3s all;
   height: 70px;
 
+  background: rgb(0 0 0 / 20%);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+
   &.with-top-download {
     border-top-right-radius: 25px;
     border-top-left-radius: 25px;
