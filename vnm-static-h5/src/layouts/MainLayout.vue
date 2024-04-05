@@ -72,7 +72,7 @@
         <q-route-tab to="/finance/deposit" name="deposit">
           <img class="inactive" src="../assets/images/footer/withdraw-icon.svg" />
           <img class="hover" src="../assets/images/footer/withdraw-icon-active.svg" />
-          {{ $t("lang.account") }}
+          {{ $t("lang.deposit") }}
         </q-route-tab>
         <q-route-tab class="cs-web-id" to="/account/vip?redirect=home" id="cs-web-id" name="vip">
           <img class="inactive" src="../assets/images/footer/vip-icon.svg" />
