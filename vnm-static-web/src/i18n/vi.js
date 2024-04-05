@@ -123,6 +123,8 @@ export default {
     "downloadTheApp": "Tải ứng dụng",
     "soccerBetting": "Cá cược bóng đá",
     "footballNews": "Tin tức bóng đá",
+    "esportNews": 'Tin Esport',
+    "bettingGuide": 'Hướng dẫn cá cược',
     "networkSecurity": "Bảo mật mạng",
     "networkSecurityPt1": "Thông tin được bảo mật an toàn không có lỗ hổng",
     "networkSecurityPt2": "Cập nhật thường xuyên để bảo vệ",
