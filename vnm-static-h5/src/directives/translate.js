@@ -124,9 +124,11 @@ export const translateRecord = (rec, type = "") => {
   } else if (rec === "ADJUST") {
     return i18n.global.t('lang.str_adjust'); // Closed
   } if (rec === "AG") {
-    return "AG " + i18n.global.t('lang.livecasino') + ", XIN" + i18n.global.t('lang.slot'); // AG
+    // return "AG " + i18n.global.t('lang.livecasino') + ", XIN" + i18n.global.t('lang.slot'); // AG
+    return "XIN " + i18n.global.t('lang.slot'); // AG
   }else if (rec === "GPI") {
-    return "GPI " + i18n.global.t('lang.slot') + ", GPI" + i18n.global.t('lang.lottery'); // AG
+    // return "GPI " + i18n.global.t('lang.slot') + ", GPI" + i18n.global.t('lang.lottery'); // AG
+    return "GPI " + i18n.global.t('lang.lottery'); // AG
   }  else if (rec === "BBINDY") {
     return "BBIN"  + i18n.global.t('lang.livecasino');
   } else if (rec === "KP") {
