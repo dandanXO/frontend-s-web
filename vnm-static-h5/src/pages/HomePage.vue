@@ -985,7 +985,7 @@ export default defineComponent({
               pokerObj.title_en = pokerObj.name + " Poker";
               pokerObj.icon = "poker";
               if (pokerObj.code === "GPI") {
-                pokerObj.gameCode = "poker";
+                pokerObj.gameCode = "";
               }
               poker.value.push(pokerObj);
             }

@@ -408,6 +408,10 @@ export default defineComponent({
       box-shadow: $shadow-bg;
       padding: 4px;
 
+      .q-img {
+        aspect-ratio: 1/1;
+      }
+
       img {
         width: 100%;
         height: auto;
