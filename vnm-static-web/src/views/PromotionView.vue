@@ -659,7 +659,7 @@ export default defineComponent({
               }
             }
             .promo-details {
-              font-family: "Microsoft Yahei UI";
+              // font-family: "Microsoft Yahei UI";
               margin: 20px 0;
               padding: 50px 0 10px 0;
               display: flex;
