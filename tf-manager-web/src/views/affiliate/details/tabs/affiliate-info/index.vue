@@ -329,7 +329,7 @@
           <template #label>
             <div>
               <svg-icon icon-class="money" style="height: 16px;width: 16px;" />
-              {{ t('fields.totalBalance') }}
+              {{ t('fields.affiliateWallet') }}
             </div>
           </template>
           <div style="display: inline-block;" v-loading="loading.total">
@@ -355,7 +355,7 @@
           <template #label>
             <div>
               <svg-icon icon-class="money" style="height: 16px;width: 16px;" />
-              {{ t('fields.commissionBalance') }}
+              {{ t('fields.commissionWallet') }}
             </div>
           </template>
           <div style="display: inline-block;" v-loading="loading.commissionBalance">
