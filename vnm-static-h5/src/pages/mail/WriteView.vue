@@ -60,7 +60,7 @@
   <q-dialog class="modal-common-div" @hide="closePage" v-model="modalSendSuccess">
     <q-card style="width: 330px" class="modalcontent">
       <div class="headers">
-        <div class="black-titles">{{ $t("lang.compose_msgsent") }}</div>
+        <div class="titles">{{ $t("lang.compose_msgsent") }}</div>
         <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
       </div>
 

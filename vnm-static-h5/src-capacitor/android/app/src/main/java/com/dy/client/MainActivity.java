@@ -1,4 +1,4 @@
-package com.xf.client;
+package com.vnm.client;
 
 import com.getcapacitor.BridgeActivity;
 

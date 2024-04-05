@@ -591,3 +591,9 @@ svg {
   background-color: #4c9dec;
   color: #ffffff;
 }
+
+@media (max-width: 450px) {
+  .sm-screen-txt {
+    font-size: 70% !important;
+  }
+}
