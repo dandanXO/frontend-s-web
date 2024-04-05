@@ -477,7 +477,7 @@ a:hover {
 
 @media screen and (max-width: 475px){
   .top-wrapper{
-   padding-top: 85%;
+   /* padding-top: 85%; */
   }
 }
 
