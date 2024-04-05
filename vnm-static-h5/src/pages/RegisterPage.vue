@@ -152,7 +152,9 @@
           color="white"
         >
           <template v-slot:prepend>
-            <q-icon color="bright" name="smartphone" style="font-size: 24px" />
+            <div style="width: 24px; display: flex; align-items: center">
+              <img src="../assets/images/login/phone-icon.png" width="18" />
+            </div>
           </template>
         </q-input>
 
@@ -171,7 +173,9 @@
           color="white"
         >
           <template v-slot:prepend>
-            <q-icon color="bright" name="mail_outline" style="font-size: 24px" />
+            <div style="width: 24px; display: flex; align-items: center">
+              <img src="../assets/images/login/mail-icon.png" width="27" />
+            </div>
           </template>
         </q-input>
 
@@ -409,7 +413,7 @@ export default defineComponent({
     const isValidRealName = (val) => {
       const phonePattern = /^[a-zA-Z\s]+$/;
       return phonePattern.test(regForm.realName) || t("lang.personal_realname_valid");
-    }
+    };
 
     const router = useRouter();
     const onSubmit = () => {
@@ -472,7 +476,7 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: t('lang.register_successful'),
+                  message: t("lang.register_successful"),
                   icon: "check_circle_outline"
                 });
                 store.autoLogin(res.data);
