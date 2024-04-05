@@ -410,10 +410,16 @@ export default {
     record_username: "Tên người dùng",
     record_fill_up_record_time: "Thời gian điền ghi chú",
     record_choose_lucky_number: "Chọn số may mắn",
+    record_win_status: "Tình trạng thắng",
     record_no_data: "Không có dữ liệu, vui lòng kiểm tra ngày khác",
     record_date_of_win: "Ngày thắng",
     record_winner_list: "Danh sách người chiến thắng",
     record_lucky_number_of_win: "Số may mắn của người chiến thắng",
+    number_sent_successful: "Gửi số thành công",
+    not_drawn_yet: "Chưa được rút",
+    won: "Thắng",
+    didnt_win: "Không thắng",
+    please_select_query_time: "Vui lòng chọn thời gian truy vấn",
 
     // slot
     slot_search: "Tìm kiếm trò chơi",

@@ -56,13 +56,7 @@ export function submitLuckyNumber(item) {
 }
 
 export function submitNewLossBonus(item) {
-  return eventapi.post(
-    `/privi/lotteryNumber`,
-    qs.stringify({
-      number: item,
-      promoCode: "lh1-lottery"
-    })
-  );
+  return eventapi.post(`/privi/lotteryNumber`);
 }
 
 export function submitPokerNewLossBonus() {
@@ -82,7 +76,7 @@ export function refundSlotBonus() {
 }
 
 export function luckyNumberList(queryItems, memberId) {
-  return eventapi.get(`/privi/selectNumbers`, {
+  return eventapi.get(`/privi/selectedNumbers`, {
     params: {
       winStatus: queryItems.winStatus,
       recordTime: queryItems.recordTime,
