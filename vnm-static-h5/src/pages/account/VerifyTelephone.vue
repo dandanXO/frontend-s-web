@@ -119,7 +119,7 @@ export default defineComponent({
       formDetails.realName = store.realName;
       formDetails.birthday = store.birthday;
       formDetails.email = store.email;
-      formDetails.phone = store.phone;
+      formDetails.phone = "";
       formDetails.phoneVerified = store.phoneVerified;
     };
 
@@ -180,7 +180,6 @@ export default defineComponent({
     const submitUpdateSecurity = () => {
       phoneOtpRef.value.validate();
       phoneNumberRef.value.validate()
-
       if (phoneNumberRef.value.hasError || phoneOtpRef.value.hasError) {
       } else {
         api.post("/session/verifyAndUpdatePhone", qs.stringify({
@@ -201,12 +200,6 @@ export default defineComponent({
             router.go(-1);
           }
         }).catch((e) => {
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: e.message,
-            icon: "report_problem"
-          });
         });
       }
     };

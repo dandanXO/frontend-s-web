@@ -118,7 +118,7 @@ export default defineComponent({
       formDetail.nickName = personalState.memberInfo.nickName;
       formDetail.realName = personalState.memberInfo.realName;
       formDetail.birthday = personalState.memberInfo.birthday;
-      formDetail.email = personalState.memberInfo.email;
+      formDetail.email = "";
       formDetail.phone = personalState.memberInfo.phone;
       formDetail.phoneVerified = personalState.memberInfo.phoneVerified;
     };
@@ -219,7 +219,7 @@ export default defineComponent({
       emailOtpRef.value.validate()
       if (emailOtpRef.value.hasError) {
       } else {
-        api.post("/session/verifyAndUpdateEmail", qs.stringify({
+        api.post("/otp/verifyEmail", qs.stringify({
           email: formDetail.email,
           code: formDetail.emailOtpRef,
           codeId: emailCodeId.value
@@ -309,7 +309,7 @@ export default defineComponent({
         return;
       }
 
-      api.post(`/otp/sendNewEmail`, qs.stringify({
+      api.post(`/otp/sendEmail`, qs.stringify({
         email: formDetail.email,
         captchaCode: innerCaptchaRef.value,
         codeId: updateSecurityVerified.codeId

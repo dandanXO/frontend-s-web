@@ -768,6 +768,7 @@ about: {
     903: "Email does not match the registered account",
     904: "Email has not been verified",
     905: "Real name not provided",
+    906: "User email has not verify yet.",
     909: "Phone number not found",
     910: "Username does not match phone number",
     1000: "Login name or password error, please try again!",

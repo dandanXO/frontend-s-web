@@ -763,6 +763,7 @@ export default {
     903: "Email không phù hợp với tài khoản đã đăng ký",
     904: "Email chưa được xác minh",
     905: "Không cung cấp tên thật",
+    906: "E-mail của người dùng chưa được xác minh.",
     909: "Không tìm thấy số điện thoại",
     910: "Tên người dùng không khớp với số điện thoại",
     1000: "Tên đăng nhập hoặc Mật khẩu không hợp lệ. Vui lòng thử lại!",
