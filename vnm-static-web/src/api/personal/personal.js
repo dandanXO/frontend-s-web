@@ -120,6 +120,6 @@ export function sendSessionSms(telephoneInfo) {
   return server.REST.post("/session/sendSms", telephoneInfo);
 }
 export function verifySms(telephoneInfo) {
-  return server.REST.post("/session/verifyAndUpdatePhone", telephoneInfo);
+  return server.REST.post("/otp/verifyPhone", telephoneInfo);
 }
 
