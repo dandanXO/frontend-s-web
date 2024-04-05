@@ -819,6 +819,7 @@ function showDialog(type) {
 
 function showSettingDialog(type) {
   if (type === 'CREATE') {
+    uiControl.dialogSetting = 'ALL'
     if (affiliateFinancialDepositSettingForm.value) {
       affiliateFinancialDepositSettingForm.value.resetFields()
     }
