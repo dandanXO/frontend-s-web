@@ -175,7 +175,8 @@ const closeLoginDialog = () => {
 };
 
 const openRegDialog = () => {
-  emits("open-reg-dialog");
+  router.push("/register")
+  // emits("open-reg-dialog");
 };
 
 const openForgotpwdDialog = () => {
