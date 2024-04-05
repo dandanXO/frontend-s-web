@@ -41,6 +41,10 @@ export function submitPiggyBankClaim() {
   return eventapi.put(`/piggy-bank/claim`);
 }
 
+export function getPiggyBankAmt() {
+  return eventapi.get(`/piggy-bank/amount`);
+}
+
 export function submitLuckyNumber(item) {
   return eventapi.post(
     `/privi/lotteryNumber`,
@@ -65,8 +69,16 @@ export function submitPokerNewLossBonus() {
   return eventapi.put(`/bonus/claim/vnm-poker-refund`);
 }
 
+export function refundPokerBonus() {
+  return eventapi.get(`vnm-refund/poker`);
+}
+
 export function submitSlotNewLossBonus() {
   return eventapi.put(`/bonus/claim/vnm-slots-refund`);
+}
+
+export function refundSlotBonus() {
+  return eventapi.get(`vnm-refund/slots`);
 }
 
 export function luckyNumberList(queryItems, memberId) {

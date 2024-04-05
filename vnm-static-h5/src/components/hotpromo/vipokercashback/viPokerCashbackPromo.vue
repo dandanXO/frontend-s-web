@@ -23,8 +23,8 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed } from "vue";
-import { submitPokerNewLossBonus } from "../../../api/index/promo";
+import { ref, reactive, computed, onMounted } from "vue";
+import { submitPokerNewLossBonus, refundPokerBonus } from "../../../api/index/promo";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -58,6 +58,18 @@ function chooseNewLossBonus() {
       newLossBonusBtnLoading.value = false;
     });
 }
+
+const getRefundPokerBonus = () => {
+  refundPokerBonus().then((res) => {
+    if (res.code === 0) {
+      newLossBonus.value = res.data;
+    }
+  });
+};
+
+onMounted(() => {
+  getRefundPokerBonus();
+});
 </script>
 
 <style lang="scss" scoped>
