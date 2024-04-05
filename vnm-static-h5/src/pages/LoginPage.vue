@@ -206,7 +206,7 @@
           <q-btn class="common-large-white-btn bottom-btn" :label="$t('lang.register_btn')" no-caps rounded />
         </router-link>
       </div>
-      <div class="text-center">
+      <div class="text-center q-pb-lg">
         <router-link class="cs-web-id" id="cs-web-id" to="/liveChat">
           {{ $t("lang.contact_customer_service") }}
         </router-link>
