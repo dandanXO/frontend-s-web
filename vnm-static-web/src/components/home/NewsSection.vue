@@ -125,6 +125,8 @@ onMounted(() => {
           width: 556px;
           height: 240px;
         }
+        .news-contents {flex: 4;
+        }
       }
       .news-image {
         flex: 2;
@@ -139,7 +141,7 @@ onMounted(() => {
       .news-contents {
         position: relative;
         padding: 0 30px 30px 0;
-        flex: 4;
+        flex: 3;
         cursor: pointer;
         .news-title {
           color: #7a80a1;
