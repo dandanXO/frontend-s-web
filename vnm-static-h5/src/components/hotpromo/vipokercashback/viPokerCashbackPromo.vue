@@ -7,7 +7,7 @@
       <label>{{ $t("lang.vipoker_netlossbonus") }}</label>
       <q-form @submit="chooseNewLossBonus">
         <div class="insert-lucky-num">
-          <q-input v-model="newLossBonus" placeholder="0" type="number" outlined dense />
+          <q-input v-model="newLossBonus" placeholder="0" type="number" readonly outlined dense />
         </div>
       </q-form>
       <q-btn
