@@ -282,7 +282,7 @@ const platforms = ref([
         img {
             
     max-width: 365px;
-    margin-bottom: -120px;
+    margin: -120px 0;
         }
     }
 }
