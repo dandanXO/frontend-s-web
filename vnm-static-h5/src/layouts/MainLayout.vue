@@ -59,27 +59,27 @@
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
       <q-tabs v-model="tab" no-caps class="bg-white text-primary" :breakpoint="0" align="justify">
-        <q-route-tab to="/" name="home" exact>
+        <q-route-tab to="/" name="home" exact class="sm-screen-txt">
           <img class="inactive" src="../assets/images/footer/home-icon.svg" />
           <img class="hover" src="../assets/images/footer/home-icon-active.svg" />
           {{ $t("lang.home") }}
         </q-route-tab>
-        <q-route-tab to="/promo" name="promo">
+        <q-route-tab to="/promo" name="promo" class="sm-screen-txt">
           <img class="inactive" src="../assets/images/footer/promo-icon.svg" />
           <img class="hover" src="../assets/images/footer/promo-icon-active.svg" />
           {{ $t("lang.promo") }}
         </q-route-tab>
-        <q-route-tab to="/finance/deposit" name="deposit">
+        <q-route-tab to="/finance/deposit" name="deposit" class="sm-screen-txt">
           <img class="inactive" src="../assets/images/footer/withdraw-icon.svg" />
           <img class="hover" src="../assets/images/footer/withdraw-icon-active.svg" />
           {{ $t("lang.deposit") }}
         </q-route-tab>
-        <q-route-tab class="cs-web-id" to="/account/vip?redirect=home" id="cs-web-id" name="vip">
+        <q-route-tab to="/account/vip?redirect=home" id="cs-web-id" name="vip" class="cs-web-id sm-screen-txt">
           <img class="inactive" src="../assets/images/footer/vip-icon.svg" />
           <img class="hover" src="../assets/images/footer/vip-icon-active.svg" />
           {{ $t("lang.vip") }}
         </q-route-tab>
-        <q-route-tab to="/account" name="account">
+        <q-route-tab to="/account" name="account" class="sm-screen-txt">
           <img class="inactive" src="../assets/images/footer/account-icon.svg" />
           <img class="hover" src="../assets/images/footer/account-icon-active.svg" />
           {{ $t("lang.mine") }}
@@ -158,7 +158,7 @@ export default defineComponent({
           if (route.query.platform) {
             var platformName =
               route.query.platform == "BBINDY" ? "BBIN" : translateRecord(route.query.platform, "slot");
-            pageName.value = `${platformName} ${t('lang.page_lobby')}`;
+            pageName.value = `${platformName} ${t("lang.page_lobby")}`;
           }
         } else if (route.path === "/fishing") {
           prevPage.value = "";
@@ -167,7 +167,7 @@ export default defineComponent({
           pageName.value = t("lang.page_game");
           if (route.query.platform) {
             var platformName = translateRecord(route.query.platform);
-            pageName.value = `${platformName} ${t('lang.page_lobby')}`;
+            pageName.value = `${platformName} ${t("lang.page_lobby")}`;
           }
         } else if (route.path === "/account/vip") {
           hasPage.value = true;
