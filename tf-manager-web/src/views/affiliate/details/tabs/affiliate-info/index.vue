@@ -354,6 +354,32 @@
         >
           <template #label>
             <div>
+              <svg-icon icon-class="money" style="height: 16px;width: 16px;" />
+              {{ t('fields.commissionBalance') }}
+            </div>
+          </template>
+          <div style="display: inline-block;" v-loading="loading.commissionBalance">
+            <div class="balance">
+              $
+              <span
+                v-formatter="{data: memberDetail.commissionBalance, type: 'money'}"
+              />
+            </div>
+          </div>
+          <el-button
+            class="refresh-btn"
+            icon="el-icon-refresh"
+            size="mini"
+            @click="refreshCommissionBalance"
+          />
+        </el-descriptions-item>
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
               <svg-icon icon-class="visits" style="height: 16px;width: 16px;" />
               {{ t('fields.affiliateLink') }}
             </div>
@@ -1325,7 +1351,7 @@ import {
   freezeMember, unfreezeMember, updateRisk, syncMemberDetail
 } from '../../../../../api/member'
 import { getFinancialLevels } from '../../../../../api/financial-level'
-import { getAffiliateRecord } from '../../../../../api/affiliate-record'
+import { getAffiliateRecord, getCommissionBalance } from '../../../../../api/affiliate-record'
 import {
   addAffiliateRemark,
   approveAffiliate,
@@ -1413,6 +1439,7 @@ const loading = reactive({
   loginInfo: false,
   remark: false,
   total: false,
+  commissionBalance: false,
   affiliateInfo: false,
   superiorAffiliateInfo: false,
 })
@@ -1458,6 +1485,7 @@ const memberDetail = reactive({
   superiorAffName: '',
   regTime: '',
   balance: 0,
+  commissionBalance: 0,
   totalDeposit: 0,
   totalWithdraw: 0,
   lastLoginTime: '',
@@ -1995,6 +2023,17 @@ async function refreshAllBalance() {
   loading.total = false
 }
 
+async function loadCommissionBalance() {
+  const { data: balance } = await getCommissionBalance(props.affId)
+  memberDetail.commissionBalance = balance
+}
+
+async function refreshCommissionBalance() {
+  loading.commissionBalance = true
+  await loadCommissionBalance()
+  loading.commissionBalance = false
+}
+
 async function loadAffiliateRecord() {
   const { data: record } = await getAffiliateRecord(props.affId)
   affiliateDetails.affiliateCode = record.affiliateCode
@@ -2090,6 +2129,7 @@ onMounted(async () => {
   await loadMemberStatus()
   await loadAffiliateRemark()
   await loadBalance()
+  await loadCommissionBalance()
   await loadAffiliateRecord()
   await loadReferralLink()
   await loadRiskLevels();

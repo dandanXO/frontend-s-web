@@ -5,6 +5,10 @@ export const getAffiliateRecord = (id) => {
   return https().request(`/affiliateRecord/${id}`, Method.GET);
 };
 
+export const getCommissionBalance = (id) => {
+  return https().request(`/affiliateRecord/${id}/commissionBalance`, Method.GET);
+};
+
 export const getAffiliateSummary = (query) => {
   return https().request("/affiliateRecord/summary", Method.GET, query, ContentType.form);
 };

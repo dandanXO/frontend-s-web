@@ -623,6 +623,7 @@ export default {
     code: '代码',
     color: '颜色',
     commission: '分红',
+    commissionBalance: '佣金余额',
     commissionModel: '分红模式',
     commissionPercent: '分红 %',
     commissionRate: '分红比率',
