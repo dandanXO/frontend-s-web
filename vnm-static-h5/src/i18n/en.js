@@ -405,10 +405,16 @@ export default {
     record_username: "Username",
     record_fill_up_record_time: "Fill up record time",
     record_choose_lucky_number: "Choose lucky number",
+    record_win_status: "Win status",
     record_no_data: "No data, please check other day",
     record_date_of_win: "Date of win",
     record_winner_list: "Winner list",
     record_lucky_number_of_win: "Lucky number of win",
+    number_sent_successful: "Number sent successfully",
+    not_drawn_yet: "Not drawn yet",
+    won: "Won",
+    didnt_win: "Didn't win",
+    please_select_query_time: "Please select the query time",
 
     // slot
     slot_search: "Search for games",
@@ -601,11 +607,15 @@ export default {
       "Affiliate A recruit B (who is already user under Affiliate A), A receive 1000VND as this month commission, B receive 600VND as this month commission.",
     affiliate_03_para_04: "A earns: 1000VND + (600VND*10% )= 1060VND",
     affiliate_05_head_title: "PAYMENT METHODS",
-    affiliate_04_para_01: "Commission will be settled on 5th of each month paid on the 10th of each month, from 10th onward Affiliate may proceed to withdraw money.",
+    affiliate_04_para_01:
+      "Commission will be settled on 5th of each month paid on the 10th of each month, from 10th onward Affiliate may proceed to withdraw money.",
     affiliate_04_para_02: "Commission will be paid in VND.",
-    affiliate_04_para_03: "Complaint and dispute about commission must be submit to Affiliate cares before 10th of each month, otherwise paid commission cannot be changed.",
-    affiliate_04_para_04: "TF.com reserves the right to change or correct the commission percentage we deem appropriate.",
-    affiliate_04_para_05: "TF.com reserves the right to change or modify the above terms or add any additional terms as necessary.",
+    affiliate_04_para_03:
+      "Complaint and dispute about commission must be submit to Affiliate cares before 10th of each month, otherwise paid commission cannot be changed.",
+    affiliate_04_para_04:
+      "TF.com reserves the right to change or correct the commission percentage we deem appropriate.",
+    affiliate_04_para_05:
+      "TF.com reserves the right to change or modify the above terms or add any additional terms as necessary.",
     affiliate_apply_agency: "Apply for agency now",
     affiliate_online_cs: "24-hour online customer service",
     affiliate_jointemail: "Joint venture department email",
@@ -1256,6 +1266,7 @@ export default {
     903: "Email does not match the registered account",
     904: "Email has not been verified",
     905: "Real name not provided",
+    906: "User email has not verify yet.",
     909: "Phone number not found",
     910: "Username does not match phone number",
     1000: "Login name or password error",
@@ -1312,7 +1323,7 @@ export default {
     33001: "Must be a 3-digit number",
     34000: "Member's birthday is not in this month",
     34001: "Member's birthday not found",
-    35000: "35000 Member cannot receive this privilege",
+    35000: "Member cannot receive this privilege",
     35001: "Member has already received this privilege",
     35002: "No eligible special privileges can be received",
     35003: "Special privileges and members do not match",

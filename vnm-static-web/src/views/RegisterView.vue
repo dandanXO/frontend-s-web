@@ -47,7 +47,7 @@ import RegisterAccount from "@/components/auth/RegisterAccount.vue";
 .card-bg {
   background-color: #F7F9FC;
   box-shadow: 0px 0px 10px 0px #0000001A;
-  padding: 50px;
+  padding: 16px 30px 20px;
   border-radius: 10px;
 }
 </style>

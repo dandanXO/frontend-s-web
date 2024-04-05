@@ -607,7 +607,7 @@ export default {
     "welcomeBonus": "Thưởng Chào Mừng",
     "monthlyBonus": "Thưởng Hàng Tháng",
     "birthdayBonus": "Thưởng Sinh Nhật",
-    "rabateBonus": "TIỀN THƯỞNG HOÀN TRẢ",
+    "rebateBonus": "TIỀN THƯỞNG HOÀN TRẢ",
     "sportRebate": "Hoàn Trả Thể Thao",
     "esportRebate": "Hoàn Trả Esport",
     "liveCasinoRebate": "Hoàn Trả Casino Trực Tuyến",
@@ -648,10 +648,17 @@ export default {
     "popularEsportsEvents": "Sự kiện Esports phổ biến nhất và đa dạng",
     "moreGames": "và nhiều trò chơi khác nữa",
     "proceedNow": "Tiếp tục ngay bây giờ",
-    depositNow: 'Nạp Tiền Ngay',
-    "congrats": "Chúc mừng! Tài khoản của bạn đã được tạo.",
+    depositNow: 'GỬI TIỀN NGAY',
+    "congrats": "Đăng ký thành công",
     "webapp": "Web APP",
-    "esportapp": "E-sport APP"
+    "esportapp": "E-sport APP",
+    firstSlide: "TẢI XUỐNG ỨNG DỤNG",
+    firstSlideContent: "Trải nghiệm siêu mượt trên ứng dụng đẳng cấp của TF88",
+    firstSlideSub: "TẢI XUỐNG +60VNPD",
+    secondSlide: "THƯỞNG GỬI TIỀN HẤP DẪN",
+    secondSlideContent: 'THƯỞNG NẠP ĐẦU 100% LÊN ĐẾN 2,000 VNDP',
+    thirdSlide: "NHÀ PHÁT TRIỂN ESPORTS",
+    thirdSlideContent: "TF88 là nhà phát triển tiên phong của cá cược E-Sports tại Châu Á. Cược ngay E-Sports với hơn 500 sự kiện mỗi ngày!"
   },
   bankError: {
     "bankCardFirst": "Vui lòng đăng ký thẻ ngân hàng trước",
@@ -697,6 +704,8 @@ export default {
     "backToTop": "TOP"
   },
   status: {
+    pending: "Dang Chờ",
+    "claimed": "Khẳng Dịnh",
     withdrawFailed: "Lệnh rút tiền thất bại",
     withdraw: "Rút tiền",
     promotion: "Khuyến mãi",
@@ -756,6 +765,7 @@ export default {
     903: "Email không phù hợp với tài khoản đã đăng ký",
     904: "Email chưa được xác minh",
     905: "Không cung cấp tên thật",
+    906: "E-mail của người dùng chưa được xác minh.",
     909: "Không tìm thấy số điện thoại",
     910: "Tên người dùng không khớp với số điện thoại",
     1000: "Tên đăng nhập hoặc Mật khẩu không hợp lệ. Vui lòng thử lại!",

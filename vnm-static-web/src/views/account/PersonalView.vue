@@ -476,7 +476,7 @@ import {
   verifyEmail,
   sendSms,
   verifySms,
-  verifyOtpAndChangePassword
+  verifyOtpAndChangePassword, forgetWithdrawSendEmail
 } from "@/api/personal/personal";
 import { getVerificationCode } from "@/api/index/login";
 import moment from "moment";
@@ -1143,8 +1143,8 @@ import { useI18n } from "vue-i18n";
         // If countdown timer has finished, reset the timer and send the email
         const obj = {
           email: personalState.memberInfo.email
-        } 
-        sendEmail(obj).then((res) => {
+        }
+        forgetWithdrawSendEmail(obj).then((res) => {
           if (res.code === 0) {
             receivedVerificationCode.value = true;
             emailCodeId.value= res.data.codeId;

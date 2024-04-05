@@ -139,10 +139,10 @@
       <a @click="closeRegDialog">先去逛逛</a>
     </div> -->
     
-    <div style="text-align: center" class="font-gray">
-      {{ $t('login.alreadyAccount') }}?
-      <a @click="openLoginDialog">{{ $t('login.login') }}</a>
-    </div>
+<!--    <div style="text-align: center" class="font-gray">-->
+<!--      {{ $t('login.alreadyAccount') }}?-->
+<!--      <a @click="openLoginDialog">{{ $t('login.login') }}</a>-->
+<!--    </div>-->
 
   </div>
 </template>

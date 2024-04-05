@@ -15,14 +15,20 @@
       <div class="subtitle">
         {{ $t('refer.friendList') }}
       </div>
-      <el-table>
+      <el-table :data="dataSource">
         <template #empty>
           <EmptyData />
         </template>
-        <el-table-column prop="id" :label="$t('refer.accountId')" width="180" />
-        <el-table-column prop="regTime" :label="$t('refer.regTime')"  width="180" />
-        <el-table-column prop="bet" :label="$t('refer.bet')"  />
-        <el-table-column prop="status" :label="$t('refer.status')"  />
+        <el-table-column prop="id" :label="$t('refer.accountId')" width="300" />
+        <el-table-column prop="regTime" :label="$t('refer.regTime')"  width="300" />
+        <el-table-column prop="totalBet" :label="$t('refer.bet')"  width="250"   />
+        <el-table-column prop="status" :label="$t('refer.status')" >
+          <template #default="scope">
+            <div style="display: flex; align-items: center">
+              {{ getStatusType(scope.row.status) }}
+            </div>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
   </div>
@@ -76,7 +82,7 @@
 
 <script lang="js">
 import { defineComponent, reactive, ref, watch, onMounted } from "vue";
-import { getReferralLink, getInviteFriendListCount } from "@/api/personal/share"
+import { getReferralLink, getInviteFriendListCount, getVNMReferred } from "@/api/personal/share"
 import {
   RiFacebookCircleLine, RiWhatsappLine, RiTelegramLine, RiTwitterLine, RiInstagramLine,
 } from "vue-remix-icons"
@@ -144,10 +150,45 @@ export default defineComponent({
     onMounted(() => {
       getReferral()
       getInviteCount()
+      getReferralList()
     })
     watch(languageVal, (value, oldValue) => {
       copybtntxt.value = t('common.copy')
     })
+    const dataSource = ref([])
+    const getReferralList = () => {
+      getVNMReferred().then((res) => {
+          res = {
+    "code": 0,
+    "data": [
+        {
+            "id": "1679738050175582210",
+            "loginName": "cygnus001",
+            "regTime": "2024-04-01 01:22:14",
+            "depositCount": 3,
+            "totalBet": 1000.0000,
+            "status": "CLAIMED" // PENDING 待领取, CLAIMED 已领取
+        }
+      ]
+        }
+        if (res.code === 0) {
+          dataSource.value = res.data
+      }
+    })
+    }
+    
+    const getStatusType = (statusType) => {
+      if (!statusType) {
+        return "";
+      }
+      if (statusType === "PENDING") {
+        return t('status.pending'); // PENDING
+      } else if (statusType === "CLAIMED") {
+        return t('status.claimed'); // CLAIMED
+      } else {
+        return depositType;
+      }
+    };
     return {
       searchForm,
       copybtntxt,
@@ -158,7 +199,10 @@ export default defineComponent({
       VueQRCodeComponent,
       router,
       referredMember,
-      depositMember
+      depositMember,
+      dataSource,
+      getVNMReferred,
+      getStatusType
     };
   },
 });

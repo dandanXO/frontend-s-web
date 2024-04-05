@@ -91,6 +91,10 @@ export function deleteBankCard(cardId) {
 }
 
 export function sendEmail(emailInfo) {
+  return server.REST.post("/otp/sendEmail", emailInfo);
+}
+
+export function forgetWithdrawSendEmail(emailInfo) {
   return server.REST.post("/session/sendNewEmail", emailInfo);
 }
 
@@ -99,7 +103,7 @@ export function verifyOtpAndChangePassword(withdrawPwdInfo) {
 }
 
 export function verifyEmail(emailInfo) {
-  return server.REST.post("/session/verifyAndUpdateEmail", emailInfo);
+  return server.REST.post("/otp/verifyEmail", emailInfo);
 }
 
 export function saveFinanceFeedback(reminderInfo) {

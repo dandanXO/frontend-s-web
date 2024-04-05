@@ -56,7 +56,7 @@ export default {
     fishing: "Fishing",
     cockfight: 'Cockfight',
     deposit_should_between: "Deposit amount should between ",
-    msg_deleted: "Message deleted"
+    msg_deleted: "Message deleted",
   },
   login: {
     username: 'Username',
@@ -611,7 +611,7 @@ about: {
     welcomeBonus: "Welcome Bonus",
     monthlyBonus: "Monthly Bonus",
     "birthdayBonus": "Birthday Bonus",
-    "rabateBonus": "Rabate Bonus",
+    "rebateBonus": "Rebate Bonus",
     "sportRebate": "Sport Rebate",
     "esportRebate": "Esport Rebate",
     "liveCasinoRebate": "Live Casino Rebate",
@@ -652,10 +652,18 @@ about: {
     "popularEsportsEvents": "The Most Comprehensive Popular Esports Events",
     "moreGames": "and many more games",
     "proceedNow": "Proceed Now",
-    depositNow: "Deposit Now",
-    congrats: "Congratulations! Your account has been created.",
+    depositNow: "DEPOSIT NOW",
+    congrats: "Registered successfully",
     webapp: "Web App",
-    esportapp: "Esports App"
+    esportapp: "Esports App",
+    firstSlide: "DOWN LOAD APPS",
+    firstSlideContent: "Super smooth experience on TF88's high class apps",
+    firstSlideSub: "DOWNLOAD +60 VNDP",
+    secondSlide: "GET WELCOME BONUS",
+    secondSlideContent: 'FIRST TIME DEPOSIT 100% UP TO 2,000 VNDP',
+    thirdSlide: "ESPORTS BETTING DEVELOPER",
+    thirdSlideContent: "TF88 is the pioneer developer of E-Sports betting in Asia. Bet now on E-Sports with over 500 events every day!"
+ 
   },
   bankError: {
     "bankCardFirst": "Please bind your bank card first",
@@ -733,7 +741,9 @@ about: {
     tiktok: "Tiktok",
     automatic_payment: "Automatic Paying",
     otp_success_send_email: "OTP Code has been sent to your email",
-    otp_success_send_phone: "OTP Code has been sent to your mobile number"
+    otp_success_send_phone: "OTP Code has been sent to your mobile number",
+    claimed: "Claimed",
+    pending: "Pending"
   },
   response: {
     101: "Platform not found",
@@ -760,6 +770,7 @@ about: {
     903: "Email does not match the registered account",
     904: "Email has not been verified",
     905: "Real name not provided",
+    906: "User email has not verify yet.",
     909: "Phone number not found",
     910: "Username does not match phone number",
     1000: "Login name or password error, please try again!",

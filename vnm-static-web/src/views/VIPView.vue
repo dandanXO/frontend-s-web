@@ -133,7 +133,7 @@
         </div>
         <div>
 
-            <div class="tbl-title rebate">{{ $t('vip.rabateBonus')}}</div>
+            <div class="tbl-title rebate">{{ $t('vip.rebateBonus')}}</div>
 
             <table class="rebate">
                 <tbody>

@@ -1442,7 +1442,7 @@ export default defineComponent({
       } else if (withdrawStatus === "SUCCESS") {
         return t('status.success'); // Success
       } else if (withdrawStatus === "STEP_1" || withdrawStatus === "PENDING") {
-        return t('status.underReview');; //Under review
+        return t('status.underReview'); //Under review
       } else if (withdrawStatus === "STEP_2") {
         return t('status.toBePaid'); // To be paid
       } else if (withdrawStatus === "STEP_3") {

@@ -49,28 +49,37 @@
           <div class="tab2">
             <q-form :model="query" :layout="'inline'">
               <q-row class="firstrow">
-                <div class="date">
-                  <q-input filled v-model="query.recordTime" mask="date">
-                    <template v-slot:append>
-                      <q-icon name="event" class="cursor-pointer">
-                        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                          <q-date
-                            v-model="query.recordTime"
-                            v-close-popup="dateClosePopup"
-                            @navigation="dateClosePopup = false"
-                            @update:model-value="dateClosePopup = true"
-                          >
-                            <!-- <q-date v-model="query.recordTime" @update:model-value="v-close-popup" > -->
-                            <div class="row items-center justify-end">
-                              <q-btn v-close-popup :label="$t('lang.close_btn')" color="primary" flat></q-btn>
-                            </div>
-                          </q-date>
-                        </q-popup-proxy>
-                      </q-icon>
-                    </template>
-                  </q-input>
+                <div>
+                  <div class="date">
+                    <q-input filled v-model="query.recordTime" mask="date">
+                      <template v-slot:append>
+                        <q-icon name="event" class="cursor-pointer">
+                          <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                            <q-date
+                              v-model="query.recordTime"
+                              v-close-popup="dateClosePopup"
+                              @navigation="dateClosePopup = false"
+                              @update:model-value="dateClosePopup = true"
+                            >
+                              <!-- <q-date v-model="query.recordTime" @update:model-value="v-close-popup" > -->
+                              <div class="row items-center justify-end">
+                                <q-btn v-close-popup :label="$t('lang.close_btn')" color="primary" flat></q-btn>
+                              </div>
+                            </q-date>
+                          </q-popup-proxy>
+                        </q-icon>
+                      </template>
+                    </q-input>
+                  </div>
+                  <q-select
+                    outlined
+                    class="q-mt-md"
+                    dense
+                    v-model="winStatusSelect"
+                    :options="winStatusOptions"
+                    :label="$t('lang.record_win_status')"
+                  />
                 </div>
-
                 <q-btn color="brightbtn" @click="retrieveList()">
                   {{ $t("lang.inquiry") }}
                 </q-btn>
@@ -94,10 +103,9 @@
       <q-tab-panels v-model="activeKey">
         <q-tab-panel name="winner">
           <div class="tab3">
-            <!-- <q-form :model="winnersQuery" :layout="'inline'">
+            <q-form :model="winnersQuery" :layout="'inline'">
               <q-row class="firstrow">
                 <div class="date">
-                  <div>查询时间</div>
                   <q-input filled v-model="winnersQuery.resultTime" mask="date">
                     <template v-slot:append>
                       <q-icon name="event" class="cursor-pointer">
@@ -118,9 +126,11 @@
                   </q-input>
                 </div>
 
-                <div class="common-btn retrieve-btn" @click="retrieveWinnerList()">查询</div>
+                <q-btn color="brightbtn" @click="retrieveWinnerList()">
+                  {{ $t("lang.inquiry") }}
+                </q-btn>
               </q-row>
-            </q-form> -->
+            </q-form>
 
             <q-table
               :columns="winnerColumns"
@@ -167,7 +177,7 @@ function chooseLuckyNumber() {
         $q.notify({
           type: "positive",
           position: "top",
-          message: "成功发送号码。",
+          message: t("lang.number_sent_successful"),
           icon: "check_circle_outline"
         });
         luckyNumber.value = null;
@@ -208,6 +218,13 @@ const recordColumns = [
     field: "number",
     align: "center",
     sortable: true
+  },
+  {
+    name: "winStatus",
+    label: t("lang.record_win_status"),
+    field: "winStatus",
+    align: "center",
+    sortable: true
   }
 ];
 
@@ -225,6 +242,7 @@ function retrieveList() {
     else memberId = null;
 
     query.recordTime = moment(query.recordTime).format("YYYY-MM-DD");
+    query.winStatus = winStatusSelect.value.value;
 
     luckyNumberList(query, memberId)
       .then((res) => {
@@ -236,13 +254,13 @@ function retrieveList() {
             let status = "";
             switch (obj.winStatus) {
               case "BET":
-                status = "未开奖";
+                status = t("lang.not_drawn_yet");
                 break;
               case "WIN":
-                status = "已中奖";
+                status = t("lang.won");
                 break;
               case "LOSS":
-                status = "未中奖";
+                status = t("lang.didnt_win");
                 break;
               default:
                 console.log("LotteryPromo :: retrieveList :: no such winStatus exist!");
@@ -261,11 +279,33 @@ function retrieveList() {
     $q.notify({
       color: "negative",
       position: "top",
-      message: "请选择查询时间",
+      message: t("lang.please_select_query_time"),
       icon: "report_problem"
     });
   }
 }
+
+const winStatusSelect = ref();
+const winStatusOptions = [
+  { value: "BET", label: t("lang.not_drawn_yet") },
+  { value: "WIN", label: t("lang.won") },
+  { value: "LOSS", label: t("lang.didnt_win") }
+];
+
+// switch (obj.winStatus) {
+//   case "BET":
+//     status = t("lang.not_drawn_yet");
+//     break;
+//   case "WIN":
+//     status = t("lang.won");
+//     break;
+//   case "LOSS":
+//     status = t("lang.didnt_win");
+//     break;
+//   default:
+//     console.log("LotteryPromo :: retrieveList :: no such winStatus exist!");
+//     break;
+// }
 
 // tab 3
 const winnerColumns = [
@@ -319,7 +359,7 @@ function retrieveWinnerList() {
     $q.notify({
       color: "negative",
       position: "top",
-      message: "请选择查询时间",
+      message: t("lang.please_select_query_time"),
       icon: "report_problem"
     });
   }
@@ -513,6 +553,7 @@ const dateClosePopup = ref(true);
       }
 
       :deep(.q-table th) {
+        white-space: wrap;
         // background: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
         // color: white;
       }
