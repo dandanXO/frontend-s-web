@@ -16,8 +16,10 @@
       <q-icon name="close" @click="closeTopBox" />
       <img class="headicon" src="../assets/logo-web.svg" alt="download-logo" />
       <div class="download-txt-container">
-        <span class="download-title">{{ $t("lang.app_download_title") }}</span>
-        <span>{{ $t("lang.app_download_desc") }}</span>
+        <span class="download-title">
+          <font class="sm-screen-txt">{{ $t("lang.app_download_title") }}</font>
+        </span>
+        <span class="sm-screen-txt">{{ $t("lang.app_download_desc") }}</span>
       </div>
       <div class="buttons">
         <div class="buttons">
@@ -26,7 +28,7 @@
             target="_blank"
             :label="$t('lang.dowload_now')"
             color="brightbtn"
-            class="top-btn"
+            class="top-btn sm-screen-txt"
             no-caps
           />
         </div>
@@ -39,10 +41,10 @@
       <img alt="logo" src="../assets/logo-web.svg" />
     </div>
     <div class="header-middle" v-if="!store.token">
-      <q-btn rounded no-caps color="brightbtn" @click="router.push('/login')">
+      <q-btn rounded no-caps color="brightbtn" class="sm-screen-txt" @click="router.push('/login')">
         {{ $t("lang.login") }}
       </q-btn>
-      <q-btn rounded no-caps color="lightbluebtn" @click="router.push('/register')">
+      <q-btn rounded no-caps color="lightbluebtn" class="sm-screen-txt" @click="router.push('/register')">
         {{ $t("lang.register") }}
       </q-btn>
     </div>
