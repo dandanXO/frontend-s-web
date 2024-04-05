@@ -121,9 +121,10 @@ export const userStore = defineStore("userStore", {
           } else {
             lineUrl = res.data.liveUrl2;
           }
+          const token = this.token ?? "";
           window.open(
             // `https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=WEB&lang=zh-CN&token=${this.token}`,
-            `${lineUrl}${this.token}`,
+            `${lineUrl}&token=${token}`,
             "Chat Server",
             "resizable=yes, width=" + 800 + ", height=" + 880 + ", top=" + top + ", left=" + left
           );
