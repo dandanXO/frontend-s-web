@@ -277,7 +277,7 @@ export default defineComponent({
         if (v === "") {
           return Promise.reject(t('withdraw.inputAccNumber'));
         } else if (/^\d+$/.test(v) === false) {
-          return Promise.reject(t('withdraw.onlyNumber'));
+          return Promise.reject(t('placeholder.onlyNumber'));
         } else {
           return Promise.resolve();
         }
@@ -293,8 +293,6 @@ export default defineComponent({
       return Promise.resolve();
     };
     let validateBankLength = async (r, v) => {
-      var min = 6;
-      var max = 12;
       if (selectedBankType.value === "Bank") {
         var selectedBankCode = null;
         banksList.value.forEach(bank => {
@@ -303,22 +301,22 @@ export default defineComponent({
           }
         });
         if (selectedBankCode === "alipay") {
-          min = 11;
-          max = 20;
+          // min = 11;
+          // max = 20;
         } else {
           if (!/^\d+$/.test(v)) {
             return Promise.reject(t('withdraw.enterDigits'));
           }
-          min = 16;
-          max = 19;
         }
 
       } else if (selectedBankType.value === "Crypto") {
+        var min = null;
+        var max = null;
         min = 34;
         max = 36;
       } else if (selectedBankType.value === "e-Wallet") {
-        min = 34;
-        max = 34;
+        // min = 34;
+        // max = 34;
         var selectedCode = null;
         banksList.value.forEach(bank => {
           if (bank.id === bankCardInfo.bankId) {
@@ -326,14 +324,14 @@ export default defineComponent({
           }
         });
         if (selectedCode === "KDPAY") {
-          min = 34;
-          max = 34;
+          // min = 34;
+          // max = 34;
         } else if (selectedCode === "EBPAY") {
-          min = 34;
-          max = 34;
+          // min = 34;
+          // max = 34;
         } else if (selectedCode === "OKPAY") {
-          min = 16;
-          max = 16;
+          // min = 16;
+          // max = 16;
         }
       }
       if (v === "") {
