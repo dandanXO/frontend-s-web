@@ -617,6 +617,7 @@ export default {
     code: 'Code',
     color: 'Color',
     commission: 'Commission',
+    commissionBalance: 'Commission Balance',
     commissionModel: 'Commission Model',
     commissionPercent: 'Commission %',
     commissionRate: 'Commission Rate',
