@@ -7,22 +7,33 @@
         <div class="col">
             <img width="300" height="280" src="../../../assets/images/promotion/hotpromo/penny-bank/penny-bank-pig.png" />
             <div class="btn-color-blue standard-button action-btn" @click="onClickClaimNow">{{ t('promo.btn_claim_now') }}</div>
+            <div class="claimAmt">{{ claimAmt }}</div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { } from 'vue';
-import { piggyBankGetLottery, piggyBankClaim } from '../../../api/index/promo';
+import { ref, onMounted } from 'vue';
+import { piggyBankGetLottery, piggyBankClaim,getBonusPiggyCashback } from '../../../api/index/promo';
 import { useI18n } from "vue-i18n";
 import { ElMessage } from 'element-plus';
 
 const { t } = useI18n();
+const claimAmt = ref(0);
 
+const getAmount = () => {
+    getBonusPiggyCashback().then((res) => {
+        if (res.code === 0) {
+            claimAmt.value = res.data;
+        } else {
+            ElMessage.error(res.message)
+        }
+    })
+}
 const onClickLotteryNow = () => {
     piggyBankGetLottery().then((res) => {
         if (res.code === 0) {
-
+            claimAmt.value = res.data;
         } else {
             ElMessage.error(res.message)
         }
@@ -32,6 +43,7 @@ const onClickLotteryNow = () => {
 const onClickClaimNow = () => {
     piggyBankClaim().then((res) => {
         if (res.code === 0) {
+            ElMessage.success(t('common.claimedSuccess'))
 
         } else {
             ElMessage.error(res.message)
@@ -39,6 +51,9 @@ const onClickClaimNow = () => {
     })
 }
 
+onMounted(() => {
+    getAmount();
+})
 </script>
 <style lang="scss" scoped>
 .row {
@@ -52,6 +67,18 @@ const onClickClaimNow = () => {
     gap: 20px;
     justify-content: center;
     align-items: center;
+    position: relative;
+
+}
+
+.claimAmt {
+    position: absolute;
+    top: 188px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    font-size: 25px;
+    text-align: center;
 }
 
 .action-btn {
