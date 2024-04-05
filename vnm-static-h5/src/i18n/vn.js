@@ -598,14 +598,14 @@ export default {
     affiliate_example_02_text_05: "- Phí giao dịch ngân hàng ((nạp + rút)1%): 81.500.000",
     affiliate_example_02_text_06: "=> Lợi nhuận ròng= (4.200.000.00090%)-250.000.000-81.500.000=3.448.500.000",
     affiliate_example_02_text_07: "=> Hoa hồng= 3.448.500.00055%=1.896.675.000",
-    affiliate_03_head_title: "ĐỐI TÁC LIÊN KẾT",
+    affiliate_04_head_title: "ĐỐI TÁC LIÊN KẾT",
     affiliate_03_para_01:
       "Đối tác có thể tuyển dụng đại lý liên kết của riêng họ từ cơ sở người dùng của mình (người dùng đã đăng ký dưới liên kết đại lý) để kiếm 10% hoa hồng của họ cộng với hoa hồng của riêng bạn.",
     affiliate_03_para_02: "Ví dụ:",
     affiliate_03_para_03:
       "Đối tác A tuyển dụng B (người dùng đã đăng ký dưới liên kết của Đại lý A), A nhận 1000VND làm hoa hồng tháng này, B nhận 600VND làm hoa hồng tháng này.",
     affiliate_03_para_04: "A kiếm: 1000VND + (600VND*10% )= 1060VND",
-    affiliate_04_head_title: "PHƯƠNG THỨC THANH TOÁN",
+    affiliate_05_head_title: "PHƯƠNG THỨC THANH TOÁN",
     affiliate_04_para_01:
       "Hoa hồng sẽ được thanh toán vào ngày 5 của mỗi tháng, thanh toán vào ngày 10 của mỗi tháng, từ ngày 10 trở đi Đối tác có thể tiến hành rút tiền.",
     affiliate_04_para_02: "Hoa hồng sẽ được thanh toán bằng VND.",

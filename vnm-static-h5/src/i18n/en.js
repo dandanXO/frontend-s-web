@@ -593,14 +593,14 @@ export default {
     affiliate_example_02_text_05: "-Bank transaction fee((deposit+withdrawn)*1%): 81.500.000",
     affiliate_example_02_text_06: "=>Net profit= (4.200.000.000*90%)-250.000.000-81.500.000=3.448.500.000",
     affiliate_example_02_text_07: "=>Commission= 3.448.500.000*55%=1.896.675.000",
-    affiliate_03_head_title: "DOWNLINE AFFILIATE",
+    affiliate_04_head_title: "DOWNLINE AFFILIATE",
     affiliate_03_para_01:
       "Affiliate may recruit their own downline affiliate from their users base (users who already registered under the affiliate link) to earn 10% of their commission plus your own commission.",
     affiliate_03_para_02: "Example:",
     affiliate_03_para_03:
       "Affiliate A recruit B (who is already user under Affiliate A), A receive 1000VND as this month commission, B receive 600VND as this month commission.",
     affiliate_03_para_04: "A earns: 1000VND + (600VND*10% )= 1060VND",
-    affiliate_04_head_title: "PAYMENT METHODS",
+    affiliate_05_head_title: "PAYMENT METHODS",
     affiliate_04_para_01: "Commission will be settled on 5th of each month paid on the 10th of each month, from 10th onward Affiliate may proceed to withdraw money.",
     affiliate_04_para_02: "Commission will be paid in VND.",
     affiliate_04_para_03: "Complaint and dispute about commission must be submit to Affiliate cares before 10th of each month, otherwise paid commission cannot be changed.",
