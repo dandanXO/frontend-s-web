@@ -5,14 +5,14 @@
       <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
         <el-tab-pane :label="t('home.footballNews')" name="first">
           <div class="news-listing">
-            <div class="news" v-for="news in footballNewsList">
+            <div class="news" v-for="news in footballNewsList" @click="open(news.url)">
               <div class="news-image">
                 <img :src="news.pictureurl" />
               </div>
               <div class="news-contents">
                 <div class="news-title">{{ news.title }}</div>
                 <div class="news-content" v-html="news.excerpt"></div>
-                <button class="standard-button btn-color-blue" @click="open(news.url)">
+                <button class="standard-button btn-color-blue">
                   {{ $t("home.moreDetails") }}
                 </button>
               </div>
@@ -25,10 +25,10 @@
               <div class="news-image">
                 <img :src="news.pictureurl" />
               </div>
-              <div class="news-contents">
+              <div class="news-contents" @click="open(news.url)">
                 <div class="news-title">{{ news.title }}</div>
                 <div class="news-content" v-html="news.excerpt"></div>
-                <button class="standard-button btn-color-blue" @click="open(news.url)">
+                <button class="standard-button btn-color-blue">
                   {{ $t("home.moreDetails") }}
                 </button>
               </div>
@@ -139,7 +139,8 @@ onMounted(() => {
       .news-contents {
         position: relative;
         padding: 0 30px 30px 0;
-        flex: 3;
+        flex: 4;
+        cursor: pointer;
         .news-title {
           color: #7a80a1;
           font-size: 20px;
