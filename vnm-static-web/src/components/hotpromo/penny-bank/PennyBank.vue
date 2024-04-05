@@ -33,7 +33,7 @@ const getAmount = () => {
 const onClickLotteryNow = () => {
     piggyBankGetLottery().then((res) => {
         if (res.code === 0) {
-            claimAmt.value = res.data;
+            claimAmt.value = Number(claimAmt.value) + Number(res.data);
         } else {
             ElMessage.error(res.message)
         }

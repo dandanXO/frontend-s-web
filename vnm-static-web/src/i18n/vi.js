@@ -55,7 +55,7 @@ export default {
     "lottery": "Xổ Số",
     fishing: "Bắn Cá",
     cockfight: 'Đá Gà',
-    deposit_should_between: "Nạp tiền đặt cọc phải nằm trong khoảng từ ",
+    deposit_should_between: "Vui lòng nhập số tiền từ ",
     msg_deleted: "Tin nhắn đã bị xóa"
   },
   "login": {

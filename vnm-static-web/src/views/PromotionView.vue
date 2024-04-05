@@ -90,7 +90,7 @@
               : 'background-image: url(' + require(`../assets/promo/web-bg.jpg`) + '\''
           "
         >
-          <h2 class="text-center">{{selectedPromo.title}}</h2>
+          <h2 class="text-center" style="font-family: 'Roboto'; color: #0060d3; font-weight: 900; font-size: 30px;">{{selectedPromo.title}}</h2>
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
             <HotPromotion :list="selectedPromo" />
           </div>
@@ -659,7 +659,7 @@ export default defineComponent({
               }
             }
             .promo-details {
-              // font-family: "Microsoft Yahei UI";
+              font-family: "Roboto";
               margin: 20px 0;
               padding: 50px 0 10px 0;
               display: flex;
