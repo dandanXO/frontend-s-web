@@ -472,7 +472,7 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: t('lang.register_success'),
+                  message: t('lang.register_successful'),
                   icon: "check_circle_outline"
                 });
                 store.autoLogin(res.data);

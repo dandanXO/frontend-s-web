@@ -55,7 +55,7 @@ export default {
     "lottery": "Xổ Số",
     fishing: "Bắn Cá",
     cockfight: 'Đá Gà',
-    deposit_should_between: "Nạp tiền đặt cọc phải nằm trong khoảng từ ",
+    deposit_should_between: "Vui lòng nhập số tiền từ ",
     msg_deleted: "Tin nhắn đã bị xóa"
   },
   "login": {
@@ -821,7 +821,7 @@ export default {
     33001: "Phải là một số có 3 chữ số",
     34000: "Ngày sinh của thành viên không phải là tháng này",
     34001: "Không tìm thấy ngày sinh của thành viên",
-    35000: "Thành viên 35000 không thể nhận đặc quyền này",
+    35000: "35000 Thành viên không thể nhận quyền lợi này",
     35001: "Thành viên đã nhận đặc quyền này",
     35002: "Không có đặc quyền đặc biệt đủ điều kiện để nhận",
     35003: "Đặc quyền đặc biệt và thành viên không khớp",

@@ -4,7 +4,7 @@
         <div class="col">
             <div class="row">
                 <div>{{ t('promo.net_work_bonus') }}</div>
-                <el-input />
+                <el-input v-model="claimAmt" :readonly="true" />
             </div>
             <div class="btn-color-blue standard-button action-btn" @click="onClickClaimNow">{{ t('promo.btn_claim_now') }}</div>
         </div>
@@ -12,23 +12,40 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue';
 import { ElMessage } from 'element-plus';
-import { bonusClaimSlotsRefund } from '../../../api/index/promo';
+import { bonusClaimSlotsRefund, getBonusSlotsCashback } from '../../../api/index/promo';
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
-const onClickClaimNow = () => {
-    bonusClaimSlotsRefund().then((res) => {
-        if(res.code === 0) {
-
+const claimAmt = ref(0)
+const getAmount = () => {
+    getBonusSlotsCashback().then((res) => {
+        if (res.code === 0) {
+            claimAmt.value = res.data;
         } else {
             ElMessage.error(res.message)
         }
     })
 }
+const onClickClaimNow = () => {
+    bonusClaimSlotsRefund().then((res) => {
+        if(res.code === 0) {
+            ElMessage.success(t('common.claimedSuccess'))
+        } else {
+            ElMessage.error(res.message)
+        }
+    })
+}
+onMounted(() => {
+    getAmount();
+})
 </script>
 
 <style lang="scss" scoped>
+.el-input__inner {
+    text-align: center;
+}
 .row {
     display: flex;
     justify-content: center;

@@ -182,7 +182,7 @@ export default defineComponent({
       phoneNumberRef.value.validate()
       if (phoneNumberRef.value.hasError || phoneOtpRef.value.hasError) {
       } else {
-        api.post("/session/verifyAndUpdatePhone", qs.stringify({
+        api.post("/otp/verifyPhone", qs.stringify({
           phone: formDetails.phone,
           code: formDetails.phoneOtpRef,
           codeId: phoneCodeId.value
