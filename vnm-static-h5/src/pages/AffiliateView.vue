@@ -164,7 +164,7 @@
       </div>
       <!-- <div class="red-note">{{ $t("lang.affiliate_03_note") }}</div> -->
 
-      <div class="section-title q-pt-md">{{ $t("lang.affiliate_03_head_title") }}</div>
+      <div class="section-title q-pt-md">{{ $t("lang.affiliate_04_head_title") }}</div>
       <div class="sample-container" style="font-size: 85%">
         <q-card-section>
           <div class="cell-wrapper">
@@ -182,7 +182,7 @@
         </q-card-section>
       </div>
 
-      <div class="section-title q-pt-md">{{ $t("lang.affiliate_04_head_title") }}</div>
+      <div class="section-title q-pt-md">{{ $t("lang.affiliate_05_head_title") }}</div>
       <div class="sample-container" style="font-size: 85%">
         <q-card-section>
           <ol style="padding-left: 20px">
