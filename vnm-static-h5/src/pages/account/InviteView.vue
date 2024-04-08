@@ -9,24 +9,35 @@
       </div>
 
       <div class="shadow-box-info">
-        <table border="0" cellpadding="10" cellspacing="0">
+        <table border="0" cellpadding="10" cellspacing="0" style="width:100%;">
           <tr class="box-header-row">
             <td v-html="$t('lang.share_table_header_01')" />
             <td v-html="$t('lang.share_table_header_02')" />
             <td v-html="$t('lang.share_table_header_03')" />
             <td v-html="$t('lang.share_table_header_04')" />
           </tr>
-          <tr class="box-content-row">
-            <td colspan="4">
-              <div>
-                <img
-                  src="../../assets/images/common/empty-data.png"
-                  style="display: block; width: 100px; margin: 20px auto 0"
-                />
-              </div>
-              {{ $t("lang.share_table_content_empty") }}
-            </td>
-          </tr>
+          <template v-if="referredData.length === 0">
+            <tr class="box-content-row">
+              <td colspan="4">
+                <div>
+                  <img
+                    src="../../assets/images/common/empty-data.png"
+                    style="display: block; width: 100px; margin: 20px auto 0"
+                  />
+                </div>
+                {{ $t("lang.share_table_content_empty") }}
+              </td>
+            </tr>
+          </template>
+
+          <template v-else>
+            <tr v-for="(item, i) in referredData" :key="i">
+              <td>{{ item.loginName }}</td>
+              <td>{{ item.regTime }}</td>
+              <td>{{ item.totalBet }}</td>
+              <td>{{ item.status }}</td>
+            </tr>
+          </template>
         </table>
       </div>
 
@@ -102,7 +113,7 @@ export default defineComponent({
         $q.notify({
           color: "positive",
           position: "top",
-          message: "复制成功！",
+          message: t('lang.link_success'),
           icon: "check_circle_outline"
         });
       }, 100)
@@ -144,6 +155,8 @@ export default defineComponent({
       }
     }
 
+    const referredData = ref([])
+
     onMounted(() => {
       api.get("/session/member/referralCode").then((res) => {
         // console.log(reminderForm)
@@ -153,11 +166,18 @@ export default defineComponent({
         }
       });
 
-      api.get("/session/member/referStats").then((res) => {
+      // api.get("/session/member/referStats").then((res) => {
+      //   // console.log(reminderForm)
+      //   if (res.code === 0) {
+      //     refTotalRegister.value = res.data.totalRegister;
+      //     refTotalDeposit.value = res.data.totalDeposit;
+      //   }
+      // });
+
+      api.get("/session/vnm/referred").then((res) => {
         // console.log(reminderForm)
         if (res.code === 0) {
-          refTotalRegister.value = res.data.totalRegister;
-          refTotalDeposit.value = res.data.totalDeposit;
+          referredData.value = res.data;
         }
       });
 
@@ -169,7 +189,8 @@ export default defineComponent({
       qrCode,
       refTotalRegister,
       refTotalDeposit,
-      copyText
+      copyText,
+      referredData
     }
   }
 });

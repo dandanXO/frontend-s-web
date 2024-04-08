@@ -28,7 +28,7 @@
     <div class="deposit-item-container q-mt-sm">
       <template v-for="(item, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
-          <q-badge v-if="activeMethod.privilegeId" color="orange" floating rounded>+{{ item.hotLabel }}</q-badge>
+          <q-badge v-if="activeMethod.privilegeId" color="green" floating rounded>+{{ item.hotLabel }}</q-badge>
           <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
           <div :class="['deposit-svg', item.isActive && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -152,10 +152,11 @@
     </div>
 
     <div class="q-mt-lg">
-      <div :class="`btn-submit`" @click="confirmDeposit">
+      <PrimaryButton :label="'Submit'" :loading="isLoadingInitPay || btnLoading" :onClick="confirmDeposit" />
+      <!-- <div :class="`btn-submit`" @click="confirmDeposit">
         <q-spinner v-if="isLoadingInitPay || btnLoading" color="white" size="2em" :thickness="2"></q-spinner>
         <template v-else>Submit</template>
-      </div>
+      </div> -->
     </div>
 
     <div class="q-mt-lg" style="color: #576373" v-if="activeMethod.privilegeId">
@@ -210,6 +211,7 @@ import { useRouter } from "vue-router";
 import { convertToCommaAmount } from "src/boot/utils";
 import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
+import PrimaryButton from "src/components/auth/PrimaryButton.vue";
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -775,7 +777,7 @@ onMounted(() => {
       aspect-ratio: 106/64;
 
       &.active {
-        background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+        background: #00B900;
       }
     }
 
@@ -851,7 +853,7 @@ onMounted(() => {
     // aspect-ratio: 77/38;
 
     &.active {
-      background: #5c46e7;
+      background: #00AE00;
       box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
     }
 
@@ -879,7 +881,7 @@ onMounted(() => {
     display: none;
 
     svg {
-      background: #5c46e7;
+      background: #00AE00;
       border-radius: 3px;
     }
 

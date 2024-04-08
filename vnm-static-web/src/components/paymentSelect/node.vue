@@ -309,7 +309,7 @@ $node-color: #4873f1;
         }
         img {
           background-color: #f7f7f7;
-          box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+          // box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
           // max-width: 1.5rem;
           margin-bottom: 0;
         }
@@ -373,15 +373,15 @@ $node-color: #4873f1;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 6rem;
+        width: 4.8rem;
         height: 3rem;
-
+    margin-top: 10px;
         img {
-          max-width: 2.3rem;
+          max-width: 3rem;
           width: 100%;
           height: auto;
           // max-width: 1.5rem;
-          margin-bottom: 0;
+          margin-bottom: 6px;
           border: 0;
           padding: 0;
         }

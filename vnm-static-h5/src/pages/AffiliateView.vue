@@ -48,7 +48,7 @@
         <q-btn
           @click.stop.prevent="
             openWindow(
-              `https://csweb01.amv4xjcbd.com/?partnerId=7&lang=zh-CN&way=${regDevice}&token=${store.token}`,
+              `https://csweb01.amv4xjcbd.com/?partnerId=7&lang=vn&way=${regDevice}&token=${store.token}`,
               'Chat Server',
               350,
               650
@@ -66,18 +66,28 @@
 
     <div class="esport-commission">
       <div class="section-title">{{ $t("lang.affiliate_01_head_title") }}</div>
-      <div class="subtitle">{{ $t("lang.affiliate_01_sub_title") }}</div>
+      <!-- <div class="subtitle">{{ $t("lang.affiliate_01_sub_title") }}</div> -->
       <ul>
         <li>{{ $t("lang.affiliate_01_para_01") }}</li>
-        <li>{{ $t("lang.affiliate_01_para_02") }}</li>
-        <li>{{ $t("lang.affiliate_01_para_03") }}</li>
         <li>
-          {{ $t("lang.affiliate_01_para_04a") }}
-          <ul>
-            <li>{{ $t("lang.affiliate_01_para_04b") }}</li>
-          </ul>
+          {{ $t("lang.affiliate_01_para_02") }}
+          <br />
+          {{ $t("lang.affiliate_01_para_02_a") }}
+          <br />
+          {{ $t("lang.affiliate_01_para_02_b") }}
+          <br />
+          {{ $t("lang.affiliate_01_para_02_c") }}
+          <br />
+          {{ $t("lang.affiliate_01_para_02_d") }}
         </li>
+        <li>{{ $t("lang.affiliate_01_para_03") }}</li>
+        <li>{{ $t("lang.affiliate_01_para_04") }}</li>
         <li>{{ $t("lang.affiliate_01_para_05") }}</li>
+        <li>{{ $t("lang.affiliate_01_para_06") }}</li>
+        <li>{{ $t("lang.affiliate_01_para_07") }}</li>
+        <li>{{ $t("lang.affiliate_01_para_08") }}</li>
+        <li>{{ $t("lang.affiliate_01_para_09") }}</li>
+        <li>{{ $t("lang.affiliate_01_para_10") }}</li>
       </ul>
     </div>
 
@@ -91,87 +101,97 @@
         row-key="name"
         :rows-per-page-options="[0]"
       ></q-table>
-      <div class="red-note">{{ $t("lang.affiliate_02_note") }}</div>
+      <!-- <div class="red-note">{{ $t("lang.affiliate_02_note") }}</div> -->
 
       <div class="section-title">{{ $t("lang.affiliate_03_head_title") }}</div>
       <div class="sample-container">
-        <q-card-section>
-          <div>{{ $t("lang.affiliate_example_01") }}</div>
+        <q-card-section style="font-size: 85%">
+          <div>
+            {{ $t("lang.affiliate_example_01a") }}
+            <br />
+            {{ $t("lang.affiliate_example_01b") }}
+            <br />
+            {{ $t("lang.affiliate_example_01c") }}
+            <br />
+            {{ $t("lang.affiliate_example_01d") }}
+          </div>
+          <div class="q-mt-md">{{ $t("lang.affiliate_example_01") }}</div>
           <div class="cell-wrapper">
             <div>{{ $t("lang.affiliate_example_01_text_01") }}</div>
-            <div>1100</div>
           </div>
           <div class="cell-wrapper">
             <div>{{ $t("lang.affiliate_example_01_text_02") }}</div>
-            <div>-100</div>
           </div>
           <div class="cell-wrapper">
             <div>{{ $t("lang.affiliate_example_01_text_03") }}</div>
-            <div>-16</div>
           </div>
           <div class="cell-wrapper">
             <div>{{ $t("lang.affiliate_example_01_text_04") }}</div>
-            <div>88</div>
           </div>
-        </q-card-section>
-        <q-separator></q-separator>
-        <q-card-section>
           <div class="cell-wrapper">
             <div>{{ $t("lang.affiliate_example_01_text_05") }}</div>
-            <div>898</div>
           </div>
           <div class="cell-wrapper">
             <div>{{ $t("lang.affiliate_example_01_text_06") }}</div>
-            <div>*35%</div>
           </div>
-        </q-card-section>
-        <q-separator></q-separator>
-        <q-card-section>
           <div class="cell-wrapper">
             <div>{{ $t("lang.affiliate_example_01_text_07") }}</div>
-            <div>313.6</div>
           </div>
-        </q-card-section>
-      </div>
-      <div class="red-note">{{ $t("lang.affiliate_03_note") }}</div>
 
-      <div class="sample-container">
-        <q-card-section>
-          <div>{{ $t("lang.affiliate_example_02") }}</div>
+          <div class="q-mt-md">{{ $t("lang.affiliate_example_02") }}</div>
           <div class="cell-wrapper">
             <div>{{ $t("lang.affiliate_example_02_text_01") }}</div>
-            <div>122000</div>
           </div>
           <div class="cell-wrapper">
             <div>{{ $t("lang.affiliate_example_02_text_02") }}</div>
-            <div>-2000</div>
           </div>
           <div class="cell-wrapper">
             <div>{{ $t("lang.affiliate_example_02_text_03") }}</div>
-            <div>-2240</div>
           </div>
           <div class="cell-wrapper">
             <div>{{ $t("lang.affiliate_example_02_text_04") }}</div>
-            <div>9760</div>
           </div>
-        </q-card-section>
-        <q-separator></q-separator>
-        <q-card-section>
           <div class="cell-wrapper">
             <div>{{ $t("lang.affiliate_example_02_text_05") }}</div>
-            <div>108,000</div>
           </div>
           <div class="cell-wrapper">
             <div>{{ $t("lang.affiliate_example_02_text_06") }}</div>
-            <div>*40%</div>
           </div>
-        </q-card-section>
-        <q-separator></q-separator>
-        <q-card-section>
           <div class="cell-wrapper">
             <div>{{ $t("lang.affiliate_example_02_text_07") }}</div>
-            <div>43200</div>
           </div>
+        </q-card-section>
+      </div>
+      <!-- <div class="red-note">{{ $t("lang.affiliate_03_note") }}</div> -->
+
+      <div class="section-title q-pt-md">{{ $t("lang.affiliate_04_head_title") }}</div>
+      <div class="sample-container" style="font-size: 85%">
+        <q-card-section>
+          <div class="cell-wrapper">
+            <div>{{ $t("lang.affiliate_03_para_01") }}</div>
+          </div>
+          <div class="cell-wrapper">
+            <div>{{ $t("lang.affiliate_03_para_02") }}</div>
+          </div>
+          <div class="cell-wrapper">
+            <div>{{ $t("lang.affiliate_03_para_03") }}</div>
+          </div>
+          <div class="cell-wrapper">
+            <div>{{ $t("lang.affiliate_03_para_04") }}</div>
+          </div>
+        </q-card-section>
+      </div>
+
+      <div class="section-title q-pt-md">{{ $t("lang.affiliate_05_head_title") }}</div>
+      <div class="sample-container" style="font-size: 85%">
+        <q-card-section>
+          <ol style="padding-left: 20px">
+            <li>{{ $t("lang.affiliate_04_para_01") }}</li>
+            <li>{{ $t("lang.affiliate_04_para_02") }}</li>
+            <li>{{ $t("lang.affiliate_04_para_03") }}</li>
+            <li>{{ $t("lang.affiliate_04_para_04") }}</li>
+            <li>{{ $t("lang.affiliate_04_para_05") }}</li>
+          </ol>
         </q-card-section>
       </div>
     </div>
@@ -200,7 +220,7 @@
               class="two-four-content"
               @click.stop.prevent="
                 openWindow(
-                  `https://csweb01.amv4xjcbd.com/?partnerId=7&lang=zh-CN&way=${regDevice}&token=${store.token}`,
+                  `https://csweb01.amv4xjcbd.com/?partnerId=7&lang=vn&way=${regDevice}&token=${store.token}`,
                   'Chat Server',
                   350,
                   650
@@ -214,23 +234,15 @@
         </div>
         <div class="contact-wrapper">
           <div class="contact-method">{{ $t("lang.affiliate_jointemail") }}</div>
-          <div class="contact-id">affiliate@e8007.com</div>
+          <div class="contact-id">vnaffiliates@tf88.com</div>
         </div>
         <div class="contact-wrapper">
           <div class="contact-method">{{ $t("lang.affiliate_jointskype") }}</div>
-          <div class="contact-id">live:.cd.ff6111f0549375a8 ({{ $t("lang.affiliate_clicktocontact") }})</div>
+          <div class="contact-id">live:.cid.f284aa8f5c120ae5 ({{ $t("lang.affiliate_clicktocontact") }})</div>
         </div>
         <div class="contact-wrapper">
           <div class="contact-method">{{ $t("lang.affiliate_jointletstalk") }}</div>
-          <div class="contact-id">t403523198</div>
-        </div>
-        <div class="contact-wrapper">
-          <div class="contact-method">{{ $t("lang.affiliate_jointtelegram") }}</div>
-          <div class="contact-id">LH18668</div>
-        </div>
-        <div class="contact-wrapper">
-          <div class="contact-method">{{ $t("lang.affiliate_jointbubble") }}</div>
-          <div class="contact-id">LH10086</div>
+          <div class="contact-id">+639278280893</div>
         </div>
       </div>
     </div>
@@ -259,48 +271,42 @@ const store = userStore();
 const { t } = useI18n();
 
 const columns = [
-  {
-    name: "agent",
-    required: true,
-    label: t("lang.affiliate_rank"),
-    align: "center",
-    field: (row) => row.name
-  },
-  { name: "profit", label: t("lang.affiliate_profit"), field: "profit", align: "center" },
   { name: "activeMember", label: t("lang.affiliate_activemember"), field: "activeMember", align: "center" },
+  { name: "profit", label: t("lang.affiliate_profit"), field: "profit", align: "center" },
+
   { name: "commission", label: t("lang.affiliate_commission"), field: "commission", align: "center" }
 ];
 const rows = [
   {
     name: t("lang.affiliate_bronze"),
-    profit: "<10W",
+    profit: "0~2 tỷ",
     activeMember: "5",
-    commission: "35%"
-  },
-  {
-    name: t("lang.affiliate_silver"),
-    profit: "10W-30W",
-    activeMember: "10",
     commission: "40%"
   },
   {
-    name: t("lang.affiliate_gold"),
-    profit: "30W-60W",
-    activeMember: "25",
+    name: t("lang.affiliate_silver"),
+    profit: "2.01 tỷ~3 tỷ",
+    activeMember: "10",
     commission: "45%"
   },
   {
-    name: t("lang.affiliate_diamond"),
-    profit: "60W-100W",
-    activeMember: "50",
+    name: t("lang.affiliate_gold"),
+    profit: "3.01 tỷ~4 tỷ",
+    activeMember: "25",
     commission: "50%"
   },
   {
-    name: t("lang.affiliate_crown"),
-    profit: ">100W",
-    activeMember: "80",
+    name: t("lang.affiliate_diamond"),
+    profit: "More than 4 tỷ",
+    activeMember: "50",
     commission: "55%"
   }
+  // {
+  //   name: t("lang.affiliate_crown"),
+  //   profit: ">100W",
+  //   activeMember: "80",
+  //   commission: "55%"
+  // }
 ];
 </script>
 
@@ -317,17 +323,18 @@ const rows = [
     text-shadow: 0px 5px 4px rgba(0, 0, 0, 0.47), 2px 2px 0px #9da6d4;
     // text-shadow: 0px 7.804098606109619px 7.804098606109619px rgba(0, 0, 0, 0.47),
     //   3.9020493030548096px 3.9020493030548096px 0px #9da6d4;
-    font-family: FZTanHeiS-B-GB;
+    // font-family: FZTanHeiS-B-GB;
     font-size: 3.46239rem;
     font-weight: 400;
-    background: url("../assets/images/affiliate/title-bg.jpeg"), lightgray 50% / cover no-repeat;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -moz-background-clip: text;
-    -moz-text-fill-color: transparent;
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: #88d0f7;
+    // color: #88d0f7;
+    // background: url("../assets/images/affiliate/title-bg.jpeg"), lightgray 50% / cover no-repeat;
+    // background-clip: text;
+    // -webkit-background-clip: text;
+    // -webkit-text-fill-color: transparent;
+    // -moz-background-clip: text;
+    // -moz-text-fill-color: transparent;
+    // -webkit-text-stroke-width: 1px;
+    // -webkit-text-stroke-color: #88d0f7;
   }
 
   .branding {
@@ -352,7 +359,7 @@ const rows = [
           color: $font-2;
           text-align: left;
           text-shadow: 1.1197850704193115px 1.1197850704193115px 0px #9da6d4;
-          font-family: FZTanHeiS-B-GB;
+          // font-family: FZTanHeiS-B-GB;
           font-size: 1rem;
 
           font-weight: 400;
@@ -362,7 +369,7 @@ const rows = [
         .desc {
           color: $font-2;
           text-align: left;
-          font-family: PingFang SC;
+          // font-family: PingFang SC;
           font-size: 0.75rem;
 
           font-weight: 500;
@@ -394,7 +401,7 @@ const rows = [
 
       color: #fff;
       text-align: center;
-      font-family: PingFang SC;
+      // font-family: PingFang SC;
       font-weight: 400;
       line-height: normal;
       word-break: keep-all;
@@ -435,9 +442,9 @@ const rows = [
 
       li {
         color: $font-1;
-        font-family: PingFang SC;
+        // font-family: PingFang SC;
         font-size: 0.75rem;
-        font-weight: 600;
+        // font-weight: 600;
         margin: 0.25rem 0;
         ul {
           padding: 0;
@@ -450,7 +457,7 @@ const rows = [
 
     .subtitle {
       color: $font-2;
-      font-family: PingFang SC;
+      // font-family: PingFang SC;
       font-size: 0.9rem;
       font-weight: 400;
     }
@@ -478,14 +485,14 @@ const rows = [
 
     td {
       color: $font-1;
-      font-family: PingFang SC;
+      // font-family: PingFang SC;
       font-size: 1rem;
       font-weight: 400;
     }
 
     .red-note {
       color: $negative;
-      font-family: PingFang SC;
+      // font-family: PingFang SC;
       font-size: 0.75rem;
       font-weight: 400;
       line-height: normal;
@@ -499,7 +506,7 @@ const rows = [
       padding: 1rem;
 
       color: $font-1;
-      font-family: PingFang SC;
+      // font-family: PingFang SC;
       font-size: 1rem;
 
       font-weight: 400;
@@ -522,7 +529,7 @@ const rows = [
         width: 100%;
         color: #fff;
         text-align: center;
-        font-family: PingFang SC;
+        // font-family: PingFang SC;
         font-weight: 400;
         line-height: normal;
         background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
@@ -570,6 +577,7 @@ const rows = [
             align-items: center;
             justify-content: center;
             position: absolute;
+            padding: 6px 12px;
 
             .two-four-img {
               width: 1rem;
@@ -589,14 +597,14 @@ const rows = [
 
         .contact-method {
           color: $font-1;
-          font-family: PingFang SC;
+          // font-family: PingFang SC;
           font-size: 1rem;
           font-weight: 400;
         }
 
         .contact-id {
           color: $grey-color;
-          font-family: PingFang SC;
+          // font-family: PingFang SC;
           font-size: 1rem;
           font-weight: 400;
           line-height: normal;
@@ -607,7 +615,7 @@ const rows = [
 
   .section-title {
     color: $primary;
-    font-family: PingFang SC;
+    // font-family: PingFang SC;
     font-size: 1.25rem;
     font-weight: 600;
     line-height: normal;

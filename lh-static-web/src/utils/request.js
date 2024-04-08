@@ -10,7 +10,10 @@ const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
 const crArray = process.env.VUE_APP_CR_API.split(",");
 
-const isGlobalLH = window.location.hostname.indexOf("lh318") > -1;
+const globalLinks= ["lh318","lh165","lh765","lh730","lh971","lh835"];
+console.log(window.location.hostname);
+const isGlobalLH = globalLinks.some(link => window.location.hostname.includes(link));
+
 if (isGlobalLH) {
   var rstApi = "https://aptvpnubglgl.conoibue6er.com";
   var evtApi = "https://przl4oufglgl.anpoxuaq9ae.com";

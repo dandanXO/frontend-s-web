@@ -359,7 +359,7 @@ export default defineComponent({
           transfer(transferTypeIndex.value, transferInfo).then(async(res) => {
             if (res.code === 0) {
               ElMessage({
-                message: '成功',
+                message: t('common.success'),
                 type: 'success',
               })
               store.getBalance();

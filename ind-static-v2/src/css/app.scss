@@ -13,7 +13,10 @@ body {
   letter-spacing: 1px;
 }
 #q-app {
-  // background-color: #101114;
+  background: #11131f;
+  background: url("../assets/images/index/auth-bg.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 .q-layout,
 .q-header,
@@ -66,7 +69,6 @@ body {
   height: 100%;
 }
 body.body--dark {
-  background: #11131f;
 }
 body.body--dark .q-header {
   background: transparent;
@@ -78,7 +80,7 @@ body.body--dark .q-header {
 }
 
 .q-item--active {
-  color: #fdd835;
+  // color: #fdd835;
 }
 
 body.platform-ios .q-dialog__inner--minimized > div:not(.popout-dialog) {
@@ -104,7 +106,9 @@ body.platform-ios .q-dialog__inner--minimized > div:not(.popout-dialog) {
 .page-title {
   width: 100%;
   min-height: 40px;
-  background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
+  background: linear-gradient(#83838336, #83838336), url("../assets/images/index/auth-bg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
   color: #fff;
   font-size: 16px;
   text-align: center;
@@ -178,10 +182,13 @@ body.body--dark .q-footer {
   text-align: center;
 }
 .q-carousel.home {
-  width: 100%;
+  width: calc(100% - 25px);
   height: auto;
   padding-bottom: 20px;
   background: #101114;
+  margin: 0 auto;
+  background: transparent;
+  border-radius: 4px;
 
   .q-panel > div {
     background-repeat: no-repeat;
@@ -192,7 +199,7 @@ body.body--dark .q-footer {
   .q-carousel__navigation--bottom {
     bottom: -5px;
     left: 0;
-    background: #101114;
+    // background: #101114;
     width: 100%;
     height: 20px;
   }
@@ -224,26 +231,26 @@ body.body--dark .q-footer {
   }
 }
 .account-table-page {
-  background-color: #101114;
+  // background-color: #101114;
   position: relative;
 
-  &::after {
-    content: "";
-    display: block;
-    position: absolute;
-    width: 370px;
-    height: 370px;
-    top: 50%;
-    pointer-events: none;
-    left: 50%;
-    margin-top: -50px;
-    transform: translate(-50%, -50%);
-    background-size: contain;
-    background-image: url("../assets/images/account/shadow1-bg.png");
-  }
+  // &::after {
+  //   content: "";
+  //   display: block;
+  //   position: absolute;
+  //   width: 370px;
+  //   height: 370px;
+  //   top: 50%;
+  //   pointer-events: none;
+  //   left: 50%;
+  //   margin-top: -50px;
+  //   transform: translate(-50%, -50%);
+  //   background-size: contain;
+  //   background-image: url("../assets/images/account/shadow1-bg.png");
+  // }
 }
 .account-message-page {
-  background-color: #101114;
+  // background-color: #101114;
   position: relative;
 }
 
@@ -254,12 +261,15 @@ body.body--dark .q-footer {
   height: 86px;
 
   .q-tabs__content {
-    background-image: url(../assets/images/index/bottom-nav-bg.png);
+    background-image: url(../assets/images/auth/footer-bg.png);
     background-repeat: no-repeat;
-    background-size: 120% 110px;
+    background-size: 100% 100%;
     background-position: top center;
-    padding-bottom: 4px;
+
+    // background-color: #171717;
+    padding-bottom: 10px;
     padding-top: 16px;
+    // border-radius: 40px 40px 0px 0px;
   }
 }
 .q-footer .q-tab {
@@ -273,7 +283,7 @@ body.body--dark .q-footer {
     opacity: 1;
     z-index: 9;
     position: relative;
-    margin-top: -25px;
+    margin-top: -20px;
     padding-bottom: 10px;
     img {
       height: 55px;
@@ -283,8 +293,8 @@ body.body--dark .q-footer {
 
   img {
     opacity: 1;
-    height: 45px;
-    width: 45px;
+    height: 35px;
+    width: 35px;
     margin-bottom: 1px;
     &.inactive {
       display: block;
@@ -294,10 +304,20 @@ body.body--dark .q-footer {
     }
   }
   &__indicator {
-    display: none;
+    // display: none;
+    background: linear-gradient(251.03deg, #DFDF0C 7.46%, #7EDB5C 91.87%);
+    width: 70%;
+    margin: 0 auto;
   }
   &--active {
     color: #ffffff;
+
+    .footer-label {
+      background: linear-gradient(251.03deg, #DFDF0C 7.46%, #7EDB5C 91.87%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
     // font-weight: bold;
     img {
       &.inactive {
@@ -435,7 +455,7 @@ body.body--dark .q-footer {
   color: rgba(255, 255, 255, 0.5);
 
   .wallet-btn {
-    background: rgba(255, 255, 255, 0.7);
+    background: #00ae0033;
     padding: 8px;
 
     img {
@@ -571,7 +591,7 @@ body.body--dark .q-footer {
   }
 
   .popout-dialog-container {
-    background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+    background: #19202D;
     background-position: top center;
     background-size: cover;
     background-repeat: no-repeat;

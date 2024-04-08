@@ -2,14 +2,19 @@
     <div class="welcome-page-container">
         <div class="center">
             <div class="logo">
+                <img src="../assets/home/auth/welcome-header.png">
                 {{ $t('welcome.congrats') }}
             </div>
             <div class="welcome-slides">
-                <div class="welcome-slide card-bg">
-                    <div class="slide-title">{{ $t('welcome.compatibleDevices') }}</div>
-                    <img class="banner" src="../assets/home/auth/welcome-4-types-icon.png" />
-                    <div>{{ $t('welcome.technologyLead') }}</div>
-                    <img class="supported-platforms-img" src="../assets/home/auth/welcome-supported-platforms.png" />
+                <div class="welcome-slide first card-bg">
+                    <div class="slide-title">{{ $t('welcome.firstSlide') }}</div>
+                    <div class="slide-content">{{ $t('welcome.firstSlideContent') }}</div>
+                    <div class="slide-qr">
+                        <VueQRCodeComponent :size="100" text="https://m.e8386.com" />
+                    </div>
+                    
+                    <div class="bold-content">{{ $t('welcome.firstSlideSub') }}</div>
+                    <!-- <img class="supported-platforms-img" src="../assets/home/auth/welcome-supported-platforms.png" />
                     <div class="qr-codes">
                         <template v-for="(det, idx) in platforms" :key="idx">
                             <div class="platform-qr-code">
@@ -17,31 +22,34 @@
                                 <div class="label-desc-wrapper">
                                     <span class="label">{{ det.name }}</span>
                                     <a v-if="det.mobile" :href="det.mobile" target="_blank">{{ det.mobile }}</a>
-                                    <!-- <span v-else>{{ $t('welcome.mobileUsers') }}</span> -->
+                                    <!- <span v-else>{{ $t('welcome.mobileUsers') }}</span> ->
                                 </div>
                             </div>
                         </template>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="welcome-slide center-slide card-bg">
                     <!-- <img class="ribbon" src="../assets/home/auth/welcome-slide-ribbon.png" /> -->
-                    <div class="slide-title">{{ $t('welcome.instantDeposit') }}</div>
-                    <img class="banner" src="../assets/home/auth/welcome-84-percent-icon.png" />
-                    <div class="grey-card-bg">
+                    <div class="slide-title">{{ $t('welcome.secondSlide') }}</div>
+                    <div class="slide-content sec">{{ $t('welcome.secondSlideContent') }}</div>
+                    <img class="banner" style="margin: -30px 0px; width: 320px;" src="../assets/home/auth/hundred.png" />
+                    <!-- <div class="grey-card-bg">
                         <div class="list">{{ $t('welcome.yourFirstDeposit') }}</div>
                         <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>{{ $t('welcome.firstDepositBonus') }}</div>
                         <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>{{ $t('welcome.completeBeginnerTasks') }}</div>
                         <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>{{ $t('welcome.dailyCashback') }}</div>
                         <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>{{ $t('welcome.dailyInsuranceBets') }}</div>
                     </div>
-                    <router-link to="/center/deposit" class="blue-bg deposit-btn">{{ $t('welcome.depositNow') }}</router-link>
+                    -->
+                    <router-link to="/center/deposit" class="deposit-btn">{{ $t('welcome.depositNow') }}</router-link> 
                 </div>
                 <div class="welcome-slide card-bg">
-                    <div class="slide-title">{{ $t('welcome.popularEsportsEvents') }}</div>
-                    <img class="banner" src="../assets/home/auth/welcome-17-types-icon.png" />
-                    <img class="hot-games-img" src="../assets/home/auth/welcome-hot-games.png" />
-                    <div style="margin:15px 10px 5px;">...{{ $t('welcome.moreGames') }}</div>
-                    <router-link to="/esports"  class="blue-bg proceed-btn">{{ $t('welcome.proceedNow') }}</router-link>
+                    <div class="slide-title">{{ $t('welcome.thirdSlide') }}</div>
+                    <div class="slide-content">{{ $t('welcome.thirdSlideContent') }}</div>
+                    <!-- <img class="banner" src="../assets/home/auth/welcome-17-types-icon.png" /> -->
+                    <img class="hot-games-img" src="../assets/home/auth/vnm-welcome-hot-games.png" />
+                    <!-- <div style="margin:15px 10px 5px;">...{{ $t('welcome.moreGames') }}</div>
+                    <router-link to="/esports"  class="blue-bg proceed-btn">{{ $t('welcome.proceedNow') }}</router-link> -->
                 </div>
             </div>
         </div>
@@ -137,6 +145,10 @@ const platforms = ref([
     width: 90%;
     min-height: 45px;
     margin: 30px 0px 10px;
+    font-weight: 500;
+    background: url(../assets/home/auth/title-bg-blue.png)no-repeat center center;
+    background-size: contain;
+    color: #ffffff;
 }
 
 .proceed-btn {
@@ -153,22 +165,56 @@ const platforms = ref([
     grid-template-columns: 1fr 1fr 1fr;
     gap: 50px;
     align-items: center;
-    font-family: 'PingFang SC';
-    font-weight: bold;
-
     .welcome-slide {
         display: flex;
         flex-direction: column;
-        width: 350px;
+        width: 420px;
         justify-content: flex-start;
         align-items: center;
         color: #7A80A1;
+        background: #FFFFFFCC;
         position: relative;
         padding: 25px;
+        box-shadow: 0px 0px 10px 0px #0000001A;
+        &.first{
+            .slide-qr {
+                background: url(../assets/home/auth/welcome-qrbg.png)no-repeat center center;
+                
+    width: 150px;
+    height: 155px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+    margin: 25px auto;
+            }
+            .slide-content {
+                width: 75%;
+            }
+        }
 
         .slide-title {
-            font-weight: 700;
-            font-size: 18px;
+            font-weight: 900;
+            font-size: 24px;
+            color: #424F72;
+        }
+        .slide-content {
+            text-align: center;
+            font-size: 15px;
+            margin: 10px auto;
+            color: #7A80A1;
+        }
+        .slide-images {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            align-items: center;
+            margin: 10px auto;
+        }
+        .bold-content {
+            font-weight: 900;
+            color: #7A80A1;
+            font-size: 17px;
         }
 
         .list {
@@ -188,7 +234,7 @@ const platforms = ref([
         }
 
         &.center-slide {
-            width: 470px;
+            // width: 470px;
 
             .banner {
                 width: 100%;
@@ -221,22 +267,30 @@ const platforms = ref([
     width: 100%;
     min-height: 100vh;
     height: 100%;
-    background: url("@/assets/home/auth/login-page-bg.jpg") no-repeat center center;
+    background: url("../assets/home/auth/welcome-bg.png") no-repeat center center;
     background-size: cover;
     display: flex;
     .logo {
-        font-size: 30px;
+        font-size: 50px;
         font-weight: bold;
-    background: linear-gradient(#47a9ff 50%, #de62f9);
-    -webkit-background-clip: text;
-    color: transparent;
+        color: #ffffff;
+        text-shadow: 5px 5px 25px #5894ff;
+        flex-direction: column;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+            
+    max-width: 365px;
+    margin: -120px 0;
+        }
     }
 }
 
 .center {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     gap: 30px;
     margin: 5% auto;

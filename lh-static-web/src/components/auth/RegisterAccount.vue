@@ -443,7 +443,8 @@ const closeRegDialog = () => {
 };
 
 const openLoginDialog = () => {
-  emits("open-login-dialog");
+  router.push('/login')
+  // emits("open-login-dialog");
 };
 
 onMounted(() => {

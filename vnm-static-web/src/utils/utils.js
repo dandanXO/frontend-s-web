@@ -23,7 +23,11 @@ export const getDevice = () => {
 
 export const displayBalance = (balance) => {
 
-  let numberStr = balance.toString();
+  let numberItem = balance.toString();
+
+  const numberSplits= numberItem.split(".");
+  let numberStr= numberSplits[0];
+  let numberDec= numberSplits[1] ?? "";
 
   // Initialize an empty string to store the formatted number
   let formattedNumber = '';
@@ -39,6 +43,9 @@ export const displayBalance = (balance) => {
     }
   }
 
+  if(numberDec){
+    return formattedNumber + "." + numberDec;
+  }
   return formattedNumber;
 };
 

@@ -199,6 +199,7 @@ $node-color: #33bcd4;
   margin-bottom: 15px;
   width: 100%;
   grid-template-columns: repeat(5, 1fr);
+  align-items: flex-start;
 
   .payment-method-item {
     text-align: center;
@@ -349,8 +350,8 @@ $node-color: #33bcd4;
         align-items: center;
         justify-content: center;
         box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
-        width: 4rem;
-        height: 4rem;
+        width: 60px;
+        height: 60px;
         margin-bottom: 5px;
         border: 2px solid #ddd;
         border-radius: 3px;
@@ -397,9 +398,13 @@ $node-color: #33bcd4;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
+      width: 100%;
+      max-width: 40px;
+
       img {
         padding: 0;
         border: 0;
+        width: 100%;
         max-width: 40px;
         background-color: transparent;
       }
@@ -420,7 +425,14 @@ $node-color: #33bcd4;
   }
 }
 
-@media (max-width: 390px) {
+@media (max-width: 420px) {
+  .node-txt-img {
+    width: 54px !important;
+    height: 54px !important;
+  }
+}
+
+@media (max-width: 355px) {
   .payment-method-wrapper {
     grid-template-columns: repeat(4, 1fr);
   }

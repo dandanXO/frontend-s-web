@@ -13,7 +13,6 @@
           clearable
           v-model="regForm.loginName"
           :placeholder="$t('lang.username')"
-          lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_enter_username'),
             (val) => (val && val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11'),
@@ -139,6 +138,7 @@
 
         <q-label>
           {{ $t("lang.mobile_number") }}
+          <em>*</em>
         </q-label>
         <q-input
           ref="telRef"
@@ -153,12 +153,15 @@
           color="white"
         >
           <template v-slot:prepend>
-            <q-icon color="bright" name="smartphone" style="font-size: 24px" />
+            <div style="width: 24px; display: flex; align-items: center">
+              <img src="../assets/images/login/phone-icon.png" width="18" />
+            </div>
           </template>
         </q-input>
 
         <q-label>
           {{ $t("lang.email") }}
+          <em>*</em>
         </q-label>
         <q-input
           ref="emailRef"
@@ -172,7 +175,9 @@
           color="white"
         >
           <template v-slot:prepend>
-            <q-icon color="bright" name="mail_outline" style="font-size: 24px" />
+            <div style="width: 24px; display: flex; align-items: center">
+              <img src="../assets/images/login/mail-icon.png" width="27" />
+            </div>
           </template>
         </q-input>
 
@@ -235,9 +240,12 @@
 
         <div class="text-center q-mt-md q-pb-xs">
           {{ $t("lang.registration_hints") }}
-          <router-link to="/login" style="white-space: nowrap">
+<!--          <router-link to="/login" style="white-space: nowrap">-->
+          <div style="white-space: nowrap">
             {{ $t("lang.user_registration_protocol") }}
-          </router-link>
+          </div>
+
+<!--          </router-link>-->
         </div>
       </div>
     </q-form>
@@ -410,7 +418,7 @@ export default defineComponent({
     const isValidRealName = (val) => {
       const phonePattern = /^[a-zA-Z\s]+$/;
       return phonePattern.test(regForm.realName) || t("lang.personal_realname_valid");
-    }
+    };
 
     const router = useRouter();
     const onSubmit = () => {
@@ -473,7 +481,7 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: t('lang.register_success'),
+                  message: t("lang.register_successful"),
                   icon: "check_circle_outline"
                 });
                 store.autoLogin(res.data);

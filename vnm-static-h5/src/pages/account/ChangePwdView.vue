@@ -129,7 +129,10 @@
               :label="$t('lang.chgpwd_old_withdraw_password')"
               lazy-rules
               clearable
-              :rules="[(val) => (val && val.length > 0) || $t('lang.chgpwd_please_enter_old_withdraw_password')]"
+              :rules="[
+                (val) => (val && val.length > 0) || $t('lang.chgpwd_please_enter_old_withdraw_password'),
+                (val) => (val && val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11')
+              ]"
             >
               <template v-slot:append>
                 <q-icon
@@ -156,7 +159,10 @@
             :label="$t('lang.chgpwd_new_withdraw_password')"
             lazy-rules
             clearable
-            :rules="[(val) => (val && val.length > 0) || $t('lang.chgpwd_please_enter_new_withdraw_password')]"
+            :rules="[
+              (val) => (val && val.length > 0) || $t('lang.chgpwd_please_enter_new_withdraw_password'),
+              (val) => (val && val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11')
+            ]"
           >
             <template v-slot:append>
               <q-icon
@@ -184,6 +190,7 @@
             clearable
             :rules="[
               (val) => (val && val.length > 0) || $t('lang.chgpwd_please_enter_confirm_withdraw_password'),
+              (val) => (val && val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11'),
               (val) => val === formChgWithdrawPwd.password || $t('lang.chgpwd_confirm_withdraw_password_not_match')
             ]"
           >

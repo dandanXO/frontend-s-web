@@ -25,7 +25,7 @@ const props = defineProps(["noInfoTitle","shortenContainer"]);
   }
 
   img {
-    width: 80px;
+    width: 200px;
   }
 
   p {

@@ -295,7 +295,7 @@ $node-color: #468cff;
       .node-text {
         display: flex;
         gap: 5px;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         & > div {
           font-size: 12px;
@@ -360,8 +360,8 @@ $node-color: #468cff;
         align-items: center;
         justify-content: center;
         box-shadow: inset 0 0 8px 0 #a9c9ea;
-        width: 4rem;
-        height: 4rem;
+        width: 60px;
+        height: 60px;
         margin-bottom: 5px;
         border: 2px solid $secondary;
         border-radius: 10px;
@@ -430,35 +430,24 @@ $node-color: #468cff;
   }
 }
 
-@media (max-width: 420px) {
-  .payment-method-wrapper {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media (max-width: 375px) {
-  .node .node-content .node-text .node-txt-img {
-    width: 4.5rem;
-    height: 4.5rem;
-  }
-  .node .node-item .promo img {
-    max-width: 50px;
-    width: 50px;
-  }
-  .node .node-item .promo {
-    right: -10px;
-    top: -10px;
-  }
-  .node .node-content .node-text .node-txt-img img {
-    padding: 5px 10px;
-  }
-}
-
 .node-item.payment-method-item {
   pointer-events: auto;
 }
 
 .node-group {
   pointer-events: none;
+}
+
+@media (max-width: 420px) {
+  .node-txt-img {
+    width: 54px !important;
+    height: 54px !important;
+  }
+}
+
+@media (max-width: 355px) {
+  .payment-method-wrapper {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 </style>

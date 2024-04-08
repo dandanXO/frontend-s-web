@@ -7,47 +7,47 @@
       <el-tabs v-model="mailboxState.active" @tab-click="mailTabChange" type="card">
         <el-tab-pane name="inbox" :label="$t('mail.inbox')">
           <div
-              style="
+            style="
               display: flex;
               justify-content: center;
               align-items: center;
               height: 300px;
             "
-              v-if="!isLoading['inbox']"
+            v-if="!isLoading['inbox']"
           >
             {{ $t('common.loading') }}
           </div>
           <div v-else-if="mailboxState.mailboxList.inbox.list.length > 0">
             <div class="mailbox-list">
               <template v-for="(m, mi) in mailboxState.mailboxList.inbox.list" :key="m.id">
-                  <div :class="`mailbox-item`" @click="openMsg(m)">
-                    <div class="mailbox-preview">
-                      <div :class="`mailbox-title ${m.readTime ? 'read' : 'unread'}`">
-                        <el-tag type="info" v-if="m.readTime">{{ $t('mail.isRead') }}</el-tag>
-                        <el-tag type="danger" v-else>{{ $t('mail.unread') }}</el-tag>
-                        {{ m.title }}
-                      </div>
-                      <ArrowDown :class="`mailbox-accordion ${m.isOpen ? 'open' : ''}`"></ArrowDown>
+                <div :class="`mailbox-item`" @click="openMsg(m)">
+                  <div class="mailbox-preview">
+                    <div :class="`mailbox-title ${m.readTime ? 'read' : 'unread'}`">
+                      <el-tag type="info" v-if="m.readTime">{{ $t('mail.isRead') }}</el-tag>
+                      <el-tag type="danger" v-else>{{ $t('mail.unread') }}</el-tag>
+                      {{ m.title }}
                     </div>
-
-                    <div v-if="isShowSelect" class="mailbox-checkbox">
-                      <el-checkbox v-model="selectedIds[m.id]" size="large" />
-                    </div>
+                    <ArrowDown :class="`mailbox-accordion ${m.isOpen ? 'open' : ''}`"></ArrowDown>
                   </div>
 
-                  <div :class="`mailbox-content-wrapper ${m.isOpen ? 'open' : ''}`">
-                    <div class="mailbox-content" v-html="m.content || $t('common.loading')"></div>
-                    <div class="mailbox-date">
-                      <el-icon>
-                        <Calendar />
-                      </el-icon>
-                      <div>{{ new Date(m.sendTime).toLocaleString(languageVal) }}</div>
-                      <el-icon class="delete-btn">
-                        <Delete @click="deleteMsg(m.id, mi)" />
-                      </el-icon>
-                    </div>
+                  <div v-if="isShowSelect" class="mailbox-checkbox">
+                    <el-checkbox v-model="selectedIds[m.id]" size="large" />
                   </div>
-                </template>
+                </div>
+
+                <div :class="`mailbox-content-wrapper ${m.isOpen ? 'open' : ''}`">
+                  <div class="mailbox-content" v-html="m.content || $t('common.loading')"></div>
+                  <div class="mailbox-date">
+                    <el-icon>
+                      <Calendar />
+                    </el-icon>
+                    <div>{{ new Date(m.sendTime).toLocaleString(languageVal) }}</div>
+                    <el-icon class="delete-btn">
+                      <Delete @click="deleteMsg(m.id, mi)" />
+                    </el-icon>
+                  </div>
+                </div>
+              </template>
             </div>
             <div class="pagination-wrapper">
               <el-pagination
@@ -67,25 +67,25 @@
             "
             v-else
           >
-          {{ $t('common.noRecordFound') }}
+            {{ $t('common.noRecordFound') }}
           </div>
         </el-tab-pane>
         <el-tab-pane key="sent" name="sent" :label="$t('mail.outbox')">
           <div
-              style="
+            style="
               display: flex;
               justify-content: center;
               align-items: center;
               height: 300px;
             "
-              v-if="!isLoading['outbox']"
+            v-if="!isLoading['outbox']"
           >
-          {{ $t('common.loading') }}
+            {{ $t('common.loading') }}
           </div>
           <div v-else-if="mailboxState.mailboxList.sent.list.length > 0">
             <div class="mailbox-list">
               <div class="mailbox-list">
-              <template v-for="(m, mi) in mailboxState.mailboxList.sent.list" :key="m.id">
+                <template v-for="(m, mi) in mailboxState.mailboxList.sent.list" :key="m.id">
                   <div :class="`mailbox-item`" @click="m.isOpen = !m.isOpen">
                     <div class="mailbox-preview">
                       <div :class="mailbox-title">
@@ -112,7 +112,7 @@
                     </div>
                   </div>
                 </template>
-            </div>
+              </div>
             </div>
             <div class="pagination-wrapper" :class="{ hidden: mailOpened }">
               <!-- <el-pagination
@@ -146,8 +146,8 @@
             "
             v-else
           >
-            
-          {{ $t('common.noRecordFound') }}
+
+            {{ $t('common.noRecordFound') }}
           </div>
         </el-tab-pane>
         <el-tab-pane name="write" :label="$t('mail.write')">
@@ -188,11 +188,11 @@
               </el-form-item>
               <el-form-item>
                 <template #label></template>
-                
-          <div class="btn-container">
-          <!-- <el-button @click="resetFields" class="standard-button">{{ $t('common.clear') }}</el-button> -->
-          <el-button @click="onSubmit" class="standard-button btn-color-blue">{{ $t('common.submit') }}</el-button>
-          </div>
+
+                <div class="btn-container">
+                  <!-- <el-button @click="resetFields" class="standard-button">{{ $t('common.clear') }}</el-button> -->
+                  <el-button @click="onSubmit" class="standard-button btn-color-blue">{{ $t('common.submit') }}</el-button>
+                </div>
               </el-form-item>
             </el-form>
           </div>
@@ -204,8 +204,7 @@
 
 <script setup>
 import { ref, defineComponent, reactive, onMounted } from "vue";
-import { mailInbox, mailOutbox, wirteMail, readMail, getUnreadTotal } from "@/api/personal/mailbox";
-// import { message } from "ant-design-vue";
+import { mailInbox, mailOutbox, wirteMail, readMail, getUnreadTotal, deleteMultipleMail } from "@/api/personal/mailbox";
 import { ElMessage } from "element-plus";
 import { Calendar, Delete, MessageBox, ArrowDown, Check } from "@element-plus/icons-vue";
 import moment from "moment";
@@ -218,7 +217,7 @@ import { useI18n } from "vue-i18n";
 const {t} = useI18n()
 const store = userStore();
 const i18nStoreLanguage = i18nStore()
-    const { languageVal } = storeToRefs(i18nStoreLanguage)
+const { languageVal } = storeToRefs(i18nStoreLanguage)
 const openMsg = (m) => {
   const { id, readTime } = m;
 
@@ -247,94 +246,94 @@ const openMsg = (m) => {
     });
   // }
 };
-    const mailboxData = ref([]);
-    const isLoading= reactive({
-      inbox: false,
-      outbox: false
-    })
-    const mailboxState = reactive({
-      active: "inbox",
-      mailboxList: {
-        inbox: {
-          list: [],
-          pageNum: 1,
-          pageSize: 4,
-          total: 0,
-        },
-        sent: {
-          list: [],
-          pageNum: 1,
-          pageSize: 4,
-          total: 0,
-        },
-        write: {
-          title: "",
-          content: "",
-        },
-      },
+const mailboxData = ref([]);
+const isLoading= reactive({
+  inbox: false,
+  outbox: false
+})
+const mailboxState = reactive({
+  active: "inbox",
+  mailboxList: {
+    inbox: {
+      list: [],
+      pageNum: 1,
+      pageSize: 4,
+      total: 0,
+    },
+    sent: {
+      list: [],
+      pageNum: 1,
+      pageSize: 4,
+      total: 0,
+    },
+    write: {
+      title: "",
+      content: "",
+    },
+  },
+});
+
+const loadPersonalMailbox = () => {
+  mailboxState.mailboxList[mailboxState.active].list = []
+  if (mailboxState.active === "inbox") {
+    mailboxData.value = {
+      type: null,
+      current: mailboxState.mailboxList["inbox"].pageNum,
+      size: mailboxState.mailboxList["inbox"].pageSize,
+      orderBy: "sendTime"
+    }
+    mailInbox(mailboxData.value).then((res) => {
+      isLoading["inbox"]=true;
+      if (res.code === 0) {
+        const response = res.data
+        mailboxState.mailboxList["inbox"].list.push(...response.records);
+        mailboxState.mailboxList["inbox"].total = (response.total);
+      }
+    }).catch((error) => {
+      isLoading["inbox"]=true;
+      console.log(error);
+      // message.error(error.message, 4)
     });
-
-    const loadPersonalMailbox = () => {
-      mailboxState.mailboxList[mailboxState.active].list = []
-      if (mailboxState.active === "inbox") {
-        mailboxData.value = {
-          type: null,
-          current: mailboxState.mailboxList["inbox"].pageNum,
-          size: mailboxState.mailboxList["inbox"].pageSize,
-          orderBy: "sendTime"
-        }
-        mailInbox(mailboxData.value).then((res) => {
-          isLoading["inbox"]=true;
-          if (res.code === 0) {
-            const response = res.data
-            mailboxState.mailboxList["inbox"].list.push(...response.records);
-            mailboxState.mailboxList["inbox"].total = (response.total);
-          }
-        }).catch((error) => {
-          isLoading["inbox"]=true;
-          console.log(error);
-          // message.error(error.message, 4)
-        });
-      } else {
-        mailboxData.value = {
-          type: null,
-          current: mailboxState.mailboxList["sent"].pageNum,
-          size: mailboxState.mailboxList["sent"].pageSize,
-          orderBy: "createTime"
-        }
-        mailOutbox(mailboxData.value).then((response) => {
-          isLoading["outbox"]=true;
-          if (response.code === 0) {
-            mailboxState.mailboxList["sent"].list.push(...response.data.records);
-            mailboxState.mailboxList["sent"].total = response.data.total;
-          }
-        }).catch((error) => {
-          isLoading["outbox"]=true;
-          console.log(error);
-          // message.error(error.message, 4)
-        });
+  } else {
+    mailboxData.value = {
+      type: null,
+      current: mailboxState.mailboxList["sent"].pageNum,
+      size: mailboxState.mailboxList["sent"].pageSize,
+      orderBy: "createTime"
+    }
+    mailOutbox(mailboxData.value).then((response) => {
+      isLoading["outbox"]=true;
+      if (response.code === 0) {
+        mailboxState.mailboxList["sent"].list.push(...response.data.records);
+        mailboxState.mailboxList["sent"].total = response.data.total;
       }
-    };
+    }).catch((error) => {
+      isLoading["outbox"]=true;
+      console.log(error);
+      // message.error(error.message, 4)
+    });
+  }
+};
 
-    const changePage = (key) => {
-      mailboxState.mailboxList[mailboxState.active].pageNum = key;
-      loadPersonalMailbox();
-    };
+const changePage = (key) => {
+  mailboxState.mailboxList[mailboxState.active].pageNum = key;
+  loadPersonalMailbox();
+};
 
-    const mailTabChange = (nk) => {
-      mailboxState.active = nk.props.name
-      if(nk.props.name !== "write") {
-        // const mailList = mailboxState.mailboxList[nk.props.name].list;
-        // if(mailList.length === 0) {
-        //   loadPersonalMailbox();
-        // }
-        
-        loadPersonalMailbox();
-      }
-    };
+const mailTabChange = (nk) => {
+  mailboxState.active = nk.props.name
+  if(nk.props.name !== "write") {
+    // const mailList = mailboxState.mailboxList[nk.props.name].list;
+    // if(mailList.length === 0) {
+    //   loadPersonalMailbox();
+    // }
 
-    const checkMailboxUnread = () => {
-      getUnreadTotal()
+    loadPersonalMailbox();
+  }
+};
+
+const checkMailboxUnread = () => {
+  getUnreadTotal()
     .then((res) => {
       const { code, data } = res;
       if (code === 0) {
@@ -346,74 +345,95 @@ const openMsg = (m) => {
     });
 };
 
-    onMounted(() => {
-      loadPersonalMailbox();
-      checkMailboxUnread()
-      // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
+const deleteMsg = (id) => {
+  const formattedIds= id;
+  deleteMultipleMail(formattedIds)
+    .then((res) => {
+      if (res.code === 0) {
+        ElMessage({
+          message: t('account.msg_deleted'),
+          type: "success"
+        });
+
+        checkMailboxUnread();
+        loadPersonalMailbox();
+      } else {
+        ElMessage.error(res.message)
+      }
+    })
+    .catch((error) => {
+      console.log(error);
     });
+}
 
-    const formRef = ref();
-    const rules = {
-      title: [
-        {
-          required: true,
-          message: "请输入标题",
-          trigger: "blur",
-        },
-        {
-          max: 255,
-          message: "长度为 255",
-          trigger: "change",
-        },
-      ],
-      content: [
-        {
-          required: true,
-          message: "请输入内容",
-          trigger: "blur",
-        },
-        {
-          max: 500,
-          message: "长度应少过 500 字",
-          trigger: "change",
-        },
-      ],
-    };
-    const onSubmit = () => {
-      formRef.value
-        .validate()
-        .then(() => {
-            wirteMail(mailboxState.mailboxList.write)
-              .then((response) => {
-                if(response.code === 0) {
-                    ElMessage({
-                      message: t('status.success'),
-                      type: 'success',
-                    })
+onMounted(() => {
+  loadPersonalMailbox();
+  checkMailboxUnread()
+  // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
+});
 
-                  mailboxState.mailboxList.write.title = "";
-                  mailboxState.mailboxList.write.content = "";
-                } else {
-                  // message.error(response.message);
-                }
-              })
-              .catch((error) => {
-                console.log(error);
-                // message.error(error.message, 4)
-              });
+const formRef = ref();
+const rules = {
+  title: [
+    {
+      required: true,
+      message: "请输入标题",
+      trigger: "blur",
+    },
+    {
+      max: 255,
+      message: "长度为 255",
+      trigger: "change",
+    },
+  ],
+  content: [
+    {
+      required: true,
+      message: "请输入内容",
+      trigger: "blur",
+    },
+    {
+      max: 500,
+      message: "长度应少过 500 字",
+      trigger: "change",
+    },
+  ],
+};
+const onSubmit = () => {
+  formRef.value
+    .validate()
+    .then(() => {
+      wirteMail(mailboxState.mailboxList.write)
+        .then((response) => {
+          if(response.code === 0) {
+            ElMessage({
+              message: t('status.success'),
+              type: 'success',
+            })
+
+            mailboxState.mailboxList.write.title = "";
+            mailboxState.mailboxList.write.content = "";
+          } else {
+            // message.error(response.message);
+          }
         })
         .catch((error) => {
           console.log(error);
           // message.error(error.message, 4)
         });
-    };
+    })
+    .catch((error) => {
+      console.log(error);
+      // message.error(error.message, 4)
+    });
+};
 // export default defineComponent({
 //   name: "MailboxView",
 //   components: {
 //     Calendar
 //   },
 //   setup() {
-    
+
 //   },
 // });
 </script>
@@ -421,14 +441,21 @@ const openMsg = (m) => {
 <style scoped lang="scss">
 .account-container {
   .account-content-wrapper {
+
+    .el-form-item {
+      flex-direction: row;
+    }
+    .el-form-item__content {
+      max-width: unset;
+    }
     .account-content.mail {
       min-height: 740px;
       margin-bottom: 0;
       padding: 0;
       .ant-form.ant-form-horizontal
-        .ant-form-item
-        .ant-form-item-control-input-content
-        .ant-input {
+      .ant-form-item
+      .ant-form-item-control-input-content
+      .ant-input {
         background: #16151c;
       }
       :deep(.ant-form-horizontal .ant-form-item-label) {

@@ -44,7 +44,7 @@
                     ref="userNameRef"
                     v-model="loginForm.userName"
                     :placeholder="
-                      currentSite.lang === 'EN' ? 'Username' : '用户名'
+                      $t('common.username')
                     "
                     name="username"
                     type="text"
@@ -66,7 +66,7 @@
                       v-model="loginForm.password"
                       :type="passwordType"
                       :placeholder="
-                        currentSite.lang === 'EN' ? 'Password' : '密码'
+                        $t('common.password')
                       "
                       name="password"
                       tabindex="2"
@@ -77,10 +77,10 @@
                     />
                   </el-form-item>
                 </el-tooltip>
-                <div style="margin:20px 0px">
+                <div style="margin:20px 0px" v-if="props.siteId !== '8'">
                   <el-link type="primary" @click="forgetPasswordDialog">
                     {{
-                      currentSite.lang === 'EN' ? 'Forget Password' : '忘记密码'
+                      $t('common.forgetpass')
                     }}
                   </el-link>
                 </div>
@@ -103,7 +103,7 @@
                   </el-button>
                 </div>
 
-                <div v-if="props.siteId !== '5'" class="flex-c-center-div">
+                <div v-if="props.siteId !== '5' || props.siteId !== '8'" class="flex-c-center-div">
                   <div class="contact-div" @click="swipeToContactUs">
                     {{ $t('common.contact_us') }}
                   </div>
@@ -123,9 +123,7 @@
                       ref="userNameRef"
                       v-model="regForm.userName"
                       :placeholder="
-                        currentSite.lang === 'EN'
-                          ? 'Affiliate Account'
-                          : '合营账户'
+                        $t('common.affiliateaccount')
                       "
                       name="userName"
                       type="text"
@@ -146,7 +144,7 @@
                         v-model="regForm.password"
                         :type="passwordType"
                         :placeholder="
-                          currentSite.lang === 'EN' ? 'Password' : '密码'
+                          $t('common.password')
                         "
                         name="password"
                         tabindex="2"
@@ -169,9 +167,7 @@
                         v-model="regForm.confirmPwd"
                         :type="passwordType"
                         :placeholder="
-                          currentSite.lang === 'EN'
-                            ? 'Confirm Password'
-                            : '密码确认'
+                          $t('common.confirmpassword')
                         "
                         name="password"
                         tabindex="3"
@@ -215,7 +211,7 @@
                       {{ $t('common.back_login') }}
                     </el-button>
                   </div>
-                  <div v-if="props.siteId !== '5'" class="flex-c-center-div">
+                  <div v-if="props.siteId !== '5' || props.siteId !== '8'" class="flex-c-center-div">
                     <div class="contact-div" @click="swipeToContactUs">
                       {{ $t('common.contact_us') }}
                     </div>
@@ -561,18 +557,18 @@ export default defineComponent({
   setup(props) {
     const validatePass2 = async (r, v) => {
       if (v === '') {
-        return Promise.reject(new Error('密码确认不能为空'))
+        return Promise.reject(new Error(t('message.required_confirm_pwd')))
       } else if (v !== state.regForm.password) {
-        return Promise.reject(new Error('与登录密码不一致'))
+        return Promise.reject(new Error(t('message.required_same_with_password')))
       } else {
         return Promise.resolve()
       }
     }
     const validateResetPass2 = async (r, v) => {
       if (v === '') {
-        return Promise.reject(new Error('密码确认不能为空'))
+        return Promise.reject(new Error(t('message.required_confirm_pwd')))
       } else if (v !== state.resetForm.password) {
-        return Promise.reject(new Error('与登录密码不一致'))
+        return Promise.reject(new Error(t('message.required_same_with_password')))
       } else {
         return Promise.resolve()
       }
@@ -643,7 +639,7 @@ export default defineComponent({
           {
             required: true,
             pattern: /^[a-zA-Z1-9][a-zA-Z0-9]*$/,
-            message: '代理账号只能有数字或字母组成',
+            message: t('common.affiliateaccountcanonlycontainnumchar'),
             trigger: 'blur',
           },
         ],
@@ -670,26 +666,26 @@ export default defineComponent({
         userName: [
           {
             required: true,
-            message: '代理账号不能为空',
+            message: t('message.required_signup_account'),
             trigger: 'blur',
           },
           {
             min: 6,
             max: 12,
-            message: '由6-12位数字或字母组成',
+            message: t('message.required_6_to_12'),
             trigger: 'blur',
           },
         ],
         password: [
           {
             required: true,
-            message: '登录密码不能为空',
+            message: t('message.requried_password'),
             trigger: 'blur',
           },
           {
             min: 6,
             max: 12,
-            message: '由6-12位数字或字母组成',
+            message: t('message.required_6_to_12'),
             trigger: 'blur',
           },
         ],
@@ -744,13 +740,13 @@ export default defineComponent({
         captchaCode: [
           {
             required: true,
-            message: '验证码不能为空',
+            message: t('message.required_captcha'),
             trigger: 'blur',
           },
           {
             min: 4,
             max: 4,
-            message: '由4位数字组成',
+            message: t('message.required_4_digits'),
             trigger: 'change',
           },
         ],
@@ -870,7 +866,7 @@ export default defineComponent({
       handleLogin: () => {
         loginFormRef.value.validate(async valid => {
           if (valid) {
-            if (state.loginForm.site === 'IND') {
+            if (state.loginForm.site === 'IND' || state.loginForm.site === 'VNM') {
               methods.userLogin()
             } else {
               methods.onGetImage()
@@ -1469,7 +1465,8 @@ a {
         position: relative;
         .log {
           font-weight: bold;
-          font-family: fzh;
+          //font-family: fzh;
+          font-family : Oxanium, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
           font-size: 32px;
           padding-left: 15px;
         }

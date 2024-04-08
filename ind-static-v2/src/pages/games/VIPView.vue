@@ -10,8 +10,8 @@
       indicator-color="transparent"
       align="justify"
     >
-      <q-tab name="promo" label="Promo" />
-      <q-tab name="vip" label="VIP" />
+      <q-tab class="left" name="promo" label="Promo" />
+      <q-tab class="right" name="vip" label="VIP" />
     </q-tabs>
   </div>
 
@@ -26,19 +26,8 @@
       <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
-            <div :class="`vip-badge vip${vip.vipLevel}`"></div>
-
             <div class="vip-level-header">
-              <svg viewBox="0 0 450 70">
-                <defs>
-                  <!-- Linear Gradient -->
-                  <linearGradient id="myGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" style="stop-color: #8b36f8; stop-opacity: 1" />
-                    <stop offset="100%" style="stop-color: #334ad6; stop-opacity: 1" />
-                  </linearGradient>
-                </defs>
-                <text class="svgText" x="10" y="45" fill="url(#myGradient)">VIP{{ vip.vipLevel }}</text>
-              </svg>
+              VIP{{ vip.vipLevel }}
             </div>
 
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
@@ -73,7 +62,6 @@
     </Carousel>
 
     <div v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
-      <hr class="separator-line" style="margin-bottom: 20px" />
 
       <div class="vip-rewards">
         <div class="vip-reward-item">
@@ -143,8 +131,6 @@
           </div>
         </div>
       </div>
-
-      <hr class="separator-line" style="margin-top: 20px" />
 
       <div class="header-wrapper">
         <div class="header">Monthly Cumulative Deposit An Upgrade Vip Level</div>
@@ -804,9 +790,10 @@ const swipeRight = () => {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  gap: 5px;
 
   .vip-reward-item {
-    width: 107px;
+    width: 120px;
     height: 182px;
     background: url("../../assets/images/vip/vip-reward-unlock-bg.png") no-repeat center center;
     background-size: 100% 100%;
@@ -834,14 +821,14 @@ const swipeRight = () => {
       }
 
       .title {
-        color: #5c46e7;
+        color: #fff;
         font-size: 11px;
         height: 35px;
         line-height: 18px;
       }
 
       .reward-amt-wrapper {
-        background-color: #c9c8ff;
+        background: #FFFFFF1A;
         padding: 5px 15px;
         max-width: 100px;
         border-radius: 4px;
@@ -851,11 +838,7 @@ const swipeRight = () => {
         .reward-amt {
           line-height: 12px;
           word-wrap: break-word;
-          color: #8b36f8;
-          background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%), linear-gradient(0deg, #ffffff, #ffffff);
-          background-clip: text;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
+          color: #fff;
         }
       }
     }
@@ -878,26 +861,36 @@ const swipeRight = () => {
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    background: #101114;
     color: #5c6c86;
   }
 
   .vip-promo-tab-toggle {
-    background-color: #1b2232;
+    background: url(../../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
+    background-size: 100% 100%;
     border-radius: 8px;
     margin-bottom: 4px;
     margin-top: 5px;
     padding: 1px;
+
+    .right {
+      color: white;
+      background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-right.png) no-repeat center center;
+      background-size: 0;
+    }
+
+    .left {
+      color: white;
+      background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
+      background-size: 0;
+    }
 
     :deep(.q-tab__label) {
       font-weight: 400;
     }
 
     :deep(.q-tab--active) {
-      color: #fff;
-      background: linear-gradient(0deg, #5c46e7, #5c46e7), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-      box-shadow: 0px 1px 2px 0px #0000000d;
-      border: 1px solid #5c46e7;
+      color: white;
+      background-size: 100% 100%;
     }
 
     :deep(.q-tab--active .q-tab__label) {
@@ -910,115 +903,68 @@ const swipeRight = () => {
   position: relative;
   display: flex;
   flex-direction: column-reverse;
-  background: url("../../assets/images/vip/badge/banner.png") no-repeat top center;
+  background: url("../../assets/images/vip/badge/banner1-2.png") no-repeat bottom center;
   background-size: 100% 100%;
   height: 170px;
   width: 100%;
   justify-content: flex-end;
   font-size: 12px;
 
-  .vip-badge {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-    top: 0px;
-    left: 10px;
-    background-repeat: no-repeat;
-    background-position: top left;
-    background-size: contain;
-    width: 102px;
-    height: 100px;
-    color: #fff;
-    position: absolute;
+  &3, &4 {
+    background: url("../../assets/images/vip/badge/banner3-4.png") no-repeat bottom center;
+  }
 
-    background: url("../../assets/images/vip/badge/vip1.png") no-repeat top center;
-    background-size: 100% 100%;
+  &5, &6 {
+    background: url("../../assets/images/vip/badge/banner5-6.png") no-repeat bottom center;
+  }
 
-    &.vip2 {
-      background: url("../../assets/images/vip/badge/vip2.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
+  &7, &8 {
+    background: url("../../assets/images/vip/badge/banner7-8.png") no-repeat bottom center;
+  }
 
-    &.vip3 {
-      background: url("../../assets/images/vip/badge/vip3.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
+  &9 {
+    background: url("../../assets/images/vip/badge/banner9.png") no-repeat bottom center;
+  }
 
-    &.vip4 {
-      background: url("../../assets/images/vip/badge/vip4.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
+  &10 {
+    background: url("../../assets/images/vip/badge/banner10.png") no-repeat bottom center;
+  }
 
-    &.vip5 {
-      background: url("../../assets/images/vip/badge/vip5.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
+  &11 {
+    background: url("../../assets/images/vip/badge/banner11.png") no-repeat bottom center;
+  }
 
-    &.vip6 {
-      background: url("../../assets/images/vip/badge/vip6.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
-
-    &.vip7 {
-      background: url("../../assets/images/vip/badge/vip7.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
-
-    &.vip8 {
-      background: url("../../assets/images/vip/badge/vip8.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
-
-    &.vip9 {
-      background: url("../../assets/images/vip/badge/vip9.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
-
-    &.vip10 {
-      background: url("../../assets/images/vip/badge/vip10.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
-
-    &.vip11 {
-      background: url("../../assets/images/vip/badge/vip11.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
-
-    &.vip12 {
-      background: url("../../assets/images/vip/badge/vip12.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
+  &12 {
+    background: url("../../assets/images/vip/badge/banner12.png") no-repeat bottom center;
   }
 
   .vip-level-header {
-    font-family: sans-serif;
+    font-family: 'Poppins';
     font-size: 3.2em;
     font-weight: 800;
-    -webkit-text-stroke: 2px #fff;
-    top: 28%;
-    right: 2%;
+    top: 25%;
+    left: 6%;
     z-index: 1;
     position: absolute;
-    color: #8b36f8;
+    color: #fff;
 
-    svg {
-      font-family: Arial;
-      font-size: 10rem;
-      font-weight: bold;
-      position: absolute;
-      width: 125px;
-      height: 70px;
-      right: 0px;
-      top: 0px;
-    }
+    // svg {
+    //   font-family: Arial;
+    //   font-size: 10rem;
+    //   font-weight: bold;
+    //   position: absolute;
+    //   width: 125px;
+    //   height: 70px;
+    //   right: 0px;
+    //   top: 0px;
+    // }
 
-    .svgText {
-      stroke: white;
-      stroke-width: 10px;
-      stroke-linejoin: round;
-      paint-order: stroke;
-    }
+    // .svgText {
+    //   stroke: white;
+    //   stroke-width: 10px;
+    //   stroke-linejoin: round;
+    //   paint-order: stroke;
+    // }
   }
 
   .vip-contents {
@@ -1044,13 +990,13 @@ const swipeRight = () => {
       right: 6%;
 
       .progress-bar-endpoint-label {
-        color: #333;
+        color: #fff;
       }
 
       .progress-bar-outer-bar {
-        border: 1px solid #fff;
+        // border: 1px solid #fff;
         border-radius: 16px;
-        background: #fff;
+        background: #FFFFFF4D;
         width: 100%;
         overflow: hidden;
         position: relative;
@@ -1070,7 +1016,8 @@ const swipeRight = () => {
       .progress-bar-inner-bar {
         color: #fff;
         border-radius: 16px;
-        background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+        // background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
+        background: #fff;
         height: 12px;
       }
     }
@@ -1084,10 +1031,10 @@ const swipeRight = () => {
       font-size: 1.2em;
       left: 25px;
       top: 55%;
-      color: #424f72;
+      color: #fff;
 
       span {
-        color: #7a80a1;
+        color: #fff;
       }
     }
   }
@@ -1105,7 +1052,7 @@ const swipeRight = () => {
 }
 
 .carousel__slide {
-  padding: 10px;
+  padding: 0px 10px 20px 10px;
 
   &.carousel__slide--next .vipitem,
   &.carousel__slide--prev .vipitem {
@@ -1132,7 +1079,7 @@ const swipeRight = () => {
 
   .top-header {
     color: #f1f1f1;
-    background: linear-gradient(180deg, #41206f 0%, #1f2862 100%);
+    background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
   }
 
   .q-table__card {
@@ -1165,11 +1112,14 @@ const swipeRight = () => {
   }
   tbody > :nth-child(odd) {
     background: rgba(21, 0, 37, 0.2);
-    background: #652c93;
+    // background: #652c93;
+    background: #652c9315;
   }
   tbody > :nth-child(even) {
     background: rgba(21, 0, 37, 0.5);
-    background: #502175;
+    // background: #502175;
+    background: #00ae000c;
+
   }
 
   span.amt-text {
@@ -1203,7 +1153,7 @@ const swipeRight = () => {
 
   .hint-msg {
     border-radius: 8px;
-    background: linear-gradient(180deg, #2f1b4d 0%, #1a2045 100%);
+    background: #111215;
     padding: 10px;
     margin: 0 0 1.25rem 0;
     color: rgba(255, 255, 255, 0.7);
@@ -1222,10 +1172,7 @@ const swipeRight = () => {
       font-weight: 800;
       line-height: 32px;
       text-align: left;
-      background: linear-gradient(180deg, #d6b335 0%, #fff96b 50%, #f2ae01 100%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #fff;
     }
   }
 }

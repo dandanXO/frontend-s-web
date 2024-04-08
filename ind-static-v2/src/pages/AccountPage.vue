@@ -6,7 +6,39 @@
       <ProfileProgressBanner />
 
       <q-form ref="profileFormRef" class="pc-form">
-        <div class="pc-form-item" @click="openPersonalCenterDialog">
+          <InputRowGrid>
+            <template #fields>
+              <div class="pc-form-item" @click="openPersonalCenterDialog">
+                <InputField :label="'Full Name'">
+                  <template #input>
+                    <q-input
+                      v-model="formDetail.realName"
+                      outlined
+                      clearable
+                      hide-bottom-space
+                      readonly
+                    ></q-input>
+                  </template>
+                </InputField>
+              </div>
+
+              <div class="pc-form-item" @click="openPersonalCenterDialog">
+                <InputField :label="'Phone'">
+                  <template #input>
+                    <q-input
+                      v-model="formDetail.phone"
+                      outlined
+                      clearable
+                      hide-bottom-space
+                      readonly
+                    ></q-input>
+                  </template>
+                </InputField>
+              </div>
+            </template>
+          </InputRowGrid>
+
+          <!--
           <div class="pc-form-label">Full Name</div>
           <div class="pc-form-input">
             <q-input
@@ -37,6 +69,7 @@
             ></q-input>
           </div>
         </div>
+        -->
 
         <!-- <div class="pc-form-item" @click="openPersonalCenterDialog">
           <div class="pc-form-label">Email</div>
@@ -74,7 +107,7 @@
               @click="startRefresh"
             >
               <template v-slot:loading>
-                <q-spinner class="on-left" style="color: #ae6def" />
+                <q-spinner class="on-left" style="color: #00AE00" />
                 Updating...
               </template>
             </q-btn>
@@ -82,7 +115,8 @@
         </div>
 
         <div class="q-mt-md">
-          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">Sign Out</q-btn>
+          <PrimaryButton :label="'Sign Out'" :onClick="openConfirmSignOutDialog" />
+          <!-- <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">Sign Out</q-btn> -->
         </div>
 
         <!-- <div class="text-center q-mt-md" v-if="canEdit">
@@ -236,101 +270,98 @@
         dense
         rounded
         icon="close"
-        class="bg-yellow text-black popout-close"
+        class="text-black popout-close"
         @click="openChangePasswordDialog()"
         v-close-popup
       />
       <div class="popout-dialog-container">
         <div class="txt-title">Change Password</div>
+          <div class="pc-form">
+            <InputRowGrid>
+            <template #fields>
+              <InputField :label="'Password'">
+                <template #input>
+                  <q-input
+                    outlined
+                    clearable
+                    placeholder="Enter Current Password"
+                    v-model="updatePwdInfo.oldPassword"
+                    ref="oldPasswordRef"
+                    hide-bottom-space
+                    :type="isPwd ? 'password' : 'text'"
+                    :rules="[(val) => (val && val.length > 0) || 'Please insert old password']"
+                  >
+                    <template v-slot:append>
+                      <q-icon
+                        :name="isPwd ? 'visibility_off' : 'visibility'"
+                        class="cursor-pointer"
+                        @click="isPwd = !isPwd"
+                      />
+                    </template>
+                  </q-input>
+                </template>
+              </InputField>
 
-        <div class="pc-form">
-          <div class="pc-form-item">
-            <div class="pc-form-label">Password</div>
-            <div class="pc-form-input">
-              <q-input
-                filled
-                dense
-                clearable
-                placeholder="Enter Current Password"
-                v-model="updatePwdInfo.oldPassword"
-                ref="oldPasswordRef"
-                hide-bottom-space
-                :type="isPwd ? 'password' : 'text'"
-                :rules="[(val) => (val && val.length > 0) || 'Please insert old password']"
-              >
-                <template v-slot:append>
-                  <q-icon
-                    color="yellow-7"
-                    :name="isPwd ? 'visibility_off' : 'visibility'"
-                    class="cursor-pointer"
-                    @click="isPwd = !isPwd"
-                  />
+              <InputField :label="'New Password'">
+                <template #input>
+                  <q-input
+                    outlined
+                    clearable
+                    placeholder="Enter New Password"
+                    v-model="updatePwdInfo.password"
+                    ref="passwordRef"
+                    hide-bottom-space
+                    :type="isPwd ? 'password' : 'text'"
+                    :rules="[
+                      (val) => (val && val.length > 0) || 'Please insert new password',
+                      (val) =>
+                        (val.length >= 6 && val.length <= 11) || 'The characters of new password must be between 6 and 11',
+                      () => isAlphanumeric(updatePwdInfo.password, 'New password')
+                    ]"
+                  >
+                    <template v-slot:append>
+                      <q-icon
+                        :name="isPwd ? 'visibility_off' : 'visibility'"
+                        class="cursor-pointer"
+                        @click="isPwd = !isPwd"
+                      />
+                    </template>
+                  </q-input>
                 </template>
-              </q-input>
-            </div>
-          </div>
-          <div class="pc-form-item">
-            <div class="pc-form-label">New Password</div>
-            <div class="pc-form-input">
-              <q-input
-                filled
-                dense
-                clearable
-                placeholder="Enter New Password"
-                v-model="updatePwdInfo.password"
-                ref="passwordRef"
-                hide-bottom-space
-                :type="isPwd ? 'password' : 'text'"
-                :rules="[
-                  (val) => (val && val.length > 0) || 'Please insert new password',
-                  (val) =>
-                    (val.length >= 6 && val.length <= 11) || 'The characters of new password must be between 6 and 11',
-                  () => isAlphanumeric(updatePwdInfo.password, 'New password')
-                ]"
-              >
-                <template v-slot:append>
-                  <q-icon
-                    color="yellow-7"
-                    :name="isPwd ? 'visibility_off' : 'visibility'"
-                    class="cursor-pointer"
-                    @click="isPwd = !isPwd"
-                  />
+              </InputField>
+
+              <InputField :label="'Confirm New Password'">
+                <template #input>
+                  <q-input
+                    outlined
+                    clearable
+                    placeholder="Enter Confirm New Password"
+                    v-model="updatePwdInfo.confirmNewPwd"
+                    ref="confirmPasswordRef"
+                    hide-bottom-space
+                    :type="isPwd ? 'password' : 'text'"
+                    :rules="[
+                      (val) => (val && val.length > 0) || 'Please insert confirm new password',
+                      (val) => val === updatePwdInfo.password || 'Confirm password does not match with new password'
+                    ]"
+                  >
+                    <template v-slot:append>
+                      <q-icon
+                        :name="isPwd ? 'visibility_off' : 'visibility'"
+                        class="cursor-pointer"
+                        @click="isPwd = !isPwd"
+                      />
+                    </template>
+                  </q-input>
                 </template>
-              </q-input>
-            </div>
-          </div>
-          <div class="pc-form-item">
-            <div class="pc-form-label">Confirm New Password</div>
-            <div class="pc-form-input">
-              <q-input
-                filled
-                dense
-                clearable
-                placeholder="Enter Confirm New Password"
-                v-model="updatePwdInfo.confirmNewPwd"
-                ref="confirmPasswordRef"
-                hide-bottom-space
-                :type="isPwd ? 'password' : 'text'"
-                :rules="[
-                  (val) => (val && val.length > 0) || 'Please insert confirm new password',
-                  (val) => val === updatePwdInfo.password || 'Confirm password does not match with new password'
-                ]"
-              >
-                <template v-slot:append>
-                  <q-icon
-                    color="yellow-7"
-                    :name="isPwd ? 'visibility_off' : 'visibility'"
-                    class="cursor-pointer"
-                    @click="isPwd = !isPwd"
-                  />
-                </template>
-              </q-input>
-            </div>
-          </div>
+              </InputField>
+            </template>
+          </InputRowGrid>
         </div>
 
         <div class="q-mt-md q-pl-lg q-pr-lg">
-          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="submitUpdatePwd">Confirm</q-btn>
+          <PrimaryButton :label="'Confirm'" :isSmall="true" :onClick="submitUpdatePwd"/>
+          <!-- <q-btn rounded flat no-caps class="btn-purple-pattern" @click="submitUpdatePwd">Confirm</q-btn> -->
         </div>
       </div>
     </div>
@@ -513,6 +544,9 @@ import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
+import InputRowGrid from "src/components/auth/InputRowGrid.vue";
+import InputField from "src/components/auth/InputField.vue";
+import PrimaryButton from "src/components/auth/PrimaryButton.vue";
 
 let slideList = ref(["Personal Center", "Discount", "Record", "Order", "Bank", "Message"]);
 let slideListPath = ref([
@@ -1193,7 +1227,7 @@ const openConfirmSignOutDialog = () => {
 }
 
 .progress-container {
-  background: linear-gradient(180deg, #d29e3a 0%, #d65033 100%);
+  // background: linear-gradient(180deg, #d29e3a 0%, #d65033 100%);
 }
 
 .infoboard-container {
@@ -1315,7 +1349,7 @@ const openConfirmSignOutDialog = () => {
 }
 
 .pc-tip-chg-pwd {
-  color: #a73dff;
+  color: #00AE00;
 }
 
 .pc-tip {
@@ -1334,33 +1368,35 @@ const openConfirmSignOutDialog = () => {
 }
 
 .btn-refresh {
-  background: #48325a;
+  background: #00AE001A;
   border-radius: 8px;
   font-weight: 400;
   margin-top: auto;
-  color: #ae6def;
+  color: #00AE00;
   padding: 10px 20px;
 
   :deep(.q-icon) {
-    color: #ae6def;
+    color: #00AE00;
   }
 }
 
 .btn-cancel {
-  background: #ffffff20;
+  background: radial-gradient(68.92% 68.92% at 50% 50%, #1D341D 0%, #466A45 100%);
+  border: 1px solid #5D8956;
   font-weight: 700;
-  color: #dcdcdc;
+  color: #fff;
   border: 1px solid #ffffff80;
   border-radius: 8px;
   width: 140px;
   height: 42px;
 }
 .btn-confirm {
-  background: linear-gradient(187.94deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
+  background: radial-gradient(68.92% 68.92% at 50% 50%, #00550E 0%, #57CD69 100%);
+  border: 1px solid #5D8956;
   font-weight: 700;
   width: 140px;
   height: 42px;
-  color: #5c46e7;
+  color: #fff;
   border-radius: 8px;
 }
 </style>

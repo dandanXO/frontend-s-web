@@ -223,13 +223,22 @@ export function piggyBankGetLottery() {
 export function piggyBankClaim() {
   return server.EVENT.put('/piggy-bank/claim');
 }
+export function getBonusPiggyCashback() {
+  return server.EVENT.get('/piggy-bank/amount');
+}
 
 // slot netloss
 export function bonusClaimSlotsRefund() {
   return server.EVENT.put('/bonus/claim/vnm-slots-refund');
 }
+export function getBonusSlotsCashback() {
+  return server.EVENT.get('/vnm-refund/slots');
+}
 
 // poker cashback
 export function bonusClaimPokerRefund() {
   return server.EVENT.put('/bonus/claim/vnm-poker-refund');
+}
+export function getBonusPokerCashback() {
+  return server.EVENT.get('/vnm-refund/poker');
 }

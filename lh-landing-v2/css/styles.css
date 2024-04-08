@@ -68,13 +68,13 @@ a:hover {
   z-index:1;
   margin: 0 auto;
 
-  background-image: url("../images/top-image.png");
+  /* background-image: url("../images/top-image.png"); */
   background-size: contain;
   background-position: bottom center;
   background-repeat: no-repeat;
   /*height: 400px;*/
   width: 100%;
-  aspect-ratio: 5/4;
+  /* aspect-ratio: 5/4; */
   margin-top: 0px;
   padding-top: 0px
 }

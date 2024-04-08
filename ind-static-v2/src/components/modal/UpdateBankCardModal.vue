@@ -10,51 +10,55 @@
 
         <q-card-section>
           <q-form>
-            <div class="q-my-sm">
-              <div class="input-title">Holder Name</div>
-              <q-input
-                standout
-                class="q-pb-xs dialog-input"
-                hide-bottom-space
-                filled
-                v-model="bankCardField.cardAccount"
-                label="Enter Holder Name"
-                lazy-rules
-                :rules="[(_) => isValidCardAccount()]"
-                label-color="secondary"
-              />
-            </div>
+            <InputRowGrid>
+              <template #fields>
+                <InputField :label="'Holder Name'">
+                  <template #input>
+                    <q-input
+                      class="q-pb-xs dialog-input"
+                      hide-bottom-space
+                      outlined
+                      v-model="bankCardField.cardAccount"
+                      label="Enter Holder Name"
+                      lazy-rules
+                      :rules="[(_) => isValidCardAccount()]"
+                      label-color="secondary"
+                    />
+                  </template>
+                </InputField>
 
-            <div class="q-my-sm">
-              <div class="input-title">Account Number</div>
-              <q-input
-                type="number"
-                standout
-                class="q-pb-xs dialog-input"
-                hide-bottom-space
-                filled
-                v-model="bankCardField.cardNumber"
-                label="Enter Account Number"
-                lazy-rules
-                :rules="[(_) => isValidCardNumber()]"
-                label-color="secondary"
-              />
-            </div>
+                <InputField :label="'Account Number'">
+                  <template #input>
+                    <q-input
+                      type="number"
+                      class="q-pb-xs dialog-input"
+                      hide-bottom-space
+                      outlined
+                      v-model="bankCardField.cardNumber"
+                      label="Enter Account Number"
+                      lazy-rules
+                      :rules="[(_) => isValidCardNumber()]"
+                      label-color="secondary"
+                    />
+                  </template>
+                </InputField>
 
-            <div class="q-my-sm">
-              <div class="input-title">IFSC Code</div>
-              <q-input
-                standout
-                class="q-pb-xs dialog-input"
-                hide-bottom-space
-                filled
-                v-model="bankCardField.cardAddress"
-                label="Enter Bank IFSC Code"
-                lazy-rules
-                :rules="[(_) => isValidCardAddress()]"
-                label-color="secondary"
-              />
-            </div>
+                <InputField :label="'IFSC Code'">
+                  <template #input>
+                    <q-input
+                      class="q-pb-xs dialog-input"
+                      hide-bottom-space
+                      outlined
+                      v-model="bankCardField.cardAddress"
+                      label="Enter Bank IFSC Code"
+                      lazy-rules
+                      :rules="[(_) => isValidCardAddress()]"
+                      label-color="secondary"
+                    />
+                  </template>
+                </InputField>
+              </template>
+            </InputRowGrid>
           </q-form>
         </q-card-section>
 
@@ -78,6 +82,8 @@ import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import ConfirmButton from "../../atoms/ConfirmButton.vue";
 import { useRouter } from "vue-router";
+import InputRowGrid from "../auth/InputRowGrid.vue";
+import InputField from "../auth/InputField.vue";
 
 const props = defineProps(["loadCards"]);
 
@@ -229,7 +235,7 @@ defineExpose({
   .q-card {
     padding: 1.5rem;
     border-radius: 8px;
-    background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+    background: #19202D;
     width: calc(100% - 16px);
   }
 

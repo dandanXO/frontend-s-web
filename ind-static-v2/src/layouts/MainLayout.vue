@@ -80,33 +80,7 @@
       </router-view>
     </q-page-container>
 
-    <q-footer v-if="ui.footer" :style="ui.bottomInsetHeight > 0 ? `bottom: ${ui.bottomInsetHeight}px;` : ''" elevated>
-      <q-tabs v-model="tab" no-caps :breakpoint="0" align="justify">
-        <q-route-tab to="/home" name="home" exact :ripple="false">
-          <img class="inactive" src="../assets/images/index/menu/home-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/home-icon-hover.png" />
-          Home
-        </q-route-tab>
-        <q-route-tab class="cs-web-id" to="/promo" id="cs-web-id" name="live" :ripple="false">
-          <img class="inactive" src="../assets/images/index/menu/bonus-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.png" />
-          Promo
-        </q-route-tab>
-        <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" class="center-menu" :ripple="false">
-          <img src="../assets/images/index/menu/deposit-icon.png" />
-        </q-route-tab>
-        <q-route-tab to="/earn-money" name="earn-money" :ripple="false">
-          <img class="inactive" src="../assets/images/index/menu/earn-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/earn-icon-hover.png" />
-          Earn Money
-        </q-route-tab>
-        <q-route-tab to="/account" name="account" :ripple="false">
-          <img class="inactive" src="../assets/images/index/menu/account-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/account-icon-hover.png" />
-          Me
-        </q-route-tab>
-      </q-tabs>
-    </q-footer>
+    <FooterSection />
   </q-layout>
 </template>
 
@@ -115,13 +89,16 @@ import { computed, defineComponent, onMounted, ref, watch } from "vue";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
+import FooterSection from '../layouts/FooterSection.vue';
 // import EssentialLink from "components/EssentialLink.vue";
 
 import { translateRecord } from "src/directives/translate";
 
 export default defineComponent({
   name: "MainLayout",
-
+  components: {
+    FooterSection
+  },
   setup() {
     const route = useRoute();
     const router = useRouter();
@@ -225,13 +202,21 @@ export default defineComponent({
           pageName.value = "VIP Privileges";
           if (route.query.redirect) prevPage.value = route.query.redirect;
           else prevPage.value = "/";
+        } else if (route.path === "/login") {
+          prevPage.value = "/home";
+          hasPage.value = true;
+          pageName.value = "Login";
+        } else if (route.path === "/register") {
+          prevPage.value = "/login";
+          hasPage.value = true;
+          pageName.value = "Register";
         } else if (route.path === "/forgot-account") {
           prevPage.value = "/login";
           hasPage.value = true;
           pageName.value = "Forgot Account";
         } else if (route.path === "/forgot-password") {
           prevPage.value = "/login";
-          // hasPage.value = true;
+          hasPage.value = true;
           pageName.value = "Forgot Password";
         } else if (route.path === "/live-casino") {
           hasPage.value = true;

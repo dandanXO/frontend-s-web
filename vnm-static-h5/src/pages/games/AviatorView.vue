@@ -4,6 +4,27 @@
       <q-spinner-hourglass :color="ui.themeColor" size="8em" />
     </div>
     <div class="pageitem">
+      <div class="topbar">
+        <div class="search">
+          <q-form @submit="searchList">
+            <q-input
+              class="search-input"
+              bg-color="white"
+              filled
+              standout
+              v-model="gamePage.searchKey"
+              :label="$t('lang.slot_search')"
+              @update:model-value="searchList"
+            >
+              <template v-slot:append>
+                <q-btn class="search-btn" type="submit" push size="md" round>
+                  <img src="../../assets/images/common/search-btn.svg" />
+                </q-btn>
+              </template>
+            </q-input>
+          </q-form>
+        </div>
+      </div>
       <q-scroll-area ref="scrollSlotRef" style="height: calc(100% - 110px)" v-if="!isLoading">
         <div class="grid" style="padding-bottom: 20px">
           <div
@@ -33,19 +54,6 @@
                 <div class="slot-name">{{ game.name }}</div>
               </q-list>
             </transition>
-            <!-- <q-img
-                loading="lazy"
-                :src="game.icon"
-                :placeholder-src="defaultImg"
-                fit="cover"
-                height="120px"
-                no-spinner
-            >
-              <template v-slot:loading>
-                <img :src="game.default" style="height: 140px; max-width: 200px; border-radius: 15px; overflow:hidden;">
-              </template>
-            </q-img> -->
-            <!-- <img :loading="'lazy'" :class="selectedPlat.code === 'PG' ? 'zoomin' : ''" :src="game.icon" v-bind:alt="game.default" > -->
           </div>
         </div>
         <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
@@ -399,6 +407,10 @@ export default defineComponent({
       border-radius: 12px;
       box-shadow: $shadow-bg;
       padding: 4px;
+
+      .q-img {
+        aspect-ratio: 1/1;
+      }
 
       img {
         width: 100%;

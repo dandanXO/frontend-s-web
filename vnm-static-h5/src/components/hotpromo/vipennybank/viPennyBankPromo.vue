@@ -35,8 +35,8 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed } from "vue";
-import { submitPiggyBankLottery, submitPiggyBankClaim } from "../../../api/index/promo";
+import { ref, reactive, computed, onMounted } from "vue";
+import { submitPiggyBankLottery, submitPiggyBankClaim, getPiggyBankAmt } from "../../../api/index/promo";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -58,7 +58,7 @@ const postPiggyBankLottery = () => {
           icon: "check_circle_outline"
         });
 
-        lotteryAmount.value = res.data.amount;
+        // lotteryAmount.value = res.data;
       }
     })
     .catch(() => {})
@@ -87,6 +87,19 @@ const putPiggyBankClaim = () => {
       btnLoading.value = false;
     });
 };
+
+const loadPiggyBankAmt = () => {
+  getPiggyBankAmt().then((res) => {
+    if (res.code === 0) {
+      lotteryAmount.value = res.data;
+    }
+  });
+};
+
+// /piggy-bank/amount
+onMounted(() => {
+  loadPiggyBankAmt();
+});
 </script>
 
 <style lang="scss" scoped>

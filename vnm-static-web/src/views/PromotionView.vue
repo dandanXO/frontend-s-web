@@ -37,6 +37,16 @@
             <a @click="showPromoDetails(promo)">
               <div class="promo-img-wrapper">
                 
+                <div class="promo-label">
+                  <div class="label-type" v-if="promo.labelType !== 2">{{ getPromoLabel(promo.labelType) }}</div>
+                  <div class="label-date">{{ JSON.parse(promo.param).date }}</div>
+                </div>
+                <div class="promo-details">
+                  <!-- <div class="front-date">{{ JSON.parse(promo.param).date }}</div> -->
+                  <div class="front-title">{{ promo.title }}</div>
+                  <div class="front-sub">{{ JSON.parse(promo.param).sub }}</div>
+                  <div class="front-btn">{{ $t('home.moreDetails')}}</div>
+                </div>
                 <div class="promo-bg">
                   <img class="promo-content isDesktop" :src="imgURL + promo.desktopImgUrl" />
                   <img class="promo-content isMobile" :src="imgURL + promo.mobileImgUrl" />
@@ -80,7 +90,7 @@
               : 'background-image: url(' + require(`../assets/promo/web-bg.jpg`) + '\''
           "
         >
-          <h2 class="text-center">{{selectedPromo.title}}</h2>
+          <h2 class="text-center" style="font-family: 'Roboto'; color: #0060d3; font-weight: 900; font-size: 30px;">{{selectedPromo.title}}</h2>
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
             <HotPromotion :list="selectedPromo" />
           </div>
@@ -228,9 +238,9 @@ export default defineComponent({
         if(res.code === 0) {
           promoState.promoList.push(...res.data);
           res.data.forEach(element => {
-            if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-              promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-            } else {
+            // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+            //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+            // } else {
               if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3') {
                 if (element.redirectUrl === 'lh1-invite') {
                   showPromoDetails(element)
@@ -244,7 +254,7 @@ export default defineComponent({
               if (element.redirectUrl === route.query.name) {
                 showPromoDetails(element)
               }
-            }
+            // }
           });
         }
       }).catch((e) => { console.log("error", e); });
@@ -252,23 +262,23 @@ export default defineComponent({
     }
 
     const getPromoLabel = (labelType) => {
-      switch (labelType) {
-        case 0:
-          return "NEW 最新";
-        case 1:
-          return "HOT 热门";
-        case 3:
-          return "RECOMMEND 推荐";
-        case 4:
-          return "DAILY 日常";
-        case 5:
-          return "NEWBIE 新人";
-        case 6:
-          return "TIME 限时";
-        default:
-          return "";
-      }
-    };
+  switch (labelType) {
+    case 0:
+      return "NEW Mới nhất";
+    case 1:
+      return "HOT Phổ biến";
+    case 3:
+      return "RECOMMEND Đề xuất";
+    case 4:
+      return "DAILY Hàng ngày";
+    case 5:
+      return "NEWBIE Mới";
+    case 6:
+      return "TIME Thời gian giới hạn";
+    default:
+      return "";
+  }
+};
     onMounted(() => {
       // loadBanner();
       loadAll();
@@ -595,7 +605,7 @@ export default defineComponent({
             display: flex;
             justify-content: space-between;
             align-items: center;
-            // padding: 0 50px;
+            padding: 0 50px;
             // border-radius: 10px 10px 0 0;
             position: relative;
 
@@ -649,7 +659,7 @@ export default defineComponent({
               }
             }
             .promo-details {
-              font-family: "Microsoft Yahei UI";
+              font-family: "Roboto";
               margin: 20px 0;
               padding: 50px 0 10px 0;
               display: flex;

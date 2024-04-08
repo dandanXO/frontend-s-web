@@ -37,11 +37,9 @@
               <div
                 style="color: #cfb282; font-size: 18px; position: absolute; bottom: 4px; left: 0; right: 0"
                 v-if="vipLevel + 1 === Number(vip.vipLevel) && store.token"
-              >
+              > {{ store.currency.label }}
                 {{
-                  Number(currentDepositAmt)
-                    .toLocaleString("en-US", { style: "currency", currency: "CNY" })
-                    .replace("CN", "")
+                  Number(currentDepositAmt).toFixed(2)
                 }}
               </div>
             </div>
@@ -135,7 +133,7 @@
         </div>
         <div>
 
-            <div class="tbl-title rebate">{{ $t('vip.rabateBonus')}}</div>
+            <div class="tbl-title rebate">{{ $t('vip.rebateBonus')}}</div>
 
             <table class="rebate">
                 <tbody>
@@ -624,7 +622,7 @@ export default defineComponent({
     const claimVIPLevelItem = (vip) => {
       claim(vip.vipLevel).then((res) => {
         if (res.code === 0) {
-          ElMessage.success("领取成功！");
+          ElMessage.success(t('common.claimedSuccess'));
           store.getBalance();
           initVIPTable();
         } else {

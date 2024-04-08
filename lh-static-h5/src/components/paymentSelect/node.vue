@@ -201,6 +201,7 @@ $node-color: #468cff;
   width: 100%;
   grid-template-columns: repeat(5, 1fr);
   padding-right: 15px;
+  align-items: flex-start;
 
   .payment-method-item {
     text-align: center;
@@ -357,8 +358,8 @@ $node-color: #468cff;
         align-items: center;
         justify-content: center;
         box-shadow: inset 0 0 8px 0 #a9c9ea;
-        width: 4rem;
-        height: 4rem;
+        width: 60px;
+        height: 60px;
         margin-bottom: 5px;
         border: 2px solid $secondary;
         border-radius: 10px;
@@ -406,11 +407,14 @@ $node-color: #468cff;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
+      width: 100%;
+      max-width: 40px;
+
       img {
         padding: 0;
         border: 0;
         background-color: transparent;
-        max-width: 60px;
+        max-width: 40px;
         width: 100%;
       }
       ::after {
@@ -430,21 +434,27 @@ $node-color: #468cff;
   }
 }
 
-@media (max-width: 375px) {
-  .node .node-content .node-text .node-txt-img {
-    width: 4.5rem;
-    height: 4.5rem;
-  }
-  .node .node-item .promo img {
-    max-width: 50px;
-    width: 50px;
-  }
-  .node .node-item .promo {
-    right: -10px;
-    top: -10px;
-  }
-  .node .node-content .node-text .node-txt-img img {
-    // padding: 5px 10px;
+// @media (max-width: 375px) {
+//   .node .node-content .node-text .node-txt-img {
+//     width: 4.5rem;
+//     height: 4.5rem;
+//   }
+//   .node .node-item .promo img {
+//     max-width: 50px;
+//     width: 50px;
+//   }
+//   .node .node-item .promo {
+//     right: -10px;
+//     top: -10px;
+//   }
+//   .node .node-content .node-text .node-txt-img img {
+//     // padding: 5px 10px;
+//   }
+// }
+@media (max-width: 420px) {
+  .node-txt-img {
+    width: 54px !important;
+    height: 54px !important;
   }
 }
 

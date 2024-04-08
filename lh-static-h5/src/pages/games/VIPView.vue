@@ -79,7 +79,7 @@
         </div>
         <div class="turnover">
           <div class="common-text">流水要求</div>
-          <div class="common-text">{{ claimDesc.turnover }}</div>
+          <div class="common-text">{{ claimDesc.turnover }}（不包含彩票场馆）</div>
         </div>
         <div
           class="claim-btn-container"

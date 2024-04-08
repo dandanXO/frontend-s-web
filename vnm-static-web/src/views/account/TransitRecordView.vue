@@ -669,7 +669,7 @@
 </template>
 
 <script lang="js">
-import { defineComponent, onMounted, reactive, ref } from "vue";
+import { defineComponent, onMounted, reactive, watch, ref } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
   loadRecords,
@@ -686,6 +686,8 @@ import FileUpload from "@/components/FileUpload.vue";
 import EmptyData from "@/components/emptyData.vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
   components: {
@@ -778,7 +780,7 @@ export default defineComponent({
         key: "serialNumber"
       }
     ];
-    const tableColumns = {
+    const tableColumns = ref({
       deposit: [
         ...commonColumns,
         {
@@ -995,7 +997,7 @@ export default defineComponent({
           slots: { customRender: "type" }
         }
       ]
-    };
+    });
     const loading = ref(false);
     const pagination = reactive({
       pageSize: 20,
@@ -1012,7 +1014,7 @@ export default defineComponent({
       console.log(searchForm[recordActive.value])
       if(!searchForm[recordActive.value]["startDate"] || !searchForm[recordActive.value]["endDate"]){
         ElMessage({
-          message: t('transit.transitStartEnd'),
+          message: t('transit.startEndDate'),
           type: "error"
         });
         return;
@@ -1300,7 +1302,7 @@ export default defineComponent({
       } else if (transferType === "STEP_5") {
         return t('status.suspend'); // Suspend
       } else if (transferType === "AUTOPAY") {
-        return t('status.automaticPayment');; // Automatic Payment
+        return t('status.automaticPayment'); // Automatic Payment
       } else if (transferType === "WAITING_CALLBACK") {
         return t('status.automaticPaymentInProgress'); // Waiting Callback
       } else if (transferType === "SENDING") {
@@ -1350,59 +1352,57 @@ export default defineComponent({
         return "";
       }
       if (platformName === "AG") {
-        return "AG" + t('account.livecasino') + ", XIN" + t('account.slot'); // AG
+        return "AG " + t('account.livecasino') + ", XIN" + t('account.slot'); // AG
       }else if (platformName === "GPI") {
-        return "GPI" + t('account.slot') + ", GPI" + t('account.lottery'); // AG
+        return "GPI " + t('account.slot') + ", GPI" + t('account.lottery'); // AG
       }  else if (platformName === "BBINDY") {
-        return "BBIN" + t('account.livecasino'); // BBINDY
+        return "BBIN"  + t('account.livecasino'); 
       } else if (platformName === "KP") {
-        return "King Poker" ; // KY
+        return "King Poker" ; 
       } else if (platformName === "KM") {
-        return "King Maker"; // KYDY
+        return "King Maker"; 
       } else if (platformName === "V8") {
-        return "V8" + t('account.poker'); // DT
+        return "V8" + t('account.poker'); 
       } else if (platformName === "TCG") {
-        return "TCG" + t('account.lottery') ; // TCG
+        return "TCG " + t('account.lottery') ; 
       }else if (platformName === "LOTTO") {
-        return "LOTTO " + t('account.lottery') ; // TCG
+        return "LOTTO " + t('account.lottery') ; 
       }else if (platformName === "MGP") {
-        return "MGP " + t('account.slot') ; // TCG
-      }  else if (platformName === "BBINDY") {
-        return "BBIN" + t('account.livecasino');
+        return "MGP " + t('account.slot') ; 
       }  else if (platformName === "EBET") {
-        return "WE" + t('account.livecasino');
+        return "WE " + t('account.livecasino');
       } else if (platformName === "PT") {
-        return "PT" + t('account.slot'); // PTDY
+        return "PT " + t('account.slot'); 
       } else if (platformName === "PG") {
-        return "PG" + t('account.slot');// PGDY
+        return "PG " + t('account.slot');
       } else if (platformName === "SW") {
-        return "SW" + t('account.slot'); // PGDY
+        return "SW " + t('account.slot'); 
       } else if (platformName === "SABA") {
-        return "SABA " + t('account.sport'); // PGDY
+        return "SABA " + t('account.sport'); 
       }else if(platformName === 'GFSBO'){
-        return "SBOBET " + t('account.sport'); // PGDY
+        return "SBOBET " + t('account.sport'); 
       }else if(platformName === 'CMD'){
-        return "CMD " + t('account.sport'); // PGDY
+        return "CMD " + t('account.sport'); 
       } else if (platformName === "BG") {
-        return "BG" + t('account.livecasino');; // PGDY
+        return "BG " + t('account.livecasino'); 
       } else if (platformName === "Evo") {
-        return "Evo" + t('account.livecasino');; // PGDY
+        return "Evo " + t('account.livecasino'); 
       } else if (platformName === "BBINDY") {
-        return "BBIN" + t('account.livecasino');; // PGDY
+        return "BBIN " + t('account.livecasino'); 
       } else if (platformName === "BBIN") {
-        return "BBIN" + t('account.livecasino');; // PGDY
+        return "BBIN " + t('account.livecasino'); 
       } else if (platformName === "WE") {
-        return "WE" + t('account.livecasino');; // PGDY
+        return "WE " + t('account.livecasino');
       }else if (platformName === "WM") {
-        return "WM" + t('account.livecasino');; // PGDY
+        return "WM " + t('account.livecasino'); 
       } else if (platformName === "AE") {
-        return "Sexy " + t('account.livecasino');; // PGDY
+        return "Sexy " + t('account.livecasino'); 
       } else if (platformName === "PMLIVE") {
-        return "DB" + t('account.livecasino'); // PGDY
+        return "DB " + t('account.livecasino'); 
       }else if (platformName === "TFGaming") {
-        return "TFGaming";
+        return "TFGaming " + t('account.esport');
       } else if (platformName === "WS") {
-        return "WS168" + t('account.cockfight');
+        return "WS168 " + t('account.cockfight');
       }else if (platformName === "SP") {
         return "SP " + t('account.fishing');
       }else if (platformName === "JILI") {
@@ -1442,7 +1442,7 @@ export default defineComponent({
       } else if (withdrawStatus === "SUCCESS") {
         return t('status.success'); // Success
       } else if (withdrawStatus === "STEP_1" || withdrawStatus === "PENDING") {
-        return t('status.underReview');; //Under review
+        return t('status.underReview'); //Under review
       } else if (withdrawStatus === "STEP_2") {
         return t('status.toBePaid'); // To be paid
       } else if (withdrawStatus === "STEP_3") {
@@ -1563,7 +1563,228 @@ export default defineComponent({
       }
     };
     const formRef = ref(null);
-
+    const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
+    watch(languageVal, () => {
+      tableColumns.value = {
+      deposit: [
+        ...commonColumns,
+        {
+          title: t('transit.depositAmount'),
+          dataIndex: "depositAmount"
+        },
+        {
+          title: t('transit.status'),
+          dataIndex: "status"
+        },
+        {
+          title: t('transit.paymentType'),
+          dataIndex: "paymentType"
+        },
+        {
+          title: t('transit.depositDate'),
+          dataIndex: "depositDate",
+          slots: { customRender: "depositDate" }
+        },
+        {
+          title: t('transit.operation'),
+          dataIndex: "operation",
+          slots: { customRender: "operation" }
+        }
+      ],
+      withdraw: [
+        ...commonColumns,
+        {
+          title: t('transit.withdrawAmount'),
+          dataIndex: "withdrawAmount"
+        },
+        {
+          title: t('transit.status'),
+          dataIndex: "status"
+        },
+        {
+          title: t('transit.withdrawDate'),
+          dataIndex: "withdrawDate",
+          slots: { customRender: "withdrawDate" }
+        },
+        {
+          title: t('transit.operation'),
+          dataIndex: "operation",
+          slots: { customRender: "operation" }
+        }
+      ],
+      transfer: [
+        ...commonColumns,
+        {
+          title: t('transit.type'),
+          dataIndex: "type",
+          key: "type",
+          slots: { customRender: "type" }
+        },
+        {
+          title: t('transit.gamePlatform'),
+          dataIndex: "platform",
+          key: "platform"
+        },
+        {
+          title: t('transit.amount'),
+          dataIndex: "amount",
+          key: "withdrawAmount"
+        },
+        {
+          title: t('transit.status'),
+          dataIndex: "status",
+          key: "status",
+          slots: { customRender: "status" }
+        },
+        {
+          title: t('transit.time'),
+          dataIndex: "transferDate",
+          key: "transferDate",
+          slots: { customRender: "transferDate" }
+        }
+      ],
+      rebates: [
+        ...commonColumns,
+        {
+          title: t('transit.privilegeName'),
+          dataIndex: "privilegeName"
+        },
+        {
+          title: t('transit.amount'),
+          dataIndex: "amount"
+        },
+        {
+          title: t('transit.recordTime'),
+          dataIndex: "recordTime",
+          slots: { customRender: "recordTime" }
+        }
+      ],
+      turnover: [
+        ...commonColumns,
+        {
+          title: t('transit.subType'),
+          dataIndex: "subType"
+        },
+        {
+          title: t('transit.amount'),
+          dataIndex: "amount"
+        },
+        {
+          title: t('transit.platform'),
+          dataIndex: "platformCode"
+        },
+        {
+          title: t('transit.recordTime'),
+          dataIndex: "recordTime",
+          slots: { customRender: "recordTime" }
+        }
+      ],
+      gameBetRecord: [
+        {
+          title: t('transit.betTime'),
+          dataIndex: "betTime",
+          slots: { customRender: "betTime" }
+        },
+        {
+          title: t('transit.gamePlatform'),
+          dataIndex: "platform"
+        },
+        {
+          title: t('transit.bet'),
+          dataIndex: "bet"
+        },
+        {
+          title: t('transit.payout'),
+          dataIndex: "payout"
+        },
+        {
+          title: t('transit.gameType'),
+          dataIndex: "gameType"
+        },
+        {
+          title: t('transit.status'),
+          dataIndex: "status"
+        }
+      ],
+      betRecord: [
+        {
+          title: t('transit.betId'),
+          dataIndex: "betId"
+        },
+        {
+          title: t('transit.transactionId'),
+          dataIndex: "transactionId"
+        },
+        {
+          title: t('transit.gamePlatform'),
+          dataIndex: "platform"
+        },
+        {
+          title: t('transit.bet'),
+          dataIndex: "bet"
+        },
+        {
+          title: t('transit.payout'),
+          dataIndex: "payout"
+        },
+        {
+          title: t('transit.beforeBalance'),
+          dataIndex: "beforeBalance"
+        },
+        {
+          title: t('transit.afterBalance'),
+          dataIndex: "afterBalance"
+        },
+        {
+          title: t('transit.betStatus'),
+          dataIndex: "betStatus"
+        },
+        {
+          title: t('transit.gameType'),
+          dataIndex: "gameType"
+        },
+        {
+          title: t('transit.betTime'),
+          dataIndex: "betTime",
+          slots: { customRender: "betTime" }
+        },
+        {
+          title: t('transit.settleTime'),
+          dataIndex: "settleTime",
+          slots: { customRender: "settleTime" }
+        },
+        {
+          title: t('transit.result'),
+          dataIndex: "result"
+        },
+        {
+          title: t('transit.sportBetResult'),
+          dataIndex: "sportBetResult"
+        }
+      ],
+      reminderRecord: [
+        {
+          title: t('transit.orderNo'),
+          dataIndex: "orderNo"
+        },
+        {
+          title: t('transit.financeRemark'),
+          dataIndex: "financeRemark"
+        },
+        {
+          title: t('transit.feedbackTime'),
+          dataIndex: "feedbackTime",
+          slots: { customRender: "feedbackTime" }
+        },
+        {
+          title: t('transit.type'),
+          dataIndex: "type",
+          slots: { customRender: "type" }
+        }
+      ]
+    };
+    })
     return {
       recordActive,
       uploadFileRef,

@@ -80,8 +80,8 @@
                 </div>
                 <div class="info-tbl-col">
                   <div class="tbl-row">
-                    <div v-if="personalState.memberInfo.telephone" class="basic-info-cell title">{{ $t('personal.mobileNo') }}</div>
-                    <div v-if="personalState.memberInfo.telephone" class="basic-info-cell contentwtxt" style="display:flex;justify-content: space-between;align-items: center;">
+                    <div class="basic-info-cell title">{{ $t('personal.mobileNo') }}</div>
+                    <div class="basic-info-cell contentwtxt" style="display:flex;justify-content: space-between;align-items: center;">
                       {{ personalState.memberInfo.telephone }}
 
                       <button
@@ -148,8 +148,8 @@
               </div> -->
 
               <div class="tbl-row">
-                <div v-if="personalState.memberInfo.email" class="basic-info-cell title">{{$t('personal.email')}}</div>
-                <div v-if="personalState.memberInfo.email" class="basic-info-cell contentwtxt" style="display:flex;justify-content: space-between;align-items: center;">
+                <div class="basic-info-cell title">{{$t('personal.email')}}</div>
+                <div class="basic-info-cell contentwtxt" style="display:flex;justify-content: space-between;align-items: center;">
                   {{ personalState.memberInfo.email }}
 
                   <button
@@ -476,7 +476,7 @@ import {
   verifyEmail,
   sendSms,
   verifySms,
-  verifyOtpAndChangePassword
+  verifyOtpAndChangePassword, forgetWithdrawSendEmail
 } from "@/api/personal/personal";
 import { getVerificationCode } from "@/api/index/login";
 import moment from "moment";
@@ -641,7 +641,7 @@ import { useI18n } from "vue-i18n";
           verificationModalVisible.value = false;
 
           ElMessage({
-            message: '成功',
+            message: t('common.success'),
             type: 'success',
           })
 
@@ -668,7 +668,7 @@ import { useI18n } from "vue-i18n";
             if (res.code === 0) {
 
               ElMessage({
-                message: '成功',
+                message: t('common.success'),
                 type: 'success',
               })
 
@@ -775,7 +775,7 @@ import { useI18n } from "vue-i18n";
           verifySms(verificationPhoneDetails.memberInfo).then((res) => {
             if (res.code === 0) {
               ElMessage({
-                message: '成功',
+                message: t('common.success'),
                 type: 'success',
               })
               updatePhoneModalVisible.value = false
@@ -1143,8 +1143,8 @@ import { useI18n } from "vue-i18n";
         // If countdown timer has finished, reset the timer and send the email
         const obj = {
           email: personalState.memberInfo.email
-        } 
-        sendEmail(obj).then((res) => {
+        }
+        forgetWithdrawSendEmail(obj).then((res) => {
           if (res.code === 0) {
             receivedVerificationCode.value = true;
             emailCodeId.value= res.data.codeId;

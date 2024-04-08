@@ -247,7 +247,7 @@ const copyMessage = (position) => {
 const blurCode = () => {
   const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
   copybtntxt.forEach(element => {
-    element.value = "复制";
+    element.value = t('account.str_copy');
   });
 };
 const form = reactive({
@@ -575,7 +575,7 @@ async function verifyDepositAmount(r, v) {
   if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
     if (v < calculatedMinDeposit.value || v > activeMethod.value.depositMax) {
       return Promise.reject(
-        "存入金额介于 " +
+        t('account.deposit_should_between') +
         calculatedMinDeposit.value +
         " - " +
         activeMethod.value.depositMax
@@ -596,7 +596,7 @@ async function verifyBank(r, v) {
       if (d) {
         return Promise.resolve();
       } else {
-        return Promise.reject("请输入银行");
+        return Promise.reject(t('account.please_select_bank'));
       }
     });
   }

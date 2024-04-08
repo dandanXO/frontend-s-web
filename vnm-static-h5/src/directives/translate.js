@@ -44,9 +44,9 @@ export const translateRecord = (rec, type = "") => {
   } else if (rec === "BANK") {
     return i18n.global.t('lang.str_viptransfer');
   } else if (rec === "USDTERC") {
-    return "USDT ERC"; // USDT ERC
+    return i18n.global.t('lang.str_usdterc'); // USDT ERC
   } else if (rec === "USDTTRC") {
-    return "USDT TRC"; // USDT TRC
+    return i18n.global.t('lang.str_usdttrc'); // USDT TRC
   } else if (rec === "OFFLINE") {
     return i18n.global.t('lang.str_offlinetransfer');
   } else if (rec === "UNION") {
@@ -123,14 +123,64 @@ export const translateRecord = (rec, type = "") => {
     return i18n.global.t('lang.str_transfer'); // Closed
   } else if (rec === "ADJUST") {
     return i18n.global.t('lang.str_adjust'); // Closed
-  } else if (rec === "MGP") {
-    return "MG"; // AG
-  } else if (rec === "AG") {
-    return "AG"; // AG
-  } else if (rec === "BBINDY" || rec === "BBIN") {
-    return "BBIN"; // BBINDY
-  } else if (rec === "EBET") {
-    return "WE"; // EBET
+  } if (rec === "AG") {
+    // return "AG " + i18n.global.t('lang.livecasino') + ", XIN" + i18n.global.t('lang.slot'); // AG
+    return "XIN " + i18n.global.t('lang.slot'); // AG
+  }else if (rec === "GPI") {
+    // return "GPI " + i18n.global.t('lang.slot') + ", GPI" + i18n.global.t('lang.lottery'); // AG
+    return "GPI " + i18n.global.t('lang.lottery'); // AG
+  }  else if (rec === "BBINDY") {
+    return "BBIN"  + i18n.global.t('lang.livecasino');
+  } else if (rec === "KP") {
+    return "King Poker" ;
+  } else if (rec === "KM") {
+    return "King Maker";
+  } else if (rec === "V8") {
+    return "V8" + i18n.global.t('lang.poker');
+  } else if (rec === "TCG") {
+    return "TCG " + i18n.global.t('lang.lottery') ;
+  }else if (rec === "LOTTO") {
+    return "LOTTO " + i18n.global.t('lang.lottery') ;
+  }else if (rec === "MGP") {
+    return "MGP " + i18n.global.t('lang.slot') ;
+  }  else if (rec === "EBET") {
+    return "WE " + i18n.global.t('lang.livecasino');
+  } else if (rec === "PT") {
+    return "PT " + i18n.global.t('lang.slot');
+  } else if (rec === "PG") {
+    return "PG " + i18n.global.t('lang.slot');
+  } else if (rec === "SW") {
+    return "SW " + i18n.global.t('lang.slot');
+  } else if (rec === "SABA") {
+    return "SABA " + i18n.global.t('lang.sport');
+  }else if(rec === 'GFSBO'){
+    return "SBOBET " + i18n.global.t('lang.sport');
+  }else if(rec === 'CMD'){
+    return "CMD " + i18n.global.t('lang.sport');
+  } else if (rec === "BG") {
+    return "BG " + i18n.global.t('lang.livecasino');
+  } else if (rec === "Evo") {
+    return "Evo " + i18n.global.t('lang.livecasino');
+  } else if (rec === "BBINDY") {
+    return "BBIN " + i18n.global.t('lang.livecasino');
+  } else if (rec === "BBIN") {
+    return "BBIN " + i18n.global.t('lang.livecasino');
+  } else if (rec === "WE") {
+    return "WE " + i18n.global.t('lang.livecasino');
+  }else if (rec === "WM") {
+    return "WM " + i18n.global.t('lang.livecasino');
+  } else if (rec === "AE") {
+    return "Sexy " + i18n.global.t('lang.livecasino');
+  } else if (rec === "PMLIVE") {
+    return "DB " + i18n.global.t('lang.livecasino');
+  }else if (rec === "TFGaming") {
+    return "TFGaming " + i18n.global.t('lang.esport');
+  } else if (rec === "WS") {
+    return "WS168 " + i18n.global.t('lang.cockfight');
+  }else if (rec === "SP") {
+    return "SP " + i18n.global.t('lang.fishing');
+  }else if (rec === "JILI") {
+    return "JILI  " + i18n.global.t('lang.fishing');
   } else {
     return rec;
   }

@@ -3,7 +3,7 @@
     <div class="inner">
       <div class="bg-design"><img src="../../assets/images/login/cus-service.png"></div>
       <div class="title">
-        专属客服服务
+        {{ t('common.zhuanshukefufuwu') }}
       </div>
       <div class="subtitle">
         EXCLUSIVE CUSTOMER SERVICE
@@ -27,6 +27,9 @@
 </template>
 <script setup>
 import { defineProps, ref } from 'vue'
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const props = defineProps({
   siteId: {
@@ -58,36 +61,36 @@ const telegramLink = () => {
 const contactlist = ref([
   {
     icon: 'cmail',
-    type: '合营部电邮',
+    type: t('common.email'),
     link: mailLink(),
     btns: [{
-      text: '咨询',
+      text: t('common.askus'),
       action: ''
     }]
   },
   {
     icon: 'cqq',
-    type: '合营QQ',
+    type: t('common.qq'),
     link: qqLink(),
     btns: [{
-      text: '复制',
+      text: t('common.copy'),
       action: ''
     },
     {
-      text: '下载',
+      text: t('common.download'),
       action: 'https://im.qq.com/index/'
     }]
   },
   {
     icon: 'cskype',
-    type: '合营部Skype',
+    type: t('common.skype'),
     link: 'live:.cid.1b8d9a018a52a8f5',
     btns: [{
-      text: '复制',
+      text: t('common.copy'),
       action: ''
     },
     {
-      text: '下载',
+      text: t('common.download'),
       action: 'https://www.skype.com/zh-Hans/get-skype/'
     }]
   },
@@ -96,24 +99,24 @@ const contactlist = ref([
     type: 'Telegram',
     link: telegramLink(),
     btns: [{
-      text: '复制',
+      text: t('common.copy'),
       action: ''
     },
     {
-      text: '下载',
+      text: t('common.download'),
       action: 'https://telegram.org/'
     }]
   },
   {
     icon: 'bubble-logo',
-    type: '泡泡',
+    type: t('common.paopao'),
     link: 'LH10086',
     btns: [{
-      text: '复制',
+      text: t('common.copy'),
       action: ''
     },
     {
-      text: '下载',
+      text: t('common.download'),
       action: 'https://paopaoim.com/index.html'
     }]
   }
@@ -122,11 +125,11 @@ const copyMessage = (position, text, btnPosition) => {
   console.log(position);
   console.log(text);
   console.log(contactlist.value)
-  if (text === '咨询') {
+  if (text === t('common.askus')) {
     const mailtoLink = contactlist.value[position].link
     window.open(mailtoLink, '_blank');
   }
-  if (text === '复制') {
+  if (text === t('common.copy')) {
     let copyText = null;
     copyText = contactlist.value[position].link;
     // Create a temporary textarea element
@@ -141,13 +144,13 @@ const copyMessage = (position, text, btnPosition) => {
     // Remove the temporary textarea element
     document.body.removeChild(tempTextarea);
     // const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
-    contactlist.value[position].btns[btnPosition].text = '已复制'
+    contactlist.value[position].btns[btnPosition].text = t('common.copied');
     // copybtntxt[position].value = "已复制";
     setTimeout(() => {
-      contactlist.value[position].btns[btnPosition].text = '复制';
+      contactlist.value[position].btns[btnPosition].text = t('common.copy');
     }, 2000);
   }
-  if (text === '下载') {
+  if (text === t('common.download')) {
     const downloadLink = contactlist.value[position].btns[btnPosition].action
     window.open(downloadLink, '_blank');
   }
@@ -227,7 +230,7 @@ const copyMessage = (position, text, btnPosition) => {
             padding: 10px;
             text-align: center;
             width: 100%;
-            max-width: 200px;
+            max-width: 235px;
             .type, .link {
                 margin: 10px auto;
                 overflow: hidden;
@@ -236,6 +239,7 @@ const copyMessage = (position, text, btnPosition) => {
             }
             .buttons {
                 margin-top: 20px;
+              white-space: nowrap;
             }
             }
     }

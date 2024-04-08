@@ -119,7 +119,7 @@ export default defineComponent({
       formDetails.realName = store.realName;
       formDetails.birthday = store.birthday;
       formDetails.email = store.email;
-      formDetails.phone = store.phone;
+      formDetails.phone = "";
       formDetails.phoneVerified = store.phoneVerified;
     };
 
@@ -180,10 +180,9 @@ export default defineComponent({
     const submitUpdateSecurity = () => {
       phoneOtpRef.value.validate();
       phoneNumberRef.value.validate()
-
       if (phoneNumberRef.value.hasError || phoneOtpRef.value.hasError) {
       } else {
-        api.post("/session/verifyAndUpdatePhone", qs.stringify({
+        api.post("/otp/verifyPhone", qs.stringify({
           phone: formDetails.phone,
           code: formDetails.phoneOtpRef,
           codeId: phoneCodeId.value
@@ -201,12 +200,6 @@ export default defineComponent({
             router.go(-1);
           }
         }).catch((e) => {
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: e.message,
-            icon: "report_problem"
-          });
         });
       }
     };
@@ -286,7 +279,7 @@ export default defineComponent({
       }))
           .then(res => {
             getCode();
-            let message = res.message || '发送手机验证码成功',
+            let message = res.message || t('lang.personal_verification_successful'),
                 color = 'positive'
 
             if (res.code === 0) {

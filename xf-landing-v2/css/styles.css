@@ -31,7 +31,7 @@ a:hover {
 
 
 .top-wrapper {
-  padding: 420px 16px 20px;
+  padding: 0px 16px 20px;
   position:relative;
 }
 
@@ -479,7 +479,7 @@ a:hover {
 
 @media screen and (max-width: 475px){
   .top-wrapper{
-   padding-top: 85%;
+   /* padding-top: 85%; */
   }
 
   .top-board h2{

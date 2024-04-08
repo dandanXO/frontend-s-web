@@ -5,6 +5,7 @@ import { stringify } from "qs";
 import { userStore } from "@/store";
 import i18n from "../i18n/index";
 import { ResponseCode, SkipErrorCode } from "@/api/response";
+import { useRoute, useRouter } from "vue-router";
 
 const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
@@ -102,7 +103,12 @@ const onResponse = (response) => {
         res.code === ResponseCode.ERROR_NAME_EXIST
       ) {
         store.token = null;
-        location.reload();
+        if (window.location.pathname === '/promotion') {
+          res.message = i18n.global.t('response.' + res.code) || res.message
+          return res;
+        } else {
+          location.reload();
+        }
       }
       if (res.code === ResponseCode.ERROR_TOKEN_LOGGED) {
         store.token = null;
@@ -114,6 +120,7 @@ const onResponse = (response) => {
       // }
       // message.error(res.message, 4);
       // ElMessage.error(res.message);
+      
     }
     // throw new Error(res.message || "Error");
       res.message = i18n.global.t('response.' + res.code) || res.message

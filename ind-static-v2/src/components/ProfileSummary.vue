@@ -1,14 +1,9 @@
 <template>
   <div style="height: 56px" v-if="topDownload"></div>
-  <div style="height: 80px"></div>
+  <div style="height: 70px"></div>
 
   <div class="top-download" v-if="topDownload">
     <div class="download-container">
-      <!-- <div class="download-icon"><img src="../assets/images/index/download/top-download-icon.png" /></div>
-      <div class="download-rating">
-        <div class="rate-exp">Best experience!</div>
-        <div class="rate-stars"><img src="../assets/images/index/download/top-download-stars.png" /></div>
-      </div> -->
 
       <div class="download-btn">
         <a :href="topDownloadUrl">
@@ -27,7 +22,7 @@
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-wrapper-extra">
         <div class="logo-img">
-          <img src="../assets/logo.png" @click="onClickLogo" />
+          <img src="../assets/images/auth/auth-logo-text-only.png" @click="onClickLogo" />
         </div>
       </div>
       <div class="profile-wrapper" v-if="store.hasToken()">
@@ -68,7 +63,7 @@
           <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
           <q-chip v-if="store.unreadInboxMail" class="notification" color="red" size="xs"></q-chip>
         </div> -->
-        <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown">
+        <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown" unelevated>
           <template v-slot:label>
             <div class="profile-pic">
               <div class="unread-total" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</div>
@@ -86,7 +81,7 @@
             </div>
           </template>
 
-          <q-list style="background: #303954" dense unelevated flat class="dropdown-list">
+          <q-list style="background: #19242E" dense unelevated flat class="dropdown-list">
             <q-item clickable v-close-popup @click="onVipClick">
               <q-item-section avatar>
                 <q-avatar icon="diamond" />
@@ -140,8 +135,8 @@
         </q-btn-dropdown>
       </div>
       <div class="profile-wrapper" v-else>
-        <q-btn class="btn-style-purple" no-caps @click="router.push('/register')">Register</q-btn>
-        <q-btn no-caps @click="goLogin()">Login</q-btn>
+        <PrimaryButton :isSmall="true" :label="'Register'" :onClick="() => router.push('/register')"/>
+        <q-btn no-caps unelevated @click="goLogin" style="color:#98A7B5">Login</q-btn>
       </div>
     </div>
   </div>
@@ -154,6 +149,7 @@ import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, isAndroid } from "src/boot/utils";
 import { api } from "boot/axios";
+import PrimaryButton from "./auth/PrimaryButton.vue";
 
 const props = defineProps(["homeProfile"]);
 const emits = defineEmits(["closeslot"]);
@@ -291,9 +287,9 @@ onMounted(() => {
   max-width: 500px;
   margin: auto;
   width: 100%;
-  height: 86px; /* adjust the height as needed */
-  padding: 8px 16px 28px;
-  background: linear-gradient(180deg, #0c2962 0%, #01030d 100%);
+  height: 55px; /* adjust the height as needed */
+  padding: 12px 16px 28px;
+  background: linear-gradient(rgba(131, 131, 131, 0.2117647059), rgba(131, 131, 131, 0.2117647059));
   z-index: 98;
 
   .download-container {
@@ -329,7 +325,7 @@ onMounted(() => {
     }
 
     .download-count {
-      color: #fe9a9a;
+      color: #97A6B4;
       font-size: 20px;
     }
 
@@ -357,7 +353,7 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   position: relative;
-  background: linear-gradient(180deg, #2d0f54 0%, #101114 100%);
+  // background: linear-gradient(180deg, #2d0f54 0%, #101114 100%);
   box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
   overflow-x: hidden;
   position: fixed;
@@ -367,6 +363,11 @@ onMounted(() => {
   max-width: 500px;
   z-index: 999;
   transition: 0.3s all;
+  height: 70px;
+
+  background: rgb(0 0 0 / 20%);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
 
   &.with-top-download {
     border-top-right-radius: 25px;
@@ -389,6 +390,7 @@ onMounted(() => {
       width: 100%;
       gap: 0;
       justify-content: space-between;
+      align-items: center;
       padding: 0 12px;
       // overflow-y: hidden;
 
@@ -407,8 +409,8 @@ onMounted(() => {
     align-items: center;
     justify-content: flex-end;
     gap: 12px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     margin-bottom: 4px;
     width: 100%;
     position: relative;
@@ -417,7 +419,7 @@ onMounted(() => {
       position: absolute;
       right: 0px;
       top: 0px;
-      background: #8952ff;
+      background: #00AE00;
       border-radius: 100px;
       padding: 0px 3px;
       z-index: 1;
@@ -479,8 +481,8 @@ onMounted(() => {
     .profile-balance {
       position: relative;
       // background: rgba(255, 255, 255, 0.24);
-      background: rgba(103, 38, 154, 0.9);
-      border-radius: 24px;
+      background: #192633;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -489,13 +491,14 @@ onMounted(() => {
       padding-bottom: 2px;
       min-width: 130px;
       width: 100%;
-      height: 28px;
+      height: 35px;
       padding-left: 12px;
       padding-right: 8px;
 
       font-size: 14px;
-      color: rgba(255, 255, 255, 0.7);
+      color: #fff;
       font-weight: bold;
+      border: 1px solid #2C323B;
 
       &:active {
         filter: brightness(0.75);
@@ -522,14 +525,13 @@ onMounted(() => {
   .profile-wrapper-extra {
     display: flex;
     align-items: center;
-    padding-top: 10px;
-    margin-bottom: auto;
     width: 100%;
   }
 
   .logo-img {
     width: 100%;
     margin: 0 auto;
+    display: flex;
 
     img {
       max-width: 100px;
@@ -547,14 +549,14 @@ onMounted(() => {
   position: relative;
   margin-left: 20px;
   margin-bottom: 5px;
-  margin-top: -10px;
+  margin-top: -15px;
 
   img {
     display: block;
-    width: 100px;
+    width: 60px;
     position: absolute;
-    top: -17px;
-    left: -45px;
+    top: -2px;
+    left: -25px;
   }
 
   .vip-level {
@@ -567,7 +569,7 @@ onMounted(() => {
     padding-top: 3px;
     padding-bottom: 4px;
     z-index: 3;
-    color: #334ad6;
+    color: #00AE00;
     font-weight: 700;
     font-style: italic;
   }
@@ -581,12 +583,14 @@ onMounted(() => {
 
 .btn-refresh {
   position: absolute;
-  top: 0;
-  right: 10px;
+  right: 0px;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .style-blue-btn {
   background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+  background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
   border-radius: 5px;
 }
 
@@ -609,7 +613,7 @@ onMounted(() => {
 }
 
 .message-amt {
-  background-color: #8952ff;
+  background-color: #00AE00;
   border-radius: 30px;
   width: 20px;
   height: 20px;
@@ -635,7 +639,7 @@ onMounted(() => {
 }
 
 .q-item__label {
-  color: #c5c7ff;
+  // color: #c5c7ff;
   font-weight: 500;
 }
 

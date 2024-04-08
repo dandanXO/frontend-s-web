@@ -123,6 +123,12 @@
       </div>
     </div>
     <el-dialog class="bankModal" width="500" v-model="bankCardModalState.visible" :footer="null" :title="$t('withdraw.bindCard')">
+      <div type="warning" class="account-tip-warning">
+        <ul>
+          <li>{{ $t('personal.bankCardReminder1') }}</li>
+          <li>{{ $t('personal.bankCardReminder2') }}</li>
+        </ul>
+      </div>
       <el-form ref="bankCardFormRef" :model="bankCardInfo" :rules="bankCardRules">
         <el-form-item prop="bankId" :rules="[{ required: true, message: $t('placeholder.selectBank'), trigger: 'blur' }]">
           <el-row :gutter="20">
@@ -213,7 +219,7 @@
       :close-on-click-modal="false"
       @keydown.enter.prevent
     >
-      <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="100" label-suffix=":">
+      <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="160" label-suffix=":">
         <el-form-item tabindex="3" :label="$t('personal.captcha')" prop="captchaCode" :rules="[{ required: true, message: $t('placeholder.captchareq'), trigger: 'blur' }]" >
           <el-row :gutter="10" style="justify-content: center; align-items: center">
             <el-col :span="12">
@@ -233,7 +239,7 @@
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted } from "vue";
+import { defineComponent, reactive, ref, watch, onMounted } from "vue";
 import { getVerificationCode } from "@/api/index/login";
 // import { Modal, message } from "ant-design-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -254,7 +260,9 @@ import { sendSessionSms } from "@/api/personal/personal";
 import { InfoFilled } from "@element-plus/icons-vue";
 import moment from "moment";
 import { useI18n } from "vue-i18n";
+import { i18nStore } from '@/store/language'
 import emptyData from "@/components/emptyData.vue";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
   name: "WithdrawBankView",
@@ -269,7 +277,7 @@ export default defineComponent({
         if (v === "") {
           return Promise.reject(t('withdraw.inputAccNumber'));
         } else if (/^\d+$/.test(v) === false) {
-          return Promise.reject(t('withdraw.onlyNumber'));
+          return Promise.reject(t('placeholder.onlyNumber'));
         } else {
           return Promise.resolve();
         }
@@ -285,8 +293,6 @@ export default defineComponent({
       return Promise.resolve();
     };
     let validateBankLength = async (r, v) => {
-      var min = 6;
-      var max = 12;
       if (selectedBankType.value === "Bank") {
         var selectedBankCode = null;
         banksList.value.forEach(bank => {
@@ -295,22 +301,22 @@ export default defineComponent({
           }
         });
         if (selectedBankCode === "alipay") {
-          min = 11;
-          max = 20;
+          // min = 11;
+          // max = 20;
         } else {
           if (!/^\d+$/.test(v)) {
             return Promise.reject(t('withdraw.enterDigits'));
           }
-          min = 16;
-          max = 19;
         }
 
       } else if (selectedBankType.value === "Crypto") {
+        var min = null;
+        var max = null;
         min = 34;
         max = 36;
       } else if (selectedBankType.value === "e-Wallet") {
-        min = 34;
-        max = 34;
+        // min = 34;
+        // max = 34;
         var selectedCode = null;
         banksList.value.forEach(bank => {
           if (bank.id === bankCardInfo.bankId) {
@@ -318,14 +324,14 @@ export default defineComponent({
           }
         });
         if (selectedCode === "KDPAY") {
-          min = 34;
-          max = 34;
+          // min = 34;
+          // max = 34;
         } else if (selectedCode === "EBPAY") {
-          min = 34;
-          max = 34;
+          // min = 34;
+          // max = 34;
         } else if (selectedCode === "OKPAY") {
-          min = 16;
-          max = 16;
+          // min = 16;
+          // max = 16;
         }
       }
       if (v === "") {
@@ -362,7 +368,7 @@ export default defineComponent({
       size: 10
     });
     const router = useRouter();
-    const columns = [
+    const columns = ref([
       {
         title: t('withdraw.bank'),
         dataIndex: "bankName",
@@ -388,7 +394,7 @@ export default defineComponent({
         key: "unbindTime",
         dataIndex: "unbindTime"
       }
-    ];
+    ]);
     const maskCardNumber = (cardNumber) => {
       const maskedDigits = cardNumber.slice(0, -4).replace(/[a-zA-Z0-9]/g, "*");
       const lastFourDigits = cardNumber.slice(-4);
@@ -414,7 +420,7 @@ export default defineComponent({
     const searchRecord = () => {
       if(!searchForm.startDate || !searchForm.endDate){
         ElMessage({
-          message: t('common.startEndDate'),
+          message: t('withdraw.startEndDate'),
           type: "error"
         });
         return;
@@ -885,6 +891,38 @@ export default defineComponent({
         return t('withdraw.accountNo');
       }
     };
+    const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
+    watch(languageVal, () => {
+      
+      columns.value = [
+      {
+        title: t('withdraw.bank'),
+        dataIndex: "bankName",
+        key: "bankName"
+      },
+      {
+        title: t('withdraw.cardNumber'),
+        dataIndex: "cardNumber",
+        key: "cardNumber"
+      },
+      {
+        title: t('withdraw.cardAddress'),
+        dataIndex: "cardAddress",
+        key: "cardAddress"
+      },
+      {
+        title: t('withdraw.bindTime'),
+        key: "bindTime",
+        dataIndex: "bindTime"
+      },
+      {
+        title: t('withdraw.unbindTime'),
+        key: "unbindTime",
+        dataIndex: "unbindTime"
+      }
+    ];
+    })
     return {
       searchForm,
       columns,
@@ -1008,6 +1046,29 @@ body {
 
 .ant-space-item:nth-child(2) {
   flex: 4;
+}
+
+.account-tip-warning {
+  border: 1px solid #F8DD9A;
+  background: #FEF7E6; 
+  color: #FFC024;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  ul {
+    margin: 0;
+    padding: 0 0 0 21px;
+  }
+  svg {
+    height: 15px;
+    fill: #FFC024;
+    margin-right: 10px;
+  }
 }
 </style>
 
