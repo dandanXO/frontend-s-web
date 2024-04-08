@@ -57,7 +57,7 @@
             </el-select>
           </el-form-item>
           <el-form-item :label="t('fields.affiliateName')" prop="affiliateName">
-            <el-input v-model="form.affiliateName" style="width: 350px;" maxlength="11" />
+            <el-input v-model="form.affiliateName" style="width: 350px;" maxlength="13" />
           </el-form-item>
           <el-form-item :label="t('fields.way')" prop="way">
             <el-select
