@@ -204,7 +204,7 @@ export default {
     share_accumulated_recharge: "Accumulated recharge",
     share_persons: "Persons",
     share_invitefriends: "Invite friends",
-    share_table_header_01: "Transfer Wallet",
+    share_table_header_01: "Account Name",
     share_table_header_02: "Registration Time",
     share_table_header_03: "Start Betting",
     share_table_header_04: "Status",
@@ -1231,7 +1231,6 @@ export default {
     upload_success: "Upload Successfully.",
     upload_fail_please_try: "Upload failed. Please try again later.",
     upload_image: "Upload Image",
-
     esport: "Esport",
     livecasino: "Live",
     sport: "Sport",
@@ -1239,7 +1238,8 @@ export default {
     poker: "POKER",
     lottery: "Lottery",
     fishing: "Fishing",
-    cockfight: "Cockfight"
+    cockfight: "Cockfight",
+    copy_success: "Link successfully copied!"
   },
   error: {
     101: "Platform not found",
