@@ -19,7 +19,7 @@
         <template #empty>
           <EmptyData />
         </template>
-        <el-table-column prop="id" :label="$t('refer.accountId')" width="300" />
+        <el-table-column prop="loginName" :label="$t('refer.accountId')" width="300" />
         <el-table-column prop="regTime" :label="$t('refer.regTime')"  width="300" />
         <el-table-column prop="totalBet" :label="$t('refer.bet')"  width="250"   />
         <el-table-column prop="status" :label="$t('refer.status')" >
@@ -158,19 +158,6 @@ export default defineComponent({
     const dataSource = ref([])
     const getReferralList = () => {
       getVNMReferred().then((res) => {
-          res = {
-    "code": 0,
-    "data": [
-        {
-            "id": "1679738050175582210",
-            "loginName": "cygnus001",
-            "regTime": "2024-04-01 01:22:14",
-            "depositCount": 3,
-            "totalBet": 1000.0000,
-            "status": "CLAIMED" // PENDING 待领取, CLAIMED 已领取
-        }
-      ]
-        }
         if (res.code === 0) {
           dataSource.value = res.data
       }
