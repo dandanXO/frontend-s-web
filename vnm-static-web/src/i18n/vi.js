@@ -118,6 +118,7 @@ export default {
     bindEmailFirst: "Vui lòng gắn kết email của bạn trước",
     success: "Gửi thành công",
     sendPhoneVerificationSuccess: 'Gửi xác minh số điện thoại thành công',
+    bankCard: "Số thẻ"
   },
   "home": {
     "appDownload": "Tải ứng dụng",

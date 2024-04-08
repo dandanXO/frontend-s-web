@@ -119,6 +119,7 @@ export default {
     bindEmailFirst: 'Kindly bind your email first',
     success: 'Successful',
     sendPhoneVerificationSuccess: 'Phone verification sent successfully',
+    bankCard: "Account number"
   },
   home: {
     appDownload: 'APP Download',

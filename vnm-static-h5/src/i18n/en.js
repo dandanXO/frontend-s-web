@@ -1239,7 +1239,8 @@ export default {
     lottery: "Lottery",
     fishing: "Fishing",
     cockfight: "Cockfight",
-    copy_success: "Link successfully copied!"
+    copy_success: "Link successfully copied!",
+    enter_transfer_amount: "Enter Transfer Amount"
   },
   error: {
     101: "Platform not found",
