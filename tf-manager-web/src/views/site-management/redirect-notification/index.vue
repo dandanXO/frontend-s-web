@@ -284,6 +284,7 @@ const form = reactive({
   redirectUrlApp: null,
   redirectUrlH5: null,
   redirectUrlWeb: null,
+  lastPopUpTime: null,
 })
 
 const formRules = reactive({
@@ -376,7 +377,7 @@ function addPopUpTime() {
       ElMessage({ message: t('message.timeExist'), type: 'error' });
     } else {
       popUpTimeList.push(formatPopUpTime(popUpTime.value));
-      form.popUpTimes = JSON.stringify(popUpTimeList);
+      form.popUpTimes = JSON.stringify(popUpTimeList.sort());
     }
     popUpTime.value = null;
     uiControl.popUpTimePickerVisible = false;
@@ -476,6 +477,7 @@ async function removeSetting(setting) {
 }
 
 function submit() {
+  form.lastPopUpTime = form.popUpTimes ? JSON.parse(form.popUpTimes).sort().reverse()[0] : null
   const formCopy = { ...form }
   formCopy.eligibleWays = JSON.stringify(formCopy.eligibleWays)
   if (uiControl.dialogType === 'CREATE') {
