@@ -1585,6 +1585,12 @@ export default {
     summonBonus: '唤醒彩金',
     depositBonus: '存款彩金',
     depositDayCount: '存款天数',
+    redirectUrlApp: 'APP跳转链接',
+    redirectUrlWeb: 'Web跳转链接',
+    redirectUrlH5: 'H5跳转链接',
+    popUpTime: '弹窗时间',
+    notificationType: '通知类型',
+    notificationContent: '通知内容',
   },
   message: {
     addRemarkSuccess: '新增备注成功',
@@ -1975,7 +1981,9 @@ export default {
     validateCompetitionTimeRequired: '赛事时间必填',
     validateKeyQuantityRequired: '钥匙数量必填',
     validateMonthRequired: '年/月必填',
+    validateTimeRequired: '时间必填',
     syncMemberDetailSuccess: '同步会员信息成功',
+    timeExist: '时间已存在',
   },
   menu: {
     undefined: '',
@@ -2187,6 +2195,7 @@ export default {
     Utils: '工具',
     'Ip Location': 'Ip查询',
     'Member Summon Reward Record': '精英召唤活动记录',
+    'Redirect Notification': '页面跳转通知',
   },
   google: {
     google_auth_menu: '谷歌验证',
