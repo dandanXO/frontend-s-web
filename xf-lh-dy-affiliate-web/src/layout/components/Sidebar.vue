@@ -96,7 +96,7 @@ const mainNavigationData = [
   'Referral Link',
   'contactUs',
   'Daily Detail',
-  'Daily Summary'
+  'Daily Summary',
 ]
 const isExpanded = ref(true)
 const store = useStore()
@@ -201,7 +201,7 @@ const getNavigationData = () => {
             icon: 'report',
           },
         ],
-      }
+      },
     ]
   } else {
     navigationData.value = [
@@ -266,10 +266,18 @@ const getNavigationData = () => {
             isMainNav: true,
             icon: 'money-bag',
           },
+          // {
+          //   path: '/withdraw-request',
+          //   title: t('menu.Bank Withdrawal'),
+          //   label: 'Bank Withdrawal',
+          //   active: false,
+          //   isMainNav: true,
+          //   icon: 'form-w-pencil',
+          // },
           {
-            path: '/withdraw-request',
-            title: t('menu.Bank Withdrawal'),
-            label: 'Bank Withdrawal',
+            path: '/withdraw',
+            title: t('fields.withdrawRecord'),
+            label: 'withdrawRecord',
             active: false,
             isMainNav: true,
             icon: 'form-w-pencil',
