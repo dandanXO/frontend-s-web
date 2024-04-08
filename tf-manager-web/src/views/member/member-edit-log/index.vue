@@ -338,6 +338,7 @@ import moment from 'moment'
 import {
   createMemberEditLog,
   getMemberEditLogList,
+  getMemberEditLogSensitiveList,
   preCheckForCreate,
   check,
   fail,
@@ -506,9 +507,15 @@ async function loadMemberEditLog() {
     query.createTime[1] = formatInputTimeZone(query.createTime[1], timeZone, 'end');
     query.createTime = query.createTime.join(',')
   }
-  const { data: ret } = await getMemberEditLogList(query)
-  page.pages = ret.pages
-  page.records = ret.records
+  if (hasPermission(['sys:member:editlog:check'])) {
+    const { data: ret } = await getMemberEditLogList(query)
+    page.pages = ret.pages
+    page.records = ret.records
+  } else {
+    const { data: ret } = await getMemberEditLogSensitiveList(query)
+    page.pages = ret.pages
+    page.records = ret.records
+  }
 }
 
 async function loadSites() {
