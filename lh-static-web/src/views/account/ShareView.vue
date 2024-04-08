@@ -6,7 +6,7 @@
       <div class="label label-grad">推广分享</div>
     </div>
     <p style="margin:1em 0px;">
-      您通过推广链接邀请的用户注册并存款，您将获得最高累计2,000元的奖励。<router-link to="/promotion?name=dy2-summon-event">活动详情</router-link>
+      您通过推广链接邀请的用户注册并存款，您将获得最高累计<span class="number">2,000</span>元的奖励。<router-link to="/promotion?name=dy2-summon-event">活动详情</router-link>
     </p>
 
 
@@ -61,7 +61,7 @@
     </div>
     <p style="margin:1em 0px;">
       您通过唤醒链接邀请的用户注册并存款，您将获
-得最高累计2,000元的奖励。<router-link to="/promotion?name=dy2-summon-event">活动详情</router-link>
+得最高累计<span class="number">2,000</span>元的奖励。<router-link to="/promotion?name=dy2-summon-event">活动详情</router-link>
     </p>
   </div>
     <hr class="divider-style" />
@@ -189,7 +189,7 @@ export default defineComponent({
     onMounted(() => {
       getReferral()
       getInviteCount()
-      getSummonCount()
+      // getSummonCount()
     })
     return {
       searchForm,
@@ -225,6 +225,16 @@ export default defineComponent({
         padding: 0 10px;
         p {
           width: 60%;
+          .number {
+            color: #4C88F8;
+            font-family: Microsoft YaHei;
+font-size: 16px;
+font-weight: 700;
+line-height: 21.12px;
+letter-spacing: 0.07em;
+text-align: left;
+
+          }
         }
       }
     &.left {
@@ -258,7 +268,7 @@ export default defineComponent({
       .label {
         color: #ffffff;
         &.qrtitle {
-          text-shadow: 0px 1.83px 7.59px 0px #00000040;
+          text-shadow: 2px 2px 10px #000000;
           font-size: 30px;
         }
       }
