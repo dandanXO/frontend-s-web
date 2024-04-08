@@ -1242,7 +1242,8 @@ export default {
     lottery: "Lottery",
     fishing: "Fishing",
     cockfight: "Cockfight",
-    copy_success: "Liên kết đã được sao chép thành công!"
+    copy_success: "Liên kết đã được sao chép thành công!",
+    enter_transfer_amount: "Nhập số tiền chuyển"
   },
   error: {
     101: "Không tìm thấy nền tảng",

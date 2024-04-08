@@ -295,7 +295,7 @@ $node-color: #468cff;
       .node-text {
         display: flex;
         gap: 5px;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         & > div {
           font-size: 12px;

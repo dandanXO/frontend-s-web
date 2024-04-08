@@ -163,11 +163,11 @@
             hide-bottom-space
             ref="amountRef"
             v-model="transferInfo.amount"
-            placeholder="输入转账金额"
+            :placeholder="$t('lang.enter_transfer_amount')"
             clearable
             class="transfer-amt-input"
             color="white"
-            :rules="[(val) => !!val || '请输入转账金额']"
+            :rules="[(val) => !!val || $t('lang.enter_transfer_amount')]"
             @click="clearInput"
           >
             <template v-slot:prepend>
