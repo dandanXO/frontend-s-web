@@ -247,7 +247,7 @@ const copyMessage = (position) => {
 const blurCode = () => {
   const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
   copybtntxt.forEach(element => {
-    element.value = "复制";
+    element.value = t('account.str_copy');
   });
 };
 const form = reactive({
@@ -596,7 +596,7 @@ async function verifyBank(r, v) {
       if (d) {
         return Promise.resolve();
       } else {
-        return Promise.reject("请输入银行");
+        return Promise.reject(t('account.please_select_bank'));
       }
     });
   }

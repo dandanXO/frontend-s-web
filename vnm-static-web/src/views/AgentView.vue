@@ -11,9 +11,9 @@
         <img src="../assets/images/affiliate/official-partner.png" height="55">
       </div>
       <div class="buttons">
-        <a :href="'https://vnm-affiliate.th80to83w1.com?agent=' + (affCode ? affCode : '')">{{ $t('affiliate.joinus') }}</a>
-        <a class="outline" :href="'https://vnm-affiliate.th80to83w1.com?agent=' + (affCode ? affCode : '')">{{ $t('affiliate.login') }}</a>
-        <a class="outline" @click.stop.prevent="store.openLiveChat()">
+        <a :href="affiliateUrl + 'vi/login?agent=' + (affCode ? affCode : '')">{{ $t('affiliate.joinus') }}</a>
+        <a class="outline" :href="affiliateUrl + 'vi/login?agent=' + (affCode ? affCode : '')">{{ $t('affiliate.login') }}</a>
+        <a class="outline" :href="affiliateUrl + 'vi/login?view=2&agent=' + (affCode ? affCode : '')" target="_blank">
           {{ $t('affiliate.contactus') }}
         </a>
       </div>
@@ -29,7 +29,7 @@
             <ul>
               <li>{{ $t('affiliate.afftnc1') }}</li>
               <li>{{ $t('affiliate.afftnc2') }}
-                <ul>
+                <ul v-if="languageVal === 'en'">
                   <li>{{ $t('affiliate.afftnc2-1') }}</li>
                   <li>{{ $t('affiliate.afftnc2-2') }}</li>
                   <li>{{ $t('affiliate.afftnc2-3') }}</li>
@@ -39,10 +39,16 @@
               <li>{{ $t('affiliate.afftnc4') }}</li>
               <li>{{ $t('affiliate.afftnc5') }}</li>
               <li>{{ $t('affiliate.afftnc6') }}</li>
-              <li>{{ $t('affiliate.afftnc7') }}</li>
-              <li>{{ $t('affiliate.afftnc8') }}</li>
-              <li>{{ $t('affiliate.afftnc9') }}</li>
-              <li>{{ $t('affiliate.afftnc10') }}</li>
+              <li>{{ $t('affiliate.afftnc7') }}
+                <ul v-if="languageVal === 'vi'">
+                  <li>{{ $t('affiliate.afftnc2-1') }}</li>
+                  <li>{{ $t('affiliate.afftnc2-2') }}</li>
+                  <li>{{ $t('affiliate.afftnc2-3') }}</li>
+                </ul>
+              </li>
+              <li v-if="languageVal === 'en'">{{ $t('affiliate.afftnc8') }}</li>
+              <li v-if="languageVal === 'en'">{{ $t('affiliate.afftnc9') }}</li>
+              <li v-if="languageVal === 'en'">{{ $t('affiliate.afftnc10') }}</li>
             </ul>
           </div>
           <div class="affiliate-sub sm">
@@ -208,9 +214,13 @@
           </ul>
         </div></div>
       <div>
-        <a :href="'https://vnm-affiliate.th80to83w1.com?agent=' +
+        <a :href="affiliateUrl + 'vi/login?agent=' +
           (affCode ? affCode : '')
           " class="agent-reg-btn">{{ $t('affiliate.applyAgentNow') }}</a>
+
+        <a style="text-align: center; width:100%;margin:16px auto 0px;display:block;" class="outline" :href="affiliateUrl + 'vi/login?view=2&agent=' + (affCode ? affCode : '')" target="_blank">
+          {{ $t('affiliate.contactus') }}
+        </a>
       </div>
     </div>
     </div>
@@ -218,8 +228,7 @@
 </template>
 <script>
 import { i18nStore } from '@/store/language'
-import { defineComponent } from "vue";
-// import { useI18n } from "vue-i18n";
+import { defineComponent, ref } from "vue";
 import { userStore } from "@/store";
 import { getDevice } from "@/utils/utils";
 
@@ -229,7 +238,8 @@ export default defineComponent({
   setup() {
     const i18nStoreLanguage = i18nStore()
     const { languageVal } = storeToRefs(i18nStoreLanguage)
-    // const { t } = useI18n();
+    const affiliateUrl = ref("https://vnm-affiliate.th80to83w1.com/");
+
     const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
       var left = (screen.width - popupWinWidth) * 2;
       var top = (screen.height - popupWinHeight) / 4;
@@ -293,7 +303,9 @@ export default defineComponent({
       affCode,
       regDevice,
       store,
-      openWindow,languageVal
+      openWindow,
+      languageVal,
+      affiliateUrl
     };
   },
 });
@@ -309,7 +321,7 @@ export default defineComponent({
     background-position: top center;
     background-size: 100%;
     margin: 0 auto;
-    padding: 100px 20px 160px;
+    padding: 100px 20px 60px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
