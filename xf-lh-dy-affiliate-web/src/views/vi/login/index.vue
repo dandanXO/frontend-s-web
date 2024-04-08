@@ -8,13 +8,14 @@
     :mousewheel="true"
     :autoHeight="true"
     @swiper="onSwiper"
+    id="login-swiper"
   >
     <SwiperSlide>
       <LoginRegisterPage siteId="8" />
     </SwiperSlide>
-    <!--    <SwiperSlide>-->
-    <!--      <CustomerServicePage siteId="8" />-->
-    <!--    </SwiperSlide>-->
+    <SwiperSlide>
+      <CustomerServicePage siteId="8" />
+    </SwiperSlide>
     <!--    <SwiperSlide>-->
     <!--      <SupportPage />-->
     <!--    </SwiperSlide>-->
@@ -25,7 +26,7 @@
   </Swiper>
   <div v-if="isMobileView">
     <LoginRegisterPage siteId="8" />
-    <!--    <CustomerServicePage siteId="8" />-->
+    <CustomerServicePage siteId="8" />
     <!--    <SupportPage />-->
   </div>
 </template>
@@ -41,7 +42,7 @@ import SwiperCore, {
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/swiper-bundle.css'
-// import CustomerServicePage from '@/components/customer-service'
+import CustomerServicePage from '@/components/customer-service'
 import LoginRegisterPage from '@/components/login-register'
 // import SupportPage from '@/components/support-page'
 import { useRoute } from 'vue-router'
@@ -56,6 +57,7 @@ export default defineComponent({
     Mousewheel,
     Scrollbar,
     LoginRegisterPage,
+    CustomerServicePage
   },
   setup() {
     const route = useRoute()
