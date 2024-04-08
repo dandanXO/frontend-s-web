@@ -117,6 +117,21 @@
           />
         </el-select>
 
+        <el-select
+          v-model="request.source"
+          size="small"
+          :placeholder="t('fields.sourceType')"
+          class="filter-item"
+          style="width: 200px; margin-left: 5px"
+        >
+          <el-option
+            v-for="item in source.list"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+
         <el-input
           v-model="request.reviewBy"
           size="small"
@@ -531,6 +546,15 @@ const profitList = reactive({
   ],
 })
 
+const source = reactive({
+  list: [
+    { label: t('fields.allSource'), value: '1' },
+    { label: 'DIRECT', value: 'DIRECT' },
+    { label: 'REFER', value: 'REFER' },
+    { label: 'AFFILIATE', value: 'AFFILIATE' }
+  ],
+})
+
 const page = reactive({
   pages: 0,
   records: [],
@@ -563,6 +587,7 @@ const request = reactive({
   min: null,
   max: null,
   reviewBy: null,
+  source: null,
 })
 
 const uiControl = reactive({
@@ -606,6 +631,7 @@ function resetQuery() {
   request.financialLevel = financialLevelList.list[0].id
   request.profit = profitList.list[0].value
   request.reviewStatus = reviewStatusList.list[0].value
+  request.source = source.list[0].value
   request.min = ''
   request.max = ''
   request.reviewBy = ''
@@ -801,6 +827,7 @@ onMounted(async () => {
   request.sort = sortList.list[0].value
   request.profit = profitList.list[0].value
   request.reviewStatus = reviewStatusList.list[0].value
+  request.source = source.list[0].value
   loadVipList()
   loadFinancialLevelList()
   await loadMemberRecord()
