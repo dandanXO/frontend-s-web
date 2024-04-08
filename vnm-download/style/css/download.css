@@ -2,7 +2,7 @@
     width: 100%;
     height: auto;
     display: none;
-    background: url(../images/bg.png) top center no-repeat;
+    background: url("../images/bg.png") top center no-repeat;
     background-size: 100% auto;
     overflow: hidden;
     font-family: "微软雅黑";
@@ -75,7 +75,7 @@ a.logo img{
     height: 0.18rem;
     margin: 0 auto;
     margin-top: 0.18rem;
-    background: url(../images/down.png) no-repeat;
+    background: url("../images/down.png") no-repeat;
     background-size: 100%;
 }
 .torial {
