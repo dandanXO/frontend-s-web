@@ -101,6 +101,7 @@ export default {
     copiedQQShortUrl: 'Succesffully Copied QQ Anti Block Url',
     copiedLink: 'Copied Successfully',
     downloadQRCode: 'Download QR Code',
+    affiliateShortLink: 'Short Domain',
   },
   commissionInfo: {
     commissionInfo: 'Commission Info',

@@ -101,6 +101,7 @@ export default {
     copiedQQShortUrl: '已帮您复制QQ防封短链',
     copiedLink: '复制成功',
     downloadQRCode: '下载二维码',
+    affiliateShortLink: '短域名',
   },
   commissionInfo: {
     commissionInfo: '佣金说明',
