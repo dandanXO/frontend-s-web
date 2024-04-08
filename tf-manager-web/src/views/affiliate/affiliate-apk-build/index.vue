@@ -232,10 +232,11 @@
           </div>
           <div v-else>
             <el-input
-              v-model="form.extraParams"
+              v-model="form.jsonParams"
               style="width: 350px"
               autosize="true"
               type="textarea"
+              :rows="15"
             />
           </div>
         </el-form-item>
@@ -301,6 +302,7 @@ const request = reactive({
 const form = reactive({
   id: null,
   extraParams: null,
+  jsonParams: null,
 })
 
 function resetQuery() {
@@ -339,7 +341,6 @@ function changePage(page) {
 }
 
 function showDialog(item) {
-  uiControl.dialogVisible = true
   form.id = item.id
   param.value = []
   if (item.extraParams) {
@@ -351,6 +352,12 @@ function showDialog(item) {
     })
   }
   addParam()
+  form.jsonParams = item.extraParams === null ? "{}" : JSON.stringify(
+    JSON.parse(item.extraParams),
+    undefined,
+    2
+  )
+  uiControl.dialogVisible = true
 }
 
 function addParam() {
@@ -369,7 +376,7 @@ async function submit() {
     form.extraParams = constructParam()
   } else {
     form.extraParams = JSON.stringify(
-      JSON.parse(form.extraParams)
+      JSON.parse(form.jsonParams)
     )
   }
   await editParam(form.id, form.extraParams)

@@ -1580,6 +1580,12 @@ export default {
     summonBonus: 'Summon Bonus',
     depositBonus: 'Deposit Bonus',
     depositDayCount: 'Day Count',
+    redirectUrlApp: 'Redirect URL APP',
+    redirectUrlWeb: 'Redirect URL Web',
+    redirectUrlH5: 'Redirect URL H5',
+    popUpTime: 'Pop Up Time',
+    notificationType: 'Notification Type',
+    notificationContent: 'Notification Content',
   },
   message: {
     addRemarkSuccess: 'Add Remark Success',
@@ -2006,7 +2012,9 @@ export default {
     validateCompetitionTimeRequired: 'Competition Time is required',
     validateKeyQuantityRequired: 'Key quantity is required',
     validateMonthRequired: 'Year/Month is required',
+    validateTimeRequired: 'Time is required',
     syncMemberDetailSuccess: 'Sync Member Detail Success',
+    timeExist: 'Time already exists',
   },
   menu: {
     undefined: '',
@@ -2218,6 +2226,7 @@ export default {
     Utils: 'Utils',
     'Ip Location': 'Ip Location',
     'Member Summon Reward Record': 'Member Summon Reward Record',
+    'Redirect Notification': 'Redirect Notification',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
