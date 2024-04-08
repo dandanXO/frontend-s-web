@@ -1547,6 +1547,7 @@ export default {
     configValue: '设置值',
     s3Url: 'S3地址',
     allSites: '全部站点',
+    allSource: '全部来源类型',
     rank: '等级',
     processResult: '结算结果',
     winner: '贏家',

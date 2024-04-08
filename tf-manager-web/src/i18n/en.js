@@ -1540,6 +1540,7 @@ export default {
     configValue: 'Config Value',
     s3Url: 'S3 URL',
     allSites: 'All Sites',
+    allSource: 'All Source Type',
     rank: 'Rank',
     processResult: 'Process Result',
     winner: 'Winner',

@@ -862,7 +862,7 @@ function createSetting() {
       settingForm.siteId = request.siteId
       for (let i = 1; i <= 3; i++) {
         const propertyName = `privilegeId${i}`;
-        if (settingForm[propertyName] === "") {
+        if (settingForm[propertyName] === "" || settingForm[propertyName] === null) {
           settingForm[propertyName] = 0;
         }
       }
