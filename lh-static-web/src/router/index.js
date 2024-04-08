@@ -144,6 +144,11 @@ const routes = [
         path: "/affiliate",
         name: "affiliate",
         component: () => import(/* webpackChunkName: "affiliate" */ "../views/AgentView.vue")
+      },
+      {
+        path: "/app-tutorial",
+        name: "appTutorial",
+        component: () => import(/* webpackChunkName: "appTutorial" */ "../views/AppTutorial.vue")
       }
     ]
   },
