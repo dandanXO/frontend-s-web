@@ -9,7 +9,7 @@
       </div>
 
       <div class="shadow-box-info">
-        <table border="0" cellpadding="10" cellspacing="0">
+        <table border="0" cellpadding="10" cellspacing="0" style="width:100%;">
           <tr class="box-header-row">
             <td v-html="$t('lang.share_table_header_01')" />
             <td v-html="$t('lang.share_table_header_02')" />
@@ -113,7 +113,7 @@ export default defineComponent({
         $q.notify({
           color: "positive",
           position: "top",
-          message: "复制成功！",
+          message: t('lang.link_success'),
           icon: "check_circle_outline"
         });
       }, 100)

@@ -57,6 +57,7 @@ export default {
     cockfight: 'Cockfight',
     deposit_should_between: "Deposit amount should between ",
     msg_deleted: "Message deleted",
+    please_select_bank: "Please select bank"
   },
   login: {
     username: 'Username',
