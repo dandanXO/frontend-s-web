@@ -55,7 +55,7 @@
 
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
-      <el-form-item :label="$t('personnal.confirmPwd')" prop="confirmPwd">
+      <el-form-item :label="$t('personal.confirmPwd')" prop="confirmPwd">
         <el-input
           class="half wTip"
           v-model="forgotPwdPostVerifyForm.confirmPwd"
