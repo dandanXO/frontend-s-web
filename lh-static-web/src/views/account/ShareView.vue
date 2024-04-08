@@ -189,7 +189,7 @@ export default defineComponent({
     onMounted(() => {
       getReferral()
       getInviteCount()
-      // getSummonCount()
+      getSummonCount()
     })
     return {
       searchForm,

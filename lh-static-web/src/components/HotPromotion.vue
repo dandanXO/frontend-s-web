@@ -53,6 +53,7 @@
     ></LhStepGamePromo>
 
     <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel' && !isCommonPromo && store.token" />
+    <Summoner v-if="list.redirectUrl === 'dy2-summon-event' && !isCommonPromo && store.token" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -100,6 +101,7 @@ import CnyStepGame2024Promo from "../components/hotpromo/cnystepgame2024/CnyStep
 import LhStepGamePromo from "../components/hotpromo/lhstepgame/LhStepGamePromo.vue";
 import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
 import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
+import Summoner from "../components/hotpromo/summoner/Summoner.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -138,7 +140,8 @@ export default defineComponent({
     DragonCardPromo,
     CS2Sign,
     BonusSpinWheel,
-    LhStepGamePromo
+    LhStepGamePromo,
+    Summoner
     // DailyBonus
   },
   props: {
@@ -409,7 +412,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-upgrade-hongbao" ||
       this.list.redirectUrl === "lh-cs2-copenhagen-major-2024" ||
       this.list.redirectUrl === "lh1-spin-wheel" ||
-      this.list.redirectUrl === "lh1-game-steps"
+      this.list.redirectUrl === "lh1-game-steps" ||
+      this.list.redirectUrl === "dy2-summon-event"
     ) {
       this.isCommonPromo = false;
     } else {
