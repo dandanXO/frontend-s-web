@@ -119,6 +119,11 @@ const routes = [
         component: () => {}
       },
       {
+        path: "/summon/:summonCode",
+        name: "summonCode",
+        component: () => {}
+      },
+      {
         path: "/privilege/invite",
         name: "invite",
         component: () => import("../views/PrivilegeInvite.vue")
@@ -182,6 +187,10 @@ router.beforeEach((to, from, next) => {
   if (to.name === "referCode") {
     sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
     next(`/register?refer=1`);
+  }
+  if (to.name === "summonCode") {
+    sessionStorage.setItem("SUMMON_CODE", to.params.summonCode);
+    next(`/login?summon=1`);
   }
 
   if (store.token) {

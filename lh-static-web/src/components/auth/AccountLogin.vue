@@ -125,7 +125,8 @@ const submitLogin = () => {
             password: loginForm.password,
             sid: sidParam,
             captchaCode: loginForm.captchaCode,
-            codeId: loginForm.codeId
+            codeId: loginForm.codeId,
+            summoner: loginForm.summoner
           })
           .then(() => {
             const jumpUrl = route.query.redirect ? route.query.redirect.toString() : props.pageType === 'view' ? '/' : route.path;
@@ -133,6 +134,7 @@ const submitLogin = () => {
               router.push(jumpUrl);
 
               sessionStorage.removeItem("REFERRAL_CODE");
+              sessionStorage.removeItem("SUMMON_CODE");
               loginForm.loginName = null;
               loginForm.password = null;
               loginForm.captchaCode = null;
@@ -183,8 +185,16 @@ const openForgotpwdDialog = () => {
   emits("open-forgotpwd-dialog");
 };
 
+const getSummonCode = () => {
+  const summonCode = sessionStorage.getItem("SUMMON_CODE");
+// && route.query && route.query.refer
+  if (summonCode) {
+    loginForm.summoner = summonCode;
+  }
+};
 onMounted(() => {
   getCode();
+  getSummonCode();
 });
 </script>
 
