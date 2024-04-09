@@ -866,7 +866,7 @@ export default defineComponent({
       handleLogin: () => {
         loginFormRef.value.validate(async valid => {
           if (valid) {
-            if (state.loginForm.site === 'IND' || state.loginForm.site === 'VNM') {
+            if (state.loginForm.site === 'IND') {
               methods.userLogin()
             } else {
               methods.onGetImage()
@@ -1026,7 +1026,8 @@ export default defineComponent({
       onGetImage: async () => {
         state.dialogLoading = true
         state.coordinates.splice(0)
-        const { data } = await getVerificationImage()
+        const imgType = (languageVal === 'vi' || languageVal === 'en') ? 1 : 0;
+        const { data } = await getVerificationImage(imgType)
         Object.keys({ ...data.data }).forEach(field => {
           state[field] = data.data[field]
         })
@@ -1142,7 +1143,7 @@ export default defineComponent({
 
     const currentSite = ref({})
     const i18nStoreLanguage = i18nStore()
-    const { setLanguage } = i18nStoreLanguage
+    const { setLanguage, languageVal } = i18nStoreLanguage
     const populateCurrentSiteData = () => {
       if (props.siteId === '6') {
         currentSite.value.firstLiner = '从东赢开始'
