@@ -107,7 +107,6 @@ export default defineComponent({
     });
 
     const profileFormRef = ref();
-
     const store = userStore();
 
     const loadInfo = () => {
@@ -185,7 +184,7 @@ export default defineComponent({
         captchaCode: updateSecurityVerified.captchaCode,
         codeId: updateSecurityVerified.codeId
       };
-      api.post("/otp/sendEmail", qs.stringify(emailDetails)).then((ret) => {
+      api.post("/otp/sendNewEmail", qs.stringify(emailDetails)).then((ret) => {
         if (ret.code === 0) {
           $q.notify({
             color: "positive",
@@ -219,7 +218,9 @@ export default defineComponent({
       emailOtpRef.value.validate()
       if (emailOtpRef.value.hasError) {
       } else {
-        api.post("/otp/verifyEmail", qs.stringify({
+        var apiUrl= "session/verifyEmailForVNM";
+
+        api.post(apiUrl, qs.stringify({
           email: formDetail.email,
           code: formDetail.emailOtpRef,
           codeId: emailCodeId.value
@@ -264,19 +265,6 @@ export default defineComponent({
     const showVerifyBtn = ref(true);
     const showVerificationTokenInput = ref(false)
 
-
-    const isValidName = () => {
-      const namePattern =
-          /^([\u4e00-\u9fa5]*)$/;
-      return namePattern.test(formDetail.realName) || "请输入中文字符";
-    };
-
-    const isValidPhone = () => {
-      const reg = /^\d+$/;
-      const {phone} = formDetail;
-      const result = '' === phone ? '请验证您的电话号码' : !reg.test(phone) ? '电话号码只允许使用数字' : true;
-      return result
-    }
 
     const otpCountdownCount = ref(0);
     let otpCountdownSchedule;
@@ -370,10 +358,8 @@ export default defineComponent({
       birthdayRef,
       moment,
       canEdit,
-      isValidName,
       otpCountdownCount,
       showVerificationTokenInput,
-      isValidPhone,
       captchaRef,
       innerCaptchaRef,
       showCaptchaDialog,

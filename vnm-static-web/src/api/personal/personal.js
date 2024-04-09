@@ -1,4 +1,5 @@
 import { server } from "@/utils/request";
+import { userStore } from "@/store";
 
 export function loadBalance(platform) {
   return server.REST.get("/session/balance?v=" + new Date().getTime(), {
@@ -91,7 +92,7 @@ export function deleteBankCard(cardId) {
 }
 
 export function sendEmail(emailInfo) {
-  return server.REST.post("/otp/sendEmail", emailInfo);
+  return server.REST.post("/otp/sendNewEmail", emailInfo);
 }
 
 export function forgetWithdrawSendEmail(emailInfo) {
@@ -102,9 +103,6 @@ export function verifyOtpAndChangePassword(withdrawPwdInfo) {
   return server.REST.post("/session/verifyOtpAndChangePassword", withdrawPwdInfo);
 }
 
-export function verifyEmail(emailInfo) {
-  return server.REST.post("/otp/verifyEmail", emailInfo);
-}
 
 export function saveFinanceFeedback(reminderInfo) {
   return server.REST.post("/session/saveFinanceFeedback", reminderInfo);
@@ -119,7 +117,18 @@ export function sendSms(telephoneInfo) {
 export function sendSessionSms(telephoneInfo) {
   return server.REST.post("/session/sendSms", telephoneInfo);
 }
+
+export function verifyEmail(emailInfo) {
+
+  var apiUrl= "session/verifyEmailForVNM";
+
+  return server.REST.post(apiUrl, emailInfo);
+}
+
 export function verifySms(telephoneInfo) {
-  return server.REST.post("/otp/verifyPhone", telephoneInfo);
+
+  var apiUrl="session/verifyPhoneForVNM";
+
+  return server.REST.post(apiUrl, telephoneInfo);
 }
 

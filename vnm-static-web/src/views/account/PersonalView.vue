@@ -19,82 +19,82 @@
             <el-input style="width:650px;" type="password" v-model="updateFormDetails.mobileNo" :placeholder="$t('placeholder.mobileNo')" clearable show-password />
           </el-form-item>
         </el-form> -->
-        
-      <el-form ref="updateFormRef" :model="updateFormDetails">
-        <div class="personal-wrapper">
-          <div class="basic-info">
-            <div class="basic-info-table">
 
-              <div class="info-tbl-row">
-                <div class="info-tbl-col">
-                  <div class="tbl-row">
-                    <div class="basic-info-cell title">{{ $t('personal.realName') }}</div>
-                    <div v-if="personalState.memberInfo.realName" class="basic-info-cell contentwtxt">
-                      {{ personalState.memberInfo.realName }}
-                    </div>
+        <el-form ref="updateFormRef" :model="updateFormDetails">
+          <div class="personal-wrapper">
+            <div class="basic-info">
+              <div class="basic-info-table">
 
-                    <div v-else class="basic-info-cell content">
-                      <div class="datewsend" v-if="isEdit">
-                        <el-form-item
-                          name="realName"
-                          prop="realName"
-                          :rules="[
+                <div class="info-tbl-row">
+                  <div class="info-tbl-col">
+                    <div class="tbl-row">
+                      <div class="basic-info-cell title">{{ $t('personal.realName') }}</div>
+                      <div v-if="personalState.memberInfo.realName" class="basic-info-cell contentwtxt">
+                        {{ personalState.memberInfo.realName }}
+                      </div>
+
+                      <div v-else class="basic-info-cell content">
+                        <div class="datewsend" v-if="isEdit">
+                          <el-form-item
+                            name="realName"
+                            prop="realName"
+                            :rules="[
                             { required: true, message: $t('placeholder.realName') }
                           ]"
-                        >
-                          <el-input v-model="updateFormDetails.realName" :placeholder="$t('personal.realName')" />
-                        </el-form-item>
+                          >
+                            <el-input v-model="updateFormDetails.realName" :placeholder="$t('personal.realName')" />
+                          </el-form-item>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <div class="info-tbl-row">
-                <div class="info-tbl-col">
-                  <div class="tbl-row">
-                    <div class="basic-info-cell title">{{ $t('personal.birthday') }}</div>
-                    <div v-if="personalState.memberInfo.birthday" class="basic-info-cell contentwtxt">
-                      {{ personalState.memberInfo.birthday }}
-                    </div>
-
-                    <div v-else class="basic-info-cell content">    
-                      <div class="datewsend" v-if="isEdit">
-                        <el-form-item
-                          name="birthday"
-                          prop="birthday"
-                          :rules="[{ required: true, message: $t('placeholder.birthday') }]"
-                        >
-                          <el-date-picker
-                            style="max-width: 650px; width: 100%;"
-                            v-model="updateFormDetails.birthday"
-                            value-format="YYYY-MM-DD"
-                            :placeholder="$t('personal.birthday')"
-                          />
-                        </el-form-item>
+                <div class="info-tbl-row">
+                  <div class="info-tbl-col">
+                    <div class="tbl-row">
+                      <div class="basic-info-cell title">{{ $t('personal.birthday') }}</div>
+                      <div v-if="personalState.memberInfo.birthday" class="basic-info-cell contentwtxt">
+                        {{ personalState.memberInfo.birthday }}
                       </div>
-                                        
-                      <div class="basic-info-cell contentwtxt" style="min-height: 40px;" v-else></div>
+
+                      <div v-else class="basic-info-cell content">
+                        <div class="datewsend" v-if="isEdit">
+                          <el-form-item
+                            name="birthday"
+                            prop="birthday"
+                            :rules="[{ required: true, message: $t('placeholder.birthday') }]"
+                          >
+                            <el-date-picker
+                              style="max-width: 650px; width: 100%;"
+                              v-model="updateFormDetails.birthday"
+                              value-format="YYYY-MM-DD"
+                              :placeholder="$t('personal.birthday')"
+                            />
+                          </el-form-item>
+                        </div>
+
+                        <div class="basic-info-cell contentwtxt" style="min-height: 40px;" v-else></div>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="info-tbl-col">
-                  <div class="tbl-row">
-                    <div class="basic-info-cell title">{{ $t('personal.mobileNo') }}</div>
-                    <div class="basic-info-cell contentwtxt" style="display:flex;justify-content: space-between;align-items: center;">
-                      {{ personalState.memberInfo.telephone }}
+                  <div class="info-tbl-col">
+                    <div class="tbl-row">
+                      <div class="basic-info-cell title">{{ $t('personal.mobileNo') }}</div>
+                      <div class="basic-info-cell contentwtxt" style="display:flex;justify-content: space-between;align-items: center;">
+                        {{ personalState.memberInfo.telephone }}
 
-                      <button
-                        class="standard-button btn-color-blue sm-btn"
-                        v-if="!personalState.memberInfo.phoneVerified"
-                        type="button"
-                        @click="updatePhoneModal"
-                      >
-                        {{ $t('common.verify') }}
-                      </button>
-                    </div>
+                        <button
+                          class="standard-button btn-color-blue sm-btn"
+                          v-if="!personalState.memberInfo.phoneVerified"
+                          type="button"
+                          @click="updatePhoneModal"
+                        >
+                          {{ $t('common.verify') }}
+                        </button>
+                      </div>
 
-<!--                    <div v-else class="basic-info-cell contentwtxt">-->
+                      <!--                    <div v-else class="basic-info-cell contentwtxt">-->
                       <!-- <div class="datewsend" v-if="isEdit">
                     <el-form-item
                       name="phone"
@@ -110,58 +110,58 @@
                     </el-form-item>
                   </div> -->
 
-<!--                    </div>-->
+                      <!--                    </div>-->
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <!-- <div class="tbl-row">
-                <div class="basic-info-cell title">QQ：</div>
-                <div v-if="personalState.memberInfo.email" class="basic-info-cell content">
-                  {{ personalState.memberInfo.email }}
-                </div>
-                <div v-else class="basic-info-cell content">
-                  <!- <div class="datewsend" v-if="isEdit">
-                    <el-form-item
-                      name="email"
-                      prop="email"
-                      :rules="[
-                        { required: true, message: '请输入邮箱' },
-                        { type: 'email', message: '邮箱信息错误' },
-                      ]"
+                <!-- <div class="tbl-row">
+                  <div class="basic-info-cell title">QQ：</div>
+                  <div v-if="personalState.memberInfo.email" class="basic-info-cell content">
+                    {{ personalState.memberInfo.email }}
+                  </div>
+                  <div v-else class="basic-info-cell content">
+                    <!- <div class="datewsend" v-if="isEdit">
+                      <el-form-item
+                        name="email"
+                        prop="email"
+                        :rules="[
+                          { required: true, message: '请输入邮箱' },
+                          { type: 'email', message: '邮箱信息错误' },
+                        ]"
+                      >
+                        <el-input
+                          v-model="updateFormDetails.email"
+                          placeholder="邮箱"
+                        />
+                      </el-form-item>
+                    </div> ->
+                    <button
+                      class="standard-button btn-color-blue sm-btn"
+                      v-if="!personalState.memberInfo.emailVerified"
+                      type="button"
+                      @click="updateSecurityModal"
                     >
-                      <el-input
-                        v-model="updateFormDetails.email"
-                        placeholder="邮箱"
-                      />
-                    </el-form-item>
-                  </div> ->
-                  <button
-                    class="standard-button btn-color-blue sm-btn"
-                    v-if="!personalState.memberInfo.emailVerified"
-                    type="button"
-                    @click="updateSecurityModal"
-                  >
-                    验证
-                  </button>
-                </div>
-              </div> -->
+                      验证
+                    </button>
+                  </div>
+                </div> -->
 
-              <div class="tbl-row">
-                <div class="basic-info-cell title">{{$t('personal.email')}}</div>
-                <div class="basic-info-cell contentwtxt" style="display:flex;justify-content: space-between;align-items: center;">
-                  {{ personalState.memberInfo.email }}
+                <div class="tbl-row">
+                  <div class="basic-info-cell title">{{$t('personal.email')}}</div>
+                  <div class="basic-info-cell contentwtxt" style="display:flex;justify-content: space-between;align-items: center;">
+                    {{ personalState.memberInfo.email }}
 
-                  <button
-                    class="standard-button btn-color-blue sm-btn"
-                    v-if="!personalState.memberInfo.emailVerified"
-                    type="button"
-                    @click="updateSecurityModal"
-                  >
-                    {{ $t('common.verify') }}
-                  </button>
-                </div>
-<!--                <div v-else class="basic-info-cell contentwtxt">-->
+                    <button
+                      class="standard-button btn-color-blue sm-btn"
+                      v-if="!personalState.memberInfo.emailVerified"
+                      type="button"
+                      @click="updateSecurityModal"
+                    >
+                      {{ $t('common.verify') }}
+                    </button>
+                  </div>
+                  <!--                <div v-else class="basic-info-cell contentwtxt">-->
                   <!-- <div class="datewsend" v-if="isEdit">
                     <el-form-item
                       name="email"
@@ -177,116 +177,116 @@
                       />
                     </el-form-item>
                   </div> -->
-<!--                </div>-->
-              </div>
+                  <!--                </div>-->
+                </div>
 
-              <el-button
-                style="margin-top: 10px; border-radius: 2em;"
-                :loading="loadingBtn"
-                class="standard-button btn-color-blue"
-                v-if="isEdit"
-                @click="updateState"
-              >
-               {{ $t('common.submit')}}
-              </el-button>
+                <el-button
+                  style="margin-top: 10px; border-radius: 2em;"
+                  :loading="loadingBtn"
+                  class="standard-button btn-color-blue"
+                  v-if="isEdit"
+                  @click="updateState"
+                >
+                  {{ $t('common.submit')}}
+                </el-button>
 
-              <button
-                class="standard-button btn-color-blue"
-                v-if="
+                <button
+                  class="standard-button btn-color-blue"
+                  v-if="
                   !isEdit &&
                   (
                     !personalState.memberInfo.birthday)
                 "
-                @click="isEdit = !isEdit"
-              >
-                {{ $t('common.edit') }}
-              </button>
+                  @click="isEdit = !isEdit"
+                >
+                  {{ $t('common.edit') }}
+                </button>
+              </div>
             </div>
+            <!-- <div class="buttons">
+              <el-button size="large" class="common-btn light" @click="updatePwdModal">修改密码</el-button>
+            </div> -->
           </div>
-          <!-- <div class="buttons">
-            <el-button size="large" class="common-btn light" @click="updatePwdModal">修改密码</el-button>
-          </div> -->
-        </div>
-      </el-form>
+        </el-form>
       </el-tab-pane>
       <el-tab-pane :label="$t('personal.bank')" name="Bank"><WithdrawBank /></el-tab-pane>
       <el-tab-pane :label="$t('personal.chgPwd')" name="chgPwd">
         <div class="update-pwd-container">
 
-            <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">
-              <el-form-item ref="refOldPassword" :label="$t('personal.oldPwd')" name="oldPassword" prop="oldPassword">
-                <el-input type="password" v-model="updatePwdInfo.oldPassword" :placeholder="$t('placeholder.oldPwd')" clearable show-password />
-              </el-form-item>
+          <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">
+            <el-form-item ref="refOldPassword" :label="$t('personal.oldPwd')" name="oldPassword" prop="oldPassword">
+              <el-input type="password" v-model="updatePwdInfo.oldPassword" :placeholder="$t('placeholder.oldPwd')" clearable show-password />
+            </el-form-item>
 
-              <el-form-item ref="refPassword" :label="$t('personal.newPwd')" name="password" prop="password">
-                <el-input type="password" v-model="updatePwdInfo.password" :placeholder="$t('placeholder.newPwd')" clearable show-password />
-              </el-form-item>
-              <el-form-item ref="refConfirmPassword" :label="$t('personal.confirmPwd')" name="confirmPassword" prop="confirmPassword">
-                <el-input type="password" v-model="updatePwdInfo.confirmPassword" :placeholder="$t('placeholder.confirmPwd')" clearable show-password />
-              </el-form-item>
+            <el-form-item ref="refPassword" :label="$t('personal.newPwd')" name="password" prop="password">
+              <el-input type="password" v-model="updatePwdInfo.password" :placeholder="$t('placeholder.newPwd')" clearable show-password />
+            </el-form-item>
+            <el-form-item ref="refConfirmPassword" :label="$t('personal.confirmPwd')" name="confirmPassword" prop="confirmPassword">
+              <el-input type="password" v-model="updatePwdInfo.confirmPassword" :placeholder="$t('placeholder.confirmPwd')" clearable show-password />
+            </el-form-item>
+            <div class="txt-center btn-container">
+              <button
+                :loading="loadingPwBtn"
+                class="standard-button btn-color-white"
+                type="button"
+                @click="clearPwd"
+              >
+                {{ $t('personal.clear') }}
+              </button>
+
+              <button
+                :loading="loadingPwBtn"
+                class="standard-button btn-color-blue"
+                type="button"
+                @click="submitUpdatePwd"
+              >
+                {{ $t('personal.submit') }}
+              </button>
+            </div>
+          </el-form>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane :label="$t('personal.chgWithdrawPwd')" name="chgWithdrawPwd">
+        <div class="update-pwd-container">
+          <el-form ref="updateWithdrawPwdFormRef" :hideRequiredMark="true" :model="updateWithdrawPwdInfo" :rules="updateWithdrawPwdRules">
+            <el-form-item v-if="personalState.memberInfo.registeredWithdrawPassword && !receivedVerificationCode" ref="refWithdrawOldPassword" :label="$t('personal.oldWithdrawPwd')"  name="oldPassword" prop="oldPassword">
+              <el-input type="password" v-model="updateWithdrawPwdInfo.oldPassword" :placeholder="$t('placeholder.oldWithdrawPwd')" clearable show-password />
+            </el-form-item>
+
+            <el-form-item ref="refWithdrawPassword" :label="$t('personal.newWithdrawPwd')" name="password" prop="password">
+              <el-input type="password" v-model="updateWithdrawPwdInfo.password" :placeholder="$t('placeholder.newWithdrawPwd')" clearable show-password />
+            </el-form-item>
+            <el-form-item ref="refWithdrawConfirmPassword" :label="$t('personal.confirmWithdrawPwd')"  name="confirmPassword" prop="confirmPassword">
+              <el-input type="password" v-model="updateWithdrawPwdInfo.confirmPassword" :placeholder="$t('placeholder.confirmWithdrawPwd')" clearable show-password />
+            </el-form-item>
+            <el-form-item v-if="receivedVerificationCode" ref="refWithdrawVerificationCode" :label="$t('personal.verificationCode')"  name="code" prop="code">
+              <el-input v-model="updateWithdrawPwdInfo.code" :placeholder="$t('placeholder.verificationCode')" />
+            </el-form-item>
+
+            <div class="withdrawBottom">
               <div class="txt-center btn-container">
                 <button
-                  :loading="loadingPwBtn"
+                  :loading="loadingWdPwBtn"
                   class="standard-button btn-color-white"
                   type="button"
-                  @click="clearPwd"
+                  @click="clearWithdrawPwd"
                 >
                   {{ $t('personal.clear') }}
                 </button>
 
                 <button
-                  :loading="loadingPwBtn"
+                  :loading="loadingWdPwBtn"
                   class="standard-button btn-color-blue"
                   type="button"
-                  @click="submitUpdatePwd"
+                  @click="receivedVerificationCode ? codeChangeWithdrawPwd() : submitUpdateWithdrawPwd()"
                 >
                   {{ $t('personal.submit') }}
                 </button>
               </div>
-            </el-form>
-          </div>
-      </el-tab-pane>
-      <el-tab-pane :label="$t('personal.chgWithdrawPwd')" name="chgWithdrawPwd">
-        <div class="update-pwd-container">
-            <el-form ref="updateWithdrawPwdFormRef" :hideRequiredMark="true" :model="updateWithdrawPwdInfo" :rules="updateWithdrawPwdRules">
-              <el-form-item v-if="personalState.memberInfo.registeredWithdrawPassword && !receivedVerificationCode" ref="refWithdrawOldPassword" :label="$t('personal.oldWithdrawPwd')"  name="oldPassword" prop="oldPassword">
-                <el-input type="password" v-model="updateWithdrawPwdInfo.oldPassword" :placeholder="$t('placeholder.oldWithdrawPwd')" clearable show-password />
-              </el-form-item>
-
-              <el-form-item ref="refWithdrawPassword" :label="$t('personal.newWithdrawPwd')" name="password" prop="password">
-                <el-input type="password" v-model="updateWithdrawPwdInfo.password" :placeholder="$t('placeholder.newWithdrawPwd')" clearable show-password />
-              </el-form-item>
-              <el-form-item ref="refWithdrawConfirmPassword" :label="$t('personal.confirmWithdrawPwd')"  name="confirmPassword" prop="confirmPassword">
-                <el-input type="password" v-model="updateWithdrawPwdInfo.confirmPassword" :placeholder="$t('placeholder.confirmWithdrawPwd')" clearable show-password />
-              </el-form-item>
-              <el-form-item v-if="receivedVerificationCode" ref="refWithdrawVerificationCode" :label="$t('personal.verificationCode')"  name="code" prop="code">
-                <el-input v-model="updateWithdrawPwdInfo.code" :placeholder="$t('placeholder.verificationCode')" />
-              </el-form-item>
-              
-              <div class="withdrawBottom">
-                <div class="txt-center btn-container">
-                  <button
-                    :loading="loadingWdPwBtn"
-                    class="standard-button btn-color-white"
-                    type="button"
-                    @click="clearWithdrawPwd"
-                  >
-                    {{ $t('personal.clear') }}
-                  </button>
-
-                  <button
-                    :loading="loadingWdPwBtn"
-                    class="standard-button btn-color-blue"
-                    type="button"
-                    @click="receivedVerificationCode ? codeChangeWithdrawPwd() : submitUpdateWithdrawPwd()"
-                  >
-                    {{ $t('personal.submit') }}
-                  </button>
-                </div>
-                <div v-if="!receivedVerificationCode" class="link" @click="sendOTPEmail">{{ $t('personal.forgetWithdrawPassword') }}</div>
-              </div>
-            </el-form>
-          </div>
+              <div v-if="!receivedVerificationCode" class="link" @click="sendOTPEmail">{{ $t('personal.forgetWithdrawPassword') }}</div>
+            </div>
+          </el-form>
+        </div>
       </el-tab-pane>
     </el-tabs>
 
@@ -357,7 +357,7 @@
           </el-space>
         </el-form-item>
         <el-button :loading="loadingSecurityBtn" class="common-btn verification-btn" @click="submitUpdateSecurity">
-          
+
           {{ $t('common.submit') }}
         </el-button>
       </el-form>
@@ -483,136 +483,136 @@ import moment from "moment";
 import { lsGet, lsStore, lsRemove, getTimeout } from '@/utils/utils'
 import WithdrawBank from "@/components/account/WithdrawBank.vue";
 import { useI18n } from "vue-i18n";
-    const { t } = useI18n();
-    const selectedTab = ref('personal')
-    // Send Verification Code
-    const emailKey = `emailKey`
-    const phoneKey = `phoneKey`
-    const sendOtpDisabledKey = `sendOtpDisabled`
+const { t } = useI18n();
+const selectedTab = ref('personal')
+// Send Verification Code
+const emailKey = `emailKey`
+const phoneKey = `phoneKey`
+const sendOtpDisabledKey = `sendOtpDisabled`
 
-    const sendOtpDisabledTimeout = 60
-    const sendOtpDisabledTimeoutLeft = getTimeout(sendOtpDisabledKey)
+const sendOtpDisabledTimeout = 60
+const sendOtpDisabledTimeoutLeft = getTimeout(sendOtpDisabledKey)
 
-    let cachedEmail = lsGet(emailKey);
-    let cachedTelephone = lsGet(phoneKey);
-    let initialSendOtpDisabledTimeout = false
+let cachedEmail = lsGet(emailKey);
+let cachedTelephone = lsGet(phoneKey);
+let initialSendOtpDisabledTimeout = false
 
-    if (sendOtpDisabledTimeoutLeft) {
-      initialSendOtpDisabledTimeout = true
+if (sendOtpDisabledTimeoutLeft) {
+  initialSendOtpDisabledTimeout = true
+} else {
+  lsRemove(sendOtpDisabledKey)
+  lsRemove(emailKey)
+  lsRemove(phoneKey)
+
+  cachedEmail = '';
+  cachedTelephone = '';
+}
+
+const disableSendVerificationButton = ref(initialSendOtpDisabledTimeout);
+const disableSendPhoneButton = ref(initialSendOtpDisabledTimeout);
+const countDown = ref(sendOtpDisabledTimeoutLeft);
+const countDownPhone = ref(sendOtpDisabledTimeoutLeft);
+
+const loadingBtn = ref(false)
+const loadingPwBtn = ref(false)
+const loadingWdPwBtn = ref(false)
+const loadingSecurityBtn = ref(false)
+const loadingPhoneBtn = ref(false)
+const isEmailSending = ref(false)
+const isPhoneSending = ref(false)
+const verificationDetails = reactive({
+  memberInfo: {}
+});
+const verificationPhoneDetails = reactive({
+  memberInfo: {}
+});
+const personalState = reactive({
+  memberInfo: {},
+  bankCardList: []
+});
+
+onMounted(() => {
+
+  if(sendOtpDisabledTimeoutLeft)
+    countdownTimer();
+
+  loadInfo();
+  getCode();
+});
+const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
+  var left = (screen.width - popupWinWidth) * 2;
+  var top = (screen.height - popupWinHeight) / 4;
+  window.open(pageURL, pageTitle,
+    'resizable=yes, width=' + popupWinWidth
+    + ', height=' + popupWinHeight + ', top='
+    + top + ', left=' + left);
+}
+const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
+const store = userStore();
+const getCode = () => {
+  updateSecurityVerified.captchaCode = ''
+  updatePhoneVerified.captchaCode = ''
+  getVerificationCode().then((res) => {
+    if (res.code === 0) {
+      verificationImg.value = "data:image/png;base64," + res.data.img;
+      updateSecurityVerified.codeId = res.data.id;
+      updatePhoneVerified.codeId = res.data.id;
     } else {
-      lsRemove(sendOtpDisabledKey)
-      lsRemove(emailKey)
-      lsRemove(phoneKey)
-
-      cachedEmail = '';
-      cachedTelephone = '';
+      ElMessage.error(res.message);
     }
-
-    const disableSendVerificationButton = ref(initialSendOtpDisabledTimeout);
-    const disableSendPhoneButton = ref(initialSendOtpDisabledTimeout);
-    const countDown = ref(sendOtpDisabledTimeoutLeft);
-    const countDownPhone = ref(sendOtpDisabledTimeoutLeft);
-
-    const loadingBtn = ref(false)
-    const loadingPwBtn = ref(false)
-    const loadingWdPwBtn = ref(false)
-    const loadingSecurityBtn = ref(false)
-    const loadingPhoneBtn = ref(false)
-    const isEmailSending = ref(false)
-    const isPhoneSending = ref(false)
-    const verificationDetails = reactive({
-      memberInfo: {}
-    });
-    const verificationPhoneDetails = reactive({
-      memberInfo: {}
-    });
-    const personalState = reactive({
-      memberInfo: {},
-      bankCardList: []
-    });
-
-    onMounted(() => {
-
-      if(sendOtpDisabledTimeoutLeft)
-        countdownTimer();
-
-      loadInfo();
-      getCode();
-    });
-      const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
-      var left = (screen.width - popupWinWidth) * 2;
-      var top = (screen.height - popupWinHeight) / 4;
-      window.open(pageURL, pageTitle,
-                    'resizable=yes, width=' + popupWinWidth
-                    + ', height=' + popupWinHeight + ', top='
-                    + top + ', left=' + left);
+  }).catch(() => {
+    // console.log(e.message);
+    // message.error(e.message);
+  });
+};
+const updateSecurityModalVisible = ref(false);
+const updateSecurityFormRef = ref();
+const captchaUpdateRef = ref();
+const updateSecurityVerified = reactive({
+  verificationCode: "",
+  emailAddress: "",
+});
+const updatePhoneVerified = reactive({
+  verificationCode: "",
+  phone: "",
+});
+const verificationImg = ref("");
+const loadInfo = () => {
+  loadMemberInfo().then((response) => {
+    if (response.code === 0) {
+      personalState.memberInfo = response.data;
+      if (personalState.memberInfo.birthday) {
+        personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
+      }
     }
-    const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
-    const store = userStore();
-    const getCode = () => {
-      updateSecurityVerified.captchaCode = ''
-      updatePhoneVerified.captchaCode = ''
-      getVerificationCode().then((res) => {
-        if (res.code === 0) {
-          verificationImg.value = "data:image/png;base64," + res.data.img;
-          updateSecurityVerified.codeId = res.data.id;
-          updatePhoneVerified.codeId = res.data.id;
-        } else {
-          ElMessage.error(res.message);
-        }
-      }).catch(() => {
-          // console.log(e.message);
-        // message.error(e.message);
-      });
-    };
-    const updateSecurityModalVisible = ref(false);
-    const updateSecurityFormRef = ref();
-    const captchaUpdateRef = ref();
-    const updateSecurityVerified = reactive({
-      verificationCode: "",
-      emailAddress: "",
-    });
-    const updatePhoneVerified = reactive({
-      verificationCode: "",
-      phone: "",
-    });
-    const verificationImg = ref("");
-    const loadInfo = () => {
-      loadMemberInfo().then((response) => {
-        if (response.code === 0) {
-          personalState.memberInfo = response.data;
-          if (personalState.memberInfo.birthday) {
-            personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
-          }
-        }
-      }).catch((error) => {
-        console.log("error", error);
-      });
-    }
+  }).catch((error) => {
+    console.log("error", error);
+  });
+}
 
-    const verificationModalVisible = ref(false)
-    const updateSecurityModal = () => {
-      updateSecurityVerified.emailAddress = cachedEmail;
-      updateSecurityVerified.verificationCode = "";
-      updateSecurityModalVisible.value = true;
-    };
-    const openVerificationModal = () => {
-      updateSecurityFormRef.value.validateField('emailAddress').then((resp) => {
-          // captchaForm.captchaCode = "";
-          getCode();
-          verificationModalVisible.value = true;
+const verificationModalVisible = ref(false)
+const updateSecurityModal = () => {
+  updateSecurityVerified.emailAddress = cachedEmail;
+  updateSecurityVerified.verificationCode = "";
+  updateSecurityModalVisible.value = true;
+};
+const openVerificationModal = () => {
+  updateSecurityFormRef.value.validateField('emailAddress').then((resp) => {
+    // captchaForm.captchaCode = "";
+    getCode();
+    verificationModalVisible.value = true;
 
-        }).catch((err) => {
-            ElMessage({
-              message: t('placeholder.emailFormat'),
-              type: 'error',
-            })
-        })
-    }
-    const verifyVerificationCode = () => {
-      captchaUpdateRef.value
-        .validate()
-        .then(() => {
+  }).catch((err) => {
+    ElMessage({
+      message: t('placeholder.emailFormat'),
+      type: 'error',
+    })
+  })
+}
+const verifyVerificationCode = () => {
+  captchaUpdateRef.value
+    .validate()
+    .then(() => {
       isEmailSending.value = true
       verificationDetails.memberInfo.email = updateSecurityVerified.emailAddress
 
@@ -651,75 +651,75 @@ import { useI18n } from "vue-i18n";
           getCode()
           isEmailSending.value = false
         }
-     }).catch((e) => {
-          console.log(e.message);
+      }).catch((e) => {
+        console.log(e.message);
         // message.error(e.message);
       });
 
     })
-    }
-    const submitUpdateSecurity = () => {
-      loadingSecurityBtn.value = true
-      updateSecurityFormRef.value
-        .validate()
-        .then(() => {
-          verificationDetails.memberInfo.code = updateSecurityVerified.verificationCode
-          verifyEmail(verificationDetails.memberInfo).then((res) => {
-            if (res.code === 0) {
+}
+const submitUpdateSecurity = () => {
+  loadingSecurityBtn.value = true
+  updateSecurityFormRef.value
+    .validate()
+    .then(() => {
+      verificationDetails.memberInfo.code = updateSecurityVerified.verificationCode
+      verifyEmail(verificationDetails.memberInfo).then((res) => {
+        if (res.code === 0) {
 
-              ElMessage({
-                message: t('common.success'),
-                type: 'success',
-              })
+          ElMessage({
+            message: t('common.success'),
+            type: 'success',
+          })
 
-              updateSecurityModalVisible.value = false
+          updateSecurityModalVisible.value = false
 
-              loadInfo()
+          loadInfo()
 
-            } else {
-              ElMessage.error(res.message)
-            }
-          }).catch((e) => {
-            console.log(e.message);
-            // message.error(e.message);
-          });
-        }).catch((error) => {
-        console.log("error", error);
+        } else {
+          ElMessage.error(res.message)
+        }
+      }).catch((e) => {
+        console.log(e.message);
+        // message.error(e.message);
       });
-      loadingSecurityBtn.value = false
-    };
-    // Phone
+    }).catch((error) => {
+    console.log("error", error);
+  });
+  loadingSecurityBtn.value = false
+};
+// Phone
 
-    const verificationPhoneModalVisible = ref(false)
-    // const openPhoneVerificationModal = () => {
-    //   getCode();
-    //   verificationPhoneModalVisible.value = true;
-    // }
-    const openPhoneVerificationModal = () => {
-      updatePhoneFormRef.value.validateField('phone').then((resp) => {
-          // captchaForm.captchaCode = "";
-          getCode();
-          verificationPhoneModalVisible.value = true;
+const verificationPhoneModalVisible = ref(false)
+// const openPhoneVerificationModal = () => {
+//   getCode();
+//   verificationPhoneModalVisible.value = true;
+// }
+const openPhoneVerificationModal = () => {
+  updatePhoneFormRef.value.validateField('phone').then((resp) => {
+    // captchaForm.captchaCode = "";
+    getCode();
+    verificationPhoneModalVisible.value = true;
 
-        }).catch((err) => {
-            ElMessage({
-              message: t('placeholder.mobileNo'),
-              type: 'error',
-            })
-        })
-    }
+  }).catch((err) => {
+    ElMessage({
+      message: t('placeholder.mobileNo'),
+      type: 'error',
+    })
+  })
+}
 
-    const updatePhoneModalVisible = ref(false)
-    const updatePhoneFormRef = ref();
-    const updatePhoneModal = () => {
-      updatePhoneVerified.phone = cachedTelephone;
-      updatePhoneVerified.phoneCode = "";
-      updatePhoneModalVisible.value = true;
-    };
-    const verifyPhoneVerificationCode = () => {
-      captchaUpdateRef.value
-        .validate()
-        .then(() => {
+const updatePhoneModalVisible = ref(false)
+const updatePhoneFormRef = ref();
+const updatePhoneModal = () => {
+  updatePhoneVerified.phone = cachedTelephone;
+  updatePhoneVerified.phoneCode = "";
+  updatePhoneModalVisible.value = true;
+};
+const verifyPhoneVerificationCode = () => {
+  captchaUpdateRef.value
+    .validate()
+    .then(() => {
 
       isPhoneSending.value = true
       verificationPhoneDetails.memberInfo.phone = updatePhoneVerified.phone
@@ -755,427 +755,444 @@ import { useI18n } from "vue-i18n";
 
           isPhoneSending.value = false
         } else {
-            ElMessage.error(res.message)
-            getCode()
-            isPhoneSending.value = false
-          }
-     }).catch((e) => {
-          console.log(e.message);
+          ElMessage.error(res.message)
+          getCode()
+          isPhoneSending.value = false
+        }
+      }).catch((e) => {
+        console.log(e.message);
         // message.error(e.message);
       });
 
     })
-    }
-    const submitUpdatePhone = () => {
-      loadingPhoneBtn.value = true
-      updatePhoneFormRef.value
-        .validate()
-        .then(() => {
-          verificationPhoneDetails.memberInfo.code = updatePhoneVerified.verificationCode
-          verifySms(verificationPhoneDetails.memberInfo).then((res) => {
-            if (res.code === 0) {
-              ElMessage({
-                message: t('common.success'),
-                type: 'success',
-              })
-              updatePhoneModalVisible.value = false
-              store.getMemberInfo()
-              loadInfo()
-            } else {
-              ElMessage.error(res.message)
-            }
-          }).catch((e) => {
-            console.log(e.message);
-            // message.error(e.message);
-          });
-        }).catch((error) => {
-        console.log("error", error);
-      });
-
-
-      loadingPhoneBtn.value = false
-    };
-
-    const countdownTimer = () => {
-      if (countDown.value > 0) {
-        setTimeout(() => {
-          countDown.value -= 1
-          countdownTimer()
-        }, 1000)
-      } else {
-        lsRemove(sendOtpDisabledKey);
-        lsRemove(phoneKey);
-
-        disableSendVerificationButton.value = false
-        disableSendPhoneButton.value = false
-      }
-    }
-
-    const updateSecurityVerifiedRules = {
-      emailAddress: [
-        {
-          required: true,
-          message: t('placeholder.email'),
-          trigger: "blur",
-        },
-        {
-          type: "email",
-          message: t('placeholder.emailFormat'),
-          trigger: "blur",
-        },
-      ],
-      verificationCode: [
-        {
-          required: true,
-          message: t('placeholder.verificationCode'),
-          trigger: "blur",
-        },
-        {
-          min: 4,
-          message: t('placeholder.min4'),
-          trigger: "blur",
-        },
-      ],
-    };
-
-    const updatePhoneVerifiedRules = {
-      phone: [
-        {
-          required: true,
-          message: t('placeholder.mobileNo'),
-          trigger: "blur",
-        },
-      ],
-      verificationCode: [
-        {
-          required: true,
-          message: t('placeholder.verificationCode'),
-          trigger: "blur",
-        },
-        {
-          min: 4,
-          message: t('placeholder.min4'),
-          trigger: "blur",
-        },
-      ],
-    };
-    //update pwd
-    const updatePwdModalVisible = ref(false);
-    const updatePwdFormRef = ref();
-    const updatePwdInfo = reactive({
-      oldPassword: "",
-      password: "",
-      confirmPassword: ""
-    });
-    const updatePwdModal = () => {
-      updatePwdInfo.oldPassword = "";
-      updatePwdInfo.password = "";
-      updatePwdModalVisible.value = true;
-    };
-
-    const refOldPassword= ref();
-    const refPassword= ref();
-    const clearPwd = () =>{
-      updatePwdInfo.oldPassword = "";
-      updatePwdInfo.password= "";
-      updatePwdInfo.confirmPassword= "";
-    }
-    const submitUpdatePwd = () => {
-      // debugger;
-      loadingPwBtn.value = true
-      updatePwdFormRef.value
-        .validate()
-        .then(() => {
-          changePwd(updatePwdInfo.oldPassword, updatePwdInfo.password).then((response) => {
-            if (response.code === 0) {
-              // message.success("success");
-              ElMessage({
-                message: t('common.updateSuccess'),
-                type: 'success',
-              })
-              clearPwd();
-            } else {
-              ElMessage.error(t(`response.${response.code}`))
-            }
-          }).catch((error) => {
-            console.log(error.message);
-            // message.error(error.message, 4)
-          });
-        }).catch((error) => {
-          console.log("error", error);
-      });
-      loadingPwBtn.value = false
-    };
-
-    const validatePwd = async (r,v) => {
-      if(updatePwdInfo.confirmPassword !== updatePwdInfo.password){
-        return Promise.reject(t('personal.common_and_new_password_not_match'));
-      } else {
-        return Promise.resolve();
-      }
-    }
-
-    const updatePwdRules = {
-      oldPassword: [
-        {
-          required: true,
-          message: t('placeholder.oldPwd'),
-          trigger: "blur"
-        },
-        {
-          min: 6,
-          max: 11,
-          message: t('placeholder.between612'),
-          trigger: "blur"
-        }
-      ],
-      password: [
-        {
-          required: true,
-          message: t('placeholder.newPwd'),
-          trigger: "blur"
-        },
-        {
-          min: 6,
-          max: 11,
-          message: t('placeholder.between612'),
-          trigger: "blur"
-        }
-      ],
-      confirmPassword: [
-        {
-          required: true,
-          message: t('placeholder.confirmPwd'),
-          trigger: "blur"
-        },
-        {
-          min: 6,
-          max: 11,
-          message: t('placeholder.between612'),
-          trigger: "blur"
-        },
-        {
-          required: true,
-          validator: validatePwd,
-          trigger: "blur"
-        }
-      ]
-    };
-
-    const updateWithdrawPwdFormRef = ref();
-    const updateWithdrawPwdInfo = reactive({
-      oldPassword: "",
-      password: "",
-      confirmPassword: ""
-    });
-
-    const emailCodeId= ref();
-    const refWithdrawOldPassword= ref();
-    const refWithdrawPassword= ref();
-    const clearWithdrawPwd = () =>{
-      updateWithdrawPwdInfo.oldPassword = "";
-      updateWithdrawPwdInfo.password= "";
-      updateWithdrawPwdInfo.confirmPassword= "";
-      updateWithdrawPwdInfo.code = "";
-    }
-
-    const submitUpdateWithdrawPwd = () => {
-      // debugger;
-      loadingWdPwBtn.value = true
-      updateWithdrawPwdFormRef.value
-        .validate()
-        .then(() => {
-          changeWithdrawPwd(updateWithdrawPwdInfo.oldPassword, updateWithdrawPwdInfo.password).then((response) => {
-            if (response.code === 0) {
-              // message.success("success");
-              ElMessage({
-                message: t('common.updateSuccess'),
-                type: 'success',
-              })
-              clearWithdrawPwd();
-              window.location.reload();
-            } else {
-              ElMessage.error(response.message);
-            }
-          }).catch((error) => {
-            console.log(error.message);
-            // message.error(error.message, 4)
-          });
-        }).catch((error) => {
-          console.log("error", error);
-      });
-      loadingWdPwBtn.value = false
-    };
-    const codeChangeWithdrawPwd = () => {
-      
-      loadingWdPwBtn.value = true
-      updateWithdrawPwdFormRef.value
-        .validate()
-        .then(() => {
-          const obj = {
-            password: updateWithdrawPwdInfo.password,
-            code: updateWithdrawPwdInfo.code,
-            codeId: emailCodeId.value
-          }
-          verifyOtpAndChangePassword(obj).then((response) => {
-            if (response.code === 0) {
-              // message.success("success");
-              ElMessage({
-                message: t('common.updateSuccess'),
-                type: 'success',
-              })
-              receivedVerificationCode.value = false;
-              clearWithdrawPwd();
-            } else {
-              ElMessage.error(t(`response.${response.code}`))
-            }
-          }).catch((error) => {
-            console.log(error.message);
-            // message.error(error.message, 4)
-          });
-        }).catch((error) => {
-          console.log("error", error);
-      });
-      loadingWdPwBtn.value = false
-    }
-
-    const validateWithdrawPwd = async (r,v) => {
-      if(updateWithdrawPwdInfo.confirmPassword !== updateWithdrawPwdInfo.password){
-        return Promise.reject(t('placeholder.noMatch'));
-      } else {
-        return Promise.resolve();
-      }
-    }
-    const validateRequireWithdrawPwd = () => {
-    }
-
-    const updateWithdrawPwdRules = {
-      oldPassword: [
-        {
-          required: true,
-          message: t('personal.oldWithdrawPwd'),
-          trigger: "blur"
-        },
-        {
-          min: 6,
-          max: 11,
-          message: t('placeholder.between612'),
-          trigger: "blur"
-        }
-      ],
-      password: [
-        {
-          required: true,
-          message: t('personal.newWithdrawPwd'),
-          trigger: "blur"
-        },
-        {
-          min: 6,
-          max: 11,
-          message: t('placeholder.between612'),
-          trigger: "blur"
-        }
-      ],
-      confirmPassword: [
-        {
-          required: true,
-          message: t('personal.confirmWithdrawPwd'),
-          trigger: "blur"
-        },
-        {
-          min: 6,
-          max: 11,
-          message: t('placeholder.between612'),
-          trigger: "blur"
-        },
-        {
-          required: true,
-          validator: validateWithdrawPwd,
-          trigger: "blur"
-        }
-      ]
-    };
-
-
-    const isEdit = ref(false)
-    const updateFormDetails = reactive(
-      {
-      }
-    )
-    const updateFormRef = ref()
-    const updateState = () => {
-      loadingBtn.value = true
-      updateFormRef.value
-        .validate()
-        .then(() => {
-          updateAccount(toRaw(updateFormDetails)).then((ret) => {
-            if (ret.code === 0) {
-              ElMessage({
-                message: t('common.submitSuccess'),
-                type: 'success',
-              })
-              loadInfo();
-              isEdit.value = false;
-            } else {
-              ElMessage.error(ret.message)
-            }
-          }).catch((err) => {
-            console.log(err.message);
+}
+const submitUpdatePhone = () => {
+  loadingPhoneBtn.value = true
+  updatePhoneFormRef.value
+    .validate()
+    .then(() => {
+      verificationPhoneDetails.memberInfo.code = updatePhoneVerified.verificationCode
+      verifySms(verificationPhoneDetails.memberInfo).then((res) => {
+        if (res.code === 0) {
+          ElMessage({
+            message: t('common.success'),
+            type: 'success',
           })
-        })
-
-      loadingBtn.value = false
-    }
-    const receivedVerificationCode = ref(false);
-    // Define a reactive variable to track the countdown timer
-    const countdownValue = ref(0);
-    let countdownInterval;
-
-    // Function to send OTP email
-    const sendOTPEmail = () => {
-      if (!personalState.memberInfo.email) {
-        ElMessage.warning(t('common.bindEmailFirst'));
-        selectedTab.value = 'personal'
-        return
-      }
-      // Check if countdown timer is still running
-      if (countdownValue.value === 0) {
-        // If countdown timer has finished, reset the timer and send the email
-        const obj = {
-          email: personalState.memberInfo.email
+          updatePhoneModalVisible.value = false
+          store.getMemberInfo()
+          loadInfo()
+        } else {
+          ElMessage.error(res.message)
         }
-        forgetWithdrawSendEmail(obj).then((res) => {
-          if (res.code === 0) {
-            receivedVerificationCode.value = true;
-            emailCodeId.value= res.data.codeId;
-            ElMessage.success({
-              type: "success",
-              message: t('common.emailSent')
-            });
-            // Start the countdown timer again after sending the email
-            countdownValue.value = 60;
-            countdownInterval = setInterval(() => {
-              countdownValue.value -= 1;
-              if (countdownValue.value === 0) {
-                clearInterval(countdownInterval);
-              }
-            }, 1000);
-          } else {
-            ElMessage.error(res.message);
-          }
-        });
-      } else {
-        // If countdown timer is still running, show a message to try again later
-        ElMessage.warning({
-          type: "warning",
-          message: t('common.tryAgain', { countDown: countdownValue.value })
-        });
+      }).catch((e) => {
+        console.log(e.message);
+        // message.error(e.message);
+      });
+    }).catch((error) => {
+    console.log("error", error);
+  });
+
+
+  loadingPhoneBtn.value = false
+};
+
+const countdownTimer = () => {
+  if (countDown.value > 0) {
+    setTimeout(() => {
+      countDown.value -= 1
+      countdownTimer()
+    }, 1000)
+  } else {
+    lsRemove(sendOtpDisabledKey);
+    lsRemove(phoneKey);
+
+    disableSendVerificationButton.value = false
+    disableSendPhoneButton.value = false
+  }
+}
+
+const validatePhoneNumber = async (r, v) => {
+  var reg = /^\d+$/;
+  if (v === "") {
+    return Promise.reject(t('placeholder.verifyPhone'));
+  } else if (!reg.test(v)) {
+    return Promise.reject(t('placeholder.onlyNumber'));
+  } else {
+    return Promise.resolve();
+  }
+};
+
+const updateSecurityVerifiedRules = {
+  emailAddress: [
+    {
+      required: true,
+      message: t('placeholder.email'),
+      trigger: "blur",
+    },
+    {
+      type: "email",
+      message: t('placeholder.emailFormat'),
+      trigger: "blur",
+    },
+  ],
+  verificationCode: [
+    {
+      required: true,
+      message: t('placeholder.verificationCode'),
+      trigger: "blur",
+    },
+    {
+      min: 4,
+      message: t('placeholder.min4'),
+      trigger: "blur",
+    },
+  ],
+};
+
+const updatePhoneVerifiedRules = {
+  phone: [
+    {
+      required: true,
+      message: t('placeholder.mobileNo'),
+      trigger: "blur",
+    },
+    {
+      validator: validatePhoneNumber,
+      trigger: "blur"
+    }
+  ],
+  verificationCode: [
+    {
+      required: true,
+      message: t('placeholder.verificationCode'),
+      trigger: "blur",
+    },
+    {
+      min: 4,
+      message: t('placeholder.min4'),
+      trigger: "blur",
+    },
+  ],
+};
+
+//update pwd
+const updatePwdModalVisible = ref(false);
+const updatePwdFormRef = ref();
+const updatePwdInfo = reactive({
+  oldPassword: "",
+  password: "",
+  confirmPassword: ""
+});
+const updatePwdModal = () => {
+  updatePwdInfo.oldPassword = "";
+  updatePwdInfo.password = "";
+  updatePwdModalVisible.value = true;
+};
+
+const refOldPassword= ref();
+const refPassword= ref();
+const clearPwd = () =>{
+  updatePwdInfo.oldPassword = "";
+  updatePwdInfo.password= "";
+  updatePwdInfo.confirmPassword= "";
+}
+const submitUpdatePwd = () => {
+  // debugger;
+  loadingPwBtn.value = true
+  updatePwdFormRef.value
+    .validate()
+    .then(() => {
+      changePwd(updatePwdInfo.oldPassword, updatePwdInfo.password).then((response) => {
+        if (response.code === 0) {
+          // message.success("success");
+          ElMessage({
+            message: t('common.updateSuccess'),
+            type: 'success',
+          })
+          clearPwd();
+        } else {
+          ElMessage.error(t(`response.${response.code}`))
+        }
+      }).catch((error) => {
+        console.log(error.message);
+        // message.error(error.message, 4)
+      });
+    }).catch((error) => {
+    console.log("error", error);
+  });
+  loadingPwBtn.value = false
+};
+
+const validatePwd = async (r,v) => {
+  if(updatePwdInfo.confirmPassword !== updatePwdInfo.password){
+    return Promise.reject(t('personal.common_and_new_password_not_match'));
+  } else {
+    return Promise.resolve();
+  }
+}
+
+const updatePwdRules = {
+  oldPassword: [
+    {
+      required: true,
+      message: t('placeholder.oldPwd'),
+      trigger: "blur"
+    },
+    {
+      min: 6,
+      max: 11,
+      message: t('placeholder.between612'),
+      trigger: "blur"
+    }
+  ],
+  password: [
+    {
+      required: true,
+      message: t('placeholder.newPwd'),
+      trigger: "blur"
+    },
+    {
+      min: 6,
+      max: 11,
+      message: t('placeholder.between612'),
+      trigger: "blur"
+    }
+  ],
+  confirmPassword: [
+    {
+      required: true,
+      message: t('placeholder.confirmPwd'),
+      trigger: "blur"
+    },
+    {
+      min: 6,
+      max: 11,
+      message: t('placeholder.between612'),
+      trigger: "blur"
+    },
+    {
+      required: true,
+      validator: validatePwd,
+      trigger: "blur"
+    }
+  ]
+};
+
+const updateWithdrawPwdFormRef = ref();
+const updateWithdrawPwdInfo = reactive({
+  oldPassword: "",
+  password: "",
+  confirmPassword: ""
+});
+
+const emailCodeId= ref();
+const refWithdrawOldPassword= ref();
+const refWithdrawPassword= ref();
+const clearWithdrawPwd = () =>{
+  updateWithdrawPwdInfo.oldPassword = "";
+  updateWithdrawPwdInfo.password= "";
+  updateWithdrawPwdInfo.confirmPassword= "";
+  updateWithdrawPwdInfo.code = "";
+}
+
+const submitUpdateWithdrawPwd = () => {
+  // debugger;
+  loadingWdPwBtn.value = true
+  updateWithdrawPwdFormRef.value
+    .validate()
+    .then(() => {
+      changeWithdrawPwd(updateWithdrawPwdInfo.oldPassword, updateWithdrawPwdInfo.password).then((response) => {
+        if (response.code === 0) {
+          // message.success("success");
+          ElMessage({
+            message: t('common.updateSuccess'),
+            type: 'success',
+          })
+          clearWithdrawPwd();
+          window.location.reload();
+        } else {
+          ElMessage.error(response.message);
+        }
+      }).catch((error) => {
+        console.log(error.message);
+        // message.error(error.message, 4)
+      });
+    }).catch((error) => {
+    console.log("error", error);
+  });
+  loadingWdPwBtn.value = false
+};
+const codeChangeWithdrawPwd = () => {
+
+  loadingWdPwBtn.value = true
+  updateWithdrawPwdFormRef.value
+    .validate()
+    .then(() => {
+      const obj = {
+        password: updateWithdrawPwdInfo.password,
+        code: updateWithdrawPwdInfo.code,
+        codeId: emailCodeId.value
       }
-    };
+      verifyOtpAndChangePassword(obj).then((response) => {
+        if (response.code === 0) {
+          // message.success("success");
+          ElMessage({
+            message: t('common.updateSuccess'),
+            type: 'success',
+          })
+          receivedVerificationCode.value = false;
+          clearWithdrawPwd();
+        } else {
+          ElMessage.error(t(`response.${response.code}`))
+        }
+      }).catch((error) => {
+        console.log(error.message);
+        // message.error(error.message, 4)
+      });
+    }).catch((error) => {
+    console.log("error", error);
+  });
+  loadingWdPwBtn.value = false
+}
+
+const validateWithdrawPwd = async (r,v) => {
+  if(updateWithdrawPwdInfo.confirmPassword !== updateWithdrawPwdInfo.password){
+    return Promise.reject(t('placeholder.noMatch'));
+  } else {
+    return Promise.resolve();
+  }
+}
+
+const validateRequireWithdrawPwd = () => {
+}
+
+const updateWithdrawPwdRules = {
+  oldPassword: [
+    {
+      required: true,
+      message: t('personal.oldWithdrawPwd'),
+      trigger: "blur"
+    },
+    {
+      min: 6,
+      max: 11,
+      message: t('placeholder.between612'),
+      trigger: "blur"
+    }
+  ],
+  password: [
+    {
+      required: true,
+      message: t('personal.newWithdrawPwd'),
+      trigger: "blur"
+    },
+    {
+      min: 6,
+      max: 11,
+      message: t('placeholder.between612'),
+      trigger: "blur"
+    }
+  ],
+  confirmPassword: [
+    {
+      required: true,
+      message: t('personal.confirmWithdrawPwd'),
+      trigger: "blur"
+    },
+    {
+      min: 6,
+      max: 11,
+      message: t('placeholder.between612'),
+      trigger: "blur"
+    },
+    {
+      required: true,
+      validator: validateWithdrawPwd,
+      trigger: "blur"
+    }
+  ]
+};
+
+
+const isEdit = ref(false)
+const updateFormDetails = reactive(
+  {
+  }
+)
+const updateFormRef = ref()
+const updateState = () => {
+  loadingBtn.value = true
+  updateFormRef.value
+    .validate()
+    .then(() => {
+      updateAccount(toRaw(updateFormDetails)).then((ret) => {
+        if (ret.code === 0) {
+          ElMessage({
+            message: t('common.submitSuccess'),
+            type: 'success',
+          })
+          loadInfo();
+          isEdit.value = false;
+        } else {
+          ElMessage.error(ret.message)
+        }
+      }).catch((err) => {
+        console.log(err.message);
+      })
+    })
+
+  loadingBtn.value = false
+}
+const receivedVerificationCode = ref(false);
+// Define a reactive variable to track the countdown timer
+const countdownValue = ref(0);
+let countdownInterval;
+
+// Function to send OTP email
+const sendOTPEmail = () => {
+  if (!personalState.memberInfo.email) {
+    ElMessage.warning(t('common.bindEmailFirst'));
+    selectedTab.value = 'personal'
+    return
+  }
+  // Check if countdown timer is still running
+  if (countdownValue.value === 0) {
+    // If countdown timer has finished, reset the timer and send the email
+    const obj = {
+      email: personalState.memberInfo.email
+    }
+    forgetWithdrawSendEmail(obj).then((res) => {
+      if (res.code === 0) {
+        receivedVerificationCode.value = true;
+        emailCodeId.value= res.data.codeId;
+        ElMessage.success({
+          type: "success",
+          message: t('common.emailSent')
+        });
+        // Start the countdown timer again after sending the email
+        countdownValue.value = 60;
+        countdownInterval = setInterval(() => {
+          countdownValue.value -= 1;
+          if (countdownValue.value === 0) {
+            clearInterval(countdownInterval);
+          }
+        }, 1000);
+      } else {
+        ElMessage.error(res.message);
+      }
+    });
+  } else {
+    // If countdown timer is still running, show a message to try again later
+    ElMessage.warning({
+      type: "warning",
+      message: t('common.tryAgain', { countDown: countdownValue.value })
+    });
+  }
+};
 </script>
 
 <style scoped lang="scss">
-.withdrawBottom { 
+.withdrawBottom {
   display: flex; justify-content: space-between; align-items: center; max-width: 620px;
   .link {
     color:#468cff;
@@ -1183,14 +1200,14 @@ import { useI18n } from "vue-i18n";
   }
 }
 .el-form--inline .el-form-item {
-    display: inline-flex;
-    vertical-align: middle;
-    margin-right: 32px;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+  display: inline-flex;
+  vertical-align: middle;
+  margin-right: 32px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
-.basic-info-cell {     
+.basic-info-cell {
   &.content {
     width: 650px;
     .datewsend {
@@ -1199,13 +1216,13 @@ import { useI18n } from "vue-i18n";
       }
       :deep(.el-input__inner) {
         &::placeholder {
-            font-weight: bold;
-          }
+          font-weight: bold;
+        }
       }
       :deep(.el-input__wrapper) {
-        
+
         color: #999999;
-            font-weight: bold;
+        font-weight: bold;
         width: 650px;
         box-shadow: 0px 0px 8px 0px #A9C9EA inset;
         background: #F7F8FB;
@@ -1213,20 +1230,20 @@ import { useI18n } from "vue-i18n";
         margin: 5px 0 20px;
         padding: 10px 20px;
         min-height: 40px;
-        }
       }
-      
+    }
+
   }
   &.contentwtxt {
     color: #999999;
-        font-weight: bold;
+    font-weight: bold;
     width: 650px;
     box-shadow: 0px 0px 8px 0px #A9C9EA inset;
     background: #F7F8FB;
     border-radius: 6px;
     margin: 5px 0 20px;
     padding: 10px 20px;
-    .el-input__inner {  
+    .el-input__inner {
       &::placeholder {
         font-weight: bold;
       }
@@ -1344,24 +1361,24 @@ import { useI18n } from "vue-i18n";
 
   .el-form-item {
 
-flex-direction: column;
-align-items: flex-start;
-width: 100%;
-}
-.el-form-item__content {
-width: 100%;
-max-width: 650px;
-.el-input__wrapper {
-padding: 10px 20px;
-}
-}
-.el-dialog {
-  .el-form-item {
-  flex-direction: row;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
   }
-  .el-input__wrapper {
-    padding: 5px 10px;
+  .el-form-item__content {
+    width: 100%;
+    max-width: 650px;
+    .el-input__wrapper {
+      padding: 10px 20px;
+    }
   }
-}
+  .el-dialog {
+    .el-form-item {
+      flex-direction: row;
+    }
+    .el-input__wrapper {
+      padding: 5px 10px;
+    }
+  }
 }
 </style>
