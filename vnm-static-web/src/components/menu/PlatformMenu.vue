@@ -81,6 +81,8 @@ const gotoGame = (item, platformType) => {
   // console.log(platformType);
   if (platformType === "slot") {
     router.push(`/slot?plat=${item.code}`);
+  } else if (platformType === "fishing") {
+    router.push(`/fishing?plat=${item.code}`);
   } else {
     const platName = item.alias ?? item.name
     emits("load-game", platName, item.code, item.gameCode);
