@@ -3,6 +3,7 @@
     <div class="header-container">
       <div class="search">
         <el-input v-model="request.affiliateName" size="small" style="width: 200px;" :placeholder="t('fields.loginName')" />
+        <el-input v-model="request.domain" size="small" style="width: 200px;margin-left: 5px" :placeholder="t('fields.domain')" />
         <el-select
           v-if="hasRole(['ADMIN'])"
           v-model="request.siteId"
