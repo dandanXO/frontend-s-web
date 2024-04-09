@@ -191,6 +191,13 @@ deploy-ind-download:
 
 #===============================================================================================
 
+deploy-ind-download-v2:
+  extends: .s3-deploy
+  variables:
+    PROJECT: ind-download-v2
+
+#===============================================================================================
+
 build-tf-manager-web:
   extends: .build-projects
   variables:
