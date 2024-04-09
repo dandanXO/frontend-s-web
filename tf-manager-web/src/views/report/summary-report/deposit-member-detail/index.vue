@@ -160,7 +160,7 @@ var siteIdFromParam = new URL(location.href).searchParams.get('site')
 
 const uiControl = reactive({
   messageVisible: false,
-  show: false,
+  show: true,
 })
 
 const store = useStore()
