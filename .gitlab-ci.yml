@@ -191,6 +191,13 @@ deploy-ind-download:
 
 #===============================================================================================
 
+deploy-ind-download-v2:
+  extends: .s3-deploy
+  variables:
+    PROJECT: ind2-download
+
+#===============================================================================================
+
 deploy-vnm-download:
   extends: .s3-deploy
   variables:
