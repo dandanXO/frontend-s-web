@@ -16,6 +16,7 @@ export default {
     deposit: 'Deposit',
     withdraw: 'Withdraw',
     transfer: 'Transfer',
+    rebate: 'Rebate',
     referFriend: 'Refer a friend',
     transactionRecord: 'Transaction record',
     personalInfo: 'Personal information',

@@ -2,6 +2,12 @@
   <div class="promo-container">
     <div class="all-promotions" v-if="!isPromoDetail">
       <div class="promo-main-container">
+        <!-- <div class="rebates-container">
+          <img src="../assets/promo/rebate/coin.png" />
+          <div class="rebatebtn">{{$t('rebate.totalVNDP')}}</div>
+          <div class="input">{{ rebateAmt }}</div>
+          <div class="rebatebtn">{{$t('rebate.claimNow')}}</div>
+        </div> -->
         <div class="promo-type-wrapper">
           <div style="position:sticky; top: 0;">
             <div class="type-list">
@@ -432,11 +438,21 @@ export default defineComponent({
     .promo-main-container {
       width: 100%;
       // max-width: $maxwidth;
-    max-width: 1050px;
+      max-width: 1050px;
       margin: 0 auto;
       padding: 10px 0;
       display: flex;
       gap: 30px;
+      position: relative;
+      .rebates-container {
+        position: absolute;
+        top: -80px;
+        background: url(../assets/promo/rebate/rebatebg.png)no-repeat center center;
+        background-size: contain;
+        width: 100%;
+        height: 65px;
+
+      }
       .promo-type-wrapper {
         display: flex;
         box-shadow: 0px 4px 22px 0px #00000026;

@@ -20,7 +20,8 @@ export default {
     "transactionRecord": "Lịch sử giao dịch",
     "personalInfo": "Thông tin cá nhân",
     "mailbox": "Hòm thư",
-    logout: "Đăng xuất"
+    logout: "Đăng xuất",
+    rebate: "Hoàn Trả"
   },
   "account": {
     "welcome": "Chào mừng",
