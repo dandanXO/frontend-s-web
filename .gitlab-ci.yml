@@ -191,6 +191,13 @@ deploy-ind-download:
 
 #===============================================================================================
 
+deploy-vnm-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: vnm-download
+
+#===============================================================================================
+
 build-tf-manager-web:
   extends: .build-projects
   variables:
