@@ -191,7 +191,7 @@ deploy-ind-download:
 
 #===============================================================================================
 
-deploy-ind-download-v2:
+deploy-ind2-download:
   extends: .s3-deploy
   variables:
     PROJECT: ind2-download
