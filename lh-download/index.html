@@ -129,11 +129,10 @@
                 checkPlatform();
             }
             setTimeout(()=>{
-                console.log("Check")
                 if (iosDownload.length === 0 && androidDownload.length === 0) {
                     $("#before-load").text("加载失败，请重连页面")
                 }
-            },10000);
+            },5000);
         } catch (error) {
             $("#before-load").text("加载失败，请重连页面")
             console.log(error)
