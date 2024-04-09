@@ -39,6 +39,8 @@ export default {
     next_page: "Trang tiếp theo",
     username_between_6_12: "Tên đăng ký phải có từ 6-12 ký tự",
     first_digit_must_be_0: "Chữ số đầu tiên phải là 0",
+    
+    rebate_claim_now: "Yêu cầu ngay",
 
     // side menu
     menu_sports: "Thể Thao",
@@ -49,6 +51,7 @@ export default {
     menu_slots: "NỔ HŨ",
     menu_fishing: "Bắn Cá",
     menu_cockfighting: "ĐÁ GÀ",
+    menu_rebate: "Hoàn Trả",
 
     // notify msg
     msg_update_successful: "Cập nhật thành công",

@@ -37,6 +37,8 @@ export default {
     username_between_6_12: "Username should contain 6-12 characters",
     first_digit_must_be_0: "First digit must be 0",
 
+    rebate_claim_now: "Claim now",
+
     // side menu
     menu_sports: "Sports",
     menu_esports: "eSports",
@@ -46,6 +48,7 @@ export default {
     menu_slots: "Slots",
     menu_fishing: "Fishing",
     menu_cockfighting: "Cock Fighting",
+    menu_rebate: "Rebate",
 
     // notify msg
     msg_update_successful: "Update successful",

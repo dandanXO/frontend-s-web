@@ -93,7 +93,7 @@
             <q-btn :label="$t('lang.deposit_btn')" no-caps class="btn-main btn-pointer" @click="openDeposit" />
 
             <q-btn :label="$t('lang.withdraw_btn')" no-caps class="btn-main btn-pointer" @click="openWithdraw" />
-
+            <q-btn :label="$t('lang.menu_rebate')" no-caps class="btn-main btn-pointer" @click="getRebateAmt" />
             <!-- <q-btn :label="$t('lang.transfer_btn')" no-caps class="btn-main btn-pointer" @click="openTransfer" /> -->
           </div>
         </q-card-section>
@@ -343,6 +343,27 @@
       </div>
     </q-card>
   </q-dialog>
+  
+  <q-dialog
+    width="100%"
+    class="modal-common-div"
+    v-model="isRebateModalVisible"
+    show-cancel-button
+    :showCancelButton="false"
+    :showConfirmButton="false"
+  >
+    <q-card style="width: 100%" class="modalcontent">
+      <div class="headers">
+        <div class="titles">{{ $t("lang.menu_rebate") }}</div>
+        <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
+      </div>
+        <div class="contents" style="font-size: 30px; color:#468CFF;">{{ rebateAmt }}</div>
+        <div class="btnsreas">
+          <div class="confirmsbtns common-md-btn btn-standard-height" @click="claimRebateAmt">{{$t('lang.rebate_claim_now')}}</div>
+          <div class="cacnels common-md-white-btn btn-standard-height" @click="isRebateModalVisible = false">{{$t('lang.cancel')}}</div>
+        </div>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
@@ -351,7 +372,7 @@ import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
 // import { RiRefreshLine } from "vue-remix-icons";
-import { api } from "boot/axios";
+import { api, eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 
 export default defineComponent({
@@ -489,6 +510,28 @@ export default defineComponent({
     const openTransfer = () => {
       router.push("account/transfer");
     };
+    
+    const isRebateModalVisible = ref(false)
+    const rebateAmt = ref(0);
+    const getRebateAmt = () => {
+      eventapi.get('/daily-rebate/available-amount').then((res) => {
+        if (res.code === 0) {
+          rebateAmt.value = res.data
+          isRebateModalVisible.value = true
+        } else {
+          
+        }
+      })
+    }
+    const claimRebateAmt = () => {
+      eventapi.put('/bonus/claim/vnm-daily-rebate').then((res) => {
+        if (res.code === 0) {
+          isRebateModalVisible.value = false
+        } else {
+          
+        }
+      })
+    }
     const getBalance = () => {
       isLoadingBalance.value = true;
       store.getBalance().then(() => {
@@ -557,7 +600,11 @@ export default defineComponent({
       getVipProgress,
       formatNumber,
       updatedVip,
-      isHideLevelUp
+      isHideLevelUp,
+      isRebateModalVisible,
+      rebateAmt,
+      getRebateAmt,
+      claimRebateAmt,
     };
   }
 });
