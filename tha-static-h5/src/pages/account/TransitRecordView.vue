@@ -1124,6 +1124,12 @@ export default defineComponent({
           //clear array and then push new record
           dataSource.splice(0);
           dataSource.push(...response.data.records);
+
+          if (recordActive.value === 'gameBetRecord') {
+            totalBetRecord.totalBet = response.data?.sums.totalBet
+            totalBetRecord.totalPayout = response.data?.sums.totalPayout
+          }
+
         } else {
           // $q.notify({
           //   color: "negative",
@@ -1183,19 +1189,19 @@ export default defineComponent({
           platformsList.value = ret.data
         }
       })
-      const obj = {
-        memberId: searchForm.gameBetRecord.memberId,
-        platform: searchForm.gameBetRecord.platform,
-        startDate: searchForm.gameBetRecord.startDate,
-        endDate: searchForm.gameBetRecord.endDate,
-      }
-      api.get("/session/member/betRecordTotal", {params: obj}).then((res) => {
-        const ret = res.data
-        if (ret.code === 0) {
-          totalBetRecord.totalBet = ret.data.totalBet
-          totalBetRecord.totalPayout = ret.data.totalPayout
-        }
-      })
+      // const obj = {
+      //   memberId: searchForm.gameBetRecord.memberId,
+      //   platform: searchForm.gameBetRecord.platform,
+      //   startDate: searchForm.gameBetRecord.startDate,
+      //   endDate: searchForm.gameBetRecord.endDate,
+      // }
+      // api.get("/session/member/betRecordTotal", {params: obj}).then((res) => {
+      //   const ret = res.data
+      //   if (ret.code === 0) {
+      //     totalBetRecord.totalBet = ret.data.totalBet
+      //     totalBetRecord.totalPayout = ret.data.totalPayout
+      //   }
+      // })
 
     };
     const betRecordDialog = ref(false)
