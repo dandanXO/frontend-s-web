@@ -6,7 +6,7 @@
       <div class="label label-grad">推广分享</div>
     </div>
     <p style="margin:1em 0px;">
-      您通过推广链接邀请的用户注册并存款，您将获得最高累计<span class="number">2,000</span>元的奖励。<router-link to="/promotion?name=dy2-summon-event">活动详情</router-link>
+      您通过推广链接邀请的用户注册并存款，您将获得最高累计<span class="number">2,000</span>元的奖励。<router-link to="/promotion?name=lh1-summon-event">活动详情</router-link>
     </p>
 
 
@@ -54,14 +54,14 @@
       </div>
       </div>
     </div>
-    <div class="share-content right">
+    <div class="share-content right" v-if="store.memberType==='TEST'">
       <div class="desc">
     <div class="form-field">
       <div class="label label-grad">唤醒分享</div>
     </div>
     <p style="margin:1em 0px;">
       您通过唤醒链接邀请的用户注册并存款，您将获
-得最高累计<span class="number">2,000</span>元的奖励。<router-link to="/promotion?name=dy2-summon-event">活动详情</router-link>
+得最高累计<span class="number">2,000</span>元的奖励。<router-link to="/promotion?name=lh1-summon-event">活动详情</router-link>
     </p>
   </div>
     <hr class="divider-style" />
@@ -79,7 +79,7 @@
 
     <hr class="divider-style" />
 
-    <div class="form-field qr-bg">
+    <div class="form-field qr-bg" >
       <div class="label qrtitle">唤醒二维码</div>
 
       <VueQRCodeComponent :size="180" :text="summonerLink" />
@@ -113,6 +113,7 @@ import moment from 'moment'
 import VueQRCodeComponent from 'vue-qrcode-component'
 import { useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
+import { userStore } from "@/store";
 
 export default defineComponent({
   name: "ShareView",
@@ -120,6 +121,7 @@ export default defineComponent({
     RiFacebookCircleLine, RiWhatsappLine, RiTelegramLine, RiTwitterLine, RiInstagramLine, VueQRCodeComponent, UserFilled, Money
   },
   setup() {
+    const store= userStore();
     const router = useRouter()
     const searchForm = reactive({
       date: moment('2022-03-03', 'YYYY-MM-DD'),
@@ -205,7 +207,8 @@ export default defineComponent({
       referredMember,
       depositMember,
       summonMember,
-      summonerLink
+      summonerLink,
+      store
     };
   },
 });

@@ -53,7 +53,7 @@
     ></LhStepGamePromo>
 
     <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel' && !isCommonPromo && store.token" />
-    <Summoner v-if="list.redirectUrl === 'dy2-summon-event' && !isCommonPromo && store.token" />
+    <Summoner v-if="list.redirectUrl === 'lh1-summon-event' && !isCommonPromo && store.token" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -413,7 +413,7 @@ export default defineComponent({
       this.list.redirectUrl === "lh-cs2-copenhagen-major-2024" ||
       this.list.redirectUrl === "lh1-spin-wheel" ||
       this.list.redirectUrl === "lh1-game-steps" ||
-      this.list.redirectUrl === "dy2-summon-event"
+      this.list.redirectUrl === "lh1-summon-event"
     ) {
       this.isCommonPromo = false;
     } else {
