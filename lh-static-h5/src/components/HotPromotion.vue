@@ -92,6 +92,7 @@
       :promo-code="list.promoCode"
     />
     <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel' && !isCommonPromo && store.token" />
+    <SummonerPromo v-if="list.redirectUrl === 'lh1-summon-event' && !isCommonPromo && store.token" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -145,6 +146,7 @@ import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Prom
 import LhStepGamePromo from "../components/hotpromo/lhstepgame/LhStepGamePromo.vue";
 import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
 import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
+import SummonerPromo from "../components/hotpromo/summoner/SummonerPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -177,7 +179,8 @@ export default defineComponent({
     CS2Sign,
     // CnyStepGame2024Promo
     BonusSpinWheel,
-    LhStepGamePromo
+    LhStepGamePromo,
+    SummonerPromo
   },
   props: {
     list: {
@@ -266,7 +269,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-lpl-game" ||
       this.list.redirectUrl === "lh-cs2-copenhagen-major-2024" ||
       this.list.redirectUrl === "lh1-spin-wheel" ||
-      this.list.redirectUrl === "lh1-game-steps"
+      this.list.redirectUrl === "lh1-game-steps" ||
+      this.list.redirectUrl === "lh1-summon-event"
     ) {
       this.isCommonPromo = false;
     } else {

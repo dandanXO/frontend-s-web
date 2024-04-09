@@ -196,6 +196,12 @@ const routes = [
     // component: () => {},
   },
   {
+    path: "/summon/:summonerCode",
+    name: "summonCode",
+    component: () => {}
+    // component: () => {},
+  },
+  {
     path: "/account",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/AccountPage.vue") }],
