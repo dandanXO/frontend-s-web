@@ -1352,17 +1352,17 @@ export default defineComponent({
         return "";
       }
       if (platformName === "AG") {
-        return "AG " + t('account.livecasino') + ", XIN" + t('account.slot'); // AG
+        return "AG " + t('account.livecasino') + ", XIN " + t('account.slot'); // AG
       }else if (platformName === "GPI") {
-        return "GPI " + t('account.slot') + ", GPI" + t('account.lottery'); // AG
+        return "GPI " + t('account.slot') + ", GPI " + t('account.lottery'); // AG
       }  else if (platformName === "BBINDY") {
-        return "BBIN"  + t('account.livecasino'); 
+        return "BBIN "  + t('account.livecasino');
       } else if (platformName === "KP") {
         return "King Poker" ; 
       } else if (platformName === "KM") {
         return "King Maker"; 
       } else if (platformName === "V8") {
-        return "V8" + t('account.poker'); 
+        return "V8 " + t('account.poker');
       } else if (platformName === "TCG") {
         return "TCG " + t('account.lottery') ; 
       }else if (platformName === "LOTTO") {
@@ -1406,7 +1406,7 @@ export default defineComponent({
       }else if (platformName === "SP") {
         return "SP " + t('account.fishing');
       }else if (platformName === "JILI") {
-        return "JILI  " + t('account.fishing');
+        return "JILI " + t('account.fishing');
       }   else {
         return platformName;
       }
