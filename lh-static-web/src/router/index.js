@@ -119,6 +119,11 @@ const routes = [
         component: () => {}
       },
       {
+        path: "/summon/:summonCode",
+        name: "summonCode",
+        component: () => {}
+      },
+      {
         path: "/privilege/invite",
         name: "invite",
         component: () => import("../views/PrivilegeInvite.vue")
@@ -144,6 +149,11 @@ const routes = [
         path: "/affiliate",
         name: "affiliate",
         component: () => import(/* webpackChunkName: "affiliate" */ "../views/AgentView.vue")
+      },
+      {
+        path: "/app-tutorial",
+        name: "appTutorial",
+        component: () => import(/* webpackChunkName: "appTutorial" */ "../views/AppTutorial.vue")
       }
     ]
   },
@@ -177,6 +187,10 @@ router.beforeEach((to, from, next) => {
   if (to.name === "referCode") {
     sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
     next(`/register?refer=1`);
+  }
+  if (to.name === "summonCode") {
+    sessionStorage.setItem("SUMMON_CODE", to.params.summonCode);
+    next(`/login?summon=1`);
   }
 
   if (store.token) {
