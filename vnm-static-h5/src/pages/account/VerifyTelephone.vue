@@ -1,6 +1,6 @@
 <template>
   <div class="personal-account">
-<!--    <div class="web">{{ $t("lang.personal_exclusiveurl") }}: {{ store.evip }}</div>-->
+    <!--    <div class="web">{{ $t("lang.personal_exclusiveurl") }}: {{ store.evip }}</div>-->
     <q-form ref="profileFormRef">
       <div class="flex items-center no-wrap">
         <q-input
@@ -137,23 +137,23 @@ export default defineComponent({
     const verificationImg = ref("");
     const getCode = () => {
       api
-          .get("/member/verificationCode")
-          .then((response) => {
-            if (response.code === 0) {
-              verificationImg.value =
-                  "data:image/png;base64," + response.data.img;
-              updateSecurityVerified.codeId = response.data.id;
-              innerCaptchaRef.value = "";
-            }
-          })
-          .catch((e) => {
-            $q.notify({
-              color: "negative",
-              position: "top",
-              message: e.message,
-              icon: "report_problem"
-            });
+        .get("/member/verificationCode")
+        .then((response) => {
+          if (response.code === 0) {
+            verificationImg.value =
+              "data:image/png;base64," + response.data.img;
+            updateSecurityVerified.codeId = response.data.id;
+            innerCaptchaRef.value = "";
+          }
+        })
+        .catch((e) => {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: e.message,
+            icon: "report_problem"
           });
+        });
     };
     //update security
 
@@ -182,7 +182,9 @@ export default defineComponent({
       phoneNumberRef.value.validate()
       if (phoneNumberRef.value.hasError || phoneOtpRef.value.hasError) {
       } else {
-        api.post("/otp/verifyPhone", qs.stringify({
+        var apiUrl="session/verifyPhoneForVNM";
+
+        api.post(apiUrl, qs.stringify({
           phone: formDetails.phone,
           code: formDetails.phoneOtpRef,
           codeId: phoneCodeId.value
@@ -221,13 +223,6 @@ export default defineComponent({
     const showCaptchaDialog = ref(false);
     const showVerifyBtn = ref(true);
     const showVerificationTokenInput = ref(false)
-
-
-    const isValidName = () => {
-      const namePattern =
-          /^([\u4e00-\u9fa5]*)$/;
-      return namePattern.test(formDetails.realName) || "请输入中文字符";
-    };
 
     const isValidPhone = () => {
       const phonePattern = /^(0[1-9]|[1-9])(\d{8,9})$/;
@@ -277,31 +272,31 @@ export default defineComponent({
         captchaCode: innerCaptchaRef.value,
         codeId: updateSecurityVerified.codeId
       }))
-          .then(res => {
+        .then(res => {
+          getCode();
+          let message = res.message || t('lang.personal_verification_successful'),
+            color = 'positive'
+
+          if (res.code === 0) {
+            canEdit.value = true;
+            showCaptchaDialog.value = false
+            showVerifyBtn.value = false;
+            showVerificationTokenInput.value = true
+            phoneCodeId.value = res.data.codeId;
+            // console.log(res.data.codeId)
+            countdownOtp();
+          } else {
+            color = 'negative';
             getCode();
-            let message = res.message || t('lang.personal_verification_successful'),
-                color = 'positive'
-
-            if (res.code === 0) {
-              canEdit.value = true;
-              showCaptchaDialog.value = false
-              showVerifyBtn.value = false;
-              showVerificationTokenInput.value = true
-              phoneCodeId.value = res.data.codeId;
-              // console.log(res.data.codeId)
-              countdownOtp();
-            } else {
-              color = 'negative';
-              getCode();
-            }
+          }
 
 
-            if (message) {
-              $q.notify({message, color});
-            }
+          if (message) {
+            $q.notify({message, color});
+          }
 
-            // console.log('onCaptchaSubmit', res)
-          })
+          // console.log('onCaptchaSubmit', res)
+        })
     }
 
     onMounted(() => {
@@ -339,7 +334,6 @@ export default defineComponent({
       birthdayRef,
       moment,
       canEdit,
-      isValidName,
       phoneNumberRef,
       showVerificationTokenInput,
       isValidPhone,
