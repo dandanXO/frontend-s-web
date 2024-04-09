@@ -239,7 +239,8 @@ const phoneLogin = () => {
           phoneNumber: loginForm.phoneNumber,
           sid: sidParam,
           code: loginForm.code,
-          smsCodeId: loginForm.smsCodeId
+          smsCodeId: loginForm.smsCodeId,
+          summoner: loginForm.summoner
         })
         .then(() => {
           const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
@@ -247,6 +248,7 @@ const phoneLogin = () => {
             router.push(jumpUrl);
 
             sessionStorage.removeItem("REFERRAL_CODE");
+            sessionStorage.removeItem("SUMMON_CODE");
           } else {
             loginForm.phoneNumber = null;
             loginForm.code = null;
@@ -271,10 +273,19 @@ const getCode = () => {
     }
   });
 };
+
+const getSummonCode = () => {
+  const summonCode = sessionStorage.getItem("SUMMON_CODE");
+// && route.query && route.query.refer
+  if (summonCode) {
+    loginForm.summoner = summonCode;
+  }
+};
 const verificationImg = ref("");
 
 onMounted(() => {
   getCode();
+  getSummonCode();
 });
 </script>
 

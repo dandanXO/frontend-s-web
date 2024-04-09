@@ -89,6 +89,10 @@ export default route(function (/* { store, ssrContext } */) {
       next(`/login?register`);
     }
 
+    if (to.name === "summonCode") {
+      sessionStorage.setItem("SUMMON_CODE", to.params.summonerCode);
+      next(`/login`);
+    }
     // if (to.name === "RegisterPage") {
     //   next(`/login?register`);
     // }

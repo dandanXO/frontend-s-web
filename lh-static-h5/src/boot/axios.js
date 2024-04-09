@@ -11,7 +11,10 @@ const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
 
-const isGlobalLH = window.location.hostname.indexOf("lh318") > -1;
+const globalLinks= ["lh318","lh165","lh765","lh730","lh971","lh835"];
+console.log(window.location.hostname);
+const isGlobalLH = globalLinks.some(link => window.location.hostname.includes(link));
+
 if (isGlobalLH) {
   var rstApi = "https://apc2ttgdgl.grsib6dfily.com";
   var evtApi = "https://pr5z5egdgl.grsib6dfily.com";

@@ -372,6 +372,10 @@ export default defineComponent({
           prevPage.value = "login";
           hasPage.value = true;
           pageName.value = "注册";
+        } else if (route.path === "/app-tutorial") {
+          prevPage.value = "account/invite";
+          hasPage.value = true;
+          pageName.value = "APP安装教程";
         }
 
         if (route.query.redirect) {

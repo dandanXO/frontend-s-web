@@ -30,9 +30,9 @@
         <!--<img src="img/download_pic.png" style="width: 90%;margin-top: 10px;"/> -->
         <img src="img/download_text.png" style="width: 90%;max-width:650px;margin-top: 15px;"/>
         <img src="img/download-icons_2.png" style="width: 80%;max-width:500px;margin-top: 25px;"/>
-		<div id="desc" style="display:none;color:#fff;">安装新APP，请先卸载旧版本</div>
+        <div id="desc" style="display:none;color:#fff;">安装新APP，请先卸载旧版本</div>
         <div class="games_title_container"></div>
-        <div style="width:100%; text-align: center;padding:20px 0px 10px;font-size:18px;font-weight: bold;"
+        <div style="width:100%; text-align: center;padding:20px 0px 10px;font-size:18px;font-weight: bold;color:#fff;"
              id="before-load">加载中。。。
         </div>
         <div id="android-lists"
@@ -88,24 +88,24 @@
     var iosDownload = [];
     var androidDownload = [];
     var host = window.location.host;
-	const dataUrl='https://tfwkal.nc547frt0an.com'
-	var liveUrl1 = "";
-	var liveUrl2 = "";
+    const dataUrl='https://tfwkal.nc547frt0an.com'
+    var liveUrl1 = "";
+    var liveUrl2 = "";
 
     getApiUrl();
-	getCustomerUrl();
+    getCustomerUrl();
 
     $('#dy_customer').click(() => {
-		window.open(liveUrl1)
+        window.open(liveUrl1)
     })
-	
-	  async function getCustomerUrl() {
+
+    async function getCustomerUrl() {
         try {
             const response = await fetch(dataUrl+`/getCustomerService`);
             const data = await response.json();
             if (data&&data.code === 0) {
                 liveUrl1 = data.data.liveUrl1;
-				liveUrl2 = data.data.liveUrl2;
+                liveUrl2 = data.data.liveUrl2;
             }
 
         } catch (error) {
@@ -128,7 +128,13 @@
 
                 checkPlatform();
             }
+            setTimeout(()=>{
+                if (iosDownload.length === 0 && androidDownload.length === 0) {
+                    $("#before-load").text("加载失败，请重连页面")
+                }
+            },5000);
         } catch (error) {
+            $("#before-load").text("加载失败，请重连页面")
             console.log(error)
         }
     }
@@ -216,7 +222,7 @@
     }
 
     function showIOS() {
-	  $('#desc').show();
+        $('#desc').show();
         for (var i = 0; i < iosList.length; i++) {
             $(".swiper-wrapper").append(
                 '<div class="swiper-slide"><img src="' +

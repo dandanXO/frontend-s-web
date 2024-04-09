@@ -57,6 +57,7 @@ export default {
     cockfight: 'Cockfight',
     deposit_should_between: "Deposit amount should between ",
     msg_deleted: "Message deleted",
+    please_select_bank: "Please select bank"
   },
   login: {
     username: 'Username',
@@ -118,6 +119,7 @@ export default {
     bindEmailFirst: 'Kindly bind your email first',
     success: 'Successful',
     sendPhoneVerificationSuccess: 'Phone verification sent successfully',
+    bankCard: "Account number"
   },
   home: {
     appDownload: 'APP Download',

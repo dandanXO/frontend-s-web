@@ -295,10 +295,10 @@ $node-color: #468cff;
       .node-text {
         display: flex;
         gap: 5px;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         & > div {
-          font-size: 12px;
+          font-size: 10.5px;
           color: #000;
         }
         img {
@@ -335,7 +335,7 @@ $node-color: #468cff;
 
     .node-text {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       // gap: 5px;
       flex-direction: column;
@@ -445,7 +445,7 @@ $node-color: #468cff;
   }
 }
 
-@media (max-width: 355px) {
+@media (max-width: 375px) {
   .payment-method-wrapper {
     grid-template-columns: repeat(4, 1fr);
   }

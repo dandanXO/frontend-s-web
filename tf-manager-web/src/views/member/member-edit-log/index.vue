@@ -338,6 +338,7 @@ import moment from 'moment'
 import {
   createMemberEditLog,
   getMemberEditLogList,
+  getMemberEditLogSensitiveList,
   preCheckForCreate,
   check,
   fail,
@@ -386,6 +387,7 @@ const uiControl = reactive({
     { key: 8, displayName: 'Risk Level', value: 'RISK_LEVEL' },
     { key: 9, displayName: 'Member Type', value: 'MEMBER_TYPE' },
     { key: 10, displayName: 'Financial Level', value: 'FINANCIAL_LEVEL' },
+    { key: 11, displayName: 'Withdraw Password', value: 'WITHDRAW_PASSWORD' },
   ],
 })
 const request = reactive({
@@ -506,9 +508,15 @@ async function loadMemberEditLog() {
     query.createTime[1] = formatInputTimeZone(query.createTime[1], timeZone, 'end');
     query.createTime = query.createTime.join(',')
   }
-  const { data: ret } = await getMemberEditLogList(query)
-  page.pages = ret.pages
-  page.records = ret.records
+  if (hasPermission(['sys:member:editlog:check'])) {
+    const { data: ret } = await getMemberEditLogList(query)
+    page.pages = ret.pages
+    page.records = ret.records
+  } else {
+    const { data: ret } = await getMemberEditLogSensitiveList(query)
+    page.pages = ret.pages
+    page.records = ret.records
+  }
 }
 
 async function loadSites() {

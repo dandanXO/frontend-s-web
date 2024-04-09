@@ -389,11 +389,13 @@ export default defineComponent({
                 password: loginForm.password,
                 sid: sidParam,
                 captchaCode: loginForm.captchaCode,
-                codeId: loginForm.codeId
+                codeId: loginForm.codeId,
+                summoner: loginForm.summoner
               })
               .then(() => {
                 $q.loading.hide();
                 sessionStorage.removeItem("REFERRAL_CODE");
+                sessionStorage.removeItem("SUMMON_CODE");
 
                 if (isCheckRmb.value) {
                   localStorage.setItem(
@@ -443,11 +445,13 @@ export default defineComponent({
                 phoneNumber: phoneLoginForm.phoneNumber,
                 sid: sidParam,
                 code: phoneLoginForm.code,
-                smsCodeId: phoneLoginForm.smsCodeId
+                smsCodeId: phoneLoginForm.smsCodeId,
+                summoner: loginForm.summoner
               })
               .then(() => {
                 $q.loading.hide();
                 sessionStorage.removeItem("REFERRAL_CODE");
+                sessionStorage.removeItem("SUMMON_CODE");
                 loginFormRef.value.reset();
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/";
@@ -476,6 +480,13 @@ export default defineComponent({
       router.push("/");
     };
 
+    const getSummonCode = () => {
+      const summonCode = sessionStorage.getItem("SUMMON_CODE");
+    // && route.query && route.query.refer
+      if (summonCode) {
+        loginForm.summoner = summonCode;
+      }
+    };
     onMounted(() => {
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has("register")) {
@@ -485,6 +496,7 @@ export default defineComponent({
     });
     onActivated(() => {
       getCode();
+      getSummonCode();
     });
 
     return {

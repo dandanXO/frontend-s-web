@@ -1000,6 +1000,16 @@
             </span>
           </div>
         </router-link>
+        <router-link to="/promo?id=77">
+          <div class="popup-item">
+            <span>
+              ยอดฝากรายวันรับ
+              <em>30%</em>
+              สูงสุด
+              <em>2,000</em>
+            </span>
+          </div>
+        </router-link>
       </div>
     </div>
   </q-dialog>

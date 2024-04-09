@@ -77,7 +77,7 @@
                     />
                   </el-form-item>
                 </el-tooltip>
-                <div style="margin:20px 0px">
+                <div style="margin:20px 0px" v-if="props.siteId !== '8'">
                   <el-link type="primary" @click="forgetPasswordDialog">
                     {{
                       $t('common.forgetpass')
@@ -103,7 +103,7 @@
                   </el-button>
                 </div>
 
-                <div v-if="props.siteId !== '5'" class="flex-c-center-div">
+                <div v-if="props.siteId !== '5' || props.siteId !== '8'" class="flex-c-center-div">
                   <div class="contact-div" @click="swipeToContactUs">
                     {{ $t('common.contact_us') }}
                   </div>
@@ -211,7 +211,7 @@
                       {{ $t('common.back_login') }}
                     </el-button>
                   </div>
-                  <div v-if="props.siteId !== '5'" class="flex-c-center-div">
+                  <div v-if="props.siteId !== '5' || props.siteId !== '8'" class="flex-c-center-div">
                     <div class="contact-div" @click="swipeToContactUs">
                       {{ $t('common.contact_us') }}
                     </div>
@@ -557,18 +557,18 @@ export default defineComponent({
   setup(props) {
     const validatePass2 = async (r, v) => {
       if (v === '') {
-        return Promise.reject(new Error('密码确认不能为空'))
+        return Promise.reject(new Error(t('message.required_confirm_pwd')))
       } else if (v !== state.regForm.password) {
-        return Promise.reject(new Error('与登录密码不一致'))
+        return Promise.reject(new Error(t('message.required_same_with_password')))
       } else {
         return Promise.resolve()
       }
     }
     const validateResetPass2 = async (r, v) => {
       if (v === '') {
-        return Promise.reject(new Error('密码确认不能为空'))
+        return Promise.reject(new Error(t('message.required_confirm_pwd')))
       } else if (v !== state.resetForm.password) {
-        return Promise.reject(new Error('与登录密码不一致'))
+        return Promise.reject(new Error(t('message.required_same_with_password')))
       } else {
         return Promise.resolve()
       }
@@ -666,26 +666,26 @@ export default defineComponent({
         userName: [
           {
             required: true,
-            message: '代理账号不能为空',
+            message: t('message.required_signup_account'),
             trigger: 'blur',
           },
           {
             min: 6,
             max: 12,
-            message: '由6-12位数字或字母组成',
+            message: t('message.required_6_to_12'),
             trigger: 'blur',
           },
         ],
         password: [
           {
             required: true,
-            message: '登录密码不能为空',
+            message: t('message.requried_password'),
             trigger: 'blur',
           },
           {
             min: 6,
             max: 12,
-            message: '由6-12位数字或字母组成',
+            message: t('message.required_6_to_12'),
             trigger: 'blur',
           },
         ],
@@ -740,13 +740,13 @@ export default defineComponent({
         captchaCode: [
           {
             required: true,
-            message: '验证码不能为空',
+            message: t('message.required_captcha'),
             trigger: 'blur',
           },
           {
             min: 4,
             max: 4,
-            message: '由4位数字组成',
+            message: t('message.required_4_digits'),
             trigger: 'change',
           },
         ],
@@ -1026,7 +1026,8 @@ export default defineComponent({
       onGetImage: async () => {
         state.dialogLoading = true
         state.coordinates.splice(0)
-        const { data } = await getVerificationImage()
+        const imgType = (languageVal === 'vi' || languageVal === 'en') ? 1 : 0;
+        const { data } = await getVerificationImage(imgType)
         Object.keys({ ...data.data }).forEach(field => {
           state[field] = data.data[field]
         })
@@ -1142,7 +1143,7 @@ export default defineComponent({
 
     const currentSite = ref({})
     const i18nStoreLanguage = i18nStore()
-    const { setLanguage } = i18nStoreLanguage
+    const { setLanguage, languageVal } = i18nStoreLanguage
     const populateCurrentSiteData = () => {
       if (props.siteId === '6') {
         currentSite.value.firstLiner = '从东赢开始'
@@ -1465,7 +1466,8 @@ a {
         position: relative;
         .log {
           font-weight: bold;
-          font-family: fzh;
+          //font-family: fzh;
+          font-family : Oxanium, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
           font-size: 32px;
           padding-left: 15px;
         }

@@ -207,7 +207,7 @@ export default {
     share_accumulated_recharge: "Nạp tiền tích lũy",
     share_persons: "Người",
     share_invitefriends: "Mời Bạn Bè",
-    share_table_header_01: "Chuyển Ví",
+    share_table_header_01: "Tên tài khoả",
     share_table_header_02: "Thời gian đăng ký",
     share_table_header_03: "Bắt đầu đặt cược",
     share_table_header_04: "trạng thái",
@@ -1241,7 +1241,9 @@ export default {
     poker: "POKER",
     lottery: "Lottery",
     fishing: "Fishing",
-    cockfight: "Cockfight"
+    cockfight: "Cockfight",
+    copy_success: "Liên kết đã được sao chép thành công!",
+    enter_transfer_amount: "Nhập số tiền chuyển"
   },
   error: {
     101: "Không tìm thấy nền tảng",
