@@ -35,7 +35,7 @@ const initContactList = () => {
   contactlist.value = [
     {
       icon: 'cmail',
-      type: '合营部电邮',
+      type: t('common.email'),
       link: 'affiliate@dyvip99.com',
       btns: [{
         text: t('fields.enquire'),
@@ -44,7 +44,7 @@ const initContactList = () => {
     },
     {
       icon: 'cqq',
-      type: '合营QQ',
+      type: t('common.qq'),
       link: '100983290',
       btns: [{
         text: t('fields.copy'),
@@ -57,7 +57,7 @@ const initContactList = () => {
     },
     {
       icon: 'cskype',
-      type: '合营部Skype',
+      type: t('common.skype'),
       link: 'Live:cid.b2a14236...',
       btns: [{
         text: t('fields.copy'),
@@ -70,7 +70,7 @@ const initContactList = () => {
     },
     {
       icon: 'cflygram',
-      type: '合营Flygram',
+      type: t('common.telegram'),
       link: 'dybet5',
       btns: [{
         text: t('fields.copy'),
