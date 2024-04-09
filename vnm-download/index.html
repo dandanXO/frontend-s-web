@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="/style/css/download.css?v=1">
     <link rel="stylesheet" type="text/css" href="/style/css/swiper-3.4.1.min.css?v=3" />
     <script type="text/javascript" src="/style/js/jquery-3.2.1.min.js?v=5" ></script>
-    <script type="text/javascript" src="/style/js/swiper-3.4.1.min.js?v=5"></script>
+    <script src="js/jquery-3.6.1.min.js?v=5" type="text/javascript"></script>
     <script type="text/javascript" src="/style/js/download.js?v=5"></script>
     <script type="text/javascript" src="/style/js/clipboard.min.js?v=5"></script>
     <script type="text/javascript" src="https://village.muinegoodview.com/tf-website.txt"></script>
@@ -53,11 +53,11 @@
     </style>
 </head>
 <body>
-<div class="download">
+<div class="download" style="background-image:url('style/images/bg.png')">
     <div class="remind">
         <div class="content">
             <a class="logo"><img src="/style/images/logo.png" width="73px" height="73px"/></a>
-            <h3>TF app</h3>
+            <h3>TF App <span id="ver-no">()</span></h3>
             <div class="remind-txt">
                 Hỗ trợ tất cả các game thể thao, Live Casino, Slots, Bắn cá trong một ứng dụng<br>
                 đặt cược dễ dàng và nhanh chóng<br>
@@ -88,6 +88,8 @@
     </div> -->
 </div>
 <script>
+    var versionNo= "1.0.1";
+
     var andList=[
         {imgurl:'/style/images/web/android/1.png'},
         {imgurl:'/style/images/web/android/2.png'},
@@ -105,8 +107,11 @@
         {imgurl:'/style/images/web/ios/6.png'}
     ];
     var type = "ALL_AND";
-    $(function(){
-
+    $(document).ready(function (e) {
+        var suffixAgent= "";
+        $("#ver-no").html("(v" + versionNo + ")");
+        var agentCode = getQueryString("agentCode");
+        console.log(agentCode);
 
         function is_weixin() {
             var ua = navigator.userAgent.toLowerCase();
@@ -135,28 +140,23 @@
                 //window.location.href="downloadty_com.html";
                 showAndroid();
             };
-            var host = window.location.host;
-            var vv={agentCode:getQueryString("agentCode"),regFrom:getQueryString("url"),downloadUrl:host};
-            $('#download').attr('data-clipboard-text', "UIO"+JSON.stringify(vv));
-            new ClipboardJS('.install');
-            $("#download").click(function() {
-                postDownloadExtra(type, host);
-            });
-        };
+            // var host = window.location.host;
+            // var vv={agentCode:getQueryString("agentCode"),regFrom:getQueryString("url"),downloadUrl:host};
+        }
+
     });
+
     function showAndroid(){
         for(var i=0;i<andList.length;i++){
             $(".swiper-wrapper").append('<div class="swiper-slide"><img src="'+andList[i].imgurl+'" alt=""/></div>')
         };
-        $('#download').attr('href','https://village.muinegoodview.com/tf_app.apk?v='+Math.random());
+        $('#download').attr('href',`https://file.rd7etvkrgt.com/apps/8/tf88-app-${versionNo}.apk?v=`+Math.random());
     }
-    function getPlist()
-    {
-        return "itms-services://?action=download-manifest&url=https://village.muinegoodview.com/tf-website.plist";
-    }
+
     function showIOS()
     {
-        $('#download').attr('href',getPlist());
+        $("#download").attr("download", "jolly88.mobileconfig");
+        $('#download').attr('href', "itms-services://?action=download-manifest&url=https://village.muinegoodview.com/tf-website.plist");
     }
     function getIosPath()
     {
