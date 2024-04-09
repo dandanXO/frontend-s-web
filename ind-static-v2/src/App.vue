@@ -130,7 +130,7 @@ export default defineComponent({
       if (omitSites.includes(window.location.host)) {
         affiliateCode = "E4B265";
       } else {
-        affiliateCode = "8999B3";
+        affiliateCode = "3B1BFB";
       }
 
       sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
