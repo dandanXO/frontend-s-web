@@ -10,7 +10,7 @@
         <div class="card-panel-description">
           <span style="font-size: 20px; font-weight: normal;">
             {{
-              item.way === 'PC' ? $t('fields.affiliateShortLink') : $t('fields.affiliateShortLink')
+              item.way === 'PC' ? $t('referralLink.affiliateShortLink') : $t('referralLink.affiliateShortLink')
             }}
           </span>
           <a :href="item.domain" target="_blank" style="color: #3F8CFF">
