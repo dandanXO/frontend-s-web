@@ -107,8 +107,8 @@ export default {
     DEPOSIT_WALLET_AMOUNT_ADJUST: '额度调整',
   },
   referralLink: {
-    affiliateWebPlatformLink: 'PC端代理链接',
-    affiliateH5PlatformLink: 'H5版代理链接（推荐使用）',
+    affiliateWebPlatformLink: 'PC端推广链接',
+    affiliateH5PlatformLink: 'H5版推广链接（推荐使用）',
     affiliateWXShortLink: '防封短链 (微信)',
     affiliateQQShortLink: '防封短链 (QQ)',
     affiliateLongLink: '长连接',
