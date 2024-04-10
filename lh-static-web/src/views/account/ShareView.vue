@@ -54,7 +54,7 @@
       </div>
       </div>
     </div>
-    <div class="share-content right" v-if="store.memberType==='TEST'">
+    <div class="share-content right" v-if="store.memberType==='TEST' || store.memberType==='PROMO_TEST'">
       <div class="desc">
     <div class="form-field">
       <div class="label label-grad">唤醒分享</div>
