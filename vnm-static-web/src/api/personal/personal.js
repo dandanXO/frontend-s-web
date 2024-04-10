@@ -131,4 +131,9 @@ export function verifySms(telephoneInfo) {
 
   return server.REST.post(apiUrl, telephoneInfo);
 }
-
+export function dailyRebateAmt() {
+  return server.EVENT.get("/daily-rebate/available-amount");
+}
+export function claimRebate() {
+  return server.EVENT.put("/bonus/claim/vnm-daily-rebate");
+}

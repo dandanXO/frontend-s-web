@@ -462,7 +462,47 @@
       </a>
     </div>
   </div>
+  <q-page-sticky position="bottom-right" :offset="fabPos">
+    <q-fab
+      icon="money"
+      color="info"
+      :disable="draggingFab"
+      v-touch-pan.prevent.mouse="moveFab"
+      @click="getRebateAmt"
+      persistent
+    >
+        <template v-slot:icon="{ opened }">
+          <q-icon :class="{ 'example-fab-animate--hover': opened !== true }" name="money" />
+        </template>
 
+        <template v-slot:active-icon="{ opened }">
+          <q-icon :class="{ 'example-fab-animate': opened === true }" name="money" />
+        </template>
+    </q-fab>
+  </q-page-sticky>
+  <q-dialog
+    width="100%"
+    class="modal-update-div"
+    v-model="isRebateModalVisible"
+    show-cancel-button
+    :showCancelButton="false"
+    :showConfirmButton="false"
+  >
+    <q-card style="width: 100%" class="bg-bright text-black">
+      <div class="modalcontent">
+        <div class="headers">
+          <div style="width: 16px">&nbsp;</div>
+          <div class="titles">{{$t('lang.menu_rebate')}}</div>
+          <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
+        </div>
+        <div class="contents">{{ rebateAmt }}</div>
+        <div class="btnsreas">
+          <div class="confirmsbtns common-md-btn" @click="claimRebateAmt">{{$t('lang.rebate_claim_now')}}</div>
+          <div class="cancels common-md-white-btn" @click="isRebateModalVisible = false">{{$t('lang.cancel')}}</div>
+        </div>
+      </div>
+    </q-card>
+  </q-dialog>
   <GameModal ref="allGames"></GameModal>
 
   <q-dialog
@@ -483,7 +523,7 @@
         <div class="contents">检测到新版本，您是否要更新？</div>
         <div class="btnsreas">
           <div class="confirmsbtns common-md-btn" @click="openDownloadPage">立即更新</div>
-          <div class="cacnels common-md-white-btn" @click="cancelUpdate">取消</div>
+          <div class="cancels common-md-white-btn" @click="cancelUpdate">取消</div>
         </div>
       </div>
     </q-card>
@@ -553,7 +593,7 @@
 <script>
 import { computed, defineComponent, onActivated, reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { api } from "boot/axios";
+import { api, eventapi } from "boot/axios";
 import { cached } from "boot/cache";
 import { Platform, useQuasar } from "quasar";
 import { userStore } from "stores/index";
@@ -583,6 +623,29 @@ export default defineComponent({
     LangOptions
   },
   setup() {
+    const fabPos = ref([ 18, 18 ])
+    const draggingFab = ref(false)
+    const isRebateModalVisible = ref(false)
+    const rebateAmt = ref(0);
+    const getRebateAmt = () => {
+      eventapi.get('/daily-rebate/available-amount').then((res) => {
+        if (res.code === 0) {
+          rebateAmt.value = res.data
+          isRebateModalVisible.value = true
+        } else {
+          
+        }
+      })
+    }
+    const claimRebateAmt = () => {
+      eventapi.put('/bonus/claim/vnm-daily-rebate').then((res) => {
+        if (res.code === 0) {
+          isRebateModalVisible.value = false
+        } else {
+          
+        }
+      })
+    }
     const isFirstView = ref(false);
     const closeAlert = () => {
       localStorage.setItem("indexImgTop", new Date().getTime());
@@ -1080,13 +1143,13 @@ export default defineComponent({
     const getVersionNo = async () => {
       if (Platform.is.android && Platform.is.capacitor) {
         const info = await App.getInfo();
-        var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
+        var current_version = parseInt(info.version.replace(/\./g, "") + info.build);
         const appType = "ALL";
         const device = Platform.is.android ? "ANDROID" : "IOS";
         const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
         if (res.code === 0) {
           var version_info = res.data.version;
-          var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
+          var latest_ver_no = parseInt(version_info.replace(/\./g, ""));
           download_url.value = res.data.url;
           if (latest_ver_no > current_version) {
             isAppUpdateModal.value = true;
@@ -1245,7 +1308,22 @@ export default defineComponent({
       getUnreadTotal,
       topBoxVisible,
       isMenuFloat,
-      toggleMenuFloat
+      toggleMenuFloat,
+      isRebateModalVisible,
+      rebateAmt,
+      getRebateAmt,
+      claimRebateAmt,
+      fabPos,
+      draggingFab,
+
+      moveFab (ev) {
+        draggingFab.value = ev.isFirst !== true && ev.isFinal !== true
+
+        fabPos.value = [
+          fabPos.value[ 0 ] - ev.delta.x,
+          fabPos.value[ 1 ] - ev.delta.y
+        ]
+      }
     };
   }
 });
@@ -1586,8 +1664,8 @@ export default defineComponent({
       box-sizing: border-box;
       padding: 20px 12px 15px;
       text-align: center;
-      color: $font-2;
-      font-size: 1.2rem;
+      color: #468CFF;
+      font-size: 2.2rem;
 
       .contentfonts {
         text-align: center;
@@ -1622,7 +1700,7 @@ export default defineComponent({
       margin-top: 20px;
       gap: 15px;
 
-      .cacnels {
+      .cancels {
         flex: 1;
         box-sizing: border-box;
         text-align: center;
@@ -1632,6 +1710,7 @@ export default defineComponent({
         align-items: center;
         justify-content: center;
         margin-right: 8px;
+        padding: 10px !important;
       }
 
       .confirmsbtns {
@@ -1643,6 +1722,7 @@ export default defineComponent({
         align-items: center;
         justify-content: center;
         letter-spacing: 1px;
+        padding: 10px !important;
       }
     }
   }

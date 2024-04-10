@@ -93,16 +93,22 @@
         <div v-if="store.token" class="profile-actions">
           <router-link to="/center/deposit" class="action-btn">
             <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-deposit.png" />
+              <img src="../../assets/images/home/profile-action-deposit.svg" />
             </div>
            {{ $t('menu.deposit') }}
           </router-link>
           <router-link to="/center/withdraw" class="action-btn">
             <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-withdraw.png" />
+              <img src="../../assets/images/home/profile-action-withdraw.svg" />
             </div>
             {{ $t('menu.withdraw') }}
           </router-link>
+          <div class="action-btn" @click="showRebateValue">
+            <div class="icon-rounded">
+              <img src="../../assets/images/home/profile-action-rebate.svg" />
+            </div>
+            {{ $t('menu.rebate') }}
+          </div>
           <!-- <router-link to="/center/transfer" class="action-btn">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-transfer.png" />
@@ -420,7 +426,15 @@
         </div>
       </div>
     </el-dialog>
-
+    <el-dialog class="" v-model="isRebateDialogVisible" width="600px" align-center>
+      <div class="noticedialog">
+        <div class="title" style="flex-direction: column;display:flex;">{{$t('vip.rebateBonus')}} <span style="font-size: 30px; color: #5196ff;">{{ rebateAmt ? rebateAmt : 0 }}</span></div>
+        <div class="standard-button-container">
+          <button class="standard-button btn-color-white" @click="isRebateDialogVisible = false">{{$t('common.cancel')}}</button>
+          <button class="standard-button btn-color-blue" @click="claimNow()">{{$t('promo.btn_claim_now')}}</button>
+        </div>
+      </div>
+    </el-dialog>
     <GameModal ref="modalGame"></GameModal>
   </header>
 </template>
@@ -436,7 +450,7 @@ import { useRoute, useRouter } from "vue-router";
 import { userStore } from "@/store/index";
 import { getVerificationCode, register } from "@/api/index/login";
 import { findAccount } from "@/api/index/forgotPwd";
-import { sendSms } from "@/api/personal/personal";
+import { sendSms, dailyRebateAmt, claimRebate } from "@/api/personal/personal";
 import { ElMessage } from "element-plus";
 import {displayBalance} from "@/utils/utils"
 import {
@@ -1115,8 +1129,30 @@ export default defineComponent({
     const openGame = (gameName, code, gameCode) => {
       modalGame.value.open(gameName, code, gameCode);
     };
+    const rebateAmt = ref(0);
+    const isRebateDialogVisible = ref(false);
+    const showRebateValue = () => {
+      dailyRebateAmt().then((res) => {
+        if (res.code === 0) {
+          isRebateDialogVisible.value = true
+          rebateAmt.value = res.data
+        } else {
+          ElMessage.error(res.message)
+        }
+      })
+    }
+    const claimNow = () => {
+      claimRebate().then((res) =>{
 
-
+        if(res.code === 0) {
+        
+        isRebateDialogVisible.value = false;
+        ElMessage.success($t('common.claimedSuccess'))
+      } else {
+        ElMessage.error(res.message)
+      }
+      })
+    }
     onMounted(() => {
 
       if (regCountdown.value > 0)
@@ -1484,7 +1520,11 @@ export default defineComponent({
       openRegDialog,
       openForgotpwdDialog,
       navigations,
-      languageVal
+      languageVal,
+      showRebateValue,
+      isRebateDialogVisible,
+      claimRebate,
+      claimNow
     };
   }
 });
@@ -1621,7 +1661,7 @@ body {
   .action-btn {
     // height: 30px;
     gap: 2px;
-    width: 40px;
+    width: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1651,7 +1691,7 @@ body {
 
     img {
       display: block;
-      width: 16px;
+      width: 20px;
     }
   }
 
