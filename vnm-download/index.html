@@ -57,7 +57,7 @@
     <div class="remind">
         <div class="content">
             <a class="logo"><img src="/style/images/logo.png" width="73px" height="73px"/></a>
-            <h3>TF App <span id="ver-no">()</span></h3>
+            <h3>TF App <span id="ver-no">().</span></h3>
             <div class="remind-txt">
                 Hỗ trợ tất cả các game thể thao, Live Casino, Slots, Bắn cá trong một ứng dụng<br>
                 đặt cược dễ dàng và nhanh chóng<br>
@@ -155,8 +155,8 @@
 
     function showIOS()
     {
-        $("#download-link").attr("href", "./download/TF88.mobileconfig");
-        $("#download-link").attr("download", "TF88.mobileconfig");
+        $("#download").attr("href", "./download/TF88.mobileconfig");
+        $("#download").attr("download", "TF88.mobileconfig");
     }
     function getIosPath()
     {
@@ -167,6 +167,7 @@
             };
             if(getIsPath())
             {
+                console.log("HERE");
                 var path=getTestFlightIosPath();
                 $('#download').attr('href',path);
             }
