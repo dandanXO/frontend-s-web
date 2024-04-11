@@ -41,7 +41,7 @@ export default {
     first_digit_must_be_0: "Chữ số đầu tiên phải là 0",
     rebate_claim_now: "Yêu cầu ngay",
     not_logged_in: "Bạn chưa đăng nhập",
-    login_register_to_view: "Đăng nhập/Đăng ký để xem",
+    login_register_to_view: "Vui lòng đăng nhập/đăng ký tài khoản để xem",
 
     // side menu
     menu_sports: "Thể Thao",
