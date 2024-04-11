@@ -1253,7 +1253,7 @@ export default defineComponent({
 
     const getAppDownloadUrl = () => {
       api
-        .get("/app/getAppData?siteCode=lh1&appType=ALL_SITE")
+        .get("/app/getAppData?siteCode=vnm&appType=ALL_SITE")
         .then((res) => {
           // console.log(res);
           downloadUrl.value = res.data.downloadPageUrl;
