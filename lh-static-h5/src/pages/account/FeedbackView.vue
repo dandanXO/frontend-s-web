@@ -314,7 +314,7 @@ const getSelected = (item, ans) => {
 const toggleSelected = (item, ans, isChecked, needSpecify) => {
   const input = answerInputModal.value;
 
-  const previousChoicesArr = Array.from(choices[item.sequence - 1]?.choice || []);
+  const previousChoicesArr = Array.from(choices[item.sequence - 1].choice || []);
   const newChoicesArr = [...previousChoicesArr, ans].filter((item) => (!isChecked ? item !== ans : item));
 
   var obj = {
