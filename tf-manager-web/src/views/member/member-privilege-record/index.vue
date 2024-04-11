@@ -294,7 +294,6 @@
       size="small"
       :empty-text="t('fields.noData')"
     >
-      <el-table-column prop="memberId" :label="t('fields.memberId')" width="200" />
       <el-table-column prop="loginName" :label="t('fields.loginName')" width="230" />
       <el-table-column prop="privilegeId" :label="t('fields.privilegeId')" width="200" />
       <el-table-column prop="amount" :label="t('fields.amount')" width="230" />
@@ -351,7 +350,6 @@ import { required } from '../../../utils/validate'
 import { ElMessage } from 'element-plus'
 import { getActivePrivilegeInfoBySiteIdWithoutRebate, getPrivilegeExcelMappingWithoutRebate } from '../../../api/privilege-info'
 import { createBatchPrivilege, distributePrivilege } from '../../../api/member-privilege'
-import { findIdByLoginName } from '../../../api/member'
 import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n()
@@ -711,10 +709,10 @@ function importToTable(file) {
               range: 1,
             })
           );
-          for (const d of data) {
-            const { data: id } = await findIdByLoginName(d.loginName, importForm.siteId);
-            d.memberId = id;
-          }
+          // for (const d of data) {
+          //   const { data: id } = await findIdByLoginName(d.loginName, importForm.siteId);
+          //   d.memberId = id;
+          // }
           break;
         }
         importedPage.records = data;
@@ -752,9 +750,7 @@ async function confirmImport() {
     if (value) {
       item.siteId = importForm.siteId;
       Object.entries(value).forEach(([k, v]) => {
-        if (k !== "loginName") {
-          item[k] = v;
-        }
+        item[k] = v;
       });
     }
     data.push(item);
