@@ -38,6 +38,8 @@
 
    <script type="text/javascript">
     //Call a Message to Parent (If App.)
+    console.log("0411-10")
+
     if(
       window.location.pathname === "/vip" ||
       window.location.pathname === "/promotion" ||
@@ -58,7 +60,6 @@
       if( window["WebScript"]){
         window["WebScript"].notifyApp("LH_ANDROID");
       }
-
       // window.localStorage.setItem('https://123123.com', "LH_H5_RST_URL");
       window.addEventListener('message', function(event) {
         if(event.data.data !== undefined){
