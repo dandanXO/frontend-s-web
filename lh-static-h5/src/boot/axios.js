@@ -67,6 +67,14 @@ function getInitApi(apiLinks, urlLsName) {
   }
 }
 
+function getErrorType(errorUrl){
+  errorUrl = errorUrl.replace("https://", "");
+  const firstStr = errorUrl.substr(0,5);
+  console.log(firstStr);
+
+  return firstStr;
+}
+
 function isInApp(){
   if( window.location.pathname === "/vip" ||
     window.location.pathname === "/viptest" ||
@@ -104,11 +112,13 @@ export default boot(({ app, router }) => {
 
   const onResponseError = (error) => {
     // message.error(error.message);
+    const errorType = getErrorType(error.config?.baseURL);
+
     Notify.create({
       type: "negative",
-      timeout: 1000,
+      timeout: 2500,
       position: "top",
-      message: error.message
+      message: error.message + ` (${errorType})`
     });
     Loading.hide();
     return Promise.reject(error);
@@ -125,6 +135,8 @@ export default boot(({ app, router }) => {
 
     if (res.code !== ResponseCode.SUCCESS) {
       Loading.hide();
+      const errorType = getErrorType(response.config?.baseURL);
+
       if (res.code === ResponseCode.ERROR_SYSTEM) {
         return res;
       }
@@ -178,14 +190,15 @@ export default boot(({ app, router }) => {
           LocalStorage.remove("TOKEN");
           window.location.href = "/";
         }
+
         Notify.create({
           type: "negative",
-          timeout: 1000,
+          timeout: 2500,
           position: "top",
-          message: res.message || "错误"
+          message: res.message + ` (${errorType} ${res.code})` || "错误"
         });
       }
-      throw new Error(res.message || "错误");
+      throw new Error(res.message + ` (${errorType} ${res.code})` || "错误");
     } else {
       Loading.hide();
       return res;
