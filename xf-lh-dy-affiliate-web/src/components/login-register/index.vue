@@ -1181,7 +1181,7 @@ export default defineComponent({
       }
       if (props.siteId === '8') {
         currentSite.value.firstLiner = 'Start From TFGaming'
-        currentSite.value.secondLiner = 'Become a legend<br>Or become the eulogist of legend?'
+        currentSite.value.secondLiner = 'Nơi bắt đầu mới -Chia sẻ cơ hội-Hợp tác thành công'
         currentSite.value.logo = viLogo
         state.loginForm.site = 'VNM'
         setLanguage('vi')
@@ -1410,6 +1410,11 @@ a {
     .loginPage .right .top .log{
       font-family: 'Roboto'
     }
+    .loginPage .left {
+        .second-liner {
+          font-family: 'Roboto'
+        }
+      }
   }
   .inner {
     max-width: 1200px;
