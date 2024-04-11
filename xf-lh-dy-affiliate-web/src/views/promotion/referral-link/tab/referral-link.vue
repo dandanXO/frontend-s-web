@@ -297,8 +297,8 @@ async function loadReferralLink() {
     obj => obj.code === 'affiliate_short_url_platform'
   ).value
 
-  page.webLongLink = temWebLongLink + '/agent/' + affInfo.affiliateCode
-  page.h5LongLink = tempH5LongLink + '/agent/' + affInfo.affiliateCode
+  page.webLongLink = temWebLongLink + 'agent/' + affInfo.affiliateCode
+  page.h5LongLink = tempH5LongLink + 'agent/' + affInfo.affiliateCode
   page.shortLinkPlatform = tempShortLinkPlatform
 
   await nextTick()
