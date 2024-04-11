@@ -191,6 +191,10 @@ export default {
       EXPIRED: 'Expired',
       FAILED: 'Failed',
     },
+    piggyBank: {
+      SAVING: 'Saving',
+      CLAIMED: 'Claimed',
+    }
   },
   betStatus: {
     BET: 'BET',
@@ -1079,6 +1083,8 @@ export default {
     permission: 'Permission',
     permissionAssignment: 'Permission Assignment',
     pgroup: 'Privilege Group',
+    piggyBankRecords: 'Piggy Bank Records',
+    piggyBankSettings: 'Piggy Bank Settings',
     place: 'Place',
     platform: 'Platform',
     platformAccount: 'Platform Account',
@@ -1943,6 +1949,7 @@ export default {
     validateRoleNameRequired: 'Role Name is required',
     validateRolloverRequired: 'Rollover is required',
     validateRoundRequired: 'Round is required',
+    validateRulesRequired: 'Rules is required',
     validateSchemaNameRequired: 'Schema Name is required',
     validateSequenceRequired: 'Sequence is required',
     validateSiteRequired: 'Site is required',
@@ -2136,6 +2143,7 @@ export default {
     'BB Dacha': 'BB Dacha',
     'VIP Wheel': 'VIP Wheel',
     'Bet Wheel': 'Bet Wheel',
+    'Piggy Bank': 'Piggy Bank',
     'Site Management': 'Site Management',
     Message: 'Message',
     Announcement: 'Announcement',
