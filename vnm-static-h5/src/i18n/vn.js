@@ -39,8 +39,9 @@ export default {
     next_page: "Trang tiếp theo",
     username_between_6_12: "Tên đăng ký phải có từ 6-12 ký tự",
     first_digit_must_be_0: "Chữ số đầu tiên phải là 0",
-    
     rebate_claim_now: "Yêu cầu ngay",
+    not_logged_in: "Bạn chưa đăng nhập",
+    login_register_to_view: "Đăng nhập/Đăng ký để xem",
 
     // side menu
     menu_sports: "Thể Thao",
@@ -289,7 +290,7 @@ export default {
 
     // withdraw
     withdraw_amount: "Số tiền",
-    withdraw_withdrawallamount: "Rút toàn bộ số tiền",
+    withdraw_withdrawallamount: "Rút toàn bộ",
     withdraw_tipstitle: "Mẹo",
     withdraw_tipdesc:
       "Để đảm bảo an toàn cho số tiền, bạn cần xác minh số điện thoại di động của mình trước khi rút tiền",

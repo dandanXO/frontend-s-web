@@ -1,16 +1,4 @@
 <template>
-  <!-- <pre> -->
-  <!-- ---{{ $t("lang.langVal") }}--- -->
-  <!-- <br />esport-{{ esport }} -->
-  <!-- <br />sport-{{ sport }} -->
-  <!-- <br />livecasino-{{ livecasino }} -->
-  <!-- <br />poker-{{ poker }} -->
-  <!-- <br />lottery-{{ lottery }} -->
-  <!-- <br />cockfight-{{ cockfight }} -->
-  <!-- <br />fishing-{{ fishing }} -->
-  <!-- <br />casuals-{{ casuals }} -->
-  <!-- </pre> -->
-
   <div v-if="isH5 && topBoxVisible" class="download-top-container">
     <div class="download-top-box">
       <q-icon name="close" @click="closeTopBox" />
@@ -116,6 +104,18 @@
   </div>
 
   <div class="details-bar">
+    <div class="message" @click="refreshBalance">
+      <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
+        {{
+          store.token
+            ? !isLoadingBalance
+              ? "VNDP " + mainWallet.toFixed(2)
+              : $t("lang.loading")
+            : $t("lang.not_logged_in")
+        }}
+      </span>
+      <span>{{ store.token ? $t("lang.central_wallet") : $t("lang.login_register_to_view") }}</span>
+    </div>
     <div class="menulist">
       <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/deposit-mid.png" />
@@ -471,13 +471,13 @@
       @click="getRebateAmt"
       persistent
     >
-        <template v-slot:icon="{ opened }">
-          <q-icon :class="{ 'example-fab-animate--hover': opened !== true }" name="money" />
-        </template>
+      <template v-slot:icon="{ opened }">
+        <q-icon :class="{ 'example-fab-animate--hover': opened !== true }" name="money" />
+      </template>
 
-        <template v-slot:active-icon="{ opened }">
-          <q-icon :class="{ 'example-fab-animate': opened === true }" name="money" />
-        </template>
+      <template v-slot:active-icon="{ opened }">
+        <q-icon :class="{ 'example-fab-animate': opened === true }" name="money" />
+      </template>
     </q-fab>
   </q-page-sticky>
   <q-dialog
@@ -492,17 +492,18 @@
       <div class="modalcontent">
         <div class="headers">
           <div style="width: 16px">&nbsp;</div>
-          <div class="titles">{{$t('lang.menu_rebate')}}</div>
+          <div class="titles">{{ $t("lang.menu_rebate") }}</div>
           <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
         </div>
         <div class="contents">{{ rebateAmt }}</div>
         <div class="btnsreas">
-          <div class="confirmsbtns common-md-btn" @click="claimRebateAmt">{{$t('lang.rebate_claim_now')}}</div>
-          <div class="cancels common-md-white-btn" @click="isRebateModalVisible = false">{{$t('lang.cancel')}}</div>
+          <div class="confirmsbtns common-md-btn" @click="claimRebateAmt">{{ $t("lang.rebate_claim_now") }}</div>
+          <div class="cancels common-md-white-btn" @click="isRebateModalVisible = false">{{ $t("lang.cancel") }}</div>
         </div>
       </div>
     </q-card>
   </q-dialog>
+
   <GameModal ref="allGames"></GameModal>
 
   <q-dialog
@@ -524,6 +525,31 @@
         <div class="btnsreas">
           <div class="confirmsbtns common-md-btn" @click="openDownloadPage">立即更新</div>
           <div class="cancels common-md-white-btn" @click="cancelUpdate">取消</div>
+        </div>
+      </div>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog
+    width="100%"
+    class="modal-common-div"
+    v-model="isLoginModal"
+    show-cancel-button
+    :showCancelButton="false"
+    :showConfirmButton="false"
+  >
+    <q-card style="width: 100%" class="modalcontent">
+      <div class="headers">
+        <div class="titles">{{ $t("lang.system_hint") }}</div>
+        <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
+      </div>
+      <div class="contents">{{ $t("lang.system_please_login") }}</div>
+      <div class="btnsreas">
+        <div class="confirmsbtns common-md-btn btn-standard-height" @click="router.push('/login')">
+          {{ $t("lang.system_loginnow") }}
+        </div>
+        <div class="cacnels common-md-white-btn btn-standard-height" @click="isLoginModal = false">
+          {{ $t("lang.system_cancel") }}
         </div>
       </div>
     </q-card>
@@ -623,29 +649,31 @@ export default defineComponent({
     LangOptions
   },
   setup() {
-    const fabPos = ref([ 18, 18 ])
-    const draggingFab = ref(false)
-    const isRebateModalVisible = ref(false)
+    const fabPos = ref([18, 18]);
+    const draggingFab = ref(false);
+    const isRebateModalVisible = ref(false);
     const rebateAmt = ref(0);
     const getRebateAmt = () => {
-      eventapi.get('/daily-rebate/available-amount').then((res) => {
-        if (res.code === 0) {
-          rebateAmt.value = res.data
-          isRebateModalVisible.value = true
-        } else {
-          
-        }
-      })
-    }
+      if (store.hasToken()) {
+        eventapi.get("/daily-rebate/available-amount").then((res) => {
+          if (res.code === 0) {
+            rebateAmt.value = res.data;
+            isRebateModalVisible.value = true;
+          } else {
+          }
+        });
+      } else {
+        isLoginModal.value = true;
+      }
+    };
     const claimRebateAmt = () => {
-      eventapi.put('/bonus/claim/vnm-daily-rebate').then((res) => {
+      eventapi.put("/bonus/claim/vnm-daily-rebate").then((res) => {
         if (res.code === 0) {
-          isRebateModalVisible.value = false
+          isRebateModalVisible.value = false;
         } else {
-          
         }
-      })
-    }
+      });
+    };
     const isFirstView = ref(false);
     const closeAlert = () => {
       localStorage.setItem("indexImgTop", new Date().getTime());
@@ -1231,6 +1259,8 @@ export default defineComponent({
       isMenuFloat.value = !isMenuFloat.value;
     };
 
+    const isLoginModal = ref(false);
+
     return {
       imageLoading,
       slide: ref(0),
@@ -1315,14 +1345,11 @@ export default defineComponent({
       claimRebateAmt,
       fabPos,
       draggingFab,
+      isLoginModal,
 
-      moveFab (ev) {
-        draggingFab.value = ev.isFirst !== true && ev.isFinal !== true
-
-        fabPos.value = [
-          fabPos.value[ 0 ] - ev.delta.x,
-          fabPos.value[ 1 ] - ev.delta.y
-        ]
+      moveFab(ev) {
+        draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
+        fabPos.value = [fabPos.value[0] - ev.delta.x, fabPos.value[1] - ev.delta.y];
       }
     };
   }
@@ -1664,7 +1691,7 @@ export default defineComponent({
       box-sizing: border-box;
       padding: 20px 12px 15px;
       text-align: center;
-      color: #468CFF;
+      color: #468cff;
       font-size: 2.2rem;
 
       .contentfonts {

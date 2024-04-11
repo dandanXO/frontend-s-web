@@ -255,6 +255,7 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import LangOptions from "components/LangOptions";
 import qs from "qs";
 import { useI18n } from "vue-i18n";
+import { App } from "@capacitor/app";
 
 export default defineComponent({
   name: "LoginPage",
@@ -402,6 +403,7 @@ export default defineComponent({
           delete allComponents[element];
         });
         const sidParam = FingerprintJS.hashComponents(allComponents);
+        const appVer = appVersionNo.value;
 
         if (loginType.value === false) {
           loginNameRef.value.validate();
@@ -419,7 +421,8 @@ export default defineComponent({
                 password: loginForm.password,
                 sid: sidParam,
                 captchaCode: loginForm.captchaCode,
-                codeId: loginForm.codeId
+                codeId: loginForm.codeId,
+                ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVer } : {})
               })
               .then(() => {
                 $q.loading.hide();
@@ -506,12 +509,21 @@ export default defineComponent({
       router.push("/");
     };
 
+    const appVersionNo = ref("");
+    const getVersionNo = async () => {
+      if (Platform.is.android && Platform.is.capacitor) {
+        const info = await App.getInfo();
+        appVersionNo.value = info.version + "." + info.build;
+      }
+    };
+
     onMounted(() => {
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has("register")) {
         tab.value = "register";
       }
       checkRememberPwd();
+      getVersionNo();
     });
     onActivated(() => {
       getCode();
@@ -545,7 +557,9 @@ export default defineComponent({
       getInnerCode,
       isValidCnPhone,
       telephoneRef,
-      LangOptions
+      LangOptions,
+      appVersionNo,
+      getVersionNo
     };
   }
 });
