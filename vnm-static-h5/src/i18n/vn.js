@@ -167,6 +167,8 @@ export default {
     system_operation_success: "Thao tác thành công, vui lòng kiểm tra mã xác minh trên điện thoại di động!",
     system_verify_failed: "Xác minh không thành công, vui lòng làm mới trang",
     system_loginnow: "Đăng nhập ngay",
+    system_newversiondetected: "Đã phát hiện phiên bản mới, bạn có muốn cập nhật không?",
+    system_updatenow: "Cập nhật bây giờ",
 
     // personal | verify
     personal_exclusiveurl: "URL riêng",

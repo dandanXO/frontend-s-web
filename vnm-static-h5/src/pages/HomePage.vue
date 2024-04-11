@@ -518,13 +518,13 @@
       <div class="modalcontent">
         <div class="headers">
           <div style="width: 16px">&nbsp;</div>
-          <div class="titles">系统提示</div>
+          <div class="titles">{{ $t("lang.system_hint") }}</div>
           <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
         </div>
-        <div class="contents">检测到新版本，您是否要更新？</div>
+        <div class="contents" style="font-size: 20px">{{ $t("lang.system_newversiondetected") }}</div>
         <div class="btnsreas">
-          <div class="confirmsbtns common-md-btn" @click="openDownloadPage">立即更新</div>
-          <div class="cancels common-md-white-btn" @click="cancelUpdate">取消</div>
+          <div class="confirmsbtns common-md-btn" @click="openDownloadPage">{{ $t("lang.system_updatenow") }}</div>
+          <div class="cancels common-md-white-btn" @click="cancelUpdate">{{ $t("lang.system_cancel") }}</div>
         </div>
       </div>
     </q-card>
