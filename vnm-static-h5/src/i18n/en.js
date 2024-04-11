@@ -165,6 +165,8 @@ export default {
     system_operation_success: "The operation is successful, please check the mobile phone verification code!",
     system_verify_failed: "Verification failed, please refresh",
     system_loginnow: "Login now",
+    system_newversiondetected: "New version detected, do you want to update?",
+    system_updatenow: "Update now",
 
     // personal | verify
     personal_exclusiveurl: "Exclusive URL",
