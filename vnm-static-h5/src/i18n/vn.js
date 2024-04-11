@@ -6,7 +6,7 @@ export default {
     dowload_now: "Tải xuống",
     login: "Đăng nhập",
     register: "Đăng ký",
-    deposit: "Nạp tiền",
+    deposit: "Nạp Rút",
     withdraw: "Rút tiền",
     transfer: "Chuyển điểm",
     vip: "VIP",
@@ -42,6 +42,8 @@ export default {
     rebate_claim_now: "Yêu cầu ngay",
     not_logged_in: "Bạn chưa đăng nhập",
     login_register_to_view: "Vui lòng đăng nhập/đăng ký tài khoản để xem",
+    tf88_news: "Tin tức TF88",
+    see_all: "Nhìn thấy tất cả",
 
     // side menu
     menu_sports: "Thể Thao",
@@ -743,7 +745,7 @@ export default {
     invalid_email: "Email không hợp lệ",
     invalid_phone_num: "Chỉ cho phép số",
     register_successful: "Đăng ký thành công",
-    no_special_characters: "Tên người dùng phải là sự kết hợp của chữ cái và số",
+    no_special_characters: "Tên tài khoản không được chứa ký tự đặc biệt",
     length_between_6_11: " Độ dài phải từ 6 đến 11 ký tự",
     length_between_34_37: "Độ dài phải từ 34 đến 37 ký tự",
     receive_by_email: "Nhận bằng email",

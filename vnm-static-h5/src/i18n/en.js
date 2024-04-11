@@ -39,6 +39,8 @@ export default {
     rebate_claim_now: "Claim now",
     not_logged_in: "Not logged in yet",
     login_register_to_view: "Log in/Register to view",
+    tf88_news: "TF88 News",
+    see_all: "See all",
 
     // side menu
     menu_sports: "Sports",
