@@ -124,7 +124,7 @@ export default {
     downloadQRCode: 'Tải Mã QR Về',
   },
   commissionInfo: {
-    commissionInfo: 'Thông Tin Hoa Hồng',
+    commissionInfo: 'Kế hoạch chiết khấu hoa hồng',
     affiliateCommissionInfo: 'Thông Tin Hoa Hồng Đại Lý',
     commissionCalculator: 'Máy Tính Hoa Hồng',
     monthlyTotalEffectiveTurnover: 'Tổng Doanh Số Thực Hiện Hàng Tháng',
