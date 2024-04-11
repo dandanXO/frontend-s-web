@@ -145,7 +145,7 @@ export default route(function (/* { store, ssrContext } */) {
       ui.isAffiliateB = true;
       console.log("jo98.cc");
 
-      fbq("init", "1127152488322457");
+      fbq("init", "770694301689908");
 
       fbq("track", "PageView");
       fbq("track", "ViewContent");
