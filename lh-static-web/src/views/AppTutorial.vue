@@ -53,7 +53,7 @@ onMounted(() => {
 <style lang="scss">
 .app-tutorial-container {
     background: url('../assets/images/app-tutorial/app-tutorial-bg.png') no-repeat center center;
-    // background-size: 100% 100%;
+    background-size: 100% 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
