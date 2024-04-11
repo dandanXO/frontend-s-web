@@ -2,7 +2,7 @@
   <div class="roles-main">
     <el-card class="box-card" shadow="never">
       <div class="role-span">{{ route.name }}</div>
-      <div class="contact-boxes">
+      <div class="contact-boxes" :style="siteId === '8' ? 'gap: 50px;': ''">
         <div class="contact-box" v-for="(c, i) in contactlist" :key="i">
           <div class="contacticon"><img :src="require(`../../../assets/images/${c.icon}.svg`)"></div>
           <div class="type">{{ c.type }}</div>
@@ -20,81 +20,139 @@
 import { ref, watch, onMounted } from 'vue'
 import { storeToRefs } from "pinia";
 import { useI18n } from 'vue-i18n'
+import { useStore } from "@/store"
 import { useRoute } from 'vue-router'
 
 import { i18nStore } from "@/store/language";
 
+const store = useStore();
 const route = useRoute()
 const i18nStoreLanguage = i18nStore();
 const { languageVal } = storeToRefs(i18nStoreLanguage);
 const { t } = useI18n()
 
-const contactlist = ref([]);
+const siteId = store.state.user.siteId;
+const mailLink = () => {
+  if (siteId === '7') {
+    return 'mailto:affiliate@e8007.com'
+  } else if (siteId === '8') {
+    return 'mailto:vnaffiliates@tf88.com'
+  } else {
+    return 'mailto:affiliate@dyvip99.com'
+  }
+}
+const qqLink = () => {
+  if (siteId === '7') {
+    return '1903687863'
+  } else {
+    return '100983290'
+  }
+}
+const telegramLink = () => {
+  if (siteId === '7') {
+    return '@LH18668'
+  } else {
+    return 'leihuo123'
+  }
+}
+const contactlist = ref()
 
 const initContactList = () => {
   contactlist.value = [
     {
       icon: 'cmail',
       type: t('common.email'),
-      link: 'affiliate@dyvip99.com',
+      link: mailLink(),
       btns: [{
-        text: t('fields.enquire'),
+        text: t('common.askus'),
         action: ''
       }]
     },
     {
       icon: 'cqq',
       type: t('common.qq'),
-      link: '100983290',
+      link: qqLink(),
       btns: [{
-        text: t('fields.copy'),
+        text: t('common.copy'),
         action: ''
       },
       {
-        text: t('fields.download'),
-        action: ''
+        text: t('common.download'),
+        action: 'https://im.qq.com/index/'
       }]
     },
     {
       icon: 'cskype',
       type: t('common.skype'),
-      link: 'Live:cid.b2a14236...',
+      link: 'live:.cid.1b8d9a018a52a8f5',
       btns: [{
-        text: t('fields.copy'),
+        text: t('common.copy'),
         action: ''
       },
       {
-        text: t('fields.download'),
-        action: ''
+        text: t('common.download'),
+        action: 'https://www.skype.com/zh-Hans/get-skype/'
       }]
     },
     {
-      icon: 'cflygram',
-      type: t('common.telegram'),
-      link: 'dybet5',
+      icon: 'ctelegram',
+      type: 'Telegram',
+      link: telegramLink(),
       btns: [{
-        text: t('fields.copy'),
+        text: t('common.copy'),
         action: ''
       },
       {
-        text: t('fields.download'),
-        action: ''
+        text: t('common.download'),
+        action: 'https://telegram.org/'
       }]
     },
     {
-      icon: 'cbat',
-      type: '合营蝙蝠ID',
-      link: '12830840',
+      icon: 'bubble-logo',
+      type: t('common.paopao'),
+      link: 'LH10086',
       btns: [{
-        text: t('fields.copy'),
+        text: t('common.copy'),
         action: ''
       },
       {
-        text: t('fields.download'),
-        action: ''
+        text: t('common.download'),
+        action: 'https://paopaoim.com/index.html'
       }]
     }
   ]
+  if (siteId === '8') {
+    contactlist.value.forEach((contact, ind) => {
+      if (contact.icon === 'cqq') {
+        contactlist.value.splice(ind, 1);
+      }
+      if (contact.icon === 'bubble-logo') {
+        contactlist.value.splice(ind, 1);
+      }
+      if (contact.icon === 'cbat') {
+        contactlist.value.splice(ind, 1);
+      }
+      if (contact.icon === 'ctelegram') {
+        contact.link = '@dailitf88'
+      }
+      if (contact.icon === 'cskype') {
+        contact.link = 'live:.cid.f284aa8f5c120ae5'
+      }
+      if (contact.icon === 'cmail') {
+        contact.link = 'mailto:vnaffiliates@tf88.com'
+      }
+    });
+    const obj = {
+      icon: 'czalo',
+      type: t('common.zalo'),
+      link: '+639278280893',
+      btns: [{
+        text: t('common.askus'),
+        action: ''
+      }]
+    }
+    contactlist.value.push(obj);
+  }
 }
 
 watch(languageVal, () => {

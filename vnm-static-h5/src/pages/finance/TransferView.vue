@@ -76,7 +76,7 @@
                       require(`../../assets/images/home/${scope.opt.type.toLowerCase()}/logo-${scope.opt.code.toLowerCase()}.png`)
                     "
                     :style="
-                      scope?.opt?.type === 'main'
+                      scope.opt.type === 'main'
                         ? 'width: 15px; margin: 10px 10px 10px 5px;'
                         : 'width: 30px; margin-top: 10px; margin-bottom: 10px;'
                     "
