@@ -36,8 +36,9 @@ export default {
     next_page: "Next Step",
     username_between_6_12: "Username should contain 6-12 characters",
     first_digit_must_be_0: "First digit must be 0",
-
     rebate_claim_now: "Claim now",
+    not_logged_in: "Not logged in yet",
+    login_register_to_view: "Log in/Register to view",
 
     // side menu
     menu_sports: "Sports",
@@ -282,7 +283,7 @@ export default {
 
     // withdraw
     withdraw_amount: "Amount",
-    withdraw_withdrawallamount: "Withdraw full amount",
+    withdraw_withdrawallamount: "Withdraw all",
     withdraw_tipstitle: "Tips",
     withdraw_tipdesc: "To ensure the safety of funds, you need to verify your mobile phone number before depositing",
     withdraw_proceedverify: "Proceed to verify",

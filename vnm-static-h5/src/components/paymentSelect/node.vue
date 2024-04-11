@@ -438,6 +438,10 @@ $node-color: #468cff;
   pointer-events: none;
 }
 
+.node-wrapper > .node > .payment-method-wrapper .node-item.payment-method-item .node-text .overflow.txt-title {
+  white-space: nowrap !important;
+}
+
 @media (max-width: 420px) {
   .node-txt-img {
     width: 54px !important;
@@ -445,7 +449,7 @@ $node-color: #468cff;
   }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 355px) {
   .payment-method-wrapper {
     grid-template-columns: repeat(4, 1fr);
   }

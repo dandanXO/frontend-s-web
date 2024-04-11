@@ -113,12 +113,12 @@
             clearable
           >
             <template v-slot:prepend>
-              <span style="font-size: 26px" class="text-bright">
+              <span style="font-size: 18px" class="text-bright">
                 {{ store.currency.value }}
               </span>
             </template>
             <template v-slot:append>
-              <span style="font-size: 26px" class="text-bright">
+              <span style="font-size: 18px" class="text-bright">
                 <q-btn
                   @click="updateWithdrawAmt"
                   no-caps

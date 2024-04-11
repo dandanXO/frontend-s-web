@@ -58,7 +58,6 @@
                     color="#0089ED"
                   />
                   <q-chip size="sm" :label="$t('lang.mail_read')" v-if="det.readTime && det.sendTime" />
-                  {{ $t("lang.compose_title") }}：
                   {{ det.title }}
                 </div>
 

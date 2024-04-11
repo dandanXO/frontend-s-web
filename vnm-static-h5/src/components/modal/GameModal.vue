@@ -393,7 +393,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               gameCode: gameCode,
               isMobile: Platform.is.mobile ? true : false,
               way: way
-            }
+            },
+            headers: platformCode === 'PG' ? { 'Cache-Control': 'no-cache, no-store, must-revalidate' } : {}
           })
           .then((response) => {
             $q.loading.hide();
