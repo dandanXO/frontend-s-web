@@ -96,7 +96,7 @@
               : 'background-image: url(' + require(`../assets/promo/web-bg.jpg`) + '\''
           "
         >
-          <h2 class="text-center" style="font-family: 'Roboto'; color: #0060d3; font-weight: 900; font-size: 30px;">{{selectedPromo.title}}</h2>
+<!--          <h2 class="text-center" style="font-family: 'Roboto'; color: #0060d3; font-weight: 900; font-size: 30px;">{{selectedPromo.title}}</h2>-->
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
             <HotPromotion :list="selectedPromo" />
           </div>
@@ -690,7 +690,7 @@ export default defineComponent({
               }
               .front-title {
                 color: #4c88f8;
-                font-size: 30px;
+                font-size: 20px;
                 font-weight: 700;
               }
               .front-sub {

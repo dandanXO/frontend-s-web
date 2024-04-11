@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    @close="setWithExpiry('isImpt', true, 43200000)"
+    @close="setWithExpiry('isImpt', true, homePopupFrequencyNum)"
     class="imptann-modal"
     v-model="isImportantAnnoucementModal"
     v-if="!isImpt"
@@ -39,7 +39,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { loadPromoBanner } from "@/api/index/promo";
+import { loadPromoBanner, loadHomePopup } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 
 const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
@@ -59,7 +59,9 @@ const setWithExpiry = (key, value, interval) => {
   const now = new Date();
   const item = {
     value: value,
-    expiry: now.getTime() + interval
+    expiry: now.getTime() + interval,
+    id: homePopupId.value,
+    frequency: homePopupFrequency.value
   };
   localStorage.setItem(key, JSON.stringify(item));
 };
@@ -82,24 +84,44 @@ const isImpt = getWithExpiry("isImpt");
 const isFirstView = ref(false);
 const homePopupImg = ref("");
 const isImportantAnnoucementModal = ref(false);
+const homePopupFrequency = ref(0);
+const homePopupFrequencyNum = ref(0);
+const homePopupContent = ref("");
+const homePopupType = ref("");
+const homePopupId = ref(0);
+
 const checkShowImgTop = () => {
   const lastTime = localStorage.getItem("indexImgTop");
   if (lastTime) {
     const diff = new Date().getTime() - Number(lastTime);
     if (diff > 1000 * 60 * 60 * 12) isFirstView.value = true;
   } else {
-    loadPromoBanner("HOMEPOP")
+    loadHomePopup("")
       .then((res) => {
         const { code, data } = res;
         if (code === 0) {
-          if (data.length > 0) {
-            if (isImpt === null) {
-              isImportantAnnoucementModal.value = true;
-
-              homePopupImg.value =
-                data.length > 0 ? imgURL + data[0]["desktopImageUrl"] : "";
-              if (homePopupImg.value) isFirstView.value = true;
+          if (isImpt === null) {
+            switch (data["frequency"]) {
+              case "EVERYTIME":
+                homePopupFrequencyNum.value = 0;
+                break;
+              case "EVERYDAY":
+                homePopupFrequencyNum.value = 86400000; // 24hrs
+                break;
+              case "SESSION":
+                homePopupFrequencyNum.value = 7866432000; // 3months
+                break;
+              default:
+                homePopupFrequencyNum.value = 10000;
+                break;
             }
+            isImportantAnnoucementModal.value = true;
+            homePopupImg.value = process.env.VUE_APP_IMAGE_CDN + "/promo/" + data["desktopImgUrl"];
+            homePopupContent.value = data["content"];
+            homePopupType.value = data["type"];
+            homePopupId.value = data["id"];
+            homePopupFrequency.value = data["frequency"];
+            isFirstView.value = true;
           } else {
             isImportantAnnoucementModal.value = false;
           }
@@ -139,21 +161,21 @@ onMounted(() => {
     }
   }
 }
-
+</style>
+<style lang="scss">
 .imptann-modal {
   max-width: 800px;
 
   .el-dialog__body {
-    padding: 0;
+    padding: 0 !important;
+    border-radius:12px;
   }
 
   .alert-img {
     display: block;
     width: 100%;
+    border-radius:12px;
   }
 
-  .el-dialog__headerbtn {
-    opacity: 0;
-  }
 }
 </style>
