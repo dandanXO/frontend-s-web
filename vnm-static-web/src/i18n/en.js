@@ -642,6 +642,12 @@ about: {
     mobileAccess: "Mobile Access",
     scanDownload: "Scan QR to download"
   },
+  maintenance: {
+    title: "System under maintenance...",
+    desc: `Starting from 01/07/2024 (GMT +8) until 19/09/2024 (GMT +8).<br>
+    All services and games will be temporarily suspended during this period.<br>
+     We sincerely apologize for any inconvenience caused!`
+  }, 
   "welcome": {
     "compatibleDevices": "Perfectly Compatible with Secure Devices",
     "technologyLead": "Leihuo leads the market with outstanding technology. Independently develop a full set of terminal applications, allowing you to enjoy Web, H5, and iOS, Android native apps, smooth games, and more. Let you master it! Intimate service, 7x24 online customer service accompanies you all year round.",

@@ -7,15 +7,15 @@
       <div class="maintenance-logo">
         <img src="../assets/logo-web.svg" />
       </div>
-      <div class="maintenance-title">目前我们的网站正在维护中...</div>
+      <div class="maintenance-title">{{ $t("lang.maintenance_title") }}</div>
       <div class="maintenance-desc">
-        从：2023年7月1日（GMT+8）
+        {{ $t("lang.maintenance_from") }}
         <br />
-        至：2023年9月19日（GMT+8）
+        {{ $t("lang.maintenance_to") }}
         <br />
-        期间所有游戏和服务均无法使用。
+        {{ $t("lang.maintenance_desc_01") }}
         <br />
-        对于给您带来任何的不变，我们深表歉意，并感谢您的耐心等待！
+        {{ $t("lang.maintenance_desc_02") }}
       </div>
     </div>
     <!-- <div class="maintenance-btn">

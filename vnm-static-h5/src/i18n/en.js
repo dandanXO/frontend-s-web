@@ -39,6 +39,8 @@ export default {
     rebate_claim_now: "Claim now",
     not_logged_in: "Not logged in yet",
     login_register_to_view: "Log in/Register to view",
+    tf88_news: "TF88 News",
+    see_all: "See all",
 
     // side menu
     menu_sports: "Sports",
@@ -167,6 +169,13 @@ export default {
     system_loginnow: "Login now",
     system_newversiondetected: "New version detected, do you want to update?",
     system_updatenow: "Update now",
+
+    // maintenance
+    maintenance_title: "The system is maintenance...",
+    maintenance_from: "Starting from 01/07/2024 (GMT +8)",
+    maintenance_to: "to 19/09/2024 (GMT +8)",
+    maintenance_desc_01: "All services and games will be suspended during the above period, ",
+    maintenance_desc_02: "sincerely sorry for this inconvenience!",
 
     // personal | verify
     personal_exclusiveurl: "Exclusive URL",
