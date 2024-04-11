@@ -26,7 +26,7 @@
   </div>
 </template>
 <script setup>
-import { defineProps, ref } from 'vue'
+import { onMounted, defineProps, ref } from 'vue';
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -40,6 +40,8 @@ const props = defineProps({
 const mailLink = () => {
   if (props.siteId === '7') {
     return 'mailto:affiliate@e8007.com'
+  } else if (props.siteId === '8') {
+    return 'mailto:vnaffiliates@tf88.com'
   } else {
     return 'mailto:affiliate@dyvip99.com'
   }
@@ -155,6 +157,35 @@ const copyMessage = (position, text, btnPosition) => {
     window.open(downloadLink, '_blank');
   }
 };
+onMounted(() => {
+  console.log(props.siteId)
+  if (props.siteId === '8') {
+    contactlist.value.forEach((contact, ind) => {
+      if (contact.icon === 'cqq') {
+        contactlist.value.splice(ind, 1);
+      }
+      if (contact.icon === 'bubble-logo') {
+        contactlist.value.splice(ind, 1);
+      }
+      if (contact.icon === 'telegram') {
+        contact.link = '@dailitf88'
+      }
+      if (contact.icon === 'skype') {
+        contact.link = 'live:.cid.f284aa8f5c120ae5'
+      }
+    });
+    const obj = {
+      icon: 'ctelegram',
+      type: t('common.zalo'),
+      link: '+639278280893',
+      btns: [{
+        text: t('common.askus'),
+        action: ''
+      }]
+    }
+    contactlist.value.push(obj);
+  }
+})
 </script>
 <style lang="scss">
 .customer-service {

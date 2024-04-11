@@ -338,6 +338,7 @@ export default {
     status: 'Status',
     subtotal: 'Sub Total',
     systemAlert: 'System Alert',
+    affiliateSuccessSubmit: 'Dear partner, your information has been successfully submitted. Our agent will inform you of the review result within 24 hours. If you have any questions, please contact our agent or online customer service. Thank you.',
     systemAnnouncement: 'System Announcement',
     telephone: 'Telephone',
     thirdLevelAffiliateCommission: 'Third Level Affiliate Commission',

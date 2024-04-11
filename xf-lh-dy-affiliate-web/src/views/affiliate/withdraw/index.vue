@@ -3,11 +3,11 @@
     <el-card class="box-card" shadow="never">
       <template #header>
         <div class="clearfix">
-          <span class="role-span">{{ $t('menu.Withdraw') }}</span>
+          <span class="role-span">{{ $t('fields.affiliateWithdraw') }}</span>
         </div>
       </template>
       <el-tabs v-model="activeName" style="margin:20px;">
-        <el-tab-pane :label="t('fields.affiliateWithdraw')" name="withdraw">
+        <el-tab-pane :label="t('menu.Withdraw')" name="withdraw">
           <WithdrawTab />
         </el-tab-pane>
         <el-tab-pane

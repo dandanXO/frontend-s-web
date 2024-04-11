@@ -54,12 +54,21 @@ onMounted(() => {
 
 </script>
 <style lang="scss">
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap");
 .el-submenu__title:focus, .el-submenu__title:hover, .el-menu-item:hover {
   outline: 0 !important;
 }
 
 .el-menu-item:hover {
   background: #001528 !important;
+}
+body.vilang {
+  font-family: 'Roboto';
+  .sidebar .navigation .route-wrapper {
+    
+  font-family: 'Roboto';
+  }
 }
 
 </style>
