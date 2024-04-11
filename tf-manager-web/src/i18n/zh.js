@@ -198,6 +198,10 @@ export default {
       CASH: '已折现',
       CANCEL: '已取消',
     },
+    piggyBank: {
+      SAVING: '存款中',
+      CLAIMED: '已领取',
+    }
   },
   betStatus: {
     BET: '下注',
@@ -1085,6 +1089,8 @@ export default {
     permission: '权限',
     permissionAssignment: '分配权限',
     pgroup: '优惠组别',
+    piggyBankRecords: '存钱罐记录',
+    piggyBankSettings: '存钱罐设置',
     place: '位置',
     platform: '平台',
     platformAccount: '平台账号',
@@ -1912,6 +1918,7 @@ export default {
     validateRoleNameRequired: '角色名称必填',
     validateRolloverRequired: '倍数必填',
     validateRoundRequired: '局数必填',
+    validateRulesRequired: '彩金配置必填',
     validateSchemaNameRequired: '模式名必填',
     validateSequenceRequired: '排序必填',
     validateSiteRequired: '站点必填',
@@ -2105,6 +2112,7 @@ export default {
     'BB Dacha': 'BB别墅杯',
     'VIP Wheel': 'VIP转盘',
     'Bet Wheel': '投注转盘',
+    'Piggy Bank': '存钱罐',
     'Site Management': '站点管理',
     Message: '信息',
     Announcement: '公告',
