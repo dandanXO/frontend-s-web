@@ -25,3 +25,16 @@
     font-size: 13px;
   }
 }
+
+
+@media (max-width: 420px){
+  .summoner {
+    .wrapcontent {
+      flex-wrap: wrap;
+
+      .q-tabs__content {
+        flex-wrap: wrap;
+      }
+    }
+  }
+}
