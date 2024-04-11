@@ -30,6 +30,8 @@ export default {
     qq: '合营QQ',
     skype: '合营部Skype',
     paopao: '泡泡',
+    zalo: 'Zalo',
+    telegram: 'Telegram'
   },
   depositStatus: {
     SUCCESS: '存款成功',

@@ -31,6 +31,8 @@ export default {
     qq: 'QQ',
     skype: 'Skype',
     paopao: 'Bubble',
+    zalo: 'Zalo',
+    telegram: 'Telegram'
   },
   depositStatus: {
     SUCCESS: 'Success',

@@ -10,7 +10,7 @@
       </div>
       <div class="bar" />
       <div class="services">
-        <div class="contact-boxes">
+        <div class="contact-boxes" :style="props.siteId === '8' ? 'gap: 50px;': ''">
           <div class="contact-box" v-for="(c, i) in contactlist" :key="i">
             <div class="contacticon"><img style="max-width: 75px;" :src="require(`../../assets/images/${c.icon}.svg`)"></div>
             <div class="type">{{ c.type }}</div>
@@ -167,10 +167,10 @@ onMounted(() => {
       if (contact.icon === 'bubble-logo') {
         contactlist.value.splice(ind, 1);
       }
-      if (contact.icon === 'telegram') {
+      if (contact.icon === 'ctelegram') {
         contact.link = '@dailitf88'
       }
-      if (contact.icon === 'skype') {
+      if (contact.icon === 'cskype') {
         contact.link = 'live:.cid.f284aa8f5c120ae5'
       }
     });
