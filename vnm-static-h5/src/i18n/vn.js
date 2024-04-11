@@ -170,6 +170,13 @@ export default {
     system_newversiondetected: "Đã phát hiện phiên bản mới, bạn có muốn cập nhật không?",
     system_updatenow: "Cập nhật bây giờ",
 
+    // maintenance
+    maintenance_title: "Hệ thống đang bảo trì...",
+    maintenance_from: "Bắt đầu từ 01/07/2024 (GMT +8)",
+    maintenance_to: "đến 19/09/2024 (GMT +8)",
+    maintenance_desc_01: "Tất cả dịch vụ và trò chơi sẽ tạm dừng trong thời gian trên, ",
+    maintenance_desc_02: "thành thật xin lỗi vì sự bất tiện này!",
+
     // personal | verify
     personal_exclusiveurl: "URL riêng",
     personal_username: "Tên tài khoản",
