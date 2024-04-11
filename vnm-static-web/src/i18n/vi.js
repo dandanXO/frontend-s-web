@@ -639,6 +639,11 @@ export default {
     mobileAccess: "Truy cập di động",
     scanDownload: "Quét mã QR để tải xuống"
   },
+  maintenance: {
+    title: "Hệ thống đang bảo trì...",
+    desc: `Bắt đầu từ 01/07/2024 (GMT +8) đến 19/09/2024 (GMT +8)<br>
+    Tất cả dịch vụ và trò chơi sẽ tạm dừng trong thời gian trên, <br>thành thật xin lỗi vì sự bất tiện này!`
+  }, 
   "welcome": {
     "compatibleDevices": "Hoàn toàn tương thích với các thiết bị an toàn",
     "technologyLead": "Leihuo dẫn đầu thị trường với công nghệ xuất sắc. Phát triển độc lập một bộ ứng dụng terminal đầy đủ, cho phép bạn tận hưởng Web, H5, và ứng dụng iOS, Android nguyên bản, trò chơi mượt mà và nhiều hơn nữa. Để bạn thống trị! Dịch vụ gần gũi, dịch vụ khách hàng trực tuyến 24/7 đi cùng bạn suốt năm.",
