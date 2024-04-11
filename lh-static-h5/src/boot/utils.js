@@ -91,9 +91,9 @@ export const getVisitorId = async () => {
 
   // console.log("VisitorInfo");
   // console.log(fp);
-  if (fp?.visitorId) {
+  if (fp && fp.visitorId) {
     localStorage.setItem("VISITOR_ID", fp.visitorId);
-    return fp?.visitorId;
+    return fp.visitorId;
   } else {
     const fpPromise = FingerprintJS.load();
     const fp = await fpPromise;
