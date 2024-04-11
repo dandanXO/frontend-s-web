@@ -274,7 +274,7 @@ onMounted(() => {
 .summoner {
   .q-tabs{
     margin-bottom: 16px;
-
+    height: auto !important;
   }
   .q-tabs .q-tab {
     background: url(../../../assets/images/promo/hotpromo/summoner/tabbg.png) no-repeat center center;
