@@ -7,6 +7,7 @@ export default {
     login: "Login",
     register: "Register",
     deposit: "Deposit",
+    deposit_btm: "Deposit",
     withdraw: "Withdraw",
     transfer: "Transfer",
     vip: "VIP",
