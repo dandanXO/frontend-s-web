@@ -189,7 +189,10 @@ const copyMessage = (position, text, btnPosition) => {
   console.log(text);
   console.log(contactlist.value)
   if (text === t('common.askus')) {
-    const mailtoLink = contactlist.value[position].link
+    var mailtoLink = contactlist.value[position].link
+    if (props.siteId === '8') {
+      mailtoLink = 'mailto:' + contactlist.value[position].link
+    }
     window.open(mailtoLink, '_blank');
   }
   if (text === t('common.copy')) {
