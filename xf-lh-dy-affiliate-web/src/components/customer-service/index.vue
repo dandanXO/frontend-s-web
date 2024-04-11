@@ -123,6 +123,104 @@ const contactlist = ref([
     }]
   }
 ])
+
+const initContactList = () => {
+  contactlist.value = [
+    {
+      icon: 'cmail',
+      type: t('common.email'),
+      link: mailLink(),
+      btns: [{
+        text: t('common.askus'),
+        action: ''
+      }]
+    },
+    {
+      icon: 'cqq',
+      type: t('common.qq'),
+      link: qqLink(),
+      btns: [{
+        text: t('common.copy'),
+        action: ''
+      },
+      {
+        text: t('common.download'),
+        action: 'https://im.qq.com/index/'
+      }]
+    },
+    {
+      icon: 'cskype',
+      type: t('common.skype'),
+      link: 'live:.cid.1b8d9a018a52a8f5',
+      btns: [{
+        text: t('common.copy'),
+        action: ''
+      },
+      {
+        text: t('common.download'),
+        action: 'https://www.skype.com/zh-Hans/get-skype/'
+      }]
+    },
+    {
+      icon: 'ctelegram',
+      type: 'Telegram',
+      link: telegramLink(),
+      btns: [{
+        text: t('common.copy'),
+        action: ''
+      },
+      {
+        text: t('common.download'),
+        action: 'https://telegram.org/'
+      }]
+    },
+    {
+      icon: 'bubble-logo',
+      type: t('common.paopao'),
+      link: 'LH10086',
+      btns: [{
+        text: t('common.copy'),
+        action: ''
+      },
+      {
+        text: t('common.download'),
+        action: 'https://paopaoim.com/index.html'
+      }]
+    }
+  ]
+  if (props.siteId === '8') {
+    contactlist.value.forEach((contact, ind) => {
+      if (contact.icon === 'cqq') {
+        contactlist.value.splice(ind, 1);
+      }
+      if (contact.icon === 'bubble-logo') {
+        contactlist.value.splice(ind, 1);
+      }
+      if (contact.icon === 'cbat') {
+        contactlist.value.splice(ind, 1);
+      }
+      if (contact.icon === 'ctelegram') {
+        contact.link = '@dailitf88'
+      }
+      if (contact.icon === 'cskype') {
+        contact.link = 'live:.cid.f284aa8f5c120ae5'
+      }
+      if (contact.icon === 'cmail') {
+        contact.link = 'mailto:vnaffiliates@tf88.com'
+      }
+    });
+    const obj = {
+      icon: 'czalo',
+      type: t('common.zalo'),
+      link: '+639278280893',
+      btns: [{
+        text: t('common.askus'),
+        action: ''
+      }]
+    }
+    contactlist.value.push(obj);
+  }
+}
 const copyMessage = (position, text, btnPosition) => {
   console.log(position);
   console.log(text);
@@ -186,6 +284,11 @@ onMounted(() => {
     contactlist.value.push(obj);
   }
 })
+
+onMounted(() => {
+  initContactList();
+})
+
 </script>
 <style lang="scss">
 .customer-service {
