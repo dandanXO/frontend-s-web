@@ -36,7 +36,7 @@ const mailLink = () => {
   if (siteId === '7') {
     return 'mailto:affiliate@e8007.com'
   } else if (siteId === '8') {
-    return 'mailto:vnaffiliates@tf88.com'
+    return 'vnaffiliates@tf88.com'
   } else {
     return 'mailto:affiliate@dyvip99.com'
   }
@@ -51,6 +51,8 @@ const qqLink = () => {
 const telegramLink = () => {
   if (siteId === '7') {
     return '@LH18668'
+  } else if (siteId === '8') {
+    return '@dailitf88'
   } else {
     return 'leihuo123'
   }
@@ -122,36 +124,56 @@ const initContactList = () => {
     }
   ]
   if (siteId === '8') {
-    contactlist.value.forEach((contact, ind) => {
-      if (contact.icon === 'cqq') {
-        contactlist.value.splice(ind, 1);
-      }
-      if (contact.icon === 'bubble-logo') {
-        contactlist.value.splice(ind, 1);
-      }
-      if (contact.icon === 'cbat') {
-        contactlist.value.splice(ind, 1);
-      }
-      if (contact.icon === 'ctelegram') {
-        contact.link = '@dailitf88'
-      }
-      if (contact.icon === 'cskype') {
-        contact.link = 'live:.cid.f284aa8f5c120ae5'
-      }
-      if (contact.icon === 'cmail') {
-        contact.link = 'mailto:vnaffiliates@tf88.com'
-      }
-    });
-    const obj = {
-      icon: 'czalo',
-      type: t('common.zalo'),
-      link: '+639278280893',
-      btns: [{
-        text: t('common.askus'),
-        action: ''
-      }]
-    }
-    contactlist.value.push(obj);
+    contactlist.value = [
+      {
+        icon: 'cmail',
+        type: t('common.email'),
+        link: mailLink(),
+        btns: [{
+          text: t('common.askus'),
+          action: ''
+        }]
+      },
+      {
+        icon: 'czalo',
+        type: t('common.zalo'),
+        link: '+639278280893',
+        btns: [{
+          text: t('common.copy'),
+          action: ''
+        },
+        {
+          text: t('common.download'),
+          action: 'http://zaloapp.com/qr/p/1j6eul1u6866m'
+        }]
+      },
+      {
+        icon: 'cskype',
+        type: t('common.skype'),
+        link: 'live:.cid.f284aa8f5c120ae5',
+        btns: [{
+          text: t('common.copy'),
+          action: ''
+        },
+        {
+          text: t('common.download'),
+          action: 'https://www.skype.com/get-skype/'
+        }]
+      },
+      {
+        icon: 'ctelegram',
+        type: 'Telegram',
+        link: telegramLink(),
+        btns: [{
+          text: t('common.copy'),
+          action: ''
+        },
+        {
+          text: t('common.download'),
+          action: 'https://telegram.org/'
+        }]
+      },
+    ]
   }
 }
 
