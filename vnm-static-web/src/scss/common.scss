@@ -207,9 +207,25 @@ body {
       margin-left: 10px;
     }
     .el-dialog__headerbtn {
-      top: 0px;
-      width: 45px;
-      height: 45px;
+      top: 5px;
+      right: 5px;
+      height: 2em;
+      width: 2em;
+      border-radius: 50%;
+      background: #666;
+      text-align: center;
+      line-height: 2em;
+      display:flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover{
+        opacity: 0.9;
+      }
+      &:active{
+        filter: brightness(0.85);
+      }
+
       .el-dialog__close {
         color: #ffffff;
         height: 1.5em;
