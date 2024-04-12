@@ -1195,6 +1195,9 @@
           />
         </el-form-item>
         <div class="dialog-footer">
+          <el-button v-if="uiControl.dialogType !== 'UPDATE_COMMISSION'" @click="updateFeeUndefined()">
+            {{ t('fields.setUndefined') }}
+          </el-button>
           <el-button @click="uiControl.dialogVisible = false">
             {{ t('fields.cancel') }}
           </el-button>
@@ -2000,6 +2003,20 @@ async function updateFeeRate() {
   })
 }
 
+async function updateFeeUndefined() {
+  if (uiControl.dialogType === 'UPDATE_PAYMENT_FEE') {
+    await updatePaymentFeeRate(props.affId, null)
+  } else if (uiControl.dialogType === 'UPDATE_PLATFORM_FEE') {
+    await updatePlatformFeeRate(props.affId, null)
+  }
+  await loadAffiliateRecord()
+  uiControl.dialogVisible = false
+  ElMessage({
+    message: t('message.updateSuccess'),
+    type: 'success',
+  })
+}
+
 function updateMemberTimeType() {
   updateTimeTypeModel.value.validate(async valid => {
     if (valid) {
@@ -2124,7 +2141,11 @@ function restrictCommissionDecimalInput(event) {
     if (charCode === 46) {
       event.preventDefault()
     }
-    uiControl.commissionMax = 4
+    if (uiControl.dialogType === 'UPDATE_COMMISSION') {
+      uiControl.commissionMax = 4
+    } else {
+      uiControl.commissionMax = 6
+    }
   } else if (commForm.commission === '1') {
     uiControl.commissionMax = 1
   } else {
