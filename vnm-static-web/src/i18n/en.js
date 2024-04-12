@@ -404,6 +404,7 @@ transit: {
   type: 'Type',
   gameType: 'Game Type',
   gamePlatform:'Game Platform',
+  betTime: "Bet Time",
   time: 'Time',
   privilegeName: 'Privilege Name',
   bet: 'Bet',

@@ -401,6 +401,7 @@ export default {
     "withdrawDate": "Ngày rút tiền",
     "type": "Loại",
     "gameType": "Loại game",
+    betTime: "Thời gian đặt cược",
     "gamePlatform": "Nền tảng game",
     "time": "Thời gian",
     "privilegeName": "Tên đặc quyền",
