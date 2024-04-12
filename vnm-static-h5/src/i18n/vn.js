@@ -219,6 +219,7 @@ export default {
       "Nếu người dùng bạn mời qua liên kết quảng bá đăng ký và nạp tiền, bạn sẽ nhận được phần thưởng tích lũy tối đa là 2,000VNDP.",
     share_sponsoredlinks: "Liên kết tài trợ",
     share_copy: "Sao chép",
+    share_copy_success: "Đã sao chép thành công",
     share_qrcode: "Mã QR",
     share_accumulated_registration: "Đăng ký tích lũy",
     share_accumulated_recharge: "Nạp tiền tích lũy",

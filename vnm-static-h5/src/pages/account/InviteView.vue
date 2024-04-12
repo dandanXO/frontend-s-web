@@ -5,11 +5,12 @@
       <div class="shadow-box">
         <div class="title-top-line1">
           <div id="selfTgurl">{{ selfTgurl }}</div>
+          <q-btn @click="copyText(selfTgurl)" style="min-width: 110px">{{ $t("lang.share_copy") }}</q-btn>
         </div>
       </div>
 
       <div class="shadow-box-info">
-        <table border="0" cellpadding="10" cellspacing="0" style="width:100%;">
+        <table border="0" cellpadding="10" cellspacing="0" style="width: 100%">
           <tr class="box-header-row">
             <td v-html="$t('lang.share_table_header_01')" />
             <td v-html="$t('lang.share_table_header_02')" />
@@ -79,7 +80,7 @@ import {userStore} from "src/stores";
 import {useQuasar, Platform} from "quasar";
 import {api} from "boot/axios"
 import {Clipboard} from '@capacitor/clipboard';
-
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "ShareView",
@@ -90,7 +91,7 @@ export default defineComponent({
     const $q = useQuasar();
     const store = userStore();
     const selfTgurl = ref("");
-
+    const { t } = useI18n();
     const refCode = ref("");
     const refTotalRegister = ref("");
     const refTotalDeposit = ref("");
@@ -108,12 +109,13 @@ export default defineComponent({
 
 
     const copyText = (text) => {
+      console.log("asdasdasd",text)
       copyToClipboard(text);
       setTimeout(() => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: t('lang.link_success'),
+          message: t('lang.share_copy_success'),
           icon: "check_circle_outline"
         });
       }, 100)
@@ -195,6 +197,7 @@ export default defineComponent({
   }
 });
 </script>
+
 <style lang="scss">
 .share-container {
   .share-tnc {
@@ -285,9 +288,9 @@ export default defineComponent({
   .personal-content-box .title-top-line1 {
     // margin-top: 10px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     gap: 10px;
-    align-items: baseline;
+    align-items: center;
     // padding-bottom: 30px;
   }
 
