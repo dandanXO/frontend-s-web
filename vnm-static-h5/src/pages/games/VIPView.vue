@@ -1,5 +1,4 @@
 <template>
-  <!-- <pre>vv{{vipItems}}</pre> -->
   <div class="vip-container">
     <q-carousel
       v-model="slide"
@@ -61,7 +60,7 @@
               ></q-linear-progress>
               <div class="start-end">
                 <div class="vip-card-common-text">V{{ vipIndex }}</div>
-                <div class="vip-card-current-num" v-if="vipLevel === vipIndex">VNDP {{ currentDeposit }}</div>
+                <div class="vip-card-current-num" v-if="vipLevel === vipIndex + 1">VNDP {{ currentDeposit }}</div>
                 <div class="vip-card-common-text">V{{ vipIndex + 1 }}</div>
               </div>
             </div>
@@ -74,6 +73,7 @@
           </q-card-section>
 
           <q-separator></q-separator>
+
           <q-card-section class="level-promo-body">
             <div class="vip-promo-bonus">
               <div class="common-text">
@@ -81,7 +81,15 @@
               </div>
               <div class="common-amount">{{ vip.welcomeBonus }}</div>
               <div class="common-btn" v-if="vip.welcomeBonus !== '-'">
-                <q-btn class="btn-main" no-caps @click="claim()">{{ $t("lang.vip_claim") }}</q-btn>
+                <q-btn
+                  class="btn-main"
+                  no-caps
+                  @click="claimDesc.availableBtn ? claim() : null"
+                  v-if="claimDesc.availableBtn || claimDesc.claimedBtn"
+                  :class="claimDesc.claimedBtn ? 'status-claimed' : ''"
+                >
+                  {{ claimDesc.claimedBtn ? $t("lang.vip_claimed") : $t("lang.vip_claim") }}
+                </q-btn>
               </div>
             </div>
             <div class="vip-promo-bonus">
@@ -90,7 +98,14 @@
               </div>
               <div class="common-amount">{{ vip.monthlyBonus }}</div>
               <div class="common-btn" v-if="vip.monthlyBonus !== '-'">
-                <q-btn class="btn-main" no-caps @click="claim()">{{ $t("lang.vip_claim") }}</q-btn>
+                <q-btn
+                  class="btn-main"
+                  no-caps
+                  @click="claimDesc.monthlyBtn ? claimMonthly() : null"
+                  v-if="claimDesc.monthlyBtn"
+                >
+                  {{ $t("lang.vip_claim") }}
+                </q-btn>
               </div>
             </div>
             <div class="vip-promo-bonus">
@@ -99,32 +114,15 @@
               </div>
               <div class="common-amount">{{ vip.birthdayBonus }}</div>
               <div class="common-btn" v-if="vip.birthdayBonus !== '-'">
-                <q-btn class="btn-main" no-caps @click="router.push('/liveChat')">{{ $t("lang.vip_contactcs") }}</q-btn>
+                <q-btn
+                  class="btn-main"
+                  v-if="claimDesc.availableBtn || claimDesc.claimedBtn"
+                  no-caps
+                  @click="router.push('/liveChat')"
+                >
+                  {{ $t("lang.vip_contactcs") }}
+                </q-btn>
               </div>
-            </div>
-            <!-- <div class="turnover">
-          <div class="common-text">流水要求</div>
-          <div class="common-text">{{ claimDesc.turnover }}</div>
-        </div> -->
-            <div
-              class="claim-btn-container"
-              @click="claimDesc.availableBtn ? claim() : null"
-              v-if="claimDesc.availableBtn || claimDesc.claimedBtn"
-              :class="claimDesc.claimedBtn ? 'status-claimed' : ''"
-            >
-              <img class="claim-btn" src="../../assets/images/vip/claim-btn.png" alt="" />
-              <span class="common-text">
-                {{ claimDesc.claimedBtn ? "已领取" : "立即领取" }}
-              </span>
-            </div>
-            <!-- depositPromoBtn -->
-            <div
-              class="claim-btn-container"
-              @click="router.push('/finance/deposit?from=vip')"
-              v-if="claimDesc.depositPromoBtn"
-            >
-              <img class="claim-btn" src="../../assets/images/vip/claim-btn.png" alt="" />
-              <span class="common-text">前往存款</span>
             </div>
           </q-card-section>
         </q-card>
@@ -322,13 +320,14 @@ const vipItems = ref([
     welcomeBonus: "-",
     monthlyBonus: "-",
     birthdayBonus: "-",
-    amount: "一笔存款",
+    amount: "100",
     rebateSport: "0.30%",
     rebateEsports: "0.40%",
     rebateLive: "0.40%",
     rebatePoker: "0.40%",
     rebateSlot: "0.60%",
-    rebateLottery: "0.30%"
+    rebateLottery: "0.30%",
+    progressBarVal: 0
   },
   {
     level: "2",
@@ -336,13 +335,14 @@ const vipItems = ref([
     welcomeBonus: "-",
     monthlyBonus: "-",
     birthdayBonus: "-",
-    amount: "3,000",
+    amount: "380,000",
     rebateSport: "0.38%",
     rebateEsports: "0.48%",
     rebateLive: "0.45%",
     rebatePoker: "0.48%",
     rebateSlot: "0.70%",
-    rebateLottery: "0.30%"
+    rebateLottery: "0.30%",
+    progressBarVal: 0
   },
   {
     level: "3",
@@ -350,13 +350,14 @@ const vipItems = ref([
     welcomeBonus: "888",
     monthlyBonus: "588",
     birthdayBonus: "-",
-    amount: "30,000",
+    amount: "1,000,000",
     rebateSport: "0.48%",
     rebateEsports: "0.58%",
     rebateLive: "0.50%",
     rebatePoker: "0.58%",
     rebateSlot: "0.80%",
-    rebateLottery: "0.40%"
+    rebateLottery: "0.40%",
+    progressBarVal: 0
   },
   {
     level: "4",
@@ -364,13 +365,14 @@ const vipItems = ref([
     welcomeBonus: "1,888",
     monthlyBonus: "888",
     birthdayBonus: "888",
-    amount: "80,000",
+    amount: "3,000,000",
     rebateSport: "0.58%",
     rebateEsports: "0.68%",
     rebateLive: "0.55%",
     rebatePoker: "0.68%",
     rebateSlot: "1.00%",
-    rebateLottery: "0.40%"
+    rebateLottery: "0.40%",
+    progressBarVal: 0
   },
   {
     level: "5",
@@ -378,13 +380,14 @@ const vipItems = ref([
     welcomeBonus: "3,888",
     monthlyBonus: "1,888",
     birthdayBonus: "2,888",
-    amount: "200,000",
+    amount: "9,000,000",
     rebateSport: "0.68%",
     rebateEsports: "0.78%",
     rebateLive: "0.60%",
     rebatePoker: "0.78%",
     rebateSlot: "1.20%",
-    rebateLottery: "0.50%"
+    rebateLottery: "0.50%",
+    progressBarVal: 0
   },
   {
     level: "6",
@@ -392,13 +395,14 @@ const vipItems = ref([
     welcomeBonus: "5,888",
     monthlyBonus: "3,888",
     birthdayBonus: "5,888",
-    amount: "400,000",
+    amount: "20,000,000",
     rebateSport: "0.78%",
     rebateEsports: "0.88%",
     rebateLive: "0.70%",
     rebatePoker: "0.88%",
     rebateSlot: "1.60%",
-    rebateLottery: "0.50%"
+    rebateLottery: "0.50%",
+    progressBarVal: 0
   },
   {
     level: "7",
@@ -406,94 +410,124 @@ const vipItems = ref([
     welcomeBonus: "10,888",
     monthlyBonus: "5,888",
     birthdayBonus: "8,888",
-    amount: "600,000",
+    amount: "50,000,000",
     rebateSport: "0.88%",
     rebateEsports: "1.00%",
     rebateLive: "0.80%",
     rebatePoker: "1.00%",
     rebateSlot: "2.00%",
-    rebateLottery: "0.60%"
+    rebateLottery: "0.60%",
+    progressBarVal: 0
   }
 ]);
 
 const vipClaimItems = [
-  { benefit: "网站首存优惠", turnover: "无", availableBtn: false, claimedBtn: false, depositPromoBtn: false },
+  {
+    benefit: "网站首存优惠",
+    turnover: "无",
+    availableBtn: false,
+    claimedBtn: false,
+    depositPromoBtn: false,
+    monthlyBtn: false,
+    progressBarVal: 0
+  },
   {
     benefit: "存款最少20元可申请一次晋级奖金88元",
     turnover: "电竞/体育10倍 老虎机12倍 真人18倍",
     availableBtn: false,
     claimedBtn: false,
-    depositPromoBtn: false
+    depositPromoBtn: false,
+    monthlyBtn: false,
+    progressBarVal: 0
   },
   {
     benefit: "存款最少100元可申请一次再存20% 最高奖金1888元",
     turnover: "电竞/体育15倍 老虎机12倍 真人18倍",
     availableBtn: false,
     claimedBtn: false,
-    depositPromoBtn: false
+    depositPromoBtn: false,
+    monthlyBtn: false
   },
   {
     benefit: "存款最少20元可申请一次晋级奖金188元",
     turnover: "电竞/体育 5倍  老虎机12倍 真人15倍",
     availableBtn: false,
     claimedBtn: false,
-    depositPromoBtn: false
+    depositPromoBtn: false,
+    monthlyBtn: false,
+    progressBarVal: 0
   },
   {
     benefit: "存款最少20元可申请一次晋级奖金388元",
     turnover: "电竞/体育 5倍  老虎机12倍 真人15倍",
     availableBtn: false,
     claimedBtn: false,
-    depositPromoBtn: false
+    depositPromoBtn: false,
+    monthlyBtn: false,
+    progressBarVal: 0
   },
   {
     benefit: "存款最少200元可申请一次再存30%最高奖金1888元",
     turnover: "电竞/体育 15倍  老虎机12倍 真人18倍",
     availableBtn: false,
     claimedBtn: false,
-    depositPromoBtn: false
+    depositPromoBtn: false,
+    monthlyBtn: false,
+    progressBarVal: 0
   },
   {
     benefit: "存款最少20元可申请一次晋级奖金888元",
     turnover: "电竞/体育 5倍  老虎机12倍 真人18倍",
     availableBtn: false,
     claimedBtn: false,
-    depositPromoBtn: false
+    depositPromoBtn: false,
+    monthlyBtn: false,
+    progressBarVal: 0
   },
   {
     benefit: "存款最少500元可申请每月一次再存35% 最高奖金8888元",
     turnover: "电竞/体育 15倍  老虎机12倍 真人18倍",
     availableBtn: false,
     claimedBtn: false,
-    depositPromoBtn: false
+    depositPromoBtn: false,
+    monthlyBtn: false,
+    progressBarVal: 0
   },
   {
     benefit: "存款最少20元可申请一次晋级奖金1888元",
     turnover: "电竞/体育 8倍  老虎机12倍 真人18倍",
     availableBtn: false,
     claimedBtn: false,
-    depositPromoBtn: false
+    depositPromoBtn: false,
+    monthlyBtn: false,
+    progressBarVal: 0
   },
   {
     benefit: "存款最少500元可申请一次再存40%最高奖金18888元",
     turnover: "电竞/体育 15倍  老虎机12倍 真人18倍",
     availableBtn: false,
     claimedBtn: false,
-    depositPromoBtn: false
+    depositPromoBtn: false,
+    monthlyBtn: false,
+    progressBarVal: 0
   },
   {
     benefit: "存款最少20元可申请一次晋级奖金8888元",
     turnover: "电竞/体育10倍  老虎机12倍 真人18倍",
     availableBtn: false,
     claimedBtn: false,
-    depositPromoBtn: false
+    depositPromoBtn: false,
+    monthlyBtn: false,
+    progressBarVal: 0
   },
   {
     benefit: "存款最少20元可申请一次晋级奖金18888元",
     turnover: "电竞/体育10倍  老虎机12倍 真人18倍",
     availableBtn: false,
     claimedBtn: false,
-    depositPromoBtn: false
+    depositPromoBtn: false,
+    monthlyBtn: false,
+    progressBarVal: 0
   }
 ];
 
@@ -508,6 +542,7 @@ const currentDeposit = ref(0);
 // }
 
 const checkVipRedeem = () => {
+  // console.log(claimDesc.value)
   if (!claimDesc.value) {
     vipClaimItems.value.forEach((el, i) => {
       el[i].vip = i;
@@ -517,7 +552,7 @@ const checkVipRedeem = () => {
     });
   }
   getProgressBar();
-  eventapi.get("/vip-upgrade/lh/canRedeem").then((res) => {
+  eventapi.get("/vip-welcome/canRedeem").then((res) => {
     if (res.code === 0) {
       // console.log(res.data);
       // Your arrays of elements
@@ -528,6 +563,7 @@ const checkVipRedeem = () => {
 
       // Function to update properties based on the provided elements
       function updatePropertiesBasedOnElements(elements, property) {
+        // console.log(property)
         elements.forEach((element, i) => {
           const index = element - 1;
           // vipClaimItems[i].vip = i
@@ -538,7 +574,7 @@ const checkVipRedeem = () => {
       }
 
       // Call the function to update properties based on depositPromoAvailable elements
-      updatePropertiesBasedOnElements(depositPromoAvailableElements, "depositPromoBtn");
+      // updatePropertiesBasedOnElements(depositPromoAvailableElements, "depositPromoBtn");
 
       // Call the function to update properties based on promoAvailable elements
       updatePropertiesBasedOnElements(promoAvailableElements, "availableBtn");
@@ -569,6 +605,12 @@ const checkVipRedeem = () => {
       });
     }
   });
+
+  eventapi.get("/privi/vip/canRedeem", { promoCode: "vnm-vip-monthly" }).then((res) => {
+    if (res.code === 0) {
+      vipClaimItems[slide.value].monthlyBtn = res.data;
+    }
+  });
 };
 const getProgressBar = () => {
   vipItems.value.forEach((vip, i) => {
@@ -577,37 +619,23 @@ const getProgressBar = () => {
     } else {
       vip.progressBarVal = 1;
     }
-    // if (vipLevel.value > vip.level) {
-    //   vip.progressBarVal = 100
-    // }
 
     if (Number(vipLevel.value + 1 === Number(vip.level))) {
-      // Remove commas from the string
       let amt = vip.amount.replace(/,/g, "");
       let current = currentDeposit.value.replace(/,/g, "");
-
-      // Parse the string into a number
       let vipAmount = parseInt(amt, 10);
       let currentDep = parseInt(current, 10);
 
-      // console.log(vipAmount); // Outputs: 400000
-      // console.log(currentDep);
+      console.log("vipAmount", vipAmount); // Outputs: 400000
+      console.log("currentDep", currentDep);
 
       let percentageChange = (currentDep / vipAmount) * 100;
-      // console.log(percentageChange / 100);
-      vipItems.value[Number(vipLevel.value)].progressBarVal = 1 - percentageChange / 100;
-      // // Calculate the maximum absolute percentage change
-      // let maxAbsoluteChange = Math.max(Math.abs(percentageChange), 1);
 
-      // // Normalize to a range between 0 and 1
-      // let normalizedValue = Math.abs(percentageChange) / maxAbsoluteChange;
+      vipItems.value[vipLevel.value - 1].progressBarVal = 1 - percentageChange / 100;
 
-      // // Map the normalized value to a range with increments of 0.1
-      // let mappedValue = Math.ceil(normalizedValue * 10) / 10;
+      console.log("percentageChange", percentageChange);
 
-      // console.log(mappedValue); // Outputs: 0.8
-      // // var currentProgressPercentage = Math.abs((vipAmount - currentDep) / currentDep) / 100;
-      // vipItems.value[Number(vipLevel.value)].progressBarVal = mappedValue
+      // vipItems.value[vipLevel.value - 1].progressBarVal = 0.5;
     }
   });
 };
@@ -831,12 +859,32 @@ const extractNumber = (str) => {
   vipNumber.value = match ? parseInt(match[0], 10) : null;
 };
 
+const claimMonthly = async () => {
+  try {
+    if (store.hasToken()) {
+      const res = await eventapi.put("/bonus/claim/vnm-vip-monthly");
+      if (res.code === 0) {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: t("lang.vip_claim_success"),
+          icon: "check_circle_outline"
+        });
+      }
+    } else {
+      isLoginModal.value = true;
+    }
+  } catch (error) {
+    console.error("Error in VIP claim:", error);
+  }
+};
+
 const claim = async () => {
   extractNumber(store.vip);
 
   try {
     if (store.hasToken()) {
-      const res = await eventapi.post("/vip-upgrade/lh/claim", qs.stringify({ vipLevel: slide.value + 1 }));
+      const res = await eventapi.post("/vip-welcome/claim", qs.stringify({ vipLevel: slide.value + 1 }));
       if (res.code === 0) {
         $q.notify({
           color: "positive",
@@ -1203,7 +1251,8 @@ onActivated(() => {
   .vip-promo-bonus {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    // justify-content: space-between;
+    gap: 20px;
     white-space: normal;
   }
 
@@ -1227,6 +1276,7 @@ onActivated(() => {
   }
 
   .common-btn {
+    margin-left: auto;
     .btn-main {
       background-image: url("../../assets/images/account/account-btn.png");
       background-size: 100% 100%;
@@ -1245,6 +1295,12 @@ onActivated(() => {
       background-color: transparent;
       &:before {
         box-shadow: none;
+      }
+
+      &.status-claimed {
+        opacity: 0.6;
+        filter: grayscale(0.6);
+        cursor: not-allowed;
       }
     }
   }

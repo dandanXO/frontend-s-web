@@ -447,6 +447,7 @@ export default {
     vip_birthday_bonus: "Birthday bonus",
     vip_request: "Request",
     vip_claim: "Claim",
+    vip_claimed: "Claimed",
     vip_claim_success: "Claimed successfully",
     vip_contactcs: "Contact CS",
     level: "Level",
