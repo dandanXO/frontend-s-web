@@ -35,7 +35,6 @@
           standout
           v-model="regForm.password"
           :placeholder="$t('lang.password')"
-          lazy-rules
           :type="isPwd ? 'password' : 'text'"
           :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_type_the_password'),
@@ -89,7 +88,6 @@
           :type="isCfmPwd ? 'password' : 'text'"
           v-model="regForm.confirmPwd"
           :placeholder="$t('lang.confirm_password')"
-          lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_type_the_confirm_password'),
             (val) => val === regForm.password || $t('lang.password_not_same'),
@@ -121,7 +119,6 @@
           clearable
           v-model="regForm.realName"
           :placeholder="$t('lang.real_name')"
-          lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_enter_your_real_name'),
             (val) => (val && val.length >= 2) || $t('lang.real_name_validation'),
@@ -170,7 +167,6 @@
           type="email"
           v-model="regForm.email"
           :placeholder="$t('lang.email')"
-          lazy-rules
           :rules="[(val) => (val && val.length > 0) || $t('lang.email_valid'), isValidEmail]"
           color="white"
         >
@@ -193,7 +189,6 @@
           type="text"
           v-model="regForm.captchaCode"
           :placeholder="$t('lang.verification_code')"
-          lazy-rules
           color="white"
           :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_enter_verification_code'),
@@ -240,12 +235,12 @@
 
         <div class="text-center q-mt-md q-pb-xs">
           {{ $t("lang.registration_hints") }}
-<!--          <router-link to="/login" style="white-space: nowrap">-->
+          <!--          <router-link to="/login" style="white-space: nowrap">-->
           <div style="white-space: nowrap">
             {{ $t("lang.user_registration_protocol") }}
           </div>
 
-<!--          </router-link>-->
+          <!--          </router-link>-->
         </div>
       </div>
     </q-form>
@@ -329,7 +324,7 @@ export default defineComponent({
       password: "",
       confirmPwd: "",
       telephone: "",
-      // email: "",
+      email: "",
       captchaCode: "",
       regHost: location.hostname,
       codeId: "",
@@ -395,7 +390,8 @@ export default defineComponent({
     const loginNameRef = ref();
     const pwdRef = ref();
     const confirmPwdRef = ref();
-    // const telRef = ref();
+    const realNameRef = ref();
+    const telRef = ref();
     const emailRef = ref();
     const verificationRef = ref();
     const affiliateCodeRef = ref();
@@ -425,20 +421,22 @@ export default defineComponent({
       loginNameRef.value.validate();
       pwdRef.value.validate();
       confirmPwdRef.value.validate();
-      // telRef.value.validate();
+      telRef.value.validate();
+      realNameRef.value.validate();
       // phoneVerificationRef.value.validate();
-      // emailRef.value.validate();
+      emailRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
-        message: "注册中"
+        message: t("lang.register_in_progress")
       });
       if (
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
         confirmPwdRef.value.hasError ||
-        // telRef.value.hasError ||
+        telRef.value.hasError ||
         // phoneVerificationRef.value.hasError ||
-        // emailRef.value.hasError ||
+        emailRef.value.hasError ||
+        realNameRef.value.hasError ||
         verificationRef.value.hasError
       ) {
         $q.loading.hide();
@@ -606,8 +604,9 @@ export default defineComponent({
       loginNameRef,
       pwdRef,
       confirmPwdRef,
-      // telRef,
+      telRef,
       emailRef,
+      realNameRef,
       verificationRef,
       affiliateCodeRef,
       onSubmit,

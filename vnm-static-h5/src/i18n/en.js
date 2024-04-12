@@ -112,7 +112,8 @@ export default {
     login_here: "Login here",
     registration_hints: "Registration means you have agreed and complied",
     user_registration_protocol: "User Registration protocol",
-    register_success: "",
+    register_success: "Registered Successfully.",
+    register_in_progress: "Registering...",
 
     // forgot password
     sms_retrieval: "SMS retrieval",
@@ -182,6 +183,7 @@ export default {
     personal_username: "Username",
     personal_realname: "Real name",
     personal_realname_val: "Please enter your real name",
+    personal_realname_valid: "Please enter a valid real name",
     personal_birthday: "Birthday",
     personal_birthday_val: "Please enter birthday",
     personal_confirm: "Confirm",
