@@ -640,7 +640,10 @@ about: {
     "highLimit": "High Limit",
     "priorityPaymentMethod": "Priority Payment Method",
     "customerCare": "24/7 VIP Customer Care Team",
-    "invitationExclusive": "Invitation to Exclusive Events"
+    "invitationExclusive": "Invitation to Exclusive Events",
+    upgrade: "WELCOME",
+    birthday: "BIRTHDAY",
+    monthly: "MONTHLY",
   },
   app: {
     sports: "Access to massive sports events and top-tier esports competitions.",
