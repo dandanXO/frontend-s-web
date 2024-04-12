@@ -127,6 +127,7 @@ export default {
     won: "Won",
     didnt_win: "Didn't win",
     record_win_status: "Win status",
+    comingSoon: "Coming Soon..."
   },
   home: {
     appDownload: 'APP Download',
@@ -403,6 +404,7 @@ transit: {
   type: 'Type',
   gameType: 'Game Type',
   gamePlatform:'Game Platform',
+  betTime: "Bet Time",
   time: 'Time',
   privilegeName: 'Privilege Name',
   bet: 'Bet',

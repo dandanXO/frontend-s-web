@@ -1,6 +1,6 @@
 <template>
   <div class="platform-section" :style="{ 'background-size':'cover', 'background-image':( platformType !== 'slot' && platformType !== 'fishing') ? 'url(' + require('../assets/' + platformType + '/' + platformType + '-bg.png') + ')' : 'none' }">
-    <div class="platform-container"
+    <div v-if="platformsListDisplay.length > 0" class="platform-container"
       :class="(platformType === 'slot' || platformType === 'fishing') ? 'slot-container' : ''"
     >
       <div class="platform-container-slot" v-if="platformType === 'slot' || platformType === 'fishing'">
@@ -95,6 +95,10 @@
           </template>
         </template>
       </div>
+    </div>
+    <div v-else class="empty-container">
+      <img src="../assets/logo.svg">
+      {{ $t('common.comingSoon') }}
     </div>
 
     <div class="margin-center game-container" v-if="platformExpandable">

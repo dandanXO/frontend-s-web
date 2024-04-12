@@ -81,7 +81,7 @@
               </div>
               <div class="common-amount">{{ vip.welcomeBonus }}</div>
               <div class="common-btn" v-if="vip.welcomeBonus !== '-'">
-                <q-btn class="btn-main" no-caps>{{ $t("lang.vip_claim") }}</q-btn>
+                <q-btn class="btn-main" no-caps @click="claim()">{{ $t("lang.vip_claim") }}</q-btn>
               </div>
             </div>
             <div class="vip-promo-bonus">
@@ -90,7 +90,7 @@
               </div>
               <div class="common-amount">{{ vip.monthlyBonus }}</div>
               <div class="common-btn" v-if="vip.monthlyBonus !== '-'">
-                <q-btn class="btn-main" no-caps>{{ $t("lang.vip_claim") }}</q-btn>
+                <q-btn class="btn-main" no-caps @click="claim()">{{ $t("lang.vip_claim") }}</q-btn>
               </div>
             </div>
             <div class="vip-promo-bonus">
@@ -271,6 +271,31 @@
       </div>
     </div>
   </div>
+
+  <q-dialog
+    width="100%"
+    class="modal-common-div"
+    v-model="isLoginModal"
+    show-cancel-button
+    :showCancelButton="false"
+    :showConfirmButton="false"
+  >
+    <q-card style="width: 100%" class="modalcontent">
+      <div class="headers">
+        <div class="titles">{{ $t("lang.system_hint") }}</div>
+        <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
+      </div>
+      <div class="contents">{{ $t("lang.system_please_login") }}</div>
+      <div class="btnsreas">
+        <div class="confirmsbtns common-md-btn btn-standard-height" @click="router.push('/login')">
+          {{ $t("lang.system_loginnow") }}
+        </div>
+        <div class="cacnels common-md-white-btn btn-standard-height" @click="isLoginModal = false">
+          {{ $t("lang.system_cancel") }}
+        </div>
+      </div>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -810,31 +835,27 @@ const claim = async () => {
   extractNumber(store.vip);
 
   try {
-    // const res = await eventapi.post("/vip-upgrade/lh/claim", qs.stringify({ vipLevel: vipNumber.value }));
-    const res = await eventapi.post("/vip-upgrade/lh/claim", qs.stringify({ vipLevel: slide.value + 1 }));
-    if (res.code === 0) {
-      $q.notify({
-        color: "positive",
-        position: "top",
-        message: "领取成功",
-        icon: "check_circle_outline"
-      });
-      claimDesc.value.claimedBtn = true;
-
-      claimDesc.value.availableBtn = false;
+    if (store.hasToken()) {
+      const res = await eventapi.post("/vip-upgrade/lh/claim", qs.stringify({ vipLevel: slide.value + 1 }));
+      if (res.code === 0) {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: t("lang.vip_claim_success"),
+          icon: "check_circle_outline"
+        });
+        claimDesc.value.claimedBtn = true;
+        claimDesc.value.availableBtn = false;
+      }
     } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: res.message,
-        icon: "report_problem"
-      });
+      isLoginModal.value = true;
     }
   } catch (error) {
     console.error("Error in VIP claim:", error);
   }
 };
 const vipLevel = ref(null);
+const isLoginModal = ref(false);
 onActivated(() => {
   if (store.hasToken()) {
     store.getMemberInfo().then(() => {
@@ -1124,7 +1145,7 @@ onActivated(() => {
           font-weight: 600;
           color: $font-2;
           border-bottom-width: 0;
-          white-space: normal;
+          white-space: wrap;
         }
       }
       thead > :first-child {
@@ -1183,7 +1204,7 @@ onActivated(() => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    white-space: normal;
   }
 
   .vip-tips {

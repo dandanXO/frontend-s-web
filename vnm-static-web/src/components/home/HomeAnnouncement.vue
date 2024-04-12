@@ -179,7 +179,7 @@ onMounted(() => {
   width: 80%;
   margin: 0 auto;
   max-width: 1350px;
-
+  overflow: hidden;
   .top-bar-inner {
     max-width: $maxwidth;
     width: 100%;

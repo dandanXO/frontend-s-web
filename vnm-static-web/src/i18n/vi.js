@@ -127,6 +127,7 @@ export default {
     won: "Thắng",
     didnt_win: "Không thắng",
     record_win_status: "Tình trạng thắng",
+    comingSoon: "Coming Soon...",
   },
   "home": {
     "appDownload": "Tải ứng dụng",
@@ -400,6 +401,7 @@ export default {
     "withdrawDate": "Ngày rút tiền",
     "type": "Loại",
     "gameType": "Loại game",
+    betTime: "Thời gian đặt cược",
     "gamePlatform": "Nền tảng game",
     "time": "Thời gian",
     "privilegeName": "Tên đặc quyền",

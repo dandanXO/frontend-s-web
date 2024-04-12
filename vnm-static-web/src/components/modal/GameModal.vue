@@ -124,7 +124,7 @@ import { transfer } from "@/api/personal/transfer";
 // import { message } from "ant-design-vue";
 import { storeToRefs } from "pinia";
 import DepositComponent from "@/components/depositComponent.vue";
-import { ElMessageBox } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 // import { Modal } from "ant-design-vue";
@@ -245,29 +245,37 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           gameCode: gameCode,
           isMobile: isMobile()
         }).then((res) => {
-          window.open(
-            res.data,
-            "popUpWindow",
-            "fullscreen=yes,resizable=no,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no,status=no"
-          );
+          if(res.code===0) {
+            window.open(
+              res.data,
+              "popUpWindow",
+              "fullscreen=yes,resizable=no,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no,status=no"
+            );
+          }else{
+            ElMessage.error(t('response.' + res.code) || res.message);
+          }
         });
       } else {
         launchSessionGame(platformCode, {
           gameCode: gameCode,
           isMobile: isMobile()
         }).then((res) => {
-          let srcData = res.data;
+          if(res.code===0) {
+            let srcData = res.data;
 
-          if (platformCode === "PG") {
-            const scriptEndTag = "</" + "script>";
-            srcData = res.data
-              .replace(/<\/script>/g, scriptEndTag)
-              .replaceAll(/\\\"/g, '"')
-              .replaceAll(/\n/g, "");
+            if (platformCode === "PG") {
+              const scriptEndTag = "</" + "script>";
+              srcData = res.data
+                .replace(/<\/script>/g, scriptEndTag)
+                .replaceAll(/\\\"/g, '"')
+                .replaceAll(/\n/g, "");
+            }
+
+            src.value = srcData;
+            visible.value = true;
+          }else{
+            ElMessage.error(t('response.' + res.code) || res.message);
           }
-
-          src.value = srcData;
-          visible.value = true;
         });
       }
     } else {
@@ -383,21 +391,21 @@ defineExpose({
       display: none;
       top: -95%;
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, transparent 20%, #db7e42 20%, transparent 30%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
+      radial-gradient(circle, transparent 20%, #db7e42 20%, transparent 30%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
       background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%;
     }
 
     &:after {
       bottom: -95%;
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
+      radial-gradient(circle, #db7e42 20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
       background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
     }
 
