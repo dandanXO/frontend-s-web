@@ -207,17 +207,9 @@ body {
       margin-left: 10px;
     }
     .el-dialog__headerbtn {
-      top: 5px;
-      right: 5px;
-      height: 2em;
-      width: 2em;
-      border-radius: 50%;
-      background: #666;
-      text-align: center;
-      line-height: 2em;
-      display:flex;
-      align-items: center;
-      justify-content: center;
+      top:0px;
+      width:45px;
+      height: 45px;
 
       &:hover{
         opacity: 0.9;
