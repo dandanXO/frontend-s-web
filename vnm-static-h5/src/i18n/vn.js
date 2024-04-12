@@ -115,6 +115,7 @@ export default {
     registration_hints: "Đăng ký tức bạn đã đồng ý và tuân thủ",
     user_registration_protocol: "Thoản thuận đăng ký tài khoản",
     register_success: "Đăng ký thành công",
+    register_in_progress: "Đang đăng ký...",
 
     // forgot password
     sms_retrieval: "Truy xuất qua SMS",
