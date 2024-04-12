@@ -236,16 +236,8 @@ const openCaptchaForm = (type) => {
 
 const phoneLogin = () => {
   loadingBtn.value = true;
-  const fpPromise = FingerprintJS.load();
   (async () => {
-    const fp = await fpPromise;
-    const result = await fp.get();
-    const excludes = { value: ["timezone", "timeZoneOffset"] };
-    const allComponents = { ...result.components };
-    excludes.value.forEach((element) => {
-      delete allComponents[element];
-    });
-    const sidParam = FingerprintJS.hashComponents(allComponents);
+    const sidParam = store.visitorId;
 
     mobileLoginRef.value.validate().then(() => {
       if (!loginForm.smsCodeId) {

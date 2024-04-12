@@ -75,7 +75,7 @@
           </div>
         </div>
 
-<LocaleChanger />
+        <LocaleChanger />
 
         <div v-if="!store.token" class="right-contents">
           <!-- <router-link to="/login" class="action-btn">
@@ -95,7 +95,7 @@
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-deposit.svg" />
             </div>
-           {{ $t('menu.deposit') }}
+            {{ $t('menu.deposit') }}
           </router-link>
           <router-link to="/center/withdraw" class="action-btn">
             <div class="icon-rounded">
@@ -199,7 +199,7 @@
           </div>
         </div> -->
       </div>
-      
+
       <!-- <div class="side right"><img src="../../assets/home/header_side.png"></div> -->
     </div>
 
@@ -1087,16 +1087,8 @@ export default defineComponent({
       if (!elForm) return;
       await elForm.validate((valid) => {
         if (valid) {
-          const fpPromise = FingerprintJS.load();
           (async () => {
-            const fp = await fpPromise;
-            const result = await fp.get();
-            const excludes = { value: ["timezone", "timeZoneOffset"] };
-            const allComponents = { ...result.components };
-            excludes.value.forEach((element) => {
-              delete allComponents[element];
-            });
-            const sidParam = FingerprintJS.hashComponents(allComponents);
+            const sidParam = store.visitorId;
             regForm.sid = sidParam;
             register(regForm)
               .then((response) => {
@@ -1145,12 +1137,12 @@ export default defineComponent({
       claimRebate().then((res) =>{
 
         if(res.code === 0) {
-        
-        isRebateDialogVisible.value = false;
-        ElMessage.success($t('common.claimedSuccess'))
-      } else {
-        ElMessage.error(res.message)
-      }
+
+          isRebateDialogVisible.value = false;
+          ElMessage.success($t('common.claimedSuccess'))
+        } else {
+          ElMessage.error(res.message)
+        }
       })
     }
     onMounted(() => {
@@ -1242,23 +1234,15 @@ export default defineComponent({
       passRef.value.validate().then(() => {
         findAccount(passForm).then((res) => {
           if (res.code === 0) {
-            ElMessage.success("您的帐号已经发送到注册邮箱");
+            ElMessage.success(t('account.you_account_has_been_sent_email'));
           }
         });
       });
     };
     const submitLogin = () => {
       loadingBtn.value = true;
-      const fpPromise = FingerprintJS.load();
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+        const sidParam = store.visitorId;
 
         loginRef.value.validate().then(() => {
           store
@@ -1298,16 +1282,8 @@ export default defineComponent({
 
     const phoneLogin = () => {
       loadingBtn.value = true;
-      const fpPromise = FingerprintJS.load();
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+        const sidParam = store.visitorId;
 
         mobileLoginRef.value.validate().then(() => {
           store
@@ -1798,18 +1774,18 @@ body {
 
   .top-nav-wrapper {
     .side {
-      
-    position: absolute;
-    top: 0;
-    &.left {
 
-      left: 0px;
-    }
-    &.right {
+      position: absolute;
+      top: 0;
+      &.left {
 
-      right: 0px;
-    transform: rotateY(180deg);
-    }
+        left: 0px;
+      }
+      &.right {
+
+        right: 0px;
+        transform: rotateY(180deg);
+      }
     }
     padding: 10px;
     background: $color-white;
@@ -1827,7 +1803,7 @@ body {
       gap: 15px;
 
       &.logged-in-nav {
-    max-width: 1530px;
+        max-width: 1530px;
       }
 
       .logospon {
@@ -1900,7 +1876,7 @@ body {
 
           span:last-child {
             text-transform: uppercase;
-    font-size: 0.55rem;
+            font-size: 0.55rem;
             display: flex;
             flex-direction: column;
             white-space: nowrap;
@@ -1918,7 +1894,7 @@ body {
 
             img.hover-icon {
               filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
-                contrast(102%);
+              contrast(102%);
             }
           }
         }
