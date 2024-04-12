@@ -24,7 +24,7 @@
             <el-form :model="query" :layout="'inline'">
               <el-row class="firstrow">
                 <div class="date">
-                  <div>{{ t('promo.fill_up_record_time') }}</div>
+                  <div>{{ $t('promo.fill_up_record_time') }}</div>
                   <el-date-picker
                     key="1"
                     :placeholder="$t('promo.selectDate')"
@@ -32,15 +32,38 @@
                     value-format="YYYY-MM-DD"
                     format="YYYY-MM-DD"
                   />
+
+
                 </div>
 
-                <el-form-item :label="t('promo.view_myself_record')">
-                  <el-switch v-model="query.onlyMe" />
-                </el-form-item>
 
-                <el-form-item>
-                  <div class="common-btn retrieve-btn" @click="retrieveList()">{{ t('promo.check') }}</div>
-                </el-form-item>
+                <div class="date">
+                  <div>{{ $t('common.record_win_status') }}</div>
+                  <el-select
+                    class="q-mt-md"
+                    style="width: 150px;"
+                    v-model="winStatusSelect"
+                  >
+                    <el-option
+                      v-for="p in winStatusOptions"
+                      :key="p.value"
+                      :value="p.value"
+                      :label="p.label"
+                    >
+                      {{ p.label }}
+                    </el-option>
+                  </el-select>
+                </div>
+
+
+                <!--                <el-form-item :label="t('promo.view_myself_record')">-->
+                <!--                  <el-switch v-model="query.onlyMe" />-->
+                <!--                </el-form-item>-->
+                <div class="date">
+                  <el-form-item>
+                    <div class="common-btn retrieve-btn" @click="retrieveList()">{{ t('promo.check') }}</div>
+                  </el-form-item>
+                </div>
               </el-row>
             </el-form>
 
@@ -107,6 +130,14 @@ const { t } = useI18n();
 const store = userStore();
 
 const activeKey = ref("0");
+const props= defineProps(["promoCode"]);
+
+const winStatusSelect = ref();
+const winStatusOptions = [
+  { value: "BET", label: t("common.not_drawn_yet") },
+  { value: "WIN", label: t("common.won") },
+  { value: "LOSS", label: t("common.didnt_win") }
+];
 
 // tab 1
 const luckyNumber = ref(null);
@@ -114,10 +145,10 @@ const luckyNumberBtnLoading = ref(false);
 function chooseLuckyNumber() {
   luckyNumberBtnLoading.value = true;
 
-  submitLuckyNumber(luckyNumber.value)
+  submitLuckyNumber(luckyNumber.value, props.promoCode)
     .then((res) => {
       if (res.code === 0) {
-        ElMessage.success("成功发送号码。");
+        ElMessage.success(t('common.successful_sent'));
         luckyNumber.value = null;
       } else {
         ElMessage.error({
@@ -144,6 +175,10 @@ const dataSource = ref([]);
 function retrieveList() {
   if (query.onlyMe) memberId = store.id;
   else memberId = null;
+
+  if(winStatusSelect.value) {
+    query.winStatus= winStatusSelect.value;
+  }
 
   luckyNumberList(query, memberId)
     .then((res) => {
@@ -351,7 +386,8 @@ function retrieveWinnerList() {
         align-items: center;
         justify-content: center;
         gap: 50px;
-        padding: 10px 75px;
+        padding: 10px 45px;
+        flex-wrap:nowrap;
 
         :deep(.el-form-item) {
           margin-bottom: unset;

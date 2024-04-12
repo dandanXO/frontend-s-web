@@ -32,10 +32,10 @@ export function welcomeTaskClaimBonus(item) {
   return server.EVENT.put(`/welcomeTask/claim/${item}`);
 }
 
-export function submitLuckyNumber(item) {
+export function submitLuckyNumber(item, promoCode) {
   return server.EVENT.post(`/privi/lotteryNumber`, {
     number: item,
-    promoCode: "lh1-lottery"
+    promoCode: promoCode
   });
 }
 
