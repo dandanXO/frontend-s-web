@@ -39,6 +39,8 @@
     />
 
     <FeedbackAwardPromo v-if="list.redirectUrl === 'lh1-feedback-awards' && !isCommonPromo" />
+    
+    <AppHongBao v-if="list.redirectUrl === 'lh1-app-hongbao' && !isCommonPromo && store.token" :promo-code="list.promoCode" :params="list.param" />
 
     <PrivilegeInvitePromo
       v-if="
@@ -147,6 +149,7 @@ import LhStepGamePromo from "../components/hotpromo/lhstepgame/LhStepGamePromo.v
 import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
 import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
 import SummonerPromo from "../components/hotpromo/summoner/SummonerPromo.vue";
+import AppHongBao from "../components/hotpromo/apphongbao/AppHongBao.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -180,7 +183,8 @@ export default defineComponent({
     // CnyStepGame2024Promo
     BonusSpinWheel,
     LhStepGamePromo,
-    SummonerPromo
+    SummonerPromo,
+    AppHongBao
   },
   props: {
     list: {
@@ -270,7 +274,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh-cs2-copenhagen-major-2024" ||
       this.list.redirectUrl === "lh1-spin-wheel" ||
       this.list.redirectUrl === "lh1-game-steps" ||
-      this.list.redirectUrl === "lh1-summon-event"
+      this.list.redirectUrl === "lh1-summon-event" ||
+      this.list.redirectUrl === "lh1-app-hongbao"
     ) {
       this.isCommonPromo = false;
     } else {
