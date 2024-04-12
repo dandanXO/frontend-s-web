@@ -101,8 +101,8 @@
                 <q-btn
                   class="btn-main"
                   no-caps
-                  @click="claimDesc.monthlyBtn ? claimMonthly() : null"
-                  v-if="claimDesc.monthlyBtn"
+                  @click="claimMonthly()"
+                  v-if="claimDesc.availableBtn || claimDesc.claimedBtn"
                 >
                   {{ $t("lang.vip_claim") }}
                 </q-btn>
