@@ -993,6 +993,7 @@ export default {
     system_message: "System Message",
     confirm_deposit_msg: "Confirm deposit",
     coming_soon: "Coming soon",
+    game_is_coming_soon: "Stay tune! Game is coming soon",
     no_fav_game_yet: "No favourite game yet",
     or: "OR",
     weak_level: "Weak",

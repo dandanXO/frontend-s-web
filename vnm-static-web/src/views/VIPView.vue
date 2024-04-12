@@ -472,7 +472,8 @@ export default defineComponent({
     const vipItems = reactive([
       {
         vipLevel: "1",
-        upgrade: t('vip.3timedeposit'),
+        // upgrade: t('vip.3timedeposit'),
+        upgrade: "100",
         vipTitle: "IRON",
         depositPromoAvailable: false,
         promoAvailable: false,
