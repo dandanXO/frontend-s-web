@@ -571,6 +571,7 @@ export default {
     bindTypeRemove: '解绑',
     bonus: '奖金',
     bonusAmount: '奖金金额',
+    bonusDays: '奖金日',
     bonusReceived: '已领取奖金',
     bonusType: '奖金类型',
     byDepositDateDesc: '存款日期低到高',
@@ -2329,6 +2330,15 @@ export default {
     PENDING: '未复核',
     APPROVED: '正确',
     REJECTED: '错误',
+  },
+  week: {
+    monday: '星期一',
+    tuesday: '星期二',
+    wednesday: '星期三',
+    thursday: '星期四',
+    friday: '星期五',
+    saturday: '星期六',
+    sunday: '星期日',
   },
   error: {
     400: '请求无效',
