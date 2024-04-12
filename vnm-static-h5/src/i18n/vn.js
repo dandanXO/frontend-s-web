@@ -1000,6 +1000,7 @@ export default {
     system_message: "Thông báo hệ thống",
     confirm_deposit_msg: "Xác nhận giao dịch nạp tiền",
     coming_soon: "Sắp ra mắt",
+    game_is_coming_soon: "Hãy đợi! Trò chơi sẽ sớm ra mắt",
     no_fav_game_yet: "Chưa có trò chơi nào bạn thích",
     or: "Hoặc",
     weak_level: "Yếu",
