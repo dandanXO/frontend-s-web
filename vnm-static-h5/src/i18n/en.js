@@ -216,6 +216,7 @@ export default {
       "If users you invite through the promotional link register and deposit, you will receive a maximum cumulative reward of 2,000VNDP.",
     share_sponsoredlinks: "Sponsored links",
     share_copy: "Copy",
+    share_copy_success: "Copied successfully",
     share_qrcode: "QR Code",
     share_accumulated_registration: "Accumulated registration",
     share_accumulated_recharge: "Accumulated recharge",
