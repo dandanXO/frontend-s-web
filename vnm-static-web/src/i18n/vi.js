@@ -121,7 +121,12 @@ export default {
     bindEmailFirst: "Vui lòng gắn kết email của bạn trước",
     success: "Gửi thành công",
     sendPhoneVerificationSuccess: 'Gửi xác minh số điện thoại thành công',
-    bankCard: "Số thẻ"
+    bankCard: "Số thẻ",
+    successful_sent: "Số đã được gửi thành công.",
+    not_drawn_yet: "Chưa được rút",
+    won: "Thắng",
+    didnt_win: "Không thắng",
+    record_win_status: "Tình trạng thắng",
   },
   "home": {
     "appDownload": "Tải ứng dụng",
