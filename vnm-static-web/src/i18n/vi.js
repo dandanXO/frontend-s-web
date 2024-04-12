@@ -636,7 +636,10 @@ export default {
     "highLimit": "Giới Hạn Cao",
     "priorityPaymentMethod": "Phương Thức Thanh Toán Ưu Tiên",
     "customerCare": "Đội Ngũ Chăm Sóc Khách Hàng VIP 24/7",
-    "invitationExclusive": "Lời Mời Tham Dự Sự Kiện Độc Quyền"
+    "invitationExclusive": "Lời Mời Tham Dự Sự Kiện Độc Quyền",
+    upgrade: "NÂNG CẤP",
+    birthday: "MỪNG SINH NHẬT",
+    monthly: "HÀNG THÁNG",
   },
   app: {
     sports: "Các sự kiện Thể Thao và E-Sport hàng đầu với quy mô lớn.",
