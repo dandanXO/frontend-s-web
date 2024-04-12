@@ -5,7 +5,7 @@
       <img class="headicon" src="../assets/logo-web.svg" alt="download-logo" />
       <div class="download-txt-container">
         <span class="download-title">
-          <font class="sm-screen-txt">{{ $t("lang.app_download_title") }}</font>
+          <div class="sm-screen-txt">{{ $t("lang.app_download_title") }}</div>
         </span>
         <span class="sm-screen-txt">{{ $t("lang.app_download_desc") }}</span>
       </div>
