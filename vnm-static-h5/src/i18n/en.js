@@ -290,6 +290,7 @@ export default {
     deposit_please_enter_deposit: "Please enter deposit amount",
     deposit_loadingdatapleasewait: "Loading data... Please wait...",
     deposit_confirm: "Confirm",
+    deposit_promo: "Select promotion",
     deposit_select_amount: "Select amount",
     deposit_between: "Deposit should be between ",
     deposit_bank: "Bank",

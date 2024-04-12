@@ -297,6 +297,7 @@ export default {
     deposit_please_enter_deposit: "Vui lòng nhập số tiền nạp",
     deposit_loadingdatapleasewait: "Đang tải dữ liệu... Vui lòng đợi...",
     deposit_confirm: "Xác nhận",
+    deposit_promo: "Chọn Khuyến mãi",
     deposit_select_amount: "Chọn số lượng",
     deposit_between: "Vui lòng nhập số tiền từ ",
     deposit_bank: "Ngân hàng",
