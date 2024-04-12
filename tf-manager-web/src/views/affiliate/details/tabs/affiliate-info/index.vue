@@ -623,7 +623,7 @@
             type="info"
             size="mini"
             style="float: right;"
-            v-permission="['sys:affiliate:update:paymentFee']"
+            v-permission="['sys:affiliate:update:payment-fee']"
             @click="showDialog('UPDATE_PAYMENT_FEE')"
           >
             {{ t('fields.update') }}
@@ -648,7 +648,7 @@
             type="info"
             size="mini"
             style="float: right;"
-            v-permission="['sys:affiliate:update:platformFee']"
+            v-permission="['sys:affiliate:update:platform-fee']"
             @click="showDialog('UPDATE_PLATFORM_FEE')"
           >
             {{ t('fields.update') }}
