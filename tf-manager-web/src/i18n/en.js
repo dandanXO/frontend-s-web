@@ -565,6 +565,7 @@ export default {
     bindTypeRemove: 'Remove',
     bonus: 'Bonus',
     bonusAmount: 'Bonus Amount',
+    bonusDays: 'Bonus Days',
     bonusReceived: 'Bonus Received',
     bonusType: 'Bonus Type',
     byDepositDateDesc: 'Sort by Deposit Date DESC',
@@ -2361,6 +2362,15 @@ export default {
     PENDING: 'Pending',
     APPROVED: 'Approved',
     REJECTED: 'Rejected',
+  },
+  week: {
+    monday: 'Monday',
+    tuesday: 'Tuesday',
+    wednesday: 'Wednesday',
+    thursday: 'Thursday',
+    friday: 'Friday',
+    saturday: 'Saturday',
+    sunday: 'Sunday',
   },
   error: {
     400: 'Bad Request',
