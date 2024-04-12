@@ -1500,6 +1500,7 @@ export default {
     signName: 'Sign Name',
     secretId: 'Secret ID',
     secretKey: 'Secret Key',
+    setUndefined: 'Set Undefined',
     appId: 'Application ID',
     templateId: 'Template ID',
     addSmsSetting: 'Add SMS Setting',

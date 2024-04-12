@@ -1506,6 +1506,7 @@ export default {
     signName: '公司名字',
     secretId: '密码',
     secretKey: '密钥',
+    setUndefined: '设置未定义',
     appId: '应用ID',
     templateId: '模板ID',
     addSmsSetting: '新增短信设置',
