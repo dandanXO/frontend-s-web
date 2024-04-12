@@ -854,7 +854,7 @@ function create() {
       }
       form.vips = form.vips.replace(/['"]+/g, '')
       form.payTypes = form.payTypes.replace(/['"]+/g, '')
-      if (form.frequency === 'DAILY') {
+      if (form.bonusDays && form.frequency === 'DAILY' && form.triggerType === 'DEPOSITBONUSES') {
         form.bonusDays = form.bonusDays.replace(/['"]+/g, '')
       } else {
         form.bonusDays = ''
@@ -879,7 +879,7 @@ function edit() {
       }
       form.vips = form.vips.replace(/['"]+/g, '')
       form.payTypes = form.payTypes.replace(/['"]+/g, '')
-      if (form.frequency === 'DAILY') {
+      if (form.bonusDays && form.frequency === 'DAILY' && form.triggerType === 'DEPOSITBONUSES') {
         form.bonusDays = form.bonusDays.replace(/['"]+/g, '')
       } else {
         form.bonusDays = ''
