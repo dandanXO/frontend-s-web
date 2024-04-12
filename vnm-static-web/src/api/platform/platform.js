@@ -41,18 +41,19 @@ export function launchSessionGame(
 ) {
   var way = null;
   var gameheader= {};
-  if(platform === 'PG'){
-    gameheader =  {
-      'Cache-Control': 'no-cache, no-store, must-revalidate'
-    }
-  }
+  //Not Request headers.
+  // if(platform === 'PG'){
+  //   gameheader =  {
+  //     'Cache-Control': 'no-cache, no-store, must-revalidate'
+  //   }
+  // }
 
   if (getDevice() === "MOBILE") {
     way = getMobileOS();
   }
   return server.REST.get(`/session/launch?_time=${new Date().getTime()}`, {
     params: { platform, gameCode, isMobile, way },
-    headers: gameheader
+    // headers: gameheader
   });
 }
 
