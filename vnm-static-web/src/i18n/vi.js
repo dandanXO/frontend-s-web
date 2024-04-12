@@ -58,7 +58,8 @@ export default {
     cockfight: 'Đá Gà',
     deposit_should_between: "Vui lòng nhập số tiền từ ",
     msg_deleted: "Tin nhắn đã bị xóa",
-    please_select_bank: "Vui lòng chọn ngân hàng"
+    please_select_bank: "Vui lòng chọn ngân hàng",
+    you_account_has_been_sent_email: "Mã tài khoản của bạn đã được gửi đến email của bạn."
   },
   "login": {
     "username": "Tên tài khoản",
