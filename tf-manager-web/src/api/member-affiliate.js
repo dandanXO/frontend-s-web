@@ -108,6 +108,24 @@ export const updateCommissionRate = (id, commission) => {
   )
 }
 
+export const updatePaymentFeeRate = (id, fee) => {
+  return https().request(
+    `/affiliate/${id}/paymentFee?_method=PUT`,
+    Method.POST,
+    { paymentFee: fee },
+    ContentType.form
+  )
+}
+
+export const updatePlatformFeeRate = (id, fee) => {
+  return https().request(
+    `/affiliate/${id}/platformFee?_method=PUT`,
+    Method.POST,
+    { platformFee: fee },
+    ContentType.form
+  )
+}
+
 export const updateAffiliatePassword = (id, password, site) => {
   return https().request(
     `/affiliate/${id}/password?_method=PUT`,
