@@ -854,6 +854,11 @@ function create() {
       }
       form.vips = form.vips.replace(/['"]+/g, '')
       form.payTypes = form.payTypes.replace(/['"]+/g, '')
+      if (form.frequency === 'DAILY') {
+        form.bonusDays = form.bonusDays.replace(/['"]+/g, '')
+      } else {
+        form.bonusDays = ''
+      }
       form.gameTypeRollover = constructRollover();
       await createPrivilegeInfo(form)
       uiControl.dialogVisible = false
