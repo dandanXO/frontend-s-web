@@ -1343,8 +1343,8 @@ export default defineComponent({
       return 8;
     }
 
-    watch(
-      () => regForm.password
+    // watch(
+    //   () => regForm.password
       // () => {
       //   pwdStrength.value = "";
 
@@ -1383,7 +1383,7 @@ export default defineComponent({
 
       //   // console.log(pwdStrength.value);
       // },
-    );
+    // );
     const todayDate = () => {
       return "GTM+8 " + moment().utcOffset("+08:00").format("M/D/YYYY, h:mm:ss A ") + moment(new Date()).locale("zh-cn").format("dddd");
     };

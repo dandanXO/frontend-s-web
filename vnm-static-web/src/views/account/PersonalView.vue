@@ -290,35 +290,6 @@
       </el-tab-pane>
     </el-tabs>
 
-    <!--    <el-dialog-->
-    <!--      v-model="updatePwdModalVisible"-->
-    <!--      :footer="null"-->
-    <!--      width="500px"-->
-    <!--      title="修改密码"-->
-    <!--      align-center-->
-    <!--      :close-on-click-modal="false"-->
-    <!--      :close-on-press-escape="false"-->
-    <!--    >-->
-    <!--      <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">-->
-    <!--        <el-form-item ref="oldPassword" name="oldPassword" prop="oldPassword">-->
-    <!--          <el-input type="password" v-model="updatePwdInfo.oldPassword" :placeholder="'旧密码'" />-->
-    <!--        </el-form-item>-->
-    <!--        <el-form-item ref="password" name="password" prop="password">-->
-    <!--          <el-input type="password" v-model="updatePwdInfo.password" :placeholder="'新密码'" />-->
-    <!--        </el-form-item>-->
-    <!--        <el-form-item class="txt-center">-->
-    <!--          <el-button-->
-    <!--            :loading="loadingPwBtn"-->
-    <!--            class="txt-center submit-btn common-btn"-->
-    <!--            type="submit"-->
-    <!--            @click="submitUpdatePwd"-->
-    <!--          >-->
-    <!--            提交-->
-    <!--          </el-button>-->
-    <!--        </el-form-item>-->
-    <!--      </el-form>-->
-    <!--    </el-dialog>-->
-
     <el-dialog
       wrap-class-name="securityModal"
       v-model="updateSecurityModalVisible"

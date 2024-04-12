@@ -2,7 +2,7 @@
   <div class="news-section">
     <el-card>
       <img src="../../assets/logo.svg" />
-      <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+      <el-tabs v-model="activeName" class="demo-tabs" >
         <el-tab-pane :label="t('home.footballNews')" name="first">
           <div class="news-listing">
             <div class="news" v-for="news in footballNewsList.slice(0,5)" @click="open(news.url)">
