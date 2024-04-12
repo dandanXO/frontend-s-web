@@ -32,7 +32,7 @@ const getAmount = () => {
 const onClickClaimNow = () => {
     bonusClaimPokerRefund().then((res) => {
         if (res.code === 0) {
-            
+          ElMessage.success(t('common.claimedSuccess'))
         } else {
             ElMessage.error(res.message)
         }

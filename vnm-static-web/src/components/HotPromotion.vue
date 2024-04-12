@@ -6,7 +6,7 @@
     <PennyBank v-if="list.redirectUrl === 'vi-penny-bank' && !isCommonPromo" />
     <SlotNetloss v-if="list.redirectUrl === 'vi-slot-netloss' && !isCommonPromo" />
     <PokerCashback v-if="list.redirectUrl === 'vi-poker-cashback' && !isCommonPromo" />
-    <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone' && !isCommonPromo && store.token" />
+    <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">

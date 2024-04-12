@@ -276,7 +276,7 @@ const getNavigationData = () => {
           // },
           {
             path: '/withdraw',
-            title: t('fields.withdrawRecord'),
+            title: t('fields.affiliateWithdraw'),
             label: 'withdrawRecord',
             active: false,
             isMainNav: true,

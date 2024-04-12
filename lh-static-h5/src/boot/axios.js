@@ -112,7 +112,7 @@ export default boot(({ app, router }) => {
 
   const onResponseError = (error) => {
     // message.error(error.message);
-    const errorType = getErrorType(error.config?.baseURL);
+    const errorType = getErrorType(error.config.baseURL);
 
     Notify.create({
       type: "negative",
@@ -135,7 +135,7 @@ export default boot(({ app, router }) => {
 
     if (res.code !== ResponseCode.SUCCESS) {
       Loading.hide();
-      const errorType = getErrorType(response.config?.baseURL);
+      const errorType = getErrorType(response.config.baseURL);
 
       if (res.code === ResponseCode.ERROR_SYSTEM) {
         return res;

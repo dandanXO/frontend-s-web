@@ -58,7 +58,8 @@ export default {
     cockfight: 'Đá Gà',
     deposit_should_between: "Vui lòng nhập số tiền từ ",
     msg_deleted: "Tin nhắn đã bị xóa",
-    please_select_bank: "Vui lòng chọn ngân hàng"
+    please_select_bank: "Vui lòng chọn ngân hàng",
+    you_account_has_been_sent_email: "Mã tài khoản của bạn đã được gửi đến email của bạn."
   },
   "login": {
     "username": "Tên tài khoản",
@@ -120,7 +121,12 @@ export default {
     bindEmailFirst: "Vui lòng gắn kết email của bạn trước",
     success: "Gửi thành công",
     sendPhoneVerificationSuccess: 'Gửi xác minh số điện thoại thành công',
-    bankCard: "Số thẻ"
+    bankCard: "Số thẻ",
+    successful_sent: "Số đã được gửi thành công.",
+    not_drawn_yet: "Chưa được rút",
+    won: "Thắng",
+    didnt_win: "Không thắng",
+    record_win_status: "Tình trạng thắng",
   },
   "home": {
     "appDownload": "Tải ứng dụng",
@@ -639,6 +645,11 @@ export default {
     mobileAccess: "Truy cập di động",
     scanDownload: "Quét mã QR để tải xuống"
   },
+  maintenance: {
+    title: "Hệ thống đang bảo trì...",
+    desc: `Bắt đầu từ 01/07/2024 (GMT +8) đến 19/09/2024 (GMT +8)<br>
+    Tất cả dịch vụ và trò chơi sẽ tạm dừng trong thời gian trên, <br>thành thật xin lỗi vì sự bất tiện này!`
+  }, 
   "welcome": {
     "compatibleDevices": "Hoàn toàn tương thích với các thiết bị an toàn",
     "technologyLead": "Leihuo dẫn đầu thị trường với công nghệ xuất sắc. Phát triển độc lập một bộ ứng dụng terminal đầy đủ, cho phép bạn tận hưởng Web, H5, và ứng dụng iOS, Android nguyên bản, trò chơi mượt mà và nhiều hơn nữa. Để bạn thống trị! Dịch vụ gần gũi, dịch vụ khách hàng trực tuyến 24/7 đi cùng bạn suốt năm.",

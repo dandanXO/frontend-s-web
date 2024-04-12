@@ -7,6 +7,7 @@ export default {
     login: "Login",
     register: "Register",
     deposit: "Deposit",
+    deposit_btm: "Deposit",
     withdraw: "Withdraw",
     transfer: "Transfer",
     vip: "VIP",
@@ -39,6 +40,8 @@ export default {
     rebate_claim_now: "Claim now",
     not_logged_in: "Not logged in yet",
     login_register_to_view: "Log in/Register to view",
+    tf88_news: "TF88 News",
+    see_all: "See all",
 
     // side menu
     menu_sports: "Sports",
@@ -49,7 +52,6 @@ export default {
     menu_slots: "Slots",
     menu_fishing: "Fishing",
     menu_cockfighting: "Cock Fighting",
-    menu_rebate: "Rebate",
 
     // notify msg
     msg_update_successful: "Update successful",
@@ -110,7 +112,8 @@ export default {
     login_here: "Login here",
     registration_hints: "Registration means you have agreed and complied",
     user_registration_protocol: "User Registration protocol",
-    register_success: "",
+    register_success: "Registered Successfully.",
+    register_in_progress: "Registering...",
 
     // forgot password
     sms_retrieval: "SMS retrieval",
@@ -168,11 +171,19 @@ export default {
     system_newversiondetected: "New version detected, do you want to update?",
     system_updatenow: "Update now",
 
+    // maintenance
+    maintenance_title: "The system is maintenance...",
+    maintenance_from: "Starting from 01/07/2024 (GMT +8)",
+    maintenance_to: "to 19/09/2024 (GMT +8)",
+    maintenance_desc_01: "All services and games will be suspended during the above period, ",
+    maintenance_desc_02: "sincerely sorry for this inconvenience!",
+
     // personal | verify
     personal_exclusiveurl: "Exclusive URL",
     personal_username: "Username",
     personal_realname: "Real name",
     personal_realname_val: "Please enter your real name",
+    personal_realname_valid: "Please enter a valid real name",
     personal_birthday: "Birthday",
     personal_birthday_val: "Please enter birthday",
     personal_confirm: "Confirm",

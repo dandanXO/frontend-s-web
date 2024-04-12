@@ -99,7 +99,7 @@
               </div>
               <div class="common-amount">{{ vip.birthdayBonus }}</div>
               <div class="common-btn" v-if="vip.birthdayBonus !== '-'">
-                <q-btn class="btn-main" no-caps>{{ $t("lang.vip_contactcs") }}</q-btn>
+                <q-btn class="btn-main" no-caps @click="router.push('/liveChat')">{{ $t("lang.vip_contactcs") }}</q-btn>
               </div>
             </div>
             <!-- <div class="turnover">

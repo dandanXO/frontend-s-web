@@ -18,16 +18,22 @@
         <div class="profile-actions">
           <router-link to="/center/deposit" class="action-btn">
             <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-deposit.png" />
+              <img src="../../assets/images/home/profile-action-deposit.svg" />
             </div>
             {{ $t('menu.deposit') }}
           </router-link>
           <router-link to="/center/withdraw" class="action-btn">
             <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-withdraw.png" />
+              <img src="../../assets/images/home/profile-action-withdraw.svg" />
             </div>
             {{ $t('menu.withdraw') }}
           </router-link>
+          <div class="action-btn" @click="showRebateValue">
+            <div class="icon-rounded">
+              <img src="../../assets/images/home/profile-action-rebate.svg" />
+            </div>
+            {{ $t('menu.rebate') }}
+          </div>
           <!-- <router-link to="/center/transfer" class="action-btn">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-transfer.png" />
@@ -50,6 +56,15 @@
       </div>
     </div>
   </div>
+    <el-dialog class="" v-model="isRebateDialogVisible" width="600px" align-center>
+      <div class="noticedialog">
+        <div class="title" style="flex-direction: column;display:flex;">{{$t('vip.rebateBonus')}} <span style="font-size: 30px; color: #5196ff;">{{ rebateAmt ? rebateAmt : 0 }}</span></div>
+        <div class="standard-button-container">
+          <button class="standard-button btn-color-white" @click="isRebateDialogVisible = false">{{$t('common.cancel')}}</button>
+          <button class="standard-button btn-color-blue" @click="claimNow()">{{$t('promo.btn_claim_now')}}</button>
+        </div>
+      </div>
+    </el-dialog>
 </template>
 
 <script setup>
@@ -62,6 +77,8 @@ import { useI18n } from "vue-i18n";
 import { i18nStore } from '@/store/language'
 import { storeToRefs } from 'pinia'
 import { displayBalance } from "@/utils/utils";
+import { dailyRebateAmt, claimRebate } from "@/api/personal/personal";
+import { ElMessage } from "element-plus";
 const i18nStoreLanguage = i18nStore()
 const { languageVal } = storeToRefs(i18nStoreLanguage)
 const { t } = useI18n();
@@ -74,6 +91,30 @@ const refreshBalance = () => {
   });
 };
 
+const rebateAmt = ref(0);
+const isRebateDialogVisible = ref(false);
+const showRebateValue = () => {
+  dailyRebateAmt().then((res) => {
+    if (res.code === 0) {
+      isRebateDialogVisible.value = true
+      rebateAmt.value = res.data
+    } else {
+      ElMessage.error(res.message)
+    }
+  })
+}
+const claimNow = () => {
+  claimRebate().then((res) =>{
+
+    if(res.code === 0) {
+    
+    isRebateDialogVisible.value = false;
+    ElMessage.success($t('common.claimedSuccess'))
+  } else {
+    ElMessage.error(res.message)
+  }
+  })
+}
 const loginName = computed(() => {
   return store.nickName;
 });
@@ -190,7 +231,7 @@ const menuItems = ref([
 
         img {
           display: block;
-          width: 16px;
+          width: 20px;
         }
       }
     }
@@ -207,4 +248,26 @@ const menuItems = ref([
     line-height: 25px;
   }
 }
+
+
+.noticedialog {
+  padding: 0 0 5px;
+
+  .title {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 0;
+    text-align: center;
+  }
+
+  .contents {
+    padding: 20px;
+  }
+
+  .el-button {
+    display: block;
+    margin: 15px auto;
+  }
+}
+
 </style>

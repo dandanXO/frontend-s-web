@@ -38,6 +38,8 @@
 
    <script type="text/javascript">
     //Call a Message to Parent (If App.)
+    console.log("0411-11")
+
     if(
       window.location.pathname === "/vip" ||
       window.location.pathname === "/promotion" ||
@@ -58,25 +60,24 @@
       if( window["WebScript"]){
         window["WebScript"].notifyApp("LH_ANDROID");
       }
-
       // window.localStorage.setItem('https://123123.com', "LH_H5_RST_URL");
       window.addEventListener('message', function(event) {
         if(event.data.data !== undefined){
           // {"actDomain":"https://przvnboftl.anpoxuaq9ae.com:9972","crDomain":"https://m.lh330696.com:9971","rstDomain":"https://apodnbo0tl.anipoius54d.com:9972"}
           const returnJson =event.data.data;
-          if(returnJson?.rstDomain){
-            window.localStorage.setItem("LH_H5_RST_URL", returnJson?.rstDomain);
+          if(returnJson && returnJson.rstDomain){
+            window.localStorage.setItem("LH_H5_RST_URL", returnJson.rstDomain);
 
             document.addEventListener("DOMContentLoaded", function() {
               var bodyElement = document.body;
               bodyElement.classList.add("body-applinks");
             });
           }
-          if(returnJson?.actDomain){
-            window.localStorage.setItem("LH_H5_EVT_URL", returnJson?.actDomain);
+          if(returnJson && returnJson.actDomain){
+            window.localStorage.setItem("LH_H5_EVT_URL", returnJson.actDomain);
           }
-          if(returnJson?.crDomain){
-            window.localStorage.setItem("LH_H5_CRT_URL", returnJson?.crDomain);
+          if(returnJson && returnJson.crDomain){
+            window.localStorage.setItem("LH_H5_CRT_URL", returnJson.crDomain);
           }
         }
       });

@@ -10,9 +10,9 @@
       </div>
       <div class="bar" />
       <div class="services">
-        <div class="contact-boxes">
+        <div class="contact-boxes" :style="props.siteId === '8' ? 'gap: 50px;': ''">
           <div class="contact-box" v-for="(c, i) in contactlist" :key="i">
-            <div class="contacticon"><img style="max-width: 75px;" :src="require(`../../assets/images/${c.icon}.svg`)"></div>
+            <div class="contacticon"><img style="max-width: 67px;" :src="require(`../../assets/images/${c.icon}.svg`)"></div>
             <div class="type">{{ c.type }}</div>
             <div class="link">{{ c.link }}</div>
             <div class="buttons">
@@ -20,13 +20,16 @@
             </div>
           </div>
         </div>
-        <div class="girl"><img v-if="props.siteId === '7'" src="../../assets/images/login/cus-guy.png"><img v-else src="../../assets/images/login/cus-girl.png"></div>
+        <div class="girl">
+          <img v-if="props.siteId === '7'" src="../../assets/images/login/cus-guy.png">
+          <img v-else-if="props.siteId === '8'" src="../../assets/images/login/cus-girl-vn.png">
+          <img v-else src="../../assets/images/login/cus-girl.png"></div>
       </div>
     </div>
   </div>
 </template>
 <script setup>
-import { defineProps, ref } from 'vue'
+import { onMounted, defineProps, ref } from 'vue';
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -40,6 +43,8 @@ const props = defineProps({
 const mailLink = () => {
   if (props.siteId === '7') {
     return 'mailto:affiliate@e8007.com'
+  } else if (props.siteId === '8') {
+    return 'vnaffiliates@tf88.com'
   } else {
     return 'mailto:affiliate@dyvip99.com'
   }
@@ -54,79 +59,140 @@ const qqLink = () => {
 const telegramLink = () => {
   if (props.siteId === '7') {
     return '@LH18668'
+  } else if (props.siteId === '8') {
+    return '@dailitf88'
   } else {
     return 'leihuo123'
   }
 }
-const contactlist = ref([
-  {
-    icon: 'cmail',
-    type: t('common.email'),
-    link: mailLink(),
-    btns: [{
-      text: t('common.askus'),
-      action: ''
-    }]
-  },
-  {
-    icon: 'cqq',
-    type: t('common.qq'),
-    link: qqLink(),
-    btns: [{
-      text: t('common.copy'),
-      action: ''
+const contactlist = ref()
+
+const initContactList = () => {
+  contactlist.value = [
+    {
+      icon: 'cmail',
+      type: t('common.email'),
+      link: mailLink(),
+      btns: [{
+        text: t('common.askus'),
+        action: ''
+      }]
     },
     {
-      text: t('common.download'),
-      action: 'https://im.qq.com/index/'
-    }]
-  },
-  {
-    icon: 'cskype',
-    type: t('common.skype'),
-    link: 'live:.cid.1b8d9a018a52a8f5',
-    btns: [{
-      text: t('common.copy'),
-      action: ''
+      icon: 'cqq',
+      type: t('common.qq'),
+      link: qqLink(),
+      btns: [{
+        text: t('common.copy'),
+        action: ''
+      },
+      {
+        text: t('common.download'),
+        action: 'https://im.qq.com/index/'
+      }]
     },
     {
-      text: t('common.download'),
-      action: 'https://www.skype.com/zh-Hans/get-skype/'
-    }]
-  },
-  {
-    icon: 'ctelegram',
-    type: 'Telegram',
-    link: telegramLink(),
-    btns: [{
-      text: t('common.copy'),
-      action: ''
+      icon: 'cskype',
+      type: t('common.skype'),
+      link: 'live:.cid.1b8d9a018a52a8f5',
+      btns: [{
+        text: t('common.copy'),
+        action: ''
+      },
+      {
+        text: t('common.download'),
+        action: 'https://www.skype.com/zh-Hans/get-skype/'
+      }]
     },
     {
-      text: t('common.download'),
-      action: 'https://telegram.org/'
-    }]
-  },
-  {
-    icon: 'bubble-logo',
-    type: t('common.paopao'),
-    link: 'LH10086',
-    btns: [{
-      text: t('common.copy'),
-      action: ''
+      icon: 'ctelegram',
+      type: 'Telegram',
+      link: telegramLink(),
+      btns: [{
+        text: t('common.copy'),
+        action: ''
+      },
+      {
+        text: t('common.download'),
+        action: 'https://telegram.org/'
+      }]
     },
     {
-      text: t('common.download'),
-      action: 'https://paopaoim.com/index.html'
-    }]
+      icon: 'bubble-logo',
+      type: t('common.paopao'),
+      link: 'LH10086',
+      btns: [{
+        text: t('common.copy'),
+        action: ''
+      },
+      {
+        text: t('common.download'),
+        action: 'https://paopaoim.com/index.html'
+      }]
+    }
+  ]
+  if (props.siteId === '8') {
+    contactlist.value = [
+      {
+        icon: 'cmail',
+        type: t('common.email'),
+        link: mailLink(),
+        btns: [{
+          text: t('common.askus'),
+          action: ''
+        }]
+      },
+      {
+        icon: 'czalo',
+        type: t('common.zalo'),
+        link: '+639278280893',
+        btns: [{
+          text: t('common.copy'),
+          action: ''
+        },
+        {
+          text: t('common.download'),
+          action: 'http://zaloapp.com/qr/p/1j6eul1u6866m'
+        }]
+      },
+      {
+        icon: 'cskype',
+        type: t('common.skype'),
+        link: 'live:.cid.f284aa8f5c120ae5',
+        btns: [{
+          text: t('common.copy'),
+          action: ''
+        },
+        {
+          text: t('common.download'),
+          action: 'https://www.skype.com/get-skype/'
+        }]
+      },
+      {
+        icon: 'ctelegram',
+        type: 'Telegram',
+        link: telegramLink(),
+        btns: [{
+          text: t('common.copy'),
+          action: ''
+        },
+        {
+          text: t('common.download'),
+          action: 'https://telegram.org/'
+        }]
+      },
+    ]
   }
-])
+}
 const copyMessage = (position, text, btnPosition) => {
   console.log(position);
   console.log(text);
   console.log(contactlist.value)
   if (text === t('common.askus')) {
-    const mailtoLink = contactlist.value[position].link
+    var mailtoLink = contactlist.value[position].link
+    if (props.siteId === '8') {
+      mailtoLink = 'mailto:' + contactlist.value[position].link
+    }
     window.open(mailtoLink, '_blank');
   }
   if (text === t('common.copy')) {
@@ -155,6 +221,11 @@ const copyMessage = (position, text, btnPosition) => {
     window.open(downloadLink, '_blank');
   }
 };
+
+onMounted(() => {
+  initContactList();
+})
+
 </script>
 <style lang="scss">
 .customer-service {

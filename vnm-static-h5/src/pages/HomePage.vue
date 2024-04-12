@@ -5,7 +5,7 @@
       <img class="headicon" src="../assets/logo-web.svg" alt="download-logo" />
       <div class="download-txt-container">
         <span class="download-title">
-          <font class="sm-screen-txt">{{ $t("lang.app_download_title") }}</font>
+          <div class="sm-screen-txt">{{ $t("lang.app_download_title") }}</div>
         </span>
         <span class="sm-screen-txt">{{ $t("lang.app_download_desc") }}</span>
       </div>
@@ -445,6 +445,54 @@
     </div>
   </div>
 
+  <div class="home-news">
+    <div class="home-news-title-section">
+      <div class="news-title">{{ $t("lang.tf88_news") }}</div>
+      <div class="news-see-all">
+        <q-btn rounded no-caps color="lightbluebtn" class="sm-screen-txt" @click="goToNewsPage">
+          {{ $t("lang.see_all") }}
+        </q-btn>
+      </div>
+    </div>
+    <div class="home-news-top-container">
+      <a
+        :href="newsDetail_00.url"
+        target="_blank"
+        class="top-news"
+        :style="{ backgroundImage: `url(${newsDetail_00.pictureurl})` }"
+      >
+        <div class="title-txt">{{ newsDetail_00.title }}</div>
+      </a>
+      <a
+        :href="newsDetail_01.url"
+        target="_blank"
+        class="top-news"
+        :style="{ backgroundImage: `url(${newsDetail_01.pictureurl})` }"
+      >
+        <div class="title-txt">{{ newsDetail_01.title }}</div>
+      </a>
+    </div>
+
+    <div class="home-news-bottom-container">
+      <a :href="newsDetail_02.url" target="_blank" class="bottom-news">
+        <div class="news-img" :style="{ backgroundImage: `url(${newsDetail_02.pictureurl})` }"></div>
+        <div class="news-txt">{{ newsDetail_02.title }}</div>
+      </a>
+      <a :href="newsDetail_03.url" target="_blank" class="bottom-news">
+        <div class="news-img" :style="{ backgroundImage: `url(${newsDetail_03.pictureurl})` }"></div>
+        <div class="news-txt">{{ newsDetail_03.title }}</div>
+      </a>
+      <a :href="newsDetail_04.url" target="_blank" class="bottom-news">
+        <div class="news-img" :style="{ backgroundImage: `url(${newsDetail_04.pictureurl})` }"></div>
+        <div class="news-txt">{{ newsDetail_04.title }}</div>
+      </a>
+      <a :href="newsDetail_05.url" target="_blank" class="bottom-news">
+        <div class="news-img" :style="{ backgroundImage: `url(${newsDetail_05.pictureurl})` }"></div>
+        <div class="news-txt">{{ newsDetail_05.title }}</div>
+      </a>
+    </div>
+  </div>
+
   <div class="float-service" @click="toggleMenuFloat">
     <div class="float-btn"><img src="../assets/images/home/floating-btn.png" width="20px" /></div>
     <div class="float-menu" :class="isMenuFloat && 'show-menu'">
@@ -462,6 +510,7 @@
       </a>
     </div>
   </div>
+
   <q-page-sticky position="bottom-right" :offset="fabPos">
     <q-fab
       icon="money"
@@ -480,6 +529,7 @@
       </template>
     </q-fab>
   </q-page-sticky>
+
   <q-dialog
     width="100%"
     class="modal-update-div"
@@ -1203,7 +1253,7 @@ export default defineComponent({
 
     const getAppDownloadUrl = () => {
       api
-        .get("/app/getAppData?siteCode=lh1&appType=ALL_SITE")
+        .get("/app/getAppData?siteCode=vnm&appType=ALL_SITE")
         .then((res) => {
           // console.log(res);
           downloadUrl.value = res.data.downloadPageUrl;
@@ -1249,6 +1299,7 @@ export default defineComponent({
       checkShowImgTop();
       getAppDownloadUrl();
       getUnreadTotal();
+      getNewsDetails();
     });
 
     const imageLoading = ref(false);
@@ -1260,6 +1311,32 @@ export default defineComponent({
     };
 
     const isLoginModal = ref(false);
+
+    const newsDetails = ref([]);
+    const newsDetail_00 = ref([]);
+    const newsDetail_01 = ref([]);
+    const newsDetail_02 = ref([]);
+    const newsDetail_03 = ref([]);
+    const newsDetail_04 = ref([]);
+    const newsDetail_05 = ref([]);
+
+    const goToNewsPage = () => {
+      window.open("http://tf88club.net");
+    };
+
+    const getNewsDetails = () => {
+      api.get("/news").then((res) => {
+        if (res.code === 0) {
+          newsDetails.value = res.data;
+          newsDetail_00.value = res.data[0];
+          newsDetail_01.value = res.data[1];
+          newsDetail_02.value = res.data[2];
+          newsDetail_03.value = res.data[3];
+          newsDetail_04.value = res.data[4];
+          newsDetail_05.value = res.data[5];
+        }
+      });
+    };
 
     return {
       imageLoading,
@@ -1346,6 +1423,15 @@ export default defineComponent({
       fabPos,
       draggingFab,
       isLoginModal,
+      newsDetails,
+      getNewsDetails,
+      newsDetail_00,
+      newsDetail_01,
+      newsDetail_02,
+      newsDetail_03,
+      newsDetail_04,
+      newsDetail_05,
+      goToNewsPage,
 
       moveFab(ev) {
         draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -1357,6 +1443,88 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+.home-news {
+  width: calc(100% - 2rem);
+  margin: 0 auto 32px;
+
+  .home-news-title-section {
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+
+    .news-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #313441;
+    }
+  }
+
+  .home-news-top-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 8px;
+    margin-bottom: 8px;
+
+    .top-news {
+      background-color: #ffffff;
+      border-radius: 12px;
+      height: 140px;
+      background-size: cover;
+      position: relative;
+      overflow: hidden;
+
+      .title-txt {
+        font-weight: 700;
+        color: #ffffff;
+        text-align: left;
+        line-height: 1.4;
+        font-size: 14px;
+        padding: 10px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        text-shadow: 10px 10px 10px #000;
+        overflow: hidden;
+        width: 100%;
+        background: linear-gradient(0deg, #063c78 0%, rgba(0, 0, 0, 0) 72.73%);
+      }
+    }
+  }
+  .home-news-bottom-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 8px;
+    row-gap: 8px;
+    .bottom-news {
+      display: flex;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0px -2px 5px 0px #b1d7ff inset;
+
+      .news-img {
+        min-width: 60px;
+        min-height: 60px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        background-size: cover;
+      }
+
+      .news-txt {
+        color: #333333;
+        font-size: 12px;
+        padding: 8px;
+        max-height: 40px; /* Assuming 4 lines of text with 12px font size and 12px padding */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Limit to 2 lines */
+        -webkit-box-orient: vertical;
+      }
+    }
+  }
+}
+
 .float-service {
   position: fixed;
   right: 0;
@@ -1798,7 +1966,7 @@ export default defineComponent({
   align-items: flex-start;
   justify-content: space-between;
   width: $box-width;
-  margin: 0px auto 30px;
+  margin: 0px auto 16px;
   gap: 8px;
 
   .game-left-list {

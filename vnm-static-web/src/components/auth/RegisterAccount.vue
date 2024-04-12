@@ -400,16 +400,8 @@ const submitRegisterForm = async (elForm) => {
   await elForm
     .validate((valid) => {
       if (valid) {
-        const fpPromise = FingerprintJS.load();
         (async () => {
-          const fp = await fpPromise;
-          const result = await fp.get();
-          const excludes = { value: ["timezone", "timeZoneOffset"] };
-          const allComponents = { ...result.components };
-          excludes.value.forEach((element) => {
-            delete allComponents[element];
-          });
-          const sidParam = FingerprintJS.hashComponents(allComponents);
+          const sidParam = store.visitorId;
           regForm.sid = sidParam;
           register(regForm)
             .then((response) => {

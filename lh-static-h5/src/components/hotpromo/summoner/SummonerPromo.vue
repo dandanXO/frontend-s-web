@@ -4,7 +4,7 @@
       <q-tabs
         v-model="tabPosition"
         dense
-        class="text-grey"
+        class="text-grey wrapcontent"
         active-color="primary"
         indicator-color="primary"
         align="justify"
@@ -272,10 +272,14 @@ onMounted(() => {
 <style lang="scss">
 
 .summoner {
+  .q-tabs{
+    margin-bottom: 16px;
+    height: auto !important;
+  }
   .q-tabs .q-tab {
     background: url(../../../assets/images/promo/hotpromo/summoner/tabbg.png) no-repeat center center;
-    width: 250px;
-    height: 95px;
+    width: 180px;
+    height: 69px;
     background-size: contain;
     color: #ffffff !important;
     font-family: PingFang SC;
@@ -347,9 +351,8 @@ onMounted(() => {
 
     td,
     th {
-
       font-family: PingFang SC;
-      font-size: 14.5px;
+      font-size: 14px;
       font-weight: 600;
       line-height: 28px;
       text-align: center;
@@ -377,7 +380,7 @@ onMounted(() => {
   }
 
   .summon-btn {
-    margin: 30px auto;
+    margin: 10px auto;
     width: 200px;
     display: block;
 
@@ -403,9 +406,10 @@ onMounted(() => {
 
     p {
       text-align: left;
-      padding: 6px 10px;
+      padding: 0px 4px;
+      margin-bottom: 10px;
       color: #7a8eb9;
-      font-size: 20px;
+      font-size: 16px;
 
       img {
         margin: 20px auto;
@@ -418,10 +422,10 @@ onMounted(() => {
 .main-desc {
   color: #7A8EB9;
   font-family: PingFang SC;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
-  line-height: 34.45px;
-  margin: 30px auto;
+  line-height: 24px;
+  margin: 15px auto;
   text-align: center;
 }
 
@@ -435,5 +439,7 @@ onMounted(() => {
   text-align: left;
 
 }
+
+
 
 </style>
