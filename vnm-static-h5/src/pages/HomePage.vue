@@ -419,27 +419,46 @@
       </div>
 
       <div class="game-lists fade-in-image" id="cockfight-lists">
-        <template v-for="(item, index) in cockfight" :key="index">
-          <div
-            class="platform-block"
-            @click="playGame(item.gameName, item.code, item.gameCode)"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
+        <template v-if="cockfight.length == 0">
+          <div class="platform-block" @click="isPlatformComingSoon = true">
             <div
               class="platform-img-frame"
               :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
+                'background-image': getImgPlatformBg('cockfight', 'ws')
               }"
             >
               <div class="platform-content">
                 <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
+                  {{ $t("lang.coming_soon") }}
                 </div>
               </div>
             </div>
           </div>
+        </template>
+
+        <template v-else>
+          <template v-for="(item, index) in cockfight" :key="index">
+            <div
+              class="platform-block"
+              @click="playGame(item.gameName, item.code, item.gameCode)"
+              :class="item.underMaintenance === true ? 'maintenance' : ''"
+            >
+              <MaintenanceBox :item="item" />
+
+              <div
+                class="platform-img-frame"
+                :style="{
+                  'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
+                }"
+              >
+                <div class="platform-content">
+                  <div class="platform-title">
+                    {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </template>
         </template>
       </div>
     </div>
@@ -655,13 +674,30 @@
         <div class="close-alert" @click="setExpiryBanner()">
           <q-icon size="24px" name="close"></q-icon>
         </div>
-        <div class="promo-banner-container">
+        <router-link class="promo-banner-container" :to="homePopupLink" :target="homePopupLinkOut ? '_blank' : '_self'">
           <div class="promo-banner-content" v-if="homePopupType === 'TEXT'" v-html="homePopupContent"></div>
           <div class="promo-banner-img" v-else>
             <img :src="homePopupImg" class="alert-img" />
           </div>
-        </div>
+        </router-link>
       </q-card-section>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog width="100%" class="modal-update-div" v-model="isPlatformComingSoon" show-cancel-button>
+    <q-card style="width: 100%" class="bg-bright text-black">
+      <div class="modalcontent">
+        <div class="headers">
+          <div style="width: 16px">&nbsp;</div>
+          <div class="titles">{{ $t("lang.coming_soon") }}</div>
+          <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
+        </div>
+        <div class="contents">{{ $t("lang.game_is_coming_soon") }}</div>
+        <div class="btnsreas" style="justify-content: center">
+          <div class="confirmsbtns common-md-btn" v-close-popup>{{ $t("lang.confirm") }}</div>
+          <!-- <div class="cancels common-md-white-btn" @click="isRebateModalVisible = false">{{ $t("lang.cancel") }}</div> -->
+        </div>
+      </div>
     </q-card>
   </q-dialog>
 </template>
@@ -921,6 +957,8 @@ export default defineComponent({
     const homePopupId = ref(0);
     const homePopupFrequency = ref(0);
     const homePopupFrequencyNum = ref(0);
+    const homePopupLink = ref("");
+    const homePopupLinkOut = ref(false);
 
     const setExpiryBanner = () => {
       if (homePopupFrequencyNum.value !== 0) {
@@ -995,6 +1033,14 @@ export default defineComponent({
                 homePopupType.value = res.data["type"];
                 homePopupId.value = res.data["id"];
                 homePopupFrequency.value = res.data["frequency"];
+
+                if (res.data["path"].includes("http")) {
+                  homePopupLink.value = res.data["path"];
+                  homePopupLinkOut.value = true;
+                } else {
+                  homePopupLink.value = `/promo?name=${res.data["path"]}`;
+                }
+
                 isFirstView.value = true;
               }
             }
@@ -1338,6 +1384,8 @@ export default defineComponent({
       });
     };
 
+    const isPlatformComingSoon = ref(false);
+
     return {
       imageLoading,
       slide: ref(0),
@@ -1393,6 +1441,8 @@ export default defineComponent({
       cancelUpdate,
       openDownloadPage,
       homePopupImg,
+      homePopupLink,
+      homePopupLinkOut,
       refreshBalance,
       isLoadingBalance,
       closeTopBox,
@@ -1432,6 +1482,7 @@ export default defineComponent({
       newsDetail_04,
       newsDetail_05,
       goToNewsPage,
+      isPlatformComingSoon,
 
       moveFab(ev) {
         draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -1826,7 +1877,9 @@ export default defineComponent({
 .modal-update-div {
   .modalcontent {
     background: $white;
-    height: 232px;
+    // height: 232px;
+    height: auto;
+    min-height: 232px;
     border-radius: 10px;
     box-sizing: border-box;
 
