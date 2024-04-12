@@ -108,6 +108,7 @@
                 val >= selectedWithdrawalMethod.withdrawMin || $t('lang.withdraw_please_enter_correct_withdraw_amount'),
               (val) =>
                 val <= selectedWithdrawalMethod.withdrawMax || $t('lang.withdraw_please_enter_correct_withdraw_amount'),
+              (val) => (val && /^([1-9][0-9]*)$/.test(val))  || $t('lang.withdraw_amt_no_decimal_allow'),
               isValidUSDTAmt
             ]"
             clearable

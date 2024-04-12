@@ -314,6 +314,7 @@ export default {
     withdraw_password: "Mật khẩu rút tiền",
     withdraw_please_enter_withdraw_password: "Vui lòng nhập mật khẩu rút tiền",
     withdraw_please_enter_correct_withdraw_amount: "Vui lòng nhập số tiền rút chính xác",
+    withdraw_amt_no_decimal_allow: "Không thể rút số tiền có chứa dấu thập phân.",
     withdraw_confirm: "Xác nhận",
     withdraw_singlewithdrawal: "Hạn mức giao dịch",
     withdraw_withdrawtoday: "Giới hạn trong ngày",

@@ -306,6 +306,7 @@ export default {
     withdraw_password: "Withdraw password",
     withdraw_please_enter_withdraw_password: "Please enter the withdrawal password",
     withdraw_please_enter_correct_withdraw_amount: "Please enter the correct withdraw amount",
+    withdraw_amt_no_decimal_allow: "Withdrawal amount cannot contain a decimal point.",
     withdraw_confirm: "Confirm",
     withdraw_singlewithdrawal: "Single withdrawal",
     withdraw_withdrawtoday: "Withdraw money today",
