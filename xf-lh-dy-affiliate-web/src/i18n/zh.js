@@ -158,7 +158,7 @@ export default {
     addVirtualCard: '新增虚拟卡',
     adjust: '调整',
     adjustAmount: '调整金额',
-    adjustment: '调整金额',
+    adjustment: '线下优惠',
     adjustReason: '调整原因',
     adjustType: '平账类型',
     affiliate: '代理',
