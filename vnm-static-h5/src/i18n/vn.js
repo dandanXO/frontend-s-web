@@ -452,6 +452,7 @@ export default {
     vip_birthday_bonus: "MỪNG SINH NHẬT",
     vip_request: "Yêu cầu",
     vip_claim: "Yêu cầu",
+    vip_claimed: "Khẳng định",
     vip_claim_success: "Đã yêu cầu thành công",
     vip_contactcs: "Liên hệ CSKH",
     level: "Cấp độ",

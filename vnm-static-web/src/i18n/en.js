@@ -106,6 +106,7 @@ export default {
     viewnow: 'View Now',
     playnow: 'Play Now',
     systemError: 'System error',
+    loginTitle: "Announcement",
     bankName: 'Bank Name',
     bankAcc: 'Bank Account',
     backCard: 'Account number',

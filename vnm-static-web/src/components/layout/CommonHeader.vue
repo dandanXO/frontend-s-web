@@ -2497,6 +2497,21 @@ body {
   }
 }
 
+.imptann-modal .el-dialog__headerbtn {
+  top: 5px !important;
+  right: 5px;
+  height: 2em !important;
+  width: 2em !important;
+  border-radius: 50%;
+  background: #666;
+  text-align: center;
+  line-height: 1.7em;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
 // .register-dialog {
 //   .el-dialog__header .el-dialog__headerbtn {
 //     .el-dialog {
