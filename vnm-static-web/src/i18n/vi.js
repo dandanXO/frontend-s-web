@@ -127,6 +127,7 @@ export default {
     won: "Thắng",
     didnt_win: "Không thắng",
     record_win_status: "Tình trạng thắng",
+    comingSoon: "Coming Soon...",
   },
   "home": {
     "appDownload": "Tải ứng dụng",

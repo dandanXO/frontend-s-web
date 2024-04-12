@@ -127,6 +127,7 @@ export default {
     won: "Won",
     didnt_win: "Didn't win",
     record_win_status: "Win status",
+    comingSoon: "Coming Soon..."
   },
   home: {
     appDownload: 'APP Download',
