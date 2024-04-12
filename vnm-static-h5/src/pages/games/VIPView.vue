@@ -1124,7 +1124,7 @@ onActivated(() => {
           font-weight: 600;
           color: $font-2;
           border-bottom-width: 0;
-          white-space: wrap;
+          white-space: normal;
         }
       }
       thead > :first-child {

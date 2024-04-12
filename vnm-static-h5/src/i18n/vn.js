@@ -1148,7 +1148,6 @@ export default {
     menu_promo: "Khuyến mãi",
     menu_transaction: "Số tiền cược",
     menu_reminder: "Lịch sử nhắc nhở",
-    menu_rebate: "Hoàn trả",
     no_more_data_le: "Không tìm thấy thông tin",
 
     col_bettime: "Thời Gian Trận Đấu",
