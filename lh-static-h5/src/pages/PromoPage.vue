@@ -220,20 +220,8 @@ export default defineComponent({
       active: { value: "ALL", label: "ALL" },
       promoList: []
     });
-    const promoTypes = ref([
-      { code: "ALL", img: "all", label: "所有游戏" },
-      { code: "ESPORTS", img: "esport", label: "电竞" },
-      { code: "SPORTS", img: "sport", label: "体育" },
-      { code: "POKER", img: "poker", label: "棋牌" },
-      { code: "DAILY", img: "daily", label: "日常" },
-      { name: "SLOT GAME", label: "老虎机" },
-      // {name: "slot", label: '老虎机'},
-      { name: "LIVE CASINO", label: "真人" },
-      { name: "FISH", label: "捕鱼" }
-    ]);
 
     const isFetchingPromo = ref(false);
-    const promoTabActive = ref(promoTypes.value[0].value);
     const filteredArray = ref([]);
     const isPromoDetail = ref(false);
     const selectedPromo = ref({});
@@ -249,7 +237,8 @@ export default defineComponent({
     const tabItems = [
 
       { name: "all", label: "全部优惠" },
-      { name: "ftd", label: "首存" },
+      // { name: "ftd", label: "首存" },
+      { name: "ftd", label: "新人" },
       { name: "esport", label: "电竞" },
       { name: "sport", label: "体育" },
       // {name: "slot game", label: '老虎机'},
@@ -332,7 +321,6 @@ export default defineComponent({
       }
     };
     const switchPromoType = (type) => {
-      promoTabActive.value = type.value;
       if (type.value !== "ALL") {
         filteredArray.value = promoState.promoList.filter(function(promo) {
           return promo.promoType.toLowerCase().split(",").includes(type.value.toLowerCase());
@@ -440,8 +428,6 @@ export default defineComponent({
 
     return {
       promoState,
-      promoTypes,
-      promoTabActive,
       switchPromoType,
       filteredArray,
       isPromoDetail,
