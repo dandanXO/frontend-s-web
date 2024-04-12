@@ -116,7 +116,7 @@
         <q-select
           ref="offerRef"
           class="deposit-selection q-mt-xs"
-          label="选择优惠"
+          :label="$t('lang.deposit_promo')"
           filled
           :options="unselectedPrivileges"
           v-model="selectedPrivilege"

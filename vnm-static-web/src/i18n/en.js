@@ -364,7 +364,8 @@ deposit: {
   notept1: 'The transaction unit in the game is TF VNDP, 1 VNDP = 1000VND',
   redirected: 'You will be redirected to your bank page to complete the deposit',
   successful: 'If successful, you will receive a notification on this page',
-  deposited: 'Deposited'
+  deposited: 'Deposited',
+  promo: 'Select promotion'
 },
 transfer:  {
   transfer: 'Transfer',

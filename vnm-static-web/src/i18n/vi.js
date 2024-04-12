@@ -363,6 +363,7 @@ export default {
     redirected: 'Bạn sẽ được chuyển hướng đến trang ngân hàng của bạn để hoàn thành việc gửi tiền',
     successful: 'Nếu thành công, bạn sẽ nhận được thông báo trên trang này.',
     deposited: 'Đã gửi',
+    promo: 'Chọn Khuyến mãi',
   },
   "transfer": {
     "transfer": "Chuyển điểm",
