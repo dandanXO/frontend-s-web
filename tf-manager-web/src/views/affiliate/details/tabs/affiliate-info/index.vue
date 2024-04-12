@@ -611,6 +611,56 @@
         >
           <template #label>
             <div>
+              <svg-icon icon-class="money" style="height: 16px;width: 16px;" />
+              {{ t('fields.paymentFee') }}
+            </div>
+          </template>
+          <span v-if="affiliateDetails.paymentFee !== null">
+            {{ affiliateDetails.paymentFee }} %
+          </span>
+          <span v-if="affiliateDetails.paymentFee === null">{{ t('fields.undefined') }}</span>
+          <el-button
+            type="info"
+            size="mini"
+            style="float: right;"
+            v-permission="['sys:affiliate:update:paymentFee']"
+            @click="showDialog('UPDATE_PAYMENT_FEE')"
+          >
+            {{ t('fields.update') }}
+          </el-button>
+        </el-descriptions-item>
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              <svg-icon icon-class="money" style="height: 16px;width: 16px;" />
+              {{ t('fields.platformFee') }}
+            </div>
+          </template>
+          <span v-if="affiliateDetails.platformFee !== null">
+            {{ affiliateDetails.platformFee }} %
+          </span>
+          <span v-if="affiliateDetails.platformFee === null">{{ t('fields.undefined') }}</span>
+          <el-button
+            type="info"
+            size="mini"
+            style="float: right;"
+            v-permission="['sys:affiliate:update:platformFee']"
+            @click="showDialog('UPDATE_PLATFORM_FEE')"
+          >
+            {{ t('fields.update') }}
+          </el-button>
+        </el-descriptions-item>
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
               <svg-icon
                 icon-class="peoples"
                 style="height: 16px;width: 16px;"
@@ -1128,7 +1178,7 @@
         </div>
       </el-form>
       <el-form
-        v-if="uiControl.dialogType === 'UPDATE_COMMISSION'"
+        v-if="uiControl.dialogType === 'UPDATE_COMMISSION' || uiControl.dialogType === 'UPDATE_PAYMENT_FEE' || uiControl.dialogType === 'UPDATE_PLATFORM_FEE'"
         ref="commissionForm"
         :model="commForm"
         :rules="commFormRules"
@@ -1136,7 +1186,7 @@
         size="small"
         label-width="200px"
       >
-        <el-form-item :label="t('fields.commissionRate')" prop="commission">
+        <el-form-item :label="t('fields.rate')" prop="commission">
           <el-input
             v-model="commForm.commission"
             style="width: 250px"
@@ -1148,7 +1198,7 @@
           <el-button @click="uiControl.dialogVisible = false">
             {{ t('fields.cancel') }}
           </el-button>
-          <el-button type="primary" @click="updateCommission()">
+          <el-button type="primary" @click="updateFeeRate()">
             {{ t('fields.confirm') }}
           </el-button>
         </div>
@@ -1366,6 +1416,8 @@ import {
   updateAffiliatePassword,
   updateCommissionModel,
   updateCommissionRate,
+  updatePaymentFeeRate,
+  updatePlatformFeeRate,
   updateTimeType,
   updateBelongType,
 } from '../../../../../api/member-affiliate'
@@ -1515,6 +1567,8 @@ const affiliateDetails = reactive({
   downlineMember: 0,
   downlineAffiliate: 0,
   commission: 0,
+  paymentFee: null,
+  platformFee: null,
 })
 
 const superiorAffiliateDetail = reactive({
@@ -1735,6 +1789,12 @@ function showDialog(type) {
   } else if (type === 'UPDATE_COMMISSION') {
     commForm.commission = affiliateDetails.commission / 100
     uiControl.dialogTitle = t('fields.updateCommissionRate')
+  } else if (type === 'UPDATE_PAYMENT_FEE') {
+    commForm.commission = affiliateDetails.paymentFee / 100
+    uiControl.dialogTitle = t('fields.updatePaymentFee')
+  } else if (type === 'UPDATE_PLATFORM_FEE') {
+    commForm.commission = affiliateDetails.platformFee / 100
+    uiControl.dialogTitle = t('fields.updatePlatformFee')
   } else if (type === 'ADD_REMARK') {
     if (addRemarkForm.value) {
       addRemarkForm.value.resetFields()
@@ -1919,15 +1979,21 @@ function updateField(type) {
   }
 }
 
-async function updateCommission() {
+async function updateFeeRate() {
   commissionForm.value.validate(async valid => {
     if (valid) {
       // detailField
-      await updateCommissionRate(props.affId, commForm.commission)
+      if (uiControl.dialogType === 'UPDATE_COMMISSION') {
+        await updateCommissionRate(props.affId, commForm.commission)
+      } else if (uiControl.dialogType === 'UPDATE_PAYMENT_FEE') {
+        await updatePaymentFeeRate(props.affId, commForm.commission)
+      } else if (uiControl.dialogType === 'UPDATE_PLATFORM_FEE') {
+        await updatePlatformFeeRate(props.affId, commForm.commission)
+      }
       await loadAffiliateRecord()
       uiControl.dialogVisible = false
       ElMessage({
-        message: t('message.updateCommissionRateSuccess'),
+        message: t('message.updateSuccess'),
         type: 'success',
       })
     }
@@ -2041,6 +2107,8 @@ async function loadAffiliateRecord() {
   affiliateDetails.downlineMember = record.downlineMember
   affiliateDetails.downlineAffiliate = record.downlineAffiliate
   affiliateDetails.commission = record.commission * 100
+  affiliateDetails.paymentFee = record.paymentFee === null ? null : record.paymentFee * 100
+  affiliateDetails.platformFee = record.platformFee === null ? null : record.platformFee * 100
 }
 
 function restrictCommissionDecimalInput(event) {
