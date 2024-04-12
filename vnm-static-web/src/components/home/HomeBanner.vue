@@ -5,7 +5,9 @@
     v-model="isImportantAnnoucementModal"
     v-if="!isImpt"
   >
-    <img :src="homePopupImg" class="alert-img" />
+     <a :href="homePopupPath" :target="homePopupPath.includes('https://') ? '_blank' : '_self'">
+       <img :src="homePopupImg" class="alert-img" />
+     </a>
   </el-dialog>
 
   <el-carousel
@@ -83,6 +85,7 @@ const isImpt = getWithExpiry("isImpt");
 
 const isFirstView = ref(false);
 const homePopupImg = ref("");
+const homePopupPath = ref("");
 const isImportantAnnoucementModal = ref(false);
 const homePopupFrequency = ref(0);
 const homePopupFrequencyNum = ref(0);
@@ -116,6 +119,11 @@ const checkShowImgTop = () => {
                 break;
             }
             isImportantAnnoucementModal.value = true;
+            if (data["path"].includes("https://")) {
+              homePopupPath.value = data["path"];
+            } else {
+              homePopupPath.value = "/promotion?name=" + data["path"];
+            }
             homePopupImg.value = process.env.VUE_APP_IMAGE_CDN + "/promo/" + data["desktopImgUrl"];
             homePopupContent.value = data["content"];
             homePopupType.value = data["type"];
