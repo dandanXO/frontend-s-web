@@ -1500,6 +1500,7 @@ export default defineComponent({
       showRebateValue,
       isRebateDialogVisible,
       claimRebate,
+      rebateAmt,
       claimNow
     };
   }
