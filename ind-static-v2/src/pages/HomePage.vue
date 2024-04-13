@@ -58,7 +58,7 @@
 
   <div class="home-wrapper" :class="detectAndroidVersion()">
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
-      <div v-touch-pan.prevent.mouse="moveCsIcon" @click="openCSInNewTab('https://direct.lc.chat/16887009/')">
+      <div v-touch-pan.prevent.mouse="moveCsIcon" @click="openCSInNewTab('https://direct.lc.chat/14154051/')">
         <div class="cs-icon-wrapper"></div>
       </div>
     </q-page-sticky>
@@ -292,7 +292,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://www.55ace.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(https://7rzyd3kui.indwin7.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -328,7 +328,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://www.55ace.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(https://7rzyd3kui.indwin7.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -389,7 +389,7 @@
                             try {
                               return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return `url(https://www.55ace.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(https://7rzyd3kui.indwin7.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -430,7 +430,7 @@
                           try {
                             return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://www.55ace.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(https://7rzyd3kui.indwin7.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -690,7 +690,7 @@
                       try {
                         return `url(${require(`../assets/images/index/sport/item-game-${item.name.toLowerCase()}.png`)})`;
                       } catch (e) {
-                        return `url(https://www.55ace.com/static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
+                        return `url(https://7rzyd3kui.indwin7.com/static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
                       }
                     })()
                   }"

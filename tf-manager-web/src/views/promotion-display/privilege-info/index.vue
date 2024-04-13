@@ -148,6 +148,26 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item
+          :label="t('fields.bonusDays')"
+          prop="bonusDays"
+          v-if="form.frequency === 'DAILY' && form.triggerType === 'DEPOSITBONUSES'"
+        >
+          <el-checkbox
+            v-model="checkboxes.bonusDays.checkAll"
+            :indeterminate="checkboxes.bonusDays.isIndeterminate"
+            @change="handleBonusDaysCheckAllChange"
+          >{{ t('fields.checkall') }}</el-checkbox>
+          <el-checkbox-group
+            v-model="selectedBonusDays.bonusDaysChecked"
+            @change="handleCheckedChange('BONUSDAYS')"
+            style="width: 450px"
+          >
+            <el-checkbox v-for="v in uiControl.day" :label="v.key" :key="v.key">
+              {{ v.displayName }}
+            </el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
         <el-form-item :label="t('fields.bonusType')" prop="bonusType">
           <el-radio-group v-model="form.bonusType">
             <el-radio
@@ -492,6 +512,15 @@ const uiControl = reactive({
     { key: 2, displayName: 'Close', value: 'CLOSE' },
     { key: 3, displayName: 'Test', value: 'TEST' },
   ],
+  day: [
+    { key: 1, displayName: t('week.monday'), value: 1 },
+    { key: 2, displayName: t('week.tuesday'), value: 2 },
+    { key: 3, displayName: t('week.wednesday'), value: 3 },
+    { key: 4, displayName: t('week.thursday'), value: 4 },
+    { key: 5, displayName: t('week.friday'), value: 5 },
+    { key: 6, displayName: t('week.saturday'), value: 6 },
+    { key: 7, displayName: t('week.sunday'), value: 7 },
+  ],
   bonusAmountRatioMax: 15,
   pgroup: false,
 })
@@ -534,6 +563,7 @@ const form = reactive({
   param: null,
   remark: null,
   pgroup: null,
+  bonusDays: null,
 })
 
 const formRules = reactive({
@@ -564,6 +594,7 @@ const paymentTypeList = reactive({
 
 const selectedVIPs = reactive({ vipChecked: [] })
 const selectedPayTypes = reactive({ payTypeChecked: [] })
+const selectedBonusDays = reactive({ bonusDaysChecked: [] })
 
 const checkboxes = reactive({
   paymentType: {
@@ -571,6 +602,10 @@ const checkboxes = reactive({
     isIndeterminate: ref(false),
   },
   vip: {
+    checkAll: ref(false),
+    isIndeterminate: ref(false),
+  },
+  bonusDays: {
     checkAll: ref(false),
     isIndeterminate: ref(false),
   },
@@ -609,6 +644,8 @@ function handleCheckedChange(type) {
     form.vips = JSON.stringify(selectedVIPs.vipChecked.join(','))
   } else if (type === 'PAYTYPE') {
     form.payTypes = JSON.stringify(selectedPayTypes.payTypeChecked.join(','))
+  } else if (type === 'BONUSDAYS') {
+    form.bonusDays = JSON.stringify(selectedBonusDays.bonusDaysChecked.join(','))
   }
   handleIndividualCheckChange()
 }
@@ -631,6 +668,16 @@ const handlePaymentTypeCheckAllChange = (val) => {
     })
   }
   handleCheckedChange('PAYTYPE')
+}
+
+const handleBonusDaysCheckAllChange = (val) => {
+  selectedBonusDays.bonusDaysChecked = []
+  if (val) {
+    uiControl.day.forEach(day => {
+      selectedBonusDays.bonusDaysChecked.push(day.key)
+    })
+  }
+  handleCheckedChange('BONUSDAYS')
 }
 
 function changeSite(siteId) {
@@ -689,6 +736,7 @@ function showDialog(type) {
       privilegeInfoForm.value.resetFields()
       selectedVIPs.vipChecked = []
       selectedPayTypes.payTypeChecked = []
+      selectedBonusDays.bonusDaysChecked = []
     }
     form.frequency = uiControl.frequency[0].value
     form.bonusType = uiControl.bonusType[0].value
@@ -709,6 +757,7 @@ function showDialog(type) {
 async function showEdit(privilegeInfo) {
   selectedVIPs.vipChecked = []
   selectedPayTypes.payTypeChecked = []
+  selectedBonusDays.bonusDaysChecked = []
   showDialog('EDIT')
   await getVipBySiteId(privilegeInfo.siteId)
   await nextTick(() => {
@@ -747,6 +796,12 @@ async function showEdit(privilegeInfo) {
     payTypeArr.forEach(element => {
       selectedPayTypes.payTypeChecked.push(element)
     })
+    if (form.bonusDays && form.bonusDays !== '') {
+      const bonusDayArr = JSON.parse(JSON.stringify(form.bonusDays)).split(',')
+      bonusDayArr.forEach(element => {
+        selectedBonusDays.bonusDaysChecked.push(parseInt(element))
+      })
+    }
     handleIndividualCheckChange()
     rollover.value = [];
     if (form.gameTypeRollover) {
@@ -775,6 +830,8 @@ function handleIndividualCheckChange() {
   handleCategoryChange(selectedVIPs.vipChecked, checkboxes.vip, vipIds)
   const paymentCodes = [...new Set(paymentTypeList.list.map(el => el.code))];
   handleCategoryChange(selectedPayTypes.payTypeChecked, checkboxes.paymentType, paymentCodes)
+  const bonusDays = [...new Set(uiControl.day.map(el => el.value))];
+  handleCategoryChange(selectedBonusDays.bonusDaysChecked, checkboxes.bonusDays, bonusDays)
 }
 
 function clearCheckAll() {
@@ -782,6 +839,8 @@ function clearCheckAll() {
   checkboxes.vip.isIndeterminate = false
   checkboxes.paymentType.checkAll = false
   checkboxes.paymentType.isIndeterminate = false
+  checkboxes.bonusDays.checkAll = false
+  checkboxes.bonusDays.isIndeterminate = false
 }
 
 /**
@@ -795,6 +854,11 @@ function create() {
       }
       form.vips = form.vips.replace(/['"]+/g, '')
       form.payTypes = form.payTypes.replace(/['"]+/g, '')
+      if (form.bonusDays && form.frequency === 'DAILY' && form.triggerType === 'DEPOSITBONUSES') {
+        form.bonusDays = form.bonusDays.replace(/['"]+/g, '')
+      } else {
+        form.bonusDays = ''
+      }
       form.gameTypeRollover = constructRollover();
       await createPrivilegeInfo(form)
       uiControl.dialogVisible = false
@@ -815,6 +879,11 @@ function edit() {
       }
       form.vips = form.vips.replace(/['"]+/g, '')
       form.payTypes = form.payTypes.replace(/['"]+/g, '')
+      if (form.bonusDays && form.frequency === 'DAILY' && form.triggerType === 'DEPOSITBONUSES') {
+        form.bonusDays = form.bonusDays.replace(/['"]+/g, '')
+      } else {
+        form.bonusDays = ''
+      }
       form.gameTypeRollover = constructRollover();
       await updatePrivilegeInfo(form)
       uiControl.dialogVisible = false

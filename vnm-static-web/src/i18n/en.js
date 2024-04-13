@@ -58,7 +58,8 @@ export default {
     cockfight: 'Cockfight',
     deposit_should_between: "Deposit amount should between ",
     msg_deleted: "Message deleted",
-    please_select_bank: "Please select bank"
+    please_select_bank: "Please select bank",
+    you_account_has_been_sent_email: "Your Account Id has been sent to your email"
   },
   login: {
     username: 'Username',
@@ -120,7 +121,13 @@ export default {
     bindEmailFirst: 'Kindly bind your email first',
     success: 'Successful',
     sendPhoneVerificationSuccess: 'Phone verification sent successfully',
-    bankCard: "Account number"
+    bankCard: "Account number",
+    successful_sent: "Successfully submitted number",
+    not_drawn_yet: "Not drawn yet",
+    won: "Won",
+    didnt_win: "Didn't win",
+    record_win_status: "Win status",
+    comingSoon: "Coming Soon..."
   },
   home: {
     appDownload: 'APP Download',
@@ -397,6 +404,7 @@ transit: {
   type: 'Type',
   gameType: 'Game Type',
   gamePlatform:'Game Platform',
+  betTime: "Bet Time",
   time: 'Time',
   privilegeName: 'Privilege Name',
   bet: 'Bet',
@@ -642,6 +650,12 @@ about: {
     mobileAccess: "Mobile Access",
     scanDownload: "Scan QR to download"
   },
+  maintenance: {
+    title: "System under maintenance...",
+    desc: `Starting from 01/07/2024 (GMT +8) until 19/09/2024 (GMT +8).<br>
+    All services and games will be temporarily suspended during this period.<br>
+     We sincerely apologize for any inconvenience caused!`
+  }, 
   "welcome": {
     "compatibleDevices": "Perfectly Compatible with Secure Devices",
     "technologyLead": "Leihuo leads the market with outstanding technology. Independently develop a full set of terminal applications, allowing you to enjoy Web, H5, and iOS, Android native apps, smooth games, and more. Let you master it! Intimate service, 7x24 online customer service accompanies you all year round.",

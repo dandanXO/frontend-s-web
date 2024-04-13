@@ -523,7 +523,7 @@ export default defineComponent({
   }
 
   .q-field__control {
-    margin-bottom: 14px;
+    // margin-bottom: 14px;
     background: $white;
     box-shadow: $shadow-bg;
     border-radius: 10px;

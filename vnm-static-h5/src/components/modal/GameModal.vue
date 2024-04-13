@@ -386,6 +386,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             });
           return;
         }
+      // ,headers: platformCode === 'PG' ? { 'Cache-Control': 'no-cache, no-store, must-revalidate' } : {}
         api
           .get(`/session/launch?_time=${new Date().getTime()}`, {
             params: {

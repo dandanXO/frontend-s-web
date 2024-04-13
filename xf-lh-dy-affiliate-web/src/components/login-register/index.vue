@@ -4,6 +4,7 @@
     :class="[
       props.siteId !== '5' ? '' : 'ind-firstPage',
       props.siteId !== '7' ? '' : 'lh',
+      props.siteId !== '8' ? '' : 'vi',
     ]"
   >
     <div class="inner">
@@ -217,12 +218,12 @@
                     </div>
                   </div>
                 </div>
-                <!--div v-if="step === 2">
+                <div v-if="step === 2 && props.siteId === '8'">
                   <el-form-item prop="realName">
                     <el-input
                       ref="realNameRef"
                       v-model="regForm.realName"
-                      :placeholder="'姓名'"
+                      :placeholder="$t('fields.realName')"
                       name="realName"
                       type="text"
                       tabindex="4"
@@ -233,7 +234,7 @@
                     <el-input
                       ref="telephoneRef"
                       v-model="regForm.telephone"
-                      :placeholder="'手机号码'"
+                      :placeholder="$t('fields.telephone')"
                       name="telephone"
                       type="text"
                       tabindex="4"
@@ -244,14 +245,14 @@
                     <el-input
                       ref="emailRef"
                       v-model="regForm.email"
-                      :placeholder="'邮箱'"
+                      :placeholder="$t('fields.email')"
                       name="Email"
                       type="text"
                       tabindex="5"
                       autocomplete="on"
                     />
                   </el-form-item>
-                  <!- <el-form-item prop="birthday">
+                  <!-- <el-form-item prop="birthday">
                         <el-date-picker
                             v-model="regForm.birthday"
                             type="date"
@@ -261,29 +262,29 @@
                             popper-class="custom-date-picker"
                             :disabled-date="disabledDate"
                         />
-                        </el-form-item>
-                        <el-form-item prop="codeAffiliate" v-if="!hasAffiliate">
-                        <el-input v-if="hasAffiliate"
-                                    ref="codeAffiliateRef"
-                                    v-model="regForm.codeAffiliate"
-                                    :placeholder="'代理码'"
-                                    name="codeAffiliate"
-                                    type="text"
-                                    tabindex="8"
-                                    autocomplete="on"
-                                    :disabled="true"
-                        />
-                        <el-input
-                            ref="codeAffiliateRef"
-                            v-model="regForm.codeAffiliate"
-                            :placeholder="'代理码'"
-                            name="codeAffiliate"
-                            type="text"
-                            tabindex="8"
-                            autocomplete="on"
-                        />
-                        </el-form-item>
-                        <el-button
+                  </el-form-item-->
+                  <!-- <el-form-item prop="codeAffiliate" v-if="!hasAffiliate">
+                  <el-input v-if="hasAffiliate"
+                              ref="codeAffiliateRef"
+                              v-model="regForm.codeAffiliate"
+                              :placeholder="'代理码'"
+                              name="codeAffiliate"
+                              type="text"
+                              tabindex="8"
+                              autocomplete="on"
+                              :disabled="true"
+                  />
+                  <el-input
+                      ref="codeAffiliateRef"
+                      v-model="regForm.codeAffiliate"
+                      :placeholder="'代理码'"
+                      name="codeAffiliate"
+                      type="text"
+                      tabindex="8"
+                      autocomplete="on"
+                  />
+                  </el-form-item> -->
+                  <el-button
                     class="common-btn"
                     :loading="loading"
                     type="danger"
@@ -292,7 +293,7 @@
                   >
                     申请
                   </el-button>
-                </div> -->
+                </div>
               </el-form>
             </div>
             <div class="bot">&nbsp;</div>
@@ -575,8 +576,8 @@ export default defineComponent({
     }
     const validateRealName = async (r, v) => {
       if (v === '') {
-        return Promise.reject(new Error('请输入姓名'))
-      } else if (!checkRealName(v)) {
+        return Promise.reject(new Error(t('message.requiredRealName')))
+      } else if (!checkRealName(v) && props.siteId !== '8') {
         return Promise.reject(new Error('请输入中文字符'))
       } else {
         return Promise.resolve()
@@ -709,7 +710,7 @@ export default defineComponent({
         telephone: [
           {
             required: true,
-            message: '手机号码不能为空',
+            message: t('message.requiredTelephone'),
             trigger: 'blur',
           },
         ],
@@ -723,17 +724,17 @@ export default defineComponent({
         email: [
           {
             required: true,
-            message: '邮箱不能为空',
+            message: t('message.requiredEmail'),
             trigger: 'blur',
           },
           {
             type: 'email',
-            message: '邮件地址无效',
+            message: t('message.emailFormat'),
             trigger: 'blur',
           },
           {
             max: 50,
-            message: '由少过50位数字或字母组成',
+            message: t('message.lessthan50'),
             trigger: 'blur',
           },
         ],
@@ -879,11 +880,13 @@ export default defineComponent({
         state.regForm.siteId = props.siteId
         regFormRef.value.validate(async valid => {
           if (valid) {
-            // if (step.value === 1) {
-            //   step.value = 2
-            //   return
-            // } else {
-            // }
+            if (props.siteId === '8') {
+              if (step.value === 1) {
+                step.value = 2
+                return
+              } else {
+              }
+            }
             state.loading = true
             try {
               await store.dispatch(
@@ -891,19 +894,20 @@ export default defineComponent({
                 state.regForm
               )
               ElNotification({
-                title: '系统提示',
+                title: t('fields.systemAlert'),
                 message:
-                  '尊敬的合作伙伴，您的资料提交成功，我们的代理专员会在24小时内告知您审核结果，如有疑问请联系我们代理专员或在线客服，谢谢。',
+                  t('fields.affiliateSuccessSubmit'),
                 showClose: false,
                 type: 'success',
               })
             } catch (e) {
               ElNotification({
-                title: '系统提示',
+                title: t('fields.systemAlert'),
                 message: e.message,
                 showClose: false,
                 type: 'error',
               })
+              step.value = 1
               getCode()
               state.loading = false
               return
@@ -1177,7 +1181,7 @@ export default defineComponent({
       }
       if (props.siteId === '8') {
         currentSite.value.firstLiner = 'Start From TFGaming'
-        currentSite.value.secondLiner = 'Become a legend<br>Or become the eulogist of legend?'
+        currentSite.value.secondLiner = 'Nơi bắt đầu mới -Chia sẻ cơ hội-Hợp tác thành công'
         currentSite.value.logo = viLogo
         state.loginForm.site = 'VNM'
         setLanguage('vi')
@@ -1400,6 +1404,17 @@ a {
   &.lh {
     background: url('../../assets/images/login/lh-bg.jpg') no-repeat center
       center;
+  }
+  &.vi {
+    font-family: 'Roboto';
+    .loginPage .right .top .log{
+      font-family: 'Roboto'
+    }
+    .loginPage .left {
+        .second-liner {
+          font-family: 'Roboto'
+        }
+      }
   }
   .inner {
     max-width: 1200px;

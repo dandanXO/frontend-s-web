@@ -7,6 +7,7 @@ export default {
     login: "Đăng nhập",
     register: "Đăng ký",
     deposit: "Nạp tiền",
+    deposit_btm: "Nạp Rút",
     withdraw: "Rút tiền",
     transfer: "Chuyển điểm",
     vip: "VIP",
@@ -39,8 +40,11 @@ export default {
     next_page: "Trang tiếp theo",
     username_between_6_12: "Tên đăng ký phải có từ 6-12 ký tự",
     first_digit_must_be_0: "Chữ số đầu tiên phải là 0",
-    
     rebate_claim_now: "Yêu cầu ngay",
+    not_logged_in: "Bạn chưa đăng nhập",
+    login_register_to_view: "Vui lòng đăng nhập/đăng ký tài khoản để xem",
+    tf88_news: "Tin tức TF88",
+    see_all: "Nhìn thấy tất cả",
 
     // side menu
     menu_sports: "Thể Thao",
@@ -111,6 +115,7 @@ export default {
     registration_hints: "Đăng ký tức bạn đã đồng ý và tuân thủ",
     user_registration_protocol: "Thoản thuận đăng ký tài khoản",
     register_success: "Đăng ký thành công",
+    register_in_progress: "Đang đăng ký...",
 
     // forgot password
     sms_retrieval: "Truy xuất qua SMS",
@@ -166,6 +171,15 @@ export default {
     system_operation_success: "Thao tác thành công, vui lòng kiểm tra mã xác minh trên điện thoại di động!",
     system_verify_failed: "Xác minh không thành công, vui lòng làm mới trang",
     system_loginnow: "Đăng nhập ngay",
+    system_newversiondetected: "Đã phát hiện phiên bản mới, bạn có muốn cập nhật không?",
+    system_updatenow: "Cập nhật bây giờ",
+
+    // maintenance
+    maintenance_title: "Hệ thống đang bảo trì...",
+    maintenance_from: "Bắt đầu từ 01/07/2024 (GMT +8)",
+    maintenance_to: "đến 19/09/2024 (GMT +8)",
+    maintenance_desc_01: "Tất cả dịch vụ và trò chơi sẽ tạm dừng trong thời gian trên, ",
+    maintenance_desc_02: "thành thật xin lỗi vì sự bất tiện này!",
 
     // personal | verify
     personal_exclusiveurl: "URL riêng",
@@ -205,6 +219,7 @@ export default {
       "Nếu người dùng bạn mời qua liên kết quảng bá đăng ký và nạp tiền, bạn sẽ nhận được phần thưởng tích lũy tối đa là 2,000VNDP.",
     share_sponsoredlinks: "Liên kết tài trợ",
     share_copy: "Sao chép",
+    share_copy_success: "Đã sao chép thành công",
     share_qrcode: "Mã QR",
     share_accumulated_registration: "Đăng ký tích lũy",
     share_accumulated_recharge: "Nạp tiền tích lũy",
@@ -289,7 +304,7 @@ export default {
 
     // withdraw
     withdraw_amount: "Số tiền",
-    withdraw_withdrawallamount: "Rút toàn bộ số tiền",
+    withdraw_withdrawallamount: "Rút toàn bộ",
     withdraw_tipstitle: "Mẹo",
     withdraw_tipdesc:
       "Để đảm bảo an toàn cho số tiền, bạn cần xác minh số điện thoại di động của mình trước khi rút tiền",
@@ -437,6 +452,7 @@ export default {
     vip_birthday_bonus: "MỪNG SINH NHẬT",
     vip_request: "Yêu cầu",
     vip_claim: "Yêu cầu",
+    vip_claim_success: "Đã yêu cầu thành công",
     vip_contactcs: "Liên hệ CSKH",
     level: "Cấp độ",
     upgrade: "Nâng cấp",
@@ -733,7 +749,7 @@ export default {
     invalid_email: "Email không hợp lệ",
     invalid_phone_num: "Chỉ cho phép số",
     register_successful: "Đăng ký thành công",
-    no_special_characters: "Tên người dùng phải là sự kết hợp của chữ cái và số",
+    no_special_characters: "Tên tài khoản không được chứa ký tự đặc biệt",
     length_between_6_11: " Độ dài phải từ 6 đến 11 ký tự",
     length_between_34_37: "Độ dài phải từ 34 đến 37 ký tự",
     receive_by_email: "Nhận bằng email",
@@ -986,6 +1002,7 @@ export default {
     system_message: "Thông báo hệ thống",
     confirm_deposit_msg: "Xác nhận giao dịch nạp tiền",
     coming_soon: "Sắp ra mắt",
+    game_is_coming_soon: "Hãy đợi! Trò chơi sẽ sớm ra mắt",
     no_fav_game_yet: "Chưa có trò chơi nào bạn thích",
     or: "Hoặc",
     weak_level: "Yếu",
@@ -1133,7 +1150,6 @@ export default {
     menu_promo: "Khuyến mãi",
     menu_transaction: "Số tiền cược",
     menu_reminder: "Lịch sử nhắc nhở",
-    menu_rebate: "Hoàn trả",
     no_more_data_le: "Không tìm thấy thông tin",
 
     col_bettime: "Thời Gian Trận Đấu",

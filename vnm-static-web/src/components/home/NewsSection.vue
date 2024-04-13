@@ -2,10 +2,10 @@
   <div class="news-section">
     <el-card>
       <img src="../../assets/logo.svg" />
-      <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+      <el-tabs v-model="activeName" class="demo-tabs" >
         <el-tab-pane :label="t('home.footballNews')" name="first">
           <div class="news-listing">
-            <div class="news" v-for="news in footballNewsList" @click="open(news.url)">
+            <div class="news" v-for="news in footballNewsList.slice(0,5)" @click="open(news.url)">
               <div class="news-image">
                 <img :src="news.pictureurl" />
               </div>
@@ -21,7 +21,7 @@
         </el-tab-pane>
         <el-tab-pane :label="t('home.esportNews')" name="second">
           <div class="news-listing">
-            <div class="news" v-for="news in esportNewsList">
+            <div class="news" v-for="news in esportNewsList.slice(0,5)">
               <div class="news-image">
                 <img :src="news.pictureurl" />
               </div>
@@ -37,7 +37,7 @@
         </el-tab-pane>
         <el-tab-pane :label="t('home.soccerBetting')" name="third">
           <div class="news-listing">
-            <div class="news" v-for="news in soccerBettingList">
+            <div class="news" v-for="news in soccerBettingList.slice(0,5)">
               <div class="news-image">
                 <img :src="news.pictureurl" />
               </div>
@@ -53,7 +53,7 @@
         </el-tab-pane>
         <el-tab-pane :label="t('home.bettingGuide')" name="fourth">
           <div class="news-listing">
-            <div class="news" v-for="news in bettingGuideList">
+            <div class="news" v-for="news in bettingGuideList.slice(0,5)">
               <div class="news-image">
                 <img :src="news.pictureurl" />
               </div>

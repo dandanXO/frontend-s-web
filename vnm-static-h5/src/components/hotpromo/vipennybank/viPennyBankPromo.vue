@@ -38,11 +38,13 @@
 import { ref, reactive, computed, onMounted } from "vue";
 import { submitPiggyBankLottery, submitPiggyBankClaim, getPiggyBankAmt } from "../../../api/index/promo";
 import { useI18n } from "vue-i18n";
+import { useQuasar } from "quasar";
 
 const { t } = useI18n();
 const newLossBonus = ref(null);
 const btnLoading = ref(false);
 const lotteryAmount = ref(0);
+const $q = useQuasar();
 
 // piggy-bank/getLottery
 const postPiggyBankLottery = () => {
@@ -58,7 +60,7 @@ const postPiggyBankLottery = () => {
           icon: "check_circle_outline"
         });
 
-        // lotteryAmount.value = res.data;
+        lotteryAmount.value += res.data;
       }
     })
     .catch(() => {})

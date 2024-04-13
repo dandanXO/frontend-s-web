@@ -179,10 +179,10 @@ router.beforeEach((to, from, next) => {
       }
     }
   } else {
-    if (to.query.name) {
-      store.loginPageVisible = true;
-      next({ query: { redirect: to.path } });
-    }
+    // if (to.query.name) {
+    //   store.loginPageVisible = true;
+    //   next({ query: { redirect: to.path } });
+    // }
     if (to.meta.requiresAuth) {
       // ElMessageBox.alert("账号已在其他设备登录，请登录后再操作", $t('common.systemError'), {
       //   // if you want to disable its autofocus

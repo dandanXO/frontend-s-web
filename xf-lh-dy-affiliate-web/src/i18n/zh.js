@@ -30,6 +30,8 @@ export default {
     qq: '合营QQ',
     skype: '合营部Skype',
     paopao: '泡泡',
+    zalo: 'Zalo',
+    telegram: 'Telegram'
   },
   depositStatus: {
     SUCCESS: '存款成功',
@@ -335,6 +337,7 @@ export default {
     status: '状态',
     subtotal: '小计',
     systemAlert: '系统提示',
+    affiliateSuccessSubmit: '尊敬的合作伙伴，您的资料提交成功，我们的代理专员会在24小时内告知您审核结果，如有疑问请联系我们代理专员或在线客服，谢谢。',
     systemAnnouncement: '系统公告',
     telephone: '电话号码',
     thirdLevelAffiliateCommission: '三级代理佣金',

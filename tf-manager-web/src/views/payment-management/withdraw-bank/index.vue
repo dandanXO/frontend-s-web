@@ -158,7 +158,7 @@
     >
       <el-table-column type="expand">
         <template #default="props">
-          <el-table :data="props.row.child" ref="table" size="small" style="margin-left: 60px; width: 100%;">
+          <el-table :data="props.row.child" ref="table" size="small" max-height="250" style="margin-left: 60px; width: 75%;">
             <el-table-column prop="bankName" :label="t('fields.bankName')" />
             <el-table-column prop="bankCode" :label="t('fields.bankCode')" />
             <el-table-column label="" align="left">

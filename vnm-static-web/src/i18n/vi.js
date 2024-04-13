@@ -5,7 +5,7 @@ export default {
     "sports": "Thể Thao",
     "liveCasino": "Casino",
     "poker": "Poker",
-    "slot": "Nỗ Hủ",
+    "slot": "Nổ Hũ",
     "lottery": "Xổ số",
     "fishing": "Bắn Cá",
     "cockfight": "Đá Gà",
@@ -58,7 +58,8 @@ export default {
     cockfight: 'Đá Gà',
     deposit_should_between: "Vui lòng nhập số tiền từ ",
     msg_deleted: "Tin nhắn đã bị xóa",
-    please_select_bank: "Vui lòng chọn ngân hàng"
+    please_select_bank: "Vui lòng chọn ngân hàng",
+    you_account_has_been_sent_email: "Mã tài khoản của bạn đã được gửi đến email của bạn."
   },
   "login": {
     "username": "Tên tài khoản",
@@ -104,6 +105,7 @@ export default {
     "viewnow": "Xem ngay",
     "playnow": "Chơi ngay",
     "systemError": "Lỗi hệ thống",
+    "loginTitle": "Thông báo",
     bankName: 'Ngân hàng ',
     bankAcc: 'Tên tài khoản',
     backCard: 'Số tài khoản',
@@ -119,7 +121,13 @@ export default {
     bindEmailFirst: "Vui lòng gắn kết email của bạn trước",
     success: "Gửi thành công",
     sendPhoneVerificationSuccess: 'Gửi xác minh số điện thoại thành công',
-    bankCard: "Số thẻ"
+    bankCard: "Số thẻ",
+    successful_sent: "Số đã được gửi thành công.",
+    not_drawn_yet: "Chưa được rút",
+    won: "Thắng",
+    didnt_win: "Không thắng",
+    record_win_status: "Tình trạng thắng",
+    comingSoon: "Coming Soon...",
   },
   "home": {
     "appDownload": "Tải ứng dụng",
@@ -393,6 +401,7 @@ export default {
     "withdrawDate": "Ngày rút tiền",
     "type": "Loại",
     "gameType": "Loại game",
+    betTime: "Thời gian đặt cược",
     "gamePlatform": "Nền tảng game",
     "time": "Thời gian",
     "privilegeName": "Tên đặc quyền",
@@ -638,6 +647,11 @@ export default {
     mobileAccess: "Truy cập di động",
     scanDownload: "Quét mã QR để tải xuống"
   },
+  maintenance: {
+    title: "Hệ thống đang bảo trì...",
+    desc: `Bắt đầu từ 01/07/2024 (GMT +8) đến 19/09/2024 (GMT +8)<br>
+    Tất cả dịch vụ và trò chơi sẽ tạm dừng trong thời gian trên, <br>thành thật xin lỗi vì sự bất tiện này!`
+  }, 
   "welcome": {
     "compatibleDevices": "Hoàn toàn tương thích với các thiết bị an toàn",
     "technologyLead": "Leihuo dẫn đầu thị trường với công nghệ xuất sắc. Phát triển độc lập một bộ ứng dụng terminal đầy đủ, cho phép bạn tận hưởng Web, H5, và ứng dụng iOS, Android nguyên bản, trò chơi mượt mà và nhiều hơn nữa. Để bạn thống trị! Dịch vụ gần gũi, dịch vụ khách hàng trực tuyến 24/7 đi cùng bạn suốt năm.",
@@ -774,7 +788,7 @@ export default {
     1000: "Tên đăng nhập hoặc Mật khẩu không hợp lệ. Vui lòng thử lại!",
     1001: "Tài khoản đã đóng",
     1002: "Tài khoản dành cho đại lý",
-    1004: "Tên người dùng chỉ được chứa số và chữ cái",
+    1004: "Tên tài khoản không được chứa ký tự đặc biệt",
     1300: "Số tiền phải là số lớn hơn 0",
     1301: "Thẻ này không được hỗ trợ",
     1302: "Loại tiền này không được hỗ trợ",

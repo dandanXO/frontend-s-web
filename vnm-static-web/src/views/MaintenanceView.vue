@@ -4,15 +4,8 @@
       <div class="maintenance-logo">
         <img src="../assets/logo.svg" />
       </div>
-      <div class="maintenance-title">目前我们的网站正在维护中...</div>
-      <div class="maintenance-desc">
-        从：2023年7月1日（GMT+8）
-        <br />
-        至：2023年9月19日（GMT+8）
-        <br />
-        期间所有游戏和服务均无法使用。
-        <br />
-        对于给您带来任何的不变，我们深表歉意，并感谢您的耐心等待！
+      <div class="maintenance-title" v-html="$t('maintenance.title')"></div>
+      <div class="maintenance-desc" v-html="$t('maintenance.desc')">
       </div>
     </div>
     <div class="maintenance-img">

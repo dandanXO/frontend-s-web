@@ -7,6 +7,7 @@ export default {
     login: "Login",
     register: "Register",
     deposit: "Deposit",
+    deposit_btm: "Deposit",
     withdraw: "Withdraw",
     transfer: "Transfer",
     vip: "VIP",
@@ -36,8 +37,11 @@ export default {
     next_page: "Next Step",
     username_between_6_12: "Username should contain 6-12 characters",
     first_digit_must_be_0: "First digit must be 0",
-
     rebate_claim_now: "Claim now",
+    not_logged_in: "Not logged in yet",
+    login_register_to_view: "Log in/Register to view",
+    tf88_news: "TF88 News",
+    see_all: "See all",
 
     // side menu
     menu_sports: "Sports",
@@ -48,7 +52,6 @@ export default {
     menu_slots: "Slots",
     menu_fishing: "Fishing",
     menu_cockfighting: "Cock Fighting",
-    menu_rebate: "Rebate",
 
     // notify msg
     msg_update_successful: "Update successful",
@@ -109,7 +112,8 @@ export default {
     login_here: "Login here",
     registration_hints: "Registration means you have agreed and complied",
     user_registration_protocol: "User Registration protocol",
-    register_success: "",
+    register_success: "Registered Successfully.",
+    register_in_progress: "Registering...",
 
     // forgot password
     sms_retrieval: "SMS retrieval",
@@ -164,12 +168,22 @@ export default {
     system_operation_success: "The operation is successful, please check the mobile phone verification code!",
     system_verify_failed: "Verification failed, please refresh",
     system_loginnow: "Login now",
+    system_newversiondetected: "New version detected, do you want to update?",
+    system_updatenow: "Update now",
+
+    // maintenance
+    maintenance_title: "The system is maintenance...",
+    maintenance_from: "Starting from 01/07/2024 (GMT +8)",
+    maintenance_to: "to 19/09/2024 (GMT +8)",
+    maintenance_desc_01: "All services and games will be suspended during the above period, ",
+    maintenance_desc_02: "sincerely sorry for this inconvenience!",
 
     // personal | verify
     personal_exclusiveurl: "Exclusive URL",
     personal_username: "Username",
     personal_realname: "Real name",
     personal_realname_val: "Please enter your real name",
+    personal_realname_valid: "Please enter a valid real name",
     personal_birthday: "Birthday",
     personal_birthday_val: "Please enter birthday",
     personal_confirm: "Confirm",
@@ -202,6 +216,7 @@ export default {
       "If users you invite through the promotional link register and deposit, you will receive a maximum cumulative reward of 2,000VNDP.",
     share_sponsoredlinks: "Sponsored links",
     share_copy: "Copy",
+    share_copy_success: "Copied successfully",
     share_qrcode: "QR Code",
     share_accumulated_registration: "Accumulated registration",
     share_accumulated_recharge: "Accumulated recharge",
@@ -282,7 +297,7 @@ export default {
 
     // withdraw
     withdraw_amount: "Amount",
-    withdraw_withdrawallamount: "Withdraw full amount",
+    withdraw_withdrawallamount: "Withdraw all",
     withdraw_tipstitle: "Tips",
     withdraw_tipdesc: "To ensure the safety of funds, you need to verify your mobile phone number before depositing",
     withdraw_proceedverify: "Proceed to verify",
@@ -432,6 +447,7 @@ export default {
     vip_birthday_bonus: "Birthday bonus",
     vip_request: "Request",
     vip_claim: "Claim",
+    vip_claim_success: "Claimed successfully",
     vip_contactcs: "Contact CS",
     level: "Level",
     upgrade: "Upgrade",
@@ -979,6 +995,7 @@ export default {
     system_message: "System Message",
     confirm_deposit_msg: "Confirm deposit",
     coming_soon: "Coming soon",
+    game_is_coming_soon: "Stay tune! Game is coming soon",
     no_fav_game_yet: "No favourite game yet",
     or: "OR",
     weak_level: "Weak",

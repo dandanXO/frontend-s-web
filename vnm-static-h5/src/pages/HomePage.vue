@@ -1,23 +1,11 @@
 <template>
-  <!-- <pre> -->
-  <!-- ---{{ $t("lang.langVal") }}--- -->
-  <!-- <br />esport-{{ esport }} -->
-  <!-- <br />sport-{{ sport }} -->
-  <!-- <br />livecasino-{{ livecasino }} -->
-  <!-- <br />poker-{{ poker }} -->
-  <!-- <br />lottery-{{ lottery }} -->
-  <!-- <br />cockfight-{{ cockfight }} -->
-  <!-- <br />fishing-{{ fishing }} -->
-  <!-- <br />casuals-{{ casuals }} -->
-  <!-- </pre> -->
-
   <div v-if="isH5 && topBoxVisible" class="download-top-container">
     <div class="download-top-box">
       <q-icon name="close" @click="closeTopBox" />
       <img class="headicon" src="../assets/logo-web.svg" alt="download-logo" />
       <div class="download-txt-container">
         <span class="download-title">
-          <font class="sm-screen-txt">{{ $t("lang.app_download_title") }}</font>
+          <div class="sm-screen-txt">{{ $t("lang.app_download_title") }}</div>
         </span>
         <span class="sm-screen-txt">{{ $t("lang.app_download_desc") }}</span>
       </div>
@@ -116,6 +104,18 @@
   </div>
 
   <div class="details-bar">
+    <div class="message" @click="refreshBalance">
+      <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
+        {{
+          store.token
+            ? !isLoadingBalance
+              ? "VNDP " + mainWallet.toFixed(2)
+              : $t("lang.loading")
+            : $t("lang.not_logged_in")
+        }}
+      </span>
+      <span>{{ store.token ? $t("lang.central_wallet") : $t("lang.login_register_to_view") }}</span>
+    </div>
     <div class="menulist">
       <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/deposit-mid.png" />
@@ -419,29 +419,96 @@
       </div>
 
       <div class="game-lists fade-in-image" id="cockfight-lists">
-        <template v-for="(item, index) in cockfight" :key="index">
-          <div
-            class="platform-block"
-            @click="playGame(item.gameName, item.code, item.gameCode)"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
+        <template v-if="cockfight.length == 0">
+          <div class="platform-block" @click="isPlatformComingSoon = true">
             <div
               class="platform-img-frame"
               :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
+                'background-image': getImgPlatformBg('cockfight', 'ws')
               }"
             >
               <div class="platform-content">
                 <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
+                  {{ $t("lang.coming_soon") }}
                 </div>
               </div>
             </div>
           </div>
         </template>
+
+        <template v-else>
+          <template v-for="(item, index) in cockfight" :key="index">
+            <div
+              class="platform-block"
+              @click="playGame(item.gameName, item.code, item.gameCode)"
+              :class="item.underMaintenance === true ? 'maintenance' : ''"
+            >
+              <MaintenanceBox :item="item" />
+
+              <div
+                class="platform-img-frame"
+                :style="{
+                  'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
+                }"
+              >
+                <div class="platform-content">
+                  <div class="platform-title">
+                    {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </template>
+        </template>
       </div>
+    </div>
+  </div>
+
+  <div class="home-news">
+    <div class="home-news-title-section">
+      <div class="news-title">{{ $t("lang.tf88_news") }}</div>
+      <div class="news-see-all">
+        <q-btn rounded no-caps color="lightbluebtn" class="sm-screen-txt" @click="goToNewsPage">
+          {{ $t("lang.see_all") }}
+        </q-btn>
+      </div>
+    </div>
+    <div class="home-news-top-container">
+      <a
+        :href="newsDetail_00.url"
+        target="_blank"
+        class="top-news"
+        :style="{ backgroundImage: `url(${newsDetail_00.pictureurl})` }"
+      >
+        <div class="title-txt">{{ newsDetail_00.title }}</div>
+      </a>
+      <a
+        :href="newsDetail_01.url"
+        target="_blank"
+        class="top-news"
+        :style="{ backgroundImage: `url(${newsDetail_01.pictureurl})` }"
+      >
+        <div class="title-txt">{{ newsDetail_01.title }}</div>
+      </a>
+    </div>
+
+    <div class="home-news-bottom-container">
+      <a :href="newsDetail_02.url" target="_blank" class="bottom-news">
+        <div class="news-img" :style="{ backgroundImage: `url(${newsDetail_02.pictureurl})` }"></div>
+        <div class="news-txt">{{ newsDetail_02.title }}</div>
+      </a>
+      <a :href="newsDetail_03.url" target="_blank" class="bottom-news">
+        <div class="news-img" :style="{ backgroundImage: `url(${newsDetail_03.pictureurl})` }"></div>
+        <div class="news-txt">{{ newsDetail_03.title }}</div>
+      </a>
+      <a :href="newsDetail_04.url" target="_blank" class="bottom-news">
+        <div class="news-img" :style="{ backgroundImage: `url(${newsDetail_04.pictureurl})` }"></div>
+        <div class="news-txt">{{ newsDetail_04.title }}</div>
+      </a>
+      <a :href="newsDetail_05.url" target="_blank" class="bottom-news">
+        <div class="news-img" :style="{ backgroundImage: `url(${newsDetail_05.pictureurl})` }"></div>
+        <div class="news-txt">{{ newsDetail_05.title }}</div>
+      </a>
     </div>
   </div>
 
@@ -462,6 +529,7 @@
       </a>
     </div>
   </div>
+
   <q-page-sticky position="bottom-right" :offset="fabPos">
     <q-fab
       icon="money"
@@ -471,15 +539,16 @@
       @click="getRebateAmt"
       persistent
     >
-        <template v-slot:icon="{ opened }">
-          <q-icon :class="{ 'example-fab-animate--hover': opened !== true }" name="money" />
-        </template>
+      <template v-slot:icon="{ opened }">
+        <q-icon :class="{ 'example-fab-animate--hover': opened !== true }" name="money" />
+      </template>
 
-        <template v-slot:active-icon="{ opened }">
-          <q-icon :class="{ 'example-fab-animate': opened === true }" name="money" />
-        </template>
+      <template v-slot:active-icon="{ opened }">
+        <q-icon :class="{ 'example-fab-animate': opened === true }" name="money" />
+      </template>
     </q-fab>
   </q-page-sticky>
+
   <q-dialog
     width="100%"
     class="modal-update-div"
@@ -492,17 +561,18 @@
       <div class="modalcontent">
         <div class="headers">
           <div style="width: 16px">&nbsp;</div>
-          <div class="titles">{{$t('lang.menu_rebate')}}</div>
+          <div class="titles">{{ $t("lang.menu_rebate") }}</div>
           <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
         </div>
         <div class="contents">{{ rebateAmt }}</div>
         <div class="btnsreas">
-          <div class="confirmsbtns common-md-btn" @click="claimRebateAmt">{{$t('lang.rebate_claim_now')}}</div>
-          <div class="cancels common-md-white-btn" @click="isRebateModalVisible = false">{{$t('lang.cancel')}}</div>
+          <div class="confirmsbtns common-md-btn" @click="claimRebateAmt">{{ $t("lang.rebate_claim_now") }}</div>
+          <div class="cancels common-md-white-btn" @click="isRebateModalVisible = false">{{ $t("lang.cancel") }}</div>
         </div>
       </div>
     </q-card>
   </q-dialog>
+
   <GameModal ref="allGames"></GameModal>
 
   <q-dialog
@@ -517,13 +587,38 @@
       <div class="modalcontent">
         <div class="headers">
           <div style="width: 16px">&nbsp;</div>
-          <div class="titles">系统提示</div>
+          <div class="titles">{{ $t("lang.system_hint") }}</div>
           <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
         </div>
-        <div class="contents">检测到新版本，您是否要更新？</div>
+        <div class="contents" style="font-size: 20px">{{ $t("lang.system_newversiondetected") }}</div>
         <div class="btnsreas">
-          <div class="confirmsbtns common-md-btn" @click="openDownloadPage">立即更新</div>
-          <div class="cancels common-md-white-btn" @click="cancelUpdate">取消</div>
+          <div class="confirmsbtns common-md-btn" @click="openDownloadPage">{{ $t("lang.system_updatenow") }}</div>
+          <div class="cancels common-md-white-btn" @click="cancelUpdate">{{ $t("lang.system_cancel") }}</div>
+        </div>
+      </div>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog
+    width="100%"
+    class="modal-common-div"
+    v-model="isLoginModal"
+    show-cancel-button
+    :showCancelButton="false"
+    :showConfirmButton="false"
+  >
+    <q-card style="width: 100%" class="modalcontent">
+      <div class="headers">
+        <div class="titles">{{ $t("lang.system_hint") }}</div>
+        <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
+      </div>
+      <div class="contents">{{ $t("lang.system_please_login") }}</div>
+      <div class="btnsreas">
+        <div class="confirmsbtns common-md-btn btn-standard-height" @click="router.push('/login')">
+          {{ $t("lang.system_loginnow") }}
+        </div>
+        <div class="cacnels common-md-white-btn btn-standard-height" @click="isLoginModal = false">
+          {{ $t("lang.system_cancel") }}
         </div>
       </div>
     </q-card>
@@ -579,13 +674,30 @@
         <div class="close-alert" @click="setExpiryBanner()">
           <q-icon size="24px" name="close"></q-icon>
         </div>
-        <div class="promo-banner-container">
+        <router-link class="promo-banner-container" :to="homePopupLink" :target="homePopupLinkOut ? '_blank' : '_self'">
           <div class="promo-banner-content" v-if="homePopupType === 'TEXT'" v-html="homePopupContent"></div>
           <div class="promo-banner-img" v-else>
             <img :src="homePopupImg" class="alert-img" />
           </div>
-        </div>
+        </router-link>
       </q-card-section>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog width="100%" class="modal-update-div" v-model="isPlatformComingSoon" show-cancel-button>
+    <q-card style="width: 100%" class="bg-bright text-black">
+      <div class="modalcontent">
+        <div class="headers">
+          <div style="width: 16px">&nbsp;</div>
+          <div class="titles">{{ $t("lang.coming_soon") }}</div>
+          <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
+        </div>
+        <div class="contents">{{ $t("lang.game_is_coming_soon") }}</div>
+        <div class="btnsreas" style="justify-content: center">
+          <div class="confirmsbtns common-md-btn" v-close-popup>{{ $t("lang.confirm") }}</div>
+          <!-- <div class="cancels common-md-white-btn" @click="isRebateModalVisible = false">{{ $t("lang.cancel") }}</div> -->
+        </div>
+      </div>
     </q-card>
   </q-dialog>
 </template>
@@ -623,29 +735,31 @@ export default defineComponent({
     LangOptions
   },
   setup() {
-    const fabPos = ref([ 18, 18 ])
-    const draggingFab = ref(false)
-    const isRebateModalVisible = ref(false)
+    const fabPos = ref([18, 18]);
+    const draggingFab = ref(false);
+    const isRebateModalVisible = ref(false);
     const rebateAmt = ref(0);
     const getRebateAmt = () => {
-      eventapi.get('/daily-rebate/available-amount').then((res) => {
-        if (res.code === 0) {
-          rebateAmt.value = res.data
-          isRebateModalVisible.value = true
-        } else {
-          
-        }
-      })
-    }
+      if (store.hasToken()) {
+        eventapi.get("/daily-rebate/available-amount").then((res) => {
+          if (res.code === 0) {
+            rebateAmt.value = res.data;
+            isRebateModalVisible.value = true;
+          } else {
+          }
+        });
+      } else {
+        isLoginModal.value = true;
+      }
+    };
     const claimRebateAmt = () => {
-      eventapi.put('/bonus/claim/vnm-daily-rebate').then((res) => {
+      eventapi.put("/bonus/claim/vnm-daily-rebate").then((res) => {
         if (res.code === 0) {
-          isRebateModalVisible.value = false
+          isRebateModalVisible.value = false;
         } else {
-          
         }
-      })
-    }
+      });
+    };
     const isFirstView = ref(false);
     const closeAlert = () => {
       localStorage.setItem("indexImgTop", new Date().getTime());
@@ -843,6 +957,8 @@ export default defineComponent({
     const homePopupId = ref(0);
     const homePopupFrequency = ref(0);
     const homePopupFrequencyNum = ref(0);
+    const homePopupLink = ref("");
+    const homePopupLinkOut = ref(false);
 
     const setExpiryBanner = () => {
       if (homePopupFrequencyNum.value !== 0) {
@@ -917,6 +1033,14 @@ export default defineComponent({
                 homePopupType.value = res.data["type"];
                 homePopupId.value = res.data["id"];
                 homePopupFrequency.value = res.data["frequency"];
+
+                if (res.data["path"].includes("http")) {
+                  homePopupLink.value = res.data["path"];
+                  homePopupLinkOut.value = true;
+                } else {
+                  homePopupLink.value = `/promo?name=${res.data["path"]}`;
+                }
+
                 isFirstView.value = true;
               }
             }
@@ -1175,7 +1299,7 @@ export default defineComponent({
 
     const getAppDownloadUrl = () => {
       api
-        .get("/app/getAppData?siteCode=lh1&appType=ALL_SITE")
+        .get("/app/getAppData?siteCode=vnm&appType=ALL_SITE")
         .then((res) => {
           // console.log(res);
           downloadUrl.value = res.data.downloadPageUrl;
@@ -1221,6 +1345,7 @@ export default defineComponent({
       checkShowImgTop();
       getAppDownloadUrl();
       getUnreadTotal();
+      getNewsDetails();
     });
 
     const imageLoading = ref(false);
@@ -1230,6 +1355,36 @@ export default defineComponent({
     const toggleMenuFloat = () => {
       isMenuFloat.value = !isMenuFloat.value;
     };
+
+    const isLoginModal = ref(false);
+
+    const newsDetails = ref([]);
+    const newsDetail_00 = ref([]);
+    const newsDetail_01 = ref([]);
+    const newsDetail_02 = ref([]);
+    const newsDetail_03 = ref([]);
+    const newsDetail_04 = ref([]);
+    const newsDetail_05 = ref([]);
+
+    const goToNewsPage = () => {
+      window.open("http://tf88club.net");
+    };
+
+    const getNewsDetails = () => {
+      api.get("/news").then((res) => {
+        if (res.code === 0) {
+          newsDetails.value = res.data;
+          newsDetail_00.value = res.data[0];
+          newsDetail_01.value = res.data[1];
+          newsDetail_02.value = res.data[2];
+          newsDetail_03.value = res.data[3];
+          newsDetail_04.value = res.data[4];
+          newsDetail_05.value = res.data[5];
+        }
+      });
+    };
+
+    const isPlatformComingSoon = ref(false);
 
     return {
       imageLoading,
@@ -1286,6 +1441,8 @@ export default defineComponent({
       cancelUpdate,
       openDownloadPage,
       homePopupImg,
+      homePopupLink,
+      homePopupLinkOut,
       refreshBalance,
       isLoadingBalance,
       closeTopBox,
@@ -1315,14 +1472,21 @@ export default defineComponent({
       claimRebateAmt,
       fabPos,
       draggingFab,
+      isLoginModal,
+      newsDetails,
+      getNewsDetails,
+      newsDetail_00,
+      newsDetail_01,
+      newsDetail_02,
+      newsDetail_03,
+      newsDetail_04,
+      newsDetail_05,
+      goToNewsPage,
+      isPlatformComingSoon,
 
-      moveFab (ev) {
-        draggingFab.value = ev.isFirst !== true && ev.isFinal !== true
-
-        fabPos.value = [
-          fabPos.value[ 0 ] - ev.delta.x,
-          fabPos.value[ 1 ] - ev.delta.y
-        ]
+      moveFab(ev) {
+        draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
+        fabPos.value = [fabPos.value[0] - ev.delta.x, fabPos.value[1] - ev.delta.y];
       }
     };
   }
@@ -1330,6 +1494,88 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+.home-news {
+  width: calc(100% - 2rem);
+  margin: 0 auto 32px;
+
+  .home-news-title-section {
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+
+    .news-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #313441;
+    }
+  }
+
+  .home-news-top-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 8px;
+    margin-bottom: 8px;
+
+    .top-news {
+      background-color: #ffffff;
+      border-radius: 12px;
+      height: 140px;
+      background-size: cover;
+      position: relative;
+      overflow: hidden;
+
+      .title-txt {
+        font-weight: 700;
+        color: #ffffff;
+        text-align: left;
+        line-height: 1.4;
+        font-size: 14px;
+        padding: 10px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        text-shadow: 10px 10px 10px #000;
+        overflow: hidden;
+        width: 100%;
+        background: linear-gradient(0deg, #063c78 0%, rgba(0, 0, 0, 0) 72.73%);
+      }
+    }
+  }
+  .home-news-bottom-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 8px;
+    row-gap: 8px;
+    .bottom-news {
+      display: flex;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0px -2px 5px 0px #b1d7ff inset;
+
+      .news-img {
+        min-width: 60px;
+        min-height: 60px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        background-size: cover;
+      }
+
+      .news-txt {
+        color: #333333;
+        font-size: 12px;
+        padding: 8px;
+        max-height: 40px; /* Assuming 4 lines of text with 12px font size and 12px padding */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Limit to 2 lines */
+        -webkit-box-orient: vertical;
+      }
+    }
+  }
+}
+
 .float-service {
   position: fixed;
   right: 0;
@@ -1631,7 +1877,9 @@ export default defineComponent({
 .modal-update-div {
   .modalcontent {
     background: $white;
-    height: 232px;
+    // height: 232px;
+    height: auto;
+    min-height: 232px;
     border-radius: 10px;
     box-sizing: border-box;
 
@@ -1664,7 +1912,7 @@ export default defineComponent({
       box-sizing: border-box;
       padding: 20px 12px 15px;
       text-align: center;
-      color: #468CFF;
+      color: #468cff;
       font-size: 2.2rem;
 
       .contentfonts {
@@ -1771,7 +2019,7 @@ export default defineComponent({
   align-items: flex-start;
   justify-content: space-between;
   width: $box-width;
-  margin: 0px auto 30px;
+  margin: 0px auto 16px;
   gap: 8px;
 
   .game-left-list {
