@@ -106,6 +106,7 @@ export default {
     viewnow: 'View Now',
     playnow: 'Play Now',
     systemError: 'System error',
+    loginTitle: "Announcement",
     bankName: 'Bank Name',
     bankAcc: 'Bank Account',
     backCard: 'Account number',
@@ -363,7 +364,8 @@ deposit: {
   notept1: 'The transaction unit in the game is TF VNDP, 1 VNDP = 1000VND',
   redirected: 'You will be redirected to your bank page to complete the deposit',
   successful: 'If successful, you will receive a notification on this page',
-  deposited: 'Deposited'
+  deposited: 'Deposited',
+  promo: 'Select promotion'
 },
 transfer:  {
   transfer: 'Transfer',
@@ -639,7 +641,10 @@ about: {
     "highLimit": "High Limit",
     "priorityPaymentMethod": "Priority Payment Method",
     "customerCare": "24/7 VIP Customer Care Team",
-    "invitationExclusive": "Invitation to Exclusive Events"
+    "invitationExclusive": "Invitation to Exclusive Events",
+    upgrade: "WELCOME",
+    birthday: "BIRTHDAY",
+    monthly: "MONTHLY",
   },
   app: {
     sports: "Access to massive sports events and top-tier esports competitions.",

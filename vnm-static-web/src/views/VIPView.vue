@@ -48,8 +48,22 @@
             >
               <span>{{ getVipLevelProgress(vip) === 100 && !!vipLevel ? $t('vip.achieved') : $t('vip.unachieved') }}</span>
             </div>
+            <div class="claimButtons" v-if="currentSlide === vipIndex && store.token">
+              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2" @click="store.openLiveChat()" class="claimBtn vipBirthday">
+                <RiCake2Line />
+                {{ $t('vip.birthday') }}
+              </a>
+              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2" :class="{'unavailable': vipLevel + 1 !== Number(vip.vipLevel) || !canClaimMonthly}" @click="canClaimMonthly && vipLevel + 1 === Number(vip.vipLevel) ? claimBonus('monthly'): null" class="claimBtn vipMonthly">
+                <RiCalendar2Line />
+                {{ $t('vip.monthly') }}
+              </a>
+              <a :class="{'unavailable':vip.unavailable, 'claimed':vip.claimed}" @click="!vip.unavailable && !vip.claimed?claimBonus('welcome', vipIndex + 1): null" class="claimBtn vipWelcome">
+                <RiMoneyDollarCircleLine />
+                {{ $t('vip.upgrade') }}
+              </a>
+            </div>
           </div>
-          <router-link
+          <!-- <router-link
             to="/center/deposit"
             class="vipLevelButton"
             v-if="vip.depositPromoAvailable && !vip.unavailable && !vip.claimed"
@@ -63,7 +77,7 @@
           >
             {{$t('vip.claimVIP')}}
           </div>
-          <div class="vipLevelButton claimed" v-if="vip.claimed && !vip.unavailable">{{ $t('vip.claimed') }}</div>
+          <div class="vipLevelButton claimed" v-if="vip.claimed && !vip.unavailable">{{ $t('vip.claimed') }}</div> -->
         </div>
       </Slide>
       <template #addons>
@@ -320,28 +334,41 @@
       </ol>
     </div>
   </div>
+  
+  <el-dialog class="" v-model="privilegeClaimedModalVisible" width="600px" align-center>
+      <div class="noticedialog">
+        <div class="title" style="flex-direction: column;display:flex;">{{modalTitle}} <span style="font-size: 30px; color: #5196ff;">{{ amount ? amount : 0 }}</span></div>
+        <div class="standard-button-container">
+          <button class="standard-button btn-color-blue" @click="claimNow()">{{$t('common.confirm')}}</button>
+        </div>
+      </div>
+    </el-dialog>
 </template>
 
 <script>
 import { ref, reactive, defineComponent, computed, onMounted } from "vue";
-import { claimBonusItem, canRedeem, claim } from "@/api/index/promo";
+import { canRedeemMonthly, canRedeemWelcome, claimMonthly, claimWelcome } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 // import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
 import { useI18n } from "vue-i18n";
+import { RiCake2Line, RiCalendar2Line, RiMoneyDollarCircleLine } from "vue-remix-icons";
 
 export default defineComponent({
   name: "VIPView",
   components: {
     Carousel,
     Slide,
-    Navigation
+    Navigation,
+    RiCake2Line,
+    RiCalendar2Line,
+    RiMoneyDollarCircleLine
   },
   setup() {
     const { t } = useI18n();
     const store = userStore();
-    const amount = ref("$0");
+    const amount = ref("0");
     const privilegeClaimedModalVisible = ref(false);
     const vipLevel = computed(() => {
       return +store.vip.replace("VIP", "");
@@ -382,36 +409,67 @@ export default defineComponent({
     const storeToken = computed(() => {
       return store.token;
     });
-    const loadingClaim = ref(false);
-    const loadingMClaim = ref(false);
-    const loadingBClaim = ref(false);
-    const dailySlot = (bonusItem, vipType) => {
-      loadingClaim.value = true;
+    const modalTitle = ref('')
+    const claimBonus = (vipType, vipLevel) => {
       if (vipType === "monthly") {
-        loadingMClaim.value = true;
-      } else if (vipType === "birthday") {
-        loadingBClaim.value = true;
-      }
-      claimBonusItem(bonusItem)
-        .then((res) => {
-          if (res.code === 0) {
-            amount.value = "$" + res.data;
+        claimMonthly().then((res) => {
+          if(res.code === 0) {
+            amount.value = store.currency.label + res.data;
             privilegeClaimedModalVisible.value = true;
-            loadingClaim.value = false;
-            loadingMClaim.value = false;
-            loadingBClaim.value = false;
-            store.getBalance();
+            modalTitle.value = t('vip.monthlyBonus');
           } else {
-            ElMessage.error(res.message);
-            loadingClaim.value = false;
-            loadingMClaim.value = false;
-            loadingBClaim.value = false;
+            ElMessage.error(res.message)
           }
         })
-        .catch((err) => {
-          console.log(err.message);
-        });
-    };
+      } else if (vipType === "welcome") {
+        claimWelcome(vipLevel).then((res) => {
+          if(res.code === 0) {
+            amount.value = store.currency.label + res.data;
+            privilegeClaimedModalVisible.value = true;
+            modalTitle.value = t('vip.welcomeBonus');
+
+          } else {
+            ElMessage.error(res.message)
+          }
+        })
+      }
+    }
+    const claimNow = () => {
+      privilegeClaimedModalVisible.value = false;
+      store.getBalance();
+      initVIPTable();
+
+    }
+    // const loadingClaim = ref(false);
+    // const loadingMClaim = ref(false);
+    // const loadingBClaim = ref(false);
+    // const dailySlot = (bonusItem, vipType) => {
+    //   loadingClaim.value = true;
+    //   if (vipType === "monthly") {
+    //     loadingMClaim.value = true;
+    //   } else if (vipType === "birthday") {
+    //     loadingBClaim.value = true;
+    //   }
+    //   claimBonusItem(bonusItem)
+    //     .then((res) => {
+    //       if (res.code === 0) {
+    //         amount.value = "$" + res.data;
+    //         privilegeClaimedModalVisible.value = true;
+    //         loadingClaim.value = false;
+    //         loadingMClaim.value = false;
+    //         loadingBClaim.value = false;
+    //         store.getBalance();
+    //       } else {
+    //         ElMessage.error(res.message);
+    //         loadingClaim.value = false;
+    //         loadingMClaim.value = false;
+    //         loadingBClaim.value = false;
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       console.log(err.message);
+    //     });
+    // };
 
     // const terms = [
     //   {
@@ -580,12 +638,17 @@ export default defineComponent({
       //   claimed: false
       // }
     ]);
+    const canClaimMonthly = ref(false);
     const initVIPTable = () => {
       if (store.token) {
-        canRedeem().then((res) => {
+        canRedeemMonthly('vnm-vip-monthly').then((res) => {
+          if (res.code === 0) {
+            canClaimMonthly.value = res.data
+          }
+        })
+        canRedeemWelcome().then((res) => {
           if (res.code === 0) {
             // Your arrays of elements
-            const depositPromoAvailableElements = res.data.depositPromoAvailable;
             const promoAvailableElements = res.data.promoAvailable;
             const unavailableElements = res.data.unavailable;
             const claimedElements = res.data.claimed;
@@ -599,10 +662,6 @@ export default defineComponent({
                 }
               });
             }
-
-            // Call the function to update properties based on depositPromoAvailable elements
-            updatePropertiesBasedOnElements(depositPromoAvailableElements, "depositPromoAvailable");
-
             // Call the function to update properties based on promoAvailable elements
             updatePropertiesBasedOnElements(promoAvailableElements, "promoAvailable");
 
@@ -620,17 +679,17 @@ export default defineComponent({
         });
       }
     };
-    const claimVIPLevelItem = (vip) => {
-      claim(vip.vipLevel).then((res) => {
-        if (res.code === 0) {
-          ElMessage.success(t('common.claimedSuccess'));
-          store.getBalance();
-          initVIPTable();
-        } else {
-          ElMessage.error(res.message)
-        }
-      });
-    };
+    // const claimVIPLevelItem = (vip) => {
+    //   claim(vip.vipLevel).then((res) => {
+    //     if (res.code === 0) {
+    //       ElMessage.success(t('common.claimedSuccess'));
+    //       store.getBalance();
+    //       initVIPTable();
+    //     } else {
+    //       ElMessage.error(res.message)
+    //     }
+    //   });
+    // };
     const currentSlide = ref(0);
     const slideTo = () => {
       const vipLevel = +store.vip.replace("VIP", "");
@@ -653,19 +712,19 @@ export default defineComponent({
       vipLevel,
       getVipLevelProgress,
       storeToken,
-      dailySlot,
-      loadingClaim,
-      loadingMClaim,
-      loadingBClaim,
       amount,
       privilegeClaimedModalVisible,
       // currentDisplayTerms,
       // vipTerms,
-      claimVIPLevelItem,
+      // claimVIPLevelItem,
       currentSlide,
       slideTo,
       currentDepositAmt,
-      store
+      store,
+      canClaimMonthly,
+      claimBonus,
+      claimNow,
+      modalTitle
     };
   }
 });
@@ -737,6 +796,51 @@ $border-settings: 1px solid #e5e7eb;
     height: 284px;
     background: url("../assets/vip/badge/banner-1.png") no-repeat top center;
     background-size: contain;
+    
+.claimButtons {
+  display: flex;
+  position: absolute;
+    right: 34%;
+    gap: 10px;
+    top: 25px;
+    z-index: 99;
+  .claimBtn {
+    cursor: pointer;
+    width: 55px;
+    height: 55px;
+    gap: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 7px;
+    padding: 8px;
+    line-height: 9px;
+    flex-direction: column;
+    color: #cdae77;
+    box-shadow: 0px 2px 5px 0px #cdae77 inset;
+    &.unavailable {
+    cursor: unset;
+    color: #b1b1b1;
+    box-shadow: 0px 2px 5px 0px #b1b1b1 inset;
+    svg {
+      fill: #b1b1b1;
+    }
+    }
+    &.claimed {
+    box-shadow: 0px 2px 5px 0px #78634a inset;
+    color: #78634a;
+    cursor: unset;
+    svg {
+    fill: #78634a;
+    }
+  }
+  svg{ 
+    width: 18px;
+      fill: #cdae77;
+  }
+  }
+}
 
     &2 {
       background: url("../assets/vip/badge/banner-2.png") no-repeat top center;

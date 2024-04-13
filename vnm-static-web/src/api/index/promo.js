@@ -180,8 +180,21 @@ export function signIn() {
 export function canRedeem() {
   return server.EVENT.get("/vip-upgrade/lh/canRedeem");
 }
+export function canRedeemWelcome() {
+  return server.EVENT.get("/vip-welcome/canRedeem");
+}
+export function canRedeemMonthly(promoCode) {
+  return server.EVENT.get(`/privi/vip/canRedeem?promoCode=${promoCode}`);
+}
+
 export function claim(level) {
   return server.EVENT.post("/vip-upgrade/lh/claim", { vipLevel: level });
+}
+export function claimMonthly() {
+  return server.EVENT.put("/bonus/claim/vnm-vip-monthly");
+}
+export function claimWelcome(level) {
+  return server.EVENT.post("/vip-welcome/claim", { vipLevel: level });
 }
 
 export function getQuestionnaireList() {

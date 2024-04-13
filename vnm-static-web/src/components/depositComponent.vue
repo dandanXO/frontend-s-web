@@ -109,7 +109,7 @@
           >
             <el-select
               v-model="selectedPrivilege"
-            :placeholder="$t('deposit.selectPromo')"
+            :placeholder="$t('deposit.promo')"
               @select="checkMinDepositAmt"
               @focus="loadPrivilege(activeMethod)"
               fit-input-width
