@@ -70,6 +70,9 @@
           <router-link to="/account/invite" class="summon-btn">
             <img src="../../../assets/images/promo/hotpromo/summoner/summon-btn.png">
           </router-link>
+          <div class="summon-btn" @click="claimReward" style="margin-bottom:16px;">
+            <img src="../../../assets/images/promo/hotpromo/summoner/claim-summon-btn.png">
+          </div>
           <div class="findfriend" @click="getSummonRecord">
             <img src="../../../assets/images/promo/hotpromo/summoner/findfriend-btn.png">
           </div>
@@ -234,7 +237,8 @@ const tableData = ref([]);
 const page = reactive({
   current: 1,
   size: 20
-})
+});
+const props = defineProps(["promoCode"]);
 const columns = [
   {
     label: "被唤醒会员账号",
@@ -265,6 +269,35 @@ const getSummonRecord = () => {
       console.log("here", err);
     });
 }
+
+const claimReward = () => {
+  eventapi
+    .post("/member-summon/claim", {
+      promoCode : props.promoCode
+    })
+    .then((res) => {
+      if (res.code == 0) {
+        $q.notify({
+          message: "成功领取 " + res.data + " 元。",
+          type: "positive",
+          position: "top",
+          icon: "check_circle_outline"
+        });
+      }else{
+        $q.notify({
+          color: "negative",
+          position: "bottom",
+          message: res.message,
+          icon: "report_problem"
+        });
+      }
+    })
+    .catch((err) => {
+      console.log("here", err);
+    });
+}
+
+
 onMounted(() => {
 
 })
@@ -383,6 +416,14 @@ onMounted(() => {
     margin: 10px auto;
     width: 200px;
     display: block;
+    cursor: pointer;
+
+    &:hover{
+      opacity: 0.9;
+    }
+    &:active{
+      filter:brightness(0.85);
+    }
 
     img {
       width: 100%;

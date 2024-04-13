@@ -267,11 +267,11 @@ export function loadSummon(promoCode) {
     }
   });
 } 
-export function claimSummon(promoCode) { 
+export function claimSummon(promoCode) {
   return server.EVENT.post('/member-summon/claim', { promoCode });
 } 
 export function getSummonRewardRecord(page) { 
   return server.EVENT.get('/member-summon/get-summon-reward-record', { param: {
     page
   } });
-} 
+}
