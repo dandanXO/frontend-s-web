@@ -272,9 +272,9 @@ const getSummonRecord = () => {
 
 const claimReward = () => {
   eventapi
-    .post("/member-summon/claim", {
+    .post("/member-summon/claim",qs.stringify({
       promoCode : props.promoCode
-    })
+    }))
     .then((res) => {
       if (res.code == 0) {
         $q.notify({
