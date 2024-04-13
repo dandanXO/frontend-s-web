@@ -92,7 +92,7 @@
       :promo-code="list.promoCode"
     />
     <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel' && !isCommonPromo && store.token" />
-    <SummonerPromo v-if="list.redirectUrl === 'lh1-summon-event' && !isCommonPromo && store.token" />
+    <SummonerPromo v-if="list.redirectUrl === 'lh1-summon-event' && !isCommonPromo && store.token"  :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>

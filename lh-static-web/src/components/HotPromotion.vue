@@ -53,7 +53,7 @@
     ></LhStepGamePromo>
 
     <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel' && !isCommonPromo && store.token" />
-    <Summoner v-if="list.redirectUrl === 'lh1-summon-event' && !isCommonPromo && store.token" />
+    <Summoner v-if="list.redirectUrl === 'lh1-summon-event' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
