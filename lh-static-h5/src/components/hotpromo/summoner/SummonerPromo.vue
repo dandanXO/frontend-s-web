@@ -231,6 +231,7 @@ import { ref, reactive, onMounted } from 'vue'
 import { eventapi } from "src/boot/axios";
 import { useQuasar} from "quasar";
 const $q = useQuasar();
+var qs = require("qs");
 const tabPosition = ref('first')
 const isShowFriendDialog = ref(false);
 const tableData = ref([]);
