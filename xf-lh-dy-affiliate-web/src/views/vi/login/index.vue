@@ -9,6 +9,7 @@
     :touchRatio="0.01"
     :noSwiping="true"
     :autoHeight="true"
+    :allowTouchMove="(swiperKey===0) ? false: true"
     @swiper="onSwiper"
     id="login-swiper"
   >
