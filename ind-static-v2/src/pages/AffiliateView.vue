@@ -7,7 +7,7 @@
         <a
           @click.stop.prevent="
             openWindow(
-              `https://direct.lc.chat/16978800/3`,
+              `https://direct.lc.chat/14154051/`,
               'Chat Server',
               350,
               650
