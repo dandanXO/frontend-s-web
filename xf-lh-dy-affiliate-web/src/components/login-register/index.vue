@@ -17,7 +17,7 @@
           <div class="second-liner" v-html="currentSite.secondLiner" />
         </div>
         <div class="right">
-          <div class="bg swiper-no-swiping">
+          <div class="bg">
             <div class="top">
               <div class="log">
                 {{ isReg ? $t('common.signup') : $t('common.login') }}
