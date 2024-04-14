@@ -5,11 +5,8 @@
     :slides-per-view="1"
     :direction="'vertical'"
     :pagination="{clickable: true}"
-    :mousewheel="false"
-    :touchRatio="0.01"
-    :noSwiping="true"
+    :mousewheel="true"
     :autoHeight="true"
-    :allowTouchMove="(swiperKey===0) ? false: true"
     @swiper="onSwiper"
     id="login-swiper"
   >
