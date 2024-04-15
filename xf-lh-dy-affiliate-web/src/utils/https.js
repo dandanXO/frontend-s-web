@@ -146,9 +146,11 @@ const https = (api) => {
   const currentHost = window.location.host
   const thaiHost = "affiliate-web.monemental.com"
   const indHost = "ind-nfaet6t.exerpsison.com"
+  const ind2Host = "ind-xt5dzo.xlpfl0qqf3p.com"
   const lhHost = "lh1-affiliate.phoicynxeey.com"
   const lh2Host = "lh1-affiliate.lhf2ifpudro.com"
   const vnmHost = "vnm-affiliate.th80to83w1.com"
+  // const testLocal = "localhost:9998"
   const isAff = api === 'affiliate'
   const isCr = api === 'cashier'
   let apiUrl = process.env.VUE_APP_RST_API;
@@ -159,6 +161,10 @@ const https = (api) => {
 
     case indHost:
       apiUrl = isAff ? process.env.VUE_APP_IND_RST_API : (isCr ? process.env.VUE_APP_IND_CR_API : process.env.VUE_APP_IND_BASE_API)
+      break
+
+    case ind2Host:
+      apiUrl = isAff ? process.env.VUE_APP_IND2_BASE_API : (isCr ? process.env.VUE_APP_IND2_CR_API : process.env.VUE_APP_IND2_BASE_API)
       break
 
     case lhHost:
