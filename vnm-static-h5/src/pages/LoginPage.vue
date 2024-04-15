@@ -428,6 +428,14 @@ export default defineComponent({
                 $q.loading.hide();
                 sessionStorage.removeItem("REFERRAL_CODE");
 
+                // FB tracking :: login-success
+                if (
+                  window.location.href.indexOf("https://tf88king.com") > -1 ||
+                  window.location.href.indexOf("https://tfgame88.com") > -1
+                ) {
+                  fbq("track", "login-success");
+                }
+
                 if (isCheckRmb.value) {
                   localStorage.setItem(
                     "userpass",

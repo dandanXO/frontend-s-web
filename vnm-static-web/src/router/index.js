@@ -20,7 +20,7 @@ const routes = [
   {
     path: "/forgotPwd",
     name: "forgotPwd",
-    component: () => import(/* webpackChunkName: "ForgotPwd" */ "../views/ForgotPwdView.vue"),
+    component: () => import(/* webpackChunkName: "ForgotPwd" */ "../views/ForgotPwdView.vue")
   },
   {
     path: "/",
@@ -194,12 +194,23 @@ router.beforeEach((to, from, next) => {
       // }).then(() => {
       //   store.loginPageVisible = true;
       // });
-      
+
       store.loginPageVisible = true;
       next({ query: { redirect: to.path } });
     } else {
       next();
     }
   }
+
+  // FB tracking
+  if (window.location.href.indexOf("https://tf88king.com") > -1) {
+    fbq("init", "888951505918547");
+    fbq("track", "PageView");
+  } else if (window.location.href.indexOf("https://tfgame88.com") > -1) {
+    fbq("init", "460181013114922");
+    fbq("track", "PageView");
+  } else if (window.location.href.indexOf("https://tf88uytin.com") > -1) {
+    otag("init", "adv10336256983680");
+  } 
 });
 export default router;
