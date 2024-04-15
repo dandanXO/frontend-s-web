@@ -316,12 +316,12 @@ export const lotteryPlatforms = [
 // fishing
 export const fishingPlatforms = [
   {
-    code: "GPS",
-    cnname: "GPS决战中途岛",
-    image: "gps",
-    message: "炫彩3D精致画面，身临其境海天—色;超高爆率燃爆全屏，招财游戏—炮千金;多人同台趣味比拼，休闲集结快乐出击 ",
+    code: "PMFISH",
+    cnname: "DB捕鱼",
+    image: "db",
+    message: "最受欢迎的DB捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
     caption: "",
-    gameCode: 7202
+    gameCode: ""
   },
   {
     code: "AGF",
@@ -332,11 +332,11 @@ export const fishingPlatforms = [
     gameCode: "HMPL"
   },
   {
-    code: "PMFISH",
-    cnname: "DB捕鱼",
-    image: "db",
-    message: "最受欢迎的DB捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
+    code: "GPS",
+    cnname: "GPS决战中途岛",
+    image: "gps",
+    message: "炫彩3D精致画面，身临其境海天—色;超高爆率燃爆全屏，招财游戏—炮千金;多人同台趣味比拼，休闲集结快乐出击 ",
     caption: "",
-    gameCode: ""
-  }
+    gameCode: 7202
+  },
 ];
