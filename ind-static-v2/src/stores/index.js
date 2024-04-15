@@ -44,7 +44,7 @@ export const userStore = defineStore("userStore", {
       readMsgLists: [],
       aaid: "",
       googleadid: "",
-      h5Url: "https://7rzyd3kui.indwin7.com/",
+      h5Url: "https://m.789f.app/",
       hasUpdatedOneSignal: false
     };
   },
