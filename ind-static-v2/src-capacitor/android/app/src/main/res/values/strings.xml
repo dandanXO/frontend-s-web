@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">789F</string>
     <string name="title_activity_main">789F</string>
-    <string name="package_name">com.ind.app55ace</string>
-    <string name="custom_url_scheme">com.ind.app55ace</string>
+    <string name="package_name">com.ind.app789f</string>
+    <string name="custom_url_scheme">com.ind.app789f</string>
     <string name="onesignal_notification_accent_color">000000</string>
 </resources>
