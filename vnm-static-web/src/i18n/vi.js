@@ -464,7 +464,7 @@ export default {
     paymentMethods: "PHƯƠNG THỨC THANH TOÁN",
     paymentMethods1: "Tiền hoa hồng sẽ được thanh toán vào ngày 5 hàng tháng.",
     paymentMethods2: "Tiền hoa hồng sẽ được thanh toán VND.",
-    paymentMethods3: "Tiền hoa hồng hàng tháng sẽ được chốt tổng kết và chốt vào ngày 5 hàng tháng và hệ thống sẽ cập tiền hoa hồng vào tài khoản của đại lý trên TF.com vào ngày 10 hàng tháng. Từ ngày 10 trở đi đại lý có thể thực hiện lệnh rút tiền về tài khoản.",
+    paymentMethods3: "Tiền hoa hồng hàng tháng sẽ được chốt tổng kết và chốt vào ngày 5 hàng tháng và hệ thống sẽ cập tiền hoa hồng vào tài khoản của đại lý trên TF.com vào ngày 5 hàng tháng. Từ ngày 5 trở đi đại lý có thể thực hiện lệnh rút tiền về tài khoản.",
     paymentMethods4: "TF.com có quyền thay đổi hoặc chỉnh sửa về tỷ lệ phần trăm hoa hồng mà chúng tôi cho là phù hợp.",
     paymentMethods5: "TF.com có quyền thay đổi hoặc chỉnh sửa các điều khoản bên trên hoặc thêm bất kỳ điều khoản nào trong trường hợp cần thiết.",
     activeUser: "Thành viên hoạt động",
