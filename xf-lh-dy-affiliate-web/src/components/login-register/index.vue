@@ -2,7 +2,7 @@
   <div
     class="firstPage"
     :class="[
-      props.siteId !== '5' ? '' : 'ind-firstPage',
+      (props.siteId !== '5' && props.siteId !== '9') ? '' : 'ind-firstPage',
       props.siteId !== '7' ? '' : 'lh',
       props.siteId !== '8' ? '' : 'vi',
     ]"
