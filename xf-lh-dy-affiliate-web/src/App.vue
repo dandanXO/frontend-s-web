@@ -29,6 +29,8 @@ onMounted(() => {
     link.href = '/th-favicon.ico';
   }else if(window.location.pathname.indexOf("ind") > -1 || window.location.hostname.indexOf("ind-") > -1){
     link.href = '/ind-favicon.ico';
+  }else if(window.location.pathname.indexOf("ind2") > -1 || window.location.hostname.indexOf("ind2-") > -1){
+    link.href = '/ind2-favicon.ico';
   }else{
     link.href = '/favicon.ico';
   }
@@ -66,7 +68,7 @@ onMounted(() => {
 body.vilang {
   font-family: 'Roboto';
   .sidebar .navigation .route-wrapper {
-    
+
   font-family: 'Roboto';
   }
 }

@@ -553,6 +553,7 @@ import { ElNotification, ElMessage } from 'element-plus'
 import dyLogo from '@/assets/images/dy/logowhitee.png'
 import xfLogo from '@/assets/images/xf/logowhitee.png'
 import indLogo from '@/assets/images/ind/ind-logo.png'
+import ind2Logo from '@/assets/images/ind2/789logo.png'
 import lhLogo from '@/assets/images/lh/logo.png'
 import viLogo from '@/assets/images/vi/vilogo.svg'
 import { getVerificationImage } from '@/api/verification'
@@ -885,7 +886,8 @@ export default defineComponent({
       handleLogin: () => {
         loginFormRef.value.validate(async valid => {
           if (valid) {
-            if (state.loginForm.site === 'IND') {
+            debugger;
+            if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2') {
               methods.userLogin()
             } else {
               methods.onGetImage()
@@ -950,7 +952,7 @@ export default defineComponent({
         state.coordinates.splice(0)
       },
       onSuccess: async () => {
-        if (state.loginForm.site === 'IND') {
+        if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2') {
           router
             .push({
               path: state.redirect || '/',
@@ -1187,6 +1189,15 @@ export default defineComponent({
           'Become a legend<br>Or become the eulogist of legend?'
         currentSite.value.logo = indLogo
         state.loginForm.site = 'IND'
+        currentSite.value.lang = 'EN'
+        setLanguage('en')
+      }
+      if (props.siteId === '9') {
+        currentSite.value.firstLiner = 'Starts from 789F'
+        currentSite.value.secondLiner =
+          'Become a legend<br>Or become the eulogist of legend?'
+        currentSite.value.logo = ind2Logo
+        state.loginForm.site = 'IW2'
         currentSite.value.lang = 'EN'
         setLanguage('en')
       }
