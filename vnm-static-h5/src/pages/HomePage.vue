@@ -109,7 +109,7 @@
         {{
           store.token
             ? !isLoadingBalance
-              ? "VNDP " + mainWallet.toLocaleString('en-US', {maximumFractionDigits: 0})
+              ? "VNDP " + mainWallet.toLocaleString("en-US", { maximumFractionDigits: 0 })
               : $t("lang.loading")
             : $t("lang.not_logged_in")
         }}
@@ -531,22 +531,9 @@
   </div>
 
   <q-page-sticky position="bottom-right" :offset="fabPos">
-    <q-fab
-      icon="money"
-      color="info"
-      :disable="draggingFab"
-      v-touch-pan.prevent.mouse="moveFab"
-      @click="getRebateAmt"
-      persistent
-    >
-      <template v-slot:icon="{ opened }">
-        <q-icon :class="{ 'example-fab-animate--hover': opened !== true }" name="money" />
-      </template>
-
-      <template v-slot:active-icon="{ opened }">
-        <q-icon :class="{ 'example-fab-animate': opened === true }" name="money" />
-      </template>
-    </q-fab>
+    <q-btn rounded no-caps color="info" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt" persistent>
+      {{ $t("lang.rebates") }}
+    </q-btn>
   </q-page-sticky>
 
   <q-dialog
@@ -561,7 +548,7 @@
       <div class="modalcontent">
         <div class="headers">
           <div style="width: 16px">&nbsp;</div>
-          <div class="titles">{{ $t("lang.menu_rebate") }}</div>
+          <div class="titles">{{ $t("lang.float_rebate") }}</div>
           <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
         </div>
         <div class="contents">{{ rebateAmt }}</div>
