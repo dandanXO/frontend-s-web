@@ -136,6 +136,12 @@
       </div>
     </div>
 
+    <JollyVIP 
+      v-if="list.id === 194 && !isCommonPromo && store.hasToken()"
+      @claim-festival-bonus="handleSlot('jolly88-vip-monthly')"
+      @claim-birthday-bonus="handleSlot('jolly88-vip-birthday')"
+     />
+
     <ClaimPromo
       v-if="isCommonPromo && store.hasToken()"
       :promo-id="list.id"
@@ -144,6 +150,7 @@
     />
 
     <SJBPromo v-if="list.id === 40 && !isCommonPromo && store.hasToken()" class="promo-sjb" />
+
 
     <template v-if="list.promoCode === 'multi-wheel'">
       <template v-if="store.hasToken()">
@@ -186,6 +193,7 @@ import SJBPromo from "../components/hotpromo/40/shiJieBei.vue";
 import InviteFriendPromo from "../components/hotpromo/35/inviteFriendPromo.vue";
 import PromoSpinWheel from "components/hotpromo/80/PromoSpinWheel.vue";
 import PromoSpinWheelWinner from "components/hotpromo/80/PromoSpinWheelWinner.vue";
+import JollyVIP from "components/hotpromo/194/JollyVIP.vue";
 import { useI18n } from "vue-i18n";
 import qs from "qs";
 
@@ -197,7 +205,8 @@ export default defineComponent({
     ClaimPromo,
     SJBPromo,
     PromoSpinWheel,
-    PromoSpinWheelWinner
+    PromoSpinWheelWinner,
+    JollyVIP
     // InviteFriendPromo
   },
   props: {
@@ -221,8 +230,8 @@ export default defineComponent({
     };
   },
   methods: {
-    handleSlot() {
-      const bonusItem = this.list.promoCode;
+    handleSlot(promoCode) {
+      const bonusItem = promoCode || this.list.promoCode;
       const eventUrl = "/bonus/claim/" + bonusItem;
       this.btnLoading = true;
       eventapi
@@ -254,6 +263,7 @@ export default defineComponent({
       this.list.id === 40 ||
       this.list.id === 35 ||
       this.list.id === 81 ||
+      this.list.id === 194 ||
       this.list.promoCode === "jolly_event"
     ) {
       this.isCommonPromo = false;
