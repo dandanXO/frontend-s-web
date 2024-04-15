@@ -503,6 +503,7 @@ export default {
     vip_lottery_rebate: "Lottery Rebate",
     vip_unachieved: "Unachieved",
     vip_achieved: "Achieved",
+    vip_cumulative_deposits: "Cumulative deposits:",
 
     have_one_successful_deposit: "have one successful deposit",
     accumulated_deposits: "Accumulated deposits",
@@ -1151,6 +1152,7 @@ export default {
     menu_reminder: "Reminder",
     menu_rebate: "Rebate",
     no_more_data_le: "No more data",
+    float_rebate: "Rebate",
 
     col_bettime: "Game Time",
     col_platform: "Platform",

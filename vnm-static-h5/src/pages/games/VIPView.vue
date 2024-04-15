@@ -41,14 +41,14 @@
             </span>
           </div>
           <div class="vip-card-info">
-            <div class="level q-mb-md q-mt-md">
+            <div class="level q-mt-md">
               <div class="vip-level">VIP{{ vipIndex + 1 }}</div>
               <div class="vip-card-common-text">{{ vip.title }}</div>
             </div>
-            <!-- <div class="amount">
-              <div class="vip-card-common-text">累计存款：</div>
+            <div class="amount q-mt-sm">
+              <div class="vip-card-common-text">{{ $t("lang.vip_cumulative_deposits") }}</div>
               <div class="vip-card-common-text amount-text">{{ vip.amount }}</div>
-            </div> -->
+            </div>
             <div class="progress">
               <q-linear-progress
                 reverse
@@ -908,7 +908,7 @@ onActivated(() => {
   if (store.hasToken()) {
     store.getMemberInfo().then(() => {
       vipLevel.value = +store.vip.replace("VIP", "");
-      currentDeposit.value = parseFloat(store.currentDeposit).toLocaleString();
+      currentDeposit.value = parseFloat(store.currentDeposit).toLocaleString("en-US", { maximumFractionDigits: 0 });
       checkVipRedeem();
     });
   } else {
@@ -946,6 +946,7 @@ onActivated(() => {
 
   .vip-card-container {
     position: relative;
+    margin: -16px -20px 0;
 
     .card-img-wrap {
       min-height: 160px;
