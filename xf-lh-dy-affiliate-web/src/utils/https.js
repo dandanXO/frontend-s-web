@@ -146,7 +146,7 @@ const https = (api) => {
   const currentHost = window.location.host
   const thaiHost = "affiliate-web.monemental.com"
   const indHost = "ind-nfaet6t.exerpsison.com"
-  const ind2Host = "ind-xt5dzo.xlpfl0qqf3p.com"
+  const ind2Host = "iw2-xt5dzo.xlpfl0qqf3p.com"
   const lhHost = "lh1-affiliate.phoicynxeey.com"
   const lh2Host = "lh1-affiliate.lhf2ifpudro.com"
   const vnmHost = "vnm-affiliate.th80to83w1.com"
