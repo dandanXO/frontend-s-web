@@ -548,7 +548,7 @@
       <div class="modalcontent">
         <div class="headers">
           <div style="width: 16px">&nbsp;</div>
-          <div class="titles">{{ $t("lang.float_rebate") }}</div>
+          <div class="titles">{{ $t("lang.menu_rebate") }}</div>
           <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
         </div>
         <div class="contents">{{ rebateAmt }}</div>
