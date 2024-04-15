@@ -60,8 +60,7 @@
       <div class="label label-grad">唤醒分享</div>
     </div>
     <p style="margin:1em 0px;">
-      您通过唤醒链接邀请的用户注册并存款，您将获
-得最高累计<span class="number">2,000</span>元的奖励。<router-link to="/promotion?name=lh1-summon-event">活动详情</router-link>
+      您通过唤醒链接激活的老用户存款，双方都可获得不限量彩金。<router-link to="/promotion?name=lh1-summon-event">活动详情</router-link>
     </p>
   </div>
     <hr class="divider-style" />
