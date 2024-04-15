@@ -161,7 +161,7 @@ onMounted(() => {
         align-items: center;
 
         img.table {
-            aspect-ratio: 398 / 280;
+            aspect-ratio: 796 / 358;
         }
 
         .table-data {
@@ -169,7 +169,7 @@ onMounted(() => {
             top: 0%;
             left: 50%;
             transform: translate(-50%, 0%);
-            width: 80%;
+            width: 90%;
             display: table;
 
             .row {
@@ -178,17 +178,17 @@ onMounted(() => {
                 display: table-row;
 
                 .header {
-                    font-size: 0.9rem;
+                    font-size: 14px;
                     color: #FFFFFFB2;
                     text-align: center;
                     display: table-cell;
                     padding: 2px;
-                    padding-top: 35px;
+                    padding-top: 25px;
                     padding-bottom: 10px;
                 }
 
                 .content {
-                    font-size: 0.8rem;
+                    font-size: 10px;
                     color: #B5A0F1;
                     text-align: center;
                     display: table-cell;

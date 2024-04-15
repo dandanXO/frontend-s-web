@@ -2,6 +2,7 @@
   <div class="promo-container">
     <div
       class="promo"
+      :class="selectedPromo.redirectUrl === 'lh1-app-hongbao' ? 'unfixed' : ''"
       :style="
         'background-image: url(' +
         imgURL +
@@ -477,6 +478,10 @@ export default defineComponent({
     background-position: bottom center;
     background-size: cover;
     background-attachment: fixed;
+
+    &.unfixed {
+      background-attachment: scroll;
+    }
   }
 
   a {
