@@ -1151,6 +1151,7 @@ export default {
     regStartDate: '注册开始时间',
     redPacketMinDayDeposit: '红包雨当日最小存款',
     redPacketMinTotalDeposit: '红包雨历史最小存款',
+    redPacketMinDayBetAmount: '红包雨当日最低投注金额',
     rule: '规则',
     maxRebate: '最大返水额',
     maxBalance: '最高余额',
