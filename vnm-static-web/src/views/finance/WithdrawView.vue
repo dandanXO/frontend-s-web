@@ -19,20 +19,32 @@
         <div class="withdraw-tip">* 若提款失败请查看站内信提示的失败原因！</div>
       </div>
     </div> -->
-    <el-radio-group style="margin-bottom: 20px;" v-model="activeItem" size="small">
-      <el-radio-button @change="selectMethod(method, method.name)" v-for="method in withdrawalMethods" :key="method.name" :value="method.name">
+    <el-radio-group style="margin-bottom: 20px" v-model="activeItem" size="small">
+      <el-radio-button
+        @change="selectMethod(method, method.name)"
+        v-for="method in withdrawalMethods"
+        :key="method.name"
+        :value="method.name"
+      >
         {{ method.name }}
       </el-radio-button>
     </el-radio-group>
-    <el-card :class="{'selected': withdrawInfo.cardId === b.id}" v-if="withdrawState.bankCardList.length > 0" v-for="(b, i) in withdrawState.bankCardList" :key="i" @click="withdrawInfo.cardId = b.id" class="bank-card">
-          <div class="bank-card-contents">
-            <div class="bankName">{{ b.bankName }}</div>
-            <div class="name">{{ b.cardAccount }}</div>
-            <div class="cardNumber">{{ b.cardNumber }}</div>
-          </div>
-          <!-- <img class="bank-card-img" src="../../assets/images/account/bank_icon.png"> -->
-            <img class="bank-card-img" :src="imgURL + selectedWithdrawalMethod.icon" />
-        </el-card>
+    <el-card
+      :class="{ selected: withdrawInfo.cardId === b.id }"
+      v-if="withdrawState.bankCardList.length > 0"
+      v-for="(b, i) in withdrawState.bankCardList"
+      :key="i"
+      @click="withdrawInfo.cardId = b.id"
+      class="bank-card"
+    >
+      <div class="bank-card-contents">
+        <div class="bankName">{{ b.bankName }}</div>
+        <div class="name">{{ b.cardAccount }}</div>
+        <div class="cardNumber">{{ b.cardNumber }}</div>
+      </div>
+      <!-- <img class="bank-card-img" src="../../assets/images/account/bank_icon.png"> -->
+      <img class="bank-card-img" :src="imgURL + selectedWithdrawalMethod.icon" />
+    </el-card>
     <div class="withdraw-form">
       <el-form
         ref="formRef"
@@ -59,7 +71,7 @@
         </el-form-item> -->
 
         <el-form-item class="helptxt" prop="amount" :label="$t('withdraw.amount')" name="amount">
-          <el-row :gutter="10"  style="align-items: center; width: 54%">
+          <el-row :gutter="10" style="align-items: center; width: 54%">
             <el-col :span="24">
               <el-input class="form-input" v-model="withdrawInfo.amount" :placeholder="$t('withdraw.amount')">
                 <template #append>{{ store.currency.label }}</template>
@@ -68,11 +80,15 @@
             <el-col :span="24">
               <span v-if="selectedWithdrawalMethod && selectedWithdrawalMethod.withdrawMin">
                 {{
-                  `${$t('withdraw.singleLimit')}: ${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax} ${store.currency.label}`
+                  `${$t("withdraw.singleLimit")}: ${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${
+                    selectedWithdrawalMethod.withdrawMax
+                  } ${store.currency.label}`
                 }}
                 <br />
                 {{
-                  `${$t('withdraw.withdrawalToday')}: ${selectedWithdrawalMethod.withdrawMaxAmount} ${store.currency.label}, ${$t('withdraw.remaining')}: ${selectedWithdrawalMethod.withdrawMaxTimes} ${$t('withdraw.times')}`
+                  `${$t("withdraw.withdrawalToday")}: ${selectedWithdrawalMethod.withdrawMaxAmount} ${
+                    store.currency.label
+                  }, ${$t("withdraw.remaining")}: ${selectedWithdrawalMethod.withdrawMaxTimes} ${$t("withdraw.times")}`
                 }}
               </span>
             </el-col>
@@ -90,9 +106,9 @@
             "
           ></div> -->
         </el-form-item>
-        <div class="values" >
+        <div class="values">
           <span @click="withdrawInfo.amount = amt.toString()" class="amt" v-for="amt in amounts">
-          {{amt}}
+            {{ amt }}
           </span>
         </div>
         <el-row>
@@ -107,7 +123,11 @@
             </div>
           </el-col>
         </el-row>
-        <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" :label="$t('deposit.realTimeExchangeRate')">
+        <el-form-item
+          v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
+          class="helptxt"
+          :label="$t('deposit.realTimeExchangeRate')"
+        >
           <span style="color: #17cd27">
             1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }} {{ store.currency.label }}
           </span>
@@ -148,22 +168,32 @@
         </el-form-item> -->
         <el-form-item :label="$t('withdraw.withdrawPwd')">
           <el-row :gutter="10" style="align-items: center; width: 54%">
-          <el-col :span="24">
-            <el-input type="password" show-password v-model="withdrawInfo.withdrawPassword" :placeholder="$t('withdraw.withdrawPwd')" />
-          </el-col></el-row>
+            <el-col :span="24">
+              <el-input
+                type="password"
+                show-password
+                v-model="withdrawInfo.withdrawPassword"
+                :placeholder="$t('withdraw.withdrawPwd')"
+              />
+            </el-col>
+          </el-row>
         </el-form-item>
-        <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" :label="$t('withdraw.expectedAmount')">
+        <el-form-item
+          v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
+          class="helptxt"
+          :label="$t('withdraw.expectedAmount')"
+        >
           <span style="color: #17cd27">
             {{
               selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
                 ? "0.00"
                 : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2)
             }}
-            {{ $t('withdraw.usdt') }}
+            {{ $t("withdraw.usdt") }}
           </span>
         </el-form-item>
         <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="" style="color: #17cd27">
-          {{ $t('withdraw.exchangeRateExample') }}
+          {{ $t("withdraw.exchangeRateExample") }}
         </div>
 
         <!-- K豆教程视频 -->
@@ -184,7 +214,7 @@
 
         <div class="flex-box flex-justify-center">
           <el-button :loading="loadingBtn" size="large" class="common-btn withdraw-btn" @click="submitWithdraw">
-            {{ $t('common.confirm') }}
+            {{ $t("common.confirm") }}
           </el-button>
         </div>
       </el-form>
@@ -243,7 +273,7 @@ export default defineComponent({
       // }
     ]);
     const amounts = reactive([
-      50, 
+      50,
       100, 200, 500, 1000, 5000, 10000, 50000, 1000000
     ])
     onMounted(() => {
@@ -269,6 +299,15 @@ export default defineComponent({
                 message: t('common.success'),
                 type: "success"
               });
+
+              // FB tracking :: login-withdrawal
+              if (
+                  window.location.href.indexOf("https://tf88king.com") > -1 ||
+                  window.location.href.indexOf("https://tfgame88.com") > -1
+                ) {
+                  fbq("track", "login-withdrawal");
+                }
+
               getWithdrawalMethods();
               loadCards();
             } else {
@@ -497,21 +536,21 @@ export default defineComponent({
 .values {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  text-align: center;grid-gap: 10px;
+  text-align: center;
+  grid-gap: 10px;
   width: 540px;
   .amt {
     padding: 20px 50px;
-    color: #A4AABB;
-    box-shadow: 0px 0px 8px 0px #A9C9EA inset;
+    color: #a4aabb;
+    box-shadow: 0px 0px 8px 0px #a9c9ea inset;
     border-radius: 10px;
-    background: #F7F8FB;
+    background: #f7f8fb;
     cursor: pointer;
-      border: 2px solid transparent;
+    border: 2px solid transparent;
     &:hover {
-      background: #FFFFFF;
-      border: 2px solid #468CFF;
-      box-shadow: 0px 0px 4px 0px #00358B4D;
-
+      background: #ffffff;
+      border: 2px solid #468cff;
+      box-shadow: 0px 0px 4px 0px #00358b4d;
     }
   }
 }
@@ -520,12 +559,12 @@ export default defineComponent({
   background: linear-gradient(98.09deg, #f0f7ff -1.13%, #e7f3ff 97.1%);
   border: 2px solid transparent;
   cursor: pointer;
-  
+
   .bank-card-img {
-        width: 40px;
-      }
+    width: 40px;
+  }
   &.selected {
-    border: 2px solid #468CFF;
+    border: 2px solid #468cff;
   }
   :deep(.el-card__body) {
     // font-family: Poppins;
@@ -557,7 +596,7 @@ export default defineComponent({
         font-weight: 400;
         line-height: 19.6px;
         text-align: left;
-    word-break: break-word;
+        word-break: break-word;
       }
     }
   }

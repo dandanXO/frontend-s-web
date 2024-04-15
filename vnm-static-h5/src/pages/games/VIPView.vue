@@ -626,15 +626,13 @@ const getProgressBar = () => {
       let vipAmount = parseInt(amt, 10);
       let currentDep = parseInt(current, 10);
 
-      console.log("vipAmount", vipAmount); // Outputs: 400000
-      console.log("currentDep", currentDep);
+      // console.log("vipAmount", vipAmount); // Outputs: 400000
+      // console.log("currentDep", currentDep);
 
       let percentageChange = (currentDep / vipAmount) * 100;
-
       vipItems.value[vipLevel.value - 1].progressBarVal = 1 - percentageChange / 100;
 
-      console.log("percentageChange", percentageChange);
-
+      // console.log("percentageChange", percentageChange);
       // vipItems.value[vipLevel.value - 1].progressBarVal = 0.5;
     }
   });

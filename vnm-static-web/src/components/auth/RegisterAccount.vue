@@ -411,6 +411,15 @@ const submitRegisterForm = async (elForm) => {
                   type: "success",
                   message: t('login.registerSuccess')
                 });
+
+                // FB tracking :: signup-success
+                if (
+                  window.location.href.indexOf("https://tf88king.com") > -1 ||
+                  window.location.href.indexOf("https://tfgame88.com") > -1
+                ) { 
+                  fbq("track", "signup-success");
+                }
+
                 store.autoLogin(response.data);
                 emits("close-dialog");
                 router.push("/welcome");

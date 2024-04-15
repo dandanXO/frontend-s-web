@@ -108,7 +108,7 @@
                 val >= selectedWithdrawalMethod.withdrawMin || $t('lang.withdraw_please_enter_correct_withdraw_amount'),
               (val) =>
                 val <= selectedWithdrawalMethod.withdrawMax || $t('lang.withdraw_please_enter_correct_withdraw_amount'),
-              (val) => (val && /^([1-9][0-9]*)$/.test(val))  || $t('lang.withdraw_amt_no_decimal_allow'),
+              (val) => (val && /^([1-9][0-9]*)$/.test(val)) || $t('lang.withdraw_amt_no_decimal_allow'),
               isValidUSDTAmt
             ]"
             clearable
@@ -394,6 +394,15 @@ export default defineComponent({
               icon: "check_circle_outline"
             });
             getWithdrawalMethods();
+
+            // FB tracking :: login-withdrawal
+            if (
+                  window.location.href.indexOf("https://tf88king.com") > -1 ||
+                  window.location.href.indexOf("https://tfgame88.com") > -1
+                ) {
+                  fbq("track", "login-withdrawal");
+                }
+
 
             withdrawInfo.amount = "";
             withdrawInfo.withdrawPassword = "";

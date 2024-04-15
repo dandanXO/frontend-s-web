@@ -475,6 +475,15 @@ export default defineComponent({
                   message: t("lang.register_successful"),
                   icon: "check_circle_outline"
                 });
+
+                // FB tracking :: signup-success
+                if (
+                  window.location.href.indexOf("https://tf88king.com") > -1 ||
+                  window.location.href.indexOf("https://tfgame88.com") > -1
+                ) {
+                  fbq("track", "signup-success");
+                }
+
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {
