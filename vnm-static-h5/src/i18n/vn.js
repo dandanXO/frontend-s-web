@@ -176,8 +176,8 @@ export default {
 
     // maintenance
     maintenance_title: "Hệ thống đang bảo trì...",
-    maintenance_from: "Bắt đầu từ 01/07/2024 (GMT +8)",
-    maintenance_to: "đến 19/09/2024 (GMT +8)",
+    maintenance_from: "Bắt đầu từ 17/04/2024 06:00 (GMT +8)",
+    maintenance_to: "đến 10:00 (GMT +8)",
     maintenance_desc_01: "Tất cả dịch vụ và trò chơi sẽ tạm dừng trong thời gian trên, ",
     maintenance_desc_02: "thành thật xin lỗi vì sự bất tiện này!",
 

@@ -657,7 +657,7 @@ about: {
   },
   maintenance: {
     title: "System under maintenance...",
-    desc: `Starting from 01/07/2024 (GMT +8) until 19/09/2024 (GMT +8).<br>
+    desc: `Starting from 17/04/2024 06:00 until 10:00 (GMT +8).<br>
     All services and games will be temporarily suspended during this period.<br>
      We sincerely apologize for any inconvenience caused!`
   }, 
