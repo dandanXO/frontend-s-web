@@ -202,7 +202,7 @@
                       style="width:50%;"
                       @click.prevent="handleRegister"
                     >
-                      {{ $t('common.apply') }}
+                      {{ props.siteId === '8' || props.siteId === 8 ? $t('google.next_step') :$t('common.apply') }}
                     </el-button>
                     <el-button
                       class="common-btn default-btn"
@@ -284,7 +284,7 @@
                       autocomplete="on"
                   />
                   </el-form-item> -->
-                  <el-button
+                  <!-- <el-button
                     class="common-btn"
                     :loading="loading"
                     type="danger"
@@ -292,7 +292,25 @@
                     @click.prevent="handleRegister"
                   >
                     申请
-                  </el-button>
+                  </el-button> -->
+                  <div class="flex-c-center-div">
+                    <el-button
+                      class="common-btn default-btn"
+                      style="width:50%;"
+                      @click="step = 1"
+                    >
+                      {{ $t('google.prev_step') }}
+                    </el-button>
+                    <el-button
+                      class="common-btn"
+                      :loading="loading"
+                      type="danger"
+                      style="width:50%;"
+                      @click.prevent="handleRegister"
+                    >
+                      {{ $t('common.apply') }}
+                    </el-button>
+                  </div>
                 </div>
               </el-form>
             </div>
