@@ -109,7 +109,7 @@
         {{
           store.token
             ? !isLoadingBalance
-              ? "VNDP " + mainWallet.toFixed(2)
+              ? "VNDP " + mainWallet.toLocaleString('en-US', {maximumFractionDigits: 0})
               : $t("lang.loading")
             : $t("lang.not_logged_in")
         }}
