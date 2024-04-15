@@ -163,7 +163,7 @@ export default {
     chgpwd_otp_changed_successful: "Thay đổi OTP thành công!",
 
     // system hint
-    system_hint: "Gợi ý hệ thống",
+    system_hint: "Thông báo",
     system_please_login: "Vui lòng đăng nhập để tiếp tục",
     system_confirm: "Xác nhận",
     system_delete_all_msg: "Bạn có chắc chắn muốn xóa tất cả không?",
