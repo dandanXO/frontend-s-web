@@ -30,6 +30,19 @@
         <a class="download-button-wrapper" target="_blank" :href="downloadUrl" :title="downloadUrl">
             <img class="button" src="../../../assets/images/promo/hotpromo/apphongbao/download-button.png" />
         </a>
+
+        <div class="notes">
+            <p>
+                注：每场红包限量，抢完为止，若您抢到【谢谢惠顾】，则代表该场次限量包数已全部抽完。
+            </p>
+            <p>
+                注：限量红包不错过，下载APP开启推播通知&优惠通知，红包雨开始前3分钟，每分钟推送提醒一次。
+            </p>
+        </div>
+
+        <div class="rules-header">
+            <img class="rules-header-img" src="../../../assets/images/promo/hotpromo/apphongbao/rules-header.png" />
+        </div>
     </div>
 </template>
 
@@ -215,6 +228,23 @@ onMounted(() => {
             &:active {
                 transform: translateY(2px);
             }
+        }
+    }
+
+    .notes {
+        margin: 0 auto;
+        text-align: left;
+        padding: 10px;
+        color: #7a8eb9;
+        font-size: 12px;
+    }
+
+    .rules-header {
+        margin: 0 auto;
+        padding: 10px;
+
+        .rules-header-img {
+            width: 100%;
         }
     }
 }
