@@ -67,9 +67,9 @@
               </tr>
             </table>
           </div>
-          <router-link to="/account/invite" class="summon-btn">
+          <div @click="goToInvite" class="summon-btn">
             <img src="../../../assets/images/promo/hotpromo/summoner/summon-btn.png">
-          </router-link>
+          </div>
           <div class="summon-btn" @click="claimReward" style="margin-bottom:16px;">
             <img src="../../../assets/images/promo/hotpromo/summoner/claim-summon-btn.png">
           </div>
@@ -141,9 +141,9 @@
               </tr>
             </table>
           </div>
-          <router-link to="/account/invite" class="summon-btn">
+          <div @click="goToInvite" class="summon-btn">
             <img src="../../../assets/images/promo/hotpromo/summoner/summon-btn.png">
-          </router-link>
+          </div>
           <div class="findfriend" @click="getSummonRecord">
             <img src="../../../assets/images/promo/hotpromo/summoner/findfriend-btn.png">
           </div>
@@ -197,9 +197,9 @@
               </tr>
             </table>
           </div>
-          <router-link to="/account/invite" class="summon-btn">
+          <div @click="goToInvite" class="summon-btn">
             <img src="../../../assets/images/promo/hotpromo/summoner/summon-btn.png">
-          </router-link>
+          </div>
 
           <div class="rules">
             <p>
@@ -230,6 +230,9 @@
 import { ref, reactive, onMounted } from 'vue'
 import { eventapi } from "src/boot/axios";
 import { useQuasar} from "quasar";
+import { useRouter } from "vue-router";
+
+const router= useRouter()
 const $q = useQuasar();
 var qs = require("qs");
 const tabPosition = ref('first')
@@ -269,6 +272,15 @@ const getSummonRecord = () => {
     .catch((err) => {
       console.log("here", err);
     });
+}
+
+
+const goToInvite = () => {
+  if(window.location.pathname === "/promotion"){
+    document.location.href = "app://invitefriend";
+  }else{
+    router.push("/account/invite");
+  }
 }
 
 const claimReward = () => {
