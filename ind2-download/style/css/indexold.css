@@ -164,8 +164,8 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
 
 .AJ34ce {
     display: grid;
-    grid-template-columns: repeat(2, max-content);
-    grid-template-rows: 1fr;
+    grid-template-columns:  repeat(2, max-content);
+    grid-template-rows:  1fr;
     column-gap: 12px
 }
 
@@ -177,7 +177,7 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
 
 .Hc0nne {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns:  1fr;
     row-gap: 24px
 }
 
@@ -249,7 +249,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     position: relative;
     margin-top: 15px;
 }
-
 
 .Il7kR, .qxNhq {
     align-items: flex-start;
@@ -699,7 +698,7 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
 .Jwxk6d {
     display: grid;
     flex-grow: 1;
-    grid-template-columns: 1fr
+    grid-template-columns:  1fr
 }
 
 .HJV0ef {
@@ -715,7 +714,7 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     column-gap: 24px;
     display: grid;
     flex-grow: 1;
-    grid-template-columns: max-content auto
+    grid-template-columns:  max-content auto
 }
 
 .jILTFe {
@@ -747,7 +746,7 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
 
 .JzwBgb {
     display: grid;
-    grid-template-columns: max-content auto;
+    grid-template-columns:  max-content auto;
     align-items: center
 }
 
@@ -789,7 +788,7 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     display: grid;
     align-items: center;
     grid-column-gap: 16px;
-    grid-template-columns: repeat(2, max-content)
+    grid-template-columns:  repeat(2, max-content)
 }
 
 .abYEib {
@@ -964,17 +963,16 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     line-height: 1.25rem;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 6;
-    line-clamp: 6;
-    max-height: 7.5rem;
+    /*-webkit-line-clamp: 6;*/
+    /*line-clamp: 6;*/
     overflow: hidden;
-    text-overflow: ellipsis
+    /*text-overflow: ellipsis;*/
 }
 
 .TKjAsc {
     display: grid;
     grid-gap: 16px;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:  repeat(2, 1fr);
     margin-top: 24px
 }
 
@@ -1491,8 +1489,50 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
 
 .KKjvXb {
     background-color: #056449;
-    color: #e6f3ef
+    color: #e6f3ef;
 }
+
+.header-icon{
+    padding: 10px 0px;
+    margin: 0px 18px;
+    transition: .15s color linear;
+    font: inherit;
+    font-size: 16px;
+    color: rgb(95, 99, 104);
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: .0178571429em;
+    height: 38px;
+    line-height: 38px;
+}
+
+.header-inner{
+    display:flex;
+    align-items: center;
+    width:100%;
+    justify-content: space-between;
+}
+
+.user-header{
+    padding-right: 16px;
+    cursor: pointer;
+}
+
+.user-header:hover{
+    filter: brightness(0.8);
+}
+
+.header-icon:hover, .header-icon:active{
+    color: #000;
+}
+
+.active-icon{
+    color: #01875f;
+    border-bottom: 3px solid #01875f;
+}
+
+
+
 
 @media screen and (min-width: 600px) {
     .HcyOxe {
@@ -1770,14 +1810,14 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
 
     .Hc0nne {
         column-gap: 16px;
-        grid-template-columns: 244px auto
+        grid-template-columns:  244px auto
     }
 }
 
 @media screen and (min-width: 1280px) {
     .Hc0nne {
         column-gap: 24px;
-        grid-template-columns: 266px auto
+        grid-template-columns:  266px auto
     }
 
     .KvNvKe {
@@ -1839,7 +1879,7 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
         width: 100%;
     }
 
-    .hnnXjf{
+    .hnnXjf {
         margin-top: 20px;
     }
 }
@@ -1851,7 +1891,7 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
         line-height: 20px;
     }
 
-    .l8YSdd{
+    .l8YSdd {
         overflow: hidden;
     }
 
