@@ -9,27 +9,48 @@
             </div>
         </div>
 
-        <div class="table-wrapper">
-            <img class="table" src="../../../assets/images/promo/hotpromo/apphongbao/table.png" />
-            <div class="table-data">
-                <div class="row">
-                    <div class="header">活动对象</div>
-                    <div class="header">抽奖时段</div>
-                    <div class="header">抽奖资格</div>
-                    <div class="header">红包</div>
-                </div>
-                <div class="row">
-                    <div class="content" style="width:110px">{{ params.sub }}</div>
-                    <div class="content" style="width:30px">{{ params.gametime }}</div>
-                    <div class="content" style="width:90px">{{ params.requirement }}</div>
-                    <div class="content">{{ params.hongbao }}</div>
+        <div class="bottom">
+            <div class="table-wrapper">
+                <img class="table" src="../../../assets/images/promo/hotpromo/apphongbao/table.png" />
+                <div class="table-data">
+                    <div class="row">
+                        <div class="header">活动对象</div>
+                        <div class="header">抽奖时段</div>
+                        <div class="header">抽奖资格</div>
+                        <div class="header">红包</div>
+                    </div>
+                    <div class="row">
+                        <div class="content" style="width:110px">{{ params.sub }}</div>
+                        <div class="content" style="width:30px">{{ params.gametime }}</div>
+                        <div class="content" style="width:90px">{{ params.requirement }}</div>
+                        <div class="content">{{ params.hongbao }}</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <a class="download-button-wrapper" target="_blank" :href="downloadUrl" :title="downloadUrl">
-            <img class="button" src="../../../assets/images/promo/hotpromo/apphongbao/download-button.png" />
-        </a>
+            <a class="download-button-wrapper" target="_blank" :href="downloadUrl" :title="downloadUrl">
+                <img class="button" src="../../../assets/images/promo/hotpromo/apphongbao/download-button.png" />
+            </a>
+
+            <div class="notes">
+                <p>
+                    注：每场红包限量，抢完为止，若您抢到【谢谢惠顾】，则代表该场次限量包数已全部抽完。
+                </p>
+                <p>
+                    注：限量红包不错过，下载APP开启推播通知&优惠通知，红包雨开始前3分钟，每分钟推送提醒一次。
+                </p>
+            </div>
+
+            <div class="rules-header">
+                <img class="rules-header-img" src="../../../assets/images/promo/hotpromo/apphongbao/rules-header.png" />
+                <p>1.活动需下载雷火APP即可参与抢夺红包雨，每场红包雨每日仅限抽1次，奖金由系统实时派发至用户账户内；</p>
+                <p>2.活动期间，用户需有APP登入记录与存款记录并且需当日有效投注达888元或以上即可符合参与抢夺红包雨活动条件，红包雨彩金不限场馆3倍流水即可提款；</p>
+                <p>3.活动期间，每场已开启的红包雨限量8888个红包，若限量红包已全数抽完，则提示【谢谢惠顾】；</p><p>4. 流水仅计算当天下注且结算的注单，若提前兑现、注单未结算、取消或走盘皆不及不计算为有效投注；</p>
+                <p>5. 任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；</p>
+                <p>6. 每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消全部优惠的权利；</p>
+                <p>7. 为避免文字理解差异，本站保留最终解释权；，每位用户每日最多可获得6次转动转盘机会，每日转动转盘必中其中一项奖励。<br></p>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -115,7 +136,7 @@ onMounted(() => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 50px;
+    gap: 5px;
 
     .stage-wrapper {
         position: relative;
@@ -152,68 +173,98 @@ onMounted(() => {
         }
     }
 
-    .table-wrapper {
-        position: relative;
-        width: 340px;
-        height: 166px;
+    .bottom {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
+        background: url('../../../assets/images/promo/hotpromo/apphongbao/notes-bg.png') no-repeat top center;
+        background-size: 100% 100%;
+        width: 100%;
+        padding: 10px;
 
-        img.table {
-            aspect-ratio: 398 / 280;
-        }
+        .table-wrapper {
+            position: relative;
+            width: 340px;
+            height: 166px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-        .table-data {
-            position: absolute;
-            top: 0%;
-            left: 50%;
-            transform: translate(-50%, 0%);
-            width: 80%;
-            display: table;
+            img.table {
+                aspect-ratio: 796 / 358;
+            }
 
-            .row {
-                align-items: center;
-                justify-content: center;
-                display: table-row;
+            .table-data {
+                position: absolute;
+                top: 0%;
+                left: 50%;
+                transform: translate(-50%, 0%);
+                width: 90%;
+                display: table;
 
-                .header {
-                    font-size: 0.9rem;
-                    color: #FFFFFFB2;
-                    text-align: center;
-                    display: table-cell;
-                    padding: 2px;
-                    padding-top: 35px;
-                    padding-bottom: 10px;
-                }
+                .row {
+                    align-items: center;
+                    justify-content: center;
+                    display: table-row;
 
-                .content {
-                    font-size: 0.8rem;
-                    color: #B5A0F1;
-                    text-align: center;
-                    display: table-cell;
-                    padding: 2px;
-                    overflow: auto;
-                    height: 100px;
+                    .header {
+                        font-size: 14px;
+                        color: #FFFFFFB2;
+                        text-align: center;
+                        display: table-cell;
+                        padding: 2px;
+                        padding-top: 25px;
+                        padding-bottom: 10px;
+                    }
+
+                    .content {
+                        font-size: 10px;
+                        color: #B5A0F1;
+                        text-align: center;
+                        display: table-cell;
+                        padding: 2px;
+                        overflow: auto;
+                        height: 100px;
+                    }
                 }
             }
         }
-    }
 
-    .download-button-wrapper {
-        cursor: pointer;
+        .download-button-wrapper {
+            cursor: pointer;
 
-        img.button {
-            width: 220px;
-            height: 79px;
-            aspect-ratio: 314 / 113;
+            img.button {
+                width: 220px;
+                height: 79px;
+                aspect-ratio: 314 / 113;
 
-            &:hover {
-                filter: brightness(1.1);
+                &:hover {
+                    filter: brightness(1.1);
+                }
+
+                &:active {
+                    transform: translateY(2px);
+                }
             }
+        }
 
-            &:active {
-                transform: translateY(2px);
+        .notes {
+            margin: 0 auto;
+            text-align: left;
+            padding: 0px 10px;
+            color: #7a8eb9;
+            font-size: 12px;
+        }
+
+        .rules-header {
+            margin: 0 auto;
+            padding: 0px 10px;
+            color: #A4C1FF;
+
+            .rules-header-img {
+                width: 100%;
+                margin: 20px 0px;
             }
         }
     }
