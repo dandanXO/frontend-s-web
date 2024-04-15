@@ -2,8 +2,8 @@
   <q-dialog class="selection-modal" v-model="selectionRef" position="bottom">
     <div class="selection-modal-wrapper">
       <div class="selection-header">
-        <div class="select-cancel" v-close-popup>{{ $t('lang.col_cancel') }}</div>
-        <div class="select-confirm" @click="searchRecord()" v-close-popup>{{ $t('lang.col_confirm') }}</div>
+        <div class="select-cancel" v-close-popup>{{ $t("lang.col_cancel") }}</div>
+        <div class="select-confirm" @click="searchRecord()" v-close-popup>{{ $t("lang.col_confirm") }}</div>
       </div>
       <Swiper
         class="swiper-container"
@@ -25,7 +25,7 @@
   </q-dialog>
   <div class="table-record">
     <div class="flex-div">
-      <span class="select-stage">{{ $t('lang.col_selectplat') }}</span>
+      <span class="select-stage">{{ $t("lang.col_selectplat") }}</span>
       <q-select
         clearable
         rounded
@@ -42,12 +42,12 @@
       ></q-select>
 
       <div class="payout-total">
-        <div>{{ $t('lang.col_totalbet')}}{{ totalBetRecord.totalBet }}</div>
-        <div>{{ $t('lang.col_totalpayout')}}{{ totalBetRecord.totalPayout }}</div>
+        <div>{{ $t("lang.col_totalbet") }}{{ totalBetRecord.totalBet }}</div>
+        <div>{{ $t("lang.col_totalpayout") }}{{ totalBetRecord.totalPayout }}</div>
       </div>
     </div>
     <div class="flex-div">
-      <span>{{$t('lang.col_start')}}</span>
+      <span>{{ $t("lang.col_start") }}</span>
       <q-input rounded outlined dense v-model="startDate">
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
@@ -61,7 +61,7 @@
           </q-icon>
         </template>
       </q-input>
-      <span>{{$t('lang.col_end')}}</span>
+      <span>{{ $t("lang.col_end") }}</span>
       <q-input rounded outlined dense v-model="endDate">
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
@@ -104,7 +104,7 @@ import "swiper/swiper-bundle.css";
 import * as _ from "lodash";
 import { useI18n } from "vue-i18n";
 
-const {t} = useI18n()
+const { t } = useI18n();
 const store = userStore();
 
 const selectionRef = ref(false);
@@ -275,6 +275,8 @@ const getGameName = (gameName) => {
       return "AG";
     case "ALLBET":
       return "ALLBET";
+    case "JiliGames":
+      return "JILI Fish, JILI Slot";
 
     default:
       return gameName;
@@ -291,11 +293,11 @@ const loadPlatformLists = () => {
     )
     .then((data) => {
       platformsList.value.push({
-        label: t('lang.all_platform'),
+        label: t("lang.all_platform"),
         value: ""
       });
 
-      _.each(data, function(item, index) {
+      _.each(data, function (item, index) {
         var option = {
           label: getGameName(item.name),
           value: item.code
@@ -308,27 +310,27 @@ const loadPlatformLists = () => {
 const tableHeaders = [
   {
     key: "betTime",
-    label: t('lang.col_bettime')
+    label: t("lang.col_bettime")
   },
   {
     key: "platform",
-    label: t('lang.col_platform')
+    label: t("lang.col_platform")
   },
   {
     key: "bet",
-    label: t('lang.col_bet')
+    label: t("lang.col_bet")
   },
   {
     key: "payout",
-    label: t('lang.col_payout')
+    label: t("lang.col_payout")
   },
   {
     key: "gameType",
-    label: t('lang.col_gametype')
+    label: t("lang.col_gametype")
   },
   {
     key: "status",
-    label: t('lang.col_betstatus')
+    label: t("lang.col_betstatus")
   }
 ];
 

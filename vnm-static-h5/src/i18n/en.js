@@ -173,8 +173,8 @@ export default {
 
     // maintenance
     maintenance_title: "The system is maintenance...",
-    maintenance_from: "Starting from 01/07/2024 (GMT +8)",
-    maintenance_to: "to 19/09/2024 (GMT +8)",
+    maintenance_from: "Starting from 17/04/2024 06:00 (GMT +8)",
+    maintenance_to: "to 10:00 (GMT +8)",
     maintenance_desc_01: "All services and games will be suspended during the above period, ",
     maintenance_desc_02: "sincerely sorry for this inconvenience!",
 

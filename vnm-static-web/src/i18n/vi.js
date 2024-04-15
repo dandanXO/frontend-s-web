@@ -653,7 +653,7 @@ export default {
   },
   maintenance: {
     title: "Hệ thống đang bảo trì...",
-    desc: `Bắt đầu từ 01/07/2024 (GMT +8) đến 19/09/2024 (GMT +8)<br>
+    desc: `Bắt đầu từ 17/04/2024 06:00 (GMT +8) đến 10:00 (GMT +8)<br>
     Tất cả dịch vụ và trò chơi sẽ tạm dừng trong thời gian trên, <br>thành thật xin lỗi vì sự bất tiện này!`
   }, 
   "welcome": {
