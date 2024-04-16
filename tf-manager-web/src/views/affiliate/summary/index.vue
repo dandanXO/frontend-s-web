@@ -94,7 +94,7 @@
           prop="loginName"
           :label="t('fields.loginName')"
           align="left"
-          width="150"
+          width="160"
         >
           <template
             #default="scope"
