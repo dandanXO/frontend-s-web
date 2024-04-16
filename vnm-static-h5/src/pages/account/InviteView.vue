@@ -42,7 +42,7 @@
         </table>
       </div>
 
-      <div class="qr-title">{{ $t("lang.share_tnc") }}</div>
+      <div class="qr-title">{{ $t("lang.share_para_title") }}</div>
       <div class="share-tnc">
         <ol>
           <li v-html="$t('lang.share_tnc_para_01')" />

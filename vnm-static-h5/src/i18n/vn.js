@@ -225,36 +225,37 @@ export default {
     share_accumulated_recharge: "Nạp tiền tích lũy",
     share_persons: "Người",
     share_invitefriends: "Mời Bạn Bè",
-    share_table_header_01: "Tên tài khoả",
+    share_table_header_01: "ID Tài khoản",
     share_table_header_02: "Thời gian đăng ký",
-    share_table_header_03: "Bắt đầu đặt cược",
-    share_table_header_04: "trạng thái",
+    share_table_header_03: "Cược",
+    share_table_header_04: "Trạng thái",
     share_table_content_empty: "Không tìm được lịch sử khớp",
     share_tnc: "Điều Khoản Và Điều Kiện",
-    share_tnc_para_01: "Khuyến mãi bắt đầu từ 00:00:00 ngày 01/06/2022 (GMT +8)",
+    share_para_title: "Giới thiệu bạn bè",
+    share_tnc_para_01: "Khuyến mãi bắt đầu từ 00:00:00 ngày 01/06/2022 (GMT +8).",
     share_tnc_para_02:
-      "Chỉ cần giới thiệu thêm bạn tham gia tại TF88, bạn sẽ nhận được 300VNDP trên mỗi một người giới thiệu thành công. Người chơi mà thành viên giới thiệu cũng sẽ nhận được tiền thưởng chào mừng là 150VNDP.",
-    share_tnc_para_03: "Để đủ điều kiện nhận tiền thưởng, thành viên cần đáp ứng các điều kiện sau  đây",
+      "Chỉ cần giới thiệu thêm bạn tham gia tại TF88, bạn sẽ nhận được 300 VNDP trên mỗi một người giới thiệu thành công.",
+    share_tnc_para_03: "Để đủ điều kiện nhận tiền thưởng, thành viên cần đáp ứng các điều kiện sau đây:",
     share_tnc_para_03_a: "Thành viên giới thiệu (Khách hàng)",
     share_tnc_para_03_a_i: "Tổng tiền cược hợp lệ tối thiểu từ 10.000 VNDP trở lên",
     share_tnc_para_03_a_ii: "Đạt cấp độ vip 1 trở lên",
-    share_tnc_para_03_b: "Thành viên được giới thiệu (Bạn của bạn):",
+    share_tnc_para_03_b: "Thành viên được giới thiệu(Bạn của bạn):",
     share_tnc_para_03_b_i:
       "Đăng ký tài khoản trong thời gian khuyến mãi thông qua liên kết giới thiệu bạn bè được chỉ định",
     share_tnc_para_03_b_ii: "Chưa từng đăng ký tại TF88 và không có bất kỳ tài khoản nào khác tại TF88",
     share_tnc_para_03_b_iii:
       "Phải có giao dịch gửi tiền đầu tiên thành công và có tổng số tiền cược hợp lệ tích lũy tối thiểu 4.000VNDP.",
     share_tnc_para_04:
-      'Thành viên có thể giới thiệu bạn bè bằng cách vào mục "Thông tin cá nhân - Mời bạn bè" Sau đó thành viên có thể gửi liên kết giới thiệu của mình cho bạn bè để đăng ký tài khoản thông qua liên kết này.',
+      'Thành viên đủ điều kiện có thể giới thiệu bạn bè bằng cách vào mục "Thông tin cá nhân - Mời bạn bè" . Sau đó thành viên có thể gửi liên kết giới thiệu của mình cho bạn bè để đăng ký tài khoản thông qua liên kết này',
     share_tnc_para_05:
-      "Việc xét duyệt chương trình khuyến mãi sẽ được thực hiện hàng tuần. Sau khi xác minh xong, phần thưởng giới thiệu sẽ tự động cập nhật vào tài khoản của thành viên giới thiệu và thành viên được giới thiệu vào khoảng 6 giờ tối (GMT + 8) vào Thứ Hai hàng tuần.",
+      "Việc xét duyệt chương trình khuyến mãi sẽ được thực hiện hàng tuần. Sau khi xác minh xong, phần thưởng giới thiệu sẽ tự động cập nhật vào tài khoản của thành viên giới thiệu và thành viên được giới thiệu vào khoảng 6 giờ tối (GMT + 8) vào Thứ Hai hàng tuần",
     share_tnc_para_06: "Thành viên nhận khuyến mãi cần hoàn thành 5 vòng cược của khuyến mãi trước khi rút tiền.",
     share_tnc_para_07:
       "Tất cả cược HÒA, cược HỦY, cược 2 BÊN, kiểu cược Europe Handicap tỷ lệ dưới 1.75, Asian Handicap dưới 0.75, Thể thao ảo, Đua ngựa, Number Game, sẽ không được áp dụng cho chương trình này.",
     share_tnc_para_08:
       "TF88 có quyền chỉnh sửa, từ chối hoặc hủy bỏ chương trình Khuyến mãi này mà không cần báo trước.",
     share_tnc_para_09: "Chương trình có thể áp dụng cùng lúc với tất cả các Khuyến mãi tại TF88.",
-    share_tnc_para_10: "Điều khoản &amp; Điều kiện khuyến mãi chung được áp dụng.",
+    share_tnc_para_10: "Điều khoản &amp; Điềukiện khuyến mãi chung được áp dụng.",
 
     // transfer
     transfer_transfer: "Chuyển khoản",
