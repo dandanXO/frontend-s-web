@@ -531,7 +531,15 @@
   </div>
 
   <q-page-sticky position="bottom-right" :offset="fabPos">
-    <q-btn rounded no-caps color="info" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt" persistent>
+    <q-btn
+      rounded
+      no-caps
+      color="info"
+      :disable="draggingFab"
+      v-touch-pan.prevent.mouse="moveFab"
+      @click="getRebateAmt"
+      persistent
+    >
       {{ $t("lang.rebates") }}
     </q-btn>
   </q-page-sticky>
@@ -1360,13 +1368,16 @@ export default defineComponent({
     const getNewsDetails = () => {
       api.get("/news").then((res) => {
         if (res.code === 0) {
-          newsDetails.value = res.data;
-          newsDetail_00.value = res.data[0];
-          newsDetail_01.value = res.data[1];
-          newsDetail_02.value = res.data[2];
-          newsDetail_03.value = res.data[3];
-          newsDetail_04.value = res.data[4];
-          newsDetail_05.value = res.data[5];
+          const filteredData = res.data.filter((item) => item.category.includes("Soi kèo bóng đá"));
+          if (filteredData.length > 0) {
+            newsDetails.value = filteredData;
+            newsDetail_00.value = filteredData[0];
+            newsDetail_01.value = filteredData[1];
+            newsDetail_02.value = filteredData[2];
+            newsDetail_03.value = filteredData[3];
+            newsDetail_04.value = filteredData[4];
+            newsDetail_05.value = filteredData[5];
+          }
         }
       });
     };

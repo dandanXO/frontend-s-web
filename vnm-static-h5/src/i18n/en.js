@@ -177,6 +177,9 @@ export default {
     maintenance_to: "to 10:00 (GMT +8)",
     maintenance_desc_01: "All services and games will be suspended during the above period, ",
     maintenance_desc_02: "sincerely sorry for this inconvenience!",
+    maintenance_contact_01: "Email Us:",
+    maintenance_contact_02: "24/7 Customer Service",
+    maintenance_contact_03: "Telegram:",
 
     // personal | verify
     personal_exclusiveurl: "Exclusive URL",
