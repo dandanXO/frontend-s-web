@@ -29,6 +29,11 @@ let siteId;
 
 console.log(currentHost)
 switch (currentHost) {
+  case process.env.VUE_APP_IW2_HOST:
+    baseApi = process.env.VUE_APP_IW2_API;
+    baseWss = process.env.VUE_APP_IW2_SOCKET;
+    siteId = 'iw2';
+    break;
   case process.env.VUE_APP_IND2_HOST:
     baseApi = process.env.VUE_APP_IND2_API;
     baseWss = process.env.VUE_APP_IND2_SOCKET;
