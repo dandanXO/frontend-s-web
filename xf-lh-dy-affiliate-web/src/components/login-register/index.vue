@@ -933,7 +933,6 @@ export default defineComponent({
       handleLogin: () => {
         loginFormRef.value.validate(async valid => {
           if (valid) {
-            debugger;
             if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2' || state.loginForm.site === 'VNM') {
               methods.userLogin()
             } else {
