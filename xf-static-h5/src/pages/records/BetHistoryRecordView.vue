@@ -107,7 +107,6 @@ const loadNewData = () => {
   if (maxPage.value > current.value) {
     current.value++;
   } else {
-    debugger;
     current.value = 1;
     isEnded.value = true;
     return;
