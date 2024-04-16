@@ -624,6 +624,7 @@ export default defineComponent({
             // Data Image
             verificationImg.value = 'data:image/png;base64,' + res.data.img
             state.regForm.codeId = res.data.id
+            state.loginForm.codeId = res.data.id
           }
         })
         .catch(e => {})
@@ -670,7 +671,7 @@ export default defineComponent({
           },
           {
             required: true,
-            pattern: /^[a-zA-Z1-9][a-zA-Z0-9]*$/,
+            pattern: /^[a-zA-Z0-9_][a-zA-Z0-9_]*$/,
             message: t('common.affiliateaccountcanonlycontainnumchar'),
             trigger: 'blur',
           },
@@ -946,7 +947,7 @@ export default defineComponent({
         state.regForm.siteId = props.siteId
         regFormRef.value.validate(async valid => {
           if (valid) {
-            if (props.siteId === '8') {
+            if (props.siteId === '8' || props.siteId === 8) {
               if (step.value === 1) {
                 step.value = 2
                 return

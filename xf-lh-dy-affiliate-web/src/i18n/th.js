@@ -18,7 +18,7 @@ export default {
     back_login: 'ย้อนกลับไปที่หน้าเข้าสู่ระบบ',
     contact_us: 'ติดต่อเรา',
     affiliateaccountcanonlycontainnumchar:
-      'บัญชีตัวแทนสามารถมีได้เฉพาะตัวเลขหรือตัวอักษรเท่านั้น',
+      'บัญชีพันธมิตรสามารถมีเฉพาะ _ เลข และตัวอักษรเท่านั้น',
     confirmpassword: 'ยืนยันรหัสผ่าน',
     affiliateaccount: 'บัญชีตัวแทน',
     forgetpass: 'ลืมรหัสผ่าน',

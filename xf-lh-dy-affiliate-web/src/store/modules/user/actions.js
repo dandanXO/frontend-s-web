@@ -32,8 +32,8 @@ export const actions = {
       way: regDevice,
       key,
       coordinates,
-      codeId,
-      captchaCode,
+      codeId: codeId,
+      captchaCode: captchaCode
     });
     commit(UserMutationTypes.SET_TOKEN, loginInfo.token);
     commit(UserMutationTypes.SET_ID, loginInfo.id);

@@ -17,8 +17,7 @@ export default {
     register_affi: 'Register Now',
     back_login: 'Back Login',
     contact_us: 'Contact Us',
-    affiliateaccountcanonlycontainnumchar:
-      'The Affiliate account can only contain numbers or letters',
+    affiliateaccountcanonlycontainnumchar: 'The affiliate account can only contain underscores (_), numbers, and letters.',
     confirmpassword: 'Confirm password.',
     affiliateaccount: 'Affiliate Account Name',
     forgetpass: 'Forget Password.',
