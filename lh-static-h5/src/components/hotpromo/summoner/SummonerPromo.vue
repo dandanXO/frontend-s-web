@@ -279,7 +279,7 @@ const goToInvite = () => {
   if(window.location.pathname === "/promotion"){
     document.location.href = "app://invitefriend";
   }else{
-    router.push("/account/invite");
+    router.push("/account/invite#summon-share");
   }
 }
 
