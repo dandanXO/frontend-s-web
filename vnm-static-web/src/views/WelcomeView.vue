@@ -10,7 +10,7 @@
                     <div class="slide-title">{{ $t('welcome.firstSlide') }}</div>
                     <div class="slide-content">{{ $t('welcome.firstSlideContent') }}</div>
                     <div class="slide-qr">
-                        <VueQRCodeComponent :size="100" text="https://m.e8386.com" />
+                        <VueQRCodeComponent :size="100" :text="ui.downloadUrl" />
                     </div>
                     
                     <div class="bold-content">{{ $t('welcome.firstSlideSub') }}</div>
@@ -57,24 +57,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import VueQRCodeComponent from 'vue-qrcode-component';
 import { useI18n } from "vue-i18n";
+import { uiStore } from "@/store/ui";
 const { t } = useI18n();
-
-const platforms = ref([
-    {
-    code: "QZ",
-    name: t('welcome.webapp'),
-    link: "https://m.e8386.com",
-    },
-    {
-    code: "DJ",
-    name: t('welcome.esportapp'),
-    link: "https://m.e8386.com",
-    }
-]);
-
+const ui = uiStore()
 </script>
 
 <style lang="scss" scoped>
