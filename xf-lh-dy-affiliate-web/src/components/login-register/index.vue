@@ -36,7 +36,7 @@
                 v-if="!isReg"
                 ref="loginFormRef"
                 :model="loginForm"
-                :rules="loginRules"
+                :rules="props.siteId === '8' ? loginRulesVi : loginRules"
                 class="login-form"
                 autocomplete="no-fill"
               >
@@ -44,9 +44,7 @@
                   <el-input
                     ref="userNameRef"
                     v-model="loginForm.userName"
-                    :placeholder="
-                      $t('common.username')
-                    "
+                    :placeholder="$t('common.username')"
                     name="username"
                     type="text"
                     tabindex="1"
@@ -66,23 +64,35 @@
                       ref="passwordRef"
                       v-model="loginForm.password"
                       :type="passwordType"
-                      :placeholder="
-                        $t('common.password')
-                      "
+                      :placeholder="$t('common.password')"
                       name="password"
                       tabindex="2"
                       autocomplete="no-fill"
                       @keyup="checkCapslock"
                       @blur="capsTooltip = false"
-                      @keyup.enter="handleLogin"
+                      @keyup.enter="props.siteId !== '8' ? handleLogin() : null"
                     />
                   </el-form-item>
                 </el-tooltip>
+                <el-form-item prop="captchaCode" v-if="props.siteId === '8'">
+                  <el-input
+                    v-model="loginForm.captchaCode"
+                    :placeholder="$t('common.verificationcode')"
+                    name="captchaCode"
+                    type="text"
+                    tabindex="7"
+                    autocomplete="on"
+                    @keyup.enter="handleLogin"
+                    clearable
+                  >
+                    <template #append class="verification">
+                      <img :src="captchaImg" @click="getCaptcha()">
+                    </template>
+                  </el-input>
+                </el-form-item>
                 <div style="margin:20px 0px" v-if="props.siteId !== '8'">
                   <el-link type="primary" @click="forgetPasswordDialog">
-                    {{
-                      $t('common.forgetpass')
-                    }}
+                    {{ $t('common.forgetpass') }}
                   </el-link>
                 </div>
                 <div class="flex-c-center-div">
@@ -104,7 +114,10 @@
                   </el-button>
                 </div>
 
-                <div v-if="props.siteId !== '5' || props.siteId !== '8'" class="flex-c-center-div">
+                <div
+                  v-if="props.siteId !== '5' || props.siteId !== '8'"
+                  class="flex-c-center-div"
+                >
                   <div class="contact-div" @click="swipeToContactUs">
                     {{ $t('common.contact_us') }}
                   </div>
@@ -123,9 +136,7 @@
                     <el-input
                       ref="userNameRef"
                       v-model="regForm.userName"
-                      :placeholder="
-                        $t('common.affiliateaccount')
-                      "
+                      :placeholder="$t('common.affiliateaccount')"
                       name="userName"
                       type="text"
                       tabindex="1"
@@ -144,9 +155,7 @@
                         ref="passwordRef"
                         v-model="regForm.password"
                         :type="passwordType"
-                        :placeholder="
-                          $t('common.password')
-                        "
+                        :placeholder="$t('common.password')"
                         name="password"
                         tabindex="2"
                         autocomplete="on"
@@ -167,9 +176,7 @@
                         ref="confirmPwdRef"
                         v-model="regForm.confirmPwd"
                         :type="passwordType"
-                        :placeholder="
-                          $t('common.confirmpassword')
-                        "
+                        :placeholder="$t('common.confirmpassword')"
                         name="password"
                         tabindex="3"
                         autocomplete="on"
@@ -212,7 +219,10 @@
                       {{ $t('common.back_login') }}
                     </el-button>
                   </div>
-                  <div v-if="props.siteId !== '5' || props.siteId !== '8'" class="flex-c-center-div">
+                  <div
+                    v-if="props.siteId !== '5' || props.siteId !== '8'"
+                    class="flex-c-center-div"
+                  >
                     <div class="contact-div" @click="swipeToContactUs">
                       {{ $t('common.contact_us') }}
                     </div>
@@ -334,10 +344,7 @@
         {{ words.join(' , ') }}
       </span>
     </template>
-    <div
-      id="loadDiv"
-      v-loading="dialogLoading"
-    >
+    <div id="loadDiv" v-loading="dialogLoading">
       <el-image
         style="cursor: pointer"
         id="imageRef"
@@ -402,10 +409,7 @@
       {{ index + 1 }}
     </div>
   </div>
-  <el-dialog
-    v-model="showPasswordDialog"
-    :title="t('fields.forgetPassword')"
-  >
+  <el-dialog v-model="showPasswordDialog" :title="t('fields.forgetPassword')">
     <el-steps :active="passwordStep" align-center>
       <el-step :title="t('forgetPassword.verifyAuth')" />
       <el-step :title="t('forgetPassword.verifyQues')" />
@@ -461,7 +465,9 @@
       >
         <div class="auth-title">{{ $t('forgetPassword.messageQues') }}</div>
         <div>
-          <span>{{ securityQuestion.question[securityQuestion.currentIndex] }}</span>
+          <span>
+            {{ securityQuestion.question[securityQuestion.currentIndex] }}
+          </span>
           <el-link
             icon="el-icon-refresh"
             :underline="false"
@@ -479,11 +485,7 @@
           />
         </el-form-item>
         <div class="flex-c-center-div">
-          <el-button
-            class="common-btn"
-            type="danger"
-            @click="submitVerifyQues"
-          >
+          <el-button class="common-btn" type="danger" @click="submitVerifyQues">
             {{ $t('forgetPassword.submit') }}
           </el-button>
         </div>
@@ -511,7 +513,10 @@
             @blur="capsTooltip = false"
           />
         </el-form-item>
-        <el-form-item prop="confirmPassword" :label="t('fields.confirmNewPassword')">
+        <el-form-item
+          prop="confirmPassword"
+          :label="t('fields.confirmNewPassword')"
+        >
           <el-input
             v-model="resetForm.confirmPassword"
             :placeholder="t('fields.confirmNewPassword')"
@@ -579,7 +584,9 @@ export default defineComponent({
       if (v === '') {
         return Promise.reject(new Error(t('message.required_confirm_pwd')))
       } else if (v !== state.regForm.password) {
-        return Promise.reject(new Error(t('message.required_same_with_password')))
+        return Promise.reject(
+          new Error(t('message.required_same_with_password'))
+        )
       } else {
         return Promise.resolve()
       }
@@ -588,7 +595,9 @@ export default defineComponent({
       if (v === '') {
         return Promise.reject(new Error(t('message.required_confirm_pwd')))
       } else if (v !== state.resetForm.password) {
-        return Promise.reject(new Error(t('message.required_same_with_password')))
+        return Promise.reject(
+          new Error(t('message.required_same_with_password'))
+        )
       } else {
         return Promise.resolve()
       }
@@ -641,6 +650,7 @@ export default defineComponent({
     const googleAuthFormRef = ref(null)
     const quesAuthFormRef = ref(null)
     const resetFormRef = ref(null)
+    const captchaImg = ref('')
     const state = reactive({
       loginForm: {
         userName: '',
@@ -648,6 +658,8 @@ export default defineComponent({
         site: 'DY2',
         key: '',
         coordinates: '',
+        captchaCode: '',
+        codeId: '',
       },
       loginRules: {
         userName: [
@@ -668,6 +680,41 @@ export default defineComponent({
             required: true,
             message: t('message.requiredPassword'),
             trigger: 'blur',
+          },
+        ],
+      },
+      loginRulesVi: {
+        userName: [
+          {
+            required: true,
+            message: t('message.requiredLoginName'),
+            trigger: 'blur',
+          },
+          {
+            required: true,
+            pattern: /^[a-zA-Z1-9][a-zA-Z0-9]*$/,
+            message: t('common.affiliateaccountcanonlycontainnumchar'),
+            trigger: 'blur',
+          },
+        ],
+        password: [
+          {
+            required: true,
+            message: t('message.requiredPassword'),
+            trigger: 'blur',
+          },
+        ],
+        captchaCode: [
+          {
+            required: true,
+            message: t('message.required_captcha'),
+            trigger: 'blur',
+          },
+          {
+            min: 4,
+            max: 4,
+            message: t('message.required_4_digits'),
+            trigger: 'change',
           },
         ],
       },
@@ -807,8 +854,8 @@ export default defineComponent({
             required: true,
             message: t('message.requiredAnswer'),
             trigger: 'blur',
-          }
-        ]
+          },
+        ],
       },
       resetForm: {
         password: '',
@@ -887,7 +934,7 @@ export default defineComponent({
         loginFormRef.value.validate(async valid => {
           if (valid) {
             debugger;
-            if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2') {
+            if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2' || state.loginForm.site === 'VNM') {
               methods.userLogin()
             } else {
               methods.onGetImage()
@@ -915,8 +962,7 @@ export default defineComponent({
               )
               ElNotification({
                 title: t('fields.systemAlert'),
-                message:
-                  t('fields.affiliateSuccessSubmit'),
+                message: t('fields.affiliateSuccessSubmit'),
                 showClose: false,
                 type: 'success',
               })
@@ -949,10 +995,13 @@ export default defineComponent({
           elDialog.classList.remove('shake')
         }, 500)
         methods.onGetImage()
+        if (state.loginForm.site === 'VNM') {
+          getCaptcha()
+        }
         state.coordinates.splice(0)
       },
       onSuccess: async () => {
-        if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2') {
+        if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2' || state.loginForm.site === 'VNM') {
           router
             .push({
               path: state.redirect || '/',
@@ -1039,6 +1088,8 @@ export default defineComponent({
         } catch (e) {
           if (e.message === '验证失败') {
             methods.onFail()
+          } else if (state.loginForm.site === 'VNM') {
+            methods.onFail()
           } else {
             state.showDialog = false
           }
@@ -1050,7 +1101,7 @@ export default defineComponent({
       onGetImage: async () => {
         state.dialogLoading = true
         state.coordinates.splice(0)
-        const imgType = (languageVal === 'vi' || languageVal === 'en') ? 1 : 0;
+        const imgType = languageVal === 'vi' || languageVal === 'en' ? 1 : 0
         const { data } = await getVerificationImage(imgType)
         Object.keys({ ...data.data }).forEach(field => {
           state[field] = data.data[field]
@@ -1067,7 +1118,7 @@ export default defineComponent({
         state.resetForm.confirmPassword = ''
         state.showPasswordDialog = true
       },
-      restrictIntegerInput: (event) => {
+      restrictIntegerInput: event => {
         var charCode = event.which ? event.which : event.keyCode
         if (charCode < 48 || charCode > 57 || charCode === 46) {
           event.preventDefault()
@@ -1076,8 +1127,15 @@ export default defineComponent({
       submitVerifyGoogle: () => {
         googleAuthFormRef.value.validate(async valid => {
           if (valid) {
-            const { data: ret } = await verifyGoogleAuthentication(state.googleAuthForm.loginName, props.siteId, state.googleAuthForm.code)
-            const { data: ret1 } = await getSecurityQuestionsList(state.googleAuthForm.loginName, props.siteId)
+            const { data: ret } = await verifyGoogleAuthentication(
+              state.googleAuthForm.loginName,
+              props.siteId,
+              state.googleAuthForm.code
+            )
+            const { data: ret1 } = await getSecurityQuestionsList(
+              state.googleAuthForm.loginName,
+              props.siteId
+            )
             state.twoFaCode = ret
             if (ret1 === null || ret1 === undefined) {
               ElMessage.error(t('forgetPassword.noSecurityQuestionSet'))
@@ -1090,7 +1148,10 @@ export default defineComponent({
         })
       },
       nextQuestion: () => {
-        state.securityQuestion.currentIndex = state.securityQuestion.currentIndex === 2 ? 0 : state.securityQuestion.currentIndex + 1
+        state.securityQuestion.currentIndex =
+          state.securityQuestion.currentIndex === 2
+            ? 0
+            : state.securityQuestion.currentIndex + 1
       },
       submitVerifyQues: () => {
         quesAuthFormRef.value.validate(async valid => {
@@ -1120,7 +1181,7 @@ export default defineComponent({
             state.showPasswordDialog = false
           }
         })
-      }
+      },
     })
 
     function getOtherQuery(query) {
@@ -1163,6 +1224,22 @@ export default defineComponent({
       var myElement = document.getElementById('login-swiper')
       console.log(myElement)
       myElement.swiper.slideTo(1)
+    }
+
+    const getCaptcha = () => {
+      state.loginForm.captchaCode = ''
+
+      getVerificationCode().then(res => {
+        if (res.code === 0) {
+          captchaImg.value = 'data:image/png;base64,' + res.data.img
+          state.loginForm.codeId = res.data.id
+        } else {
+          ElMessage.error({
+            type: 'error',
+            message: res.message,
+          })
+        }
+      })
     }
 
     const currentSite = ref({})
@@ -1210,7 +1287,8 @@ export default defineComponent({
       }
       if (props.siteId === '8') {
         currentSite.value.firstLiner = 'Start From TFGaming'
-        currentSite.value.secondLiner = 'Nơi bắt đầu mới -Chia sẻ cơ hội-Hợp tác thành công'
+        currentSite.value.secondLiner =
+          'Nơi bắt đầu mới -Chia sẻ cơ hội-Hợp tác thành công'
         currentSite.value.logo = viLogo
         state.loginForm.site = 'VNM'
         setLanguage('vi')
@@ -1234,6 +1312,9 @@ export default defineComponent({
       dialog.addEventListener('scroll', methods.onScrollEvent)
       window.addEventListener('resize', methods.onScrollEvent)
       populateCurrentSiteData()
+      if (props.siteId === '8') {
+        getCaptcha()
+      }
     })
     return {
       userNameRef,
@@ -1265,6 +1346,8 @@ export default defineComponent({
       googleAuthFormRef,
       quesAuthFormRef,
       resetFormRef,
+      getCaptcha,
+      captchaImg,
     }
   },
 })
@@ -1436,14 +1519,14 @@ a {
   }
   &.vi {
     font-family: 'Roboto';
-    .loginPage .right .top .log{
-      font-family: 'Roboto'
+    .loginPage .right .top .log {
+      font-family: 'Roboto';
     }
     .loginPage .left {
-        .second-liner {
-          font-family: 'Roboto'
-        }
+      .second-liner {
+        font-family: 'Roboto';
       }
+    }
   }
   .inner {
     max-width: 1200px;
@@ -1511,7 +1594,9 @@ a {
         .log {
           font-weight: bold;
           //font-family: fzh;
-          font-family : Oxanium, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+          font-family: Oxanium, -apple-system, BlinkMacSystemFont, Segoe UI,
+            Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,
+            Microsoft YaHei, Arial, sans-serif;
           font-size: 32px;
           padding-left: 15px;
         }
