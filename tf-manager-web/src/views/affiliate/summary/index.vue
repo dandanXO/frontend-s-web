@@ -685,7 +685,6 @@ async function loadRecord() {
 async function loadChildren(tree, treeNode, resolve) {
   const query = {}
 
-  // query.recordTime = tree.recordTime
   query.parentAffiliateId = tree.affiliateId
   query.siteId = request.siteId
   if (request.recordTime !== null) {
@@ -693,7 +692,6 @@ async function loadChildren(tree, treeNode, resolve) {
       query.recordTime = request.recordTime.join(',')
     }
   }
-  console.log('request recordTime : ', request.recordTime)
   const { data: children } = await getAffiliateChildSummary(query)
   resolve(children)
 }
