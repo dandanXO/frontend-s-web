@@ -205,6 +205,13 @@ deploy-vnm-download:
 
 #===============================================================================================
 
+deploy-vnm-maintenance:
+  extends: .s3-deploy
+  variables:
+    PROJECT: vnm-maintenance
+
+#===============================================================================================
+
 build-tf-manager-web:
   extends: .build-projects
   variables:
