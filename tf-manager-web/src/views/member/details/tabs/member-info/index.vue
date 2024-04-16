@@ -1597,7 +1597,7 @@ export default defineComponent({
 
       await loadBalance();
       loading.fundingInfo = false;
-      if (site.id === '3' && site.id === '8') {
+      if (site.id === '3' || site.id === '8') {
         uiControl.showCall = true;
         uiControl.showCall1 = true;
       }
