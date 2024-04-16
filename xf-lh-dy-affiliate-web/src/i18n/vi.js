@@ -19,6 +19,7 @@ export default {
     back_login: 'Quay lại đăng nhập',
     contact_us: 'Liên hệ chúng tôi',
     affiliateaccount: 'Tên Tài khoản đại lý',
+    affiliateaccountcanonlycontainnumchar: 'Tài khoản liên kết chỉ có thể chứa _, số và chữ cái.',
     forgetpass: 'Quên mật khẩu',
     zhuanshukefufuwu: 'Dịch vụ chăm sóc khách hàng riêng',
     askus: 'Hỏi',

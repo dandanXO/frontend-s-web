@@ -17,8 +17,7 @@ export default {
     register_affi: 'Register Now',
     back_login: 'Back Login',
     contact_us: 'Contact Us',
-    affiliateaccountcanonlycontainnumchar:
-      'Tài khoản liên kết chỉ có thể chứa số hoặc chữ cái.',
+    affiliateaccountcanonlycontainnumchar: 'The affiliate account can only contain underscores (_), numbers, and letters.',
     confirmpassword: 'Confirm password.',
     affiliateaccount: 'Affiliate Account Name',
     forgetpass: 'Forget Password.',

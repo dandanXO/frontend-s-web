@@ -78,6 +78,22 @@
                     />
                   </el-form-item>
                 </el-tooltip>
+                <el-form-item prop="captchaCode">
+                  <el-input
+                    v-if="siteId === '8' || siteId === 8"
+                    ref="verificationRef"
+                    v-model="loginForm.captchaCode"
+                    :placeholder="$t('common.verificationcode')"
+                    name="captchaCode"
+                    type="text"
+                    tabindex="7"
+                    autocomplete="on"
+                  >
+                    <template #append class="verification">
+                      <img :src="verificationImg" @click="getCode()">
+                    </template>
+                  </el-input>
+                </el-form-item>
                 <div style="margin:20px 0px" v-if="props.siteId !== '8'">
                   <el-link type="primary" @click="forgetPasswordDialog">
                     {{
@@ -614,6 +630,7 @@ export default defineComponent({
             // Data Image
             verificationImg.value = 'data:image/png;base64,' + res.data.img
             state.regForm.codeId = res.data.id
+            state.loginForm.codeId = res.data.id
           }
         })
         .catch(e => {})
@@ -657,7 +674,7 @@ export default defineComponent({
           },
           {
             required: true,
-            pattern: /^[a-zA-Z1-9][a-zA-Z0-9]*$/,
+            pattern: /^[a-zA-Z0-9_][a-zA-Z0-9_]*$/,
             message: t('common.affiliateaccountcanonlycontainnumchar'),
             trigger: 'blur',
           },
@@ -885,7 +902,7 @@ export default defineComponent({
       handleLogin: () => {
         loginFormRef.value.validate(async valid => {
           if (valid) {
-            if (state.loginForm.site === 'IND') {
+            if (state.loginForm.site === 'IND' || state.loginForm.site === 'VNM') {
               methods.userLogin()
             } else {
               methods.onGetImage()
@@ -898,7 +915,7 @@ export default defineComponent({
         state.regForm.siteId = props.siteId
         regFormRef.value.validate(async valid => {
           if (valid) {
-            if (props.siteId === '8') {
+            if (props.siteId === '8' || props.siteId === 8) {
               if (step.value === 1) {
                 step.value = 2
                 return
@@ -950,7 +967,7 @@ export default defineComponent({
         state.coordinates.splice(0)
       },
       onSuccess: async () => {
-        if (state.loginForm.site === 'IND') {
+        if (state.loginForm.site === 'IND' || state.loginForm.site === 'VNM') {
           router
             .push({
               path: state.redirect || '/',
