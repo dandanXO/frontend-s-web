@@ -123,6 +123,9 @@ if (siteId === 'dy') {
 } else if (siteId === 'vnm') {
   link.href = '/favicon.ico';
   title.innerText = 'TF88';
+} else if (siteId === 'iw2') {
+  link.href = '/iw2-favicon.ico';
+  title.innerText = '789F';
 } else {
   link.href = '/favicon.ico';
   title.innerText = 'TF88';
