@@ -7,7 +7,7 @@
           <div class="top-line1-content">
             您通过推广链接邀请的用户注册并存款，您将获得最高累计
             <span class="prize-span">2,000</span>
-            元的奖励。<router-link to="/promo?name=lh1-summon-event">活动详情</router-link>
+            元的奖励。<router-link to="/promo?name=lh1-invite">活动详情</router-link>
           </div>
         </div>
       </div>
