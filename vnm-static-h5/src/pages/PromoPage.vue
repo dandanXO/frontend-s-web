@@ -123,7 +123,7 @@
                 />
               </div>
               <div class="inner">
-                <h2>{{ selectedPromo.title }}</h2>
+                <!-- <h2>{{ selectedPromo.title }}</h2> -->
 
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
