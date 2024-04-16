@@ -22,7 +22,7 @@ export const actions = {
     { commit },
     userInfo
   ) {
-    let { userName, password, site, key, coordinates } = userInfo;
+    let { userName, password, site, key, coordinates, codeId, captchaCode } = userInfo;
     userName = userName.trim();
     const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
     const { data: loginInfo } = await loginRequest({
@@ -31,7 +31,9 @@ export const actions = {
       siteCode: site,
       way: regDevice,
       key,
-      coordinates
+      coordinates,
+      codeId,
+      captchaCode,
     });
     commit(UserMutationTypes.SET_TOKEN, loginInfo.token);
     commit(UserMutationTypes.SET_ID, loginInfo.id);
