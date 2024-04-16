@@ -654,7 +654,9 @@ export default {
   maintenance: {
     title: "Hệ thống đang bảo trì...",
     desc: `Bắt đầu từ 17/04/2024 06:00 (GMT +8) đến 10:00 (GMT +8)<br>
-    Tất cả dịch vụ và trò chơi sẽ tạm dừng trong thời gian trên, <br>thành thật xin lỗi vì sự bất tiện này!`
+    Tất cả dịch vụ và trò chơi sẽ tạm dừng trong thời gian trên, <br>thành thật xin lỗi vì sự bất tiện này!`,
+    email: "Gửi Email",
+    customerService: "Hỗ trợ trực tuyến 24/7",
   }, 
   "welcome": {
     "compatibleDevices": "Hoàn toàn tương thích với các thiết bị an toàn",

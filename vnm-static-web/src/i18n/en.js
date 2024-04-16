@@ -659,7 +659,9 @@ about: {
     title: "System under maintenance...",
     desc: `Starting from 17/04/2024 06:00 until 10:00 (GMT +8).<br>
     All services and games will be temporarily suspended during this period.<br>
-     We sincerely apologize for any inconvenience caused!`
+     We sincerely apologize for any inconvenience caused!`,
+    email: "Email us",
+    customerService: "24/7 Customer Service",
   }, 
   "welcome": {
     "compatibleDevices": "Perfectly Compatible with Secure Devices",
