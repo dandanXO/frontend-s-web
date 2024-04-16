@@ -81,6 +81,26 @@ a:hover {
   max-width: 600px;
 }
 
+.maintenance-contact {
+  margin-top: 24px;
+}
+
+.contact-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.contact-item a {
+  color: #4c88f8;
+}
+
+.contact-img img {
+  width: 24px;
+  display: block;
+}
+
 @media (min-width: 991px) {
   .maintenance-container {
     flex-direction: row;
