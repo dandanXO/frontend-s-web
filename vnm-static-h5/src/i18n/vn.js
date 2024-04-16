@@ -180,6 +180,9 @@ export default {
     maintenance_to: "đến 10:00 (GMT +8)",
     maintenance_desc_01: "Tất cả dịch vụ và trò chơi sẽ tạm dừng trong thời gian trên, ",
     maintenance_desc_02: "thành thật xin lỗi vì sự bất tiện này!",
+    maintenance_contact_01: "Gửi Email:",
+    maintenance_contact_02: "Hỗ trợ trực tuyến 24/7",
+    maintenance_contact_03: "Telegram:",
 
     // personal | verify
     personal_exclusiveurl: "URL riêng",
