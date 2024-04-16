@@ -18,7 +18,7 @@ export default {
     back_login: 'Back Login',
     contact_us: 'Contact Us',
     affiliateaccountcanonlycontainnumchar:
-      'Tài khoản liên kết chỉ có thể chứa số hoặc chữ cái.',
+      'The Affiliate account can only contain numbers or letters',
     confirmpassword: 'Confirm password.',
     affiliateaccount: 'Affiliate Account Name',
     forgetpass: 'Forget Password.',
