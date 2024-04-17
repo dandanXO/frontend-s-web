@@ -1179,7 +1179,7 @@ export default defineComponent({
               lottObj.title_en = "Lottery " + lottObj.name;
               lottObj.icon = "lottery";
               if (lottObj.code === "GPI") {
-                lottObj.gameCode = "thailottery";
+                lottObj.gameCode = "sode";
               }
               lottery.value.push(lottObj);
             }
