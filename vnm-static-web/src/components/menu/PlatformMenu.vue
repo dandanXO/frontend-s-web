@@ -1,5 +1,5 @@
 <template>
-  <div class="platform-menu-container" :style="props.platformType === 'slot'? 'max-width: 1200px': ''">
+  <div class="platform-menu-container" :style="checkPlatLength()">
     <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
     <template v-for="(item, index) in platformsListDisplay" :key="index">
       <!--      <router-link :to="`${props.platformName}?plat=${item.code}`">-->
@@ -75,6 +75,17 @@ const getPlatformList = () => {
 //   return props.platforms.filter((nav) => platformsListDisplay.value.some((platform) => platform.code === nav.code));
 // });
 
+const checkPlatLength = () => {
+ if (props.platformType === 'slot') { 
+   if (platformsListDisplay.value.length === 8) {
+    return 'max-width: 1200px'
+   } else if (platformsListDisplay.value.length > 8) {
+    return 'max-width: 1400px'
+   }
+ } else {
+  return ''
+  }
+}
 const router = useRouter();
 const gotoGame = (item, platformType) => {
   // debugger;
