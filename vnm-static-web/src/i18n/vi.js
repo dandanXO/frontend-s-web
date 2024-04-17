@@ -840,6 +840,7 @@ export default {
     30006: "Những thành viên được liệt kê là chủ tài khoản bị cấm nhận đặc quyền này",
     31000: "Không tìm thấy ưu đãi",
     32000: "Không tìm thấy cấp bậc VIP",
+    32003: "Chưa đạt cấp VIP yêu cầu",
     33000: "Phải sử dụng một số có 3 chữ số",
     33001: "Phải là một số có 3 chữ số",
     34000: "Ngày sinh của thành viên không phải là tháng này",
