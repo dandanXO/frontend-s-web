@@ -87,7 +87,7 @@ a.logo img{
     height: 0.18rem;
     margin: 0 auto;
     margin-top: 0.18rem;
-    background: url("../images/down.png") no-repeat;
+    /*background: url("../images/down.png") no-repeat;*/
     background-size: 100%;
 }
 .torial {
