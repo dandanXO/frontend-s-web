@@ -122,7 +122,7 @@
         />
       </div>
     </div>
-    <el-dialog class="bankModal" width="500" v-model="bankCardModalState.visible" :footer="null" :title="$t('withdraw.bindCard')">
+    <el-dialog class="bankModal" width="600" v-model="bankCardModalState.visible" :footer="null" :title="$t('withdraw.bindCard')">
       <div type="warning" class="account-tip-warning">
         <ul>
           <li>{{ $t('personal.bankCardReminder1') }}</li>
@@ -194,6 +194,7 @@
             v-model="bankCardInfo.smsCode"
             :placeholder="$t('withdraw.smsCodeRequired')"
             @keyup.enter="submitBankCard"
+            style="width:340px;"
           />
             <el-button class="common-btn" @click="openCaptchaForm()">{{$t('personal.getVerificationCode')}}</el-button>
           </el-space>
