@@ -268,6 +268,7 @@ export default {
     LOTTERY: '彩票',
     CASUAL: '小游戏',
     NBA: 'NBA',
+    COCKFIGHT: '斗鸡',
   },
   homeBannerType: {
     HOME: '首页',

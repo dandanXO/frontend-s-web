@@ -262,6 +262,7 @@ export default {
     LOTTERY: 'LOTTERY',
     CASUAL: 'CASUAL',
     NBA: 'NBA',
+    COCKFIGHT: 'COCKFIGHT',
   },
   homeBannerType: {
     HOME: 'Home',

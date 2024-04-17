@@ -214,6 +214,7 @@ export default {
     POKER: 'โป๊กเกอร์',
     LOTTERY: 'หวย',
     CASUAL: 'ไม่เป็นทางการ',
+    COCKFIGHT: 'ไม่เป็นทางการ',
   },
   distributeStatus: {
     PENDING: 'กำลังดำเนินการ',
