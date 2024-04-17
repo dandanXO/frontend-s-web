@@ -247,6 +247,7 @@ export default {
     POKER: 'โป๊กเกอร์',
     DAILY: 'รายวัน',
     FTD: 'FTD',
+    LOTTERY: 'ลอตเตอรี่',
     OTHER: 'อื่นๆ',
   },
   scheduleType: {

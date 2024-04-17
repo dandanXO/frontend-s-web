@@ -380,6 +380,7 @@ export default {
     POKER: 'POKER',
     DAILY: 'DAILY',
     FTD: 'FTD',
+    LOTTERY: 'LOTTERY',
     OTHER: 'OTHER',
   },
   scheduleType: {
