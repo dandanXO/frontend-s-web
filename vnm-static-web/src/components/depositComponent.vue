@@ -114,7 +114,7 @@
               @focus="loadPrivilege(activeMethod)"
               fit-input-width
               clearable
-              style="width:350px"
+              style="width:500px"
             >
               <el-option
                 v-for="p in unselectedPrivileges"
@@ -811,7 +811,7 @@ onMounted(() => {
     }
 
     .el-select__wrapper {
-      width: 350px;
+      width: 500px;
     }
   }
 }
