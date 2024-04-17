@@ -2,6 +2,19 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          @focus="loadSites"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-date-picker
           v-model="request.recordTime"
           format="DD/MM/YYYY"
@@ -11,7 +24,7 @@
           range-separator=":"
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
-          style="width: 300px"
+          style="width: 300px; margin-left: 20px;"
           :shortcuts="shortcuts"
           :disabled-date="disabledDate"
           :editable="false"
@@ -424,7 +437,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, defineExpose } from 'vue'
+import { onMounted, reactive, defineExpose, computed } from 'vue'
 import moment from 'moment'
 import {
   getDorisSummaryReport,
@@ -437,6 +450,8 @@ import { getSiteListSimple } from '../../../../api/site'
 import { useStore } from '../../../../store'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
+
+import { TENANT } from '../../../../store/modules/user/action-types'
 
 defineExpose({
   loadSites,
@@ -454,6 +469,7 @@ const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
 
 const store = useStore()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const siteList = reactive({
   list: [],
 })
@@ -546,7 +562,15 @@ async function loadSummaryRecord() {
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
-  request.siteId = siteList.list.filter(x => x.siteCode === 'IND')[0].id
+
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    request.siteId = site.value.id
+  } else {
+    request.siteId = store.state.user.siteId
+  }
 }
 
 function changePage(page) {

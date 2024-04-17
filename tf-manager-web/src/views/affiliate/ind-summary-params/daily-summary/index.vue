@@ -3,6 +3,31 @@
     <div class="header-container">
       <div class="search">
         <div>
+          <el-select
+            v-model="request.siteId"
+            :placeholder="t('fields.site')"
+            @focus="loadSites"
+          >
+            <el-option
+              v-for="item in siteList.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+          <el-select
+            v-model="request.loginNameList"
+            :placeholder="t('fields.platform')"
+            multiple
+            style="margin-left: 20px;"
+          >
+            <el-option
+              v-for="aff in affiliateNames"
+              :key="aff.name"
+              :label="aff.name"
+              :value="aff.name"
+            />
+          </el-select>
           <el-date-picker
             v-model="request.recordTime"
             format="DD/MM/YYYY"
@@ -12,7 +37,7 @@
             range-separator=":"
             :start-placeholder="t('fields.startDate')"
             :end-placeholder="t('fields.endDate')"
-            style="width: 300px;"
+            style="width: 300px; margin-left: 20px;"
             :shortcuts="shortcuts"
             :disabled-date="disabledDate"
             :editable="false"
@@ -253,7 +278,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, watch, ref, defineExpose } from 'vue'
+import { onMounted, reactive, watch, ref, defineExpose, computed } from 'vue'
 import moment from 'moment'
 import {
   queryDailySummaryByType,
@@ -264,12 +289,16 @@ import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
 // import { formatInputTimeZone } from '@/utils/format-timeZone'
 import { useRoute } from 'vue-router'
+import { useStore } from '../../../../store'
+import { TENANT } from '../../../../store/modules/user/action-types'
 
 defineExpose({
   loadSites,
 })
 
 const { t } = useI18n()
+const store = useStore()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const siteList = reactive({
   list: [],
 })
@@ -306,7 +335,14 @@ let previouseLoginNameList = ref(null)
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
-  request.siteId = siteList.list.filter(x => x.siteCode === 'IND')[0].id
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    request.siteId = site.value.id
+  } else {
+    request.siteId = store.state.user.siteId
+  }
 
   if (
     route.query.loginNameList !== null &&
