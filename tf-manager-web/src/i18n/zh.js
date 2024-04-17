@@ -386,6 +386,7 @@ export default {
     POKER: '棋牌',
     DAILY: '日常',
     FTD: '首存',
+    LOTTERY: '彩票',
     OTHER: '其他',
   },
   scheduleType: {
