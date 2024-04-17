@@ -2,7 +2,7 @@
   <div class="platform-section">
 
     <div class="platform-container"
-      :class="(platformType === 'slot') ? 'slot-container' : ''"
+         :class="(platformType === 'slot') ? 'slot-container' : ''"
     >
       <div class="platform-container-slot" v-if="platformType === 'slot'">
         <img src="../assets/slot/slot-top-bg.png">
@@ -114,7 +114,7 @@
                 <div class="text">
                   <span v-if="item.code === 'AG'">XIN</span>
                   <span v-else>{{ item.code }}</span>
-              </div>
+                </div>
               </div>
             </template>
           </div>
@@ -276,14 +276,14 @@ const setFilteredPlatforms = () => {
     platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
   );
 
-  filteredPlatforms.value = filteredPlatforms.value.map((item1) => {
+  filteredPlatforms.value = platformsListDisplay.value.map((item1) => {
     const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
-    return { ...matchingItem, ...item1 };
+    return { ...matchingItem, ...item1   };
   });
 
-  // console.log("Filter plat");
+  filteredPlatforms.value.sort((a,b) => a.sequence - b.sequence);
+  // console.log("Atend plat");
   // console.log(filteredPlatforms.value);
-  // console.log(platformsListDisplay.value);
 
   if (!route.query.plat) {
     setSelectedPlat();
