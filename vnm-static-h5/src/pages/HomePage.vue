@@ -1252,10 +1252,6 @@ export default defineComponent({
         isStationNotice.value = true;
       }
     };
-    const gotoPromo = (banner) => {
-      const redirectU = "/promo?name=" + banner.redirectUrl;
-      router.push(`${redirectU}`);
-    };
 
     const download_url = ref("");
     const isAppUpdateModal = ref(false);
@@ -1364,6 +1360,24 @@ export default defineComponent({
     const goToNewsPage = () => {
       window.open("http://tf88club.net");
     };
+
+    const gotoPromo = (banner) => {
+      const urlSplit= banner.redirectUrl.split("|");
+      if(urlSplit.length >= 2){
+        const type= urlSplit[0];
+        if(type==='page'){
+          router.push(`/${banner.redirectUrl}`);
+        }else{
+          router.push(`/promo?name=${banner.redirectUrl}`);
+        }
+      }else{
+        if(banner.redirectUrl.includes("https://")){
+          window.open(banner.redirectUrl,"_blank");
+        }else{
+          router.push(`/promo?name=${banner.redirectUrl}`);
+        }
+      }
+    }
 
     const getNewsDetails = () => {
       api.get("/news").then((res) => {
