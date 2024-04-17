@@ -58,7 +58,7 @@
 
   <div class="home-wrapper" :class="detectAndroidVersion()">
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
-      <div v-touch-pan.prevent.mouse="moveCsIcon" @click="openCSInNewTab('https://direct.lc.chat/14154051/')">
+      <div v-touch-pan.prevent.mouse="moveCsIcon" @click="openCSInNewTab(ui.CSAUrl)">
         <div class="cs-icon-wrapper"></div>
       </div>
     </q-page-sticky>
@@ -1673,6 +1673,20 @@ const initOneSignal = () => {
   });
 };
 
+const loadCustomerAddress = () => {
+  cached
+    .get("customerAddress", () =>
+      api.get("/config/customerAddress/v2").then((res) => {
+        return res;
+      })
+    )
+    .then((data) => {
+      console.log(data);
+      var url = data.liveUrl1;
+      ui.CSAUrl = url;
+    });
+};
+
 onActivated(() => {
   store.getUnreadTotal();
 });
@@ -1683,6 +1697,7 @@ onMounted(() => {
   loadAnnouncement();
   checkPlatform();
   loadHotGameList();
+  loadCustomerAddress();
   loadJILIFishGameList();
   loadJDBFishGameList();
   AOS.init();
