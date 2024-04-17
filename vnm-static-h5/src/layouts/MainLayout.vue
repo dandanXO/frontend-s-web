@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh Lpr fFf">
+  <q-layout view="hHh Lpr fFf"  :class="{'roboto': languageVal === 'vn', 'poppins': languageVal === 'en' }">
     <q-header v-if="hasPage" :class="hasShadow ? 'with-shadow' : ''">
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
@@ -98,6 +98,9 @@ import { translateRecord } from "src/directives/translate";
 import { useI18n } from "vue-i18n";
 import LangOptions from "components/LangOptions";
 
+import { i18nStore } from "src/router/language";
+import { storeToRefs } from "pinia";
+
 export default defineComponent({
   name: "MainLayout",
 
@@ -119,6 +122,9 @@ export default defineComponent({
     const hasDrawer = ref(false);
     const hasShadow = ref(false);
     const leftDrawerOpen = ref(false);
+
+    const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
 
     const logout = () => {
       store.memberLogout().then(() => {
@@ -416,6 +422,7 @@ export default defineComponent({
       checkRoute();
     });
     return {
+      languageVal,
       tab: ref("home"),
       leftDrawerOpen,
       toggleLeftDrawer() {

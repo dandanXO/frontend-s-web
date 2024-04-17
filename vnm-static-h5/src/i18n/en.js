@@ -180,6 +180,9 @@ export default {
     maintenance_contact_01: "Email Us:",
     maintenance_contact_02: "24/7 Customer Service",
     maintenance_contact_03: "Telegram:",
+    currently_maintaining: "Maintenance in progress",
+    maintenance_time: "Maintenance Time",
+
 
     // personal | verify
     personal_exclusiveurl: "Exclusive URL",

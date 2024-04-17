@@ -657,6 +657,9 @@ export default {
     Tất cả dịch vụ và trò chơi sẽ tạm dừng trong thời gian trên, <br>thành thật xin lỗi vì sự bất tiện này!`,
     email: "Gửi Email",
     customerService: "Hỗ trợ trực tuyến 24/7",
+    currentlyMaintaining: "Đang bảo trì",
+    maintainenceTime: "Thời gian bảo trì",
+    otherPlatFirst: " Vui lòng tham gia cược tại các sảnh khác trước nhé",
   }, 
   "welcome": {
     "compatibleDevices": "Hoàn toàn tương thích với các thiết bị an toàn",

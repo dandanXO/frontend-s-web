@@ -183,6 +183,8 @@ export default {
     maintenance_contact_01: "Gửi Email:",
     maintenance_contact_02: "Hỗ trợ trực tuyến 24/7",
     maintenance_contact_03: "Telegram:",
+    currently_maintaining: "Đang bảo trì",
+    maintenance_time: "Thời gian bảo trì",
 
     // personal | verify
     personal_exclusiveurl: "URL riêng",

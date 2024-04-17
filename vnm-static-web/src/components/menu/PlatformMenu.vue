@@ -1,5 +1,5 @@
 <template>
-  <div class="platform-menu-container">
+  <div class="platform-menu-container" :style="props.platformType === 'slot'? 'max-width: 1200px': ''">
     <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
     <template v-for="(item, index) in platformsListDisplay" :key="index">
       <!--      <router-link :to="`${props.platformName}?plat=${item.code}`">-->
@@ -7,12 +7,12 @@
            :class="item.underMaintenance === true ? 'maintenance' : ''">
 
         <div class="maintenance-box" v-if="item.underMaintenance === true">
-          <p>维护中</p>
+          <p>{{ $t('maintenance.currentlyMaintaining') }}</p>
           <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
-            维护时间:<br/> {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD HH:mm") }}<br/>-
+            {{ $t('maintenance.maintenanceTime') }}:<br/> {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD HH:mm") }}<br/>-
             {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD HH:mm") }}
           </p>
-          <p class="small-size">请先前往其他场馆娱乐</p>
+          <p class="small-size">{{ $t('maintenance.otherPlatFirst') }}</p>
         </div>
 
         <!-- <div class="platform-menu-title" v-html="item.cnname" />
