@@ -1606,6 +1606,7 @@ export default {
     notificationContent: '通知内容',
   },
   message: {
+    startenddatemore3months: "开始与结束时间不能多于3个月",
     addRemarkSuccess: '新增备注成功',
     addSuccess: '新增成功',
     adjustSuccess: '平账成功',

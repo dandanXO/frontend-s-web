@@ -1601,6 +1601,7 @@ export default {
     notificationContent: 'Notification Content',
   },
   message: {
+    startenddatemore3months: "Start and End date cannot more than 3 months",
     addRemarkSuccess: 'Add Remark Success',
     addSuccess: 'Add Success',
     adjustSuccess: 'Adjust Amount Success',
