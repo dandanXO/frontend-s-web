@@ -19,6 +19,7 @@
     <Gift8Promo v-if="list.redirectUrl === 'lh1-gift8' && !isCommonPromo && store.token" />
     <UpgradeHongBao v-if="list.redirectUrl === 'lh1-upgrade-hongbaoz' && !isCommonPromo && store.token" />
     <AppHongBao v-if="list.redirectUrl === 'lh1-app-hongbao' && !isCommonPromo && store.token" :promo-code="list.promoCode" :params="list.param" />
+    <FtdPromo v-if="list.redirectUrl === 'lh1-ftd-promo' && !isCommonPromo && store.token" />
     <HongBaoYu2024
       v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo && store.token"
       :promo-code="list.promoCode"
@@ -104,6 +105,7 @@ import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
 import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
 import Summoner from "../components/hotpromo/summoner/Summoner.vue";
 import AppHongBao from "../components/hotpromo/apphongbao/AppHongBao.vue";
+import FtdPromo from "../components/hotpromo/ftd/FtdPromo.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -144,7 +146,8 @@ export default defineComponent({
     BonusSpinWheel,
     LhStepGamePromo,
     Summoner,
-    AppHongBao
+    AppHongBao,
+    FtdPromo
     // DailyBonus
   },
   props: {
@@ -417,7 +420,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-spin-wheel" ||
       this.list.redirectUrl === "lh1-game-steps" ||
       this.list.redirectUrl === "lh1-summon-event" ||
-      this.list.redirectUrl === "lh1-app-hongbao"
+      this.list.redirectUrl === "lh1-app-hongbao" ||
+      this.list.redirectUrl === "lh1-ftd-promo"
     ) {
       this.isCommonPromo = false;
     } else {
