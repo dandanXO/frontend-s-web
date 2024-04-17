@@ -361,7 +361,11 @@ async function loadSites() {
     )
     request.siteId = site.value.id
   } else {
-    request.siteId = store.state.user.siteId
+    if (store.state.user.siteId === null) {
+      request.siteId = store.state.user.sites[0].id
+    } else {
+      request.siteId = store.state.user.siteId
+    }
   }
 
   const { data: affiliates } = await getAffiliateList(request.siteId)
