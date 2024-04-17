@@ -6,7 +6,6 @@
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
-          @focus="loadSites"
         >
           <el-option
             v-for="item in siteList.list"
@@ -455,7 +454,6 @@ import { TENANT } from '../../../../store/modules/user/action-types'
 
 defineExpose({
   loadSites,
-  loadSummaryRecord,
 })
 
 const { t } = useI18n()
@@ -569,11 +567,7 @@ async function loadSites() {
     )
     request.siteId = site.value.id
   } else {
-    if (store.state.user.siteId === null) {
-      request.siteId = store.state.user.sites[0].id
-    } else {
-      request.siteId = store.state.user.siteId
-    }
+    request.siteId = 1
   }
 }
 

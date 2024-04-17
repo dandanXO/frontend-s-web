@@ -6,7 +6,7 @@
           <el-select
             v-model="request.siteId"
             :placeholder="t('fields.site')"
-            @focus="loadSites"
+            @change="handleChangeSites"
           >
             <el-option
               v-for="item in siteList.list"
@@ -361,13 +361,17 @@ async function loadSites() {
     )
     request.siteId = site.value.id
   } else {
-    if (store.state.user.siteId === null) {
-      request.siteId = store.state.user.sites[0].id
-    } else {
-      request.siteId = store.state.user.siteId
-    }
+    request.siteId = 1
   }
+  loadAffiliateList()
+}
 
+function handleChangeSites() {
+  request.loginNameList = null
+  loadAffiliateList()
+}
+
+async function loadAffiliateList() {
   const { data: affiliates } = await getAffiliateList(request.siteId)
 
   affiliateNames.value = affiliates

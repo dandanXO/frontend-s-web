@@ -6,7 +6,7 @@
           <el-select
             v-model="request.siteId"
             :placeholder="t('fields.site')"
-            @focus="loadSites"
+            @change="handleChangeSites()"
           >
             <el-option
               v-for="item in siteList.list"
@@ -344,7 +344,7 @@ const request = reactive({
   recordTime: [defaultStartDate, defaultEndDate],
   loginNameList: null,
   affiliateCode: null,
-  // affiliateLevel: 'SUPER_AFFILIATE',
+  affiliateLevel: 'SUPER_AFFILIATE',
   superiorLoginName: null,
 })
 
@@ -358,19 +358,26 @@ const total = reactive({
   data: null,
 })
 
+function handleChangeSites() {
+  request.loginNameList = null
+  loadAffiliateList()
+}
+
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
-  console.log('load site')
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
   } else {
-    request.siteId = store.state.user.siteId
+    request.siteId = 1
   }
-  console.log('store : ', store.state)
+  loadAffiliateList()
+}
+
+async function loadAffiliateList() {
   const { data: affiliates } = await getAffiliateList(request.siteId)
 
   affiliateNames.value = affiliates
@@ -378,7 +385,9 @@ async function loadSites() {
     .map(a => {
       const modifiedSuperiorName =
         a.superiorAffiliateName !== null
-          ? a.superiorAffiliateName.replace('admin', '').trim()
+          ? a.superiorAffiliateName.includes('admin')
+            ? a.superiorAffiliateName.replace('admin', '').trim()
+            : a.superiorAffiliateName
           : null
 
       return {
@@ -521,7 +530,10 @@ function checkQuery() {
     query.loginNameList = getFromRouter.loginNameList
   }
 
-  query.superiorLoginName = request.superiorLoginName
+  if (getFromRouter.superiorLoginName != null) {
+    query.superiorLoginName = getFromRouter.superiorLoginName
+  }
+
   query.affiliateLevel = request.affiliateLevel
 
   return query
