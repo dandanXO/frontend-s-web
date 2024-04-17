@@ -359,7 +359,7 @@ export default defineComponent({
           width: 280px;
           height: 297px;
           box-shadow: 0px 4px 34px 0px #00000033;
-          background-color: #ffffffd6;
+          background-color: #ffffff;
           border-radius: 8px;
           display: flex;
           flex-direction: column;
