@@ -12,7 +12,7 @@
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
           style="width: 380px"
-          :disabled-date="disabledDate"
+          @change="checkDateValue"
           :editable="false"
           :clearable="false"
           :default-time="defaultTime"
@@ -203,6 +203,7 @@ import { useI18n } from "vue-i18n";
 import { useRoute } from 'vue-router'
 import { useStore } from "@/store";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { ElMessage } from "element-plus";
 const store = useStore()
 
 const { t } = useI18n();
@@ -302,6 +303,19 @@ function convertStartDate(date) {
   return moment(date).startOf('day').format('YYYY-MM-DD HH:mm:ss');
 }
 
+const checkDateValue = (date) => {
+  const [startCheck, endCheck] = date;
+  const distract = moment(endCheck).diff(startCheck, 'days');
+  if (distract >= 93) {
+    ElMessage({
+      message: t('message.startenddatemore3months'),
+      type: "error"
+    });
+    request.betTime = [defaultStartDate, defaultEndDate];
+  }
+}
+
+// eslint-disable-next-line no-unused-vars
 function disabledDate(time) {
   if (selectedDate) {
     return time.getTime() < moment(selectedDate).startOf('month').format('x') || (time.getTime() > new Date().getTime() || time.getTime() > moment(selectedDate).endOf('month').format('x'));

@@ -13,7 +13,7 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 380px"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
+          @change="checkDateValue"
           :editable="false"
           :clearable="false"
           :default-time="defaultTime"
@@ -172,6 +172,7 @@ import { useRoute } from 'vue-router'
 import { getShortcuts } from "@/utils/datetime";
 import { useStore } from "@/store";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { ElMessage } from "element-plus";
 
 const store = useStore()
 const { t } = useI18n();
@@ -269,8 +270,16 @@ function convertStartDate(date) {
   return moment(date).startOf('day').format('YYYY-MM-DD HH:mm:ss');
 }
 
-function disabledDate(time) {
-  return time.getTime() < moment(new Date()).subtract(2, 'months').startOf('month').format('x') || time.getTime() > new Date().getTime();
+const checkDateValue = (date) => {
+  const [startCheck, endCheck] = date;
+  const distract = moment(endCheck).diff(startCheck, 'days');
+  if (distract >= 93) {
+    ElMessage({
+      message: t('message.startenddatemore3months'),
+      type: "error"
+    });
+    request.betTime = [defaultStartDate, defaultEndDate];
+  }
 }
 
 function checkQuery() {

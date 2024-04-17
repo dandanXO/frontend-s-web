@@ -1177,6 +1177,7 @@ export default {
     grossProfit: 'กำไรขั้นต้น',
   },
   message: {
+    startenddatemore3months: "เวลาเริ่มและเสร็จสิ้นต้องไม่เกิน 3 เดือน",
     addRemarkSuccess: 'เพิ่มหมายเหตุความสำเร็จ',
     addSuccess: 'เพิ่มความสำเร็จ',
     adjustSuccess: 'ปรับจำนวนเงินสำเร็จ',
