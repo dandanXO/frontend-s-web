@@ -3,19 +3,16 @@
     <div class="header-container">
       <div class="search">
         <div>
-          <el-select
-            v-model="request.siteId"
-            :placeholder="t('fields.site')"
-            @focus="loadSites"
-          >
+          <el-select v-model="request.siteId" :placeholder="t('fields.site')">
             <el-option
               v-for="item in siteList.list"
               :key="item.id"
               :label="item.siteName"
               :value="item.id"
+              @change="handleChangeSites"
             />
           </el-select>
-          <el-select
+          <!-- <el-select
             v-model="request.loginNameList"
             :placeholder="t('fields.platform')"
             multiple
@@ -27,7 +24,7 @@
               :label="aff.name"
               :value="aff.name"
             />
-          </el-select>
+          </el-select> -->
           <el-date-picker
             v-model="request.recordTime"
             format="DD/MM/YYYY"
@@ -341,13 +338,26 @@ async function loadSites() {
     )
     request.siteId = site.value.id
   } else {
-    if (store.state.user.siteId === null) {
-      request.siteId = store.state.user.sites[0].id
-    } else {
-      request.siteId = store.state.user.siteId
-    }
+    request.siteId = 1
   }
 
+  if (
+    route.query.loginNameList !== null &&
+    route.query.loginNameList !== undefined
+  ) {
+    if (previouseLoginNameList.value !== null) {
+      if (route.query.loginNameList !== previouseLoginNameList.value) {
+        resetQuery()
+        loadRecord()
+      }
+    } else {
+      previouseLoginNameList = route.query.loginNameList
+      loadRecord()
+    }
+  }
+}
+
+function handleChangeSites() {
   if (
     route.query.loginNameList !== null &&
     route.query.loginNameList !== undefined

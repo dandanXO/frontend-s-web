@@ -31,7 +31,6 @@ function checkTab(val) {
   if (val === 'daily-summary') {
     console.log(summaryTab)
     summaryTab.value.loadSites()
-    summaryTab.value.loadSummaryRecord()
   }
 }
 </script>
