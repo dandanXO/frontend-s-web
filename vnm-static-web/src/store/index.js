@@ -149,7 +149,7 @@ export const userStore = defineStore("userStore", {
 });
 
 export const i18nStore = defineStore("i18nStore", () => {
-  const languageLocale = localStorage.getItem("languageLocale") || "en";
+  const languageLocale = localStorage.getItem("languageLocale") || "vi";
   const languageVal = ref(languageLocale);
   
   function setLanguage(l) {
