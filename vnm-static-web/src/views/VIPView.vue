@@ -49,15 +49,17 @@
               <span>{{ getVipLevelProgress(vip) === 100 && !!vipLevel ? $t('vip.achieved') : $t('vip.unachieved') }}</span>
             </div>
             <div class="claimButtons" v-if="currentSlide === vipIndex && store.token">
-              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2" @click="store.openLiveChat()" class="claimBtn vipBirthday">
+              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2 && vipIndex + 1 !== 3" @click="store.openLiveChat()" class="claimBtn vipBirthday">
                 <RiCake2Line />
                 {{ $t('vip.birthday') }}
               </a>
-              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2" :class="{'unavailable': vipLevel + 1 !== Number(vip.vipLevel) || !canClaimMonthly}" @click="canClaimMonthly && vipLevel + 1 === Number(vip.vipLevel) ? claimBonus('monthly'): null" class="claimBtn vipMonthly">
+              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2" :class="{'unavailable': vipLevel + 1 !== Number(vip.vipLevel) || !canClaimMonthly}"
+                 @click="canClaimMonthly && vipLevel + 1 === Number(vip.vipLevel) ? claimBonus('monthly'): null" class="claimBtn vipMonthly">
                 <RiCalendar2Line />
                 {{ $t('vip.monthly') }}
               </a>
-              <a :class="{'unavailable':vip.unavailable, 'claimed':vip.claimed}" @click="!vip.unavailable && !vip.claimed?claimBonus('welcome', vipIndex + 1): null" class="claimBtn vipWelcome">
+              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2" :class="{'unavailable':vip.unavailable, 'claimed':vip.claimed}"
+                 @click="!vip.unavailable && !vip.claimed?claimBonus('welcome', vipIndex + 1): null" class="claimBtn vipWelcome">
                 <RiMoneyDollarCircleLine />
                 {{ $t('vip.upgrade') }}
               </a>
