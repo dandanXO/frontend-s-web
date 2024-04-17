@@ -318,7 +318,7 @@ export default {
     virtualWallet: 'Số tài khoản ví ảo chỉ có thể chứa chữ số và chữ cái',
     enterDigits: 'Vui lòng nhập các chữ số',
     lengthShouldBe: 'Chiều dài nên là',
-    smsCodeRequired: 'Vui lòng nhập mã xác minh qua tin nhắn',
+    smsCodeRequired: 'Vui lòng nhập mã xác minh qua tin nhắn SMS',
     bankBranchAddress: 'Địa chỉ chi nhánh ngân hàng',
     
   },
