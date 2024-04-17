@@ -70,7 +70,7 @@ export const editMemberRemark = (id, remark) => {
 };
 
 export const deleteMemberRemark = (id) => {
-  return https().request(`/member/remark/${id}`, Method.DELETE, ContentType.form);
+  return https().request(`/member/remark/${id}?_method=DELETE`, Method.POST, ContentType.form);
 };
 
 export const getMemberNameList = (siteId) => {
