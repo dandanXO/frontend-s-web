@@ -4,7 +4,7 @@ import vi from "./vi";
 
 const i18n = createI18n({
   legacy: false,
-  locale: localStorage.getItem("languageLocale") || "en",
+  locale: localStorage.getItem("languageLocale") || "vi",
   // allowComposition: true,
   messages: {
     en,

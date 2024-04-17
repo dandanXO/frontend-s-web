@@ -374,15 +374,15 @@ export default defineComponent({
     const getPromoLabel = (labelType) => {
       switch (labelType) {
         case 0:
-          return "NEW Mới nhất";
+          return "Mới nhất";
         case 1:
-          return "HOT Phổ biến";
+          return "Hot";
         case 3:
-          return "RECOMMEND Đề xuất";
+          return "Đề xuất";
         case 4:
-          return "DAILY Hằng ngày";
+          return "Hàng ngày";
         case 5:
-          return "NEWBIE Người mới";
+          return "Thành viên mới";
         case 6:
           return "TIME Thời gian";
         default:
