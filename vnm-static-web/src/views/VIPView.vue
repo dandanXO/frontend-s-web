@@ -53,7 +53,7 @@
                 <RiCake2Line />
                 {{ $t('vip.birthday') }}
               </a>
-              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2" :class="{'unavailable': vipLevel + 1 !== Number(vip.vipLevel) || !canClaimMonthly}"
+              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2" :class="{'unavailable': vipLevel !== Number(vip.vipLevel) || !canClaimMonthly}"
                  @click="canClaimMonthly && vipLevel + 1 === Number(vip.vipLevel) ? claimBonus('monthly'): null" class="claimBtn vipMonthly">
                 <RiCalendar2Line />
                 {{ $t('vip.monthly') }}
