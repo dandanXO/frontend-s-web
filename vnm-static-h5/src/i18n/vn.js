@@ -1351,6 +1351,7 @@ export default {
     30006: "Thành viên được liệt kê là tài khoản cấm nhận quyền lợi này",
     31000: "Không có khuyến mãi này",
     32000: "Không có cấp độ VIP này",
+    32003: "Chưa đạt cấp VIP yêu cầu",
     33000: "Phải là số 3 chữ số",
     33001: "Phải là số 3 chữ số",
     34000: "Ngày sinh của thành viên không ở trong tháng này",

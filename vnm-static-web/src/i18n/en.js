@@ -846,6 +846,7 @@ about: {
     30006: "Members listed as account holders are prohibited from receiving this privilege",
     31000: "Promotion not found",
     32000: "VIP level not found",
+    32003: "Haven't reached the required VIP level",
     33000: "Must use a 3-digit number",
     33001: "Must be a 3-digit number",
     34000: "Member's birthday is not in this month",
