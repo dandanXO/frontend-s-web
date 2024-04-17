@@ -662,6 +662,9 @@ about: {
      We sincerely apologize for any inconvenience caused!`,
     email: "Email us",
     customerService: "24/7 Customer Service",
+    currentlyMaintaining: "Maintenance in progress",
+    maintainenceTime: "Maintenance Time",
+    otherPlatFirst: "Kindly go to other platforms for entertainment",
   }, 
   "welcome": {
     "compatibleDevices": "Perfectly Compatible with Secure Devices",

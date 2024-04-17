@@ -562,6 +562,7 @@ export default defineComponent({
             font-weight: bold;
             font-size: 1rem;
             max-width: 160px;
+            font-family: 'Roboto';
 
             @media (min-width: 500px) {
               max-width: calc(100% - 220px);
