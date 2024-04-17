@@ -19,11 +19,21 @@
     <div class="header-left">
       <img alt="logo" src="../assets/logo-1.png" />
     </div>
-    <div class="header-right" @click="router.push('/account/inbox?redirect=home')">
-      <img class="btn-pointer" src="../assets/images/home/home-message-box.png" />
+    <div class="header-right" @click="() => (hasDrawer = !hasDrawer)">
+      <img class="btn-pointer" src="../assets/images/home/home-hamburger-menu.png" />
       <div class="red-dot" v-if="unreadInboxMail > 0" />
     </div>
   </div>
+
+  <q-drawer side="left" :width="300" :breakpoint="500" overlay v-model="hasDrawer">
+    <div class="home-drawer">
+      <user-profile />
+      <div class="home-drawer__divider" />
+      <link-group />
+      <div class="home-drawer__divider" />
+      <system-config />
+    </div>
+  </q-drawer>
 
   <q-carousel
     class="home"
@@ -894,6 +904,9 @@ import "swiper/css";
 import "swiper/css/scrollbar";
 import { translateRecord } from "src/directives/translate";
 import MaintenanceBox from "components/MaintenanceBox.vue";
+import UserProfile from "components/home/drawer/UserProfile.vue";
+import LinkGroup from "components/home/drawer/LinkGroup.vue";
+import SystemConfig from "components/home/drawer/SystemConfig.vue";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
@@ -904,7 +917,10 @@ export default defineComponent({
     // Swiper,
     // SwiperSlide,
     GameModal,
-    MarqueeText
+    MarqueeText,
+    UserProfile,
+    LinkGroup,
+    SystemConfig
     // PlatformBlock
   },
   setup() {
@@ -916,6 +932,8 @@ export default defineComponent({
     const thumbsSwiper = ref(null);
     const firstSwiper = ref(null);
     const secondSwiper = ref(null);
+
+    const hasDrawer = ref(false);
 
     const setFirstSwiper = (swiper) => {
       firstSwiper.value = swiper;
@@ -1756,6 +1774,7 @@ export default defineComponent({
       liveTabs,
       selectedLiveTab,
       scrollPageRef,
+      hasDrawer,
       announcementList,
       isStationNotice,
       openPopup,
@@ -2395,6 +2414,17 @@ export default defineComponent({
 
   .fade-in-image {
     animation: fadeIn 1.5s;
+  }
+}
+
+.home-drawer {
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  &__divider {
+    border-bottom: 1px solid #ecedf0;
+    margin: 0 20px;
   }
 }
 
