@@ -1,8 +1,8 @@
 <template>
     <div class="action-button-wrapper">
-        <div class="action-button">
+        <router-link to="/finance/deposit" class="action-button">
             点击{{ props.tab }}
-        </div>
+        </router-link>
         <div class="action-button" @click="claimBonus">
             领取奖金
         </div>
