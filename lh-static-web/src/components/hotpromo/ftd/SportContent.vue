@@ -26,10 +26,14 @@
                 <tr>
                     <td>≥300元</td>
                     <td>28%</td>
+                    <td style="visibility: hidden;"></td>
+                    <td style="visibility: hidden;"></td>
                 </tr>
                 <tr>
                     <td>≥100元</td>
                     <td>12%</td>
+                    <td style="visibility: hidden;"></td>
+                    <td style="visibility: hidden;"></td>
                 </tr>
             </table>
         </div>
