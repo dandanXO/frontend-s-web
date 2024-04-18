@@ -25,9 +25,7 @@
             </table>
         </div>
 
-        <div class="first-deposit-btn">
-            点击{{ props.tab }}
-        </div>
+        <ActionButtons :tab="props.tab" :type="props.type"/>
 
         <div class="notes">
             <p>1.&nbsp;活动期间，新用户注册后第二笔存款可选择参与一次复存返利，完成第二笔存款时可联系在线客服申请活动；</p>
@@ -63,9 +61,7 @@
             </table>
         </div>
 
-        <div class="first-deposit-btn">
-            点击{{ props.tab }}
-        </div>
+        <ActionButtons :tab="props.tab" :type="props.type"/>
 
         <div class="notes">
             <p>1.&nbsp;活动期间，新用户注册后第一笔存款可选择参与一次首存返利，完成存款且未投注前可联系在线客服申请活动；</p>
@@ -79,6 +75,7 @@
 </template>
 <script setup>
 import './styles.css';
+import ActionButtons from './ActionButtons.vue';
 
-const props = defineProps(['tab']);
+const props = defineProps(['tab', 'type']);
 </script>

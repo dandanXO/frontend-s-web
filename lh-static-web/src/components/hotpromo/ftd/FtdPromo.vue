@@ -25,12 +25,12 @@
             <img class="separator" v-else-if="currentTab === '复存'" src="../../../assets/images/promotion/hotpromo/ftd/consecutive-deposit-separator.png" />
         </div>
 
-        <SportContent v-if="currentType === '体育'" :tab="currentTab" />
-        <EsportContent v-else-if="currentType === '电竞'" :tab="currentTab" />
-        <LiveContent v-else-if="currentType === '真人'" :tab="currentTab" />
-        <PokerContent v-else-if="currentType === '棋牌'" :tab="currentTab" />
-        <SlotContent v-else-if="currentType === '电子'" :tab="currentTab" />
-        <FishingContent v-else-if="currentType === '捕鱼'" :tab="currentTab" />
+        <SportContent v-if="currentType === '体育'" :tab="currentTab" :type="currentType" />
+        <EsportContent v-else-if="currentType === '电竞'" :tab="currentTab" :type="currentType" />
+        <LiveContent v-else-if="currentType === '真人'" :tab="currentTab" :type="currentType" />
+        <PokerContent v-else-if="currentType === '棋牌'" :tab="currentTab" :type="currentType" />
+        <SlotContent v-else-if="currentType === '电子'" :tab="currentTab" :type="currentType" />
+        <FishingContent v-else-if="currentType === '捕鱼'" :tab="currentTab" :type="currentType" />
     </div>
 </template>
 
