@@ -402,7 +402,7 @@ function disabledDate(time) {
   return (
     time.getTime() <
       moment(new Date())
-        .subtract(3, 'months')
+        .subtract(2, 'months')
         .startOf('month')
         .format('x') || time.getTime() > new Date().getTime()
   )
@@ -497,7 +497,6 @@ function getSummaries(param) {
               maximumFractionDigits: 2,
             })
         } else {
-          console.log('total.data : ', total.data)
           sums[index] =
             '$' +
             parseFloat(total.data[prop]).toLocaleString('en-US', {
