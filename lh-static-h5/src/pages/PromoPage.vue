@@ -139,7 +139,7 @@
           </div>
           <div v-else class="selected-promo">
             <div class="selected-promo-wrapper">
-              <div class="banner-container" v-if="selectedPromo && selectedPromo.mobileBannerUrl && !isSpecialPromo">
+              <div class="banner-container" v-if="selectedPromo && selectedPromo.mobileBannerUrl && !isSpecialPromo && selectedPromo.promoCode !== 'lh1-ftd-promo'">
                 <img
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
@@ -149,7 +149,8 @@
               <div
                 class="inner"
                 :class="{
-                  lhstepgame: selectedPromo.promoCode === 'lh1-game-steps'
+                  lhstepgame: selectedPromo.promoCode === 'lh1-game-steps',
+                  lhftd: selectedPromo.promoCode === 'lh1-ftd-promo'
                 }"
               >
                 <div v-if="selectedPromo.hasPromo">
@@ -777,6 +778,16 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
+        &.lhftd {
+          margin: 0px;
+          width: 100%;
+          gap: 0px;
+
+          .hot-promo {
+            border-radius: 0px;
+          }
+        }
 
         &.lhstepgame {
           margin: 0px;

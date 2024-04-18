@@ -70,7 +70,8 @@
           class="banner-container"
           v-if="
             (selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl) &&
-            selectedPromo.promoCode !== 'lh1-game-steps'
+            selectedPromo.promoCode !== 'lh1-game-steps' &&
+            selectedPromo.promoCode !== 'lh1-ftd-promo'
           "
         >
           <div class="promo-bg isDesktop">
@@ -98,7 +99,7 @@
               : 'background-image: url(' + require(`../assets/promo/web-bg.jpg`) + '\''
           "
           :class="{
-            fullwidth: selectedPromo.promoCode === 'lh1-game-steps'
+            fullwidth: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh1-ftd-promo'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">

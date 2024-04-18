@@ -41,6 +41,7 @@
     <FeedbackAwardPromo v-if="list.redirectUrl === 'lh1-feedback-awards' && !isCommonPromo" />
     
     <AppHongBao v-if="list.redirectUrl === 'lh1-app-hongbao' && !isCommonPromo && store.token" :promo-code="list.promoCode" :params="list.param" />
+    <FtdPromo  v-if="list.redirectUrl === 'lh1-ftd-promo' && !isCommonPromo && store.token" />
 
     <PrivilegeInvitePromo
       v-if="
@@ -150,7 +151,7 @@ import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
 import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
 import SummonerPromo from "../components/hotpromo/summoner/SummonerPromo.vue";
 import AppHongBao from "../components/hotpromo/apphongbao/AppHongBao.vue";
-
+import FtdPromo from "../components/hotpromo/ftd/FtdPromo.vue";
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -184,7 +185,8 @@ export default defineComponent({
     BonusSpinWheel,
     LhStepGamePromo,
     SummonerPromo,
-    AppHongBao
+    AppHongBao,
+    FtdPromo
   },
   props: {
     list: {
@@ -275,7 +277,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-spin-wheel" ||
       this.list.redirectUrl === "lh1-game-steps" ||
       this.list.redirectUrl === "lh1-summon-event" ||
-      this.list.redirectUrl === "lh1-app-hongbao"
+      this.list.redirectUrl === "lh1-app-hongbao" ||
+      this.list.redirectUrl === "lh1-ftd-promo"
     ) {
       this.isCommonPromo = false;
     } else {
