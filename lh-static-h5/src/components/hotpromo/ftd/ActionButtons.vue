@@ -1,8 +1,8 @@
 <template>
     <div class="action-button-wrapper">
-        <router-link to="/finance/deposit" class="action-button">
+        <div class="action-button" @click="goToDeposit">
             点击{{ props.tab }}
-        </router-link>
+        </div>
         <div class="action-button" @click="claimBonus">
             领取奖金
         </div>
@@ -13,9 +13,19 @@
 import { eventapi } from "boot/axios";
 import './styles.css';
 import { useQuasar } from "quasar";
+import { useRouter } from "vue-router";
 
 const $q = useQuasar();
 const qs = require("qs");
+const router = useRouter();
+
+const goToDeposit = () => {
+  if(window.location.pathname === "/promotion"){
+    document.location.href = "app://deposit";
+  }else{
+    router.push("/finance/deposit");
+  }
+}
 
 const claimBonus = () => {
     const params = {}
