@@ -1,9 +1,10 @@
 <template>
     <div class="banner-wrapper">
-        <img class="genie" src="../../../assets/images/promo/hotpromo/ftd/genie.png" />
-        <div class="genie-ball-wrapper">
-            <img class="genie-ball" src="../../../assets/images/promo/hotpromo/ftd/genie-ball.png" />
-            <span class="genie-ball-text">{{ currentType }}</span>
+        <div class="genie-wrapper">
+            <div class="genie-ball-wrapper">
+                <img class="genie-ball" src="../../../assets/images/promo/hotpromo/ftd/genie-ball.png" />
+                <span class="genie-ball-text">{{ currentType }}</span>
+            </div>
         </div>
         
         <div class="tab-wrapper">
@@ -83,9 +84,16 @@ const switchTab = (index) => {
         flex-direction: column;
         gap: 20px;
 
+        .genie-wrapper {
+            width: 100%;
+            min-height: 300px;
+            background: url('../../../assets/images/promo/hotpromo/ftd/genie.png') no-repeat top center;
+            background-size: 100% 100%;
+        }
+
         .genie-ball-wrapper {
             position: absolute;
-            top: calc(0% + 135px);
+            top: calc(0% + 150px);
             left: 52%;
             transform: translate(-50%, -50%);
             aspect-ratio: 321 / 319;
