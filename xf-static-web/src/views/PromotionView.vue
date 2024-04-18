@@ -600,6 +600,7 @@ export default defineComponent({
         background-repeat: no-repeat;
         background-position: top center;
         padding-bottom: 0px;
+        background-color: #770201;
 
         .banner-container {
           display: none;
@@ -612,7 +613,6 @@ export default defineComponent({
           width: 100%;
           margin: 0 auto;
         }
-
       }
 
       &.bg__cny-spinwheel {
