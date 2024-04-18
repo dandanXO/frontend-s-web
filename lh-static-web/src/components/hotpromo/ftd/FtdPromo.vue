@@ -7,7 +7,7 @@
         </div>
         
         <div class="tab-wrapper">
-            <div class="tab" :class="t === currentType ? 'active-tab' : ''" v-for="t, index in typesArr" @click="switchType(index)">{{ t }}存款</div>
+            <div class="tab" :class="t === currentType ? 'active-tab' : ''" v-for="t, index in typesArr" @click="switchType(index)">{{ t }}首存</div>
         </div>
     </div>
     <div class="content-wrapper">
