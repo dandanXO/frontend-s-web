@@ -39,10 +39,10 @@
                     font-size: 15px;
                     text-align: center;
                     padding: 20px 0px;
+                    border-bottom: 1px solid #FFFFFF1A;
     
                     &:not(:last-child) {
                         border-right: 1px solid #FFFFFF1A;
-                        border-bottom: 1px solid #FFFFFF1A;
                     }
                 }
     
