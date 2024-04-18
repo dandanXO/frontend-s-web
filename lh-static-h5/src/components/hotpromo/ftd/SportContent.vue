@@ -36,9 +36,7 @@
         
         <div class="hint">注：首存金额以第一笔存款金额为准</div>
 
-        <div class="first-deposit-btn">
-            点击{{ props.tab }}
-        </div>
+        <ActionButtons :tab="props.tab" :type="props.type"/>
 
         <div class="notes">
             <p>&#x2022;&nbsp;每位新用户可选择参与1次首存返利，完成存款且未投注前即可联系在线客服申请活动；</p>
@@ -52,6 +50,7 @@
 </template>
 <script setup>
 import './styles.css';
+import ActionButtons from './ActionButtons.vue';
 
-const props = defineProps(['tab']);
+const props = defineProps(['tab', 'type']);
 </script>
