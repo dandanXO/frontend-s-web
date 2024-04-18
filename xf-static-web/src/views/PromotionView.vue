@@ -593,6 +593,28 @@ export default defineComponent({
     width: 100%;
 
     .selected-promo-wrapper {
+      &.bg__xf-return-promo {
+        background-image: url("../assets/images/promotion/hotpromo/return-promo/bg.png");
+        // background-size: cover;
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        background-position: top center;
+        padding-bottom: 0px;
+
+        .banner-container {
+          display: none;
+        }
+
+        .inner {
+          height: 100%;
+          justify-content: space-between;
+          max-width: none;
+          width: 100%;
+          margin: 0 auto;
+        }
+
+      }
+
       &.bg__cny-spinwheel {
         background-image: url("../assets/images/promotion/hotpromo/bonus-spinwheel/bg.jpg");
         background-size: 100% 100%;
