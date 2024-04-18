@@ -343,8 +343,8 @@ const switchPlat = (plat) => {
 
 const getPlatGameList = () => {
   if (props.platformGameType === "SLOT" || props.platformGameType === "FISH") {
-    getPlatformList()
-      .then((data) => {
+    const getFn = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
+    getFn().then((data) => {
         platformsListDisplay.value = data.filter((element) => element.gameType.includes(props.platformGameType));
         platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
           const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
