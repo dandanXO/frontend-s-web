@@ -303,6 +303,7 @@ const siteList = reactive({
 const route = useRoute()
 const getFromRouter = reactive({
   loginNameList: route.query.loginNameList,
+  superiorLoginName: route.query.superiorLoginName,
 })
 
 const shortcuts = getShortcuts(t)
@@ -321,6 +322,7 @@ const request = reactive({
   siteId: null,
   recordTime: [defaultStartDate, defaultEndDate],
   loginNameList: null,
+  superiorLoginName: null,
 })
 
 const total = reactive({
@@ -328,6 +330,7 @@ const total = reactive({
 })
 
 let previouseLoginNameList = ref(null)
+let previousSuperiorLoginName = ref(null)
 
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
@@ -354,6 +357,19 @@ async function loadSites() {
       previouseLoginNameList = route.query.loginNameList
       loadRecord()
     }
+  } else if (
+    route.query.superiorLoginName !== null &&
+    route.query.superiorLoginName !== undefined
+  ) {
+    if (previousSuperiorLoginName.value !== null) {
+      if (route.query.superiorLoginName !== previousSuperiorLoginName.value) {
+        resetQuery()
+        loadRecord()
+      }
+    } else {
+      previousSuperiorLoginName = route.query.superiorLoginName
+      loadRecord()
+    }
   }
 }
 
@@ -371,6 +387,10 @@ function handleChangeSites() {
       previouseLoginNameList = route.query.loginNameList
       loadRecord()
     }
+  } else if (
+    route.query.superiorLoginName !== null &&
+    route.query.superiorLoginName !== undefined
+  ) {
   }
 }
 
@@ -382,7 +402,7 @@ function disabledDate(time) {
   return (
     time.getTime() <
       moment(new Date())
-        .subtract(2, 'months')
+        .subtract(3, 'months')
         .startOf('month')
         .format('x') || time.getTime() > new Date().getTime()
   )
@@ -435,6 +455,10 @@ function checkQuery() {
     query.loginNameList = getFromRouter.loginNameList
   }
 
+  if (getFromRouter.superiorLoginName != null) {
+    query.superiorLoginName = getFromRouter.superiorLoginName
+  }
+
   return query
 }
 
@@ -473,6 +497,7 @@ function getSummaries(param) {
               maximumFractionDigits: 2,
             })
         } else {
+          console.log('total.data : ', total.data)
           sums[index] =
             '$' +
             parseFloat(total.data[prop]).toLocaleString('en-US', {
@@ -494,6 +519,11 @@ onMounted(async () => {
       route.query.loginNameList !== undefined
     ) {
       getFromRouter.loginNameList = route.query.loginNameList
+    } else if (
+      route.query.superiorLoginName !== null &&
+      route.query.superiorLoginName !== undefined
+    ) {
+      getFromRouter.superiorLoginName = route.query.superiorLoginName
     } else {
       getFromRouter.loginNameList = null
     }
