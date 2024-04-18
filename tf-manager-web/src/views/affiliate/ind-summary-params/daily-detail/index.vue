@@ -16,6 +16,10 @@
             />
           </el-select>
           <el-select
+            v-if="
+              route.query.loginNameList !== null &&
+                route.query.loginNameList !== undefined
+            "
             v-model="request.loginNameList"
             :placeholder="t('fields.platform')"
             multiple
@@ -380,23 +384,14 @@ async function loadSites() {
 async function loadAffiliateList() {
   const { data: affiliates } = await getAffiliateList(request.siteId)
 
+  const loginNameArray = getFromRouter.loginNameList.split(',')
   affiliateNames.value = affiliates
-    .filter(a => a.affiliateLevel === 'SUPER_AFFILIATE')
-    .map(a => {
-      const modifiedSuperiorName =
-        a.superiorAffiliateName !== null
-          ? a.superiorAffiliateName.includes('admin')
-            ? a.superiorAffiliateName.replace('admin', '').trim()
-            : a.superiorAffiliateName
-          : null
-
-      return {
-        name:
-          a.superiorAffiliateName !== null && modifiedSuperiorName !== 'OFFICAL'
-            ? `${a.loginName} (${modifiedSuperiorName})`
-            : a.loginName,
-      }
-    })
+    .filter(
+      a =>
+        loginNameArray.includes(a.loginName) &&
+        a.affiliateLevel === 'SUPER_AFFILIATE'
+    )
+    .map(a => ({ name: a.loginName }))
 }
 
 let previouseLoginNameList = ref(null)
@@ -417,7 +412,6 @@ async function loadSitesWithPreDefineAffiliate() {
       request.siteId = store.state.user.siteId
     }
   }
-  const { data: affiliates } = await getAffiliateList(request.siteId)
 
   if (
     route.query.loginNameList !== null &&
@@ -444,15 +438,6 @@ async function loadSitesWithPreDefineAffiliate() {
       loadRecord()
     }
   }
-
-  const loginNameArray = getFromRouter.loginNameList.split(',')
-  affiliateNames.value = affiliates
-    .filter(
-      a =>
-        loginNameArray.includes(a.loginName) &&
-        a.affiliateLevel === 'SUPER_AFFILIATE'
-    )
-    .map(a => ({ name: a.loginName }))
 }
 
 function convertDate(date) {
@@ -544,6 +529,9 @@ async function loadRecord() {
   const query = checkQuery()
   const { data: ret } = await queryDailySummary(query)
   const { data: ret1 } = await queryDailySummaryTotal(query)
+
+  loadAffiliateList()
+
   total.data = ret1
   page.pages = ret.pages
   page.records = ret.records
