@@ -18,6 +18,7 @@
         display: flex;
         align-items: center;
         gap: 10px;
+        flex-wrap: nowrap;
     }
 
     .stats-table-wrapper {
