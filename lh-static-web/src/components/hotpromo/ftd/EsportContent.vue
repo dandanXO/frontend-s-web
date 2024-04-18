@@ -1,7 +1,7 @@
 <template>
     <div class="ftd-promo-content-frame">
         <div class="row">
-            <img width="25" src="../../../assets/images/promotion/hotpromo/ftd/diamond-bullet.png" />
+            <img width="25px" src="../../../assets/images/promotion/hotpromo/ftd/diamond-bullet.png" />
             <span>活动期间新会员首次存款时可申请一次电竞首存优惠</span>
         </div>
 

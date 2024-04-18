@@ -1,7 +1,7 @@
 <template>
     <div class="ftd-promo-content-frame" v-if="props.tab === '复存'">
         <div class="row">
-            <img width="25" src="../../../assets/images/promotion/hotpromo/ftd/diamond-bullet.png" />
+            <img width="25px" src="../../../assets/images/promotion/hotpromo/ftd/diamond-bullet.png" />
             <span>活动期间，新会员完成注册后的第二笔存款，即可申请一次捕鱼复存优惠，申请成功的用户可享受单笔存款最高30%的存款优惠。</span>
         </div>
 
@@ -40,7 +40,7 @@
     </div>
     <div class="ftd-promo-content-frame" v-else-if="props.tab === '首存'">
         <div class="row">
-            <img width="25" src="../../../assets/images/promotion/hotpromo/ftd/diamond-bullet.png" />
+            <img width="25px" src="../../../assets/images/promotion/hotpromo/ftd/diamond-bullet.png" />
             <span>活动期间，新会员首次存款时可申请一次捕鱼首存优惠，申请成功的用户可享受单笔存款最高38%的存款优惠。</span>
         </div>
 
