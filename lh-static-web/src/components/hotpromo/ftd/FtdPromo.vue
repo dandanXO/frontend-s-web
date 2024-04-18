@@ -191,6 +191,7 @@ const switchTab = (index) => {
                     text-align: center;
                     color: #FFFFFF99;
                     position: absolute;
+                    cursor: pointer;
 
                     &:first-child {
                         left: 0%;
@@ -198,6 +199,10 @@ const switchTab = (index) => {
 
                     &:nth-child(2) {
                         right: 0%;
+                    }
+
+                    &:hover {
+                        color: #ffffffcc;
                     }
                     
                     &.active-tab {
