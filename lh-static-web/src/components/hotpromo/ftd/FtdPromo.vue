@@ -131,7 +131,7 @@ const switchTab = (index) => {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                font-size: 20px;
+                font-size: 18px;
                 color: #ffffff65;
                 font-weight: bold;
                 font-family: 'FZHanZhenGuangBiaoS-GB';
@@ -186,7 +186,7 @@ const switchTab = (index) => {
                     justify-content: center;
                     align-items: center;
                     font-family: Microsoft YaHei UI;
-                    font-size: 36px;
+                    font-size: 30px;
                     font-weight: 700;
                     line-height: 47.88px;
                     text-align: center;
