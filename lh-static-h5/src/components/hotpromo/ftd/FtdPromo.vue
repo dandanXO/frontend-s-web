@@ -135,7 +135,7 @@ const switchTab = (index) => {
                 justify-content: center;
                 align-items: center;
                 font-size: 12px;
-                color: #fff;
+                color: #ffffff65;
                 font-weight: bold;
                 font-family: 'FZHanZhenGuangBiaoS-GB';
                 cursor: pointer;
@@ -147,6 +147,7 @@ const switchTab = (index) => {
                 &.active-tab {
                     background: url('../../../assets/images/promo/hotpromo/ftd/tab-active.png') no-repeat center center;
                     background-size: 100% 100%;
+                    color: #fff;
                 }
             }
         }
