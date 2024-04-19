@@ -111,8 +111,8 @@ const getPromotion = () => {
       loadingClaim.value = false;
 
       if (res.code === 0) {
-        // const claimedAmt = res.data.lastDigitAmount + res.data.vipAmount;
-        const claimedAmt = res.data;
+        const claimedAmt = res.data.lastDigitAmount + res.data.vipAmount;
+        // const claimedAmt = res.data;
 
         if(claimedAmt===0){
           $q.notify({
