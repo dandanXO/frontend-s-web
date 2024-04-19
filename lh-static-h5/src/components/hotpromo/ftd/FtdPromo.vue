@@ -93,16 +93,16 @@ const switchTab = (index) => {
 
         .genie-ball-wrapper {
             position: absolute;
-            top: calc(0% + 150px);
-            left: 52%;
+            top: calc(0% + 180px);
+            left: 51%;
             transform: translate(-50%, -50%);
             aspect-ratio: 321 / 319;
-            width: 100px;
+            width: 120px;
         }
 
         .genie-ball {
             aspect-ratio: 321 / 319;
-            width: 100px;
+            width: 120px;
 	        animation: pulse 2s infinite;
         }
 
