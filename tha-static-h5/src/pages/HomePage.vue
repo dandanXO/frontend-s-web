@@ -40,7 +40,8 @@
           class="column no-wrap flex-center"
           :img-src="!$q.screen.gt.sm ? imgURL + banner.mobileImageUrl : imgURL + banner.desktopImageUrl"
           @click="gotoPromo(banner)"
-        ></q-carousel-slide>
+        >
+        </q-carousel-slide>
       </q-carousel>
     </div>
 
@@ -1653,10 +1654,21 @@ export default defineComponent({
       } else if (banner.promoPageId) {
         router.push({ path: "/promo", query: { id: banner.promoPageId } });
       } else if (banner.redirectUrl) {
-        const redirectPage = "/" + banner.redirectUrl;
-        router.push(`${redirectPage}`);
+        if (banner.redirectUrl.startsWith("promo/")) {
+          const promoId = banner.redirectUrl.substring(6);
+          router.push({ path: "/promo", query: { id: promoId } });
+        } else if (banner.redirectUrl.startsWith("open/")) {
+          const parts = banner.redirectUrl.split("/");
+          if (parts.length === 5) {
+            const gameName = parts[1];
+            const platformCode = parts[2];
+            const gameCode = parts[3];
+            const status = parts[4];
+            gameModalRef.value.open(gameName, platformCode, gameCode, status);
+          }
+        }
       }
-      router.push(`/promo`);
+      // router.push(`/promo`);
     };
 
     // isH5 -- platform checker
