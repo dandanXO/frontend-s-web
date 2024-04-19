@@ -99,7 +99,7 @@
 </template>
 
 <script lang="js">
-import {ref, defineComponent, onMounted, reactive, watch} from "vue";
+import {ref, defineComponent, onActivated, reactive, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {RiFunctionLine} from 'vue-remix-icons'
 import {api} from "boot/axios";
@@ -207,7 +207,7 @@ export default defineComponent({
       // }).catch((e) => { console.log("error", e); });
       switchPromoType(promoState.active)
     }
-    onMounted(() => {
+    onActivated(() => {
       loadBanner();
       loadAll();
     });

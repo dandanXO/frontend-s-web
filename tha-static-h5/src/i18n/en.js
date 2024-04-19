@@ -430,6 +430,7 @@ export default {
     medium_level: "Good",
     strong_level: "Strong",
     fill_in_information: "Please fill in information first.",
+    verify_phone_number: "Please verify phone number first.",
     verify: "Verify",
     my_total_refer_friends_rebate: "Total Rebates from my Referred Friends:",
     my_a_line_refer_total: "Cash back from referred level 1:",
