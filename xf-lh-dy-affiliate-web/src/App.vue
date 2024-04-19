@@ -25,11 +25,11 @@ onMounted(() => {
     link.href = '/vi-favicon.ico';
   }else if(window.location.pathname.indexOf("my") > -1 || window.location.host.indexOf("my") > -1){
     link.href = '/my-favicon.ico';
-  }else if(window.location.pathname.indexOf("th") > -1 || window.location.pathname.indexOf("ph") > -1 || window.location.host.indexOf("ph") > -1 || window.location.host.indexOf("th") > -1){
-    link.href = '/th-favicon.ico';
+  }else if(window.location.pathname.indexOf("lh1-") > -1 || window.location.host.indexOf("lh1-") > -1){
+    link.href = '/favicon.ico';
   }else if(window.location.pathname.indexOf("ind") > -1 || window.location.hostname.indexOf("ind-") > -1){
     link.href = '/ind-favicon.ico';
-  }else if(window.location.pathname.indexOf("ind2") > -1 || window.location.hostname.indexOf("ind2-") > -1){
+  }else if(window.location.pathname.indexOf("iw2") > -1 || window.location.hostname.indexOf("iw2-") > -1){
     link.href = '/ind2-favicon.ico';
   }else{
     link.href = '/favicon.ico';
@@ -44,7 +44,9 @@ onMounted(() => {
       window.location.pathname = '/xf/login'
     } else if (window.location.host.indexOf('ind') > -1 || window.location.hostname.indexOf("ind-") > -1 || window.location.href.includes('ind-')) {
       window.location.pathname = '/ind/login'
-    } else if (window.location.host.indexOf('lh1') > -1) {
+    } else if (window.location.host.indexOf('iw2') > -1 || window.location.hostname.indexOf("iw2-") > -1 || window.location.href.includes('iw2-')) {
+      window.location.pathname = '/ind/login'
+    }  else if (window.location.host.indexOf('lh1') > -1) {
       window.location.pathname = '/lh/login'
     }else if (window.location.host.indexOf('vnm') > -1 || window.location.hostname.indexOf("vnm-") > -1 || window.location.href.includes('vnm-')) {
       window.location.pathname = '/vi/login'
