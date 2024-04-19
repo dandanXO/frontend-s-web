@@ -17,7 +17,9 @@ onMounted(() => {
     link.rel = 'icon';
     document.head.appendChild(link);
   }
-  if(window.location.pathname.indexOf("dy") > -1){
+  console.log("Hostname");
+  console.log(window.location.hostname);
+  if(window.location.pathname.indexOf("dy") > -1 || window.location.hostname.indexOf("dy2-") > -1){
     link.href = '/dy-favicon.ico';
   }else if(window.location.pathname.indexOf("xf") > -1){
     link.href = '/xf-favicon.ico';
@@ -36,7 +38,7 @@ onMounted(() => {
   }
 
   // change path according to hostname
-  console.log(window.location.host);
+  // console.log(window.location.host);
   // debugger;
   if (window.location.pathname === '/login') {
     console.log("Nside Login.")
