@@ -506,6 +506,7 @@ const uiControl = reactive({
     { key: 5, displayName: 'Time', value: 'TIME' },
     { key: 6, displayName: 'Multiple', value: 'MULTIPLE' },
     { key: 7, displayName: 'PGroup', value: 'PGROUP' },
+    { key: 8, displayName: 'Sequence', value: 'SEQUENCE' }
   ],
   status: [
     { key: 1, displayName: 'Open', value: 'OPEN' },
