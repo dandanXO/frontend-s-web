@@ -180,7 +180,7 @@ import Node from "@/components/paymentSelect/node";
 import BankComponent from "@/components/finance/BankComponent";
 import TFLoading from "@/components/loading/TFLoading.vue";
 import { userStore } from "@/store";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 // import { InfoFilled } from "@element-plus/icons-vue";
 import { doIt } from "@/utils/action";
 
@@ -188,6 +188,7 @@ import { doIt } from "@/utils/action";
   RiSpamLine;
 }
 const router = useRouter();
+const route = useRoute();
 const loadingBtn = ref(false);
 const store = userStore();
 const formRef = ref();
@@ -315,6 +316,10 @@ async function loadPrivilege(val) {
           } else {
             hasPrivilege.value = true;
             unselectedPrivileges.value.push(p);
+
+            if(p.code === route.query?.privilegeCode && selectedPrivilege.value === null) {
+              selectedPrivilege.value = p.id;
+            }
           }
         }
       });
