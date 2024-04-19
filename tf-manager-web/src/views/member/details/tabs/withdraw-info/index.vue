@@ -461,6 +461,8 @@ async function loadWithdrwalInfo() {
       query
     )
     page.totalWithdrawAmount = amount
+  } else {
+    page.totalWithdrawAmount = 0
   }
   const { data: success } = await getMemberWithdrawSuccessRecord(props.mbrId, query);
   page.totalSuccessWithdrawAmount = success.totalAmount
