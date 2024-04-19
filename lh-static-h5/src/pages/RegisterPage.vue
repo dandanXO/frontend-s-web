@@ -778,4 +778,26 @@ function charType(num) {
   width: 100%;
   margin: 10px auto 10px;
 }
+
+.body--dark {
+  .login-container {
+    background: url(../assets/images/login/login-bg-dark.jpg) no-repeat top center;
+    background-size: 100% auto;
+    .login-form-container {
+      @include content-block-dark-with-border;
+      q-label {
+        color: $font-3-dark;
+      }
+    }
+    .rounded-borders {
+      > .text-center {
+        color: $font-1;
+        .login-text,
+        a {
+          color: $primary-dark;
+        }
+      }
+    }
+  }
+}
 </style>

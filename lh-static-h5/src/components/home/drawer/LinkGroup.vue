@@ -2,7 +2,7 @@
   <div class="link-group-wrapper">
     <linkable-button v-for="link in links" :key="link.href" :to="link.href">
       <div class="link-content-wrapper">
-        <img :src="link.icon" />
+        <img :src="$q.dark.isActive ? link.iconDark : link.icon" />
         <span>{{ link.label }}</span>
       </div>
     </linkable-button>
@@ -15,11 +15,14 @@ import LinkableButton from "components/home/drawer/LinkableButton.vue";
 import LinkCommunicationImg from "assets/images/home/link-communication.png";
 import LinkVipImg from "assets/images/home/link-vip.png";
 import LinkCustomerServiceImg from "assets/images/home/link-customer-service.png";
+import LinkCommunicationDarkImg from "assets/images/home/link-communication-dark.png";
+import LinkVipDarkImg from "assets/images/home/link-vip-dark.png";
+import LinkCustomerDarkServiceImg from "assets/images/home/link-customer-service-dark.png";
 
 const links = ref([
-  { icon: LinkCommunicationImg, label: "消息中心", href: "/account/inbox" },
-  { icon: LinkVipImg, label: "VIP特权", href: "/account/vip" },
-  { icon: LinkCustomerServiceImg, label: "联系客服", href: "/liveChat" }
+  { icon: LinkCommunicationImg, label: "消息中心", href: "/account/inbox", iconDark: LinkCommunicationDarkImg },
+  { icon: LinkVipImg, label: "VIP特权", href: "/account/vip", iconDark: LinkVipDarkImg },
+  { icon: LinkCustomerServiceImg, label: "联系客服", href: "/liveChat", iconDark: LinkCustomerDarkServiceImg }
 ]);
 </script>
 <style scoped lang="scss">

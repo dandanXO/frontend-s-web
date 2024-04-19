@@ -3,13 +3,22 @@
     <h5 class="system-config-title">系统设置</h5>
     <div class="system-config-inner-wrapper">
       <span>夜间模式</span>
-      <q-toggle v-model="isToggle" />
+      <q-toggle :model-value="$q.dark.isActive" @update:model-value="handleDarkModeToggle" />
     </div>
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
-const isToggle = ref(false);
+import { useQuasar } from "quasar";
+import { useLocalStorage } from "@vueuse/core";
+
+const isDarkMode = useLocalStorage("DARK_MODE", true);
+
+const $q = useQuasar();
+
+const handleDarkModeToggle = (value) => {
+  $q.dark.set(value);
+  isDarkMode.value = value;
+};
 </script>
 <style scoped lang="scss">
 .system-config-wrapper {
@@ -32,6 +41,12 @@ const isToggle = ref(false);
   justify-content: space-between;
   :deep(.q-toggle__inner--truthy) {
     color: #4877f6;
+  }
+}
+
+.body--dark {
+  .system-config-wrapper {
+    color: $font-3-dark;
   }
 }
 </style>

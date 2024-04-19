@@ -238,7 +238,7 @@ const getTitleText = () => {
   else if (bankType === BANK_CARD) return "请输入解绑银行卡号";
   else if (bankType === CRYPTO) return "请输入解绑虚拟币账户";
   else if (bankType === EWALLET) return "请输入解绑电子钱包";
-}
+};
 
 const unbindBankCard = () => {
   unbindBankCardNoRef.value.validate();
@@ -437,6 +437,16 @@ onActivated(() => {
   .unbind-input {
     width: calc(100% - 16px);
     margin: auto;
+  }
+}
+
+.body--dark {
+  .bank-detail-container {
+    .bank-detail-wrapper {
+      .bank-bind-item {
+        @include content-block-dark;
+      }
+    }
   }
 }
 </style>

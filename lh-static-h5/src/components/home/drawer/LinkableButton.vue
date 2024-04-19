@@ -4,12 +4,13 @@
       <slot />
     </div>
     <div class="right">
-      <img :src="ArrowRightImg" />
+      <img :src="$q.dark.isActive ? ArrowRightDarkImg : ArrowRightImg" />
     </div>
   </router-link>
 </template>
 <script setup>
 import ArrowRightImg from "assets/images/home/arrow-right.png";
+import ArrowRightDarkImg from "assets/images/home/arrow-right-dark.png";
 defineProps({
   to: String
 });
@@ -32,6 +33,12 @@ defineProps({
       width: 10px;
       height: auto;
     }
+  }
+}
+
+.body--dark {
+  .link-button-wrapper {
+    color: $font-3-dark;
   }
 }
 </style>

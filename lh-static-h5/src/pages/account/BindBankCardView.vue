@@ -496,4 +496,18 @@ onActivated(() => {
     color: #ffffff;
   }
 }
+
+.body--dark {
+  .bind-container {
+    .bind-wrapper {
+      .bind-item {
+        @include content-block-dark-with-border;
+        .q-field__control {
+          background: $background-dark;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}
 </style>

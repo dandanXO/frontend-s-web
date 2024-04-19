@@ -98,7 +98,11 @@
   <q-input style="width: 100%; opacity: 0" filled color="white" ref="copyinput" v-model="text_copied" />
 
   <q-dialog v-model="reminderDialog" width="100%" no-backdrop-dismiss no-esc-dismis>
-    <q-card class="reminder-dialog-card bg-white" style="width: 100%; padding: 0px 0px 20px">
+    <q-card
+      class="reminder-dialog-card"
+      :class="$q.dark.isActive ? '' : 'bg-white'"
+      style="width: 100%; padding: 0px 0px 20px"
+    >
       <q-card-section class="text-white">
         <q-toolbar>
           <q-toolbar-title>催单</q-toolbar-title>
@@ -428,5 +432,21 @@ export default defineComponent({
 
 .reminder-dialog-form {
   padding: 16px;
+}
+
+.body--dark {
+  .table-record {
+    .q-card {
+      background: $background-dark-light !important;
+      box-shadow: none;
+      border: 1px solid $border-dark;
+    }
+    .label {
+      color: $font-1;
+    }
+    .desc {
+      color: #999999;
+    }
+  }
 }
 </style>
