@@ -275,7 +275,3 @@ export function getSummonRewardRecord(page) {
     page
   } });
 }
-
-export function fdtPromoFirstDepositClaimBonus(promoCode) {
-  return server.EVENT.post('/first-deposit/claim', { promoCode });
-} 
