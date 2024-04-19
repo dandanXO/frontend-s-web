@@ -44,7 +44,9 @@
             <img class="account-avatar" :src="require(`../../assets/images/account/menu-icon-${item.icon}.png`)" />
             {{ item.label }}
 
-            <div v-if="item.icon==='inbox' && store.unreadTotal > 0" class="unread-total"><span>{{store.unreadTotal}}</span></div>
+            <div v-if="item.icon === 'inbox' && store.unreadTotal > 0" class="unread-total">
+              <span>{{ store.unreadTotal }}</span>
+            </div>
           </router-link>
         </div>
       </div>
@@ -53,11 +55,10 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { userStore } from "@/store";
-import {
-  RiRefreshLine,
-} from 'vue-remix-icons';
+import { getUnreadTotal } from "@/api/personal/mailbox";
+import { RiRefreshLine } from "vue-remix-icons";
 
 const store = userStore();
 const isLoadingBalance = ref(false);
@@ -93,6 +94,24 @@ const menuItems = ref([
   { route: "/center/feedback", label: "会员建议", icon: "feedback" },
   { route: "/center/share", label: "分享好友", icon: "transitrecord" }
 ]);
+
+const checkMailboxUnread = () => {
+  getUnreadTotal()
+    .then((res) => {
+      const { code, data } = res;
+      if (code === 0) {
+        store.unreadTotal = data;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+onMounted(() => {
+  checkMailboxUnread();
+  setInterval(checkMailboxUnread, 60000);
+});
 </script>
 
 <style lang="scss">
@@ -177,12 +196,12 @@ const menuItems = ref([
     }
   }
 
-  .unread-total{
+  .unread-total {
     width: 45px;
     height: 25px;
     border-radius: 25px;
     text-align: center;
-    color:#fff;
+    color: #fff;
     background: red;
     font-size: 16px;
     line-height: 25px;
