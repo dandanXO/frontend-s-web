@@ -17,17 +17,15 @@ onMounted(() => {
     link.rel = 'icon';
     document.head.appendChild(link);
   }
-  console.log("Hostname");
-  console.log(window.location.hostname);
-  if(window.location.pathname.indexOf("dy") > -1 || window.location.hostname.indexOf("dy2-") > -1){
+  if(window.location.pathname.indexOf("dy") > -1 || window.location.host.indexOf("dy2-") > -1){
     link.href = '/dy-favicon.ico';
-  }else if(window.location.pathname.indexOf("xf") > -1){
+  }else if(window.location.pathname.indexOf("xf") > -1 || window.location.host.indexOf("xf") > -1){
     link.href = '/xf-favicon.ico';
-  }else if(window.location.pathname.indexOf("vi") > -1){
+  }else if(window.location.pathname.indexOf("vi") > -1 || window.location.host.indexOf("vnm") > -1){
     link.href = '/vi-favicon.ico';
-  }else if(window.location.pathname.indexOf("my") > -1){
+  }else if(window.location.pathname.indexOf("my") > -1 || window.location.host.indexOf("my") > -1){
     link.href = '/my-favicon.ico';
-  }else if(window.location.pathname.indexOf("th") > -1 || window.location.pathname.indexOf("ph") > -1){
+  }else if(window.location.pathname.indexOf("th") > -1 || window.location.pathname.indexOf("ph") > -1 || window.location.host.indexOf("ph") > -1 || window.location.host.indexOf("th") > -1){
     link.href = '/th-favicon.ico';
   }else if(window.location.pathname.indexOf("ind") > -1 || window.location.hostname.indexOf("ind-") > -1){
     link.href = '/ind-favicon.ico';
@@ -55,7 +53,6 @@ onMounted(() => {
     }
   }
 });
-
 </script>
 <style lang="scss">
 
