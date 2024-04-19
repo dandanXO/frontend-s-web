@@ -111,13 +111,25 @@ const getPromotion = () => {
       loadingClaim.value = false;
 
       if (res.code === 0) {
-        const claimedAmt = res.data.lastDigitAmount + res.data.vipAmount;
-        $q.notify({
-          color: "positive",
-          position: "top",
-          message: `恭喜中奖！获得：${claimedAmt}`,
-          icon: "check_circle_outline"
-        });
+        // const claimedAmt = res.data.lastDigitAmount + res.data.vipAmount;
+        const claimedAmt = res.data;
+
+        if(claimedAmt===0){
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: `谢谢惠顾`,
+            icon: "check_circle_outline"
+          });
+
+        }else{
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: `恭喜中奖！获得：${claimedAmt}`,
+            icon: "check_circle_outline"
+          });
+        }
 
         store.getBalance();
 
