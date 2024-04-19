@@ -271,6 +271,11 @@ const regRules = {
     //   trigger: "blur"
     // },
     {
+      required: true,
+      trigger: "change",
+      message: t('placeholder.realName')
+    },
+    {
       validator: validateRealName,
       trigger: "change"
     }
@@ -283,6 +288,7 @@ const regRules = {
       trigger: "blur"
     },
     {
+      required: true,
       validator: validateName,
       trigger: "change"
     }
@@ -295,6 +301,7 @@ const regRules = {
       trigger: "blur"
     },
     {
+      required: true,
       validator: validatePass,
       trigger: "change"
     }
@@ -307,6 +314,7 @@ const regRules = {
       trigger: "blur"
     },
     {
+      required: true,
       validator: validatePass2,
       trigger: "change"
     }
@@ -331,11 +339,6 @@ const regRules = {
     }
   ],
   email: [
-    {
-      required: true,
-      message: t('placeholder.email'),
-      trigger: "blur"
-    },
     {
       type: "email",
       message: t('placeholder.emailFormat'),
