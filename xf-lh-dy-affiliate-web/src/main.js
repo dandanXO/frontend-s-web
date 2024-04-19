@@ -45,7 +45,7 @@ if (window.location.host.indexOf('dy') > -1 || window.location.pathname.indexOf(
   link.href = '/xf-favicon.ico'
 } else if (window.location.host.indexOf('my') > -1 || window.location.pathname.indexOf('my') > -1) {
   link.href = '/my-favicon.ico'
-} else if (window.location.host.indexOf('vi') > -1 || window.location.pathname.indexOf('vi') > -1) {
+} else if (window.location.host.indexOf('vnm') > -1 || window.location.pathname.indexOf('vi') > -1) {
   link.href = '/vi-favicon.ico'
 } else if (
   window.location.host.indexOf('th') > -1 ||
