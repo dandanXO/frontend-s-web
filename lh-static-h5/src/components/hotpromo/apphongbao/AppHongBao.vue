@@ -225,7 +225,7 @@ onMounted(() => {
 
       .table-data {
         position: absolute;
-        top: 10%;
+        top: 15%;
         left: 50%;
         transform: translate(-50%, 0%);
         width: 90%;
@@ -237,11 +237,11 @@ onMounted(() => {
           display: table-row;
 
           .header {
-            font-size: 13px;
+            font-size: 12px;
             color: #ffffffb2;
             text-align: center;
             display: table-cell;
-            padding: 5px 2px;
+            padding: 5px;
             border-bottom: 1px solid #411971;
             
             &:not(:last-child) {
@@ -254,9 +254,10 @@ onMounted(() => {
             color: #b5a0f1;
             text-align: center;
             display: table-cell;
-            padding: 5px 2px;
+            padding: 5px;
             overflow: auto;
-            height: 100px;
+            height: 70px;
+            vertical-align: middle;
             
             &:not(:last-child) {
               border-right: 1px solid #411971;
