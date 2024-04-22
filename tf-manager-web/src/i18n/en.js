@@ -388,6 +388,18 @@ export default {
     NORMAL: 'Normal',
     BET_RECORDS: 'Bet Records',
   },
+  summonFailReason: {
+    PRIVI_IS_CLOSED: 'Privilege is closed',
+    PRIVI_HAS_ENDED: 'Privilge has ended',
+    PRIVI_HAVENT_START: 'Privilege havent start',
+    SUMMONER_VIP_LEVEL_NOT_REACH: 'Summoner VIP level not reach',
+    MEMBER_VIP_LEVEL_EXCEED_1: 'Member VIP level exceed 1',
+    MEMBER_HISTORY_DEPOSIT_AMOUNT_NOT_REACH: 'Member history deposit amount not reach',
+    MEMBER_DEPOSIT_IN_PAST_15_DAYS: 'Member has deposit recently',
+    MEMBER_BET_IN_PAST_15_DAYS: 'Member has bet recently',
+    MEMBER_AND_SUMMONER_SAME_REGISTER_DETAIL: 'Member and summoner same register detail',
+    MEMBER_ALREADY_SUMMONED: 'Member is already summoned',
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -2247,6 +2259,8 @@ export default {
     'Ip Location': 'Ip Location',
     'Member Summon Reward Record': 'Member Summon Reward Record',
     'Redirect Notification': 'Redirect Notification',
+    'Member Summon Event': 'Member Summon Event',
+    'Member Summon List': 'Member Summon List',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
