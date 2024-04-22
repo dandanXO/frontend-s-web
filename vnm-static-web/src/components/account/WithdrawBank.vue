@@ -295,10 +295,10 @@ export default defineComponent({
     };
     let validateBankLength = async (r, v) => {
         var min = 8;
-        var max = 18;
+        var max = 20;
       if (selectedBankType.value === "Bank") {
           min = 8;
-          max = 18;
+          max = 20;
         var selectedBankCode = null;
         banksList.value.forEach(bank => {
           if (bank.id === bankCardInfo.bankId) {
