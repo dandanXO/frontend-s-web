@@ -225,7 +225,7 @@ onMounted(() => {
 
       .table-data {
         position: absolute;
-        top: 0%;
+        top: 10%;
         left: 50%;
         transform: translate(-50%, 0%);
         width: 90%;
@@ -237,13 +237,16 @@ onMounted(() => {
           display: table-row;
 
           .header {
-            font-size: 14px;
+            font-size: 13px;
             color: #ffffffb2;
             text-align: center;
             display: table-cell;
-            padding: 2px;
-            padding-top: 25px;
-            padding-bottom: 10px;
+            padding: 5px 2px;
+            border-bottom: 1px solid #411971;
+            
+            &:not(:last-child) {
+              border-right: 1px solid #411971;
+            }
           }
 
           .content {
@@ -251,9 +254,13 @@ onMounted(() => {
             color: #b5a0f1;
             text-align: center;
             display: table-cell;
-            padding: 2px;
+            padding: 5px 2px;
             overflow: auto;
             height: 100px;
+            
+            &:not(:last-child) {
+              border-right: 1px solid #411971;
+            }
           }
         }
       }
