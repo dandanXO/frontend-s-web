@@ -590,7 +590,7 @@ async function pDepo(deposit) {
                 $q.notify({
                   color: "negative",
                   position: "top",
-                  message: '无法打开充值页面。请检查游览器是否拦截弹窗页面，并修改为"允许弹窗"后再进行充值操作。',
+                  message: t("lang.deposit_allowpopups"),
                   icon: "report_problem"
                 });
                 btnLoading.value = false;

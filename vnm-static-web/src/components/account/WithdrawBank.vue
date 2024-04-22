@@ -294,7 +294,11 @@ export default defineComponent({
       return Promise.resolve();
     };
     let validateBankLength = async (r, v) => {
+        var min = 8;
+        var max = 18;
       if (selectedBankType.value === "Bank") {
+          min = 8;
+          max = 18;
         var selectedBankCode = null;
         banksList.value.forEach(bank => {
           if (bank.id === bankCardInfo.bankId) {
@@ -311,8 +315,6 @@ export default defineComponent({
         }
 
       } else if (selectedBankType.value === "Crypto") {
-        var min = null;
-        var max = null;
         min = 34;
         max = 36;
       } else if (selectedBankType.value === "e-Wallet") {

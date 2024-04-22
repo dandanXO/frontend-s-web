@@ -183,7 +183,6 @@ export default {
     currently_maintaining: "Maintenance in progress",
     maintenance_time: "Maintenance Time",
 
-
     // personal | verify
     personal_exclusiveurl: "Exclusive URL",
     personal_username: "Username",
@@ -302,6 +301,8 @@ export default {
     deposit_between: "Deposit should be between ",
     deposit_bank: "Bank",
     deposit_insert_bank: "Please insert bank",
+    deposit_allowpopups:
+      'Unable to open the recharge page. Please check whether the browser blocks pop-up pages and change it to "Allow pop-ups" before proceeding with the recharge operation.',
 
     // withdraw
     withdraw_amount: "Amount",
@@ -361,6 +362,7 @@ export default {
     bd_submit: "Submit",
     bd_please_enter_digit_only: "Please enter digit only",
     bd_length_between_16_19: "Length should between 16-19",
+    bd_length_between_8_18: "Length should between 8-18",
     bd_added_bank_card: "Added bank card",
     bd_click_verification:
       "Please click to get the verification code and enter your registered mobile phone for verification",

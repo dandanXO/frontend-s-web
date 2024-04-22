@@ -308,6 +308,8 @@ export default {
     deposit_between: "Vui lòng nhập số tiền từ ",
     deposit_bank: "Ngân hàng",
     deposit_insert_bank: "Vui lòng chèn ngân hàng",
+    deposit_allowpopups:
+      'Không thể mở trang nạp tiền. Vui lòng kiểm tra xem trình duyệt có chặn các trang bật lên hay không và thay đổi nó thành "Cho phép cửa sổ bật lên" trước khi tiếp tục thao tác nạp tiền.',
 
     // withdraw
     withdraw_amount: "Số tiền",
@@ -366,6 +368,7 @@ export default {
     bd_submit: "Gửi",
     bd_please_enter_digit_only: "Vui lòng chỉ nhập số",
     bd_length_between_16_19: "Chiều dài nên từ 16-19",
+    bd_length_between_8_18: "Chiều dài nên từ 8-18",
     bd_added_bank_card: "Thẻ ngân hàng đã được thêm",
     bd_click_verification:
       "Vui lòng nhấp để nhận mã xác minh và nhập số điện thoại di động đã đăng ký của bạn để xác minh",
