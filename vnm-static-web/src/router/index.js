@@ -207,7 +207,7 @@ router.beforeEach((to, from, next) => {
     fbq("init", "888951505918547");
     fbq("track", "PageView");
   } else if (window.location.href.indexOf("https://tfgame88.com") > -1) {
-    fbq("init", "460181013114922");
+    fbq("init", "3658633674357920");
     fbq("track", "PageView");
   } else if (window.location.href.indexOf("https://tf88uytin.com") > -1) {
     otag("init", "adv10336256983680");
