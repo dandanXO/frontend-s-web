@@ -25,8 +25,6 @@
             </table>
         </div>
 
-        <ActionButtons :tab="props.tab" :type="props.type"/>
-
         <div class="notes">
             <p>1.&nbsp;活动期间，新用户注册后第二笔存款可选择参与一次复存返利，完成第二笔存款时可联系在线客服申请活动；</p>
             <p>2.&nbsp;申请奖金后需在捕鱼场馆中完成相对应的流水要求，当用户钱包余额＜最低投注额且无未结算注单时，系统将自动判定已完成活动规定的有效流水；</p>
@@ -61,8 +59,6 @@
             </table>
         </div>
 
-        <ActionButtons :tab="props.tab" :type="props.type"/>
-
         <div class="notes">
             <p>1.&nbsp;每位新用户可选择参与1次首存返利，在本活动页面选择好首存场馆后，点击【点击首存】按钮跳转至存款页面后，核实优惠一栏是否是您申请的优惠按钮，确认无误后进行存款即可；</p>
             <p>2.&nbsp;申请奖金后需在捕鱼场馆中完成相对应的流水要求，当用户钱包余额＜最低投注额且无未结算注单时，系统将自动判定已完成活动规定的有效流水；</p>
@@ -75,7 +71,6 @@
 </template>
 <script setup>
 import './styles.css';
-import ActionButtons from './ActionButtons.vue';
 
 const props = defineProps(['tab', 'type']);
 </script>
