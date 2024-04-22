@@ -177,7 +177,11 @@
   </div>
 
   <q-dialog class="modal-common-div" width="100%" v-model="isDisplayLogin">
-    <q-card style="width: 100%; padding: 10px 12px 20px" class="bg-white text-black text-center">
+    <q-card
+      style="width: 100%; padding: 10px 12px 20px"
+      class="text-black text-center"
+      :class="$q.dark.isActive ? '' : 'bg-white'"
+    >
       <div class="headers">
         <div style="width: 2.4em">&nbsp;</div>
         <div class="titles">系统提示</div>

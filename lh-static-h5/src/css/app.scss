@@ -722,4 +722,14 @@ svg {
       }
     }
   }
+
+  .q-field--standout.q-field--highlighted .q-field__control {
+    color: $font-3-dark;
+  }
+
+  .q-field--standout.q-field--highlighted .q-field__native,
+  .q-field--standout.q-field--highlighted .q-field__append,
+  .q-field--standout.q-field--highlighted .q-field__input {
+    color: $font-3-dark;
+  }
 }

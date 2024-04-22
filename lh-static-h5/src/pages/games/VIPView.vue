@@ -1012,14 +1012,13 @@ onActivated(() => {
             color: $dark;
           }
           .vip-card-common-text {
-            color: $font-3-dark;
+            color: $font-1;
           }
         }
         .amount {
           .vip-card-common-text {
-            color: $font-3-dark;
+            color: $font-1;
           }
-          // .vip-card
         }
       }
     }
