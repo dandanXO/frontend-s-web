@@ -421,6 +421,8 @@ const submitRegisterForm = async (elForm) => {
                   window.location.href.indexOf("https://tfgame88.com") > -1
                 ) { 
                   fbq("track", "signup-success");
+                }else if(window.location.href.indexOf("https://tf88uytin.com") > -1){
+                  otag("event", "registration");
                 }
 
                 store.autoLogin(response.data);
