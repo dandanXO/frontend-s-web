@@ -337,7 +337,7 @@
       style="max-width: 1080px"
       @close="store.regPageVisible = false"
     >
-      <div class="acc-dialog-container" :style="`background-image: url(${require(`../../assets/home/acc-dialog-bg-${languageVal}.png`)})`">
+      <div class="acc-dialog-container" :style="`background-image: url(${require(`../../assets/home/reg-acc-dialog-bg-${languageVal}.png`)})`">
         <div class="acc-dialog-left">
           <!-- <div class="acc-dialog-img">
             <img src="../../assets/home/acc-dialog-img.png" />
