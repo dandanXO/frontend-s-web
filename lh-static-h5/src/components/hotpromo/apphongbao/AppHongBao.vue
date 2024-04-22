@@ -243,7 +243,7 @@ onMounted(() => {
             display: table-cell;
             padding: 5px;
             border-bottom: 1px solid #411971;
-            
+
             &:not(:last-child) {
               border-right: 1px solid #411971;
             }
@@ -258,7 +258,7 @@ onMounted(() => {
             overflow: auto;
             height: 70px;
             vertical-align: middle;
-            
+
             &:not(:last-child) {
               border-right: 1px solid #411971;
             }
@@ -289,14 +289,14 @@ onMounted(() => {
       margin: 0 auto;
       text-align: left;
       padding: 0px 10px;
-      color: #7a8eb9;
+      color: #fff;
       font-size: 12px;
     }
 
     .rules-header {
       margin: 0 auto;
       padding: 0px 10px;
-      color: #a4c1ff;
+      color: #fff;
 
       .rules-header-img {
         width: 100%;

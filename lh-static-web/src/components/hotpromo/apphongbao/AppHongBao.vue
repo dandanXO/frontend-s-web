@@ -245,7 +245,7 @@ onMounted(() => {
       width: 95%;
       text-align: left;
       padding: 0px 20px;
-      color: #7a8eb9;
+      color: #fff;
       font-size: 20px;
     }
 
@@ -254,7 +254,7 @@ onMounted(() => {
       max-width: 1400px;
       width: 95%;
       padding: 0px 20px;
-      color: #a4c1ff;
+      color: #fff;
       font-size: 20px;
 
       .rules-header-img {
