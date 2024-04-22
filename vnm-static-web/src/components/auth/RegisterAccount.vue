@@ -321,6 +321,7 @@ const regRules = {
   ],
   telephone: [
     {
+      required: true,
       validator: validatePhoneNumber,
       trigger: "change"
     }
