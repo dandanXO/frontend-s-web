@@ -188,3 +188,7 @@ export const getMemberWithdrawSuccessRecord = (id, query) => {
 export const syncMemberDetail = (id, siteId) => {
   return https().request(`/member/sync/${id}`, Method.GET, { siteId: siteId }, ContentType.form);
 };
+
+export const showAlert = (siteId) => {
+  return https().request("/member/alert", Method.GET, siteId, ContentType.form);
+};

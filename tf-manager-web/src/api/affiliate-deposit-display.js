@@ -24,3 +24,7 @@ export const createAffiliateDepositSetting = (affiliateDepositSetting) => {
 export const updateAffiliateDepositSetting = (affiliateDepositSetting) => {
   return https().request(`/affiliate-deposit-display/setting/update?_method=PUT`, Method.POST, affiliateDepositSetting, ContentType.form);
 };
+
+export const getAffiliateBySiteId = (siteId) => {
+  return https().request(`/affiliate-deposit-display/affiliate-list?siteId=${siteId}`, Method.GET);
+};

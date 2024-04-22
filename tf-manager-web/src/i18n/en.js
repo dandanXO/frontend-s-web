@@ -948,6 +948,7 @@ export default {
     mallName: 'Mall Name',
     manualPay: 'Manual Pay',
     massImport: 'Mass Import',
+    messageAffiliateDepositDisplay: 'Please set deposit display setting for new afiliate',
     matchTime: 'Match Time',
     matchTitle: 'Match Title',
     maxBonus: 'Maximum Bonus',
@@ -1701,6 +1702,7 @@ export default {
     rebateSuccess:
       'VIP Rebate distribution in process, please refresh and check on the records later.',
     registerSuccess: 'Register Success',
+    registerSuccessInd: 'Register Success. Please set deposit display setting for new afiliate.',
     referSuccess: 'Distribute Refer Friend Promo Success',
     replySuccess: 'Reply Success',
     removePreviousLevel: 'Please remove previous level',
