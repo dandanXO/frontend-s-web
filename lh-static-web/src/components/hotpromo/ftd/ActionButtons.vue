@@ -46,3 +46,38 @@ const getPromoCode = () => {
 
 const props = defineProps(['tab', 'type']);
 </script>
+
+<style lang="scss">
+.action-button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+    .action-button {
+        width: 220px;
+        aspect-ratio: 290 / 93;
+        margin: 0 auto;
+        background: url('../../../assets/images/promotion/hotpromo/ftd/first-deposit-btn.png') no-repeat center center;
+        background-size: 100% 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        font-family: 'FZHanZhenGuangBiaoS-GB';
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 42.75px;
+        color: #2E1900;
+        cursor: pointer;
+
+        &:hover {
+            filter: brightness(1.1);
+        }
+
+        &:active {
+            transform: translateY(2px);
+        }
+    }
+}
+</style>
