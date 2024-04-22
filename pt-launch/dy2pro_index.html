@@ -66,7 +66,7 @@
 <div class="loader"></div>
 </body>
 <script type="text/javascript"
-		src="https://login.ld176988.com/jswrapper/integration.js.php?casino=winforfun88"></script>
+		src="https://login-ag.nptgp.com/jswrapper/integration.js.php?casino=agdragon"></script>
 <script type="text/javascript">
 	window.onload=function() {
 		if ('true' === 'true') {
@@ -114,7 +114,7 @@
 			currentgame = game;
 			gametype = type;
 			var realMode = 1;
-			iapiRequestTemporaryToken(realMode, '424', 'GamePlay');
+			iapiRequestTemporaryToken(realMode, '77', 'GamePlay');
 		} else {
 			alert("您尚未登陆，请先登录系统");
 		}
@@ -126,22 +126,14 @@
 					+'&temptoken=' + temptoken + '&game=' + currentgame + '&real=1';
 		} else if (gametype = "ngm") {
 			var support = 'https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=H5&lang=zh-CN&type=2'
-			var clientUrl = 'https://hub.ld176988.com/igaming/'
-					+ '?gameId='
+			var clientUrl = 'https://games-ag.nptgp.com/casinomobile/casinoclient.html'
+					+ '?game='
 					+ currentgame
 					+ '&real=1'
 					+ '&username='
 					+ getQueryVariable('username')
 					+ '&swipeUpOff=true&lang=zh-cn&tempToken='
-					+ temptoken
-					+ '&lobby='
-					+ location.href.substring(0,
-							location.href.lastIndexOf('/') + 1)
-					+ '&support='
-					+ ''
-					+ '&logout='
-					+ location.href.substring(0,
-							location.href.lastIndexOf('/') + 1) ;
+					+ temptoken;
 		}
 		document.location = clientUrl;
 	}
