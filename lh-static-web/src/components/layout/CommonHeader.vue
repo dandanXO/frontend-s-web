@@ -112,7 +112,7 @@
               <div class="profile-img-wrapper">
                 <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
                 <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
-                <el-badge class="unread-count" v-if="store.unreadTotal" :value="store.unreadTotal" />
+                <el-badge class="unread-count" v-if="store.unreadTotal" :value="store.unreadTotal" color="red" />
               </div>
             </span>
             <template #dropdown>
