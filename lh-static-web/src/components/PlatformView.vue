@@ -335,13 +335,17 @@ const switchPlat = (plat) => {
 
 const getPlatGameList = () => {
   if (props.platformGameType === "SLOT") {
-    getPlatformList()
+    const getFn = store.token ? getLoggedInPlatformList : getPlatformList;
+    getFn()
       .then((data) => {
         platformsListDisplay.value = data.filter((element) => element.gameType.includes(props.platformGameType));
         platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
           const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
           return { ...matchingItem, ...item1 };
         });
+
+        // console.log("SLOT")
+        // console.log(platformsListDisplay.value);
 
         if (!route.query.plat) {
           switchPlat(platformsListDisplay.value[0]);
