@@ -251,7 +251,7 @@ onMounted(() => {
 
           .content {
             font-size: 10px;
-            color: #b5a0f1;
+            color: #fff;
             text-align: center;
             display: table-cell;
             padding: 5px;
