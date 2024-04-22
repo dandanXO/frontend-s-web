@@ -362,7 +362,7 @@ export default {
     bd_submit: "Submit",
     bd_please_enter_digit_only: "Please enter digit only",
     bd_length_between_16_19: "Length should between 16-19",
-    bd_length_between_8_18: "Length should between 8-18",
+    bd_length_between_8_20: "Length should between 8-20",
     bd_added_bank_card: "Added bank card",
     bd_click_verification:
       "Please click to get the verification code and enter your registered mobile phone for verification",
