@@ -26,6 +26,8 @@
                 <img class="separator" v-else-if="currentTab === '复存'" src="../../../assets/images/promo/hotpromo/ftd/consecutive-deposit-separator.png" />
             </div>
 
+            <ActionButtons :tab="currentTab" :type="currentType"/>
+
             <SportContent v-if="currentType === '体育'" :tab="currentTab" :type="currentType" />
             <EsportContent v-else-if="currentType === '电竞'" :tab="currentTab" :type="currentType" />
             <LiveContent v-else-if="currentType === '真人'" :tab="currentTab" :type="currentType" />
@@ -44,6 +46,7 @@ import LiveContent from './LiveContent.vue';
 import PokerContent from './PokerContent.vue';
 import SlotContent from './SlotContent.vue';
 import FishingContent from './FishingContent.vue';
+import ActionButtons from './ActionButtons.vue';
 
 const typesArr = ref(['体育', '电竞', '真人', '棋牌', '电子', '捕鱼']);
 const typeIndex = ref(0);
@@ -160,6 +163,7 @@ const switchTab = (index) => {
             justify-content: flex-start;
             align-items: center;
             padding: 20px;
+            gap: 20px;
 
             .second-tab-wrapper {
                 display: flex;
@@ -215,7 +219,6 @@ const switchTab = (index) => {
             }
 
             .separator-wrapper {
-                margin: 20px 0px;
 
                 .separator {
                     aspect-ratio: 1232 / 76;
