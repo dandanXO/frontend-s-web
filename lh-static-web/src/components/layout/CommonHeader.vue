@@ -112,6 +112,7 @@
               <div class="profile-img-wrapper">
                 <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
                 <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
+                <el-badge class="unread-count" v-if="store.unreadTotal" :value="store.unreadTotal" />
               </div>
             </span>
             <template #dropdown>
@@ -1518,6 +1519,15 @@ body {
       width: 12px;
       height: 12px;
       opacity: 0;
+    }
+
+    .unread-count {
+      position: absolute;
+      bottom: 2px;
+      right: 5px;
+      width: 12px;
+      height: 12px;
+      opacity: 1;
     }
   }
 
