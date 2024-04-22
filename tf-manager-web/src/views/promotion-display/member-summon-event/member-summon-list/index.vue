@@ -32,6 +32,22 @@
           :placeholder="t('fields.memberSummon')"
         />
         <el-select
+          v-model="request.status"
+          size="small"
+          :placeholder="t('fields.status')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+        >
+          <el-option
+            :label="t('fields.fail')"
+            value="0"
+          />
+          <el-option
+            :label="t('fields.success')"
+            value="1"
+          />
+        </el-select>
+        <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -82,11 +98,6 @@
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column prop="memberBonus" :label="t('fields.summonBonus')">
-        <template #default="scope">
-          $ <span v-formatter="{data: scope.row.memberBonus, type: 'money'}" />
-        </template>
-      </el-table-column>
       <el-table-column
         prop="summonName"
         :label="t('fields.memberSummon')"
@@ -99,20 +110,34 @@
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column prop="depositAmount" :label="t('fields.depositAmount')">
+      <el-table-column
+        prop="status"
+        :label="t('fields.status')"
+      >
         <template #default="scope">
-          $ <span v-formatter="{data: scope.row.depositAmount, type: 'money'}" />
-        </template>
-      </el-table-column>
-      <el-table-column prop="depositBonus" :label="t('fields.depositBonus')">
-        <template #default="scope">
-          $ <span v-formatter="{data: scope.row.depositBonus, type: 'money'}" />
+          <span v-if="scope.row.status===true">
+            {{ t('fields.success') }}
+          </span>
+          <span v-else>
+            {{ t('fields.fail') }}
+          </span>
         </template>
       </el-table-column>
       <el-table-column
-        prop="dayCount"
-        :label="t('fields.depositDayCount')"
-      />
+        prop="failReason"
+        :label="t('fields.failReason')"
+      >
+        <template #default="scope">
+          <div v-if="scope.row.status===false">
+            <span v-for="(item, index) in scope.row.failReasonList" :key="item">
+              {{ t(`summonFailReason.${item}`) }}{{ index+1 === scope.row.failReasonList.length ? "" : "; " }}
+            </span>
+          </div>
+          <div v-else>
+            -
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="createTime"
         :label="t('fields.createTime')"
@@ -147,13 +172,13 @@
 <script setup>
 import { onMounted, reactive, ref, computed } from 'vue'
 import moment from 'moment'
-import { listMemberSummonRewardRecord } from '../../../api/member-summon'
+import { listMemberSummon } from '../../../../api/member-summon'
 import { useI18n } from 'vue-i18n'
-import { hasPermission } from '../../../utils/util'
+import { hasPermission } from '../../../../utils/util'
 import { getShortcuts } from '@/utils/datetime'
-import { getSiteListSimple } from '../../../api/site'
-import { useStore } from '../../../store'
-import { TENANT } from '../../../store/modules/user/action-types'
+import { getSiteListSimple } from '../../../../api/site'
+import { useStore } from '../../../../store'
+import { TENANT } from '../../../../store/modules/user/action-types'
 
 const { t } = useI18n()
 const shortcuts = getShortcuts(t)
@@ -184,6 +209,7 @@ const request = reactive({
   siteId: null,
   summonerName: null,
   summonName: null,
+  status: null,
 })
 
 function convertDate(date) {
@@ -228,9 +254,20 @@ function checkQuery() {
 async function loadRecord() {
   page.loading = true
   const query = checkQuery()
-  const { data: ret } = await listMemberSummonRewardRecord(query)
+  const { data: ret } = await listMemberSummon(query)
   page.pages = ret.pages
   page.records = ret.records
+  if (page.records !== null) {
+    for (var i = 0; i < page.records.length; i++) {
+      page.records[i].failReasonList = ["-"]
+      if (page.records[i].failReason !== null && page.records[i].failReason.includes(",")) {
+        page.records[i].failReasonList = page.records[i].failReason.split(",")
+      } else {
+        page.records[i].failReasonList[0] = page.records[i].failReason;
+      }
+    }
+  }
+  console.log(page.records)
   page.total = ret.total
   page.loading = false
 }
