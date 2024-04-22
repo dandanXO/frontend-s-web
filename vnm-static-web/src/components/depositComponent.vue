@@ -555,6 +555,11 @@ function doDeposit(data) {
           //     { once: true }
           // );
         }
+
+        if(window.location.href.indexOf("https://tf88uytin.com") > -1){
+          otag("event", "deposit");
+        }
+
       });
       loadingBtn.value = false;
     } else {
