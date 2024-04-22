@@ -1025,7 +1025,8 @@ const populateRiskColor = () => {
 async function approve(affiliate) {
   await listApproveAffiliate(affiliate.id, LOGIN_USER_NAME.value)
   await loadAffiliates()
-  ElMessage({ message: t('message.affiliateApproved'), type: 'success' })
+  ElMessage({ message: t('message.affiliateApproved'), type: 'success' });
+  page.loading = false;
 }
 
 function freeze() {
