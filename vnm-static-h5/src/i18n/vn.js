@@ -1301,7 +1301,7 @@ export default {
     901: "Không tìm thấy ghi chú",
     902: "Email không khớp với thành viên của chúng tôi",
     903: "Email không khớp với tài khoản đã đăng ký",
-    904: "Email chưa được xác minh",
+    904: "Email chưa được xác nhận , hãy liên hệ CSKH 24/7.",
     905: "Chưa nhập tên thật của thành viên",
     906: "E-mail của người dùng chưa được xác minh.",
     909: "Không tìm thấy số điện thoại",
