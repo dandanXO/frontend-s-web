@@ -389,7 +389,7 @@
             />
           </span>
           <span v-if="scope.row.bonusType === 'RATIO'">
-            {{ scope.row.bonusAmount * 100 }} %
+            {{ (scope.row.bonusAmount * 100).toFixed(2) }} %
           </span>
         </template>
       </el-table-column>
