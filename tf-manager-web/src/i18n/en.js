@@ -277,6 +277,8 @@ export default {
     HOMEPROMO: 'Home Promo',
     HOMEPOP: 'Home Pop',
     CENTERPROMO: 'Center Promo',
+    LOGIN: 'Login',
+    REGISTER: 'Register',
   },
   distributeStatus: {
     PENDING: 'Pending',

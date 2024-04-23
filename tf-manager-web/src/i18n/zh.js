@@ -283,6 +283,8 @@ export default {
     HOMEPROMO: '首页优惠',
     HOMEPOP: '首页弹出窗',
     CENTERPROMO: '中心优惠',
+    LOGIN: '登录',
+    REGISTER: '注册',
   },
   distributeStatus: {
     PENDING: '未派发',
