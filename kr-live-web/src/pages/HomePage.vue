@@ -2,38 +2,37 @@
   <div class="main-section">
     <!-- <div v-for="e in snowCount" :key="`snow-${e}`" class="snow"></div> -->
 
-    <img class="home-decor-flower" src="../assets/home/home-decor-flower.png" />
+    <!-- <img class="home-decor-flower" src="../assets/home/home-decor-flower.png" />
     <img class="home-decor-bike" src="../assets/home/home-decor-bike.png" />
     <img class="home-decor-bike-2" src="../assets/home/home-decor-bike-2.png" />
-    <img class="home-decor-tree" src="../assets/home/home-decor-tree.png" />
+    <img class="home-decor-tree" src="../assets/home/home-decor-tree.png" /> -->
 
-    <div class="home-banner-wrapper">
-      <q-carousel
+    <!-- <q-carousel
         :class="!$q.screen.gt.sm ? 'home-banner-h5' : 'home-banner-web'"
         autoplay
         navigation
         v-model="slide"
         swipeable
         infinite
-      >
-        <template v-slot:navigation-icon="{ active, onClick }">
+      > -->
+    <!-- <template v-slot:navigation-icon="{ active, onClick }">
           <q-btn padding="3px 10px" v-if="active" size="xs" color="brand" @click="onClick" />
           <q-btn padding="3px 10px" v-else size="xs" color="white" @click="onClick" />
-        </template>
+        </template> -->
 
-        <!--      <q-carousel-slide-->
-        <!--        name="mainSlide"-->
-        <!--        class="column no-wrap flex-center"-->
-        <!--        :img-src="-->
-        <!--          !$q.screen.gt.sm-->
-        <!--            ? require('../assets/images/index/main-home-banner-mobile.jpg')-->
-        <!--            : require('../assets/images/index/main-home-banner-desktop.jpg')-->
-        <!--        "-->
-        <!--        @click="gotoPromo(0)"-->
-        <!--      >-->
-        <!--        <h1 class="main-slide-txt">ออนไลน์คาสิโนที่ไว้ใจได้-Jolly88</h1>-->
-        <!--      </q-carousel-slide>-->
-        <q-carousel-slide
+    <!--      <q-carousel-slide-->
+    <!--        name="mainSlide"-->
+    <!--        class="column no-wrap flex-center"-->
+    <!--        :img-src="-->
+    <!--          !$q.screen.gt.sm-->
+    <!--            ? require('../assets/images/index/main-home-banner-mobile.jpg')-->
+    <!--            : require('../assets/images/index/main-home-banner-desktop.jpg')-->
+    <!--        "-->
+    <!--        @click="gotoPromo(0)"-->
+    <!--      >-->
+    <!--        <h1 class="main-slide-txt">ออนไลน์คาสิโนที่ไว้ใจได้-Jolly88</h1>-->
+    <!--      </q-carousel-slide>-->
+    <!-- <q-carousel-slide
           v-for="(banner, i) in banners"
           :key="i"
           :name="i"
@@ -42,57 +41,47 @@
           @click="gotoPromo(banner)"
         >
         </q-carousel-slide>
-      </q-carousel>
-    </div>
+      </q-carousel> -->
 
+    <!-- <div class="grid-wrapper">
+      <div class="items-center grid" ref="gameBoardRef"> -->
+    <!--      <div-->
+    <!--        class="game-board-item"-->
+    <!--        :class="currentSelectedMenu == 'xfj' ? 'active-board' : ''"-->
+    <!--        @click="switchMenu('xfj')"-->
+    <!--      >-->
+    <!--        <img src="../assets/images/index/home-cf.png"/>-->
+    <!--        <span>{{ $t("lang.fish2_list") }}</span>-->
+    <!--      </div>-->
+
+    <!--      <div class="game-board-item"-->
+    <!--           :class="(currentSelectedMenu=='fish2') ? 'active-board' : ''"-->
+    <!--           @click="switchMenu('fish2')"-->
+    <!--      >-->
+    <!--        <img src="../assets/images/index/home-fish2.png"/>-->
+    <!--        <span>เกมส์เล็ก ๆ</span>-->
+    <!--      </div>-->
+    <!-- </div>
+    </div> -->
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <img src="../assets/images/menu/announce-icon-thai-theme.png" />
+          <div class="box">
+            <div class="text">  공지</div>
+          
+          </div>
         </div>
         <marquee-text :repeat="announcementList.length" :duration="announcementList.length * 20">
-          <div v-if="announcementList">
+          <!-- <div v-if="announcementList">
             <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
               {{ a.content }}
             </span>
-          </div>
+          </div> -->
+          <div>XX가 XX게임에서 2000000원 땄어요!</div>
         </marquee-text>
       </div>
     </div>
-    <div class="grid-wrapper">
-      <div class="items-center grid" ref="gameBoardRef">
-        <div
-          v-for="(e, i) in gameBoardItemData"
-          :key="`gbi-${i}`"
-          ref="gameBoardItemRef"
-          class="game-board-item"
-          :class="currentSelectedMenu == e.name ? 'active-board' : ''"
-          @click="switchMenu(e.name, i)"
-        >
-          <img class="active-flag" :src="require(`../assets/home/game-board-item-bg-active-flag.png`)" />
-          <img :src="require(`../assets/images/index/${e.imgName}`)" />
-          <span>{{ e.label }}</span>
-        </div>
-
-        <!--      <div-->
-        <!--        class="game-board-item"-->
-        <!--        :class="currentSelectedMenu == 'xfj' ? 'active-board' : ''"-->
-        <!--        @click="switchMenu('xfj')"-->
-        <!--      >-->
-        <!--        <img src="../assets/images/index/home-cf.png"/>-->
-        <!--        <span>{{ $t("lang.fish2_list") }}</span>-->
-        <!--      </div>-->
-
-        <!--      <div class="game-board-item"-->
-        <!--           :class="(currentSelectedMenu=='fish2') ? 'active-board' : ''"-->
-        <!--           @click="switchMenu('fish2')"-->
-        <!--      >-->
-        <!--        <img src="../assets/images/index/home-fish2.png"/>-->
-        <!--        <span>เกมส์เล็ก ๆ</span>-->
-        <!--      </div>-->
-      </div>
-    </div>
-
+<!-- 
     <Transition>
       <div class="game-grid-lists" id="id-sport-board" v-if="currentSelectedMenu === 'sport'">
         <div
@@ -115,9 +104,9 @@
           ></div>
         </div>
       </div>
-    </Transition>
+    </Transition> -->
 
-    <Transition>
+    <!-- <Transition>
       <div class="game-grid-lists" id="id-live-board" v-if="currentSelectedMenu === 'live'">
         <div
           class="game-item btn-pointer"
@@ -139,8 +128,8 @@
           ></div>
         </div>
       </div>
-    </Transition>
-
+    </Transition> -->
+<!-- 
     <Transition>
       <div class="game-grid-lists" id="id-lottery-board" v-if="currentSelectedMenu === 'lottery'">
         <div v-if="lotteryGames.length === 0 && !isShow" class="coming-soon-div">
@@ -211,8 +200,8 @@
           </template>
         </template>
       </div>
-    </Transition>
-    <Transition>
+    </Transition> -->
+    <!-- <Transition>
       <div class="game-grid-lists" id="id-cf-board" v-if="currentSelectedMenu === 'xfj'">
         <div v-if="xfjGames.length === 0" class="coming-soon-div">
           <img src="../assets/home/coming-soon-img.png" />
@@ -240,17 +229,17 @@
           ></div>
         </div>
       </div>
-    </Transition>
-    <Transition>
+    </Transition> -->
+    <!-- <Transition>
       <div class="game-grid-lists" id="id-fish2-board" v-if="currentSelectedMenu === 'fish2'">
         <div class="coming-soon-div">
           <img src="../assets/home/coming-soon-img.png" />
           <span>{{ $t("lang.coming_soon") }}</span>
         </div>
       </div>
-    </Transition>
+    </Transition> -->
 
-    <Transition>
+    <!-- <Transition>
       <div class="game-grid-lists" id="id-slot-board" v-if="currentSelectedMenu === 'slots' && !isShow">
         <div v-if="store.hasToken()" class="game-item btn-pointer btn-slot-game" @click="showFavourite()">
           <img :src="require('../assets/home/slot/slot-favourite-board.png')" />
@@ -273,7 +262,10 @@
           </div>
         </template>
       </div>
-    </Transition>
+    </Transition> -->  .copyright-text{
+    font-size: 20px;
+    line-height: 28px;
+  }
     <Transition>
       <div class="game-scroll-lists" id="id-slot-board" v-if="currentSelectedMenu === 'slots' && isShow">
         <q-scroll-area
@@ -747,7 +739,7 @@
   </div>
 
   <div class="home-bottom-section">
-    <div class="marquee">
+    <!-- <div class="marquee">
       <Vue3Marquee pause-on-hover pause-on-click>
         <img src="../assets/logo/AE.png" height="30" />
         <img src="../assets/logo/AMBSLOT.png" height="30" />
@@ -769,14 +761,14 @@
         <img src="../assets/logo/CG.png" height="30" />
         <img src="../assets/logo/SP.png" height="30" />
       </Vue3Marquee>
-    </div>
+    </div> -->
 
-    <div class="bottom-footer">
+    <!-- <div class="bottom-footer">
       <img class="footer-logo" src="../assets/logo.png" />
       <p>{{ $t("lang.footer_tnc") }}</p>
 
       <span>{{ $t("lang.footer_all_rights") }}</span>
-    </div>
+    </div> -->
   </div>
 
   <GameModal ref="gameModalRef"></GameModal>
@@ -860,15 +852,15 @@
     </q-card>
   </q-dialog>
 
-  <q-page-sticky
+  <!-- <q-page-sticky
     v-if="showSticky || specialInviteBonusEligible"
     class="home-sticky-div"
     position="right"
     :offset="[0, 0]"
   >
-    <div v-if="showSticky" class="home-sticky">
-      <!-- <img class="sticky-bear" src="../assets/home/line-bear.png" /> -->
-      <q-btn name="close" height="20" width="20" size="xs" @click="closeLineSticky" class="sticky-close-btn">
+    <div v-if="showSticky" class="home-sticky"> -->
+  <!-- <img class="sticky-bear" src="../assets/home/line-bear.png" /> -->
+  <!-- <q-btn name="close" height="20" width="20" size="xs" @click="closeLineSticky" class="sticky-close-btn">
         <q-icon name="close"></q-icon>
       </q-btn>
       <div class="sticky-container">
@@ -881,7 +873,7 @@
     <div v-if="specialInviteBonusEligible" class="bonus-sticky-box">
       <div class="special-invite-bonus-sticky" @click="redeemSpecialInviteBonus" />
     </div>
-  </q-page-sticky>
+  </q-page-sticky> -->
 
   <q-dialog class="special-invite-bonus-popup" width="100%" v-model="specialInviteBonusPopupVisible">
     <div class="special-invite-bonus-container">
@@ -2050,6 +2042,9 @@ export default defineComponent({
 
 .home-banner-wrapper {
   position: relative;
+  width: 100%;
+  height: 440px;
+  background: url("../assets/images/headerBanner/banner.svg") no-repeat center center;
 }
 
 .midd {
@@ -2066,7 +2061,7 @@ export default defineComponent({
   .station-notice-wrapper {
     display: flex;
     border-radius: 8px;
-    border: 1px solid #9c1103;
+
     gap: 10px;
     padding: 2px 10px;
     justify-content: center;
@@ -2075,11 +2070,17 @@ export default defineComponent({
     flex: 1;
 
     .volume {
-      padding-top: 3px;
-
-      img {
-        width: 21px;
-        height: auto;
+      height: 32px;
+      background-color: #ff3c3c;
+      display: flex;
+      align-items: center;
+      .box {
+        width: 60px;
+        font-size: 16px;
+        line-height: 22.4px;
+        border-radius: 2px;
+        display: flex;
+        justify-content: center;
       }
     }
 

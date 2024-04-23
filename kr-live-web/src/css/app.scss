@@ -12,9 +12,9 @@ body {
 }
 
 #q-app {
-  background: $dark-page;
-  background: url("../assets/images/common/bg-img-thai-theme.jpg") no-repeat top center;
-  background-size: cover;
+  // background: $dark-page;
+  // background: url("../assets/images/common/bg-img-thai-theme.jpg") no-repeat top center;
+  // background-size: cover;
 }
 
 ::-webkit-scrollbar {
@@ -168,13 +168,10 @@ body.body--dark .q-drawer {
 
 body.body--dark .q-footer {
   padding-bottom: calc(1px + env(safe-area-inset-top, 0));
-  background-image: url(../assets/images/common/footer-bg.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: top;
   margin: 0 auto;
   width: 100%;
-  background: #900000;
+  height: 250px;
+  background: #0d0e0f;
 
   .q-tabs {
     max-width: 600px;
@@ -287,11 +284,10 @@ svg {
   animation: breathing 4s ease-out infinite normal;
 }
 
-
 @-webkit-keyframes breathing {
   0% {
-    -webkit-transform:  scale(1.1);
-    transform:  scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
     filter: brightness(1.2);
   }
 
@@ -302,8 +298,8 @@ svg {
   }
 
   60% {
-    -webkit-transform:  scale(1.1);
-    transform:  scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
     filter: brightness(1.2);
   }
 
@@ -316,9 +312,9 @@ svg {
 
 @keyframes breathing {
   0% {
-    -webkit-transform:  scale(1.1);
+    -webkit-transform: scale(1.1);
     -ms-transform: scale(1.1);
-    transform:  scale(1.1);
+    transform: scale(1.1);
     filter: brightness(1.2);
   }
 
@@ -332,7 +328,7 @@ svg {
   60% {
     -webkit-transform: scale(1.1);
     -ms-transform: scale(1.1);
-    transform:  scale(1.1);
+    transform: scale(1.1);
     filter: brightness(1.2);
   }
 
@@ -343,7 +339,6 @@ svg {
     filter: brightness(1);
   }
 }
-
 
 .q-splitter--dark .q-splitter__separator {
   background: none;
@@ -539,7 +534,7 @@ svg {
   }
 }
 
-.btn-slot-game.inner-slot-game{
+.btn-slot-game.inner-slot-game {
   &:before {
     border-radius: 20px;
   }
@@ -576,7 +571,7 @@ svg {
   background: #5d0d0d;
 }
 
-.verification-input:hover :before{
+.verification-input:hover :before {
   opacity: 0 !important;
 }
 
@@ -596,8 +591,8 @@ input:internal-autofill-selected {
   border: 2px solid #fb3ca9;
   background: linear-gradient(90deg, #cf027d 0%, #ff6370 100%);
   box-shadow: 0px 0px 0.3409rem 0.06818rem rgba(251, 89, 114, 0.54),
-  0px 0.1818rem 0.1818rem 0px rgba(255, 178, 189, 0.26) inset,
-  0px -0.4545rem 0.4545rem 0px rgba(171, 16, 99, 0.76) inset;
+    0px 0.1818rem 0.1818rem 0px rgba(255, 178, 189, 0.26) inset,
+    0px -0.4545rem 0.4545rem 0px rgba(171, 16, 99, 0.76) inset;
 }
 
 .btn-lg {
@@ -617,8 +612,8 @@ input:internal-autofill-selected {
   color: $header-color;
 }
 
-.mb-large{
-  margin-bottom:40px;
+.mb-large {
+  margin-bottom: 40px;
 }
 
 .w-1\.8 {
@@ -647,8 +642,8 @@ input:internal-autofill-selected {
 }
 
 @media (min-width: 991px) {
-  #q-app {
-    background: url("../assets/images/common/bg-web-thai-theme.png") no-repeat top center;
-    background-size: 100% 100%;
-  }
+  // #q-app {
+  //   background: url("../assets/images/common/bg-web-thai-theme.png") no-repeat top center;
+  //   background-size: 100% 100%;
+  // }
 }

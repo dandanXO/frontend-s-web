@@ -1,50 +1,5 @@
 <template>
   <q-layout view="hHh Lpr lFf">
-    <q-header elevated>
-      <AppDownload />
-
-      <q-card-section v-if="!store.hasToken()" class="top-section justify-between items-center" horizontal>
-        <q-card-actions v-if="$q.screen.gt.md">
-          <div class="btn-deco-wrapper">
-            <q-btn size="md" class="register-btn" to="/register">{{ $t("lang.register") }}</q-btn>
-          </div>
-        </q-card-actions>
-        <div class="logo">
-          <router-link to="/"><img src="../assets/logo.png" /></router-link>
-        </div>
-        <q-card-actions>
-          <div class="btn-deco-wrapper">
-            <q-btn size="md" class="login-btn" to="/login">{{ $t("lang.login") }}</q-btn>
-          </div>
-          <div v-if="!$q.screen.gt.md" class="btn-deco-wrapper">
-            <q-btn size="md" class="register-btn" to="/register">
-              {{ $t("lang.register") }}
-            </q-btn>
-          </div>
-        </q-card-actions>
-      </q-card-section>
-      <!--      v-if="hasPage"-->
-      <q-card-section v-if="store.hasToken()" class="top-section flex justify-between items-center">
-        <q-btn flat @click="ui.leftDrawerOpen = !ui.leftDrawerOpen" round dense icon="menu" />
-
-        <div class="point-rebate-div">
-          <img src="../assets/images/menu/coin-icon.png" />
-
-          <span id="point-span">{{ mainWalletValue }}</span>
-
-          <img class="btn-pointer" @click="store.getBalance()" src="../assets/images/menu/refresh-icon.png" />
-        </div>
-
-        <div v-if="$q.screen.gt.md" class="logo">
-          <router-link to="/"><img src="../assets/logo.png" /></router-link>
-        </div>
-
-        <q-btn v-if="store.hasToken()" class="flex header-vip-btn" to="/promo?id=194" no-caps flat label="VIP" stack>
-          <img class="vip-btn btn-pointer" src="../assets/images/menu/vip-icon.png" />
-        </q-btn>
-      </q-card-section>
-    </q-header>
-
     <q-drawer v-model="ui.leftDrawerOpen" bordered overlay :width="350" :breakpoint="1280" class="drawer-left">
       <div v-if="store.hasToken()" class="drawer-container">
         <AccountPage />
@@ -52,41 +7,9 @@
     </q-drawer>
 
     <q-page-container>
-      <div class="page-header" v-if="hasPage">
-        <div class="page-header-inner">
-          <div class="page">
-            <img v-if="headerIcon" :src="headerIcon" />
-            <span>{{ pageName }}</span>
-          </div>
+      <div class="home-banner-wrapper"></div>
 
-          <div class="lang-select-board" v-if="hasLang">
-            <q-select
-              class="lang-container"
-              placeholder=""
-              style="min-height: 30px; height: 30px"
-              v-model="languageVal"
-              :options="langOptions"
-              option-label="label"
-              option-value="value"
-              emit-value
-              map-options
-            ></q-select>
-          </div>
-
-          <div class="header-back">
-            <div class="lang-select-board" v-if="hasLang">
-              <div @click="openAffiliatePage" class="affiliate-btn btn-pointer">
-                <img src="../assets/images/menu/affiliate-icon.png" />
-                <span>{{ $t("lang.affiliate_footer") }}</span>
-              </div>
-            </div>
-
-            <div class="close-back-btn btn-pointer" @click="closeWindowOrBack()">
-              <RiCloseLine />
-            </div>
-          </div>
-        </div>
-      </div>
+      <LoginBar />
       <div class="main-content">
         <router-view v-slot="{ Component }">
           <KeepAlive :max="8">
@@ -95,63 +18,18 @@
         </router-view>
       </div>
     </q-page-container>
-    <q-footer v-if="ui.footer" elevated>
-      <q-tabs v-model="tab" no-caps class="footer-nav" :breakpoint="0" align="justify">
-        <q-route-tab to="/" name="home" exact>
-          <img class="footer-icon" :src="tab === 'home' ? footers['home']['active'] : footers['home']['icon']" />
-          <span class="footer-label">{{ $t("lang.home_page") }}</span>
-        </q-route-tab>
-
-        <q-route-tab to="/finance/withdraw" name="withdraw">
-          <img
-            class="footer-icon"
-            :src="tab === 'withdraw' ? footers['withdraw']['active'] : footers['withdraw']['icon']"
-          />
-          <span class="footer-label">{{ $t("lang.withdraw_footer") }}</span>
-        </q-route-tab>
-
-        <q-route-tab to="/finance/deposit" name="deposit" class="middle-menu">
-          <img
-            class="footer-icon"
-            :src="tab === 'deposit' ? footers['deposit']['active'] : footers['deposit']['icon']"
-          />
-
-          <span class="footer-label">{{ $t("lang.deposit_footer") }}</span>
-        </q-route-tab>
-
-        <!-- <q-route-tab to="/finance/deposit" name="deposit">
-          <img
-            class="footer-icon"
-            :src="tab === 'deposit' ? footers['deposit']['active'] : footers['deposit']['icon']"
-          />
-          <span>{{ $t("lang.deposit_footer") }}</span>
-        </q-route-tab> -->
-
-        <!-- <q-route-tab to="/finance/withdraw" name="withdraw">
-          <img class="footer-icon"
-               :src="(tab === 'withdraw') ? footers['withdraw']['active']  : footers['withdraw']['icon'] "/>
-          <span>{{ $t('lang.withdraw_footer') }}</span>
-        </q-route-tab> -->
-
-        <!-- <q-route-tab to="/account/mail" name="notice">
-          <img class="footer-icon"
-               :src="(tab === 'notice') ? footers['notice']['active']  :  footers['notice']['icon'] "/>
-          <span>{{ $t('lang.notice_footer') }}</span>
-        </q-route-tab> -->
-        <q-route-tab to="/getapp" name="app">
-          <img class="footer-icon" :src="tab === 'app' ? footers['app']['active'] : footers['app']['icon']" />
-          <span class="footer-label">APP</span>
-        </q-route-tab>
-        <q-route-tab to="/liveChat" id="cs-web-id" class="cs-web-id" name="cs" @click="openLiveChat($event, router)">
-          <img
-            class="footer-icon"
-            :class="tab != 'cs' ? 'breathing-icon' : ''"
-            :src="tab === 'cs' ? footers['cs']['active'] : footers['cs']['icon']"
-          />
-          <span class="footer-label">{{ $t("lang.cs_footer") }}</span>
-        </q-route-tab>
-      </q-tabs>
-    </q-footer>
+    <!-- <q-footer v-if="ui.footer" elevated>
+    
+    </q-footer> -->
+    <footer>
+      <div class="footer-box">
+        <div class="box" v-for="(items, index) in footerBoxImgUrl" :key="index">
+          <img :src="items.imgUrl" alt="" />
+        </div>
+        
+      </div>
+      <div class="copyright-text">ⓒ 2023 RS9 CASINO All right reserved</div>
+    </footer>
   </q-layout>
 </template>
 
@@ -168,6 +46,7 @@ import { i18nStore } from "src/router/language";
 import { useI18n } from "vue-i18n";
 import { openLiveChat } from "src/boot/utils";
 import AppDownload from "../components/AppDownload.vue";
+import LoginBar from "../components/LoginAndRegister/LoginBar";
 
 export default defineComponent({
   name: "MainLayout",
@@ -175,10 +54,26 @@ export default defineComponent({
     AccountPage,
     // RiArrowDropLeftLine,
     RiCloseLine,
-    AppDownload
+    AppDownload,
+    LoginBar
   },
 
   setup() {
+    const footerBoxImgUrl = reactive([
+      { imgUrl: require("../assets/images/footer/company1.png") },
+      { imgUrl: require("../assets/images/footer/company2.png") },
+      { imgUrl: require("../assets/images/footer/company3.png") },
+      { imgUrl: require("../assets/images/footer/company4.png") },
+      { imgUrl: require("../assets/images/footer/company5.png") },
+      { imgUrl: require("../assets/images/footer/company6.png") },
+      { imgUrl: require("../assets/images/footer/company7.png") },
+      { imgUrl: require("../assets/images/footer/company8.png") },
+      { imgUrl: require("../assets/images/footer/company9.png") },
+      { imgUrl: require("../assets/images/footer/company10.png") },
+      { imgUrl: require("../assets/images/footer/company11.png") },
+      { imgUrl: require("../assets/images/footer/company12.png") }
+    ]);
+
     const route = useRoute();
     const router = useRouter();
     const store = userStore();
@@ -433,7 +328,8 @@ export default defineComponent({
       mainWalletValue,
       openAffiliatePage,
       openLiveChat,
-      router
+      router,
+      footerBoxImgUrl
     };
   }
 });
@@ -640,6 +536,57 @@ svg path {
   padding: 10px 16px;
   width: calc(100%);
 }
+
+.home-banner-wrapper {
+  position: relative;
+  width: 100%;
+  height: 440px;
+  background-image: url("../assets/images/headerBanner/banner.svg");
+  background-color: rgba(0, 0, 0, 0.3);
+  background-blend-mode: multiply;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+footer {
+  width: 100%;
+  height: 300px;
+  background-color: #0d0e0f;
+  display: flex;
+  flex-direction: column;
+justify-content: space-between;
+align-items: center;
+}
+
+.footer-box {
+  margin-top: 36px;
+  max-width: 1280px;
+  /* display: grid;
+  grid-template-columns: repeat(8, 150px); */
+  column-gap: 5px;
+  row-gap: 5px;
+  /* grid-template-rows: repeat(2, 70px); */
+  /* align-items: center;
+  justify-items: center; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  .box {
+    width: 140px;
+    height: 60px;
+    background-color: #272a30;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.copyright-text{
+    font-size: 20px;
+    line-height: 28px;
+    padding-bottom: 20px;
+  }
 
 @media (min-width: 600px) {
   .login-btn {
