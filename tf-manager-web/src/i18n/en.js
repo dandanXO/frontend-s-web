@@ -239,6 +239,9 @@ export default {
     merchantDepositSummary: 'Merchant Deposit Summary',
     onlineStatsCompareChartName: 'Online Stats Compared By Day',
     onlineStatsChartName: 'Online Stats',
+    rfdRegisterCount: 'Member Register Count',
+    rfdFDepositCount: 'Member First Deposit Count',
+    rfdReport: 'Register and Ftd Report',
   },
   reportGame: {
     gamePlatform: 'Game Platform',

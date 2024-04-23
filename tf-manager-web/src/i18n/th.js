@@ -193,6 +193,9 @@ export default {
     bet: 'การเดิมพัน',
     payout: 'การจ่ายเงิน',
     merchantDepositSummary: 'สรุปการฝากเงินของร้านค้า',
+    rfdRegisterCount: 'จำนวนการลงทะเบียน',
+    rfdFDepositCount: 'สถิติการฝากครั้งแรก',
+    rfdReport: 'การลงทะเบียนแนวโน้มการฝากเงินครั้งแรก',
   },
   reportGame: {
     gamePlatform: 'แพลตฟอร์มเกม',
