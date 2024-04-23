@@ -262,10 +262,7 @@
           </div>
         </template>
       </div>
-    </Transition> -->  .copyright-text{
-    font-size: 20px;
-    line-height: 28px;
-  }
+    </Transition> -->  
     <Transition>
       <div class="game-scroll-lists" id="id-slot-board" v-if="currentSelectedMenu === 'slots' && isShow">
         <q-scroll-area
