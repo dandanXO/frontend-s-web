@@ -2470,7 +2470,7 @@ body {
       }
 
       .acc-dialog-right {
-        width: 450px;
+        width: 60%;
         padding: 24px 24px 24px 40px;
 
         .acc-dialog-content {
