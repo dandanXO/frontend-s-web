@@ -1,5 +1,4 @@
 <template>
-  <pre>isH5 {{ isH5 }}</pre>
   <q-layout view="hHh Lpr fFf" :class="{ roboto: languageVal === 'vn', poppins: languageVal === 'en' }">
     <q-header v-if="hasPage" :class="hasShadow ? 'with-shadow' : ''">
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
