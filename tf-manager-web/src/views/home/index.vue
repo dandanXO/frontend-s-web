@@ -359,7 +359,7 @@
     </el-row>
     <el-row class="chart-summary">
       <el-card>
-        <Chart :options="depositBarchatOptions" />
+        <Chart :options="rfdLinechatOptions" />
       </el-card>
       <el-card>
         <Chart :options="depositLinechatOptions" />
@@ -414,7 +414,7 @@
     </el-row>
     <el-row class="chart-summary-2">
       <el-card>
-        <Chart :options="rfdLinechatOptions" />
+        <Chart :options="depositBarchatOptions" />
       </el-card>
     </el-row>
   </div>
