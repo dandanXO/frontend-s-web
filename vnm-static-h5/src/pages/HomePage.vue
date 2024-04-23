@@ -531,7 +531,7 @@
   </div>
 
   <q-page-sticky position="bottom-right" :offset="fabPos">
-    <q-btn
+    <!-- <q-btn
       rounded
       no-caps
       color="info"
@@ -541,7 +541,10 @@
       persistent
     >
       {{ $t("lang.rebates") }}
-    </q-btn>
+    </q-btn> -->
+     <div class="rebates-absolute"
+     :disable="draggingFab"
+      v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">{{ $t("lang.rebates") }}</div>
   </q-page-sticky>
 
   <q-dialog
@@ -2244,7 +2247,18 @@ export default defineComponent({
     animation: fadeIn 1.5s;
   }
 }
+.rebates-absolute {
+  background: url(../assets/images/home/rebates-absolute.png)no-repeat center center;
+  background-size: contain;
+  height: 100px;
+  width: 135px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+  font-weight: bold;
 
+}
 @keyframes fadeIn {
   0% {
     opacity: 0;
