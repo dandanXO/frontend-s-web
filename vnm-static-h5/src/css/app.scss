@@ -171,7 +171,7 @@ body .q-footer {
   padding-bottom: calc(1px + env(safe-area-inset-bottom, 0));
   overflow: hidden;
   border-radius: 8px 8px 0px 0px;
-  box-shadow: 0px -4px 15px 0px #dadada66;
+  box-shadow: 0px -6px 50px 0px rgba(0, 0, 0, 0.4);
 }
 
 svg {

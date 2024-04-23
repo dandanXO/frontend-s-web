@@ -1797,7 +1797,11 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  color: #696d70;
+    border-radius: 2.1875rem;
+    background: #fff;
+    box-shadow: 0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset, 0px 4px 10px 0px;
+    font-family: 'Roboto';
   .hot-match-div {
     background-image: url("../assets/images/home/match-icon.png");
     background-repeat: no-repeat;

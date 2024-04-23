@@ -2593,10 +2593,10 @@ body {
     width: 100%;
     padding: 0px 6px 0px 8px;
     z-index: 2;
-    color: #000000;
+    color: #444444;
     letter-spacing: 1px;
     text-align: center;
-    font-family: PingFang SC;
+    font-weight: bold;
 
     &.active {
       font-weight: 500;
