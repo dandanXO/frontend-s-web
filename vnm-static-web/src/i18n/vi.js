@@ -789,7 +789,7 @@ export default {
     901: "Không tìm thấy bản ghi",
     902: "Email không phù hợp với thành viên của chúng tôi",
     903: "Email không phù hợp với tài khoản đã đăng ký",
-    904: "Email chưa được xác minh",
+    904: "Email chưa được xác nhận , hãy liên hệ CSKH 24/7.",
     905: "Không cung cấp tên thật",
     906: "E-mail của người dùng chưa được xác minh.",
     909: "Không tìm thấy số điện thoại",

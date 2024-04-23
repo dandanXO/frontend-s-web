@@ -1299,7 +1299,7 @@ export default {
     901: "Record not found",
     902: "Email does not match our member",
     903: "Email does not match the registered account",
-    904: "Email has not been verified",
+    904: "Email has not been verified yet, please contact Customer Service 24/7.",
     905: "Real name not provided",
     906: "User email has not verify yet.",
     909: "Phone number not found",
