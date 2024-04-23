@@ -81,6 +81,7 @@
           <router-link to="/register" class="action-btn">
             <a class="header-btn btn-color-white">注册</a>
           </router-link> -->
+          <button @click="handleDarkModeClick">切换黑暗模式</button>
           <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">登录</a>
           <a class="header-btn btn-color-white" @click="registerDialogVisible = true">注册</a>
         </div>
@@ -451,6 +452,7 @@ import { getUnreadTotal } from "@/api/personal/mailbox";
 import LoginDialog from "@/views/LoginDialog.vue";
 import RegisterAccount from "@/components/auth/RegisterAccount.vue";
 import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
+import { useDark } from "@vueuse/core";
 
 export default defineComponent({
   name: "CommonHeader",
@@ -1375,6 +1377,10 @@ export default defineComponent({
       router.push(path);
     };
 
+    const isDark = useDark()
+
+    const handleDarkModeClick = () => isDark.value = !isDark.value
+
     return {
       token,
       el,
@@ -1440,7 +1446,8 @@ export default defineComponent({
       handleCommand,
       openLoginDialog,
       openRegDialog,
-      openForgotpwdDialog
+      openForgotpwdDialog,
+      handleDarkModeClick
     };
   }
 });
