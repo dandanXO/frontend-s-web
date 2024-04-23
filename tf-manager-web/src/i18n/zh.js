@@ -245,6 +245,9 @@ export default {
     merchantDepositSummary: '商户充值汇总',
     onlineStatsCompareChartName: '在线人数环比',
     onlineStatsChartName: '在线人数统计',
+    rfdRegisterCount: '注册人数统计',
+    rfdFDepositCount: '首存人数统计',
+    rfdReport: '注册首存走势',
   },
   reportGame: {
     gamePlatform: '游戏平台',
