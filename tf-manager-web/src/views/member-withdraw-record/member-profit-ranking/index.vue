@@ -118,7 +118,7 @@
       size="small"
       highlight-current-row
       v-loading="page.loading"
-      height="calc(100vh - 220px)"
+      height="calc(100vh - 180px)"
       :header-cell-style="{background: 'lightgray'}"
       :empty-text="t('fields.noData')"
     >
