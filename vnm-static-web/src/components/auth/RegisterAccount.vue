@@ -1,7 +1,5 @@
 <template>
   <el-form ref="registerRef" :rules="regRules" :model="regForm" label-width="200" size="large">
-    
-
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
       <el-form-item :label="$t('login.username')" prop="loginName">
@@ -49,9 +47,7 @@
           class="wTip"
           v-model="regForm.realName"
           :placeholder="$t('login.realName')"
-          :rules="[
-            { required: true, message: t('placeholder.realName') },
-          ]"
+          :rules="[{ required: true, message: t('placeholder.realName') }]"
           clearable
         >
           <template #append></template>
@@ -65,9 +61,7 @@
           class="wTip"
           v-model="regForm.email"
           :placeholder="$t('login.email')"
-          :rules="[
-            { required: true, message: t('placeholder.email') },
-          ]"
+          :rules="[{ required: true, message: t('placeholder.email') }]"
           clearable
         >
           <template #append></template>
@@ -81,9 +75,7 @@
           class="wTip"
           v-model="regForm.telephone"
           :placeholder="$t('login.mobileNo')"
-          :rules="[
-            { required: true, message: t('placeholder.mobileNo') },
-          ]"
+          :rules="[{ required: true, message: t('placeholder.mobileNo') }]"
           clearable
         >
           <template #append></template>
@@ -119,7 +111,7 @@
           <el-input
             @keyup.enter="submitRegisterForm(registerRef)"
             v-model="regForm.captchaCode"
-            :placeholder="$t('login.captcha')"  
+            :placeholder="$t('login.captcha')"
             clearable
           />
           <img style="width: 90px" :src="verificationImg" @click="getCode" />
@@ -131,19 +123,20 @@
       <el-button class="blue-bg primary-btn" size="large" @click="resetRegForm(registerRef)">重新填写</el-button>
   </div> -->
   <div>
-    <button class="primary-btn login-btn" size="large" @click="submitRegisterForm(registerRef)">{{ $t('login.register') }}</button>
+    <button class="primary-btn login-btn" size="large" @click="submitRegisterForm(registerRef)">
+      {{ $t("login.register") }}
+    </button>
   </div>
 
-  <div style="width: 100%; margin-top: 5px;">
+  <div style="width: 100%; margin-top: 5px">
     <!-- <div style="visibility:hidden">
       <a @click="closeRegDialog">先去逛逛</a>
     </div> -->
-    
-<!--    <div style="text-align: center" class="font-gray">-->
-<!--      {{ $t('login.alreadyAccount') }}?-->
-<!--      <a @click="openLoginDialog">{{ $t('login.login') }}</a>-->
-<!--    </div>-->
 
+    <!--    <div style="text-align: center" class="font-gray">-->
+    <!--      {{ $t('login.alreadyAccount') }}?-->
+    <!--      <a @click="openLoginDialog">{{ $t('login.login') }}</a>-->
+    <!--    </div>-->
   </div>
 </template>
 
@@ -196,7 +189,7 @@ const checkRealName = (v) => {
 
 let validateName = async (r, v) => {
   if (v === "") {
-    return Promise.reject(t('placeholder.username'));
+    return Promise.reject(t("placeholder.username"));
   } else {
     return Promise.resolve();
   }
@@ -205,9 +198,9 @@ let validateName = async (r, v) => {
 let validatePhoneNumber = async (r, v) => {
   var reg = /^\d+$/;
   if (v === "") {
-    return Promise.reject(t('placeholder.verifyPhone'));
+    return Promise.reject(t("placeholder.verifyPhone"));
   } else if (!reg.test(v)) {
-    return Promise.reject(t('placeholder.onlyNumber'));
+    return Promise.reject(t("placeholder.onlyNumber"));
   } else {
     return Promise.resolve();
   }
@@ -215,7 +208,7 @@ let validatePhoneNumber = async (r, v) => {
 
 let validateRealName = async (r, v) => {
   if (v === "") {
-    return Promise.reject(t('placeholder.realName'));
+    return Promise.reject(t("placeholder.realName"));
   } else {
     return Promise.resolve();
   }
@@ -245,9 +238,9 @@ let validatePassStrength = (r, v) => {
 
 let validatePass2 = async (r, v) => {
   if (v === "") {
-    return Promise.reject(t('placeholder.confirmPwd'));
+    return Promise.reject(t("placeholder.confirmPwd"));
   } else if (v !== regForm.password) {
-    return Promise.reject(t('placeholder.noMatch'));
+    return Promise.reject(t("placeholder.noMatch"));
   } else {
     return Promise.resolve();
   }
@@ -255,7 +248,7 @@ let validatePass2 = async (r, v) => {
 
 let validatePass = async (r, v) => {
   if (v === "") {
-    return Promise.reject(t('placeholder.password'));
+    return Promise.reject(t("placeholder.password"));
   } else {
     return validatePassStrength(r, v);
   }
@@ -273,7 +266,7 @@ const regRules = {
     {
       required: true,
       trigger: "change",
-      message: t('placeholder.realName')
+      message: t("placeholder.realName")
     },
     {
       validator: validateRealName,
@@ -284,7 +277,7 @@ const regRules = {
     {
       min: 6,
       max: 11,
-      message: t('placeholder.between612'),
+      message: t("placeholder.between612"),
       trigger: "blur"
     },
     {
@@ -297,7 +290,7 @@ const regRules = {
     {
       min: 6,
       max: 11,
-      message: t('placeholder.between612'),
+      message: t("placeholder.between612"),
       trigger: "blur"
     },
     {
@@ -310,7 +303,7 @@ const regRules = {
     {
       min: 6,
       max: 11,
-      message: t('placeholder.between612'),
+      message: t("placeholder.between612"),
       trigger: "blur"
     },
     {
@@ -329,38 +322,38 @@ const regRules = {
   smsCode: [
     {
       required: true,
-      message: t('placeholder.phoneVerification'),
+      message: t("placeholder.phoneVerification"),
       trigger: "blur"
     },
     {
       min: 6,
       max: 6,
-      message: t('placeholder.min6'),
+      message: t("placeholder.min6"),
       trigger: "blur"
     }
   ],
   email: [
     {
       type: "email",
-      message: t('placeholder.emailFormat'),
+      message: t("placeholder.emailFormat"),
       trigger: "blur"
     },
     {
       max: 50,
-      message: t('placeholder.lessthan50'),
+      message: t("placeholder.lessthan50"),
       trigger: "blur"
     }
   ],
   captchaCode: [
     {
       required: true,
-      message: t('placeholder.captchareq'),
+      message: t("placeholder.captchareq"),
       trigger: "blur"
     },
     {
       min: 4,
       max: 4,
-      message: t('placeholder.captcha'),
+      message: t("placeholder.captcha"),
       trigger: "change"
     }
   ]
@@ -399,6 +392,8 @@ const getReferalCode = () => {
 
 const verificationImg = ref("");
 
+const welcomeHome = ref(false);
+
 const submitRegisterForm = async (elForm) => {
   if (!elForm) return;
   await elForm
@@ -413,28 +408,28 @@ const submitRegisterForm = async (elForm) => {
               if (regResult === 0) {
                 ElMessage({
                   type: "success",
-                  message: t('login.registerSuccess')
+                  message: t("login.registerSuccess")
                 });
 
                 // FB tracking :: signup-success
                 if (
                   window.location.href.indexOf("https://tf88king.com") > -1 ||
                   window.location.href.indexOf("https://tfgame88.com") > -1
-                ) { 
+                ) {
                   fbq("track", "signup-success");
-                }else if(window.location.href.indexOf("https://tf88uytin.com") > -1){
+                } else if (window.location.href.indexOf("https://tf88uytin.com") > -1) {
                   otag("event", "registration");
                 }
 
                 store.autoLogin(response.data);
                 emits("close-dialog");
-                router.push("/welcome");
+                emits("open-welcome-dialog")
 
                 sessionStorage.removeItem("REFERRAL_CODE");
                 sessionStorage.removeItem("AFFILIATE_CODE");
 
                 if (store.token) {
-                  router.push("/welcome");
+                  emits("open-welcome-dialog")
                 }
               } else {
                 ElMessage.error(response.message);
@@ -509,10 +504,10 @@ onMounted(() => {
   width: 100%;
 
   margin: 15px 0px;
-    margin-top: 40px;
-    padding: 5px;
+  margin-top: 40px;
+  padding: 5px;
 
-    position: relative;
+  position: relative;
   width: 100%;
   .form-field-icon {
     margin: auto;
@@ -537,7 +532,7 @@ onMounted(() => {
   color: #fff;
   font-size: 14px;
   border-radius: 8px;
-  background: url(../../assets/images/common/loginbtn.png)no-repeat center center;
+  background: url(../../assets/images/common/loginbtn.png) no-repeat center center;
   background-size: cover;
   padding: 10px 0;
 }
@@ -551,7 +546,6 @@ onMounted(() => {
 
 <style lang="scss">
 .form-field {
-
   .el-form-item {
     margin-bottom: 0px;
   }

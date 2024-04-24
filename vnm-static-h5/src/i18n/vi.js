@@ -1294,6 +1294,7 @@ export default {
     603: "Không có token",
     604: "Đã đăng nhập thành công",
     608: "Quá nhiều lần truy cập, vui lòng thử lại sau",
+    609: "Đang bảo trì",
     707: "Số dư không đủ",
     800: "Mã xác nhận không chính xác",
     801: "Mật khẩu đã hết hạn",
