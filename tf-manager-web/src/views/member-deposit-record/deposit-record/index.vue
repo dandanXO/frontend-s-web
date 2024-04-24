@@ -205,7 +205,7 @@
 
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <el-table
-        :height="tableHeight"
+        height="calc(100vh - 285px)"
         size="small"
         :resizable="true"
         :data="page.records"
