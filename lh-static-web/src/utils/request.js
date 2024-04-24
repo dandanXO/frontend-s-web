@@ -18,10 +18,19 @@ if (isGlobalLH) {
   var rstApi = "https://aptvpnubglgl.conoibue6er.com";
   var evtApi = "https://przl4oufglgl.anpoxuaq9ae.com";
   var crtApi = "https://caxlzwt2glgl.inc8ozys5we.com";
+} else if(window.location.hostname.includes("leihuo")){
+  var rstGlobalArray = process.env.VUE_APP_GLOBAL_RST_API.split(",");
+  var evtGlobalArray = process.env.VUE_APP_GLOBAL_EVT_API.split(",");
+  var crGlobalArray = process.env.VUE_APP_GLOBAL_CR_API.split(",");
+
+  var rstApi = getInitApi(rstGlobalArray, "LH_WEB_RST_URL");
+  var evtApi = getInitApi(evtGlobalArray, "LH_WEB_EVT_URL");
+  var crtApi = getInitApi(crGlobalArray, "LH_WEB_CRT_URL");
+
 } else {
   var rstApi = getInitApi(rstArray, "LH_WEB_RST_URL");
-  var crtApi = getInitApi(crArray, "LH_WEB_CRT_URL");
   var evtApi = getInitApi(evtArray, "LH_WEB_EVT_URL");
+  var crtApi = getInitApi(crArray, "LH_WEB_CRT_URL");
 }
 
 function getInitApi(apiLinks, urlLsName) {
@@ -129,7 +138,7 @@ const onResponse = (response) => {
       // ElMessage.error(res.message);
     }
     // throw new Error(res.message || "Error");
-      return res
+    return res
   } else {
     return response.data;
   }
