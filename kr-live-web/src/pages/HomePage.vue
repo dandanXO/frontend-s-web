@@ -44,31 +44,31 @@
       </q-carousel> -->
 
     <!-- <div class="grid-wrapper">
-      <div class="items-center grid" ref="gameBoardRef"> -->
-    <!--      <div-->
-    <!--        class="game-board-item"-->
-    <!--        :class="currentSelectedMenu == 'xfj' ? 'active-board' : ''"-->
-    <!--        @click="switchMenu('xfj')"-->
-    <!--      >-->
-    <!--        <img src="../assets/images/index/home-cf.png"/>-->
-    <!--        <span>{{ $t("lang.fish2_list") }}</span>-->
-    <!--      </div>-->
-
-    <!--      <div class="game-board-item"-->
-    <!--           :class="(currentSelectedMenu=='fish2') ? 'active-board' : ''"-->
-    <!--           @click="switchMenu('fish2')"-->
-    <!--      >-->
-    <!--        <img src="../assets/images/index/home-fish2.png"/>-->
-    <!--        <span>เกมส์เล็ก ๆ</span>-->
-    <!--      </div>-->
-    <!-- </div>
+      <div class="items-center grid" ref="gameBoardRef">
+        <div
+          class="game-board-item"
+          :class="currentSelectedMenu == 'xfj' ? 'active-board' : ''"
+          @click="switchMenu('xfj')"
+        >
+          <img src="../assets/images/index/home-cf.png" />
+          <span>{{ $t("lang.fish2_list") }}</span>
+        </div>
+        <div
+          class="game-board-item"
+          :class="currentSelectedMenu == 'fish2' ? 'active-board' : ''"
+          @click="switchMenu('fish2')"
+        >
+          <img src="../assets/images/index/home-fish2.png" />
+          <span>เกมส์เล็ก ๆ</span>
+        </div>
+      </div>
     </div> -->
+
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
           <div class="box">
-            <div class="text">  공지</div>
-          
+            <div class="text">공지</div>
           </div>
         </div>
         <marquee-text :repeat="announcementList.length" :duration="announcementList.length * 20">
@@ -81,8 +81,24 @@
         </marquee-text>
       </div>
     </div>
-<!-- 
-    <Transition>
+    <div class="grid-wrapper">
+      <div class="items-center grid" ref="gameBoardRef">
+        <div
+          v-for="(e, i) in gameBoardItemData"
+          :key="`gbi-${i}`"
+          ref="gameBoardItemRef"
+          class="game-board-item"
+          :class="currentSelectedMenu == e.name ? 'active-board' : ''"
+          @click="switchMenu(e.name, i)"
+        >
+          <!-- <img class="active-flag" :src="require(`../assets/home/game-board-item-bg-active-flag.png`)" /> -->
+          <!-- <img :src="require(`../assets/images/index/${e.imgName}`)" /> -->
+          <span>{{ e.label }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- <Transition>
       <div class="game-grid-lists" id="id-sport-board" v-if="currentSelectedMenu === 'sport'">
         <div
           class="game-item btn-pointer mid-grid-column"
@@ -129,8 +145,8 @@
         </div>
       </div>
     </Transition> -->
-<!-- 
-    <Transition>
+
+    <!-- <Transition>
       <div class="game-grid-lists" id="id-lottery-board" v-if="currentSelectedMenu === 'lottery'">
         <div v-if="lotteryGames.length === 0 && !isShow" class="coming-soon-div">
           <img src="../assets/home/coming-soon-img.png" />
@@ -239,11 +255,11 @@
       </div>
     </Transition> -->
 
-    <!-- <Transition>
+    <Transition>
       <div class="game-grid-lists" id="id-slot-board" v-if="currentSelectedMenu === 'slots' && !isShow">
-        <div v-if="store.hasToken()" class="game-item btn-pointer btn-slot-game" @click="showFavourite()">
+        <!-- <div v-if="store.hasToken()" class="game-item btn-pointer btn-slot-game" @click="showFavourite()">
           <img :src="require('../assets/home/slot/slot-favourite-board.png')" />
-        </div>
+        </div> -->
 
         <template v-for="p in platforms" :key="p">
           <div class="game-item btn-pointer btn-slot-game" @click="selectSlotPlat(p)">
@@ -262,7 +278,7 @@
           </div>
         </template>
       </div>
-    </Transition> -->  
+    </Transition>
     <Transition>
       <div class="game-scroll-lists" id="id-slot-board" v-if="currentSelectedMenu === 'slots' && isShow">
         <q-scroll-area
@@ -1308,12 +1324,10 @@ export default defineComponent({
       return lotteryGames.value;
     });
     const gameBoardItemData = [
-      { name: "slots", imgName: "home-slot.png", label: t("lang.slot_header") },
-      { name: "fish", imgName: "home-fish.png", label: t("lang.fish_header") },
-      { name: "live", imgName: "home-live.png", label: t("lang.live_header") },
-      { name: "sport", imgName: "home-sport.png", label: t("lang.sport_header") },
-      { name: "casual", imgName: "home-esport.png", label: t("lang.minigame_header") },
-      { name: "lottery", imgName: "home-lottery.png", label: t("lang.lottery_list") }
+      { name: "slots", label: "리얼 보드" },
+      { name: "fish", label: "리얼 보드" },
+      { name: "live", label: "리얼 보드" },
+      { name: "sport", label: "리얼 보드" }
     ];
 
     const currentSelectedMenu = ref("slots");
@@ -1533,65 +1547,49 @@ export default defineComponent({
 
     var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
     var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
-    const getPlatList = () => {
-      cached
-        .get(platformApiKey, () =>
-          api.get(platformApiUrl).then((res) => {
-            const response = res.data;
-            return response;
-          })
-        )
-        .then((data) => {
-          if (store.memberType !== "TEST") {
-            console.log(store.memberType);
-            data = data.filter((element) => {
-              return element.status === "OPEN";
-            });
-          }
-          // console.log(data);
 
-          fishPlatforms.value = data.filter((element) => element.gameType.includes("FISH"));
-          platforms.value = data.filter((element) => element.gameType.includes("SLOT"));
-          platformMinigame.value = data.filter((element) => element.gameType.includes("CASUAL"));
-          platformMinigame.value.push(...data.filter((element) => element.gameType.includes("ESPORT")));
-          liveCasinoGames.value = data.filter((element) => element.gameType.includes("LIVE"));
-          xfjGames.value = data.filter((element) => element.gameType.includes("MINIGAME"));
-          lotteryGames.value = data.filter((element) => element.gameType.includes("LOTTERY"));
+    const getPlatList =async () => {
+     const aaa = await fetch("fakeData/homePagePlatList.json");
 
-          if (currentSelectedMenu.value === "slots") {
-            switchPlat(platforms.value[0], "slots");
-            platforms.value.forEach((e, i) => {
-              if (e.code === "AWS") {
-                platforms.value.splice(i, 1);
-              }
-            });
-          } else if (currentSelectedMenu.value === "fish") {
-            switchPlat(fishPlatforms.value[0], "fish");
-          }
+     const res = await aaa.json();
+     console.log(res);
+      // cached
+      //   .get(platformApiKey, () =>
+      //     api.get(platformApiUrl).then((res) => {
+      //       const response = res.data;
+      //       return response;
+      //     })
+      //   )
+      //   .then((data) => {
+      // if (store.memberType !== "TEST") {
+      //   console.log(store.memberType);
+      //   data = data.filter((element) => {
+      //     return element.status === "OPEN";
+      //   });
+      // }
+      // console.log(data);
 
-          // console.log("After");
-          // console.log(platformMinigame.value);
-          // alert(platformMinigame.value.length);
-          // if (!route.query.plat) {
-          //   switchPlat(platforms.value[0], "slot");
-          //   switchPlat(fishPlatforms.value[0], "fish");
-          // } else {
-          //   platforms.value.forEach((element) => {
-          //     if (parseInt(route.query.plat) === element.id) {
-          //       switchPlat(element, "slot");
-          //     }
-          //   });
-          // }
-          // switchPlat(platforms.value[0], 'slots');
-        })
-        .catch((err) => {
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: "Loading failed",
-          //   icon: "report_problem"
-          // });
-        });
+      // fishPlatforms.value = data.filter((element) => element.gameType.includes("FISH"));
+      // platforms.value = data.filter((element) => element.gameType.includes("SLOT"));
+      // platformMinigame.value = data.filter((element) => element.gameType.includes("CASUAL"));
+      // platformMinigame.value.push(...data.filter((element) => element.gameType.includes("ESPORT")));
+      // liveCasinoGames.value = data.filter((element) => element.gameType.includes("LIVE"));
+      // xfjGames.value = data.filter((element) => element.gameType.includes("MINIGAME"));
+      // lotteryGames.value = data.filter((element) => element.gameType.includes("LOTTERY"));
+
+      //   if (currentSelectedMenu.value === "slots") {
+      //     switchPlat(platforms.value[0], "slots");
+      //     platforms.value.forEach((e, i) => {
+      //       if (e.code === "AWS") {
+      //         platforms.value.splice(i, 1);
+      //       }
+      //     });
+      //   } else if (currentSelectedMenu.value === "fish") {
+      //     switchPlat(fishPlatforms.value[0], "fish");
+      //   }
+      // })
+      // .catch((err) => {
+      // });
     };
     const getLength = (tab, ann) => {
       var categoryLength = announcementList.value.filter((item) => item.id == ann.typeId);
@@ -2185,7 +2183,7 @@ export default defineComponent({
     text-align: center;
     padding: 12px 12px;
     white-space: nowrap;
-    background: url("../assets/home/game-board-item-bg.png") no-repeat center center;
+    background: url("../assets/images/home-board/home-board-btn-dark.png") no-repeat center center;
     background-size: 100% 100%;
     position: relative;
 
@@ -2195,7 +2193,7 @@ export default defineComponent({
 
     &.active-board {
       // background: $linear-bg-4;
-      background: url("../assets/home/game-board-item-bg-active.png") no-repeat center center;
+      background: url("../assets/images/home-board/home-board-btn-light.png") no-repeat center center;
       background-size: 100% 100%;
 
       .active-flag {
@@ -2709,7 +2707,7 @@ export default defineComponent({
   }
 
   .game-grid-lists {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 
   .slot-grid {
@@ -2722,7 +2720,7 @@ export default defineComponent({
   }
 
   .game-grid-lists {
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(6, 1fr);
   }
 
   #id-live-board {
