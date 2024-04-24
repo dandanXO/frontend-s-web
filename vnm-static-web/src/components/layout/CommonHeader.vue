@@ -84,9 +84,10 @@
           <router-link to="/register" class="action-btn">
             <a class="header-btn btn-color-white">注册</a>
           </router-link> -->
-          <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">{{ $t('common.login') }}</a>
-          <a class="header-btn btn-color-white" @click="registerDialogVisible = true">{{ $t('common.register') }}
-            <img src="../../assets/home/regbtn_side.png">
+          <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">{{ $t("common.login") }}</a>
+          <a class="header-btn btn-color-white" @click="registerDialogVisible = true">
+            {{ $t("common.register") }}
+            <img src="../../assets/home/regbtn_side.png" />
           </a>
         </div>
 
@@ -95,19 +96,19 @@
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-deposit.svg" />
             </div>
-            {{ $t('menu.deposit') }}
+            {{ $t("menu.deposit") }}
           </router-link>
           <router-link to="/center/withdraw" class="action-btn">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-withdraw.svg" />
             </div>
-            {{ $t('menu.withdraw') }}
+            {{ $t("menu.withdraw") }}
           </router-link>
           <div class="action-btn" @click="showRebateValue">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-rebate.svg" />
             </div>
-            {{ $t('menu.rebate') }}
+            {{ $t("menu.rebate") }}
           </div>
           <!-- <router-link to="/center/transfer" class="action-btn">
             <div class="icon-rounded">
@@ -126,19 +127,20 @@
               </div>
             </span>
             <template #dropdown>
-              <el-dropdown-menu style="min-width: 180px; display: flex;
-              flex-direction: column;
-              align-items: flex-start" class="profile-info-dropdown-content">
+              <el-dropdown-menu
+                style="min-width: 180px; display: flex; flex-direction: column; align-items: flex-start"
+                class="profile-info-dropdown-content"
+              >
                 <el-dropdown-item command="personal">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
-                    <span>{{$t('menu.personalInfo')}}</span>
+                    <span>{{ $t("menu.personalInfo") }}</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="deposit">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
-                    <span>{{$t('menu.deposit')}}</span>
+                    <span>{{ $t("menu.deposit") }}</span>
                   </div>
                 </el-dropdown-item>
                 <!-- <el-dropdown-item command="transfer">
@@ -148,13 +150,15 @@
                   </div>
                 </el-dropdown-item> -->
                 <el-dropdown-item command="promotion">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
-                    <span>{{$t('menu.promotion')}}</span>
+                    <span>{{ $t("menu.promotion") }}</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="logout">
-                  <button class="standard-button btn-color-white" style="color: #468cff">{{$t('menu.logout')}}</button>
+                  <button class="standard-button btn-color-white" style="color: #468cff">
+                    {{ $t("menu.logout") }}
+                  </button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -170,9 +174,9 @@
             </div>
             <a @click="refreshBalance" class="details-balance">
               <div class="flex-wrap" style="display: flex; align-items: center; flex-wrap: nowrap">
-                <span class="assets-text">{{$t('account.mainWallet')}}:</span>
+                <span class="assets-text">{{ $t("account.mainWallet") }}:</span>
                 <span class="amount">
-                  <span v-if="isLoadingBalance">{{$t('common.loading')}}...</span>
+                  <span v-if="isLoadingBalance">{{ $t("common.loading") }}...</span>
                   <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ displayBalance(store.balance) }}</span>
                 </span>
               </div>
@@ -311,9 +315,11 @@
       style="max-width: 1080px"
       @close="store.loginPageVisible = false"
     >
-      <div class="acc-dialog-container" :style="`background-image: url(${require(`../../assets/home/acc-dialog-bg-${languageVal}.png`)})`">
-        <div class="acc-dialog-left">
-        </div>
+      <div
+        class="acc-dialog-container"
+        :style="`background-image: url(${require(`../../assets/home/acc-dialog-bg-${languageVal}.png`)})`"
+      >
+        <div class="acc-dialog-left"></div>
         <div class="acc-dialog-right">
           <!-- <div class="acc-dialog-homelogo">
             <img src="../../assets/logo.svg" width="150" />
@@ -337,7 +343,10 @@
       style="max-width: 1080px"
       @close="store.regPageVisible = false"
     >
-      <div class="acc-dialog-container" :style="`background-image: url(${require(`../../assets/home/reg-acc-dialog-bg-${languageVal}.png`)})`">
+      <div
+        class="acc-dialog-container"
+        :style="`background-image: url(${require(`../../assets/home/reg-acc-dialog-bg-${languageVal}.png`)})`"
+      >
         <div class="acc-dialog-left">
           <!-- <div class="acc-dialog-img">
             <img src="../../assets/home/acc-dialog-img.png" />
@@ -347,10 +356,35 @@
           <!-- <div class="acc-dialog-homelogo">
             <img src="../../assets/logo.svg" width="150" />
           </div> -->
-          <RegisterAccount @close-dialog="registerDialogVisible = false" @open-login-dialog="openLoginDialog" />
+          <RegisterAccount
+            @close-dialog="registerDialogVisible = false"
+            @open-login-dialog="openLoginDialog"
+            @open-welcome-dialog="welcomeDialogVisible = true"
+          />
         </div>
       </div>
     </el-dialog>
+
+    <el-dialog
+      v-model="welcomeDialogVisible"
+      width="100%"
+      align-center
+      style="max-width: 1480px"
+      @close="store.welcomeDialogVisible = false"
+    >
+      <HomeWelcome />
+    </el-dialog>
+
+    <!-- <el-dialog
+      v-model="welcomeHome"
+      width="80%"
+      style="padding: 0; margin: 24px auto"
+      align-center
+      :close-on-click-modal="false"
+      @keydown.enter.prevent
+    >
+      <HomeWelcome></HomeWelcome>
+    </el-dialog> -->
 
     <el-dialog
       v-model="captchaDialogVisible"
@@ -365,7 +399,12 @@
         <el-form-item tabindex="3" :label="$t('personal.captcha')" prop="captchaCode">
           <el-row :gutter="10" style="justify-content: center; align-items: center">
             <el-col :span="12">
-              <el-input v-model="captchaForm.captchaCode" :label="$t('personal.captcha')" :placeholder="$t('personal.captcha')" @keyup.enter="sendOtp" />
+              <el-input
+                v-model="captchaForm.captchaCode"
+                :label="$t('personal.captcha')"
+                :placeholder="$t('personal.captcha')"
+                @keyup.enter="sendOtp"
+              />
             </el-col>
             <el-col :span="12">
               <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
@@ -373,7 +412,7 @@
           </el-row>
         </el-form-item>
         <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px" @click="sendOtp">
-          {{ $t('common.send') }}
+          {{ $t("common.send") }}
         </el-button>
       </el-form>
     </el-dialog>
@@ -386,7 +425,10 @@
       style="max-width: 1080px"
       @close="store.forgetPassDialogVisible = false"
     >
-      <div class="acc-dialog-container" :style="`background-image: url(${require(`../../assets/home/acc-dialog-bg-${languageVal}.png`)})`">
+      <div
+        class="acc-dialog-container"
+        :style="`background-image: url(${require(`../../assets/home/acc-dialog-bg-${languageVal}.png`)})`"
+      >
         <div class="acc-dialog-left">
           <!-- <div class="acc-dialog-img">
             <img src="../../assets/home/acc-dialog-img.png" />
@@ -405,7 +447,7 @@
 
     <el-dialog class="noPadding" v-model="noticeDialogVisible" width="1280px" align-center style="max-width: 600px">
       <div class="noticedialog">
-        <div class="title">{{ $t('common.systemError') }}</div>
+        <div class="title">{{ $t("common.systemError") }}</div>
         <div class="contents">
           <!-- 尊敬的雷火会员：
           为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！雷火娱乐
@@ -413,25 +455,32 @@
           尊敬的雷火会员：为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！雷火娱乐
           2022/10/13 -->
         </div>
-        <el-button class="common-btn" @click="noticeDialogVisible = false">{{$t('common.confirm')}}</el-button>
+        <el-button class="common-btn" @click="noticeDialogVisible = false">{{ $t("common.confirm") }}</el-button>
       </div>
     </el-dialog>
 
     <el-dialog class="" v-model="logoutDialogVisible" width="600px" align-center>
       <div class="noticedialog">
-        <div class="title">{{$t('common.areyousure')}}</div>
+        <div class="title">{{ $t("common.areyousure") }}</div>
         <div class="standard-button-container">
-          <button class="standard-button btn-color-white" @click="logoutDialogVisible = false">{{$t('common.cancel')}}</button>
-          <button class="standard-button btn-color-blue" @click="onLogout()">{{$t('common.confirm')}}</button>
+          <button class="standard-button btn-color-white" @click="logoutDialogVisible = false">
+            {{ $t("common.cancel") }}
+          </button>
+          <button class="standard-button btn-color-blue" @click="onLogout()">{{ $t("common.confirm") }}</button>
         </div>
       </div>
     </el-dialog>
     <el-dialog class="" v-model="isRebateDialogVisible" width="600px" align-center>
       <div class="noticedialog">
-        <div class="title" style="flex-direction: column;display:flex;">{{$t('vip.rebateBonus')}} <span style="font-size: 30px; color: #5196ff;">{{ rebateAmt ? rebateAmt : 0 }}</span></div>
+        <div class="title" style="flex-direction: column; display: flex">
+          {{ $t("vip.rebateBonus") }}
+          <span style="font-size: 30px; color: #5196ff">{{ rebateAmt ? rebateAmt : 0 }}</span>
+        </div>
         <div class="standard-button-container">
-          <button class="standard-button btn-color-white" @click="isRebateDialogVisible = false">{{$t('common.cancel')}}</button>
-          <button class="standard-button btn-color-blue" @click="claimNow()">{{$t('promo.btn_claim_now')}}</button>
+          <button class="standard-button btn-color-white" @click="isRebateDialogVisible = false">
+            {{ $t("common.cancel") }}
+          </button>
+          <button class="standard-button btn-color-blue" @click="claimNow()">{{ $t("promo.btn_claim_now") }}</button>
         </div>
       </div>
     </el-dialog>
@@ -477,6 +526,7 @@ import { getUnreadTotal } from "@/api/personal/mailbox";
 import LoginDialog from "@/views/LoginDialog.vue";
 import RegisterAccount from "@/components/auth/RegisterAccount.vue";
 import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
+import HomeWelcome from "@/components/home/HomeWelcome.vue";
 
 import { i18nStore } from '@/store/language'
 export default defineComponent({
@@ -497,7 +547,8 @@ export default defineComponent({
     LoginDialog,
     ForgotPwdDialog,
     RegisterAccount,
-    LocaleChanger
+    LocaleChanger,
+    HomeWelcome
   },
   setup() {
     const { t } = useI18n();
@@ -1428,6 +1479,8 @@ export default defineComponent({
       router.push(path);
     };
 
+    const welcomeDialogVisible = ref(false)
+
     return {
       token,
       el,
@@ -1501,7 +1554,8 @@ export default defineComponent({
       isRebateDialogVisible,
       claimRebate,
       rebateAmt,
-      claimNow
+      claimNow,
+      welcomeDialogVisible
     };
   }
 });
@@ -1623,7 +1677,7 @@ body {
       }
 
       .amount {
-        font-family: 'Roboto';
+        font-family: "Roboto";
         margin-right: 0.5rem;
         white-space: nowrap;
       }
@@ -1775,15 +1829,12 @@ body {
 
   .top-nav-wrapper {
     .side {
-
       position: absolute;
       top: 0;
       &.left {
-
         left: 0px;
       }
       &.right {
-
         right: 0px;
         transform: rotateY(180deg);
       }
@@ -1895,7 +1946,7 @@ body {
 
             img.hover-icon {
               filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
-              contrast(102%);
+                contrast(102%);
             }
           }
         }
@@ -2443,7 +2494,7 @@ body {
 
       .acc-dialog-container {
         display: flex;
-        background: url(../../assets/home/acc-dialog-bg-full.png)no-repeat left center;
+        background: url(../../assets/home/acc-dialog-bg-full.png) no-repeat left center;
         min-height: 600px;
       }
 
@@ -2507,10 +2558,9 @@ body {
   background: #666;
   text-align: center;
   line-height: 1.7em;
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 // .register-dialog {
@@ -2566,7 +2616,6 @@ body {
       position: absolute;
       right: -10px;
       top: -20px;
-
     }
   }
 }

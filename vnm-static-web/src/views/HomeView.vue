@@ -13,7 +13,7 @@
 
 <script setup>
 import GameModal from "@/components/modal/GameModal.vue";
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import HomeBanner from "@/components/home/HomeBanner.vue";
 import NewsSection from "@/components/home/NewsSection.vue";
 import HomeAnnouncement from "@/components/home/HomeAnnouncement.vue";
@@ -26,7 +26,6 @@ const openGame = (gameName, platType, gameCode, scrollingState) => {
   gameMenu.value.open(gameName, platType, gameCode, scrollingState);
 };
 
-onMounted(() => {});
 </script>
 
 <style scoped lang="scss">
