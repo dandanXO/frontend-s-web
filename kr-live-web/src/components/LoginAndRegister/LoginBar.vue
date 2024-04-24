@@ -8,13 +8,16 @@
         </div>
       </div>
       <div class="right-content">
-
+        <div v-if="true" class="login-box"><LoggedIn /></div>
+        <div v-if="false" class="login-box"><NotLoggedIn /></div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import LoggedIn from "./LoggedIn.vue";
+import NotLoggedIn from "./NotLoggedIn.vue";
 import { reactive, ref } from "vue";
 
 const iconInfo = reactive([
@@ -45,7 +48,7 @@ const iconInfo = reactive([
 }
 
 .content {
-  width: 1280px;
+  width: 1200px;
   display: flex;
 }
 
@@ -56,7 +59,7 @@ const iconInfo = reactive([
   width: 40%;
 }
 
-.right-content{
+.right-content {
   width: 60%;
 }
 
@@ -71,5 +74,10 @@ const iconInfo = reactive([
 .credit-info {
   display: flex;
   align-items: center;
+}
+
+.login-box{
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

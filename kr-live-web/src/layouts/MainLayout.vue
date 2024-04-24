@@ -10,13 +10,16 @@
       <div class="home-banner-wrapper"></div>
 
       <LoginBar />
-      <div class="main-content">
+      <div class="main">
+        <div class="main-content">
         <router-view v-slot="{ Component }">
           <KeepAlive :max="8">
             <component :is="Component" />
           </KeepAlive>
         </router-view>
       </div>
+      </div>
+      
     </q-page-container>
     <!-- <q-footer v-if="ui.footer" elevated>
     
@@ -561,13 +564,8 @@ align-items: center;
 .footer-box {
   margin-top: 36px;
   max-width: 1280px;
-  /* display: grid;
-  grid-template-columns: repeat(8, 150px); */
   column-gap: 5px;
   row-gap: 5px;
-  /* grid-template-rows: repeat(2, 70px); */
-  /* align-items: center;
-  justify-items: center; */
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

@@ -93,7 +93,7 @@
         >
           <!-- <img class="active-flag" :src="require(`../assets/home/game-board-item-bg-active-flag.png`)" /> -->
           <!-- <img :src="require(`../assets/images/index/${e.imgName}`)" /> -->
-          <span>{{ e.label }}</span>
+          <span class="home-board-item-text">{{ e.label }}</span>
         </div>
       </div>
     </div>
@@ -268,18 +268,31 @@
               :style="{
                 backgroundImage: (() => {
                   try {
-                    return `url(${require(`../assets/home/slot/${p.code}.png`)})`;
+                    return `url(${require(`../assets/images/people/people${p.code}.png`)})`;
                   } catch (e) {
                     return `url(${comingSoonImg})`;
                   }
                 })()
               }"
             ></div>
+            <div class="plat-form-box">
+              <div class="plat-form-text">{{ p.text }}</div>
+            </div>
+            <div class="platform-company-box">
+              <div
+              class="company-image"
+                :style="{
+                  backgroundImage: (() => {
+                    return `url(${require(`../assets/images/footer/company${p.code}.png`)})`;
+                  })()
+                }"
+              ></div>
+            </div>
           </div>
         </template>
       </div>
     </Transition>
-    <Transition>
+    <!-- <Transition>
       <div class="game-scroll-lists" id="id-slot-board" v-if="currentSelectedMenu === 'slots' && isShow">
         <q-scroll-area
           style="height: 500px"
@@ -314,8 +327,6 @@
                   })()
                 }"
               ></div>
-
-              <!--                <img :src="require('../assets/logo/' + p.code + '.png')" />-->
             </div>
           </div>
           <q-scroll-observer axis="vertical" />
@@ -330,7 +341,6 @@
           style="height: 500px"
           :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
         >
-          <!-- FAVOURITE -->
           <div class="slot-grid" style="padding-bottom: 20px" v-if="sortedFavGamesList.length > 0">
             <div
               v-for="(game, index) in sortedFavGamesList"
@@ -424,8 +434,6 @@
                     @click="searchList"
                     class="clear-input-icon btn-pointer"
                   ></q-icon>
-
-                  <!-- <q-btn type="submit" @click="searchList" :label="$t('lang.search')" color="brightbtn"/> -->
                 </template>
               </q-input>
             </q-form>
@@ -480,26 +488,13 @@
                 />
               </template>
 
-              <!-- <q-img
-                    loading="lazy"
-                    :src="game.icon"
-                    :placeholder-src="defaultImg"
-                    fit="cover"
-                    height="120px"
-                    no-spinner
-                >
-                  <template v-slot:loading>
-                    <img :src="game.default" style="height: 140px; max-width: 200px; border-radius: 15px; overflow:hidden;">
-                  </template>
-                </q-img> -->
-              <!-- <img :loading="'lazy'" :class="selectedPlat.code === 'PG' ? 'zoomin' : ''" :src="game.icon" v-bind:alt="game.default" > -->
             </div>
           </div>
           <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
           <q-scroll-observer @scroll="scrolling" />
         </q-scroll-area>
       </div>
-    </Transition>
+    </Transition> -->
 
     <Transition>
       <div class="game-grid-lists" id="id-fish-board" v-if="currentSelectedMenu === 'fish' && !isShow">
@@ -749,6 +744,24 @@
         </template>
       </div>
     </Transition>
+  </div>
+
+  <div class="news-section">
+    <div class="news-title">
+      <div class="title-text">공지사항</div>
+      <div class="more-text">+ 더보기</div>
+    </div>
+    <div v-for="(item, index) in newsList" :key="index" class="news-item-box">
+      <div class="news-item-left">
+        <div class="news-item-sort">[{{ item.sort }}]</div>
+        <span>※</span>
+        <div class="news-item-title">{{ item.title }}</div>
+        <span>※</span>
+      </div>
+      <div class="news-item-right">
+        <div class="news-item-date">{{ item.date }}</div>
+      </div>
+    </div>
   </div>
 
   <div class="home-bottom-section">
@@ -1291,6 +1304,7 @@ export default defineComponent({
     }
 
     const platforms = ref([]);
+    const newsList = ref([]);
     const selectedPlatId = ref();
     const selectedPlat = reactive({
       code: "",
@@ -1548,11 +1562,12 @@ export default defineComponent({
     var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
     var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
 
-    const getPlatList =async () => {
-     const aaa = await fetch("fakeData/homePagePlatList.json");
+    const getPlatList = async () => {
+      const res = await fetch("fakeData/homePagePlatList.json");
 
-     const res = await aaa.json();
-     console.log(res);
+      const result = await res.json();
+
+      const resData = result.data;
       // cached
       //   .get(platformApiKey, () =>
       //     api.get(platformApiUrl).then((res) => {
@@ -1570,7 +1585,8 @@ export default defineComponent({
       // console.log(data);
 
       // fishPlatforms.value = data.filter((element) => element.gameType.includes("FISH"));
-      // platforms.value = data.filter((element) => element.gameType.includes("SLOT"));
+      platforms.value = resData.filter((element) => element.gameType.includes("SLOT"));
+
       // platformMinigame.value = data.filter((element) => element.gameType.includes("CASUAL"));
       // platformMinigame.value.push(...data.filter((element) => element.gameType.includes("ESPORT")));
       // liveCasinoGames.value = data.filter((element) => element.gameType.includes("LIVE"));
@@ -1591,6 +1607,16 @@ export default defineComponent({
       // .catch((err) => {
       // });
     };
+
+    const getNewsList = async () => {
+      const res = await fetch("fakeData/newsList.json");
+
+      const result = await res.json();
+
+      const resData = result.data;
+      newsList.value = resData;
+    };
+
     const getLength = (tab, ann) => {
       var categoryLength = announcementList.value.filter((item) => item.id == ann.typeId);
       return categoryLength.length;
@@ -1872,6 +1898,7 @@ export default defineComponent({
       loadData();
       loadAnnouncement();
       getPlatList();
+      getNewsList();
     };
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
@@ -2020,7 +2047,8 @@ export default defineComponent({
       specialInviteBonusEligible,
       specialInviteBonusPopupVisible,
       redeemSpecialInviteBonus,
-      toggleSpecialInviteBonusPopup
+      toggleSpecialInviteBonusPopup,
+      newsList
     };
   }
 });
@@ -2047,18 +2075,18 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin: 10px 10px 5px;
+  /* margin: 10px 10px 5px; */
 
   @media (min-width: 769px) {
-    margin: 10px;
+    padding: 20px;
   }
 
   .station-notice-wrapper {
     display: flex;
     border-radius: 8px;
-
+    background-color: #000;
     gap: 10px;
-    padding: 2px 10px;
+    padding: 8px 12px;
     justify-content: center;
     align-items: center;
     width: 85%;
@@ -2158,13 +2186,14 @@ export default defineComponent({
 
 .grid {
   display: flex;
+  justify-content: space-between;
   margin: 0px auto 0px;
-  align-items: flex-start;
-  column-gap: 8px;
+  flex-wrap: wrap;
+  column-gap: 20px;
   row-gap: 14px;
   width: calc(100% - 20px);
   // background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
-  padding: 40px 12px 16px;
+  padding: 0px 170px;
   border-radius: 12px;
   overflow-x: auto;
 
@@ -2174,10 +2203,9 @@ export default defineComponent({
 
   .game-board-item {
     border-radius: 8px;
-    width: auto;
+    width: 21%;
     gap: 12px;
     height: 100%;
-    margin: auto;
     display: flex;
     align-items: center;
     text-align: center;
@@ -2186,6 +2214,14 @@ export default defineComponent({
     background: url("../assets/images/home-board/home-board-btn-dark.png") no-repeat center center;
     background-size: 100% 100%;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .home-board-item-text {
+      color: #fff;
+      font-size: 24px;
+      line-height: 33.6px;
+    }
 
     .active-flag {
       display: none;
@@ -2238,6 +2274,8 @@ export default defineComponent({
   column-gap: 15px;
   row-gap: 10px;
   transition: 1s ease-in;
+  .platform-company-box {
+  }
 
   @media (min-width: 769px) {
     margin: 12px auto 20px;
@@ -2246,14 +2284,51 @@ export default defineComponent({
 
   .game-item {
     border-radius: 8px;
+    position: relative;
 
     .platform-img {
       width: 100%;
       height: auto;
-      aspect-ratio: 140/218;
+      aspect-ratio: 177/218;
       background-size: contain;
       background-repeat: no-repeat;
       background-position: top center;
+    }
+
+    .plat-form-box {
+      position: absolute;
+      /* position: relative; */
+      left: 0px;
+      bottom: 0px;
+      z-index: -1;
+      width: 100%;
+      height: 52px;
+      background-color: #1f2833;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .plat-form-text {
+        color: #fff;
+        font-size: 20px;
+        line-height: 28px;
+        position: relative;
+      }
+    }
+    .platform-company-box {
+      position: absolute;
+      left: 2px;
+      bottom: 48px;
+      background-color: #0000004d;
+      backdrop-filter: blur(5px);
+      width: 98%;
+      height: 56px;
+      .company-image{
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center center;
+      }
     }
 
     img {
@@ -2619,6 +2694,56 @@ export default defineComponent({
   }
 }
 
+.news-title {
+  background: linear-gradient(#3f4146, #202226);
+  height: 61px;
+  border: 1px #454545 solid;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 40px;
+  .title-text {
+    font-size: 20px;
+    line-height: 28px;
+  }
+  .more-text {
+    font-size: 20px;
+    line-height: 28px;
+    color: #ff3c3c;
+    cursor: pointer;
+  }
+}
+
+.news-item-box {
+  width: 100%;
+  height: 60px;
+  background-color: #272a30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 40px;
+  font-size: 16px;
+  line-height: 22px;
+  border-bottom: 1px solid #3f3f3f;
+  .news-item-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .news-item-sort {
+      padding-right: 8px;
+    }
+    .news-item-title {
+      padding-right: 8px;
+      padding-left: 8px;
+    }
+  }
+  .news-item-right {
+    .news-item-date {
+      color: #92959f;
+    }
+  }
+}
+
 @media (min-width: 600px) {
 }
 
@@ -2720,7 +2845,8 @@ export default defineComponent({
   }
 
   .game-grid-lists {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 20px;
   }
 
   #id-live-board {
