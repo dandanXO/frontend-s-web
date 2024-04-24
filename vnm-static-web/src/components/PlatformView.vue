@@ -284,7 +284,7 @@ const setFilteredPlatforms = () => {
     platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
   );
 
-  filteredPlatforms.value = filteredPlatforms.value.map((item1) => {
+  filteredPlatforms.value = platformsListDisplay.value.map((item1) => {
     const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
     return { ...matchingItem, ...item1 };
   });

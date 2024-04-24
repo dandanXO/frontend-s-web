@@ -1,6 +1,6 @@
 export default {
   lang: {
-    langVal: "vn",
+    langVal: "vi",
     app_download_title: "Tải ứng dụng",
     app_download_desc: "Cược trực tiếp số 1 Châu Á",
     dowload_now: "Tải xuống",
