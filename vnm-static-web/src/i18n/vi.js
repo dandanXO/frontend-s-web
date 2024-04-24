@@ -781,6 +781,7 @@ export default {
     601: "Lỗi xác thực mã thông báo",
     603: "Không tìm thấy mã thông báo",
     608: "Hoạt động của người dùng hiện tại quá thường xuyên. Vui lòng thử lại sau.",
+    609: "Đang bảo trì",
     604: "Đăng nhập thành công",
     707: "Số dư không đủ",
     800: "Mã xác nhận không chính xác",

@@ -269,7 +269,8 @@ onMounted(() => {
 .summoner-tabs {
   :deep(.el-tabs__nav) {
     float: none;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 100px;
   }
 
   :deep(.el-tabs__nav-wrap:after) {

@@ -60,7 +60,7 @@
               ></q-linear-progress>
               <div class="start-end">
                 <div class="vip-card-common-text">V{{ vipIndex }}</div>
-                <div class="vip-card-current-num" v-if="vipLevel === vipIndex + 1">VNDP {{ currentDeposit }}</div>
+                <div class="vip-card-current-num" v-if="vipLevel === vipIndex ">VNDP {{ currentDeposit }}</div>
                 <div class="vip-card-common-text">V{{ vipIndex + 1 }}</div>
               </div>
             </div>
@@ -630,7 +630,7 @@ const getProgressBar = () => {
       // console.log("currentDep", currentDep);
 
       let percentageChange = (currentDep / vipAmount) * 100;
-      vipItems.value[vipLevel.value - 1].progressBarVal = 1 - percentageChange / 100;
+      vipItems.value[vipLevel.value].progressBarVal = 1 - percentageChange / 100;
 
       // console.log("percentageChange", percentageChange);
       // vipItems.value[vipLevel.value - 1].progressBarVal = 0.5;
