@@ -201,7 +201,7 @@ const refreshBalance = () => {
 
 const onClickLogo = () => {
   if (isAndroid()) {
-    window.open("https://m.789f.app/", "_blank");
+    window.open("https://m.indwin7.com/", "_blank");
     return;
   }
 
@@ -534,7 +534,7 @@ onMounted(() => {
     display: flex;
 
     img {
-      max-width: 100px;
+      max-width: 80px;
       width: 100%;
       text-align: center;
     }
