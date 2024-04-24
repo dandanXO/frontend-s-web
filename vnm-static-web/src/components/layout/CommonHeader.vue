@@ -2549,9 +2549,14 @@ body {
   }
 }
 
+.imptann-modal{
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
 .imptann-modal .el-dialog__headerbtn {
-  top: 5px !important;
-  right: 5px;
+  top: 15px !important;
+  right: 15px;
   height: 2em !important;
   width: 2em !important;
   border-radius: 50%;

@@ -666,7 +666,7 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isImportantAnnoucementModal">
+  <q-dialog width="100%" class="modal-home-popup" v-model="isImportantAnnoucementModal">
     <q-card style="width: 90%; max-width: 500px; margin: 0 auto" class="text-white">
       <q-card-section>
         <div class="close-alert" @click="setExpiryBanner()">
@@ -2246,6 +2246,22 @@ export default defineComponent({
   font-weight: bold;
 
 }
+
+.modal-home-popup{
+  background:transparent;
+  box-shadow: none;
+
+  .q-card{
+    background:transparent;
+    box-shadow: none;
+  }
+
+  .q-card-section{
+    background:transparent;
+    box-shadow: none;
+  }
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -2281,6 +2297,5 @@ export default defineComponent({
       }
     }
   }
-
 }
 </style>
