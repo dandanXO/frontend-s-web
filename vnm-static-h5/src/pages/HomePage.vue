@@ -1739,6 +1739,7 @@ export default defineComponent({
     gap: 12px;
 
     :deep(.q-btn) {
+      min-width: 99px;
       min-height: 12px;
       font-weight: bold;
       @media (max-width: 400px) {
@@ -1748,25 +1749,7 @@ export default defineComponent({
   }
 
   .header-lang {
-    // .lang-container {
-    //   img {
-    //     display: block;
-    //     width: 30px;
-    //     height: 30px;
-    //   }
-
-    //   :deep(.q-field__marginal) {
-    //     min-height: 40px;
-    //     height: 40px;
-    //     display: none;
-    //   }
-
-    //   :deep(.q-field__native) {
-    //     min-height: 30px;
-    //     height: 30px;
-    //     padding: 0;
-    //   }
-    // }
+    margin-top:2px;
   }
 
   .header-right {
@@ -2277,7 +2260,7 @@ export default defineComponent({
 @media (max-width: 480px) {
 }
 
-@media (max-width: 400px) {
+@media (max-width: 410px) {
   .grid {
     .q-card {
       .q-card__section {
@@ -2287,5 +2270,17 @@ export default defineComponent({
       }
     }
   }
+
+
+  .home-header {
+
+    .header-middle {
+
+      :deep(.q-btn) {
+        min-width: 75px;
+      }
+    }
+  }
+
 }
 </style>
