@@ -65,7 +65,7 @@
       </div>
     </div>
     <div v-else class="selected-promo">
-      <div class="selected-promo-wrapper">
+      <div class="selected-promo-wrapper" :class="{ darkbluebg: selectedPromo.promoCode === 'lh1-eurocup-2024'}">
         <div
           class="banner-container"
           v-if="
@@ -749,6 +749,13 @@ export default defineComponent({
   .selected-promo {
     width: 100%;
     .selected-promo-wrapper {
+        &.darkbluebg {
+          background-color: #0D3173;
+          .inner {
+            margin-top: -100px;
+            background-position: 0 160px;
+          }
+        }
       .banner-container {
         width: 100%;
         .promo-bg {
