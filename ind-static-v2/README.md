@@ -1,4 +1,4 @@
-# 789F App (iw2-h5-project)
+# IndWin7 App (iw2-h5-project)
 
 India 2 (**IW2**) H5 APP
 
