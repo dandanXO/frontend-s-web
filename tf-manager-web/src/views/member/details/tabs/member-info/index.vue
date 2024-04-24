@@ -1488,7 +1488,7 @@ export default defineComponent({
     const refreshDnW = async () => {
       loading.dnw = true;
       const { data: balance } = await getDnW(props.mbrId, site.id);
-      memberDetail.companyProfit = balance.companyProfit;
+      memberDetail.companyProfit = balance;
       loading.dnw = false;
     };
 
