@@ -8,7 +8,7 @@
       </template>
       <el-form @submit.prevent>
         <div style="margin: 20px;">
-          <el-row :gutter="20">
+          <el-row :gutter="20" v-if="siteId !== '8'">
             <el-col :xl="2" :lg="3" :md="4" :sm="24">
               <el-form-item :label="t('fields.memberTag') + ' :'" />
             </el-col>
@@ -200,7 +200,7 @@
             </el-col>
           </el-row>
         </div>
-        <div class="inputs-wrap">
+        <div class="inputs-wrap" v-if="siteId !== '8'">
           <el-button
             size="normal"
             type="primary"
@@ -609,7 +609,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, computed } from 'vue'
 import { useStore } from '@/store'
 import moment from 'moment'
 import {
@@ -1133,6 +1133,10 @@ async function submitRemark() {
 function formatDate(date) {
   return date ? moment(date).format('YYYY/MM/DD HH:mm:ss') : '-'
 }
+
+const siteId = computed(() => {
+  return store.state.user.siteId
+})
 
 onMounted(() => {
   loadAllTags()

@@ -341,6 +341,8 @@ export default {
     systemAnnouncement: '系统公告',
     telephone: '电话号码',
     thirdLevelAffiliateCommission: '三级代理佣金',
+    thisYear: '今年',
+    thisThreeMonths: '这三个月',
     thisMonth: '本月',
     thisWeek: '本周',
     title: '标题',
