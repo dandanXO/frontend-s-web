@@ -7,14 +7,14 @@
             注：用户选定每组的参与队伍后不予更改；
         </span>
         <div class="teams">
-            <div v-for="(team, teamindex) in teams" class="team">
+            <div v-for="(team, teamindex) in teams" :key="teamindex" class="team">
                 <div class="team-box">
                     <div class="team-num">{{ team.name }} 组</div>
                     <div class="chosen-items">
                         <div class="selection">
-                            {{ team.selection.length > 0 ? ' 已选择：' : '请选队伍' }}
+                            {{ team.selection.length > 0 ? '' : '请选队伍' }}
                             <div class="selected-items">
-                                <div v-for="t in team.selection">
+                                <div v-for="(t, idx) in team.selection" :key="idx">
                                     {{ t.name }}
                                 </div>
                             </div>
@@ -29,7 +29,7 @@
                     <div class="choices" :class="{ isConfirmed: team.isSelectionConfirmed }">
                         <div @click="team.isSelectionConfirmed ? null : toggleSelection(team, choice.name)"
                             :class="{ 'selected': team.selection.some(item => item.name === choice.name) }"
-                            v-for="choice in choices" class="choice">
+                            v-for="(choice, cidx) in choices" :key="cidx" class="choice">
                             <div class="close-icon"></div>
                             <img src="../images/flag.png">
                             {{ choice.name }}
@@ -130,7 +130,6 @@ function confirmSelection(team, choiceName) {
 <style lang="scss">
 .teams {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
     gap: 15px;
     margin: 20px 0;
 
@@ -144,19 +143,19 @@ function confirmSelection(team, choiceName) {
                 position: absolute;
                 padding: 6px;
                 background: linear-gradient(180deg, #F99500 0%, #B34B00 100%);
-                width: 23%;
+                width: 20%;
                 border-radius: 5px;
                 text-align: center;
                 color: #ffffff;
                 font-family: Microsoft YaHei UI;
-                font-size: 24px;
+                font-size: 20px;
                 font-weight: 700;
-                line-height: 42.56px;
+                line-height: 25.56px;
             }
 
             .chosen-items {
-                margin-left: 25%;
-                height: 60px;
+                margin-left: 20%;
+                height: 40px;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -164,8 +163,6 @@ function confirmSelection(team, choiceName) {
                 font-family: Microsoft YaHei UI;
                 font-size: 12px;
                 font-weight: 400;
-                line-height: 31.92px;
-                letter-spacing: 0.12em;
                 padding: 10px;
 
                 .selection {
@@ -186,26 +183,28 @@ function confirmSelection(team, choiceName) {
                 }
 
                 .unselectedbtn {
-                    background: linear-gradient(180deg, #FCF5FF 0%, #8DB9EE 100%);
-                    font-family: Microsoft YaHei UI;
-                    font-size: 24px;
+                    // background: linear-gradient(180deg, #FCF5FF 0%, #8DB9EE 100%);
+                    // font-family: Microsoft YaHei UI;
+                    // font-size: 24px;
+                    // font-weight: 700;
+                    // line-height: 31.92px;
+                    // letter-spacing: 0.12em;
+                    // color: #1A396F;
+                    
+                    background: linear-gradient(180deg, #FCF5FF 0%, #8DB9EE 100%);font-family: Microsoft YaHei UI;
+                    font-size: 15px;
                     font-weight: 700;
-                    line-height: 31.92px;
-                    letter-spacing: 0.12em;
                     color: #1A396F;
-                    cursor: disabled;
-                    border-radius: 24px;
                     padding: 5px 20px;
+                    border-radius: 24px;
                     cursor: pointer;
                 }
 
                 .selectedbtn {
                     background: linear-gradient(180deg, #008DF9 0%, #0051B3 100%);
                     font-family: Microsoft YaHei UI;
-                    font-size: 24px;
+                    font-size: 15px;
                     font-weight: 700;
-                    line-height: 31.92px;
-                    letter-spacing: 0.12em;
                     color: #ffffff;
                     padding: 5px 20px;
                     border-radius: 24px;
@@ -217,7 +216,7 @@ function confirmSelection(team, choiceName) {
                 gap: 10px;
                 align-items: center;
                 justify-content: space-evenly;
-                height: 260px;
+    height: 150px;
 
                 .choice {
                     display: flex;
@@ -225,7 +224,7 @@ function confirmSelection(team, choiceName) {
                     color: #ffffff;
                     align-items: center;
                     justify-content: center;
-                    padding: 10px 10px;
+                    padding: 5px;
                     cursor:pointer;
 
                     .close-icon {

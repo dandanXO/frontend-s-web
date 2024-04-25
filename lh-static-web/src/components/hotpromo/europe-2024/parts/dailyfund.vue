@@ -2,7 +2,7 @@
   <div class="tab-title">
     {{ tabtitle }}
   </div>
-  <div class="fund-alert">注：用户选定每组的参与队伍后不予更改；</div>
+  <div class="note">注：用户选定每组的参与队伍后不予更改；</div>
   <div class="fund-wrapper">
     <img :src="FundLogoImg" class="fund-logo" />
     <div class="fund-inner-wrapper">

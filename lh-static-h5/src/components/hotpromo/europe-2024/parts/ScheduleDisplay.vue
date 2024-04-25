@@ -19,8 +19,8 @@
   
   <script setup>
     import { ref, defineProps } from 'vue';
-    import GroupStage from "@/components/hotpromo/europe-2024/parts/groupstage.vue"
-    import KnockoutStage from "@/components/hotpromo/europe-2024/parts/knockoutstage.vue"
+    import GroupStage from "../parts/GroupStage.vue"
+    import KnockoutStage from "../parts/KnockoutStage.vue"
   
   const props = defineProps({
     tabtitle: String
@@ -52,11 +52,12 @@ function activateSchedTab(index) {
         color: #ffffff;
         font-weight: bold;
         font-family: 'PingFang SC';
-        font-size: 25px;
+    font-size: 15px;
         font-weight: 800;
         line-height: 34.75px;
         letter-spacing: 0.12em;
         text-align: center;
+        border: 0;
 
         &.active {
           background-image: url(../images/schedactive-tab.png);

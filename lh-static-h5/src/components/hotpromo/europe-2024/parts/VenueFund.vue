@@ -19,8 +19,8 @@
 
 <script setup>
   import { ref, defineProps } from 'vue';
-  import NewComersLimeLight from "@/components/hotpromo/europe-2024/parts/newcomerslimelight.vue"
-  import EmergencyFund from "@/components/hotpromo/europe-2024/parts/emergencyfund.vue"
+  import NewComersLimeLight from "../../europe-2024/parts/NewcomersLimeLight.vue"
+  import EmergencyFund from "../../europe-2024/parts/EmergencyFund.vue"
 
 const props = defineProps({
   tabtitle: String
@@ -52,7 +52,7 @@ function activateSchedTab(index) {
       color: #ffffff;
       font-weight: bold;
       font-family: 'PingFang SC';
-      font-size: 25px;
+    font-size: 15px;
       font-weight: 800;
       line-height: 34.75px;
       letter-spacing: 0.12em;

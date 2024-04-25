@@ -10,7 +10,7 @@
     </button>
 </div>
     <div class="team-content">
-        <template v-for="gp in groups[groupActiveTab].items">
+        <template :key="i" v-for="(gp, i) in groups[groupActiveTab].items">
             <div class="gpbar">
                 <div class="group-head">
                     <div class="team-name">
@@ -202,24 +202,24 @@ function activateTeamsTab(index) {
 <style lang="scss">
 .team-buttons {
         display: flex;
-        gap: 50px;
+        gap:10px;
         margin: 20px 0px;
     button {
         color: #FFFFFFCC;
         display: flex;
         background: none;
         font-family: 'Microsoft YaHei UI';
-        font-size: 32px;
+        font-size: 16px;
         font-weight: 700;
-        line-height: 42.56px;
         letter-spacing: 0.12em;
         justify-content: center;
         align-items: center;
+        border: 0;
         gap: 10px;
         &:before{
             content: '';
-            width: 5px;
-            height: 30px;
+            width: 2px;
+            height: 10px;
             background: unset;
         }
         &.active {
@@ -241,26 +241,26 @@ function activateTeamsTab(index) {
             background: #051D4766;
             border: 1px solid #FFFFFF66;
             .group-head {
-                flex: 2;
-                background: url(../images/groupbg.png)no-repeat center center;
-                    display: flex;
-                    background-size: cover;
-                    justify-content: space-evenly;
-                    gap: 20px;
-                    align-items: center;
-                    padding: 30px 55px 30px 0px;
+                flex: 1;
+                background: url(../images/groupbg.png)no-repeat right center;
+                    
+                
+            display: flex;
+    background-size: cover;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 5px 25px 5px 0;
+    flex-direction: column;
                 .team-name {
                     color: #FFFFFF33;
                     font-family: Microsoft YaHei UI;
-                    font-size: 62.95px;
+                    font-size: 15px;
                     font-weight: 700;
-                    line-height: 83.73px;
                 }
                 .smalltxt {
                     font-family: Microsoft YaHei UI;
-                    font-size: 25.67px;
+                    font-size: 8px;
                     font-weight: 400;
-                    line-height: 34.14px;
                     text-align: left;
                     color: #ffffff;
 
@@ -275,14 +275,17 @@ function activateTeamsTab(index) {
                 .team {
                     color: #ffffff;
                     font-family: Microsoft YaHei UI;
-                    font-size: 32px;
+                    font-size: 12px;
                     font-weight: 400;
-                    line-height: 42.56px;
                     letter-spacing: 0.12em;
                     display: flex;
-                    gap: 10px;
+                    gap: 5px;
                     justify-content: center;
                     align-items: center;
+                    img {
+                        width: 20px !important;
+                        height: unset;
+                    }
                     &.teamB {
                         flex-direction: row-reverse;
                     }
@@ -299,16 +302,14 @@ function activateTeamsTab(index) {
                         -webkit-background-clip: text; /* Apply background gradient to the text */
                         background-clip: text;
                         font-family: Microsoft YaHei UI;
-                        font-size: 58.64px;
+                        font-size: 18px;
                         font-weight: 700;
-                        line-height: 77.99px;
                         letter-spacing: 0.12em;
                     }
                     .date {
                         font-family: Microsoft YaHei UI;
-                        font-size: 20px;
+                        font-size: 10px;
                         font-weight: 400;
-                        line-height: 26.6px;
                         color: #FFFFFFCC;
                     }
                 }
