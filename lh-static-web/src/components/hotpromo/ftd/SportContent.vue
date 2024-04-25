@@ -51,7 +51,7 @@
     </div>
 </template>
 <script setup>
-import './styles.css';
+import './styles.scss';
 
 const props = defineProps(['tab', 'type']);
 </script>
