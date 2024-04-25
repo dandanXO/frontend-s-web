@@ -319,6 +319,8 @@ export default {
     systemAnnouncement: 'ประกาศระบบ',
     telephone: 'หมายเลขโทรศัพท์',
     thirdLevelAffiliateCommission: 'คอมมิชชันตัวแทนระดับ 3',
+    thisYear: 'ปีนี้',
+    thisThreeMonths: 'สามเดือนนี้',
     thisMonth: 'เดือนนี้',
     thisWeek: 'สัปดาห์นี้',
     title: 'ชื่อ',
