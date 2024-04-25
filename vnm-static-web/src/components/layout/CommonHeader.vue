@@ -369,22 +369,11 @@
       v-model="welcomeDialogVisible"
       width="100%"
       align-center
-      style="max-width: 1480px"
+      style="max-width: 1280px"
       @close="store.welcomeDialogVisible = false"
     >
       <HomeWelcome />
     </el-dialog>
-
-    <!-- <el-dialog
-      v-model="welcomeHome"
-      width="80%"
-      style="padding: 0; margin: 24px auto"
-      align-center
-      :close-on-click-modal="false"
-      @keydown.enter.prevent
-    >
-      <HomeWelcome></HomeWelcome>
-    </el-dialog> -->
 
     <el-dialog
       v-model="captchaDialogVisible"
