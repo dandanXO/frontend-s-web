@@ -1,14 +1,13 @@
 <template>
   <div class="bracket-wrapper">
-    <div
+    <bracket-team
       class="bracket-team"
       v-for="(team, index) in bracketTeamList"
       :key="`team-${index}`"
       :style="{ top: team.top + 'px', left: team.left + 'px' }"
-    >
-      <img :src="FlagImg" />
-      <span class="bracket-team__name">德国</span>
-    </div>
+      :img-url="FlagImg"
+      country="德国"
+    ></bracket-team>
     <div
       class="bracket-date"
       v-for="(date, index) in bracketDateList"
@@ -28,6 +27,7 @@
 <script setup>
 import { ref } from "vue";
 import FlagImg from "@/components/hotpromo/europe-2024/images/flag.png";
+import BracketTeam from "./components/BracketTeam.vue";
 
 const bracketTeamList = ref([
   // left side round of 16
@@ -106,16 +106,6 @@ const bracketDateList = ref([
     position: absolute;
     width: 72px;
     height: 123px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-    .bracket-team__name {
-      font-family: Microsoft YaHei UI;
-      font-size: 32px;
-      line-height: 42.56px;
-      letter-spacing: 0.12em;
-    }
   }
   .bracket-date {
     position: absolute;
