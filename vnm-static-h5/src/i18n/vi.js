@@ -1235,7 +1235,7 @@ export default {
     str_quickpayment: "Thanh Toán Nhanh",
     str_specialpay: "Thanh Toán Đặc Biệt",
     str_pending: "Đang Chờ Xử Lý",
-    str_waitingcallback: "Chờ Gọi Lại",
+    str_waitingcallback: "Chờ thanh toán",
     str_settled: "Đã kết cược",
     str_ongoing: "Đang Diễn Ra",
     str_finish: "Hoàn Thành",
