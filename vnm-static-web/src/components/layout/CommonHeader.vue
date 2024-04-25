@@ -315,15 +315,11 @@
       style="max-width: 1080px"
       @close="store.loginPageVisible = false"
     >
-      <div
-        class="acc-dialog-container"
-        :style="`background-image: url(${require(`../../assets/home/acc-dialog-bg-${languageVal}.png`)})`"
-      >
-        <div class="acc-dialog-left"></div>
+      <div class="acc-dialog-container">
+        <div class="acc-dialog-left">
+          <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" />
+        </div>
         <div class="acc-dialog-right">
-          <!-- <div class="acc-dialog-homelogo">
-            <img src="../../assets/logo.svg" width="150" />
-          </div> -->
           <div class="acc-dialog-content">
             <LoginDialog
               @close-dialog="loginDialogVisible = false"
@@ -343,19 +339,11 @@
       style="max-width: 1080px"
       @close="store.regPageVisible = false"
     >
-      <div
-        class="acc-dialog-container"
-        :style="`background-image: url(${require(`../../assets/home/reg-acc-dialog-bg-${languageVal}.png`)})`"
-      >
+      <div class="acc-dialog-container">
         <div class="acc-dialog-left">
-          <!-- <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img.png" />
-          </div> -->
+          <img :src="`${require(`../../assets/home/acc-dialog-bg-signup-${languageVal}.png`)}`" width="150" />
         </div>
         <div class="acc-dialog-right">
-          <!-- <div class="acc-dialog-homelogo">
-            <img src="../../assets/logo.svg" width="150" />
-          </div> -->
           <RegisterAccount
             @close-dialog="registerDialogVisible = false"
             @open-login-dialog="openLoginDialog"
@@ -414,19 +402,11 @@
       style="max-width: 1080px"
       @close="store.forgetPassDialogVisible = false"
     >
-      <div
-        class="acc-dialog-container"
-        :style="`background-image: url(${require(`../../assets/home/acc-dialog-bg-${languageVal}.png`)})`"
-      >
+      <div class="acc-dialog-container">
         <div class="acc-dialog-left">
-          <!-- <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img.png" />
-          </div> -->
+          <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" />
         </div>
         <div class="acc-dialog-right">
-          <!-- <div class="acc-dialog-homelogo">
-            <img src="../../assets/logo.svg" width="150" />
-          </div> -->
           <div class="acc-dialog-content">
             <ForgotPwdDialog @close-dialog="forgetPassDialogVisible = false" @open-login-dialog="openLoginDialog" />
           </div>
@@ -2485,10 +2465,13 @@ body {
         display: flex;
         background: url(../../assets/home/acc-dialog-bg-full.png) no-repeat left center;
         min-height: 600px;
+        align-items: center;
+        padding-top: 30px;
+        padding-bottom: 30px;
       }
 
       .acc-dialog-left {
-        width: calc(100% - 450px);
+        width:60%;
         background-size: 100% 100%;
         background-position: center center;
         background-color: transparent;
@@ -2496,6 +2479,12 @@ body {
         border-bottom-left-radius: 20px;
         // background-color: #ffffff;
         padding: 8px;
+
+        img {
+          display: block;
+          width: 100%;
+          margin-right: -60px;
+        }
 
         .acc-dialog-img {
           margin-top: -50px;
@@ -2510,8 +2499,8 @@ body {
       }
 
       .acc-dialog-right {
-        width: 60%;
-        padding: 24px 24px 24px 40px;
+        width: 40%;
+        padding: 24px 24px 24px 0;
 
         .acc-dialog-content {
           padding-top: 26px;
@@ -2538,7 +2527,7 @@ body {
   }
 }
 
-.imptann-modal{
+.imptann-modal {
   background: transparent !important;
   box-shadow: none !important;
 }
