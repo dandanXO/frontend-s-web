@@ -6,7 +6,7 @@
                 <span class="genie-ball-text">{{ currentType }}</span>
             </div>
         </div>
-        
+
         <div class="tab-wrapper">
             <div class="tab" :class="t === currentType ? 'active-tab' : ''" v-for="t, index in typesArr" :key="index" @click="switchType(index)">{{ t }}首存</div>
         </div>
@@ -128,7 +128,7 @@ const switchTab = (index) => {
             flex-wrap: wrap;
             justify-content: center;
             width: 100%;
-            
+
             .tab {
                 width: 100px;
                 aspect-ratio: 184 / 63;
@@ -204,7 +204,7 @@ const switchTab = (index) => {
                         &:nth-child(2) {
                             right: 0%;
                         }
-                        
+
                         &.active-tab {
                             background: url('../../../assets/images/promo/hotpromo/ftd/second-tab-active.png') no-repeat center center;
                             background-size: 100% 100%;
