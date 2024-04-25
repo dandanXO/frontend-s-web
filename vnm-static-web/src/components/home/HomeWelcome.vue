@@ -14,42 +14,17 @@
           </div>
 
           <div class="bold-content">{{ $t("welcome.firstSlideSub") }}</div>
-          <!-- <img class="supported-platforms-img" src="../../assets/home/auth/welcome-supported-platforms.png" />
-                  <div class="qr-codes">
-                      <template v-for="(det, idx) in platforms" :key="idx">
-                          <div class="platform-qr-code">
-                              <VueQRCodeComponent :size="100" :text="det.link" />
-                              <div class="label-desc-wrapper">
-                                  <span class="label">{{ det.name }}</span>
-                                  <a v-if="det.mobile" :href="det.mobile" target="_blank">{{ det.mobile }}</a>
-                                  <!- <span v-else>{{ $t('welcome.mobileUsers') }}</span> ->
-                              </div>
-                          </div>
-                      </template>
-                  </div> -->
         </div>
         <div class="welcome-slide center-slide card-bg">
-          <!-- <img class="ribbon" src="../../assets/home/auth/welcome-slide-ribbon.png" /> -->
           <div class="slide-title">{{ $t("welcome.secondSlide") }}</div>
           <div class="slide-content sec">{{ $t("welcome.secondSlideContent") }}</div>
-          <img class="banner" style="margin: -30px 0px; width: 320px" src="../../assets/home/auth/hundred.png" />
-          <!-- <div class="grey-card-bg">
-                      <div class="list">{{ $t('welcome.yourFirstDeposit') }}</div>
-                      <div class="list white-space-nowrap"><img src="../../assets/home/auth/welcome-slide-bullet-icon.png"/>{{ $t('welcome.firstDepositBonus') }}</div>
-                      <div class="list white-space-nowrap"><img src="../../assets/home/auth/welcome-slide-bullet-icon.png"/>{{ $t('welcome.completeBeginnerTasks') }}</div>
-                      <div class="list white-space-nowrap"><img src="../../assets/home/auth/welcome-slide-bullet-icon.png"/>{{ $t('welcome.dailyCashback') }}</div>
-                      <div class="list white-space-nowrap"><img src="../../assets/home/auth/welcome-slide-bullet-icon.png"/>{{ $t('welcome.dailyInsuranceBets') }}</div>
-                  </div>
-                  -->
+          <img class="banner" style="margin: -20px 0px; width: 100%" src="../../assets/home/auth/hundred.png" />
           <router-link to="/center/deposit" class="deposit-btn">{{ $t("welcome.depositNow") }}</router-link>
         </div>
         <div class="welcome-slide card-bg">
           <div class="slide-title">{{ $t("welcome.thirdSlide") }}</div>
           <div class="slide-content">{{ $t("welcome.thirdSlideContent") }}</div>
-          <!-- <img class="banner" src="../../assets/home/auth/welcome-17-types-icon.png" /> -->
-          <img class="hot-games-img" src="../../assets/home/auth/vnm-welcome-hot-games.png" />
-          <!-- <div style="margin:15px 10px 5px;">...{{ $t('welcome.moreGames') }}</div>
-                  <router-link to="/esports"  class="blue-bg proceed-btn">{{ $t('welcome.proceedNow') }}</router-link> -->
+          <img class="hot-games-img" style="margin-top: 20px" src="../../assets/home/auth/vnm-welcome-hot-games.png" />
         </div>
       </div>
     </div>
@@ -154,7 +129,8 @@ const ui = uiStore();
   .welcome-slide {
     display: flex;
     flex-direction: column;
-    width: 420px;
+    width: 320px;
+    min-height: 420px;
     justify-content: flex-start;
     align-items: center;
     color: #7a80a1;
@@ -181,7 +157,7 @@ const ui = uiStore();
 
     .slide-title {
       font-weight: 900;
-      font-size: 24px;
+      font-size: 20px;
       color: #424f72;
     }
     .slide-content {
@@ -252,14 +228,15 @@ const ui = uiStore();
 .welcome-page-container {
   width: calc(100% + 32px);
   margin: -16px;
-  min-height: 90vh;
+  // min-height: 90vh;
+  padding-top: 16px;
   height: 100%;
   background: url("../../assets/home/auth/welcome-bg.png") no-repeat center center;
   background-size: cover;
   display: flex;
   border-radius: 12px;
   .logo {
-    font-size: 50px;
+    font-size: 36px;
     font-weight: bold;
     color: #ffffff;
     text-shadow: 5px 5px 25px #5894ff;
@@ -268,8 +245,8 @@ const ui = uiStore();
     justify-content: center;
     align-items: center;
     img {
-      max-width: 365px;
-      margin: -120px 0;
+      max-width: 200px;
+      margin: -80px 0;
     }
   }
 }
@@ -280,7 +257,7 @@ const ui = uiStore();
   justify-content: center;
   align-items: center;
   gap: 30px;
-  margin: 5% auto;
+  margin: 5% auto 3%;
   width: 100%;
   max-width: 900px;
 }

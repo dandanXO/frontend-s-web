@@ -641,7 +641,7 @@ export default defineComponent({
     img {
       display: block;
       width: 100%;
-      max-width: 290px;
+      max-width: 190px;
     }
 
     .login-text {

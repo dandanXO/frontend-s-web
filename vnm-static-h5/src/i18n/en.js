@@ -343,6 +343,7 @@ export default {
     add_ewallet: "Add eWallet",
     bd_bank_card: "Bank card",
     bd_untie: "Untie",
+    bd_untie_success: "Untie successfully",
     bd_virtual_account: "Virtual account",
     bd_account_bank: "Account Bank",
     bd_please_select: "Please select",

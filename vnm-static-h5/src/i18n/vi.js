@@ -349,6 +349,7 @@ export default {
     add_ewallet: "Thêm ví điện tử",
     bd_bank_card: "Thẻ ngân hàng",
     bd_untie: "Xóa",
+    bd_untie_success: "Hủy liên kết thành công",
     bd_virtual_account: "Tài khoản ảo",
     bd_account_bank: "Tài khoản ngân hàng",
     bd_please_select: "Vui lòng chọn",

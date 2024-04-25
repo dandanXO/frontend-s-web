@@ -83,8 +83,8 @@
 
                 <p v-if="item.underMaintenance === true && item.maintenanceStartTime && item.maintenanceEndTime"
                    class="maintenance-p">
-                   {{$t('common.maintenanceTime')}}: <em>{{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                  {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}</em>
+                   {{$t('common.maintenanceTime')}}: <em>{{ moment(item.maintenanceStartTime).format("DD/MM/YYYY hh:mm A") }} -
+                  {{ moment(item.maintenanceEndTime).format("DD/MM/YYYY hh:mm A") }}</em>
                 </p>
                 <p v-else>
                   &nbsp;
