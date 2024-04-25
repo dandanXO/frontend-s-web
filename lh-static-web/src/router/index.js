@@ -182,14 +182,21 @@ router.beforeEach((to, from, next) => {
   const store = userStore();
   if (to.name === "agentCode") {
     sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
+    sessionStorage.removeItem("REFERRAL_CODE")
+    sessionStorage.removeItem("SUMMON_CODE")
+
     next(`/register`);
   }
   if (to.name === "referCode") {
     sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
+    sessionStorage.removeItem("AFFILIATE_CODE")
+
     next(`/register?refer=1`);
   }
   if (to.name === "summonCode") {
     sessionStorage.setItem("SUMMON_CODE", to.params.summonCode);
+    sessionStorage.removeItem("AFFILIATE_CODE")
+
     next(`/login?summon=1`);
   }
 
