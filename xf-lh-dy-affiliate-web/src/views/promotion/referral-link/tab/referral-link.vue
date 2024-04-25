@@ -26,7 +26,11 @@
 
         <div class="btn-group">
           <el-dropdown trigger="click">
-            <el-button type="primary" size="normal" style="width:100%; box-shadow: 0px 6px 12px 0px #3F8CFF43;">
+            <el-button
+              type="primary"
+              size="normal"
+              style="width:100%; box-shadow: 0px 6px 12px 0px #3F8CFF43;"
+            >
               <span>{{ $t('fields.copy') }}</span>
               <el-icon class="el-icon--right"><arrow-down-bold /></el-icon>
             </el-button>
@@ -38,6 +42,9 @@
                 <el-dropdown-item @click="handleLinkSelection('WEB', 'QQ')">
                   {{ $t('referralLink.affiliateQQShortLink') }}
                 </el-dropdown-item>
+                <el-dropdown-item @click="handleLinkSelection('WEB', 'ZALO')">
+                  {{ $t('referralLink.affiliateZALOShortLink') }}
+                </el-dropdown-item>
                 <el-dropdown-item @click="copy(page.webLongLink)">
                   {{ $t('referralLink.affiliateLongLink') }}
                 </el-dropdown-item>
@@ -45,7 +52,10 @@
             </template>
           </el-dropdown>
           <el-dropdown trigger="click">
-            <el-button size="normal" style="margin-left: 0px; width: 100%; border-color: #409eff">
+            <el-button
+              size="normal"
+              style="margin-left: 0px; width: 100%; border-color: #409eff"
+            >
               <span style="color: #409eff;">{{ $t('fields.download') }}</span>
               <el-icon class="el-icon--right" style="color: #409eff;">
                 <arrow-down-bold />
@@ -58,6 +68,9 @@
                 </el-dropdown-item>
                 <el-dropdown-item @click="handleQrSelection('WEB', 'QQ')">
                   {{ $t('referralLink.affiliateQQQRLink') }}
+                </el-dropdown-item>
+                <el-dropdown-item @click="handleQrSelection('WEB', 'ZALO')">
+                  {{ $t('referralLink.affiliateZALOQRLink') }}
                 </el-dropdown-item>
                 <el-dropdown-item @click="handleQrSelection('WEB', 'NORMAL')">
                   {{ $t('referralLink.affiliateLongQRLink') }}
@@ -107,6 +120,9 @@
                 <el-dropdown-item @click="handleLinkSelection('H5', 'QQ')">
                   {{ $t('referralLink.affiliateQQShortLink') }}
                 </el-dropdown-item>
+                <el-dropdown-item @click="handleLinkSelection('H5', 'ZALO')">
+                  {{ $t('referralLink.affiliateZALOShortLink') }}
+                </el-dropdown-item>
                 <el-dropdown-item @click="copy(page.h5LongLink)">
                   {{ $t('referralLink.affiliateLongLink') }}
                 </el-dropdown-item>
@@ -115,7 +131,8 @@
           </el-dropdown>
           <el-dropdown trigger="click">
             <el-button
-              size="normal" style="margin-left: 0px; width: 100%; border-color: #409eff"
+              size="normal"
+              style="margin-left: 0px; width: 100%; border-color: #409eff"
             >
               <span style="color: #409eff;">{{ $t('fields.download') }}</span>
               <el-icon class="el-icon--right" style="color: #409eff;">
@@ -129,6 +146,9 @@
                 </el-dropdown-item>
                 <el-dropdown-item @click="handleQrSelection('H5', 'QQ')">
                   {{ $t('referralLink.affiliateQQQRLink') }}
+                </el-dropdown-item>
+                <el-dropdown-item @click="handleQrSelection('H5', 'ZALO')">
+                  {{ $t('referralLink.affiliateZALOQRLink') }}
                 </el-dropdown-item>
                 <el-dropdown-item @click="handleQrSelection('H5', 'NORMAL')">
                   {{ $t('referralLink.affiliateLongQRLink') }}
@@ -350,6 +370,8 @@ function handleLinkSelection(linkType, urlType) {
     dialogContent = t('referralLink.copiedWXShortUrl')
   } else if (urlType === 'QQ') {
     dialogContent = t('referralLink.copiedQQShortUrl')
+  } else if (urlType === 'ZALO') {
+    dialogContent = t('referralLink.copiedZALOShortUrl')
   }
 
   request.longUrl = pageLongLink
@@ -434,7 +456,7 @@ onMounted(() => {
   gap: 20px;
 }
 .el-card {
-  background: #F4F9FD;
+  background: #f4f9fd;
   border: 0;
 }
 .card-container {
@@ -452,7 +474,7 @@ onMounted(() => {
   width: 270px;
 }
 
-.card-panel-description a{
+.card-panel-description a {
   width: auto;
   display: inline-block;
   white-space: normal;
@@ -505,5 +527,4 @@ onMounted(() => {
     margin-left: 0;
   }
 }
-
 </style>
