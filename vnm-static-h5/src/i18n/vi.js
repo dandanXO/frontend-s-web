@@ -369,7 +369,7 @@ export default {
     bd_submit: "Gửi",
     bd_please_enter_digit_only: "Vui lòng chỉ nhập số",
     bd_length_between_16_19: "Chiều dài nên từ 16-19",
-    bd_length_between_8_20: "Chiều dài nên từ 8-20",
+    bd_length_between_8_20: "Chiều dài nên từ 6-20",
     bd_added_bank_card: "Thẻ ngân hàng đã được thêm",
     bd_click_verification:
       "Vui lòng nhấp để nhận mã xác minh và nhập số điện thoại di động đã đăng ký của bạn để xác minh",
