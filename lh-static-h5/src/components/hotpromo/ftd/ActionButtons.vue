@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import './styles.css';
+import './styles.scss';
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
