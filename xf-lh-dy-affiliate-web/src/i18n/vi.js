@@ -19,7 +19,8 @@ export default {
     back_login: 'Quay lại đăng nhập',
     contact_us: 'Liên hệ chúng tôi',
     affiliateaccount: 'Tên Tài khoản đại lý',
-    affiliateaccountcanonlycontainnumchar: 'Tài khoản liên kết chỉ có thể chứa _, số và chữ cái.',
+    affiliateaccountcanonlycontainnumchar:
+      'Tài khoản liên kết chỉ có thể chứa _, số và chữ cái.',
     forgetpass: 'Quên mật khẩu',
     zhuanshukefufuwu: 'Dịch vụ chăm sóc khách hàng riêng',
     askus: 'Hỏi',
@@ -31,7 +32,7 @@ export default {
     skype: 'Skype',
     paopao: 'Bubble',
     zalo: 'Zalo',
-    telegram: 'Telegram'
+    telegram: 'Telegram',
   },
   depositStatus: {
     SUCCESS: 'Thành công',
@@ -113,7 +114,7 @@ export default {
     affiliateH5PlatformLink: 'Liên kết đại lý H5 (Được Khuyến Nghị)',
     affiliateWXShortLink: 'URL Chống Chặn (Wechat)',
     affiliateQQShortLink: 'URL Chống Chặn (QQ)',
-    affiliateZALOShortLink: 'URL Chống Chặn (Zalo)',
+    affiliateZALOShortLink: 'URL Chống Chặn (Zalo) ',
     affiliateLongLink: 'URL Bình Thường',
     affiliateWXQRLink: 'Mã QR Chống Chặn (Wechat)',
     affiliateQQQRLink: 'Mã QR Chống Chặn (QQ)',
@@ -341,7 +342,8 @@ export default {
     status: 'Trạng thái',
     subtotal: 'Tổng phụ',
     systemAlert: 'Cảnh báo Hệ thống',
-    affiliateSuccessSubmit: 'Kính gửi đối tác, thông tin của bạn đã được gửi thành công. Đại lý của chúng tôi sẽ thông báo cho bạn về kết quả xem xét trong vòng 24 giờ. Nếu bạn có bất kỳ câu hỏi nào, vui lòng liên hệ với chuyên viên đại lý hoặc dịch vụ chăm sóc  khách hàng trực tuyến của chúng tôi. Cảm ơn bạn. ',
+    affiliateSuccessSubmit:
+      'Kính gửi đối tác, thông tin của bạn đã được gửi thành công. Đại lý của chúng tôi sẽ thông báo cho bạn về kết quả xem xét trong vòng 24 giờ. Nếu bạn có bất kỳ câu hỏi nào, vui lòng liên hệ với chuyên viên đại lý hoặc dịch vụ chăm sóc  khách hàng trực tuyến của chúng tôi. Cảm ơn bạn. ',
     systemAnnouncement: 'Thông báo Hệ thống',
     telephone: 'Số Điện thoại',
     thirdLevelAffiliateCommission: 'Hoa hồng Cấp ba của Đại lý',

@@ -10,7 +10,9 @@
         <div class="card-panel-description">
           <span style="font-size: 20px; font-weight: normal;">
             {{
-              item.way === 'PC' ? $t('referralLink.affiliateShortLink') : $t('referralLink.affiliateShortLink')
+              item.way === 'PC'
+                ? $t('referralLink.affiliateShortLink')
+                : $t('referralLink.affiliateShortLink')
             }}
           </span>
           <a :href="item.domain" target="_blank" style="color: #3F8CFF">
@@ -36,6 +38,9 @@
                 <el-dropdown-item @click="handleLinkSelection(item, 'QQ')">
                   {{ $t('referralLink.affiliateQQShortLink') }}
                 </el-dropdown-item>
+                <el-dropdown-item @click="handleLinkSelection(item, 'ZALO')">
+                  {{ $t('referralLink.affiliateZALOShortLink') }}
+                </el-dropdown-item>
                 <el-dropdown-item @click="copy(item.domain)">
                   {{ $t('referralLink.affiliateLongLink') }}
                 </el-dropdown-item>
@@ -59,6 +64,9 @@
                 </el-dropdown-item>
                 <el-dropdown-item @click="handleQrSelection(item, 'QQ')">
                   {{ $t('referralLink.affiliateQQQRLink') }}
+                </el-dropdown-item>
+                <el-dropdown-item @click="handleQrSelection(item, 'ZALO')">
+                  {{ $t('referralLink.affiliateZALOQRLink') }}
                 </el-dropdown-item>
                 <el-dropdown-item @click="handleQrSelection(item, 'NORMAL')">
                   {{ $t('referralLink.affiliateLongQRLink') }}
@@ -236,6 +244,8 @@ function handleLinkSelection(item, urlType) {
     dialogContent = t('referralLink.copiedWXShortUrl')
   } else if (urlType === 'QQ') {
     dialogContent = t('referralLink.copiedQQShortUrl')
+  } else if (urlType === 'ZALO') {
+    dialogContent = t('referralLink.copiedZALOShortUrl')
   }
 
   request.longUrl = item.domain

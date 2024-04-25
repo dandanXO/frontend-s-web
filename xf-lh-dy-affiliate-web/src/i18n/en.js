@@ -17,7 +17,8 @@ export default {
     register_affi: 'Register Now',
     back_login: 'Back Login',
     contact_us: 'Contact Us',
-    affiliateaccountcanonlycontainnumchar: 'The affiliate account can only contain underscores (_), numbers, and letters.',
+    affiliateaccountcanonlycontainnumchar:
+      'The affiliate account can only contain underscores (_), numbers, and letters.',
     confirmpassword: 'Confirm password.',
     affiliateaccount: 'Affiliate Account Name',
     forgetpass: 'Forget Password.',
@@ -31,7 +32,7 @@ export default {
     skype: 'Skype',
     paopao: 'Bubble',
     zalo: 'Zalo',
-    telegram: 'Telegram'
+    telegram: 'Telegram',
   },
   depositStatus: {
     SUCCESS: 'Success',
@@ -117,7 +118,7 @@ export default {
     affiliateLongLink: 'Normal Url',
     affiliateWXQRLink: 'Anti Block QRCode (Wechat)',
     affiliateQQQRLink: 'Anti Block QRCode (QQ)',
-    affiliateZALOQRLink: 'Anti Block QRCode (Zalo)',
+    affiliateZALOQRLink: 'Anti Block QRCode (Zalo) ',
     affiliateLongQRLink: 'Normal Link QRCode',
     affiliateDownloadQRtoLocal: 'Download',
     affiliateScanMe: 'Scan and View in Mobile',
@@ -342,7 +343,8 @@ export default {
     status: 'Status',
     subtotal: 'Sub Total',
     systemAlert: 'System Alert',
-    affiliateSuccessSubmit: 'Dear partner, your information has been successfully submitted. Our agent will inform you of the review result within 24 hours. If you have any questions, please contact our agent or online customer service. Thank you.',
+    affiliateSuccessSubmit:
+      'Dear partner, your information has been successfully submitted. Our agent will inform you of the review result within 24 hours. If you have any questions, please contact our agent or online customer service. Thank you.',
     systemAnnouncement: 'System Announcement',
     telephone: 'Telephone',
     thirdLevelAffiliateCommission: 'Third Level Affiliate Commission',
