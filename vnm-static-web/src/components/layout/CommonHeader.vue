@@ -310,12 +310,12 @@
     <el-dialog
       class="acc-dialog"
       v-model="loginDialogVisible"
-      width="1280px"
+      width="980px"
       align-center
       style="max-width: 1080px"
       @close="store.loginPageVisible = false"
     >
-      <div class="acc-dialog-container">
+      <div class="acc-dialog-container login-container">
         <div class="acc-dialog-left">
           <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" />
         </div>
@@ -339,7 +339,7 @@
       style="max-width: 1080px"
       @close="store.regPageVisible = false"
     >
-      <div class="acc-dialog-container">
+      <div class="acc-dialog-container signup-container">
         <div class="acc-dialog-left">
           <img :src="`${require(`../../assets/home/acc-dialog-bg-signup-${languageVal}.png`)}`" width="150" />
         </div>
@@ -402,7 +402,7 @@
       style="max-width: 1080px"
       @close="store.forgetPassDialogVisible = false"
     >
-      <div class="acc-dialog-container">
+      <div class="acc-dialog-container login-container">
         <div class="acc-dialog-left">
           <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" />
         </div>
@@ -2497,6 +2497,32 @@ body {
           }
         }
       }
+
+      .login-container{
+        .acc-dialog-left {
+          img {
+            display: block;
+            width: auto;
+            height: 500px;
+            margin: auto;
+          }
+        }
+      }
+
+      .signup-container{
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        .acc-dialog-left {
+          img {
+            display: block;
+            width: auto;
+            max-height: 750px;
+            margin: auto;
+          }
+        }
+      }
+
 
       .acc-dialog-right {
         width: 40%;
