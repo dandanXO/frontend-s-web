@@ -38,6 +38,9 @@
         </div>
       </div>
       <div class="right-group">
+        <div class="other-points-conversion" @click.prevent="onLogoutSubmit">
+          <div class="register-text">Logout</div>
+        </div>
         <div class="other-points-conversion">
           <div class="register-text">포인트전환</div>
         </div>
@@ -46,7 +49,14 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { userStore } from "stores/index";
+
+const store = userStore();
+const onLogoutSubmit = () => {
+  store.memberLogout();
+};
+</script>
 
 <style scoped lang="scss">
 .logginedin-container {
@@ -89,12 +99,11 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
 }
 .right-group {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-left: 12px;
 }
 

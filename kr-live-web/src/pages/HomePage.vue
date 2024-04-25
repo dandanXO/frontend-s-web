@@ -943,7 +943,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog class="home-popup-banner" width="100%" v-model="isHomePromoModal">
+  <!-- <q-dialog class="home-popup-banner" width="100%" v-model="isHomePromoModal">
     <div class="promo-popup-div">
       <q-btn
         round
@@ -1022,7 +1022,7 @@
         </router-link>
       </div>
     </div>
-  </q-dialog>
+  </q-dialog> -->
 
   <q-dialog width="100%" v-model="isSpinWheelPromo" class="modal-update-div">
     <q-card style="width: 100%; padding: 0px 20px 20px" class="bg-primary text-white text-center">
@@ -1563,6 +1563,8 @@ export default defineComponent({
     var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
 
     const getPlatList = async () => {
+
+      //假裝打api接json回傳
       const res = await fetch("fakeData/homePagePlatList.json");
 
       const result = await res.json();
@@ -1609,6 +1611,7 @@ export default defineComponent({
     };
 
     const getNewsList = async () => {
+      //假裝打api接json回傳
       const res = await fetch("fakeData/newsList.json");
 
       const result = await res.json();
@@ -2289,8 +2292,9 @@ export default defineComponent({
     .platform-img {
       width: 100%;
       height: auto;
-      aspect-ratio: 177/218;
-      background-size: contain;
+      aspect-ratio: 224/276;
+      background-size: 100%100%;
+      /* background-size: contain; */
       background-repeat: no-repeat;
       background-position: top center;
     }
@@ -2302,7 +2306,7 @@ export default defineComponent({
       bottom: 0px;
       z-index: -1;
       width: 100%;
-      height: 52px;
+      height: 60px;
       background-color: #1f2833;
       display: flex;
       justify-content: center;
@@ -2317,8 +2321,8 @@ export default defineComponent({
     }
     .platform-company-box {
       position: absolute;
-      left: 2px;
-      bottom: 48px;
+      left: 3px;
+      bottom: 58px;
       background-color: #0000004d;
       backdrop-filter: blur(5px);
       width: 98%;
@@ -2331,9 +2335,9 @@ export default defineComponent({
       }
     }
 
-    img {
+    /* img {
       width: 100%;
-    }
+    } */
   }
 }
 

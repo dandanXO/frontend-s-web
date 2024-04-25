@@ -8,8 +8,8 @@
         </div>
       </div>
       <div class="right-content">
-        <div v-if="true" class="login-box"><LoggedIn /></div>
-        <div v-if="false" class="login-box"><NotLoggedIn /></div>
+        <div v-if="store.hasToken()" class="login-box"><LoggedIn /></div>
+        <div v-if="!store.hasToken()" class="login-box"><NotLoggedIn /></div>
       </div>
     </div>
   </div>
@@ -18,7 +18,9 @@
 <script setup>
 import LoggedIn from "./LoggedIn.vue";
 import NotLoggedIn from "./NotLoggedIn.vue";
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
+import { userStore } from "stores/index";
+const store = userStore();
 
 const iconInfo = reactive([
   { info: "송금신청", iconUrl: require("../../assets/icon/deposit.svg") },
@@ -50,10 +52,12 @@ const iconInfo = reactive([
 .content {
   width: 1200px;
   display: flex;
+  flex-wrap: wrap;
 }
 
 .left-content {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-around;
   width: 40%;
