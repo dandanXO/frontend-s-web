@@ -591,7 +591,7 @@
             </div>
           </template>
           <span v-if="affiliateDetails.commission !== null">
-            {{ affiliateDetails.commission }} %
+            {{ (affiliateDetails.commission).toFixed() }} %
           </span>
           <span v-if="affiliateDetails.commission === null">0 %</span>
           <el-button
