@@ -165,6 +165,10 @@ export default defineComponent({
       );
     };
 
+    const errorHandler = (error) => {
+      console.error("File error: " + error.code);
+    };
+
     onMounted(() => {
       checkSID();
       // initCsWeb();
