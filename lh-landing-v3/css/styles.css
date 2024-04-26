@@ -34,19 +34,20 @@ a:hover {
   background-size: cover;
   background-repeat: no-repeat;
   min-height: 100vh;
-  max-width: 500px;
+  max-width: 650px;
   margin: auto;
 }
 
 .title-img {
-  padding: 16px;
-  max-width: 500px;
+  padding: 4px 16px 0px;
+  max-width: 400px;
   margin: auto;
 }
 
 .title-img img {
   display: block;
-  width: 100%;
+  width: 90%;
+  margin: auto;
 }
 
 .top-wrapper {
@@ -57,7 +58,7 @@ a:hover {
 .top-logo {
   display: flex;
   justify-content: flex-start;
-  padding-top: 20px;
+  padding-top: 5px;
 }
 
 .top-logo img {
@@ -274,7 +275,7 @@ a:hover {
 }
 
 .hongbao-btn img {
-  max-width: 320px;
+  max-width: 250px;
 }
 
 .head-pattern-img {
@@ -283,17 +284,17 @@ a:hover {
 
 .head-pattern-img__01 {
   left: -10px;
-  width: 80px;
+  width: 60px;
 }
 
 .head-pattern-img__02 {
   right: -30px;
-  width: 120px;
+  width: 100px;
 }
 
 .content-desc {
   width: 100%;
-  margin: 0 -16px;
+  margin: -10px -16px 0px;
 }
 
 .content-desc {
@@ -302,24 +303,29 @@ a:hover {
 }
 
 .content-cat {
-  margin-top: 16px;
+  margin-top: 0px;
+}
+
+.content-cat img{
+  width: 90%;
+  margin: 0 auto;
 }
 
 .subtitle-img {
-  margin-top: 16px;
+  margin-top: 5px;
 }
 
 .subtitle-img__start {
 }
 
 .content-container {
-  margin-top: 16px;
+  margin-top: 5px;
 }
 
 .content-item {
   background-image: url(../img/item-bg.png);
   background-size: 100% 100%;
-  padding: 16px;
+  padding: 16px 16px 10px;
   min-height: 70px;
   display: flex;
   align-items: center;
@@ -333,7 +339,7 @@ a:hover {
 
 .item-txt {
   color: #682500;
-  font-size: 22px;
+  font-size: 19px;
   font-weight: bold;
 }
 
@@ -351,6 +357,7 @@ a:hover {
   color: #ffffff;
   border-radius: 40px;
   border: 1px solid #682500;
+  white-space: nowrap;
 }
 .item-btns .btn-brown-light {
   /* background: #ffffff; */
@@ -359,6 +366,7 @@ a:hover {
   color: #682500;
   border-radius: 40px;
   border: 1px solid #682500;
+  white-space: nowrap;
 }
 
 .table-img {
@@ -612,5 +620,11 @@ a:hover {
 
   .item-txt {
     font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 360px){
+  .item-btns{
+    margin-right: 4px;
   }
 }
