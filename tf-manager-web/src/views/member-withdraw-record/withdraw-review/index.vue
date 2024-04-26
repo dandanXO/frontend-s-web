@@ -117,6 +117,21 @@
           />
         </el-select>
 
+        <el-select
+          v-model="request.source"
+          size="small"
+          :placeholder="t('fields.sourceType')"
+          class="filter-item"
+          style="width: 200px; margin-left: 5px"
+        >
+          <el-option
+            v-for="item in source.list"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+
         <el-input
           v-model="request.reviewBy"
           size="small"
@@ -174,7 +189,7 @@
       size="small"
       highlight-current-row
       v-loading="page.loading"
-      height="500"
+      :height="tableHeight"
       :header-cell-style="{background: 'lightgray'}"
       :empty-text="t('fields.noData')"
       :summary-method="getSummaries"
@@ -497,6 +512,11 @@ const financialLevelList = reactive({
 })
 let timeZone = null;
 
+const tableHeight = computed(() => {
+  const windowHeight = window.innerHeight;
+  return windowHeight - 225;
+})
+
 const sortList = reactive({
   list: [
     { label: t('fields.byprofitasc'), value: '1' },
@@ -528,6 +548,15 @@ const profitList = reactive({
     { label: t('fields.allprofit'), value: '1' },
     { label: t('fields.profitpositive'), value: '2' },
     { label: t('fields.profitnegative'), value: '3' },
+  ],
+})
+
+const source = reactive({
+  list: [
+    { label: t('fields.allSource'), value: '1' },
+    { label: 'DIRECT', value: 'DIRECT' },
+    { label: 'REFER', value: 'REFER' },
+    { label: 'AFFILIATE', value: 'AFFILIATE' }
   ],
 })
 
@@ -563,6 +592,7 @@ const request = reactive({
   min: null,
   max: null,
   reviewBy: null,
+  source: null,
 })
 
 const uiControl = reactive({
@@ -606,6 +636,7 @@ function resetQuery() {
   request.financialLevel = financialLevelList.list[0].id
   request.profit = profitList.list[0].value
   request.reviewStatus = reviewStatusList.list[0].value
+  request.source = source.list[0].value
   request.min = ''
   request.max = ''
   request.reviewBy = ''
@@ -801,6 +832,7 @@ onMounted(async () => {
   request.sort = sortList.list[0].value
   request.profit = profitList.list[0].value
   request.reviewStatus = reviewStatusList.list[0].value
+  request.source = source.list[0].value
   loadVipList()
   loadFinancialLevelList()
   await loadMemberRecord()
@@ -937,5 +969,10 @@ async function showDialog(record) {
 
 .el-input-number:deep .el-input__inner {
   text-align: left;
+}
+</style>
+<style lang="scss">
+.roles-main .el-table__footer-wrapper{
+  height: 43px;
 }
 </style>

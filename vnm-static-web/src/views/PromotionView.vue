@@ -2,6 +2,12 @@
   <div class="promo-container">
     <div class="all-promotions" v-if="!isPromoDetail">
       <div class="promo-main-container">
+        <!-- <div class="rebates-container">
+          <img src="../assets/promo/rebate/coin.png" />
+          <div class="rebatebtn">{{$t('rebate.totalVNDP')}}</div>
+          <div class="input">{{ rebateAmt }}</div>
+          <div class="rebatebtn">{{$t('rebate.claimNow')}}</div>
+        </div> -->
         <div class="promo-type-wrapper">
           <div style="position:sticky; top: 0;">
             <div class="type-list">
@@ -37,6 +43,16 @@
             <a @click="showPromoDetails(promo)">
               <div class="promo-img-wrapper">
                 
+                <div class="promo-label">
+                  <div class="label-type" v-if="promo.labelType !== 2">{{ getPromoLabel(promo.labelType) }}</div>
+                  <div class="label-date">{{ JSON.parse(promo.param).date }}</div>
+                </div>
+                <div class="promo-details">
+                  <!-- <div class="front-date">{{ JSON.parse(promo.param).date }}</div> -->
+                  <div class="front-title">{{ promo.title }}</div>
+                  <div class="front-sub">{{ JSON.parse(promo.param).sub }}</div>
+                  <div class="front-btn">{{ $t('home.moreDetails')}}</div>
+                </div>
                 <div class="promo-bg">
                   <img class="promo-content isDesktop" :src="imgURL + promo.desktopImgUrl" />
                   <img class="promo-content isMobile" :src="imgURL + promo.mobileImgUrl" />
@@ -72,6 +88,7 @@
             "
           ></div>
         </div>
+        
         <div
           class="inner"
           :style="
@@ -80,9 +97,11 @@
               : 'background-image: url(' + require(`../assets/promo/web-bg.jpg`) + '\''
           "
         >
+<!--          <h2 class="text-center" style="font-family: 'Roboto'; color: #0060d3; font-weight: 900; font-size: 30px;">{{selectedPromo.title}}</h2>-->
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
             <HotPromotion :list="selectedPromo" />
           </div>
+          
           <div
             class="promo-view-container"
             :class="{
@@ -110,6 +129,10 @@ import { loadPromoBanner } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { useI18n } from "vue-i18n";
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from 'pinia'
+const i18nStoreLanguage = i18nStore()
+const { languageVal } = storeToRefs(i18nStoreLanguage)
 import HotPromotion from '@/components/HotPromotion'
 export default defineComponent({
   name: "PromoView",
@@ -128,16 +151,16 @@ export default defineComponent({
     const promoTypes = ref([
       { code:"ALL", img: 'all', label: t('promo.all') },
       { code: "SPORT", img: 'sport', label:  t('promo.sports')},
-      { code: "POKER", img: 'poker', label: t('promo.poker')},
       { code: "LIVE CASINO", img: 'live', label: t('promo.casino')},
-      { code: "SLOT", img: 'slot', label: t('promo.slot')},
-      { code: "FISH", img: 'fish', label: t('promo.fish')},
+      { code: "SLOT GAME", img: 'slot', label: t('promo.slot')},
+      { code: "POKER", img: 'poker', label: t('promo.poker')},
       { code: "LOTTERY", img: 'lottery', label: t('promo.lottery')},
+      { code: "FISH", img: 'fish', label: t('promo.fish')},
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
     const isPromoDetail = computed(() => {
-      if(route.query && route.query?.name && store.token){
+      if(route.query && route.query?.name ){
         return true;
       }
       return false;
@@ -162,21 +185,20 @@ export default defineComponent({
       })
     }
     const showPromoDetails = (promo) => {
-
-      if (!store.token) {
-          ElMessageBox.alert(t('common.loginbeforeAction'), t('common.systemError'), {
-              // if you want to disable its autofocus
-              // autofocus: false,sd
-              center: true,
-              confirmButtonText: t('common.confirm'),
-              showClose: false,
-              buttonSize: 'large'
-          }).then(() => {
-            // router.push('/login');
-              store.loginPageVisible = true
-          })
-          return
-      } else {
+      // if (!store.token) {
+      //     ElMessageBox.alert(t('bankError.loginbeforeAction'), t('common.systemError'), {
+      //         // if you want to disable its autofocus
+      //         // autofocus: false,sd
+      //         center: true,
+      //         confirmButtonText: t('common.confirm'),
+      //         showClose: false,
+      //         buttonSize: 'large'
+      //     }).then(() => {
+      //       // router.push('/login');
+      //         store.loginPageVisible = true
+      //     })
+      //     return
+      // } else {
         if (promo.redirectUrl.includes("page-vip")) {
           router.push("/vip");
         } else if (promo.redirectUrl.includes("lh1-invite")) {
@@ -191,7 +213,7 @@ export default defineComponent({
           // isPromoDetail.value = true;
           selectedPromo.value = promo
         }
-      }
+      // }
     }
 
     const scrollToTop = () => {
@@ -224,9 +246,9 @@ export default defineComponent({
         if(res.code === 0) {
           promoState.promoList.push(...res.data);
           res.data.forEach(element => {
-            if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-              promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-            } else {
+            // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+            //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+            // } else {
               if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3') {
                 if (element.redirectUrl === 'lh1-invite') {
                   showPromoDetails(element)
@@ -240,7 +262,7 @@ export default defineComponent({
               if (element.redirectUrl === route.query.name) {
                 showPromoDetails(element)
               }
-            }
+            // }
           });
         }
       }).catch((e) => { console.log("error", e); });
@@ -248,26 +270,38 @@ export default defineComponent({
     }
 
     const getPromoLabel = (labelType) => {
-      switch (labelType) {
-        case 0:
-          return "NEW 最新";
-        case 1:
-          return "HOT 热门";
-        case 3:
-          return "RECOMMEND 推荐";
-        case 4:
-          return "DAILY 日常";
-        case 5:
-          return "NEWBIE 新人";
-        case 6:
-          return "TIME 限时";
-        default:
-          return "";
-      }
-    };
+  switch (labelType) {
+    case 0:
+      return "Mới nhất";
+    case 1:
+      return "Hot";
+    case 3:
+      return "Đề xuất";
+    case 4:
+      return "Hàng ngày";
+    case 5:
+      return "Thành viên mới";
+    case 6:
+      return "TIME Thời gian giới hạn";
+    default:
+      return "";
+  }
+};
     onMounted(() => {
       // loadBanner();
       loadAll();
+    });
+
+    watch(languageVal, (newValue, oldValue) => {
+      promoTypes.value = [
+        { code:"ALL", img: 'all', label: t('promo.all') },
+        { code: "SPORT", img: 'sport', label:  t('promo.sports')},
+        { code: "POKER", img: 'poker', label: t('promo.poker')},
+        { code: "LIVE CASINO", img: 'live', label: t('promo.casino')},
+        { code: "SLOT GAME", img: 'slot', label: t('promo.slot')},
+        { code: "FISH", img: 'fish', label: t('promo.fish')},
+        { code: "LOTTERY", img: 'lottery', label: t('promo.lottery')},
+      ];
     });
 
     // watch(() => route.query.name, () => {
@@ -287,7 +321,8 @@ export default defineComponent({
       selectedPromo,
       banner,
       imgURL,
-      getPromoLabel
+      getPromoLabel,
+      languageVal
     }
   },
 });
@@ -302,7 +337,7 @@ export default defineComponent({
     background-size: 100% auto;
     padding: 50px;
     position: relative;
-    padding-top: max(300px, 22vw);
+    padding-top: max(270px, 15vw);
     background-color: #f3f7fd;
   }
   .promo-view-container {
@@ -405,11 +440,21 @@ export default defineComponent({
     .promo-main-container {
       width: 100%;
       // max-width: $maxwidth;
-      max-width: 1200px;
+      max-width: 1050px;
       margin: 0 auto;
       padding: 10px 0;
       display: flex;
       gap: 30px;
+      position: relative;
+      .rebates-container {
+        position: absolute;
+        top: -80px;
+        background: url(../assets/promo/rebate/rebatebg.png)no-repeat center center;
+        background-size: contain;
+        width: 100%;
+        height: 65px;
+
+      }
       .promo-type-wrapper {
         display: flex;
         box-shadow: 0px 4px 22px 0px #00000026;
@@ -502,7 +547,7 @@ export default defineComponent({
             .label {
               z-index: 0;
               color: #468cff;
-              font-size: 23px;
+              font-size: 16px;
             }
 
             &:before {
@@ -578,7 +623,7 @@ export default defineComponent({
             display: flex;
             justify-content: space-between;
             align-items: center;
-            // padding: 0 50px;
+            padding: 0 50px;
             // border-radius: 10px 10px 0 0;
             position: relative;
 
@@ -632,7 +677,7 @@ export default defineComponent({
               }
             }
             .promo-details {
-              font-family: "Microsoft Yahei UI";
+              font-family: "Roboto";
               margin: 20px 0;
               padding: 50px 0 10px 0;
               display: flex;
@@ -647,7 +692,7 @@ export default defineComponent({
               }
               .front-title {
                 color: #4c88f8;
-                font-size: 30px;
+                font-size: 20px;
                 font-weight: 700;
               }
               .front-sub {
@@ -677,7 +722,7 @@ export default defineComponent({
               justify-content: center;
               align-items: center;
               gap: 30px;
-              height: 320px;
+              height: 250px;
               .promo-content {
                 height: 100%;
                 &.isDesktop {

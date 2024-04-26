@@ -4,9 +4,22 @@
       <div class="search">
         <div>
           <el-select
+            v-model="request.siteId"
+            :placeholder="t('fields.site')"
+            @change="handleChangeSites"
+          >
+            <el-option
+              v-for="item in siteList.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+          <el-select
             v-model="request.loginNameList"
             :placeholder="t('fields.platform')"
             multiple
+            style="margin-left: 10px"
           >
             <el-option
               v-for="aff in affiliateNames"
@@ -128,6 +141,12 @@
             />
           </template>
         </el-table-column>
+        <el-table-column
+          prop="withdrawCount"
+          :label="t('fields.withdrawCount')"
+          align="center"
+          width="150"
+        />
         <el-table-column
           :label="t('fields.depositWithdrawalProfit')"
           align="center"
@@ -290,7 +309,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, computed } from 'vue'
 import { hasPermission } from '../../../../utils/util'
 import moment from 'moment'
 import {
@@ -301,9 +320,14 @@ import { getSiteListSimple } from '../../../../api/site'
 import { getAffiliateList } from '../../../../api/affiliate-record'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
+import { useStore } from '../../../../store'
+
+import { TENANT } from '../../../../store/modules/user/action-types'
 // import { formatInputTimeZone } from '@/utils/format-timeZone'
 
 const { t } = useI18n()
+const store = useStore()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const siteList = reactive({
   list: [],
 })
@@ -336,7 +360,24 @@ const total = reactive({
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
-  request.siteId = siteList.list.filter(x => x.siteCode === 'IND')[0].id
+
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    request.siteId = site.value.id
+  } else {
+    request.siteId = 1
+  }
+  loadAffiliateList()
+}
+
+function handleChangeSites() {
+  request.loginNameList = null
+  loadAffiliateList()
+}
+
+async function loadAffiliateList() {
   const { data: affiliates } = await getAffiliateList(request.siteId)
 
   affiliateNames.value = affiliates
@@ -460,9 +501,15 @@ function getSummaries(param) {
         sums[index] = t('fields.total')
       } else if (index > 1) {
         var prop = column.property
-        if (index === 5 || index === 6 || index === 11 || index === 12) {
+        if (
+          index === 4 ||
+          index === 6 ||
+          index === 7 ||
+          index === 12 ||
+          index === 13
+        ) {
           sums[index] = total.data[prop]
-        } else if (index === 4) {
+        } else if (index === 5) {
           // profit depositWithdrawal = deposit - withdrawal
           sums[index] =
             '$' +

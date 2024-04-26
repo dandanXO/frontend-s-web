@@ -20,7 +20,7 @@ const routes = [
   {
     path: "/forgotPwd",
     name: "forgotPwd",
-    component: () => import(/* webpackChunkName: "ForgotPwd" */ "../views/ForgotPwdView.vue"),
+    component: () => import(/* webpackChunkName: "ForgotPwd" */ "../views/ForgotPwdView.vue")
   },
   {
     path: "/",
@@ -69,11 +69,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "Game" */ "../views/LotteryView.vue")
       },
       {
-        path: "/lottery/SGWin",
-        name: "SGWin",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/lottery/SgwinView.vue")
-      },
-      {
         path: "/poker",
         name: "poker",
         component: () => import(/* webpackChunkName: "Game" */ "../views/PokerView.vue")
@@ -104,11 +99,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "Game" */ "../views/AppView.vue")
       },
       {
-        path: "/sponsor",
-        name: "sponsor",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/SponsorView.vue")
-      },
-      {
         path: "/vip",
         name: "vip",
         component: () => import(/* webpackChunkName: "Game" */ "../views/VIPView.vue")
@@ -122,11 +112,6 @@ const routes = [
         path: "/refer/:referralCode",
         name: "referCode",
         component: () => {}
-      },
-      {
-        path: "/privilege/invite",
-        name: "invite",
-        component: () => import("../views/PrivilegeInvite.vue")
       },
       {
         path: "/center",
@@ -194,21 +179,38 @@ router.beforeEach((to, from, next) => {
       }
     }
   } else {
+    // if (to.query.name) {
+    //   store.loginPageVisible = true;
+    //   next({ query: { redirect: to.path } });
+    // }
     if (to.meta.requiresAuth) {
-      ElMessageBox.alert("账号已在其他设备登录，请登录后再操作", "系统提示", {
-        // if you want to disable its autofocus
-        // autofocus: false,
-        center: true,
-        confirmButtonText: 'Confirm',
-        showClose: false,
-        buttonSize: "large"
-      }).then(() => {
-        store.loginPageVisible = true;
-      });
+      // ElMessageBox.alert("账号已在其他设备登录，请登录后再操作", $t('common.systemError'), {
+      //   // if you want to disable its autofocus
+      //   // autofocus: false,
+      //   center: true,
+      //   confirmButtonText: 'Confirm',
+      //   showClose: false,
+      //   buttonSize: "large"
+      // }).then(() => {
+      //   store.loginPageVisible = true;
+      // });
+
+      store.loginPageVisible = true;
       next({ query: { redirect: to.path } });
     } else {
       next();
     }
   }
+
+  // FB tracking
+  if (window.location.href.indexOf("https://tf88king.com") > -1) {
+    fbq("init", "888951505918547");
+    fbq("track", "PageView");
+  } else if (window.location.href.indexOf("https://tfgame88.com") > -1) {
+    fbq("init", "3658633674357920");
+    fbq("track", "PageView");
+  } else if (window.location.href.indexOf("https://tf88uytin.com") > -1) {
+    otag("init", "adv10336256983680");
+  } 
 });
 export default router;

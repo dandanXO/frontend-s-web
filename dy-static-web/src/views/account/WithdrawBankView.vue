@@ -166,7 +166,7 @@
           <el-input disabled v-model="bankCardInfo.cardAccount" />
         </el-form-item>
         <el-form-item prop="cardNumber" name="cardNumber">
-          <el-input v-model="bankCardInfo.cardNumber" :placeholder="numAddress()" />
+          <el-input v-model="bankCardInfo.cardNumber" :placeholder="numAddress()" :type="isSZPAY ? 'number' : ''" />
         </el-form-item>
         <el-form-item prop="cardAddress" name="cardAddress" v-if="!isUSDT && !isEWALLET && !isALIPAY">
           <el-input
@@ -237,7 +237,7 @@
 </template>
 
 <script lang="js">
-import {defineComponent, reactive, ref, onMounted} from "vue";
+import {defineComponent, reactive, ref, onMounted, watch} from "vue";
 import {getVerificationCode} from "@/api/index/login";
 // import { Modal, message } from "ant-design-vue";
 import {ElMessage, ElMessageBox} from "element-plus";
@@ -327,10 +327,17 @@ export default defineComponent({
         } else if(selectedCode === 'OKPAY') {
           min = 16;
           max = 16;
+        } else if(selectedCode === 'SZPAY') {
+          min = 11;
+          max = 11;
         }
       }
       if (v === '') {
-        return Promise.reject('请输入卡号');
+        if (selectedCode === 'SZPAY') {
+        return Promise.reject('请输入数字人民币使用的手机号');
+        } else{
+          return Promise.reject('请输入卡号');
+        }
       } else if (v.length < min || v.length > max) {
         if (min === max) {
           return Promise.reject('长度应为 ' + min);
@@ -348,6 +355,7 @@ export default defineComponent({
     const isEWALLET = ref(false);
     const isALIPAY = ref(false);
     const store = userStore();
+    const isSZPAY = ref(false);
     const searchForm = reactive({
       startDate: "",
       endDate: "",
@@ -534,6 +542,7 @@ export default defineComponent({
       // telephone: "",
       // smsCode: "",
       // smsCodeId: ""
+      currencyId: ""
     });
     const bankName = ref()
     const banksList = ref([])
@@ -842,12 +851,29 @@ export default defineComponent({
     const numAddress = () => {
       if (isUSDT.value) {
         return '钱包地址'
-      } else if (isEWALLET.value) {
+      } else if (isEWALLET.value && !isSZPAY.value) {
         return '电子钱包'
+      } else if (isEWALLET.value && isSZPAY.value) {
+        return '数字人民币使用的手机号'
       } else {
         return '银行卡号'
       }
     }
+
+    watch(
+      () => bankCardInfo.bankId,
+      (newVal, oldVal) => {
+        isSZPAY.value = false;
+        const selectedBank = banksList.value.find((bank) => bank.id === newVal);
+        if (selectedBank) {
+          bankCardInfo.currencyId = selectedBank.currencyIds;
+          if (selectedBank.code === 'SZPAY') {
+            isSZPAY.value = true;
+          }
+        }
+      }
+    );
+
     return {
       searchForm,
       columns,
@@ -890,7 +916,8 @@ export default defineComponent({
       withdrawState,
       checkBankCards,
       chooseCard,
-      numAddress
+      numAddress,
+      isSZPAY
     };
   }
 });

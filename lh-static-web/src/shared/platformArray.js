@@ -316,6 +316,22 @@ export const lotteryPlatforms = [
 // fishing
 export const fishingPlatforms = [
   {
+    code: "PMFISH",
+    cnname: "DB捕鱼",
+    image: "db",
+    message: "最受欢迎的DB捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
+    caption: "",
+    gameCode: ""
+  },
+  {
+    code: "AGF",
+    cnname: "AG捕鱼王",
+    image: "ag",
+    message: "最受欢迎的AG捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
+    caption: "",
+    gameCode: "HMPL"
+  },
+  {
     code: "GPS",
     cnname: "GPS决战中途岛",
     image: "gps",
@@ -323,12 +339,4 @@ export const fishingPlatforms = [
     caption: "",
     gameCode: 7202
   },
-  {
-    code: "AG",
-    cnname: "AG捕鱼王",
-    image: "",
-    message: "",
-    caption: "",
-    gameCode: ""
-  }
 ];

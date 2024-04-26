@@ -295,6 +295,7 @@ export default {
     remaining: "剩余次数",
     requiredAffiliateLevel: "请输入代理级别",
     requiredAmount: "请输入金额",
+    requiredPositiveInteger: "金额应为正数",
     requiredAnswer: "请输入答案",
     requiredCardAccount: "请输入银行卡账号",
     requiredCardAddress: "请输入银行卡地址",

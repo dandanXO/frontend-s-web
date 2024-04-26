@@ -109,25 +109,79 @@
         </div>
       </el-form>
     </el-dialog>
+    <el-dialog
+      :title="uiControl.dialogTitle"
+      v-model="uiControl.copyDialogVisible"
+      append-to-body
+      width="600px"
+    >
+      <el-form
+        ref="copyForm2"
+        v-loading="uiControl.copyDialogLoading"
+        :model="copyForm"
+        :inline="true"
+        size="small"
+        label-width="160px"
+      >
+        <el-form-item :label="t('fields.withdrawName')" prop="newWithdrawId">
+          <el-select
+            v-model="copyForm.newWithdrawId"
+            size="small"
+            :placeholder="t('fields.withdrawPlatformName')"
+            class="filter-item"
+            style="width: 300px; margin-bottom: 10px"
+          >
+            <el-option
+              v-for="item in list.withdrawInfo"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.copyDialogVisible = false">{{ t('fields.cancel') }}</el-button>
+          <el-button type="primary" @click="copySubmit">{{ t('fields.confirm') }}</el-button>
+        </div>
+      </el-form>
+    </el-dialog>
     <el-table
       :data="page.records"
       ref="table"
-      row-key="id"
+      row-key="withdrawId"
       size="small"
       highlight-current-row
-      @selection-change="handleSelectionChange"
       :empty-text="t('fields.noData')"
+      style="width: 50%;"
+      @expand-change="handleExpand"
+      :expand-row-keys="[]"
     >
+      <el-table-column type="expand">
+        <template #default="props">
+          <el-table :data="props.row.child" ref="table" size="small" max-height="250" style="margin-left: 60px; width: 75%;">
+            <el-table-column prop="bankName" :label="t('fields.bankName')" />
+            <el-table-column prop="bankCode" :label="t('fields.bankCode')" />
+            <el-table-column label="" align="left">
+              <template #default="scope">
+                <el-button icon="el-icon-delete"
+                           size="mini"
+                           type="danger"
+                           v-permission="['sys:withdraw-bank:del']"
+                           @click="removeWithdrawBank(scope.row)"
+                />
+              </template>
+            </el-table-column>
+          </el-table>
+        </template>
+      </el-table-column>
       <el-table-column prop="withdrawName" :label="t('fields.withdrawName')" />
-      <el-table-column prop="bankName" :label="t('fields.bankName')" />
-      <el-table-column prop="bankCode" :label="t('fields.bankCode')" />
       <el-table-column label="" align="left">
         <template #default="scope">
-          <el-button icon="el-icon-delete"
-                     size="mini"
-                     type="danger"
-                     v-permission="['sys:withdraw-bank:del']"
-                     @click="removeWithdrawBank(scope.row)"
+          <el-button
+            icon="el-icon-copy-document"
+            size="mini"
+            type="warning"
+            @click="showCopyDialog(scope.row)"
           />
         </template>
       </el-table-column>
@@ -148,7 +202,9 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import { onMounted, reactive, ref, computed } from 'vue'
 import { getSiteListSimple } from '../../../api/site'
 import {
+  copyWithdrawBank,
   getWithdrawBankList,
+  getWithdrawPlatform,
   createWithdrawBank,
   deleteWithdrawBank,
 } from '../../../api/system-withdraw-bank'
@@ -171,7 +227,10 @@ const uiControl = reactive({
   dialogTitle: '',
   dialogType: 'CREATE',
   editBtn: true,
-  removeBtn: true
+  removeBtn: true,
+  copyDialogVisible: false,
+  copyDialogTitle: '',
+  copyDialogLoading: false,
 })
 
 const request = reactive({
@@ -206,6 +265,11 @@ const list = reactive({
   withdrawInfo: [],
 })
 
+const copyForm = reactive({
+  oldWithdrawId: null,
+  newWithdrawId: null,
+})
+
 function changePage(page) {
   request.current = page
   loadWithdrawBankList()
@@ -228,13 +292,43 @@ function handleSiteChange() {
   loadWithdraw()
 }
 
+async function handleExpand(row, expandRow) {
+  const requestCopy = { ...request }
+  requestCopy.size = 100
+  requestCopy.withdrawId = row.withdrawId
+  const { data: ret } = await getWithdrawBankList(requestCopy)
+  if (ret.size > 0) {
+    page.records.forEach(record => {
+      if (record.withdrawId === row.withdrawId) {
+        record.child = []
+        ret.records.forEach(item => { record.child.push(item) }
+        )
+      }
+    });
+  }
+}
+
+function showCopyDialog(withdraw) {
+  console.log('withdraw', withdraw)
+  copyForm.oldWithdrawId = withdraw.withdrawId;
+  copyForm.newWithdrawId = null
+  uiControl.dialogTitle = t('fields.copyPayment') + " -  " + withdraw.withdrawName;
+  uiControl.copyDialogVisible = true
+}
+
+async function copySubmit() {
+  await copyWithdrawBank(copyForm.oldWithdrawId, copyForm.newWithdrawId);
+  loadWithdrawBankList();
+  ElMessage({ message: t('message.copySuccess'), type: 'success' });
+}
+
 async function loadSites() {
   const { data: ret } = await getSiteListSimple()
   list.sites = ret
 }
 
 async function loadWithdrawBankList() {
-  const { data: ret } = await getWithdrawBankList(request)
+  const { data: ret } = await getWithdrawPlatform(request)
   page.pages = ret.pages
   page.records = ret.records
 }
@@ -312,6 +406,15 @@ onMounted(async () => {
 
 .el-table--enable-row-transition .el-table__body td.el-table__cell {
   padding: 4px 0;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
 }
 
 i.el-icon-circle-check {

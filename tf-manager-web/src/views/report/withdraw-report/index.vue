@@ -59,6 +59,64 @@
       </div>
     </div>
 
+    <div class="tables-container-wrap1">
+      <el-card class="info-card">
+        <el-descriptions
+          size="small"
+          v-for="(item, index) in page.records"
+          :key="index"
+          :title="item.name"
+          :column="2"
+          class="margin-top"
+          style="margin-bottom: 20px;"
+          border
+        >
+          <el-descriptions-item
+            label-align="left"
+            label-class-name="member-label"
+            class-name="member-context"
+            style="width: 50%;"
+          >
+            <template #label>
+              <div> {{ t('dashboard.totalTransaction') }} </div>
+            </template>
+            <span>{{ item.totalSuccessWithdraw }} / {{ (parseInt(item.totalWithdraw) + parseInt(item.totalSuccessWithdraw)) }} </span>
+          </el-descriptions-item>
+          <el-descriptions-item
+            label-align="left"
+            label-class-name="member-label"
+            class-name="member-context"
+          >
+            <template #label>
+              <div> {{ t('fields.amount') }} </div>
+            </template>
+            <span v-formatter="{data: item.totalSuccessWithdrawAmount, type: 'money'}" /> /
+            <span v-formatter="{data: parseFloat(item.totalWithdrawAmount) + parseFloat(item.totalSuccessWithdrawAmount), type: 'money'}" />
+          </el-descriptions-item>
+          <el-descriptions-item
+            label-align="left"
+            label-class-name="member-label"
+            class-name="member-context"
+          >
+            <template #label>
+              <div> {{ t('fields.successRate') }} </div>
+            </template>
+            <span v-formatter="{data: item.totalSuccessWithdraw / (parseInt(item.totalWithdraw) + parseInt(item.totalSuccessWithdraw)) * 100, type: 'money'}" /> %
+          </el-descriptions-item>
+          <el-descriptions-item
+            label-align="left"
+            label-class-name="member-label"
+            class-name="member-context"
+          >
+            <template #label>
+              <div>{{ t('fields.successAmounntRate') }} </div>
+            </template>
+            <span v-formatter="{data: item.totalSuccessWithdrawAmount / (parseFloat(item.totalWithdrawAmount) + parseFloat(item.totalSuccessWithdrawAmount)) * 100, type: 'money'}" /> %
+          </el-descriptions-item>
+        </el-descriptions>
+      </el-card>
+    </div>
+
     <el-table
       :data="page.records"
       ref="table"
@@ -71,6 +129,7 @@
       :empty-text="t('fields.noData')"
       :summary-method="getSummaries"
       show-summary
+      v-show="false"
     >
       <el-table-column type="expand">
         <template #default="scope">
@@ -273,7 +332,7 @@ const totalPage = reactive({
 })
 
 const request = reactive({
-  size: 30,
+  size: 100,
   current: 1,
   name: null,
   recordTime: [defaultStartDate, defaultEndDate],
@@ -485,5 +544,134 @@ onMounted(async () => {
 
 .el-input-number:deep .el-input__inner {
   text-align: left;
+}
+</style>
+
+<style lang="scss" scoped>
+.member-label {
+  width: 150px;
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.member-context {
+  width: 30%;
+}
+
+.member-context-red {
+  background: #ff0000;
+  color: white;
+}
+
+</style>
+
+<style lang="scss" scoped>
+.tables-container-wrap1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  .info-card {
+    margin-bottom: 10px;
+    :deep(.el-card__body){
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 16px;
+    }
+  }
+}
+
+.box-card {
+  ::v-deep(.el-card__body) {
+    padding: 0;
+  }
+}
+
+::v-deep {
+  .el-tabs__content {
+    padding: 0;
+  }
+}
+
+.platform {
+  display: flex;
+  text-align: center;
+  width: fit-content;
+  flex: 1;
+
+  * {
+    // add back paddings supposed to be present 1
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .label {
+    background-color: #f5f7fa;
+    width: 73px;
+  }
+
+  .plat-ctrl {
+    flex: 1;
+  }
+}
+
+::v-deep([class^='el-table']) {
+  .cell,
+  .remove-padding {
+    padding: 0 !important;
+  }
+
+  .remove-padding {
+    .cell {
+      display: flex;
+    }
+  }
+}
+
+.balance {
+  padding: 3px 50px;
+  border: solid 1px #dcdfe6;
+  background-color: #e9ecef;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.platform-balance {
+  padding: 5px;
+  display: inline-block;
+}
+
+.level-color {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.refresh-btn {
+  margin-left: 20px;
+}
+
+.refresh-platform-btn {
+  margin-left: 5px;
+  display: inline-block;
+}
+</style>
+
+<style lang="scss">
+.member-label {
+  width: 15% !important;
 }
 </style>

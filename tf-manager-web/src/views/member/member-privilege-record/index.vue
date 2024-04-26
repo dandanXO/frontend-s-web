@@ -82,12 +82,11 @@
           {{ t('fields.massImport') }}
         </el-button>
         <el-button
-          icon="el-icon-download"
           size="mini"
-          type="warning"
-          v-permission="['sys:member-privilege:export']"
-          @click="exportExcel"
-        >{{ t('fields.exportToExcel') }}
+          type="primary"
+          v-permission="['sys:report:privilege:record:export']"
+          @click="requestExportExcel"
+        >{{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
     </div>
@@ -295,7 +294,6 @@
       size="small"
       :empty-text="t('fields.noData')"
     >
-      <el-table-column prop="memberId" :label="t('fields.memberId')" width="200" />
       <el-table-column prop="loginName" :label="t('fields.loginName')" width="230" />
       <el-table-column prop="privilegeId" :label="t('fields.privilegeId')" width="200" />
       <el-table-column prop="amount" :label="t('fields.amount')" width="230" />
@@ -320,23 +318,16 @@
       <el-button @click="clearImport(); uiControl.dialogVisible = false;">{{ t('fields.cancel') }}</el-button>
     </div>
   </el-dialog>
-  <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.progressBarVisible" append-to-body width="500px"
+  <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
              :close-on-click-modal="false" :close-on-press-escape="false"
   >
-    <el-progress :text-inside="true" :stroke-width="26" :percentage="exportPercentage"
-                 :color="uiControl.colors" v-if="exportPercentage !== 100"
-    />
-    <el-result
-      icon="success"
-      :title="t('fields.successfullyExport')"
-      v-if="exportPercentage === 100"
-    />
-    <div class="dialog-footer">
-      <el-button type="primary" :disabled="exportPercentage !== 100"
-                 @click="uiControl.progressBarVisible = false"
-      >{{ t('fields.done') }}
-      </el-button>
-    </div>
+    <span>{{ t('message.requestExportToExcelDone1') }}</span>
+    <router-link :to="`/site-management/download-manager`">
+      <el-link type="primary">
+        {{ t('menu.DownloadManager') }}
+      </el-link>
+    </router-link>
+    <span>{{ t('message.requestExportToExcelDone2') }}</span>
   </el-dialog>
 </template>
 
@@ -347,6 +338,7 @@ import moment from 'moment'
 import {
   getPrivilegeRecord,
   getTotalPrivilegeAmount,
+  requestExportPrivilegeRecord,
 } from '../../../api/report-privilege-record'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
@@ -358,7 +350,6 @@ import { required } from '../../../utils/validate'
 import { ElMessage } from 'element-plus'
 import { getActivePrivilegeInfoBySiteIdWithoutRebate, getPrivilegeExcelMappingWithoutRebate } from '../../../api/privilege-info'
 import { createBatchPrivilege, distributePrivilege } from '../../../api/member-privilege'
-import { findIdByLoginName } from '../../../api/member'
 import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n()
@@ -379,11 +370,6 @@ const siteList = reactive({
   list: [],
 })
 const selectedPrivilege = ref(null);
-const exportPercentage = ref(0);
-
-const EXPORT_HEADER = [t('fields.loginName'), t('fields.privilegeName'), t('fields.alias'), t('fields.amount'),
-  t('fields.recordTime'), t('fields.privilegeType'), t('fields.privilegeSerialNo'), t('fields.depositSerialNo'),
-  t('fields.updateBy')];
 
 const EXPORT_MEMBER_PRIVILEGE_LIST_HEADER = [
   'Login Name',
@@ -723,10 +709,10 @@ function importToTable(file) {
               range: 1,
             })
           );
-          for (const d of data) {
-            const { data: id } = await findIdByLoginName(d.loginName, importForm.siteId);
-            d.memberId = id;
-          }
+          // for (const d of data) {
+          //   const { data: id } = await findIdByLoginName(d.loginName, importForm.siteId);
+          //   d.memberId = id;
+          // }
           break;
         }
         importedPage.records = data;
@@ -764,9 +750,7 @@ async function confirmImport() {
     if (value) {
       item.siteId = importForm.siteId;
       Object.entries(value).forEach(([k, v]) => {
-        if (k !== "loginName") {
-          item[k] = v;
-        }
+        item[k] = v;
       });
     }
     data.push(item);
@@ -789,41 +773,14 @@ async function confirmImport() {
   loadPrivilegeRecord();
 }
 
-async function exportExcel() {
-  uiControl.progressBarVisible = true;
+async function requestExportExcel() {
   const query = checkQuery();
-  query.current = 1;
-  const { data: ret } = await getPrivilegeRecord(query);
-  const exportData = [EXPORT_HEADER];
-  const maxLength = [];
-
-  pushRecordToData(ret.records, exportData);
-  exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
-  query.current = ret.current;
-
-  while (query.current < ret.pages) {
-    query.current += 1;
-    const { data: ret } = await getPrivilegeRecord(query);
-    pushRecordToData(ret.records, exportData);
-    exportPercentage.value = Math.round(ret.current / (ret.pages + 1) * 100);
+  query.requestBy = store.state.user.name;
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+  const { data: ret } = await requestExportPrivilegeRecord(query);
+  if (ret) {
+    uiControl.messageVisible = true;
   }
-  const ws = XLSX.utils.aoa_to_sheet(exportData);
-  exportData.map(data => {
-    Object.keys(data).map(key => {
-      const value = data[key];
-
-      maxLength[key] = typeof value === 'number'
-        ? (maxLength[key] >= 10 ? maxLength[key] : 10)
-        : (maxLength[key] >= value.length + 2 ? maxLength[key] : value.length + 2);
-    });
-  });
-  const wsCols = maxLength.map(w => { return { width: w } });
-  ws['!cols'] = wsCols;
-  const wb = XLSX.utils.book_new();
-  wb.SheetNames.push('Member_Privilege_Record');
-  wb.Sheets.Member_Privilege_Record = ws;
-  XLSX.writeFile(wb, "member_privilege_record.xlsx");
-  exportPercentage.value = 100;
 }
 
 onMounted(async () => {

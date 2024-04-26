@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <template v-if="props.type !== 'outbox'">
+    <!-- <template v-if="props.type !== 'outbox'">
       <q-tabs active-color="dark" indicator-color="bright" align="justify" v-model="mailboxMessageTab">
         <q-tab :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
           <div class="tab-flex">
@@ -9,7 +9,7 @@
           </div>
         </q-tab>
       </q-tabs>
-    </template>
+    </template> -->
 
     <q-tab-panels v-model="mailboxMessageTab" animated>
       <q-tab-panel :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
@@ -19,17 +19,22 @@
             v-if="props.type !== 'outbox' && truncatedListByType && truncatedListByType.length"
           >
             <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md" @click="readMails(item.type)">
-              全部已读
+              {{ $t("lang.mail_allread") }}
             </q-btn>
             <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md" @click="deleteMails(item.type)">
-              全部删除
+              {{ $t("lang.mail_deleteall") }}
             </q-btn>
-            <q-toggle v-if="truncatedListByType.length" v-model="allowSelectMultiple" :label="'选择多个'" left-label />
+            <q-toggle
+              v-if="truncatedListByType.length"
+              v-model="allowSelectMultiple"
+              :label="$t('lang.mail_selectone')"
+              left-label
+            />
             <q-btn v-if="hasMailSelected" class="common-md-white-btn" size="md" @click="readMails(item.type)">
-              已读
+              {{ $t("lang.mail_read") }}
             </q-btn>
             <q-btn v-if="hasMailSelected" class="common-md-white-btn" size="md" @click="deleteMails(item.type)">
-              删除
+              {{ $t("lang.mail_delete") }}
             </q-btn>
           </div>
           <q-infinite-scroll @load="onLoad" :offset="150">
@@ -52,8 +57,7 @@
                     style="font-size: 14px"
                     color="#0089ED"
                   />
-                  <q-chip size="sm" label="已读" v-if="det.readTime && det.sendTime" />
-                  标题：
+                  <q-chip size="sm" :label="$t('lang.mail_read')" v-if="det.readTime && det.sendTime" />
                   {{ det.title }}
                 </div>
 
@@ -78,7 +82,7 @@
                 </div>
               </div>
               <div v-else class="q-pa-md" style="text-align: center">
-                {{ truncatedList.length === 0 ? "暂无数据" : "暂无更多数据了" }}
+                {{ truncatedList.length === 0 ? $t("lang.mail_nodata") : $t("lang.mail_nodatayet") }}
               </div>
             </template>
           </q-infinite-scroll>
@@ -87,7 +91,7 @@
         <div class="loading-container" v-else>
           <q-inner-loading :showing="loading">
             <q-spinner-gears size="50px" color="brand" />
-            <div class="label">加载中</div>
+            <div class="label">{{ $t("lang.mail_loading") }}</div>
           </q-inner-loading>
         </div>
       </q-tab-panel>
@@ -96,14 +100,19 @@
     <q-dialog width="100%" v-model="isDeleteMailModal">
       <q-card style="width: 100%; padding: 20px" class="text-black">
         <q-card-section class="q-mb-md text-center" style="flex-direction: column">
-          <strong>温馨提示</strong>
+          <strong>{{ $t("lang.system_hint") }}</strong>
           <br />
           <br />
-          确认删除信息？
+          {{ $t("lang.system_delete_all_msg") }}
         </q-card-section>
         <q-card-actions align="center">
-          <q-btn class="common-md-btn" size="md" @click="confirmDeleteMails(type)" label="确认" />
-          <q-btn class="common-md-white-btn" size="md" @click="isDeleteMailModal = false" label="取消" />
+          <q-btn class="common-md-btn" size="md" @click="confirmDeleteMails(type)" :label="$t('lang.system_confirm')" />
+          <q-btn
+            class="common-md-white-btn"
+            size="md"
+            @click="isDeleteMailModal = false"
+            :label="$t('lang.system_cancel')"
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -116,6 +125,7 @@ import { RiArrowDownSLine, RiArrowUpSLine } from "vue-remix-icons";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import qs from "qs";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   components: {
@@ -150,18 +160,20 @@ export default defineComponent({
   },
   emits: ["readMsg"],
   setup(props, context) {
+    const { t } = useI18n();
     const mailboxMessageTypeData = ref([
-      { num: 1, type: "NOTIFICATION", name: "通知" },
-      { num: 2, type: "ACTIVITY", name: "活动" },
-      { num: 3, type: "ANNOUNCEMENT", name: "公告" },
-      { num: 4, type: "PAYMENT", name: "充提" },
-      { num: 5, type: "ALL", name: "全部" }
+      { num: 5, type: "ALL", name: t("lang.mail_all") },
+      { num: 1, type: "NOTIFICATION", name: t("lang.mail_notification") },
+      { num: 2, type: "ACTIVITY", name: t("lang.mail_activity") },
+      { num: 3, type: "ANNOUNCEMENT", name: t("lang.mail_announcement") },
+      { num: 4, type: "PAYMENT", name: t("lang.mail_payment") }
     ]);
     const mailboxMessageTab = ref(mailboxMessageTypeData.value[0].type);
     if (props.type === "outbox") {
       mailboxMessageTab.value = mailboxMessageTypeData.value[4].type;
     }
     const $q = useQuasar();
+
     const isDeleteMailModal = ref(false);
     const truncatedList = ref([]);
     const truncatedListByType = computed(() => {
@@ -215,7 +227,7 @@ export default defineComponent({
           .then((res) => {
             if (res.code === 0) {
               $q.notify({
-                message: "读取已选择的消息",
+                message: t("lang.msg_readallselected"),
                 type: "positive",
                 position: "top",
                 icon: "check_circle_outline"
@@ -246,7 +258,7 @@ export default defineComponent({
           .then((res) => {
             if (res.code === 0) {
               $q.notify({
-                message: "全部消息已读",
+                message: t("lang.msg_readallmsg"),
                 type: "positive",
                 position: "top",
                 icon: "check_circle_outline"
@@ -275,7 +287,7 @@ export default defineComponent({
           .then((res) => {
             if (res.code === 0) {
               $q.notify({
-                message: "全部消息已读",
+                message: t("lang.msg_readallmsg"),
                 type: "positive",
                 position: "top",
                 icon: "check_circle_outline"
@@ -326,7 +338,7 @@ export default defineComponent({
           .then((res) => {
             if (res.code === 0) {
               $q.notify({
-                message: "已读消息",
+                message: t("lang.msg_readmsg"),
                 type: "positive",
                 position: "top",
                 icon: "check_circle_outline"
@@ -368,7 +380,7 @@ export default defineComponent({
               truncatedList.value = truncatedList.value.filter((mail) => !selectedMailIds.value[mail.id]);
 
               $q.notify({
-                message: "删除已选择的消息",
+                message: t("lang.msg_deleteselected"),
                 type: "positive",
                 position: "top",
                 icon: "check_circle_outline"
@@ -396,7 +408,7 @@ export default defineComponent({
             truncatedList.value = truncatedList.value.filter((item) => item.type !== msgType.value);
             if (res.code === 0) {
               $q.notify({
-                message: "已删除全部消息",
+                message: t("lang.msg_deleteallmsg"),
                 type: "positive",
                 position: "top",
                 icon: "check_circle_outline"
@@ -419,7 +431,7 @@ export default defineComponent({
             truncatedList.value = truncatedList.value.filter((item) => item.type !== msgType.value);
             if (res.code === 0) {
               $q.notify({
-                message: "已删除全部消息",
+                message: t("lang.msg_deleteallmsg"),
                 type: "positive",
                 position: "top",
                 icon: "check_circle_outline"

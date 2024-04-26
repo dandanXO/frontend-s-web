@@ -230,7 +230,7 @@
               :label="p.typeName"
               :key="p.value"
             >
-              {{ p.typeName }}
+              {{ p.displayName }}
             </el-checkbox>
           </el-checkbox-group>
         </el-col>
@@ -542,13 +542,17 @@ const labelType = reactive({
   ],
 })
 const promoTypes = [
-  { typeName: 'WELCOME', value: 1 },
-  { typeName: 'SPORT', value: 2 },
-  { typeName: 'ESPORT', value: 3 },
-  { typeName: 'FISH', value: 4 },
-  { typeName: 'LIVE CASINO', value: 5 },
-  { typeName: 'SLOT GAME', value: 6 },
-  { typeName: 'POKER', value: 7 },
+  { typeName: 'WELCOME', value: 1, displayName: t('promoType.WELCOME') },
+  { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
+  { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
+  { typeName: 'FISH', value: 4, displayName: t('promoType.FISH') },
+  { typeName: 'LIVE CASINO', value: 5, displayName: t('promoType.LIVECASINO') },
+  { typeName: 'SLOT GAME', value: 6, displayName: t('promoType.SLOTGAME') },
+  { typeName: 'POKER', value: 7, displayName: t('promoType.POKER') },
+  { typeName: 'DAILY', value: 8, displayName: t('promoType.DAILY') },
+  { typeName: 'FTD', value: 9, displayName: t('promoType.FTD') },
+  { typeName: 'LOTTERY', value: 11, displayName: t('promoType.LOTTERY') },
+  { typeName: 'OTHER', value: 10, displayName: t('promoType.OTHER') },
 ]
 
 function handleCheckedChangePromoType() {

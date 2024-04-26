@@ -73,7 +73,7 @@
                 <q-item-section avatar>
                   <img
                     :src="require(`../../assets/images/home/${scope.opt.type.toLowerCase()}/logo-${scope.opt.code.toLowerCase()}.png`)"
-                    :style="scope?.opt?.type === 'main' ? 'width: 15px; margin: 10px 10px 10px 5px;' : 'width: 30px; margin-top: 10px; margin-bottom: 10px;'">
+                    :style="scope.opt.type === 'main' ? 'width: 15px; margin: 10px 10px 10px 5px;' : 'width: 30px; margin-top: 10px; margin-bottom: 10px;'">
                   <!-- <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;" :src="imgURL + scope.opt.bankIcon"> -->
                 </q-item-section>
                 <q-item-section>

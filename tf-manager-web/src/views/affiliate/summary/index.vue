@@ -94,7 +94,7 @@
           prop="loginName"
           :label="t('fields.loginName')"
           align="left"
-          width="120"
+          width="160"
         >
           <template
             #default="scope"
@@ -296,6 +296,7 @@
           />
           <el-date-picker
             v-model="popUpRequest.recordTime"
+            v-if="currentPageType === 'allMembers'"
             format="DD/MM/YYYY"
             value-format="YYYY-MM-DD"
             size="small"
@@ -303,6 +304,21 @@
             range-separator=":"
             :start-placeholder="t('fields.startDate')"
             :end-placeholder="t('fields.endDate')"
+            style="width: 300px; margin-left: 10px"
+            :shortcuts="shortcuts"
+            :disabled-date="disabledDate"
+            :editable="false"
+            :clearable="false"
+          />
+          <el-date-picker
+            v-model="popUpRequest.regTime"
+            format="DD/MM/YYYY"
+            value-format="YYYY-MM-DD"
+            size="small"
+            type="daterange"
+            range-separator=":"
+            :start-placeholder="t('fields.regStartDate')"
+            :end-placeholder="t('fields.regEndDate')"
             style="width: 300px; margin-left: 10px"
             :shortcuts="shortcuts"
             :disabled-date="disabledDate"
@@ -335,6 +351,9 @@
             "
           >
             {{ t('fields.search') }}
+          </el-button>
+          <el-button size="mini" @click="resetPopupQuery()">
+            {{ t('fields.reset') }}
           </el-button>
         </div>
       </div>
@@ -442,6 +461,17 @@
           <template #default="scope">
             $
             <span v-formatter="{data: scope.row.payout, type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="profit"
+          :label="t('fields.totalProfit')"
+          align="center"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span v-formatter="{data: scope.row.profit, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column
@@ -553,7 +583,8 @@ const request = reactive({
 
 const popUpRequest = reactive({
   loginName: null,
-  recordTime: [...request.recordTime],
+  recordTime: null,
+  regTime: null,
   memberType: null,
 })
 
@@ -594,6 +625,13 @@ function resetQuery() {
   request.affiliateCode = null
   request.activeMember = 0
   request.siteId = site.value ? site.value.id : siteList.list[0].id
+}
+
+function resetPopupQuery() {
+  popUpRequest.loginName = null
+  popUpRequest.recordTime = null
+  popUpRequest.regTime = null
+  popUpRequest.memberType = null
 }
 
 const page = reactive({
@@ -647,9 +685,13 @@ async function loadRecord() {
 async function loadChildren(tree, treeNode, resolve) {
   const query = {}
 
-  query.recordTime = tree.recordTime
   query.parentAffiliateId = tree.affiliateId
   query.siteId = request.siteId
+  if (request.recordTime !== null) {
+    if (request.recordTime.length === 2) {
+      query.recordTime = request.recordTime.join(',')
+    }
+  }
   const { data: children } = await getAffiliateChildSummary(query)
   resolve(children)
 }
@@ -682,20 +724,18 @@ async function loadNewMember(affiliateId) {
     }
   })
 
-  if (popUpRequest.recordTime !== null) {
-    if (popUpRequest.recordTime.length === 2) {
-      query.recordTime = JSON.parse(JSON.stringify(popUpRequest.recordTime))
+  popUpRequest.regTime = request.recordTime
 
-      query.recordTime[0] = moment(query.recordTime[0]).format(
-        'YYYY-MM-DD 00:00:00'
-      )
-      query.recordTime[1] = moment(query.recordTime[1]).format(
-        'YYYY-MM-DD 23:59:59'
-      )
+  if (popUpRequest.regTime !== null) {
+    if (popUpRequest.regTime.length === 2) {
+      query.regTime = JSON.parse(JSON.stringify(popUpRequest.regTime))
 
-      query.recordTime = query.recordTime.join(',')
+      query.regTime[0] = moment(query.regTime[0]).format('YYYY-MM-DD 00:00:00')
+      query.regTime[1] = moment(query.regTime[1]).format('YYYY-MM-DD 23:59:59')
+
+      query.regTime = query.regTime.join(',')
     } else {
-      query.recordTime = moment(popUpRequest.recordTime[0]).format(
+      query.regTime = moment(popUpRequest.regTime[0]).format(
         'YYYY-MM-DD 00:00:00'
       )
     }
@@ -733,6 +773,23 @@ async function loadAllMember(affiliateId) {
   query.affiliateId = affiliateId
   query.loginName = popUpRequest.loginName
   query.memberType = popUpRequest.memberType
+
+  popUpRequest.recordTime = request.recordTime
+
+  if (popUpRequest.regTime !== null) {
+    if (popUpRequest.regTime.length === 2) {
+      query.regTime = JSON.parse(JSON.stringify(popUpRequest.regTime))
+
+      query.regTime[0] = moment(query.regTime[0]).format('YYYY-MM-DD 00:00:00')
+      query.regTime[1] = moment(query.regTime[1]).format('YYYY-MM-DD 23:59:59')
+
+      query.regTime = query.regTime.join(',')
+    } else {
+      query.regTime = moment(popUpRequest.regTime[0]).format(
+        'YYYY-MM-DD 00:00:00'
+      )
+    }
+  }
 
   if (popUpRequest.recordTime !== null) {
     if (popUpRequest.recordTime.length === 2) {

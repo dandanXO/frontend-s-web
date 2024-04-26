@@ -1,9 +1,10 @@
 <template>
   <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
+      <!-- <div class="side left"><img src="../../assets/home/header_side.png"></div> -->
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
-          <img class="logo" src="../../assets/logo.svg" />
+          <img class="logo" src="../../assets/logo-bebest.svg" />
         </router-link>
         <div class="navigations">
           <template v-for="nav in navigations" :key="nav.name">
@@ -74,7 +75,7 @@
           </div>
         </div>
 
-<LocaleChanger />
+        <LocaleChanger />
 
         <div v-if="!store.token" class="right-contents">
           <!-- <router-link to="/login" class="action-btn">
@@ -83,29 +84,38 @@
           <router-link to="/register" class="action-btn">
             <a class="header-btn btn-color-white">注册</a>
           </router-link> -->
-          <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">{{ $t('common.login') }}</a>
-          <a class="header-btn btn-color-white" @click="registerDialogVisible = true">{{ $t('common.register') }}</a>
+          <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">{{ $t("common.login") }}</a>
+          <a class="header-btn btn-color-white" @click="registerDialogVisible = true">
+            {{ $t("common.register") }}
+            <img src="../../assets/home/regbtn_side.png" />
+          </a>
         </div>
 
         <div v-if="store.token" class="profile-actions">
           <router-link to="/center/deposit" class="action-btn">
             <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-deposit.png" />
+              <img src="../../assets/images/home/profile-action-deposit.svg" />
             </div>
-           {{ $t('menu.deposit') }}
+            {{ $t("menu.deposit") }}
           </router-link>
           <router-link to="/center/withdraw" class="action-btn">
             <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-withdraw.png" />
+              <img src="../../assets/images/home/profile-action-withdraw.svg" />
             </div>
-            {{ $t('menu.withdraw') }}
+            {{ $t("menu.withdraw") }}
           </router-link>
-          <router-link to="/center/transfer" class="action-btn">
+          <div class="action-btn" @click="showRebateValue">
+            <div class="icon-rounded">
+              <img src="../../assets/images/home/profile-action-rebate.svg" />
+            </div>
+            {{ $t("menu.rebate") }}
+          </div>
+          <!-- <router-link to="/center/transfer" class="action-btn">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-transfer.png" />
             </div>
             {{ $t('menu.transfer') }}
-          </router-link>
+          </router-link> -->
         </div>
 
         <div class="profile-info" v-if="store.token">
@@ -117,35 +127,38 @@
               </div>
             </span>
             <template #dropdown>
-              <el-dropdown-menu style="min-width: 180px; display: flex;
-              flex-direction: column;
-              align-items: flex-start" class="profile-info-dropdown-content">
+              <el-dropdown-menu
+                style="min-width: 180px; display: flex; flex-direction: column; align-items: flex-start"
+                class="profile-info-dropdown-content"
+              >
                 <el-dropdown-item command="personal">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
-                    <span>{{$t('menu.personalInfo')}}</span>
+                    <span>{{ $t("menu.personalInfo") }}</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="deposit">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
-                    <span>{{$t('menu.deposit')}}</span>
+                    <span>{{ $t("menu.deposit") }}</span>
                   </div>
                 </el-dropdown-item>
-                <el-dropdown-item command="transfer">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
+                <!-- <el-dropdown-item command="transfer">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
                     <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
                     <span>{{$t('menu.transfer')}}</span>
                   </div>
-                </el-dropdown-item>
+                </el-dropdown-item> -->
                 <el-dropdown-item command="promotion">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
-                    <span>{{$t('menu.promotion')}}</span>
+                    <span>{{ $t("menu.promotion") }}</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="logout">
-                  <button class="standard-button btn-color-white" style="color: #468cff">{{$t('menu.logout')}}</button>
+                  <button class="standard-button btn-color-white" style="color: #468cff">
+                    {{ $t("menu.logout") }}
+                  </button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -161,10 +174,10 @@
             </div>
             <a @click="refreshBalance" class="details-balance">
               <div class="flex-wrap" style="display: flex; align-items: center; flex-wrap: nowrap">
-                <span class="assets-text">{{$t('account.mainWallet')}}:</span>
+                <span class="assets-text">{{ $t("account.mainWallet") }}:</span>
                 <span class="amount">
-                  <span v-if="isLoadingBalance">{{$t('common.loading')}}...</span>
-                  <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ store.balance }}</span>
+                  <span v-if="isLoadingBalance">{{ $t("common.loading") }}...</span>
+                  <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ displayBalance(store.balance) }}</span>
                 </span>
               </div>
               <el-icon>
@@ -190,6 +203,8 @@
           </div>
         </div> -->
       </div>
+
+      <!-- <div class="side right"><img src="../../assets/home/header_side.png"></div> -->
     </div>
 
     <!-- <el-dialog
@@ -295,18 +310,16 @@
     <el-dialog
       class="acc-dialog"
       v-model="loginDialogVisible"
-      width="1280px"
+      width="980px"
       align-center
       style="max-width: 1080px"
       @close="store.loginPageVisible = false"
     >
-      <div class="acc-dialog-container" :style="`background-image: url(${require(`../../assets/home/acc-dialog-bg-${languageVal}.png`)})`">
+      <div class="acc-dialog-container login-container">
         <div class="acc-dialog-left">
+          <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" />
         </div>
         <div class="acc-dialog-right">
-          <!-- <div class="acc-dialog-homelogo">
-            <img src="../../assets/logo.svg" width="150" />
-          </div> -->
           <div class="acc-dialog-content">
             <LoginDialog
               @close-dialog="loginDialogVisible = false"
@@ -326,24 +339,33 @@
       style="max-width: 1080px"
       @close="store.regPageVisible = false"
     >
-      <div class="acc-dialog-container" :style="`background-image: url(${require(`../../assets/home/acc-dialog-bg-${languageVal}.png`)})`">
+      <div class="acc-dialog-container signup-container">
         <div class="acc-dialog-left">
-          <!-- <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img.png" />
-          </div> -->
+          <img :src="`${require(`../../assets/home/acc-dialog-bg-signup-${languageVal}.png`)}`" width="150" />
         </div>
         <div class="acc-dialog-right">
-          <!-- <div class="acc-dialog-homelogo">
-            <img src="../../assets/logo.svg" width="150" />
-          </div> -->
-          <RegisterAccount @close-dialog="registerDialogVisible = false" @open-login-dialog="openLoginDialog" />
+          <RegisterAccount
+            @close-dialog="registerDialogVisible = false"
+            @open-login-dialog="openLoginDialog"
+            @open-welcome-dialog="welcomeDialogVisible = true"
+          />
         </div>
       </div>
     </el-dialog>
 
     <el-dialog
+      v-model="welcomeDialogVisible"
+      width="100%"
+      align-center
+      style="max-width: 1280px"
+      @close="store.welcomeDialogVisible = false"
+    >
+      <HomeWelcome />
+    </el-dialog>
+
+    <el-dialog
       v-model="captchaDialogVisible"
-      title="验证码"
+      :title="$t('personal.captcha')"
       width="50%"
       align-center
       style="max-width: 500px"
@@ -351,10 +373,15 @@
       @keydown.enter.prevent
     >
       <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="100" label-suffix=":">
-        <el-form-item tabindex="3" label="验证码" prop="captchaCode">
+        <el-form-item tabindex="3" :label="$t('personal.captcha')" prop="captchaCode">
           <el-row :gutter="10" style="justify-content: center; align-items: center">
             <el-col :span="12">
-              <el-input v-model="captchaForm.captchaCode" label="验证码" placeholder="验证码" @keyup.enter="sendOtp" />
+              <el-input
+                v-model="captchaForm.captchaCode"
+                :label="$t('personal.captcha')"
+                :placeholder="$t('personal.captcha')"
+                @keyup.enter="sendOtp"
+              />
             </el-col>
             <el-col :span="12">
               <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
@@ -362,7 +389,7 @@
           </el-row>
         </el-form-item>
         <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px" @click="sendOtp">
-          发送
+          {{ $t("common.send") }}
         </el-button>
       </el-form>
     </el-dialog>
@@ -375,16 +402,11 @@
       style="max-width: 1080px"
       @close="store.forgetPassDialogVisible = false"
     >
-      <div class="acc-dialog-container">
+      <div class="acc-dialog-container login-container">
         <div class="acc-dialog-left">
-          <!-- <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img.png" />
-          </div> -->
+          <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" />
         </div>
         <div class="acc-dialog-right">
-          <div class="acc-dialog-homelogo">
-            <img src="../../assets/logo.svg" width="150" />
-          </div>
           <div class="acc-dialog-content">
             <ForgotPwdDialog @close-dialog="forgetPassDialogVisible = false" @open-login-dialog="openLoginDialog" />
           </div>
@@ -394,28 +416,43 @@
 
     <el-dialog class="noPadding" v-model="noticeDialogVisible" width="1280px" align-center style="max-width: 600px">
       <div class="noticedialog">
-        <div class="title">系统提示</div>
+        <div class="title">{{ $t("common.systemError") }}</div>
         <div class="contents">
-          尊敬的雷火会员：
+          <!-- 尊敬的雷火会员：
           为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！雷火娱乐
           2022/10/13
           尊敬的雷火会员：为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！雷火娱乐
-          2022/10/13
+          2022/10/13 -->
         </div>
-        <el-button class="common-btn" @click="noticeDialogVisible = false">确认</el-button>
+        <el-button class="common-btn" @click="noticeDialogVisible = false">{{ $t("common.confirm") }}</el-button>
       </div>
     </el-dialog>
 
     <el-dialog class="" v-model="logoutDialogVisible" width="600px" align-center>
       <div class="noticedialog">
-        <div class="title">您确定要退出吗？</div>
+        <div class="title">{{ $t("common.areyousure") }}</div>
         <div class="standard-button-container">
-          <button class="standard-button btn-color-white" @click="logoutDialogVisible = false">取消</button>
-          <button class="standard-button btn-color-blue" @click="onLogout()">确认</button>
+          <button class="standard-button btn-color-white" @click="logoutDialogVisible = false">
+            {{ $t("common.cancel") }}
+          </button>
+          <button class="standard-button btn-color-blue" @click="onLogout()">{{ $t("common.confirm") }}</button>
         </div>
       </div>
     </el-dialog>
-
+    <el-dialog class="" v-model="isRebateDialogVisible" width="600px" align-center>
+      <div class="noticedialog">
+        <div class="title" style="flex-direction: column; display: flex">
+          {{ $t("vip.rebateBonus") }}
+          <span style="font-size: 30px; color: #5196ff">{{ rebateAmt ? rebateAmt : 0 }}</span>
+        </div>
+        <div class="standard-button-container">
+          <button class="standard-button btn-color-white" @click="isRebateDialogVisible = false">
+            {{ $t("common.cancel") }}
+          </button>
+          <button class="standard-button btn-color-blue" @click="claimNow()">{{ $t("promo.btn_claim_now") }}</button>
+        </div>
+      </div>
+    </el-dialog>
     <GameModal ref="modalGame"></GameModal>
   </header>
 </template>
@@ -431,8 +468,9 @@ import { useRoute, useRouter } from "vue-router";
 import { userStore } from "@/store/index";
 import { getVerificationCode, register } from "@/api/index/login";
 import { findAccount } from "@/api/index/forgotPwd";
-import { sendSms } from "@/api/personal/personal";
+import { sendSms, dailyRebateAmt, claimRebate } from "@/api/personal/personal";
 import { ElMessage } from "element-plus";
+import {displayBalance} from "@/utils/utils"
 import {
   RiRefreshLine
 } from "vue-remix-icons";
@@ -457,6 +495,7 @@ import { getUnreadTotal } from "@/api/personal/mailbox";
 import LoginDialog from "@/views/LoginDialog.vue";
 import RegisterAccount from "@/components/auth/RegisterAccount.vue";
 import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
+import HomeWelcome from "@/components/home/HomeWelcome.vue";
 
 import { i18nStore } from '@/store/language'
 export default defineComponent({
@@ -477,7 +516,8 @@ export default defineComponent({
     LoginDialog,
     ForgotPwdDialog,
     RegisterAccount,
-    LocaleChanger
+    LocaleChanger,
+    HomeWelcome
   },
   setup() {
     const { t } = useI18n();
@@ -485,12 +525,12 @@ export default defineComponent({
     const { languageVal } = storeToRefs(i18nStoreLanguage)
     const navigations = computed(() => [
       { code: "home", name: t('menu.home'), enName: "Home", path: "/home" },
-      { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
       { code: "sports", name: t('menu.sports'), enName: "Sports", path: "/sports", submenu: true },
       { code: "live", name: t('menu.liveCasino'), enName: "Live", path: "/live-casino", submenu: true },
-      { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
       { code: "slot", name: t('menu.slot'), enName: "Slots", path: "/slot", submenu: true },
       { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true },
+      { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
+      { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
       { code: "fish", name: t('menu.fishing'), enName: "Fishing", path: "/fishing", submenu: true },
       { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
       { code: "Promotion", name: t('menu.promotion'), enName: "Promotion", path: "/promotion", submenu: false, hasicon: true },
@@ -650,9 +690,9 @@ export default defineComponent({
     };
     let validatePass2 = async (r, v) => {
       if (v === "") {
-        return Promise.reject("请重新输入密码");
+        return Promise.reject(t('placeholder.passwordAgain'));
       } else if (v !== regForm.password) {
-        return Promise.reject("密码不同");
+        return Promise.reject(t('placeholder.passwordDifferent'));
       } else {
         return Promise.resolve();
       }
@@ -660,9 +700,9 @@ export default defineComponent({
     let validatePhoneNumber = async (r, v) => {
       var reg = /^\d+$/;
       if (v === "") {
-        return Promise.reject("请验证您的电话号码");
+        return Promise.reject(t('placeholder.verifyPhone'));
       } else if (!reg.test(v)) {
-        return Promise.reject("电话号码只允许使用数字");
+        return Promise.reject(t('placeholder.onlyNumber'));
       } else {
         return Promise.resolve();
       }
@@ -989,7 +1029,7 @@ export default defineComponent({
 
               ElMessage({
                 type: "success",
-                message: "发送手机验证码成功"
+                message: t('common.sendPhoneVerificationSuccess')
               });
 
               captchaDialogVisible.value = false;
@@ -1020,7 +1060,7 @@ export default defineComponent({
               loginForm.smsCodeId = response.data.codeId;
               ElMessage({
                 type: "success",
-                message: "发送手机验证码成功"
+                message: t('common.sendPhoneVerificationSuccess')
               });
               captchaDialogVisible.value = false;
               getCode();
@@ -1067,16 +1107,8 @@ export default defineComponent({
       if (!elForm) return;
       await elForm.validate((valid) => {
         if (valid) {
-          const fpPromise = FingerprintJS.load();
           (async () => {
-            const fp = await fpPromise;
-            const result = await fp.get();
-            const excludes = { value: ["timezone", "timeZoneOffset"] };
-            const allComponents = { ...result.components };
-            excludes.value.forEach((element) => {
-              delete allComponents[element];
-            });
-            const sidParam = FingerprintJS.hashComponents(allComponents);
+            const sidParam = store.visitorId;
             regForm.sid = sidParam;
             register(regForm)
               .then((response) => {
@@ -1084,7 +1116,7 @@ export default defineComponent({
                 if (regResult === 0) {
                   ElMessage({
                     type: "success",
-                    message: "注册成功"
+                    message: t('login.registerSuccess')
                   });
                   store.autoLogin(response.data);
                   registerDialogVisible.value = false;
@@ -1109,8 +1141,30 @@ export default defineComponent({
     const openGame = (gameName, code, gameCode) => {
       modalGame.value.open(gameName, code, gameCode);
     };
+    const rebateAmt = ref(0);
+    const isRebateDialogVisible = ref(false);
+    const showRebateValue = () => {
+      dailyRebateAmt().then((res) => {
+        if (res.code === 0) {
+          isRebateDialogVisible.value = true
+          rebateAmt.value = res.data
+        } else {
+          ElMessage.error(res.message)
+        }
+      })
+    }
+    const claimNow = () => {
+      claimRebate().then((res) =>{
 
+        if(res.code === 0) {
 
+          isRebateDialogVisible.value = false;
+          ElMessage.success($t('common.claimedSuccess'))
+        } else {
+          ElMessage.error(res.message)
+        }
+      })
+    }
     onMounted(() => {
 
       if (regCountdown.value > 0)
@@ -1200,23 +1254,15 @@ export default defineComponent({
       passRef.value.validate().then(() => {
         findAccount(passForm).then((res) => {
           if (res.code === 0) {
-            ElMessage.success("您的帐号已经发送到注册邮箱");
+            ElMessage.success(t('account.you_account_has_been_sent_email'));
           }
         });
       });
     };
     const submitLogin = () => {
       loadingBtn.value = true;
-      const fpPromise = FingerprintJS.load();
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+        const sidParam = store.visitorId;
 
         loginRef.value.validate().then(() => {
           store
@@ -1256,16 +1302,8 @@ export default defineComponent({
 
     const phoneLogin = () => {
       loadingBtn.value = true;
-      const fpPromise = FingerprintJS.load();
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+        const sidParam = store.visitorId;
 
         mobileLoginRef.value.validate().then(() => {
           store
@@ -1325,8 +1363,8 @@ export default defineComponent({
       return 8;
     }
 
-    watch(
-      () => regForm.password
+    // watch(
+    //   () => regForm.password
       // () => {
       //   pwdStrength.value = "";
 
@@ -1365,7 +1403,7 @@ export default defineComponent({
 
       //   // console.log(pwdStrength.value);
       // },
-    );
+    // );
     const todayDate = () => {
       return "GTM+8 " + moment().utcOffset("+08:00").format("M/D/YYYY, h:mm:ss A ") + moment(new Date()).locale("zh-cn").format("dddd");
     };
@@ -1409,6 +1447,8 @@ export default defineComponent({
 
       router.push(path);
     };
+
+    const welcomeDialogVisible = ref(false)
 
     return {
       token,
@@ -1454,6 +1494,7 @@ export default defineComponent({
       passRef,
       passRules,
       forgetPassRules,
+      displayBalance,
       submitForgetPass,
       pwdStrength,
       resetRegForm,
@@ -1477,7 +1518,13 @@ export default defineComponent({
       openRegDialog,
       openForgotpwdDialog,
       navigations,
-      languageVal
+      languageVal,
+      showRebateValue,
+      isRebateDialogVisible,
+      claimRebate,
+      rebateAmt,
+      claimNow,
+      welcomeDialogVisible
     };
   }
 });
@@ -1510,11 +1557,13 @@ body {
   //   border: 0;
   // }
 
-  // .el-dropdown-menu__item {
-  //   min-width: 130px;
-  //   color: #a8b5c3;
-  //   gap: 8px;
-  // }
+  .el-dropdown-menu__item {
+    // min-width: 130px;
+    // color: #a8b5c3;
+    // gap: 8px;
+    width: 100%;
+    justify-content: center;
+  }
 
   // .el-dropdown-menu__item:not(.is-disabled):focus {
   //   background: #3a4550;
@@ -1597,6 +1646,7 @@ body {
       }
 
       .amount {
+        font-family: "Roboto";
         margin-right: 0.5rem;
         white-space: nowrap;
       }
@@ -1611,7 +1661,7 @@ body {
   .action-btn {
     // height: 30px;
     gap: 2px;
-    width: 40px;
+    width: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1619,6 +1669,7 @@ body {
     font-size: 0.75rem;
     color: $font-1;
     cursor: pointer;
+    text-align: center;
 
     &:hover {
       color: $link-active;
@@ -1640,7 +1691,7 @@ body {
 
     img {
       display: block;
-      width: 16px;
+      width: 20px;
     }
   }
 
@@ -1746,6 +1797,17 @@ body {
   transition: all 0.3s ease;
 
   .top-nav-wrapper {
+    .side {
+      position: absolute;
+      top: 0;
+      &.left {
+        left: 0px;
+      }
+      &.right {
+        right: 0px;
+        transform: rotateY(180deg);
+      }
+    }
     padding: 10px;
     background: $color-white;
 
@@ -1762,7 +1824,7 @@ body {
       gap: 15px;
 
       &.logged-in-nav {
-        max-width: 1400px;
+        max-width: 1530px;
       }
 
       .logospon {
@@ -1835,7 +1897,7 @@ body {
 
           span:last-child {
             text-transform: uppercase;
-    font-size: 0.55rem;
+            font-size: 0.55rem;
             display: flex;
             flex-direction: column;
             white-space: nowrap;
@@ -1873,6 +1935,8 @@ body {
           > div {
             max-width: $maxwidth;
             margin: 0 auto;
+            width: 100%;
+            flex-wrap: wrap;
           }
         }
       }
@@ -2399,12 +2463,15 @@ body {
 
       .acc-dialog-container {
         display: flex;
-        background: url(../../assets/home/acc-dialog-bg-full.png)no-repeat left center;
+        background: url(../../assets/home/acc-dialog-bg-full.png) no-repeat left center;
         min-height: 600px;
+        align-items: center;
+        padding-top: 30px;
+        padding-bottom: 30px;
       }
 
       .acc-dialog-left {
-        width: calc(100% - 450px);
+        width:60%;
         background-size: 100% 100%;
         background-position: center center;
         background-color: transparent;
@@ -2412,6 +2479,12 @@ body {
         border-bottom-left-radius: 20px;
         // background-color: #ffffff;
         padding: 8px;
+
+        img {
+          display: block;
+          width: 100%;
+          margin-right: -60px;
+        }
 
         .acc-dialog-img {
           margin-top: -50px;
@@ -2425,9 +2498,35 @@ body {
         }
       }
 
+      .login-container{
+        .acc-dialog-left {
+          img {
+            display: block;
+            width: auto;
+            height: 500px;
+            margin: auto;
+          }
+        }
+      }
+
+      .signup-container{
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        .acc-dialog-left {
+          img {
+            display: block;
+            width: auto;
+            max-height: 750px;
+            margin: auto;
+          }
+        }
+      }
+
+
       .acc-dialog-right {
-        width: 450px;
-        padding: 24px 24px 24px 40px;
+        width: 40%;
+        padding: 24px 24px 24px 0;
 
         .acc-dialog-content {
           padding-top: 26px;
@@ -2452,6 +2551,25 @@ body {
       }
     }
   }
+}
+
+.imptann-modal {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.imptann-modal .el-dialog__headerbtn {
+  top: 15px !important;
+  right: 15px;
+  height: 2em !important;
+  width: 2em !important;
+  border-radius: 50%;
+  background: #666;
+  text-align: center;
+  line-height: 1.7em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 // .register-dialog {
@@ -2502,6 +2620,12 @@ body {
     background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
     box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
     color: $font-1;
+    position: relative;
+    img {
+      position: absolute;
+      right: -10px;
+      top: -20px;
+    }
   }
 }
 
@@ -2527,10 +2651,10 @@ body {
     width: 100%;
     padding: 0px 6px 0px 8px;
     z-index: 2;
-    color: #565c84;
+    color: #444444;
     letter-spacing: 1px;
     text-align: center;
-    font-family: PingFang SC;
+    font-weight: bold;
 
     &.active {
       font-weight: 500;

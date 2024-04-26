@@ -476,7 +476,7 @@ import { getFinancialLevels } from '../../../../api/financial-level'
 import { getBankInfoListSimple } from '../../../../api/bank-info'
 import {
   getAffiliateWithdrawRecordChecking,
-  fromAffiliateApplyToChecking,
+  fromAffiliateCheckingToApply,
   fromAffiliateCheckingToBeforePaid,
   fromAffiliateCheckingToFail,
 } from '../../../../api/member-withdraw-record'
@@ -694,13 +694,13 @@ async function loadSites() {
 }
 
 async function toApply() {
-  await fromAffiliateApplyToChecking(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
+  await fromAffiliateCheckingToApply(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
   await loadRecord()
   ElMessage({ message: t('message.updateToApplySuccess'), type: 'success' })
 }
 
 async function success(memberWithdrawRecord) {
-  await fromAffiliateCheckingToBeforePaid(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate)
+  await fromAffiliateCheckingToBeforePaid(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
   await loadRecord()
   ElMessage({ message: t('message.updateToBeforePaidSuccess'), type: 'success' })
 }
@@ -733,7 +733,8 @@ async function fail() {
         failForm.id,
         failForm.reasonType,
         failForm.failReason,
-        failForm.withdrawDate
+        failForm.withdrawDate,
+        request.siteId
       )
       uiControl.dialogVisible = false
       clickedFail.value = false

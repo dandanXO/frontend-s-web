@@ -1,37 +1,46 @@
 <template>
-  <router-view :class="{'roboto': languageVal === 'vi', 'poppins': languageVal === 'en' }" />
+  
+  <el-config-provider :locale="languageVal === 'en' ? en : vi">
+    <router-view :class="{'roboto': languageVal === 'vi', 'poppins': languageVal === 'en' }" />
+  </el-config-provider>
+  
 </template>
 
 <script>
 import { defineComponent, onMounted, onUnmounted, ref } from "vue";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { memberAccessLog } from "@/api/index/login";
 import axios from "axios";
+import { userStore } from "@/store";
+import { getVisitorId } from "@/utils/utils";
+import { ElConfigProvider } from 'element-plus'
 
+import vi from 'element-plus/dist/locale/vi.mjs'
+import en from 'element-plus/dist/locale/en.mjs'
 
 import { i18nStore } from '@/store/language'
 import { storeToRefs } from 'pinia'
 export default defineComponent({
+  components: {
+    ElConfigProvider,
+  },
   setup() {
     const i18nStoreLanguage = i18nStore()
     const { languageVal } = storeToRefs(i18nStoreLanguage)
     const onlineStatTimeout = ref();
+    const store = userStore();
     const onlineStatInterval = ref();
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
-      const fpPromise = FingerprintJS.load();
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+        const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+        store.visitorId = visitorId;
+
+        console.log("SID");
+        console.log(visitorId);
+
         const obj = {
-          identifier: sidParam,
+          identifier: store.visitorId,
           affiliateCode: affiliateItem,
         };
         memberAccessLog(obj).then((res) => {
@@ -43,23 +52,15 @@ export default defineComponent({
     };
 
     const getOnlineStatApi = async () => {
-      const fpPromise = FingerprintJS.load();
-
-      const fp = await fpPromise;
-      const result = await fp.get();
-      const excludes = { value: ["timezone", "timeZoneOffset"] };
-      const allComponents = { ...result.components };
-      excludes.value.forEach((element) => {
-        delete allComponents[element];
-      });
-      const sidParam = FingerprintJS.hashComponents(allComponents);
+      const sidParam = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+      store.visitorId = sidParam;
 
       if (sidParam) {
         const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
           params: {
             way: "web",
             sid: sidParam,
-            siteCode: "lh1"
+            siteCode: "vnm"
           }
         });
       }
@@ -77,7 +78,9 @@ export default defineComponent({
       clearInterval(onlineStatInterval);
     })
     return {
-      languageVal
+      languageVal,
+      vi,
+      en
     }
   },
 });

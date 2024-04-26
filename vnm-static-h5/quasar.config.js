@@ -23,7 +23,7 @@ module.exports = configure(function (ctx) {
         // app boot file (/src/boot)
         // --> boot files are part of "main.js"
         // https://v2.quasar.dev/quasar-cli-webpack/boot-files
-        boot: ["axios", "cache", "lang"],
+        boot: ["axios", "cache", "lang", "fingerprint"],
 
         // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
         css: ["app.scss", 'responsive.scss'],
@@ -146,8 +146,8 @@ module.exports = configure(function (ctx) {
             },
 
             manifest: {
-                name: `雷火`,
-                short_name: `雷火`,
+                name: `TF88`,
+                short_name: `TF88`,
                 description: `APP`,
                 display: "standalone",
                 orientation: "portrait",
@@ -192,7 +192,7 @@ module.exports = configure(function (ctx) {
         capacitor: {
             hideSplashscreen: true,
             // (Optional) If not present, will look for package.json > name
-            appName: '雷火', // string
+            appName: 'TF88', // string
             backButtonExit: '*',
         },
 

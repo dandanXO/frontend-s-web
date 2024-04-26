@@ -1,6 +1,18 @@
 <template>
   <el-dialog v-model="visible" width="100%" class="full-modal" :title="title" destroyOnClose :afterClose="destroyGame">
     <TFLoading v-if="logoShow"></TFLoading>
+
+    <template v-if="!logoShow && transferInfo.platform === 'TFGaming' && UI.innerWidth > 1440">
+      <div class="left-banner-tfgaming"
+        :style="`width: ${bannerWidth}px`"
+      ></div>
+    </template>
+    <template v-if="!logoShow && transferInfo.platform === 'TFGaming' && UI.innerWidth > 1440">
+      <div class="right-banner-tfgaming"
+           :style="`width: ${bannerWidth}px`"
+      ></div>
+    </template>
+
     <template v-if="transferInfo.platform === 'PG'">
       <iframe
         @load="loadGame()"
@@ -117,7 +129,7 @@
 import { userStore } from "@/store";
 import { launchSessionGame } from "@/api/platform/platform";
 import { isMobile } from "@/utils/utils";
-import { ref, defineExpose } from "vue";
+import { ref, defineExpose, computed } from "vue";
 import ComingSoon from "@/components/loading/ComingSoon";
 import TFLoading from "@/components/loading/TFLoading";
 import { transfer } from "@/api/personal/transfer";
@@ -126,12 +138,19 @@ import { storeToRefs } from "pinia";
 import DepositComponent from "@/components/depositComponent.vue";
 import { ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
+import { uiStore } from "@/store/ui";
 // import { Modal } from "ant-design-vue";
 
 const store = userStore();
+const UI= uiStore();
 const { token } = storeToRefs(store);
 const isMobileDrawerActive = ref(false);
 const values = ref(["100", "200", "300", "500", "1000"]);
+
+
+const bannerWidth = computed(() => {
+  return (UI.innerWidth - 1440) / 2;
+});
 
 const quickTransferTab = ref(true);
 
@@ -292,11 +311,40 @@ const loadGame = () => {
   }
 };
 
+
+
+
 defineExpose({
   open
 });
 </script>
 <style lang="scss">
+.left-banner-tfgaming{
+  background-image: url("../../assets/images/games/left-banner.png");
+  height: calc(100vh - 50px);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top right;
+  position:absolute;
+  z-index:9999;
+  top:45px;
+  bottom:0px;
+  left:0px;
+}
+
+.right-banner-tfgaming{
+  background-image: url("../../assets/images/games/right-banner.png");
+  height: calc(100vh - 50px);
+  background-size: cover;;
+  background-position: top left;
+  background-repeat: no-repeat;
+  position:absolute;
+  z-index:9999;
+  top:45px;
+  bottom:0px;
+  right:0px;
+}
+
 .el-overlay {
   z-index: 2500 !important;
 }

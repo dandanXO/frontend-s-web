@@ -2,7 +2,7 @@
   <q-dialog class="modal-common-div" v-model="showCaptchaDialog">
     <q-card style="width: 100%" class="modalcontent">
       <div class="headers">
-        <div class="black-titles">验证码</div>
+        <div class="black-titles">{{ $t("lang.captcha_code") }}</div>
         <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
       </div>
 
@@ -10,18 +10,18 @@
         <q-input
           ref="innerCaptchaRef"
           v-model="innerCaptchaCode"
-          placeholder="验证码"
+          :placeholder="$t('lang.captcha_code')"
           maxlength="4"
           :rules="[
-            (val) => (val && val.length > 0) || '请输入验证码',
-            (val) => (val && val.length === 4) || '验证码必须为4个字符串'
+            (val) => (val && val.length > 0) || $t('lang.enter_captcha_code'),
+            (val) => (val && val.length === 4) || $t('lang.captcha_code_must_4')
           ]"
           @keydown.enter="onCaptchaSubmit()"
         >
           <template v-slot:append>
             <img
               :src="phoneVerificationImg"
-              title="点击刷新验证码"
+              :title="$t('lang.captcha_refresh')"
               style="margin-top: 6px; cursor: pointer"
               @click="getInnerCode()"
             />
@@ -30,7 +30,13 @@
       </div>
 
       <q-card-actions style="margin: 0 auto" align="center" class="bg-white text-teal">
-        <q-btn style="width: 100%" class="common-md-btn" flat label="发送验证码" @click="onCaptchaSubmit()" />
+        <q-btn
+          style="width: 100%"
+          class="common-md-btn"
+          flat
+          :label="$t('lang.verification_code_send')"
+          @click="onCaptchaSubmit()"
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -38,17 +44,17 @@
   <q-dialog class="modal-common-div" v-model="showCaptchaSuccessDialog">
     <q-card style="width: 100%" class="modalcontent">
       <div class="headers">
-        <div class="black-titles">信息</div>
+        <div class="black-titles">{{ $t("lang.system_hint") }}</div>
         <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
       </div>
 
       <div class="contents">
         <img style="width: 2.5rem" src="../../assets/images/common/success-tick-icon.svg" />
-        <p>操作成功，请查看手机验证码！</p>
+        <p>{{ $t("lang.system_operation_success") }}</p>
       </div>
 
       <q-card-actions style="width: 100%" align="center" class="bg-white text-teal">
-        <q-btn class="common-md-btn" flat label="确定" v-close-popup />
+        <q-btn class="common-md-btn" flat :label="$t('lang.system_confirm')" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -56,17 +62,37 @@
   <q-dialog class="modal-common-div" v-model="showCaptchaFailedDialog">
     <q-card style="width: 100%" class="modalcontent">
       <div class="headers">
-        <div class="black-titles">系统提示</div>
+        <div class="black-titles">{{ $t("lang.system_hint") }}</div>
         <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
       </div>
 
       <div class="contents">
         <img style="width: 2.5rem" src="../../assets/images/common/failed-icon.svg" />
-        <p>{{ captchaFailedMessage || "验证码校验失败，请刷新" }}</p>
+        <p>{{ captchaFailedMessage || $t("lang.system_verify_failed") }}</p>
       </div>
 
       <q-card-actions style="width: 100%" align="center" class="bg-white text-teal">
-        <q-btn class="common-md-btn" flat label="确定" v-close-popup />
+        <q-btn class="common-md-btn" flat :label="$t('lang.system_confirm')" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog class="modal-common-div" v-model="showBindBankNoteDialog">
+    <q-card style="width: 100%" class="modalcontent">
+      <div class="headers">
+        <div class="black-titles">{{ $t("lang.bd_note") }}</div>
+        <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
+      </div>
+
+      <!-- <div class="contents"> -->
+      <ol>
+        <li class="q-mb-md">{{ $t("lang.bd_note_para_01") }}</li>
+        <li>{{ $t("lang.bd_note_para_02") }}</li>
+      </ol>
+      <!-- </div> -->
+
+      <q-card-actions style="width: 100%" align="center" class="bg-white text-teal">
+        <q-btn class="common-md-btn" flat :label="$t('lang.system_confirm')" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -75,7 +101,7 @@
     <div class="bind-wrapper">
       <q-form class="bind-item q-my-sm">
         <q-label>
-          开户行
+          {{ $t("lang.bd_account_bank") }}
           <em>*</em>
         </q-label>
         <q-select
@@ -84,7 +110,7 @@
           v-model="bankCardInfo.bankId"
           class="q-pb-xs"
           hide-bottom-space
-          label="请选择"
+          :label="$t('lang.bd_please_select')"
           lazy-rules
           clearable
           :options="bankList"
@@ -92,7 +118,7 @@
           option-label="name"
           emit-value
           map-options
-          :rules="[(val) => val || '请选择']"
+          :rules="[(val) => val || $t('lang.bd_please_select')]"
         >
           <template v-slot:selected-item="scope">
             <q-item-section avatar>
@@ -125,7 +151,7 @@
         </q-select>
 
         <q-label>
-          银行卡号
+          {{ $t("lang.bd_bank_acc_number") }}
           <em>*</em>
         </q-label>
         <q-input
@@ -135,14 +161,14 @@
           v-model="bankCardInfo.cardNumber"
           class="q-pb-xs"
           hide-bottom-space
-          label="请输入银行卡号"
+          :placeholder="$t('lang.bd_please_enter_bank_card')"
           lazy-rules
           clearable
-          :rules="[(val) => (val && val.length > 0) || '请输入银行卡号', validateBankLength]"
+          :rules="[(val) => (val && val.length > 0) || $t('lang.bd_please_enter_bank_card'), validateBankLength]"
         ></q-input>
 
         <q-label>
-          姓名
+          {{ $t("lang.bd_real_name") }}
           <em>*</em>
         </q-label>
         <q-input
@@ -150,14 +176,14 @@
           v-model="bankCardInfo.cardAccount"
           class="q-pb-xs"
           hide-bottom-space
-          label="请输入姓名"
+          :placeholder="$t('lang.bd_please_enter_real_name')"
           lazy-rules
           clearable
           readonly
         ></q-input>
 
         <q-label>
-          开户行地址
+          {{ $t("lang.bd_acc_bank_address") }}
           <em>*</em>
         </q-label>
         <q-input
@@ -166,15 +192,15 @@
           v-model="bankCardInfo.cardAddress"
           class="q-pb-xs"
           hide-bottom-space
-          label="请输入您的开户行地址"
+          :placeholder="$t('lang.bd_please_enter_acc_bank_address')"
           lazy-rules
           clearable
-          :rules="[(val) => (val && val.length > 0) || '请输入您的开户行地址']"
+          :rules="[(val) => (val && val.length > 0) || $t('lang.bd_please_enter_acc_bank_address')]"
         ></q-input>
 
         <!-- since onMount API forced update name & phone, hence no validation needed. -->
         <q-label>
-          手机号
+          {{ $t("lang.bd_phone_number") }}
           <em>*</em>
         </q-label>
         <q-input
@@ -182,7 +208,7 @@
           v-model="bankCardInfo.telephone"
           class="q-pb-xs"
           hide-bottom-space
-          label="请输入您绑定的手机号"
+          :placeholder="$t('lang.bd_please_enter_phone_number')"
           lazy-rules
           clearable
           readonly
@@ -192,7 +218,7 @@
               @click="openPhoneVeriDialog()"
               type="submit"
               class="common-sm-btn bottom-btn get-otp-btn"
-              label="获取验证码"
+              :label="$t('lang.bd_get_otp')"
               color="brightbtn"
               rounded
             />
@@ -201,7 +227,7 @@
 
         <template v-if="isOtpSent">
           <q-label>
-            验证码
+            {{ $t("lang.bd_otp_code") }}
             <em>*</em>
           </q-label>
           <q-input
@@ -210,20 +236,26 @@
             v-model="bankCardInfo.smsCode"
             class="q-pb-xs"
             hide-bottom-space
-            label="请输入您的注册手机验证"
+            :placeholder="$t('lang.bd_please_enter_otp')"
             lazy-rules
             clearable
             maxlength="6"
-            :rules="[(val) => (val && val.length > 3) || '请输入您的注册手机验证']"
+            :rules="[(val) => (val && val.length > 3) || $t('lang.bd_please_enter_otp')]"
             @keydown.enter.prevent="handleEnterKey"
             @keydown.enter="submitBankCard()"
           ></q-input>
         </template>
       </q-form>
 
-      <div class="note">温馨提示：若持卡人姓名不符可联系在线客服更正信息，感谢您的支持与 理解！</div>
+      <div class="note">{{ $t("lang.bd_reminder_name_issue") }}</div>
 
-      <q-btn class="common-large-btn" label="提交" width="100%" style="width: 100%" @click="submitBankCard()" />
+      <q-btn
+        class="common-large-btn"
+        :label="$t('lang.bd_submit')"
+        width="100%"
+        style="width: 100%"
+        @click="submitBankCard()"
+      />
     </div>
   </q-page>
 </template>
@@ -234,6 +266,7 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
+import { t } from "src/boot/lang";
 
 const qs = require("qs");
 const $q = useQuasar();
@@ -257,8 +290,8 @@ const bankCardInfo = reactive({
 });
 
 const validateBankLength = (val) => {
-  if (!/^\d+$/.test(val)) return "请输入数字";
-  return (val.length > 15 && val.length < 20) || "长度应为16到19个字符";
+  if (!/^\d+$/.test(val)) return t("lang.bd_please_enter_digit_only");
+  return (val.length > 5 && val.length < 21) || t("lang.bd_length_between_8_20");
 };
 
 // NOTE: no chance to validate, e.g. member telephone = 44****77
@@ -276,7 +309,7 @@ const getInnerCode = () => {
   innerCaptchaCode.value = "";
 
   api
-    .get("/member/verificationCode")
+    .get("/member/verificationEasyCode")
     .then((response) => {
       if (response.code === 0) {
         phoneVerificationImg.value = "data:image/png;base64," + response.data.img;
@@ -342,7 +375,7 @@ const loadBankCards = () => {
       $q.notify({
         color: "negative",
         position: "top",
-        message: "请输入您的真实姓名",
+        message: t("lang.bd_please_enter_real_name"),
         icon: "report_problem"
       });
       router.push("/account/personal");
@@ -350,7 +383,7 @@ const loadBankCards = () => {
       $q.notify({
         color: "negative",
         position: "top",
-        message: "请输入您的电话号码",
+        message: t("lang.bd_please_enter_phone_number"),
         icon: "report_problem"
       });
       router.push("/account/verifyTelephone");
@@ -383,7 +416,7 @@ const submitBankCard = () => {
     $q.notify({
       color: "negative",
       position: "top",
-      message: "请点击获取验证码，并输入您的注册手机验证",
+      message: t("lang.bd_click_verification"),
       icon: "report_problem"
     });
   } else {
@@ -405,7 +438,7 @@ const submitBankCard = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "已添加银行卡",
+            message: t("lang.bd_added_bank_card"),
             icon: "check_circle_outline"
           });
           router.push("/account/withdraw");
@@ -422,6 +455,8 @@ const handleEnterKey = () => {
     openPhoneVeriDialog();
   }
 };
+
+const showBindBankNoteDialog = ref(true);
 
 onActivated(() => {
   loadBankCards();

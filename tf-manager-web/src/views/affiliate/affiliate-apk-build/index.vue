@@ -186,39 +186,59 @@
       />
     </el-card>
     <el-dialog
-      :title="t('affiliateApk.editParam')"
+      :title="t('affiliateApk.editParam')+ ': ' + loginName"
       v-model="uiControl.dialogVisible"
     >
       <el-form ref="paramForm" :model="form" :rules="formRules" @submit.prevent>
         <el-form-item :label="t('fields.param')" prop="extraParams">
-          <div v-for="(item, index) in param" :key="index">
+          <el-switch
+            v-model="uiControl.showParamFormat"
+            class="mb-2"
+            inactive-text="Key Value"
+            active-text="Json"
+            inactive-value="key-value"
+            active-value="json"
+            @change="syncParam"
+          />
+          <div v-if="uiControl.showParamFormat === 'key-value'">
+            <div v-for="(item, index) in param" :key="index">
+              <el-input
+                style="width: 170px; margin-top: 5px;"
+                v-model="item.key"
+              />
+              :
+              <el-input style="width: 170px " v-model="item.value" />
+              <el-button
+                v-if="index === param.length - 1"
+                icon="el-icon-plus"
+                size="mini"
+                type="primary"
+                style="margin-left: 20px"
+                @click="addParam()"
+                plain
+              >
+                {{ t('fields.add') }}
+              </el-button>
+              <el-button
+                icon="el-icon-remove"
+                size="mini"
+                type="danger"
+                style="margin-left: 20px"
+                @click="delParam(index)"
+                plain
+              >
+                {{ t('fields.delete') }}
+              </el-button>
+            </div>
+          </div>
+          <div v-else>
             <el-input
-              style="width: 170px; margin-top: 5px;"
-              v-model="item.key"
+              v-model="form.jsonParams"
+              style="width: 350px"
+              autosize="true"
+              type="textarea"
+              :rows="15"
             />
-            :
-            <el-input style="width: 170px " v-model="item.value" />
-            <el-button
-              v-if="index === param.length - 1"
-              icon="el-icon-plus"
-              size="mini"
-              type="primary"
-              style="margin-left: 20px"
-              @click="addParam()"
-              plain
-            >
-              {{ t('fields.add') }}
-            </el-button>
-            <el-button
-              icon="el-icon-remove"
-              size="mini"
-              type="danger"
-              style="margin-left: 20px"
-              @click="delParam(index)"
-              plain
-            >
-              {{ t('fields.delete') }}
-            </el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -260,6 +280,7 @@ const site = ref(null);
 const latestVersion = ref('-')
 const uiControl = reactive({
   dialogVisible: false,
+  showParamFormat: 'key-value',
 })
 const list = reactive({
   sites: [],
@@ -282,7 +303,10 @@ const request = reactive({
 const form = reactive({
   id: null,
   extraParams: null,
+  jsonParams: null,
 })
+
+const loginName = ref(null)
 
 function resetQuery() {
   request.loginName = null
@@ -320,9 +344,9 @@ function changePage(page) {
 }
 
 function showDialog(item) {
-  uiControl.dialogVisible = true
   form.id = item.id
   param.value = []
+  loginName.value = item.loginName
   if (item.extraParams) {
     Object.entries(JSON.parse(item.extraParams)).forEach(([key, value]) => {
       const json = {}
@@ -332,6 +356,12 @@ function showDialog(item) {
     })
   }
   addParam()
+  form.jsonParams = item.extraParams === null ? "{}" : JSON.stringify(
+    JSON.parse(item.extraParams),
+    undefined,
+    2
+  )
+  uiControl.dialogVisible = true
 }
 
 function addParam() {
@@ -346,7 +376,13 @@ function delParam(index) {
 }
 
 async function submit() {
-  form.extraParams = constructParam()
+  if (uiControl.showParamFormat === 'key-value') {
+    form.extraParams = constructParam()
+  } else {
+    form.extraParams = JSON.stringify(
+      JSON.parse(form.jsonParams)
+    )
+  }
   await editParam(form.id, form.extraParams)
   uiControl.dialogVisible = false
   await loadAffiliates()
@@ -361,6 +397,26 @@ function constructParam() {
     }
   });
   return JSON.stringify(json);
+}
+
+function syncParam() {
+  if (uiControl.showParamFormat === 'json') {
+    form.jsonParams = JSON.stringify(
+      JSON.parse(constructParam()),
+      undefined,
+      2
+    )
+  } else {
+    // json to key-value and add to param
+    const json = JSON.parse(form.jsonParams)
+    param.value = []
+    Object.entries(json).forEach(([key, value]) => {
+      param.value.push({
+        key,
+        value,
+      })
+    })
+  }
 }
 
 async function loadLatestVersion() {

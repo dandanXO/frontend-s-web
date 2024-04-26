@@ -91,12 +91,6 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: "/share",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", name: "share", component: () => import("pages/ShareView.vue") }],
-    meta: { requiresAuth: true }
-  },
-  {
     path: "/news",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", name: "news", component: () => import("pages/NewsPage.vue") }]
@@ -139,12 +133,6 @@ const routes = [
     path: "/account/assets",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/account/AssetsView.vue") }],
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/account/promotion",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/account/PromotionView.vue") }],
     meta: { requiresAuth: true }
   },
   {
@@ -208,6 +196,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/account/records/rebate",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/records/RebatesRecordView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
     path: "/account/records/financeFeedBack",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/records/FeedbackRecordView.vue") }],
@@ -217,18 +211,6 @@ const routes = [
     path: "/account/records/bet",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/records/BetHistoryRecordView.vue") }],
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/account/records/recommend",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/records/RecommendRecordView.vue") }],
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/account/records/help",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/records/HelpRecordView.vue") }],
     meta: { requiresAuth: true }
   },
   {
@@ -371,12 +353,6 @@ const routes = [
     path: "/vip",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", name: "vipapp", component: () => import("pages/games/VIPView.vue") }],
-    meta: { requiresAuth: true, isApp: true }
-  },
-  {
-    path: "/privilege/invite",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/PrivilegeInvite.vue") }],
     meta: { requiresAuth: true, isApp: true }
   },
   // Always leave this as last one,

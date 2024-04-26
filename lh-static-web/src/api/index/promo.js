@@ -152,15 +152,17 @@ export function getCurrentStepInit() {
   return server.EVENT.get(`/game-steps/initiate`, {});
 }
 
-export function submitGameStep() {
-  return server.EVENT.post(`/game-steps/step`);
+export function submitGameStep(param) {
+  const { stage } = param;
+  return server.EVENT.post(`/game-steps/step`, { stage });
 }
 
-export function getStepRecords(current) {
+export function getStepRecords(current, currentStage) {
   return server.EVENT.get(`/game-steps/records`, {
     params: {
       size: 10,
-      current: current
+      current: current,
+      stage: currentStage
     }
   });
 }
@@ -257,4 +259,19 @@ export function claimDailyRainItem(item) {
 }
 export function getDailyRainListing(item) {
   return server.EVENT.get(`/redPacketVip/list?promoCode=${item}`);
+}
+export function loadSummon(promoCode) {
+  return server.EVENT.get('/member-summon/get-record', {
+    params: {
+      promoCode
+    }
+  });
+} 
+export function claimSummon(promoCode) {
+  return server.EVENT.post('/member-summon/claim', { promoCode });
+} 
+export function getSummonRewardRecord(page) { 
+  return server.EVENT.get('/member-summon/get-summon-reward-record', { param: {
+    page
+  } });
 }

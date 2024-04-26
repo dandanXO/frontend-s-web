@@ -1,9 +1,9 @@
 <template>
-  <el-form ref="forgotPwdFormRef" :rules="forgotPwdFormRules" :model="forgotPwdForm" label-width="90" size="large">
+  <el-form ref="forgotPwdFormRef" :rules="forgotPwdFormRules" :model="forgotPwdForm" label-width="200" size="large">
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
-      <el-form-item label="用户名" prop="loginName">
-        <el-input v-model="forgotPwdForm.loginName" placeholder="请输入6-11位非汉字字符" clearable />
+      <el-form-item :label="$t('login.username')" prop="loginName">
+        <el-input v-model="forgotPwdForm.loginName" :placeholder="$t('login.username')" clearable />
       </el-form-item>
     </div>
 
@@ -16,7 +16,7 @@
       @click="submitForm"
       v-if="!forgotPwdPostVerifyForm.codeId"
     >
-      提交
+      {{$t('common.submit')}}
     </el-button>
   </el-form>
 
@@ -24,26 +24,26 @@
     ref="forgotPwdPostVerifyFormRef"
     :rules="forgotPwdPostVerifyFormRules"
     :model="forgotPwdPostVerifyForm"
-    label-width="90"
+    label-width="200"
     size="large"
     v-if="forgotPwdPostVerifyForm.codeId"
   >
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
-      <el-form-item label="验证码" prop="code">
+      <el-form-item :label="$t('login.captcha')" prop="code">
         <div style="display: flex; width: 100%">
-          <el-input v-model="forgotPwdPostVerifyForm.code" label="验证码" placeholder="验证码"></el-input>
+          <el-input v-model="forgotPwdPostVerifyForm.code" :label="$t('login.captcha')" :placeholder="$t('login.captcha')"></el-input>
         </div>
       </el-form-item>
     </div>
 
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
-      <el-form-item label="密码" prop="password">
+      <el-form-item :label="$t('login.password')" prop="password">
         <el-input
           class="wTip"
           v-model="forgotPwdPostVerifyForm.password"
-          placeholder="请输入6-11位字母/数字组合"
+          :placeholder="$t('placeholder.password')"
           type="password"
           show-password
           clearable
@@ -55,11 +55,11 @@
 
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
-      <el-form-item label="确认密码" prop="confirmPwd">
+      <el-form-item :label="$t('personal.confirmPwd')" prop="confirmPwd">
         <el-input
           class="half wTip"
           v-model="forgotPwdPostVerifyForm.confirmPwd"
-          placeholder="请确认密码"
+          :placeholder="$t('placeholder.confirmPwd')"
           type="password"
           show-password
           clearable
@@ -70,12 +70,12 @@
     </div>
 
     <el-button :loading="loadingBtn" size="large" class="blue-bg primary-btn" @click="submitPostVerifyForm">
-      提交
+      {{ $t('common.submit') }}
     </el-button>
   </el-form>
 
   <div style="text-align: center; margin-top: 20px">
-    <a @click="openLoginDialog">返回登入页面</a>
+    <a @click="openLoginDialog">{{ $t('login.backtoLogin') }}</a>
   </div>
 </template>
 
@@ -90,7 +90,9 @@ import {
 import CaptchaVerify from "./CaptchaVerify.vue";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n()
 const emits = defineEmits(["open-login-dialog, close-dialog"]);
 
 const openLoginDialog = () => {
@@ -103,50 +105,50 @@ const forgotPwdFormRules = {
   loginName: [
     {
       required: true,
-      message: "请输入用户名",
+      message: t('placeholder.username'),
       trigger: "blur"
     },
     {
       min: 6,
       max: 12,
-      message: "长度要在 6-12 之间",
+      message: t('placeholder.between612'),
       trigger: "blur"
     }
   ],
   phone: [
     {
       required: true,
-      message: "请输入手机号码",
+      message: t('placeholder.mobileNo'),
       trigger: "blur"
     }
   ],
   email: [
     {
       required: true,
-      message: "请输入您的邮箱",
+      message: t('placeholder.email'),
       trigger: "blur"
     },
     {
       type: "email",
-      message: "电子邮件地址无效",
+      message: t('placeholder.emailFormat'),
       trigger: "blur"
     },
     {
       max: 50,
-      message: "长度应小于 50",
+      message: t('placeholder.lessthan50'),
       trigger: "blur"
     }
   ],
   captchaCode: [
     {
       required: true,
-      message: "请输入验证码",
+      message: t('placeholder.captchareq'),
       trigger: "blur"
     },
     {
       min: 4,
       max: 4,
-      message: "长度为 4",
+      message: t('placeholder.min4'),
       trigger: "blur"
     }
   ]
@@ -189,9 +191,9 @@ let validatePassStrength = (r, v) => {
 
 let validatePass2 = async (r, v) => {
   if (v === "") {
-    return Promise.reject("请重新输入密码");
+    return Promise.reject(t('placeholder.passwordAgain'));
   } else if (v !== forgotPwdPostVerifyForm.password) {
-    return Promise.reject("密码不同");
+    return Promise.reject(t('placeholder.passwordDifferent'));
   } else {
     return Promise.resolve();
   }
@@ -199,7 +201,7 @@ let validatePass2 = async (r, v) => {
 
 let validatePass = async (r, v) => {
   if (v === "") {
-    return Promise.reject("请输入密码");
+    return Promise.reject(t('placeholder.passwordreq'));
   } else {
     return validatePassStrength(r, v);
   }
@@ -258,7 +260,7 @@ const submitForm = () => {
         sendForgetPasswordPhone(params)
           .then((res) => {
             if (res.code === 0) {
-              ElMessage.success("验证码已经发送到手机");
+              ElMessage.success(t('status.otp_success_send_phone'));
               forgotPwdPostVerifyForm.codeId = res.data.codeId;
               captchaVerifyRef.value.closeDialog();
               captchaVerifyRef.value.initCountdownTimer();
@@ -285,7 +287,7 @@ const submitForm = () => {
         sendForgetPasswordEmail(params)
           .then((res) => {
             if (res.code === 0) {
-              ElMessage.success("验证码已经发送到邮箱");
+              ElMessage.success(t('status.otp_success_send_email'));
               forgotPwdPostVerifyForm.codeId = res.data.codeId;
               captchaVerifyRef.value.closeDialog();
               captchaVerifyRef.value.initCountdownTimer();
@@ -329,7 +331,7 @@ const submitPostVerifyForm = () => {
         verifyForgetPasswordPhone(params)
           .then((res) => {
             if (res.code === 0) {
-              ElMessage.success("成功");
+              ElMessage.success(t('status.success'));
               openLoginDialog();
             } else {
               ElMessage.error({
@@ -352,7 +354,7 @@ const submitPostVerifyForm = () => {
         verifyForgetPasswordEmail(params)
           .then((res) => {
             if (res.code === 0) {
-              ElMessage.success("成功");
+              ElMessage.success(t('status.success'));
               openLoginDialog();
             } else {
               ElMessage.error({
@@ -393,9 +395,11 @@ const submitPostVerifyForm = () => {
   gap: 10px;
   position: relative;
   width: 100%;
+  margin-top: 40px;
 
   .form-field-icon {
     margin: auto;
+    height: 30px;
   }
 }
 

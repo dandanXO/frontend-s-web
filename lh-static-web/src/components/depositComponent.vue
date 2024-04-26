@@ -58,10 +58,8 @@
               </el-select>
             </el-form-item>
             <div class="account-tip">
-              最低存款: {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }} {{ isUSDT ? "USDT" : store.currency.label
-              }}
-              <br />
-              最高存款: {{
+              单笔存款：{{ calculatedMinDeposit ? calculatedMinDeposit : 0 }} {{ isUSDT ? "USDT" : store.currency.label
+              }}  -   {{
                 activeMethod.depositMax ? activeMethod.depositMax : "No Limit"
               }} {{ isUSDT ? "USDT" : store.currency.label }}
             </div>
@@ -182,7 +180,7 @@ import Node from "@/components/paymentSelect/node";
 import BankComponent from "@/components/finance/BankComponent";
 import TFLoading from "@/components/loading/TFLoading.vue";
 import { userStore } from "@/store";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 // import { InfoFilled } from "@element-plus/icons-vue";
 import { doIt } from "@/utils/action";
 
@@ -190,6 +188,7 @@ import { doIt } from "@/utils/action";
   RiSpamLine;
 }
 const router = useRouter();
+const route = useRoute();
 const loadingBtn = ref(false);
 const store = userStore();
 const formRef = ref();
@@ -266,8 +265,7 @@ const rules = {
       trigger: "blur"
     },
     {
-      pattern: /^[1-9]\d*$/,
-      message: "金额应为正数",
+      validator: verifyDepositDecimal,
       trigger: "change"
     },
     {
@@ -318,6 +316,10 @@ async function loadPrivilege(val) {
           } else {
             hasPrivilege.value = true;
             unselectedPrivileges.value.push(p);
+
+            if(p.code === route.query?.privilegeCode && selectedPrivilege.value === null) {
+              selectedPrivilege.value = p.id;
+            }
           }
         }
       });
@@ -563,6 +565,19 @@ function doDeposit(data) {
 
 }
 
+async function verifyDepositDecimal(r,v){
+  if (isUSDT.value) {
+    return Promise.resolve();
+  } else {
+    var decimalPattern = /^[1-9]\d*$/;
+    if(v.match(decimalPattern) !== null){
+      return Promise.resolve();
+    }else{
+      return Promise.reject("金额因为正数");
+    }
+  }
+}
+
 async function verifyDepositAmount(r, v) {
   if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
     if (v < calculatedMinDeposit.value || v > activeMethod.value.depositMax) {
@@ -669,6 +684,7 @@ onMounted(() => {
 .account-tip {
   display: flex;
   align-items: flex-start;
+  margin-bottom: 18px;
 }
 
 // .deposit {
@@ -923,7 +939,7 @@ onMounted(() => {
 }
 
 .btn-confirm {
-  margin-left: 90px; 
+  margin-left: 90px;
   margin-bottom: 10px;
 }
 </style>

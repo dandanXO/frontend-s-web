@@ -104,6 +104,26 @@ button {
     width: 200px;
 }
 
+.step-2-btn.is-active{
+    top:0;
+    left:0px;
+    bottom: 0px;
+    text-align:center;
+    right:0px;
+    font-size: 24px;
+    letter-spacing: 2px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    border-radius:12px;
+    background: #71ADFF;
+}
+
+.step-2-btn.is-active::before{
+    content:"加载中...";
+}
+
 .step-2-hint {
     aspect-ratio: 928/156;
     width: calc(100% - 0px);
@@ -245,6 +265,8 @@ button {
     width: 80%;
 }
 
+
+
 .step-1-modal-action-wrapper {
     display: flex;
     flex-direction: column;
@@ -278,6 +300,8 @@ button {
     width: 700px;
     background-size: 100% 100%;
     position: relative;
+    max-height: 400px;
+    box-sizing: border-box;
 }
 
 #step-1-modal .modal-content .step-1-modal-btn {
@@ -285,4 +309,9 @@ button {
     width: 200px;
     background: url(../assets/images/step-1-modal-btn.png);
     background-size: 100% 100%;
+}
+
+#step-1-modal .modal-content .step-1-modal-btn:active{
+    filter: brightness(0.85);
+    transform: translate(0px,1px);
 }

@@ -155,9 +155,8 @@
             </div>
             <div class="header-title-div" style="margin-top: 25px">
               <span class="span3">
-                此次问卷提供
-                <span class="span1" style="color: #468cff">18-188元</span>
-                建议金
+                根据您填写的内容随机为您派发
+                <span class="span1" style="color: #468cff">0-188元</span>
               </span>
             </div>
             <div class="qr-code-div">
@@ -315,7 +314,7 @@ const getSelected = (item, ans) => {
 const toggleSelected = (item, ans, isChecked, needSpecify) => {
   const input = answerInputModal.value;
 
-  const previousChoicesArr = Array.from(choices[item.sequence - 1]?.choice || []);
+  const previousChoicesArr = Array.from(choices[item.sequence - 1].choice || []);
   const newChoicesArr = [...previousChoicesArr, ans].filter((item) => (!isChecked ? item !== ans : item));
 
   var obj = {

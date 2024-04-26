@@ -33,7 +33,7 @@ body {
     font-family: "Roboto";
     .profile-actions {
       .action-btn {
-        font-size: 0.35rem;
+        font-size: 0.65rem;
       }
     }
   }
@@ -207,9 +207,17 @@ body {
       margin-left: 10px;
     }
     .el-dialog__headerbtn {
-      top: 0px;
-      width: 45px;
+      top:0px;
+      width:45px;
       height: 45px;
+
+      &:hover{
+        opacity: 0.9;
+      }
+      &:active{
+        filter: brightness(0.85);
+      }
+
       .el-dialog__close {
         color: #ffffff;
         height: 1.5em;
@@ -495,4 +503,8 @@ button {
 
 .font-gray {
   color: #555;
+}
+
+.text-center{
+  text-align: center;
 }

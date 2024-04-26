@@ -8,64 +8,112 @@ export const constantRoutes = [
     component: () => import('../views/dy/login/index.vue'),
   },
   {
-    path: "/xf/login",
-    name: "XF Login",
+    path: '/xf/login',
+    name: 'XF Login',
     meta: { hidden: true },
-    component: () => import(/* webpackChunkName: "loginAffiliate" */"../views/xf/login/index.vue")
+    component: () =>
+      import(
+        /* webpackChunkName: "loginAffiliate" */ '../views/xf/login/index.vue'
+      ),
   },
   {
-    path: "/xf/register",
-    name: "XF Register",
+    path: '/xf/register',
+    name: 'XF Register',
     meta: { hidden: true },
-    component: () => import(/* webpackChunkName: "registerAffiliate" */"../views/xf/register/index.vue")
+    component: () =>
+      import(
+        /* webpackChunkName: "registerAffiliate" */ '../views/xf/register/index.vue'
+      ),
   },
   {
-    path: "/dy/login",
-    name: "DY Login",
+    path: '/dy/login',
+    name: 'DY Login',
     meta: { hidden: true },
-    component: () => import(/* webpackChunkName: "loginAffiliate" */"../views/dy/login/index.vue")
+    component: () =>
+      import(
+        /* webpackChunkName: "loginAffiliate" */ '../views/dy/login/index.vue'
+      ),
   },
   {
-    path: "/dy/register",
-    name: "DY Register",
+    path: '/dy/register',
+    name: 'DY Register',
     meta: { hidden: true },
-    component: () => import(/* webpackChunkName: "registerAffiliate" */"../views/dy/register/index.vue")
+    component: () =>
+      import(
+        /* webpackChunkName: "registerAffiliate" */ '../views/dy/register/index.vue'
+      ),
   },
   {
-    path: "/ind/login",
-    name: "IND Login",
+    path: '/ind/login',
+    name: 'IND Login',
     meta: { hidden: true },
-    component: () => import(/* webpackChunkName: "loginAffiliate" */"../views/ind/login/index.vue")
+    component: () =>
+      import(
+        /* webpackChunkName: "loginAffiliate" */ '../views/ind/login/index.vue'
+      ),
   },
   {
-    path: "/ind/register",
-    name: "IND Register",
+    path: '/ind/register',
+    name: 'IND Register',
     meta: { hidden: true },
-    component: () => import(/* webpackChunkName: "registerAffiliate" */"../views/ind/register/index.vue")
+    component: () =>
+      import(
+        /* webpackChunkName: "registerAffiliate" */ '../views/ind/register/index.vue'
+      ),
   },
   {
-    path: "/vi/login",
-    name: "VNM Login",
+    path: '/ind2/login',
+    name: 'IW2 Login',
     meta: { hidden: true },
-    component: () => import(/* webpackChunkName: "loginAffiliate" */"../views/vi/login/index.vue")
+    component: () =>
+      import(
+        /* webpackChunkName: "loginAffiliate" */ '../views/ind2/login/index.vue'
+      ),
   },
   {
-    path: "/vi/register",
-    name: "VNM Register",
+    path: '/ind2/register',
+    name: 'IW2 Register',
     meta: { hidden: true },
-    component: () => import(/* webpackChunkName: "registerAffiliate" */"../views/vi/register/index.vue")
+    component: () =>
+      import(
+        /* webpackChunkName: "registerAffiliate" */ '../views/ind2/register/index.vue'
+      ),
   },
   {
-    path: "/lh/login",
-    name: "LH Login",
+    path: '/vi/login',
+    name: 'VNM Login',
     meta: { hidden: true },
-    component: () => import(/* webpackChunkName: "loginAffiliate" */"../views/lh/login/index.vue")
+    component: () =>
+      import(
+        /* webpackChunkName: "loginAffiliate" */ '../views/vi/login/index.vue'
+      ),
   },
   {
-    path: "/lh/register",
-    name: "LH Register",
+    path: '/vi/register',
+    name: 'VNM Register',
     meta: { hidden: true },
-    component: () => import(/* webpackChunkName: "registerAffiliate" */"../views/lh/register/index.vue")
+    component: () =>
+      import(
+        /* webpackChunkName: "registerAffiliate" */ '../views/vi/register/index.vue'
+      ),
+  },
+  {
+    path: '/lh/login',
+    name: 'LH Login',
+    meta: { hidden: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "loginAffiliate" */ '../views/lh/login/index.vue'
+      ),
+  },
+  {
+    path: '/lh/register',
+    name: 'LH Register',
+    meta: { hidden: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "registerAffiliate" */ '../views/lh/register/index.vue'
+      ),
   },
   {
     path: '/',
@@ -108,7 +156,8 @@ export const constantRoutes = [
       },
       {
         path: 'affiliate',
-        component: () => import('../views/member-info/affiliate-management/index.vue'),
+        component: () =>
+          import('../views/member-info/affiliate-management/index.vue'),
         name: 'Affiliate Management',
         meta: {
           title: 'affiliate-management',
@@ -175,6 +224,14 @@ export const constantRoutes = [
         name: 'Credit Flow',
         meta: {
           title: 'credit flow',
+        },
+      },
+      {
+        path: 'withdraw',
+        component: () => import('../views/affiliate/withdraw/index.vue'),
+        name: 'Withdraw',
+        meta: {
+          title: 'Withdraw',
         },
       },
       {

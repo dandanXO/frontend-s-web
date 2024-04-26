@@ -189,17 +189,17 @@
         </template>
       </q-form>
 
-      <div  v-if="isEmailSent" class="text-blue q-px-md">OTP已发送到您的电子邮件中, 请输入OTP和新密码。</div>
+      <div  v-if="isEmailSent" class="text-blue q-px-md">验证码已发送到您的{{ (fgtpwdTab ==='tabSms') ? '手机短信' : '电子邮件' }}中, 请输入验证码和新密码。</div>
       <q-form v-if="isEmailSent" class="q-gutter-y-md rounded-borders">
         <q-input
           ref="codeRef"
           filled
           hide-bottom-space
           v-model="verificationForm.code"
-          label="OTP码"
+          label="验证码"
           lazy-rules
           clearable
-          :rules="[(val) => (val && val.length > 0) || '请输入OTP码']"
+          :rules="[(val) => (val && val.length > 0) || '请输入验证码']"
         >
           <template v-slot:prepend>
             <q-icon name="qr_code" />

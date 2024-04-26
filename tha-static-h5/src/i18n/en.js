@@ -51,6 +51,7 @@ export default {
     lottery_rebate: "Lottery Rebate",
     monthly_bonus: "Monthly bonus",
     birthday_bonus: "Birthday bonus",
+    festival_bonus: "Festival bonus",
     terms_and_conditions: "Terms and Conditions",
     vip_tnc_para_1:
       "This program is for VIP members with valid accounts. VIP upgrades are based on the total amount of members' accumulated deposits, successful daily deposit amounts calculated from 00:00:01 to 23:59:59 (GMT+8).",
@@ -403,6 +404,7 @@ export default {
     bank: "Bank",
     upload_img: "Upload",
     upload_successfully: "Upload Successfully.",
+    please_upload_file: "Please upload file",
     failed_upload_size_dont_meet_requirement:
       "Upload failed. Image size doesn't meet the specified requirements. Please upload the image again.",
     card_added: "Card added.",
@@ -428,6 +430,7 @@ export default {
     medium_level: "Good",
     strong_level: "Strong",
     fill_in_information: "Please fill in information first.",
+    verify_phone_number: "Please verify phone number first.",
     verify: "Verify",
     my_total_refer_friends_rebate: "Total Rebates from my Referred Friends:",
     my_a_line_refer_total: "Cash back from referred level 1:",
@@ -568,6 +571,7 @@ export default {
     33001: "Must be a 3-digit number",
     34000: "Member's birthday is not in this month",
     34001: "Member's birthday not found",
+    34002: "Please collect it on your birthday",
     35000: "35000 Member cannot receive this privilege",
     35001: "Member has already received this privilege",
     35002: "No eligible special privileges can be received",

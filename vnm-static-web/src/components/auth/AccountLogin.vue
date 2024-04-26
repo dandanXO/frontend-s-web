@@ -37,7 +37,8 @@
     </div>
 
     <div class="agreement-and-forget-pass">
-      <div class="font-gray"></div>
+      <div class="rememberMe"><el-switch v-model="rememberMe" size="small" :active-text="$t('login.rememberMe')"
+              inactive-text="" /></div>
       <div><a @click="openForgotpwdDialog">{{ $t('login.forgotPwd') }}</a></div>
     </div>
 
@@ -65,6 +66,7 @@ import { ElMessage } from "element-plus";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 const props= defineProps(["pageType"]);
+const rememberMe = ref(false)
 
 const loginRules = {
   loginName: [
@@ -75,7 +77,7 @@ const loginRules = {
     },
     {
       min: 6,
-      max: 12,
+      max: 11,
       message: t('placeholder.username'),
       trigger: "blur"
     }
@@ -116,17 +118,18 @@ const route = useRoute();
 
 const submitLogin = () => {
   loadingBtn.value = true;
-  const fpPromise = FingerprintJS.load();
   (async () => {
-    const fp = await fpPromise;
-    const result = await fp.get();
-    const excludes = { value: ["timezone", "timeZoneOffset"] };
-    const allComponents = { ...result.components };
-    excludes.value.forEach((element) => {
-      delete allComponents[element];
-    });
-    const sidParam = FingerprintJS.hashComponents(allComponents);
+    const sidParam = store.visitorId;
 
+    if (rememberMe.value) {
+      const obj = {
+        loginName: loginForm.loginName,
+        password: loginForm.password,
+      }
+       sessionStorage.setItem("loginPassword", JSON.stringify(obj));
+    } else {
+      sessionStorage.removeItem("loginPassword")
+    }
     loginRef.value
       .validate()
       .then(() => {
@@ -148,6 +151,15 @@ const submitLogin = () => {
               loginForm.password = null;
               loginForm.captchaCode = null;
               closeLoginDialog();
+
+              // FB tracking :: login-success
+              if (
+                  window.location.href.indexOf("https://tf88king.com") > -1 ||
+                  window.location.href.indexOf("https://tfgame88.com") > -1
+                ) { 
+                  fbq("track", "login-success");
+                }
+
             } else {
               getCode();
             }
@@ -195,6 +207,14 @@ const openForgotpwdDialog = () => {
 
 onMounted(() => {
   getCode();
+  
+  const hasPassword = sessionStorage.getItem("loginPassword");
+  if (hasPassword) {
+    const obj = JSON.parse(hasPassword);
+    loginForm.loginName = obj.loginName
+    loginForm.password = obj.password
+    rememberMe.value = true
+  }
 });
 </script>
 
@@ -220,6 +240,7 @@ onMounted(() => {
 
   .form-field-icon {
     margin: auto;
+    height: 30px;
   }
 }
 :deep(.el-form-item--large .el-form-item__label) {
@@ -231,7 +252,11 @@ onMounted(() => {
 .agreement-and-forget-pass {
   display: flex;
   justify-content: space-between;
+  .rememberMe {
+    display:flex;
+    gap: 5px;
 
+  }
   .highlight {
     color: #5e8aee;
   }

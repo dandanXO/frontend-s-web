@@ -2,6 +2,7 @@
   <div class="promo-container">
     <div
       class="promo"
+      :class="selectedPromo.redirectUrl === 'lh1-app-hongbao' ? 'unfixed' : ''"
       :style="
         'background-image: url(' +
         imgURL +
@@ -35,11 +36,7 @@
                   <div
                     class="promo-item"
                     v-if="
-                      promo.promoType.toLowerCase().split(',').includes(tab.name) ||
-                      (tab.name === 'others' &&
-                        (promo.promoType.toLowerCase().split(',').includes('slot game') ||
-                          promo.promoType.toLowerCase().split(',').includes('welcome') ||
-                          promo.promoType.toLowerCase().split(',').includes('fish')))
+                      promo.promoType.toLowerCase().split(',').includes(tab.name)
                     "
                   >
                     <a @click="showPromoDetails(promo)">
@@ -107,54 +104,60 @@
                     </a>
                   </div>
 
-                  <div class="promo-item" v-if="tab.name === 'daily' && promo.labelType === 4">
-                    <a @click="showPromoDetails(promo)">
-                      <div>
-                        <div class="promo-label">
-                          <div class="promo-ribbon" v-if="promo.labelType !== 2">
-                            {{ getPromoLabel(promo.labelType) }}
-                          </div>
-                          <div
-                            class="promo-item-date"
-                            v-if="parsedParam(promo.param).date"
-                            v-html="parsedParam(promo.param).date"
-                          />
-                        </div>
-                        <div class="promo-item-title">{{ promo.title }}</div>
-                        <div
-                          class="promo-item-deal"
-                          v-if="parsedParam(promo.param).sub"
-                          v-html="parsedParam(promo.param).sub"
-                        />
-                        <div>
-                          <q-btn label="查看详情" dense color="brightbtn" class="promo-item-btn" />
-                        </div>
+<!--                  <div class="promo-item" v-if="tab.name === 'daily' && promo.labelType === 4">-->
+<!--                    <a @click="showPromoDetails(promo)">-->
+<!--                      <div>-->
+<!--                        <div class="promo-label">-->
+<!--                          <div class="promo-ribbon" v-if="promo.labelType !== 2">-->
+<!--                            {{ getPromoLabel(promo.labelType) }}-->
+<!--                          </div>-->
+<!--                          <div-->
+<!--                            class="promo-item-date"-->
+<!--                            v-if="parsedParam(promo.param).date"-->
+<!--                            v-html="parsedParam(promo.param).date"-->
+<!--                          />-->
+<!--                        </div>-->
+<!--                        <div class="promo-item-title">{{ promo.title }}</div>-->
+<!--                        <div-->
+<!--                          class="promo-item-deal"-->
+<!--                          v-if="parsedParam(promo.param).sub"-->
+<!--                          v-html="parsedParam(promo.param).sub"-->
+<!--                        />-->
+<!--                        <div>-->
+<!--                          <q-btn label="查看详情" dense color="brightbtn" class="promo-item-btn" />-->
+<!--                        </div>-->
 
-                        <div class="promo-item-side-img">
-                          <img :src="imgURL + promo.mobileImgUrl" />
-                        </div>
-                      </div>
-                    </a>
-                  </div>
+<!--                        <div class="promo-item-side-img">-->
+<!--                          <img :src="imgURL + promo.mobileImgUrl" />-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </a>-->
+<!--                  </div>-->
                 </div>
               </div>
             </div>
           </div>
           <div v-else class="selected-promo">
             <div class="selected-promo-wrapper">
-              <div class="banner-container" v-if="selectedPromo?.mobileBannerUrl">
+              <div class="banner-container" v-if="selectedPromo && selectedPromo.mobileBannerUrl && !isSpecialPromo && selectedPromo.promoCode !== 'lh1-ftd-promo'">
                 <img
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
                   style="display: block; width: 100%"
                 />
               </div>
-              <div class="inner">
+              <div
+                class="inner"
+                :class="{
+                  lhstepgame: selectedPromo.promoCode === 'lh1-game-steps',
+                  lhftd: selectedPromo.promoCode === 'lh1-ftd-promo'
+                }"
+              >
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
-                  v-if="selectedPromo.promoType"
+                  v-if="selectedPromo.promoType && selectedPromo.promoCode !== 'lh1-game-steps'"
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
@@ -219,20 +222,8 @@ export default defineComponent({
       active: { value: "ALL", label: "ALL" },
       promoList: []
     });
-    const promoTypes = ref([
-      { code: "ALL", img: "all", label: "所有游戏" },
-      { code: "ESPORTS", img: "esport", label: "电竞" },
-      { code: "SPORTS", img: "sport", label: "体育" },
-      { code: "POKER", img: "poker", label: "棋牌" },
-      { code: "DAILY", img: "daily", label: "日常" },
-      { name: "SLOT GAME", label: "老虎机" },
-      // {name: "slot", label: '老虎机'},
-      { name: "LIVE CASINO", label: "真人" },
-      { name: "FISH", label: "捕鱼" }
-    ]);
 
     const isFetchingPromo = ref(false);
-    const promoTabActive = ref(promoTypes.value[0].value);
     const filteredArray = ref([]);
     const isPromoDetail = ref(false);
     const selectedPromo = ref({});
@@ -248,6 +239,8 @@ export default defineComponent({
     const tabItems = [
 
       { name: "all", label: "全部优惠" },
+      // { name: "ftd", label: "首存" },
+      { name: "ftd", label: "新人" },
       { name: "esport", label: "电竞" },
       { name: "sport", label: "体育" },
       // {name: "slot game", label: '老虎机'},
@@ -255,7 +248,8 @@ export default defineComponent({
       { name: "live casino", label: "真人" },
       { name: "poker", label: "棋牌" },
       { name: "daily", label: "日常" },
-      { name: "others", label: "其它" }
+      { name: "other", label: "其它" },
+
     ];
 
     watch(() => route.query, () => {
@@ -284,7 +278,14 @@ export default defineComponent({
           }
         });
     };
+    const isSpecialPromo= ref(false);
     const showPromoDetails = (promo) => {
+      if(promo.promoCode === 'lh1-game-steps'){
+        isSpecialPromo.value= true;
+      }else{
+        isSpecialPromo.value= false;
+      }
+
       // extension
       if (extensionState.value) {
         if (promo.redirectUrl.includes("page-vip")) {
@@ -322,7 +323,6 @@ export default defineComponent({
       }
     };
     const switchPromoType = (type) => {
-      promoTabActive.value = type.value;
       if (type.value !== "ALL") {
         filteredArray.value = promoState.promoList.filter(function(promo) {
           return promo.promoType.toLowerCase().split(",").includes(type.value.toLowerCase());
@@ -344,9 +344,9 @@ export default defineComponent({
           // promoState.promoList.push(...res.data);
 
           promoItems.forEach(element => {
-            if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+            // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
               // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-            } else {
+            // } else {
               promoState.promoList.push(element);
 
               if ((route.query.name === "lh1-invite-2" || route.query.name === "lh1-invite-3") && String(element.redirectUrl) === "lh1-invite") {
@@ -360,7 +360,7 @@ export default defineComponent({
               if ((route.query.name === "/vip")) {
                 router.push("/account/vip");
               }
-            }
+            // }
           });
 
 
@@ -430,8 +430,6 @@ export default defineComponent({
 
     return {
       promoState,
-      promoTypes,
-      promoTabActive,
       switchPromoType,
       filteredArray,
       isPromoDetail,
@@ -449,7 +447,8 @@ export default defineComponent({
       currentPath,
       extensionState,
       extensionToken,
-      isFetchingPromo
+      isFetchingPromo,
+      isSpecialPromo
       // routeQuery
     };
   }
@@ -466,6 +465,10 @@ export default defineComponent({
     background-position: bottom center;
     background-size: cover;
     background-attachment: fixed;
+
+    &.unfixed {
+      background-attachment: scroll;
+    }
   }
 
   a {
@@ -775,6 +778,26 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
+        &.lhftd {
+          margin: 0px;
+          width: 100%;
+          gap: 0px;
+
+          .hot-promo {
+            border-radius: 0px;
+          }
+        }
+
+        &.lhstepgame {
+          margin: 0px;
+          width: 100%;
+          gap: 0px;
+
+          .hot-promo {
+            border-radius: 0px;
+          }
+        }
 
         img {
           margin-bottom: 5px;

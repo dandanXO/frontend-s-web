@@ -33,10 +33,9 @@
                   <!-- <div>Bank Account Number</div> -->
                 </div>
               </div>
-              <div class="unlink-btn" @click="unbindBankCard(bc)">
-                <!-- <img src="../../assets/images/account/unbind_bank_card.png" /> -->
-                <RiLinkUnlink />
-              </div>
+              <!--              <div class="unlink-btn" @click="unbindBankCard(bc)">-->
+              <!--                <RiLinkUnlink />-->
+              <!--              </div>-->
 
               <div class="flex-box cards">
                 <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">
@@ -360,7 +359,8 @@
 
 <script lang="js">
 import {defineComponent, reactive, ref, onMounted, computed} from "vue";
-import {RiSpamLine, RiLink, RiLinkUnlink} from "vue-remix-icons";
+import {RiSpamLine, RiLink} from "vue-remix-icons";
+// RiLinkUnlink
 // import moment from "moment";
 import {api} from "boot/axios"
 import {useQuasar} from "quasar";
@@ -374,8 +374,7 @@ export default defineComponent({
   name: "WithdrawBankView",
   components: {
     RiSpamLine,
-    RiLink,
-    RiLinkUnlink
+    RiLink
   },
   setup() {
     const store = userStore();
@@ -648,7 +647,7 @@ export default defineComponent({
 
     const getInnerCode = () => {
       api
-        .get("/member/verificationCode")
+        .get("/member/verificationEasyCode")
         .then((response) => {
           if (response.data.code === 0) {
             phoneVerificationImg.value =

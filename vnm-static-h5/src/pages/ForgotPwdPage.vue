@@ -3,11 +3,15 @@
     <template v-if="!isEmailSent">
       <div class="fgtpwd-tabs-div">
         <div class="fgtpwd-item" @click="goToTab('tabSms')" :class="fgtpwdTab === 'tabSms' ? 'is-active' : ''">
-          <span>{{ $t("lang.sms_retrieval") }}</span>
+          <span>{{ $t("lang.recover_password_by_phone_number") }}</span>
         </div>
 
         <div class="fgtpwd-item" @click="goToTab('tabEmail')" :class="fgtpwdTab === 'tabEmail' ? 'is-active' : ''">
-          <span>{{ $t("lang.email_retrieval") }}</span>
+          <span>{{ $t("lang.recover_password_by_email") }}</span>
+        </div>
+
+        <div class="fgtpwd-item" @click="goToTab('tabAcc')" :class="fgtpwdTab === 'tabAcc' ? 'is-active' : ''">
+          <span>{{ $t("lang.recover_account_by_email") }}</span>
         </div>
       </div>
 
@@ -24,7 +28,7 @@
       <q-form v-if="!isEmailSent" class="q-mt-xs">
         <template v-if="fgtpwdTab === 'tabSms'">
           <q-label>
-            {{ $t("lang.please_enter_username") }}
+            {{ $t("lang.username") }}
             <em>*</em>
           </q-label>
           <q-input
@@ -44,7 +48,7 @@
           </q-input>
 
           <q-label>
-            {{ $t("lang.please_enter_phone_number") }}
+            {{ $t("lang.phone_number") }}
             <em>*</em>
           </q-label>
           <q-input
@@ -53,10 +57,13 @@
             clearable
             v-model="passwordFormPhone.phone"
             :placeholder="$t('lang.phone_number')"
-            :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_phone_number')]"
+            :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_phone_number'),
+              (val) => isValidVnmPhone(val)
+            ]"
             color="white"
             label-color="secondary"
             autocomplete="username"
+            type="number"
           >
             <template v-slot:prepend>
               <div style="width: 24px; display: flex; align-items: center">
@@ -66,7 +73,7 @@
           </q-input>
 
           <q-label>
-            {{ $t("lang.please_enter_verification_code") }}
+            {{ $t("lang.verification_code") }}
             <em>*</em>
           </q-label>
           <q-input
@@ -108,7 +115,7 @@
 
         <template v-if="fgtpwdTab === 'tabEmail'">
           <q-label>
-            {{ $t("lang.please_enter_username") }}
+            {{ $t("lang.username") }}
             <em>*</em>
           </q-label>
           <q-input
@@ -128,7 +135,7 @@
           </q-input>
 
           <q-label>
-            {{ $t("lang.please_enter_email") }}
+            {{ $t("lang.email") }}
             <em>*</em>
           </q-label>
           <q-input
@@ -150,7 +157,7 @@
           </q-input>
 
           <q-label>
-            {{ $t("lang.please_enter_verification_code") }}
+            {{ $t("lang.verification_code") }}
             <em>*</em>
           </q-label>
           <q-input
@@ -180,6 +187,69 @@
           <div class="row justify-between items-center">
             <q-btn
               @click.prevent="onSubmitForgotPwd('email')"
+              class="common-large-btn"
+              :label="$t('lang.change_password_btn')"
+              no-caps
+              width="100%"
+              color="brightbtn"
+              style="width: 100%"
+            />
+          </div>
+        </template>
+
+        <template v-if="fgtpwdTab === 'tabAcc'">
+          <q-label>
+            {{ $t("lang.email") }}
+            <em>*</em>
+          </q-label>
+          <q-input
+            rounded
+            standout
+            clearable
+            v-model="passwordFormEmail.email"
+            :placeholder="$t('lang.email')"
+            :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_email'), isValidEmail]"
+            color="white"
+            label-color="secondary"
+          >
+            <template v-slot:prepend>
+              <div style="width: 24px; display: flex; align-items: center">
+                <img src="../assets/images/login/mail-icon.png" width="27" />
+              </div>
+            </template>
+          </q-input>
+
+          <q-label>
+            {{ $t("lang.verification_code") }}
+            <em>*</em>
+          </q-label>
+          <q-input
+            ref="ftCaptchaRef"
+            rounded
+            standout
+            clearable
+            type="text"
+            maxlength="4"
+            v-model="passwordFormEmail.captchaCode"
+            :placeholder="$t('lang.verification_code')"
+            :rules="[
+              (val) => (val && val.length > 0) || $t('lang.please_enter_verification_code'),
+              (val) => (val && val.length > 3 && val.length < 5) || $t('lang.length_is_4')
+            ]"
+            color="white"
+            label-color="brand"
+          >
+            <template v-slot:append>
+              <img class="veri-img" :src="verificationImg" @click="getCode" />
+            </template>
+            <template v-slot:prepend>
+              <img src="../assets/images/login/veri-icon.png" width="24" />
+            </template>
+          </q-input>
+
+          <div class="row justify-between items-center">
+            <q-btn
+              @click.prevent="onSubmitForgotPwd('acc')"
               class="common-large-btn"
               :label="$t('lang.change_password_btn')"
               no-caps
@@ -298,6 +368,7 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { SessionStorage } from "quasar";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "LoginPage",
@@ -307,6 +378,7 @@ export default defineComponent({
 
       isEmailSent.value = false;
     });
+    const { t } = useI18n();
     const verificationImg = ref("");
     const passwordFormPhone = reactive({
       codeId: "",
@@ -330,7 +402,7 @@ export default defineComponent({
 
     const getCode = () => {
       api
-        .get("/member/verificationCode")
+        .get("/member/verificationEasyCode")
         .then((response) => {
           if (response.code === 0) {
             verificationImg.value = "data:image/png;base64," + response.data.img;
@@ -362,8 +434,14 @@ export default defineComponent({
     const isValidEmail = () => {
       const emailPattern =
         /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
-      return emailPattern.test(passwordFormEmail.email) || "请输入有效电子邮件";
+      return emailPattern.test(passwordFormEmail.email) || t("lang.email_valid");
     };
+    const isValidVnmPhone = (val) => {
+      const phonePattern =
+        /^0\d{9}$/;
+      return phonePattern.test(val) || t("lang.phone_not_valid");
+    }
+
     var qs = require("qs");
     const route = useRoute();
     const router = useRouter();
@@ -372,7 +450,7 @@ export default defineComponent({
     const onSubmitForgotPwd = (method) => {
       if (method === "email") {
         $q.loading.show({
-          message: "发送验证码中..."
+          message: t("lang.verification_code_sending")
         });
         api
           .post("/otp/sendForgetPasswordEmail", qs.stringify(passwordFormEmail))
@@ -396,7 +474,7 @@ export default defineComponent({
         getCode();
       } else if (method === "phone") {
         $q.loading.show({
-          message: "发送验证码中..."
+          message: t("lang.verification_code_sending")
         });
         api
           .post("/otp/sendForgetPasswordPhone", qs.stringify(passwordFormPhone))
@@ -413,6 +491,31 @@ export default defineComponent({
               message: "请输入新密码",
               icon: "check_circle_outline"
             });
+          })
+          .catch((error) => {
+            $q.loading.hide();
+          });
+        getCode();
+      } else if (method === "acc") {
+        $q.loading.show({
+          message: t("lang.verification_code_sending")
+        });
+        api
+          .post("/otp/findAccount", qs.stringify(passwordFormEmail))
+          .then((response) => {
+            if (response.code === 0) {
+              // isEmailSent.value = true;
+              // SessionStorage.set("emailCodeId", response.data.codeId);
+              passwordFormEmail.email = "";
+
+              $q.notify({
+                color: "positive",
+                position: "top",
+                message: t("lang.account_sent_to_email"),
+                icon: "check_circle_outline"
+              });
+            }
+            $q.loading.hide();
           })
           .catch((error) => {
             $q.loading.hide();
@@ -467,7 +570,7 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: "密码修改成功",
+                  message: t("lang.password_reset_complete"),
                   icon: "check_circle_outline"
                 });
 
@@ -546,6 +649,7 @@ export default defineComponent({
       verificationImg,
       getCode,
       isValidEmail,
+      isValidVnmPhone,
       isEmailSent,
       onSubmitForgotPwd,
       onVerifyForgotPassword,

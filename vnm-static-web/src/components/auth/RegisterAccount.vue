@@ -1,7 +1,5 @@
 <template>
   <el-form ref="registerRef" :rules="regRules" :model="regForm" label-width="200" size="large">
-    
-
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
       <el-form-item :label="$t('login.username')" prop="loginName">
@@ -43,47 +41,68 @@
       </el-form-item>
     </div>
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/name-icon.png" />
+      <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
       <el-form-item :label="$t('login.realName')" prop="realName">
         <el-input
           class="wTip"
           v-model="regForm.realName"
           :placeholder="$t('login.realName')"
-          :rules="[
-            { required: true, message: '姓名必须与提款银行卡账号姓名一致' },
-            {
-              pattern: '^([\u4e00-\u9fa5]*)$',
-              message: '请输入中文字符',
-              trigger: 'change'
-            }
-          ]"
+          :rules="[{ required: true, message: t('placeholder.realName') }]"
           clearable
         >
           <template #append></template>
         </el-input>
       </el-form-item>
     </div>
-    <!-- <div class="light-bg form-field">
+    <div class="light-bg form-field">
+      <img class="form-field-icon" src="@/assets/home/auth/email-icon.png" />
+      <el-form-item :label="$t('login.email')" prop="email">
+        <el-input
+          class="wTip"
+          v-model="regForm.email"
+          :placeholder="$t('login.email')"
+          :rules="[{ required: true, message: t('placeholder.email') }]"
+          clearable
+        >
+          <template #append></template>
+        </el-input>
+      </el-form-item>
+    </div>
+    <div class="light-bg form-field">
+      <img class="form-field-icon" src="@/assets/home/auth/phone-icon.png" />
+      <el-form-item :label="$t('login.mobileNo')" prop="telephone">
+        <el-input
+          class="wTip"
+          v-model="regForm.telephone"
+          :placeholder="$t('login.mobileNo')"
+          :rules="[{ required: true, message: t('placeholder.mobileNo') }]"
+          clearable
+        >
+          <template #append></template>
+        </el-input>
+      </el-form-item>
+    </div>
+    <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/referral-icon.png" />
-      <el-form-item label="推荐码" prop="codeAffiliate">
+      <el-form-item :label="t('login.codeAffiliate')" prop="codeAffiliate">
         <el-input
           v-if="!hasAffiliate"
           class="half"
           v-model="regForm.codeAffiliate"
-          placeholder="如果没有 无需填写"
+          :placeholder="t('login.codeAffiliate')"
           clearable
         />
         <el-input
           v-else
           class="half"
           v-model="regForm.codeAffiliate"
-          placeholder="如果没有 无需填写"
+          :placeholder="t('login.codeAffiliate')"
           readonly
           disabled
           clearable
         />
       </el-form-item>
-    </div> -->
+    </div>
 
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
@@ -92,7 +111,7 @@
           <el-input
             @keyup.enter="submitRegisterForm(registerRef)"
             v-model="regForm.captchaCode"
-            :placeholder="$t('login.captcha')"  
+            :placeholder="$t('login.captcha')"
             clearable
           />
           <img style="width: 90px" :src="verificationImg" @click="getCode" />
@@ -104,19 +123,20 @@
       <el-button class="blue-bg primary-btn" size="large" @click="resetRegForm(registerRef)">重新填写</el-button>
   </div> -->
   <div>
-    <button class="primary-btn login-btn" size="large" @click="submitRegisterForm(registerRef)">{{ $t('login.register') }}</button>
+    <button class="primary-btn login-btn" size="large" @click="submitRegisterForm(registerRef)">
+      {{ $t("login.register") }}
+    </button>
   </div>
 
-  <div style="width: 100%; margin-top: 5px;">
+  <div style="width: 100%; margin-top: 5px">
     <!-- <div style="visibility:hidden">
       <a @click="closeRegDialog">先去逛逛</a>
     </div> -->
-    
-    <div style="text-align: center" class="font-gray">
-      {{ $t('login.alreadyAccount') }}?
-      <a @click="openLoginDialog">{{ $t('login.login') }}</a>
-    </div>
 
+    <!--    <div style="text-align: center" class="font-gray">-->
+    <!--      {{ $t('login.alreadyAccount') }}?-->
+    <!--      <a @click="openLoginDialog">{{ $t('login.login') }}</a>-->
+    <!--    </div>-->
   </div>
 </template>
 
@@ -169,9 +189,7 @@ const checkRealName = (v) => {
 
 let validateName = async (r, v) => {
   if (v === "") {
-    return Promise.reject("请输入登录名");
-  } else if (!checkName(v)) {
-    return Promise.reject("不允许使用特殊字符");
+    return Promise.reject(t("placeholder.username"));
   } else {
     return Promise.resolve();
   }
@@ -180,9 +198,9 @@ let validateName = async (r, v) => {
 let validatePhoneNumber = async (r, v) => {
   var reg = /^\d+$/;
   if (v === "") {
-    return Promise.reject("请验证您的电话号码");
+    return Promise.reject(t("placeholder.verifyPhone"));
   } else if (!reg.test(v)) {
-    return Promise.reject("电话号码只允许使用数字");
+    return Promise.reject(t("placeholder.onlyNumber"));
   } else {
     return Promise.resolve();
   }
@@ -190,9 +208,7 @@ let validatePhoneNumber = async (r, v) => {
 
 let validateRealName = async (r, v) => {
   if (v === "") {
-    return Promise.reject("请输入登姓名");
-  } else if (!checkRealName(v)) {
-    return Promise.reject("请输入中文字符");
+    return Promise.reject(t("placeholder.realName"));
   } else {
     return Promise.resolve();
   }
@@ -222,9 +238,9 @@ let validatePassStrength = (r, v) => {
 
 let validatePass2 = async (r, v) => {
   if (v === "") {
-    return Promise.reject("请重新输入密码");
+    return Promise.reject(t("placeholder.confirmPwd"));
   } else if (v !== regForm.password) {
-    return Promise.reject("密码不同");
+    return Promise.reject(t("placeholder.noMatch"));
   } else {
     return Promise.resolve();
   }
@@ -232,7 +248,7 @@ let validatePass2 = async (r, v) => {
 
 let validatePass = async (r, v) => {
   if (v === "") {
-    return Promise.reject("请输入密码");
+    return Promise.reject(t("placeholder.password"));
   } else {
     return validatePassStrength(r, v);
   }
@@ -240,12 +256,17 @@ let validatePass = async (r, v) => {
 
 const regRules = {
   realName: [
+    // {
+    //   required: false,
+    //   min: 2,
+    //   max: 12,
+    //   message: "长度应为 2 至 12",
+    //   trigger: "blur"
+    // },
     {
-      required: false,
-      min: 2,
-      max: 12,
-      message: "长度应为 2 至 12",
-      trigger: "blur"
+      required: true,
+      trigger: "change",
+      message: t("placeholder.realName")
     },
     {
       validator: validateRealName,
@@ -255,11 +276,12 @@ const regRules = {
   loginName: [
     {
       min: 6,
-      max: 12,
-      message: "长度应为 6 至 12",
+      max: 11,
+      message: t("placeholder.between612"),
       trigger: "blur"
     },
     {
+      required: true,
       validator: validateName,
       trigger: "change"
     }
@@ -267,11 +289,12 @@ const regRules = {
   password: [
     {
       min: 6,
-      max: 12,
-      message: "长度应为 6 至 12",
+      max: 11,
+      message: t("placeholder.between612"),
       trigger: "blur"
     },
     {
+      required: true,
       validator: validatePass,
       trigger: "change"
     }
@@ -279,17 +302,19 @@ const regRules = {
   confirmPwd: [
     {
       min: 6,
-      max: 12,
-      message: "长度应为 6 至 12",
+      max: 11,
+      message: t("placeholder.between612"),
       trigger: "blur"
     },
     {
+      required: true,
       validator: validatePass2,
       trigger: "change"
     }
   ],
   telephone: [
     {
+      required: true,
       validator: validatePhoneNumber,
       trigger: "change"
     }
@@ -297,43 +322,38 @@ const regRules = {
   smsCode: [
     {
       required: true,
-      message: "请输入手机验证码",
+      message: t("placeholder.phoneVerification"),
       trigger: "blur"
     },
     {
       min: 6,
       max: 6,
-      message: "长度应为 6",
+      message: t("placeholder.min6"),
       trigger: "blur"
     }
   ],
   email: [
     {
-      required: true,
-      message: "请输入您的邮箱",
-      trigger: "blur"
-    },
-    {
       type: "email",
-      message: "电子邮件地址无效",
+      message: t("placeholder.emailFormat"),
       trigger: "blur"
     },
     {
       max: 50,
-      message: "长度应小于 50",
+      message: t("placeholder.lessthan50"),
       trigger: "blur"
     }
   ],
   captchaCode: [
     {
       required: true,
-      message: "需要验证码",
+      message: t("placeholder.captchareq"),
       trigger: "blur"
     },
     {
       min: 4,
       max: 4,
-      message: "长度应为 4",
+      message: t("placeholder.captcha"),
       trigger: "change"
     }
   ]
@@ -372,21 +392,15 @@ const getReferalCode = () => {
 
 const verificationImg = ref("");
 
+const welcomeHome = ref(false);
+
 const submitRegisterForm = async (elForm) => {
   if (!elForm) return;
   await elForm
     .validate((valid) => {
       if (valid) {
-        const fpPromise = FingerprintJS.load();
         (async () => {
-          const fp = await fpPromise;
-          const result = await fp.get();
-          const excludes = { value: ["timezone", "timeZoneOffset"] };
-          const allComponents = { ...result.components };
-          excludes.value.forEach((element) => {
-            delete allComponents[element];
-          });
-          const sidParam = FingerprintJS.hashComponents(allComponents);
+          const sidParam = store.visitorId;
           regForm.sid = sidParam;
           register(regForm)
             .then((response) => {
@@ -394,17 +408,28 @@ const submitRegisterForm = async (elForm) => {
               if (regResult === 0) {
                 ElMessage({
                   type: "success",
-                  message: "注册成功"
+                  message: t("login.registerSuccess")
                 });
+
+                // FB tracking :: signup-success
+                if (
+                  window.location.href.indexOf("https://tf88king.com") > -1 ||
+                  window.location.href.indexOf("https://tfgame88.com") > -1
+                ) {
+                  fbq("track", "signup-success");
+                } else if (window.location.href.indexOf("https://tf88uytin.com") > -1) {
+                  otag("event", "registration");
+                }
+
                 store.autoLogin(response.data);
                 emits("close-dialog");
-                router.push("/welcome");
+                emits("open-welcome-dialog")
 
                 sessionStorage.removeItem("REFERRAL_CODE");
                 sessionStorage.removeItem("AFFILIATE_CODE");
 
                 if (store.token) {
-                  router.push("/welcome");
+                  emits("open-welcome-dialog")
                 }
               } else {
                 ElMessage.error(response.message);
@@ -479,13 +504,14 @@ onMounted(() => {
   width: 100%;
 
   margin: 15px 0px;
-    margin-top: 40px;
-    padding: 5px;
+  margin-top: 40px;
+  padding: 5px;
 
-    position: relative;
+  position: relative;
   width: 100%;
   .form-field-icon {
     margin: auto;
+    height: 30px;
   }
 }
 
@@ -506,7 +532,7 @@ onMounted(() => {
   color: #fff;
   font-size: 14px;
   border-radius: 8px;
-  background: url(../../assets/images/common/loginbtn.png)no-repeat center center;
+  background: url(../../assets/images/common/loginbtn.png) no-repeat center center;
   background-size: cover;
   padding: 10px 0;
 }
@@ -520,7 +546,6 @@ onMounted(() => {
 
 <style lang="scss">
 .form-field {
-
   .el-form-item {
     margin-bottom: 0px;
   }

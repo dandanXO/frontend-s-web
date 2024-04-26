@@ -20,6 +20,36 @@
         <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
       </div>
     </div>
+    <div class="flex-div">
+      <span>开始：</span>
+      <q-input rounded outlined dense v-model="startDate">
+        <template v-slot:append>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+              <q-date v-model="startDate" mask="YYYY-MM-DD" @update:model-value="searchRecord">
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="关闭" color="primary" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
+      <span>结束：</span>
+      <q-input rounded outlined dense v-model="endDate">
+        <template v-slot:append>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+              <q-date v-model="endDate" mask="YYYY-MM-DD" @update:model-value="searchRecord">
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="关闭" color="primary" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
+    </div>
 
     <RecordComponent
       ref="recordRef"
@@ -32,7 +62,7 @@
     />
   </div>
 </template>
-<script lang="js">
+<script setup>
 import {defineComponent, onMounted, ref, reactive} from "vue";
 import RecordComponent from "../../components/RecordComponent.vue";
 import {api} from "boot/axios";
@@ -41,166 +71,148 @@ import {userStore} from "src/stores";
 import {cached} from "boot/cache";
 import * as _ from "lodash"
 
-export default defineComponent({
-  name: "BetHistoryRecordView",
-  components: {
-    RecordComponent
-  },
-  setup() {
-
-    const totalBetRecord = reactive({
-      totalBet: 0,
-      totalPayout: 0
-    });
-
-    const store = userStore();
-    const visible = ref(true);
-    const tableData = ref([]);
-    const recordRef = ref();
-
-    const searchRecord = () => {
-      // console.log("searchRecord");
-
-      recordRef.value.clearTable();
-
-      endDate = moment().format("YYYY-MM-DD");
-      startDate = moment().add(-7, "days").format("YYYY-MM-DD");
-      loadDepositTable(true);
-    }
-
-    const platform = ref("");
-
-    const isEnded = ref(false);
-
-    var apiUrl = "/session/member/gameBetRecord";
 
 
-    var endDate = moment().format("YYYY-MM-DD");
-    var startDate = moment().add(-7, "days").format("YYYY-MM-DD");
-
-    const loadNewData = () => {
-      startDate = moment(startDate).add(-7, "days").format("YYYY-MM-DD");
-      // console.log(startDate);
-
-      endDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
-      // console.log(endDate);
-
-      if (startDate <= moment().add(-30, "days").format("YYYY-MM-DD")) {
-        console.log("mor than 3 months");
-        isEnded.value = true;
-        return;
-      }
-      loadDepositTable(false);
-    };
-
-    const platformsList = ref([]);
-
-    const loadDepositTable = (isNew = true) => {
-      console.log("CHeck");
-      console.log(platform.value);
-
-      if (isNew) {
-        visible.value = true;
-        tableData.value = [];
-        isEnded.value = false;
-      }
-      console.log(startDate);
-      console.log(endDate);
-
-      var platformName = platform.value ? platform.value.value : "";
-
-      let paramData = {
-        "startDate": startDate,
-        "endDate": endDate,
-        "platform": platformName,
-        "memberId": store.id
-      };
-
-      api.get(apiUrl, {
-          params: paramData
-        }
-      ).then((res) => {
-        if (res.data.records.length > 0) {
-          tableData.value.push(...res.data.records);
-        }
-        totalBetRecord.totalBet = res.data.sums.totalBet;
-        totalBetRecord.totalPayout = res.data.sums.totalPayout;
-
-      }).finally(() => {
-        if (isNew) {
-          visible.value = false;
-        }
-      });
-    };
-
-    const loadPlatformLists = () => {
-      var platformApiUrl = store.hasToken()
-        ? "/session/loggedInPlatform"
-        : "/platform";
-      var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
-
-
-      cached.get(platformApiKey, () => api.get(platformApiUrl).then((response) => {
-        return response
-      })).then((data) => {
-        console.log(data);
-        _.each(data, function (item, index) {
-          var option = {
-            label: item.name,
-            value: item.code,
-          }
-          platformsList.value.push(option);
-        })
-
-      });
-    }
-
-
-    const tableHeaders = [
-      {
-        key: "betTime",
-        label: "游戏时间"
-      },
-      {
-        key: "platform",
-        label: "游戏平台"
-      },
-      {
-        key: "bet",
-        label: "投注"
-      },
-      {
-        key: "payout",
-        label: "派彩"
-      },
-      {
-        key: "gameType",
-        label: "游戏类型"
-      },
-      {
-        key: "status",
-        label: "投注状态"
-      }
-    ];
-    onMounted(async () => {
-      await loadPlatformLists();
-      await loadDepositTable();
-    });
-
-    return {
-      tableData,
-      visible,
-      tableHeaders,
-      loadNewData,
-      isEnded,
-      searchRecord,
-      platformsList,
-      recordRef,
-      platform,
-      totalBetRecord
-    };
-  }
+const totalBetRecord = reactive({
+  totalBet: 0,
+  totalPayout: 0
 });
+
+
+var apiUrl= "/session/member/gameBetRecord";
+
+var endDate = reactive(moment().format("YYYY-MM-DD"));
+var startDate = reactive(moment().add(-7, "days").format("YYYY-MM-DD"));
+var current = ref(1);
+var maxPage = ref(0);
+
+const store = userStore();
+const visible = ref(true);
+const tableData = ref([]);
+const recordRef = ref();
+
+const platform = ref("");
+const platformsList = ref([]);
+const isEnded = ref(false);
+
+const searchRecord = () => {
+  tableData.value = [];
+  isEnded.value = false;
+  recordRef.value.clearTable();
+  loadDepositTable(true);
+}
+
+
+const loadNewData = () => {
+  if (maxPage.value > current.value) {
+    current.value++;
+  } else {
+    current.value = 1;
+    isEnded.value = true;
+    return;
+  }
+  loadDepositTable(false);
+};
+
+
+const loadDepositTable = (isNew) => {
+  if (isNew) {
+    visible.value = true;
+  }
+
+  console.log(startDate);
+  console.log(endDate);
+
+  var platformName = platform.value ? platform.value.value : "";
+  let paramData = {
+    startDate: startDate,
+    endDate: endDate,
+    platform: platformName,
+    memberId: store.id,
+    size: 10,
+    current: current.value
+  };
+
+  api.get(apiUrl, {
+      params: paramData
+    }
+  ).then((res) => {
+    maxPage.value = res.data.pages;
+    totalBetRecord.totalBet = res.data.sums.totalBet;
+    totalBetRecord.totalPayout = res.data.sums.totalPayout;
+    tableData.value.push(...res.data.records);
+
+
+
+  }).finally(() => {
+    if (isNew) {
+      visible.value = false;
+    }
+  });
+};
+
+const loadPlatformLists = () => {
+  var platformApiUrl = store.hasToken()
+    ? "/session/loggedInPlatform"
+    : "/platform";
+  var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
+
+
+  cached.get(platformApiKey, () => api.get(platformApiUrl).then((response) => {
+    return response
+  })).then((data) => {
+    console.log(data);
+    _.each(data, function (item, index) {
+      var option = {
+        label: item.name,
+        value: item.code,
+      }
+      platformsList.value.push(option);
+    })
+
+  });
+}
+
+
+const tableHeaders = [
+  {
+    key: "betTime",
+    label: "游戏时间"
+  },
+  {
+    key: "platform",
+    label: "游戏平台"
+  },
+  {
+    key: "bet",
+    label: "投注"
+  },
+  {
+    key: "payout",
+    label: "派彩"
+  },
+  {
+    key: "gameType",
+    label: "游戏类型"
+  },
+  {
+    key: "status",
+    label: "投注状态"
+  }
+];
+onMounted(async () => {
+  await loadPlatformLists();
+
+  const startMonth = moment(startDate).format("MM");
+  const endMonth = moment(endDate).format("MM");
+  if (startMonth !== endMonth) {
+    // If startDate and endDate are in the same month, take the latest month's data
+    const latestMonthEnd = moment(endDate).endOf("month").format("YYYY-MM-DD");
+    startDate = moment(latestMonthEnd).startOf("month").format("YYYY-MM-DD");
+  }
+  await loadDepositTable(true);
+});
+
 </script>
 <style lang="scss">
 .table-record {
@@ -242,7 +254,7 @@ export default defineComponent({
 }
 
 .payout-total {
-margin-right: 5px;
+  margin-right: 5px;
 
 }
 </style>

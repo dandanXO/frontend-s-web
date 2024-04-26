@@ -19,29 +19,37 @@
         <div class="withdraw-tip">* 若提款失败请查看站内信提示的失败原因！</div>
       </div>
     </div> -->
-    <el-tabs v-model="selectedWithdrawalMethod.name">
-      <el-tab-pane v-for="(method, i) in withdrawalMethods" :name="method.name" :label="method.name">
-        <div style="visibility: hidden; display: none;">
-        {{ selectedWithdrawalMethod }}
-        {{ withdrawState.bankCardList = [{
-          bankName: 'nameofbank',
-          id: '1'
-        }] }}</div>
-        <el-card :class="{'selected': withdrawInfo.cardId === b.id}" v-if="withdrawState.bankCardList.length > 0" v-for="(b, i) in withdrawState.bankCardList" :key="i" @click="withdrawInfo.cardId = b.id" class="bank-card">
-          <div class="bank-card-contents">
-            <div class="bankName">{{ b.bankName }}</div>
-            <div class="name">codytsst01</div>
-            <div class="cardNumber">5555 5555 5555 5555 555 5</div>
-          </div>
-          <img class="bank-card-img" src="../../assets/images/account/bank_icon.png">
-        </el-card>
-      </el-tab-pane>
-    </el-tabs>
+    <el-radio-group style="margin-bottom: 20px" v-model="activeItem" size="small">
+      <el-radio-button
+        @change="selectMethod(method, method.name)"
+        v-for="method in withdrawalMethods"
+        :key="method.name"
+        :value="method.name"
+      >
+        {{ method.name }}
+      </el-radio-button>
+    </el-radio-group>
+    <el-card
+      :class="{ selected: withdrawInfo.cardId === b.id }"
+      v-if="withdrawState.bankCardList.length > 0"
+      v-for="(b, i) in withdrawState.bankCardList"
+      :key="i"
+      @click="withdrawInfo.cardId = b.id"
+      class="bank-card"
+    >
+      <div class="bank-card-contents">
+        <div class="bankName">{{ b.bankName }}</div>
+        <div class="name">{{ b.cardAccount }}</div>
+        <div class="cardNumber">{{ b.cardNumber }}</div>
+      </div>
+      <!-- <img class="bank-card-img" src="../../assets/images/account/bank_icon.png"> -->
+      <img class="bank-card-img" :src="imgURL + selectedWithdrawalMethod.icon" />
+    </el-card>
     <div class="withdraw-form">
       <el-form
         ref="formRef"
-        label-width="150px"
-        label-position="left"
+        label-width="200px"
+        label-position="top"
         label-suffix=":"
         :model="withdrawInfo"
         :rules="withdrawRules"
@@ -63,7 +71,7 @@
         </el-form-item> -->
 
         <el-form-item class="helptxt" prop="amount" :label="$t('withdraw.amount')" name="amount">
-          <el-row :gutter="10"  style="align-items: center; width: 54%">
+          <el-row :gutter="10" style="align-items: center; width: 54%">
             <el-col :span="24">
               <el-input class="form-input" v-model="withdrawInfo.amount" :placeholder="$t('withdraw.amount')">
                 <template #append>{{ store.currency.label }}</template>
@@ -72,11 +80,15 @@
             <el-col :span="24">
               <span v-if="selectedWithdrawalMethod && selectedWithdrawalMethod.withdrawMin">
                 {{
-                  `${$t('withdraw.singleLimit')}: ${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax} ${store.currency.label}`
+                  `${$t("withdraw.singleLimit")}: ${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${
+                    selectedWithdrawalMethod.withdrawMax
+                  } ${store.currency.label}`
                 }}
                 <br />
                 {{
-                  `${$t('withdraw.withdrawalToday')}: ${selectedWithdrawalMethod.withdrawMaxAmount} ${store.currency.label}, ${$t('withdraw.remaining')}: ${selectedWithdrawalMethod.withdrawMaxTimes} ${$t('withdraw.times')}`
+                  `${$t("withdraw.withdrawalToday")}: ${selectedWithdrawalMethod.withdrawMaxAmount} ${
+                    store.currency.label
+                  }, ${$t("withdraw.remaining")}: ${selectedWithdrawalMethod.withdrawMaxTimes} ${$t("withdraw.times")}`
                 }}
               </span>
             </el-col>
@@ -94,9 +106,9 @@
             "
           ></div> -->
         </el-form-item>
-        <div class="values" >
+        <div class="values">
           <span @click="withdrawInfo.amount = amt.toString()" class="amt" v-for="amt in amounts">
-          {{amt}}
+            {{ amt }}
           </span>
         </div>
         <el-row>
@@ -111,7 +123,11 @@
             </div>
           </el-col>
         </el-row>
-        <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="实时汇率">
+        <el-form-item
+          v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
+          class="helptxt"
+          :label="$t('deposit.realTimeExchangeRate')"
+        >
           <span style="color: #17cd27">
             1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }} {{ store.currency.label }}
           </span>
@@ -152,22 +168,32 @@
         </el-form-item> -->
         <el-form-item :label="$t('withdraw.withdrawPwd')">
           <el-row :gutter="10" style="align-items: center; width: 54%">
-          <el-col :span="24">
-            <el-input v-model="withdrawInfo.withdrawPassword" :placeholder="$t('withdraw.withdrawPwd')" />
-          </el-col></el-row>
+            <el-col :span="24">
+              <el-input
+                type="password"
+                show-password
+                v-model="withdrawInfo.withdrawPassword"
+                :placeholder="$t('withdraw.withdrawPwd')"
+              />
+            </el-col>
+          </el-row>
         </el-form-item>
-        <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="预计到账">
+        <el-form-item
+          v-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
+          class="helptxt"
+          :label="$t('withdraw.expectedAmount')"
+        >
           <span style="color: #17cd27">
             {{
-              selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
+              selectedWithdrawalMethod && (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin || (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2) < 0)
                 ? "0.00"
                 : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2)
             }}
-            USDT
+            {{ $t("withdraw.usdt") }}
           </span>
         </el-form-item>
         <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="" style="color: #17cd27">
-          *特别说明：三方自动收取提币 1.00 USDT 手续费！
+          {{ $t("withdraw.exchangeRateExample") }}
         </div>
 
         <!-- K豆教程视频 -->
@@ -188,7 +214,7 @@
 
         <div class="flex-box flex-justify-center">
           <el-button :loading="loadingBtn" size="large" class="common-btn withdraw-btn" @click="submitWithdraw">
-            {{ $t('common.confirm') }}
+            {{ $t("common.confirm") }}
           </el-button>
         </div>
       </el-form>
@@ -247,7 +273,7 @@ export default defineComponent({
       // }
     ]);
     const amounts = reactive([
-      50, 
+      50,
       100, 200, 500, 1000, 5000, 10000, 50000, 1000000
     ])
     onMounted(() => {
@@ -255,6 +281,14 @@ export default defineComponent({
     });
     const submitWithdraw = () => {
       loadingBtn.value = true;
+      if (withdrawInfo.cardId === null) {
+      loadingBtn.value = false;
+        ElMessage({
+          message: t('placeholder.selectBankCard'),
+          type: "warning"
+        });
+        return
+      }
       formRef.value
         .validate()
         .then(() => {
@@ -262,12 +296,24 @@ export default defineComponent({
             if (response.code === 0) {
               store.getBalance();
               ElMessage({
-                message: "成功",
+                message: t('common.success'),
                 type: "success"
               });
+
+              // FB tracking :: login-withdrawal
+              if (
+                  window.location.href.indexOf("https://tf88king.com") > -1 ||
+                  window.location.href.indexOf("https://tfgame88.com") > -1
+                ) {
+                  fbq("track", "login-withdrawal");
+                }
+
               getWithdrawalMethods();
               loadCards();
             } else {
+              if (response.code === 12100) {
+                response.message = t('common.withdrawDoesNotMatch')
+              }
               ElMessage.error({
                 type: "error",
                 message: response.message
@@ -287,12 +333,12 @@ export default defineComponent({
       amount: [
         {
           required: true,
-          message: "请输入金额",
+          message: t('placeholder.amount'),
           trigger: "blur"
         },
         {
           pattern: "^([1-9][0-9]*)$",
-          message: "金额应为正数",
+          message: t('placeholder.wholeNumber'),
           trigger: "change"
         },
         {
@@ -305,7 +351,7 @@ export default defineComponent({
 
       if (isUSDT.value) {
         ElMessageBox.alert(
-          "请先绑定虚拟币钱包", "系统提示",
+          t('bankError.bindUSDT'), t('common.systemError'),
           {
             showClose: false,
             showCancelButton: false,
@@ -323,7 +369,7 @@ export default defineComponent({
           });
       } else if (isEWALLET.value) {
         ElMessageBox.alert(
-          "请先绑定电子钱包", "系统提示",
+          t('bankError.bindEWallet'), t('common.systemError'),
           {
             showClose: false,
             showCancelButton: false,
@@ -341,7 +387,7 @@ export default defineComponent({
           });
       } else {
         ElMessageBox.alert(
-          "请先绑定银行卡", "系统提示",
+          t('bankError.bankCardFirst'), t('common.systemError'),
           {
             showClose: false,
             showCancelButton: false,
@@ -397,7 +443,7 @@ export default defineComponent({
       if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
         if (v < selectedWithdrawalMethod.value.withdrawMin || v > selectedWithdrawalMethod.value.withdrawMax) {
           return Promise.reject(
-            "存入金额介于 " +
+            t('withdraw.depositAmountRange') + " " +
             selectedWithdrawalMethod.value.withdrawMin +
             " - " +
             selectedWithdrawalMethod.value.withdrawMax
@@ -426,7 +472,7 @@ export default defineComponent({
         if (response.code === 0) {
           withdrawalMethods.value = response.data;
           if (withdrawalMethods.value.length) {
-            selectMethod(withdrawalMethods.value[0], 0);
+            selectMethod(withdrawalMethods.value[0], withdrawalMethods.value[0].name);
           }
         } else {
           ElMessage.error({
@@ -490,21 +536,21 @@ export default defineComponent({
 .values {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  text-align: center;grid-gap: 10px;
+  text-align: center;
+  grid-gap: 10px;
   width: 540px;
   .amt {
     padding: 20px 50px;
-    color: #A4AABB;
-    box-shadow: 0px 0px 8px 0px #A9C9EA inset;
+    color: #a4aabb;
+    box-shadow: 0px 0px 8px 0px #a9c9ea inset;
     border-radius: 10px;
-    background: #F7F8FB;
+    background: #f7f8fb;
     cursor: pointer;
-      border: 2px solid transparent;
+    border: 2px solid transparent;
     &:hover {
-      background: #FFFFFF;
-      border: 2px solid #468CFF;
-      box-shadow: 0px 0px 4px 0px #00358B4D;
-
+      background: #ffffff;
+      border: 2px solid #468cff;
+      box-shadow: 0px 0px 4px 0px #00358b4d;
     }
   }
 }
@@ -513,11 +559,15 @@ export default defineComponent({
   background: linear-gradient(98.09deg, #f0f7ff -1.13%, #e7f3ff 97.1%);
   border: 2px solid transparent;
   cursor: pointer;
+
+  .bank-card-img {
+    width: 40px;
+  }
   &.selected {
-    border: 2px solid #468CFF;
+    border: 2px solid #468cff;
   }
   :deep(.el-card__body) {
-    font-family: Poppins;
+    // font-family: Poppins;
     text-align: left;
     display: flex;
     gap: 10px;
@@ -546,6 +596,7 @@ export default defineComponent({
         font-weight: 400;
         line-height: 19.6px;
         text-align: left;
+        word-break: break-word;
       }
     }
   }

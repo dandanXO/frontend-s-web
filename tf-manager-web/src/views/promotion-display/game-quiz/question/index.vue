@@ -126,7 +126,7 @@
           </el-select>
         </el-form-item>
         <el-form-item v-if="uiControl.dialogType === 'CREATE'" :label="t('fields.homeTeam')" prop="homeTeam">
-          <el-input v-model="form.homeTeam" style="width: 350px;" maxlength="50" @change="populateChoiceOne" />
+          <el-input v-model="form.homeTeam" style="width: 350px;" maxlength="50" @change="populateChoice" />
         </el-form-item>
         <el-form-item :label="t('fields.homeTeamIcon')" prop="homeTeamIcon">
           <el-row :gutter="5" style="width: 350px">
@@ -152,7 +152,7 @@
           </el-row>
         </el-form-item>
         <el-form-item v-if="uiControl.dialogType === 'CREATE'" :label="t('fields.awayTeam')" prop="awayTeam">
-          <el-input v-model="form.awayTeam" style="width: 350px;" maxlength="50" @change="populateChoiceOne" />
+          <el-input v-model="form.awayTeam" style="width: 350px;" maxlength="50" @change="populateChoice" />
         </el-form-item>
         <el-form-item :label="t('fields.awayTeamIcon')" prop="awayTeamIcon">
           <el-row :gutter="5" style="width: 350px">
@@ -954,6 +954,8 @@ const validateChoiceOne = (rule, value, callback) => {
 const validateChoiceTwo = (rule, value, callback) => {
   if (form.questionTwo && !form.gameType) {
     callback(new Error(t('message.validateChoiceTwoRequired')));
+  } else if (form.questionTwo && JSON.parse(form.choiceTwo).length < 2) {
+    callback(new Error(t('message.validateAnswerTwoAtLeastTwoChoices')));
   } else {
     callback();
   }
@@ -962,6 +964,8 @@ const validateChoiceTwo = (rule, value, callback) => {
 const validateChoiceThree = (rule, value, callback) => {
   if (form.questionThree && !form.gameType) {
     callback(new Error(t('message.validateChoiceThreeRequired')));
+  } else if (form.questionTwo && JSON.parse(form.choiceThree).length < 2) {
+    callback(new Error(t('message.validateAnswerThreeAtLeastTwoChoices')));
   } else {
     callback();
   }
@@ -1002,6 +1006,7 @@ const formRules = reactive({
 });
 
 const validateAnswerOne = (rule, value, callback) => {
+  console.log(endForm.answerOne)
   if (endForm.answerOne === null) {
     callback(new Error(t('message.validateAnswerOneRequired')));
   } else {
@@ -1010,6 +1015,7 @@ const validateAnswerOne = (rule, value, callback) => {
 };
 
 const validateAnswerTwo = (rule, value, callback) => {
+  console.log(endForm.answerTwo)
   if (endForm.questionTwo && endForm.answerTwo === null) {
     callback(new Error(t('message.validateAnswerTwoRequired')));
   } else {
@@ -1018,6 +1024,7 @@ const validateAnswerTwo = (rule, value, callback) => {
 };
 
 const validateAnswerThree = (rule, value, callback) => {
+  console.log(endForm.answerThree)
   if (endForm.questionThree && endForm.answerThree === null) {
     callback(new Error(t('message.validateAnswerThreeRequired')));
   } else {
@@ -1237,12 +1244,10 @@ async function cancelQuiz(id) {
   });
 }
 
-function populateChoiceOne() {
+function populateChoice() {
   choiceOne.value[0].value = form.homeTeam
   choiceOne.value[1].value = form.awayTeam
-}
 
-function populateChoice() {
   if (form.gameType && form.questionTwo) {
     const question = uiControl.questions.find(q => t(q.value) === form.questionTwo);
     if (question.key === 1) {

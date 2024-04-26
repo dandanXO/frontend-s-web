@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { login, logout, mobileLogin } from "@/api/index/login";
 import { loadBalance, loadMemberInfo } from "@/api/personal/personal";
+import { getUnreadTotal } from "@/api/personal/mailbox";
 import { useSessionStorage } from "@vueuse/core";
 import { MAIN } from "@/utils/utils";
 import { getCSAFromServer } from "@/api/index/site";
@@ -44,6 +45,7 @@ export const userStore = defineStore("userStore", {
             this.token = ret.data;
             this.getBalance();
             this.getMemberInfo();
+            this.getUnreadMail();
           } else {
             ElMessage.error(ret.message);
             // throw new Error(ret.message);
@@ -58,6 +60,7 @@ export const userStore = defineStore("userStore", {
       this.token = token;
       this.getBalance();
       this.getMemberInfo();
+      this.getUnreadMail();
     },
     telephoneLogin(loginInfo) {
       return mobileLogin(loginInfo)
@@ -66,6 +69,7 @@ export const userStore = defineStore("userStore", {
             this.token = ret.data;
             this.getBalance();
             this.getMemberInfo();
+            this.getUnreadMail();
           } else {
             ElMessage.error(ret.message);
             // throw new Error(ret.message);
@@ -75,6 +79,14 @@ export const userStore = defineStore("userStore", {
           console.log(err);
           // message.error(err.message);
         });
+    },
+    getUnreadMail() {
+      getUnreadTotal().then((response) => {
+        if (response.code === 0) {
+          this.unreadTotal = response.data;
+        }
+      }).catch((error) => {
+      });
     },
     getMemberInfo() {
       if (this.token) {
@@ -133,9 +145,10 @@ export const userStore = defineStore("userStore", {
             lineUrl = res.data.liveUrl2;
           }
 
+          const token = this.token ?? "";
           window.open(
             // `https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=WEB&lang=zh-CN&token=${this.token}`,
-            `${lineUrl}&token=${this.token}`,
+            `${lineUrl}&token=${token}`,
             "Chat Server",
             "resizable=yes, width=" + 800 + ", height=" + 880 + ", top=" + top + ", left=" + left
           );

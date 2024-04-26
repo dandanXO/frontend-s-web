@@ -119,6 +119,11 @@ const routes = [
         component: () => {}
       },
       {
+        path: "/summon/:summonCode",
+        name: "summonCode",
+        component: () => {}
+      },
+      {
         path: "/privilege/invite",
         name: "invite",
         component: () => import("../views/PrivilegeInvite.vue")
@@ -144,6 +149,11 @@ const routes = [
         path: "/affiliate",
         name: "affiliate",
         component: () => import(/* webpackChunkName: "affiliate" */ "../views/AgentView.vue")
+      },
+      {
+        path: "/app-tutorial",
+        name: "appTutorial",
+        component: () => import(/* webpackChunkName: "appTutorial" */ "../views/AppTutorial.vue")
       }
     ]
   },
@@ -172,11 +182,22 @@ router.beforeEach((to, from, next) => {
   const store = userStore();
   if (to.name === "agentCode") {
     sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
+    sessionStorage.removeItem("REFERRAL_CODE")
+    sessionStorage.removeItem("SUMMON_CODE")
+
     next(`/register`);
   }
   if (to.name === "referCode") {
     sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
+    sessionStorage.removeItem("AFFILIATE_CODE")
+
     next(`/register?refer=1`);
+  }
+  if (to.name === "summonCode") {
+    sessionStorage.setItem("SUMMON_CODE", to.params.summonCode);
+    sessionStorage.removeItem("AFFILIATE_CODE")
+
+    next(`/login?summon=1`);
   }
 
   if (store.token) {
@@ -191,7 +212,8 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     if (to.meta.requiresAuth) {
-      ElMessageBox.alert("账号已在其他设备登录，请登录后再操作", "系统提示", {
+      // 账号已在其他设备登录，
+      ElMessageBox.alert("请登录后再操作", "系统提示", {
         // if you want to disable its autofocus
         // autofocus: false,
         center: true,

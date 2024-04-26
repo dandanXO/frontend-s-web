@@ -114,7 +114,7 @@
     <template v-if="chgpwdTab === 'tabWithdrawPassword'">
       <q-form @submit="submitUpdateWithdrawPwd">
         <div class="change-pwd">
-          <template v-if="store.registeredWithdrawPassword">
+          <template v-if="store.registeredWithdrawPassword && secondCodeId == null">
             <q-label>
               {{ $t("lang.chgpwd_please_enter_old_withdraw_password") }}
               <em>*</em>
@@ -129,7 +129,10 @@
               :label="$t('lang.chgpwd_old_withdraw_password')"
               lazy-rules
               clearable
-              :rules="[(val) => (val && val.length > 0) || $t('lang.chgpwd_please_enter_old_withdraw_password')]"
+              :rules="[
+                (val) => (val && val.length > 0) || $t('lang.chgpwd_please_enter_old_withdraw_password'),
+                (val) => (val && val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11')
+              ]"
             >
               <template v-slot:append>
                 <q-icon
@@ -156,7 +159,10 @@
             :label="$t('lang.chgpwd_new_withdraw_password')"
             lazy-rules
             clearable
-            :rules="[(val) => (val && val.length > 0) || $t('lang.chgpwd_please_enter_new_withdraw_password')]"
+            :rules="[
+              (val) => (val && val.length > 0) || $t('lang.chgpwd_please_enter_new_withdraw_password'),
+              (val) => (val && val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11')
+            ]"
           >
             <template v-slot:append>
               <q-icon
@@ -184,6 +190,7 @@
             clearable
             :rules="[
               (val) => (val && val.length > 0) || $t('lang.chgpwd_please_enter_confirm_withdraw_password'),
+              (val) => (val && val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11'),
               (val) => val === formChgWithdrawPwd.password || $t('lang.chgpwd_confirm_withdraw_password_not_match')
             ]"
           >
@@ -196,11 +203,44 @@
               />
             </template>
           </q-input>
+
+          <template v-if="secondCodeId !== null">
+            <q-label>
+              {{ $t("lang.chgpwd_please_insert_otp_code") }}
+              <em>*</em>
+            </q-label>
+            <q-input
+              ref="otpCodeRef"
+              standout
+              v-model="formChgWithdrawPwd.otpCode"
+              class="q-pb-xs"
+              hide-bottom-space
+              :type="isPwd ? 'password' : 'text'"
+              :label="$t('lang.chgpwd_otp_code')"
+              lazy-rules
+              clearable
+              :rules="[(val) => (val && val.length > 0) || $t('lang.chgpwd_please_insert_otp_code')]"
+            >
+              <template v-slot:append>
+                <q-icon
+                  color="dark"
+                  :name="isPwd ? 'visibility_off' : 'visibility'"
+                  class="cursor-pointer"
+                  @click="isPwd = !isPwd"
+                />
+              </template>
+            </q-input>
+          </template>
+
+          <div class="forget-pwd-tip" @click="openCaptchaDialog()" v-if="memberEmail !== null && secondCodeId == null">
+            {{ $t("lang.chgpwd_forgot_withdraw_password") }}
+          </div>
         </div>
         <div class="box-width">
           <q-btn
             type="submit"
             class="common-large-btn"
+            no-caps
             :label="$t('lang.chgpwd_confirm')"
             width="100%"
             style="width: 100%"
@@ -209,6 +249,32 @@
       </q-form>
     </template>
   </q-page>
+
+  <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
+    <q-card width="100%">
+      <q-card-section class="q-pa-md bg-brightbtn text-white">
+        <q-toolbar>
+          <q-toolbar-title>{{ $t("lang.personal_verification") }}</q-toolbar-title>
+          <q-btn flat v-close-popup round dense icon="close" />
+        </q-toolbar>
+      </q-card-section>
+      <div class="q-px-lg q-pt-sm q-pb-lg">
+        <q-card-section class="q-mb-md q-pa-md">
+          <q-input v-model="innerCaptchaRef" :placeholder="$t('lang.personal_verification')">
+            <template v-slot:append>
+              <img
+                :src="verificationImg"
+                :title="$t('lang.personal_verification_refresh')"
+                style="margin-top: 6px; cursor: pointer"
+                @click="getCode"
+              />
+            </template>
+          </q-input>
+        </q-card-section>
+        <q-btn @click="onCaptchaSubmit" :label="$t('lang.personal_sendotp')" color="brightbtn" />
+      </div>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script lang="js">
@@ -262,6 +328,7 @@ export default defineComponent({
     }
 
     const chgpwdTab = ref("tabPassword");
+    // const chgpwdTab = ref("tabWithdrawPassword");
 
     const goToTab = (tabVal) => {
       formChgAccountPwd.oldPassword = "";
@@ -273,8 +340,93 @@ export default defineComponent({
       chgpwdTab.value = tabVal;
     };
 
+    const memberEmail = ref(null)
+    const openCaptchaDialog = () => {
+      getCode();
+      showCaptchaDialog.value = true;
+    }
+    const showCaptchaDialog = ref(false);
+    const verificationImg = ref("");
+    const getCode = () => {
+      api
+        .get("/member/verificationEasyCode")
+        .then((response) => {
+          if (response.code === 0) {
+            verificationImg.value =
+              "data:image/png;base64," + response.data.img;
+            // updateSecurityVerified.codeId = response.data.id;
+            // innerCaptchaRef.value = "";
+            innerCaptchaCodeId.value = response.data.id;
+          }
+        })
+        .catch((e) => {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: e.message,
+            icon: "report_problem"
+          });
+        });
+    };
+
+    const onCaptchaSubmit = () => {
+      api.post(`/session/sendNewEmail`, qs.stringify({
+        captchaCode: innerCaptchaRef.value,
+        codeId: innerCaptchaCodeId.value
+      }))
+        .then(res => {
+          getCode();
+          let message = res.message || t('lang.personal_emailotp_sent'),
+            color = 'positive'
+
+          if (res.code === 0) {
+            showCaptchaDialog.value = false
+            secondCodeId.value = res.data.codeId;
+          } else
+            getCode();
+
+          if (message)
+            $q.notify({message, color});
+          getCode();
+          console.log('onCaptchaSubmit', res)
+        })
+    }
+
+    const innerCaptchaRef = ref();
+    const innerCaptchaCodeId = ref();
+    const secondCodeId = ref(null);
+
+    const verifyOtpAndChangePassword = () => {
+      api.post(`/session/verifyOtpAndChangePassword`, qs.stringify({
+        password: formChgWithdrawPwd.password,
+        code: formChgWithdrawPwd.otpCode,
+        codeId: secondCodeId.value,
+      }))
+        .then((response) => {
+          if (response.code === 0) {
+            formChgWithdrawPwd.password = "";
+            formChgWithdrawPwd.confirmNewPwd = "";
+            formChgWithdrawPwd.otpCode= "";
+
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: t('lang.success'),
+              icon: "report_problem"
+            });
+
+          }
+        })
+        .catch((e) => {
+
+        });
+    }
+
     onMounted(() => {
       console.log(store);
+      memberEmail.value = store.email;
+      secondCodeId.value = null;
+      getCode();
     });
 
     //update pwd
@@ -331,12 +483,13 @@ export default defineComponent({
     const oldWithdrawPasswordRef = ref();
     const withdrawPasswordRef = ref();
     const confirmWithdrawPasswordRef = ref();
+    const otpCodeRef = ref();
 
     const submitUpdateWithdrawPwd = () => {
       withdrawPasswordRef.value.validate()
       confirmWithdrawPasswordRef.value.validate();
 
-      if(store.registeredWithdrawPassword) {
+      if(store.registeredWithdrawPassword && secondCodeId.value == null) {
         oldWithdrawPasswordRef.value.validate();
         if (oldWithdrawPasswordRef.value.hasError || withdrawPasswordRef.value.hasError) {
         } else {
@@ -367,29 +520,33 @@ export default defineComponent({
       } else {
         if (withdrawPasswordRef.value.hasError) {
         } else {
-          api.post("/session/withdrawPassword", qs.stringify({
-            oldPassword: '',
-            password: formChgWithdrawPwd.password
-          })).then((response) => {
-            if (response.code === 0) {
-              $q.notify({
-                color: "positive",
-                position: "top",
-                message: t('lang.chgpwd_withdraw_password_updated_successfully'),
-                icon: "check_circle_outline"
-              });
-              router.go(-1);
-            } else {
-              $q.notify({
-                color: "negative",
-                position: "top",
-                message: response.message,
-                icon: "report_problem"
-              });
-            }
-          }).catch((error) => {
-            console.log("error", error);
-          });
+          if (secondCodeId.value !== null) {
+            verifyOtpAndChangePassword();
+          } else {
+            api.post("/session/withdrawPassword", qs.stringify({
+              oldPassword: '',
+              password: formChgWithdrawPwd.password
+            })).then((response) => {
+              if (response.code === 0) {
+                $q.notify({
+                  color: "positive",
+                  position: "top",
+                  message: t('lang.chgpwd_withdraw_password_updated_successfully'),
+                  icon: "check_circle_outline"
+                });
+                router.go(-1);
+              } else {
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message: response.message,
+                  icon: "report_problem"
+                });
+              }
+            }).catch((error) => {
+              console.log("error", error);
+            });
+          }
         }
       }
     };
@@ -412,7 +569,18 @@ export default defineComponent({
       withdrawPasswordRef,
       confirmWithdrawPasswordRef,
       resetChgAccountPwd,
-      resetChgWithdrawPwd
+      resetChgWithdrawPwd,
+      showCaptchaDialog,
+      getCode,
+      openCaptchaDialog,
+      verificationImg,
+      onCaptchaSubmit,
+      memberEmail,
+      innerCaptchaRef,
+      innerCaptchaCodeId,
+      verifyOtpAndChangePassword,
+      secondCodeId,
+      otpCodeRef
     };
   }
 });
@@ -483,5 +651,13 @@ export default defineComponent({
       }
     }
   }
+}
+
+.forget-pwd-tip {
+  color: $font-1;
+  font-size: 1rem;
+  text-decoration: none;
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

@@ -67,7 +67,7 @@
         <div class="banner-container" v-if="selectedPromo.redirectUrl !== 'cny-hongbaoyu'">
           <template v-if="selectedPromo.promoCode === 'cny-spinwheel'">
             <img
-              src="../assets/images/promotion/hotpromo/cny-spinwheel/banner.png"
+              src="../assets/images/promotion/hotpromo/bonus-spinwheel/banner1.png"
               style="display: block; width: 100%"
             />
           </template>
@@ -241,13 +241,13 @@ export default defineComponent({
         if (res.code === 0) {
           promoState.promoList.push(...res.data);
           res.data.forEach(element => {
-            if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-              promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-            } else {
+            // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+            //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+            // } else {
               if (element.redirectUrl === route.query.name) {
                 showPromoDetails(element);
               }
-            }
+            // }
           });
         }
       }).catch((e) => {
@@ -593,12 +593,33 @@ export default defineComponent({
     width: 100%;
 
     .selected-promo-wrapper {
+      &.bg__xf-return-promo {
+        background-image: url("../assets/images/promotion/hotpromo/return-promo/bg.png");
+        // background-size: cover;
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        background-position: top center;
+        padding-bottom: 0px;
+        background-color: #770201;
+
+        .banner-container {
+          display: none;
+        }
+
+        .inner {
+          height: 100%;
+          justify-content: space-between;
+          max-width: none;
+          width: 100%;
+          margin: 0 auto;
+        }
+      }
+
       &.bg__cny-spinwheel {
-        background-image: url("../assets/images/promotion/hotpromo/cny-spinwheel/cny-spinwheel-bg.jpg");
+        background-image: url("../assets/images/promotion/hotpromo/bonus-spinwheel/bg.jpg");
         background-size: 100% 100%;
         background-repeat: no-repeat;
         background-position: top center;
-        background-color: #a1211d;
         padding-bottom: 0px;
 
         .inner {
@@ -659,7 +680,8 @@ export default defineComponent({
 
           &.isDesktop {
             display: block;
-            height: 430px;
+            min-height: 430px;
+            aspect-ratio: 1920/500;
           }
 
           &.isMobile {

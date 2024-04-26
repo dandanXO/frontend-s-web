@@ -18,6 +18,22 @@
           :clearable="false"
           :default-time="defaultTime"
         />
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px;margin-left:10px"
+          default-first-option
+          @focus="loadSites"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-input
           v-model="request.serialNumber"
           style="width: 300px; margin-left: 10px"
@@ -559,9 +575,9 @@ async function loadSites() {
 
 async function toApply(memberWithdrawRecord) {
   if (memberWithdrawRecord) {
-    await fromAffiliatePendingToApply([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate }])
+    await fromAffiliatePendingToApply([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate, siteId: memberWithdrawRecord.siteId }])
   } else {
-    await fromAffiliatePendingToApply(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
+    await fromAffiliatePendingToApply(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
   }
   await loadRecord()
   ElMessage({ message: t('message.updateToApplySuccess'), type: 'success' })

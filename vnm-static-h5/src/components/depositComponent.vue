@@ -13,34 +13,38 @@
     <div v-if="isDisplay" class="inner-cont" style="overflow: auto">
       <div class="submit-message">
         <div class="line">
-          <span>银行名称：</span>
+          <span>{{ $t("lang.dv_bank_name") }}：</span>
           <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
           <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('0')" class="common-btn">
             {{ copybtntxt0 }}
           </q-btn>
         </div>
         <div class="line">
-          <span>银行账号：</span>
+          <span>{{ $t("lang.dv_bank_acc") }}：</span>
           <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
           <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('1')" class="common-btn">
             {{ copybtntxt1 }}
           </q-btn>
         </div>
         <div class="line">
-          <span>银行卡号：</span>
+          <span>{{ $t("lang.dv_bank_card_no") }}：</span>
           <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
           <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('2')" class="common-btn">
             {{ copybtntxt2 }}
           </q-btn>
         </div>
         <div class="line">
-          <span>存款金额：</span>
+          <span>{{ $t("lang.dv_deposit_amount") }}：</span>
           <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
           <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('3')" class="common-btn">
             {{ copybtntxt3 }}
           </q-btn>
         </div>
       </div>
+
+      <q-btn no-caps color="brightbtn" class="common-btn q-mt-md" @click="recoverDepositState()">
+        Make another deposit
+      </q-btn>
     </div>
     <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs">
@@ -69,7 +73,7 @@
         <q-select
           v-else
           ref="depositAmtRef"
-          label="选择金额"
+          :label="$t('lang.deposit_select_amount')"
           name="localAmount"
           class="deposit-selection"
           filled
@@ -112,7 +116,7 @@
         <q-select
           ref="offerRef"
           class="deposit-selection q-mt-xs"
-          label="选择优惠"
+          :label="$t('lang.deposit_promo')"
           filled
           :options="unselectedPrivileges"
           v-model="selectedPrivilege"
@@ -264,10 +268,10 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
-const copybtntxt0 = ref("复制");
-const copybtntxt1 = ref("复制");
-const copybtntxt2 = ref("复制");
-const copybtntxt3 = ref("复制");
+const copybtntxt0 = ref(t("lang.dv_copy"));
+const copybtntxt1 = ref(t("lang.dv_copy"));
+const copybtntxt2 = ref(t("lang.dv_copy"));
+const copybtntxt3 = ref(t("lang.dv_copy"));
 const copyMessage = (position) => {
   let copyText = null;
   copyText = eval(`subMsg${position}.value.innerText`);
@@ -283,7 +287,7 @@ const copyMessage = (position) => {
   // Remove the temporary textarea element
   document.body.removeChild(tempTextarea);
   const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
-  copybtntxt[position].value = "已复制";
+  copybtntxt[position].value = t("lang.dv_copied");
   // copyText.select()
   // document.execCommand("copy")
   // copybtntxt0.value = 'คัดลอกแล้ว'
@@ -291,7 +295,7 @@ const copyMessage = (position) => {
 const blurCode = () => {
   const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
   copybtntxt.forEach((element) => {
-    element.value = "复制";
+    element.value = t("lang.dv_copy");
   });
 };
 
@@ -300,10 +304,10 @@ const verifyDepositAmount = ref([
   (val) => (val && /^\d+$/.test(val)) || t("lang.deposit_cantcontaindecimals"),
   (val) =>
     val > calculatedMinDeposit.value - 1 ||
-    "存款应介于 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
+    t("lang.deposit_between") + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
   (val) =>
     val < activeMethod.value.depositMax + 1 ||
-    "存款应介于 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
+    t("lang.deposit_between") + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
 ]);
 
 const form = reactive({
@@ -545,10 +549,11 @@ async function pDepo(deposit) {
       // console.log(res)
 
       if (res.code === 0) {
-        console.log("After SDubmit");
         console.log(res);
-
         const response = res.data.result;
+
+
+
         if (res.data.result.payResultType === "OFFLINE") {
           btnLoading.value = false;
         }
@@ -586,7 +591,7 @@ async function pDepo(deposit) {
                 $q.notify({
                   color: "negative",
                   position: "top",
-                  message: '无法打开充值页面。请检查游览器是否拦截弹窗页面，并修改为"允许弹窗"后再进行充值操作。',
+                  message: t("lang.deposit_allowpopups"),
                   icon: "report_problem"
                 });
                 btnLoading.value = false;
@@ -650,6 +655,11 @@ async function pDepo(deposit) {
             }
           }
         }
+
+        if(window.location.href.indexOf("https://tf88uytin.com") > -1){
+          otag("event", "deposit");
+        }
+
       } else {
         $q.notify({
           color: "negative",
@@ -689,6 +699,11 @@ const checkExtension = () => {
     // store.dispatch("token", extensionToken);
     console.log(store);
   }
+};
+
+const recoverDepositState = () => {
+  isDisplay.value = false;
+  form.localAmount = "";
 };
 
 onMounted(() => {

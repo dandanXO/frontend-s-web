@@ -1,5 +1,14 @@
 <template>
   <div class="promo-container">
+    <div class="promo-banner" v-if="!isPromoDetail">
+      <div class="promo-banner-image">
+        <img src="../assets/promo/top-promo-banner.jpg" />
+        <div class="countdown-day">
+          <span>{{ countDay }}</span>
+        </div>
+      </div>
+    </div>
+
     <div class="all-promotions" v-if="!isPromoDetail">
       <div class="promo-main-container">
         <div class="promo-type-wrapper">
@@ -57,7 +66,14 @@
     </div>
     <div v-else class="selected-promo">
       <div class="selected-promo-wrapper">
-        <div class="banner-container" v-if="selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl">
+        <div
+          class="banner-container"
+          v-if="
+            (selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl) &&
+            selectedPromo.promoCode !== 'lh1-game-steps' &&
+            selectedPromo.promoCode !== 'lh1-ftd-promo'
+          "
+        >
           <div class="promo-bg isDesktop">
             <img
               :src="
@@ -82,6 +98,9 @@
               ? `background-image: url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
               : 'background-image: url(' + require(`../assets/promo/web-bg.jpg`) + '\''
           "
+          :class="{
+            fullwidth: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh1-ftd-promo'
+          }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
             <HotPromotion :list="selectedPromo" />
@@ -123,6 +142,7 @@ import { loadPromo } from "@/api/index/promo.js";
 import { loadPromoBanner } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { ElMessage, ElMessageBox } from "element-plus";
+import moment from "moment";
 
 import HotPromotion from '@/components/HotPromotion'
 export default defineComponent({
@@ -140,13 +160,16 @@ export default defineComponent({
     });
     const promoTypes = ref([
       { code:"ALL", img: 'all', label: '全站优惠' },
+      { code: "FTD", img: 'deposit', label: '新人优惠'},
       { code: "ESPORT", img: 'esport', label: '电竞优惠'},
       { code: "SPORT", img: 'sport', label: '体育优惠'},
       { code: "LIVE CASINO", img: 'live', label: '真人优惠'},
       { code: "POKER", img: 'poker', label: '棋牌优惠'},
       // { code: "FISH", img: 'fish', label: '捕鱼'},
       { code: "DAILY", img: 'daily', label: '日常优惠'},
-      { code: "OTHERS", img: 'slot', label: '其他优惠'},
+      { code: "OTHER", img: 'slot', label: '其他优惠'},
+
+
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
@@ -159,6 +182,14 @@ export default defineComponent({
     const selectedPromo = ref({});
     const route = useRoute();
     const router = useRouter();
+
+    const countDay= ref(5);
+    const euroCupStartDate = moment("2024-06-15");
+    countDay.value= euroCupStartDate.diff(moment(),'days');
+    if( countDay.value <= 0 ){
+      countDay.value = 0;
+    }
+
     // watch(() => route.query, () => {
     //   if (route.query === null) {
     //    isPromoDetail.value = false
@@ -169,7 +200,7 @@ export default defineComponent({
     const loadBanner = () => {
       loadPromoBanner("PROMO").then((res) => {
         if (res.code === 0) {
-            banner.value = res.data[0]
+          banner.value = res.data[0]
         } else {
           ElMessage.error(res.message)
         }
@@ -178,18 +209,18 @@ export default defineComponent({
     const showPromoDetails = (promo) => {
 
       if (!store.token) {
-          ElMessageBox.alert('请登录后再操作', '系统提示', {
-              // if you want to disable its autofocus
-              // autofocus: false,sd
-              center: true,
-              confirmButtonText: '确认',
-              showClose: false,
-              buttonSize: 'large'
-          }).then(() => {
-            // router.push('/login');
-              store.loginPageVisible = true
-          })
-          return
+        ElMessageBox.alert('请登录后再操作', '系统提示', {
+          // if you want to disable its autofocus
+          // autofocus: false,sd
+          center: true,
+          confirmButtonText: '确认',
+          showClose: false,
+          buttonSize: 'large'
+        }).then(() => {
+          // router.push('/login');
+          store.loginPageVisible = true
+        })
+        return
       } else {
         if (promo.redirectUrl.includes("page-vip")) {
           router.push("/vip");
@@ -217,23 +248,9 @@ export default defineComponent({
 
       promoTabActive.value = type;
       if (type !== "ALL") {
-        if(type ==='OTHERS'){
-          filteredArray.value = promoState.promoList.filter(function(promo) {
-            const promoTypes = promo.promoType.toLowerCase().split(",");
-            return promoTypes.includes("slot game") || promoTypes.includes("welcome") || promoTypes.includes("fish");
-          });
-          // console.log(filteredArray.value);
-        } else if (type === 'DAILY') {
-          filteredArray.value = promoState.promoList.filter(function(promo) {
-            const labelType = promo.labelType;
-            return labelType === 4;
-          });
-        } else {
-          filteredArray.value = promoState.promoList.filter(function(promo) {
-            return promo.promoType.toLowerCase().split(',').includes(type.toLowerCase());
-          });
-        }
-
+        filteredArray.value = promoState.promoList.filter(function(promo) {
+          return promo.promoType.toLowerCase().split(',').includes(type.toLowerCase());
+        });
       } else {
         filteredArray.value = promoState.promoList
       }
@@ -244,23 +261,23 @@ export default defineComponent({
         if(res.code === 0) {
           promoState.promoList.push(...res.data);
           res.data.forEach(element => {
-            if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-              promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-            } else {
-              if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3') {
-                if (element.redirectUrl === 'lh1-invite') {
-                  showPromoDetails(element)
-                }
-              }
-              if (route.query.name === 'lh1-football-fight-2' || route.query.name === 'lh1-football-fight-3') {
-                if (element.redirectUrl === 'lh1-football-fight') {
-                  showPromoDetails(element)
-                }
-              }
-              if (element.redirectUrl === route.query.name) {
+            // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+            //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+            // } else {
+            if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3') {
+              if (element.redirectUrl === 'lh1-invite') {
                 showPromoDetails(element)
               }
             }
+            if (route.query.name === 'lh1-football-fight-2' || route.query.name === 'lh1-football-fight-3') {
+              if (element.redirectUrl === 'lh1-football-fight') {
+                showPromoDetails(element)
+              }
+            }
+            if (element.redirectUrl === route.query.name) {
+              showPromoDetails(element)
+            }
+            // }
           });
         }
       }).catch((e) => { console.log("error", e); });
@@ -307,22 +324,54 @@ export default defineComponent({
       selectedPromo,
       banner,
       imgURL,
-      getPromoLabel
+      getPromoLabel,
+      countDay
     }
   },
 });
 </script>
+
 <style lang="scss">
 .promo-container {
   min-height: 600px;
 
+  .promo-banner {
+    background:#f3f7fd;
+    width:100%;
+    display:flex;
+    justify-content:center;
+
+    .promo-banner-image {
+      position: relative;
+
+      .countdown-day{
+        position:absolute;
+        font-size: 140px;
+        font-weight:bold;
+        color: blue;
+        background: linear-gradient(180deg, #73B2FF 31.25%, #3981FF 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-text-stroke-width: 0.1px;
+        -webkit-text-stroke-color: white;
+        top: 150px;
+        left: 700px;
+        height: 140px;
+        width: 150px;
+        line-height: 140px;
+        text-align: center;
+      }
+    }
+  }
+
   .all-promotions {
-    background: url(../assets/promo/bg-top3.jpg) no-repeat center top;
+    // background: url(../assets/promo/top-promo-banner.jpg) no-repeat center top;
+    // background-size: 100% auto;
+    // padding-top: max(110px, 16vw);
     width: 100%;
-    background-size: 100% auto;
-    padding: 50px;
+    padding: 30px 50px 50px;
     position: relative;
-    padding-top: max(110px, 16vw);
     background-color: #f3f7fd;
   }
   .promo-view-container {
@@ -344,11 +393,19 @@ export default defineComponent({
       margin: 10px auto;
       min-width: 80%;
       text-align: center;
+
       tr:first-child td {
         background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
         color: #ffffff;
         border: 0;
       }
+      tr:first-child td:first-child{
+        border-top-left-radius: 16px;
+      }
+      tr:first-child td:last-child{
+        border-top-right-radius: 16px;
+      }
+
       border-collapse: collapse;
       th,
       td {
@@ -378,10 +435,8 @@ export default defineComponent({
         color: #7a8eb9;
       }
       tr {
-        &:last-child {
-          td:first-child {
-            border-radius: 20px 0 0 0;
-          }
+        p{
+          margin:0px;
         }
       }
     }
@@ -721,6 +776,17 @@ export default defineComponent({
         background-position: top center;
         gap: 20px;
         background-repeat: no-repeat;
+
+        &.fullwidth {
+          width: 100%;
+          max-width: 100%;
+          margin: 0;
+          padding: 0;
+
+          .promo-view-container {
+            display: none;
+          }
+        }
 
         &:has(.corner-decor) {
           position: relative;

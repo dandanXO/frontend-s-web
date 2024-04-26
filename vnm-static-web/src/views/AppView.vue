@@ -8,19 +8,19 @@
     <div id="sec-content">
       <div class="intro-container">
         <img
-          src="../assets/app/toplabel.png"
-          alt="最佳电竞竞猜app"
+          :src="require(`../assets/app/toplabel-${languageVal}.png`)"
+          alt="TF88GamingApp"
           width="570px"
           class="img-slogan"
           data-v-93674b8c=""
         />
-        <img src="../assets/app/light.png" alt="最佳电竞竞猜app" width="570px" class="img-slogan" data-v-93674b8c="" />
+        <img src="../assets/app/light.png" alt="TF88GamingApp" width="570px" class="img-slogan" data-v-93674b8c="" />
         <div class="text-content">
-          海量体育、电竞顶尖赛事
+          {{ $t('app.sports') }}
           <br />
-          真人娱乐、彩票投注及电子游艺等，最新最全娱乐项目尽在掌中
+          {{ $t('app.live') }}
           <br />
-          实时直播，热门活动享不停
+          {{ $t('app.hot') }}
         </div>
         <div class="buttons">
           <!-- <div class="btn iphone">
@@ -48,11 +48,11 @@
                 <div class="supported-mobile-os">
                   <img src="../assets/app/ios-icon.png" />
                   <img src="../assets/app/android-icon.png" />
-                  <span v-if="det.mobile">手机访问</span>
+                  <span v-if="det.mobile">{{ $t('app.mobileAccess') }}</span>
                 </div>
                 <div>
                   <a v-if="det.mobile" :href="det.mobile" target="_blank">{{ det.mobile }}</a>
-                  <span v-else>手机用户扫码下载</span>
+                  <span v-else>{{ $t('app.scanDownload') }}</span>
                 </div>
               </div>
             </div>
@@ -71,7 +71,7 @@
         >
           <swiper-slide style="position: relative" v-for="i in 3">
             <img class="fadeIn" :src="require(`../assets/app/phone-${i}.png`)" />
-            <img class="bounceIn" :src="require(`../assets/app/words-${i}.png`)" />
+            <img class="bounceIn" :src="require(`../assets/app/words-${i}-${languageVal}.png`)" />
             <img class="fadeInUp" :src="require(`../assets/app/bottom-${i}.png`)" />
             <img class="fadeInRight" :src="require(`../assets/app/right-${i}.png`)" />
           </swiper-slide>
@@ -95,6 +95,9 @@ import SwiperCore from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { EffectFade, Autoplay } from "swiper/modules";
 import "swiper/css";
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from "pinia";
+import { useI18n } from "vue-i18n";
 SwiperCore.use([EffectFade, Autoplay]);
 
 export default defineComponent({
@@ -106,6 +109,9 @@ export default defineComponent({
     VueQRCodeComponent
   },
   setup() {
+    const { t } = useI18n()
+    const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
     const onSwiper = (swiper) => {};
 
     const onSlideChange = () => {
@@ -115,13 +121,13 @@ export default defineComponent({
     const platforms = ref([
       {
         code: "H5",
-        name: "手机H5网页",
+        name: t('app.h5'),
         link: window.location.host,
         mobile: window.location.host
       },
       {
         code: "QZ",
-        name: "全站APP下载",
+        name: t('app.app'),
         link: ""
       }
       // {
@@ -183,7 +189,8 @@ export default defineComponent({
       onSwiper,
       swiperKey,
       EffectFade,
-      swiperInstance
+      swiperInstance,
+      languageVal
     };
   }
 });
@@ -352,7 +359,7 @@ export default defineComponent({
           width: 280px;
           height: 297px;
           box-shadow: 0px 4px 34px 0px #00000033;
-          background-color: #ffffffd6;
+          background-color: #ffffff;
           border-radius: 8px;
           display: flex;
           flex-direction: column;

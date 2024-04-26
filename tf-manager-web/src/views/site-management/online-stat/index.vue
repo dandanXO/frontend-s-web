@@ -52,7 +52,7 @@
     </div>
     <div>
       <el-card>
-        <Chart :options="onlineStatOptions" />
+        <Chart :options="onlineStatOptions" ref="stats" @clicked="onClick" />
       </el-card>
     </div>
     <div class="header-container">
@@ -124,7 +124,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
 import { getSiteListSimple } from '../../../api/site'
 import {
@@ -135,6 +135,7 @@ import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
 import Chart from '@/components/charts/Charts'
 
+const stats = ref(null);
 const { t } = useI18n()
 const startDate = new Date()
 startDate.setDate(startDate.getDate())
@@ -178,6 +179,7 @@ const onlineStatOptions = reactive({
   },
   xAxis: {
     type: 'category',
+    triggerEvent: true,
     data: [],
   },
   yAxis: {
@@ -325,6 +327,15 @@ async function loadCompare() {
     compareOptions.series[index].data = count
     compareOptions.series[index].name = item.way
   })
+}
+
+async function onClick(val) {
+  if (val) {
+    compareRequest.recordTime = val.name + ":00"
+    compareRequest.siteId = request.siteId
+    compareRequest.compareDays = 7
+    await loadCompare()
+  }
 }
 
 onMounted(async () => {

@@ -7,12 +7,13 @@
       <div class="account-tip-warning">
         <div>
           <RiVolumeUpFill />
-          Please note:
+          {{ $t('deposit.note') }}
         </div>
         <ul>
-          <li>The transaction unit in the game is TF VNDP, 1VNDP = 1000VND</li>
-          <li>Vui lòng tải app : ”Viettel Money”</li>
+          <li>{{ $t('deposit.notept1') }}</li>
         </ul> 
+        
+        <div v-if="selectedPayType" v-html="activeMethod.msg"></div>
       </div>
       <div class="node-wrapper">
         <Node
@@ -25,16 +26,16 @@
 
       <div v-if="submitMessage.length > 0 && isDisplay" class="inner-cont">
         <div class="submit-message">
-          <div class="linebox"><span>银行名称：</span> <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
+          <div class="linebox"><span>{{$t('common.bankName') }}</span> <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
             <button @blur="blurCode" @click="copyMessage('0')" class="common-btn">{{ copybtntxt0 }}</button>
           </div>
-          <div class="linebox"><span>银行账号：</span> <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
+          <div class="linebox"><span>{{$t('common.bankAcc') }}</span> <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
             <button @blur="blurCode" @click="copyMessage('1')" class="common-btn">{{ copybtntxt1 }}</button>
           </div>
-          <div class="linebox"><span>银行卡号：</span> <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
+          <div class="linebox"><span>{{$t('common.bankCard') }}</span> <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
             <button @blur="blurCode" @click="copyMessage('2')" class="common-btn">{{ copybtntxt2 }}</button>
           </div>
-          <div class="linebox"><span>存款金额：</span> <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
+          <div class="linebox"><span>{{$t('common.depositAmount') }} </span> <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
             <button @blur="blurCode" @click="copyMessage('3')" class="common-btn">{{ copybtntxt3 }}</button>
           </div>
         </div>
@@ -108,12 +109,12 @@
           >
             <el-select
               v-model="selectedPrivilege"
-            :placeholder="$t('deposit.selectPromo')"
+            :placeholder="$t('deposit.promo')"
               @select="checkMinDepositAmt"
               @focus="loadPrivilege(activeMethod)"
               fit-input-width
               clearable
-              style="width:350px"
+              style="width:500px"
             >
               <el-option
                 v-for="p in unselectedPrivileges"
@@ -164,12 +165,12 @@
         v-model="isDeposited"
         :maskClosable="false"
         :closable="false"
-        title="已存款"
+        :title="$t('deposit.deposited')"
       >
-        您将被重定向到您的银行页面以完成存款。<br /><br />
+      {{ $t('deposit.redirected') }}<br /><br />
 
-        如果成功，您将在此页面上收到通知。<br /><br />
-        <el-button class="common-btn" @click="clearInfo">理解</el-button>
+      {{ $t('deposit.successful') }}<br /><br />
+        <el-button class="common-btn" @click="clearInfo">{{ $t('common.understand') }}</el-button>
       </el-dialog>
     </div>
   </div>
@@ -218,10 +219,10 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
-const copybtntxt0 = ref("复制");
-const copybtntxt1 = ref("复制");
-const copybtntxt2 = ref("复制");
-const copybtntxt3 = ref("复制");
+const copybtntxt0 = ref(t('common.copy'));
+const copybtntxt1 = ref(t('common.copy'));
+const copybtntxt2 = ref(t('common.copy'));
+const copybtntxt3 = ref(t('common.copy'));
 const copyMessage = (position) => {
   let copyText = null;
   copyText = eval(`subMsg${position}.value.innerText`);
@@ -237,7 +238,7 @@ const copyMessage = (position) => {
   // Remove the temporary textarea element
   document.body.removeChild(tempTextarea);
   const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
-  copybtntxt[position].value = "已复制";
+  copybtntxt[position].value = t('common.copied');
   // copyText.select()
   // document.execCommand("copy")
   // copybtntxt0.value = 'คัดลอกแล้ว'
@@ -246,7 +247,7 @@ const copyMessage = (position) => {
 const blurCode = () => {
   const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
   copybtntxt.forEach(element => {
-    element.value = "复制";
+    element.value = t('account.str_copy');
   });
 };
 const form = reactive({
@@ -266,12 +267,12 @@ const rules = {
   localAmount: [
     {
       required: true,
-      message: "请输入金额",
+      message: t('placeholder.amount'),
       trigger: "blur"
     },
     {
       pattern: /^[1-9]\d*$/,
-      message: "金额应为正数",
+      message: t('placeholder.wholeNumber'),
       trigger: "change"
     },
     {
@@ -420,12 +421,12 @@ function confirmDeposit() {
   if (store.token) {
     if (!store.phone) {
       ElMessageBox.confirm(
-        t('common.safetyBeforePhone'), t('common.systemError'),
+        t('bankError.safetyBeforePhone'), t('common.systemError'),
         {
           showClose: "false",
           cancelButtonClass: "cancel-btn",
           confirmButtonText: t('common.confirm'),
-          cancelButtonText: "取消",
+          cancelButtonText: t('common.cancel'),
           type: "warning",
           draggable: true,
           buttonSize: "small"
@@ -440,12 +441,12 @@ function confirmDeposit() {
     }
     if (!store.realName) {
       ElMessageBox.confirm(
-        t('common.bindRealName'), t('common.systemError'),
+        t('bankError.bindRealName'), t('common.systemError'),
         {
           showClose: "false",
           cancelButtonClass: "cancel-btn",
           confirmButtonText: t('common.confirm'),
-          cancelButtonText: "取消",
+          cancelButtonText: t('common.cancel'),
           type: "warning",
           draggable: true,
           buttonSize: "small"
@@ -554,9 +555,17 @@ function doDeposit(data) {
           //     { once: true }
           // );
         }
+
+        if(window.location.href.indexOf("https://tf88uytin.com") > -1){
+          otag("event", "deposit");
+        }
+
       });
       loadingBtn.value = false;
     } else {
+      if(d.code === 11004) {
+        d.message = t('common.privilegeDeposit')
+      }
       ElMessage.error(d.message);
     }
   }).catch((err) => {
@@ -571,7 +580,7 @@ async function verifyDepositAmount(r, v) {
   if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
     if (v < calculatedMinDeposit.value || v > activeMethod.value.depositMax) {
       return Promise.reject(
-        "存入金额介于 " +
+        t('account.deposit_should_between') +
         calculatedMinDeposit.value +
         " - " +
         activeMethod.value.depositMax
@@ -592,7 +601,7 @@ async function verifyBank(r, v) {
       if (d) {
         return Promise.resolve();
       } else {
-        return Promise.reject("请输入银行");
+        return Promise.reject(t('account.please_select_bank'));
       }
     });
   }
@@ -807,7 +816,7 @@ onMounted(() => {
     }
 
     .el-select__wrapper {
-      width: 350px;
+      width: 500px;
     }
   }
 }
@@ -823,7 +832,7 @@ onMounted(() => {
     flex-direction: column;
   }
     :deep(.el-form-item__label) {
-      font-family: Poppins;
+      // font-family: Poppins;
 font-size: 18px;
 font-weight: 400;
 line-height: 27px;

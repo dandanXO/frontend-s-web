@@ -12,6 +12,10 @@
           <span v-if="appVersionNo">{{ $t("lang.version_no") }}: {{ appVersionNo }}</span>
         </div>
       </div>
+
+      <div class="q-mt-sm">
+        <LangOptions />
+      </div>
     </div>
 
     <div class="vipcard">
@@ -27,7 +31,7 @@
               </div>
             </div>
             <div class="amt">
-              {{ !isLoadingBalance ? "₫" + mainWallet : $t("lang.loading") }}
+              {{ !isLoadingBalance ? "VNDP " + mainWallet : $t("lang.loading") }}
             </div>
           </div>
         </q-card-section>
@@ -93,8 +97,8 @@
             <q-btn :label="$t('lang.deposit_btn')" no-caps class="btn-main btn-pointer" @click="openDeposit" />
 
             <q-btn :label="$t('lang.withdraw_btn')" no-caps class="btn-main btn-pointer" @click="openWithdraw" />
-
-            <q-btn :label="$t('lang.transfer_btn')" no-caps class="btn-main btn-pointer" @click="openTransfer" />
+            <q-btn :label="$t('lang.menu_rebate')" no-caps class="btn-main btn-pointer" @click="getRebateAmt" />
+            <!-- <q-btn :label="$t('lang.transfer_btn')" no-caps class="btn-main btn-pointer" @click="openTransfer" /> -->
           </div>
         </q-card-section>
 
@@ -184,7 +188,7 @@
           </div>
         </router-link>
 
-        <router-link to="/account/inbox">
+        <router-link to="/account/letters">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-notice-icon.png" />
             <div class="acct-nav-label">
@@ -202,14 +206,14 @@
           </div>
         </router-link>
 
-        <router-link to="/account/letters">
+        <!-- <router-link to="/account/letters">
           <div class="acct-nav-item">
             <img src="../assets/images/account/user-feedbakc-icon.png" />
             <div class="acct-nav-label">
               {{ $t("lang.mine_feedback") }}
             </div>
           </div>
-        </router-link>
+        </router-link> -->
 
         <router-link to="/account/changePwd">
           <div class="acct-nav-item">
@@ -220,14 +224,14 @@
           </div>
         </router-link>
 
-        <!-- <router-link to="/affiliate"> -->
-        <!-- <div class="acct-nav-item"> -->
-        <!-- <img src="../assets/images/account/account-affiliate-icon.png" /> -->
-        <!-- <div class="acct-nav-label"> -->
-        <!-- {{ $t("lang.mine_apply_for_partnership") }} -->
-        <!-- </div> -->
-        <!-- </div> -->
-        <!-- </router-link> -->
+        <router-link to="/affiliate">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-affiliate-icon.png" />
+            <div class="acct-nav-label">
+              {{ $t("lang.mine_apply_for_partnership") }}
+            </div>
+          </div>
+        </router-link>
 
         <!-- <router-link to="/promo?redirect=account"> -->
         <!-- <div class="acct-nav-item"> -->
@@ -329,13 +333,42 @@
   >
     <q-card style="width: 100%" class="modalcontent">
       <div class="headers">
-        <div class="titles">系统提示</div>
+        <div class="titles">{{ $t("lang.logout_title") }}</div>
         <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
       </div>
-      <div class="contents">确认要退出登录吗？</div>
+      <div class="contents">{{ $t("lang.logout_desc") }}</div>
       <div class="btnsreas">
-        <div class="confirmsbtns common-md-btn" @click="logout">确定</div>
-        <div class="cacnels common-md-white-btn" @click="isLogoutModal = false">取消</div>
+        <div class="confirmsbtns common-md-btn btn-standard-height" @click="logout">
+          {{ $t("lang.logout_confirm") }}
+        </div>
+        <div class="cacnels common-md-white-btn btn-standard-height" @click="isLogoutModal = false">
+          {{ $t("lang.logout_cancel") }}
+        </div>
+      </div>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog
+    width="100%"
+    class="modal-common-div"
+    v-model="isRebateModalVisible"
+    show-cancel-button
+    :showCancelButton="false"
+    :showConfirmButton="false"
+  >
+    <q-card style="width: 100%" class="modalcontent">
+      <div class="headers">
+        <div class="titles">{{ $t("lang.menu_rebate") }}</div>
+        <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
+      </div>
+      <div class="contents" style="font-size: 30px; color: #468cff">{{ rebateAmt }}</div>
+      <div class="btnsreas">
+        <div class="confirmsbtns common-md-btn btn-standard-height" @click="claimRebateAmt">
+          {{ $t("lang.rebate_claim_now") }}
+        </div>
+        <div class="cacnels common-md-white-btn btn-standard-height" @click="isRebateModalVisible = false">
+          {{ $t("lang.cancel") }}
+        </div>
       </div>
     </q-card>
   </q-dialog>
@@ -347,12 +380,13 @@ import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
 // import { RiRefreshLine } from "vue-remix-icons";
-import { api } from "boot/axios";
+import { api, eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
+import LangOptions from "components/LangOptions";
 
 export default defineComponent({
   name: "AccountPage",
-  components: {},
+  components: { LangOptions },
   setup() {
     const router = useRouter();
     const store = userStore();
@@ -405,7 +439,7 @@ export default defineComponent({
 
     const timerBalance = ref();
     const mainWallet = computed(() => {
-      return store.balance.toFixed(2);
+      return store.balance.toLocaleString("en-US", { maximumFractionDigits: 0 });
     });
     const getVersionNo = async () => {
       if (store.getDeviceType() == "ANDROID") {
@@ -440,7 +474,7 @@ export default defineComponent({
 
     onMounted(() => {
       getBalance();
-      store.getBalance();
+      // store.getBalance();
       // store.getUnreadTotal();
       getVersionNo();
       getPromoImage();
@@ -484,6 +518,26 @@ export default defineComponent({
     };
     const openTransfer = () => {
       router.push("account/transfer");
+    };
+
+    const isRebateModalVisible = ref(false);
+    const rebateAmt = ref(0);
+    const getRebateAmt = () => {
+      eventapi.get("/daily-rebate/available-amount").then((res) => {
+        if (res.code === 0) {
+          rebateAmt.value = res.data;
+          isRebateModalVisible.value = true;
+        } else {
+        }
+      });
+    };
+    const claimRebateAmt = () => {
+      eventapi.put("/bonus/claim/vnm-daily-rebate").then((res) => {
+        if (res.code === 0) {
+          isRebateModalVisible.value = false;
+        } else {
+        }
+      });
     };
     const getBalance = () => {
       isLoadingBalance.value = true;
@@ -553,7 +607,12 @@ export default defineComponent({
       getVipProgress,
       formatNumber,
       updatedVip,
-      isHideLevelUp
+      isHideLevelUp,
+      isRebateModalVisible,
+      rebateAmt,
+      getRebateAmt,
+      claimRebateAmt,
+      LangOptions
     };
   }
 });
@@ -721,7 +780,7 @@ export default defineComponent({
 
   .btm-sect-btns {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     width: 100%;
   }
 
@@ -966,6 +1025,7 @@ export default defineComponent({
         .acct-nav-label {
           // white-space: nowrap;
           color: $font-1;
+          font-size: 12px;
         }
 
         img {

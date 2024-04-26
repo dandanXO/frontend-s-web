@@ -112,6 +112,7 @@
               <div class="profile-img-wrapper">
                 <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
                 <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
+                <el-badge class="unread-count" v-if="store.unreadTotal" :value="store.unreadTotal" color="red" />
               </div>
             </span>
             <template #dropdown>
@@ -483,7 +484,7 @@ export default defineComponent({
       { code: "fish", name: "娱乐", enName: "Fishing", path: "/fishing", submenu: true },
       { code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: false, hasicon: true },
       { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true },
-      { code: "App", name: "APP", enName: "App", path: "/app", submenu: false, hasicon: true },
+      { code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true },
       { code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true }
     ]
   }),
@@ -1518,6 +1519,15 @@ body {
       width: 12px;
       height: 12px;
       opacity: 0;
+    }
+
+    .unread-count {
+      position: absolute;
+      bottom: 2px;
+      right: 5px;
+      width: 12px;
+      height: 12px;
+      opacity: 1;
     }
   }
 

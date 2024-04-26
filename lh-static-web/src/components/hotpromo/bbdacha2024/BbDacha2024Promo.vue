@@ -2,7 +2,36 @@
   <div class="match-vote-wrapper">
     <div class="head-title mb-40">
       <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/head-title-01.png" />
-    </div>
+    </div><div class="table-container">
+          <p class="top-liner">活动期间，每轮中超竞猜正确次数≥2场可获每轮总存款的对应存款反比奖金</p>
+
+          <table class="promo-table">
+            <thead>
+              <tr>
+                <th>竞猜正确场次</th>
+                <th>存款反比</th>
+                <th>彩金上限</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>≥2</td>
+                <td>0.5%</td>
+                <td>88</td>
+              </tr>
+              <tr>
+                <td>≥3</td>
+                <td>0.8%</td>
+                <td>188</td>
+              </tr>
+              <tr>
+                <td>≥5</td>
+                <td>1.0%</td>
+                <td>388</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
     <div class="competition-container">
       <p v-if="isLoaded && upcomingData.length === 0" style="text-align: center">目前没有赛事。</p>
@@ -101,36 +130,7 @@
       </div> -->
 
       <div class="tab-panel" v-if="activeKey === 'tabOne'">
-        <div class="table-container">
-          <p class="top-liner">活动期间，每轮中超竞猜正确次数≥2场可获每轮总存款的对应存款反比奖金</p>
-
-          <table class="promo-table">
-            <thead>
-              <tr>
-                <th>竞猜正确场次</th>
-                <th>存款反比</th>
-                <th>彩金上限</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>≥2</td>
-                <td>0.5%</td>
-                <td>58</td>
-              </tr>
-              <tr>
-                <td>≥3</td>
-                <td>0.8%</td>
-                <td>88</td>
-              </tr>
-              <tr>
-                <td>≥5</td>
-                <td>1.0%</td>
-                <td>188</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        
 
         <div class="head-title my-40">
           <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/head-title-02.png" />

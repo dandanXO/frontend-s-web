@@ -17,7 +17,7 @@
       <div v-if="submitMessage.length > 0 && isDisplay" class="inner-cont">
         <div class="submit-message">
           <div class="linebox">
-            <span>$t('fields.bank')：</span>
+            <span>{{ $t('fields.bank') }}：</span>
             <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
             <button
               @blur="blurCode"
@@ -28,7 +28,7 @@
             </button>
           </div>
           <div class="linebox">
-            <span>$t('fields.cardAccount')：</span>
+            <span>{{ $t('fields.cardAccount') }}：</span>
             <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
             <button
               @blur="blurCode"
@@ -50,7 +50,7 @@
             </button>
           </div>
           <div class="linebox">
-            <span>$t('fields.depositAmount')：</span>
+            <span>{{ $t('fields.depositAmount') }}：</span>
             <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
             <button
               @blur="blurCode"
@@ -95,13 +95,13 @@
             </el-form-item>
             <div class="account-tip">
               {{ $t('message.minDepositeAmount') }}: {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }}
-              {{ isUSDT ? "USDT" : (siteId === "3" || siteId === 3 ? "THB" : "RMB") }}
+              {{ isUSDT ? "USDT" : returnCurrency() }}
               <br>
               {{ $t('message.maxDepositeAmount') }}:
               {{
                 activeMethod.depositMax ? activeMethod.depositMax : "No Limit"
               }}
-              {{ isUSDT ? "USDT" : (siteId === "3" || siteId === 3 ? "THB" : "RMB") }}
+              {{ isUSDT ? "USDT" : returnCurrency() }}
             </div>
           </el-space>
 
@@ -112,7 +112,7 @@
           >
             <span style="color: #17cd27">
               1.00 USDT ≈ {{ activeMethod.currencyRate }}
-              {{ siteId === "3" || siteId === 3 ? "THB" : "RMB" }}
+              {{ returnCurrency() }}
             </span>
           </el-form-item>
           <el-form-item
@@ -177,16 +177,16 @@
         v-model="isDeposited"
         :maskClosable="false"
         :closable="false"
-        title="已存款"
+        :title="$t('message.DepositCompleted')"
       >
-        您将被重定向到您的银行页面以完成存款。
+        {{ $t('message.depositNotification1') }}
         <br>
         <br>
+        {{ $t('message.depositNotification2') }}
 
-        如果成功，您将在此页面上收到通知。
         <br>
         <br>
-        <el-button class="common-btn" @click="clearInfo">理解</el-button>
+        <el-button class="common-btn" @click="clearInfo">{{ $t('message.understand') }}</el-button>
       </el-dialog>
     </div>
   </div>
@@ -207,6 +207,8 @@ import Jolly88Loading from "@/components/loading/Jolly88Loading.vue";
 import { useRouter } from "vue-router";
 import { doIt } from "@/utils/action";
 import { useStore } from "@/store";
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 const router = useRouter();
 const loadingBtn = ref(false);
 const store = useStore();
@@ -228,10 +230,10 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
-const copybtntxt0 = ref("复制");
-const copybtntxt1 = ref("复制");
-const copybtntxt2 = ref("复制");
-const copybtntxt3 = ref("复制");
+const copybtntxt0 = ref(t('common.copy'));
+const copybtntxt1 = ref(t('common.copy'));
+const copybtntxt2 = ref(t('common.copy'));
+const copybtntxt3 = ref(t('common.copy'));
 const copyMessage = (position, text) => {
   let copyText = null;
   copyText = text;
@@ -247,13 +249,13 @@ const copyMessage = (position, text) => {
   // Remove the temporary textarea element
   document.body.removeChild(tempTextarea);
   const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
-  copybtntxt[position].value = "已复制";
+  copybtntxt[position].value = t('common.copied');
 };
 
 const blurCode = () => {
   const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
   copybtntxt.forEach((element) => {
-    element.value = "复制";
+    element.value = t('common.copy');
   });
 };
 const form = reactive({
@@ -272,12 +274,12 @@ const rules = {
   localAmount: [
     {
       required: true,
-      message: "请输入金额",
+      message: t('message.requiredAmount'),
       trigger: "blur"
     },
     {
       pattern: "^([1-9][0-9]*)$",
-      message: "金额应为正数",
+      message: t('message.requiredPositiveInteger'),
       trigger: "change"
     },
     {
@@ -547,6 +549,15 @@ async function verifyBank(r, v) {
         return Promise.reject(new Error("请输入银行"));
       }
     });
+  }
+}
+const returnCurrency = () => {
+  if (siteId === 3 || siteId === '3') {
+    return "THB"
+  } else if (siteId === 8 || siteId === '8') {
+    return "VNDP"
+  } else {
+    return "RMB"
   }
 }
 

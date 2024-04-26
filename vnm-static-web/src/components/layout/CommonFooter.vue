@@ -53,12 +53,12 @@
             </router-link>
           </div>
         <ul>
-          <li><router-link to="/about?id=info">About TFgaming</router-link></li>
-          <li><router-link to="/about?id=law">Collect Information</router-link></li>
-          <li><router-link to="/about?id=aboutus">Legal Basis</router-link></li>
-          <li><router-link to="/about?id=rule">Betting Rules</router-link></li>
-          <li><a :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')">Affiliates</a></li>
-          <li><router-link to="/about?id=pay">Gambling Responsibly</router-link></li>
+          <li><router-link to="/about?id=aboutus">{{ $t('about.aboutus') }}</router-link></li>
+          <li><router-link to="/about?id=info">{{ $t('about.collectInformation') }}</router-link></li>
+          <li><router-link to="/about?id=law">{{ $t('about.legalBasis') }}</router-link></li>
+          <li><router-link to="/about?id=rule">{{ $t('about.bettingRules') }}</router-link></li>
+          <li><a :href="'https://vnm-affiliate.th80to83w1.com?agent=' + (affCode ? affCode : '')">{{ $t('about.affiliate') }} </a></li>
+          <li><router-link to="/about?id=blame">{{ $t('about.blame') }}</router-link></li>
         </ul>
         <!-- <div class="tagline">雷火是全球领先的合法博彩公司，拥有菲律宾政府PAGCOR 所颁发的离岸博彩许可证，并受其监管</div> -->
       </div>
@@ -70,6 +70,8 @@
         <div class="icon chrome" @mouseover="isChrome = true" @mouseout="isChrome = false" :class="{hovering: isChrome}"></div>
         <div class="brush"><RiStarFill /><i class="remixicon-star-s-fill" style="font-size: 22px;"></i>一键收藏网站</div>
       </div> -->
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div class="title">{{ $t('about.partner') }}</div>
         <div class="top-ft-rgt">
           <img src="../../assets/footer/games/AG.png" />
           <img src="../../assets/footer/games/CMD368.png" />
@@ -87,8 +89,11 @@
           <img src="../../assets/footer/games/PP.png" />
           <img src="../../assets/footer/games/V8.png" />
         </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div class="title">{{$t('about.paymentMethod')}}</div>
         <div class="top-ft-rgt">
-          <img src="../../assets/footer/payment/VCB.png" />
+          <!-- <img src="../../assets/footer/payment/VCB.png" />
           <img src="../../assets/footer/payment/Sacombank.png" />
           <img src="../../assets/footer/payment/MB.png" />
           <img src="../../assets/footer/payment/Exim.png" />
@@ -96,12 +101,17 @@
           <img src="../../assets/footer/payment/Techcombank.png" />
           <img src="../../assets/footer/payment/VP.png" />
           <img src="../../assets/footer/payment/BIDV.png" />
-          <img src="../../assets/footer/payment/ACB.png" />
+          <img src="../../assets/footer/payment/ACB.png" /> -->
+          <img src="../../assets/footer/payment/bank-logo.png" />
           <img src="../../assets/footer/payment/momo.png" />
           <img src="../../assets/footer/payment/ZaloPay.png" />
-          <img src="../../assets/footer/payment/ViettelPay.png" />
+          <img src="../../assets/footer/payment/scratch-card-logo.png" />
+          <img src="../../assets/footer/payment/ViettelPayRed.png" />
           <img src="../../assets/footer/payment/tether-logo.png" />
+          <img src="../../assets/footer/payment/lotterycard.png" />
+          <img src="../../assets/footer/payment/bank-transfer.png" />
         </div>
+      </div>
       </div>
     </div>
   </footer>
@@ -113,9 +123,13 @@ import { defineComponent, ref } from "vue";
 import { userStore } from "@/store";
 import { ElMessage, ElMessageBox } from "element-plus";
 
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from 'pinia'
 export default defineComponent({
   components: {},
   setup() {
+    const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
     const isFireFox = ref(false);
     const isChrome = ref(false);
     const store = userStore();
@@ -128,7 +142,8 @@ export default defineComponent({
       isChrome,
       store,
       openRegPage,
-      affCode
+      affCode,
+      languageVal
     };
   }
 });
@@ -148,15 +163,15 @@ export default defineComponent({
       border-top: 1px solid $font-1;
       margin: 0 auto;
       display: flex;
-      gap: 20px;
+      gap: 50px;
       justify-content: center;
       padding: 10px 0;
       align-items: flex-start;
-      flex-direction: column;
-      width: 1350px;
+      width: 100%;
+      max-width: $maxwidth;
       .top-ft-left {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         padding: 10px;
         .icon {
@@ -179,19 +194,27 @@ export default defineComponent({
           }
         }
       }
+      .title {
+        color: #A4AABB;
+        text-decoration: none;
+        font-size: 15px;
+        display: block;
+        white-space:nowrap;;
+      }
       .top-ft-rgt {
         .s1 {
           color: #ffffff;
           font-size: 16px;
         }
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
-        gap: 40px;
+        gap: 20px;
+        flex-wrap: wrap;
         img {
-          height: 35px;
+          height: 25px;
       // filter: grayscale(1);
-    filter: brightness(0.7);
+    filter: brightness(0.5);
     mix-blend-mode: luminosity;
       &:hover {
         mix-blend-mode: normal;

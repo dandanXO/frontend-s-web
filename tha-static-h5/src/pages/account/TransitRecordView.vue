@@ -19,22 +19,10 @@
                 <q-input filled v-model="searchForm.deposit.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.deposit.startDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.deposit.startDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -44,22 +32,10 @@
                 <q-input filled v-model="searchForm.deposit.endDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.deposit.endDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.deposit.endDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -67,17 +43,12 @@
                   </template>
                 </q-input>
               </div>
-              <q-btn
-                class="q-mb-md"
-                :label="$t('lang.search')"
-                color="brand"
-                @click="searchRecord"
-              />
+              <q-btn class="q-mb-md" :label="$t('lang.search')" color="brand" @click="searchRecord" />
             </q-form>
           </div>
           <!-- :grid="$q.screen.lt.md" -->
           <q-table
-          :grid="$q.screen.lt.md"
+            :grid="$q.screen.lt.md"
             :loading="loading"
             :columns="tableColumns.deposit"
             :rows="dataState.deposit"
@@ -148,22 +119,10 @@
                 <q-input filled v-model="searchForm.turnover.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.turnover.startDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.turnover.startDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -173,22 +132,10 @@
                 <q-input filled v-model="searchForm.turnover.endDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.turnover.endDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.turnover.endDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -196,12 +143,7 @@
                   </template>
                 </q-input>
               </div>
-              <q-btn
-                class="q-mb-md"
-                :label="$t('lang.search')"
-                color="brand"
-                @click="searchRecord"
-              />
+              <q-btn class="q-mb-md" :label="$t('lang.search')" color="brand" @click="searchRecord" />
             </q-form>
           </div>
           <q-table
@@ -256,22 +198,10 @@
                 <q-input filled v-model="searchForm.withdraw.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.withdraw.startDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.withdraw.startDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -281,22 +211,10 @@
                 <q-input filled v-model="searchForm.withdraw.endDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.withdraw.endDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.withdraw.endDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -304,12 +222,7 @@
                   </template>
                 </q-input>
               </div>
-              <q-btn
-                class="q-mb-md"
-                :label="$t('lang.search')"
-                color="brand"
-                @click="searchRecord"
-              />
+              <q-btn class="q-mb-md" :label="$t('lang.search')" color="brand" @click="searchRecord" />
             </q-form>
           </div>
           <q-table
@@ -321,51 +234,47 @@
             :rows-per-page-label="rowPerPageLabel"
             row-key="serialNumber"
           >
-
             <template v-slot:item="props">
               <!-- <pre>{{props}}</pre> -->
-                <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                  <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
-                      <div class="q-table__grid-item-row">
-                          <div class="q-table__grid-item-title">{{ $t("lang.order_number") }}</div>
-                          <div class="q-table__grid-item-value">{{ props.row.serialNumber }}</div>
-                      </div>
-                      <div class="q-table__grid-item-row">
-                          <div class="q-table__grid-item-title">{{ $t("lang.amount") }}</div>
-                          <div class="q-table__grid-item-value">{{ props.row.withdrawAmount }}</div>
-                      </div>
-                      <div class="q-table__grid-item-row">
-                          <div class="q-table__grid-item-title">{{ $t("lang.status") }}</div>
-                          <div class="q-table__grid-item-value">{{ getWithdrawStatus(props.row.status) }}</div>
-                      </div>
-                      <div class="q-table__grid-item-row">
-                          <div class="q-table__grid-item-title">{{ $t("lang.withdrawal_date") }}</div>
-                          <div class="q-table__grid-item-value">{{ props.row.withdrawDate }}</div>
-                      </div>
-                      <div class="q-table__grid-item-row">
-                          <div class="q-table__grid-item-title">{{ $t("lang.operation") }}</div>
-                          <div class="q-table__grid-item-value">
-                            <q-btn
-                              v-if="props.row.status === 'STEP_1'"
-                              size="sm"
-                              :label="$t('lang.reminder')"
-                              color="brand"
-                              @click="($event) => openReminder(props)"
-                            />
-
-                            <q-btn
-                              v-if="
-                                props.row.status === 'SUCCESS' &&
-                                props.row.confirmStatus === 0
-                              "
-                              size="sm"
-                              :label="$t('lang.confirm_withdraw_success')"
-                              color="brand"
-                              @click="openWithdrawConfirmDialog(props)"
-                            />
-                          </div>
-                      </div>
+              <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.order_number") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.serialNumber }}</div>
                   </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.amount") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.withdrawAmount }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.status") }}</div>
+                    <div class="q-table__grid-item-value">{{ getWithdrawStatus(props.row.status) }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.withdrawal_date") }}</div>
+                    <div class="q-table__grid-item-value">{{ props.row.withdrawDate }}</div>
+                  </div>
+                  <div class="q-table__grid-item-row">
+                    <div class="q-table__grid-item-title">{{ $t("lang.operation") }}</div>
+                    <div class="q-table__grid-item-value">
+                      <q-btn
+                        v-if="props.row.status === 'STEP_1'"
+                        size="sm"
+                        :label="$t('lang.reminder')"
+                        color="brand"
+                        @click="($event) => openReminder(props)"
+                      />
+
+                      <q-btn
+                        v-if="props.row.status === 'SUCCESS' && props.row.confirmStatus === 0"
+                        size="sm"
+                        :label="$t('lang.confirm_withdraw_success')"
+                        color="brand"
+                        @click="openWithdrawConfirmDialog(props)"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </template>
 
@@ -388,10 +297,7 @@
                 />
 
                 <q-btn
-                  v-if="
-                    props.row.status === 'SUCCESS' &&
-                    props.row.confirmStatus === 0
-                  "
+                  v-if="props.row.status === 'SUCCESS' && props.row.confirmStatus === 0"
                   size="sm"
                   :label="$t('lang.confirm_withdraw_success')"
                   color="brand"
@@ -408,22 +314,10 @@
                 <q-input filled v-model="searchForm.transfer.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.transfer.startDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.transfer.startDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -433,22 +327,10 @@
                 <q-input filled v-model="searchForm.transfer.endDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.transfer.endDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.transfer.endDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -456,12 +338,7 @@
                   </template>
                 </q-input>
               </div>
-              <q-btn
-                class="q-mb-md"
-                :label="$t('lang.search')"
-                color="brand"
-                @click="searchRecord"
-              />
+              <q-btn class="q-mb-md" :label="$t('lang.search')" color="brand" @click="searchRecord" />
             </q-form>
           </div>
           <q-table
@@ -515,22 +392,10 @@
                 <q-input filled v-model="searchForm.rebates.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.rebates.startDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.rebates.startDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -540,22 +405,10 @@
                 <q-input filled v-model="searchForm.rebates.endDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.rebates.endDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.rebates.endDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -563,12 +416,7 @@
                   </template>
                 </q-input>
               </div>
-              <q-btn
-                class="q-mb-md"
-                :label="$t('lang.search')"
-                color="brand"
-                @click="searchRecord"
-              />
+              <q-btn class="q-mb-md" :label="$t('lang.search')" color="brand" @click="searchRecord" />
             </q-form>
           </div>
           <q-table
@@ -588,22 +436,10 @@
                 <q-input filled v-model="searchForm.gameBetRecord.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.gameBetRecord.startDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.gameBetRecord.startDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -613,22 +449,10 @@
                 <q-input filled v-model="searchForm.gameBetRecord.endDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.gameBetRecord.endDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.gameBetRecord.endDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -636,30 +460,31 @@
                   </template>
                 </q-input>
                 <q-select
-                    style="width: 100%;max-width: 400px;"
-                    v-model="searchForm.gameBetRecord.platform"
-                    filled
-                    clearable
-                    :options="platformsList"
-                    label="แพลตฟอร์มเกม"
-                    color="white"
-                    label-color="grey"
-                    option-label="name"
-                    option-value="name"
-                    emit-value
-                    map-options
+                  style="width: 100%; max-width: 400px"
+                  v-model="searchForm.gameBetRecord.platform"
+                  filled
+                  clearable
+                  :options="platformsList"
+                  label="แพลตฟอร์มเกม"
+                  color="white"
+                  label-color="grey"
+                  option-label="name"
+                  option-value="name"
+                  emit-value
+                  map-options
                 />
               </div>
-              <q-btn
-                class="q-mb-md"
-                :label="$t('lang.search')"
-                color="brand"
-                @click="searchRecord"
-              />
+              <q-btn class="q-mb-md" :label="$t('lang.search')" color="brand" @click="searchRecord" />
 
               <div class="payout-total">
-                <div>{{ $t('lang.bet_amount') }} <strong>{{ totalBetRecord.totalBet }}</strong></div>
-                <div>{{ $t('lang.amount_paid') }} <strong>{{ totalBetRecord.totalPayout }}</strong></div>
+                <div>
+                  {{ $t("lang.bet_amount") }}
+                  <strong>{{ totalBetRecord.totalBet }}</strong>
+                </div>
+                <div>
+                  {{ $t("lang.amount_paid") }}
+                  <strong>{{ totalBetRecord.totalPayout }}</strong>
+                </div>
               </div>
             </q-form>
           </div>
@@ -686,22 +511,10 @@
                 <q-input filled v-model="searchForm.reminderRecord.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.reminderRecord.startDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.reminderRecord.startDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -711,22 +524,10 @@
                 <q-input filled v-model="searchForm.reminderRecord.endDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="searchForm.reminderRecord.endDate"
-                          mask="YYYY-MM-DD"
-                        >
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="searchForm.reminderRecord.endDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              :label="$t('lang.close_btn')"
-                              color="white"
-                              flat
-                            />
+                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -734,12 +535,7 @@
                   </template>
                 </q-input>
               </div>
-              <q-btn
-                class="q-mb-md"
-                :label="$t('lang.search')"
-                color="brand"
-                @click="searchRecord"
-              />
+              <q-btn class="q-mb-md" :label="$t('lang.search')" color="brand" @click="searchRecord" />
             </q-form>
           </div>
           <q-table
@@ -793,8 +589,7 @@
           :no-data-label="noDataLabel"
           :rows-per-page-label="rowPerPageLabel"
           row-key="serialNumber"
-        >
-        </q-table>
+        ></q-table>
       </q-dialog>
 
       <q-dialog v-model="reminderDialog" no-backdrop-dismiss no-esc-dismis>
@@ -838,32 +633,17 @@
                 :rows="2"
                 :max-rows="5"
               />
-              <q-btn
-                class="common-btn q-mt-md"
-                color="brand"
-                :label="$t('lang.send')"
-                @click="submitReminder"
-              />
+              <q-btn class="common-btn q-mt-md" color="brand" :label="$t('lang.send')" @click="submitReminder" />
             </q-form>
           </q-card-section>
 
           <q-card-actions align="right">
-            <q-btn
-              :label="$t('lang.close_btn')"
-              flat
-              color="primary"
-              @click="reminderDialog = false"
-            />
+            <q-btn :label="$t('lang.close_btn')" flat color="primary" @click="reminderDialog = false" />
           </q-card-actions>
         </q-card>
       </q-dialog>
 
-      <q-dialog
-        width="100%"
-        v-model="isConfirmWithdraw"
-        no-backdrop-dismiss
-        no-esc-dismis
-      >
+      <q-dialog width="100%" v-model="isConfirmWithdraw" no-backdrop-dismiss no-esc-dismis>
         <q-card style="width: 100%; padding: 20px">
           <q-card-section class="q-mb-md">
             {{ $t("lang.system_message") }}
@@ -871,17 +651,8 @@
             <br />
             {{ $t("lang.confirm_deposit_msg") }}
           </q-card-section>
-          <q-btn
-            @click="openWithdrawConfirm()"
-            :label="$t('lang.confirm')"
-            color="green"
-            style="margin-right: 8px"
-          />
-          <q-btn
-            @click="isConfirmWithdraw = false"
-            :label="$t('lang.cancel')"
-            color="warning"
-          />
+          <q-btn @click="openWithdrawConfirm()" :label="$t('lang.confirm')" color="green" style="margin-right: 8px" />
+          <q-btn @click="isConfirmWithdraw = false" :label="$t('lang.cancel')" color="warning" />
         </q-card>
       </q-dialog>
     </div>
@@ -917,6 +688,7 @@ export default defineComponent({
       totalBet: 0,
       totalPayout: 0
     })
+    const $q = useQuasar();
     const searchForm = reactive({
       turnover: {
         startDate: "",
@@ -1268,54 +1040,64 @@ export default defineComponent({
       };
 
       api
-          .post("/session/withdraw/confirm", qs.stringify(obj))
-          .then((response) => {
-            // Handle the response
-            if (response.data.code === 0) {
-              isConfirmWithdraw.value = false;
+        .post("/session/withdraw/confirm", qs.stringify(obj))
+        .then((response) => {
+          // Handle the response
+          if (response.data.code === 0) {
+            isConfirmWithdraw.value = false;
 
-              $q.notify({
-                color: "positive",
-                position: "top",
-                message: "已经确认到账",
-                icon: "check_circle_outline"
-              });
-              removeSessionKeys("/session/member/withdraw");
-              searchRecord();
-            }
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: "已经确认到账",
+              icon: "check_circle_outline"
+            });
+            removeSessionKeys("/session/member/withdraw");
+            searchRecord();
+          }
 
-            // setTimeout(() => {
-            //   window.location.reload();
-            // }, 1000);
-          })
+          // setTimeout(() => {
+          //   window.location.reload();
+          // }, 1000);
+        })
 
-          .catch((error) => {
-            // Handle the error
-            console.error(error);
-          });
+        .catch((error) => {
+          // Handle the error
+          console.error(error);
+        });
     };
 
     const submitReminder = () => {
-      api.post("/session/saveFinanceFeedback", qs.stringify(reminderForm)).then((res) => {
-        const ret = res.data
-        if (res.code === 0) {
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: t('lang.success'),
-            icon: "check_circle_outline"
-          });
-          reminderDialog.value = false;
-          reminderForm.value = {}
-          uploadFileRef.value.clear()
-        }
-      })
+      console.log(reminderForm)
+
+      if (!reminderForm.photos) {
+        $q.notify({
+          type: "negative",
+          position: "top",
+          message: t('lang.please_upload_file'),
+          icon: "report_problem"
+        });
+      } else {
+        api.post("/session/saveFinanceFeedback", qs.stringify(reminderForm)).then((res) => {
+          const ret = res.data
+          if (ret.code === 0) {
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: t('lang.success'),
+              icon: "check_circle_outline"
+            });
+            reminderDialog.value = false;
+            reminderForm.value = {}
+            uploadFileRef.value = {};
+          }
+        })
+      }
     }
 
     watch(recordActive, (currentValue, oldValue) => {
       searchRecord()
     });
-    const $q = useQuasar()
 
     const recordUrl = {
       deposit: "/session/member/deposit",
@@ -1342,6 +1124,12 @@ export default defineComponent({
           //clear array and then push new record
           dataSource.splice(0);
           dataSource.push(...response.data.records);
+
+          if (recordActive.value === 'gameBetRecord') {
+            totalBetRecord.totalBet = response.data?.sums.totalBet
+            totalBetRecord.totalPayout = response.data?.sums.totalPayout
+          }
+
         } else {
           // $q.notify({
           //   color: "negative",
@@ -1401,19 +1189,19 @@ export default defineComponent({
           platformsList.value = ret.data
         }
       })
-      const obj = {
-        memberId: searchForm.gameBetRecord.memberId,
-        platform: searchForm.gameBetRecord.platform,
-        startDate: searchForm.gameBetRecord.startDate,
-        endDate: searchForm.gameBetRecord.endDate,
-      }
-      api.get("/session/member/betRecordTotal", {params: obj}).then((res) => {
-        const ret = res.data
-        if (ret.code === 0) {
-          totalBetRecord.totalBet = ret.data.totalBet
-          totalBetRecord.totalPayout = ret.data.totalPayout
-        }
-      })
+      // const obj = {
+      //   memberId: searchForm.gameBetRecord.memberId,
+      //   platform: searchForm.gameBetRecord.platform,
+      //   startDate: searchForm.gameBetRecord.startDate,
+      //   endDate: searchForm.gameBetRecord.endDate,
+      // }
+      // api.get("/session/member/betRecordTotal", {params: obj}).then((res) => {
+      //   const ret = res.data
+      //   if (ret.code === 0) {
+      //     totalBetRecord.totalBet = ret.data.totalBet
+      //     totalBetRecord.totalPayout = ret.data.totalPayout
+      //   }
+      // })
 
     };
     const betRecordDialog = ref(false)
@@ -1485,8 +1273,10 @@ export default defineComponent({
       })
     }
 
+    const imgURL = process.env.IMAGE_CDN;
     const getImageLink = (linkId) => {
-      reminderForm.photos = `https://fxlmnp.wallykrooger.com/photo/${linkId}`
+      // reminderForm.photos = linkId;
+      reminderForm.photos = `${imgURL}/${linkId}`;
     }
 
     const removeSessionKeys = (prefix) => {
@@ -1557,7 +1347,7 @@ export default defineComponent({
   margin-bottom: 20px;
   font-size: 18px;
 
-  strong{
+  strong {
     color: $orange;
     font-weight: bold;
     font-size: 20px;
@@ -1652,12 +1442,12 @@ export default defineComponent({
     }
   }
 
-  .wrap-box{
+  .wrap-box {
     flex-wrap: wrap;
     row-gap: 5px;
 
-    > label{
-      width:45%;
+    > label {
+      width: 45%;
       flex: 1 1 160px;
     }
   }

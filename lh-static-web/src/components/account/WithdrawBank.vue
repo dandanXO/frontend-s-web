@@ -155,7 +155,7 @@
           <el-input disabled v-model="bankCardInfo.cardAccount" />
         </el-form-item>
         <el-form-item prop="cardNumber" name="cardNumber">
-          <el-input v-model="bankCardInfo.cardNumber" :placeholder="numAddress()" />
+          <el-input v-model="bankCardInfo.cardNumber" :placeholder="numAddress()" :type="isSZPAY ? 'number' : ''" />
         </el-form-item>
         <el-form-item prop="cardAddress" name="cardAddress" v-if="!isUSDT && !isEWALLET && !isALIPAY">
           <el-input
@@ -164,28 +164,28 @@
             :rules="[{ required: true, message: '请输入开户行地址', trigger: 'blur' }]"
           />
         </el-form-item>
-<!--        <el-form-item>-->
-<!--          <el-space>-->
-<!--            <el-input-->
-<!--              class="half"-->
-<!--              v-model="bankCardInfo.telephone"-->
-<!--              placeholder="输入电话号码"-->
-<!--              readonly-->
-<!--              :value="personalState.memberInfo.telephone"-->
-<!--            />-->
-<!--            <el-button class="common-btn" @click="openCaptchaForm()">获取验证码</el-button>-->
-<!--          </el-space>-->
-<!--        </el-form-item>-->
+        <!--        <el-form-item>-->
+        <!--          <el-space>-->
+        <!--            <el-input-->
+        <!--              class="half"-->
+        <!--              v-model="bankCardInfo.telephone"-->
+        <!--              placeholder="输入电话号码"-->
+        <!--              readonly-->
+        <!--              :value="personalState.memberInfo.telephone"-->
+        <!--            />-->
+        <!--            <el-button class="common-btn" @click="openCaptchaForm()">获取验证码</el-button>-->
+        <!--          </el-space>-->
+        <!--        </el-form-item>-->
 
-        <el-form-item name="smsCode" prop="smsCode" >
+        <el-form-item name="smsCode" prop="smsCode">
           <el-space>
-          <el-input
-            class="half"
-            :readonly="!isSendOtp"
-            v-model="bankCardInfo.smsCode"
-            placeholder="输入短信验证码"
-            @keyup.enter="submitBankCard"
-          />
+            <el-input
+              class="half"
+              :readonly="!isSendOtp"
+              v-model="bankCardInfo.smsCode"
+              placeholder="输入短信验证码"
+              @keyup.enter="submitBankCard"
+            />
             <el-button class="common-btn" @click="openCaptchaForm()">获取验证码</el-button>
           </el-space>
         </el-form-item>
@@ -196,9 +196,7 @@
       </el-form>
     </el-dialog>
     <el-dialog v-model="phoneCaptchaDialogVisible" title="验证码" width="50%" align-center style="max-width: 500px">
-      <el-button size="large" color="#3bafda" class="common-btn" style="width:100%;" @click="sendOtp">
-        提交
-      </el-button>
+      <el-button size="large" color="#3bafda" class="common-btn" style="width: 100%" @click="sendOtp">提交</el-button>
     </el-dialog>
 
     <el-dialog
@@ -211,7 +209,12 @@
       @keydown.enter.prevent
     >
       <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="100" label-suffix=":">
-        <el-form-item tabindex="3" label="验证码" prop="captchaCode" :rules="[{ required: true, message: '请输入验证码', trigger: 'blur' }]" >
+        <el-form-item
+          tabindex="3"
+          label="验证码"
+          prop="captchaCode"
+          :rules="[{ required: true, message: '请输入验证码', trigger: 'blur' }]"
+        >
           <el-row :gutter="10" style="justify-content: center; align-items: center">
             <el-col :span="12">
               <el-input v-model="captchaForm.captchaCode" label="验证码" placeholder="验证码" @keyup.enter="sendOtp" />
@@ -230,7 +233,7 @@
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted } from "vue";
+import { defineComponent, reactive, ref, onMounted, watch } from "vue";
 import { getVerificationCode } from "@/api/index/login";
 // import { Modal, message } from "ant-design-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -238,6 +241,7 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import { RiLink, RiLinkUnlink } from "vue-remix-icons";
 import {
   loadBanks,
+  loadAllBankCards,
   loadBankCards,
   loadUnbindRecord,
   addBankCard,
@@ -320,10 +324,17 @@ export default defineComponent({
         } else if (selectedCode === "OKPAY") {
           min = 16;
           max = 16;
+        } else if (selectedCode === "SZPAY") {
+          min = 11;
+          max = 11;
         }
       }
       if (v === "") {
-        return Promise.reject("请输入卡号");
+        if (selectedCode === 'SZPAY') {
+        return Promise.reject('请输入数字人民币使用的手机号');
+        } else{
+          return Promise.reject('请输入卡号');
+        }
       } else if (v.length < min || v.length > max) {
         if (min === max) {
           return Promise.reject("长度应为 " + min);
@@ -350,6 +361,7 @@ export default defineComponent({
     const isEWALLET = ref(false);
     const isALIPAY = ref(false);
     const store = userStore();
+    const isSZPAY = ref(false);
     const searchForm = reactive({
       startDate: "",
       endDate: "",
@@ -525,7 +537,7 @@ export default defineComponent({
     };
     const loadCards = () => {
       personalState.bankCardList = [];
-      loadBankCards().then((response) => {
+      loadAllBankCards().then((response) => {
         if (response.code === 0) {
           personalState.bankCardList.push(...response.data);
         } else {
@@ -550,7 +562,8 @@ export default defineComponent({
       cardAddress: "",
       // telephone: "",
       smsCode: "",
-      smsCodeId: ""
+      smsCodeId: "",
+      currencyId: "",
     });
     const bankName = ref();
     const banksList = ref([]);
@@ -567,6 +580,7 @@ export default defineComponent({
           bankCardInfo.cardNumber = "";
           bankCardInfo.cardAccount = store.realName;
           bankCardInfo.cardAddress = "";
+          bankCardInfo.currencyId = "";
           // bankCardInfo.telephone = "";
           bankCardInfo.smsCode = "";
           bankCardInfo.smsCodeId = "";
@@ -863,12 +877,29 @@ export default defineComponent({
     const numAddress = () => {
       if (isUSDT.value) {
         return "钱包地址";
-      } else if (isEWALLET.value) {
-        return "电子钱包";
+      } else if (isEWALLET.value && !isSZPAY.value) {
+        return '电子钱包'
+      } else if (isEWALLET.value && isSZPAY.value) {
+        return '数字人民币使用的手机号'
       } else {
         return "银行卡号";
       }
     };
+
+    watch(
+      () => bankCardInfo.bankId,
+      (newVal, oldVal) => {
+        isSZPAY.value = false;
+        const selectedBank = banksList.value.find((bank) => bank.id === newVal);
+        if (selectedBank) {
+          bankCardInfo.currencyId = selectedBank.currencyIds;
+          if (selectedBank.code === 'SZPAY') {
+            isSZPAY.value = true;
+          }
+        }
+      }
+    );
+
     return {
       searchForm,
       columns,
@@ -912,7 +943,8 @@ export default defineComponent({
       checkBankCards,
       chooseCard,
       numAddress,
-      checkType
+      checkType,
+      isSZPAY
     };
   }
 });

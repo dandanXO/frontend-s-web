@@ -114,7 +114,7 @@
           本活动获取关卡奖励需到达指定关卡。
           例：用户从第12关出发，抽中6即往前进6步，到达关卡18，只能领取关卡18的奖励，不能领取关卡8的奖励。
         </li>
-        <li>本活动所得彩金将实时派发至用户【中心钱包】，彩金仅需完成1倍流水即可提交出款申请。</li>
+        <li>本活动所得彩金将实时派发至用户【中心钱包】，彩金仅需完成3倍流水即可提交出款申请。</li>
         <li>本活动仅对已结算并产生输赢结果的有效投注进行计算，任何走水、串关、特殊投注、取消的赛事不计算有效投注。</li>
         <li>本活动与其它优惠活动共享。（特殊活动除外）</li>
         <li>同一姓名、手机号、银行卡号、邮箱地址等信息的用户账号，仅可参与一次，若有违规者，将不享受此优惠。</li>
@@ -229,7 +229,7 @@ const loadGamePlayerCurrentStep = (callback) => {
       currentStage.value = data.currentStage;
 
       stageOptions.value = [];
-      
+
       for (let i = 1; i <= currentStage.value; i++) {
         stageOptions.value.push({
           value: i,

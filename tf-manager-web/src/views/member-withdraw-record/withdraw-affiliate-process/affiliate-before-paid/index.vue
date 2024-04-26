@@ -594,9 +594,9 @@ async function loadSites() {
 
 async function toPay(memberWithdrawRecord) {
   if (memberWithdrawRecord) {
-    await fromAffiliateBeforePaidToPay([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate }])
+    await fromAffiliateBeforePaidToPay([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate, siteId: memberWithdrawRecord.siteId }])
   } else {
-    await fromAffiliateBeforePaidToPay(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
+    await fromAffiliateBeforePaidToPay(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
   }
   await loadRecord()
   ElMessage({ message: t('message.updateToPaySuccess'), type: 'success' })

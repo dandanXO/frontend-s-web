@@ -1,6 +1,6 @@
 <template>
   <div class="personal-account">
-    <div class="web">{{ $t("lang.personal_exclusiveurl") }}: {{ store.evip }}</div>
+    <!--    <div class="web">{{ $t("lang.personal_exclusiveurl") }}: {{ store.evip }}</div>-->
     <q-form ref="profileFormRef">
       <div class="flex items-center no-wrap">
         <q-input
@@ -23,7 +23,7 @@
             :label="
               showVerifyBtn && otpCountdownCount <= 0
                 ? $t('lang.personal_sendotp')
-                : `${$t('lang.personal_sentotp_countdown')}${otpCountdownCount}`
+                : `${$t('lang.personal_sentotp_countdown')} ${otpCountdownCount}`
             "
             @click="openVerificationDialog()"
             style="white-space: nowrap"
@@ -46,7 +46,7 @@
       ></q-input>
 
       <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn size="md" color="brightbtn" @click="submitUpdateSecurity()" :label="$t('lang.personal_verify')" />
+        <q-btn size="md" color="brightbtn" @click="submitUpdateSecurity()" :label="$t('lang.personal_submit_btn')" />
       </div>
     </q-form>
   </div>
@@ -92,6 +92,7 @@ import moment from "moment";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import {userStore} from "src/stores";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "PersonalView",
@@ -99,6 +100,7 @@ export default defineComponent({
     // const isCardActive = ref();
     const qs = require("qs");
     const $q = useQuasar();
+    const { t } = useI18n();
     const router = useRouter();
     const searchForm = reactive({
       start: "",
@@ -117,7 +119,7 @@ export default defineComponent({
       formDetails.realName = store.realName;
       formDetails.birthday = store.birthday;
       formDetails.email = store.email;
-      formDetails.phone = store.phone;
+      formDetails.phone = "";
       formDetails.phoneVerified = store.phoneVerified;
     };
 
@@ -135,23 +137,23 @@ export default defineComponent({
     const verificationImg = ref("");
     const getCode = () => {
       api
-          .get("/member/verificationCode")
-          .then((response) => {
-            if (response.code === 0) {
-              verificationImg.value =
-                  "data:image/png;base64," + response.data.img;
-              updateSecurityVerified.codeId = response.data.id;
-              innerCaptchaRef.value = "";
-            }
-          })
-          .catch((e) => {
-            $q.notify({
-              color: "negative",
-              position: "top",
-              message: e.message,
-              icon: "report_problem"
-            });
+        .get("/member/verificationEasyCode")
+        .then((response) => {
+          if (response.code === 0) {
+            verificationImg.value =
+              "data:image/png;base64," + response.data.img;
+            updateSecurityVerified.codeId = response.data.id;
+            innerCaptchaRef.value = "";
+          }
+        })
+        .catch((e) => {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: e.message,
+            icon: "report_problem"
           });
+        });
     };
     //update security
 
@@ -178,10 +180,11 @@ export default defineComponent({
     const submitUpdateSecurity = () => {
       phoneOtpRef.value.validate();
       phoneNumberRef.value.validate()
-
       if (phoneNumberRef.value.hasError || phoneOtpRef.value.hasError) {
       } else {
-        api.post("/session/verifyAndUpdatePhone", qs.stringify({
+        var apiUrl="session/verifyPhoneForVNM";
+
+        api.post(apiUrl, qs.stringify({
           phone: formDetails.phone,
           code: formDetails.phoneOtpRef,
           codeId: phoneCodeId.value
@@ -191,7 +194,7 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: $t('lang.personal_verification_successful'),
+              message: t('lang.personal_verification_successful'),
               icon: "check_circle_outline"
             });
             store.phoneVerified = true;
@@ -199,12 +202,6 @@ export default defineComponent({
             router.go(-1);
           }
         }).catch((e) => {
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: e.message,
-            icon: "report_problem"
-          });
         });
       }
     };
@@ -227,18 +224,11 @@ export default defineComponent({
     const showVerifyBtn = ref(true);
     const showVerificationTokenInput = ref(false)
 
-
-    const isValidName = () => {
-      const namePattern =
-          /^([\u4e00-\u9fa5]*)$/;
-      return namePattern.test(formDetails.realName) || "请输入中文字符";
-    };
-
     const isValidPhone = () => {
-      const phonePattern = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
+      const phonePattern = /^(0[1-9]|[1-9])(\d{8,9})$/;
       const {phone} = formDetails;
 
-      const result = '' === phone ? $t('lang.personal_mobilenumber_verify') : !phonePattern.test(phone) ? $t('lang.personal_mobilenumber_val') : true;
+      const result = '' === phone ? t('lang.personal_mobilenumber_verify') : !phonePattern.test(phone) ? t('lang.personal_mobilenumber_val') : true;
 
       return result;
     }
@@ -282,31 +272,31 @@ export default defineComponent({
         captchaCode: innerCaptchaRef.value,
         codeId: updateSecurityVerified.codeId
       }))
-          .then(res => {
+        .then(res => {
+          getCode();
+          let message = res.message || t('lang.personal_verification_successful'),
+            color = 'positive'
+
+          if (res.code === 0) {
+            canEdit.value = true;
+            showCaptchaDialog.value = false
+            showVerifyBtn.value = false;
+            showVerificationTokenInput.value = true
+            phoneCodeId.value = res.data.codeId;
+            // console.log(res.data.codeId)
+            countdownOtp();
+          } else {
+            color = 'negative';
             getCode();
-            let message = res.message || '发送手机验证码成功',
-                color = 'positive'
-
-            if (res.code === 0) {
-              canEdit.value = true;
-              showCaptchaDialog.value = false
-              showVerifyBtn.value = false;
-              showVerificationTokenInput.value = true
-              phoneCodeId.value = res.data.codeId;
-              // console.log(res.data.codeId)
-              countdownOtp();
-            } else {
-              color = 'negative';
-              getCode();
-            }
+          }
 
 
-            if (message) {
-              $q.notify({message, color});
-            }
+          if (message) {
+            $q.notify({message, color});
+          }
 
-            // console.log('onCaptchaSubmit', res)
-          })
+          // console.log('onCaptchaSubmit', res)
+        })
     }
 
     onMounted(() => {
@@ -344,7 +334,6 @@ export default defineComponent({
       birthdayRef,
       moment,
       canEdit,
-      isValidName,
       phoneNumberRef,
       showVerificationTokenInput,
       isValidPhone,

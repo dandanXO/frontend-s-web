@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div className="menu-title-container">
-      <span className="menu-title">Security Verified</span>
+    <div class="menu-title-container">
+      <span class="menu-title">Security Verified</span>
     </div>
     <div>
       <div class="flex-box flex-align-center security-wrapper">

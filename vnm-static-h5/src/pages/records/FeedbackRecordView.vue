@@ -16,12 +16,14 @@ import RecordComponent from "../../components/RecordComponent.vue";
 import { api } from "boot/axios";
 import moment from "moment/moment";
 import {cached} from "boot/cache";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   components: {
     RecordComponent
   },
   setup() {
+    const {t} = useI18n()
     const visible = ref(true);
     const tableData = ref([]);
 
@@ -94,23 +96,23 @@ export default defineComponent({
     const tableHeaders = [
       {
         key: "orderNo",
-        label: "订单号"
+        label: t('lang.col_orderno')
       },
       {
         key: "status",
-        label: "状态"
+        label: t('lang.col_status')
       },
       {
         key: "financeRemark",
-        label: "财务反馈"
+        label: t('lang.col_finacneremark')
       },
       {
         key: "feedbackTime",
-        label: "反馈时间"
+        label: t('lang.col_feedbacktime')
       },
       {
         key: "type",
-        label: "类型"
+        label: t('lang.col_type')
       }
     ];
     onMounted(() => {

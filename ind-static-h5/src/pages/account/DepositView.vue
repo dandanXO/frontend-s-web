@@ -494,6 +494,9 @@ async function confirmDeposit() {
 
           pDepo(data);
         }
+      })
+      .catch((e) => {
+        btnLoading.value = false;
       });
   }
 }

@@ -17,6 +17,10 @@ export const updateBatch = async (configs) => {
   await https().httpClient.post('/config?_method=PUT', JSON.stringify(configs), { headers: { "Content-Type": "application/json" } });
 }
 
+export const updateOrderBatch = async (orders) => {
+  await https().httpClient.post('/config/order?_method=PUT', JSON.stringify(orders), { headers: { "Content-Type": "application/json" } });
+}
+
 export const deleteById = async (id) => {
   await https().request(`/config/${id}?_method=DELETE`, Method.POST);
 }

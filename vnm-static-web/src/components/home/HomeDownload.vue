@@ -156,7 +156,6 @@ onMounted(() => {});
           text-align: left;
           .tab-title {
             color: #7a80a1;
-            font-family: Microsoft YaHei;
             font-size: 1.79594rem;
             font-weight: 700;
             line-height: normal;
@@ -166,7 +165,6 @@ onMounted(() => {});
 
           .tab-desc {
             color: #a4aabb;
-            font-family: Microsoft YaHei;
             font-size: 1.25rem;
             font-weight: 400;
             line-height: 1.875rem;
@@ -262,7 +260,6 @@ onMounted(() => {});
               box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
               padding: 0.25rem 0;
               color: #468cff;
-              font-family: Microsoft YaHei;
               font-size: 0.875rem;
               font-weight: 400;
               line-height: normal;

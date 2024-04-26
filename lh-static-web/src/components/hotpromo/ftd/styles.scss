@@ -1,0 +1,76 @@
+.ftd-promo-content-frame {
+    background: url('../../../assets/images/promotion/hotpromo/ftd/content-frame.png') no-repeat center center;
+    background-size: 100% 100%;
+    width: 1400px;
+    font-family: 'PingFang SC';
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 26.6px;
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 30px;
+    gap: 30px;
+
+    .row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .stats-table-wrapper {
+        border-radius: 20px;
+        overflow: hidden;
+        width: 100%;
+
+        .stats-table {
+            width: 100%;
+    
+            tr {
+                background-color: #FFFFFF1A;
+    
+                th {
+                    height: 60px;
+                    background-color: #3759B14D;
+                    color: #FFBF2E;
+                    font-size: 18px;
+                    text-align: center;
+                    padding: 20px 0px;
+                    border-bottom: 1px solid #FFFFFF1A;
+
+                    &:not(:last-child) {
+                        border-right: 1px solid #FFFFFF1A;
+                    }
+                }
+    
+                td {
+                    font-family: 'PingFang SC';
+                    font-size: 16px;
+                    font-weight: 600;
+                    text-align: center;
+                    padding: 10px 0px;
+                    border-bottom: 1px solid #FFFFFF1A;
+                    
+                    &:not(:last-child) {
+                        border-right: 1px solid #FFFFFF1A;
+                    }
+                }
+            }
+        }
+    }
+
+    .hint {
+        font-size: 14px;
+        color: #FFBF2E;
+    }
+
+    .notes {
+        font-family: PingFang SC;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 26.5px;
+        color: #aec0e7;
+    }
+}

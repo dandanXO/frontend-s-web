@@ -1,5 +1,5 @@
 <template>
-  <div class="hot-promo">
+  <div class="hot-promo" :class="list.redirectUrl === 'lh1-game-steps' && 'flat-border-radius'">
     <ClaimPromo v-if="isCommonPromo" :promo-id="list.id" :loading-claim="loadingClaim" @daily-slot="handleSlot()" />
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-tiger-card'" />
     <DragonCardPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-dragon-card'" :promo-code="list.promoCode" />
@@ -18,7 +18,13 @@
     <GiftPromo v-if="list.redirectUrl === 'lh1-gift' && !isCommonPromo && store.token" />
     <Gift8Promo v-if="list.redirectUrl === 'lh1-gift8' && !isCommonPromo && store.token" />
     <UpgradeHongBao v-if="list.redirectUrl === 'lh1-upgrade-hongbaoz' && !isCommonPromo && store.token" />
-    <HongBaoYu2024 v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo && store.token" :promo-code="list.promoCode" :params="list.param" />
+    <AppHongBao v-if="list.redirectUrl === 'lh1-app-hongbao' && !isCommonPromo && store.token" :promo-code="list.promoCode" :params="list.param" />
+    <FtdPromo v-if="list.redirectUrl === 'lh1-ftd-promo' && !isCommonPromo && store.token" />
+    <HongBaoYu2024
+      v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo && store.token"
+      :promo-code="list.promoCode"
+      :params="list.param"
+    />
 
     <AsianCup2024 v-if="list.redirectUrl === 'lh1-promo-application-A' && !isCommonPromo && store.token" />
     <BasketballHot v-if="list.redirectUrl === 'lh1-promo-basketball' && !isCommonPromo && store.token" />
@@ -30,9 +36,7 @@
         src="../assets/images/promotion/hotpromo/lhfeedback/feedback.png"
       />
     </div>
-    <BbDacha2024Promo
-      v-if="list.redirectUrl === 'lh1-match-vote' && !isCommonPromo && store.token"
-    ></BbDacha2024Promo>
+    <BbDacha2024Promo v-if="list.redirectUrl === 'lh1-match-vote' && !isCommonPromo && store.token"></BbDacha2024Promo>
     <!-- <VIPUpgradePromo v-if="list.redirectUrl === 'lh1-vip-upgrade-bonus' && !isCommonPromo && store.token" />
     <ReferBonusPromo v-if="list.redirectUrl === 'lh1-refer-bonus' && !isCommonPromo && store.token" /> -->
     <PrivilegeInvite v-if="list.redirectUrl === 'lh1-invite' && !isCommonPromo && store.token" />
@@ -41,9 +45,17 @@
     <CnyStepGame2024Promo
       v-if="list.redirectUrl === 'lh1-cny-step-game' && !isCommonPromo && store.token"
     ></CnyStepGame2024Promo>
-    <CS2Sign v-if="list.redirectUrl === 'lh-cs2-copenhagen-major-2024' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
+    <CS2Sign
+      v-if="list.redirectUrl === 'lh-cs2-copenhagen-major-2024' && !isCommonPromo && store.token"
+      :promo-code="list.promoCode"
+    />
+    <LhStepGamePromo
+      v-if="list.redirectUrl === 'lh1-game-steps' && !isCommonPromo && store.token"
+      :pageContent="list.pageContent"
+    ></LhStepGamePromo>
 
     <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel' && !isCommonPromo && store.token" />
+    <Summoner v-if="list.redirectUrl === 'lh1-summon-event' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -88,8 +100,12 @@ import LPLSummer from "../components/hotpromo/lpl-summer/LPLSummer.vue";
 import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
 import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
 import CnyStepGame2024Promo from "../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue";
+import LhStepGamePromo from "../components/hotpromo/lhstepgame/LhStepGamePromo.vue";
 import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
 import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
+import Summoner from "../components/hotpromo/summoner/Summoner.vue";
+import AppHongBao from "../components/hotpromo/apphongbao/AppHongBao.vue";
+import FtdPromo from "../components/hotpromo/ftd/FtdPromo.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -127,7 +143,11 @@ export default defineComponent({
     HongBaoYu2024,
     DragonCardPromo,
     CS2Sign,
-    BonusSpinWheel
+    BonusSpinWheel,
+    LhStepGamePromo,
+    Summoner,
+    AppHongBao,
+    FtdPromo
     // DailyBonus
   },
   props: {
@@ -397,7 +417,11 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-feedback-award" ||
       this.list.redirectUrl === "lh1-upgrade-hongbao" ||
       this.list.redirectUrl === "lh-cs2-copenhagen-major-2024" ||
-      this.list.redirectUrl === "lh1-spin-wheel"
+      this.list.redirectUrl === "lh1-spin-wheel" ||
+      this.list.redirectUrl === "lh1-game-steps" ||
+      this.list.redirectUrl === "lh1-summon-event" ||
+      this.list.redirectUrl === "lh1-app-hongbao" ||
+      this.list.redirectUrl === "lh1-ftd-promo"
     ) {
       this.isCommonPromo = false;
     } else {
@@ -469,6 +493,10 @@ export default defineComponent({
   border-radius: 10px;
   overflow: hidden;
   position: relative;
+
+  &.flat-border-radius {
+    border-radius: 0px !important;
+  }
 
   .promo-bg {
     background-size: cover;

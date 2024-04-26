@@ -2,7 +2,7 @@
   <q-page>
     <div class="transit-buttons">
       <router-link class="btn" v-for="(trans, i) in transitList" :key="i" :to="`/account/${trans.code}`">
-        <img :src="require(`../../assets/images/inbox/${trans.icon}-icon.png`)" />
+        <!-- <img :src="require(`../../assets/images/inbox/${trans.icon}-icon.png`)" /> -->
         {{ trans.name }}
         <div class="right">
           <img src="../../assets/images/inbox/account-right-icon.svg" />
@@ -14,13 +14,14 @@
 <script lang="js">
 import {defineComponent, onMounted, ref} from "vue";
 import {userStore} from "../../stores/index";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "MailBoxPage",
   components: {
   },
   setup() {
-
+    const { t } = useI18n();
     const store = userStore();
     const transitList = ref([
       // {
@@ -29,19 +30,24 @@ export default defineComponent({
       //   name: "收件箱"
       // },
       {
-        code: "write",
-        icon: "write",
-        name: "意见反馈"
+        code: "inbox",
+        icon: "inbox",
+        name: t("lang.mail_mailbox")
       },
       {
         code: "outbox",
         icon: "outbox",
-        name: "我的反馈"
+        name: t("lang.mail_outbox")
       },
+      // {
+      //   code: "feedback",
+      //   icon: "feedback",
+      //   name: t("lang.mail_feedback")
+      // },
       {
-        code: "feedback",
-        icon: "feedback",
-        name: "有奖问答"
+        code: "write",
+        icon: "write",
+        name: t("lang.mail_compose")
       },
 
     ]);

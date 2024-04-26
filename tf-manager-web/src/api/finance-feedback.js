@@ -10,6 +10,13 @@ export const getFinanceFeedback = data => {
   )
 }
 
+export const getFinanceFeedbackCount = data => {
+  return https().request(
+    '/member/financeFeedbackRecord/count',
+    Method.GET
+  )
+}
+
 export const updateFinanceFeedback = (id, remark) => {
   return https().request(`/member/${id}/update?_method=PUT`, Method.POST, { remark: remark }, ContentType.form);
 };

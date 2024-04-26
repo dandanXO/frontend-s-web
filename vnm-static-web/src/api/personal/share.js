@@ -10,3 +10,6 @@ export function getInviteFriendListCount() {
 export function getReferredBonus() {
   return server.REST.get(`session/referredBonus/count`, {});
 }
+export function getVNMReferred() {
+  return server.REST.get('/session/vnm/referred')
+}

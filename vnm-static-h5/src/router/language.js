@@ -3,7 +3,7 @@ import vueI18n from "../i18n";
 import { defineStore } from "pinia";
 
 export const i18nStore = defineStore("i18nStore", () => {
-  const languageLocale = localStorage.getItem("languageLocale") || "vn";
+  const languageLocale = localStorage.getItem("languageLocale") || "vi";
   const languageVal = ref(languageLocale);
   function setLanguage(l) {
     languageVal.value = l;

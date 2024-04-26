@@ -5,23 +5,26 @@
         <div class="appmeu-container">
           <div class="appmenu-img">
             <img
-              :src="require('../../assets/app/appmenu_' + det.image + '.png')"
+              :src="require('../../assets/app/appmenu-2.png')"
               alt=""
             />
           </div>
-          <div>
-            <div class="img-qr-title">{{ det.name }}APP</div>
-            <div class="qrcode-bg">
-              <!-- <vue-qrious :value="`${downloadUrl}`" /> -->
+          <div class="appmenu-desc">
+            <div class="img-qr-title">综合客户端下载</div>
+            <div class="img-desc">引领市场的卓越技术，自主研发了全套终端应用，让您畅享 Web,H5,更有iOS,Android原生APP，让您随时随地，娱乐 投注！</div>
+
+            <div class="dl-wrapper">
+              <VueQRCodeComponent :size="120" :text="downloadUrl" class="dl-frame" />
+              <div class="link-desc">手机免费下载地址</div>
+              <div class="link"><a :href="downloadUrl" target="_blank">{{ downloadUrl }}</a></div>
             </div>
-            <div class="img-desc">扫一扫下载{{ det.name }}APP</div>
-            <div class="img-slogan">支持IOS & Android等全部移动设备</div>
-            <a
-              class="app-url"
-              :href="`${downloadUrl}?url=${downloadUrl}&agentCode=`"
-            >
-              {{ downloadUrl }}
-            </a>
+
+            <!--            <a-->
+            <!--              class="app-url"-->
+            <!--              :href="`${downloadUrl}?url=${downloadUrl}&agentCode=`"-->
+            <!--            >-->
+            <!--              {{ downloadUrl }}-->
+            <!--            </a>-->
           </div>
         </div>
       </template>
@@ -34,9 +37,11 @@ import { defineComponent, onMounted, ref } from "vue";
 import aos from "aos";
 // import VueQrious from "vue-qrious";
 import { getAppDownloadUrlFromServer } from "@/api/index/site";
+import VueQRCodeComponent from "vue-qrcode-component";
 
 export default defineComponent({
   components: {
+    VueQRCodeComponent
     // VueQrious
   },
   setup() {
@@ -117,15 +122,12 @@ export default defineComponent({
     }
   }
   .img-qr-title {
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 5px;
+    color: #7A80A1;
+    font-size: 28px;
   }
   .img-desc {
-    color: #333;
+    color:#A4AABB;
     font-size: 16px;
-    margin-top: 10px;
-    white-space: nowrap;
   }
 
   .img-slogan {
@@ -161,5 +163,75 @@ export default defineComponent({
     color: #3b9be5;
     text-decoration: none;
   }
+}
+
+.appmenu-desc{
+  width: 500px;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.dl-wrapper {
+  width: 40%;
+  max-width: 180px;
+}
+
+.dl-frame {
+  background-image: url(../../assets/home/download/qr-frame.png);
+  background-position: center center;
+  background-size: 100% 100%;
+  padding: 40px 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
+.qr-wrapper,
+.dl-wrapper {
+  // border-radius: 0.875rem;
+  // background: #e3f5ff;
+  // text-align: center;
+  // padding: 0.5rem 1rem;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // gap: 3px;
+
+  div {
+    text-align: center;
+  }
+
+  canvas {
+    text-align: center;
+  }
+
+  .link-desc {
+    color: #7a80a1;
+    font-family: PingFang SC;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 116.5%; /* 1.165rem */
+    margin: 0.25rem 0;
+  }
+
+  .link {
+    color: #468cff;
+    font-family: PingFang SC;
+    font-size: 0.75rem;
+    text-align: center;
+    margin:0 auto;
+    font-weight: 400;
+    line-height: 116.5%; /* 1.165rem */
+
+  }
+}
+
+.qr-wrapper {
+}
+.dl-wrapper {
 }
 </style>
