@@ -36,13 +36,13 @@
             </el-button>
             <template #dropdown>
               <el-dropdown-menu style="width: inherit">
-                <el-dropdown-item @click="handleLinkSelection('WEB', 'WX')">
+                <el-dropdown-item @click="handleLinkSelection('WEB', 'WX')" v-if="siteId !== '8'">
                   {{ $t('referralLink.affiliateWXShortLink') }}
                 </el-dropdown-item>
-                <el-dropdown-item @click="handleLinkSelection('WEB', 'QQ')">
+                <el-dropdown-item @click="handleLinkSelection('WEB', 'QQ')" v-if="siteId !== '8'">
                   {{ $t('referralLink.affiliateQQShortLink') }}
                 </el-dropdown-item>
-                <el-dropdown-item @click="handleLinkSelection('WEB', 'ZALO')">
+                <el-dropdown-item @click="handleLinkSelection('WEB', 'ZALO')" v-if="siteId === '8'">
                   {{ $t('referralLink.affiliateZALOShortLink') }}
                 </el-dropdown-item>
                 <el-dropdown-item @click="copy(page.webLongLink)">
@@ -63,13 +63,13 @@
             </el-button>
             <template #dropdown>
               <el-dropdown-menu style="width: inherit">
-                <el-dropdown-item @click="handleQrSelection('WEB', 'WX')">
+                <el-dropdown-item @click="handleQrSelection('WEB', 'WX')" v-if="siteId !== '8'">
                   {{ $t('referralLink.affiliateWXQRLink') }}
                 </el-dropdown-item>
-                <el-dropdown-item @click="handleQrSelection('WEB', 'QQ')">
+                <el-dropdown-item @click="handleQrSelection('WEB', 'QQ')" v-if="siteId !== '8'">
                   {{ $t('referralLink.affiliateQQQRLink') }}
                 </el-dropdown-item>
-                <el-dropdown-item @click="handleQrSelection('WEB', 'ZALO')">
+                <el-dropdown-item @click="handleQrSelection('WEB', 'ZALO')" v-if="siteId === '8'">
                   {{ $t('referralLink.affiliateZALOQRLink') }}
                 </el-dropdown-item>
                 <el-dropdown-item @click="handleQrSelection('WEB', 'NORMAL')">
@@ -114,13 +114,13 @@
             </el-button>
             <template #dropdown>
               <el-dropdown-menu style="width: inherit">
-                <el-dropdown-item @click="handleLinkSelection('H5', 'WX')">
+                <el-dropdown-item @click="handleLinkSelection('H5', 'WX')" v-if="siteId !== '8'">
                   {{ $t('referralLink.affiliateWXShortLink') }}
                 </el-dropdown-item>
-                <el-dropdown-item @click="handleLinkSelection('H5', 'QQ')">
+                <el-dropdown-item @click="handleLinkSelection('H5', 'QQ')" v-if="siteId !== '8'">
                   {{ $t('referralLink.affiliateQQShortLink') }}
                 </el-dropdown-item>
-                <el-dropdown-item @click="handleLinkSelection('H5', 'ZALO')">
+                <el-dropdown-item @click="handleLinkSelection('H5', 'ZALO')" v-if="siteId === '8'">
                   {{ $t('referralLink.affiliateZALOShortLink') }}
                 </el-dropdown-item>
                 <el-dropdown-item @click="copy(page.h5LongLink)">
@@ -141,13 +141,13 @@
             </el-button>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item @click="handleQrSelection('H5', 'WX')">
+                <el-dropdown-item @click="handleQrSelection('H5', 'WX')" v-if="siteId !== '8'">
                   {{ $t('referralLink.affiliateWXQRLink') }}
                 </el-dropdown-item>
-                <el-dropdown-item @click="handleQrSelection('H5', 'QQ')">
+                <el-dropdown-item @click="handleQrSelection('H5', 'QQ')" v-if="siteId !== '8'">
                   {{ $t('referralLink.affiliateQQQRLink') }}
                 </el-dropdown-item>
-                <el-dropdown-item @click="handleQrSelection('H5', 'ZALO')">
+                <el-dropdown-item @click="handleQrSelection('H5', 'ZALO')" v-if="siteId === '8'">
                   {{ $t('referralLink.affiliateZALOQRLink') }}
                 </el-dropdown-item>
                 <el-dropdown-item @click="handleQrSelection('H5', 'NORMAL')">
@@ -237,7 +237,7 @@
 </template>
 <script setup>
 import { useStore } from '@/store'
-import { nextTick, onMounted, reactive } from '@vue/runtime-core'
+import { nextTick, onMounted, reactive, computed } from '@vue/runtime-core'
 import { getAffiliateInfo } from '../../../../api/affiliate'
 import { getConfigs } from '../../../../api/system-config'
 import { getShortLink } from '../../../../api/affiliate-short-link'
@@ -440,6 +440,10 @@ function handleQrSelection(linkType, urlType) {
   qrDialogControl.dialogQRLink1 = qrImageLink1
   qrDialogControl.dialogQRLink2 = qrImageLink2
 }
+
+const siteId = computed(() => {
+  return store.state.user.siteId
+})
 
 onMounted(() => {
   loadAffiliateInfo()

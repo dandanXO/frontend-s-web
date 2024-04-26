@@ -170,7 +170,7 @@
             <td>{{ record.site }}</td>
             <td>
               $
-              <span v-formatter="{ data: record.balance, type: 'money' }" />
+              <span v-formatter="{data: record.balance, type: 'money'}" />
             </td>
             <td>
               <span v-if="record.regTime === null">-</span>
@@ -186,13 +186,13 @@
             <td>
               $
               <span
-                v-formatter="{ data: record.totalDeposit, type: 'money' }"
+                v-formatter="{data: record.totalDeposit, type: 'money'}"
               />
             </td>
             <td>
               $
               <span
-                v-formatter="{ data: record.totalWithdraw, type: 'money' }"
+                v-formatter="{data: record.totalWithdraw, type: 'money'}"
               />
             </td>
             <td>
