@@ -9,7 +9,7 @@
         <div class="maintenance-box" v-if="item.underMaintenance === true">
           <p>{{ $t('maintenance.currentlyMaintaining') }}</p>
           <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
-            {{ $t('maintenance.maintenanceTime') }}:<br/> {{ moment(item.maintenanceStartTime).format("DD/MM/YYYY HH:mm") }}<br/>-
+            {{ $t('common.maintenanceTime') }}:<br/> {{ moment(item.maintenanceStartTime).format("DD/MM/YYYY HH:mm") }}<br/>-
             {{ moment(item.maintenanceEndTime).format("DD/MM/YYYY HH:mm") }}
           </p>
           <p class="small-size">{{ $t('maintenance.otherPlatFirst') }}</p>
