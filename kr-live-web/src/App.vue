@@ -56,7 +56,7 @@ export default defineComponent({
 
     let csclient;
     const initCsWeb = () => {
-      csclient = new CsClient("5", regDevice, "th", "2", "prod");
+      csclient = new CsClient("5", regDevice, "kr", "2", "prod");
 
       csclient.set("pageurl", "/liveChat");
       csclient.set("btnid", "cs-web-id");
@@ -137,7 +137,7 @@ export default defineComponent({
     const errorHandler = (error) => {
       console.error("File error: " + error.code);
     };
-    
+
     const onDeviceReady = () => {
       // Get the file system
       window.resolveLocalFileSystemURL(

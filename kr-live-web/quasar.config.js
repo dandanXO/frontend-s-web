@@ -145,8 +145,8 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: `Jolly88`,
-        short_name: `Jolly88`,
+        name: `KoreaLive`,
+        short_name: `KoreaLive`,
         description: `APP`,
         display: "standalone",
         orientation: "portrait",
