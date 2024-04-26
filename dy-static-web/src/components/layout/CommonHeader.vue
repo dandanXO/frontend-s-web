@@ -3161,13 +3161,21 @@ body {
   }
 
   &.poker {
+    .platform-title {
+      font-size: 32px;
+    }
+
+    .platform-box .contents .platform {
+      font-size: 20px;
+    }
+
     .platform-box {
       max-width: 500px;
 
       .imgbox {
         width: 225px;
         height: 250px;
-        background-image: url(../../assets/home/header_live.webp);
+        background-image: url(../../assets/home/header_live.png);
       }
     }
   }

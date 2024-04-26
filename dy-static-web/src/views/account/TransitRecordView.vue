@@ -404,7 +404,7 @@
               >
                 <template v-if="tbl.dataIndex === 'betTime'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    <span>{{ getFormatBetTime(scope.row.betTime)}}</span>
+                    <span>{{ getFormatBetTime(scope.row.betTime) }}</span>
                   </div>
                 </template>
                 <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
@@ -1333,6 +1333,8 @@ export default defineComponent({
         return '开元棋牌' // KY
       }  else if (platformName === 'KYDY') {
         return '开元棋牌' // KYDY
+      } else if (platformName === 'LEG') {
+        return '乐游棋牌' // LEG
       }  else if (platformName === 'DT') {
         return '大唐棋牌' // DT
       }  else if (platformName === 'TCG') {
@@ -1524,6 +1526,8 @@ export default defineComponent({
           return '小艾电竞 ';
         case 'DT':
           return '大唐棋牌';
+        case 'LEG':
+          return '乐游棋牌';
         case 'IM':
           return 'IM体育';
         case 'BBIN':

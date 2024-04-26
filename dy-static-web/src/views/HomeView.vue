@@ -271,14 +271,19 @@
               <div
                 class="game-platform"
                 @click="openGame('开元棋牌', 'KY', '')"
-                style="margin-top: 118px; margin-left: 38px"
+                style="margin-top: 48px; margin-left: 46px"
               >
                 <img src="../assets/home/ky.png" />
                 <div>开元棋牌</div>
               </div>
-              <div class="game-platform" @click="openGame('大唐棋牌', 'DT', '')" style="margin-left: 21px">
+              <div class="game-platform" @click="openGame('大唐棋牌', 'DT', '')" style="margin-left: 30px">
                 <img src="../assets/home/tx.png" />
                 <div>大唐棋牌</div>
+              </div>
+
+              <div class="game-platform" @click="openGame('乐游棋牌', 'LEG', '')" style="margin-left: 14px">
+                <img src="../assets/home/dy.png" />
+                <div>乐游棋牌</div>
               </div>
             </div>
           </div>
